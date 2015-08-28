@@ -20,7 +20,7 @@ module.exports = function (grunt) {
     app: require('./bower.json').appPath || 'app',
     dist: 'dist'
   };
-
+  var proxySnippet = require('grunt-connect-proxy/lib/utils').proxyRequest;
   // Define the configuration for all the tasks
   grunt.initConfig({
 
@@ -71,6 +71,30 @@ module.exports = function (grunt) {
         hostname: 'localhost',
         livereload: 35729
       },
+      server: {
+        options: {
+          hostname: 'localhost',
+          keepalive: true,
+          open: true,
+          middleware: function (connect, options) {
+            return [
+              connect.static('.tmp'),
+              connect().use(
+                  '/bower_components',
+                  connect.static('./bower_components')
+              ),
+              connect.static(appConfig.app),
+              proxySnippet
+            ];
+          }
+        },
+        proxies: [{
+          context: '/api',
+          host: 'dev.hillromvest.com',
+          port: 80
+        }]
+      },
+
       livereload: {
         options: {
           open: true,
@@ -387,7 +411,7 @@ module.exports = function (grunt) {
     }
   });
 
-
+  grunt.loadNpmTasks('grunt-connect-proxy');
   grunt.registerTask('serve', 'Compile then start a connect web server', function (target) {
     if (target === 'dist') {
       return grunt.task.run(['build', 'connect:dist:keepalive']);
@@ -398,7 +422,8 @@ module.exports = function (grunt) {
       'wiredep',
       'concurrent:server',
       'autoprefixer',
-      'connect:livereload',
+      'configureProxies:server',
+      'connect:server',
       'watch'
     ]);
   });
