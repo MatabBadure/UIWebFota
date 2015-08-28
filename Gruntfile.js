@@ -65,34 +65,33 @@ module.exports = function (grunt) {
 
     // The actual grunt server settings
     connect: {
+      options: {
+        port: 9000,
+        // Change this to '0.0.0.0' to access the server from outside.
+        hostname: 'localhost',
+        livereload: 35729
+      },
+      proxies: [
+        {
+          context: '/api',
+          host: 'dev.hillromvest.com',
+          port: 80,
+          https: false,
+          xforward: false
+        }
+      ],
+      livereload: {
         options: {
-          port: 9000,
-          // Change this to '0.0.0.0' to access the server from outside.
-          hostname: 'localhost',
-          livereload: 35729
-        },
-        proxies: [
-          {
-            context: '/api',
-            host: 'dev.hillromvest.com',
-            port: 80,
-            https: false,
-            xforward: false
-          }
-        ],
-        livereload: {
-          options: {
-            open: true,
-            middleware: function (connect) {
-              return [
-                connect.static('.tmp'),
-                connect().use(
-                  '/bower_components',
-                  connect.static('./bower_components')
-                ),
-                connect.static(appConfig.app)
-              ];
-            }
+          open: true,
+          middleware: function (connect) {
+            return [
+              connect.static('.tmp'),
+              connect().use(
+                '/bower_components',
+                connect.static('./bower_components')
+              ),
+              connect.static(appConfig.app)
+            ];
           }
         }
       },
