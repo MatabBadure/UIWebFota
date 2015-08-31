@@ -9,7 +9,7 @@
 angular.module('hillromvestApp')
   .directive('user', function (UserService) {
     return {
-      templateUrl: 'scripts/app/modules/admin/hill-rom-user/directives/create-edit/create.html',
+      templateUrl: 'scripts/modules/admin/hill-rom-user/directives/create-edit/create.html',
       restrict: 'E',
       scope: {
         user: '=userData',

@@ -3,7 +3,7 @@
 angular.module('hillromvestApp')
   .directive('clinic', function(clinicService, UserService) {
     return {
-      templateUrl: 'scripts/app/modules/admin/clinic/directives/create-edit/create.html',
+      templateUrl: 'scripts/modules/admin/clinic/directives/create-edit/create.html',
       restrict: 'E',
       scope: {
         clinic: '=clinicData',
