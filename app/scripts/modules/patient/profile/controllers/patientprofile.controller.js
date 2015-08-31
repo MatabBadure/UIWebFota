@@ -10,9 +10,11 @@ angular.module('hillromvestApp').controller('patientprofileController', function
 		}else if(currentRoute === 'patientProfileEdit'){
 			$scope.initProfileEdit();
 		}else if(currentRoute === 'patientResetPassword'){
-			$scope.initResetPassword();
+			//Todo
+			// $scope.initResetPassword();
 		}else if(currentRoute === 'patientSettings'){
-			$scope.initPatientSettings();
+			//Todo
+			// $scope.initPatientSettings();
 		}
 		
 	};
