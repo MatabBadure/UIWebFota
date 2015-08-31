@@ -9,7 +9,7 @@
 angular.module('hillromvestApp')
   .directive('userList', function(UserService) {
     return {
-      templateUrl: 'scripts/app/modules/admin/hill-rom-user/directives/list/list.html',
+      templateUrl: 'scripts/modules/admin/hill-rom-user/directives/list/list.html',
       restrict: 'E',
       scope: {
         onSelect: '&',
