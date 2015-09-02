@@ -105,10 +105,17 @@ module.exports = function (grunt) {
                 '/bower_components',
                 connect.static('./bower_components')
               ),
-              connect.static(appConfig.app)
+              connect.static(appConfig.app),
+              proxySnippet
             ];
           }
-        }
+        },
+        proxies: [{
+          context: '/api',
+          host: 'dev.hillromvest.com',
+          port: 8080
+        }]
+
       },
       test: {
         options: {
@@ -422,7 +429,7 @@ module.exports = function (grunt) {
       'concurrent:server',
       'autoprefixer',
       'configureProxies:server',
-      'connect:server',
+      'connect:livereload',
       'watch'
     ]);
   });
