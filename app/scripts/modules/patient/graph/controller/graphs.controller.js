@@ -15,7 +15,8 @@ angular.module('hillromvestApp')
       $scope.compliance.frequency = false;
       $scope.handlelegends();
       $scope.toTimeStamp = new Date().getTime();
-      $scope.compliance.secondaryYaxis = 'frequency';
+      $scope.compliance.secondaryYaxis = 'pressure';
+      $scope.compliance.primaryYaxis = 'duration';
       $scope.hmrRunRate = 0;
       $scope.adherenceScore = 0;
       $scope.missedtherapyDays = 0;
@@ -30,6 +31,7 @@ angular.module('hillromvestApp')
       $scope.yAxis1Min = 0;
       $scope.yAxis2Min = 0;
       $scope.getHmrRunRateAndScore();
+      $scope.getMissedTherapyDaysCount();
       //$scope.patientId = StorageService.get('patientID');
       $scope.fromTimeStamp = dateService.getnDaysBackTimeStamp(7);
       $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp);
@@ -119,9 +121,9 @@ angular.module('hillromvestApp')
         $scope.getDayHMRGraphData();
       } else if(days <= 7) {
         $scope.weeklyChart($scope.fromTimeStamp);
-      } else if ( days > 7 && days <= 30 ) {
+      } else if ( days > 7 && days <= 32 ) {
         $scope.monthlyChart($scope.fromTimeStamp);
-      } else if ( days > 30) {
+      } else if ( days > 32) {
          $scope.yearlyChart($scope.fromTimeStamp);
       }
     };
@@ -142,6 +144,15 @@ angular.module('hillromvestApp')
         if(response.status === 200 ){
           $scope.hmrRunRate = response.data.hmrRunRate;
           $scope.adherenceScore = response.data.score;
+        }
+      }).catch(function(response) {
+      });
+    }
+
+    $scope.getMissedTherapyDaysCount = function() {
+      patientDashBoardService.getMissedTherapyDaysCount($scope.patientId).then(function(response){
+        if(response.status === 200 ){
+          $scope.missedtherapy = response.data;
         }
       }).catch(function(response) {
       });
@@ -348,6 +359,54 @@ angular.module('hillromvestApp')
           $scope.graphData = graphUtil.convertIntoHMRLineGraph($scope.completeGraphData);
           console.log('HMR Non-Day graph data : ' + JSON.stringify($scope.graphData));
           console.log($scope.yAxisRangeForHMRLine);
+          $scope.customizationInLineGraph = function() {
+
+            /* Mark red color for missed therapy  -- start --*/
+         var circlesInHMR = d3.select('#HMRLineGraph svg').select('.nv-scatterWrap').select('.nv-group.nv-series-0').selectAll('circle')[0];
+         var count = 0;
+         var missedTherapyCircles = [];
+         angular.forEach($scope.completeGraphData.actual,function(value){
+          if(value.missedTherapy === true){
+            missedTherapyCircles.push(circlesInHMR[count]);
+          }
+          count++;
+         })
+         console.log(missedTherapyCircles);
+         angular.forEach(missedTherapyCircles,function(circle){
+          d3.select('#HMRLineGraph svg').select('.nv-scatterWrap').select('.nv-group.nv-series-0').append('circle')
+          .attr('cx',circle.attributes.cx.value)
+          .attr('cy',circle.attributes.cy.value)
+          .attr('r',4.5)
+          .attr('class','missed_therapy_node');
+         })
+
+         /* Mark red color for missed therapy  -- end --*/
+          };
+
+          var circleSelectorInHMR = d3.select('#HMRLineGraph svg').select('.nv-scatterWrap').select('.nv-group.nv-series-0').selectAll('circle')[0];
+          var circleCount;
+          if(circleSelectorInHMR !== undefined) {
+            circleCount = circleSelectorInHMR.length;
+          }
+          var count = 10;
+          $scope.waitFunction = function waitHandler() {
+            circleSelectorInHMR = d3.select('#HMRLineGraph svg').select('.nv-scatterWrap').select('.nv-group.nv-series-0').selectAll('circle')[0];
+            if(circleSelectorInHMR !== undefined) {
+            circleCount = circleSelectorInHMR.length;
+            }
+            console.log('count :' + count);
+            console.log('circle count :' + circleCount);
+
+            if(circleCount > 0 || count === 0 ) {
+              console.log('wait over !!');
+              $scope.customizationInLineGraph();
+              return false;
+            } else {
+              count --;
+            }
+            $timeout(waitHandler, 1000);
+          }
+          $scope.waitFunction();
         }
       }).catch(function(response) {
         $scope.graphData = [];
@@ -356,7 +415,6 @@ angular.module('hillromvestApp')
 
     $scope.reCreateComplianceGraph = function() {
       $scope.removeGraph();
-
       $scope.handlelegends();
       $scope.createComplianceGraphData();
       $scope.drawComplianceGraph();
@@ -376,18 +434,37 @@ angular.module('hillromvestApp')
       if(count === 2 ) {
         if($scope.compliance.pressure === false ){
           $scope.pressureIsDisabled = true;
+          $scope.frequencyIsDisabled = false;
+          $scope.durationIsDisabled = false;
         }
         if($scope.compliance.frequency === false ){
+          $scope.pressureIsDisabled = false;
           $scope.frequencyIsDisabled = true;
+          $scope.durationIsDisabled = false;
         }
         if($scope.compliance.duration === false ){
+          $scope.pressureIsDisabled = false;
+          $scope.frequencyIsDisabled = false;
           $scope.durationIsDisabled = true;
         }
-      } else if(count < 2 ) {
-         $scope.pressureIsDisabled = false;
-         $scope.frequencyIsDisabled = false;
-         $scope.durationIsDisabled = false;
+      } else if(count === 1 ) {
+        if($scope.compliance.pressure === true ){
+          $scope.pressureIsDisabled = true;
+          $scope.frequencyIsDisabled = false;
+          $scope.durationIsDisabled = false;
+        }
+        if($scope.compliance.frequency === true ){
+          $scope.pressureIsDisabled = false;
+          $scope.frequencyIsDisabled = true;
+          $scope.durationIsDisabled = false;
+        }
+        if($scope.compliance.duration === true ){
+          $scope.pressureIsDisabled = false;
+          $scope.frequencyIsDisabled = false;
+          $scope.durationIsDisabled = true;
+        }
       }
+
     }
 
     $scope.getDayHMRGraphData = function() {
@@ -543,26 +620,51 @@ angular.module('hillromvestApp')
     delete $scope.complianceGraphData ;
     $scope.complianceGraphData = [];
     var count = 0;
+    $scope.compliance.secondaryYaxis = '';
+    $scope.compliance.primaryYaxis = '';
     angular.forEach($scope.completecomplianceGraphData, function(value) {
       if(value.key.indexOf("pressure") >= 0 && $scope.compliance.pressure === true){
         value.yAxis = ++count;
         value.color = 'rgb(255, 127, 14)';
-        $scope.yAxis2Max = $scope.yAxisRangeForCompliance.maxPressure;
+        if(count === 1){
+          $scope.yAxis1Max = $scope.yAxisRangeForCompliance.maxPressure;
+          $scope.compliance.primaryYaxis = 'pressure';
+        } else if(count === 2){
+          $scope.yAxis2Max = $scope.yAxisRangeForCompliance.maxPressure;
+          $scope.compliance.secondaryYaxis = 'pressure';
+        }
         $scope.complianceGraphData.push(value);
       }
       if(value.key.indexOf("duration") >= 0 && $scope.compliance.duration === true){
         value.yAxis = ++count;
         value.color = 'rgb(31, 119, 180)';
+        if(count === 1){
+          $scope.yAxis1Max = $scope.yAxisRangeForCompliance.maxDuration;
+          $scope.compliance.primaryYaxis = 'duration';
+        } else if(count === 2){
+          $scope.yAxis2Max = $scope.yAxisRangeForCompliance.maxDuration;
+          $scope.compliance.secondaryYaxis = 'duration';
+        }
         $scope.complianceGraphData.push(value);
       }
       if(value.key.indexOf("frequency") >= 0  && $scope.compliance.frequency === true){
         value.yAxis = ++count;
         value.color = 'rgb(55, 163, 180)';
-        $scope.yAxis2Max = $scope.yAxisRangeForCompliance.maxFrequency;
+        if(count === 1){
+          $scope.yAxis1Max = $scope.yAxisRangeForCompliance.maxFrequency;
+          $scope.compliance.primaryYaxis = 'frequency';
+        } else if(count === 2){
+          $scope.yAxis2Max = $scope.yAxisRangeForCompliance.maxFrequency;
+          $scope.compliance.secondaryYaxis = 'frequency';
+        }
         $scope.complianceGraphData.push(value);
       }
     });
-    console.log(JSON.stringify($scope.complianceGraphData));
+    if( $scope.compliance.frequency === false && $scope.compliance.duration === false && $scope.compliance.pressure === false){
+      $scope.yAxis1Max = 0;
+      $scope.yAxis2Max = 0;
+    }
+    console.log('Data for compliance graph : ' + JSON.stringify($scope.complianceGraphData));
   };
 
   $scope.putComplianceGraphLabel = function(chart) {
@@ -592,7 +694,40 @@ angular.module('hillromvestApp')
           break;
     }
   };
-
+  $scope.getMinMaxForComplianceGraph = function(){
+    switch($scope.compliance.primaryYaxis) {
+        case "duration":
+            $scope.yAxis1MaxMark = $scope.maxDuration;
+            $scope.yAxis1MinMark = $scope.minDuration;
+            break;
+        case "pressure":
+            $scope.yAxis1MaxMark = $scope.maxPressure;
+            $scope.yAxis1MinMark = $scope.minPressure;
+            break;
+        case "frequency":
+            $scope.yAxis1MaxMark = $scope.maxFrequency;
+            $scope.yAxis1MinMark = $scope.minFrequency;
+            break;
+        default:
+            break;
+    }
+    switch($scope.compliance.secondaryYaxis) {
+        case "duration":
+            $scope.yAxis2MaxMark = $scope.maxDuration;
+            $scope.yAxis2MinMark = $scope.minDuration;
+            break;
+        case "pressure":
+            $scope.yAxis2MaxMark = $scope.maxPressure;
+            $scope.yAxis2MinMark = $scope.minPressure;
+            break;
+        case "frequency":
+            $scope.yAxis2MaxMark = $scope.maxFrequency;
+            $scope.yAxis2MinMark = $scope.minFrequency;
+            break;
+        default:
+            break;
+    }
+  };
   $scope.drawComplianceGraph = function() {
     d3.select('#complianceGraph svg').selectAll("*").remove();
       nv.addGraph(function() {
@@ -625,7 +760,7 @@ angular.module('hillromvestApp')
       chart.yAxis2.tickFormat(d3.format('d'));
       chart.yDomain1([$scope.yAxis1Min,$scope.yAxis1Max]);
       chart.yDomain2([$scope.yAxis2Min,$scope.yAxis2Max]); 
-      var data =  $scope.complianceGraphData
+      var data =  $scope.complianceGraphData;
          angular.forEach(data, function(value) {
               if(value.yAxis === 1){
                 chart.yAxis1.axisLabel(value.key);
@@ -634,12 +769,35 @@ angular.module('hillromvestApp')
                 chart.yAxis2.axisLabel(value.key);
               }
         });
-
         d3.select('#complianceGraph svg')
       .datum($scope.complianceGraphData)
       .transition().duration(500).call(chart);
 
-      var bgHeight = d3.select('#complianceGraph svg').selectAll('.x .tick line').attr("y2");;
+        if( $scope.compliance.frequency === false && $scope.compliance.duration === false && $scope.compliance.pressure === false){
+
+        } else {
+
+          /* Mark red color for missed therapy  -- start --*/
+         var circlesInCompliance = d3.select('#complianceGraph svg').select('.nv-group.nv-series-0').selectAll('circle')[0];
+         var count = 0;
+         var missedTherapyCircles = [];
+         angular.forEach($scope.completeComplianceData.actual,function(value){
+          if(value.missedTherapy === true){
+            missedTherapyCircles.push(circlesInCompliance[count]);
+          }
+          count++;
+         })
+         console.log(missedTherapyCircles);
+         angular.forEach(missedTherapyCircles,function(circle){
+          d3.select('#complianceGraph svg').selectAll('.nv-group.nv-series-0').append('circle')
+          .attr('cx',circle.attributes.cx.value)
+          .attr('cy',circle.attributes.cy.value)
+          .attr('r',4.5)
+          .attr('class','missed_therapy_node');
+         })
+
+         /* Mark red color for missed therapy  -- end --*/
+         var bgHeight = d3.select('#complianceGraph svg').selectAll('.x .tick line').attr("y2");;
          var bgWidth = d3.select('#complianceGraph svg ').selectAll('.y1 .tick line').attr("x2");
          d3.select('#complianceGraph svg .nv-axis g').append('rect')
                   .attr("height", Math.abs(bgHeight))
@@ -657,16 +815,7 @@ angular.module('hillromvestApp')
         $scope.y2AxisTransformRate = parseInt(y2AxisMinMax.split(',')[1].replace(y2AxisMinMax,')',''))/($scope.yAxis2Max - $scope.yAxis2Min);
         var y1LineLength = d3.select('#complianceGraph svg').selectAll('.y1.axis').selectAll('.nvd3.nv-wrap.nv-axis').selectAll('line').attr('x2');
         var y2LineLength = d3.select('#complianceGraph svg').selectAll('.y2.axis').selectAll('.nvd3.nv-wrap.nv-axis').selectAll('line').attr('x2');
-        if($scope.compliance.secondaryYaxis === 'frequency') {
-          $scope.yAxis2MaxMark = $scope.maxFrequency;
-          $scope.yAxis2MinMark = $scope.minFrequency;
-        } else if($scope.compliance.secondaryYaxis === 'pressure'){
-          $scope.yAxis2MaxMark = $scope.maxPressure;
-          $scope.yAxis2MinMark = $scope.minPressure;
-        }
-        $scope.yAxis1MaxMark = $scope.maxDuration;
-        $scope.yAxis1MinMark = $scope.minDuration;
-
+        $scope.getMinMaxForComplianceGraph();
         var y1AxisMinTransform = maxTransform - parseInt($scope.y1AxisTransformRate * $scope.yAxis1MinMark);
         var y1AxisMaxTransform = maxTransform - parseInt($scope.y1AxisTransformRate * $scope.yAxis1MaxMark);
         var y2AxisMinTransform = maxTransform - parseInt($scope.y2AxisTransformRate * $scope.yAxis2MinMark);
@@ -676,29 +825,30 @@ angular.module('hillromvestApp')
         attr('class','minRecommendedLevel').
         attr('transform','translate(0, '+ y1AxisMinTransform + ')').
         append('text').
-        text('MIN').
+        text($scope.yAxis1MinMark).
         style('fill','red');
 
         y1AxisMark.append('g').
         attr('class','maxRecommendedLevel').
         attr('transform','translate(0,'+ y1AxisMaxTransform + ')').
         append('text').
-        text('MAX').
+        text($scope.yAxis1MaxMark).
         style('fill','green');
 
         y2AxisMark.append('g').
         attr('class','minRecommendedLevel').
         attr('transform','translate(0,'+ y2AxisMinTransform + ')').
         append('text').
-        text('MIN').
+        text($scope.yAxis2MinMark).
         style('fill','red');
 
         y2AxisMark.append('g').
         attr('class','maxRecommendedLevel').
         attr('transform','translate(0,'+ y2AxisMaxTransform + ')').
         append('text').
-        text('MAX').
+        text($scope.yAxis2MaxMark).
         style('fill','green');
+      }
       return chart;
     });
   };

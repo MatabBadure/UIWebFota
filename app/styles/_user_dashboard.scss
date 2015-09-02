@@ -303,18 +303,25 @@
 			opacity: 0;
 			&:checked + .check_label{
 				color: $gray-dark;
-				&.sky_blue{
+				&.pressure_legend{
 					&:after{
-						background-color: $iceberg;
+						background-color: rgb(255, 127, 14);
 						border: $btn-default-bg;
 					}
 				}
-				&.sunshade{
+				&.frequency_legend{
 					&:after{
-						background-color: $sunshade;
+						background-color: rgb(55, 163, 180);
 						border: $btn-default-bg;
 					}
 				}
+				&.duration_legend{
+					&:after{
+						background-color: rgb(31, 119, 180);
+						border: $btn-default-bg;
+					}
+				}
+
 			}
 		}
 		.check_label{
@@ -353,47 +360,3 @@
  */
 
 /* Custom check Style END*/ 
-
-/* User Profile Setting */
-.specific-user .user-header {
-  margin-top: 30px;
-  padding: 0;
-	&--title {
-    font-size: $font-size-base;
-    font-weight: $font-weight-bold;
-    color: $pickled-bluewood;
-  }
-}
-
-.specific-user .user-header--desc {
-	padding: 0;
-	border-bottom: 1px solid $celeste;
-	span {
-		font-size: $font-size-small;
-  	color: $celeste;
-	}
-}
-
-.user-notification {
-	padding: 20px 0;
-	&--key {
-		padding: 0;
-		span {
-			color: $nevada;
-		}
-	}
-
-	&--icon {
-		padding: 0;
-		span {
-			font-size: 30px;
-			line-height: 21px;
-		}
-		span.inactive {
-			color: $silver-approx;
-		}
-		span.active {
-			color: $fruit-salad;
-		}
-	}
-}

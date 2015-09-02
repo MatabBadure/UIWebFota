@@ -65,6 +65,16 @@ angular.module('hillromvestApp')
       },
 
 
+      getMissedTherapyDaysCount: function(id) {
+        var url = patient.graph.baseURL;
+        url  = url + '/' + id + '/missedTherapyCount';
+        return $http.get(url, {
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });
+      },
+
       /**
       * @ngdoc method
       * @name getMissedTherapy
