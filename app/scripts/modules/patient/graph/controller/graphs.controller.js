@@ -404,9 +404,19 @@ angular.module('hillromvestApp')
 
           $scope.customizationForBarGraph = function() {
 
+            var rect_height = d3.select('#hmrBarGraph svg').selectAll('.nv-barsWrap defs rect').attr("height");
+            var rect_width = d3.select('#hmrBarGraph svg').selectAll('.nv-barsWrap defs rect').attr("width");
+
            d3.select('#hmrBarGraph svg').selectAll('rect.nv-bar')
               .attr("x", 40)
               .attr("width", 70);
+
+              d3.select('#hmrBarGraph svg').select('.nv-y .nv-wrap g').append('rect')
+              .attr("width", rect_width)
+              .attr("height" , rect_height)
+              .attr("x" , 0)
+              .attr("y" , 0 )
+              .attr("class" , 'svg_bg');
           };
 
           var barCount= d3.select('#hmrBarGraph svg').selectAll('.nv-group .nv-bar')[0].length;
