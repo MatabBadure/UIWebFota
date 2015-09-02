@@ -279,6 +279,10 @@
 
 .dashboard__manage-view--list.assoc {
   cursor: default;
+  padding-bottom: 0;
+  &:hover {
+    background-color: inherit;
+  }
 }
 
 .dashboard__manage-view--list .middle-detail {
