@@ -91,7 +91,7 @@ module.exports = function (grunt) {
         proxies: [{
           context: '/api',
           host: 'dev.hillromvest.com',
-          port: 80
+          port: 8080
         }]
       },
 
@@ -105,10 +105,17 @@ module.exports = function (grunt) {
                 '/bower_components',
                 connect.static('./bower_components')
               ),
-              connect.static(appConfig.app)
+              connect.static(appConfig.app),
+              proxySnippet
             ];
           }
-        }
+        },
+        proxies: [{
+          context: '/api',
+          host: 'dev.hillromvest.com',
+          port: 8080
+        }]
+
       },
       test: {
         options: {
@@ -200,15 +207,15 @@ module.exports = function (grunt) {
     compass: {
       options: {
         sassDir: '<%= yeoman.app %>/styles',
-        cssDir: '.tmp/styles',
-        generatedImagesDir: '.tmp/images/generated',
+        cssDir: '<%= yeoman.app %>/styles',
+        generatedImagesDir: '<%= yeoman.app %>/images/generated',
         imagesDir: '<%= yeoman.app %>/images',
         javascriptsDir: '<%= yeoman.app %>/scripts',
-        fontsDir: '<%= yeoman.app %>/styles/fonts',
-        importPath: './bower_components',
+        fontsDir: '<%= yeoman.app %>/fonts',
+        importPath: '<%= yeoman.app %>/bower_components',
         httpImagesPath: '/images',
         httpGeneratedImagesPath: '/images/generated',
-        httpFontsPath: '/styles/fonts',
+        httpFontsPath: '/fonts',
         relativeAssets: false,
         assetCacheBuster: false,
         raw: 'Sass::Script::Number.precision = 10\n'
@@ -422,7 +429,7 @@ module.exports = function (grunt) {
       'concurrent:server',
       'autoprefixer',
       'configureProxies:server',
-      'connect:server',
+      'connect:livereload',
       'watch'
     ]);
   });

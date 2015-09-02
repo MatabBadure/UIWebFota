@@ -19,7 +19,7 @@
     "angular-translate-loader-partial": "2.7.0",
     "angular-dynamic-locale": "0.1.27",
     "angular-local-storage": "0.2.0",
-    "angular-animate":"1.4.3",
+    "angular-animate": "1.4.3",
     "swagger-ui": "2.0.24",
     "angular-cache-buster": "0.4.3",
     "ngInfiniteScroll": "1.2.0",
@@ -31,13 +31,13 @@
     "angular-daterangepicker": "~0.1.17",
     "angular-mask": "~3.0.12",
     "angular-loading-bar": "~0.8.0",
-    "angular-validation-match":"1.5.2"
+    "angular-validation-match": "1.5.2",
+    "angular-bootstrap": "~0.13.3"
   },
   "devDependencies": {
+    "angular-mask": "~3.0.12",
     "angular-mocks": "1.4.0",
-    "angular-scenario": "1.4.0",
-    "angular-loading-bar": "~0.8.0",
-    "angular-mask": "~3.0.12"
+    "angular-scenario": "1.4.0"
   },
   "resolutions": {
     "angular": "1.4.0",
