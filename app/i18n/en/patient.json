@@ -76,6 +76,45 @@
         "delete": {
             "warning": "Are you sure you want to Deactivate the Patient?",
             "message": "If you deactivate the patient, you will no longer be able to view the information."
+        },
+        "error":{
+            "protocol":{
+                "treatmentPerDay": {
+                    "required": "Protocol Treatment per Day Required",
+                    "min": "Protocol Treatment per Day is invalid",
+                    "max": "Protocol Treatment per Day is invalid"
+                },
+                "minMinutesPerTreatment": {
+                    "required":"Minimum Minutes per Treatment Required",
+                    "min":"Minimum Minutes per Treatment Invalid",
+                    "max":"Minimum Minutes per Treatment Invalid"
+                },
+                "maxMinutesPerTreatment": {
+                    "required": "Maximum Minutes per Treatment Required",
+                    "min":"Maximum Minutes per Treatment Invalid",
+                    "max": "Maximum Minutes per Treatment Invalid"
+                },
+                "minFrequency": {
+                    "required": "Minimum Frequency Required",
+                    "min": "Minimum Frequency Should be between 5 to 20",
+                    "max": "Minimum Frequency Should be between 5 to 20"
+                },
+                "maxFrequency": {
+                    "required": "Maximum Frequency Required",
+                    "min": "Maximum Frequency Invalid",
+                    "max": "Maximum Frequency Invalid"
+                },
+                "minPressure": {
+                    "required": "Minimum Pressure Required",
+                    "min": "Minimum Pressure should be between 1 to 10",
+                    "max": "Minimum Pressure should be between 1 to 10"
+                },
+                "maxPressure": {
+                    "required": "Maximum Pressure Required",
+                    "min": "Maximum Pressure Invalid",
+                    "max": "Maximum Pressure Invalid"
+                }
+            }
         }
     }
 }
