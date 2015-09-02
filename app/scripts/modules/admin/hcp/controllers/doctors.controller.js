@@ -97,5 +97,9 @@ angular.module('hillromvestApp')
       }).catch(function(response) {});
     };
 
+    $scope.switchHCPTab = function(status){
+      $state.go(status, {'doctorId': $stateParams.doctorId});
+    };
+
     $scope.init();
   });

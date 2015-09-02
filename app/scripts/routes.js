@@ -530,7 +530,7 @@ angular.module('hillromvestApp')
 
             .state('associatedClinic', {
                 parent: 'hcpUser',
-                url: '/{doctorId}',
+                url: '/{doctorId}/associatedclinic',
                 data: {
                     roles: ['ADMIN'],
                     pageTitle: 'patient.title'
