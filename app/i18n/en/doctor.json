@@ -68,12 +68,16 @@
         "update-button-text": "Update",
         "back-button-text": "Back",
         "edit-button-text": "Edit",
+        "type": "Type",
+        "hillRom-id": "Hill-Rom ID",
+        "phoneNumber": "Phone number",
         "delete": {
             "warning": "Are you sure you want to Deactivate the Doctor?",
             "message": "If you deactivate the doctor, you will no longer be able to view the information."
         },
         "tab": {
-            "hcp-overview": "HCP Profile"
+            "hcp-overview": "HCP Profile",
+            "associated-clinic": "Associated Clinic"
         },
         "patient-assoc": "Patient Association",
         "filter": {

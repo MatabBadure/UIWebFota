@@ -527,6 +527,34 @@ angular.module('hillromvestApp')
                     ]
                 }
             })
+
+            .state('associatedClinic', {
+                parent: 'hcpUser',
+                url: '/{doctorId}',
+                data: {
+                    roles: ['ADMIN'],
+                    pageTitle: 'patient.title'
+                },
+                views: {
+                    'content@': {
+                        // templateUrl: 'scripts/modules/admin/hcp/views/create-edit/view.html',
+                        templateUrl: 'scripts/modules/admin/hcp/directives/hcp-info/associated-clinic/clinic-list.html',
+                        controller: 'DoctorsController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('doctor');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+
             .state('clinicUser', {
               parent: 'admin',
               url: '/clinics',
