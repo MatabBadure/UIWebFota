@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('hillromvestApp').controller('patientprofileController', function ($scope, $state, $stateParams, notyService, patientService, UserService, AuthServerProvider) {
+angular.module('hillromvestApp').controller('patientprofileController', function ($scope, $state, $stateParams, notyService, patientService, UserService, AuthServerProvider,Password, Auth) {
 	$scope.init = function(){
 		var currentRoute = $state.current.name;	
 		$scope.profileTab = currentRoute;	
@@ -10,11 +10,9 @@ angular.module('hillromvestApp').controller('patientprofileController', function
 		}else if(currentRoute === 'patientProfileEdit'){
 			$scope.initProfileEdit();
 		}else if(currentRoute === 'patientResetPassword'){
-			//Todo
-			// $scope.initResetPassword();
+			$scope.initResetPassword();
 		}else if(currentRoute === 'patientSettings'){
-			//Todo
-			// $scope.initPatientSettings();
+			$scope.initPatientSettings();
 		}
 		
 	};
@@ -96,6 +94,34 @@ angular.module('hillromvestApp').controller('patientprofileController', function
           notyService.showMessage(response.data.ERROR, 'warning');
         }
       });
+    };
+
+    $scope.initResetPassword = function(){
+    	$scope.profile = {};
+    	//$scope.profile.password = null;
+    };
+
+    $scope.updatePassword = function(){
+      $scope.submitted = true;
+      if($scope.form.$invalid){
+        return false;
+      }
+      var data = {
+        'password': $scope.profile.password,
+        'newPassword': $scope.profile.newPassword
+      };
+      Password.updatePassword(localStorage.getItem('patientID'), data).then(function(response){
+        Auth.logout();
+        notyService.showMessage(response.data.message, 'success');
+        $state.go('login');
+      }).catch(function(response){
+      	if(response && response.data && response.data.ERROR)
+        notyService.showMessage(response.data.ERROR, 'warning');
+      });
+    };
+
+    $scope.initPatientSettings = function(){
+    	
     };
 
 	$scope.init();
