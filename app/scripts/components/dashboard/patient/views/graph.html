@@ -196,7 +196,8 @@
 				</div> 									
 			</div>
 
-<div class="col-md-16 note_edit_container">
+
+<div class="col-md-16 note_edit_container hide_content" id="note_edit_container">
 	<form name="form" ng-submit="createNote();">
 		<div class="col-md-2 date_col">
 			<input class="date_input"  data-provide="datepicker"  data-date-format="yyyy-mm-dd"  bootstrap-datepicker data-date-end-date="0d"  id="edit_note_date" ng-model="edit_date" placeholder="Date"/></div>
@@ -219,8 +220,8 @@
 		</form>
 	</div>
 	<div class="btn_group patient_dashdoard_btns">
-		<button class="hillrom-btn btn-submit float-right" ng-click="openAddNote();" ng-show="notes.length <= 0 || notes.deleted">Add Note</button>
-		<span class="float-right view_all_btn">View All</span>
+		<button class="hillrom-btn btn-submit float-right" ng-click="openAddNote();">Add Note</button>
+		<span class="float-right view_all_btn" ng-click="showAllNotes();">View All</span>
 	</div>
 </div>
 </div>

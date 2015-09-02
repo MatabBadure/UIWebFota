@@ -919,6 +919,8 @@ angular.module('hillromvestApp')
               $scope.textNote = "";     
               //$scope.getNotes();
               $scope.showAllNotes();
+              $("#note_edit_container").removeClass("show_content");
+              $("#note_edit_container").addClass("hide_content");
             }).catch(function(){});
           }else{
             $scope.noteTextError = "Please select a date.";
@@ -938,14 +940,17 @@ angular.module('hillromvestApp')
     };
 
     $scope.openAddNote = function(){
-      $scope.textNote = "";
-      $scope.addNote = true;
+      /*$scope.textNote = "";
+      $scope.addNote = true;*/
+      $("#note_edit_container").removeClass("hide_content");
+      $("#note_edit_container").addClass("show_content");
       //$("#noteText").css("display", "block");
     };
 
     $scope.cancelAddNote = function(){
       $scope.addNote = false;
-      //$("#noteText").css("display", "block");
+      $("#note_edit_container").removeClass("show_content");
+      $("#note_edit_container").addClass("hide_content");
     };
 
     $scope.initPatientDashboard = function(){

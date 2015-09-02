@@ -119,11 +119,8 @@ angular.module('hillromvestApp')
             return response;
           });*/
       },
-      getNotesOfUserInInterval: function(id, fromDate, toDate) { 
-        //http://localhost:9000/api/notes?from=:fromTimestamp&to=:toTimestamp&userId=:userId
-        //http://localhost:9000/api/notes/from=1441096287467&to1441096287467&userId=137?cacheBuster=1441096288833
-        //http://localhost:9000/api/notes?from=1441096367892&to1441096367892&userId=137&cacheBuster=1441096370349
-        var url = admin.hillRomUser.notes + '?from=' + fromDate + '&to=' + toDate + '&userId='+id ;    
+      getNotesOfUserInInterval: function(id, fromDate, toDate) {         
+        var url = admin.hillRomUser.notes + '?from=' + fromDate + '&to=' + toDate + '&userId='+id +'&page=1&per_page=100&filter=deleted:false';    
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
