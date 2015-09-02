@@ -503,7 +503,7 @@ angular.module('hillromvestApp')
             })
             .state('hcpProfile', {
                 parent: 'hcpUser',
-                url: '/{doctorId}',
+                url: '/{doctorId}/hcpProfile',
                 data: {
                     roles: ['ADMIN'],
                     pageTitle: 'patient.title'
