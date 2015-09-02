@@ -1087,7 +1087,7 @@ angular.module('hillromvestApp')
 
             .state('patientSettings', {
                 parent: 'patient-dashboard',
-                url: '/p-settings',
+                url: '/notification-settings',
                 data: {
                     roles: ['PATIENT'],
                     pageTitle: 'patient.title'
