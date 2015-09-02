@@ -353,3 +353,47 @@
  */
 
 /* Custom check Style END*/ 
+
+/* User Profile Setting */
+.specific-user .user-header {
+  margin-top: 30px;
+  padding: 0;
+	&--title {
+    font-size: $font-size-base;
+    font-weight: $font-weight-bold;
+    color: $pickled-bluewood;
+  }
+}
+
+.specific-user .user-header--desc {
+	padding: 0;
+	border-bottom: 1px solid $celeste;
+	span {
+		font-size: $font-size-small;
+  	color: $celeste;
+	}
+}
+
+.user-notification {
+	padding: 20px 0;
+	&--key {
+		padding: 0;
+		span {
+			color: $nevada;
+		}
+	}
+
+	&--icon {
+		padding: 0;
+		span {
+			font-size: 30px;
+			line-height: 21px;
+		}
+		span.inactive {
+			color: $silver-approx;
+		}
+		span.active {
+			color: $fruit-salad;
+		}
+	}
+}
