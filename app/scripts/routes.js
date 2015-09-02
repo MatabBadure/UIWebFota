@@ -1128,30 +1128,5 @@ angular.module('hillromvestApp')
                         return $translate.refresh();
                     }]
                 }
-            })
-            .state('patientSettings', {
-                parent: 'patient-settings',
-                url: '/p-reset',
-                data: {
-                    roles: ['PATIENT'],
-                    pageTitle: 'patient.title'
-                },
-                views: {
-                    'content@': {
-                        templateUrl: 'scripts/modules/patient/profile/profile-tabs/update-password.html',
-                        controller: 'patientprofileController'
-                    }
-                },
-                resolve: {
-                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
-                        $translatePartialLoader.addPart('profile');
-                        return $translate.refresh();
-                    }],
-                    authorize: ['Auth',
-                        function(Auth) {
-                            return Auth.authorize(false);
-                        }
-                    ]
-                }
             });
 });

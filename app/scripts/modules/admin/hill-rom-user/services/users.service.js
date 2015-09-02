@@ -177,8 +177,26 @@ angular.module('hillromvestApp')
           return response;
         });
 
+      },
+
+      updatePatientUserNotification : function(userId, data){
+        var url = admin.hillRomUser.users+'/'+userId+'/notificationsetting';        
+        return $http.put(url, data,{
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });
+
+      },
+      getPatientUserNotification : function(userId){
+        var url = '/api/user/'+userId;        
+        return $http.get(url, {
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });
+
       }
-
-
+      
     };
   });

@@ -120,8 +120,34 @@ angular.module('hillromvestApp').controller('patientprofileController', function
       });
     };
 
-    $scope.initPatientSettings = function(){
-    	
+
+   
+
+    $scope.initPatientSettings = function(){ 	
+		UserService.getPatientUserNotification(localStorage.getItem('patientID')).then(function(response){
+			$scope.patientUser = response.data.user;
+		}).catch(function(){
+		   // show the error message
+		});
+    };
+
+    $scope.toggleNotification = function(notification){
+    	var data = {"isHMRNotification" : $scope.patientUser.hmrnotification, "isAcceptHMRNotification": $scope.patientUser.acceptHMRNotification, "isAcceptHMRSetting": $scope.patientUser.acceptHMRSetting };
+    	if(notification === 'hmrnotification'){
+    		data.isHMRNotification = !$scope.patientUser.hmrnotification;
+    	}
+    	if(notification === 'acceptHMRNotification'){
+    		data.isAcceptHMRNotification = !$scope.patientUser.acceptHMRNotification;
+    	}
+    	if(notification === 'acceptHMRSetting'){
+    		data.isAcceptHMRSetting = !$scope.patientUser.acceptHMRSetting;
+    	}
+    	UserService.updatePatientUserNotification(localStorage.getItem('patientID'), data).then(function(response){
+			$scope.patientUser = response.data.user;    
+		}).catch(function(){
+
+		});
+
     };
 
 	$scope.init();

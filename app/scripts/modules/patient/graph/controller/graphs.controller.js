@@ -30,7 +30,7 @@ angular.module('hillromvestApp')
       $scope.yAxis1Min = 0;
       $scope.yAxis2Min = 0;
       $scope.getHmrRunRateAndScore();
-      //$scope.edit_date = convertDateToYyyyMmDdFormat(new Date());
+      $scope.edit_date = convertDateToYyyyMmDdFormat(new Date());
       //$scope.patientId = StorageService.get('patientID');
       $scope.fromTimeStamp = dateService.getnDaysBackTimeStamp(7);
       $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp);
@@ -904,23 +904,30 @@ angular.module('hillromvestApp')
       }
     };
 
-    $scope.createNote = function(){   
+    $scope.createNote = function(){ 
+        $scope.noteTextError =  null;
         if($scope.textNote && $scope.textNote.length > 0){ 
-          var editDate= convertYyyyMmDdToTimestamp($scope.edit_date);
-          var data = {};
-          data.noteText = $scope.textNote;
-          data.userId = localStorage.getItem('patientID');
-          data.date = editDate;
-          UserService.createNote(localStorage.getItem('patientID'), data).then(function(response){
-          $scope.addNote = false;
-          $scope.textNote = "";     
-          //$scope.getNotes();
-          $scope.showAllNotes();
-        }).catch(function(){});
-      }else{
-        $scope.noteTextError = "Please add some text.";
-        return false;
-      }
+          if($scope.edit_date && $scope.edit_date != 'undefined' && $scope.edit_date.length > 0){
+            var editDate= convertYyyyMmDdToTimestamp($scope.edit_date);
+            var data = {};
+            data.noteText = $scope.textNote;
+            data.userId = localStorage.getItem('patientID');
+            data.date = editDate;
+            UserService.createNote(localStorage.getItem('patientID'), data).then(function(response){
+              $scope.addNote = false;
+              $scope.edit_date = convertDateToYyyyMmDdFormat(new Date());
+              $scope.textNote = "";     
+              //$scope.getNotes();
+              $scope.showAllNotes();
+            }).catch(function(){});
+          }else{
+            $scope.noteTextError = "Please select a date.";
+            return false;
+          }
+        }else{
+          $scope.noteTextError = "Please add some text.";
+          return false;
+        }
       
     };
 
@@ -1114,7 +1121,7 @@ angular.module('hillromvestApp')
 
     $scope.chageDateForGraph = function(){
       $scope.hideNotesCSS(); 
-    }
+    };
 
     $scope.init();
 });

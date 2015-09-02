@@ -199,8 +199,7 @@
 <div class="col-md-16 note_edit_container">
 	<form name="form" ng-submit="createNote();">
 		<div class="col-md-2 date_col">
-			<!-- <input class="date_input" type="text" validate-on-blur value="" ng-model="patient.formatedDOB" ng-readonly="validateADMINorASP()" data-date-format="mm/dd/yy" id="edit_date"> -->
-			<input class="date_input"  data-provide="datepicker"  data-date-format="yyyy-mm-dd"  bootstrap-datepicker data-date-end-date="0d"  id="edit_note_date" ng-model="edit_date" /></div>
+			<input class="date_input"  data-provide="datepicker"  data-date-format="yyyy-mm-dd"  bootstrap-datepicker data-date-end-date="0d"  id="edit_note_date" ng-model="edit_date" placeholder="Date"/></div>
 			<div class="col-md-12 description">
 				<div class="form-group">
 					<textarea class="form-control custom_textarea" rows="1" id="comment" ng-model="textNote"></textarea>
