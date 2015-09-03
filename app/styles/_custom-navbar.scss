@@ -181,6 +181,10 @@ $header--background: $body-bg;
 	cursor: default;
 }
 
-.navbar-secondary .navbar-right li a:hover #pop-over-link, #icon-arrow {
+.navbar-secondary .navbar-right li:last-child a:hover span {
+    color: $bombay;
+}
+
+.navbar-secondary .navbar-right li:last-child a:hover #pop-over-link, #icon-arrow {
 	color: $storm-dust;
 }
