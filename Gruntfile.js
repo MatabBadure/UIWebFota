@@ -91,7 +91,10 @@ module.exports = function (grunt) {
         proxies: [{
           context: '/api',
           host: 'dev.hillromvest.com',
-          port: 8080
+          port: 8080,
+          rewrite: {
+            '^/api': '/hillromvest/api'
+          }
         }]
       },
 
@@ -113,7 +116,10 @@ module.exports = function (grunt) {
         proxies: [{
           context: '/api',
           host: 'dev.hillromvest.com',
-          port: 8080
+          port: 8080,
+          rewrite: {
+            '^/api': '/hillromvest/api'
+            }
         }]
 
       },
