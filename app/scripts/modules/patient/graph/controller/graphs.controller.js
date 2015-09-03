@@ -8,6 +8,9 @@ angular.module('hillromvestApp')
       $scope.hmrBarGraph = false;
       $scope.hmrGraph = true;
       $scope.format = 'weekly';
+      $scope.selectedGraph = 'HMR';
+      $scope.selectedDateOption = 'WEEK';
+      // Data available for graph for ID 160 only for now 
       $scope.patientId = 160;
       $scope.compliance = {};
       $scope.compliance.pressure = true;
@@ -79,7 +82,6 @@ angular.module('hillromvestApp')
         });   
     
 
-  /*-----Date picker for dashboard----*/
 
     $scope.calculateDateFromPicker = function(picker) {
       $scope.fromTimeStamp = new Date(picker.startDate._d).getTime();
@@ -132,6 +134,7 @@ angular.module('hillromvestApp')
       eventHandlers: {'apply.daterangepicker': function(ev, picker) {
         $scope.calculateDateFromPicker(picker);
         $scope.drawGraph();
+        $scope.selectedDateOption = '';
         }
       },
       opens: 'left'
@@ -234,14 +237,6 @@ angular.module('hillromvestApp')
           if(value.timestamp === e.point[0]){
               toolTip =
                 '<h6>' + dateService.getDateFromTimeStamp(value.timestamp) + '</h6>' +
-                /*'<p> Treatment/Day ' + value.treatmentsPerDay + '</p>' +
-                '<p> Frequency ' + value.weightedAvgFrequency + '</p>' +
-                '<p> Pressure ' + value.weightedAvgPressure + '</p>' +
-                '<p> Cough Pauses ' + value.normalCoughPauses + '</p>';*/
-
-
-
-
                 '<ul class="graph_ul">' +
                   '<li><span class="pull-left">' + 'Treatment/Day ' +'</span><span class="pull-right value">' + value.treatmentsPerDay +'</span></li>' +
                   '<li><span class="pull-left">' + 'Frequency' + '</span><span class="pull-right value">' + value.weightedAvgFrequency  + '</span></li>' +
@@ -261,10 +256,6 @@ angular.module('hillromvestApp')
           if(value.startTime === e.point[0] && value.hmr !== 0 ){
               toolTip =
                 '<h6>' + dateService.getDateFromTimeStamp(value.startTime) + '</h6>' +
-                /*'<p> Frequency ' + value.frequency + '</p>' +
-                '<p> Pressure ' + value.pressure + '</p>' +
-                '<p> Cough Pauses ' + (value.normalCaughPauses + value.programmedCaughPauses) + '</p>';*/
-
                 '<ul class="graph_ul">' +
                   '<li><span class="pull-left">' + 'Frequency' + '</span><span class="pull-right value">' + value.frequency  + '</span></li>' +
                   '<li><span class="pull-left">' + 'Pressure' +'</span><span class="pull-right value">' + value.pressure +'</span></li>' +
@@ -283,12 +274,6 @@ angular.module('hillromvestApp')
           if(value.start === e.point.timeStamp){
               toolTip =
                 '<h6>' + dateService.getDateFromTimeStamp(value.start) + '</h6>' +
-                /*'<p> Treatment/Day ' + value.treatmentsPerDay + '</p>' +
-                '<p> Frequency ' + value.weightedAvgFrequency + '</p>' +
-                '<p> Pressure ' + value.weightedAvgPressure + '</p>' +
-                '<p> Caugh Pauses ' + value.normalCoughPauses + '</p>';
-*/
-
                 '<ul class="graph_ul">' +
                   '<li><span class="pull-left">' + 'Treatment/Day' + '</span><span class="pull-right value">' + value.treatmentsPerDay + '</span></li>' +
                   '<li><span class="pull-left">' + 'Frequency' +'</span><span class="pull-right value">' + value.weightedAvgFrequency +'</span></li>' +
@@ -335,6 +320,7 @@ angular.module('hillromvestApp')
     };
 
     $scope.showHmrGraph = function() {
+      $scope.selectedGraph = 'HMR';
       $scope.complianceGraph = false;
       $scope.hmrGraph = true;
       $scope.removeGraph();
@@ -351,7 +337,6 @@ angular.module('hillromvestApp')
           $scope.graphData = graphUtil.convertIntoHMRLineGraph($scope.completeGraphData);
           $scope.customizationInLineGraph = function() {
 
-            /* Mark red color for missed therapy  -- start --*/
          var circlesInHMR = d3.select('#HMRLineGraph svg').select('.nv-scatterWrap').select('.nv-group.nv-series-0').selectAll('circle')[0];
          var count = 0;
          var missedTherapyCircles = [];
@@ -369,7 +354,6 @@ angular.module('hillromvestApp')
           .attr('class','missed_therapy_node');
          })
 
-         /* Mark red color for missed therapy  -- end --*/
           };
 
           var circleSelectorInHMR = d3.select('#HMRLineGraph svg').select('.nv-scatterWrap').select('.nv-group.nv-series-0').selectAll('circle')[0];
@@ -528,6 +512,7 @@ angular.module('hillromvestApp')
 
     // Weekly chart
     $scope.weeklyChart = function(datePicker) {
+      $scope.selectedDateOption = 'WEEK';
       $scope.removeGraph();
       if(datePicker === undefined){
         $scope.calculateTimeDuration(7);
@@ -544,6 +529,7 @@ angular.module('hillromvestApp')
 
     // Yearly chart
     $scope.yearlyChart = function(datePicker) {
+      $scope.selectedDateOption = 'YEAR';
       $scope.removeGraph();
        if(datePicker === undefined){
         $scope.calculateTimeDuration(365);
@@ -560,6 +546,7 @@ angular.module('hillromvestApp')
    
     // Monthly chart
     $scope.monthlyChart = function(datePicker) {
+      $scope.selectedDateOption = 'MONTH';
       $scope.removeGraph();
       if(datePicker === undefined){
         $scope.calculateTimeDuration(30);
@@ -575,6 +562,7 @@ angular.module('hillromvestApp')
     };
     //hmrDayChart
     $scope.dayChart = function() {
+      $scope.selectedDateOption = 'DAY';
       $scope.removeGraph();
        if($scope.hmrGraph) {
         $scope.format = 'dayWise';
@@ -590,6 +578,7 @@ angular.module('hillromvestApp')
 
 
     $scope.showComplianceGraph = function() {
+      $scope.selectedGraph = 'COMPLIANCE';
       $scope.complianceGraph = true;
       $scope.hmrGraph = false;
       if($scope.fromTimeStamp === $scope.toTimeStamp){
