@@ -194,7 +194,6 @@ angular.module('hillromvestApp')
 
  /*---Simple pye chart JS END-----*/
     $scope.isActivePatientTab = function(tab) {
-      console.log('hello there' + $scope.patientTab.indexOf(tab));
       if ($scope.patientTab.indexOf(tab) !== -1) {
         return true;
       } else {
@@ -335,11 +334,6 @@ angular.module('hillromvestApp')
       };
     };
 
-   /* $scope.$on('elementClick.directive', function(angularEvent, event) {
-      console.log(event);
-      $scope.createGraphData();
-      $scope.$digest();
-    });*/
     $scope.showHmrGraph = function() {
       $scope.complianceGraph = false;
       $scope.hmrGraph = true;
@@ -354,11 +348,7 @@ angular.module('hillromvestApp')
           $scope.graphData = [];
         } else {
           $scope.yAxisRangeForHMRLine = graphUtil.getYaxisRangeLineGraph($scope.completeGraphData);
-          //$scope.completeGraphData = graphUtil.sortGraphData($scope.completeGraphData);
-          //$scope.completeGraphData = graphUtil.getCompleteGraphData($scope.completeGraphData,$scope.format,$scope.fromTimeStamp,$scope.toTimeStamp);
           $scope.graphData = graphUtil.convertIntoHMRLineGraph($scope.completeGraphData);
-          console.log('HMR Non-Day graph data : ' + JSON.stringify($scope.graphData));
-          console.log($scope.yAxisRangeForHMRLine);
           $scope.customizationInLineGraph = function() {
 
             /* Mark red color for missed therapy  -- start --*/
@@ -371,7 +361,6 @@ angular.module('hillromvestApp')
           }
           count++;
          })
-         console.log(missedTherapyCircles);
          angular.forEach(missedTherapyCircles,function(circle){
           d3.select('#HMRLineGraph svg').select('.nv-scatterWrap').select('.nv-group.nv-series-0').append('circle')
           .attr('cx',circle.attributes.cx.value)
@@ -394,11 +383,7 @@ angular.module('hillromvestApp')
             if(circleSelectorInHMR !== undefined) {
             circleCount = circleSelectorInHMR.length;
             }
-            console.log('count :' + count);
-            console.log('circle count :' + circleCount);
-
             if(circleCount > 0 || count === 0 ) {
-              console.log('wait over !!');
               $scope.customizationInLineGraph();
               return false;
             } else {
@@ -476,14 +461,9 @@ angular.module('hillromvestApp')
           $scope.completeGraphData = graphUtil.formatDayWiseDate($scope.completeGraphData.actual);
           $scope.yAxisRangeForHMRBar = graphUtil.getYaxisRangeBarGraph($scope.completeGraphData);
           $scope.hmrBarGraphData = graphUtil.convertIntoHMRBarGraph($scope.completeGraphData);
-          console.log('HMR Day graph data' + JSON.stringify($scope.hmrBarGraphData));
-          console.log($scope.yAxisRangeForHMRBar);
-
           $scope.customizationForBarGraph = function() {
-
             var rect_height = d3.select('#hmrBarGraph svg').selectAll('.nv-barsWrap defs rect').attr("height");
             var rect_width = d3.select('#hmrBarGraph svg').selectAll('.nv-barsWrap defs rect').attr("width");
-
            d3.select('#hmrBarGraph svg').selectAll('rect.nv-bar')
               .attr("x", 40)
               .attr("width", 70);
@@ -509,8 +489,6 @@ angular.module('hillromvestApp')
             $timeout(waitHandler, 1000);
           }
           $scope.waitFunction();
-
-          //$scope.hmrBarGraphData = [{"values":[[1420061400000,null],[1420075800000,null],[1420090200000,28987],[1420104600000,28997],[1420119000000,null],[1420133400000,null]]}]
          }
       }).catch(function(response) {
         $scope.hmrBarGraphData = [];
@@ -520,7 +498,6 @@ angular.module('hillromvestApp')
     $scope.getComplianceGraphData = function(format) {
       patientDashBoardService.getHMRGraphPoints($scope.patientId, $scope.fromTimeStamp, $scope.toTimeStamp, $scope.groupBy).then(function(response){
         $scope.completeComplianceData = response.data;
-        console.log("server response" + JSON.stringify($scope.completeComplianceData));
         if($scope.completeComplianceData.actual === undefined){
           $scope.complianceGraphData = [];
         } else {
@@ -531,12 +508,7 @@ angular.module('hillromvestApp')
           $scope.maxPressure = $scope.completeComplianceData.recommended.maxPressure;
           $scope.minDuration = $scope.completeComplianceData.recommended.minMinutesPerTreatment * $scope.completeComplianceData.recommended.treatmentsPerDay;
           $scope.maxDuration = $scope.completeComplianceData.recommended.maxMinutesPerTreatment * $scope.completeComplianceData.recommended.treatmentsPerDay;
-          //$scope.completeComplianceData = graphUtil.sortGraphData($scope.completeComplianceData);  
           $scope.yAxisRangeForCompliance = graphUtil.getYaxisRangeComplianceGraph($scope.completeComplianceData);
-          console.log("recommended setting value : " + JSON.stringify($scope.yAxisRangeForCompliance));
-          //$scope.completeComplianceData = graphUtil.getCompleteGraphData($scope.completeComplianceData,$scope.format,$scope.fromTimeStamp,$scope.toTimeStamp);
-          //$scope.completecomplianceGraphData = graphUtil.sortGraphData($scope.completeComplianceData);
-          //console.log(JSON.stringify($scope.completeComplianceData));
           $scope.completecomplianceGraphData = graphUtil.convertIntoComplianceGraph($scope.completeComplianceData.actual);          
           $scope.yAxis1Max = $scope.yAxisRangeForCompliance.maxDuration;
           $scope.createComplianceGraphData();
@@ -674,7 +646,6 @@ angular.module('hillromvestApp')
       $scope.yAxis1Max = 0;
       $scope.yAxis2Max = 0;
     }
-    console.log('Data for compliance graph : ' + JSON.stringify($scope.complianceGraphData));
   };
 
   $scope.putComplianceGraphLabel = function(chart) {
@@ -797,7 +768,6 @@ angular.module('hillromvestApp')
           }
           count++;
          })
-         console.log(missedTherapyCircles);
          angular.forEach(missedTherapyCircles,function(circle){
           d3.select('#complianceGraph svg').selectAll('.nv-group.nv-series-0').append('circle')
           .attr('cx',circle.attributes.cx.value)
