@@ -800,8 +800,8 @@ tags-input.ng-invalid .tags {
   margin-top: 20px;
   padding: 10px 0;
   &--title {
-    font-size: $font-size-base;
-    font-weight: $font-weight-bold;
+    font-size: $font-size-title;
+    font-weight: $font-weight-medium;
     color: $pickled-bluewood;
   }
 }
