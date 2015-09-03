@@ -32,7 +32,8 @@
     "angular-mask": "~3.0.12",
     "angular-loading-bar": "~0.8.0",
     "angular-validation-match": "1.5.2",
-    "angular-bootstrap": "~0.13.3"
+    "angular-bootstrap": "~0.13.3",
+    "jquery.easy-pie-chart": "~2.1.6"
   },
   "devDependencies": {
     "angular-mask": "~3.0.12",
