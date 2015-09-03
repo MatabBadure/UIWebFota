@@ -9,7 +9,7 @@ angular.module('hillromvestApp')
         onSuccess: '&',
         doctorStatus: '=doctorStatus'
       },
-      controller: function ($scope, $timeout, notyService, $state) {
+      controller: function ($scope, $timeout, notyService, $state, $stateParams, DoctorService) {
 
         $scope.open = function () {
           $scope.showModal = true;
@@ -25,6 +25,15 @@ angular.module('hillromvestApp')
         };
 
         $scope.init = function () {
+          if($stateParams.doctorId){
+            $scope.doctorStatus.isCreate = false;
+            $scope.doctorStatus.editMode = true;
+            DoctorService.getDoctor($stateParams.doctorId).then(function(response){
+              var tempHcp = response.data.user;
+              $scope.selectedHcp = tempHcp;
+              $scope.doctor = response.data.user;
+            }).catch(function(response){})
+          }
           $scope.states = [];
           $scope.credentialsList = admin_cont.hcp.credentialsList;
           $scope.submitted = false;

@@ -6,17 +6,14 @@
     <div class="dashbord-nav__primary pull-left" ng-show="!doctorStatus.isCreate">
       <span class="dashbord-nav__primary--title" translate="doctor.home.updateLabel">Update HCP</span>
     </div>
-    <div class="dashbord-nav__secondary create-user navbar-right cursor-pointer" ng-click="cancel()">
-      <span class="" translate="doctor.back-button-text">Back</span>
-    </div>
   </div>
 </div>
 
 <div class="container admin-user">
   <div class="col-md-16 margin-top reset-padding">
-   <div class="user-gen-details">
-     <span class="user-gen-details--name">Avnesh Shakya{{slectedHCP.firstName}} {{slectedClinic.lastName}}</span>
-     <span class="user-gen-details--hr-id">12345{{slectedHCP.hillromId}}</span>
+   <div class="user-gen-details" ng-show="doctorStatus.editMode">
+     <span class="user-gen-details--name">{{selectedHcp.firstName}} {{selectedHcp.lastName}}</span>
+     <span class="user-gen-details--hr-id">{{selectedHcp.id}}</span>
    </div>
   </div>
 </div>
@@ -33,7 +30,7 @@
             <span translate="doctor.required-field"></span>
           </div>
         </div>
-        <div class="col-md-16 reset-padding margin-top">
+        <div class="col-md-16 reset-padding margin-top" ng-if="doctorStatus.isCreate">
           <div class="col-md-7 reset-padding">
             <div class="col-md-6 dashboard__form--label reset-padding">
               <span class="" translate="doctor.clinic-name"></span>
