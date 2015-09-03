@@ -24,7 +24,7 @@ $brand-warning:         #f0ad4e !default;
 $brand-danger:          #d9534f !default;
 
 //HillRom Primary Colours
-$cyan-blue-light:       #7ca3dc  !default;
+$cyan-blue-light:       #7BA4DB  !default;
 
 //HillRom Secondary Colours
 $terracotta:            #ef7164  !default;
@@ -54,7 +54,7 @@ $sunshade:              #FF9829 !default;
 $silver-fade:           #C0C0C0 !default;
 $lapis-lazuli:          #276092 !default;
 $storm-dust:            #646568 !default;
-$iceberg:               #7CA3DC !default;
+$iceberg:               #7BA4DB !default;
 $davys-grey:            #555555 !default;
 $kashmir-blue:          #567196 !default;
 $blue-bayoux:           #475D7B !default;
@@ -64,6 +64,7 @@ $texas-rose:            #FFAD54 !default;
 $fruit-salad:           #5C9B52 !default;
 $silver-approx:         #C1C1C1 !default;
 $forest-green:          #228B22 !default;
+$Delta-unselect:		#A2A3A4 !default;
 
 //HillRom Popover
 $outer-space:           #273446 !default;
@@ -111,6 +112,7 @@ $font-size-h4:            ceil(($font-size-base * 1.25)) !default; // ~18px
 $font-size-h5:            $font-size-base !default;
 $font-size-h6:            ceil(($font-size-base * 0.85)) !default; // ~12px
 $font-size-icon:          30px !default;
+$font-size-title:					17px !default;
 
 //font-weight
 $font-weight-medium:			400;

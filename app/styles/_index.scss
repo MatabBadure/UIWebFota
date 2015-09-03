@@ -174,7 +174,11 @@ a::-moz-focus-inner {
 }
 
 .noty-top {
-    top: 70px;
+    top: 105px;
+}
+
+.noty-div .noty-item .close {
+	margin-right: 10px;
 }
 
 .noty-div .success {

@@ -49,6 +49,12 @@
   text-align: right;
 }
 
+.dashboard__form--type {
+  font-size: $font-size-title;
+  color:  $pickled-bluewood;
+  font-weight: $font-weight-medium;
+}
+
 .dashboard__form--label {
 	line-height: 30px;
 	color: $nevada;
@@ -70,6 +76,10 @@
 	padding-left: 10px;
 	font-weight: normal;
 	border-radius: 0;
+}
+
+.dashboard__form--input .custom-dob {
+    width: 86%;
 }
 
 .dashboard__form--input textarea {
@@ -196,7 +206,7 @@
 
 .dashboard__form--label-age {
   position: absolute;
-  right: 0;
+  right: 26px;
   border: 1px solid $bombay;
   top: 0;
   height: 30px;
@@ -237,8 +247,8 @@
 	width: 100%;
 	font-weight: normal;
 	color: $body-bg;
-	border: 1px solid $nevada;
-	background-color: $nevada;
+	border: 1px solid $lapis-lazuli;
+	background-color: $lapis-lazuli;
 	padding-left: 5px;
 	-webkit-appearance: none;
   -moz-appearance: none;
@@ -262,7 +272,7 @@
 
 .search-icon {
 	position: absolute;
-  right: 5px;
+  right: 10px;
   padding: 0;
   top: 8px;
 }
