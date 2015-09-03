@@ -200,16 +200,16 @@
               <span class=""> * </span>
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
-              <input type="email" class="form-control" validate-on-blur name="email"  ng-readonly="validateADMINorASP()" ng-model="associateCareGiver.email" ng-maxlength=100 required>
+              <input type="email" class="form-control" validate-on-blur name="email"  ng-readonly="validateADMINorASP()" ng-model="associateCareGiver.email" ng-maxlength=100 ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/" required>
               <div ng-show="(form.email.$showValidationMessage && form.email.$invalid) || submitted">
                 <span class="has-error" ng-show="form.email.$error.required">
                   E-mail is required.
                 </span>
-                <span class="has-error" ng-show="form.email.$error.email">
-                  E-mail is invalid.
-                </span>
                 <span class="has-error" ng-show="form.email.$error.maxlength">
                   E-mail cannot be longer than 100 characters.
+                </span>
+                <span class="has-error" ng-show="form.email.$error.pattern">
+                  E-mail is invalid.
                 </span>
               </div>
             </div>

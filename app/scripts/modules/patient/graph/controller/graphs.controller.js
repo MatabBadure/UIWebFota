@@ -38,6 +38,7 @@ angular.module('hillromvestApp')
       $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp);   
       $scope.getPatientById(localStorage.getItem('patientID'));
       var currentRoute = $state.current.name;
+      var server_error_msg = "Some internal error occurred. Please try after sometime.";
       $scope.showNotes = false;
       $scope.patientTab = currentRoute;
       if ($state.current.name === 'patientdashboard') {
@@ -145,7 +146,6 @@ angular.module('hillromvestApp')
           $scope.hmrRunRate = response.data.hmrRunRate;
           $scope.adherenceScore = response.data.score;
         }
-      }).catch(function(response) {
       });
     }
 
@@ -154,7 +154,6 @@ angular.module('hillromvestApp')
         if(response.status === 200 ){
           $scope.missedtherapy = response.data;
         }
-      }).catch(function(response) {
       });
     }
 
@@ -842,13 +841,13 @@ angular.module('hillromvestApp')
     $scope.getPatientById = function(patientId){
       patientService.getPatientInfo(patientId).then(function(response){
         $scope.slectedPatient = response.data;
-      }).catch(function(response){});
+      });
     };
 
     $scope.getCaregiversForPatient = function(patientId){
       patientService.getCaregiversLinkedToPatient(patientId).then(function(response){
         $scope.caregivers =  response.data.caregivers;
-      }).catch(function(response){});
+      });
     };
 
     $scope.linkCaregiver = function(){
@@ -861,11 +860,11 @@ angular.module('hillromvestApp')
       $scope.associateCareGiver = {};
       UserService.getState().then(function(response) {
         $scope.states = response.data.states;        
-      }).catch(function(response) {});
+      });
       UserService.getRelationships().then(function(response) {
         $scope.relationships = response.data.relationshipLabels;
         $scope.associateCareGiver.relationship = $scope.relationships[0];
-      }).catch(function(response) {});
+      });
     };
 
     $scope.formSubmitCaregiver = function(){
@@ -899,7 +898,9 @@ angular.module('hillromvestApp')
     $scope.disassociateCaregiver = function(caregiverId, index){
         patientService.disassociateCaregiversFromPatient(localStorage.getItem('patientID'), caregiverId).then(function(response){
         $scope.caregivers.splice(index, 1);
-      }).catch(function(response){});
+      }).catch(function(response){
+        notyService.showMessage(server_error_msg);
+      });
     };
 
     $scope.initpatientCaregiverEdit = function(caregiverId){
@@ -911,15 +912,15 @@ angular.module('hillromvestApp')
     $scope.editCaregiver = function(careGiverId){
         UserService.getState().then(function(response) {
           $scope.states = response.data.states;
-        }).catch(function(response) {});
+        });
         UserService.getRelationships().then(function(response) {
           $scope.relationships = response.data.relationshipLabels;
-        }).catch(function(response) {});
+        });
         var caregiverId = $stateParams.caregiverId;
         patientService.getCaregiverById(localStorage.getItem('patientID'), caregiverId).then(function(response){
           $scope.associateCareGiver = response.data.caregiver.user;
           $scope.associateCareGiver.relationship = response.data.caregiver.relationshipLabel;
-        }).catch(function(response){});
+        });
     };
 
     $scope.updateCaregiver = function(patientId, caregiverId , careGiver){
@@ -941,7 +942,9 @@ angular.module('hillromvestApp')
       patientService.updateCaregiver(patientId,caregiverId, tempCaregiver).then(function(response){
         $scope.associateCareGiver = [];$scope.associateCareGiver.length = 0;
         $scope.switchPatientTab('patientdashboardCaregiver');
-      }).catch(function(response){});
+      }).catch(function(response){
+        notyService.showMessage(server_error_msg);
+      });
     };
 
     $scope.initPatientDeviceProtocol = function(){     
@@ -956,7 +959,7 @@ angular.module('hillromvestApp')
           device.days = dateService.getDays(_date);
         });
         $scope.devices = response.data.deviceList;
-      }).catch(function(response){});
+      });
       $scope.getProtocols(localStorage.getItem('patientID'));    
     };
 
@@ -969,7 +972,7 @@ angular.module('hillromvestApp')
             $scope.addProtocol = false;
           }
         });
-      }).catch(function(){});
+      });
     };
 
     $scope.initPatientClinicHCPs = function(){
@@ -980,13 +983,13 @@ angular.module('hillromvestApp')
     $scope.getClinicsOfPatient = function(){
       patientService.getClinicsLinkedToPatient(localStorage.getItem('patientID')).then(function(response){
         $scope.clinics = response.data.clinics;                
-      }).catch(function(){});
+      });
     };
     
     $scope.getHCPsOfPatient = function(){
       patientService.getHCPsLinkedToPatient(localStorage.getItem('patientID')).then(function(response){
         $scope.hcps = response.data.hcpUsers;                
-      }).catch(function(){});
+      });
     };
 
     $scope.updateNote = function(noteId, noteCreatedOn){
@@ -1025,7 +1028,9 @@ angular.module('hillromvestApp')
               $scope.showAllNotes();
               $("#note_edit_container").removeClass("show_content");
               $("#note_edit_container").addClass("hide_content");
-            }).catch(function(){});
+            }).catch(function(){
+              notyService.showMessage(server_error_msg,'warning' );
+            });
           }else{
             $scope.noteTextError = "Please select a date.";
             return false;
@@ -1040,7 +1045,9 @@ angular.module('hillromvestApp')
     $scope.deleteNote = function(noteId){
       UserService.deleteNote(noteId).then(function(response){
       $scope.showAllNotes();                
-      }).catch(function(){});
+      }).catch(function(){
+        notyService.showMessage(server_error_msg,'warning' );
+      });
     };
 
     $scope.openAddNote = function(){      
@@ -1119,7 +1126,7 @@ angular.module('hillromvestApp')
              $scope.patientNotifications[index].class = "icon-lungs";
           }
         });
-      }).catch(function(){});
+      });
     }
 
     function scrollPageToTop(divId){
