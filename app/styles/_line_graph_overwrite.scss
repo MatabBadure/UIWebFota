@@ -36,7 +36,7 @@
 		}
 	.nv-wrap{
 			.nv-axisMaxMin{
-				&:last-child{
+				&:a-child{
 					text{
 					text-anchor: end !important;
 					}
@@ -68,6 +68,10 @@
 				}
 
 	}
+
+.missed_therapy_node{
+	fill: red;
+  stroke: red;
 }
 
 /* Grapg ToolTip style */
@@ -203,6 +207,7 @@
 			content: '\003e';
 		}
 	}
+}
 
    .show_content{
 		display: block;
