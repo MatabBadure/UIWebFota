@@ -12,7 +12,7 @@ angular.module('hillromvestApp')
                 },
                 views: {
                     'content@': {
-                        templateUrl: 'scripts/app/error/error.html'
+                        templateUrl: 'scripts/error/error.html'
                     }
                 },
                 resolve: {
@@ -30,7 +30,7 @@ angular.module('hillromvestApp')
                 },
                 views: {
                     'content@': {
-                        templateUrl: 'scripts/app/error/accessdenied.html'
+                        templateUrl: 'scripts/error/accessdenied.html'
                     }
                 },
                 resolve: {

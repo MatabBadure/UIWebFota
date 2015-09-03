@@ -12,7 +12,7 @@ angular.module('hillromvestApp')
                 },
                 views: {
                     'content@': {
-                        templateUrl: 'scripts/app/account/activate/activate.html',
+                        templateUrl: 'scripts/account/activate/activate.html',
                         controller: 'ActivationController'
                     }
                 },
