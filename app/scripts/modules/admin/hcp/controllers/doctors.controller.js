@@ -108,7 +108,7 @@ angular.module('hillromvestApp')
     };
 
     $scope.editHCP = function(){
-      $state.go('hcpEdit', {'doctorId': $stateParams.doctorId})
+      $state.go('hcpEdit', {'doctorId': $stateParams.doctorId});
     };
 
     $scope.showDeactivateModal = function(){

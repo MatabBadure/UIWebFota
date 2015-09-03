@@ -77,6 +77,10 @@
             "warning": "Are you sure you want to Deactivate the Doctor?",
             "message": "If you deactivate the doctor, you will no longer be able to view the information."
         },
+        "clinic-disassociate":{
+            "warning": "Are you sure, you want to disassociate Clinic from HCP?",
+            "message": "If you disassociate the clinic, This HCP will not be able to View clinic information."
+        },
         "tab": {
             "hcp-overview": "HCP Profile",
             "associated-clinic": "Associated Clinic"

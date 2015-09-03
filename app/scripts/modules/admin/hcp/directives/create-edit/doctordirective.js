@@ -20,8 +20,9 @@ angular.module('hillromvestApp')
             return clinic.name.toLowerCase().indexOf($query.toLowerCase()) != -1;
           });
         };
-        $scope.close = function () {
-          $scope.showModal = false;
+
+        $scope.cancelUpdate = function(){
+          $state.go('hcpProfile', {'doctorId': $stateParams.doctorId});
         };
 
         $scope.init = function () {
@@ -116,7 +117,7 @@ angular.module('hillromvestApp')
             $scope.doctorStatus.isMessage = true;
             $scope.doctorStatus.message = response.data.message;
             notyService.showMessage($scope.doctorStatus.message, 'success');
-            $scope.reset();
+            $state.go('hcpProfile', {'doctorId': $stateParams.doctorId});
           }).catch(function(response) {
             $scope.doctorStatus.isMessage = true;
             if (response.data.message !== undefined) {
