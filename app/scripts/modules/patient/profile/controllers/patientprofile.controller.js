@@ -150,6 +150,10 @@ angular.module('hillromvestApp').controller('patientprofileController', function
 
     };
 
+    $scope.cancel = function(){
+      $state.go('patientProfile');
+    };
+
 	$scope.init();
     
   });
