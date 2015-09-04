@@ -172,5 +172,9 @@
       "state": "State",
       "status": "Status"
     },    
-    "select-relationship": "Select relationship."
+    "select-relationship": "Select relationship.",
+    "toggle-navigation": "Toggle navigation",
+     "visi-view": "VisiView",
+     "tm-sup": "TM",
+     "health-portal": "Health Portal"
 }
