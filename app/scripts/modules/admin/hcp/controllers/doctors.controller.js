@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hillromvestApp')
-  .controller('DoctorsController', function($rootScope, $scope, $state, $timeout, Auth,$stateParams, UserService, DoctorService, notyService, clinicService ) {
+  .controller('DoctorsController',['$rootScope', '$scope', '$state', '$timeout', 'Auth', '$stateParams', 'UserService', 'DoctorService', 'notyService', 'clinicService', function($rootScope, $scope, $state, $timeout, Auth,$stateParams, UserService, DoctorService, notyService, clinicService ) {
     $scope.doctor = {};
     $scope.doctorStatus = {
       'role': localStorage.getItem('role'),
@@ -28,7 +28,13 @@ angular.module('hillromvestApp')
       var url = '/api/user/' + doctorId + '/hcp';
       UserService.getUser(doctorId, url).then(function(response) {
         $scope.doctor = response.data.user;
-      }).catch(function(response) {});
+      }).catch(function(response) {
+        if(response.data.message){
+          notyService.showMessage(response.data.message,'warning');
+        } else if(response.data.ERROR){
+          notyService.showMessage(response.data.ERROR,'warning');
+        }
+      });
     };
 
     $scope.selectedDoctor = function(doctor) {
@@ -96,9 +102,9 @@ angular.module('hillromvestApp')
         $scope.clinicList = [{"clinicId": 0, "name": "ALL"}];
         $scope.sortOption = $scope.clinicList[0].clinicId;
         if($scope.clinicsOfHCP){
-          for(var i=0; i< $scope.clinicsOfHCP.length; i++){
-            $scope.clinicList.push({"clinicId": $scope.clinicsOfHCP[i].id, "name": $scope.clinicsOfHCP[i].name});
-          }
+          angular.forEach($scope.clinicsOfHCP, function(clinic){
+            $scope.clinicList.push({"clinicId": clinic.id, "name": clinic.name});
+          });
         }
       }).catch(function(response) {});
     };
@@ -183,4 +189,4 @@ angular.module('hillromvestApp')
     };
     
     $scope.init();
-  });
+  }]);
