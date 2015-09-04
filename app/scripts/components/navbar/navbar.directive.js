@@ -128,7 +128,8 @@ angular.module('hillromvestApp')
     templateUrl: 'scripts/components/navbar/navbarpatientuser.html',
     restrict: 'E',
 
-    controller: function ($scope) {
+    controller: function ($scope, UserService) {
+      $scope.patientNotifications = 0;
       $scope.isActive = function(tab) {
         var path = $location.path();
         if (path.indexOf(tab) !== -1) {
@@ -137,6 +138,18 @@ angular.module('hillromvestApp')
           return false;
         }
       };
+
+      $scope.getNotifications = function(){
+        UserService.getPatientNotification(localStorage.getItem("patientID"), new Date().getTime()).then(function(response){                  
+          $scope.patientNotifications = response.data;
+          if($scope.patientNotifications.length < 2){
+            $scope.no_of_notifications = $scope.patientNotifications.length;
+          }else{
+            $scope.patientNotifications = 2;
+          }          
+        });
+      };
+      $scope.getNotifications();
     }
   };
 });
