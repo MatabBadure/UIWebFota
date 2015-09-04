@@ -8,6 +8,9 @@ angular.module('hillromvestApp')
       $scope.hmrBarGraph = false;
       $scope.hmrGraph = true;
       $scope.format = 'weekly';
+      $scope.selectedGraph = 'HMR';
+      $scope.selectedDateOption = 'WEEK';
+      // Data available for graph for ID 160 only for now 
       $scope.patientId = 160;
       $scope.compliance = {};
       $scope.compliance.pressure = true;
@@ -80,7 +83,6 @@ angular.module('hillromvestApp')
         });   
     
 
-  /*-----Date picker for dashboard----*/
 
     $scope.calculateDateFromPicker = function(picker) {
       $scope.fromTimeStamp = new Date(picker.startDate._d).getTime();
@@ -133,6 +135,7 @@ angular.module('hillromvestApp')
       eventHandlers: {'apply.daterangepicker': function(ev, picker) {
         $scope.calculateDateFromPicker(picker);
         $scope.drawGraph();
+        $scope.selectedDateOption = '';
         }
       },
       opens: 'left'
@@ -193,7 +196,6 @@ angular.module('hillromvestApp')
 
  /*---Simple pye chart JS END-----*/
     $scope.isActivePatientTab = function(tab) {
-      console.log('hello there' + $scope.patientTab.indexOf(tab));
       if ($scope.patientTab.indexOf(tab) !== -1) {
         return true;
       } else {
@@ -317,6 +319,7 @@ angular.module('hillromvestApp')
     };
 
     $scope.showHmrGraph = function() {
+      $scope.selectedGraph = 'HMR';
       $scope.complianceGraph = false;
       $scope.hmrGraph = true;
       $scope.removeGraph();
@@ -331,11 +334,8 @@ angular.module('hillromvestApp')
         } else {
           $scope.yAxisRangeForHMRLine = graphUtil.getYaxisRangeLineGraph($scope.completeGraphData);
           $scope.graphData = graphUtil.convertIntoHMRLineGraph($scope.completeGraphData);
-          console.log('HMR Non-Day graph data : ' + JSON.stringify($scope.graphData));
-          console.log($scope.yAxisRangeForHMRLine);
           $scope.customizationInLineGraph = function() {
 
-            /* Mark red color for missed therapy  -- start --*/
          var circlesInHMR = d3.select('#HMRLineGraph svg').select('.nv-scatterWrap').select('.nv-group.nv-series-0').selectAll('circle')[0];
          var count = 0;
          var missedTherapyCircles = [];
@@ -345,7 +345,6 @@ angular.module('hillromvestApp')
           }
           count++;
          })
-         console.log(missedTherapyCircles);
          angular.forEach(missedTherapyCircles,function(circle){
           d3.select('#HMRLineGraph svg').select('.nv-scatterWrap').select('.nv-group.nv-series-0').append('circle')
           .attr('cx',circle.attributes.cx.value)
@@ -354,7 +353,6 @@ angular.module('hillromvestApp')
           .attr('class','missed_therapy_node');
          })
 
-         /* Mark red color for missed therapy  -- end --*/
           };
 
           var circleSelectorInHMR = d3.select('#HMRLineGraph svg').select('.nv-scatterWrap').select('.nv-group.nv-series-0').selectAll('circle')[0];
@@ -368,11 +366,7 @@ angular.module('hillromvestApp')
             if(circleSelectorInHMR !== undefined) {
             circleCount = circleSelectorInHMR.length;
             }
-            console.log('count :' + count);
-            console.log('circle count :' + circleCount);
-
             if(circleCount > 0 || count === 0 ) {
-              console.log('wait over !!');
               $scope.customizationInLineGraph();
               return false;
             } else {
@@ -450,14 +444,9 @@ angular.module('hillromvestApp')
           $scope.completeGraphData = graphUtil.formatDayWiseDate($scope.completeGraphData.actual);
           $scope.yAxisRangeForHMRBar = graphUtil.getYaxisRangeBarGraph($scope.completeGraphData);
           $scope.hmrBarGraphData = graphUtil.convertIntoHMRBarGraph($scope.completeGraphData);
-          console.log('HMR Day graph data' + JSON.stringify($scope.hmrBarGraphData));
-          console.log($scope.yAxisRangeForHMRBar);
-
           $scope.customizationForBarGraph = function() {
-
             var rect_height = d3.select('#hmrBarGraph svg').selectAll('.nv-barsWrap defs rect').attr("height");
             var rect_width = d3.select('#hmrBarGraph svg').selectAll('.nv-barsWrap defs rect').attr("width");
-
            d3.select('#hmrBarGraph svg').selectAll('rect.nv-bar')
               .attr("x", 40)
               .attr("width", 70);
@@ -483,7 +472,7 @@ angular.module('hillromvestApp')
             $timeout(waitHandler, 1000);
           }
           $scope.waitFunction();
-        }
+         }
       }).catch(function(response) {
         $scope.hmrBarGraphData = [];
       });
@@ -492,7 +481,6 @@ angular.module('hillromvestApp')
     $scope.getComplianceGraphData = function(format) {
       patientDashBoardService.getHMRGraphPoints($scope.patientId, $scope.fromTimeStamp, $scope.toTimeStamp, $scope.groupBy).then(function(response){
         $scope.completeComplianceData = response.data;
-        console.log("server response" + JSON.stringify($scope.completeComplianceData));
         if($scope.completeComplianceData.actual === undefined){
           $scope.complianceGraphData = [];
         } else {
@@ -504,7 +492,6 @@ angular.module('hillromvestApp')
           $scope.minDuration = $scope.completeComplianceData.recommended.minMinutesPerTreatment * $scope.completeComplianceData.recommended.treatmentsPerDay;
           $scope.maxDuration = $scope.completeComplianceData.recommended.maxMinutesPerTreatment * $scope.completeComplianceData.recommended.treatmentsPerDay;
           $scope.yAxisRangeForCompliance = graphUtil.getYaxisRangeComplianceGraph($scope.completeComplianceData);
-          console.log("recommended setting value : " + JSON.stringify($scope.yAxisRangeForCompliance));          
           $scope.completecomplianceGraphData = graphUtil.convertIntoComplianceGraph($scope.completeComplianceData.actual);          
           $scope.yAxis1Max = $scope.yAxisRangeForCompliance.maxDuration;
           $scope.createComplianceGraphData();
@@ -524,6 +511,7 @@ angular.module('hillromvestApp')
 
     // Weekly chart
     $scope.weeklyChart = function(datePicker) {
+      $scope.selectedDateOption = 'WEEK';
       $scope.removeGraph();
       if(datePicker === undefined){
         $scope.calculateTimeDuration(7);
@@ -540,6 +528,7 @@ angular.module('hillromvestApp')
 
     // Yearly chart
     $scope.yearlyChart = function(datePicker) {
+      $scope.selectedDateOption = 'YEAR';
       $scope.removeGraph();
        if(datePicker === undefined){
         $scope.calculateTimeDuration(365);
@@ -556,6 +545,7 @@ angular.module('hillromvestApp')
    
     // Monthly chart
     $scope.monthlyChart = function(datePicker) {
+      $scope.selectedDateOption = 'MONTH';
       $scope.removeGraph();
       if(datePicker === undefined){
         $scope.calculateTimeDuration(30);
@@ -571,6 +561,7 @@ angular.module('hillromvestApp')
     };
     //hmrDayChart
     $scope.dayChart = function() {
+      $scope.selectedDateOption = 'DAY';
       $scope.removeGraph();
        if($scope.hmrGraph) {
         $scope.format = 'dayWise';
@@ -586,6 +577,7 @@ angular.module('hillromvestApp')
 
 
     $scope.showComplianceGraph = function() {
+      $scope.selectedGraph = 'COMPLIANCE';
       $scope.complianceGraph = true;
       $scope.hmrGraph = false;
       if($scope.fromTimeStamp === $scope.toTimeStamp){
@@ -642,7 +634,6 @@ angular.module('hillromvestApp')
       $scope.yAxis1Max = 0;
       $scope.yAxis2Max = 0;
     }
-    console.log('Data for compliance graph : ' + JSON.stringify($scope.complianceGraphData));
   };
 
   $scope.putComplianceGraphLabel = function(chart) {
@@ -765,7 +756,6 @@ angular.module('hillromvestApp')
           }
           count++;
          })
-         console.log(missedTherapyCircles);
          angular.forEach(missedTherapyCircles,function(circle){
           d3.select('#complianceGraph svg').selectAll('.nv-group.nv-series-0').append('circle')
           .attr('cx',circle.attributes.cx.value)

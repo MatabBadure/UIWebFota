@@ -2,7 +2,8 @@
     "clinic" : {
         "home": {
             "title": "Clinics",
-            "createLabel": "Create Clinic",
+            "manageLabel": "Manage Clinics",
+            "createLabel": "Create New Clinic",
             "createOrEditLabel": "Create or edit a Clinic",
             "updateLabel":"Update Clinic"
         },

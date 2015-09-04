@@ -3,9 +3,9 @@
         "home": {
             "title": "Patient",
             "createLabel": "Create Patient",
-            "createNewLabel": "Create New",
+            "createNewLabel": "Create New Patient",
             "createOrEditLabel": "Create or edit a Patient",
-            "manageLabel": "Manage Patient",
+            "manageLabel": "Manage Patients",
             "updateLabel":"Update Patient"
         },
         "delete": {

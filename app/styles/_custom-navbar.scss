@@ -11,29 +11,34 @@ $header--background: $body-bg;
 
 	.navbar-brand{
 		padding: 18px 10px;
-		img {
-			height: 20px;
-    	width: 65px;
+		.logo {
+			font-size: 90px;
+    		line-height: 25px;
+    		color: $cyan-blue-light;
 		}
 	}
 
 	.navbar-brand__desc {
 		display: inline-block;
-		padding: 19px 10px;
+		padding-top: 20px;
+		padding-bottom: 19px;
 
 		&--text-primary {
 			color: $sunshade;	
-			padding: 0 5px;
+			padding-left: 0;
+			padding-right: 5px;
+			font-size: $font-size-small;
 		}
 
 		&--text-secondary {
 			color: $silver-fade;
+			font-size: $font-size-small;
 		}
 	}
 }
 
 .navbar-default > .container > .navbar-primary {
-	width: 23%;
+	width: 270px;
 }
 
 .navbar-default > .container, 
@@ -73,7 +78,7 @@ $header--background: $body-bg;
 	color: inherit;
 	padding: 19px 10px;
 	span {
-		color: $storm-dust;
+		color: $Delta-unselect;
 	}
 	&:hover {
 		background-color: inherit;
@@ -176,10 +181,10 @@ $header--background: $body-bg;
 	cursor: default;
 }
 
-.navbar-secondary .navbar-right li a:hover span {
+.navbar-secondary .navbar-right li:last-child a:hover span {
     color: $bombay;
 }
 
-.navbar-secondary .navbar-right li a:hover #pop-over-link, #icon-arrow {
+.navbar-secondary .navbar-right li:last-child a:hover #pop-over-link, #icon-arrow {
 	color: $storm-dust;
 }
