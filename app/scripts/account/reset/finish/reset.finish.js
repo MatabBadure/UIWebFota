@@ -11,7 +11,7 @@ angular.module('hillromvestApp')
                 },
                 views: {
                     'content@': {
-                        templateUrl: 'scripts/app/account/reset/finish/reset.finish.html',
+                        templateUrl: 'scripts/account/reset/finish/reset.finish.html',
                         controller: 'ResetFinishController'
                     }
                 },

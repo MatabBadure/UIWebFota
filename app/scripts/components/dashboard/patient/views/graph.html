@@ -54,17 +54,17 @@
 					<div class="col-md-5 left_header_barchart">
 						<div class="row">
 							<ul class="nav nav-pills">
-							<li><a class="active" href="" ng-click="showHmrGraph()">HMR Data</a></li>
-							<li><a href="" ng-click="showComplianceGraph()">Compliance</a></li>
+							<li><a ng-class="{active: selectedGraph === 'HMR'}" href="" ng-click="showHmrGraph()">HMR Data</a></li>
+							<li><a href="" ng-class="{active: selectedGraph === 'COMPLIANCE'}" ng-click="showComplianceGraph()">Compliance</a></li>
 						</ul>
 						</div>
 					</div>
 					<div class="col-md-11 right_header_barchart">
 						<ul class="nav nav-pills pull-right ">
-							<li role="presentation" class=""><a href="" ng-hide="complianceGraph" ng-click="dayChart()">Day</a></li>
-							<li role="presentation" class=""><a class="active" href="" ng-click="weeklyChart()">Week</a></li>
-							<li role="presentation" class=""><a href="" ng-click="monthlyChart()">Month</a></li>
-							<li role="presentation" class=""><a href="" ng-click="yearlyChart()">Year</a></li>
+							<li role="presentation" class=""><a href="" ng-class="{active: selectedDateOption === 'DAY'}" ng-hide="complianceGraph" ng-click="dayChart()">Day</a></li>
+							<li role="presentation" class=""><a ng-class="{active: selectedDateOption === 'WEEK'}" href="" ng-click="weeklyChart()">Week</a></li>
+							<li role="presentation" class=""><a href="" ng-class="{active: selectedDateOption === 'MONTH'}" ng-click="monthlyChart()">Month</a></li>
+							<li role="presentation" class=""><a href="" ng-class="{active: selectedDateOption === 'YEAR'}" ng-click="yearlyChart()">Year</a></li>
 							<li role="presentation" class="" id="dp3"><a href="" date-range-picker class="date-picker" ng-model="dates" parentEl="#dp3" options="opts" >Date</a></li>
 						</ul>
 					</div>

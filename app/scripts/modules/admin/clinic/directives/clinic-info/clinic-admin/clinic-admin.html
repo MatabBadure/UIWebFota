@@ -18,25 +18,119 @@
 </div>
 
 <div class="container admin-user">
-	<div class="col-md-16 protocol-list">
-    <div class="col-md-4 protocol-list__treatment-day">
-      <span class="protocol-list--value">Avnesh K. shakya</span>
+	<div class="col-md-16 crud-list">
+    <div class="col-md-4">
+      <span>Avnesh K. shakya</span>
     </div>
-    <div class="col-md-10 protocol-list__strt-date">
-      <span class="protocol-list--value">avnesh@neevtech.com</span>
+    <div class="col-md-10">
+      <span>avnesh@neevtech.com</span>
     </div>
-    <div class="col-md-1 protocol-list__edit icons text-center">
-      <span class="glyphicon glyphicon glyphicon-pencil" ng-click=""></span>
+    <div class="col-md-1 icons text-center">
+      <span class="icon-edit-icon" ng-click=""></span>
     </div>
-    <div class="col-md-1 protocol-list__delete text-center">
-      <span ng-if="!protocol.deleted" class="glyphicon glyphicon-trash" ng-click=""></span>
+    <div class="col-md-1 icons text-center">
+      <span class="icon-delete-icon" ng-click=""></span>
     </div>
+  </div>
+
+  <div class="col-md-16 reset-padding margin-top">
+    <buton class="hillrom-btn btn-primary float-right btn-margin-left" ng-click="" translate="clinic.add-clinic-admin"></buton>
   </div>
 </div>
 
-
-<div class="container">
-	<div class="col-md-16">
-		
+<div class="container admin-user">
+	<div class="col-md-16 reset-padding margin-top">
+		<fieldset>
+		  <div class="select-one">
+		    <input type="radio" class="radio" name="addAdmin" value="existAdminText" id="existAdminText" />
+		    <label for="existAdminText" translate="clinic.option.add-exist-admin"></label>
+		    <input type="radio" class="radio" name="addAdmin" value="newAdminText" id="newAdminText" />
+		    <label for="newAdminText" translate="clinic.option.add-new-admin"></label>
+		  </div>
+		</fieldset>
 	</div>
+</div>
+
+<div class="container admin-user">
+	<div class="col-md-16 reset-padding">
+		<div class="col-md-8 exist-link">
+			<input type="text" placeholder="{{'clinic.placeholder.existed-admin' | translate}}">
+		</div>
+	</div>
+</div>
+
+
+<div class="dashboard dashboard--content padding-bottom-ls">
+  <form name="form" ng-submit="createClinicAdmin()" novalidate autocomplete="off">
+    <div class="container dashboard__form">
+      <div class="margin-top-xl">
+        <div class="col-md-16 reset-padding margin-top">
+          <div class="col-md-7 reset-padding">
+            <div class="col-md-6 dashboard__form--label reset-padding">
+              <span class="" translate="clinic.admin.first-name"></span>
+              <span class="">*</span>
+            </div>
+            <div class="col-md-10 dashboard__form--input reset-padding">
+              <input class="" type="text" name="firstName" required>
+              <div ng-show="">
+                <span class="has-error" ng-show="">
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-7 reset-padding col-md-offset-2">
+            <div class="col-md-6 dashboard__form--label reset-padding">
+              <span class="" translate="clinic.admin.middle-name"></span>
+              <span class="">*</span>
+            </div>
+            <div class="col-md-10 dashboard__form--input reset-padding">
+              <input class="" type="text" name="middleName" required>
+              <div ng-show="">
+                <span class="has-error" ng-show="">
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-16 reset-padding margin-top">
+          <div class="col-md-7 reset-padding">
+            <div class="col-md-6 dashboard__form--label reset-padding">
+              <span class="" translate="clinic.admin.last-name"></span>
+              <span class="">*</span>
+            </div>
+           <div class="col-md-10 dashboard__form--input reset-padding">
+              <input class="" type="text" name="lastName" required>
+              <div ng-show="">
+                <span class="has-error" ng-show="">
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-7 reset-padding col-md-offset-2">
+            <div class="col-md-6 dashboard__form--label reset-padding">
+              <span class="" translate="clinic.admin.email"></span>
+              <span class="">*</span>
+            </div>
+           <div class="col-md-10 dashboard__form--input reset-padding">
+              <input class="" type="text" name="email" required>
+              <div ng-show="">
+                <span class="has-error" ng-show="">
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="clr"></div>
+      </div>
+      <div class="col-md-16 reset-padding margin-top">
+        <div class="">
+        <button type="submit" class="hillrom-btn btn-primary float-right btn-margin-left" translate="clinic.update-button-text">Update</button>
+          <button type="reset" class="hillrom-btn btn-secondary float-right" translate="clinic.cancel-button-text">Cancel</button>
+          <div class="clr"></div>
+        </div>
+      </div>
+    </div>
+  </form>
 </div>
