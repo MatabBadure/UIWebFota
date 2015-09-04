@@ -17,6 +17,11 @@ angular.module('hillromvestApp')
                 url:'/patient',
                 abstract: true,
             })
+            .state('hcp-dashboard', {
+                parent: 'entity',
+                url:'/hcp',
+                abstract: true,
+            })
             .state('patientUser', {
                 parent: 'admin',
                 url: '/patients?clinicIds',
@@ -1180,6 +1185,32 @@ angular.module('hillromvestApp')
                         $translatePartialLoader.addPart('error');
                         return $translate.refresh();
                     }]
+                }
+            })
+
+            .state('hcpdashboard', {
+                parent: 'hcp-dashboard',
+                url: '/hcp-dashboard',
+                data: {
+                    roles: ['PATIENT'],
+                    pageTitle: 'hcp.title'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/hcp/graph/views/dashboard-landing.html',
+                        controller: 'hcpGraphController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
                 }
             });
 });
