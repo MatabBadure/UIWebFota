@@ -17,4 +17,10 @@ var admin_cont = {
 		'other' : 'Other'
 	}
 }
+var apiresponse = {
+	"HMR_NON_COMPLIANCE_AND_SETTINGS_DEVIATION" : "Your recommended compliance therapy is low.",
+	"HMR_NON_COMPLIANCE": "Your recommended compliance therapy is low.",
+	"MISSED_THERAPY":"Your recommended compliance therapy is low."
+
+}
 

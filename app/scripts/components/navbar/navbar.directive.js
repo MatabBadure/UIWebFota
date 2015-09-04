@@ -129,7 +129,7 @@ angular.module('hillromvestApp')
     restrict: 'E',
 
     controller: function ($scope, UserService) {
-      $scope.patientNotifications = 0;
+      $scope.notifications = 0;
       $scope.isActive = function(tab) {
         var path = $location.path();
         if (path.indexOf(tab) !== -1) {
@@ -141,11 +141,11 @@ angular.module('hillromvestApp')
 
       $scope.getNotifications = function(){
         UserService.getPatientNotification(localStorage.getItem("patientID"), new Date().getTime()).then(function(response){                  
-          $scope.patientNotifications = response.data;
-          if($scope.patientNotifications.length < 2){
-            $scope.no_of_notifications = $scope.patientNotifications.length;
+          $scope.notifications = response.data;
+          if($scope.notifications.length < 2){
+            $scope.no_of_notifications = $scope.notifications.length;
           }else{
-            $scope.patientNotifications = 2;
+            $scope.no_of_notifications = 2;
           }          
         });
       };
