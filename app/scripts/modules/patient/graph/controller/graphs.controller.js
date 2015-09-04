@@ -34,13 +34,14 @@ angular.module('hillromvestApp')
       $scope.yAxis1Min = 0;
       $scope.yAxis2Min = 0;
       $scope.getHmrRunRateAndScore();
+      $scope.edit_date = dateService.convertDateToYyyyMmDdFormat(new Date());
       $scope.getMissedTherapyDaysCount();
-      //$scope.patientId = StorageService.get('patientID');
       $scope.fromTimeStamp = dateService.getnDaysBackTimeStamp(7);
       $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp);
       $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp);   
       $scope.getPatientById(localStorage.getItem('patientID'));
       var currentRoute = $state.current.name;
+      var server_error_msg = "Some internal error occurred. Please try after sometime.";
       $scope.showNotes = false;
       $scope.patientTab = currentRoute;
       if ($state.current.name === 'patientdashboard') {
@@ -148,7 +149,6 @@ angular.module('hillromvestApp')
           $scope.hmrRunRate = response.data.hmrRunRate;
           $scope.adherenceScore = response.data.score;
         }
-      }).catch(function(response) {
       });
     }
 
@@ -157,7 +157,6 @@ angular.module('hillromvestApp')
         if(response.status === 200 ){
           $scope.missedtherapy = response.data;
         }
-      }).catch(function(response) {
       });
     }
 
@@ -832,13 +831,13 @@ angular.module('hillromvestApp')
     $scope.getPatientById = function(patientId){
       patientService.getPatientInfo(patientId).then(function(response){
         $scope.slectedPatient = response.data;
-      }).catch(function(response){});
+      });
     };
 
     $scope.getCaregiversForPatient = function(patientId){
       patientService.getCaregiversLinkedToPatient(patientId).then(function(response){
         $scope.caregivers =  response.data.caregivers;
-      }).catch(function(response){});
+      });
     };
 
     $scope.linkCaregiver = function(){
@@ -851,11 +850,11 @@ angular.module('hillromvestApp')
       $scope.associateCareGiver = {};
       UserService.getState().then(function(response) {
         $scope.states = response.data.states;        
-      }).catch(function(response) {});
+      });
       UserService.getRelationships().then(function(response) {
         $scope.relationships = response.data.relationshipLabels;
         $scope.associateCareGiver.relationship = $scope.relationships[0];
-      }).catch(function(response) {});
+      });
     };
 
     $scope.formSubmitCaregiver = function(){
@@ -889,7 +888,9 @@ angular.module('hillromvestApp')
     $scope.disassociateCaregiver = function(caregiverId, index){
         patientService.disassociateCaregiversFromPatient(localStorage.getItem('patientID'), caregiverId).then(function(response){
         $scope.caregivers.splice(index, 1);
-      }).catch(function(response){});
+      }).catch(function(response){
+        notyService.showMessage(server_error_msg);
+      });
     };
 
     $scope.initpatientCaregiverEdit = function(caregiverId){
@@ -901,15 +902,15 @@ angular.module('hillromvestApp')
     $scope.editCaregiver = function(careGiverId){
         UserService.getState().then(function(response) {
           $scope.states = response.data.states;
-        }).catch(function(response) {});
+        });
         UserService.getRelationships().then(function(response) {
           $scope.relationships = response.data.relationshipLabels;
-        }).catch(function(response) {});
+        });
         var caregiverId = $stateParams.caregiverId;
         patientService.getCaregiverById(localStorage.getItem('patientID'), caregiverId).then(function(response){
           $scope.associateCareGiver = response.data.caregiver.user;
           $scope.associateCareGiver.relationship = response.data.caregiver.relationshipLabel;
-        }).catch(function(response){});
+        });
     };
 
     $scope.updateCaregiver = function(patientId, caregiverId , careGiver){
@@ -931,7 +932,9 @@ angular.module('hillromvestApp')
       patientService.updateCaregiver(patientId,caregiverId, tempCaregiver).then(function(response){
         $scope.associateCareGiver = [];$scope.associateCareGiver.length = 0;
         $scope.switchPatientTab('patientdashboardCaregiver');
-      }).catch(function(response){});
+      }).catch(function(response){
+        notyService.showMessage(server_error_msg);
+      });
     };
 
     $scope.initPatientDeviceProtocol = function(){     
@@ -946,7 +949,7 @@ angular.module('hillromvestApp')
           device.days = dateService.getDays(_date);
         });
         $scope.devices = response.data.deviceList;
-      }).catch(function(response){});
+      });
       $scope.getProtocols(localStorage.getItem('patientID'));    
     };
 
@@ -959,7 +962,7 @@ angular.module('hillromvestApp')
             $scope.addProtocol = false;
           }
         });
-      }).catch(function(){});
+      });
     };
 
     $scope.initPatientClinicHCPs = function(){
@@ -970,33 +973,25 @@ angular.module('hillromvestApp')
     $scope.getClinicsOfPatient = function(){
       patientService.getClinicsLinkedToPatient(localStorage.getItem('patientID')).then(function(response){
         $scope.clinics = response.data.clinics;                
-      }).catch(function(){});
+      });
     };
     
     $scope.getHCPsOfPatient = function(){
       patientService.getHCPsLinkedToPatient(localStorage.getItem('patientID')).then(function(response){
         $scope.hcps = response.data.hcpUsers;                
-      }).catch(function(){});
-    };
-
-    $scope.getNotes = function(){      
-      var date = new Date().getTime();      
-      UserService.getNotesOfUser(localStorage.getItem('patientID'), date).then(function(response){
-        $scope.showNotes = true; 
-        $scope.notes = response.data;          
-        //scrollPageToTop("add_note_container");        
-      }).catch(function(){
-        $scope.notes = "";    
       });
     };
 
-    $scope.updateNote = function(){
-      if($scope.editedNoteText && $scope.editedNoteText.length > 0){
+    $scope.updateNote = function(noteId, noteCreatedOn){
+      // createdOn is in format YYYY-MM-DD
+      var editedNoteText = $("#editedNoteText_"+noteId).val();
+      var dateCreatedOn = dateService.convertYyyyMmDdToTimestamp(noteCreatedOn);
+      if(editedNoteText && editedNoteText.length > 0  && (editedNoteText.trim()).length > 0){
         var data = {};
-        data.noteText = $scope.editedNoteText;
-        UserService.updateNote($scope.notes.id, new Date().getTime(), data).then(function(response){
-          $scope.notes = response.data; 
-          $scope.editNote = false;            
+        data.noteText = editedNoteText;
+        UserService.updateNote(noteId, new Date(dateCreatedOn).getTime(), data).then(function(response){
+          $scope.showAllNotes();
+          makeAllNotesReadable();           
         }).catch(function(){
           $scope.errorMsg = "Some internal error occurred. Please try after sometime.";
           notyService.showMessage($scope.errorMsg,'warning' );
@@ -1007,61 +1002,107 @@ angular.module('hillromvestApp')
       }
     };
 
-    $scope.createNote = function(){     
-        if($scope.textNote && $scope.textNote.length > 0){
-          var data = {};
-          data.noteText = $scope.textNote;
-          data.userId = localStorage.getItem('patientID');
-          UserService.createNote(localStorage.getItem('patientID'), data).then(function(response){
-          $scope.addNote = false;
-          $scope.textNote = "";     
-          $scope.getNotes();
-        }).catch(function(){});
-      }else{
-        $scope.noteTextError = "Please add some text.";
-        return false;
-      }
+    $scope.createNote = function(){ 
+        $scope.noteTextError =  null;
+        if($scope.textNote && $scope.textNote.length > 0){ 
+          if($scope.edit_date && $scope.edit_date != 'undefined' && $scope.edit_date.length > 0){
+            var editDate= dateService.convertYyyyMmDdToTimestamp($scope.edit_date);
+            var data = {};
+            data.noteText = $scope.textNote;
+            data.userId = localStorage.getItem('patientID');
+            data.date = editDate;
+            UserService.createNote(localStorage.getItem('patientID'), data).then(function(response){
+              $scope.addNote = false;
+              $scope.edit_date = dateService.convertDateToYyyyMmDdFormat(new Date());
+              $scope.textNote = "";     
+              $scope.showAllNotes();
+              $("#note_edit_container").removeClass("show_content");
+              $("#note_edit_container").addClass("hide_content");
+            }).catch(function(){
+              notyService.showMessage(server_error_msg,'warning' );
+            });
+          }else{
+            $scope.noteTextError = "Please select a date.";
+            return false;
+          }
+        }else{
+          $scope.noteTextError = "Please add some text.";
+          return false;
+        }
       
     };
 
     $scope.deleteNote = function(noteId){
       UserService.deleteNote(noteId).then(function(response){
-      $scope.notes = "";
-      //$scope.notes.length = 0;                   
-      }).catch(function(){});
+      $scope.showAllNotes();                
+      }).catch(function(){
+        notyService.showMessage(server_error_msg,'warning' );
+      });
     };
 
-    $scope.openAddNote = function(){
-      $scope.textNote = "";
-      $scope.addNote = true;
-      //$("#noteText").css("display", "block");
+    $scope.openAddNote = function(){      
+      $("#note_edit_container").removeClass("hide_content");
+      $("#note_edit_container").addClass("show_content");      
     };
 
     $scope.cancelAddNote = function(){
       $scope.addNote = false;
-      //$("#noteText").css("display", "block");
+      $("#note_edit_container").removeClass("show_content");
+      $("#note_edit_container").addClass("hide_content");
     };
 
     $scope.initPatientDashboard = function(){
       $scope.editNote = false;
       $scope.textNote = "";
       $scope.weeklyChart();
-      $scope.getNotes();
       $scope.getPatientNotification();
     };
 
-    $scope.openEditNote = function(){
-      $scope.editNote = true;
-      $scope.editedNoteText = $scope.notes.note;
+    $scope.openEditNote = function(noteId, noteText){
+      $scope.errorMsg = null;
+      $scope.noteError = null;
+      $("#editedNoteText_"+noteId).val(noteText);
+      //ALL NOTES
+      makeAllNotesReadable();
+      // CURRENT NOTE
+      makeNoteeditable(noteId);
+      
     };
 
     $scope.cancelEditNote = function(){
-      $scope.editNote = false;
+      //$scope.editNote = false;
+      makeAllNotesReadable();
+
+    };
+
+    function makeAllNotesReadable(){
+      // ALL NOTE : should be readable
+      // viewable fields should be shown
+      // editable fields should be hidden
+      $(".view_content").removeClass("hide_content");
+      $(".view_content").addClass("show_content");
+      $(".edit_content").removeClass("show_content");
+      $(".edit_content").addClass("hide_content");
+    };
+
+    function makeNoteeditable(noteId){
+      // the edit/delete links for current note should be hidden
+      $("#viewnoteact_"+noteId).removeClass("show_content");
+      $("#viewnoteact_"+noteId).addClass("hide_content");
+      //createdon is a view content but it should be hidden for current note
+      $("#createdon_"+noteId).removeClass("show_content");
+      $("#createdon_"+noteId).addClass("hide_content");
+      // viewnote should also be hidden for current note
+      $("#viewnote_"+noteId).removeClass("show_content");
+      $("#viewnote_"+noteId).addClass("hide_content");
+      // form for current note should be visible
+      $("#editform_"+noteId).removeClass("hide_content");
+      $("#editform_"+noteId).addClass("show_content");
     };
 
     $scope.getPatientNotification = function(){
       UserService.getPatientNotification(localStorage.getItem("patientID"), new Date().getTime()).then(function(response){                  
-        $scope.patientNotifications = response.data;//notifications;//response.data;
+        $scope.patientNotifications = response.data;
         angular.forEach($scope.patientNotifications, function(notification, index) {
           var notificationType = notification.notificationType; 
           if(notificationType.indexOf("HMR_NON_COMPLIANCE AND SETTINGS_DEVIATION") > -1){
@@ -1075,14 +1116,86 @@ angular.module('hillromvestApp')
              $scope.patientNotifications[index].class = "icon-lungs";
           }
         });
-      }).catch(function(){});
+      });
     }
 
     function scrollPageToTop(divId){
       $('html, body').animate({
           scrollTop: $("#"+divId).offset().top
       }, 2000);
+    };
+
+    
+    $scope.$on('elementClick.directive', function(angularEvent, event) {
+      $scope.hideNotesCSS();
+      $scope.graphStartDate = null;
+      $scope.graphEndDate = null;
+      var selectedNodeIndex = null;
+      var graphNodesLength = $scope.completeGraphData.actual.length;
+      if(graphNodesLength && graphNodesLength > 0){
+        angular.forEach($scope.completeGraphData.actual, function(value, index) {
+          if(value.timestamp === event.point[0]){
+            selectedNodeIndex = index;
+            $scope.graphStartDate = value.timestamp;                     
+          }
+          angularEvent.targetScope.$parent.event = event;
+          angularEvent.targetScope.$parent.$digest();
+        });
+
+        // selectedNodeIndex exists means start date is present
+        if(selectedNodeIndex != null && selectedNodeIndex > -1 ){
+          //the selected note is not the last one
+          if(selectedNodeIndex < (graphNodesLength-1)){            
+            var d = new Date($scope.completeGraphData.actual[selectedNodeIndex+1].timestamp);
+            d.setDate(d.getDate()-1);
+            $scope.graphEndDate = d.getTime();
+          }else if(selectedNodeIndex === (graphNodesLength-1)){
+            //this is the last node so,get the end date from dattepicker
+            $scope.graphEndDate = $scope.toTimeStamp;
+          }
+        }
+      }
+
+      if($scope.getNotesBetweenDateRange($scope.graphStartDate,$scope.graphEndDate));
+      console.log("start date : "+dateService.getDateFromTimeStamp($scope.graphStartDate)+ " end date : "+dateService.getDateFromTimeStamp($scope.graphEndDate));
+    });
+    
+    $scope.showAllNotes = function(){      
+      $scope.getNotesBetweenDateRange($scope.fromTimeStamp, $scope.toTimeStamp);
+    };
+
+    $scope.hideNoteContainer = function(){
+      $scope.hideNotesCSS();
     }
+
+    $scope.showNotesCSS = function(){
+      $("#add_note_container").removeClass("hide_content");
+      $("#add_note_container").addClass("show_content");
+    };
+
+    $scope.hideNotesCSS = function(){
+      $("#add_note_container").removeClass("show_content");
+      $("#add_note_container").addClass("hide_content");  
+    };
+
+    $scope.getNotesBetweenDateRange = function(fromTimeStamp, toTimeStamp){  
+    console.log("start date : "+dateService.getDateFromTimeStamp($scope.fromTimeStamp)+ " end date : "+dateService.getDateFromTimeStamp($scope.toTimeStamp)); 
+      UserService.getNotesOfUserInInterval(localStorage.getItem('patientID'), fromTimeStamp, toTimeStamp).then(function(response){
+        $scope.showNotes = true; 
+        $scope.notes = response.data;  
+        $scope.showNotesCSS();
+        scrollPageToTop("add_note_container");        
+        return 1;        
+      }).catch(function(){
+        $scope.notes = ""; 
+        $scope.hideNotesCSS(); 
+        return 0;
+      });
+    };
+
+    $scope.chageDateForGraph = function(){
+      $scope.hideNotesCSS(); 
+    };
 
     $scope.init();
 });

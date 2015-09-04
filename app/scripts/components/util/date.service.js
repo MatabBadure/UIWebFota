@@ -241,6 +241,33 @@ angular.module('hillromvestApp')
         var currentDate = new Date();
         var diffDays = Math.floor((currentDate.getTime() - date.getTime())/oneDay);
         return diffDays;
+      },
+
+      convertYyyyMmDdToTimestamp: function(date){
+        if(date.indexOf("-") > -1){
+          var startDate = date.split("-"); // turning it from yyyy-mm-dd mm/dd/yyyy 
+          var dd = parseInt(startDate[2]) + 1;
+          var tempDate = startDate[1]+"/"+dd+"/"+startDate[0]; 
+          return new Date(tempDate).getTime();
+        }else{
+          return 0;
+        }
+        
+    },
+    convertDateToYyyyMmDdFormat: function(date){
+      var tempDate = new Date(date);
+      var tempMonth = tempDate.getMonth()+1;
+      var tempDay = tempDate.getDate();
+      if(tempMonth < 10){
+        tempMonth = "0"+tempMonth;
       }
+      if(tempDay < 10){
+        tempDay = "0"+tempDay;
+      }
+
+      var dateFormatted = tempDate.getFullYear()+'-' + tempMonth + '-'+ tempDay;
+      return dateFormatted;
+    }
+
     };
   });
