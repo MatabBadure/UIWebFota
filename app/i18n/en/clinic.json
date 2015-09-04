@@ -2,10 +2,10 @@
     "clinic" : {
         "home": {
             "title": "Clinics",
-            "manageLabel": "Manage Clinics",
-            "createLabel": "Create New Clinic",
+            "createLabel": "Create Clinic",
             "createOrEditLabel": "Create or edit a Clinic",
-            "updateLabel":"Update Clinic"
+            "updateLabel":"Update Clinic",
+            "manageLabel": "Manage Clinics"
         },
         "delete": {
             "question": "Are you sure you want to delete Clinic {{ id }}?"
@@ -21,7 +21,8 @@
         "placeholder": {
             "search": "Search with Name, Hill-Rom ID or Email",
             "hcp-search": "Search HCP here",
-            "patient-search": "Search Patients here"
+            "patient-search": "Search Patients here",
+            "existed-admin": "Search Clinic Admin"
         },
         "select-parent": "Parent Clinic",
         "general-details": "General Details",
@@ -47,6 +48,7 @@
         "cancel-button-text": "cancel",
         "deactivate-button-text": "Deactivate",
         "update-button-text": "Update",
+        "add-clinic-admin": "Add Clinic Admin",
         "delete": {
             "warning": "Are you sure you want to Deactivate the Clinic?",
             "message": "If you deactivate the clinic, you will no longer be able to view the information."
@@ -73,6 +75,16 @@
             "assoc-hcp": "Associated HCPs",
             "assoc-patients": "Associated Patients",
             "clinic-admin": "Clinic Admin"
+        },
+        "option": {
+            "add-exist-admin": "Select Existing Admin",
+            "add-new-admin": "Create New Admin"
+        },
+        "admin": {
+            "first-name": "First Name",
+            "middle-name": "Middle Name",
+            "last-name": "Last Name",
+            "email": "Email"
         }
     }
 }

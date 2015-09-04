@@ -715,6 +715,32 @@ angular.module('hillromvestApp')
               }
             })
 
+            .state('clinicAdmin', {
+              parent: 'clinicEdit',
+              url: '/clinicAdmin',
+              data: {
+                  roles: ['ADMIN'],
+                  pageTitle: 'clinic.title'
+              },
+              views: {
+                  'content@': {
+                      templateUrl: 'scripts/modules/admin/clinic/directives/clinic-info/clinic-admin/clinic-admin.html',
+                      controller: 'clinicsController'
+                  }
+              },
+              resolve: {
+                  translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                      $translatePartialLoader.addPart('clinic');
+                      return $translate.refresh();
+                  }],
+                  authorize: ['Auth',
+                      function(Auth) {
+                          return Auth.authorize(false);
+                      }
+                  ]
+              }
+            })
+
             .state('patient', {
                 parent: 'entity',
                 url: '/patient',
