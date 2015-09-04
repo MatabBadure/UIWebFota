@@ -165,7 +165,7 @@ angular.module('hillromvestApp')
             duration:3000,
             enabled:true
         },
-        barColor:'#ffc31c',
+        barColor:'#e8b33f',
         trackColor: '#ccc',
         scaleColor: false,
         lineWidth:12,
@@ -176,7 +176,7 @@ angular.module('hillromvestApp')
             duration:3000,
             enabled:true
         },
-        barColor:'#7e2253',
+        barColor:'#753452',
         trackColor: '#ccc',
         scaleColor: false,
         lineWidth:12,
@@ -187,7 +187,7 @@ angular.module('hillromvestApp')
               duration:3000,
               enabled:true
           },
-          barColor:'#ea766b',
+          barColor:'#e48080',
           trackColor: '#ccc',
           scaleColor: false,
           lineWidth:12,
