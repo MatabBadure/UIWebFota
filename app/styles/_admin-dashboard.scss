@@ -49,12 +49,6 @@
   text-align: right;
 }
 
-.dashboard__form--type {
-  font-size: $font-size-title;
-  color:  $pickled-bluewood;
-  font-weight: $font-weight-medium;
-}
-
 .dashboard__form--label {
 	line-height: 30px;
 	color: $nevada;
@@ -76,10 +70,6 @@
 	padding-left: 10px;
 	font-weight: normal;
 	border-radius: 0;
-}
-
-.dashboard__form--input .custom-dob {
-    width: 86%;
 }
 
 .dashboard__form--input textarea {
@@ -206,7 +196,7 @@
 
 .dashboard__form--label-age {
   position: absolute;
-  right: 26px;
+  right: 0;
   border: 1px solid $bombay;
   top: 0;
   height: 30px;
@@ -247,8 +237,8 @@
 	width: 100%;
 	font-weight: normal;
 	color: $body-bg;
-	border: 1px solid $lapis-lazuli;
-	background-color: $lapis-lazuli;
+	border: 1px solid $nevada;
+	background-color: $nevada;
 	padding-left: 5px;
 	-webkit-appearance: none;
   -moz-appearance: none;
@@ -272,7 +262,7 @@
 
 .search-icon {
 	position: absolute;
-  right: 10px;
+  right: 5px;
   padding: 0;
   top: 8px;
 }
@@ -810,8 +800,8 @@ tags-input.ng-invalid .tags {
   margin-top: 20px;
   padding: 10px 0;
   &--title {
-    font-size: $font-size-base;
-    font-weight: $font-weight-bold;
+    font-size: $font-size-title;
+    font-weight: $font-weight-medium;
     color: $pickled-bluewood;
   }
 }
@@ -861,4 +851,62 @@ tags-input.ng-invalid .tags {
   top: -2px;
   position: absolute;
   right: 0;
+}
+
+.admin-user .crud-list {
+  padding: 0;
+  margin-top: 20px;
+  div {
+    padding: 0;
+    span {
+      color: $pickled-bluewood;
+      font-size: $font-size-base;
+      font-weight: $font-weight-medium;
+    }
+  }
+  border-bottom: 1px solid $celeste;
+}
+
+.icons span {
+  cursor: pointer;
+}
+
+
+fieldset { 
+  overflow:hidden
+}
+
+.select-one { 
+  float:left; 
+  clear:none;
+}
+
+label { 
+  float:left; 
+  clear:none; 
+  display:block; 
+  padding-top: 3px;
+  padding-left: 5px; 
+  padding-right: 20px;
+  color: $pickled-bluewood;
+  font-weight: $font-weight-medium;
+}
+
+input[type=radio], input.radio { 
+  float:left; 
+  clear:none; 
+  margin: 2px 0 0 2px; 
+}
+
+.admin-user .exist-link {
+  margin: 30px 0;
+  padding: 0;
+  input {
+    width: 80%;
+    padding-left: 10px;
+    outline: none;
+    height: 30px;
+    border-radius: 0;
+    color: $pickled-bluewood;
+  }
 }

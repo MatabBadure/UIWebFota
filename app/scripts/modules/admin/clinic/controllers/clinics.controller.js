@@ -27,6 +27,9 @@ angular.module('hillromvestApp')
       } else if(currentRoute === 'clinicAssociatedHCP'){
         $scope.initClinicAssoctHCPs($stateParams.clinicId);
       }
+      else if(currentRoute === 'clinicAdmin'){
+        $scope.initClinicAdmin($stateParams.clinicId);
+      }
     };
 
     $scope.getClinicById = function(clinicId){
@@ -132,6 +135,10 @@ angular.module('hillromvestApp')
         }*/
       }).catch(function(response) {});
     };
+
+    $scope.initClinicAdmin = function(clinicId) {
+      console.log('hello');
+    }
 
     /* init clinic list*/
 
