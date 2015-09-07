@@ -1177,7 +1177,7 @@ angular.module('hillromvestApp')
       } else {
         $scope.curNotePageIndex = 1;
       }
-      $scope.getNotesBetweenDateRange($scope.fromTimeStamp, $scope.toTimeStamp);        
+      $scope.getNotesBetweenDateRange($scope.fromTimeStamp, $scope.toTimeStamp, true);        
     };
 
     $scope.hideNoteContainer = function(){
@@ -1195,15 +1195,15 @@ angular.module('hillromvestApp')
     };
 
 
-    $scope.getNotesBetweenDateRange = function(fromTimeStamp, toTimeStamp){  
+    $scope.getNotesBetweenDateRange = function(fromTimeStamp, toTimeStamp, scrollUp){  
       console.log("start date : "+dateService.getDateFromTimeStamp($scope.fromTimeStamp)+ " end date : "+dateService.getDateFromTimeStamp($scope.toTimeStamp) + " page no : "+ $scope.curNotePageIndex + " page count : " + $scope.perPageCount); 
       UserService.getNotesOfUserInInterval(localStorage.getItem('patientID'), fromTimeStamp, toTimeStamp, $scope.curNotePageIndex, $scope.perPageCount ).then(function(response){
         $scope.showNotes = true; 
         $scope.notes = response.data; 
         $scope.totalNotes = response.headers()['x-total-count']; 
         $scope.notePageCount = Math.ceil($scope.totalNotes / 4);
-        if($scope.notes.length >= 1){
-          $scope.showNotesCSS();
+        $scope.showNotesCSS();
+        if($scope.notes.length >= 1 || scrollUp){          
           scrollPageToTop("add_note_container");  
         }  
         $scope.hideAddNote();    

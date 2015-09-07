@@ -218,12 +218,12 @@
 	<div class="dashboard__manage-view--pagination">
         <div class="col-md-16 reset-padding-right">
           <div class="navbar-right">
-            <span class="record-found" ng-if="notes.length > 0">{{notes.length}} Notes</span>
-            <span class="record-found" ng-if="notes.length > 0">Found</span>
+            <span class="record-found" ng-if="notes.length > 0">{{notes.length}} <span translate="graph.notes"></span></span>
+            <span class="record-found" ng-if="notes.length > 0" translate="graph.found"></span>
             <span ng-show="perPageCount > 1">
-              <span class="navigaion-link cursor-pointer" ng-class="{ 'inactive': !(curNotePageIndex > 1) }" ng-click="showAllNotes('PREV')">Previous</span>
+              <span class="navigaion-link cursor-pointer" ng-class="{ 'inactive': !(curNotePageIndex > 1) }" ng-click="showAllNotes('PREV')" translate="graph.previous"></span>
               <span class="navigaion-no">{{curNotePageIndex}}</span>
-              <span class="navigaion-link cursor-pointer" ng-class="{ 'inactive': !(notePageCount > curNotePageIndex) }" ng-click="showAllNotes('NEXT')">Next</span>
+              <span class="navigaion-link cursor-pointer" ng-class="{ 'inactive': !(notePageCount > curNotePageIndex) }" ng-click="showAllNotes('NEXT')" translate="graph.next"></span>
             </span>
           </div>
           <div class="clr"></div>
