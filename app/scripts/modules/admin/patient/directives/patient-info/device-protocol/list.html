@@ -19,10 +19,10 @@
       <span class="protocol-list--value"> {{protocol.treatmentsPerDay}}</span>
     </div>
     <div class="col-md-4 protocol-list__strt-date">
-      <span class="protocol-list--value"> 12 January, 2015{{protocol.startDate}}</span>
+      <span class="protocol-list--value"> {{protocol.createdDate}}</span>
     </div>
     <div class="col-md-4 protocol-list__end-date">
-      <span class="protocol-list--value"> 22 January, 2015{{protocol.endDate}}</span>
+      <span class="protocol-list--value"> {{protocol.lastModifiedDate}}</span>
     </div>
     <div class="col-md-1 protocol-list__edit icons text-center">
       <span ng-if="!protocol.deleted" class="glyphicon glyphicon glyphicon-pencil" ng-click="openEditProtocol(protocol)"></span>
