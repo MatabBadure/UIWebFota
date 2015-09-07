@@ -18,8 +18,7 @@ angular.module('hillromvestApp')
       } else if (currentRoute === 'hcpNew') {
         $scope.createDoctor();
       } else if(currentRoute === 'associatedClinic'){
-        $scope.getClinicsOfHCP($stateParams.doctorId);
-        $scope.getAllclinics();
+        $scope.getAvailableclinics($stateParams.doctorId);       
         $scope.getDoctorById($stateParams.doctorId);
       }
     };
@@ -188,5 +187,27 @@ angular.module('hillromvestApp')
       $scope.associateClinicSearch = true;
     };
     
+    $scope.getAvailableclinics = function(doctorId){ 
+      DoctorService.getClinicsAssociatedToHCP(doctorId).then(function(response) {
+        $scope.clinicsOfHCP =  response.data.clinics;
+        $scope.clinicList = [{"clinicId": 0, "name": "ALL"}];
+        $scope.sortOption = $scope.clinicList[0].clinicId;
+        if($scope.clinicsOfHCP){
+          angular.forEach($scope.clinicsOfHCP, function(clinic){
+            $scope.clinicList.push({"clinicId": clinic.id, "name": clinic.name});
+          });
+        }
+        clinicService.getAllClinics().then(function(response){
+          $scope.clinics = response.data; 
+          angular.forEach($scope.clinics, function(clinic, i){
+            angular.forEach($scope.clinicsOfHCP, function(hcpclinic){
+              if(clinic.id === hcpclinic.id){
+                $scope.clinics.splice(i,1);
+              }
+            });
+          });      
+        });
+      });
+    };
     $scope.init();
   }]);

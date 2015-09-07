@@ -132,7 +132,8 @@ angular.module('hillromvestApp')
     };
 
     $scope.opts = {
-      eventHandlers: {'apply.daterangepicker': function(ev, picker) {
+      eventHandlers: {'apply.daterangepicker': function(ev, picker) {//todo
+        $scope.hideNotesCSS();
         $scope.calculateDateFromPicker(picker);
         $scope.drawGraph();
         $scope.selectedDateOption = '';
@@ -1183,18 +1184,27 @@ angular.module('hillromvestApp')
       UserService.getNotesOfUserInInterval(localStorage.getItem('patientID'), fromTimeStamp, toTimeStamp).then(function(response){
         $scope.showNotes = true; 
         $scope.notes = response.data;  
-        $scope.showNotesCSS();
-        scrollPageToTop("add_note_container");        
+        if($scope.notes.length >= 1){
+          $scope.showNotesCSS();
+          scrollPageToTop("add_note_container");  
+        }  
+        $scope.hideAddNote();    
         return 1;        
       }).catch(function(){
         $scope.notes = ""; 
         $scope.hideNotesCSS(); 
+        $scope.hideAddNote();
         return 0;
       });
     };
 
     $scope.chageDateForGraph = function(){
       $scope.hideNotesCSS(); 
+    };
+
+    $scope.hideAddNote = function(){      
+      $("#note_edit_container").removeClass("show_content");
+      $("#note_edit_container").addClass("hide_content");      
     };
 
     $scope.init();

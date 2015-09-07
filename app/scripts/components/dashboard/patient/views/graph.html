@@ -4,13 +4,13 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="stats_chart_section">
-							<div class="stats_header"><h4>Statistics</h4></div>
+							<div class="stats_header"><h4 translate="graph.statistics"></h4></div>
 							<div class="stats_chart_container">
 								<div class="col-3">
 									<div class="pie_chart" easypiechart options="adherence" percent="adherenceScore"></div>
 									<div class="stats_chart_content score">
 										<h4 class="percent" ng-bind="adherenceScore"></h4>
-										<p class="descrip">Adherence Score</p>
+										<p class="descrip" translate="graph.adherence-score"></p>
 									</div>
 									<div class="chart_inner_icon icon-adherence"></div>
 								</div>
@@ -18,7 +18,7 @@
 									<div class="pie_chart"  easypiechart options="hmr" percent="hmrRunRate"></div>
 									<div class="stats_chart_content hmr">
 										<h4 class="percent"  ng-bind="hmrRunRate"></h4>
-										<p class="descrip">HMR Runrate</p>
+										<p class="descrip" translate="graph.hmr-runrate" ></p>
 									</div>
 									<div class="chart_inner_icon icon-man-running"></div>
 								</div>
@@ -26,7 +26,7 @@
 									<div class="pie_chart"  easypiechart options="missedtherapy" percent="missedtherapyDays"></div>
 									<div class="stats_chart_content missed">
 										<h4 class="percent" ng-bind="missedtherapyDays"></h4>
-										<p class="descrip">Missed Therapy Days</p>
+										<p class="descrip" translate="graph.missed-therapy-days"> </p>
 									</div>
 									<div class="chart_inner_icon icon-lungs"></div>
 								</div>
@@ -35,13 +35,13 @@
 					</div>
 					<div class="col-md-4">
 						<div class="dashboard_noti_section">
-							<div class="header_noti"><h4>Notification</h4></div>
+							<div class="header_noti"><h4 translate="graph.notification"></h4></div>
 							<div class="notification_container">
 								<ul>
 									<li ng-repeat="notification in patientNotifications | limitTo:2">
                     <span class="dsh_icon {{notification.class}}"></span>
                     {{notification.message}}
-                    <span ng-show="notification.message"><a href="" class="read_more">more</a></span>
+                    <span ng-show="notification.message"><a href="" class="read_more"  translate="graph.more"></a></span>
 									</li>
 								</ul>
 							</div>
@@ -54,17 +54,17 @@
 					<div class="col-md-5 left_header_barchart">
 						<div class="row">
 							<ul class="nav nav-pills">
-							<li><a ng-class="{active: selectedGraph === 'HMR'}" href="" ng-click="showHmrGraph()">HMR Data</a></li>
-							<li><a href="" ng-class="{active: selectedGraph === 'COMPLIANCE'}" ng-click="showComplianceGraph()">Compliance</a></li>
+							<li><a ng-class="{active: selectedGraph === 'HMR'}" href="" ng-click="showHmrGraph()" translate="graph.hmr-data"></a></li>
+							<li><a href="" ng-class="{active: selectedGraph === 'COMPLIANCE'}" ng-click="showComplianceGraph()" translate="graph.compliance"></a></li>
 						</ul>
 						</div>
 					</div>
 					<div class="col-md-11 right_header_barchart">
 						<ul class="nav nav-pills pull-right ">
-							<li role="presentation" class=""><a href="" ng-class="{active: selectedDateOption === 'DAY'}" ng-hide="complianceGraph" ng-click="dayChart()">Day</a></li>
+							<li role="presentation" class=""><a href="" ng-class="{active: selectedDateOption === 'DAY'}" ng-hide="complianceGraph" ng-click="dayChart()" translate="graph.day"></a></li>
 							<li role="presentation" class=""><a ng-class="{active: selectedDateOption === 'WEEK'}" href="" ng-click="weeklyChart()">Week</a></li>
-							<li role="presentation" class=""><a href="" ng-class="{active: selectedDateOption === 'MONTH'}" ng-click="monthlyChart()">Month</a></li>
-							<li role="presentation" class=""><a href="" ng-class="{active: selectedDateOption === 'YEAR'}" ng-click="yearlyChart()">Year</a></li>
+							<li role="presentation" class=""><a href="" ng-class="{active: selectedDateOption === 'MONTH'}" ng-click="monthlyChart()" translate="graph.month"></a></li>
+							<li role="presentation" class=""><a href="" ng-class="{active: selectedDateOption === 'YEAR'}" ng-click="yearlyChart()" translate="graph.year"></a></li>
 							<li role="presentation" class="" id="dp3"><a href="" date-range-picker class="date-picker" ng-model="dates" parentEl="#dp3" options="opts" ><span class="icon-calendar"></span></a></li>
 						</ul>
 					</div>
@@ -129,15 +129,15 @@
 						<form action="#">
 							<div class="custom_check_container">
 								<input id="pressure" class="check" type="checkbox" name="pressure" ng-disabled="pressureIsDisabled" ng-model="compliance.pressure" ng-change="reCreateComplianceGraph()">
-			  		 			<label class="check_label pressure_legend" for="pressure">Pressure</label>
+			  		 			<label class="check_label pressure_legend" for="pressure" translate="graph.pressure" ></label>
 							</div>
 				  		 	<div class="custom_check_container">
 				  		 		<input id="frequency" class="check" type="checkbox" name="frequency" ng-disabled="frequencyIsDisabled" ng-model="compliance.frequency" ng-change="reCreateComplianceGraph()">
-				  		 		<label class="check_label frequency_legend" for="frequency" >Frequency</label>
+				  		 		<label class="check_label frequency_legend" for="frequency" translate="graph.frequency" ></label>
 				  		 	</div>
 				  		 	<div class="custom_check_container">
 				  		 		<input id="duration" class="check" type="checkbox" name="duration" ng-disabled="durationIsDisabled" ng-model="compliance.duration" ng-change="reCreateComplianceGraph()">
-				  		 		<label class="check_label duration_legend" for="duration">Duration</label>
+				  		 		<label class="check_label duration_legend" for="duration" translate="graph.duration" ></label>
 				  		 	</div>
 			  		 	</form>
 					</div>
@@ -152,16 +152,16 @@
 	<!-- Note section HTML -->
 	<div class="col-md-16">
 		<div class="btn_group patient_dashdoard_btns">
-			<button class="hillrom-btn btn-submit float-right" ng-click="showAllNotes();">Note</button>
-			<button class="hillrom-btn btn-submit float-right">Export Data</button>
+			<button class="hillrom-btn btn-submit float-right" ng-click="showAllNotes();" translate="graph.note"></button>
+			<button class="hillrom-btn btn-submit float-right" translate="graph.export-data" ></button>
 		</div>
 	</div>
 	<div class="col-md-16 hide_content" id="add_note_container">
 		<div class="add_note_container">
 			<div class="note_header">
 				<div class="col-md-14 note_header_left">
-					<span class="note">Note</span>
-					<span class="can_do">You can add / view/edit / delete a note</span>
+					<span class="note" translate="graph.note"></span>
+					<span class="can_do" translate="graph.can-do"></span>
 				</div>
 				<div class="col-md-2 note_header_right"><a href="" class="pull-right cross_icon" ng-click="hideNoteContainer();">X</a></div>
 			</div>
@@ -180,8 +180,8 @@
 						</form>
 						<div class="col-md-3 edit_delete">
 							<div class="pull-right view_note_act view_content show_content" id="viewnoteact_{{note.id}}">
-								<span class="edit icon" styel="cursor:pointer;" ng-click="openEditNote(note.id, note.note);">Edit</span>
-								<span class="delete icon" styel="cursor:pointer;" ng-click="deleteNote(note.id);">Delete</span>
+								<span class="edit icon" styel="cursor:pointer;" ng-click="openEditNote(note.id, note.note);" translate="graph.edit"></span>
+								<span class="delete icon" styel="cursor:pointer;" ng-click="deleteNote(note.id);" translate="graph.delete"></span>
 
 							</div>
 						</div>
@@ -207,14 +207,13 @@
 			<div class="col-md-2 edit_delete">
 				<div class="pull-right">
 					<span class="float-right view_all_btn" ng-click="cancelAddNote();">X</span>
-					<button class="hillrom-btn btn-submit float-right save">save</button>
+					<button class="hillrom-btn btn-submit float-right save" translate="graph.save"></button>
 				</div>
 			</div>
 		</form>
 	</div>
 	<div class="btn_group patient_dashdoard_btns">
-		<button class="hillrom-btn btn-submit float-right" ng-click="openAddNote();">Add Note</button>
-		<span class="float-right view_all_btn" ng-click="showAllNotes();">View All</span>
+		<button class="hillrom-btn btn-submit float-right" ng-click="openAddNote();" translate="graph.add-note"></button>
 	</div>
 </div>
 </div>
