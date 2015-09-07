@@ -38,7 +38,7 @@ angular.module('hillromvestApp')
       $scope.getMissedTherapyDaysCount();
       $scope.fromTimeStamp = dateService.getnDaysBackTimeStamp(7);
       $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp);
-      $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp);   
+      $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp);
       $scope.getPatientById(localStorage.getItem('patientID'));
       var currentRoute = $state.current.name;
       var server_error_msg = "Some internal error occurred. Please try after sometime.";
@@ -81,7 +81,6 @@ angular.module('hillromvestApp')
           angular.element("#edit_date").datepicker('hide');   
           $scope.$digest();   
         });   
-    
 
 
     $scope.calculateDateFromPicker = function(picker) {
@@ -132,6 +131,8 @@ angular.module('hillromvestApp')
     };
 
     $scope.opts = {
+      maxDate: new Date(),
+      format: 'MM-DD-YYYY',
       eventHandlers: {'apply.daterangepicker': function(ev, picker) {
         $scope.calculateDateFromPicker(picker);
         $scope.drawGraph();
