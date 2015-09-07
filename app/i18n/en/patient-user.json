@@ -170,7 +170,10 @@
       "npinumber": "NPI number",      
       "city": "City",
       "state": "State",
-      "status": "Status"
+      "status": "Status",
+      "active": "Active",
+      "inactive": "Inactive",
+      "pending": "Pending"
     },    
     "select-relationship": "Select relationship.",
     "toggle-navigation": "Toggle navigation",
