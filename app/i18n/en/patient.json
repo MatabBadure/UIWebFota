@@ -65,6 +65,7 @@
         "hillromId": "HillromId",
         "parentClinicId": "ParentClinicId",
         "npiNumber": "NpiNumber",
+        "npi": "NPI: ",
         "user": "user",
         "patients": "patients",
         "parent": "parent",

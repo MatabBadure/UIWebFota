@@ -90,7 +90,8 @@
         "filter": {
             "active": "Active",
             "inactive": "Inactive",
-            "all": "All"
+            "all": "All",
+            "pending": "Pending"
         },
         "error":{
             "clinic":{
