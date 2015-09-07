@@ -21,10 +21,10 @@
       <div class="fixed-filter-box reset-padding-left">
         <div class="search-dropdown">
           <select name="search" ng-model="sortOption" ng-change="searchClinics()">
-            <option value="" selected>Newly Created</option>
-            <option value="name">Name</option>
-            <option value="state">State</option>
-            <option value="zipcode">Zip Code</option>
+            <option value="" selected translate="clinic.filter.all"></option>
+            <option value="name" translate="clinic.filter.active"></option>
+            <option value="state" translate="clinic.filter.inactive"></option>
+            <option value="zipcode" translate="clinic.filter.expired"></option>
           </select>
         </div>
       </div>

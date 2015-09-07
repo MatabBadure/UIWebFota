@@ -74,6 +74,12 @@
         "deactivate-button-text": "Deactivate",
         "update-button-text": "Update",
         "back-button-text": "Back",
+        "filter": {
+            "all": "All",
+            "active": "Active",
+            "inactive": "Inactive",
+            "expired": "Expired"
+        },
         "delete": {
             "warning": "Are you sure you want to Deactivate the Patient?",
             "message": "If you deactivate the patient, you will no longer be able to view the information."

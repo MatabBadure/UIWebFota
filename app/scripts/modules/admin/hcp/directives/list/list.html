@@ -21,9 +21,10 @@
         <div class="fixed-filter-box reset-padding-left">
           <div class="search-dropdown">
             <select name="search" ng-model="sortOption" ng-change="searchDoctors()">
-              <option value="active" translate="doctor.filter.active">Active</option>
-              <option value="inactive" translate="doctor.filter.inactive">Inactive</option>
-              <option value="all" translate="doctor.filter.all">All</option>
+              <option value="" selected translate="doctor.filter.all"></option>
+              <option value="email" translate="doctor.filter.active"></option>
+              <option value="firstName" translate="doctor.filter.inactive"></option>
+              <option value="lastName" translate="doctor.filter.expired"></option>
             </select>
           </div>
         </div>
