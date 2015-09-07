@@ -18,15 +18,15 @@
 </div>
 
 <div class="container admin-user">
-	<div class="col-md-16 crud-list" ng-show="clinicAdmin">
+	<div class="col-md-16 crud-list" ng-show="clinicAdmin && !clinicAdminEdit">
     <div class="col-md-4">
-      <span>{{clinicAdmin.firstName}} {{clinicAdmin.lastName}}</span>
+      <span>{{clinicAdmin.lastName}} {{clinicAdmin.middleName}} {{clinicAdmin.firstName}}</span>
     </div>
     <div class="col-md-10">
       <span>{{clinicAdmin.email}}</span>
     </div>
     <div class="col-md-1 icons text-center">
-      <span class="icon-edit-icon" ng-click=""></span>
+      <span class="icon-edit-icon" ng-click="setEditClinicAdmin()"></span>
     </div>
     <div class="col-md-1 icons text-center">
       <span class="icon-delete-icon" ng-click="showDeleteModal()"></span>
@@ -51,16 +51,16 @@
 	</div>
 </div>
 
-<div class="container admin-user" ng-show="addAdmin === 'existAdmin' && !clinicAdmin">
+<div class="container admin-user" ng-show="showAddclinicAdmin && addAdmin === 'existAdmin' && !clinicAdmin">
 	<div class="col-md-16 reset-padding">
 		<div class="col-md-8 exist-link">
-      <input class="form-control" type="text" ng-model="searchItem" typeahead="clinic.firstName for clinic in allClinicAdmins | filter:$viewValue" typeahead-on-select="addCliniAdminToClinic($item)" placeholder="{{'clinic.placeholder.existed-admin' | translate}}">
+      <input class="form-control" type="text" ng-model="searchItem" typeahead="clinic as clinic.lastName + ' ' + clinic.firstName +' ' + clinic.email for clinic in allClinicAdmins | filter:$viewValue" typeahead-on-select="addCliniAdminToClinic($item)" placeholder="{{'clinic.placeholder.existed-admin' | translate}}">
 		</div>
 	</div>
 </div>
 
-<div class="dashboard dashboard--content padding-bottom-ls" ng-show="addAdmin === 'newAdmin' && !clinicAdmin">
-  <form name="createClinicAdminForm" ng-submit="createClinicAdmin()" novalidate autocomplete="off">
+<div class="dashboard dashboard--content padding-bottom-ls" ng-show="showAddclinicAdmin && addAdmin === 'newAdmin' && !clinicAdmin || clinicAdminEdit">
+  <form name="createClinicAdminForm" ng-submit="submitClinicAdmin()" novalidate autocomplete="off">
     <div class="container dashboard__form">
       <div class="margin-top-xl">
         <div class="col-md-16 reset-padding margin-top">
@@ -124,8 +124,9 @@
       </div>
       <div class="col-md-16 reset-padding margin-top">
         <div class="">
-        <button type="submit" class="hillrom-btn btn-primary float-right btn-margin-left" translate="clinic.update-button-text">Update</button>
-          <button type="reset" class="hillrom-btn btn-secondary float-right" translate="clinic.cancel-button-text">Cancel</button>
+          <button type="submit" ng-if="clinicAdminEdit" class="hillrom-btn btn-primary float-right btn-margin-left" translate="clinic.update-button-text">Update</button>
+          <button type="submit" ng-if="!clinicAdminEdit" class="hillrom-btn btn-primary float-right btn-margin-left" translate="clinic.create-button-text">Create</button>
+          <button type="button" class="hillrom-btn btn-secondary float-right" translate="clinic.cancel-button-text" ng-click="cancelClinicAdmin()">Cancel</button>
           <div class="clr"></div>
         </div>
       </div>

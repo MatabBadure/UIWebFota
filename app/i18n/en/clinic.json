@@ -48,6 +48,7 @@
         "cancel-button-text": "cancel",
         "deactivate-button-text": "Deactivate",
         "update-button-text": "Update",
+        "create-button-text": "Create",
         "add-clinic-admin": "Add Clinic Admin",
         "delete": {
             "warning": "Are you sure you want to Deactivate the Clinic?",

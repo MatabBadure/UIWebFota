@@ -498,7 +498,7 @@ angular.module('hillromvestApp')
       });
     };
 
-    $scope.createClinicAdmin = function(){
+    $scope.submitClinicAdmin = function(){
       $scope.submitted = true;
       if($scope.createClinicAdminForm.$invalid){
         return false;
@@ -508,8 +508,17 @@ angular.module('hillromvestApp')
       data.clinicList = [{
         'id': $stateParams.clinicId
       }];
+      if($scope.clinicAdminEdit){
+        $scope.editClinicAdmin(data);
+      } else {
+        $scope.createClinicAdmin(data);
+      }
+    };
+
+    $scope.createClinicAdmin = function(data){
       UserService.createUser(data).then(function(response){
         $scope.getclinicAdmin($stateParams.clinicId);
+        $scope.cancelClinicAdmin();
         notyService.showMessage(response.data.message, 'success');
       }).catch(function(response){
         if(response.data.message){
@@ -520,8 +529,30 @@ angular.module('hillromvestApp')
       });
     };
 
-    $scope.editClinicAdmin = function(){
-      //Todo
+    $scope.editClinicAdmin = function(data){
+      UserService.editUser(data).then(function(response){
+        $scope.getclinicAdmin($stateParams.clinicId);
+        $scope.cancelClinicAdmin();
+        notyService.showMessage(response.data.message, 'success');
+      }).catch(function(response){
+        if(response.data.message){
+          notyService.showMessage(response.data.message, 'warning');
+        }else if(response.data.ERROR){
+          notyService.showMessage(response.data.ERROR, 'warning');
+        }
+      });
+    };
+
+    $scope.setEditClinicAdmin = function(){
+      $scope.clinicAdminEdit = true;
+      $scope.newAdmin = $scope.clinicAdmin;
+    };
+
+    $scope.cancelClinicAdmin = function(){
+      $scope.newAdmin = '';
+      $scope.clinicAdminEdit = false;
+      $scope.showAddclinicAdmin = false;
+      $scope.submitted = false;
     };
 
     $scope.init();
