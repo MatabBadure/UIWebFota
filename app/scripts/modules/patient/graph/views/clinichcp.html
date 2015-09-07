@@ -128,13 +128,13 @@
   <div class="container dashboard__manage-view clinic-hcp">
     <div class="dashboard__manage-view--list" ng-repeat="hcp in hcps">
       <div class="col-md-3 reset-padding">
-        <span class="impo-highlight">{{hcp.name}}</span>
+        <span class="impo-highlight">{{hcp.lastName}} {{hcp.firstName}}</span>
       </div>
       <div class="col-md-2 reset-padding">
         <span class="impo-highlight">{{hcp.credentials}}</span>
       </div>
       <div class="col-md-2 reset-padding">
-        <span class="short-info">{{hcp.NPINumber}}</span>
+        <span class="short-info">{{hcp.npiNumber}}</span>
       </div>
 
       <div class="col-md-4 reset-padding">
@@ -148,7 +148,7 @@
       </div>
 
       <div class="col-md-1 reset-padding">
-        <span class="short-info">{{hcp.status}}</span>
+        <span class="short-info">{{hcp.activated === true ? 'Active' : 'InActive'}}</span>
       </div>
 
       <div class="clr"></div>
