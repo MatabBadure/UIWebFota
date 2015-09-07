@@ -86,6 +86,7 @@
             "associated-clinic": "Associated Clinic"
         },
         "patient-assoc": "Patient Association",
+        "patient-associated": "Patient Associated",
         "clinic-title": "Clinic Association",
         "filter": {
             "active": "Active",
