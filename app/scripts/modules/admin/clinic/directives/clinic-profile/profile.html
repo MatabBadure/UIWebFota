@@ -83,9 +83,9 @@
       <span>{{childClinic.hillromId}}</span>
     </div>
     <div class="col-md-1 detail-list--desc">
-      <div class="icon-font text-right">
-        <span class="icon-lungs" ng-if="childClinic.deleted"></span>
-        <span class="icon-lungs" ng-if="!childClinic.deleted"></span>
+      <div class="text-right">
+        <span class="inactive" ng-if="childClinic.deleted" translate="clinic.inactive"></span>
+        <span class="active" ng-if="!childClinic.deleted" translate="clinic.active"></span>
       </div>
     </div>
   </div>

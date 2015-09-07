@@ -681,6 +681,14 @@ tags-input.ng-invalid .tags {
   }
 }
 
+.admin-user .detail-list--desc .active {
+  color: $fruit-salad;
+}
+
+.admin-user .detail-list--desc .inactive {
+  color: $silver-approx
+}
+
 .admin-user .detail-list--desc .icon-font {
   position: relative;
   clear: both;
