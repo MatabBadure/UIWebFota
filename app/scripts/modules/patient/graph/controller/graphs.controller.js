@@ -132,7 +132,7 @@ angular.module('hillromvestApp')
     };
 
     $scope.opts = {
-      eventHandlers: {'apply.daterangepicker': function(ev, picker) {//todo
+      eventHandlers: {'apply.daterangepicker': function(ev, picker) {
         $scope.hideNotesCSS();
         $scope.calculateDateFromPicker(picker);
         $scope.drawGraph();
