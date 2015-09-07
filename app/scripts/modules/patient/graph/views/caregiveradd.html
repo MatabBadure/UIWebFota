@@ -200,12 +200,10 @@
               <span class=""></span>
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
-              <input type="text" class="form-control" validate-on-blur  name="mobilePhone"  ng-readonly="validateADMINorASP()" ng-model="associateCareGiver.mobilePhone" maxlength=10 ng-pattern="/^[0-9]{10}$/">
+              <input type="text" class="form-control" validate-on-blur  name="mobilePhone"  ng-readonly="validateADMINorASP()" ng-model="associateCareGiver.mobilePhone" mask="(999)-999-9999" >
               <div ng-show="(form.mobilePhone.$showValidationMessage && form.mobilePhone.$invalid) || submitted">
-                <span class="has-error" ng-show="form.mobilePhone.$error.pattern" translate="patient.errMSG.mobile-phone-invalid">
-                 </span>
-                <span class="has-error" ng-show="form.mobilePhone.$error.maxlength" translate="patient.errMSG.mobile-phone-invalid">
-                </span>
+                <span class="has-error" ng-show="form.mobilePhone.$invalid" translate="patient.errMSG.mobile-phone-invalid">
+                 </span>               
               </div>
             </div>
         </div>

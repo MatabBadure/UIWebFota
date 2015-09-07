@@ -136,8 +136,18 @@ angular.module('hillromvestApp')
       }).catch(function(response) {});
     };
 
+    $scope.getclinicAdmin = function(clinicId){
+      clinicService.getClinicAdmins(clinicId).then(function(response){
+        $scope.clinicAdmin = response.data.clinicAdmin
+      }).catch(function(response){});
+    };
+
     $scope.initClinicAdmin = function(clinicId) {
-      console.log('hello');
+      $scope.getClinicById(clinicId);
+      $scope.getclinicAdmin(clinicId);
+      clinicService.getAllClinicAdmins().then(function(response){
+        $scope.allClinicAdmins = response.data.users
+      }).catch(function(response){});
     }
 
     /* init clinic list*/
@@ -446,6 +456,103 @@ angular.module('hillromvestApp')
         $scope.sortIconUp = false;
         $scope.sortIconDown = true;
       }
+    };
+
+    $scope.addClinicAdminShow = function(){
+      $scope.showAddclinicAdmin = true;
+    };
+
+    $scope.addCliniAdminToClinic = function(clinicAdmin){
+      var data = {
+        "id": clinicAdmin.id
+      };
+      $scope.searchItem = '';
+      clinicService.addClinicAdmin($stateParams.clinicId, data).then(function(response){
+        $scope.getclinicAdmin($stateParams.clinicId);
+        notyService.showMessage(response.data.message, 'success');
+      }).catch(function(response){});
+    };
+
+    $scope.showDeleteModal = function(){
+      $scope.showModalClincAdmin = true;
+    };
+
+    $scope.cancelModelClinicAdmin = function(){
+      $scope.showModalClincAdmin = false;
+    };
+
+    $scope.deletClinicAdmin =  function(){
+      $scope.cancelModelClinicAdmin();
+      var data = {
+        "id": $scope.clinicAdmin.id
+      };
+      clinicService.disassociateClinicAdmmin($stateParams.clinicId, data).then(function(response){
+        $scope.getclinicAdmin($stateParams.clinicId);
+        notyService.showMessage(response.data.message, 'success');
+      }).catch(function(response){
+        if(response.data.message){
+          notyService.showMessage(response.data.message, 'warning');
+        }else if(response.data.ERROR){
+          notyService.showMessage(response.data.ERROR, 'warning');
+        }
+      });
+    };
+
+    $scope.submitClinicAdmin = function(){
+      $scope.submitted = true;
+      if($scope.createClinicAdminForm.$invalid){
+        return false;
+      }
+      var data = $scope.newAdmin;
+      data.role = 'CLINIC_ADMIN';
+      data.clinicList = [{
+        'id': $stateParams.clinicId
+      }];
+      if($scope.clinicAdminEdit){
+        $scope.editClinicAdmin(data);
+      } else {
+        $scope.createClinicAdmin(data);
+      }
+    };
+
+    $scope.createClinicAdmin = function(data){
+      UserService.createUser(data).then(function(response){
+        $scope.getclinicAdmin($stateParams.clinicId);
+        $scope.cancelClinicAdmin();
+        notyService.showMessage(response.data.message, 'success');
+      }).catch(function(response){
+        if(response.data.message){
+          notyService.showMessage(response.data.message, 'warning');
+        }else if(response.data.ERROR){
+          notyService.showMessage(response.data.ERROR, 'warning');
+        }
+      });
+    };
+
+    $scope.editClinicAdmin = function(data){
+      UserService.editUser(data).then(function(response){
+        $scope.getclinicAdmin($stateParams.clinicId);
+        $scope.cancelClinicAdmin();
+        notyService.showMessage(response.data.message, 'success');
+      }).catch(function(response){
+        if(response.data.message){
+          notyService.showMessage(response.data.message, 'warning');
+        }else if(response.data.ERROR){
+          notyService.showMessage(response.data.ERROR, 'warning');
+        }
+      });
+    };
+
+    $scope.setEditClinicAdmin = function(){
+      $scope.clinicAdminEdit = true;
+      $scope.newAdmin = $scope.clinicAdmin;
+    };
+
+    $scope.cancelClinicAdmin = function(){
+      $scope.newAdmin = '';
+      $scope.clinicAdminEdit = false;
+      $scope.showAddclinicAdmin = false;
+      $scope.submitted = false;
     };
 
     $scope.init();

@@ -176,5 +176,28 @@
     "toggle-navigation": "Toggle navigation",
      "visi-view": "VisiView",
      "tm-sup": "TM",
-     "health-portal": "Health Portal"
+     "health-portal": "Health Portal",
+     "graph" : {
+        "add-note" : "Add Note",
+        "save": "save",
+        "delete" : "Delete",
+        "edit": "Edit",
+        "can-do": "You can add / view/edit / delete a note",
+        "note": "Note",
+        "export-data": "Export Data",
+        "duration": "Duration",
+        "frequency": "Frequency",
+        "pressure": "Pressure",
+        "statistics": "Statistics",
+        "adherence-score": "Adherence Score",
+        "hmr-runrate": "HMR Runrate",
+        "missed-therapy-days": "Missed Therapy Days",
+        "notification": "Notification",
+        "more": "more",
+        "hmr-data": "HMR Data",
+        "compliance": "Compliance",
+        "day": "Day",
+        "year": "Year",
+        "month": "Month"
+     }
 }

@@ -254,7 +254,7 @@ angular.module('hillromvestApp')
 
             .state('patientClinics', {
                 parent: 'patientUser',
-                url: '/{patientId}/clinic-info',
+                url: '/{patientId}/clinicInfo',
                 data: {
                     roles: ['ADMIN'],
                     pageTitle: 'patient.title'
