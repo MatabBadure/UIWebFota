@@ -134,7 +134,7 @@ angular.module('hillromvestApp')
         $scope.newDoctor = function(data) {
           UserService.createUser(data).then(function(response) {
             $scope.doctorStatus.isMessage = true;
-            $scope.doctorStatus.message = "Doctor created successfully";
+            $scope.doctorStatus.message = "HCP created successfully";
             notyService.showMessage($scope.doctorStatus.message, 'success');
             $scope.reset();
           }).catch(function(response) {
