@@ -198,6 +198,10 @@
         "compliance": "Compliance",
         "day": "Day",
         "year": "Year",
-        "month": "Month"
+        "month": "Month",
+        "next": "Next",
+        "previous": "Previous",
+        "found": "Found",
+        "notes": "Notes"
      }
 }
