@@ -15,8 +15,9 @@
       <div class="col-md-10 user-notification--key">
         <span translate="profile.noti.miss-therapy-days"></span>
       </div>
-      <div class="col-md-6 user-notification--icon">
-        <span class="icon-toggle-on active"></span>
+      <div class="col-md-6 user-notification--icon" ng-click="toggleNotification('hmrnotification');">
+        <span class="icon-toggle-on active" ng-show="patientUser.hmrnotification" ></span>
+        <span class="icon-toggle-off" ng-show="!patientUser.hmrnotification" ></span>
       </div>
     </div>
 
@@ -24,8 +25,9 @@
       <div class="col-md-10 user-notification--key">
         <span translate="profile.noti.hmr-non-adher"></span>
       </div>
-      <div class="col-md-6 user-notification--icon">
-        <span class="icon-toggle-off"></span>
+      <div class="col-md-6 user-notification--icon" ng-click="toggleNotification('acceptHMRNotification');">
+        <span class="icon-toggle-on active" ng-show="patientUser.acceptHMRNotification"></span>
+        <span class="icon-toggle-off" ng-show="!patientUser.acceptHMRNotification"></span>
       </div>
     </div>
 
@@ -33,8 +35,9 @@
       <div class="col-md-10 user-notification--key">
         <span translate="profile.noti.setting-deviation"></span>
       </div>
-      <div class="col-md-6 user-notification--icon">
-        <span class="icon-toggle-off"></span>
+      <div class="col-md-6 user-notification--icon" ng-click="toggleNotification('acceptHMRSetting');">
+        <span class="icon-toggle-on active" ng-show="patientUser.acceptHMRSetting"></span>
+        <span class="icon-toggle-off" ng-show="!patientUser.acceptHMRSetting"></span>
       </div>
     </div>
   </div>

@@ -37,11 +37,18 @@
 .stats_chart_section{
 	.stats_header{
 		border-bottom: $border_default;
+		display: inline-block;
+		width: 100%;
 
 		h4{
-			color: $gray-dark;
-			margin: 0px 0px;
+			color: $iceberg;
+			margin: 0px 5px 0px 0px;
 			line-height: 25px;
+			float: left;
+
+		}
+		.sub_txt{
+			line-height: 27px;
 		}
 	}
 } 
@@ -90,6 +97,14 @@
 	    font-weight: bold;
 	    line-height: 30px;
 	    margin: 0;
+	    float: left;
+    }
+    .descrip{
+    	clear: left;
+    }
+    .patients_txt{
+    	margin: 7px 0px 0px 10px;
+    	display: inline-block;
     }
 }
 /* Notification Section CSS */
@@ -163,7 +178,7 @@
 				}
 				&.active{
 					background-color: transparent;
-					color: $gray-dark;
+					color: $iceberg;
 					border-bottom: solid 2px $sunshade;
 				}
 			}
@@ -175,7 +190,7 @@
 		li{
 			a{
 				padding: 2px 0px;
-				color: $iceberg;
+				color: $gray-light;
 				margin: 10px 0px 0px 20px;
 				border-radius: 0px;
 				border-bottom: solid 2px #fff;
@@ -188,7 +203,7 @@
 				}
 				&.active{
 					background-color: transparent;
-					color: $gray-dark;
+					color: $iceberg;
 				}
 			}
 		}
@@ -303,6 +318,12 @@
 			opacity: 0;
 			&:checked + .check_label{
 				color: $gray-dark;
+				&.missedTHRP_legend{
+					&:after{
+						background-color: rgb(255, 38, 1);
+						border: $btn-default-bg;
+					}
+				}
 				&.pressure_legend{
 					&:after{
 						background-color: rgb(255, 127, 14);
@@ -360,3 +381,49 @@
  */
 
 /* Custom check Style END*/ 
+ /* User Profile Setting */
+.specific-user .user-header {
+  margin-top: 30px;
+  padding: 0;
+	&--title {
+    font-size: $font-size-base;
+    font-weight: $font-weight-bold;
+    color: $pickled-bluewood;
+  }
+}
+
+.specific-user .user-header--desc {
+	padding: 0;
+	border-bottom: 1px solid $celeste;
+	span {
+		font-size: $font-size-small;
+  	color: $celeste;
+	}
+}
+
+.user-notification {
+	padding: 20px 0;
+	&--key {
+		padding: 0;
+		span {
+			color: $nevada;
+		}
+	}
+
+	&--icon {
+		padding: 0;
+		span {
+			font-size: 30px;
+			line-height: 21px;
+		}
+		span.inactive {
+			color: $silver-approx;
+		}
+		span.active {
+			color: $fruit-salad;
+		}
+	}
+}
+
+
+

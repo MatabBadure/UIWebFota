@@ -39,7 +39,8 @@
                     "others": "O"
         },
         "placeholder": {
-            "search": "Search with Name or Email"
+            "search": "Search with Name or Email",
+            "link-clinic": "Search Clinic"
         },
         "npi-number": "NPI Number",
         "first-name": "First Name",
@@ -68,18 +69,77 @@
         "update-button-text": "Update",
         "back-button-text": "Back",
         "edit-button-text": "Edit",
+        "type": "Type",
+        "hillRom-id": "Hill-Rom ID",
+        "phoneNumber": "Phone number",
+        "link-clinic": "Link Clinic",
         "delete": {
             "warning": "Are you sure you want to Deactivate the Doctor?",
             "message": "If you deactivate the doctor, you will no longer be able to view the information."
         },
+        "clinic-disassociate":{
+            "warning": "Are you sure, you want to disassociate Clinic from HCP?",
+            "message": "If you disassociate the clinic, This HCP will not be able to View clinic information."
+        },
         "tab": {
-            "hcp-overview": "HCP Profile"
+            "hcp-overview": "HCP Profile",
+            "associated-clinic": "Associated Clinic"
         },
         "patient-assoc": "Patient Association",
+        "clinic-title": "Clinic Association",
         "filter": {
             "active": "Active",
             "inactive": "Inactive",
             "all": "All"
+        },
+        "error":{
+            "clinic":{
+                "required": "Clinic is Required"
+            },
+            "firstName":{
+                "required": "First Name is required.",
+                "min": "First Name is required to be at least 2 character.",
+                "max": "First Name cannot be longer than 15 characters.",
+                "pattern": "First Name cannot have number."
+            },
+            "middleName": {
+                "pattern": "Middle Name cannot have number."
+            },
+            "lastName": {
+                "required": "Last Name is required.",
+                "min": "Last Name is required to be at least 2 character.",
+                "max": "Last Name cannot be longer than 15 characters.",
+                "pattern": "Last Name cannot have number."
+            },
+            "npiNumber": {
+                "pattern": "NPI Number is invalid."
+            },
+            "credential":{
+                "required": "Credential is required."
+            },
+            "email": {
+                "required": "E-mail is required.",
+                "max": "E-mail cannot be longer than 100 characters.",
+                "invalid": "E-mail is invalid."
+            },
+            "primaryPhone":{
+                "pattern": "Primary Phone is invalid."
+            },
+            "mobilePhone": {
+                "pattern": "Mobile Phone is invalid."
+            },
+            "faxNumber": {
+                "pattern": "Fax Number is invalid."
+            },
+            "address": {
+                "max": "Address cannot be longer than 100 characters."
+            },
+            "city": {
+                "max": "City cannot be longer than 15 characters."
+            },
+            "zipcode":{
+                "pattern": "Zip Code is invalid."
+            }
         }
     }
 }

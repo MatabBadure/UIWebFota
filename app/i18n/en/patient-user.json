@@ -117,7 +117,29 @@
             "device-protocol": "Device and Protocol",
             "clinic-hcp": "Clinic and HCP"
           }
-        }
+        },
+    "errMSG":{
+      "first-name-required": "First Name is required.",
+      "first-name-no-number": "First Name cannot have number or special characters.",
+      "first-name-min-length": "First Name is required to be at least 2 character.",
+      "first-name-max-length": "First Name cannot be longer than 15 characters.",
+      "middle-name-no-number": "Middle Name cannot have number or special characters.",
+      "middle-name-min-length": "Middle Name is required to be at least 2 character.",
+      "middle-name-max-length": "Middle Name cannot be longer than 15 characters.",
+      "last-name-required": "Last Name is required.", 
+      "last-name-no-number": "Last Name cannot have number or special characters.",
+      "last-name-min-length": "Last Name is required to be at least 2 character.",
+      "last-name-max-length": "Last Name cannot be longer than 15 characters.",
+      "address-max-length": "Address cannot be longer than 100 characters. ", 
+      "city-max-length": "City cannot be longer than 15 characters.",
+      "zip-code-invalid": "Zip Code is invalid.",
+      "mobile-phone-invalid": "Mobile number is invalid.",
+      "primary-phone-invalid": "Home phone number is invalid.", 
+      "primary-phone-required": "Home phone number is required.",
+      "email-invalid": "E-mail is invalid.",
+      "email-max-length": "E-mail cannot be longer than 100 characters.",
+      "email-required": "E-mail is required."
+    }
     },
     "clinic" : {
       "name": "Name",
@@ -149,5 +171,10 @@
       "city": "City",
       "state": "State",
       "status": "Status"
-    }
+    },    
+    "select-relationship": "Select relationship.",
+    "toggle-navigation": "Toggle navigation",
+     "visi-view": "VisiView",
+     "tm-sup": "TM",
+     "health-portal": "Health Portal"
 }

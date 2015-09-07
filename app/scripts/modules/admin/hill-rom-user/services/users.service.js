@@ -119,12 +119,8 @@ angular.module('hillromvestApp')
             return response;
           });*/
       },
-      getNotesOfUser: function(id, date) {
-        ///api/users/{id}/notes?date=:date
-        var url = admin.hillRomUser.baseURL + id +'/notes?date=';
-        if( date!= null && date.length > 0){
-          url = url+date;
-        }        
+      getNotesOfUserInInterval: function(id, fromDate, toDate) {         
+        var url = admin.hillRomUser.notes + '?from=' + fromDate + '&to=' + toDate + '&userId='+id +'&page=1&per_page=100&filter=deleted:false';    
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -134,10 +130,7 @@ angular.module('hillromvestApp')
 
       getNotesOfUser: function(id, date) {
         ///api/users/{id}/notes?date=:date
-        var url = admin.hillRomUser.users + '/' + id +'/notes?date='+date;
-        /*if( date!= null && date.length > 0){
-          url = url+date;
-        }    */    
+        var url = admin.hillRomUser.users + '/' + id +'/notes?date='+date; 
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -181,8 +174,26 @@ angular.module('hillromvestApp')
           return response;
         });
 
+      },
+
+      updatePatientUserNotification : function(userId, data){
+        var url = admin.hillRomUser.users+'/'+userId+'/notificationsetting';        
+        return $http.put(url, data,{
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });
+
+      },
+      getPatientUserNotification : function(userId){
+        var url = '/api/user/'+userId;        
+        return $http.get(url, {
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });
+
       }
-
-
+      
     };
   });
