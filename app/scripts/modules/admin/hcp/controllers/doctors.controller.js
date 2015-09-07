@@ -98,7 +98,7 @@ angular.module('hillromvestApp')
     $scope.getClinicsOfHCP = function(doctorId){
       DoctorService.getClinicsAssociatedToHCP(doctorId).then(function(response) {
         $scope.clinicsOfHCP =  response.data.clinics;
-        $scope.clinicList = [{"clinicId": 0, "name": "ALL"}];
+        $scope.clinicList = [{"clinicId": "", "name": "ALL"}];
         $scope.sortOption = $scope.clinicList[0].clinicId;
         if($scope.clinicsOfHCP){
           angular.forEach($scope.clinicsOfHCP, function(clinic){
