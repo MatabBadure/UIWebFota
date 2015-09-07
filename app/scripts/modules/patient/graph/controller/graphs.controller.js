@@ -155,7 +155,7 @@ angular.module('hillromvestApp')
     $scope.getMissedTherapyDaysCount = function() {
       patientDashBoardService.getMissedTherapyDaysCount($scope.patientId).then(function(response){
         if(response.status === 200 ){
-          $scope.missedtherapy = response.data;
+          $scope.missedtherapyDays = response.data.count;
         }
       });
     }
@@ -483,6 +483,7 @@ angular.module('hillromvestApp')
         $scope.completeComplianceData = response.data;
         if($scope.completeComplianceData.actual === undefined){
           $scope.complianceGraphData = [];
+          $scope.drawComplianceGraph();
         } else {
           //recommended values
           $scope.minFrequency = $scope.completeComplianceData.recommended.minFrequency;
@@ -499,6 +500,7 @@ angular.module('hillromvestApp')
         }
       }).catch(function(response) {
         $scope.complianceGraphData = [];
+        $scope.drawComplianceGraph();
       });
     };
 
