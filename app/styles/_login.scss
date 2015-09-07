@@ -1,5 +1,5 @@
 .login {   
-  background: url("../images/login-bg.svg") no-repeat scroll center center / cover rgba(0, 0, 0, 0);
+  background: url("../images/login-bg.svg") no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -8,11 +8,8 @@
   height: calc(100% - 100px);
   position: absolute;
   width: 100%;
-  -webkit-backface-visibility: hidden;
-  -moz-backface-visibility:    hidden;
-  -ms-backface-visibility:     hidden;
-  -webkit-transform: translate3d(0, 0, 0);
 }
+
 
 .login .login--position {
   width: 50%;

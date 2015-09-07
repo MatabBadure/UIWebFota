@@ -88,9 +88,10 @@
         "patient-assoc": "Patient Association",
         "clinic-title": "Clinic Association",
         "filter": {
+            "all": "All",
             "active": "Active",
             "inactive": "Inactive",
-            "all": "All"
+            "expired": "Expired"
         },
         "error":{
             "clinic":{

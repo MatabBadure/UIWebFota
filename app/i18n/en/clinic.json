@@ -48,7 +48,10 @@
         "cancel-button-text": "cancel",
         "deactivate-button-text": "Deactivate",
         "update-button-text": "Update",
+        "create-button-text": "Create",
         "add-clinic-admin": "Add Clinic Admin",
+        "active": "Active",
+        "inactive": "Inactive",
         "delete": {
             "warning": "Are you sure you want to Deactivate the Clinic?",
             "message": "If you deactivate the clinic, you will no longer be able to view the information."
@@ -80,11 +83,37 @@
             "add-exist-admin": "Select Existing Admin",
             "add-new-admin": "Create New Admin"
         },
+        "filter": {
+            "all": "All",
+            "active": "Active",
+            "inactive": "Inactive",
+            "expired": "Expired"
+        },
         "admin": {
             "first-name": "First Name",
             "middle-name": "Middle Name",
             "last-name": "Last Name",
             "email": "Email"
+        },
+        "deleteClinicAdmin":{
+            "warning": "Are you sure, You want to delete Clinic Admin?",
+            "message": "After Delete You will not be able to see the Clinic Admin."
+        },
+        "error":{
+            "clinicAdmin":{
+                "firstName":{
+                    "required":"First name required"
+                },
+                "lastName":{
+                    "required":"Last name required"
+                },
+                "middleName":{
+                    "":""
+                },
+                "email":{
+                    "required":"Email ID required"
+                }
+            }
         }
     }
 }

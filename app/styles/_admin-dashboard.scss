@@ -237,8 +237,8 @@
 	width: 100%;
 	font-weight: normal;
 	color: $body-bg;
-	border: 1px solid $nevada;
-	background-color: $nevada;
+	border: 1px solid $lapis-lazuli;
+	background-color: $lapis-lazuli;
 	padding-left: 5px;
 	-webkit-appearance: none;
   -moz-appearance: none;
@@ -679,6 +679,14 @@ tags-input.ng-invalid .tags {
     font-size: $font-size-small;
     color: $nevada;
   }
+}
+
+.admin-user .detail-list--desc .active {
+  color: $fruit-salad;
+}
+
+.admin-user .detail-list--desc .inactive {
+  color: $silver-approx
 }
 
 .admin-user .detail-list--desc .icon-font {
