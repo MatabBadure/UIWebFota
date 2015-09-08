@@ -41,10 +41,10 @@
             "language": "Language"
         },
         "tabs": {
-            "manage-patients": "Manage Patients",
-            "manage-hcps": "Manage HCPs",
-            "manage-clinics": "Manage Clinics",
-            "manage-users": "Manage HillRom Users"
+            "manage-patients": "Patients",
+            "manage-hcps": "HCPs",
+            "manage-clinics": "Clinics",
+            "manage-users": "HillRom Users"
         },
         "form": {
             "username": "Login",
