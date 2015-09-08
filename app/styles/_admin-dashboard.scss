@@ -149,12 +149,15 @@
 }
 
 .btn-submit {
-  border: 1px solid $terracotta;
-  background-color: $terracotta;
-  color: $body-bg;
+  border: 1px solid $sunshade;
+  background-color: $sunshade;
+  color: $tuna;
   margin-left: 10px;
 }
-
+.fropile_update_btn_group .cancel{
+  background-color: $texas-rose;
+  border: 1px solid $texas-rose;
+}
 .btn-primary {
   border: 1px solid $sunshade;
   background-color: $sunshade;
@@ -235,8 +238,23 @@
 	padding-left: 10px;
 	font-weight: normal;
 	border-radius: 0;
+  box-shadow: none;
+}
+::-webkit-input-placeholder {
+   color: $silver-approx;
 }
 
+:-moz-placeholder { /* Firefox 18- */
+   color: $silver-approx;  
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   color: $silver-approx;  
+}
+
+:-ms-input-placeholder {  
+   color: $silver-approx;  
+}
 .dashboard__manage-view--search select {
 	height: 30px;
 	width: 100%;
@@ -776,7 +794,7 @@ tags-input.ng-invalid .tags {
 
 .dashboard__manage-view--list .main-secon-info {
   font-size: $font-size-small;
-  color: $bombay;
+  color: $regent-gray;
   display: block;
   font-weight: $font-weight-medium;
 }
