@@ -46,7 +46,7 @@
             <input type="password" class="form-control" name="confirmPassword" placeholder="{{'global.form.confirmpassword.placeholder' | translate}}"
                    ng-model="resetAccount.confirmPassword" ng-minlength=8 ng-maxlength=50 ng-pattern="/^(?=^.{8,}$)(?=.*\d)(?=.*[!@#$%^&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/" pw-check="passwordBox" required>
 
-            <div ng-show="(form.confirmPassword.$dirty && form.confirmPassword.$showValidationMessage && form.confirmPassword.$invalid) || submitted">
+            <div ng-show="(form.confirmPassword.$dirty && form.confirmPassword.$invalid) || submitted">
               <span class="login-has-error"
                 ng-show="form.confirmPassword.$error.required && !form.confirmPassword.$error.pwmatch">
                 Password required.

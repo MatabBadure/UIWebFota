@@ -41,7 +41,7 @@
           <div class="form-group">
             <input type="password" class="form-control" validate-on-blur name="confirmPassword"
             ng-model="authenticate.confirmPassword" ng-minlength=8 ng-maxlength=50 ng-pattern="/^(?=^.{8,}$)(?=.*\d)(?=.*[!@#$%^&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/" required placeholder="{{'authenticate.placeholder.confirm-password' | translate}}" pw-check="passwordBox">
-            <div ng-show="(form.confirmPassword.$showValidationMessage && form.confirmPassword.$invalid) || submitted ">
+            <div ng-show="(form.confirmPassword.$dirty && form.confirmPassword.$invalid) || submitted ">
               <span class="login-has-error"
                 ng-show="form.confirmPassword.$error.required && !form.confirmPassword.$error.pwmatch">
                 Password required.
