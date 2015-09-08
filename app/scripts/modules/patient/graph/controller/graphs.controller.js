@@ -11,7 +11,7 @@ angular.module('hillromvestApp')
       $scope.selectedGraph = 'HMR';
       $scope.selectedDateOption = 'WEEK';
       // Data available for graph for ID 160 only for now 
-      $scope.patientId = 160;
+      $scope.patientId = parseInt(localStorage.getItem('patientID'));
       $scope.compliance = {};
       $scope.compliance.pressure = true;
       $scope.compliance.duration = true;

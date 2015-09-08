@@ -51,7 +51,6 @@ $scope.finishReset = function() {
 };
 
 $scope.passwordStrength = function(){
-  console.info('passwordStrength Called...!');
   $scope.display_strength('passwordBox','passwordStrengthContainer','status');
 };
 
@@ -60,7 +59,6 @@ $scope.div = function (x){
 };
 
   $scope.display_strength = function (x,y,z) {
-    console.log($scope.div(x));
     if(!x || $scope.div(x) === "")
     {
       $scope.div(y).style.width = 0 + "%";
