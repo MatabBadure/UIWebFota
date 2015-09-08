@@ -24,20 +24,12 @@
             ng-model="authenticate.password" ng-minlength=8 ng-maxlength=50 ng-keyup="passwordStrength()" ng-pattern="/^(?=^.{8,}$)(?=.*\d)(?=.*[!@#$%^&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/" required placeholder="{{'authenticate.placeholder.password' | translate}}">
             <div ng-show="(form.password.$showValidationMessage && form.password.$invalid) || submitted">
               <span class="login-has-error"
-                ng-show="form.password.$error.required">
-                Password required.
-              </span>
-              <span class="login-has-error"
-                ng-show="form.password.$error.minlength">
-                 Password required to be at least 8 characters.
+                ng-show="form.password.$error.required || form.password.$error.minlength || form.password.$error.pattern">
+                {{'authenticate.password.error' | translate }}
               </span>
               <span class="login-has-error"
                 ng-show="form.password.$error.maxlength">
-                Password cannot be longer than 50 characters.
-              </span>
-              <span class="login-has-error"
-                 ng-show="form.password.$error.pattern" >
-                  Password complexity criteria not met.
+                {{'authenticate.password.maxlength' | translate }}
               </span>
             </div>
             <div ng-show="form.password.$dirty" class="CommonWidth" id="passwordStrengthContainer">
@@ -48,23 +40,19 @@
           </div>
           <div class="form-group">
             <input type="password" class="form-control" validate-on-blur name="confirmPassword"
-            ng-model="authenticate.confirmPassword" ng-minlength=8 ng-maxlength=50 ng-pattern="/^(?=^.{8,}$)(?=.*\d)(?=.*[!@#$%^&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/" required placeholder="{{'authenticate.placeholder.confirm-password' | translate}}">
-            <div ng-show="(form.confirmPassword.$showValidationMessage && form.confirmPassword.$invalid) || submitted ">
+            ng-model="authenticate.confirmPassword" ng-minlength=8 ng-maxlength=50 ng-pattern="/^(?=^.{8,}$)(?=.*\d)(?=.*[!@#$%^&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/" required placeholder="{{'authenticate.placeholder.confirm-password' | translate}}" pw-check="passwordBox">
+            <div ng-show="(form.confirmPassword.$dirty && form.confirmPassword.$invalid) || submitted ">
               <span class="login-has-error"
-                ng-show="form.confirmPassword.$error.required">
+                ng-show="form.confirmPassword.$error.required && !form.confirmPassword.$error.pwmatch">
                 Password required.
               </span>
               <span class="login-has-error"
-                ng-show="form.confirmPassword.$error.minlength">
-                 Password required to be at least 8 characters.
-              </span>
-              <span class="login-has-error"
                 ng-show="form.confirmPassword.$error.maxlength">
-                Password cannot be longer than 50 characters.
+                {{'authenticate.confirm-password.maxlength' | translate }}
               </span>
               <span class="login-has-error"
-                 ng-show="form.confirmPassword.$error.pattern" >
-                  Password complexity criteria not met.
+                 ng-show="form.confirmPassword.$error.pwmatch" >
+                  {{'authenticate.confirm-password.error' | translate }}
               </span>
             </div>
           </div>
@@ -85,7 +73,7 @@
             </div>
           </div>
           <div class="form-group">
-            <input type="text" class="form-control" validate-on-blur name="answer" ng-model="authenticate.answer" required placeholder="{{'authenticate.placeholder.security-answer' | translate}}">
+            <input type="text" class="form-control" ng-disabled="!authenticate.question" validate-on-blur name="answer" ng-model="authenticate.answer" required placeholder="{{'authenticate.placeholder.security-answer' | translate}}">
             <div ng-show="(form.answer.$showValidationMessage && form.answer.$invalid) || submitted">
               <span class="login-has-error"
                 ng-show="form.answer.$error.required">

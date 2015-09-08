@@ -92,18 +92,12 @@
       <input type="password" class="form-control" validate-on-blur name="password" id="passwordBox"
       ng-model="user.password" ng-minlength=8 ng-maxlength=50 ng-keyup="passwordStrength()" ng-pattern="/^(?=^.{8,}$)(?=.*\d)(?=.*[!@#$%^&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/" required placeholder="New Password">
       <div ng-show="(confirmForm.password.$showValidationMessage && confirmForm.password.$invalid) || submitted">
-        <span class="login-has-error" ng-show="confirmForm.password.$error.required">
-         Password required.
-       </span>
-       <span class="login-has-error" ng-show="confirmForm.password.$error.minlength">
-         Password required to be at least 8 characters.
+        <span class="login-has-error" ng-show="confirmForm.password.$error.required || confirmForm.password.$error.minlength || confirmForm.password.$error.pattern">
+         {{'login.password.error' | translate }}
        </span>
        <span class="login-has-error" ng-show="confirmForm.password.$error.maxlength">
-         Password cannot be longer than 50 characters.
+         {{'login.password.maxlength' | translate }}
        </span>
-       <span class="login-has-error" ng-show="confirmForm.password.$error.pattern" >
-        Password complexity criteria not met.
-      </span>
     </div>
     <div ng-show="form.password.$dirty" class="CommonWidth" id="passwordStrengthContainer">
     </div>
@@ -113,19 +107,16 @@
   </div>
   <div class="form-group">
     <input type="password" class="form-control" validate-on-blur name="confirmPassword"
-    ng-model="user.confirmPassword" ng-minlength=8 ng-maxlength=50 ng-pattern="/^(?=^.{8,}$)(?=.*\d)(?=.*[!@#$%^&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/" required placeholder="Enter New Password">
-    <div ng-show="(confirmForm.confirmPassword.$showValidationMessage && confirmForm.confirmPassword.$invalid) || submitted">
-      <span class="login-has-error" ng-show="confirmForm.confirmPassword.$error.required">
+    ng-model="user.confirmPassword" ng-minlength=8 ng-maxlength=50 ng-pattern="/^(?=^.{8,}$)(?=.*\d)(?=.*[!@#$%^&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/" required  pw-check="passwordBox" placeholder="Enter New Password">
+    <div ng-show="(confirmForm.confirmPassword.$dirty && confirmForm.confirmPassword.$invalid) || submitted">
+      <span class="login-has-error" ng-show="confirmForm.confirmPassword.$error.required && !confirmForm.confirmPassword.$error.pwmatch">
         Password required.
       </span>
-      <span class="login-has-error" ng-show="confirmForm.confirmPassword.$error.minlength">
-        Password required to be at least 8 characters.
-      </span>
       <span class="login-has-error" ng-show="confirmForm.confirmPassword.$error.maxlength">
-        Password cannot be longer than 50 characters.
+         {{'login.confirm-password.maxlength' | translate }}
       </span>
-      <span class="login-has-error" ng-show="confirmForm.confirmPassword.$error.pattern" >
-        Password complexity criteria not met.
+      <span class="login-has-error" ng-show="confirmForm.confirmPassword.$error.pwmatch" >
+        {{'login.confirm-password.error' | translate }}
       </span>
     </div>
   </div>
@@ -145,7 +136,7 @@
     </div>
   </div>
   <div class="form-group">
-    <input type="password" class="form-control" name="answer" validate-on-blur ng-model="user.answer" required placeholder="Enter Your Answer">
+    <input type="password" class="form-control" name="answer" ng-disabled="!user.question" validate-on-blur ng-model="user.answer" required placeholder="Enter Your Answer">
     <div ng-show="(confirmForm.answer.$showValidationMessage && confirmForm.answer.$invalid) || submitted">
       <span class="login-has-error" ng-show="confirmForm.answer.$error.required">
         Answer required.
