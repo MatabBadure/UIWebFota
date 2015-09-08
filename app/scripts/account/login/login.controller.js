@@ -108,7 +108,8 @@ angular.module('hillromvestApp')
           'termsAndConditionsAccepted': $scope.user.tnc
         }).then(function(data) {
           Auth.logout();
-          $state.go('home');
+          $scope.isFirstLogin = false;
+          $scope.showLogin = true;
         }).catch(function(err) {
           Auth.logout();
           if(err.data && err.data.ERROR){
