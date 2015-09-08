@@ -76,16 +76,25 @@ $header--background: $body-bg;
 
 .navbar-secondary .navbar-right li a {
 	color: inherit;
-	padding: 19px 10px;
+	text-align: center;
+	padding: 5px 0;
 	span {
 		color: $Delta-unselect;
+	}
+	.icons {
+		display: block;
+    	padding-top: 10px;
+	}
+	.link-text {
+		display: block;
+    	padding-top: 5px;
+    	font-size: $font-size-small;
 	}
 	&:hover {
 		background-color: inherit;
 		color: $lapis-lazuli;
 		box-shadow : 0 -3px 0 0 $sunshade inset;
 		border-radius: 0;
-  	padding-bottom: 20px;
   	span{
 			color: $lapis-lazuli;
 		}
@@ -114,7 +123,6 @@ $header--background: $body-bg;
 	outline: 0;
 	box-shadow : 0 -3px 0 0 $sunshade inset;
 	border-radius: 0;
-	padding-bottom: 20px;
 	span{
 		color: $lapis-lazuli;
 	}
@@ -185,11 +193,18 @@ $header--background: $body-bg;
     color: $bombay;
 }
 
+.navbar-secondary .navbar-right li:last-child a #icon-arrow {
+	font-size: 10px;
+    padding-left: 4px;
+    color: inherit;
+}
+
 .navbar-secondary .navbar-right li:last-child a:hover #pop-over-link, #icon-arrow {
 	color: $storm-dust;
 }
 .navbar-secondary .navbar-right li .notif-bell { 
     position: relative; 
+    padding: 19px 0;
     &:hover { 
         background-color: inherit; 
         color: inherit; 

@@ -104,10 +104,10 @@ angular.module('hillromvestApp')
 .directive('navbarPopover', function(Auth, $state, Account, $compile) {
     return {
         restrict: 'A',
-        template: "<span id='pop-over-link' class='padding-right cursor-pointer'>{{username}}</span><span id='icon-arrow' class='hillrom-icon icon-arrow-down cursor-pointer'></span>" +
+        template: "<span id='pop-over-link' class='padding-right cursor-pointer'>{{username}}<span id='icon-arrow' class='hillrom-icon icon-arrow-down cursor-pointer'></span></span>" +
                   "<span style='display:none' id='pop-over-content'><div ng-click='account()'><span class='hillrom-icon icon-user-account'></span><span>Account</span></div><div ng-click='logout()'><span class='hillrom-icon icon-logout'></span><span>Logout </span></div></span>",
         link: function(scope, elements, attrs) {
-            $("#pop-over-link, #icon-arrow").popover({
+            $("#pop-over-link").popover({
                 'placement': 'bottom',
                 'trigger': 'click',
                 'html': true,

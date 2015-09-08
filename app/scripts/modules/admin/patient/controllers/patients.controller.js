@@ -84,6 +84,8 @@ angular.module('hillromvestApp')
         $scope.protocols = response.data.protocol;
         $scope.addProtocol = true;
         angular.forEach($scope.protocols, function(protocol){
+          protocol.createdDate = dateService.getDateByTimestamp(protocol.createdDate);
+          protocol.lastModifiedDate = dateService.getDateByTimestamp(protocol.lastModifiedDate);
           if(!protocol.deleted){
             $scope.addProtocol = false;
           }
@@ -626,9 +628,6 @@ angular.module('hillromvestApp')
       if($scope.protocol.patient){
         delete $scope.protocol.patient;
       }
-      if($scope.protocol.edit){
-        delete $scope.protocol.edit;
-      }
       var data = $scope.protocol.protocol;
       patientService.editProtocol($stateParams.patientId, data).then(function(response){
         $state.go('patientProtocol');
@@ -642,9 +641,6 @@ angular.module('hillromvestApp')
     };
 
     $scope.updateDevice = function(){
-      if($scope.device.edit){
-        delete $scope.device.edit;
-      }
       patientService.addDevice($stateParams.patientId, $scope.device).then(function(response){
         $state.go('patientProtocol');
       }).catch(function(response){});
