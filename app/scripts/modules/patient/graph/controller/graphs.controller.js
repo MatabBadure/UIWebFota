@@ -335,9 +335,13 @@ angular.module('hillromvestApp')
       $scope.hmrGraph = true;
       $scope.removeGraph();
     };
-
+    $scope.getUTCTime = function() {
+      $scope.UTCfromTimestamp = dateService.getUTCTimeStamp($scope.fromTimeStamp);
+      $scope.UTCtoTimestamp = dateService.getUTCTimeStamp($scope.toTimeStamp);
+    };
     $scope.getNonDayHMRGraphData = function() {
-      patientDashBoardService.getHMRGraphPoints($scope.patientId, $scope.fromTimeStamp, $scope.toTimeStamp, $scope.groupBy).then(function(response){
+      $scope.getUTCTime();
+      patientDashBoardService.getHMRGraphPoints($scope.patientId, $scope.UTCfromTimestamp, $scope.UTCtoTimestamp, $scope.groupBy).then(function(response){
         //Will get response data from real time API once api is ready
         $scope.completeGraphData = response.data;
         if($scope.completeGraphData.actual === undefined){
@@ -447,7 +451,8 @@ angular.module('hillromvestApp')
     }
 
     $scope.getDayHMRGraphData = function() {
-      patientDashBoardService.getHMRBarGraphPoints($scope.patientId, $scope.fromTimeStamp).then(function(response){
+      $scope.getUTCTime();
+      patientDashBoardService.getHMRBarGraphPoints($scope.patientId, $scope.UTCfromTimestamp).then(function(response){
         $scope.completeGraphData = response.data;
         if($scope.completeGraphData.actual === undefined){
            $scope.hmrBarGraphData = [];
@@ -490,7 +495,8 @@ angular.module('hillromvestApp')
     };
 
     $scope.getComplianceGraphData = function(format) {
-      patientDashBoardService.getHMRGraphPoints($scope.patientId, $scope.fromTimeStamp, $scope.toTimeStamp, $scope.groupBy).then(function(response){
+      $scope.getUTCTime();
+      patientDashBoardService.getHMRGraphPoints($scope.patientId, $scope.UTCfromTimestamp, $scope.UTCtoTimestamp, $scope.groupBy).then(function(response){
         $scope.completeComplianceData = response.data;
         if($scope.completeComplianceData.actual === undefined){
           $scope.complianceGraphData = [];
