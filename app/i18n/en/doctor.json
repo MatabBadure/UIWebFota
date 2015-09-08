@@ -92,7 +92,8 @@
             "all": "All",
             "active": "Active",
             "inactive": "Inactive",
-            "expired": "Expired"
+            "expired": "Expired",
+            "pending": "Pending"
         },
         "error":{
             "clinic":{
