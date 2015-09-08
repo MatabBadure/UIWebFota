@@ -44,6 +44,7 @@
   <span class="user-detail-info__data--key" translate="doctor.clinic-name"></span>
   <span class="user-detail-info__data--key">:</span>
   <span class="user-detail-info__data--value" ng-repeat="clinic in clinicsOfHCP">{{clinic.name}}{{$last ? '' : ', '}}</span>
+  <span ng-if="!clinicsOfHCP" translate="doctor.noClinics"></span>
 </div>
 
 </div>
@@ -121,6 +122,7 @@
       </div>
       <div class="clr"></div>
     </div>
+    <span ng-if="!patients" translate="doctor.noPatient"></span>
   </div>
 </div>
 
