@@ -44,6 +44,10 @@ angular.module('hillromvestApp')
         var day = Math.floor(diff / oneDay);
         return day
       },
+      getUTCTimeStamp: function(timeStamp) {
+        var timeZoneOffset = new Date(timeStamp).getTimezoneOffset();
+        return timeStamp - (timeZoneOffset * 60 * 1000);
+      },
       getWeekOfMonth: function(d) {
         /*var dayCount = this.getDayOfYear(d);
         var d = new Date(d);
