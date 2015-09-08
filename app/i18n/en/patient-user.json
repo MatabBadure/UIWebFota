@@ -19,7 +19,7 @@
         "phone": "Phone:",
         "mobile": "Mobile:",
         "fax": "Fax:",
-        "hr-id": "ID",
+        "hr-id": "ID:",
         "link-clinic": "Link Clinic",
         "link-caregiver": "Add Caregiver",
         "link-device": "Add Device",
@@ -207,5 +207,9 @@
         "previous": "Previous",
         "found": "Found",
         "notes": "Notes"
-     }
+     },
+     "no-clinic-found": "No clinic associated.",
+     "no-hcp-found": "No hcp associated.",
+     "no-protocol-found": "No protocol associated.",
+     "no-device-found": "No device associated."
 }

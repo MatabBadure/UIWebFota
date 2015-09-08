@@ -48,6 +48,7 @@ angular.module('hillromvestApp')
     restrict: 'E',
 
     controller: function ($scope, $state) {
+      $scope.userRole = localStorage.getItem('role');   
       $scope.isActive = function(tab) {
         var path = $location.path();
         if (path.indexOf(tab) !== -1) {
@@ -79,19 +80,17 @@ angular.module('hillromvestApp')
       };
 
       $scope.account = function(){
-        var userRole = localStorage.getItem('role');   
-        if(userRole === "ADMIN"){
+        if($scope.userRole === "ADMIN"){
           $state.go('adminProfile');
-        }else if(userRole === "PATIENT"){
+        }else if($scope.userRole === "PATIENT"){
           $state.go("patientProfile");
         }
       };
 
       $scope.goToHomePage = function(){
-        var userRole = localStorage.getItem('role'); 
-        if(userRole === "ADMIN"){
+        if($scope.userRole === "ADMIN"){
           $state.go("patientUser");
-        }else if(userRole === "PATIENT"){
+        }else if($scope.userRole === "PATIENT"){
           $state.go("patientdashboard");
         }
       };

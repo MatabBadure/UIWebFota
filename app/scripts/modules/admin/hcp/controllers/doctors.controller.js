@@ -149,7 +149,7 @@ angular.module('hillromvestApp')
       $scope.deactivateModal = false;
       var data = [{'id': $scope.deleteClinicId}]
       clinicService.disassociateHCP($stateParams.doctorId, data).then(function(response){
-        $scope.getClinicsOfHCP($stateParams.doctorId);
+        $scope.getAvailableclinics($stateParams.doctorId); 
         notyService.showMessage(response.data.message, 'success');
       }).catch(function(response){
         if (response.data.message !== undefined) {
@@ -171,7 +171,6 @@ angular.module('hillromvestApp')
       $scope.searchItem = "";
       var data = [{'id': $stateParams.doctorId}];
       clinicService.associateHcp(clinic.id, data).then(function(response){
-        $scope.getClinicsOfHCP($stateParams.doctorId);
         $scope.getAvailableclinics($stateParams.doctorId);
         notyService.showMessage(response.data.message, 'success');
       }).catch(function(response){
@@ -188,27 +187,37 @@ angular.module('hillromvestApp')
       $scope.associateClinicSearch = true;
     };
     
-    $scope.getAvailableclinics = function(doctorId){ 
-      DoctorService.getClinicsAssociatedToHCP(doctorId).then(function(response) {
-        $scope.clinicsOfHCP =  response.data.clinics;
-        $scope.clinicList = [{"clinicId": 0, "name": "ALL"}];
-        $scope.sortOption = $scope.clinicList[0].clinicId;
-        if($scope.clinicsOfHCP){
-          angular.forEach($scope.clinicsOfHCP, function(clinic){
-            $scope.clinicList.push({"clinicId": clinic.id, "name": clinic.name});
-          });
-        }
-        clinicService.getAllClinics().then(function(response){
-          $scope.clinics = response.data; 
-          angular.forEach($scope.clinics, function(clinic, i){
-            angular.forEach($scope.clinicsOfHCP, function(hcpclinic){
-              if(clinic.id === hcpclinic.id){
-                $scope.clinics.splice(i,1);
+    $scope.getAvailableclinics = function(doctorId){
+      $scope.clinicsAssociatedErrMsg = null;
+      $scope.clinics = []; $scope.clinics.length =0;
+      clinicService.getAllClinics().then(function(response){
+        if(response.data)
+        $scope.clinics = response.data;
+        DoctorService.getClinicsAssociatedToHCP(doctorId).then(function(response) {
+          $scope.clinicsOfHCP = [];  $scope.clinicsOfHCP.length = 0;
+          if(response.data.clinics){            
+            $scope.clinicsOfHCP =  response.data.clinics;
+          }
+          if((!response.data.clinics || response.data.clinics === 'undefined') && response.data.message){
+            $scope.clinicsAssociatedErrMsg = response.data.message;
+          }
+          for(var i=0; i< $scope.clinicsOfHCP.length; i++){
+            for(var j=0;j< $scope.clinics.length ; j++){
+              if($scope.clinicsOfHCP[i].id === $scope.clinics[j].id){
+                $scope.clinics.splice(j,1);
               }
+            }
+          }          
+          $scope.clinicList = [{"clinicId": 0, "name": "ALL"}];
+          $scope.sortOption = $scope.clinicList[0].clinicId;
+          if($scope.clinicsOfHCP){
+            angular.forEach($scope.clinicsOfHCP, function(clinic){
+              $scope.clinicList.push({"clinicId": clinic.id, "name": clinic.name});
             });
-          });      
-        });
-      });
+          }                    
+        });              
+      });      
     };
+
     $scope.init();
   }]);
