@@ -246,6 +246,8 @@
   text-overflow: '';
 }
 
+
+
 .search-dropdown:before {
   content:'\e600';
   font-family:"hillrom";
@@ -935,3 +937,15 @@ input[type=radio], input.radio {
     color: $pickled-bluewood;
   }
 }
+
+/*Condition for IE Browser*/
+
+@media screen\0 {
+  .search-dropdown{
+
+    &:before{
+      content: '' !important;
+    }
+    }
+}
+/*END*/
