@@ -628,9 +628,6 @@ angular.module('hillromvestApp')
       if($scope.protocol.patient){
         delete $scope.protocol.patient;
       }
-      if($scope.protocol.edit){
-        delete $scope.protocol.edit;
-      }
       var data = $scope.protocol.protocol;
       patientService.editProtocol($stateParams.patientId, data).then(function(response){
         $state.go('patientProtocol');
