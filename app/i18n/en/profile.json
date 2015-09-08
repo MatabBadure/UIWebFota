@@ -13,6 +13,7 @@
     "middle-name": "Middle Name",
     "last-name": "Last Name",
     "employee-id": "Employee ID",
+    "hr-id": "HR ID",
     "email": "Email",
     "role-text":"Select Role",
     "view-role-text":"Role",
