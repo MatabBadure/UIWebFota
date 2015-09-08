@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hillromvestApp')
-  .controller('LoginController', function($scope, $state, $timeout, Auth, vcRecaptchaService, globalConfig) {
+  .controller('LoginController', function($scope, $state, $timeout, Auth, vcRecaptchaService, globalConfig, $rootScope) {
     $scope.showLogin = true;
     $scope.isEmailExist = true;
     $scope.isFirstLogin = false;
@@ -52,6 +52,8 @@ angular.module('hillromvestApp')
         if (data.status === 200) {
           localStorage.removeItem('loginCount');
           localStorage.setItem('userFirstName', data.data.user.firstName);
+          localStorage.setItem('role', data.data.user.authorities[0].name);
+          $rootScope.userRole = localStorage.getItem('role');           
           if(data.data.user.authorities[0].name === 'PATIENT'){
             localStorage.setItem('patientID', data.data.user.id);
             $state.go('patientdashboard');
@@ -73,12 +75,14 @@ angular.module('hillromvestApp')
             }
           } else if (data.data.APP_CODE === 'EMAIL_PASSWORD_RESET') {
             localStorage.setItem('token', data.data.token);
+            $scope.message = '';
             $scope.isFirstLogin = true;
             $scope.isEmailExist = false;
             $scope.showLogin = false;
           } else if (data.data.APP_CODE === 'PASSWORD_RESET') {
             localStorage.setItem('token', data.data.token);
             $scope.isFirstLogin = true;
+            $scope.message = '';
             $scope.showLogin = false;
           } else {
             $scope.otherError = true;

@@ -152,11 +152,11 @@
 	<!-- Note section HTML -->
 	<div class="col-md-16">
 		<div class="btn_group patient_dashdoard_btns">
-			<button class="hillrom-btn btn-submit float-right" ng-click="showAllNotes();" translate="graph.note"></button>
+			<button ng-if="role === 'PATIENT'" class="hillrom-btn btn-submit float-right" ng-click="showAllNotes();" translate="graph.note"></button>
 			<button class="hillrom-btn btn-submit float-right" translate="graph.export-data" ></button>
 		</div>
 	</div>
-	<div class="col-md-16 hide_content" id="add_note_container">
+	<div ng-if="role === 'PATIENT'"  class="col-md-16 hide_content" id="add_note_container">
 		<div class="add_note_container">
 			<div class="note_header">
 				<div class="col-md-14 note_header_left">

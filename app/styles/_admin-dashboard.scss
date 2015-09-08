@@ -251,6 +251,8 @@
   text-overflow: '';
 }
 
+
+
 .search-dropdown:before {
   content:'\e600';
   font-family:"hillrom";
@@ -791,6 +793,19 @@ tags-input.ng-invalid .tags {
   font-weight: $font-weight-medium;
 }
 
+.dashboard__manage-view--list .short-info.active {
+  color: $fruit-salad;
+}
+
+.dashboard__manage-view--list .short-info.inactive, 
+.dashboard__manage-view--list .short-info.pending {
+  color: $silver-approx;
+}
+
+.dashboard__manage-view--list .short-info.expired {
+  color: $Lava-expired;
+}
+
 .dashboard__manage-view--list .desc-prim-info {
   font-size: $font-size-small;
   color: $nevada;
@@ -929,3 +944,15 @@ input[type=radio], input.radio {
     color: $pickled-bluewood;
   }
 }
+
+/*Condition for IE Browser*/
+
+@media screen\0 {
+  .search-dropdown{
+
+    &:before{
+      content: '' !important;
+    }
+    }
+}
+/*END*/

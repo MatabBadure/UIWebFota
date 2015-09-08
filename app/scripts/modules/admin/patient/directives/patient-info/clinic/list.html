@@ -10,7 +10,7 @@
     <span class="admin-views--title" translate="patient.clinic-title"></span>
   </div>
 
-  <div class="col-md-16 clinic-list" ng-repeat="aClinic in associatedClinics track by $index">
+  <div class="col-md-16 clinic-list" ng-repeat="aClinic in associatedClinics track by $index" ng-if="associatedClinics.length > 0">
     <div class="col-md-3 clinic-list__detail">
       <span class="clinic-list__detail--name" ng-bind="aClinic.name"></span>
     </div>
@@ -34,9 +34,10 @@
       <span class="glyphicon glyphicon-trash" ng-click="deleteClinicModel(aClinic)"></span>
     </div>
   </div>
+  <div class="col-md-16 clinic-list" ng-if="associatedClinicsErrMsg"> <span translate="no-clinic-found"></span></div>
   <div class="col-md-16 reset-padding">
     <div class="col-md-8 clinic-link">
-      <input type="text" ng-show="searchClinicText" ng-model="searchItem" typeahead="clinic.name for clinic in clinics | filter:$viewValue" typeahead-on-select="selectClinicForPatient($item)" class="form-control">
+      <input type="text" ng-show="searchClinicText" ng-model="searchItem" typeahead="clinic.name for clinic in clinics | filter:$viewValue | filter:{deleted: false}" typeahead-on-select="selectClinicForPatient($item)" class="form-control">
     </div>
 
     <div class="col-md-8 clinic-link">
@@ -49,7 +50,7 @@
     <span class="admin-views--title" translate="patient.hcp-title"></span>
   </div>
 
-  <div class="col-md-16 clinic-list" ng-repeat="hcp in associatedHCPs track by $index">
+  <div class="col-md-16 clinic-list" ng-repeat="hcp in associatedHCPs track by $index" ng-if="associatedHCPs.length > 0">
     <div class="col-md-3 clinic-list__detail">
       <span class="clinic-list__detail--name">{{hcp.lastName}} {{hcp.firstName}}</span>
     </div>
@@ -72,9 +73,12 @@
       <span class="glyphicon glyphicon-trash" ng-click="deleteHCPModel(hcp)"></span>
     </div>
   </div>
+  <div class="col-md-16 clinic-list" ng-if="associatedHCPsErrMsg">
+    <span translate="no-hcp-found"> </span>
+  </div>
   <div class="col-md-16 reset-padding">
     <div class="col-md-8 clinic-link">
-      <input type="text" ng-show="searchHCPText" ng-model="searchHcp" typeahead="hcp.firstName for hcp in hcps | filter:$viewValue" typeahead-on-select="selectHcpForPatient($item)" class="form-control">
+      <input type="text" ng-show="searchHCPText" ng-model="searchHcp" typeahead="hcp.firstName for hcp in hcps | filter:$viewValue | filter:{deleted: false}" typeahead-on-select="selectHcpForPatient($item)" class="form-control">
     </div>
 
     <div class="col-md-8 clinic-link">

@@ -15,10 +15,13 @@
         "detail": {
             "title": "Doctor"
         },
+        "noClinics": "No Clinic Associated",
+        "noPatient": "No Patient Associated.",
         "general-details":  "General Details",
         "personal-details": "Personal Details",
         "health-details":   "Health Details",
         "clinic": "Clinic",
+        "speciality": "Speciality",
         "doctor": "Doctor",
         "add-clinic": "Add Another Clinic",
         "create-caregiver": "Yes",
@@ -95,6 +98,11 @@
             "expired": "Expired",
             "pending": "Pending"
         },
+        "status-type": {
+            "active": "Active",
+            "inactive": "Inactive",
+            "pending": "Pending"
+        },
         "error":{
             "clinic":{
                 "required": "Clinic is Required"
@@ -143,6 +151,8 @@
             "zipcode":{
                 "pattern": "Zip Code is invalid."
             }
-        }
+        },
+        "no-clinic-found": "No clinic associated.",
+        "no-hcp-found": "No hcp associated."
     }
 }

@@ -24,7 +24,6 @@
             <option value="" selected translate="clinic.filter.all"></option>
             <option value="name" translate="clinic.filter.active"></option>
             <option value="state" translate="clinic.filter.inactive"></option>
-            <option value="zipcode" translate="clinic.filter.expired"></option>
           </select>
         </div>
       </div>
@@ -58,7 +57,7 @@
       <div class="clr"></div>
     </div>
 
-    <div class="dashboard__manage-view--list" ng-repeat="clinic in clinics | filter: {name: searchItem}"  ng-class="{ 'inactive': clinic.deleted }" ng-click="clinic.deleted || selectClinic(clinic)">
+    <div class="dashboard__manage-view--list" ng-repeat="clinic in clinics | filter: {name: searchItem}" ng-click="clinic.deleted || selectClinic(clinic)">
       <div class="col-md-4 reset-padding centered">
         <span class="main-prim-info">{{clinic.name}}</span>
       </div>
@@ -85,11 +84,9 @@
         <span class="impo-highlight">{{clinic.hillromId}}</span>
       </div>
 
-      <div class="col-md-1 reset-padding">
-        <div class="icon-font">
-          <span class="icon-lungs"></span>
-        </div>
-        <div class="clr"></div>
+      <div class="col-md-1 reset-padding centered">
+        <span class="short-info active" ng-if="!clinic.deleted" translate="clinic.status-type.active"></span>
+        <span class="short-info inactive" ng-if="clinic.deleted" translate="clinic.status-type.inactive"></span>
       </div>
 
       <div class="clr"></div>

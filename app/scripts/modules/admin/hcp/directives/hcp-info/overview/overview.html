@@ -37,13 +37,14 @@
 <div class="col-md-5 user-detail-info__data">
   <span class="user-detail-info__data--key" translate="doctor.status"></span>
   <span class="user-detail-info__data--key">:</span>
-  <span ng-if="doctor.activated" class="user-detail-info__data--value">Active</span>
-  <span ng-if="!doctor.activated" class="user-detail-info__data--value">Inactive</span>
+  <span ng-if="!doctor.deleted" class="user-detail-info__data--value">Active</span>
+  <span ng-if="doctor.deleted" class="user-detail-info__data--value">Inactive</span>
 </div>
 <div class="col-md-16 user-detail-info__data">
   <span class="user-detail-info__data--key" translate="doctor.clinic-name"></span>
   <span class="user-detail-info__data--key">:</span>
-  <span class="user-detail-info__data--value" ng-repeat="clinic in doctor.clinics">{{clinic.name}}{{$last ? '' : ', '}}</span>
+  <span class="user-detail-info__data--value" ng-repeat="clinic in clinicsOfHCP">{{clinic.name}}{{$last ? '' : ', '}}</span>
+  <span ng-if="!clinicsOfHCP" translate="doctor.noClinics"></span>
 </div>
 
 </div>
@@ -121,6 +122,7 @@
       </div>
       <div class="clr"></div>
     </div>
+    <span ng-if="!patients" translate="doctor.noPatient"></span>
   </div>
 </div>
 

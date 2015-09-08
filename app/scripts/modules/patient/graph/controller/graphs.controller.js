@@ -10,8 +10,29 @@ angular.module('hillromvestApp')
       $scope.format = 'weekly';
       $scope.selectedGraph = 'HMR';
       $scope.selectedDateOption = 'WEEK';
+      $scope.role = localStorage.getItem('role');
       // Data available for graph for ID 160 only for now 
       $scope.patientId = parseInt(localStorage.getItem('patientID'));
+      var currentRoute = $state.current.name;
+      var server_error_msg = "Some internal error occurred. Please try after sometime.";
+      $scope.showNotes = false;
+      $scope.patientTab = currentRoute;
+      if ($state.current.name === 'patientdashboard') {
+        $scope.initPatientDashboard();        
+      }else if(currentRoute === 'patientdashboardCaregiver'){
+        $scope.initPatientCaregiver();
+      }else if(currentRoute === 'patientdashboardCaregiverAdd'){
+        $scope.initpatientCraegiverAdd();
+      }else if(currentRoute === 'patientdashboardCaregiverEdit'){
+        $scope.initpatientCaregiverEdit();
+      }else if(currentRoute === 'patientdashboardDeviceProtocol'){
+        $scope.initPatientDeviceProtocol();
+      }else if(currentRoute === 'patientdashboardClinicHCP'){
+        $scope.initPatientClinicHCPs();
+      } else if(currentRoute === 'patientOverview') {
+        $scope.patientId = parseInt($stateParams.patientId);
+        $scope.weeklyChart();
+      }
       $scope.compliance = {};
       $scope.compliance.pressure = true;
       $scope.compliance.duration = true;
@@ -43,24 +64,8 @@ angular.module('hillromvestApp')
       $scope.perPageCount = 4;
       $scope.notePageCount = 0;
       $scope.totalNotes = 0;
-      $scope.getPatientById(localStorage.getItem('patientID'));
-      var currentRoute = $state.current.name;
-      var server_error_msg = "Some internal error occurred. Please try after sometime.";
-      $scope.showNotes = false;
-      $scope.patientTab = currentRoute;
-      if ($state.current.name === 'patientdashboard') {
-        $scope.initPatientDashboard();        
-      }else if(currentRoute === 'patientdashboardCaregiver'){
-        $scope.initPatientCaregiver();
-      }else if(currentRoute === 'patientdashboardCaregiverAdd'){
-        $scope.initpatientCraegiverAdd();
-      }else if(currentRoute === 'patientdashboardCaregiverEdit'){
-        $scope.initpatientCaregiverEdit();
-      }else if(currentRoute === 'patientdashboardDeviceProtocol'){
-        $scope.initPatientDeviceProtocol();
-      }else if(currentRoute === 'patientdashboardClinicHCP'){
-        $scope.initPatientClinicHCPs();
-      }
+      $scope.getPatientById($scope.patientId);
+      
     };
 
 
@@ -330,9 +335,13 @@ angular.module('hillromvestApp')
       $scope.hmrGraph = true;
       $scope.removeGraph();
     };
-
+    $scope.getUTCTime = function() {
+      $scope.UTCfromTimestamp = dateService.getUTCTimeStamp($scope.fromTimeStamp);
+      $scope.UTCtoTimestamp = dateService.getUTCTimeStamp($scope.toTimeStamp);
+    };
     $scope.getNonDayHMRGraphData = function() {
-      patientDashBoardService.getHMRGraphPoints($scope.patientId, $scope.fromTimeStamp, $scope.toTimeStamp, $scope.groupBy).then(function(response){
+      $scope.getUTCTime();
+      patientDashBoardService.getHMRGraphPoints($scope.patientId, $scope.UTCfromTimestamp, $scope.UTCtoTimestamp, $scope.groupBy).then(function(response){
         //Will get response data from real time API once api is ready
         $scope.completeGraphData = response.data;
         if($scope.completeGraphData.actual === undefined){
@@ -442,7 +451,8 @@ angular.module('hillromvestApp')
     }
 
     $scope.getDayHMRGraphData = function() {
-      patientDashBoardService.getHMRBarGraphPoints($scope.patientId, $scope.fromTimeStamp).then(function(response){
+      $scope.getUTCTime();
+      patientDashBoardService.getHMRBarGraphPoints($scope.patientId, $scope.UTCfromTimestamp).then(function(response){
         $scope.completeGraphData = response.data;
         if($scope.completeGraphData.actual === undefined){
            $scope.hmrBarGraphData = [];
@@ -485,7 +495,8 @@ angular.module('hillromvestApp')
     };
 
     $scope.getComplianceGraphData = function(format) {
-      patientDashBoardService.getHMRGraphPoints($scope.patientId, $scope.fromTimeStamp, $scope.toTimeStamp, $scope.groupBy).then(function(response){
+      $scope.getUTCTime();
+      patientDashBoardService.getHMRGraphPoints($scope.patientId, $scope.UTCfromTimestamp, $scope.UTCtoTimestamp, $scope.groupBy).then(function(response){
         $scope.completeComplianceData = response.data;
         if($scope.completeComplianceData.actual === undefined){
           $scope.complianceGraphData = [];
@@ -945,7 +956,10 @@ angular.module('hillromvestApp')
       });
     };
 
-    $scope.initPatientDeviceProtocol = function(){     
+    $scope.initPatientDeviceProtocol = function(){ 
+      $scope.devicesErrMsg = null;
+      $scope.protocolsErrMsg = null;
+      $scope.devices = []; $scope.devices.length = 0;   
       patientService.getDevices(localStorage.getItem('patientID')).then(function(response){
         angular.forEach(response.data.deviceList, function(device){
           var _date = dateService.getDate(device.createdDate);
@@ -956,14 +970,25 @@ angular.module('hillromvestApp')
           device.createdDate = date;
           device.days = dateService.getDays(_date);
         });
-        $scope.devices = response.data.deviceList;
+        if(response.data.deviceList){
+          $scope.devices = response.data.deviceList;
+        }else{
+          $scope.devicesErrMsg = true;
+        }
       });
       $scope.getProtocols(localStorage.getItem('patientID'));    
     };
 
     $scope.getProtocols = function(patientId){
+      $scope.protocols = []; $scope.protocols.length = 0;
+      $scope.protocolsErrMsg = null;
+      $scope.devicesErrMsg = null;
       patientService.getProtocol(patientId).then(function(response){
-        $scope.protocols = response.data.protocol;
+        if(response.data.protocol){
+          $scope.protocols = response.data.protocol;
+        }else if(response.data.message){
+          $scope.protocolsErrMsg = response.data.message;
+        }
         $scope.addProtocol = true;
         angular.forEach($scope.protocols, function(protocol){
           if(!protocol.deleted){
@@ -980,13 +1005,21 @@ angular.module('hillromvestApp')
 
     $scope.getClinicsOfPatient = function(){
       patientService.getClinicsLinkedToPatient(localStorage.getItem('patientID')).then(function(response){
-        $scope.clinics = response.data.clinics;                
+        if(response.data.clinics){
+          $scope.clinics = response.data.clinics;  
+        }else if(response.data.message){
+          $scope.clinicsOfPatientErrMsg = response.data.message;
+        }             
       });
     };
     
     $scope.getHCPsOfPatient = function(){
       patientService.getHCPsLinkedToPatient(localStorage.getItem('patientID')).then(function(response){
-        $scope.hcps = response.data.hcpUsers;                
+        if(response.data.hcpUsers){
+          $scope.hcps = response.data.hcpUsers;
+        }else if(response.data.message){
+          $scope.hcpsOfPatientErrMsg = response.data.message;
+        }              
       });
     };
 

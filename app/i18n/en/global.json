@@ -40,6 +40,12 @@
             },
             "language": "Language"
         },
+        "tabs": {
+            "manage-patients": "Patients",
+            "manage-hcps": "HCPs",
+            "manage-clinics": "Clinics",
+            "manage-users": "HillRom Users"
+        },
         "form": {
             "username": "Login",
             "username.placeholder": "enter your Hill-Rom ID or Email ID",

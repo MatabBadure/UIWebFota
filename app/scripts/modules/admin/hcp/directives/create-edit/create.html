@@ -157,12 +157,10 @@
             </div> -->
             <div class="col-md-10 dashboard__form__input--option reset-padding selected-box-container">
               <div class="custom-dropdown">
-                <select ng-model="doctor.credentials" validate-on-blur name="credential" ng-options="option for option in credentialsList" ng-selected="{{option === doctor.credentials}}" ng-change="checkCredential()"required>
+                <select ng-model="doctor.credentials" validate-on-blur name="credential" ng-options="option for option in credentialsList" ng-selected="{{option === doctor.credentials}}" ng-change="checkCredential()">
                 <option value="" selected >Select a credential</option>
                 </select>
                 <div ng-show="(form.credential.$dirty && form.credential.$showValidationMessage && form.credential.$invalid) || submitted" class="">
-                  <span class="has-error" ng-show="form.credential.$error.required" translate="doctor.error.credential.required">
-                  </span>
                 </div>
               </div>
             </div>
