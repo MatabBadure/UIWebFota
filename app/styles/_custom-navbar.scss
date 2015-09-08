@@ -193,6 +193,12 @@ $header--background: $body-bg;
     color: $bombay;
 }
 
+.navbar-secondary .navbar-right li:last-child a #icon-arrow {
+	font-size: 10px;
+    padding-left: 4px;
+    color: inherit;
+}
+
 .navbar-secondary .navbar-right li:last-child a:hover #pop-over-link, #icon-arrow {
 	color: $storm-dust;
 }
