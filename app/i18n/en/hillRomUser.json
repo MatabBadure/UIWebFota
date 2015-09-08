@@ -56,6 +56,7 @@
         "middle-name": "Middle Name",
         "last-name": "Last Name",
         "employee-id": "Employee ID",
+        "hrId": "HR ID",
         "address": "Address",
         "city": "City",
         "zipcode": "Zip",
