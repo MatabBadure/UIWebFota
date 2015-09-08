@@ -31,7 +31,7 @@ $header--background: $body-bg;
 		}
 
 		&--text-secondary {
-			color: $silver-fade;
+			color: $silver-approx;
 			font-size: $font-size-small;
 		}
 	}
@@ -195,7 +195,7 @@ $header--background: $body-bg;
 
 .navbar-secondary .navbar-right li:last-child a #icon-arrow {
 	font-size: 10px;
-    padding-left: 4px;
+    padding-left: 10px;
     color: inherit;
 }
 
