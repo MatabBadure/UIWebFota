@@ -107,20 +107,15 @@ angular.module('hillromvestApp')
         });
       },
       getRelationships: function() {
-        ///api/patient/relationships
         var url = admin.patient.baseURL + 'relationships';
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
           return response;
-        });
-        /*return $http.get('scripts/modules/admin/hill-rom-user/services/relationship.json')
-          .success(function(response) {
-            return response;
-          });*/
+        });        
       },
-      getNotesOfUserInInterval: function(id, fromDate, toDate) {         
-        var url = admin.hillRomUser.notes + '?from=' + fromDate + '&to=' + toDate + '&userId='+id +'&page=1&per_page=100&filter=deleted:false';    
+      getNotesOfUserInInterval: function(id, fromDate, toDate, pageNo, offset) { 
+        var url = admin.hillRomUser.notes + '?from=' + fromDate + '&to=' + toDate + '&userId='+id +'&page='+pageNo+'&per_page='+offset;    
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {

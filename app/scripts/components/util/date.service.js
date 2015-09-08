@@ -55,6 +55,10 @@ angular.module('hillromvestApp')
         return Math.ceil((date.getDate() + firstDay)/7);
         return new Date(d).getMonthWeek;
       },
+      getDateByTimestamp: function(data){
+        var date = new Date(data);
+        return this.getMonthName(date) + ' ' + this.getDay(date.getDate()) + ', ' + this.getYear(date.getFullYear(date))
+      },
       getDateFromTimeStamp: function(data) {
         var date = new Date(data);
         return this.getDay(date.getDate()) + '/' + this.getMonth(date.getMonth(date)) + '/' + this.getYear(date.getFullYear(date))
@@ -234,6 +238,12 @@ angular.module('hillromvestApp')
           default:
               break;
         }
+      },
+
+      getMonthName: function(date){
+        var month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        var date = new Date(date);
+        return month[date.getMonth()];
       },
 
       getDays: function(date){

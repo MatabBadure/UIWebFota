@@ -83,6 +83,12 @@
             "add-exist-admin": "Select Existing Admin",
             "add-new-admin": "Create New Admin"
         },
+        "filter": {
+            "all": "All",
+            "active": "Active",
+            "inactive": "Inactive",
+            "expired": "Expired"
+        },
         "admin": {
             "first-name": "First Name",
             "middle-name": "Middle Name",

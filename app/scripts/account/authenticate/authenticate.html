@@ -83,7 +83,7 @@
           </div>
           <div class="form-group">
             <input type="checkbox" name="tnc" ng-model="authenticate.tnc" required>
-            <span class="sec-quest">Agree to Terms and Conditions*</span>
+            <span class="sec-quest">I agree to the <a href="">Terms</a> and <a href="">Conditions</a></span>
             <div ng-show="(form.tnc.$dirty && form.tnc.$invalid) || submitted">
               <span class="login-has-error"
                 ng-show="form.tnc.$error.required">
@@ -91,7 +91,7 @@
               </span>
             </div>
           </div>
-          <button type="submit" class="myButton" ng-click="formSubmit()">Reset Password</button>
+          <button type="submit" class="myButton" ng-click="formSubmit()">Activate account</button>
         </form>
       </div>
     </div>

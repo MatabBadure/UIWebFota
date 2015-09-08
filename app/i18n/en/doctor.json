@@ -86,11 +86,13 @@
             "associated-clinic": "Associated Clinic"
         },
         "patient-assoc": "Patient Association",
+        "patient-associated": "Patient Associated",
         "clinic-title": "Clinic Association",
         "filter": {
+            "all": "All",
             "active": "Active",
             "inactive": "Inactive",
-            "all": "All"
+            "expired": "Expired"
         },
         "error":{
             "clinic":{

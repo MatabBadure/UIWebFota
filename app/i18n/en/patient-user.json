@@ -170,7 +170,10 @@
       "npinumber": "NPI number",      
       "city": "City",
       "state": "State",
-      "status": "Status"
+      "status": "Status",
+      "active": "Active",
+      "inactive": "Inactive",
+      "pending": "Pending"
     },    
     "select-relationship": "Select relationship.",
     "toggle-navigation": "Toggle navigation",
@@ -198,6 +201,10 @@
         "compliance": "Compliance",
         "day": "Day",
         "year": "Year",
-        "month": "Month"
+        "month": "Month",
+        "next": "Next",
+        "previous": "Previous",
+        "found": "Found",
+        "notes": "Notes"
      }
 }

@@ -190,7 +190,7 @@
 			</div>
 
 
-<div class="col-md-16 note_edit_container hide_content" id="note_edit_container">
+   <div class="col-md-16 note_edit_container hide_content" id="note_edit_container">
 	<form name="form" ng-submit="createNote();">
 		<div class="col-md-2 date_col">
 			<input class="date_input"  data-provide="datepicker"  data-date-format="yyyy-mm-dd"  bootstrap-datepicker data-date-end-date="0d"  id="edit_note_date" ng-model="edit_date" placeholder="Date"/></div>
@@ -215,6 +215,20 @@
 	<div class="btn_group patient_dashdoard_btns">
 		<button class="hillrom-btn btn-submit float-right" ng-click="openAddNote();" translate="graph.add-note"></button>
 	</div>
+	<div class="dashboard__manage-view--pagination">
+        <div class="col-md-16 reset-padding-right">
+          <div class="navbar-right">
+            <span class="record-found" ng-if="notes.length > 0">{{notes.length}} <span translate="graph.notes"></span></span>
+            <span class="record-found" ng-if="notes.length > 0" translate="graph.found"></span>
+            <span ng-show="perPageCount > 1">
+              <span class="navigaion-link cursor-pointer" ng-class="{ 'inactive': !(curNotePageIndex > 1) }" ng-click="showAllNotes('PREV')" translate="graph.previous"></span>
+              <span class="navigaion-no">{{curNotePageIndex}}</span>
+              <span class="navigaion-link cursor-pointer" ng-class="{ 'inactive': !(notePageCount > curNotePageIndex) }" ng-click="showAllNotes('NEXT')" translate="graph.next"></span>
+            </span>
+          </div>
+          <div class="clr"></div>
+        </div>
+      </div>
 </div>
 </div>
 </div>

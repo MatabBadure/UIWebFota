@@ -98,7 +98,7 @@ angular.module('hillromvestApp')
     $scope.getClinicsOfHCP = function(doctorId){
       DoctorService.getClinicsAssociatedToHCP(doctorId).then(function(response) {
         $scope.clinicsOfHCP =  response.data.clinics;
-        $scope.clinicList = [{"clinicId": 0, "name": "ALL"}];
+        $scope.clinicList = [{"clinicId": "", "name": "ALL"}];
         $scope.sortOption = $scope.clinicList[0].clinicId;
         if($scope.clinicsOfHCP){
           angular.forEach($scope.clinicsOfHCP, function(clinic){
@@ -172,6 +172,7 @@ angular.module('hillromvestApp')
       var data = [{'id': $stateParams.doctorId}];
       clinicService.associateHcp(clinic.id, data).then(function(response){
         $scope.getClinicsOfHCP($stateParams.doctorId);
+        $scope.getAvailableclinics($stateParams.doctorId);
         notyService.showMessage(response.data.message, 'success');
       }).catch(function(response){
          if (response.data.message !== undefined) {

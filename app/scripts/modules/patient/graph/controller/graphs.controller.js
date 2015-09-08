@@ -38,7 +38,11 @@ angular.module('hillromvestApp')
       $scope.getMissedTherapyDaysCount();
       $scope.fromTimeStamp = dateService.getnDaysBackTimeStamp(7);
       $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp);
-      $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp);
+      $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp);   
+      $scope.curNotePageIndex = 1;
+      $scope.perPageCount = 4;
+      $scope.notePageCount = 0;
+      $scope.totalNotes = 0;
       $scope.getPatientById(localStorage.getItem('patientID'));
       var currentRoute = $state.current.name;
       var server_error_msg = "Some internal error occurred. Please try after sometime.";
@@ -1164,8 +1168,19 @@ angular.module('hillromvestApp')
       console.log("start date : "+dateService.getDateFromTimeStamp($scope.graphStartDate)+ " end date : "+dateService.getDateFromTimeStamp($scope.graphEndDate));
     });
     
-    $scope.showAllNotes = function(){      
-      $scope.getNotesBetweenDateRange($scope.fromTimeStamp, $scope.toTimeStamp);
+    $scope.showAllNotes = function(page){    
+    if (page !== undefined) {
+        if (page === "PREV" && $scope.curNotePageIndex > 1) {
+         $scope.curNotePageIndex--;
+        } else if (page === "NEXT" && $scope.curNotePageIndex < $scope.notePageCount) {
+          $scope.curNotePageIndex++;
+        } else {
+          return false;
+        }
+      } else {
+        $scope.curNotePageIndex = 1;
+      }
+      $scope.getNotesBetweenDateRange($scope.fromTimeStamp, $scope.toTimeStamp, true);        
     };
 
     $scope.hideNoteContainer = function(){
@@ -1182,13 +1197,16 @@ angular.module('hillromvestApp')
       $("#add_note_container").addClass("hide_content");  
     };
 
-    $scope.getNotesBetweenDateRange = function(fromTimeStamp, toTimeStamp){  
-    console.log("start date : "+dateService.getDateFromTimeStamp($scope.fromTimeStamp)+ " end date : "+dateService.getDateFromTimeStamp($scope.toTimeStamp)); 
-      UserService.getNotesOfUserInInterval(localStorage.getItem('patientID'), fromTimeStamp, toTimeStamp).then(function(response){
+
+    $scope.getNotesBetweenDateRange = function(fromTimeStamp, toTimeStamp, scrollUp){  
+      console.log("start date : "+dateService.getDateFromTimeStamp($scope.fromTimeStamp)+ " end date : "+dateService.getDateFromTimeStamp($scope.toTimeStamp) + " page no : "+ $scope.curNotePageIndex + " page count : " + $scope.perPageCount); 
+      UserService.getNotesOfUserInInterval(localStorage.getItem('patientID'), fromTimeStamp, toTimeStamp, $scope.curNotePageIndex, $scope.perPageCount ).then(function(response){
         $scope.showNotes = true; 
-        $scope.notes = response.data;  
-        if($scope.notes.length >= 1){
-          $scope.showNotesCSS();
+        $scope.notes = response.data; 
+        $scope.totalNotes = response.headers()['x-total-count']; 
+        $scope.notePageCount = Math.ceil($scope.totalNotes / 4);
+        $scope.showNotesCSS();
+        if($scope.notes.length >= 1 || scrollUp){          
           scrollPageToTop("add_note_container");  
         }  
         $scope.hideAddNote();    
