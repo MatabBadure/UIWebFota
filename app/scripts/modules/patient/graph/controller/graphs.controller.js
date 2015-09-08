@@ -10,8 +10,29 @@ angular.module('hillromvestApp')
       $scope.format = 'weekly';
       $scope.selectedGraph = 'HMR';
       $scope.selectedDateOption = 'WEEK';
+      $scope.role = localStorage.getItem('role');
       // Data available for graph for ID 160 only for now 
       $scope.patientId = parseInt(localStorage.getItem('patientID'));
+      var currentRoute = $state.current.name;
+      var server_error_msg = "Some internal error occurred. Please try after sometime.";
+      $scope.showNotes = false;
+      $scope.patientTab = currentRoute;
+      if ($state.current.name === 'patientdashboard') {
+        $scope.initPatientDashboard();        
+      }else if(currentRoute === 'patientdashboardCaregiver'){
+        $scope.initPatientCaregiver();
+      }else if(currentRoute === 'patientdashboardCaregiverAdd'){
+        $scope.initpatientCraegiverAdd();
+      }else if(currentRoute === 'patientdashboardCaregiverEdit'){
+        $scope.initpatientCaregiverEdit();
+      }else if(currentRoute === 'patientdashboardDeviceProtocol'){
+        $scope.initPatientDeviceProtocol();
+      }else if(currentRoute === 'patientdashboardClinicHCP'){
+        $scope.initPatientClinicHCPs();
+      } else if(currentRoute === 'patientOverview') {
+        $scope.patientId = parseInt($stateParams.patientId);
+        $scope.weeklyChart();
+      }
       $scope.compliance = {};
       $scope.compliance.pressure = true;
       $scope.compliance.duration = true;
@@ -43,24 +64,8 @@ angular.module('hillromvestApp')
       $scope.perPageCount = 4;
       $scope.notePageCount = 0;
       $scope.totalNotes = 0;
-      $scope.getPatientById(localStorage.getItem('patientID'));
-      var currentRoute = $state.current.name;
-      var server_error_msg = "Some internal error occurred. Please try after sometime.";
-      $scope.showNotes = false;
-      $scope.patientTab = currentRoute;
-      if ($state.current.name === 'patientdashboard') {
-        $scope.initPatientDashboard();        
-      }else if(currentRoute === 'patientdashboardCaregiver'){
-        $scope.initPatientCaregiver();
-      }else if(currentRoute === 'patientdashboardCaregiverAdd'){
-        $scope.initpatientCraegiverAdd();
-      }else if(currentRoute === 'patientdashboardCaregiverEdit'){
-        $scope.initpatientCaregiverEdit();
-      }else if(currentRoute === 'patientdashboardDeviceProtocol'){
-        $scope.initPatientDeviceProtocol();
-      }else if(currentRoute === 'patientdashboardClinicHCP'){
-        $scope.initPatientClinicHCPs();
-      }
+      $scope.getPatientById($scope.patientId);
+      
     };
 
 
