@@ -15,10 +15,13 @@
         "detail": {
             "title": "Doctor"
         },
+        "noClinics": "No Clinic Associated",
+        "noPatient": "No Patient Associated.",
         "general-details":  "General Details",
         "personal-details": "Personal Details",
         "health-details":   "Health Details",
         "clinic": "Clinic",
+        "speciality": "Speciality",
         "doctor": "Doctor",
         "add-clinic": "Add Another Clinic",
         "create-caregiver": "Yes",
