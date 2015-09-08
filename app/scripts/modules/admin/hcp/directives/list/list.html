@@ -24,7 +24,6 @@
               <option value="" selected translate="doctor.filter.all"></option>
               <option value="email" translate="doctor.filter.active"></option>
               <option value="firstName" translate="doctor.filter.inactive"></option>
-              <option value="lastName" translate="doctor.filter.expired"></option>
             </select>
           </div>
         </div>
@@ -55,7 +54,7 @@
         <div class="clr"></div>
       </div>
 
-      <div class="dashboard__manage-view--list" ng-repeat="doctor in doctors" ng-click="doctor.deleted || selectDoctor(doctor)" ng-class="{ 'inactive': doctor.deleted }">
+      <div class="dashboard__manage-view--list" ng-repeat="doctor in doctors" ng-click="doctor.deleted || selectDoctor(doctor)">
           <div class="col-md-3 reset-padding centered">
             <span class="main-prim-info">{{doctor.lastName}} {{doctor.firstName}}</span>
           </div>
@@ -79,9 +78,9 @@
           </div>
 
           <div class="col-md-1 reset-padding centered">
-            <span class="short-info" ng-if="doctor.activated && !doctor.deleted" translate="doctor.filter.active"></span>
-            <span class="short-info" ng-if="!doctor.activated && !doctor.deleted" translate="doctor.filter.pending"></span>
-            <span class="short-info" ng-if="doctor.deleted" translate="doctor.filter.inactive"></span>
+            <span class="short-info active" ng-if="doctor.activated && !doctor.deleted" translate="doctor.status-type.active"></span>
+            <span class="short-info pending" ng-if="!doctor.activated && !doctor.deleted" translate="doctor.status-type.pending"></span>
+            <span class="short-info inactive" ng-if="doctor.deleted" translate="doctor.status-type.inactive"></span>
           </div>
 
           <div class="clr"></div>

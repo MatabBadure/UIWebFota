@@ -89,6 +89,11 @@
             "inactive": "Inactive",
             "expired": "Expired"
         },
+        "status-type": {
+            "active": "Active",
+            "inactive": "Inactive",
+            "pending": "Pending"
+        },
         "admin": {
             "first-name": "First Name",
             "middle-name": "Middle Name",
