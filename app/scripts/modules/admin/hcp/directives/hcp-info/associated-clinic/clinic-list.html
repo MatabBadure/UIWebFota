@@ -12,10 +12,9 @@
     <span class="admin-views--title" translate="doctor.clinic-title"></span>
   </div>
 </div>
-
 <div class="dashboard dashboard--content">
   <div class="container dashboard__manage-view margin-top">
-    <div class="dashboard__manage-view--list assoc" ng-repeat="clinic in clinicsOfHCP">
+    <div class="dashboard__manage-view--list assoc" ng-repeat="clinic in clinicsOfHCP" ng-if="clinicsOfHCP.length > 0">
       <div class="col-md-4 reset-padding centered">
         <span class="main-prim-info">{{clinic.name}}</span>
       </div>
@@ -47,6 +46,9 @@
        <span class="icon-delete-icon icons" ng-click="showclinicDisassociatedModal(clinic.id)"></span>
       </div>
       <div class="clr"></div>
+    </div>
+    <div class="dashboard__manage-view--list assoc" ng-if="clinicsAssociatedErrMsg">
+      <span translate="doctor.no-clinic-found"></span>
     </div>
   </div>
 </div>

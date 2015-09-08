@@ -206,5 +206,8 @@
         "previous": "Previous",
         "found": "Found",
         "notes": "Notes"
-     }
+     },
+     "no-clinic-found": "No clinic found.",
+     "no-hcp-found": "No hcp found."
+
 }

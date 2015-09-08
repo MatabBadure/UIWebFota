@@ -141,6 +141,8 @@
             "zipcode":{
                 "pattern": "Zip Code is invalid."
             }
-        }
+        },
+        "no-clinic-found": "No clinic found.",
+        "no-hcp-found": "No hcp found."
     }
 }
