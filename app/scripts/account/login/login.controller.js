@@ -73,12 +73,14 @@ angular.module('hillromvestApp')
             }
           } else if (data.data.APP_CODE === 'EMAIL_PASSWORD_RESET') {
             localStorage.setItem('token', data.data.token);
+            $scope.message = '';
             $scope.isFirstLogin = true;
             $scope.isEmailExist = false;
             $scope.showLogin = false;
           } else if (data.data.APP_CODE === 'PASSWORD_RESET') {
             localStorage.setItem('token', data.data.token);
             $scope.isFirstLogin = true;
+            $scope.message = '';
             $scope.showLogin = false;
           } else {
             $scope.otherError = true;
