@@ -80,6 +80,12 @@
             "inactive": "Inactive",
             "expired": "Expired"
         },
+        "tabs": {
+            "manage-patients": "Manage Patients",
+            "manage-hcps": "Manage HCPs",
+            "manage-clinics": "Manage Clinics",
+            "manage-users": "Manage HillRom Users"
+        },
         "delete": {
             "warning": "Are you sure you want to Deactivate the Patient?",
             "message": "If you deactivate the patient, you will no longer be able to view the information."

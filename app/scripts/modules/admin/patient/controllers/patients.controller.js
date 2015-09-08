@@ -84,6 +84,8 @@ angular.module('hillromvestApp')
         $scope.protocols = response.data.protocol;
         $scope.addProtocol = true;
         angular.forEach($scope.protocols, function(protocol){
+          protocol.createdDate = dateService.getDateByTimestamp(protocol.createdDate);
+          protocol.lastModifiedDate = dateService.getDateByTimestamp(protocol.lastModifiedDate);
           if(!protocol.deleted){
             $scope.addProtocol = false;
           }
