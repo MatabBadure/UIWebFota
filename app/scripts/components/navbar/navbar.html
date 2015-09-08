@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation" ng-if="userRole === 'ADMIN'">
   <div class="container" ng-switch="$root.isAuthenticated">
     <div class="navbar-header navbar-primary">
       <button data-target="#navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">

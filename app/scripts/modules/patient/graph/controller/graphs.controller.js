@@ -945,7 +945,10 @@ angular.module('hillromvestApp')
       });
     };
 
-    $scope.initPatientDeviceProtocol = function(){     
+    $scope.initPatientDeviceProtocol = function(){ 
+      $scope.devicesErrMsg = null;
+      $scope.protocolsErrMsg = null;
+      $scope.devices = []; $scope.devices.length = 0;   
       patientService.getDevices(localStorage.getItem('patientID')).then(function(response){
         angular.forEach(response.data.deviceList, function(device){
           var _date = dateService.getDate(device.createdDate);
@@ -956,14 +959,25 @@ angular.module('hillromvestApp')
           device.createdDate = date;
           device.days = dateService.getDays(_date);
         });
-        $scope.devices = response.data.deviceList;
+        if(response.data.deviceList){
+          $scope.devices = response.data.deviceList;
+        }else{
+          $scope.devicesErrMsg = true;
+        }
       });
       $scope.getProtocols(localStorage.getItem('patientID'));    
     };
 
     $scope.getProtocols = function(patientId){
+      $scope.protocols = []; $scope.protocols.length = 0;
+      $scope.protocolsErrMsg = null;
+      $scope.devicesErrMsg = null;
       patientService.getProtocol(patientId).then(function(response){
-        $scope.protocols = response.data.protocol;
+        if(response.data.protocol){
+          $scope.protocols = response.data.protocol;
+        }else if(response.data.message){
+          $scope.protocolsErrMsg = response.data.message;
+        }
         $scope.addProtocol = true;
         angular.forEach($scope.protocols, function(protocol){
           if(!protocol.deleted){
@@ -980,13 +994,21 @@ angular.module('hillromvestApp')
 
     $scope.getClinicsOfPatient = function(){
       patientService.getClinicsLinkedToPatient(localStorage.getItem('patientID')).then(function(response){
-        $scope.clinics = response.data.clinics;                
+        if(response.data.clinics){
+          $scope.clinics = response.data.clinics;  
+        }else if(response.data.message){
+          $scope.clinicsOfPatientErrMsg = response.data.message;
+        }             
       });
     };
     
     $scope.getHCPsOfPatient = function(){
       patientService.getHCPsLinkedToPatient(localStorage.getItem('patientID')).then(function(response){
-        $scope.hcps = response.data.hcpUsers;                
+        if(response.data.hcpUsers){
+          $scope.hcps = response.data.hcpUsers;
+        }else if(response.data.message){
+          $scope.hcpsOfPatientErrMsg = response.data.message;
+        }              
       });
     };
 

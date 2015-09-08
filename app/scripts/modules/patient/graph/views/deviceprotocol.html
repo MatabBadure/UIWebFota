@@ -20,6 +20,9 @@
       <span class="protocol-list--value"> 22 January, 2015{{protocol.endDate}}</span>
     </div>   
   </div>
+  <div class="col-md-16 protocol-list" ng-if="protocolsErrMsg">
+    <span translate="no-protocol-found"></span>
+  </div>
 
   <div class="col-md-16 reset-padding">
     <div class="col-md-8 clinic-link">
@@ -50,6 +53,9 @@
       <span>{{device.createdDate}}</span><span ng-if="device.active"> - Active date</span>
       <span ng-if="!device.active"> - Inactive date</span>
     </div>   
+  </div>
+  <div class="col-md-16 device-list" ng-if="devicesErrMsg">
+    <span translate="no-device-found"></span>
   </div>
 
   <div class="col-md-16 reset-padding">
