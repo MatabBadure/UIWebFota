@@ -641,9 +641,6 @@ angular.module('hillromvestApp')
     };
 
     $scope.updateDevice = function(){
-      if($scope.device.edit){
-        delete $scope.device.edit;
-      }
       patientService.addDevice($stateParams.patientId, $scope.device).then(function(response){
         $state.go('patientProtocol');
       }).catch(function(response){});
