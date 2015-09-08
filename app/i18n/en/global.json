@@ -83,6 +83,11 @@
                     "maxlength": "Your e-mail cannot be longer than 50 characters."
                 }
             }
+        },
+        "role":{
+            "super-admin": "Super Admin",
+            "account-services": "RC Admin",
+            "associates":"Associates"
         }
     },
     "entity": {

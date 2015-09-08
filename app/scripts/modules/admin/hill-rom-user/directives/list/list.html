@@ -54,7 +54,9 @@
         <span class="main-prim-info">{{user.lastName}} {{user.firstName}}</span>
       </div>
       <div class="col-md-3 reset-padding centered">
-        <span class="impo-highlight">{{user.role}}</span>
+        <span class="impo-highlight" ng-if="user.role === 'ADMIN'" translate="global.role.super-admin"></span>
+        <span class="impo-highlight" ng-if="user.role === 'ASSOCIATES'" translate="global.role.associates"></span>
+        <span class="impo-highlight" ng-if="user.role === 'ACCT_SERVICES'" translate="global.role.account-services"> </span>
       </div>
       <div class="col-md-3 reset-padding centered">
         <span class="impo-highlight">{{user.hillromId}}</span>
