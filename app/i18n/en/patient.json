@@ -80,11 +80,11 @@
             "inactive": "Inactive",
             "expired": "Expired"
         },
-        "tabs": {
-            "manage-patients": "Manage Patients",
-            "manage-hcps": "Manage HCPs",
-            "manage-clinics": "Manage Clinics",
-            "manage-users": "Manage HillRom Users"
+        "status-type": {
+            "active": "Active",
+            "inactive": "Inactive",
+            "expired": "Expired",
+            "pending": "Pending"
         },
         "delete": {
             "warning": "Are you sure you want to Deactivate the Patient?",

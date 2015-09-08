@@ -94,6 +94,11 @@
             "inactive": "Inactive",
             "expired": "Expired"
         },
+        "status-type": {
+            "active": "Active",
+            "inactive": "Inactive",
+            "pending": "Pending"
+        },
         "error":{
             "clinic":{
                 "required": "Clinic is Required"

@@ -784,6 +784,19 @@ tags-input.ng-invalid .tags {
   font-weight: $font-weight-medium;
 }
 
+.dashboard__manage-view--list .short-info.active {
+  color: $fruit-salad;
+}
+
+.dashboard__manage-view--list .short-info.inactive, 
+.dashboard__manage-view--list .short-info.pending {
+  color: $silver-approx;
+}
+
+.dashboard__manage-view--list .short-info.expired {
+  color: $Lava-expired;
+}
+
 .dashboard__manage-view--list .desc-prim-info {
   font-size: $font-size-small;
   color: $nevada;
