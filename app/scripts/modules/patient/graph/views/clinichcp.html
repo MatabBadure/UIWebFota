@@ -65,12 +65,9 @@
         <span class="short-info">{{clinic.state}}</span>
       </div>
 
-      <div class="col-md-1 reset-padding">        
-        <div class="col-md-1 reset-padding">
-          <div class="icon-font">
-            <span class="icon-lungs"></span>
-          </div>
-        </div>  
+      <div class="col-md-1 reset-padding">
+        <span class="short-info active" ng-if="!clinic.deleted" translate="hcp.active"></span>
+        <span class="short-info inactive" ng-if="clinic.deleted" translate="hcp.inactive"></span>
       </div>
 
       <div class="clr"></div>
