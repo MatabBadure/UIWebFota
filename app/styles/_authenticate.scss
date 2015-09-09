@@ -125,6 +125,14 @@
 
 .form__container__auth {
 	background-color: rgba(255, 255, 255, 0.7);
+	position: relative;
+}
+
+.login__container__left-section {
+	height: 225px;
+    position: absolute;
+    top: 50%;
+    margin-top: -112.5px;
 }
 
 .login-auth-form {
