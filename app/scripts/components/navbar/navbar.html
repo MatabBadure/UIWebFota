@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default navbar-fixed-top" role="navigation" ng-if="userRole === 'ADMIN'">
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container" ng-switch="$root.isAuthenticated">
     <div class="navbar-header navbar-primary">
       <button data-target="#navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">
@@ -13,7 +13,7 @@
         <span class="navbar-brand__desc--text-secondary">Health Portal</span>
       </div>
     </div>
-    <div class="collapse navbar-collapse navbar-secondary" id="navbar-collapse" ng-switch-when=true>
+    <div class="collapse navbar-collapse navbar-secondary" id="navbar-collapse" ng-if="userRole === 'ADMIN'" ng-switch-when=true>
       <ul class="nav navbar-nav navbar-right">
         <li class="icon-border">
           <a ng-class="{ active: isActive('admin/patients')}" ng-href="#/admin/patients">
