@@ -73,8 +73,8 @@ angular.module('hillromvestApp')
               $scope.userStatus.message = response.data.ERROR;
             } else {
               $scope.userStatus.message = 'Error occured! Please try again';
-              notyService.showMessage($scope.userStatus.message, 'warning');
             }
+            notyService.showMessage($scope.userStatus.message, 'warning');
           });
         };
 
