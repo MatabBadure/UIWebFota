@@ -58,6 +58,7 @@
 }
 .dashboard__form--type{
   color: $pickled-bluewood;
+  font-size: 17px;
 }
 .dashboard__form--label-val {
   line-height: 30px;
@@ -146,6 +147,7 @@
   text-transform: capitalize;
   font-size: $font-size-small;
   cursor: pointer;
+  font-weight: bold;
 }
 
 .btn-submit {
@@ -308,6 +310,15 @@
   padding-bottom: 0;
   &:hover {
     background-color: inherit;
+  }
+  .assoc_activity_col{
+    text-align: center;
+    .glyphicon{
+      cursor: pointer;
+      &:hover{
+        color: $pickled-bluewood;
+      }
+    }
   }
 }
 
@@ -505,13 +516,16 @@
 }
 
 .modal__header {
-	background-color: $pickled-bluewood;
+	background-color: $cyan-blue-light;
 	color: white;
 	padding: 10px 20px;
 	margin-bottom: 0;
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
 	text-transform: none;
+  p{
+    margin-bottom: 0px;
+  }
 }
 
 .modal__content {
@@ -579,7 +593,7 @@ tags-input.ng-invalid .tags {
 }
 
 .user-detail-info {
-  padding: 0;
+  padding: 0px 50px;
   border: 1px solid $celeste;
 }
 
@@ -666,7 +680,7 @@ tags-input.ng-invalid .tags {
 // sdfdsfdsf
 
 .user-detail-info {
-  padding: 0;
+  padding: 0px 50px;
   border: 1px solid $celeste;
 }
 
@@ -853,9 +867,10 @@ tags-input.ng-invalid .tags {
   padding: 10px 0;
   &--title {
     font-size: $font-size-title;
-    font-weight: $font-weight-medium;
+    font-weight: $font-weight-bold;
     color: $pickled-bluewood;
   }
+
 }
 
 .clinic-hcp .dashboard__manage-view--list {

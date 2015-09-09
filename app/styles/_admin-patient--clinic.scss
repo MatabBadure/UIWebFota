@@ -74,6 +74,9 @@
   text-align: center;
   span {
     cursor: pointer;
+    &:hover{
+      color: $pickled-bluewood;
+    }
   }
 }
 
@@ -88,4 +91,5 @@
     border-radius: 0;
     color: $pickled-bluewood;
   }
+  
 }
