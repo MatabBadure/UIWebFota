@@ -22,6 +22,7 @@
 
 .dashbord-nav__primary--title {
 	line-height: 42px;
+  font-weight: normal;
 }
 
 .dashbord-nav__secondary {
@@ -31,6 +32,7 @@
 		display: table-cell;
 		vertical-align: middle;
     padding-right: 7px;
+    font-weight: normal;
 	}
 }
 
@@ -45,7 +47,7 @@
 .user-required {
 	color: $bombay;
   font-size: 12px;
-  font-weight: $font-weight-bold;
+  font-weight: $font-weight-medium;
   text-align: right;
 }
 
@@ -54,7 +56,10 @@
 	color: $nevada;
 	font-weight: normal;
 }
-
+.dashboard__form--type{
+  color: $pickled-bluewood;
+  font-size: 17px;
+}
 .dashboard__form--label-val {
   line-height: 30px;
   color: $regent-gray;
@@ -142,15 +147,19 @@
   text-transform: capitalize;
   font-size: $font-size-small;
   cursor: pointer;
+  font-weight: bold;
 }
 
 .btn-submit {
-  border: 1px solid $terracotta;
-  background-color: $terracotta;
-  color: $body-bg;
+  border: 1px solid $sunshade;
+  background-color: $sunshade;
+  color: $tuna;
   margin-left: 10px;
 }
-
+.fropile_update_btn_group .cancel{
+  background-color: $texas-rose;
+  border: 1px solid $texas-rose;
+}
 .btn-primary {
   border: 1px solid $sunshade;
   background-color: $sunshade;
@@ -203,8 +212,11 @@
   padding: 0 13px;
   line-height: 30px;
   font-weight: normal;
+  color: $pickled-bluewood;
 }
-
+.dashboard__form{
+  margin-bottom: 20px;
+}
 .dashboard__manage-view--search {
 	margin-bottom: 30px;
 }
@@ -230,8 +242,23 @@
 	padding-left: 10px;
 	font-weight: normal;
 	border-radius: 0;
+  box-shadow: none;
+}
+::-webkit-input-placeholder {
+   color: $silver-approx;
 }
 
+:-moz-placeholder { /* Firefox 18- */
+   color: $silver-approx;  
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   color: $silver-approx;  
+}
+
+:-ms-input-placeholder {  
+   color: $silver-approx;  
+}
 .dashboard__manage-view--search select {
 	height: 30px;
 	width: 100%;
@@ -254,6 +281,7 @@
   color: $body-bg;
   padding: 0;
   font-size: 10px;
+  font-weight: 300;
   position: absolute;
   top: 8px !important;
   right: 9px;
@@ -270,7 +298,7 @@
 }
 
 .dashboard__manage-view--list {
-	border-bottom: 1px solid #ccc;
+	border-bottom: 1px solid #f1f1f1;
   padding-top: 10px;
   padding-bottom: 10px;
   cursor: pointer;
@@ -284,6 +312,15 @@
   padding-bottom: 0;
   &:hover {
     background-color: inherit;
+  }
+  .assoc_activity_col{
+    text-align: center;
+    .glyphicon{
+      cursor: pointer;
+      &:hover{
+        color: $pickled-bluewood;
+      }
+    }
   }
 }
 
@@ -481,13 +518,16 @@
 }
 
 .modal__header {
-	background-color: $pickled-bluewood;
+	background-color: $cyan-blue-light;
 	color: white;
 	padding: 10px 20px;
 	margin-bottom: 0;
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
 	text-transform: none;
+  p{
+    margin-bottom: 0px;
+  }
 }
 
 .modal__content {
@@ -555,7 +595,7 @@ tags-input.ng-invalid .tags {
 }
 
 .user-detail-info {
-  padding: 0;
+  padding: 0px 50px;
   border: 1px solid $celeste;
 }
 
@@ -642,7 +682,7 @@ tags-input.ng-invalid .tags {
 // sdfdsfdsf
 
 .user-detail-info {
-  padding: 0;
+  padding: 0px 50px;
   border: 1px solid $celeste;
 }
 
@@ -725,6 +765,7 @@ tags-input.ng-invalid .tags {
   padding: 0;
   color: $cyan-blue-light;
   font-size: $font-size-small;
+  font-weight: 300;
 }
 
 .dashboard__manage-view--header .header--type .sort-icon--default:after {
@@ -769,7 +810,7 @@ tags-input.ng-invalid .tags {
 
 .dashboard__manage-view--list .main-secon-info {
   font-size: $font-size-small;
-  color: $bombay;
+  color: $regent-gray;
   display: block;
   font-weight: $font-weight-medium;
 }
@@ -828,9 +869,10 @@ tags-input.ng-invalid .tags {
   padding: 10px 0;
   &--title {
     font-size: $font-size-title;
-    font-weight: $font-weight-medium;
+    font-weight: $font-weight-bold;
     color: $pickled-bluewood;
   }
+
 }
 
 .clinic-hcp .dashboard__manage-view--list {

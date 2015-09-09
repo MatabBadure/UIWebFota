@@ -117,7 +117,8 @@
   
   a {
     font-weight: 100;
-    color: #ffffff;
+    color: $tuna;
+    font-weight: bold;
   }
 
   .link {
@@ -126,23 +127,24 @@
 
   #forgotpwd a {
     color: #585858;
+    font-weight: normal;
   }
 }
 
 .myButton {
-  background-color:#e4685d;
+  background-color:#ff9829;
   -moz-border-radius:2px;
   -webkit-border-radius:2px;
   border: none;
   border-radius:4px;  
   display:inline-block;
   cursor:pointer;
-  color:#ffffff;
-  font-family:Arial;
-  font-size:15px;
-  padding:2px 25px;
+  color:#363a41;
+  font-size:12px;
+  padding:5px 25px;
   text-decoration:none;
-  text-shadow:0px 1px 0px #b23e35;
+  font-weight: bold;
+  /*text-shadow:0px 1px 0px #b23e35;*/
   float: right;
 }
 
