@@ -117,7 +117,8 @@
   
   a {
     font-weight: 100;
-    color: #ffffff;
+    color: $tuna;
+    font-weight: bold;
   }
 
   .link {
@@ -126,6 +127,7 @@
 
   #forgotpwd a {
     color: #585858;
+    font-weight: normal;
   }
 }
 
