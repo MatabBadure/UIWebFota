@@ -417,8 +417,8 @@ angular.module('hillromvestApp')
       $scope.showModalClinic = false;
     };
 
-    $scope.disassociatePatient =function(){
-      patientService.disassociatePatient($scope.patient.id).then(function(response){
+    $scope.disassociatePatient =function(disassociatePatient){
+      patientService.disassociatePatient(disassociatePatient.id).then(function(response){
         notyService.showMessage(response.data.message, 'success');
         $state.go('patientUser');
       }).catch(function(response){});
@@ -710,6 +710,15 @@ angular.module('hillromvestApp')
           }
         });
       });
+    };
+
+    $scope.openPatientDeactivateModal = function(patient){
+      $scope.deletePatient = patient;
+      $scope.patientDeactivateModal = true;
+    };
+
+    $scope.closePatientDeactivateModal = function(){
+      $scope.patientDeactivateModal = false;
     };
 
     $scope.init();

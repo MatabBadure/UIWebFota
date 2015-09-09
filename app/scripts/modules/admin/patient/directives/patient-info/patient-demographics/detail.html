@@ -185,9 +185,29 @@
     <div class="col-md-16 margin-top reset-padding">
       <div class="fropile_update_btn_group">
         <buton class="hillrom-btn btn-primary float-right btn-margin-left" ng-click="openEditDetail()" translate="patient.btn.edit">Edit</buton>
-        <buton class="cancel hillrom-btn btn-primary float-right" translate="patient.btn.deactivate">Deactivate</buton>
+
+        <buton class="cancel hillrom-btn btn-primary float-right" translate="patient.btn.deactivate" ng-click="openPatientDeactivateModal(patient)">Deactivate</buton>
         <div class="clr"></div>
       </div>
     </div>
     </div>
+</div>
+<div ng-if="patientDeactivateModal" class="modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true">
+  <div class="modal__dialog">
+    <div class="modal__content">
+      <header class="modal__header">
+        <button type="button" class="modal__close" data-dismiss="modal" ng-click="closePatientDeactivateModal()">&times;</button>
+         <p translate="patient.delete.warning"></p>
+      </header>
+      <div class="modal__body">
+         <div class="modal--message" translate="patient.delete.message"></div>
+         <div class="row modal--custom-btn">
+          <buton class="hillrom-btn btn-submit float-right" ng-click="disassociatePatient(deletePatient)">Yes</buton>
+          <buton class="hillrom-btn btn-submit float-right" data-dismiss="modal" ng-click="closePatientDeactivateModal()">No</buton>
+         </div>
+      </div>
+      <footer class="modal__footer">
+      </footer>
+    </div>
+  </div>
 </div>
