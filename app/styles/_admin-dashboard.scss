@@ -359,7 +359,6 @@
 }
 
 .dashboard__manage-view--list .inactive {
-	color: $Parsley;
   cursor: default;
 }
 
@@ -688,7 +687,8 @@ tags-input.ng-invalid .tags {
 }
 
 .admin-user .detail-list--desc .inactive {
-  color: $silver-approx
+  color: $silver-approx;
+  cursor: default;
 }
 
 .admin-user .detail-list--desc .icon-font {

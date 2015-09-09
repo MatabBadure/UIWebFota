@@ -57,7 +57,7 @@
         <div class="clr"></div>
       </div>
 
-      <div class="dashboard__manage-view--list" ng-repeat="patient in patients" ng-click="patient.isDeleted || selectPatient(patient)" ng-readonly="true">
+      <div class="dashboard__manage-view--list" ng-repeat="patient in patients" ng-click="patient.isDeleted || selectPatient(patient)" ng-readonly="true" ng-class="{'inactive': patient.isDeleted}">
           <div class="col-md-2 reset-padding">
             <span class="main-prim-info">{{patient.lastName}} {{patient.firstName}}</span>
             <span class="main-secon-info">{{patient.dob}}</span>
@@ -84,10 +84,10 @@
           <div class="col-md-1 reset-padding">
             <span class="short-info active centered" ng-if="!patient.isDeleted" translate="patient.status-type.active"></span>
 
-            <!-- Added it for inactive status -->
-            <!-- <span class="short-info inactive centered" ng-if="patient.isDeleted" translate="patient.status-type.inactive"></span> -->
+            <span class="short-info inactive centered" ng-if="patient.isDeleted" translate="patient.status-type.inactive"></span>
             
-            <span class="short-info expired centered" ng-if="patient.isDeleted" translate="patient.status-type.expired"></span>
+            <!-- Added it for expired status -->
+            <!-- <span class="short-info expired centered" ng-if="patient.isDeleted" translate="patient.status-type.expired"></span> -->
           </div>
 
           <div class="col-md-1 reset-padding-left centered text-right">
