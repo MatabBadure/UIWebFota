@@ -10,6 +10,29 @@
     <span class="admin-views--title" translate="patient.clinic-title"></span>
   </div>
 
+  <div class="dashboard dashboard--content">
+    <div class="dashboard__manage-view margin-top">
+      <div class="dashboard__manage-view--header">
+          <div class="col-md-3 header--type">
+            <span translate="patient.clinic-caption.clinic-name"></span>
+          </div>
+          <div class="col-md-4 header--type">
+            <span translate="patient.clinic-caption.address"></span>
+          </div>
+          <div class="col-md-3 header--type">
+            <span translate="patient.clinic-caption.phone-number"></span>
+          </div>
+          <div class="col-md-3 header--type">
+            <span translate="patient.clinic-caption.fax-number"></span>
+          </div>
+          <div class="col-md-2 header--type">
+            <span translate="patient.clinic-caption.hr-id"></span>
+          </div>
+          <div class="clr"></div>
+        </div>
+    </div>
+  </div>
+
   <div class="col-md-16 clinic-list" ng-repeat="aClinic in associatedClinics track by $index" ng-if="associatedClinics.length > 0">
     <div class="col-md-3 clinic-list__detail">
       <span class="clinic-list__detail--name" ng-bind="aClinic.name"></span>
@@ -48,6 +71,29 @@
 
   <div class="col-md-16 admin-views">
     <span class="admin-views--title" translate="patient.hcp-title"></span>
+  </div>
+
+  <div class="dashboard dashboard--content">
+    <div class="dashboard__manage-view margin-top">
+      <div class="dashboard__manage-view--header">
+          <div class="col-md-3 header--type">
+            <span translate="patient.hcp-caption.hcp-name"></span>
+          </div>
+          <div class="col-md-4 header--type">
+            <span translate="patient.hcp-caption.address"></span>
+          </div>
+          <div class="col-md-3 header--type">
+            <span translate="patient.hcp-caption.phone-number"></span>
+          </div>
+          <div class="col-md-3 header--type">
+            <span translate="patient.hcp-caption.fax-number"></span>
+          </div>
+          <div class="col-md-2 header--type">
+            <span translate="patient.hcp-caption.npi-id"></span>
+          </div>
+          <div class="clr"></div>
+        </div>
+    </div>
   </div>
 
   <div class="col-md-16 clinic-list" ng-repeat="hcp in associatedHCPs track by $index" ng-if="associatedHCPs.length > 0">

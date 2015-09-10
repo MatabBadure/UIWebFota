@@ -19,6 +19,20 @@
           "edit": "Edit",
           "delete": "Delete"
         },
+        "clinic-caption": {
+          "clinic-name": "Clinic Name",
+          "address": "Address",
+          "phone-number": "Phone Number",
+          "fax-number": "Fax Number",
+          "hr-id": "Hill-rom ID"
+        },
+        "hcp-caption": {
+          "clinic-name": "Clinic Name",
+          "address": "Address",
+          "phone-number": "Phone Number",
+          "fax-number": "Fax Number",
+          "npi-id": "NPI Number"
+        },
         "clinic-title": "Clinic",
         "caregiver-title": "Caregivers",
         "device-title": "Device Information",
