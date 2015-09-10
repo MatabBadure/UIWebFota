@@ -1122,7 +1122,8 @@ angular.module('hillromvestApp')
         $scope.noteTextError =  null;
         if($scope.textNote && $scope.textNote.length > 0){ 
           if($scope.edit_date && $scope.edit_date != 'undefined' && $scope.edit_date.length > 0){
-            var editDate= dateService.convertYyyyMmDdToTimestamp($scope.edit_date);
+            var editDate = $scope.edit_date;//dateService.convertYyyyMmDdToTimestamp($scope.edit_date);
+            alert("edit date : "+editDate);
             var data = {};
             data.noteText = $scope.textNote;
             data.userId = localStorage.getItem('patientID');
@@ -1276,9 +1277,9 @@ angular.module('hillromvestApp')
           }
         }
       }
-
-      if($scope.getNotesBetweenDateRange($scope.graphStartDate,$scope.graphEndDate));
-      console.log("start date : "+dateService.getDateFromTimeStamp($scope.graphStartDate)+ " end date : "+dateService.getDateFromTimeStamp($scope.graphEndDate));
+      $scope.getNotesBetweenDateRange($scope.graphStartDate,$scope.graphEndDate);
+      //if($scope.getNotesBetweenDateRange(dateService.convertDateToYyyyMmDdFormat($scope.graphStartDate),dateService.convertDateToYyyyMmDdFormat($scope.graphEndDate));
+      //console.log("start date : "+dateService.getDateFromTimeStamp($scope.graphStartDate)+ " end date : "+dateService.getDateFromTimeStamp($scope.graphEndDate));
     });
     
     $scope.showAllNotes = function(page){    
@@ -1318,8 +1319,10 @@ angular.module('hillromvestApp')
       }else{
         patientId = $stateParams.patientId;
       }
-      console.log("start date : "+dateService.getDateFromTimeStamp($scope.fromTimeStamp)+ " end date : "+dateService.getDateFromTimeStamp($scope.toTimeStamp) + " page no : "+ $scope.curNotePageIndex + " page count : " + $scope.perPageCount); 
-      UserService.getNotesOfUserInInterval(patientId, fromTimeStamp, toTimeStamp, $scope.curNotePageIndex, $scope.perPageCount ).then(function(response){
+      var fromDate = dateService.convertDateToYyyyMmDdFormat(fromTimeStamp);
+      var toDate = dateService.convertDateToYyyyMmDdFormat(toTimeStamp);
+      console.log("start date : "+dateService.getDateFromTimeStamp(fromTimeStamp)+ " end date : "+dateService.getDateFromTimeStamp(toTimeStamp) + " page no : "+ $scope.curNotePageIndex + " page count : " + $scope.perPageCount); 
+      UserService.getNotesOfUserInInterval(patientId, fromDate, toDate, $scope.curNotePageIndex, $scope.perPageCount ).then(function(response){
         $scope.showNotes = true; 
         $scope.notes = response.data; 
         $scope.totalNotes = response.headers()['x-total-count']; 
