@@ -215,3 +215,9 @@ a::-moz-focus-inner {
 .disabled-box {
   color: $alto;
 }
+
+.word-ellipsis {
+	white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
