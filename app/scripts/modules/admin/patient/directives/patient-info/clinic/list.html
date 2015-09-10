@@ -78,7 +78,7 @@
   </div>
   <div class="col-md-16 reset-padding">
     <div class="col-md-8 clinic-link">
-      <input type="text" ng-show="searchHCPText" ng-model="searchHcp" typeahead="hcp as hcp.lastName +' ' + hcp.firstName for hcp in hcps | filter:$viewValue | filter:{deleted: false}" typeahead-on-select="selectHcpForPatient($item)" class="form-control" placeholder="{{'patient.placeholder.hcp-link' | translate}}">
+      <input type="text" ng-show="searchHCPText" ng-model="searchHcp" typeahead="hcp as hcp.lastName +' ' + hcp.firstName + ' ' + hcp.email for hcp in hcps | filter:$viewValue | filter:{deleted: false}" typeahead-on-select="selectHcpForPatient($item)" class="form-control" placeholder="{{'patient.placeholder.hcp-link' | translate}}">
     </div>
 
     <div class="col-md-8 clinic-link">

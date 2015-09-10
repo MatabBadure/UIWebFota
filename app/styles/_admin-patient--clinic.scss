@@ -91,5 +91,11 @@
     border-radius: 0;
     color: $pickled-bluewood;
   }
-  
+
 }
+
+.clinic-link, .exist-link{
+    .dropdown-menu{
+      width: 80%;
+    }
+  }
