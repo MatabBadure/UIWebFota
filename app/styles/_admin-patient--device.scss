@@ -14,7 +14,9 @@
   padding: 0;
   margin-top: 20px;
   div {
+    @extend .word-ellipsis;
     padding: 0;
+    padding-right: 10px;
     span {
       color: $pickled-bluewood;
       font-size: $font-size-base;
@@ -28,6 +30,7 @@
 .admin-user .list-inactive {
   div {
     padding: 0;
+    padding-right: 10px;
     span {
       color: $silver-approx;
     }
