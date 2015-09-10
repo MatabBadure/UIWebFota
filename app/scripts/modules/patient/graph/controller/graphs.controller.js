@@ -396,14 +396,41 @@ angular.module('hillromvestApp')
       });
     };
 
-    $scope.reCreateComplianceGraph = function() {
+    $scope.reCreateComplianceGraph = function() {      
       $scope.removeGraph();
       $scope.handlelegends();
       $scope.createComplianceGraphData();
       $scope.drawComplianceGraph();
     };
 
+    $scope.isLegendEnabled = function(legendFlag){
+      $scope.minComplianceParamErrMsg = false; 
+      $scope.complianceParamErrMsg = false;  
+      var count = $scope.getCountLegends();
+      if(count === 1){
+        $scope.minComplianceParamErrMsg = true; 
+      }else if(count >= 2){
+        $scope.complianceParamErrMsg = true; 
+      }
+    };
+
+    $scope.getCountLegends = function(){      
+      var count = 0 ;
+      if($scope.compliance.pressure === true ){
+        count++;
+      }
+      if($scope.compliance.duration === true ){
+        count++;
+      }
+      if($scope.compliance.frequency === true ){
+        count++;
+      }
+      return count;      
+    };
+
     $scope.handlelegends = function() {
+      $scope.minComplianceParamErrMsg = false; 
+      $scope.complianceParamErrMsg = false;  
       var count = 0 ;
       if($scope.compliance.pressure === true ){
         count++;

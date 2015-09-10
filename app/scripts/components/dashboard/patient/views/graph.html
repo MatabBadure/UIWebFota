@@ -127,19 +127,21 @@
 				<div class="col-md-16">
 					<div class="pull-right wrapper_custom_check">
 						<form action="#">
-							<div class="custom_check_container">
-								<input id="pressure" class="check" type="checkbox" name="pressure" ng-disabled="pressureIsDisabled" ng-model="compliance.pressure" ng-change="reCreateComplianceGraph()">
+							<div class="custom_check_container" ng-click="pressureIsDisabled && isLegendEnabled('pressureIsDisabled');">
+								<input id="pressure" class="check" type="checkbox" name="pressure" ng-disabled="pressureIsDisabled" ng-model="compliance.pressure" ng-change="reCreateComplianceGraph();$event.stopPropagation();">
 			  		 			<label class="check_label pressure_legend" for="pressure" translate="graph.pressure" ></label>
 							</div>
-				  		 	<div class="custom_check_container">
-				  		 		<input id="frequency" class="check" type="checkbox" name="frequency" ng-disabled="frequencyIsDisabled" ng-model="compliance.frequency" ng-change="reCreateComplianceGraph()">
+				  		 	<div class="custom_check_container" ng-click="frequencyIsDisabled && isLegendEnabled('frequencyIsDisabled');">
+				  		 		<input id="frequency" class="check" type="checkbox" name="frequency" ng-disabled="frequencyIsDisabled" ng-model="compliance.frequency" ng-change="reCreateComplianceGraph();$event.stopPropagation();">
 				  		 		<label class="check_label frequency_legend" for="frequency" translate="graph.frequency" ></label>
 				  		 	</div>
-				  		 	<div class="custom_check_container">
-				  		 		<input id="duration" class="check" type="checkbox" name="duration" ng-disabled="durationIsDisabled" ng-model="compliance.duration" ng-change="reCreateComplianceGraph()">
+				  		 	<div class="custom_check_container" ng-click="durationIsDisabled && isLegendEnabled('durationIsDisabled');">
+				  		 		<input id="duration" class="check" type="checkbox" name="duration" ng-disabled="durationIsDisabled" ng-model="compliance.duration" ng-change="reCreateComplianceGraph();$event.stopPropagation();">
 				  		 		<label class="check_label duration_legend" for="duration" translate="graph.duration" ></label>
-				  		 	</div>
-			  		 	</form>
+				  		 	</div>				  		 	
+			  		 	</form>	
+			  		 	<span ng-show="complianceParamErrMsg" translate="graph.please-deselect-one-item" class="has-error"></span>
+		  		 		<span ng-show="minComplianceParamErrMsg" translate="graph.min-legend-required" class="has-error"></span>		  		 	
 					</div>
 				</div>
 				<div id="complianceGraph" class="complianceGraph col-md-16">

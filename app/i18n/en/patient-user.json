@@ -207,7 +207,9 @@
         "previous": "Previous",
         "found": "Found",
         "notes": "Notes",
-        "no-data-found": "No data found."
+        "no-data-found": "No data found.",
+        "please-deselect-one-item": "Please deselect one item.",
+        "min-legend-required": "At least one item should be selected."
      },
      "no-clinic-found": "No clinic associated.",
      "no-hcp-found": "No hcp associated.",
