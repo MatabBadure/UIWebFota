@@ -271,11 +271,11 @@ angular.module('hillromvestApp')
     }
   };
 
-    $scope.toolTipContentFunction = function(){
+    $scope.toolTipContentStepChart = function(){
       return function(key, x, y, e, graph) {
         var toolTip = '';
         angular.forEach($scope.completeGraphData.actual, function(value) {
-          if(value.timestamp === e.point[0]){
+          if(value.timestamp === e.point.timeStamp){
               toolTip =
                 '<h6>' + dateService.getDateFromTimeStamp(value.timestamp) + '</h6>' +
                 '<ul class="graph_ul">' +
@@ -381,48 +381,9 @@ angular.module('hillromvestApp')
           $scope.plotNoDataAvailable();
         } else {
           $scope.yAxisRangeForHMRLine = graphUtil.getYaxisRangeLineGraph($scope.completeGraphData);
-          $scope.graphData = graphUtil.convertIntoHMRLineGraph($scope.completeGraphData);
-          $scope.customizationInLineGraph = function() {
-
-         var circlesInHMR = d3.select('#HMRLineGraph svg').select('.nv-scatterWrap').select('.nv-group.nv-series-0').selectAll('circle')[0];
-         var count = 0;
-         var missedTherapyCircles = [];
-         angular.forEach($scope.completeGraphData.actual,function(value){
-          if(value.missedTherapy === true){
-            missedTherapyCircles.push(circlesInHMR[count]);
-          }
-          count++;
-         })
-         angular.forEach(missedTherapyCircles,function(circle){
-          d3.select('#HMRLineGraph svg').select('.nv-scatterWrap').select('.nv-group.nv-series-0').append('circle')
-          .attr('cx',circle.attributes.cx.value)
-          .attr('cy',circle.attributes.cy.value)
-          .attr('r',4.5)
-          .attr('class','missed_therapy_node');
-         })
-
-          };
-
-          var circleSelectorInHMR = d3.select('#HMRLineGraph svg').select('.nv-scatterWrap').select('.nv-group.nv-series-0').selectAll('circle')[0];
-          var circleCount;
-          if(circleSelectorInHMR !== undefined) {
-            circleCount = circleSelectorInHMR.length;
-          }
-          var count = 10;
-          $scope.waitFunction = function waitHandler() {
-            circleSelectorInHMR = d3.select('#HMRLineGraph svg').select('.nv-scatterWrap').select('.nv-group.nv-series-0').selectAll('circle')[0];
-            if(circleSelectorInHMR !== undefined) {
-            circleCount = circleSelectorInHMR.length;
-            }
-            if(circleCount > 0 || count === 0 ) {
-              $scope.customizationInLineGraph();
-              return false;
-            } else {
-              count --;
-            }
-            $timeout(waitHandler, 1000);
-          }
-          $scope.waitFunction();
+          $scope.graphData = graphUtil.convertToHMRStepGraph($scope.completeGraphData);
+          //$scope.graphData = graphUtil.convertIntoHMRLineGraph($scope.completeGraphData);
+          $scope.drawHMRLineGraph();
         }
       }).catch(function(response) {
         $scope.graphData = [];
@@ -760,6 +721,7 @@ angular.module('hillromvestApp')
             break;
     }
   };
+
   $scope.drawComplianceGraph = function() {
     d3.select('#complianceGraph svg').selectAll("*").remove();
       nv.addGraph(function() {
@@ -1310,5 +1272,123 @@ angular.module('hillromvestApp')
     };
 
     $scope.init();
-});
 
+      $scope.drawHMRLineGraph = function() {
+        //console.log(JSON.stringify($scope.graphData));
+        nv.addGraph(function() {
+          var chart = nv.models.lineChart()
+          .margin({top: 30, right: 100, bottom: 50, left: 100})
+          .showLegend(false)
+          .interpolate('step-after')
+          .color(d3.scale.category10().range());
+         // chart.noData("Nothing to see here.");
+          chart.tooltipContent($scope.toolTipContentStepChart());
+          //this function to put x-axis labels
+          chart.xAxis.tickFormat(function(d) {
+            if(d % 1 === 0) {
+            var timeStamp = $scope.completeGraphData.actual[d-1].timestamp;
+            switch($scope.format) {
+                case "weekly":
+                    return d3.time.format('%A')(new Date(timeStamp));
+                    break;
+                case "monthly":
+                    return 'week ' + dateService.getWeekOfMonth(timeStamp);
+                    break;
+                case "yearly":
+                    return d3.time.format('%B')(new Date(timeStamp));
+                    break;
+                default:
+                    break;
+            }
+          }
+        });
+
+          chart.yAxis.tickFormat(d3.format('d'));
+          chart.forceY([$scope.yAxisRangeForHMRLine.min, $scope.yAxisRangeForHMRLine.max]);
+            d3.select('#hmrLineGraph svg')
+          .datum($scope.graphData)
+          .transition().duration(500).call(chart);
+          //
+          /*
+          */
+
+         var circlesInHMR = d3.select('#hmrLineGraph svg').select('.nv-scatterWrap').select('.nv-group.nv-series-0').selectAll('circle')[0];
+         var count = 0;
+         var missedTherapyCircles = [];
+         angular.forEach($scope.completeGraphData.actual,function(value){
+          if(value.missedTherapy === true){
+            missedTherapyCircles.push(circlesInHMR[count]);
+          }
+          count++;
+         })
+         angular.forEach(missedTherapyCircles,function(circle){
+          d3.select('#hmrLineGraph svg').select('.nv-scatterWrap').select('.nv-group.nv-series-0').append('circle')
+          .attr('cx',circle.attributes.cx.value)
+          .attr('cy',circle.attributes.cy.value)
+          .attr('r',4.5)
+          .attr('class','missed_therapy_node');
+         })
+          //
+          return chart;
+      });
+    }
+
+    $scope.drawHMRBarGraph = function() {
+        //console.log(JSON.stringify($scope.graphData));
+        nv.addGraph(function() {
+          var chart = nv.models.multiBarChart()
+          .margin({top: 30, right: 100, bottom: 50, left: 100})
+          .showLegend(false)
+          .color(d3.scale.category10().range());
+         // chart.noData("Nothing to see here.");
+          chart.tooltipContent($scope.toolTipContentStepChart());
+          //this function to put x-axis labels
+          chart.xAxis.tickFormat(function(d) {
+            if(d % 1 === 0) {
+            var timeStamp = $scope.completeGraphData.actual[d-1].timestamp;
+            switch($scope.format) {
+                case "weekly":
+                    return d3.time.format('%A')(new Date(timeStamp));
+                    break;
+                case "monthly":
+                    return 'week ' + dateService.getWeekOfMonth(timeStamp);
+                    break;
+                case "yearly":
+                    return d3.time.format('%B')(new Date(timeStamp));
+                    break;
+                default:
+                    break;
+            }
+          }
+        });
+
+          chart.yAxis.tickFormat(d3.format('d'));
+          chart.forceY([$scope.yAxisRangeForHMRLine.min, $scope.yAxisRangeForHMRLine.max]);
+            d3.select('#hmrLineGraph svg')
+          .datum($scope.graphData)
+          .transition().duration(500).call(chart);
+          //
+          /*
+          */
+
+         var circlesInHMR = d3.select('#hmrLineGraph svg').select('.nv-scatterWrap').select('.nv-group.nv-series-0').selectAll('circle')[0];
+         var count = 0;
+         var missedTherapyCircles = [];
+         angular.forEach($scope.completeGraphData.actual,function(value){
+          if(value.missedTherapy === true){
+            missedTherapyCircles.push(circlesInHMR[count]);
+          }
+          count++;
+         })
+         angular.forEach(missedTherapyCircles,function(circle){
+          d3.select('#hmrLineGraph svg').select('.nv-scatterWrap').select('.nv-group.nv-series-0').append('circle')
+          .attr('cx',circle.attributes.cx.value)
+          .attr('cy',circle.attributes.cy.value)
+          .attr('r',4.5)
+          .attr('class','missed_therapy_node');
+         })
+          //
+          return chart;
+      });
+    }
+});

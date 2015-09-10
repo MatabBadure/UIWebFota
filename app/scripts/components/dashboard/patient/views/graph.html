@@ -79,7 +79,10 @@
 		<div class="col-md-16" class="all_graph_wrapper">
 			<div ng-if="hmrGraph" class="dashboard_line_graph">
 				<div ng-if="hmrLineGraph">
-					<nvd3-line-chart
+				<div id="hmrLineGraph" class="complianceGraph col-md-16">
+					<svg style="height:350px"> </svg>
+				</div>
+					<!-- <nvd3-line-chart
 					data="graphData"
 					id="HMRLineGraph"
 					height="350"
@@ -98,7 +101,7 @@
 					setminmax="hmrLineSetMinMax()"
 					tooltipcontent="toolTipContentFunction()" >
 					<svg></svg>
-					</nvd3-line-chart>
+					</nvd3-line-chart> -->
 				</div>
 				<div ng-if="hmrBarGraph">
 					<nvd3-multi-bar-chart

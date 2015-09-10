@@ -18,6 +18,25 @@ angular.module('hillromvestApp')
       return graphDataList;
       }
 
+      this.convertToHMRStepGraph = function(data) {
+        var pointSet = [];
+        var graphData = {};
+        var graphDataList =[];
+        var count = 1;
+        angular.forEach(data.actual, function(value) {
+          var point = {};
+          point.x = count++;
+          point.y = Math.floor(value.hmr);
+          point.timeStamp = value.timestamp;
+          pointSet.push(point);
+        });
+        graphData.values = pointSet;
+        graphData.color = '#4e95c4';
+        graphData.area = true;
+        graphDataList.push(graphData);
+      return graphDataList;
+      }
+
       var arrayMax = Function.prototype.apply.bind(Math.max, null);
       var arrayMin = Function.prototype.apply.bind(Math.min, null);
 
@@ -29,9 +48,11 @@ angular.module('hillromvestApp')
         });
         var max = arrayMax(hmrSet);
         var min = arrayMin(hmrSet);
-        range.max = Math.ceil((max + (max-min))/10) * 10;
+        range.max = Math.ceil((max + (max-min)/4)/10) * 10;
         if(min !== 0 && min > (max-min)){
-          range.min = Math.floor((min - ((max-min)/2))/10) * 10;  
+          range.min = Math.floor((min - ((max-min)/4))/10) * 10;  
+        } else {
+          range.min = min;
         }
         return range;
       }
