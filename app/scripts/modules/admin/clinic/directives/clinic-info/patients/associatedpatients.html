@@ -35,7 +35,9 @@
       </div>
       <div class="col-md-4">
         <span class="user-home-no"></span>
-        <span class="user-address">{{patient.address}}</span>
+        <span class="short-info">{{patient.city}} </span>
+        <span class="short-info" ng-if="patient.state && patient.city">,</span>
+        <span class="short-info">{{patient.state}} </span>
       </div>
       <div class="col-md-4 middle-detail">
         <span class="mobile">{{patient.mobilePhone}}</span>
