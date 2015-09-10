@@ -7,6 +7,7 @@ angular.module('hillromvestApp')
       $scope.hmrLineGraph = true;
       $scope.hmrBarGraph = false;
       $scope.hmrGraph = true;
+      $scope.isComplianceExist = false;
       $scope.format = 'weekly';
       $scope.selectedGraph = 'HMR';
       $scope.selectedDateOption = 'WEEK';
@@ -518,6 +519,7 @@ angular.module('hillromvestApp')
         if($scope.completeComplianceData.actual === undefined){
           $scope.complianceGraphData = [];
           $scope.plotNoDataAvailable();
+          $scope.isComplianceExist = false;
           //$scope.drawComplianceGraph();
         } else {
           //recommended values
@@ -531,11 +533,14 @@ angular.module('hillromvestApp')
           $scope.completecomplianceGraphData = graphUtil.convertIntoComplianceGraph($scope.completeComplianceData.actual);          
           $scope.yAxis1Max = $scope.yAxisRangeForCompliance.maxDuration;
           $scope.createComplianceGraphData();
+          $scope.isComplianceExist = true;
           $scope.drawComplianceGraph();
         }
       }).catch(function(response) {
         $scope.complianceGraphData = [];
-        $scope.drawComplianceGraph();
+        $scope.plotNoDataAvailable();
+        $scope.isComplianceExist = false;
+        //$scope.drawComplianceGraph();
       });
     };
 
@@ -830,28 +835,32 @@ angular.module('hillromvestApp')
         attr('class','minRecommendedLevel').
         attr('transform','translate(0, '+ y1AxisMinTransform + ')').
         append('text').
-        text($scope.yAxis1MinMark).
+        //text($scope.yAxis1MinMark).
+        text('MIN').
         style('fill','red');
 
         y1AxisMark.append('g').
         attr('class','maxRecommendedLevel').
         attr('transform','translate(0,'+ y1AxisMaxTransform + ')').
         append('text').
-        text($scope.yAxis1MaxMark).
+        //text($scope.yAxis1MaxMark).
+        text('MAX').
         style('fill','green');
 
         y2AxisMark.append('g').
         attr('class','minRecommendedLevel').
         attr('transform','translate(0,'+ y2AxisMinTransform + ')').
         append('text').
-        text($scope.yAxis2MinMark).
+        //text($scope.yAxis2MinMark).
+        text('MIN').
         style('fill','red');
 
         y2AxisMark.append('g').
         attr('class','maxRecommendedLevel').
         attr('transform','translate(0,'+ y2AxisMaxTransform + ')').
         append('text').
-        text($scope.yAxis2MaxMark).
+        //text($scope.yAxis2MaxMark).
+        text('MAX').
         style('fill','green');
       }
       return chart;
