@@ -117,5 +117,57 @@
             "datetimelocal": "This field should be a date and time."
         }
     },
+    "error":{
+        "firstName":{
+            "required": "First Name is required.",
+            "pattern": "First Name cannot have number and special characters.",
+            "minlength": "First Name is required to be at least 2 character.",
+            "maxlength": "First Name cannot be longer than 15 characters."
+        },
+        "lastName":{
+            "required": "Last Name is required.",
+            "pattern": "Last Name cannot have number and special characters.",
+            "minlength": "Last Name is required to be at least 2 character.",
+            "maxlength": "Last Name cannot be longer than 15 characters."
+        },
+        "middleName":{
+            "required": "Middle Name is required.",
+            "pattern": "Middle Name cannot have number and special characters.",
+            "minlength": "Middle Name is required to be at least 2 character.",
+            "maxlength": "Middle Name cannot be longer than 15 characters."
+        },
+        "email":{
+            "invalid": "E-mail is invalid.",
+            "required": "E-mail is required.",
+            "maxlength": "E-mail cannot be longer than 100 characters."
+        },
+        "dob":{
+            "required": "Date of Birth is required.",
+            "future": "Date of Birth cannot be future."
+        },
+        "address":{
+            "maxlength": "Address cannot be longer than 100 characters."
+        },
+        "city": {
+            "maxlength": "City cannot be longer than 15 characters."
+        },
+        "zipcode": {
+            "required": "Zip Code is required.",
+            "invalid": "Zip Code is invalid."
+        },
+        "primaryPhone": {
+            "pattern": "Home phone number is invalid.",
+            "maxlength": "Home phone number is invalid.",
+            "mask": "Home phone number is invalid."
+        },
+        "mobilePhone":{
+            "pattern": "Mobile number is invalid.",
+            "maxlength": "Mobile number is invalid.",
+            "mask": "Mobile number is invalid."
+        },
+        "hrId": {
+            "required": "JDE/HR ID is required."
+        }
+    },
     "footer": "Copyright @ Hill-Rom 2015. All Rights Reserved"
 }
