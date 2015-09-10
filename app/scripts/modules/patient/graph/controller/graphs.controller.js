@@ -11,6 +11,7 @@ angular.module('hillromvestApp')
       $scope.format = 'weekly';
       $scope.selectedGraph = 'HMR';
       $scope.selectedDateOption = 'WEEK';
+      $scope.disableDatesInDatePicker();
       $scope.role = localStorage.getItem('role');
       // Data available for graph for ID 160 only for now 
       $scope.patientId = parseInt(localStorage.getItem('patientID'));
@@ -141,7 +142,27 @@ angular.module('hillromvestApp')
          $scope.yearlyChart($scope.fromTimeStamp);
       }
     };
-    $scope.plotNoDataAvailable = function(){
+
+    $scope.disableDatesInDatePicker = function() {
+      var datePickerCount = document.getElementsByClassName('input-mini').length;
+      var count = 5;
+      $scope.waitFunction = function waitHandler() {
+         datePickerCount = document.getElementsByClassName('input-mini').length;
+        if(datePickerCount > 0 || count === 0 ) {
+          //$scope.customizationForBarGraph();
+          while(datePickerCount >0){
+            document.getElementsByClassName('input-mini')[datePickerCount-1].setAttribute("disabled", "true");
+            datePickerCount --;
+          }
+          return false;
+        } else {
+          count --;
+        }
+        $timeout(waitHandler, 1000);
+      }
+      $scope.waitFunction();
+    }
+    $scope.plotNoDataAvailable = function() {
       $scope.removeGraph();
       d3.selectAll('svg').append('text').
         text("No Data Available!").
