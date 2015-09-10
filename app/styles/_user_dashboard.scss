@@ -426,6 +426,18 @@
 		}
 	}
 }
+.note_delete_edit{
+	margin-right: 5px;
+}
+.dashboard__manage-view--pagination{
+	&.pagination_notes{
+		margin: 20px 5px 15px !important;
+		display: inline-block;
+		float: right;
+
+	}
+	
+}
 
 
 

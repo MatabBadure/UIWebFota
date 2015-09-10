@@ -1122,8 +1122,7 @@ angular.module('hillromvestApp')
         $scope.noteTextError =  null;
         if($scope.textNote && $scope.textNote.length > 0){ 
           if($scope.edit_date && $scope.edit_date != 'undefined' && $scope.edit_date.length > 0){
-            var editDate = $scope.edit_date;//dateService.convertYyyyMmDdToTimestamp($scope.edit_date);
-            alert("edit date : "+editDate);
+            var editDate = $scope.edit_date;            
             var data = {};
             data.noteText = $scope.textNote;
             data.userId = localStorage.getItem('patientID');
@@ -1278,8 +1277,6 @@ angular.module('hillromvestApp')
         }
       }
       $scope.getNotesBetweenDateRange($scope.graphStartDate,$scope.graphEndDate);
-      //if($scope.getNotesBetweenDateRange(dateService.convertDateToYyyyMmDdFormat($scope.graphStartDate),dateService.convertDateToYyyyMmDdFormat($scope.graphEndDate));
-      //console.log("start date : "+dateService.getDateFromTimeStamp($scope.graphStartDate)+ " end date : "+dateService.getDateFromTimeStamp($scope.graphEndDate));
     });
     
     $scope.showAllNotes = function(page){    

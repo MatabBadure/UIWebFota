@@ -181,14 +181,17 @@
 						<div class="col-md-11 description view_content show_content" id="viewnote_{{note.id}}" ng-bind="note.note"></div>
 						<form ng-submit="updateNote(note.id, note.createdOn);">
 						<div id="editform_{{note.id}}" class="col-md-16 edit_content hide_content" ng-show="role === 'PATIENT'" >
-							<div class="col-md-12 description">
+							<div class="col-md-2">
+								<span ng-bind="note.createdOn"></span>
+							</div>
+							<div class="col-md-11 description">
 								<div class="form-group">
-									<textarea id="editedNoteText_{{note.id}}" value="{{note.note}}" maxlength="300"  class="form-control custom_textarea" ></textarea> 
+									<textarea id="editedNoteText_{{note.id}}" value="{{note.note}}" maxlength="300"  class="form-control custom_textarea" rows="1"></textarea> 
 									<span class="has-error" ng-show="noteError" ng-bind="noteError" id="noteError_{{note.id}}"></span>
 								</div>
 							</div>							
 							
-							<div class="col-md-2 edit_delete" style="width: 20% !important;">
+							<div class="col-md-3 edit_delete">
 								<div class="pull-right">
 									<input type="button"  value="Cancel" ng-click="cancelEditNote(note.id);" class="hillrom-btn btn-submit float-right" />	
 									<input type="submit" id="submit" value="Update" class="hillrom-btn btn-submit float-right" />	 									
@@ -197,9 +200,9 @@
 						</div> 				
 						</form>
 						<div class="col-md-3 edit_delete" ng-show="role === 'PATIENT'">
-							<div class="pull-right view_note_act view_content show_content" id="viewnoteact_{{note.id}}">
-								<span class="edit icon" styel="cursor:pointer;" ng-click="openEditNote(note.id, note.note);" translate="graph.edit"></span>
-								<span class="delete icon" styel="cursor:pointer;" ng-click="deleteNote(note.id);" translate="graph.delete"></span>
+							<div class="pull-right view_note_act view_content show_content note_delete_edit" id="viewnoteact_{{note.id}}">
+								<span class="edit icon glyphicon glyphicon-pencil" styel="cursor:pointer;" ng-click="openEditNote(note.id, note.note);"></span>
+								<span class="delete icon glyphicon glyphicon-trash" styel="cursor:pointer;" ng-click="deleteNote(note.id);" ></span>
 
 							</div>
 						</div>
@@ -236,8 +239,8 @@
 	<div class="btn_group patient_dashdoard_btns" ng-show="role === 'PATIENT'">
 		<button class="hillrom-btn btn-submit float-right" ng-click="openAddNote();" translate="graph.add-note"></button>
 	</div>
-	<div class="dashboard__manage-view--pagination" ng-if="notes.length > 0">
-        <div class="col-md-16 reset-padding-right">
+	<div class="dashboard__manage-view--pagination pagination_notes" ng-if="notes.length > 0">
+        <div class="col-md-16">
           <div class="navbar-right">
             <span class="record-found" >{{notes.length}} 
 	            <span translate="graph.notes" ng-if="notes.length > 1"></span>
