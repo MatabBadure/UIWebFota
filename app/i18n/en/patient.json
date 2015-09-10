@@ -50,6 +50,7 @@
         "middle-name": "Middle Name",
         "last-name": "Last Name",
         "date-of-birth": "Date of Birth",
+        "city-state": "City/State",
         "address": "Address",
         "city": "City",
         "zipcode": "Zip",
