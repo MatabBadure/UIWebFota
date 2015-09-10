@@ -111,22 +111,6 @@
         "deleteClinicAdmin":{
             "warning": "Are you sure, You want to delete Clinic Admin?",
             "message": "After Delete You will not be able to see the Clinic Admin."
-        },
-        "error":{
-            "clinicAdmin":{
-                "firstName":{
-                    "required":"First name required"
-                },
-                "lastName":{
-                    "required":"Last name required"
-                },
-                "middleName":{
-                    "":""
-                },
-                "email":{
-                    "required":"Email ID required"
-                }
-            }
         }
     }
 }

@@ -24,9 +24,7 @@
             <div class="col-md-10 dashboard__form--input reset-padding">
               <input class="" type="text" name="serialNumber" ng-model="device.serialNumber" required>
               <div ng-show="(addDeviceForm.serialNumber.$dirty && addDeviceForm.serialNumber.$showValidationMessage && addDeviceForm.serialNumber.$invalid) || submitted">
-                <span class="has-error" ng-show="addDeviceForm.serialNumber.$error.required">
-                  Device Serial Number Required
-                </span>
+                <span class="has-error" ng-show="addDeviceForm.serialNumber.$error.required" translate="error.deviceSerialNumber.required"></span>
               </div>
             </div>
           </div>
@@ -41,9 +39,7 @@
             <div class="col-md-10 dashboard__form--input reset-padding">
               <input class="" type="text" name="bluetoothId" ng-model="device.bluetoothId" required>
               <div ng-show="(addDeviceForm.bluetoothId.$dirty && addDeviceForm.bluetoothId.$showValidationMessage && addDeviceForm.bluetoothId.$invalid) || submitted">
-                <span class="has-error" ng-show="addDeviceForm.bluetoothId.$error.required">
-                  Device Bluetooth ID Required
-                </span>
+                <span class="has-error" ng-show="addDeviceForm.bluetoothId.$error.required" translate="error.deviceBluetoothId.required"></span>
               </div>
             </div>
           </div>
