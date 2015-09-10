@@ -39,7 +39,7 @@
         "role-field": "Role",
         "role": {
             "super-admin": "Super Admin",
-            "account-services": "Account Services",
+            "account-services": "RC Admin",
             "associates":"Associates",
             "default" : "Select a role"
         },
