@@ -93,7 +93,7 @@
 					yAxisLabel="Minutes"
 					xAxisTickFormat="xAxisTickFormatFunction(format)"
 					xAxisTickValues="xAxisTickValuesFunction()"
-					noData="No Data Found!"
+					noData="No Data Available!"
 					objectEquality="true"
 					setminmax="hmrLineSetMinMax()"
 					tooltipcontent="toolTipContentFunction()" >
@@ -114,7 +114,7 @@
 					yAxisLabel="Minutes"
 					xAxisTickFormat="xAxisTickFormatFunction(format)"
 					xAxisTickValues="xAxisTickValuesBarChart()"
-					noData="No Data Found!"
+					noData="No Data Available!"
 					objectEquality="true"
 					setminmax="hmrBarSetMinMax()"
 					customizeBarWidth="customizeBarWidth()"
@@ -126,7 +126,7 @@
 			<div ng-if="complianceGraph">
 				<div class="col-md-16">
 					<div class="pull-right wrapper_custom_check">
-						<form action="#">
+						<form action="#" ng-if="isComplianceExist">
 							<div class="custom_check_container">
 								<input id="pressure" class="check" type="checkbox" name="pressure" ng-disabled="pressureIsDisabled" ng-model="compliance.pressure" ng-change="reCreateComplianceGraph()">
 			  		 			<label class="check_label pressure_legend" for="pressure" translate="graph.pressure" ></label>
