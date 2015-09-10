@@ -70,7 +70,7 @@ angular.module('hillromvestApp')
             $scope.authenticationError = true;
             var loginCount = parseInt(localStorage.getItem('loginCount')) || 0;
             localStorage.setItem('loginCount', loginCount + 1);
-            if (loginCount > 2) {
+            if (loginCount > 1) {
               $scope.showCaptcha = true;
             }
           } else if (data.data.APP_CODE === 'EMAIL_PASSWORD_RESET') {
