@@ -61,7 +61,6 @@ angular.module('hillromvestApp')
             localStorage.setItem('userId', data.data.user.id);
             $state.go('patientUser');
           }
-
         }
       }).catch(function(data) {
         if (data.status === 401) {
@@ -71,6 +70,7 @@ angular.module('hillromvestApp')
             var loginCount = parseInt(localStorage.getItem('loginCount')) || 0;
             localStorage.setItem('loginCount', loginCount + 1);
             if (loginCount > 1) {
+              vcRecaptchaService.reload();
               $scope.showCaptcha = true;
             }
           } else if (data.data.APP_CODE === 'EMAIL_PASSWORD_RESET') {
