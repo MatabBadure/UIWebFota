@@ -915,7 +915,7 @@ angular.module('hillromvestApp')
 
         y1AxisMark.append('g').
         attr('class','minRecommendedLevel').
-        attr('transform','translate(-35, '+ y1AxisMinTransform + ')').
+        attr('transform','translate(-45, '+ y1AxisMinTransform + ')').
         append('text').
         //text($scope.yAxis1MinMark).
         text('MIN').
@@ -923,7 +923,7 @@ angular.module('hillromvestApp')
 
         y1AxisMark.append('g').
         attr('class','maxRecommendedLevel').
-        attr('transform','translate(-35,'+ y1AxisMaxTransform + ')').
+        attr('transform','translate(-45,'+ y1AxisMaxTransform + ')').
         append('text').
         //text($scope.yAxis1MaxMark).
         text('MAX').
