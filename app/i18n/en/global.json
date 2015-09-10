@@ -251,6 +251,12 @@
             "maxlength": "Password cannot be longer than 50 characters.",
             "pattern": "Password complexity criteria not met."
         },
+        "currentPassword": {
+            "required": "Current password is required.",
+            "minlength": "Current password is required to be at least 8 character.",
+            "maxlength": "Current password cannot be longer than 50 characters.",
+            "pattern": "Current password complexity criteria not met."
+        },
         "newPassword": {
             "required": "New password is required.",
             "minlength": "New password is required to be at least 8 character.",

@@ -111,6 +111,10 @@
         "deleteClinicAdmin":{
             "warning": "Are you sure, You want to delete Clinic Admin?",
             "message": "After Delete You will not be able to see the Clinic Admin."
+        },
+        "clinicType":{
+            "parent": "Parent",
+            "child": "Child"
         }
     }
 }

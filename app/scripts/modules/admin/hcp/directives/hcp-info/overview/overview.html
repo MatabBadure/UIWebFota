@@ -98,7 +98,9 @@
       </div>
 
       <div class="col-md-2 reset-padding centered">
-        <span class="short-info">{{patient.patientUser.address}}</span>
+        <span class="short-info">{{patient.patientUser.city}} </span>
+        <span class="short-info" ng-if="patient.patientUser.state && patient.patientUser.city">,</span>
+        <span class="short-info">{{patient.patientUser.state}} </span>
       </div>
 
       <div class="col-md-2 reset-padding centered">

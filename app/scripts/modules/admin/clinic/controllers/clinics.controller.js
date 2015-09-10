@@ -42,10 +42,17 @@ angular.module('hillromvestApp')
       $scope.isAssociatePatient = false;
       clinicService.getClinicAssoctPatients(clinicId).then(function(response){
         $scope.associatedPatients = response.data.patientUsers;
-      }).catch(function(response){});
-      clinicService.getPatients().then(function(response){
-        $scope.patients = response.data.users;
-      }).catch(function(response){});
+        clinicService.getPatients().then(function(response){
+          $scope.patients = response.data.users;
+          for(var i=0; i<$scope.associatedPatients.length; i++){
+            for(var j=0; j<$scope.patients.length; j++){
+              if($scope.associatedPatients[i].id === $scope.patients[j].id){
+                $scope.patients.splice(j,1);
+              }
+            }
+          }
+        }).catch(function(response){});
+      }).catch(function(response){});      
       $scope.getClinicById(clinicId);
     };
 
@@ -53,10 +60,18 @@ angular.module('hillromvestApp')
       $scope.isAssociateHCP = false;
       clinicService.getClinicAssoctHCPs(clinicId).then(function(response){
         $scope.associatedHcps = response.data.hcpUsers;
+        clinicService.getHCPs().then(function(response){
+          $scope.hcps = response.data.users;
+          for(var i=0; i < $scope.associatedHcps.length; i++){
+            for(var j=0; j < $scope.hcps.length; j++){
+              if($scope.associatedHcps[i].id === $scope.hcps[j].id){
+                $scope.hcps.splice(j,1);
+              }
+            }
+          }
+        }).catch(function(response){});
       }).catch(function(response){});
-      clinicService.getHCPs().then(function(response){
-        $scope.hcps = response.data.users;
-      }).catch(function(response){});
+      
       $scope.getClinicById(clinicId);
     };
 
@@ -507,8 +522,8 @@ angular.module('hillromvestApp')
       var data = {
         "id": $scope.clinicAdmin.id
       };
-      clinicService.disassociateClinicAdmmin($stateParams.clinicId, data).then(function(response){
-        $scope.getclinicAdmin($stateParams.clinicId);
+      clinicService.disassociateClinicAdmmin($stateParams.clinicId, data).then(function(response){        
+        $scope.initClinicAdmin($stateParams.clinicId);
         notyService.showMessage(response.data.message, 'success');
       }).catch(function(response){
         if(response.data.message){
@@ -533,7 +548,7 @@ angular.module('hillromvestApp')
         $scope.editClinicAdmin(data);
       } else {
         $scope.createClinicAdmin(data);
-      }
+      }      
     };
 
     $scope.createClinicAdmin = function(data){
