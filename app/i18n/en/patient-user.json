@@ -27,7 +27,7 @@
           "hr-id": "Hill-rom ID"
         },
         "hcp-caption": {
-          "clinic-name": "Clinic Name",
+          "hcp-name": "HCP Name",
           "address": "Address",
           "phone-number": "Phone Number",
           "fax-number": "Fax Number",
