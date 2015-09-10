@@ -93,7 +93,7 @@
 					yAxisLabel="Minutes"
 					xAxisTickFormat="xAxisTickFormatFunction(format)"
 					xAxisTickValues="xAxisTickValuesFunction()"
-					noData="No Data Found!"
+					noData="No Data Available!"
 					objectEquality="true"
 					setminmax="hmrLineSetMinMax()"
 					tooltipcontent="toolTipContentFunction()" >
@@ -114,7 +114,7 @@
 					yAxisLabel="Minutes"
 					xAxisTickFormat="xAxisTickFormatFunction(format)"
 					xAxisTickValues="xAxisTickValuesBarChart()"
-					noData="No Data Found!"
+					noData="No Data Available!"
 					objectEquality="true"
 					setminmax="hmrBarSetMinMax()"
 					customizeBarWidth="customizeBarWidth()"
@@ -199,7 +199,7 @@
 					</div>			
 				</div> 
 			</div>
-			<div class="notes_content" ng-if="notes.length <= 0">
+			<div class="notes_content" ng-if="notes.length <= 0 && !addNoteActive">
 				<center><span translate="graph.no-data-found"></span></center>
 			</div>
 

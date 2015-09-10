@@ -44,7 +44,9 @@
             "manage-patients": "Patients",
             "manage-hcps": "HCPs",
             "manage-clinics": "Clinics",
-            "manage-users": "HillRom Users"
+            "manage-users": "HillRom Users",
+            "notifications": "Notifications",
+            "dashboard": "Dashboard"
         },
         "form": {
             "username": "Login",

@@ -108,12 +108,11 @@ $header--background: $body-bg;
 
 .navbar-secondary .navbar-right li:last-child a {
 	color: $storm-dust;
-	padding: 19px 0;
+	padding: 5px 0;
 	&:hover {
 		background-color: inherit;
 		color: inherit;
 		border-radius: 0;
-  	padding-bottom: 20px;
   	box-shadow : 0 0 0 0 $terracotta inset;
 	}
 }
@@ -131,7 +130,7 @@ $header--background: $body-bg;
 
 .header-popover {
 	.popover.bottom {
-	  margin-top: 21px;
+	  margin-top: 5px;
 	}
 
 	.popover.bottom > .arrow {
@@ -182,6 +181,17 @@ $header--background: $body-bg;
 	color: $bombay;
 }
 
+.header-popover .popover-link .icon-logged-in-user {
+	display: block;
+  padding-top: 10px;
+}
+
+.header-popover .popover-link .user-name {
+	display: block;
+  font-size: 12px;
+  padding-top: 5px;
+}
+
 .header-popover .popover-link .popover .popover-content div:hover span {
 	color: $bombay;
 }
@@ -194,9 +204,9 @@ $header--background: $body-bg;
     color: $bombay;
 }
 
-.navbar-secondary .navbar-right li:last-child a #icon-arrow {
-	font-size: 10px;
-    padding-left: 10px;
+.navbar-secondary .navbar-right li:last-child a .icon-arrow-down {
+		font-size: 8px;
+    padding-left: 5px;
     color: inherit;
 }
 
@@ -205,12 +215,16 @@ $header--background: $body-bg;
 }
 .navbar-secondary .navbar-right li .notif-bell { 
     position: relative; 
-    padding: 19px 0;
+    padding: 5px 0;
+    color: inherit; 
+    cursor: pointer;
+    .link-text {
+    	color: $lapis-lazuli;
+    }
     &:hover { 
         background-color: inherit; 
         color: inherit; 
         border-radius: 0; 
-        padding-bottom: 20px; 
         box-shadow : none; 
     } 
 } 
@@ -222,7 +236,7 @@ $header--background: $body-bg;
 .navbar-secondary .navbar-right li a span.notification-count { 
     position: absolute; 
     top: 7px; 
-    left: 20px; 
+    left: 37px; 
     font-size: 10px; 
     border: 1px solid $sunshade; 
     border-radius: 50%; 
