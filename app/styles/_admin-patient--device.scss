@@ -14,7 +14,9 @@
   padding: 0;
   margin-top: 20px;
   div {
+    @extend .word-ellipsis;
     padding: 0;
+    padding-right: 10px;
     span {
       color: $pickled-bluewood;
       font-size: $font-size-base;
@@ -28,6 +30,7 @@
 .admin-user .list-inactive {
   div {
     padding: 0;
+    padding-right: 10px;
     span {
       color: $silver-approx;
     }
@@ -61,22 +64,18 @@
 .admin-user .protocol-list .protocol-list__type span {
   font-weight: $font-weight-bold;
 }
-.admin-user .protocol-list{ 
-
-  .glyphicon-trash{
-  color: $bombay;
-  cursor: pointer;
-    &:hover{
-      color: $pickled-bluewood;
-    }
-  }
-  .glyphicon-pencil{
-  color: $bombay;
+.admin-user .protocol-list,
+.admin-user .device-list { 
+  .icon-edit-icon,
+  .icon-delete-icon {
+    color: $bombay;
+    cursor: pointer;
     &:hover{
       color: $pickled-bluewood;
     }
   }
 }
+
 .admin-user .protocol-list .protocol-list--value {
   font-weight: $font-weight-medium;
 }

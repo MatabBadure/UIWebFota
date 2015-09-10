@@ -42,10 +42,10 @@
 	<div class="col-md-16 reset-padding margin-top">
 		<fieldset>
 		  <div class="select-one">
-		    <input type="radio" name="addAdmin" ng-model="addAdmin" value="existAdmin"/>
-		    <label for="existAdminText" translate="clinic.option.add-exist-admin"></label>
-		    <input type="radio" name="addAdmin" ng-model="addAdmin" value="newAdmin"/>
-		    <label for="newAdminText" translate="clinic.option.add-new-admin"></label>
+		    <input class="cursor-pointer" type="radio" id="existAdminText" name="addAdmin" ng-model="addAdmin" value="existAdmin"/>
+		    <label class="cursor-pointer" for="existAdminText" translate="clinic.option.add-exist-admin"></label>
+		    <input class="cursor-pointer" type="radio" id="newAdminText" name="addAdmin" ng-model="addAdmin" value="newAdmin"/>
+		    <label class="cursor-pointer" for="newAdminText" translate="clinic.option.add-new-admin"></label>
 		  </div>
 		</fieldset>
 	</div>
@@ -70,10 +70,13 @@
               <span class="">*</span>
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
-              <input class="" type="text" name="firstName" ng-model="newAdmin.firstName" required>
+              <input class="" type="text" name="firstName" ng-model="newAdmin.firstName" ng-minlength=2 ng-maxlength=15 ng-pattern="/^[a-z A-Z]+$/" required>
               <div ng-show="(createClinicAdminForm.firstName.$dirty && createClinicAdminForm.firstName.$showValidationMessage && createClinicAdminForm.firstName.$invalid) || submitted">
-                <span class="has-error" ng-show="createClinicAdminForm.firstName.$error.required" translate="clinic.error.clinicAdmin.firstName.required">
+                <span class="has-error" ng-show="createClinicAdminForm.firstName.$error.required" translate="error.firstName.required">
                 </span>
+                <span class="has-error" ng-show="createClinicAdminForm.firstName.$error.pattern" translate="error.firstName.pattern"></span>
+                <span class="has-error" ng-show="createClinicAdminForm.firstName.$error.minlength" translate="error.firstName.minlength"></span>
+                <span class="has-error" ng-show="createClinicAdminForm.firstName.$error.maxlength" translate="error.firstName.maxlength"></span>
               </div>
             </div>
           </div>
@@ -83,10 +86,11 @@
               <span class="" translate="clinic.admin.middle-name"></span>
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
-              <input class="" type="text" name="middleName" ng-model="newAdmin.middleName">
-              <div ng-show="">
-                <span class="has-error" ng-show="">
-                </span>
+              <input class="" type="text" name="middleName" ng-model="newAdmin.middleName" ng-pattern="/^[a-z A-Z]+$/" ng-minlength=2 ng-maxlength=15>
+              <div ng-show="(createClinicAdminForm.middleName.$dirty && createClinicAdminForm.middleName.$showValidationMessage && createClinicAdminForm.middleName.$invalid) || submitted">
+                <span class="has-error" ng-show="createClinicAdminForm.middleName.$error.pattern" translate="error.middleName.pattern"></span>
+                <span class="has-error" ng-show="createClinicAdminForm.middleName.$error.minlength" translate="error.middleName.minlength"></span>
+                <span class="has-error" ng-show="createClinicAdminForm.middleName.$error.maxlength" translate="error.middleName.maxlength"></span>
               </div>
             </div>
           </div>
@@ -99,10 +103,12 @@
               <span class="">*</span>
             </div>
            <div class="col-md-10 dashboard__form--input reset-padding">
-              <input class="" type="text" name="lastName" ng-model="newAdmin.lastName" required>
+              <input class="" type="text" name="lastName" ng-model="newAdmin.lastName" ng-minlength=2 ng-maxlength=15 ng-pattern="/^[a-z A-Z]+$/" required>
               <div ng-show="(createClinicAdminForm.lastName.$dirty && createClinicAdminForm.lastName.$showValidationMessage && createClinicAdminForm.lastName.$invalid) || submitted">
-                <span class="has-error" ng-show="createClinicAdminForm.lastName.$error.required" translate="clinic.error.clinicAdmin.lastName.required">
-                </span>
+                <span class="has-error" ng-show="createClinicAdminForm.lastName.$error.required" translate="error.lastName.required"></span>
+                <span class="has-error" ng-show="createClinicAdminForm.lastName.$error.pattern" translate="error.lastName.pattern"></span>
+                <span class="has-error" ng-show="createClinicAdminForm.lastName.$error.minlength" translate="error.lastName.minlength"></span>
+                <span class="has-error" ng-show="createClinicAdminForm.lastName.$error.maxlength" translate="error.lastName.maxlength"></span>
               </div>
             </div>
           </div>
@@ -112,10 +118,11 @@
               <span class="">*</span>
             </div>
            <div class="col-md-10 dashboard__form--input reset-padding">
-              <input class="" type="text" name="email" ng-model="newAdmin.email" required>
+              <input class="" type="email" name="email" ng-model="newAdmin.email" required ng-maxlength=100>
               <div ng-show="(createClinicAdminForm.email.$dirty && createClinicAdminForm.email.$showValidationMessage && createClinicAdminForm.email.$invalid) || submitted">
-                <span class="has-error" ng-show="createClinicAdminForm.email.$error.required" translate="clinic.error.clinicAdmin.email.required">
-                </span>
+                <span class="has-error" ng-show="createClinicAdminForm.email.$error.required" translate="error.email.required"></span>
+                <span class="has-error" ng-show="createClinicAdminForm.email.$error.email" translate="error.email.invalid"></span>
+                <span class="has-error" ng-show="createClinicAdminForm.email.$error.maxlength" translate="error.email.maxlength"></span>
               </div>
             </div>
           </div>

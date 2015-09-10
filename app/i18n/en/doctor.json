@@ -6,7 +6,7 @@
             "createLabel": "Create HCP",
             "createNewLabel": "Create New HCP",
             "createOrEditLabel": "Create or edit a Doctor",
-            "manageLabel": "Manage HCP",
+            "manageLabel": "Manage HCPs",
             "updateLabel": "Update HCP"
         },
         "delete": {
@@ -86,7 +86,7 @@
         },
         "tab": {
             "hcp-overview": "HCP Profile",
-            "associated-clinic": "Associated Clinic"
+            "associated-clinic": "Associated Clinics"
         },
         "patient-assoc": "Patient Association",
         "patient-associated": "Patient Associated",
@@ -102,55 +102,6 @@
             "active": "Active",
             "inactive": "Inactive",
             "pending": "Pending"
-        },
-        "error":{
-            "clinic":{
-                "required": "Clinic is Required"
-            },
-            "firstName":{
-                "required": "First Name is required.",
-                "min": "First Name is required to be at least 2 character.",
-                "max": "First Name cannot be longer than 15 characters.",
-                "pattern": "First Name cannot have number."
-            },
-            "middleName": {
-                "pattern": "Middle Name cannot have number."
-            },
-            "lastName": {
-                "required": "Last Name is required.",
-                "min": "Last Name is required to be at least 2 character.",
-                "max": "Last Name cannot be longer than 15 characters.",
-                "pattern": "Last Name cannot have number."
-            },
-            "npiNumber": {
-                "pattern": "NPI Number is invalid."
-            },
-            "credential":{
-                "required": "Credential is required."
-            },
-            "email": {
-                "required": "E-mail is required.",
-                "max": "E-mail cannot be longer than 100 characters.",
-                "invalid": "E-mail is invalid."
-            },
-            "primaryPhone":{
-                "pattern": "Primary Phone is invalid."
-            },
-            "mobilePhone": {
-                "pattern": "Mobile Phone is invalid."
-            },
-            "faxNumber": {
-                "pattern": "Fax Number is invalid."
-            },
-            "address": {
-                "max": "Address cannot be longer than 100 characters."
-            },
-            "city": {
-                "max": "City cannot be longer than 15 characters."
-            },
-            "zipcode":{
-                "pattern": "Zip Code is invalid."
-            }
         },
         "no-clinic-found": "No clinic associated.",
         "no-hcp-found": "No hcp associated."

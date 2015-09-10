@@ -25,10 +25,10 @@
       <span class="protocol-list--value"> {{protocol.lastModifiedDate}}</span>
     </div>
     <div class="col-md-1 protocol-list__edit icons text-center">
-      <span ng-if="!protocol.deleted" class="glyphicon glyphicon glyphicon-pencil" ng-click="openEditProtocol(protocol)"></span>
+      <span ng-if="!protocol.deleted" class="icon-edit-icon" ng-click="openEditProtocol(protocol)"></span>
     </div>
-    <div class="col-md-1 protocol-list__delete text-center">
-      <span ng-if="!protocol.deleted" class="glyphicon glyphicon-trash" ng-click="deleteProtocolModel(protocol.id)"></span>
+    <div class="col-md-1 protocol-list__delete icons text-center">
+      <span ng-if="!protocol.deleted" class="icon-delete-icon" ng-click="deleteProtocolModel(protocol.id)"></span>
     </div>
   </div>
 
@@ -64,10 +64,10 @@
       <span ng-if="!device.active"> - Inactive date</span>
     </div>
     <div class="col-md-1 device-list__edit text-center">
-      <span ng-if="device.active" class="glyphicon glyphicon-pencil cursor-pointer" ng-click="openEditDevice(device)"></span>
+      <span ng-if="device.active" class="icon-edit-icon cursor-pointer" ng-click="openEditDevice(device)"></span>
     </div>
     <div class="col-md-1 device-list__delete text-center">
-      <span ng-if="device.active" class="glyphicon glyphicon-trash cursor-pointer" ng-click="deleteDeviceModel(device)"></span>
+      <span ng-if="device.active" class="icon-delete-icon cursor-pointer" ng-click="deleteDeviceModel(device)"></span>
     </div>
   </div>
 
