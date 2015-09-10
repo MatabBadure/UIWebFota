@@ -6,7 +6,7 @@
             "createLabel": "Create HCP",
             "createNewLabel": "Create New HCP",
             "createOrEditLabel": "Create or edit a Doctor",
-            "manageLabel": "Manage HCP",
+            "manageLabel": "Manage HCPs",
             "updateLabel": "Update HCP"
         },
         "delete": {
@@ -86,7 +86,7 @@
         },
         "tab": {
             "hcp-overview": "HCP Profile",
-            "associated-clinic": "Associated Clinic"
+            "associated-clinic": "Associated Clinics"
         },
         "patient-assoc": "Patient Association",
         "patient-associated": "Patient Associated",
