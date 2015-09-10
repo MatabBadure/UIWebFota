@@ -36,12 +36,19 @@
 					<div class="col-md-4">
 						<div class="dashboard_noti_section">
 							<div class="header_noti"><h4 translate="graph.notification"></h4></div>
-							<div class="notification_container">
+							<div class="notification_container" ng-show="patientNotifications.length <= 0">
+							<ul>
+								<li>
+									<span translate="graph.no-notifications"></span>
+								</li>
+							</ul>
+							</div>
+							<div class="notification_container" ng-show="patientNotifications.length > 0">
 								<ul>
 									<li ng-repeat="notification in patientNotifications | limitTo:2">
-                    <span class="dsh_icon {{notification.class}}"></span>
-                    {{notification.message}}
-                    <span ng-show="notification.message"><a href="" class="read_more"  translate="graph.more"></a></span>
+                    					<span class="dsh_icon {{notification.class}}"></span>
+                    							{{notification.message}}
+                    					<span ng-show="notification.message"><a href="" class="read_more"  translate="graph.more"></a></span>
 									</li>
 								</ul>
 							</div>
