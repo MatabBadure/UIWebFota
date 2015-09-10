@@ -351,6 +351,9 @@ angular.module('hillromvestApp')
           $scope.graphData = graphUtil.convertIntoHMRLineGraph($scope.completeGraphData);
           $scope.customizationInLineGraph = function() {
 
+
+
+
          var circlesInHMR = d3.select('#HMRLineGraph svg').select('.nv-scatterWrap').select('.nv-group.nv-series-0').selectAll('circle')[0];
          var count = 0;
          var missedTherapyCircles = [];
@@ -366,7 +369,21 @@ angular.module('hillromvestApp')
           .attr('cy',circle.attributes.cy.value)
           .attr('r',4.5)
           .attr('class','missed_therapy_node');
-         })
+         });
+
+
+         /*UI Cganges for Line Graph*/
+        d3.selectAll('#HMRLineGraph svg').selectAll(".nv-axis .tick").append('circle').
+        attr("cx" , 0).
+        attr("cy", 0).
+        attr("r" , 2).
+        attr("fill" , '#aeb5be');
+
+        d3.selectAll('#HMRLineGraph svg').selectAll(".nv-axis .nv-axislabel").
+        attr("y" , -40);
+
+        
+
 
           };
 
@@ -473,6 +490,13 @@ angular.module('hillromvestApp')
               .attr("x" , 0)
               .attr("y" , 0 )
               .attr("class" , 'svg_bg');
+
+
+              d3.selectAll('#hmrBarGraph svg').selectAll(".nv-axis .tick").append('circle').
+              attr("cx" , 0).
+              attr("cy", 0).
+              attr("r" , 2.3).
+              attr("fill" , '#aeb5be');
           };
 
           var barCount= d3.select('#hmrBarGraph svg').selectAll('.nv-group .nv-bar')[0].length;
@@ -614,7 +638,7 @@ angular.module('hillromvestApp')
     angular.forEach($scope.completecomplianceGraphData, function(value) {
       if(value.key.indexOf("pressure") >= 0 && $scope.compliance.pressure === true){
         value.yAxis = ++count;
-        value.color = 'rgb(255, 127, 14)';
+        value.color = '#ff9829';
         if(count === 1){
           $scope.yAxis1Max = $scope.yAxisRangeForCompliance.maxPressure;
           $scope.compliance.primaryYaxis = 'pressure';
@@ -626,7 +650,7 @@ angular.module('hillromvestApp')
       }
       if(value.key.indexOf("duration") >= 0 && $scope.compliance.duration === true){
         value.yAxis = ++count;
-        value.color = 'rgb(31, 119, 180)';
+        value.color = '#4e95c4';
         if(count === 1){
           $scope.yAxis1Max = $scope.yAxisRangeForCompliance.maxDuration;
           $scope.compliance.primaryYaxis = 'duration';
@@ -638,7 +662,7 @@ angular.module('hillromvestApp')
       }
       if(value.key.indexOf("frequency") >= 0  && $scope.compliance.frequency === true){
         value.yAxis = ++count;
-        value.color = 'rgb(55, 163, 180)';
+        value.color = '#7abd50';
         if(count === 1){
           $scope.yAxis1Max = $scope.yAxisRangeForCompliance.maxFrequency;
           $scope.compliance.primaryYaxis = 'frequency';
@@ -793,6 +817,16 @@ angular.module('hillromvestApp')
                   .attr("y" , bgHeight)
                   .attr("class" , "svg_bg");
 
+          /*UI Cganges for Line Graph*/
+        d3.selectAll('#complianceGraph svg').selectAll(".nv-axis .tick").append('circle').
+        attr("cx" , 0).
+        attr("cy", 0).
+        attr("r" , 2.3).
+        attr("fill" , '#aeb5be');
+
+
+
+
         var y1AxisMark = d3.select('#complianceGraph svg').selectAll('.y1.axis').selectAll('.nvd3.nv-wrap.nv-axis');
         var y2AxisMark = d3.select('#complianceGraph svg').selectAll('.y2.axis').selectAll('.nvd3.nv-wrap.nv-axis');
         var y1AxisMinMax = d3.select('#complianceGraph svg').selectAll('.y1.axis').selectAll('.nvd3.nv-wrap.nv-axis').select('.nv-axisMaxMin').attr("transform");
@@ -810,28 +844,28 @@ angular.module('hillromvestApp')
 
         y1AxisMark.append('g').
         attr('class','minRecommendedLevel').
-        attr('transform','translate(0, '+ y1AxisMinTransform + ')').
+        attr('transform','translate(-35, '+ y1AxisMinTransform + ')').
         append('text').
         text($scope.yAxis1MinMark).
         style('fill','red');
 
         y1AxisMark.append('g').
         attr('class','maxRecommendedLevel').
-        attr('transform','translate(0,'+ y1AxisMaxTransform + ')').
+        attr('transform','translate(-35,'+ y1AxisMaxTransform + ')').
         append('text').
         text($scope.yAxis1MaxMark).
         style('fill','green');
 
         y2AxisMark.append('g').
         attr('class','minRecommendedLevel').
-        attr('transform','translate(0,'+ y2AxisMinTransform + ')').
+        attr('transform','translate(20,'+ (y2AxisMinTransform + 3) + ')').
         append('text').
         text($scope.yAxis2MinMark).
         style('fill','red');
 
         y2AxisMark.append('g').
         attr('class','maxRecommendedLevel').
-        attr('transform','translate(0,'+ y2AxisMaxTransform + ')').
+        attr('transform','translate(20,'+ (y2AxisMaxTransform + 3) + ')').
         append('text').
         text($scope.yAxis2MaxMark).
         style('fill','green');
