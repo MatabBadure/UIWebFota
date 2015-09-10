@@ -206,7 +206,11 @@
         "next": "Next",
         "previous": "Previous",
         "found": "Found",
-        "notes": "Notes"
+        "notes": "Notes",
+        "no-data-found": "No data found.",
+        "please-deselect-one-item": "Please deselect one item.",
+        "min-legend-required": "At least one item should be selected.",
+        "no-notifications": "Doing great. Have a good day !"
      },
      "no-clinic-found": "No clinic associated.",
      "no-hcp-found": "No hcp associated.",

@@ -430,14 +430,41 @@ angular.module('hillromvestApp')
       });
     };
 
-    $scope.reCreateComplianceGraph = function() {
+    $scope.reCreateComplianceGraph = function() {      
       $scope.removeGraph();
       $scope.handlelegends();
       $scope.createComplianceGraphData();
       $scope.drawComplianceGraph();
     };
 
+    $scope.isLegendEnabled = function(legendFlag){
+      $scope.minComplianceParamErrMsg = false; 
+      $scope.complianceParamErrMsg = false;  
+      var count = $scope.getCountLegends();
+      if(count === 1){
+        $scope.minComplianceParamErrMsg = true; 
+      }else if(count >= 2){
+        $scope.complianceParamErrMsg = true; 
+      }
+    };
+
+    $scope.getCountLegends = function(){      
+      var count = 0 ;
+      if($scope.compliance.pressure === true ){
+        count++;
+      }
+      if($scope.compliance.duration === true ){
+        count++;
+      }
+      if($scope.compliance.frequency === true ){
+        count++;
+      }
+      return count;      
+    };
+
     $scope.handlelegends = function() {
+      $scope.minComplianceParamErrMsg = false; 
+      $scope.complianceParamErrMsg = false;  
       var count = 0 ;
       if($scope.compliance.pressure === true ){
         count++;
@@ -1091,11 +1118,11 @@ angular.module('hillromvestApp')
       }
     };
 
-    $scope.createNote = function(){ 
+    $scope.createNote = function(){         
         $scope.noteTextError =  null;
         if($scope.textNote && $scope.textNote.length > 0){ 
           if($scope.edit_date && $scope.edit_date != 'undefined' && $scope.edit_date.length > 0){
-            var editDate= dateService.convertYyyyMmDdToTimestamp($scope.edit_date);
+            var editDate = $scope.edit_date;            
             var data = {};
             data.noteText = $scope.textNote;
             data.userId = localStorage.getItem('patientID');
@@ -1105,6 +1132,7 @@ angular.module('hillromvestApp')
               $scope.edit_date = dateService.convertDateToYyyyMmDdFormat(new Date());
               $scope.textNote = "";     
               $scope.showAllNotes();
+              $scope.addNoteActive = false;
               $("#note_edit_container").removeClass("show_content");
               $("#note_edit_container").addClass("hide_content");
             }).catch(function(){
@@ -1129,13 +1157,17 @@ angular.module('hillromvestApp')
       });
     };
 
-    $scope.openAddNote = function(){      
+    $scope.openAddNote = function(){    
+      $scope.noteTextError =  null;  
+      $scope.textNote = null;
+      $scope.addNoteActive = true;
       $("#note_edit_container").removeClass("hide_content");
-      $("#note_edit_container").addClass("show_content");      
+      $("#note_edit_container").addClass("show_content");  
     };
 
     $scope.cancelAddNote = function(){
       $scope.addNote = false;
+      $scope.addNoteActive = false;
       $("#note_edit_container").removeClass("show_content");
       $("#note_edit_container").addClass("hide_content");
     };
@@ -1244,9 +1276,7 @@ angular.module('hillromvestApp')
           }
         }
       }
-
-      if($scope.getNotesBetweenDateRange($scope.graphStartDate,$scope.graphEndDate));
-      console.log("start date : "+dateService.getDateFromTimeStamp($scope.graphStartDate)+ " end date : "+dateService.getDateFromTimeStamp($scope.graphEndDate));
+      $scope.getNotesBetweenDateRange($scope.graphStartDate,$scope.graphEndDate);
     });
     
     $scope.showAllNotes = function(page){    
@@ -1279,9 +1309,17 @@ angular.module('hillromvestApp')
     };
 
 
-    $scope.getNotesBetweenDateRange = function(fromTimeStamp, toTimeStamp, scrollUp){  
-      console.log("start date : "+dateService.getDateFromTimeStamp($scope.fromTimeStamp)+ " end date : "+dateService.getDateFromTimeStamp($scope.toTimeStamp) + " page no : "+ $scope.curNotePageIndex + " page count : " + $scope.perPageCount); 
-      UserService.getNotesOfUserInInterval(localStorage.getItem('patientID'), fromTimeStamp, toTimeStamp, $scope.curNotePageIndex, $scope.perPageCount ).then(function(response){
+    $scope.getNotesBetweenDateRange = function(fromTimeStamp, toTimeStamp, scrollUp){ 
+      var patientId = null;  
+      if(localStorage.getItem('role') === 'PATIENT'){
+        patientId = localStorage.getItem('patientID');
+      }else{
+        patientId = $stateParams.patientId;
+      }
+      var fromDate = dateService.convertDateToYyyyMmDdFormat(fromTimeStamp);
+      var toDate = dateService.convertDateToYyyyMmDdFormat(toTimeStamp);
+      console.log("start date : "+dateService.getDateFromTimeStamp(fromTimeStamp)+ " end date : "+dateService.getDateFromTimeStamp(toTimeStamp) + " page no : "+ $scope.curNotePageIndex + " page count : " + $scope.perPageCount); 
+      UserService.getNotesOfUserInInterval(patientId, fromDate, toDate, $scope.curNotePageIndex, $scope.perPageCount ).then(function(response){
         $scope.showNotes = true; 
         $scope.notes = response.data; 
         $scope.totalNotes = response.headers()['x-total-count']; 

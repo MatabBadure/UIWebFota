@@ -36,12 +36,19 @@
 					<div class="col-md-4">
 						<div class="dashboard_noti_section">
 							<div class="header_noti"><h4 translate="graph.notification"></h4></div>
-							<div class="notification_container">
+							<div class="notification_container" ng-show="patientNotifications.length <= 0">
+							<ul>
+								<li>
+									<span translate="graph.no-notifications"></span>
+								</li>
+							</ul>
+							</div>
+							<div class="notification_container" ng-show="patientNotifications.length > 0">
 								<ul>
 									<li ng-repeat="notification in patientNotifications | limitTo:2">
-                    <span class="dsh_icon {{notification.class}}"></span>
-                    {{notification.message}}
-                    <span ng-show="notification.message"><a href="" class="read_more"  translate="graph.more"></a></span>
+                    					<span class="dsh_icon {{notification.class}}"></span>
+                    							{{notification.message}}
+                    					<span ng-show="notification.message"><a href="" class="read_more"  translate="graph.more"></a></span>
 									</li>
 								</ul>
 							</div>
@@ -126,20 +133,22 @@
 			<div ng-if="complianceGraph">
 				<div class="col-md-16">
 					<div class="pull-right wrapper_custom_check">
-						<form action="#" ng-if="isComplianceExist">
-							<div class="custom_check_container">
-								<input id="pressure" class="check" type="checkbox" name="pressure" ng-disabled="pressureIsDisabled" ng-model="compliance.pressure" ng-change="reCreateComplianceGraph()">
+						<form action="#">
+							<div class="custom_check_container" ng-click="pressureIsDisabled && isLegendEnabled('pressureIsDisabled');">
+								<input id="pressure" class="check" type="checkbox" name="pressure" ng-disabled="pressureIsDisabled" ng-model="compliance.pressure" ng-change="reCreateComplianceGraph();$event.stopPropagation();">
 			  		 			<label class="check_label pressure_legend" for="pressure" translate="graph.pressure" ></label>
 							</div>
-				  		 	<div class="custom_check_container">
-				  		 		<input id="frequency" class="check" type="checkbox" name="frequency" ng-disabled="frequencyIsDisabled" ng-model="compliance.frequency" ng-change="reCreateComplianceGraph()">
+				  		 	<div class="custom_check_container" ng-click="frequencyIsDisabled && isLegendEnabled('frequencyIsDisabled');">
+				  		 		<input id="frequency" class="check" type="checkbox" name="frequency" ng-disabled="frequencyIsDisabled" ng-model="compliance.frequency" ng-change="reCreateComplianceGraph();$event.stopPropagation();">
 				  		 		<label class="check_label frequency_legend" for="frequency" translate="graph.frequency" ></label>
 				  		 	</div>
-				  		 	<div class="custom_check_container">
-				  		 		<input id="duration" class="check" type="checkbox" name="duration" ng-disabled="durationIsDisabled" ng-model="compliance.duration" ng-change="reCreateComplianceGraph()">
+				  		 	<div class="custom_check_container" ng-click="durationIsDisabled && isLegendEnabled('durationIsDisabled');">
+				  		 		<input id="duration" class="check" type="checkbox" name="duration" ng-disabled="durationIsDisabled" ng-model="compliance.duration" ng-change="reCreateComplianceGraph();$event.stopPropagation();">
 				  		 		<label class="check_label duration_legend" for="duration" translate="graph.duration" ></label>
-				  		 	</div>
-			  		 	</form>
+				  		 	</div>				  		 	
+			  		 	</form>	
+			  		 	<span ng-show="complianceParamErrMsg" translate="graph.please-deselect-one-item" class="has-error"></span>
+		  		 		<span ng-show="minComplianceParamErrMsg" translate="graph.min-legend-required" class="has-error"></span>		  		 	
 					</div>
 				</div>
 				<div id="complianceGraph" class="complianceGraph col-md-16">
@@ -152,16 +161,16 @@
 	<!-- Note section HTML -->
 	<div class="col-md-16">
 		<div class="btn_group patient_dashdoard_btns">
-			<button ng-if="role === 'PATIENT'" class="hillrom-btn btn-submit float-right" ng-click="showAllNotes();" translate="graph.note"></button>
+			<button class="hillrom-btn btn-submit float-right" ng-click="showAllNotes();" translate="graph.note"></button>
 			<button class="hillrom-btn btn-submit float-right" translate="graph.export-data" ></button>
 		</div>
 	</div>
-	<div ng-if="role === 'PATIENT'"  class="col-md-16 hide_content" id="add_note_container">
+	<div class="col-md-16 hide_content" id="add_note_container">
 		<div class="add_note_container">
 			<div class="note_header">
 				<div class="col-md-14 note_header_left">
 					<span class="note" translate="graph.note"></span>
-					<span class="can_do" translate="graph.can-do"></span>
+					<span class="can_do" translate="graph.can-do" ng-show="role === 'PATIENT'"></span>
 				</div>
 				<div class="col-md-2 note_header_right"><a href="" class="pull-right cross_icon" ng-click="hideNoteContainer();">X</a></div>
 			</div>
@@ -171,32 +180,47 @@
 						<div class="col-md-2 date_col view_content show_content" id="createdon_{{note.id}}"><span ng-bind="note.createdOn"></span></div>
 						<div class="col-md-11 description view_content show_content" id="viewnote_{{note.id}}" ng-bind="note.note"></div>
 						<form ng-submit="updateNote(note.id, note.createdOn);">
-						<div id="editform_{{note.id}}" class="edit_content hide_content">
-							<input type="text" id="editedNoteText_{{note.id}}" value="{{note.note}}">
-							<span class="has-error" ng-show="noteError" ng-bind="noteError" id="noteError_{{note.id}}"></span>
-							<input type="submit" id="submit" value="Update" />	 
-							<input type="button"  value="Cancel" ng-click="cancelEditNote(note.id);" />	
-							</div> 				
+						<div id="editform_{{note.id}}" class="col-md-16 edit_content hide_content" ng-show="role === 'PATIENT'" >
+							<div class="col-md-2">
+								<span ng-bind="note.createdOn"></span>
+							</div>
+							<div class="col-md-11 description">
+								<div class="form-group">
+									<textarea id="editedNoteText_{{note.id}}" value="{{note.note}}" maxlength="300"  class="form-control custom_textarea" rows="1"></textarea> 
+									<span class="has-error" ng-show="noteError" ng-bind="noteError" id="noteError_{{note.id}}"></span>
+								</div>
+							</div>							
+							
+							<div class="col-md-3 edit_delete">
+								<div class="pull-right">
+									<input type="button"  value="Cancel" ng-click="cancelEditNote(note.id);" class="hillrom-btn btn-submit float-right" />	
+									<input type="submit" id="submit" value="Update" class="hillrom-btn btn-submit float-right" />	 									
+								</div>
+							</div>
+						</div> 				
 						</form>
-						<div class="col-md-3 edit_delete">
-							<div class="pull-right view_note_act view_content show_content" id="viewnoteact_{{note.id}}">
-								<span class="edit icon" styel="cursor:pointer;" ng-click="openEditNote(note.id, note.note);" translate="graph.edit"></span>
-								<span class="delete icon" styel="cursor:pointer;" ng-click="deleteNote(note.id);" translate="graph.delete"></span>
+						<div class="col-md-3 edit_delete" ng-show="role === 'PATIENT'">
+							<div class="pull-right view_note_act view_content show_content note_delete_edit" id="viewnoteact_{{note.id}}">
+								<span class="edit icon glyphicon glyphicon-pencil" styel="cursor:pointer;" ng-click="openEditNote(note.id, note.note);"></span>
+								<span class="delete icon glyphicon glyphicon-trash" styel="cursor:pointer;" ng-click="deleteNote(note.id);" ></span>
 
 							</div>
 						</div>
-					</div>
-				</div> 									
+					</div>			
+				</div> 
+			</div>
+			<div class="notes_content" ng-if="notes.length <= 0 && !addNoteActive">
+				<center><span translate="graph.no-data-found"></span></center>
 			</div>
 
 
-   <div class="col-md-16 note_edit_container hide_content" id="note_edit_container">
+   <div class="col-md-16 note_edit_container hide_content" id="note_edit_container" ng-show="role === 'PATIENT'">
 	<form name="form" ng-submit="createNote();">
 		<div class="col-md-2 date_col">
 			<input class="date_input"  data-provide="datepicker"  data-date-format="yyyy-mm-dd"  bootstrap-datepicker data-date-end-date="0d"  id="edit_note_date" ng-model="edit_date" placeholder="Date"/></div>
 			<div class="col-md-12 description">
 				<div class="form-group">
-					<textarea class="form-control custom_textarea" rows="1" id="comment" ng-model="textNote"></textarea>
+					<textarea class="form-control custom_textarea" rows="1" id="comment" ng-model="textNote" maxlength="300"></textarea>
 				</div>
 				<div>
 					<span class="has-error" ng-if="noteTextError">
@@ -212,14 +236,17 @@
 			</div>
 		</form>
 	</div>
-	<div class="btn_group patient_dashdoard_btns">
+	<div class="btn_group patient_dashdoard_btns" ng-show="role === 'PATIENT'">
 		<button class="hillrom-btn btn-submit float-right" ng-click="openAddNote();" translate="graph.add-note"></button>
 	</div>
-	<div class="dashboard__manage-view--pagination">
-        <div class="col-md-16 reset-padding-right">
+	<div class="dashboard__manage-view--pagination pagination_notes" ng-if="notes.length > 0">
+        <div class="col-md-16">
           <div class="navbar-right">
-            <span class="record-found" ng-if="notes.length > 0">{{notes.length}} <span translate="graph.notes"></span></span>
-            <span class="record-found" ng-if="notes.length > 0" translate="graph.found"></span>
+            <span class="record-found" >{{notes.length}} 
+	            <span translate="graph.notes" ng-if="notes.length > 1"></span>
+	            <span translate="graph.note" ng-if="notes.length == 1"></span>
+            </span>
+            <span class="record-found" translate="graph.found"></span>
             <span ng-show="perPageCount > 1">
               <span class="navigaion-link cursor-pointer" ng-class="{ 'inactive': !(curNotePageIndex > 1) }" ng-click="showAllNotes('PREV')" translate="graph.previous"></span>
               <span class="navigaion-no">{{curNotePageIndex}}</span>
