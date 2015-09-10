@@ -124,12 +124,14 @@ angular.module('hillromvestApp')
 
     $scope.drawGraph = function() {
       var days = dateService.getDateDiffIndays($scope.fromTimeStamp,$scope.toTimeStamp);
-      if(days === 0){
+      if(days === 0 && $scope.selectedGraph === 'HMR'){
         $scope.format = 'dayWise';
         $scope.hmrLineGraph = false;
         $scope.hmrBarGraph = true;
         $scope.removeGraph();
         $scope.getDayHMRGraphData();
+      } else if(days === 0 && $scope.selectedGraph === 'COMPLIANCE'){
+        $scope.plotNoDataAvailable();
       } else if(days <= 7) {
         $scope.weeklyChart($scope.fromTimeStamp);
       } else if ( days > 7 && days <= 32 ) {
@@ -138,7 +140,14 @@ angular.module('hillromvestApp')
          $scope.yearlyChart($scope.fromTimeStamp);
       }
     };
-
+    $scope.plotNoDataAvailable = function(){
+      $scope.removeGraph();
+      d3.selectAll('svg').append('text').
+        text("No Data Available!").
+        attr('class','nvd3 nv-noData').
+        attr('x','560').
+        attr('y','175');
+    };
     $scope.opts = {
       maxDate: new Date(),
       format: 'MM-DD-YYYY',
@@ -152,7 +161,7 @@ angular.module('hillromvestApp')
       opens: 'left'
     }
 
-  $scope.dates = {startDate: null, endDate: null};
+    $scope.dates = {startDate: null, endDate: null};
     
     $scope.getHmrRunRateAndScore = function() {
       patientDashBoardService.getHMRrunAndScoreRate($scope.patientId, $scope.toTimeStamp).then(function(response){
@@ -334,6 +343,7 @@ angular.module('hillromvestApp')
       $scope.complianceGraph = false;
       $scope.hmrGraph = true;
       $scope.removeGraph();
+      $scope.drawGraph();
     };
     $scope.getUTCTime = function() {
       $scope.UTCfromTimestamp = dateService.getUTCTimeStamp($scope.fromTimeStamp);
@@ -346,6 +356,7 @@ angular.module('hillromvestApp')
         $scope.completeGraphData = response.data;
         if($scope.completeGraphData.actual === undefined){
           $scope.graphData = [];
+          $scope.plotNoDataAvailable();
         } else {
           $scope.yAxisRangeForHMRLine = graphUtil.getYaxisRangeLineGraph($scope.completeGraphData);
           $scope.graphData = graphUtil.convertIntoHMRLineGraph($scope.completeGraphData);
@@ -393,6 +404,7 @@ angular.module('hillromvestApp')
         }
       }).catch(function(response) {
         $scope.graphData = [];
+        $scope.plotNoDataAvailable();
       });
     };
 
@@ -456,6 +468,10 @@ angular.module('hillromvestApp')
         $scope.completeGraphData = response.data;
         if($scope.completeGraphData.actual === undefined){
            $scope.hmrBarGraphData = [];
+           $scope.yAxisRangeForHMRBar = {};
+           $scope.yAxisRangeForHMRBar.min = 0;
+           $scope.yAxisRangeForHMRBar.max = 0;
+           $scope.plotNoDataAvailable();
          } else {
           $scope.completeGraphData = graphUtil.formatDayWiseDate($scope.completeGraphData.actual);
           $scope.yAxisRangeForHMRBar = graphUtil.getYaxisRangeBarGraph($scope.completeGraphData);
@@ -491,6 +507,7 @@ angular.module('hillromvestApp')
          }
       }).catch(function(response) {
         $scope.hmrBarGraphData = [];
+        $scope.plotNoDataAvailable();
       });
     };
 
@@ -500,7 +517,8 @@ angular.module('hillromvestApp')
         $scope.completeComplianceData = response.data;
         if($scope.completeComplianceData.actual === undefined){
           $scope.complianceGraphData = [];
-          $scope.drawComplianceGraph();
+          $scope.plotNoDataAvailable();
+          //$scope.drawComplianceGraph();
         } else {
           //recommended values
           $scope.minFrequency = $scope.completeComplianceData.recommended.minFrequency;

@@ -49,6 +49,12 @@ angular.module('hillromvestApp')
         if(min !== 0 && min > (max-min)){
           range.min = Math.floor(Math.floor((min - ((max-min)/2))/60)/10) * 10;  
         }
+        if(range.min === undefined){
+          range.min = 0;
+        }
+        if(range.max === undefined){
+          range.max = 0;
+        }
         return range;
       }
 
