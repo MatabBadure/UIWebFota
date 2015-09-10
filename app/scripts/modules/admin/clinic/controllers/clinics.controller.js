@@ -260,7 +260,7 @@ angular.module('hillromvestApp')
         if (response.data.message !== undefined) {
           $scope.clinicStatus.message = response.data.message;
         } else if(response.data.ERROR !== undefined){
-          $scope.clinicStatus.message = data.data.ERROR;
+          $scope.clinicStatus.message = response.data.ERROR;
         } else {
           $scope.clinicStatus.message = 'Error occurred! Please try again';
         }
@@ -338,9 +338,9 @@ angular.module('hillromvestApp')
     };
 
     $scope.cancel = function(){
-      if($stateParams.parentId){
+      if($stateParams.clinicId){
         $state.go('clinicProfile', {
-          'clinicId': $stateParams.parentId
+          'clinicId': $stateParams.clinicId
         });
       } else {
         $state.go('clinicUser');
