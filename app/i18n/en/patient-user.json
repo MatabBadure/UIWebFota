@@ -10,6 +10,15 @@
           "protocol-device": "Protocol and Device",
           "caregiver-info": "Caregiver Information"
         },
+        "caregiver-caption": {
+          "caregiver-name": "Caregiver Name",
+          "address": "Address",
+          "mobile-number": "Mobile Number",
+          "phone-number": "Phone Number",
+          "relationship": "Relationship",
+          "edit": "Edit",
+          "delete": "Delete"
+        },
         "clinic-title": "Clinic",
         "caregiver-title": "Caregivers",
         "device-title": "Device Information",
