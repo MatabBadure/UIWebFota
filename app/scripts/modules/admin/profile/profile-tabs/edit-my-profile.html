@@ -11,9 +11,6 @@
             <div class="col-md-10 dashboard__form__input reset-padding selected-box-container">
               <div class="custom-dropdown">
                 <select ng-model="user.title" name="title" ng-readonly="validateSuperAdmin()" ng-options="option for option in ['Mr.', 'Mrs.', 'Ms.']" ng-selected="{{option === user.title}}">
-                  <!-- <option selected translate="user.title.mr" value="Mr."></option>
-                  <option translate="profile.title.mrs" value="Mrs."></option>
-                  <option translate="profile.title.miss" value="Miss"></option> -->
                 </select>
               </div>
             </div>
@@ -39,18 +36,10 @@
             <div class="col-md-10 dashboard__form--input reset-padding">
               <input class="" type="text" name="firstName" validate-on-blur ng-model="user.firstName" ng-minlength=2 ng-maxlength=15 ng-pattern="/^[a-z A-Z]+$/" ng-readonly="validateSuperAdmin()" required>
               <div ng-show="(form.firstName.$dirty && form.firstName.$showValidationMessage && form.firstName.$invalid) || submitted">
-                <span class="has-error" ng-show="form.firstName.$error.required">
-                  First Name is required.
-                </span>
-                <span class="has-error" ng-show="form.firstName.$error.pattern" >
-                  First Name cannot have number.
-                </span>
-                <span class="has-error" ng-show="form.firstName.$error.minlength" >
-                  First Name is required to be at least 2 character.
-                </span>
-                <span class="has-error" ng-show="form.firstName.$error.maxlength" >
-                  First Name cannot be longer than 15 characters.
-                </span>
+                <span class="has-error" ng-show="form.firstName.$error.required" translate="error.firstName.required"></span>
+                <span class="has-error" ng-show="form.firstName.$error.pattern" translate="error.firstName.pattern"></span>
+                <span class="has-error" ng-show="form.firstName.$error.minlength" translate="error.firstName.minlength"></span>
+                <span class="has-error" ng-show="form.firstName.$error.maxlength" translate="error.firstName.maxlength"></span>
               </div>
             </div>
           </div>
@@ -61,15 +50,9 @@
             <div class="col-md-10 dashboard__form--input reset-padding">
               <input class="" type="text" name="middleName" validate-on-blur ng-model="user.middleName" ng-pattern="/^[a-z A-Z]+$/" ng-minlength=2 ng-maxlength=15 ng-readonly="validateSuperAdmin()">
               <div ng-show="(form.middleName.$dirty && form.middleName.$showValidationMessage && form.middleName.$invalid)">
-                <span class="has-error" ng-show="form.middleName.$error.pattern" >
-                  Middle Name cannot have number.
-                </span>
-                <span class="has-error" ng-show="form.middleName.$error.minlength" >
-                  Middle Name is required to be at least 2 character.
-                </span>
-                <span class="has-error" ng-show="form.middleName.$error.maxlength" >
-                  Middle Name cannot be longer than 15 characters.
-                </span>
+                <span class="has-error" ng-show="form.middleName.$error.pattern" translate="error.middleName.pattern"></span>
+                <span class="has-error" ng-show="form.middleName.$error.minlength" translate="error.middleName.minlength"></span>
+                <span class="has-error" ng-show="form.middleName.$error.maxlength" translate="error.middleName.maxlength"></span>
               </div>
             </div>
           </div>
@@ -84,18 +67,10 @@
             <div class="col-md-10 dashboard__form--input reset-padding">
               <input class="" type="text" name="lastName" validate-on-blur ng-pattern="/^[a-z A-Z]+$/" ng-model="user.lastName" ng-minlength=2 ng-maxlength=15 ng-readonly="validateSuperAdmin()" required>
               <div ng-show="(form.lastName.$dirty && form.lastName.$showValidationMessage && form.lastName.$invalid) || submitted">
-                <span class="has-error" ng-show="form.lastName.$error.required">
-                  Last Name is required.
-                </span>
-                <span class="has-error" ng-show="form.lastName.$error.pattern" >
-                  Last Name cannot have number.
-                </span>
-                <span class="has-error" ng-show="form.lastName.$error.minlength" >
-                  Last Name is required to be at least 2 character.
-                </span>
-                <span class="has-error" ng-show="form.lastName.$error.maxlength" >
-                  Last Name cannot be longer than 15 characters.
-                </span>
+                <span class="has-error" ng-show="form.lastName.$error.required" translate="error.lastName.required"></span>
+                <span class="has-error" ng-show="form.lastName.$error.pattern" translate="error.lastName.pattern"></span>
+                <span class="has-error" ng-show="form.lastName.$error.minlength" translate="error.lastName.minlength"></span>
+                <span class="has-error" ng-show="form.lastName.$error.maxlength" translate="error.lastName.maxlength"></span>
               </div>
             </div>
           </div>
@@ -118,15 +93,9 @@
             <div class="col-md-10 dashboard__form--input reset-padding">
               <input class="" type="email" name="email" validate-on-blur ng-model="user.email" ng-maxlength=100 ng-readonly="validateSuperAdmin()" required>
               <div ng-show="(form.email.$dirty && form.email.$showValidationMessage && form.email.$invalid) || submitted">
-                <span class="has-error" ng-show="form.email.$error.required">
-                   E-mail is required.
-                </span>
-                <span class="has-error" ng-show="form.email.$error.email">
-                   E-mail is invalid.
-                </span>
-                <span class="has-error" ng-show="form.email.$error.maxlength">
-                  E-mail cannot be longer than 100 characters.
-                </span>
+                <span class="has-error" ng-show="form.email.$error.required" translate="error.email.required"></span>
+                <span class="has-error" ng-show="form.email.$error.email" translate="error.email.invalid"></span>
+                <span class="has-error" ng-show="form.email.$error.maxlength" translate="error.email.maxlength"></span>
               </div>
             </div>
           </div>
@@ -144,9 +113,7 @@
                   <option translate="profile.role.associates" value="ASSOCIATES">Associates</option>
                 </select>
                 <div ng-show="(form.role.$dirty && form.role.$showValidationMessage && form.role.$invalid) || submitted">
-                  <span class="has-error" ng-show="form.role.$error.required">
-                     Role is required.
-                  </span>
+                  <span class="has-error" ng-show="form.role.$error.required" translate="error.role.required"></span>
                 </div>
               </div>
             </div>
@@ -177,12 +144,8 @@
             <div class="col-md-10 dashboard__form--input reset-padding">
               <input class="" type="text" name="answer" validate-on-blur ng-model="resetAccount.answer" ng-maxlength=100 ng-readonly="validateSuperAdmin()" required>
               <div ng-show="(form.answer.$dirty && form.answer.$showValidationMessage && form.answer.$invalid) || submitted">
-                <span class="has-error" ng-show="form.answer.$error.required">
-                   Answer is required.
-                </span>
-                <span class="has-error" ng-show="form.answer.$error.maxlength">
-                  Answer cannot be longer than 100 characters.
-                </span>
+                <span class="has-error" ng-show="form.answer.$error.required" translate="error.answer.required"></span>
+                <span class="has-error" ng-show="form.answer.$error.maxlength" translate="error.answer.maxlength"></span>
               </div>
             </div>
           </div>

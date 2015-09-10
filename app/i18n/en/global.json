@@ -235,6 +235,13 @@
         },
         "clinicName": {
             "required": "Clinic Name is required."
+        },
+        "role":{
+            "required": "Role is required."
+        },
+        "answer": {
+            "required": "Answer is required.",
+            "maxlength": "Answer cannot be longer than 100 characters."
         }
     },
     "footer": "Copyright @ Hill-Rom 2015. All Rights Reserved"
