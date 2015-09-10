@@ -242,6 +242,25 @@
         "answer": {
             "required": "Answer is required.",
             "maxlength": "Answer cannot be longer than 100 characters."
+        },
+        "password": {
+            "required": "Password is required.",
+            "minlength": "Password is required to be at least 8 character.",
+            "maxlength": "Password cannot be longer than 50 characters.",
+            "pattern": "Password complexity criteria not met."
+        },
+        "newPassword": {
+            "required": "New password is required.",
+            "minlength": "New password is required to be at least 8 character.",
+            "maxlength": "New password cannot be longer than 50 characters.",
+            "pattern": "New password complexity criteria not met."
+        },
+        "confirmPassword":{
+            "required": "Confirm password is required.",
+            "minlength": "Confirm password is required to be at least 8 character.",
+            "maxlength": "Confirm password cannot be longer than 50 characters.",
+            "pattern": "Confirm password complexity criteria not met.",
+            "match": "Password Mismatch."
         }
     },
     "footer": "Copyright @ Hill-Rom 2015. All Rights Reserved"
