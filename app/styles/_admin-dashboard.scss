@@ -384,21 +384,6 @@
   font-weight: $font-weight-medium;
 }
 
-.dashboard__manage-view--list .active {
-	color: $terracotta;
-}
-
-.dashboard__manage-view {
-  .inactive {
-    opacity: 0.6;
-    cursor: default;
-  }
-}
-
-.dashboard__manage-view--list .inactive {
-  cursor: default;
-}
-
 .dashboard__manage-view--list .progress-input {
 	font-size: $font-size-small;
 	color: $charcoal;
@@ -763,6 +748,7 @@ tags-input.ng-invalid .tags {
 
 .dashboard__manage-view--header .header--type {
   padding: 0;
+  padding-right: 10px;
   color: $cyan-blue-light;
   font-size: $font-size-small;
   font-weight: 300;
@@ -799,6 +785,14 @@ tags-input.ng-invalid .tags {
 .dashboard__manage-view--list .centered {
   height: 39px;
   line-height: 39px;
+}
+
+.dashboard__manage-view--list > div {
+  @extend .word-ellipsis;
+  padding-right: 10px;
+  span {
+    padding-right: 10px;
+  }
 }
 
 .dashboard__manage-view--list .main-prim-info {
@@ -880,6 +874,10 @@ tags-input.ng-invalid .tags {
   &:hover {
     background-color: inherit;
   }
+}
+
+.dashboard__manage-view--list.inactive {
+  cursor: default;
 }
 
 .admin-user .content-header {
