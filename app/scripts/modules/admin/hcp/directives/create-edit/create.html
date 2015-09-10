@@ -82,13 +82,13 @@
             <div class="col-md-10 dashboard__form--input reset-padding">
               <input class="" type="text" name="firstName" validate-on-blur ng-model="doctor.firstName" ng-minlength=2 ng-maxlength=15 ng-pattern="/^[a-z A-Z]+$/" required>
               <div ng-show="(form.firstName.$dirty && form.firstName.$showValidationMessage && form.firstName.$invalid) || submitted" class="">
-                <span class="has-error" ng-show="form.firstName.$error.required" translate="doctor.error.firstName.required">
+                <span class="has-error" ng-show="form.firstName.$error.required" translate="error.firstName.required">
                 </span>
-                <span class="has-error" ng-show="form.firstName.$error.pattern" translate="doctor.error.firstName.pattern">
+                <span class="has-error" ng-show="form.firstName.$error.pattern" translate="error.firstName.pattern">
                 </span>
-                <span class="has-error" ng-show="form.firstName.$error.minlength" translate="doctor.error.firstName.min">
+                <span class="has-error" ng-show="form.firstName.$error.minlength" translate="error.firstName.minlength">
                 </span>
-                <span class="has-error" ng-show="form.firstName.$error.maxlength" translate="doctor.error.firstName.max">
+                <span class="has-error" ng-show="form.firstName.$error.maxlength" translate="error.firstName.maxlength">
                 </span>
               </div>
             </div>
@@ -100,7 +100,7 @@
             <div class="col-md-10 dashboard__form--input reset-padding">
               <input class="" type="text" name="middleName" validate-on-blur ng-model="doctor.middleName" ng-pattern="/^[a-z A-Z]+$/">
               <div ng-show="(form.middleName.$showValidationMessage && form.middleName.$invalid)" class="">
-                <span class="has-error" ng-show="form.middleName.$error.pattern" translate="doctor.error.middleName.pattern">
+                <span class="has-error" ng-show="form.middleName.$error.pattern" translate="error.middleName.pattern">
                 </span>
               </div>
             </div>
@@ -115,14 +115,10 @@
             <div class="col-md-10 dashboard__form--input reset-padding">
               <input class="" type="text" name="lastName" validate-on-blur ng-model="doctor.lastName" ng-minlength=2 ng-maxlength=15 ng-pattern="/^[a-z A-Z]+$/" required>
               <div ng-show="(form.lastName.$dirty && form.lastName.$showValidationMessage && form.lastName.$invalid) || submitted" class="">
-                <span class="has-error" ng-show="form.lastName.$error.required" translate="doctor.error.lastName.required">
-                </span>
-                <span class="has-error" ng-show="form.lastName.$error.pattern" translate="doctor.error.lastName.pattern">
-                </span>
-                <span class="has-error" ng-show="form.lastName.$error.minlength" translate="doctor.error.lastName.min">
-                </span>
-                <span class="has-error" ng-show="form.lastName.$error.maxlength" translate="doctor.error.lastName.max">
-                </span>
+                <span class="has-error" ng-show="form.lastName.$error.required" translate="error.lastName.required"></span>
+                <span class="has-error" ng-show="form.lastName.$error.pattern" translate="error.lastName.pattern"></span>
+                <span class="has-error" ng-show="form.lastName.$error.minlength" translate="error.lastName.minlength"></span>
+                <span class="has-error" ng-show="form.lastName.$error.maxlength" translate="error.lastName.maxlength"></span>
               </div>
             </div>
           </div>
@@ -133,8 +129,7 @@
             <div class="col-md-10 dashboard__form--input reset-padding">
               <input class="" type="text" name="npi" validate-on-blur ng-pattern="/^[0-9]+$/" ng-model="doctor.npiNumber">
               <div ng-show="form.npi.$showValidationMessage && form.npi.$invalid" class="">
-                <span class="has-error" ng-show="form.npi.$error.pattern" translate="doctor.error.npiNumber.pattern">
-                  </span>
+                <span class="has-error" ng-show="form.npi.$error.pattern" translate="error.npiNumber.pattern"></span>
               </div>
             </div>
           </div>
@@ -152,9 +147,6 @@
             <div class="col-md-6 dashboard__form--label reset-padding">
               <span class="" translate="doctor.credentials"></span>
             </div>
-            <!-- <div class="col-md-10 dashboard__form--input reset-padding">
-              <input class="" type="text" ng-model="doctor.credentials">
-            </div> -->
             <div class="col-md-10 dashboard__form__input--option reset-padding selected-box-container">
               <div class="custom-dropdown">
                 <select ng-model="doctor.credentials" validate-on-blur name="credential" ng-options="option for option in credentialsList" ng-selected="{{option === doctor.credentials}}" ng-change="checkCredential()">
@@ -175,7 +167,7 @@
               <div class="col-md-10 dashboard__form--input reset-padding">
                 <input class="" type="text" name="otherCredential" ng-model="doctor.otherCredential" required>
                 <div ng-show="(form.otherCredential.$dirty && form.otherCredential.$invalid) || submitted" class="">
-                  <span class="has-error" ng-show="form.otherCredential.$error.required" translate="doctor.error.credential.required">
+                  <span class="has-error" ng-show="form.otherCredential.$error.required" translate="error.credential.required">
                   </span>
                 </div>
               </div>
@@ -196,12 +188,9 @@
             <div class="col-md-10 dashboard__form--input reset-padding">
               <input class="" type="email" name="email" validate-on-blur ng-model="doctor.email" ng-maxlength=100 required>
               <div ng-show="(form.email.$dirty && form.email.$showValidationMessage && form.email.$invalid) || submitted" class="">
-                <span class="has-error" ng-show="form.email.$error.required" translate="doctor.error.email.required">
-                </span>
-                <span class="has-error" ng-show="form.email.$error.email" translate="doctor.error.email.invalid">
-                </span>
-                <span class="has-error" ng-show="form.email.$error.maxlength" translate="doctor.error.email.max">
-                </span>
+                <span class="has-error" ng-show="form.email.$error.required" translate="error.email.required"></span>
+                <span class="has-error" ng-show="form.email.$error.email" translate="error.email.invalid"></span>
+                <span class="has-error" ng-show="form.email.$error.maxlength" translate="error.email.maxlength"></span>
               </div>
             </div>
           </div>
@@ -212,8 +201,7 @@
             <div class="col-md-10 dashboard__form--input reset-padding">
               <input class="" type="text" name="primaryPhone" validate-on-blur ng-model="doctor.primaryPhone" mask="(999)-999-9999">
               <div ng-show="form.primaryPhone.$showValidationMessage && form.primaryPhone.$invalid" class="">
-                <span class="has-error" ng-show="form.primaryPhone.$error.pattern" translate="doctor.error.primaryPhone.pattern">
-                  </span>
+                <span class="has-error" ng-show="form.primaryPhone.$error.mask" translate="error.primaryPhone.mask"></span>
               </div>
             </div>
           </div>
@@ -226,8 +214,7 @@
             <div class="col-md-10 dashboard__form--input reset-padding">
               <input class="" type="text" name="mobilePhone" validate-on-blur ng-model="doctor.mobilePhone" mask="(999)-999-9999">
               <div ng-show="form.mobilePhone.$showValidationMessage && form.mobilePhone.$invalid" class="">
-                <span class="has-error" ng-show="form.mobilePhone.$error.pattern" translate="doctor.error.mobilePhone.pattern">
-                </span>
+                <span class="has-error" ng-show="form.mobilePhone.$error.mask" translate="error.mobilePhone.mask"></span>
               </div>
             </div>
           </div>
@@ -238,7 +225,7 @@
             <div class="col-md-10 dashboard__form--input reset-padding">
               <input class="" type="text" name="faxNumber" validate-on-blur ng-model="doctor.faxNumber" mask="(999)-999-9999">
               <div ng-show="form.faxNumber.$showValidationMessage && form.faxNumber.$invalid" class="">
-                <span class="has-error" ng-show="form.faxNumber.$error.pattern" translate="doctor.error.faxNumber.pattern">
+                <span class="has-error" ng-show="form.faxNumber.$error.mask" translate="error.faxNumber.mask">
                 </span>
               </div>
             </div>
@@ -252,7 +239,7 @@
             <div class="col-md-10 dashboard__form--input reset-padding">
               <input class="" type="text" ng-model="doctor.address" validate-on-blur name="address" ng-maxlength="100">
               <div ng-show="(form.address.$showValidationMessage && form.address.$invalid)">
-                <span class="has-error" ng-show="form.address.$error.maxlength" translate="doctor.error.address.max">
+                <span class="has-error" ng-show="form.address.$error.maxlength" translate="error.address.maxlength">
                   </span>
               </div>
             </div>
@@ -264,8 +251,7 @@
             <div class="col-md-10 dashboard__form--input reset-padding">
               <input class="" type="text" ng-model="doctor.city" validate-on-blur name="city" ng-maxlength="15">
               <div ng-show="(form.city.$showValidationMessage && form.city.$invalid)" class="">
-                <span class="has-error" ng-show="form.city.$error.maxlength" translate="doctor.error.city.max">
-                  </span>
+                <span class="has-error" ng-show="form.city.$error.maxlength" translate="error.city.maxlength"></span>
               </div>
             </div>
           </div>
@@ -290,7 +276,7 @@
             <div class="col-md-10 dashboard__form--input reset-padding">
               <input class="" type="text" name="zip" maxlength="5" validate-on-blur ng-pattern="/^(?=.*[1-9].*)[0-9]{5}$/" ng-model="doctor.zipcode">
               <div ng-show="form.zip.$showValidationMessage && form.zip.$invalid" class="">
-                <span class="has-error" ng-show="form.zip.$error.pattern" translate="doctor.error.zipcode.pattern">
+                <span class="has-error" ng-show="form.zip.$error.pattern" translate="error.zipcode.pattern">
                 </span>
               </div>
             </div>

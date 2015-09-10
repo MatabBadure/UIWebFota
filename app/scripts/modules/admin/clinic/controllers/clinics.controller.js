@@ -260,7 +260,7 @@ angular.module('hillromvestApp')
         if (response.data.message !== undefined) {
           $scope.clinicStatus.message = response.data.message;
         } else if(response.data.ERROR !== undefined){
-          $scope.clinicStatus.message = data.data.ERROR;
+          $scope.clinicStatus.message = response.data.ERROR;
         } else {
           $scope.clinicStatus.message = 'Error occurred! Please try again';
         }
@@ -338,9 +338,9 @@ angular.module('hillromvestApp')
     };
 
     $scope.cancel = function(){
-      if($stateParams.parentId){
+      if($stateParams.clinicId){
         $state.go('clinicProfile', {
-          'clinicId': $stateParams.parentId
+          'clinicId': $stateParams.clinicId
         });
       } else {
         $state.go('clinicUser');
@@ -391,6 +391,7 @@ angular.module('hillromvestApp')
     };
 
     $scope.disassociatePatient = function(patientId){
+      $scope.closePatientDeactivateModal();
       var data = [{'id': $stateParams.clinicId}];
       clinicService.disassociatePatient(patientId, data).then(function(response){
         $scope.initClinicAssoctPatients($stateParams.clinicId);
@@ -398,6 +399,25 @@ angular.module('hillromvestApp')
       }).catch(function(response){
         notyService.showMessage(response.data.message, 'warning');
       });
+    };
+
+    $scope.openPatientDeactivateModal = function(patientId){
+      $scope.deletePatientId = patientId;
+      $scope.patientDeactivateModal = true;
+
+    };
+
+    $scope.closePatientDeactivateModal = function(){
+      $scope.patientDeactivateModal = false;
+    };
+
+    $scope.closeHcpDeactivateModal = function(){
+      $scope.hcpDeactivateModal = false;
+    };
+
+    $scope.openHcpDeactivateModal = function(hcpId){
+      $scope.deleteHcpId = hcpId
+      $scope.hcpDeactivateModal = true;
     };
 
     $scope.linkPatient = function(){
@@ -420,6 +440,7 @@ angular.module('hillromvestApp')
     };
 
     $scope.disassociateHCP = function(hcpId){
+      $scope.closeHcpDeactivateModal();
       var data = [{'id': $stateParams.clinicId}];
       clinicService.disassociateHCP(hcpId, data).then(function(response){
         $scope.initClinicAssoctHCPs($stateParams.clinicId);

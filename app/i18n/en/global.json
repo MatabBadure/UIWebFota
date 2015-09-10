@@ -119,5 +119,151 @@
             "datetimelocal": "This field should be a date and time."
         }
     },
+    "error":{
+        "firstName":{
+            "required": "First Name is required.",
+            "pattern": "First Name cannot have number and special characters.",
+            "minlength": "First Name is required to be at least 2 character.",
+            "maxlength": "First Name cannot be longer than 15 characters."
+        },
+        "lastName":{
+            "required": "Last Name is required.",
+            "pattern": "Last Name cannot have number and special characters.",
+            "minlength": "Last Name is required to be at least 2 character.",
+            "maxlength": "Last Name cannot be longer than 15 characters."
+        },
+        "middleName":{
+            "required": "Middle Name is required.",
+            "pattern": "Middle Name cannot have number and special characters.",
+            "minlength": "Middle Name is required to be at least 2 character.",
+            "maxlength": "Middle Name cannot be longer than 15 characters."
+        },
+        "email":{
+            "invalid": "E-mail is invalid.",
+            "required": "E-mail is required.",
+            "maxlength": "E-mail cannot be longer than 100 characters."
+        },
+        "dob":{
+            "required": "Date of Birth is required.",
+            "future": "Date of Birth cannot be future."
+        },
+        "address":{
+            "maxlength": "Address cannot be longer than 100 characters."
+        },
+        "city": {
+            "maxlength": "City cannot be longer than 15 characters."
+        },
+        "zipcode": {
+            "required": "Zipcode is required.",
+            "invalid": "Zipcode is invalid.",
+            "pattern": "Zipcode is invalid"
+        },
+        "primaryPhone": {
+            "required":"Home phone number is required.",
+            "pattern": "Home phone number is invalid.",
+            "maxlength": "Home phone number is invalid.",
+            "mask": "Home phone number is invalid."
+        },
+        "mobilePhone":{
+            "pattern": "Mobile number is invalid.",
+            "maxlength": "Mobile number is invalid.",
+            "mask": "Mobile number is invalid."
+        },
+        "phoneNumber":{
+            "pattern": "Phone number is invalid.",
+            "maxlength": "Phone number is invalid.",
+            "mask": "Phone number is invalid."
+        },
+        "faxNumber":{
+            "mask": "Fax Number is invalid."
+        },
+        "hrId": {
+            "required": "JDE/HR ID is required."
+        },
+        "relationship":{
+            "required": "Select relationship."
+        },
+        "deviceSerialNumber":{
+            "required": "Device Serial Number Required"
+        },
+        "deviceBluetoothId":{
+            "required": "Device Bluetooth ID Required"
+        },
+        "protocol":{
+            "treatmentPerDay": {
+                "required": "Protocol Treatment per Day Required",
+                "min": "Protocol Treatment per Day is invalid",
+                "max": "Protocol Treatment per Day is invalid"
+            },
+            "minMinutesPerTreatment": {
+                "required":"Minimum Minutes per Treatment Required",
+                "min":"Minimum Minutes per Treatment Invalid",
+                "max":"Minimum Minutes per Treatment Invalid"
+            },
+            "maxMinutesPerTreatment": {
+                "required": "Maximum Minutes per Treatment Required",
+                "min":"Maximum Minutes per Treatment Invalid",
+                "max": "Maximum Minutes per Treatment Invalid"
+            },
+            "minFrequency": {
+                "required": "Minimum Frequency Required",
+                "min": "Minimum Frequency Should be between 5 to 20",
+                "max": "Minimum Frequency Should be between 5 to 20"
+            },
+            "maxFrequency": {
+                "required": "Maximum Frequency Required",
+                "min": "Maximum Frequency Invalid",
+                "max": "Maximum Frequency Invalid"
+            },
+            "minPressure": {
+                "required": "Minimum Pressure Required",
+                "min": "Minimum Pressure should be between 1 to 10",
+                "max": "Minimum Pressure should be between 1 to 10"
+            },
+            "maxPressure": {
+                "required": "Maximum Pressure Required",
+                "min": "Maximum Pressure Invalid",
+                "max": "Maximum Pressure Invalid"
+            }
+        },
+        "npiNumber":{
+            "pattern": "NPI Number is invalid."
+        },
+        "credential": {
+            "required": "Credential is required."
+        },
+        "parentClinicName": {
+            "required": "Parent Clinic Name is required."
+        },
+        "clinicName": {
+            "required": "Clinic Name is required."
+        },
+        "role":{
+            "required": "Role is required."
+        },
+        "answer": {
+            "required": "Answer is required.",
+            "maxlength": "Answer cannot be longer than 100 characters."
+        },
+        "password": {
+            "required": "Password is required.",
+            "minlength": "Password is required to be at least 8 character.",
+            "maxlength": "Password cannot be longer than 50 characters.",
+            "pattern": "Password complexity criteria not met."
+        },
+        "newPassword": {
+            "required": "New password is required.",
+            "minlength": "New password is required to be at least 8 character.",
+            "maxlength": "New password cannot be longer than 50 characters.",
+            "pattern": "New password complexity criteria not met."
+        },
+        "confirmPassword":{
+            "required": "Confirm password is required.",
+            "minlength": "Confirm password is required to be at least 8 character.",
+            "maxlength": "Confirm password cannot be longer than 50 characters.",
+            "pattern": "Confirm password complexity criteria not met.",
+            "match": "Password Mismatch."
+        }
+    },
     "footer": "Copyright @ Hill-Rom 2015. All Rights Reserved"
 }
