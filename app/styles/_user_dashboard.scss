@@ -312,12 +312,13 @@
 	.custom_check_container{
 		float: left;
 		display: inline-block;
-		margin-right: 25px;
+		margin-right: 40px;
 		&:last-child{
 			margin-right: 0px;
 		}
 		.check{
 			opacity: 0;
+			position: absolute;
 			&:checked + .check_label{
 				color: $gray-dark;
 				&.missedTHRP_legend{
@@ -328,28 +329,32 @@
 				}
 				&.pressure_legend{
 					&:after{
-						background-color: rgb(255, 127, 14);
+						background-color: #ff9829;
 						border: $btn-default-bg;
 					}
 				}
 				&.frequency_legend{
 					&:after{
-						background-color: rgb(55, 163, 180);
+						background-color: #7abd50;
 						border: $btn-default-bg;
 					}
 				}
 				&.duration_legend{
 					&:after{
-						background-color: rgb(31, 119, 180);
+						background-color: #4e95c4;
 						border: $btn-default-bg;
 					}
 				}
-
+				&:last-child{
+					padding-right: 0px;
+				}
 			}
 		}
 		.check_label{
 			position: relative;
 			font-weight: normal;
+			padding: 0px 0px;
+
 			&:after{
 				border: 1px solid $gray-light;
 				background-color: transparent;
@@ -357,11 +362,12 @@
 			    content: "";
 			    cursor: pointer !important;
 			    display: inline-block;
-			    height: 15px;
-			    left: -20px;
+			    height: 12px;
+			    left: -17px;
 			    position: absolute;
-			    top: 2px;
-			    width: 15px;
+			    top: 3px;
+			    width: 12px;
+			    border: solid 1px $forest-green;
 			}
 		}
 	}

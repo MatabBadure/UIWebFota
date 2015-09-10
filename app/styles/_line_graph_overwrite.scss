@@ -14,7 +14,7 @@
 	.nv-lineChart{
 		g{
 			rect{
-				fill: #E5EFF9;
+				fill: #e3ecf7;
 				opacity: 1 !important;
 			}
 		}
@@ -25,14 +25,20 @@
 			}
 			.tick{
 				text{
-				fill: #777;
+				fill: $nevada;
+				font-size: 10px;
 				}
 			}
 			.nv-axisMaxMin{
 					text{
-						fill: #777;
+						fill: $nevada;
+						font-size: 10px;
+						font-weight: normal;
 					}
 				}
+			.nv-axislabel{
+				fill: $nevada;
+			}
 		}
 	.nv-wrap{
 			.nv-axisMaxMin{
@@ -48,11 +54,23 @@
 .complianceGraph {
 	.axis{
 		line{
-			stroke: #ccc;
+			stroke: transparent;
+		}
+		.y1{
+			.minRecommendedLevel{
+
+			}
 		}
 	}
 	.svg_bg{
-		fill: #e5eff9;
+		fill: #e3ecf7;
+	}
+	.nv-stackedarea {
+		path.nv-area{
+			stroke-opacity: 1;
+			stroke: #fff !important;
+			stroke-width: 1.5;
+		}
 	}
 }
 .hmrBarGraph{
@@ -68,10 +86,21 @@
 				}
 			}
 	}
-
+#HMRLineGraph{
+	.nv-axis{
+			 line{
+			 	opacity: 0;
+			 }
+		}
+		path.nv-line{
+			/*stroke: $label-color;*/
+		}
+}
 .missed_therapy_node {
-  fill: red;
-  stroke: red;
+  fill: #cf202f;
+  stroke: #fff;
+  stroke-width: 1.5;
+  fill-opacity: 1;
 }
 
 
@@ -224,5 +253,13 @@
 	.hide_content{
 		display: none;
 	}
-
+.hmrBarGraph{
+	.nv-y{
+		.tick{
+			line{
+				stroke: transparent;
+			}
+		}
+	}
+}
 	
