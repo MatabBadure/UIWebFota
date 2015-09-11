@@ -44,7 +44,8 @@
           "blutooth-id": "Bluetooth ID",
           "status": "Status",
           "created-date": "Created Date",
-          "device": "Device"
+          "device": "Device",
+          "modified-date": "Modified Date"
         },
         "clinic-title": "Clinic",
         "caregiver-title": "Caregivers",
@@ -75,9 +76,7 @@
           "bluetoothId": "Bluetooth ID",
           "hubId": "Hub ID",
           "active-status": "Active",
-          "inactive-status": "Inactive",
-          "active-status-date": " - Active Date",
-          "inactive-status-date": " - Inactive Date"
+          "inactive-status": "Inactive"
         },
         "protocol": {
           "tm-per-day": "Treatment per Day",
