@@ -12,25 +12,25 @@
   <div class="container dashboard__manage-view margin-top-xl">
     <div class="dashboard__manage-view--header">
         <div class="col-md-3 header--type">
-          <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="clinic.hcp-name">HCP Name</span>
+          <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="clinic.hcp-name"></span>
         </div>
         <div class="col-md-2 header--type">
-          <span translate="clinic.credentials">Credentials</span>
+          <span translate="clinic.credentials"></span>
         </div>
         <div class="col-md-2 header--type">
-          <span translate="clinic.npiNumber">NPI Number</span>
+          <span translate="clinic.npiNumber"></span>
         </div>
         <div class="col-md-4 header--type">
-          <span translate="clinic.clinic-name">Clinic Name</span>
+          <span translate="clinic.clinic-name"></span>
         </div>
         <div class="col-md-2 header--type">
-          <span translate="clinic.city">City</span>
+          <span translate="clinic.city"></span>
         </div>
         <div class="col-md-2 header--type">
-          <span translate="clinic.state">state</span>
+          <span translate="clinic.state"></span>
         </div>
         <div class="col-md-1 header--type">
-          <span translate="clinic.status">Status</span>
+          <span translate="clinic.status"></span>
         </div>
         <div class="clr"></div>
       </div>
@@ -65,28 +65,6 @@
 
           <div class="clr"></div>
        </div>
-
-    <!-- <div class="dashboard__manage-view--list assoc" ng-click="" ng-class="{ 'inactive': doctor.deleted }" ng-repeat="hcp in associatedHcps">
-      <div class="col-md-3 reset-padding-left">
-        <span class="user-name"> {{hcp.lastName}} {{hcp.firstName}}</span>
-        <span class="user-email">{{hcp.email}}</span>
-      </div>
-      <div class="col-md-4">
-        <span class="user-home-no"></span>
-        <span class="user-address">{{hcp.address}}</span>
-      </div>
-      <div class="col-md-4 middle-detail">
-        <span class="mobile">{{hcp.mobilePhone}}</span>
-      </div>
-
-      <div class="col-md-4 middle-detail">
-        <span class="hr-id">{{hcp.hillromId}}</span>
-      </div>
-      <div class="col-md-1 reset-padding-right middle-detail">
-        <span class="glyphicon glyphicon-trash cursor-pointer" ng-click="openHcpDeactivateModal(hcp.id)"></span>
-        </div>
-        <div class="clr"></div>
-      </div> -->
     </div>
   </div>
 </div>
@@ -103,7 +81,6 @@
   </div>
 </div>
 
-
 <div ng-if="hcpDeactivateModal" class="modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true">
   <div class="modal__dialog">
     <div class="modal__content">
@@ -114,7 +91,7 @@
       <div class="modal__body">
          <div class="modal--message" translate="clinic.deleteHcp.message"></div>
          <div class="fropile_update_btn_group row modal--custom-btn">
-          <buton class="hillrom-btn btn-submit float-right" ng-click="disassociateHCP(deleteHcpId)">Yes</buton>
+          <buton class="hillrom-btn btn-submit float-right" ng-click="disassociateHCP(deleteHcpId)" translate="clinic.yes" ></buton>
           <buton class="cancel hillrom-btn btn-submit float-right" data-dismiss="modal" ng-click="closeHcpDeactivateModal()">No</buton>
          </div>
       </div>
