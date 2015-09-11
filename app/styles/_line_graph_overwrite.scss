@@ -262,4 +262,11 @@
 		}
 	}
 }
-	
+.nv-noData{
+	text-anchor: middle;
+}
+.dashboard_line_graph, .complianceGraph{
+	svg{
+		height: 350px;
+	}
+}	
