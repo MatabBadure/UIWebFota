@@ -18,7 +18,7 @@ angular.module('hillromvestApp')
       return graphDataList;
       }
 
-      this.convertToHMRStepGraph = function(data) {
+      this.convertToHMRStepGraph = function(data,colorCode) {
         var pointSet = [];
         var graphData = {};
         var graphDataList =[];
@@ -31,7 +31,7 @@ angular.module('hillromvestApp')
           pointSet.push(point);
         });
         graphData.values = pointSet;
-        graphData.color = '#4e95c4';
+        graphData.color = colorCode;
         graphData.area = true;
         graphDataList.push(graphData);
       return graphDataList;
@@ -119,7 +119,7 @@ angular.module('hillromvestApp')
       return graphDataList;
       }
 
-      this.convertToHMRBarGraph = function(data) {
+      this.convertToHMRBarGraph = function(data,colorCode) {
         var pointSet = [];
         var graphData = {};
         var graphDataList =[];
@@ -130,7 +130,7 @@ angular.module('hillromvestApp')
           pointSet.push(point);
         });
         graphData.values = pointSet;
-        graphData.color = '#4e95c4';
+        graphData.color = colorCode;
         graphDataList.push(graphData);
       return graphDataList;
       }

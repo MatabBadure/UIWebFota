@@ -23,4 +23,11 @@ var apiresponse = {
 	"MISSED_THERAPY":"Your recommended compliance therapy is low."
 
 }
+var patientDashboard = {
+	"HMRBarGraphColor" : "#4e95c4",
+	"HMRLineGraphColor" : "#4e95c4",
+	"dateFormat" : "MM-DD-YYYY",
+	"maxDurationInMonths" : 12
+
+}
 

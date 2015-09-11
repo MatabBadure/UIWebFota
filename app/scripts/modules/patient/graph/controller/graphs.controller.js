@@ -172,8 +172,8 @@ angular.module('hillromvestApp')
     };
     $scope.opts = {
       maxDate: new Date(),
-      format: 'MM-DD-YYYY',
-      dateLimit: {"months":12},
+      format: patientDashboard.dateFormat,
+      dateLimit: {"months":patientDashboard.maxDurationInMonths},
       eventHandlers: {'apply.daterangepicker': function(ev, picker) {
         $scope.hideNotesCSS();
         $scope.calculateDateFromPicker(picker);
@@ -382,7 +382,7 @@ angular.module('hillromvestApp')
           $scope.plotNoDataAvailable();
         } else {
           $scope.yAxisRangeForHMRLine = graphUtil.getYaxisRangeLineGraph($scope.completeGraphData);
-          $scope.graphData = graphUtil.convertToHMRStepGraph($scope.completeGraphData);
+          $scope.graphData = graphUtil.convertToHMRStepGraph($scope.completeGraphData,patientDashboard.HMRLineGraphColor);
           //$scope.graphData = graphUtil.convertIntoHMRLineGraph($scope.completeGraphData);
           $scope.drawHMRLineGraph();
         }
@@ -487,7 +487,7 @@ angular.module('hillromvestApp')
           $scope.completeGraphData = graphUtil.formatDayWiseDate($scope.completeGraphData.actual);
           $scope.yAxisRangeForHMRBar = graphUtil.getYaxisRangeBarGraph($scope.completeGraphData);
           //$scope.hmrBarGraphData = graphUtil.convertIntoHMRBarGraph($scope.completeGraphData);
-          $scope.hmrBarGraphData = graphUtil.convertToHMRBarGraph($scope.completeGraphData);
+          $scope.hmrBarGraphData = graphUtil.convertToHMRBarGraph($scope.completeGraphData,patientDashboard.HMRBarGraphColor);
           $scope.drawHMRBarGraph();
           //
            $scope.customizationForBarGraph = function() {
@@ -572,15 +572,14 @@ angular.module('hillromvestApp')
       $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp);
     };
 
-    // Weekly chart
-    $scope.weeklyChart = function(datePicker) {
-      $scope.selectedDateOption = 'WEEK';
+    $scope.drawChart = function(datePicker,dateOption,groupByOption,durationInDays) {
+      $scope.selectedDateOption = dateOption;
       $scope.removeGraph();
       if(datePicker === undefined){
-        $scope.calculateTimeDuration(7);
+        $scope.calculateTimeDuration(parseInt(durationInDays));
         $scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
       }
-      $scope.format = $scope.groupBy = 'weekly';
+      $scope.format = $scope.groupBy = groupByOption;
       if($scope.hmrGraph) {
         $scope.hmrLineGraph = true;
         $scope.hmrBarGraph = false;
@@ -588,42 +587,21 @@ angular.module('hillromvestApp')
       } else if ($scope.complianceGraph) {
         $scope.getComplianceGraphData();
       }
+    }
+
+    // Weekly chart
+    $scope.weeklyChart = function(datePicker) {
+      $scope.drawChart(datePicker,'WEEK','weekly',7);
     };
 
     // Yearly chart
     $scope.yearlyChart = function(datePicker) {
-      $scope.selectedDateOption = 'YEAR';
-      $scope.removeGraph();
-       if(datePicker === undefined){
-        $scope.calculateTimeDuration(365);
-        $scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
-      }
-       $scope.format = $scope.groupBy = 'yearly';
-        if($scope.hmrGraph) {
-          $scope.hmrLineGraph = true;
-          $scope.hmrBarGraph = false;
-          $scope.getNonDayHMRGraphData();
-      } else if ($scope.complianceGraph) {
-          $scope.getComplianceGraphData();
-      }
+      $scope.drawChart(datePicker,'YEAR','yearly',365);
     };
    
     // Monthly chart
     $scope.monthlyChart = function(datePicker) {
-      $scope.selectedDateOption = 'MONTH';
-      $scope.removeGraph();
-      if(datePicker === undefined){
-        $scope.calculateTimeDuration(30);
-        $scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
-      }
-      $scope.format = $scope.groupBy = 'monthly';
-      if($scope.hmrGraph) {
-        $scope.hmrLineGraph = true;
-        $scope.hmrBarGraph = false;
-        $scope.getNonDayHMRGraphData();
-      } else if ($scope.complianceGraph) {
-        $scope.getComplianceGraphData();
-      }
+      $scope.drawChart(datePicker,'MONTH','monthly',30);
     };
     //hmrDayChart
     $scope.dayChart = function() {

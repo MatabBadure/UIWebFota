@@ -46,9 +46,9 @@
 							<div class="notification_container" ng-show="patientNotifications.length > 0">
 								<ul>
 									<li ng-repeat="notification in patientNotifications | limitTo:2">
-                    					<span class="dsh_icon {{notification.class}}"></span>
-                    							{{notification.message}}
-                    					<span ng-show="notification.message"><a href="" class="read_more"  translate="graph.more"></a></span>
+          					<span class="dsh_icon {{notification.class}}"></span>
+          							{{notification.message}}
+          					<span ng-show="notification.message"><a href="" class="read_more"  translate="graph.more"></a></span>
 									</li>
 								</ul>
 							</div>
@@ -87,59 +87,19 @@
 			<div ng-if="hmrGraph" class="dashboard_line_graph">
 				<div ng-if="hmrLineGraph">
 				<div id="hmrLineGraph" class="complianceGraph col-md-16">
-					<svg style="height:350px"> </svg>
+					<svg> </svg>
 				</div>
-					<!-- <nvd3-line-chart
-					data="graphData"
-					id="HMRLineGraph"
-					height="350"
-					showXAxis="true"
-					showYAxis="true"
-					legends="true"
-					interactive="true"
-					tooltips="true"
-					isArea="true"
-					interpolate="step-after" 
-					yAxisLabel="Minutes"
-					xAxisTickFormat="xAxisTickFormatFunction(format)"
-					xAxisTickValues="xAxisTickValuesFunction()"
-					noData="No Data Available!"
-					objectEquality="true"
-					setminmax="hmrLineSetMinMax()"
-					tooltipcontent="toolTipContentFunction()" >
-					<svg></svg>
-					</nvd3-line-chart> -->
 				</div>
 				<div ng-if="hmrBarGraph">
-					<!-- <nvd3-multi-bar-chart
-					data="hmrBarGraphData"
-					id="hmrBarGraph"
-					class="hmrBarGraph"
-					height="350"
-					showXAxis="true"
-					showYAxis="true"
-					interactive="true"
-					tooltips="true"
-					isArea="true"
-					yAxisLabel="Minutes"
-					xAxisTickFormat="xAxisTickFormatFunction(format)"
-					xAxisTickValues="xAxisTickValuesBarChart()"
-					noData="No Data Available!"
-					objectEquality="true"
-					setminmax="hmrBarSetMinMax()"
-					customizeBarWidth="customizeBarWidth()"
-					tooltipcontent="toolTipContentBarChart()">
-					<svg></svg>
-					</nvd3-multi-bar-chart> -->
 					<div id="hmrBarGraph" class="complianceGraph col-md-16">
-						<svg style="height:350px"> </svg>
+						<svg> </svg>
 					</div>
 				</div>
 			</div>
 			<div ng-if="complianceGraph">
 				<div class="col-md-16">
 					<div class="pull-right wrapper_custom_check">
-						<form action="#">
+						<form action="#" ng-if="isComplianceExist">
 							<div class="custom_check_container" ng-click="pressureIsDisabled && isLegendEnabled('pressureIsDisabled');">
 								<input id="pressure" class="check" type="checkbox" name="pressure" ng-disabled="pressureIsDisabled" ng-model="compliance.pressure" ng-change="reCreateComplianceGraph();$event.stopPropagation();">
 			  		 			<label class="check_label pressure_legend" for="pressure" translate="graph.pressure" ></label>
@@ -158,7 +118,7 @@
 					</div>
 				</div>
 				<div id="complianceGraph" class="complianceGraph col-md-16">
-					<svg style="height:350px"> </svg>
+					<svg> </svg>
 				</div>
 			</div>
 		</div>
