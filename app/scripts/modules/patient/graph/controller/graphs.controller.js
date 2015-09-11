@@ -577,6 +577,7 @@ angular.module('hillromvestApp')
       $scope.removeGraph();
       if(datePicker === undefined){
         $scope.calculateTimeDuration(7);
+        $scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
       }
       $scope.format = $scope.groupBy = 'weekly';
       if($scope.hmrGraph) {
@@ -594,6 +595,7 @@ angular.module('hillromvestApp')
       $scope.removeGraph();
        if(datePicker === undefined){
         $scope.calculateTimeDuration(365);
+        $scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
       }
        $scope.format = $scope.groupBy = 'yearly';
         if($scope.hmrGraph) {
@@ -611,6 +613,7 @@ angular.module('hillromvestApp')
       $scope.removeGraph();
       if(datePicker === undefined){
         $scope.calculateTimeDuration(30);
+        $scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
       }
       $scope.format = $scope.groupBy = 'monthly';
       if($scope.hmrGraph) {
@@ -624,6 +627,7 @@ angular.module('hillromvestApp')
     //hmrDayChart
     $scope.dayChart = function() {
       $scope.selectedDateOption = 'DAY';
+      $scope.dates = {startDate: $scope.fromDate, endDate: $scope.fromDate};
       $scope.removeGraph();
        if($scope.hmrGraph) {
         $scope.format = 'dayWise';
