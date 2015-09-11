@@ -319,10 +319,10 @@ angular.module('hillromvestApp')
           $state.go('clinicUser');
         }
       }).catch(function(response) {
-        if (response.message !== undefined) {
-          $scope.clinicStatus.message = response.message;
-        } else if(response.ERROR !== undefined) {
-          $scope.clinicStatus.message = response.ERROR;
+        if (response.data.message !== undefined) {
+          $scope.clinicStatus.message = response.data.message;
+        } else if(response.data.ERROR !== undefined) {
+          $scope.clinicStatus.message = response.data.ERROR;
         } else {
           $scope.clinicStatus.message = 'Error occured! Please try again';
         }
