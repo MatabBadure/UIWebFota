@@ -1368,10 +1368,6 @@ angular.module('hillromvestApp')
             d3.select('#hmrLineGraph svg')
           .datum($scope.graphData)
           .transition().duration(500).call(chart);
-          //
-          /*
-          */
-
          var circlesInHMR = d3.select('#hmrLineGraph svg').select('.nv-scatterWrap').select('.nv-group.nv-series-0').selectAll('circle')[0];
          var count = 0;
          var missedTherapyCircles = [];
@@ -1415,24 +1411,6 @@ angular.module('hillromvestApp')
           //this function to put x-axis labels
           chart.xAxis.tickFormat(function(d) {
             return dateService.getTimeIntervalFromTimeStamp(d);
-            /*return function(d){
-                switch($scope.format) {
-                  case "weekly":
-                      return d3.time.format('%A')(new Date(d));
-                      break;
-                  case "dayWise":
-                      return dateService.getTimeIntervalFromTimeStamp(d);
-                      break;
-                  case "monthly":
-                      return 'week ' + dateService.getWeekOfMonth(d);
-                      break;
-                  case "yearly":
-                      return d3.time.format('%B')(new Date(d));
-                      break;
-                  default:
-                      break;
-                }
-            }*/
         });
 
           chart.yAxis.tickFormat(d3.format('d'));
@@ -1441,28 +1419,6 @@ angular.module('hillromvestApp')
           d3.select('#hmrBarGraph svg')
           .datum($scope.hmrBarGraphData)
           .transition().duration(500).call(chart);
-
-          var rect_height = d3.select('#hmrBarGraph svg').selectAll('.nv-barsWrap defs rect').attr("height");
-            var rect_width = d3.select('#hmrBarGraph svg').selectAll('.nv-barsWrap defs rect').attr("width");
-           d3.select('#hmrBarGraph svg').selectAll('rect.nv-bar')
-              .attr("x", 40)
-              .attr("width", 70);
-
-              d3.select('#hmrBarGraph svg').select('.nv-y .nv-wrap g').append('rect')
-              .attr("width", rect_width)
-              .attr("height" , rect_height)
-              .attr("x" , 0)
-              .attr("y" , 0 )
-              .attr("class" , 'svg_bg');
-
-
-              d3.selectAll('#hmrBarGraph svg').selectAll(".nv-axis .tick").append('circle').
-              attr("cx" , 0).
-              attr("cy", 0).
-              attr("r" , 2.3).
-              attr("fill" , '#aeb5be');
-
-          //
           return chart;
       });
     }
