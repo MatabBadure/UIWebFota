@@ -53,6 +53,7 @@ angular.module('hillromvestApp')
           localStorage.removeItem('loginCount');
           localStorage.setItem('userFirstName', data.data.user.firstName);
           localStorage.setItem('role', data.data.user.authorities[0].name);
+          localStorage.setItem('userEmail', data.data.user.email);
           $rootScope.userRole = localStorage.getItem('role');           
           if(data.data.user.authorities[0].name === 'PATIENT'){
             localStorage.setItem('patientID', data.data.user.id);

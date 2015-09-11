@@ -189,8 +189,8 @@ angular.module('hillromvestApp')
     
     $scope.getAvailableclinics = function(doctorId){
       $scope.clinicsAssociatedErrMsg = null;
-      $scope.clinics = []; $scope.clinics.length =0;
-      clinicService.getAllClinics().then(function(response){
+      $scope.clinics = []; 
+      clinicService.getAllActiveClinics().then(function(response){
         if(response.data)
         $scope.clinics = response.data;
         DoctorService.getClinicsAssociatedToHCP(doctorId).then(function(response) {
