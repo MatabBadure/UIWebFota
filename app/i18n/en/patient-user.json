@@ -62,6 +62,7 @@
         "link-protocol": "Add Protocol",
         "link-hcp": "Link HCP",
         "notes": "Notes",
+        "add-new-point":"Add New Point",
         "placeholder": {
           "clinic-link": "Search Clinic here",
           "device-link": "Search Device here",
