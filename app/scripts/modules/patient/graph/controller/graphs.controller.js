@@ -173,6 +173,7 @@ angular.module('hillromvestApp')
     $scope.opts = {
       maxDate: new Date(),
       format: 'MM-DD-YYYY',
+      dateLimit: {"months":12},
       eventHandlers: {'apply.daterangepicker': function(ev, picker) {
         $scope.hideNotesCSS();
         $scope.calculateDateFromPicker(picker);
