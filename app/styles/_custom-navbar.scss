@@ -11,6 +11,7 @@ $header--background: $body-bg;
 
 	.navbar-brand{
 		padding: 18px 10px;
+		overflow-y: hidden;
 		.logo {
 			font-size: 97px;
     		line-height: 24px;

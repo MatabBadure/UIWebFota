@@ -10,6 +10,43 @@
           "protocol-device": "Protocol and Device",
           "caregiver-info": "Caregiver Information"
         },
+        "caregiver-caption": {
+          "caregiver-name": "Caregiver Name",
+          "address": "Address",
+          "mobile-number": "Mobile Number",
+          "phone-number": "Phone Number",
+          "relationship": "Relationship",
+          "edit": "Edit",
+          "delete": "Delete"
+        },
+        "clinic-caption": {
+          "clinic-name": "Clinic Name",
+          "address": "Address",
+          "phone-number": "Phone Number",
+          "fax-number": "Fax Number",
+          "hr-id": "Hill-rom ID"
+        },
+        "hcp-caption": {
+          "hcp-name": "HCP Name",
+          "address": "Address",
+          "phone-number": "Phone Number",
+          "fax-number": "Fax Number",
+          "npi-id": "NPI Number"
+        },
+        "protocol-caption": {
+          "type": "Type",
+          "treatment-day": "Treatment per Day",
+          "create-date": "Created Date",
+          "modified-date": "Modified Date"
+        },
+        "device-caption": {
+          "serial-no": "Serial Number",
+          "blutooth-id": "Bluetooth ID",
+          "status": "Status",
+          "created-date": "Created Date",
+          "device": "Device",
+          "modified-date": "Modified Date"
+        },
         "clinic-title": "Clinic",
         "caregiver-title": "Caregivers",
         "device-title": "Device Information",
@@ -26,6 +63,7 @@
         "link-protocol": "Add Protocol",
         "link-hcp": "Link HCP",
         "notes": "Notes",
+        "add-new-point":"Add New Point",
         "placeholder": {
           "clinic-link": "Search Clinic here",
           "device-link": "Search Device here",
@@ -36,7 +74,9 @@
           "gen-details": "Add Device",
           "serial-no": "Serial No.",
           "bluetoothId": "Bluetooth ID",
-          "hubId": "Hub ID"
+          "hubId": "Hub ID",
+          "active-status": "Active",
+          "inactive-status": "Inactive"
         },
         "protocol": {
           "tm-per-day": "Treatment per Day",

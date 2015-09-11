@@ -63,7 +63,7 @@ angular.module('hillromvestApp').controller('patientprofileController', function
 		$scope.editPatientProfile = "";
 	};	
 
-	$scope.updateProfile = function(){
+	$scope.updateProfile = function(){    
       $scope.submitted = true;
       if($scope.form.$invalid){
         return false;
@@ -84,13 +84,19 @@ angular.module('hillromvestApp').controller('patientprofileController', function
       }
       $scope.editPatientProfile.role = $scope.editPatientProfile.authorities[0].name;
       $scope.editPatientProfile.dob = null;
-      UserService.editUser($scope.editPatientProfile).then(function(response){
-        notyService.showMessage(response.data.message, 'success');
-        $state.go('patientProfile');
+      UserService.editUser($scope.editPatientProfile).then(function(response){        
+        if(localStorage.getItem("userEmail") === $scope.editPatientProfile.email){
+          notyService.showMessage(response.data.message, 'success');
+          $state.go('patientProfile');
+        }else{
+          notyService.showMessage(profile.EMAIL_UPDATED_SUCCESSFULLY, 'success');
+          Auth.logout();
+          $state.go('login');
+        }
       }).catch(function(response){
-        if(response.data.message){
+        if(response && response.data && response.data.message){
           notyService.showMessage(response.data.message, 'warning');
-        } else if(response.data.ERROR){
+        } else if(response && response.data && response.data.ERROR){
           notyService.showMessage(response.data.ERROR, 'warning');
         }
       });
