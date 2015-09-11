@@ -14,6 +14,7 @@
             "title": "Clinic"
         },
         "clinic-type": "Clinic Type",
+        "transmission": "Transmission",
         "clinic-option": {
             "parent-clinic": "Parent Clinic",
             "satellite-clinic": "Satellite Clinic"
