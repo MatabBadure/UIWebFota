@@ -165,7 +165,7 @@ angular.module('hillromvestApp')
           return response;
         });
       },
-      getAllParentChildClinics: function(url) {
+      getAllActiveClinics: function(url) {
         var url = url || '/api/clinics?page=1&per_page=100&filter=deleted:false';
         return $http.get(url, {
           headers: headerService.getHeader()
