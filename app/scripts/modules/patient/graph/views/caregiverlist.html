@@ -57,7 +57,10 @@
     <div class="col-md-1 caregiver-list__delete" >
       <span class="icon-delete-icon" ng-click="disassociateCaregiver(caregiver.user.id, $index)"></span>
     </div>
-    
+  </div>
+  
+  <div class="col-md-16 empty-list-message" ng-if="!caregivers">
+    <span translate="patient.empty-caregiver-list-message"></span>
   </div>
   <div class="col-md-16 reset-padding caregiver-link">
       <buton class="hillrom-btn btn-primary float-right" ng-click="linkCaregiver()" translate="patient.link-caregiver"></buton>

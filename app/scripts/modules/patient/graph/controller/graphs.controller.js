@@ -1003,13 +1003,16 @@ angular.module('hillromvestApp')
       $scope.devices = []; $scope.devices.length = 0;   
       patientService.getDevices(localStorage.getItem('patientID')).then(function(response){
         angular.forEach(response.data.deviceList, function(device){
-          var _date = dateService.getDate(device.createdDate);
-          var _month = dateService.getMonth(_date.getMonth());
-          var _day = dateService.getDay(_date.getDate());
-          var _year = dateService.getYear(_date.getFullYear());
-          var date = _month + "/" + _day + "/" + _year;
-          device.createdDate = date;
-          device.days = dateService.getDays(_date);
+          // var _date = dateService.getDate(device.createdDate);
+          // var _month = dateService.getMonth(_date.getMonth());
+          // var _day = dateService.getDay(_date.getDate());
+          // var _year = dateService.getYear(_date.getFullYear());
+          // var date = _month + "/" + _day + "/" + _year;
+          // device.createdDate = date;
+
+          // device.days = dateService.getDays(_date);
+          device.createdDate = dateService.getDateByTimestamp(device.createdDate);
+          device.lastModifiedDate = dateService.getDateByTimestamp(device.lastModifiedDate);
         });
         if(response.data.deviceList){
           $scope.devices = response.data.deviceList;
@@ -1032,6 +1035,8 @@ angular.module('hillromvestApp')
         }
         $scope.addProtocol = true;
         angular.forEach($scope.protocols, function(protocol){
+          protocol.createdDate = dateService.getDateByTimestamp(protocol.createdDate);
+          protocol.lastModifiedDate = dateService.getDateByTimestamp(protocol.lastModifiedDate);
           if(!protocol.deleted){
             $scope.addProtocol = false;
           }

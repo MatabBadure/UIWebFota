@@ -120,9 +120,13 @@
         <span class="short-info">{{patient.adherence}}</span>
       </div>
       <div class="col-md-1 reset-padding-left centered text-right" >
-        <span class="icon-delete-icon"></span>
+        <span class="icon-delete-icon" ng-click="openPatientDeactivateModal(patient.id)"></span>
       </div>
       <div class="clr"></div>
+    </div>
+
+    <div class="col-md-16 empty-list-message" ng-if="!associatedPatients">
+      <span translate="clinic.noHCPs"></span>
     </div>
   </div>
 </div>
