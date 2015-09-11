@@ -33,7 +33,7 @@
       <span class="content-list__detail--name" translate="clinic.status">Status</span>
     </div>
   </div>
-  <div class="col-md-16 content-list" ng-if="clinicsOfPatientErrMsg">
+  <div class="col-md-16 empty-list-message" ng-if="clinicsOfPatientErrMsg">
     <span translate="no-clinic-found"></span>
   </div>   
 </div> 
@@ -100,7 +100,7 @@
       <span class="content-list__detail--name" translate="hcp.status">Status</span>        
     </div>  
   </div>
-  <div class="col-md-16 content-list" ng-if="hcpsOfPatientErrMsg"> 
+  <div class="col-md-16 empty-list-message" ng-if="hcpsOfPatientErrMsg"> 
   <span translate="no-hcp-found"></span>
   </div>
 </div>

@@ -45,6 +45,10 @@
     </div>
   </div>
 
+  <div class="col-md-16 empty-list-message" ng-if="!clinicAdmin">
+    <span translate="clinic.noClinicAdmins"></span>
+  </div>
+
   <div class="col-md-16 reset-padding margin-top">
     <buton class="hillrom-btn btn-primary float-right btn-margin-left" ng-click="addClinicAdminShow()" translate="clinic.add-clinic-admin" ng-show="!showAddclinicAdmin && !clinicAdmin"></buton>
   </div>

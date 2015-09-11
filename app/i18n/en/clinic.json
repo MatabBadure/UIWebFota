@@ -62,6 +62,8 @@
         "adherence": "Adherence",
         "yes" : "Yes",
         "noClinics": "No Clinic Associated",
+        "noHCPs": "No HCP Associated",
+        "noClinicAdmins": "No Clinic Admin Associated",
         "delete": {
             "warning": "Are you sure you want to Deactivate the Clinic?",
             "message": "If you deactivate the clinic, you will no longer be able to view the information."
