@@ -43,8 +43,11 @@
       <div class="col-md-4 header--type">
         <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="user.email"></span>
       </div>
-      <div class="col-md-3 header--type">
+      <div class="col-md-2 header--type">
         <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="user.mobile-number"></span>
+      </div>
+      <div class="col-md-1 header--type">
+        <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="user.status"></span>
       </div>
       <div class="clr"></div>
     </div>
@@ -66,9 +69,14 @@
         <span class="short-info">{{user.email}}</span>
       </div>
 
-      <div class="col-md-3 reset-padding centered">
+      <div class="col-md-2 reset-padding centered">
         <span class="short-info"></span>
       </div>
+      <div class="col-md-1 reset-padding">
+            <span class="short-info active centered" ng-if="!user.deleted" translate="user.status-type.active"></span>
+
+            <span class="short-info inactive centered" ng-if="user.deleted" translate="user.status-type.inactive"></span>
+          </div>
 
       <div class="clr"></div>
     </div>
