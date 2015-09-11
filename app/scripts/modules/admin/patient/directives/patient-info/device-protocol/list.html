@@ -71,8 +71,11 @@
         <div class="col-md-3 header--type">
           <span translate="patient.device-caption.serial-no"></span>
         </div>
-        <div class="col-md-3 header--type">
+        <div class="col-md-2 header--type">
           <span translate="patient.device-caption.blutooth-id"></span>
+        </div>
+        <div class="col-md-1 header--type">
+          <span translate="patient.device-caption.device"></span>
         </div>
         <div class="col-md-2 header--type">
           <span translate="patient.device-caption.status"></span>
@@ -89,8 +92,11 @@
     <div class="col-md-3 device-list__serial">
       <span>{{device.serialNumber}}</span>
     </div>
-    <div class="col-md-3 device-list__bt-id">
+    <div class="col-md-2 device-list__bt-id">
       <span>{{device.bluetoothId}}</span>
+    </div>
+    <div class="col-md-1 device-list__bt-id">
+      <span class="icon-device"></span>
     </div>
     <div class="col-md-2 device-list__status">
       <span ng-if="device.active" class="device--list__status--text" translate="patient.device.active-status">Active</span>
@@ -127,8 +133,8 @@
       <div class="modal__body">
          <div class="modal--message" translate="patient.delete-protocol.message"></div>
          <div class="row modal--custom-btn">
-          <buton class="hillrom-btn btn-submit float-right" ng-click="deleteProtocol()">Yes</buton>
-          <buton class="hillrom-btn btn-submit float-right" data-dismiss="modal" ng-click="cancelProtocolModel()">No</buton>
+          <buton class="hillrom-btn btn-primary btn-margin-left float-right" data-dismiss="modal" ng-click="cancelProtocolModel()">No</buton>
+          <buton class="hillrom-btn btn-secondary float-right" ng-click="deleteProtocol()">Yes</buton>
          </div>
       </div>
       <footer class="modal__footer">
@@ -147,8 +153,8 @@
       <div class="modal__body">
          <div class="modal--message" translate="patient.delete-device.message"></div>
          <div class="row modal--custom-btn">
-          <buton class="hillrom-btn btn-submit float-right" ng-click="deleteDevice()">Yes</buton>
-          <buton class="hillrom-btn btn-submit float-right" data-dismiss="modal" ng-click="cancelDeviceModel()">No</buton>
+          <buton class="hillrom-btn btn-primary btn-margin-left float-right" data-dismiss="modal" ng-click="cancelDeviceModel()">No</buton>
+          <buton class="hillrom-btn btn-secondary float-right" ng-click="deleteDevice()">Yes</buton>
          </div>
       </div>
       <footer class="modal__footer">

@@ -43,7 +43,8 @@
           "serial-no": "Serial Number",
           "blutooth-id": "Bluetooth ID",
           "status": "Status",
-          "created-date": "Created Date"
+          "created-date": "Created Date",
+          "device": "Device"
         },
         "clinic-title": "Clinic",
         "caregiver-title": "Caregivers",
@@ -61,6 +62,7 @@
         "link-protocol": "Add Protocol",
         "link-hcp": "Link HCP",
         "notes": "Notes",
+        "add-new-point":"Add New Point",
         "placeholder": {
           "clinic-link": "Search Clinic here",
           "device-link": "Search Device here",
