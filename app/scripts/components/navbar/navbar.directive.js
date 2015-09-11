@@ -95,6 +95,9 @@ angular.module('hillromvestApp')
         }
       };
 
+      $scope.goToPatientDashboard = function(){
+        $state.go("patientdashboard");
+      };
     }
   };
 });
