@@ -8,7 +8,12 @@
   </div>
 </div>
 <div class="container admin-user">
-  <div class="col-md-16 margin-top reset-padding">
+<div class="container dashboard__form">
+  <div class="col-md-16 reset-padding">
+    <span class="dashboard__form--type" translate="patient.protocol.gen-details"></span>
+  </div>
+</div>
+  <div class="col-md-16 protocol-radio reset-padding">
     <div class="form-group">
       <span>
         <label>
@@ -30,10 +35,6 @@
   <form name="addProtocolForm" ng-submit="editPatient()" novalidate autocomplete="off">
     <div class="container dashboard__form">
       <div>
-        <div class="col-md-16 reset-padding">
-          <span class="dashboard__form--type" translate="patient.protocol.gen-details"></span>
-        </div>
-
         <div class="col-md-16 reset-padding margin-top">
           <div class="col-md-7 reset-padding">
             <div class="col-md-6 dashboard__form--label reset-padding">
