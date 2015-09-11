@@ -987,6 +987,13 @@ input[type=radio], input.radio {
     }
   }
 }
+
+.empty-list-message {
+  color: $silver-approx;
+  padding: 10px 0;
+  font-weight: $font-weight-medium;
+}
+
 /*Condition for IE Browser*/
 
 @media screen\0 {

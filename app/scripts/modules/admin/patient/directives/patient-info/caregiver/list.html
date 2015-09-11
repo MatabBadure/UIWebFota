@@ -46,11 +46,9 @@
       <span ng-if="caregiver.user.state">{{caregiver.user.state}} </span></span>
     </div>
     <div class="col-md-3 caregiver-list__phone">
-      <span class="caregiver-list__phone--text" translate="patient.phone"></span>
       <span class="caregiver-list__phone--number">{{caregiver.user.primaryPhone}}</span>
     </div>
     <div class="col-md-3 caregiver-list__fax">
-      <span class="caregiver-list__fax--text" translate="patient.mobile"></span>
       <span class="caregiver-list__fax--number">{{caregiver.user.mobilePhone}}</span>
     </div>
     <div class="col-md-2 caregiver-list__type">
@@ -63,6 +61,11 @@
       <span class="icon-delete-icon" ng-click="disassociateCaregiversFromPatient(caregiver.user.id, $index)"></span>
     </div>
   </div>
+
+  <div class="col-md-16 empty-list-message" ng-if="!caregivers">
+    <span translate="patient.empty-caregiver-list-message"></span>
+  </div>
+
   <div class="col-md-16 reset-padding caregiver-link">
       <buton class="hillrom-btn btn-primary float-right" ng-click="linkCaregiver()" translate="patient.link-caregiver"></buton>
   </div>

@@ -38,7 +38,7 @@
         <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="clinic.email">Email</span>
       </div>
       <div class="col-md-2 header--type">
-        <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="clinic.address">Address</span>
+        <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="clinic.city-state">City/State</span>
       </div>
       <div class="col-md-2 header--type">
         <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="clinic.transmission">Transmission</span>
@@ -98,7 +98,9 @@
       </div>
 
       <div class="col-md-2 reset-padding centered">
-        <span class="short-info">{{patient.address}}</span>
+        <span class="short-info">{{patient.city}}</span>
+        <span ng-if="patient.state && patient.city">,</span>
+        <span class="short-info">{{patient.state}}</span>
       </div>
 
       <div class="col-md-2 reset-padding centered">

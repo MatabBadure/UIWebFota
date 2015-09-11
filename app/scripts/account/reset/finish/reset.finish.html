@@ -27,11 +27,11 @@
             <div ng-show="(form.password.$dirty && form.password.$showValidationMessage && form.password.$invalid) || submitted">
               <span class="login-has-error"
                 ng-show="form.password.$error.required || form.password.$error.minlength || form.password.$error.pattern">
-               {{'reset.password.error' | translate }}
+               {{'error.password.pattern' | translate }}
               </span>
               <span class="login-has-error"
                 ng-show="form.password.$error.maxlength">
-                {{'reset.password.maxlength' | translate }}
+                {{'error.password.maxlength' | translate }}
               </span>
             </div>
 
@@ -43,21 +43,19 @@
         </div>
 
           <div class="form-group">
-            <input type="password" class="form-control" name="confirmPassword" placeholder="{{'global.form.confirmpassword.placeholder' | translate}}"
-                   ng-model="resetAccount.confirmPassword" ng-minlength=8 ng-maxlength=50 ng-pattern="/^(?=^.{8,}$)(?=.*\d)(?=.*[!@#$%^&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/" pw-check="passwordBox" required>
+            <input type="password" class="form-control" name="confirmPassword" placeholder="{{'global.form.confirmpassword.placeholder' | translate}}" ng-model="resetAccount.confirmPassword" ng-minlength=8 ng-maxlength=50 ng-pattern="/^(?=^.{8,}$)(?=.*\d)(?=.*[!@#$%^&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/" pw-check="passwordBox" required>
 
             <div ng-show="(form.confirmPassword.$dirty && form.confirmPassword.$invalid) || submitted">
               <span class="login-has-error"
-                ng-show="form.confirmPassword.$error.required && !form.confirmPassword.$error.pwmatch">
-                Password required.
+                ng-show="form.confirmPassword.$error.required && !form.confirmPassword.$error.pwmatch" translate="error.password.required">
               </span>
               <span class="login-has-error"
                 ng-show="form.confirmPassword.$error.maxlength">
-                 {{'reset.confirm-password.maxlength' | translate }}
+                 {{'error.confirmPassword.maxlength' | translate }}
               </span>
               <span class="login-has-error"
                 ng-show="form.confirmPassword.$error.pwmatch">
-               {{'reset.confirm-password.error' | translate }}
+               {{'error.confirmPassword.match' | translate }}
               </span>
             </div>     
         </div>
@@ -73,9 +71,7 @@
           </div>
 
           <div ng-show="(form.question.$dirty && form.question.$showValidationMessage && form.question.$invalid) || submitted">
-            <p class="login-has-error"
-               ng-show="form.question.$error.required">
-                Security question is required.
+            <p class="login-has-error" ng-show="form.question.$error.required" translate="error.securityQuestion.required">
             </p>
           </div>  
         </div>
@@ -83,10 +79,7 @@
           <div class="form-group">
             <input type="text" class="form-control" ng-disabled="!resetAccount.question" validate-on-blur name="answer" ng-model="resetAccount.answer" required placeholder="{{'reset.placeholder.security-answer' | translate}}">
             <div ng-show="(form.answer.$dirty && form.answer.$showValidationMessage && form.answer.$invalid) || submitted">
-              <span class="login-has-error"
-                ng-show="form.answer.$error.required">
-                Answer required.
-              </span>
+              <span class="login-has-error" ng-show="form.answer.$error.required" translate="error.answer.required"></span>
             </div>
           </div>
 
