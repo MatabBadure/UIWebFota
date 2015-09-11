@@ -85,8 +85,36 @@
 
 <div class="dashboard dashboard--content">
   <div class="container dashboard__manage-view margin-top">
+    <div class="dashboard__manage-view--header">
+        <div class="col-md-3 header--type">
+          <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="doctor.patient-name">Patient Name</span>
+        </div>
+        <div class="col-md-2 header--type">
+          <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="doctor.hill-rom-id">Hill-Rom ID</span>
+        </div>
+        <div class="col-md-3 header--type">
+          <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="doctor.email">Email</span>
+        </div>
+        <div class="col-md-2 header--type">
+          <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="doctor.address">Address</span>
+        </div>
+        <div class="col-md-2 header--type">
+          <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="doctor.transmission">Transmission</span>
+        </div>
+        <div class="col-md-2 header--type">
+          <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" translate="doctor.clinic-name">Clinic Name</span>
+        </div>
+        <div class="col-md-1 header--type">
+          <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="doctor.status">Status</span>
+        </div>
+        <div class="col-md-1 header--type">
+          <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="doctor.adherence">Adherence</span>
+        </div>
+        <div class="clr"></div>
+      </div>
+
     <div class="dashboard__manage-view--list  assoc" ng-repeat="patient in patients">
-      <div class="col-md-2 reset-padding">
+      <div class="col-md-3 reset-padding">
         <span class="main-prim-info">{{patient.patientUser.lastName}} {{patient.patientUser.firstName}}</span>
         <span class="main-secon-info">{{patient.patientUser.dob}}</span>
       </div>
@@ -111,15 +139,12 @@
         <span class="short-info">{{patient.patientUser.clinicName}}</span>
       </div>
 
-      <div class="col-md-2 reset-padding">
-        <div class="icon-font">
-          <span class="short-info" ng-if="!patient.patientUser.deleted">Active</span>
-          <span class="short-info" ng-if="patient.patientUser.deleted">Inactive</span>
-        </div>
-        <div class="clr"></div>
+      <div class="col-md-1 reset-padding centered">
+          <span class="short-info active" ng-if="!patient.patientUser.deleted" translate="doctor.status-type.active"></span>
+          <span class="short-info inactive" ng-if="patient.patientUser.deleted" translate="doctor.status-type.inactive"></span>
       </div>
 
-      <div class="col-md-1 reset-padding-left centered text-right">
+      <div class="col-md-1 reset-padding-left centered">
         <span class="short-info">{{patient.patientUser.adherence}}</span>
       </div>
       <div class="clr"></div>

@@ -10,6 +10,41 @@
           "protocol-device": "Protocol and Device",
           "caregiver-info": "Caregiver Information"
         },
+        "caregiver-caption": {
+          "caregiver-name": "Caregiver Name",
+          "address": "Address",
+          "mobile-number": "Mobile Number",
+          "phone-number": "Phone Number",
+          "relationship": "Relationship",
+          "edit": "Edit",
+          "delete": "Delete"
+        },
+        "clinic-caption": {
+          "clinic-name": "Clinic Name",
+          "address": "Address",
+          "phone-number": "Phone Number",
+          "fax-number": "Fax Number",
+          "hr-id": "Hill-rom ID"
+        },
+        "hcp-caption": {
+          "hcp-name": "HCP Name",
+          "address": "Address",
+          "phone-number": "Phone Number",
+          "fax-number": "Fax Number",
+          "npi-id": "NPI Number"
+        },
+        "protocol-caption": {
+          "type": "Type",
+          "treatment-day": "Treatment per Day",
+          "create-date": "Created Date",
+          "modified-date": "Modified Date"
+        },
+        "device-caption": {
+          "serial-no": "Serial Number",
+          "blutooth-id": "Bluetooth ID",
+          "status": "Status",
+          "created-date": "Created Date"
+        },
         "clinic-title": "Clinic",
         "caregiver-title": "Caregivers",
         "device-title": "Device Information",
@@ -36,7 +71,11 @@
           "gen-details": "Add Device",
           "serial-no": "Serial No.",
           "bluetoothId": "Bluetooth ID",
-          "hubId": "Hub ID"
+          "hubId": "Hub ID",
+          "active-status": "Active",
+          "inactive-status": "Inactive",
+          "active-status-date": " - Active Date",
+          "inactive-status-date": " - Inactive Date"
         },
         "protocol": {
           "tm-per-day": "Treatment per Day",

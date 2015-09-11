@@ -10,25 +10,63 @@
 
 <div class="dashboard dashboard--content">
   <div class="container dashboard__manage-view margin-top-xl">
-    <div class="dashboard__manage-view--search">
-      <div class="fuid-search-box reset-padding-right">
-        <input type="text" class="form-control" id="searchListParam" name="userName" ng-model="searchItem" autocomplete="off" placeholder="{{'clinic.placeholder.search' | translate}}">
-        <span class="search-icon hillrom-icon icon-search-icon"></span>
-      </div>
-      <div class="fixed-filter-box reset-padding-left">
-        <div class="search-dropdown">
-          <select name="search" ng-model="sortOption" ng-change="searchDoctors()">
-            <option value="" selected>Newly Created</option>
-            <option value="email">Email</option>
-            <option value="firstName">First Name</option>
-            <option value="lastName">Last Name</option>
-          </select>
+    <div class="dashboard__manage-view--header">
+        <div class="col-md-3 header--type">
+          <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="clinic.hcp-name">HCP Name</span>
         </div>
+        <div class="col-md-2 header--type">
+          <span translate="clinic.credentials">Credentials</span>
+        </div>
+        <div class="col-md-2 header--type">
+          <span translate="clinic.npiNumber">NPI Number</span>
+        </div>
+        <div class="col-md-4 header--type">
+          <span translate="clinic.clinic-name">Clinic Name</span>
+        </div>
+        <div class="col-md-2 header--type">
+          <span translate="clinic.city">City</span>
+        </div>
+        <div class="col-md-2 header--type">
+          <span translate="clinic.state">state</span>
+        </div>
+        <div class="col-md-1 header--type">
+          <span translate="clinic.status">Status</span>
+        </div>
+        <div class="clr"></div>
       </div>
-    </div>
 
+      <div class="dashboard__manage-view--list" ng-repeat="hcp in associatedHcps">
+          <div class="col-md-3 reset-padding centered">
+            <span class="main-prim-info">{{hcp.lastName}} {{hcp.firstName}}</span>
+          </div>
+          <div class="col-md-2 reset-padding centered">
+            <span class="impo-highlight">{{hcp.credentials}}</span>
+          </div>
+          <div class="col-md-2 reset-padding centered">
+            <span class="short-info">{{hcp.npiNumber}}</span>
+          </div>
 
-    <div class="dashboard__manage-view--list assoc" ng-click="" ng-class="{ 'inactive': doctor.deleted }" ng-repeat="hcp in associatedHcps">
+          <div class="col-md-4 reset-padding centered">
+            <span class="short-info" ng-repeat ="clinic in doctor.clinics">{{hcp.name}}</span>
+          </div>
+
+          <div class="col-md-2 reset-padding centered">
+            <span class="short-info">{{hcp.city}}</span>
+          </div>
+
+          <div class="col-md-2 reset-padding centered">
+            <span class="short-info">{{hcp.state}}</span>
+          </div>
+
+          <div class="col-md-1 reset-padding centered">
+            <span class="short-info active" ng-if="!doctor.deleted" translate="clinic.status-type.active"></span>
+            <span class="short-info inactive" ng-if="doctor.deleted" translate="clinic.status-type.inactive"></span>
+          </div>
+
+          <div class="clr"></div>
+       </div>
+
+    <!-- <div class="dashboard__manage-view--list assoc" ng-click="" ng-class="{ 'inactive': doctor.deleted }" ng-repeat="hcp in associatedHcps">
       <div class="col-md-3 reset-padding-left">
         <span class="user-name"> {{hcp.lastName}} {{hcp.firstName}}</span>
         <span class="user-email">{{hcp.email}}</span>
@@ -48,7 +86,7 @@
         <span class="glyphicon glyphicon-trash cursor-pointer" ng-click="openHcpDeactivateModal(hcp.id)"></span>
         </div>
         <div class="clr"></div>
-      </div>
+      </div> -->
     </div>
   </div>
 </div>

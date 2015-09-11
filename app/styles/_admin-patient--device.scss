@@ -65,7 +65,8 @@
   font-weight: $font-weight-bold;
 }
 .admin-user .protocol-list,
-.admin-user .device-list { 
+.admin-user .device-list,
+.admin-user .crud-list { 
   .icon-edit-icon,
   .icon-delete-icon {
     color: $bombay;

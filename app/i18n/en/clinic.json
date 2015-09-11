@@ -38,7 +38,7 @@
         "clinic-phone": "Clinic Phone Number",
         "hillromId": "HillromId",
         "parentClinicId": "ParentClinicId",
-        "npiNumber": "NpiNumber",
+        "npiNumber": "NPI Number",
         "user": "user",
         "patients": "patients",
         "parent": "parent",
@@ -52,6 +52,12 @@
         "add-clinic-admin": "Add Clinic Admin",
         "active": "Active",
         "inactive": "Inactive",
+        "hcp-name": "HCP Name",
+        "credentials": "Credentials",
+        "clinic-admin-name": "Clinic Admin Name",
+        "email": "Email",
+        "patient-name": "Patient Name",
+        "adherence": "Adherence",
         "delete": {
             "warning": "Are you sure you want to Deactivate the Clinic?",
             "message": "If you deactivate the clinic, you will no longer be able to view the information."
