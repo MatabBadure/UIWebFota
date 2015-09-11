@@ -391,14 +391,41 @@ angular.module('hillromvestApp')
       });
     };
 
-    $scope.reCreateComplianceGraph = function() {
+    $scope.reCreateComplianceGraph = function() {      
       $scope.removeGraph();
       $scope.handlelegends();
       $scope.createComplianceGraphData();
       $scope.drawComplianceGraph();
     };
 
+    $scope.isLegendEnabled = function(legendFlag){
+      $scope.minComplianceParamErrMsg = false; 
+      $scope.complianceParamErrMsg = false;  
+      var count = $scope.getCountLegends();
+      if(count === 1){
+        $scope.minComplianceParamErrMsg = true; 
+      }else if(count >= 2){
+        $scope.complianceParamErrMsg = true; 
+      }
+    };
+
+    $scope.getCountLegends = function(){      
+      var count = 0 ;
+      if($scope.compliance.pressure === true ){
+        count++;
+      }
+      if($scope.compliance.duration === true ){
+        count++;
+      }
+      if($scope.compliance.frequency === true ){
+        count++;
+      }
+      return count;      
+    };
+
     $scope.handlelegends = function() {
+      $scope.minComplianceParamErrMsg = false; 
+      $scope.complianceParamErrMsg = false;  
       var count = 0 ;
       if($scope.compliance.pressure === true ){
         count++;
@@ -475,6 +502,13 @@ angular.module('hillromvestApp')
               .attr("x" , 0)
               .attr("y" , 0 )
               .attr("class" , 'svg_bg');
+
+
+              d3.selectAll('#hmrBarGraph svg').selectAll(".nv-axis .tick").append('circle').
+              attr("cx" , 0).
+              attr("cy", 0).
+              attr("r" , 2.3).
+              attr("fill" , '#aeb5be');
           };
 
           var barCount= d3.select('#hmrBarGraph svg').selectAll('.nv-group .nv-bar')[0].length;
@@ -623,7 +657,7 @@ angular.module('hillromvestApp')
     angular.forEach($scope.completecomplianceGraphData, function(value) {
       if(value.key.indexOf("pressure") >= 0 && $scope.compliance.pressure === true){
         value.yAxis = ++count;
-        value.color = 'rgb(255, 127, 14)';
+        value.color = '#ff9829';
         if(count === 1){
           $scope.yAxis1Max = $scope.yAxisRangeForCompliance.maxPressure;
           $scope.compliance.primaryYaxis = 'pressure';
@@ -635,7 +669,7 @@ angular.module('hillromvestApp')
       }
       if(value.key.indexOf("duration") >= 0 && $scope.compliance.duration === true){
         value.yAxis = ++count;
-        value.color = 'rgb(31, 119, 180)';
+        value.color = '#4e95c4';
         if(count === 1){
           $scope.yAxis1Max = $scope.yAxisRangeForCompliance.maxDuration;
           $scope.compliance.primaryYaxis = 'duration';
@@ -647,7 +681,7 @@ angular.module('hillromvestApp')
       }
       if(value.key.indexOf("frequency") >= 0  && $scope.compliance.frequency === true){
         value.yAxis = ++count;
-        value.color = 'rgb(55, 163, 180)';
+        value.color = '#7abd50';
         if(count === 1){
           $scope.yAxis1Max = $scope.yAxisRangeForCompliance.maxFrequency;
           $scope.compliance.primaryYaxis = 'frequency';
@@ -803,6 +837,16 @@ angular.module('hillromvestApp')
                   .attr("y" , bgHeight)
                   .attr("class" , "svg_bg");
 
+          /*UI Cganges for Line Graph*/
+        d3.selectAll('#complianceGraph svg').selectAll(".nv-axis .tick").append('circle').
+        attr("cx" , 0).
+        attr("cy", 0).
+        attr("r" , 2.3).
+        attr("fill" , '#aeb5be');
+
+
+
+
         var y1AxisMark = d3.select('#complianceGraph svg').selectAll('.y1.axis').selectAll('.nvd3.nv-wrap.nv-axis');
         var y2AxisMark = d3.select('#complianceGraph svg').selectAll('.y2.axis').selectAll('.nvd3.nv-wrap.nv-axis');
         var y1AxisMinMax = d3.select('#complianceGraph svg').selectAll('.y1.axis').selectAll('.nvd3.nv-wrap.nv-axis').select('.nv-axisMaxMin').attr("transform");
@@ -820,7 +864,7 @@ angular.module('hillromvestApp')
 
         y1AxisMark.append('g').
         attr('class','minRecommendedLevel').
-        attr('transform','translate(0, '+ y1AxisMinTransform + ')').
+        attr('transform','translate(-45, '+ y1AxisMinTransform + ')').
         append('text').
         //text($scope.yAxis1MinMark).
         text('MIN').
@@ -828,7 +872,7 @@ angular.module('hillromvestApp')
 
         y1AxisMark.append('g').
         attr('class','maxRecommendedLevel').
-        attr('transform','translate(0,'+ y1AxisMaxTransform + ')').
+        attr('transform','translate(-45,'+ y1AxisMaxTransform + ')').
         append('text').
         //text($scope.yAxis1MaxMark).
         text('MAX').
@@ -836,7 +880,7 @@ angular.module('hillromvestApp')
 
         y2AxisMark.append('g').
         attr('class','minRecommendedLevel').
-        attr('transform','translate(0,'+ y2AxisMinTransform + ')').
+        attr('transform','translate(20,'+ (y2AxisMinTransform + 3) + ')').
         append('text').
         //text($scope.yAxis2MinMark).
         text('MIN').
@@ -844,7 +888,7 @@ angular.module('hillromvestApp')
 
         y2AxisMark.append('g').
         attr('class','maxRecommendedLevel').
-        attr('transform','translate(0,'+ y2AxisMaxTransform + ')').
+        attr('transform','translate(20,'+ (y2AxisMaxTransform + 3) + ')').
         append('text').
         //text($scope.yAxis2MaxMark).
         text('MAX').
@@ -1057,11 +1101,11 @@ angular.module('hillromvestApp')
       }
     };
 
-    $scope.createNote = function(){ 
+    $scope.createNote = function(){         
         $scope.noteTextError =  null;
         if($scope.textNote && $scope.textNote.length > 0){ 
           if($scope.edit_date && $scope.edit_date != 'undefined' && $scope.edit_date.length > 0){
-            var editDate= dateService.convertYyyyMmDdToTimestamp($scope.edit_date);
+            var editDate = $scope.edit_date;            
             var data = {};
             data.noteText = $scope.textNote;
             data.userId = localStorage.getItem('patientID');
@@ -1071,6 +1115,7 @@ angular.module('hillromvestApp')
               $scope.edit_date = dateService.convertDateToYyyyMmDdFormat(new Date());
               $scope.textNote = "";     
               $scope.showAllNotes();
+              $scope.addNoteActive = false;
               $("#note_edit_container").removeClass("show_content");
               $("#note_edit_container").addClass("hide_content");
             }).catch(function(){
@@ -1095,13 +1140,17 @@ angular.module('hillromvestApp')
       });
     };
 
-    $scope.openAddNote = function(){      
+    $scope.openAddNote = function(){    
+      $scope.noteTextError =  null;  
+      $scope.textNote = null;
+      $scope.addNoteActive = true;
       $("#note_edit_container").removeClass("hide_content");
-      $("#note_edit_container").addClass("show_content");      
+      $("#note_edit_container").addClass("show_content");  
     };
 
     $scope.cancelAddNote = function(){
       $scope.addNote = false;
+      $scope.addNoteActive = false;
       $("#note_edit_container").removeClass("show_content");
       $("#note_edit_container").addClass("hide_content");
     };
@@ -1210,9 +1259,7 @@ angular.module('hillromvestApp')
           }
         }
       }
-
-      if($scope.getNotesBetweenDateRange($scope.graphStartDate,$scope.graphEndDate));
-      console.log("start date : "+dateService.getDateFromTimeStamp($scope.graphStartDate)+ " end date : "+dateService.getDateFromTimeStamp($scope.graphEndDate));
+      $scope.getNotesBetweenDateRange($scope.graphStartDate,$scope.graphEndDate);
     });
     
     $scope.showAllNotes = function(page){    
@@ -1245,9 +1292,17 @@ angular.module('hillromvestApp')
     };
 
 
-    $scope.getNotesBetweenDateRange = function(fromTimeStamp, toTimeStamp, scrollUp){  
-      console.log("start date : "+dateService.getDateFromTimeStamp($scope.fromTimeStamp)+ " end date : "+dateService.getDateFromTimeStamp($scope.toTimeStamp) + " page no : "+ $scope.curNotePageIndex + " page count : " + $scope.perPageCount); 
-      UserService.getNotesOfUserInInterval(localStorage.getItem('patientID'), fromTimeStamp, toTimeStamp, $scope.curNotePageIndex, $scope.perPageCount ).then(function(response){
+    $scope.getNotesBetweenDateRange = function(fromTimeStamp, toTimeStamp, scrollUp){ 
+      var patientId = null;  
+      if(localStorage.getItem('role') === 'PATIENT'){
+        patientId = localStorage.getItem('patientID');
+      }else{
+        patientId = $stateParams.patientId;
+      }
+      var fromDate = dateService.convertDateToYyyyMmDdFormat(fromTimeStamp);
+      var toDate = dateService.convertDateToYyyyMmDdFormat(toTimeStamp);
+      console.log("start date : "+dateService.getDateFromTimeStamp(fromTimeStamp)+ " end date : "+dateService.getDateFromTimeStamp(toTimeStamp) + " page no : "+ $scope.curNotePageIndex + " page count : " + $scope.perPageCount); 
+      UserService.getNotesOfUserInInterval(patientId, fromDate, toDate, $scope.curNotePageIndex, $scope.perPageCount ).then(function(response){
         $scope.showNotes = true; 
         $scope.notes = response.data; 
         $scope.totalNotes = response.headers()['x-total-count']; 
@@ -1333,6 +1388,15 @@ angular.module('hillromvestApp')
           .attr('r',4.5)
           .attr('class','missed_therapy_node');
          })
+
+         d3.selectAll('#hmrLineGraph svg').selectAll(".nv-axis .tick").append('circle').
+        attr("cx" , 0).
+        attr("cy", 0).
+        attr("r" , 2).
+        attr("fill" , '#aeb5be');
+
+        d3.selectAll('#hmrLineGraph svg').selectAll(".nv-axis .nv-axislabel").
+        attr("y" , -40);
           //
           return chart;
       });
@@ -1379,17 +1443,24 @@ angular.module('hillromvestApp')
           .transition().duration(500).call(chart);
 
           var rect_height = d3.select('#hmrBarGraph svg').selectAll('.nv-barsWrap defs rect').attr("height");
-          var rect_width = d3.select('#hmrBarGraph svg').selectAll('.nv-barsWrap defs rect').attr("width");
-            d3.select('#hmrBarGraph svg').select('.nv-y .nv-wrap g').append('rect')
-            .attr("width", rect_width)
-            .attr("height" , rect_height)
-            .attr("x" , 0)
-            .attr("y" , 0 )
-            .attr("class" , 'svg_bg');
+            var rect_width = d3.select('#hmrBarGraph svg').selectAll('.nv-barsWrap defs rect').attr("width");
+           d3.select('#hmrBarGraph svg').selectAll('rect.nv-bar')
+              .attr("x", 40)
+              .attr("width", 70);
 
-            d3.select('#hmrBarGraph svg').selectAll('rect.nv-bar')
-            .attr("x", 40)
-            .attr("width", 70);
+              d3.select('#hmrBarGraph svg').select('.nv-y .nv-wrap g').append('rect')
+              .attr("width", rect_width)
+              .attr("height" , rect_height)
+              .attr("x" , 0)
+              .attr("y" , 0 )
+              .attr("class" , 'svg_bg');
+
+
+              d3.selectAll('#hmrBarGraph svg').selectAll(".nv-axis .tick").append('circle').
+              attr("cx" , 0).
+              attr("cy", 0).
+              attr("r" , 2.3).
+              attr("fill" , '#aeb5be');
 
           //
           return chart;

@@ -82,7 +82,11 @@ angular.module('hillromvestApp')
         notyService.showMessage(response.data.message, 'success');
         $state.go('login');
       }).catch(function(response){
-        notyService.showMessage(response.data.error, 'warning');
+        if(response.data.message){
+          notyService.showMessage(response.data.message, 'warning');
+        }else if(response.data.ERROR){
+          notyService.showMessage(response.data.ERROR, 'warning');
+        }
       });
     };
 

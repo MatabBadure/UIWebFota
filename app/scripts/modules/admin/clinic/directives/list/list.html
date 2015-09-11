@@ -57,7 +57,7 @@
       <div class="clr"></div>
     </div>
 
-    <div class="dashboard__manage-view--list" ng-repeat="clinic in clinics | filter: {name: searchItem}" ng-click="clinic.deleted || selectClinic(clinic)" ng-class="{'inactive': clinic.isDeleted}">
+    <div class="dashboard__manage-view--list" ng-repeat="clinic in clinics | filter: {name: searchItem}" ng-click="clinic.deleted || selectClinic(clinic)" ng-class="{'inactive': clinic.deleted}">
       <div class="col-md-4 reset-padding centered">
         <span class="main-prim-info">{{clinic.name}}</span>
       </div>
@@ -77,7 +77,8 @@
       </div>
 
       <div class="col-md-1 reset-padding centered">
-        <span class="short-info">{{clinic.type}}</span>
+        <span class="short-info" ng-if="clinic.parent" translate="clinic.clinicType.parent"></span>
+        <span class="short-info" ng-if="!clinic.parent" translate="clinic.clinicType.child"></span>
       </div>
 
       <div class="col-md-2 reset-padding centered">

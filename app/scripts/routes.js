@@ -1203,7 +1203,8 @@ angular.module('hillromvestApp')
                 },
                 views: {
                     'content@': {
-                        templateUrl: 'scripts/modules/dummyPages/view.html'
+                        templateUrl: 'scripts/modules/dummyPages/view.html',
+                        controller: 'LogoutController'
                     }
                 },
                 resolve: {
