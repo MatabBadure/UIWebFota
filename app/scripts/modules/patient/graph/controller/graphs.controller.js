@@ -1305,7 +1305,6 @@ angular.module('hillromvestApp')
       }
       var fromDate = dateService.convertDateToYyyyMmDdFormat(fromTimeStamp);
       var toDate = dateService.convertDateToYyyyMmDdFormat(toTimeStamp);
-      console.log("start date : "+dateService.getDateFromTimeStamp(fromTimeStamp)+ " end date : "+dateService.getDateFromTimeStamp(toTimeStamp) + " page no : "+ $scope.curNotePageIndex + " page count : " + $scope.perPageCount); 
       UserService.getNotesOfUserInInterval(patientId, fromDate, toDate, $scope.curNotePageIndex, $scope.perPageCount ).then(function(response){
         $scope.showNotes = true; 
         $scope.notes = response.data; 
@@ -1336,16 +1335,47 @@ angular.module('hillromvestApp')
 
     $scope.init();
 
+
       $scope.drawHMRLineGraph = function() {
-        //console.log(JSON.stringify($scope.graphData));
         nv.addGraph(function() {
-          var chart = nv.models.lineChart()
+           chart = nv.models.lineChart()
           .margin({top: 30, right: 100, bottom: 50, left: 100})
           .showLegend(false)
           .interpolate('step-after')
           .color(d3.scale.category10().range());
          // chart.noData("Nothing to see here.");
           chart.tooltipContent($scope.toolTipContentStepChart());
+          chart.lines.dispatch.on('elementClick', function(event) {
+            // 
+              $scope.hideNotesCSS();
+              $scope.graphStartDate = null;
+              $scope.graphEndDate = null;   
+              var selectedNodeIndex = null;
+              var graphNodesLength = $scope.completeGraphData.actual.length;
+              if(graphNodesLength && graphNodesLength > 0){
+                angular.forEach($scope.completeGraphData.actual, function(value, index) {
+                  if(value.timestamp === event.point.timeStamp){
+                    selectedNodeIndex = index;
+                    $scope.graphStartDate = value.timestamp;                     
+                  }
+                });
+
+                // selectedNodeIndex exists means start date is present
+                if(selectedNodeIndex != null && selectedNodeIndex > -1 ){
+                  //the selected note is not the last one
+                  if(selectedNodeIndex < (graphNodesLength-1)){            
+                    var d = new Date($scope.completeGraphData.actual[selectedNodeIndex+1].timestamp);
+                    d.setDate(d.getDate()-1);
+                    $scope.graphEndDate = d.getTime();
+                  }else if(selectedNodeIndex === (graphNodesLength-1)){
+                    //this is the last node so,get the end date from dattepicker
+                    $scope.graphEndDate = $scope.toTimeStamp;
+                  }
+                }
+              }
+              $scope.getNotesBetweenDateRange($scope.graphStartDate,$scope.graphEndDate);
+            // 
+          });
           //this function to put x-axis labels
           chart.xAxis.tickFormat(function(d) {
             if(d % 1 === 0) {
@@ -1403,9 +1433,8 @@ angular.module('hillromvestApp')
     }
 
     $scope.drawHMRBarGraph = function() {
-        console.log(JSON.stringify($scope.hmrBarGraphData));
         nv.addGraph(function() {
-          var chart = nv.models.multiBarChart()
+           chart = nv.models.multiBarChart()
           .margin({top: 30, right: 100, bottom: 50, left: 100})
           .showControls(false)
           .showLegend(false)
