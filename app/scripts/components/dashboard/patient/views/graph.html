@@ -104,7 +104,7 @@
 					</nvd3-line-chart> -->
 				</div>
 				<div ng-if="hmrBarGraph">
-					<nvd3-multi-bar-chart
+					<!-- <nvd3-multi-bar-chart
 					data="hmrBarGraphData"
 					id="hmrBarGraph"
 					class="hmrBarGraph"
@@ -123,7 +123,10 @@
 					customizeBarWidth="customizeBarWidth()"
 					tooltipcontent="toolTipContentBarChart()">
 					<svg></svg>
-					</nvd3-multi-bar-chart>
+					</nvd3-multi-bar-chart> -->
+					<div id="hmrBarGraph" class="complianceGraph col-md-16">
+						<svg style="height:350px"> </svg>
+					</div>
 				</div>
 			</div>
 			<div ng-if="complianceGraph">

@@ -294,7 +294,7 @@ angular.module('hillromvestApp')
       return function(key, x, y, e, graph) {
         var toolTip = '';
         angular.forEach($scope.completeGraphData, function(value) {
-          if(value.startTime === e.point[0] && value.hmr !== 0 ){
+          if(value.startTime === e.point.x && value.hmr !== 0 ){
               toolTip =
                 '<h6>' + dateService.getDateFromTimeStamp(value.startTime) + '</h6>' +
                 '<ul class="graph_ul">' +
@@ -458,8 +458,11 @@ angular.module('hillromvestApp')
          } else {
           $scope.completeGraphData = graphUtil.formatDayWiseDate($scope.completeGraphData.actual);
           $scope.yAxisRangeForHMRBar = graphUtil.getYaxisRangeBarGraph($scope.completeGraphData);
-          $scope.hmrBarGraphData = graphUtil.convertIntoHMRBarGraph($scope.completeGraphData);
-          $scope.customizationForBarGraph = function() {
+          //$scope.hmrBarGraphData = graphUtil.convertIntoHMRBarGraph($scope.completeGraphData);
+          $scope.hmrBarGraphData = graphUtil.convertToHMRBarGraph($scope.completeGraphData);
+          $scope.drawHMRBarGraph();
+          //
+           $scope.customizationForBarGraph = function() {
             var rect_height = d3.select('#hmrBarGraph svg').selectAll('.nv-barsWrap defs rect').attr("height");
             var rect_width = d3.select('#hmrBarGraph svg').selectAll('.nv-barsWrap defs rect').attr("width");
            d3.select('#hmrBarGraph svg').selectAll('rect.nv-bar')
@@ -487,6 +490,7 @@ angular.module('hillromvestApp')
             $timeout(waitHandler, 1000);
           }
           $scope.waitFunction();
+          //
          }
       }).catch(function(response) {
         $scope.hmrBarGraphData = [];
@@ -1305,6 +1309,7 @@ angular.module('hillromvestApp')
 
           chart.yAxis.tickFormat(d3.format('d'));
           chart.forceY([$scope.yAxisRangeForHMRLine.min, $scope.yAxisRangeForHMRLine.max]);
+          chart.yAxis.axisLabel('Minutes');
             d3.select('#hmrLineGraph svg')
           .datum($scope.graphData)
           .transition().duration(500).call(chart);
@@ -1334,59 +1339,58 @@ angular.module('hillromvestApp')
     }
 
     $scope.drawHMRBarGraph = function() {
-        //console.log(JSON.stringify($scope.graphData));
+        console.log(JSON.stringify($scope.hmrBarGraphData));
         nv.addGraph(function() {
           var chart = nv.models.multiBarChart()
           .margin({top: 30, right: 100, bottom: 50, left: 100})
+          .showControls(false)
           .showLegend(false)
           .color(d3.scale.category10().range());
          // chart.noData("Nothing to see here.");
-          chart.tooltipContent($scope.toolTipContentStepChart());
+          chart.tooltipContent($scope.toolTipContentBarChart());
           //this function to put x-axis labels
           chart.xAxis.tickFormat(function(d) {
-            if(d % 1 === 0) {
-            var timeStamp = $scope.completeGraphData.actual[d-1].timestamp;
-            switch($scope.format) {
-                case "weekly":
-                    return d3.time.format('%A')(new Date(timeStamp));
-                    break;
-                case "monthly":
-                    return 'week ' + dateService.getWeekOfMonth(timeStamp);
-                    break;
-                case "yearly":
-                    return d3.time.format('%B')(new Date(timeStamp));
-                    break;
-                default:
-                    break;
-            }
-          }
+            return dateService.getTimeIntervalFromTimeStamp(d);
+            /*return function(d){
+                switch($scope.format) {
+                  case "weekly":
+                      return d3.time.format('%A')(new Date(d));
+                      break;
+                  case "dayWise":
+                      return dateService.getTimeIntervalFromTimeStamp(d);
+                      break;
+                  case "monthly":
+                      return 'week ' + dateService.getWeekOfMonth(d);
+                      break;
+                  case "yearly":
+                      return d3.time.format('%B')(new Date(d));
+                      break;
+                  default:
+                      break;
+                }
+            }*/
         });
 
           chart.yAxis.tickFormat(d3.format('d'));
-          chart.forceY([$scope.yAxisRangeForHMRLine.min, $scope.yAxisRangeForHMRLine.max]);
-            d3.select('#hmrLineGraph svg')
-          .datum($scope.graphData)
+          chart.forceY([$scope.yAxisRangeForHMRBar.min, $scope.yAxisRangeForHMRBar.max]);
+          chart.yAxis.axisLabel('Minutes');
+          d3.select('#hmrBarGraph svg')
+          .datum($scope.hmrBarGraphData)
           .transition().duration(500).call(chart);
-          //
-          /*
-          */
 
-         var circlesInHMR = d3.select('#hmrLineGraph svg').select('.nv-scatterWrap').select('.nv-group.nv-series-0').selectAll('circle')[0];
-         var count = 0;
-         var missedTherapyCircles = [];
-         angular.forEach($scope.completeGraphData.actual,function(value){
-          if(value.missedTherapy === true){
-            missedTherapyCircles.push(circlesInHMR[count]);
-          }
-          count++;
-         })
-         angular.forEach(missedTherapyCircles,function(circle){
-          d3.select('#hmrLineGraph svg').select('.nv-scatterWrap').select('.nv-group.nv-series-0').append('circle')
-          .attr('cx',circle.attributes.cx.value)
-          .attr('cy',circle.attributes.cy.value)
-          .attr('r',4.5)
-          .attr('class','missed_therapy_node');
-         })
+          var rect_height = d3.select('#hmrBarGraph svg').selectAll('.nv-barsWrap defs rect').attr("height");
+          var rect_width = d3.select('#hmrBarGraph svg').selectAll('.nv-barsWrap defs rect').attr("width");
+            d3.select('#hmrBarGraph svg').select('.nv-y .nv-wrap g').append('rect')
+            .attr("width", rect_width)
+            .attr("height" , rect_height)
+            .attr("x" , 0)
+            .attr("y" , 0 )
+            .attr("class" , 'svg_bg');
+
+            d3.select('#hmrBarGraph svg').selectAll('rect.nv-bar')
+            .attr("x", 40)
+            .attr("width", 70);
+
           //
           return chart;
       });

@@ -118,6 +118,22 @@ angular.module('hillromvestApp')
         graphDataList.push(graphData);
       return graphDataList;
       }
+
+      this.convertToHMRBarGraph = function(data) {
+        var pointSet = [];
+        var graphData = {};
+        var graphDataList =[];
+        angular.forEach(data, function(value) {
+          var point = {};
+          point.x = value.startTime;
+          point.y = Math.floor(value.hmr/60);
+          pointSet.push(point);
+        });
+        graphData.values = pointSet;
+        graphData.color = '#4e95c4';
+        graphDataList.push(graphData);
+      return graphDataList;
+      }
       var insertData = function(data,value) {
         data.frequency = data.frequency + value.frequency;
         data.pressure = data.pressure + value.pressure;
