@@ -24,3 +24,7 @@ var apiresponse = {
 
 }
 
+var profile = {
+	'EMAIL_UPDATED_SUCCESSFULLY' : 'Email updated successfully. Please login again.'
+}
+

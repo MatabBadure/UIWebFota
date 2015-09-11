@@ -164,6 +164,14 @@ angular.module('hillromvestApp')
         }).success(function(response){
           return response;
         });
+      },
+      getAllActiveClinics: function(url) {
+        var url = url || '/api/clinics?page=1&per_page=100&filter=deleted:false';
+        return $http.get(url, {
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });
       }
     };
   });
