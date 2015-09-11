@@ -44,10 +44,12 @@ angular.module('hillromvestApp')
         $scope.associatedPatients = response.data.patientUsers;
         clinicService.getPatients().then(function(response){
           $scope.patients = response.data.users;
-          for(var i=0; i<$scope.associatedPatients.length; i++){
-            for(var j=0; j<$scope.patients.length; j++){
-              if($scope.associatedPatients[i].id === $scope.patients[j].id){
-                $scope.patients.splice(j,1);
+          if($scope.associatedPatients){
+            for(var i=0; i<$scope.associatedPatients.length; i++){
+              for(var j=0; j<$scope.patients.length; j++){
+                if($scope.associatedPatients[i].id === $scope.patients[j].id){
+                  $scope.patients.splice(j,1);
+                }
               }
             }
           }

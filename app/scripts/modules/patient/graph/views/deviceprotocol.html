@@ -70,8 +70,11 @@
           <div class="col-md-2 header--type">
             <span translate="patient.device-caption.status"></span>
           </div>
-          <div class="col-md-6 header--type">
+          <div class="col-md-2 header--type">
             <span translate="patient.device-caption.created-date"></span>
+          </div>
+          <div class="col-md-2 header--type">
+            <span translate="patient.device-caption.modified-date"></span>
           </div>
           <div class="clr"></div>
         </div>
@@ -92,9 +95,11 @@
       <span ng-if="device.active" class="device--list__status--text" translate="patient.device.active-status"></span>
       <span ng-if="!device.active" class="device--list__status--text" translate="patient.device.inactive-status"></span>
     </div>
-    <div class="col-md-6 device-list__date">
-      <span>{{device.createdDate}}</span><span ng-if="device.active" translate="patient.device.active-status-date"></span>
-      <span ng-if="!device.active" translate="patient.device.inactive-status-date"></span>
+    <div class="col-md-2 device-list__date">
+      <span>{{device.createdDate}}</span>
+    </div>
+    <div class="col-md-4 device-list__date">
+      <span>{{device.lastModifiedDate}}</span>
     </div>
   </div>
   <div class="col-md-16 device-list" ng-if="devicesErrMsg">

@@ -59,8 +59,8 @@
       </div>
 
       <div class="col-md-1 reset-padding centered">
-        <span class="short-info" ng-if="clinic.parent">Parent</span>
-        <span class="short-info" ng-if="!clinic.parent">Child</span>
+        <span class="short-info" ng-if="clinic.parent" translate="doctor.clinicType.parent"></span>
+        <span class="short-info" ng-if="!clinic.parent" translate="doctor.clinicType.satellite"></span>
       </div>
 
       <div class="col-md-2 reset-padding centered">
@@ -72,7 +72,8 @@
       </div>
       <div class="clr"></div>
     </div>
-    <div class="dashboard__manage-view--list assoc" ng-if="clinicsAssociatedErrMsg">
+
+    <div class="col-md-16 empty-list-message" ng-if="clinicsAssociatedErrMsg">
       <span translate="doctor.no-clinic-found"></span>
     </div>
   </div>

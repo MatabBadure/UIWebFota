@@ -64,6 +64,9 @@
         "link-hcp": "Link HCP",
         "notes": "Notes",
         "add-new-point":"Add New Point",
+        "empty-protocol-list-message": "No Protocol Associated",
+        "empty-device-list-message": "No Device Associated",
+        "empty-caregiver-list-message": "No Caregiver Associated",
         "placeholder": {
           "clinic-link": "Search Clinic here",
           "device-link": "Search Device here",

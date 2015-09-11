@@ -58,7 +58,7 @@
   </div>
 </div>
 
-  <div class="dashboard dashboard--content">
+  <div class="dashboard dashboard--content" ng-if="clinic.parent">
     <div class="container dashboard__manage-view margin-top-xl">
       <div class="dashboard__manage-view--header">
       <div class="col-md-4 header--type">
@@ -90,7 +90,7 @@
     </div>
   </div>
 
-<div class="container admin-user margin-top" ng-if="clinic.parent">
+<div class="container admin-user" ng-class="{'margin-top': childClinics.length}" ng-if="clinic.parent">
   <div class="col-md-16 detail-list" ng-repeat="childClinic in childClinics">
     <div class="col-md-4 detail-list--title">
       <span>{{childClinic.name}}</span>
@@ -118,6 +118,10 @@
       <span class="inactive" ng-if="childClinic.deleted" translate="clinic.inactive"></span>
       <span class="active" ng-if="!childClinic.deleted" translate="clinic.active"></span>
     </div>
+  </div>
+
+  <div class="col-md-16 empty-list-message" ng-if="!childClinics.length">
+    <span translate="clinic.noClinics"></span>
   </div>
 
   <div class="col-md-16 reset-padding margin-bottom-xl" ng-if="clinic.id">

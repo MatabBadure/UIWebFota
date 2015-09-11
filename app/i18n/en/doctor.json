@@ -56,6 +56,7 @@
         "adherence": "Adherence",
         "hill-rom-id":  "Hill-Rom ID",
         "address": "Address",
+        "city-state": "City/State",
         "city": "City",
         "zipcode": "Zip",
         "email": "Email",
@@ -108,6 +109,11 @@
             "pending": "Pending"
         },
         "no-clinic-found": "No clinic associated.",
-        "no-hcp-found": "No hcp associated."
+        "no-hcp-found": "No hcp associated.",
+        "clinicType":{
+            "parent": "Parent",
+            "child": "Child",
+            "satellite": "Satellite"
+        }
     }
 }

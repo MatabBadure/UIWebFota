@@ -51,6 +51,7 @@
       <span ng-if="!protocol.deleted" class="icon-delete-icon" ng-click="deleteProtocolModel(protocol.id)"></span>
     </div>
   </div>
+  <div class="col-md-16 empty-list-message" ng-if="!protocols"><span translate="patient.empty-protocol-list-message"></span></div>
 
   <div class="col-md-16 reset-padding">
     <div class="col-md-8 clinic-link">
@@ -118,6 +119,7 @@
       <span ng-if="device.active" class="icon-delete-icon cursor-pointer" ng-click="deleteDeviceModel(device)"></span>
     </div>
   </div>
+  <div class="col-md-16 empty-list-message" ng-if="!devices"><span translate="patient.empty-device-list-message"></span></div>
 
   <div class="col-md-16 reset-padding">
     <div class="col-md-8 clinic-link">
