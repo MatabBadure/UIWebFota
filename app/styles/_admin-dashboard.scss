@@ -790,9 +790,6 @@ tags-input.ng-invalid .tags {
 .dashboard__manage-view--list > div {
   @extend .word-ellipsis;
   padding-right: 10px;
-  span {
-    padding-right: 10px;
-  }
 }
 
 .dashboard__manage-view--list .main-prim-info {
