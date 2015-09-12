@@ -119,6 +119,7 @@ angular.module('hillromvestApp')
       UserService.getState().then(function(response) {
         $scope.states = response.data.states;
       }).catch(function(response) {});
+      $scope.getParentClinic();
       clinicService.getClinic(clinicId).then(function(response) {
         $scope.clinic = response.data.clinic;
         $scope.slectedClinic = response.data.clinic;
@@ -385,7 +386,7 @@ angular.module('hillromvestApp')
 
     $scope.getParentClinic = function() {
       clinicService.getAllClinics().then(function (response) {
-        $scope.clinics = response.data;
+        $scope.parentClinics = response.data;
       }).catch(function (response) {});
     };
 
