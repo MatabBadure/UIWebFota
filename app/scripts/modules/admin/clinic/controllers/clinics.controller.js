@@ -528,6 +528,7 @@ angular.module('hillromvestApp')
       clinicService.disassociateClinicAdmmin($stateParams.clinicId, data).then(function(response){        
         $scope.initClinicAdmin($stateParams.clinicId);
         $scope.showAddclinicAdmin = false;
+        $scope.addAdmin = '';
         notyService.showMessage(response.data.message, 'success');
       }).catch(function(response){
         if(response.data.message){
