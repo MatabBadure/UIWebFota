@@ -994,6 +994,10 @@ input[type=radio], input.radio {
   font-weight: $font-weight-medium;
 }
 
+.parent-list ul {
+  width: 100%;
+}
+
 /*Condition for IE Browser*/
 
 @media screen\0 {
@@ -1002,6 +1006,6 @@ input[type=radio], input.radio {
     &:before{
       content: '' !important;
     }
-    }
+  }
 }
 /*END*/

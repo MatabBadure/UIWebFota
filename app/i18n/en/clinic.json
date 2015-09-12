@@ -23,7 +23,8 @@
             "search": "Search with Name, Hill-Rom ID or Email",
             "hcp-search": "Search HCP here",
             "patient-search": "Search Patients here",
-            "existed-admin": "Search Clinic Admin"
+            "existed-admin": "Search Clinic Admin",
+            "parent-clinic-search": "Search Parent clinic here"
         },
         "select-parent": "Parent Clinic",
         "general-details": "General Details",

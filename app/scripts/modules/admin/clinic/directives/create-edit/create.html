@@ -55,20 +55,9 @@
               <span class="">*</span>
             </div>
             <div class="col-md-10 dashboard__form--input parent-list reset-padding">
-              <input class="" type="text" name="parentClinicName" validate-on-blur ng-model="clinic.parentClinic.name" required ng-keyup="getParentClinic()" ng-if="!clinicStatus.createSatellite" ng-disabled="clinicStatus.createSatellite">
-              <input class="" type="text" name="parentClinicName" validate-on-blur ng-model="clinic.parentClinic.name" required ng-if="clinicStatus.createSatellite" readonly>
-              <div class="dashboard-page__user-list--parent-list" ng-show="clinic.parentClinic.name.length > 0 && form.parentClinicName.$dirty">
-                <div class="parent-detail" ng-repeat="clinic in clinics | filter:{name:clinic.parentClinic.name}">
-                  <div ng-click="selectClinicEdit(clinic)" class="dashboard-page__user-list__detailed__list--details">
-                    <span class="user-detail">
-                      {{clinic.name}}
-                    </span>
-                    <span class="user-role">
-                      {{clinic.city}}
-                    </span>
-                  </div>
-                </div>
-              </div>
+              
+              <input class="form-control" name="parentClinicName" type="text" ng-model="clinic.parentClinic.name" typeahead="clinic as clinic.name for clinic in parentClinics | filter:$viewValue" typeahead-on-select="selectClinicEdit($item)" placeholder="{{'clinic.placeholder.parent-clinic-search' | translate}}" required>
+
               <div ng-show="(form.parentClinicName.$dirty && form.parentClinicName.$showValidationMessage && form.parentClinicName.$invalid) || submitted">
                 <span class="has-error" ng-show="form.parentClinicName.$error.required" translate="error.parentClinicName.required"></span>
               </div>
