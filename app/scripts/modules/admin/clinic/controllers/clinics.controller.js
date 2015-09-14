@@ -597,9 +597,9 @@ angular.module('hillromvestApp')
     };
 
     $scope.validateClinicName = function(){
-      angular.forEach($scope.parentClinics, function(pClinic){
-       if(pClinic.id === $scope.clinic.parentClinic.id){
-        $scope.clinic.parentClinic.name = pClinic.name;
+      angular.forEach($scope.parentClinics, function(parentClinic){
+       if(parentClinic.id === $scope.clinic.parentClinic.id){
+        $scope.clinic.parentClinic.name = parentClinic.name;
        }         
       });
     };
