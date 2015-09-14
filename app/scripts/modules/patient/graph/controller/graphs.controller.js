@@ -402,10 +402,10 @@ angular.module('hillromvestApp')
       $scope.complianceParamErrMsg = false;  
       var count = $scope.getCountLegends();
       if(count === 1){
-        notyService.showMessage('At least one item should be selected.','warning' );
+        notyService.showMessage(notyMessages.minComplianceError, notyMessages.typeWarning );
         $scope.minComplianceParamErrMsg = true; 
       }else if(count >= 2){
-        notyService.showMessage('Please deselect one item.','warning' );
+        notyService.showMessage(notyMessages.maxComplianceError, notyMessages.typeWarning );
         $scope.complianceParamErrMsg = true; 
       }
     };
