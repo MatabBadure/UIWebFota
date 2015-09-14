@@ -13,7 +13,7 @@ angular.module('hillromvestApp')
     restrict: 'E',
     require: "?ngModel",
     scope: true,
-    template: "<input type='text' name='mobilePhone' validate-on-blur ng-model='value' ng-maxlength=20 mask='(999)-999-9999' ng-change='onChange()'>",
+    templateUrl: 'scripts/components/partials/mobile-input-field.html',
     link: function(scope, element, attrs, ngModel){
       if (!ngModel) return;
 
