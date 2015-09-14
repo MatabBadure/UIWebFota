@@ -183,7 +183,7 @@ angular.module('hillromvestApp')
         angular.forEach(missedTherapyList, function(timeStamp){
               var count = 0;
               angular.forEach(clonedData.actual, function(value){
-                if(dateService.getDateFromTimeStamp(value.timestamp) === dateService.getDateFromTimeStamp(timeStamp)){
+                if(dateService.getDateFromTimeStamp(value.timestamp,patientDashboard.dateFormat,'/') === dateService.getDateFromTimeStamp(timeStamp,patientDashboard.dateFormat,'/')){
                    count = count+1;
                    if(clonedData.actual.length > 1){
                       clonedData.actual.splice(clonedData.actual.indexOf(value),1)
