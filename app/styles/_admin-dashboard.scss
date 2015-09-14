@@ -1009,6 +1009,10 @@ input[type=radio], input.radio {
   width: 100%;
 }
 
+ul.dropdown-menu {
+  margin-bottom: 50px;
+}
+
 /*Condition for IE Browser*/
 
 @media screen\0 {
