@@ -188,18 +188,32 @@
 
 .ranges{
 	width: 350px;
+	width: 100%;
 	.range_inputs{
 		display: inline-block;
+		width: 100%;
 		.btn{
-			margin: 22px 0px 0px;
+			margin: 7px 0px 0px;
 		    background-color: #FF9829;
 		    border: solid 1px #FF9829;
 		    color: #333333;
 		    padding: 3px 15px;
 		    border-radius: 4px;
 			&.applyBtn{
-				margin-left: 15px; 
+				margin-left: 5px; 
 			}
+		}
+	}
+	.range_inputs{
+		label{
+			width: auto;
+			padding-right: 10px;
+		}
+		> div{
+			width: 50%;
+		}
+		> div:nth-child(2){
+			padding-left: 0px;
 		}
 	}
 }
