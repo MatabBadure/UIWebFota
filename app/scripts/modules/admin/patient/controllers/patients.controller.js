@@ -93,20 +93,19 @@ angular.module('hillromvestApp')
       }).catch(function(){});
     };
 
-    $scope.initProtocolDevice = function(patientId){
-      $scope.getPatientById(patientId);
+    $scope.getDevices = function(patientId){
       patientService.getDevices(patientId).then(function(response){
         angular.forEach(response.data.deviceList, function(device){
-          var _date = dateService.getDate(device.createdDate);
-          var _month = dateService.getMonth(_date.getMonth());
-          var _day = dateService.getDay(_date.getDate());
-          var _year = dateService.getYear(_date.getFullYear());
-          var date = _month + "/" + _day + "/" + _year;
-          device.createdDate = date;
-          device.days = dateService.getDays(_date);
+          device.createdDate = dateService.getDateByTimestamp(device.createdDate);
+          device.lastModifiedDate = dateService.getDateByTimestamp(device.lastModifiedDate);
         });
         $scope.devices = response.data.deviceList;
       }).catch(function(response){});
+    };
+
+    $scope.initProtocolDevice = function(patientId){
+      $scope.getPatientById(patientId);
+      $scope.getDevices(patientId);
       $scope.getProtocols(patientId);
     };
 
@@ -720,6 +719,28 @@ angular.module('hillromvestApp')
     $scope.closePatientDeactivateModal = function(){
       $scope.patientDeactivateModal = false;
     };
+
+    angular.element('#dp2').datepicker({
+          endDate: '+0d',
+          autoclose: true}).
+          on('changeDate', function(ev) {
+          var selectedDate = angular.element('#dp2').datepicker("getDate");
+          var _month = (selectedDate.getMonth()+1).toString();
+          _month = _month.length > 1 ? _month : '0' + _month;
+          var _day = (selectedDate.getDate()).toString();
+          _day = _day.length > 1 ? _day : '0' + _day;
+          var _year = (selectedDate.getFullYear()).toString();
+          var dob = _month+"/"+_day+"/"+_year;
+          $scope.patient.dob = dob;
+          var age = dateService.getAge(selectedDate);
+          angular.element('.age').val(age);
+          $scope.patient.age = age;
+          if (age === 0) {
+            $scope.form.$invalid = true;
+          }
+          angular.element("#dp2").datepicker('hide');
+          $scope.$digest();
+        });
 
     $scope.init();
   });

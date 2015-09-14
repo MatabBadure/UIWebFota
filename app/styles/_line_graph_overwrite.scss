@@ -51,7 +51,7 @@
 		} 
 }
 
-.complianceGraph {
+.complianceGraph{
 	.axis{
 		line{
 			stroke: transparent;
@@ -86,7 +86,7 @@
 				}
 			}
 	}
-#HMRLineGraph{
+#hmrLineGraph{
 	.nv-axis{
 			 line{
 			 	opacity: 0;
@@ -262,4 +262,12 @@
 		}
 	}
 }
-	
+.nv-noData{
+	text-anchor: middle;
+}
+.dashboard_line_graph, .complianceGraph{
+	svg{
+		height: 350px;
+	}
+}	
+

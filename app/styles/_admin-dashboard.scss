@@ -790,9 +790,6 @@ tags-input.ng-invalid .tags {
 .dashboard__manage-view--list > div {
   @extend .word-ellipsis;
   padding-right: 10px;
-  span {
-    padding-right: 10px;
-  }
 }
 
 .dashboard__manage-view--list .main-prim-info {
@@ -987,6 +984,17 @@ input[type=radio], input.radio {
     }
   }
 }
+
+.empty-list-message {
+  color: $silver-approx;
+  padding: 10px 0;
+  font-weight: $font-weight-medium;
+}
+
+.parent-list ul {
+  width: 100%;
+}
+
 /*Condition for IE Browser*/
 
 @media screen\0 {
@@ -995,6 +1003,6 @@ input[type=radio], input.radio {
     &:before{
       content: '' !important;
     }
-    }
+  }
 }
 /*END*/

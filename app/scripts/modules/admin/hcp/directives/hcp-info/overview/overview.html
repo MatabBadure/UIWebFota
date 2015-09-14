@@ -96,7 +96,7 @@
           <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="doctor.email">Email</span>
         </div>
         <div class="col-md-2 header--type">
-          <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="doctor.address">Address</span>
+          <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="doctor.city-state">City/State</span>
         </div>
         <div class="col-md-2 header--type">
           <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="doctor.transmission">Transmission</span>
@@ -126,9 +126,9 @@
       </div>
 
       <div class="col-md-2 reset-padding centered">
-        <span class="short-info">{{patient.patientUser.city}} </span>
-        <span class="short-info" ng-if="patient.patientUser.state && patient.patientUser.city">,</span>
-        <span class="short-info">{{patient.patientUser.state}} </span>
+        <span class="short-info">{{patient.patientUser.city}}</span>
+        <span ng-if="patient.patientUser.state && patient.patientUser.city">,</span>
+        <span class="short-info">{{patient.patientUser.state}}</span>
       </div>
 
       <div class="col-md-2 reset-padding centered">
@@ -149,7 +149,9 @@
       </div>
       <div class="clr"></div>
     </div>
-    <span ng-if="!patients" translate="doctor.noPatient"></span>
+    <div class="col-md-16 empty-list-message">
+      <span ng-if="!patients" translate="doctor.noPatient"></span>
+    </div>
   </div>
 </div>
 

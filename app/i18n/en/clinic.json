@@ -23,7 +23,8 @@
             "search": "Search with Name, Hill-Rom ID or Email",
             "hcp-search": "Search HCP here",
             "patient-search": "Search Patients here",
-            "existed-admin": "Search Clinic Admin"
+            "existed-admin": "Search Clinic Admin",
+            "parent-clinic-search": "Search Parent clinic here"
         },
         "select-parent": "Parent Clinic",
         "general-details": "General Details",
@@ -31,6 +32,7 @@
         "hr-id": "HR-ID",
         "personal-details": "Clinic Details",
         "address": "Address",
+        "city-state": "City/State",
         "zipcode": "Zip",
         "city": "City",
         "state": "State",
@@ -60,6 +62,9 @@
         "patient-name": "Patient Name",
         "adherence": "Adherence",
         "yes" : "Yes",
+        "noClinics": "No Clinic Associated",
+        "noHCPs": "No HCP Associated",
+        "noClinicAdmins": "No Clinic Admin Associated",
         "delete": {
             "warning": "Are you sure you want to Deactivate the Clinic?",
             "message": "If you deactivate the clinic, you will no longer be able to view the information."
@@ -122,7 +127,8 @@
         },
         "clinicType":{
             "parent": "Parent",
-            "child": "Child"
+            "child": "Child",
+            "satellite": "Satellite"
         }
     }
 }

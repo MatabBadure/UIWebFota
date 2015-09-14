@@ -20,7 +20,7 @@
         <div class="col-md-2 header--type">
           <span translate="clinic.npiNumber"></span>
         </div>
-        <div class="col-md-4 header--type">
+        <div class="col-md-3 header--type">
           <span translate="clinic.clinic-name"></span>
         </div>
         <div class="col-md-2 header--type">
@@ -35,7 +35,7 @@
         <div class="clr"></div>
       </div>
 
-      <div class="dashboard__manage-view--list" ng-repeat="hcp in associatedHcps">
+      <div class="dashboard__manage-view--list assoc" ng-repeat="hcp in associatedHcps">
           <div class="col-md-3 reset-padding centered">
             <span class="main-prim-info">{{hcp.lastName}} {{hcp.firstName}}</span>
           </div>
@@ -46,7 +46,7 @@
             <span class="short-info">{{hcp.npiNumber}}</span>
           </div>
 
-          <div class="col-md-4 reset-padding centered">
+          <div class="col-md-3 reset-padding centered">
             <span class="short-info" ng-repeat ="clinic in doctor.clinics">{{hcp.name}}</span>
           </div>
 
@@ -62,9 +62,16 @@
             <span class="short-info active" ng-if="!hcp.deleted" translate="clinic.status-type.active"></span>
             <span class="short-info inactive" ng-if="hcp.deleted" translate="clinic.status-type.inactive"></span>
           </div>
+          <div class="col-md-1 reset-padding-left centered text-right" >
+            <span class="icon-delete-icon" ng-click="openHcpDeactivateModal(hcp.id)"></span>
+          </div>
 
           <div class="clr"></div>
        </div>
+
+       <div class="col-md-16 empty-list-message" ng-if="!associatedHcps.length">
+        <span translate="clinic.noHCPs"></span>
+      </div>
     </div>
   </div>
 </div>

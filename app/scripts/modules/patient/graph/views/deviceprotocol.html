@@ -34,13 +34,13 @@
       <span class="protocol-list--value"> {{protocol.treatmentsPerDay}}</span>
     </div>
     <div class="col-md-4 protocol-list__strt-date">
-      <span class="protocol-list--value"> 12 January, 2015{{protocol.startDate}}</span>
+      <span class="protocol-list--value">{{protocol.createdDate}}</span>
     </div>
     <div class="col-md-4 protocol-list__end-date">
-      <span class="protocol-list--value"> 22 January, 2015{{protocol.endDate}}</span>
+      <span class="protocol-list--value">{{protocol.lastModifiedDate}}</span>
     </div>   
   </div>
-  <div class="col-md-16 protocol-list" ng-if="protocolsErrMsg">
+  <div class="col-md-16 empty-list-message" ng-if="protocolsErrMsg">
     <span translate="no-protocol-found"></span>
   </div>
 
@@ -70,8 +70,11 @@
           <div class="col-md-2 header--type">
             <span translate="patient.device-caption.status"></span>
           </div>
-          <div class="col-md-6 header--type">
+          <div class="col-md-2 header--type">
             <span translate="patient.device-caption.created-date"></span>
+          </div>
+          <div class="col-md-2 header--type">
+            <span translate="patient.device-caption.modified-date"></span>
           </div>
           <div class="clr"></div>
         </div>
@@ -92,12 +95,14 @@
       <span ng-if="device.active" class="device--list__status--text" translate="patient.device.active-status"></span>
       <span ng-if="!device.active" class="device--list__status--text" translate="patient.device.inactive-status"></span>
     </div>
-    <div class="col-md-6 device-list__date">
-      <span>{{device.createdDate}}</span><span ng-if="device.active" translate="patient.device.active-status-date"></span>
-      <span ng-if="!device.active" translate="patient.device.inactive-status-date"></span>
+    <div class="col-md-2 device-list__date">
+      <span>{{device.createdDate}}</span>
+    </div>
+    <div class="col-md-4 device-list__date">
+      <span>{{device.lastModifiedDate}}</span>
     </div>
   </div>
-  <div class="col-md-16 device-list" ng-if="devicesErrMsg">
+  <div class="col-md-16 empty-list-message" ng-if="devicesErrMsg">
     <span translate="no-device-found"></span>
   </div>
 

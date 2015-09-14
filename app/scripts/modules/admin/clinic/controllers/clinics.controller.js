@@ -44,10 +44,12 @@ angular.module('hillromvestApp')
         $scope.associatedPatients = response.data.patientUsers;
         clinicService.getPatients().then(function(response){
           $scope.patients = response.data.users;
-          for(var i=0; i<$scope.associatedPatients.length; i++){
-            for(var j=0; j<$scope.patients.length; j++){
-              if($scope.associatedPatients[i].id === $scope.patients[j].id){
-                $scope.patients.splice(j,1);
+          if($scope.associatedPatients){
+            for(var i=0; i<$scope.associatedPatients.length; i++){
+              for(var j=0; j<$scope.patients.length; j++){
+                if($scope.associatedPatients[i].id === $scope.patients[j].id){
+                  $scope.patients.splice(j,1);
+                }
               }
             }
           }
@@ -117,6 +119,7 @@ angular.module('hillromvestApp')
       UserService.getState().then(function(response) {
         $scope.states = response.data.states;
       }).catch(function(response) {});
+      $scope.getParentClinic();
       clinicService.getClinic(clinicId).then(function(response) {
         $scope.clinic = response.data.clinic;
         $scope.slectedClinic = response.data.clinic;
@@ -383,7 +386,7 @@ angular.module('hillromvestApp')
 
     $scope.getParentClinic = function() {
       clinicService.getAllClinics().then(function (response) {
-        $scope.clinics = response.data;
+        $scope.parentClinics = response.data;
       }).catch(function (response) {});
     };
 
@@ -524,6 +527,8 @@ angular.module('hillromvestApp')
       };
       clinicService.disassociateClinicAdmmin($stateParams.clinicId, data).then(function(response){        
         $scope.initClinicAdmin($stateParams.clinicId);
+        $scope.showAddclinicAdmin = false;
+        $scope.addAdmin = '';
         notyService.showMessage(response.data.message, 'success');
       }).catch(function(response){
         if(response.data.message){
