@@ -56,13 +56,19 @@ angular.module('hillromvestApp')
         });
       }
       $scope.user.role = $scope.user.authorities[0].name;
-      UserService.editUser($scope.user).then(function(response){
-        notyService.showMessage(response.data.message, 'success');
-        $state.go('adminProfile');
+      UserService.editUser($scope.user).then(function(response){        
+        if(localStorage.getItem("userEmail") === $scope.user.email){
+          notyService.showMessage(response.data.message, 'success');
+          $state.go('adminProfile');
+        }else{
+          notyService.showMessage(profile.EMAIL_UPDATED_SUCCESSFULLY, 'success');
+          Auth.logout();
+          $state.go('login');
+        }
       }).catch(function(response){
-        if(response.data.message){
+        if(response && response.data && response.data.message){
           notyService.showMessage(response.data.message, 'warning');
-        } else if(response.data.ERROR){
+        } else if(response && response.data && response.data.ERROR){
           notyService.showMessage(response.data.ERROR, 'warning');
         }
       });
@@ -82,7 +88,11 @@ angular.module('hillromvestApp')
         notyService.showMessage(response.data.message, 'success');
         $state.go('login');
       }).catch(function(response){
-        notyService.showMessage(response.data.error, 'warning');
+        if(response.data.message){
+          notyService.showMessage(response.data.message, 'warning');
+        }else if(response.data.ERROR){
+          notyService.showMessage(response.data.ERROR, 'warning');
+        }
       });
     };
 

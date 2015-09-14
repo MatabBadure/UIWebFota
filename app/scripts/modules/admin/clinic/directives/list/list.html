@@ -21,10 +21,9 @@
       <div class="fixed-filter-box reset-padding-left">
         <div class="search-dropdown">
           <select name="search" ng-model="sortOption" ng-change="searchClinics()">
-            <option value="" selected>Newly Created</option>
-            <option value="name">Name</option>
-            <option value="state">State</option>
-            <option value="zipcode">Zip Code</option>
+            <option value="" selected translate="clinic.filter.all"></option>
+            <option value="name" translate="clinic.filter.active"></option>
+            <option value="state" translate="clinic.filter.inactive"></option>
           </select>
         </div>
       </div>
@@ -58,7 +57,7 @@
       <div class="clr"></div>
     </div>
 
-    <div class="dashboard__manage-view--list" ng-repeat="clinic in clinics | filter: {name: searchItem}"  ng-class="{ 'inactive': clinic.deleted }" ng-click="clinic.deleted || selectClinic(clinic)">
+    <div class="dashboard__manage-view--list" ng-repeat="clinic in clinics | filter: {name: searchItem}" ng-click="clinic.deleted || selectClinic(clinic)" ng-class="{'inactive': clinic.deleted}">
       <div class="col-md-4 reset-padding centered">
         <span class="main-prim-info">{{clinic.name}}</span>
       </div>
@@ -78,48 +77,26 @@
       </div>
 
       <div class="col-md-1 reset-padding centered">
-        <span class="short-info">{{clinic.type}}</span>
+        <span class="short-info" ng-if="clinic.parent" translate="clinic.clinicType.parent"></span>
+        <span class="short-info" ng-if="!clinic.parent" translate="clinic.clinicType.satellite"></span>
       </div>
 
       <div class="col-md-2 reset-padding centered">
         <span class="impo-highlight">{{clinic.hillromId}}</span>
       </div>
 
-      <div class="col-md-1 reset-padding">
-        <div class="icon-font">
-          <span class="icon-lungs"></span>
-        </div>
-        <div class="clr"></div>
+      <div class="col-md-1 reset-padding centered">
+        <span class="short-info active" ng-if="!clinic.deleted" translate="clinic.status-type.active"></span>
+        <span class="short-info inactive" ng-if="clinic.deleted" translate="clinic.status-type.inactive"></span>
       </div>
 
       <div class="clr"></div>
     </div>
 
-      <!-- <div class="dashboard__manage-view--list" ng-repeat="clinic in clinics | filter: {name: searchItem}"  ng-class="{ 'inactive': clinic.deleted }">
-        <div  ng-click="clinic.deleted || selectClinic(clinic)">
-          <div class="col-md-3 reset-padding-left">
-            <span class="user-name">{{clinic.name}} <sup class="parent-clinic" ng-if="clinic.parent">P</sup></span>
-            <span class="user-home-no">{{clinic.hillromId}}</span>
-          </div>
-          <div class="col-md-4">
-            <span class="user-home-no">{{clinic.city}} {{clinic.state}}</span>
-            <span class="user-address">{{clinic.address}} {{clinic.zipcode}}</span>
-          </div>
-          <div class="col-md-4">
-            <span class="hcp-name">{{clinic.id}}</span>
-            <span class="clinic-name"></span>
-          </div>
-          <div class="col-md-5 reset-padding-right">
-            <span>{{clinic.phoneNumber}} {{clinic.faxNumber}}</span>
-          </div>
-          <div class="clr"></div>
-       </div>
-     </div> -->
-
      <div class="dashboard__manage-view--pagination">
       <div class="col-md-16 reset-padding-right">
         <div class="navbar-right">
-          <span class="record-found" ng-if="clinics.length > 0">{{clinics.length}} Clinics</span>
+          <span class="record-found" ng-if="clinics.length > 0">{{total}} Clinics</span>
           <span class="record-found" ng-if="clinics.length > 0">Found</span>
           <span ng-show="pageCount > 1">
             <span class="navigaion-link cursor-pointer" ng-class="{ 'inactive': !(currentPageIndex > 1) }" ng-click="searchClinics('PREV')">Previous</span>

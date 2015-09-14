@@ -27,6 +27,9 @@ angular.module('hillromvestApp')
       } else if(currentRoute === 'clinicAssociatedHCP'){
         $scope.initClinicAssoctHCPs($stateParams.clinicId);
       }
+      else if(currentRoute === 'clinicAdmin'){
+        $scope.initClinicAdmin($stateParams.clinicId);
+      }
     };
 
     $scope.getClinicById = function(clinicId){
@@ -39,10 +42,19 @@ angular.module('hillromvestApp')
       $scope.isAssociatePatient = false;
       clinicService.getClinicAssoctPatients(clinicId).then(function(response){
         $scope.associatedPatients = response.data.patientUsers;
-      }).catch(function(response){});
-      clinicService.getPatients().then(function(response){
-        $scope.patients = response.data.users;
-      }).catch(function(response){});
+        clinicService.getPatients().then(function(response){
+          $scope.patients = response.data.users;
+          if($scope.associatedPatients){
+            for(var i=0; i<$scope.associatedPatients.length; i++){
+              for(var j=0; j<$scope.patients.length; j++){
+                if($scope.associatedPatients[i].id === $scope.patients[j].id){
+                  $scope.patients.splice(j,1);
+                }
+              }
+            }
+          }
+        }).catch(function(response){});
+      }).catch(function(response){});      
       $scope.getClinicById(clinicId);
     };
 
@@ -50,10 +62,18 @@ angular.module('hillromvestApp')
       $scope.isAssociateHCP = false;
       clinicService.getClinicAssoctHCPs(clinicId).then(function(response){
         $scope.associatedHcps = response.data.hcpUsers;
+        clinicService.getHCPs().then(function(response){
+          $scope.hcps = response.data.users;
+          for(var i=0; i < $scope.associatedHcps.length; i++){
+            for(var j=0; j < $scope.hcps.length; j++){
+              if($scope.associatedHcps[i].id === $scope.hcps[j].id){
+                $scope.hcps.splice(j,1);
+              }
+            }
+          }
+        }).catch(function(response){});
       }).catch(function(response){});
-      clinicService.getHCPs().then(function(response){
-        $scope.hcps = response.data.users;
-      }).catch(function(response){});
+      
       $scope.getClinicById(clinicId);
     };
 
@@ -99,6 +119,7 @@ angular.module('hillromvestApp')
       UserService.getState().then(function(response) {
         $scope.states = response.data.states;
       }).catch(function(response) {});
+      $scope.getParentClinic();
       clinicService.getClinic(clinicId).then(function(response) {
         $scope.clinic = response.data.clinic;
         $scope.slectedClinic = response.data.clinic;
@@ -132,6 +153,20 @@ angular.module('hillromvestApp')
         }*/
       }).catch(function(response) {});
     };
+
+    $scope.getclinicAdmin = function(clinicId){
+      clinicService.getClinicAdmins(clinicId).then(function(response){
+        $scope.clinicAdmin = response.data.clinicAdmin
+      }).catch(function(response){});
+    };
+
+    $scope.initClinicAdmin = function(clinicId) {
+      $scope.getClinicById(clinicId);
+      $scope.getclinicAdmin(clinicId);
+      clinicService.getAllClinicAdmins().then(function(response){
+        $scope.allClinicAdmins = response.data.users
+      }).catch(function(response){});
+    }
 
     /* init clinic list*/
 
@@ -243,7 +278,7 @@ angular.module('hillromvestApp')
         if (response.data.message !== undefined) {
           $scope.clinicStatus.message = response.data.message;
         } else if(response.data.ERROR !== undefined){
-          $scope.clinicStatus.message = data.data.ERROR;
+          $scope.clinicStatus.message = response.data.ERROR;
         } else {
           $scope.clinicStatus.message = 'Error occurred! Please try again';
         }
@@ -287,10 +322,10 @@ angular.module('hillromvestApp')
           $state.go('clinicUser');
         }
       }).catch(function(response) {
-        if (response.message !== undefined) {
-          $scope.clinicStatus.message = response.message;
-        } else if(response.ERROR !== undefined) {
-          $scope.clinicStatus.message = response.ERROR;
+        if (response.data.message !== undefined) {
+          $scope.clinicStatus.message = response.data.message;
+        } else if(response.data.ERROR !== undefined) {
+          $scope.clinicStatus.message = response.data.ERROR;
         } else {
           $scope.clinicStatus.message = 'Error occured! Please try again';
         }
@@ -321,9 +356,9 @@ angular.module('hillromvestApp')
     };
 
     $scope.cancel = function(){
-      if($stateParams.parentId){
+      if($stateParams.clinicId){
         $state.go('clinicProfile', {
-          'clinicId': $stateParams.parentId
+          'clinicId': $stateParams.clinicId
         });
       } else {
         $state.go('clinicUser');
@@ -351,7 +386,7 @@ angular.module('hillromvestApp')
 
     $scope.getParentClinic = function() {
       clinicService.getAllClinics().then(function (response) {
-        $scope.clinics = response.data;
+        $scope.parentClinics = response.data;
       }).catch(function (response) {});
     };
 
@@ -374,6 +409,7 @@ angular.module('hillromvestApp')
     };
 
     $scope.disassociatePatient = function(patientId){
+      $scope.closePatientDeactivateModal();
       var data = [{'id': $stateParams.clinicId}];
       clinicService.disassociatePatient(patientId, data).then(function(response){
         $scope.initClinicAssoctPatients($stateParams.clinicId);
@@ -381,6 +417,25 @@ angular.module('hillromvestApp')
       }).catch(function(response){
         notyService.showMessage(response.data.message, 'warning');
       });
+    };
+
+    $scope.openPatientDeactivateModal = function(patientId){
+      $scope.deletePatientId = patientId;
+      $scope.patientDeactivateModal = true;
+
+    };
+
+    $scope.closePatientDeactivateModal = function(){
+      $scope.patientDeactivateModal = false;
+    };
+
+    $scope.closeHcpDeactivateModal = function(){
+      $scope.hcpDeactivateModal = false;
+    };
+
+    $scope.openHcpDeactivateModal = function(hcpId){
+      $scope.deleteHcpId = hcpId
+      $scope.hcpDeactivateModal = true;
     };
 
     $scope.linkPatient = function(){
@@ -403,6 +458,7 @@ angular.module('hillromvestApp')
     };
 
     $scope.disassociateHCP = function(hcpId){
+      $scope.closeHcpDeactivateModal();
       var data = [{'id': $stateParams.clinicId}];
       clinicService.disassociateHCP(hcpId, data).then(function(response){
         $scope.initClinicAssoctHCPs($stateParams.clinicId);
@@ -439,6 +495,105 @@ angular.module('hillromvestApp')
         $scope.sortIconUp = false;
         $scope.sortIconDown = true;
       }
+    };
+
+    $scope.addClinicAdminShow = function(){
+      $scope.showAddclinicAdmin = true;
+    };
+
+    $scope.addCliniAdminToClinic = function(clinicAdmin){
+      var data = {
+        "id": clinicAdmin.id
+      };
+      $scope.searchItem = '';
+      clinicService.addClinicAdmin($stateParams.clinicId, data).then(function(response){
+        $scope.getclinicAdmin($stateParams.clinicId);
+        notyService.showMessage(response.data.message, 'success');
+      }).catch(function(response){});
+    };
+
+    $scope.showDeleteModal = function(){
+      $scope.showModalClincAdmin = true;
+    };
+
+    $scope.cancelModelClinicAdmin = function(){
+      $scope.showModalClincAdmin = false;
+    };
+
+    $scope.deletClinicAdmin =  function(){
+      $scope.cancelModelClinicAdmin();
+      var data = {
+        "id": $scope.clinicAdmin.id
+      };
+      clinicService.disassociateClinicAdmmin($stateParams.clinicId, data).then(function(response){        
+        $scope.initClinicAdmin($stateParams.clinicId);
+        $scope.showAddclinicAdmin = false;
+        $scope.addAdmin = '';
+        notyService.showMessage(response.data.message, 'success');
+      }).catch(function(response){
+        if(response.data.message){
+          notyService.showMessage(response.data.message, 'warning');
+        }else if(response.data.ERROR){
+          notyService.showMessage(response.data.ERROR, 'warning');
+        }
+      });
+    };
+
+    $scope.submitClinicAdmin = function(){
+      $scope.submitted = true;
+      if($scope.createClinicAdminForm.$invalid){
+        return false;
+      }
+      var data = $scope.newAdmin;
+      data.role = 'CLINIC_ADMIN';
+      data.clinicList = [{
+        'id': $stateParams.clinicId
+      }];
+      if($scope.clinicAdminEdit){
+        $scope.editClinicAdmin(data);
+      } else {
+        $scope.createClinicAdmin(data);
+      }      
+    };
+
+    $scope.createClinicAdmin = function(data){
+      UserService.createUser(data).then(function(response){
+        $scope.getclinicAdmin($stateParams.clinicId);
+        $scope.cancelClinicAdmin();
+        notyService.showMessage(response.data.message, 'success');
+      }).catch(function(response){
+        if(response.data.message){
+          notyService.showMessage(response.data.message, 'warning');
+        }else if(response.data.ERROR){
+          notyService.showMessage(response.data.ERROR, 'warning');
+        }
+      });
+    };
+
+    $scope.editClinicAdmin = function(data){
+      UserService.editUser(data).then(function(response){
+        $scope.getclinicAdmin($stateParams.clinicId);
+        $scope.cancelClinicAdmin();
+        notyService.showMessage(response.data.message, 'success');
+      }).catch(function(response){
+        if(response.data.message){
+          notyService.showMessage(response.data.message, 'warning');
+        }else if(response.data.ERROR){
+          notyService.showMessage(response.data.ERROR, 'warning');
+        }
+      });
+    };
+
+    $scope.setEditClinicAdmin = function(){
+      $scope.clinicAdminEdit = true;
+      $scope.newAdmin = $scope.clinicAdmin;
+    };
+
+    $scope.cancelClinicAdmin = function(){
+      $scope.newAdmin = '';
+      $scope.clinicAdminEdit = false;
+      $scope.showAddclinicAdmin = false;
+      $scope.submitted = false;
     };
 
     $scope.init();

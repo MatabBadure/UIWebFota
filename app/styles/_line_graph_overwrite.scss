@@ -14,7 +14,7 @@
 	.nv-lineChart{
 		g{
 			rect{
-				fill: #E5EFF9;
+				fill: #e3ecf7;
 				opacity: 1 !important;
 			}
 		}
@@ -25,18 +25,24 @@
 			}
 			.tick{
 				text{
-				fill: #777;
+				fill: $nevada;
+				font-size: 10px;
 				}
 			}
 			.nv-axisMaxMin{
 					text{
-						fill: #777;
+						fill: $nevada;
+						font-size: 10px;
+						font-weight: normal;
 					}
 				}
+			.nv-axislabel{
+				fill: $nevada;
+			}
 		}
 	.nv-wrap{
 			.nv-axisMaxMin{
-				&:last-child{
+				&:a-child{
 					text{
 					text-anchor: end !important;
 					}
@@ -45,14 +51,26 @@
 		} 
 }
 
-.complianceGraph {
+.complianceGraph{
 	.axis{
 		line{
-			stroke: #ccc;
+			stroke: transparent;
+		}
+		.y1{
+			.minRecommendedLevel{
+
+			}
 		}
 	}
 	.svg_bg{
-		fill: #e5eff9;
+		fill: #e3ecf7;
+	}
+	.nv-stackedarea {
+		path.nv-area{
+			stroke-opacity: 1;
+			stroke: #fff !important;
+			stroke-width: 1.5;
+		}
 	}
 }
 .hmrBarGraph{
@@ -68,10 +86,21 @@
 				}
 			}
 	}
-
+#hmrLineGraph{
+	.nv-axis{
+			 line{
+			 	opacity: 0;
+			 }
+		}
+		path.nv-line{
+			/*stroke: $label-color;*/
+		}
+}
 .missed_therapy_node {
-  fill: red;
-  stroke: red;
+  fill: #cf202f;
+  stroke: #fff;
+  stroke-width: 1.5;
+  fill-opacity: 1;
 }
 
 
@@ -88,7 +117,7 @@
 			border-left: 10px solid transparent;
 			border-right: 10px solid transparent;
 			
-			border-top: 10px solid #ccc;
+			border-top: 10px solid $iceberg;
 
  		}
  		&:after { 
@@ -107,29 +136,38 @@
  		}
 	}
 	.nvtooltip{
-		padding: 0px 15px 10px 15px;
-		min-width: 150px;
+		padding: 0px 0px 0px 0px;
+		min-width: 170px;
 		border-radius: 3px;
+		border: solid 1px $iceberg;
 		p{
 			padding: 0px 0px;
 			margin: 0px 0px;
 			text-align: left;
 		}
 		h6{
-			margin: 5px 0px;
-			padding: 0px 0px;
+			margin: 0px 0px;
+			padding: 5px 10px;
 			line-height: 20px;
 			font-weight: bold;
-			color: $gray-dark;
+			color: #fff;
 			font-size: 12px;
-			border-bottom: solid 1px #ccc;
+			background-color: $iceberg;
 		}
 		.graph_ul{
-			padding-left: 0px;
+			padding: 2px 10px;
 			margin-left: 0px;
+			display: inline-block;
+			overflow: hidden;
+			clear: left;
+			width: 100%;
 			li{
 				list-style-type: none;
-				.value{
+				border-bottom: solid 1px $gray-lighter;
+				padding-top: 3px;
+				overflow: hidden; 
+				color: $gray-dark;
+				span{
 					color: $gray-dark;
 				}
 			}
@@ -208,3 +246,28 @@
 			content: '\003e';
 		}
 	}
+
+   .show_content{
+		display: block;
+	}
+	.hide_content{
+		display: none;
+	}
+.hmrBarGraph{
+	.nv-y{
+		.tick{
+			line{
+				stroke: transparent;
+			}
+		}
+	}
+}
+.nv-noData{
+	text-anchor: middle;
+}
+.dashboard_line_graph, .complianceGraph{
+	svg{
+		height: 350px;
+	}
+}	
+

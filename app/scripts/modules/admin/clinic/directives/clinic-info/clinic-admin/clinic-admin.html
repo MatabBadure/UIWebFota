@@ -1,0 +1,178 @@
+<clinic-navbar></clinic-navbar>
+
+<div class="container admin-user">
+  <div class="col-md-16 margin-top reset-padding">
+   <div class="user-gen-details">
+     <span class="user-gen-details--name">{{clinic.name}}</span>
+     <span class="user-gen-details--hr-id">{{clinic.hillromId}}</span>
+   </div>
+  </div>
+</div>
+
+<div class="container admin-user">
+  <div class="col-md-16 admin-views">
+    <span class="admin-views--title" translate="clinic.tab.clinic-admin"></span>
+  </div>
+</div>
+
+<div class="dashboard dashboard--content">
+    <div class="container dashboard__manage-view margin-top">
+      <div class="dashboard__manage-view--header">
+        <div class="col-md-4 header--type">
+          <span translate="clinic.clinic-admin-name"></span>
+        </div>
+        <div class="col-md-10 header--type">
+          <span translate="clinic.email"></span>
+        </div>
+        <div class="clr"></div>
+      </div>
+    </div>
+</div>
+
+<div class="container admin-user">
+	<div class="col-md-16 crud-list" ng-show="clinicAdmin && !clinicAdminEdit">
+    <div class="col-md-4">
+      <span>{{clinicAdmin.lastName}} {{clinicAdmin.firstName}}</span>
+    </div>
+    <div class="col-md-10">
+      <span>{{clinicAdmin.email}}</span>
+    </div>
+    <div class="col-md-1 text-center">
+      <span class="icon-edit-icon" ng-click="setEditClinicAdmin()"></span>
+    </div>
+    <div class="col-md-1 text-center">
+      <span class="icon-delete-icon" ng-click="showDeleteModal()"></span>
+    </div>
+  </div>
+
+  <div class="col-md-16 empty-list-message" ng-if="!clinicAdmin">
+    <span translate="clinic.noClinicAdmins"></span>
+  </div>
+
+  <div class="col-md-16 reset-padding margin-top">
+    <buton class="hillrom-btn btn-primary float-right btn-margin-left" ng-click="addClinicAdminShow()" translate="clinic.add-clinic-admin" ng-show="!showAddclinicAdmin && !clinicAdmin"></buton>
+  </div>
+</div>
+
+<div class="container admin-user" ng-show="showAddclinicAdmin && !clinicAdmin">
+	<div class="col-md-16 reset-padding margin-top">
+		<fieldset>
+		  <div class="select-one">
+		    <input class="cursor-pointer" type="radio" id="existAdminText" name="addAdmin" ng-model="addAdmin" value="existAdmin"/>
+		    <label class="cursor-pointer" for="existAdminText" translate="clinic.option.add-exist-admin"></label>
+		    <input class="cursor-pointer" type="radio" id="newAdminText" name="addAdmin" ng-model="addAdmin" value="newAdmin"/>
+		    <label class="cursor-pointer" for="newAdminText" translate="clinic.option.add-new-admin"></label>
+		  </div>
+		</fieldset>
+	</div>
+</div>
+
+<div class="container admin-user" ng-show="showAddclinicAdmin && addAdmin === 'existAdmin' && !clinicAdmin">
+	<div class="col-md-16 reset-padding">
+		<div class="col-md-8 exist-link">
+      <input class="form-control" type="text" ng-model="searchItem" typeahead="clinic as clinic.lastName + ' ' + clinic.firstName +' ' + clinic.email for clinic in allClinicAdmins | filter:$viewValue" typeahead-on-select="addCliniAdminToClinic($item)" placeholder="{{'clinic.placeholder.existed-admin' | translate}}">
+		</div>
+	</div>
+</div>
+
+<div class="dashboard dashboard--content padding-bottom-ls" ng-show="showAddclinicAdmin && addAdmin === 'newAdmin' && !clinicAdmin || clinicAdminEdit">
+  <form name="createClinicAdminForm" ng-submit="submitClinicAdmin()" novalidate autocomplete="off">
+    <div class="container dashboard__form">
+      <div class="margin-top-xl">
+        <div class="col-md-16 reset-padding margin-top">
+          <div class="col-md-7 reset-padding">
+            <div class="col-md-6 dashboard__form--label reset-padding">
+              <span class="" translate="clinic.admin.first-name"></span>
+              <span class="">*</span>
+            </div>
+            <div class="col-md-10 dashboard__form--input reset-padding">
+              <input class="" type="text" name="firstName" ng-model="newAdmin.firstName" ng-minlength=2 ng-maxlength=15 ng-pattern="/^[a-z A-Z]+$/" required>
+              <div ng-show="(createClinicAdminForm.firstName.$dirty && createClinicAdminForm.firstName.$showValidationMessage && createClinicAdminForm.firstName.$invalid) || submitted">
+                <span class="has-error" ng-show="createClinicAdminForm.firstName.$error.required" translate="error.firstName.required">
+                </span>
+                <span class="has-error" ng-show="createClinicAdminForm.firstName.$error.pattern" translate="error.firstName.pattern"></span>
+                <span class="has-error" ng-show="createClinicAdminForm.firstName.$error.minlength" translate="error.firstName.minlength"></span>
+                <span class="has-error" ng-show="createClinicAdminForm.firstName.$error.maxlength" translate="error.firstName.maxlength"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-7 reset-padding col-md-offset-2">
+            <div class="col-md-6 dashboard__form--label reset-padding">
+              <span class="" translate="clinic.admin.middle-name"></span>
+            </div>
+            <div class="col-md-10 dashboard__form--input reset-padding">
+              <input class="" type="text" name="middleName" ng-model="newAdmin.middleName" ng-pattern="/^[a-z A-Z]+$/" ng-minlength=2 ng-maxlength=15>
+              <div ng-show="(createClinicAdminForm.middleName.$dirty && createClinicAdminForm.middleName.$showValidationMessage && createClinicAdminForm.middleName.$invalid) || submitted">
+                <span class="has-error" ng-show="createClinicAdminForm.middleName.$error.pattern" translate="error.middleName.pattern"></span>
+                <span class="has-error" ng-show="createClinicAdminForm.middleName.$error.minlength" translate="error.middleName.minlength"></span>
+                <span class="has-error" ng-show="createClinicAdminForm.middleName.$error.maxlength" translate="error.middleName.maxlength"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-16 reset-padding margin-top">
+          <div class="col-md-7 reset-padding">
+            <div class="col-md-6 dashboard__form--label reset-padding">
+              <span class="" translate="clinic.admin.last-name"></span>
+              <span class="">*</span>
+            </div>
+           <div class="col-md-10 dashboard__form--input reset-padding">
+              <input class="" type="text" name="lastName" ng-model="newAdmin.lastName" ng-minlength=2 ng-maxlength=15 ng-pattern="/^[a-z A-Z]+$/" required>
+              <div ng-show="(createClinicAdminForm.lastName.$dirty && createClinicAdminForm.lastName.$showValidationMessage && createClinicAdminForm.lastName.$invalid) || submitted">
+                <span class="has-error" ng-show="createClinicAdminForm.lastName.$error.required" translate="error.lastName.required"></span>
+                <span class="has-error" ng-show="createClinicAdminForm.lastName.$error.pattern" translate="error.lastName.pattern"></span>
+                <span class="has-error" ng-show="createClinicAdminForm.lastName.$error.minlength" translate="error.lastName.minlength"></span>
+                <span class="has-error" ng-show="createClinicAdminForm.lastName.$error.maxlength" translate="error.lastName.maxlength"></span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-7 reset-padding col-md-offset-2">
+            <div class="col-md-6 dashboard__form--label reset-padding">
+              <span class="" translate="clinic.admin.email"></span>
+              <span class="">*</span>
+            </div>
+           <div class="col-md-10 dashboard__form--input reset-padding">
+              <input class="" type="email" name="email" ng-model="newAdmin.email" required ng-maxlength=100>
+              <div ng-show="(createClinicAdminForm.email.$dirty && createClinicAdminForm.email.$showValidationMessage && createClinicAdminForm.email.$invalid) || submitted">
+                <span class="has-error" ng-show="createClinicAdminForm.email.$error.required" translate="error.email.required"></span>
+                <span class="has-error" ng-show="createClinicAdminForm.email.$error.email" translate="error.email.invalid"></span>
+                <span class="has-error" ng-show="createClinicAdminForm.email.$error.maxlength" translate="error.email.maxlength"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="clr"></div>
+      </div>
+      <div class="col-md-16 reset-padding margin-top">
+        <div class="">
+          <button type="submit" ng-if="clinicAdminEdit" class="hillrom-btn btn-primary float-right btn-margin-left" translate="clinic.update-button-text">Update</button>
+          <button type="submit" ng-if="!clinicAdminEdit" class="hillrom-btn btn-primary float-right btn-margin-left" translate="clinic.create-button-text">Create</button>
+          <button type="button" class="hillrom-btn btn-secondary float-right" translate="clinic.cancel-button-text" ng-click="cancelClinicAdmin()">Cancel</button>
+          <div class="clr"></div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div ng-if="showModalClincAdmin" class="modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true">
+  <div class="modal__dialog">
+    <div class="modal__content">
+      <header class="modal__header">
+        <button type="button" class="modal__close" data-dismiss="modal" ng-click="cancelModelClinicAdmin()">&times;</button>
+         <p translate="clinic.deleteClinicAdmin.warning"></p>
+      </header>
+      <div class="modal__body">
+         <div class="modal--message" translate="clinic.deleteClinicAdmin.message"></div>
+         <div class="row modal--custom-btn">
+          <buton class="hillrom-btn btn-submit float-right" ng-click="deletClinicAdmin()">Yes</buton>
+          <buton class="hillrom-btn btn-submit float-right" data-dismiss="modal" ng-click="cancelModelClinicAdmin()">No</buton>
+         </div>
+      </div>
+      <footer class="modal__footer">
+      </footer>
+    </div>
+  </div>
+</div>

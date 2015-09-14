@@ -1,0 +1,47 @@
+/*Navbar Style*/
+.hcp_hsp_name_arrow{
+	.icon-arrow-down{
+		margin-left: 5px;
+	}
+}
+/*Navbar Style END*/
+
+
+/*HCP Piechart Style*/ 
+.hcp_wrapper{
+	.stats_chart_container{
+		
+		.col-3{
+			width: 25%;
+		    display: inline-block;
+		    float: left;
+		    position: relative;
+		    border-bottom: solid 2px #fff;
+		    cursor: pointer;
+		    &:hover{
+		    	
+		    	border-bottom: solid 2px $sunshade;
+		    }
+		}
+	}
+	.stats_chart_section{
+		margin-top: 25px;
+	}
+
+	.stats_chart_content{
+	    &.hmr{
+	    	color: #f7a462;
+	    }
+	    &.missed{
+	    	color: #69be7f;
+	    }
+	    &.deviation{
+	    	color: #5da0cc;
+	    }
+	    &.noevent{
+	    	color: #e28181;
+	    }
+	}
+}
+
+/*HCP Piechart Style END*/

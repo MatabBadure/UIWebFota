@@ -37,11 +37,18 @@
 .stats_chart_section{
 	.stats_header{
 		border-bottom: $border_default;
+		display: inline-block;
+		width: 100%;
 
 		h4{
-			color: $gray-dark;
-			margin: 0px 0px;
+			color: $iceberg;
+			margin: 0px 5px 0px 0px;
 			line-height: 25px;
+			float: left;
+			font-size: 17px;
+		}
+		.sub_txt{
+			line-height: 27px;
 		}
 	}
 } 
@@ -90,6 +97,14 @@
 	    font-weight: bold;
 	    line-height: 30px;
 	    margin: 0;
+	    float: left;
+    }
+    .descrip{
+    	clear: left;
+    }
+    .patients_txt{
+    	margin: 7px 0px 0px 10px;
+    	display: inline-block;
     }
 }
 /* Notification Section CSS */
@@ -97,9 +112,10 @@
 	.header_noti{
 		h4{
 			margin: 0px 0px;
-			color: $gray;
+			color: $iceberg;
 			margin: 0px 0px;
 			line-height: 25px;
+			font-size: 17px;
 		}
 	}
 }
@@ -121,12 +137,13 @@
 				border: $border_default;
 			    border-radius: 50%;
 			    color: #7DDBFA;
-			    font-size: 42px;
+			    font-size: 23px;
 			    height: 43px;
 			    left: 3px;
 			    line-height: 38px;
 			    position: absolute;
 			    top: 14px;
+			    padding-left: 9px;
 			    width: 43px;
 			}
 		}
@@ -163,7 +180,7 @@
 				}
 				&.active{
 					background-color: transparent;
-					color: $gray-dark;
+					color: $iceberg;
 					border-bottom: solid 2px $sunshade;
 				}
 			}
@@ -175,7 +192,7 @@
 		li{
 			a{
 				padding: 2px 0px;
-				color: $iceberg;
+				color: $gray-light;
 				margin: 10px 0px 0px 20px;
 				border-radius: 0px;
 				border-bottom: solid 2px #fff;
@@ -188,7 +205,7 @@
 				}
 				&.active{
 					background-color: transparent;
-					color: $gray-dark;
+					color: $iceberg;
 				}
 			}
 		}
@@ -295,38 +312,49 @@
 	.custom_check_container{
 		float: left;
 		display: inline-block;
-		margin-right: 25px;
+		margin-right: 40px;
 		&:last-child{
 			margin-right: 0px;
 		}
 		.check{
 			opacity: 0;
+			position: absolute;
 			&:checked + .check_label{
 				color: $gray-dark;
+				&.missedTHRP_legend{
+					&:after{
+						background-color: rgb(255, 38, 1);
+						border: $btn-default-bg;
+					}
+				}
 				&.pressure_legend{
 					&:after{
-						background-color: rgb(255, 127, 14);
+						background-color: #ff9829;
 						border: $btn-default-bg;
 					}
 				}
 				&.frequency_legend{
 					&:after{
-						background-color: rgb(55, 163, 180);
+						background-color: #7abd50;
 						border: $btn-default-bg;
 					}
 				}
 				&.duration_legend{
 					&:after{
-						background-color: rgb(31, 119, 180);
+						background-color: #4e95c4;
 						border: $btn-default-bg;
 					}
 				}
-
+				&:last-child{
+					padding-right: 0px;
+				}
 			}
 		}
 		.check_label{
 			position: relative;
 			font-weight: normal;
+			padding: 0px 0px;
+
 			&:after{
 				border: 1px solid $gray-light;
 				background-color: transparent;
@@ -334,13 +362,19 @@
 			    content: "";
 			    cursor: pointer !important;
 			    display: inline-block;
-			    height: 15px;
-			    left: -20px;
+			    height: 12px;
+			    left: -17px;
 			    position: absolute;
-			    top: 2px;
-			    width: 15px;
+			    top: 3px;
+			    width: 12px;
+			    border: solid 1px $forest-green;
 			}
 		}
+	}
+	.graph_check_error{
+		display: block;
+		clear: left;
+		float: right;
 	}
 }
 
@@ -360,3 +394,61 @@
  */
 
 /* Custom check Style END*/ 
+ /* User Profile Setting */
+.specific-user .user-header {
+  margin-top: 30px;
+  padding: 0;
+	&--title {
+    font-size: $font-size-base;
+    font-weight: $font-weight-bold;
+    color: $pickled-bluewood;
+  }
+}
+
+.specific-user .user-header--desc {
+	padding: 0;
+	border-bottom: 1px solid $celeste;
+	span {
+		font-size: $font-size-small;
+  	color: $celeste;
+	}
+}
+
+.user-notification {
+	padding: 20px 0;
+	&--key {
+		padding: 0;
+		span {
+			color: $nevada;
+		}
+	}
+
+	&--icon {
+		padding: 0;
+		span {
+			font-size: 30px;
+			line-height: 21px;
+		}
+		span.inactive {
+			color: $silver-approx;
+		}
+		span.active {
+			color: $fruit-salad;
+		}
+	}
+}
+.note_delete_edit{
+	margin-right: 5px;
+}
+.dashboard__manage-view--pagination{
+	&.pagination_notes{
+		margin: 20px 5px 15px !important;
+		display: inline-block;
+		float: right;
+
+	}
+	
+}
+
+
+

@@ -48,6 +48,7 @@ angular.module('hillromvestApp')
     restrict: 'E',
 
     controller: function ($scope, $state) {
+      $scope.userRole = localStorage.getItem('role');   
       $scope.isActive = function(tab) {
         var path = $location.path();
         if (path.indexOf(tab) !== -1) {
@@ -79,23 +80,24 @@ angular.module('hillromvestApp')
       };
 
       $scope.account = function(){
-        var userRole = localStorage.getItem('role');   
-        if(userRole === "ADMIN"){
+        if($scope.userRole === "ADMIN"){
           $state.go('adminProfile');
-        }else if(userRole === "PATIENT"){
+        }else if($scope.userRole === "PATIENT"){
           $state.go("patientProfile");
         }
       };
 
       $scope.goToHomePage = function(){
-        var userRole = localStorage.getItem('role'); 
-        if(userRole === "ADMIN"){
+        if($scope.userRole === "ADMIN"){
           $state.go("patientUser");
-        }else if(userRole === "PATIENT"){
+        }else if($scope.userRole === "PATIENT"){
           $state.go("patientdashboard");
         }
       };
 
+      $scope.goToPatientDashboard = function(){
+        $state.go("patientdashboard");
+      };
     }
   };
 });
@@ -104,10 +106,10 @@ angular.module('hillromvestApp')
 .directive('navbarPopover', function(Auth, $state, Account, $compile) {
     return {
         restrict: 'A',
-        template: "<span id='pop-over-link' class='padding-right cursor-pointer'>{{username}}</span><span id='icon-arrow' class='hillrom-icon icon-arrow-down cursor-pointer'></span>" +
-                  "<span style='display:none' id='pop-over-content'><div ng-click='account()'><span class='hillrom-icon icon-user-account'></span><span>Account</span></div><div ng-click='logout()'><span class='hillrom-icon icon-logout'></span><span>Logout </span></div></span>",
+        template: "<span id='pop-over-link' class='cursor-pointer'><span class='icon-logged-in-user'></span><span class='user-name'>{{username}}<span class='icon-arrow-down'></span></span></span>" +
+                  "<span style='display:none' id='pop-over-content'><div id='account' ng-click='account()'><span class='hillrom-icon icon-user-account'></span><span>Account</span></div><div ng-click='logout()'><span class='hillrom-icon icon-logout'></span><span>Logout </span></div></span>",
         link: function(scope, elements, attrs) {
-            $("#pop-over-link, #icon-arrow").popover({
+            $("#pop-over-link").popover({
                 'placement': 'bottom',
                 'trigger': 'click',
                 'html': true,
@@ -128,7 +130,8 @@ angular.module('hillromvestApp')
     templateUrl: 'scripts/components/navbar/navbarpatientuser.html',
     restrict: 'E',
 
-    controller: function ($scope) {
+    controller: function ($scope, UserService) {
+      $scope.notifications = 0;
       $scope.isActive = function(tab) {
         var path = $location.path();
         if (path.indexOf(tab) !== -1) {
@@ -137,6 +140,18 @@ angular.module('hillromvestApp')
           return false;
         }
       };
+
+      $scope.getNotifications = function(){
+        UserService.getPatientNotification(localStorage.getItem("patientID"), new Date().getTime()).then(function(response){                  
+          $scope.notifications = response.data;
+          if($scope.notifications.length < 2){
+            $scope.no_of_notifications = $scope.notifications.length;
+          }else{
+            $scope.no_of_notifications = 2;
+          }          
+        });
+      };
+      $scope.getNotifications();
     }
   };
 });

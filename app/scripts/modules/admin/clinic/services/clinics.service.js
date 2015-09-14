@@ -123,6 +123,55 @@ angular.module('hillromvestApp')
         }).success(function(response) {
           return response;
         });
+      },
+
+      getClinicAdmins: function(clinicId){
+        return $http.get('/api/clinics/'+clinicId+'/clinicadmin', {
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });
+      },
+
+      getAllClinicAdmins: function(){
+        
+        return $http.get('/api/user/all?role=CLINIC_ADMIN', {
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });
+      },
+
+      addClinicAdmin: function(clinicId, data){
+        return $http.put('/api/clinics/'+clinicId+'/associateclinicadmin', data,{
+          headers: headerService.getHeader()
+        }).success(function(response){
+          return response;
+        });
+      },
+
+      disassociateClinicAdmmin: function(clinicId, data){
+        return $http.put('/api/clinics/'+clinicId+'/dissociateclinicadmin', data,{
+          headers: headerService.getHeader()
+        }).success(function(response){
+          return response;
+        });
+      },
+
+      createClinicAdmin: function(clinicId, data){
+        return $http.POST('/api/user', data,{
+          headers: headerService.getHeader()
+        }).success(function(response){
+          return response;
+        });
+      },
+      getAllActiveClinics: function(url) {
+        var url = url || '/api/clinics?page=1&per_page=100&filter=deleted:false';
+        return $http.get(url, {
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });
       }
     };
   });

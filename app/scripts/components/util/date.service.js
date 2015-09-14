@@ -44,6 +44,10 @@ angular.module('hillromvestApp')
         var day = Math.floor(diff / oneDay);
         return day
       },
+      getUTCTimeStamp: function(timeStamp) {
+        var timeZoneOffset = new Date(timeStamp).getTimezoneOffset();
+        return timeStamp - (timeZoneOffset * 60 * 1000);
+      },
       getWeekOfMonth: function(d) {
         /*var dayCount = this.getDayOfYear(d);
         var d = new Date(d);
@@ -55,9 +59,13 @@ angular.module('hillromvestApp')
         return Math.ceil((date.getDate() + firstDay)/7);
         return new Date(d).getMonthWeek;
       },
+      getDateByTimestamp: function(data){
+        var date = new Date(data);
+        return this.getMonthName(date) + ' ' + this.getDay(date.getDate()) + ', ' + this.getYear(date.getFullYear(date))
+      },
       getDateFromTimeStamp: function(data) {
         var date = new Date(data);
-        return this.getDay(date.getDate()) + '/' + this.getMonth(date.getMonth(date)) + '/' + this.getYear(date.getFullYear(date))
+        return this.getMonth(date.getMonth(date)) + '/' + this.getDay(date.getDate()) + '/' + this.getYear(date.getFullYear(date))
       },
       getDateDiffIndays: function(fromTimeStamp,toTimeStamp) {
         return Math.ceil((toTimeStamp - fromTimeStamp)/(1000*60*60*24));
@@ -236,11 +244,44 @@ angular.module('hillromvestApp')
         }
       },
 
+      getMonthName: function(date){
+        var month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        var date = new Date(date);
+        return month[date.getMonth()];
+      },
+
       getDays: function(date){
         var oneDay = 24*60*60*1000;
         var currentDate = new Date();
         var diffDays = Math.floor((currentDate.getTime() - date.getTime())/oneDay);
         return diffDays;
+      },
+
+      convertYyyyMmDdToTimestamp: function(date){
+        if(date.indexOf("-") > -1){
+          var startDate = date.split("-"); // turning it from yyyy-mm-dd mm/dd/yyyy 
+          var dd = parseInt(startDate[2]) + 1;
+          var tempDate = startDate[1]+"/"+dd+"/"+startDate[0]; 
+          return new Date(tempDate).getTime();
+        }else{
+          return 0;
+        }
+        
+    },
+    convertDateToYyyyMmDdFormat: function(date){
+      var tempDate = new Date(date);
+      var tempMonth = tempDate.getMonth()+1;
+      var tempDay = tempDate.getDate();
+      if(tempMonth < 10){
+        tempMonth = "0"+tempMonth;
       }
+      if(tempDay < 10){
+        tempDay = "0"+tempDay;
+      }
+
+      var dateFormatted = tempDate.getFullYear()+'-' + tempMonth + '-'+ tempDay;
+      return dateFormatted;
+    }
+
     };
   });

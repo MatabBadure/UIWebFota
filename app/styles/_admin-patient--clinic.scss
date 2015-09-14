@@ -4,10 +4,12 @@
   font-size: $font-size-base;
   font-weight: $font-weight-bold;
   &--name {
-    color: $storm-dust;
+    color: $bombay;
+    font-weight: normal;
   }
   &--hr-id {
     color: $sunshade;
+    font-weight: normal;
   }
 }
 
@@ -72,6 +74,9 @@
   text-align: center;
   span {
     cursor: pointer;
+    &:hover{
+      color: $pickled-bluewood;
+    }
   }
 }
 
@@ -83,6 +88,14 @@
     padding-left: 10px;
     outline: none;
     height: 30px;
+    border-radius: 0;
     color: $pickled-bluewood;
   }
+
 }
+
+.clinic-link, .exist-link{
+    .dropdown-menu{
+      width: 80%;
+    }
+  }

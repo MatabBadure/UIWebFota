@@ -2,10 +2,10 @@
     "clinic" : {
         "home": {
             "title": "Clinics",
-            "manageLabel": "Manage Clinics",
-            "createLabel": "Create New Clinic",
+            "createLabel": "Create Clinic",
             "createOrEditLabel": "Create or edit a Clinic",
-            "updateLabel":"Update Clinic"
+            "updateLabel":"Update Clinic",
+            "manageLabel": "Manage Clinics"
         },
         "delete": {
             "question": "Are you sure you want to delete Clinic {{ id }}?"
@@ -14,6 +14,7 @@
             "title": "Clinic"
         },
         "clinic-type": "Clinic Type",
+        "transmission": "Transmission",
         "clinic-option": {
             "parent-clinic": "Parent Clinic",
             "satellite-clinic": "Satellite Clinic"
@@ -21,7 +22,9 @@
         "placeholder": {
             "search": "Search with Name, Hill-Rom ID or Email",
             "hcp-search": "Search HCP here",
-            "patient-search": "Search Patients here"
+            "patient-search": "Search Patients here",
+            "existed-admin": "Search Clinic Admin",
+            "parent-clinic-search": "Search Parent clinic here"
         },
         "select-parent": "Parent Clinic",
         "general-details": "General Details",
@@ -29,6 +32,7 @@
         "hr-id": "HR-ID",
         "personal-details": "Clinic Details",
         "address": "Address",
+        "city-state": "City/State",
         "zipcode": "Zip",
         "city": "City",
         "state": "State",
@@ -37,7 +41,7 @@
         "clinic-phone": "Clinic Phone Number",
         "hillromId": "HillromId",
         "parentClinicId": "ParentClinicId",
-        "npiNumber": "NpiNumber",
+        "npiNumber": "NPI Number",
         "user": "user",
         "patients": "patients",
         "parent": "parent",
@@ -47,9 +51,32 @@
         "cancel-button-text": "cancel",
         "deactivate-button-text": "Deactivate",
         "update-button-text": "Update",
+        "create-button-text": "Create",
+        "add-clinic-admin": "Add Clinic Admin",
+        "active": "Active",
+        "inactive": "Inactive",
+        "hcp-name": "HCP Name",
+        "credentials": "Credentials",
+        "clinic-admin-name": "Clinic Admin Name",
+        "email": "Email",
+        "patient-name": "Patient Name",
+        "adherence": "Adherence",
+        "yes" : "Yes",
+        "noClinics": "No Clinic Associated",
+        "noHCPs": "No HCP Associated",
+        "noPatients": "No Patient Associated",
+        "noClinicAdmins": "No Clinic Admin Associated",
         "delete": {
             "warning": "Are you sure you want to Deactivate the Clinic?",
             "message": "If you deactivate the clinic, you will no longer be able to view the information."
+        },
+        "deletePatient":{
+            "warning": "Are you sure you want to Deactivate the Patient?",
+            "message": "If you deactivate the Patient, you will no longer be able to view the information."
+        },
+        "deleteHcp":{
+            "warning": "Are you sure you want to Deactivate the HCP?",
+            "message": "If you deactivate the HCP, you will no longer be able to view the information."
         },
         "hillRom-id": "Hill-Rom ID",
         "type": "Type",
@@ -73,6 +100,36 @@
             "assoc-hcp": "Associated HCPs",
             "assoc-patients": "Associated Patients",
             "clinic-admin": "Clinic Admin"
+        },
+        "option": {
+            "add-exist-admin": "Select Existing Admin",
+            "add-new-admin": "Create New Admin"
+        },
+        "filter": {
+            "all": "All",
+            "active": "Active",
+            "inactive": "Inactive",
+            "expired": "Expired"
+        },
+        "status-type": {
+            "active": "Active",
+            "inactive": "Inactive",
+            "pending": "Pending"
+        },
+        "admin": {
+            "first-name": "First Name",
+            "middle-name": "Middle Name",
+            "last-name": "Last Name",
+            "email": "Email"
+        },
+        "deleteClinicAdmin":{
+            "warning": "Are you sure, You want to delete Clinic Admin?",
+            "message": "After Delete You will not be able to see the Clinic Admin."
+        },
+        "clinicType":{
+            "parent": "Parent",
+            "child": "Child",
+            "satellite": "Satellite"
         }
     }
 }

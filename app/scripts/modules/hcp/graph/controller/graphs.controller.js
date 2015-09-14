@@ -1,6 +1,7 @@
 'use strict';
 
 angular.module('hillromvestApp')
+<<<<<<< HEAD
 .controller('hcpGraphController', function($scope, $state, patientDashBoardService, StorageService, dateService, graphUtil, patientService, UserService, $stateParams, notyService, $timeout) {
     var chart;
     $scope.init = function() {
@@ -14,46 +15,70 @@ angular.module('hillromvestApp')
       $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp);
       $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp);
       $scope.weeklyChart();
-
-      /*$scope.hmrLineGraph = true;
-      $scope.hmrBarGraph = false;
-      $scope.hmrGraph = true;
-      $scope.format = 'weekly';
-      $scope.selectedGraph = 'HMR';
-      $scope.selectedDateOption = 'WEEK';
-      $scope.patientId = 160;
-      $scope.compliance = {};
-      $scope.compliance.pressure = true;
-      $scope.compliance.duration = true;
-      $scope.compliance.frequency = false;
-      $scope.handlelegends();
-      $scope.toTimeStamp = new Date().getTime();
-      $scope.compliance.secondaryYaxis = 'pressure';
-      $scope.compliance.primaryYaxis = 'duration';
-      $scope.hmrRunRate = 0;
-      $scope.adherenceScore = 0;
-      $scope.missedtherapyDays = 0;
-      $scope.minFrequency = 0;
-      $scope.maxFrequency = 0;
-      $scope.minPressure = 0;
-      $scope.maxPressure = 0;
-      $scope.minDuration = 0;
-      $scope.maxDuration = 0;
-      $scope.yAxisRangeForHMRLine = {};
-      $scope.yAxisRangeForCompliance = {};
-      $scope.yAxis1Min = 0;
-      $scope.yAxis2Min = 0;
-      $scope.getHmrRunRateAndScore();
-      $scope.getMissedTherapyDaysCount();
-      //$scope.patientId = StorageService.get('patientID');
-      $scope.fromTimeStamp = dateService.getnDaysBackTimeStamp(7);
-      $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp);
-      $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp);   
-      $scope.getPatientById(localStorage.getItem('patientID'));
-      var currentRoute = $state.current.name;
-      $scope.showNotes = false;
-      $scope.patientTab = currentRoute;*/
     }; 
+
+//---HCP PieChart JS =============
+  $scope.missedtherapyDays = 25;
+  $scope.hmrRunRate = 65;
+  $scope.deviationDays = 49;
+  $scope.noeventDays = 76;
+  $scope.missedtherapy = {
+        animate:{
+            duration:3000,
+            enabled:true
+        },
+        barColor:'#69be7f',
+        trackColor: '#ccc',
+        scaleColor: false,
+        lineWidth:12,
+        lineCap:'circle'
+    };
+    $scope.hmr = {
+        animate:{
+            duration:3000,
+            enabled:true
+        },
+        barColor:'#f7a462',
+        trackColor: '#ccc',
+        scaleColor: false,
+        lineWidth:12,
+        lineCap:'circle'
+    };
+  $scope.deviation = {
+          animate:{
+              duration:3000,
+              enabled:true
+          },
+          barColor:'#5da0cc',
+          trackColor: '#ccc',
+          scaleColor: false,
+          lineWidth:12,
+          lineCap:'circle'
+      };
+$scope.noevent = {
+          animate:{
+              duration:3000,
+              enabled:true
+          },
+          barColor:'#e28181',
+          trackColor: '#ccc',
+          scaleColor: false,
+          lineWidth:12,
+          lineCap:'circle'
+      };
+//---HCP PieChart JS =============
+
+/*Dtate picker js*/
+$scope.opts = {
+      eventHandlers: {'apply.daterangepicker': function(ev, picker) {
+        $scope.calculateDateFromPicker(picker);
+        $scope.drawGraph();
+        $scope.selectedDateOption = '';
+        }
+      },
+      opens: 'left'
+    }
+/*Dtate picker js END*/
     
     $scope.calculateDateFromPicker = function(picker) {
       $scope.fromTimeStamp = new Date(picker.startDate._d).getTime();

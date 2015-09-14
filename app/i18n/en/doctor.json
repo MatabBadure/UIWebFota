@@ -6,7 +6,7 @@
             "createLabel": "Create HCP",
             "createNewLabel": "Create New HCP",
             "createOrEditLabel": "Create or edit a Doctor",
-            "manageLabel": "Manage HCP",
+            "manageLabel": "Manage HCPs",
             "updateLabel": "Update HCP"
         },
         "delete": {
@@ -15,10 +15,13 @@
         "detail": {
             "title": "Doctor"
         },
+        "noClinics": "No Clinic Associated",
+        "noPatient": "No Patient Associated.",
         "general-details":  "General Details",
         "personal-details": "Personal Details",
         "health-details":   "Health Details",
         "clinic": "Clinic",
+        "speciality": "Speciality",
         "doctor": "Doctor",
         "add-clinic": "Add Another Clinic",
         "create-caregiver": "Yes",
@@ -39,15 +42,21 @@
                     "others": "O"
         },
         "placeholder": {
-            "search": "Search with Name or Email"
+            "search": "Search with Name or Email",
+            "link-clinic": "Search Clinic here"
         },
         "npi-number": "NPI Number",
         "first-name": "First Name",
+        "patient-name": "Patient Name",
         "middle-name": "Middle Name",
         "last-name": "Last Name",
         "specialty": "Specialty",
         "credentials": "Credentials",
+        "transmission": "Transmission",
+        "adherence": "Adherence",
+        "hill-rom-id":  "Hill-Rom ID",
         "address": "Address",
+        "city-state": "City/State",
         "city": "City",
         "zipcode": "Zip",
         "email": "Email",
@@ -68,18 +77,43 @@
         "update-button-text": "Update",
         "back-button-text": "Back",
         "edit-button-text": "Edit",
+        "type": "Type",
+        "hillRom-id": "Hill-Rom ID",
+        "phoneNumber": "Phone number",
+        "link-clinic": "Link Clinic",
         "delete": {
             "warning": "Are you sure you want to Deactivate the Doctor?",
             "message": "If you deactivate the doctor, you will no longer be able to view the information."
         },
+        "clinic-disassociate":{
+            "warning": "Are you sure, you want to disassociate Clinic from HCP?",
+            "message": "If you disassociate the clinic, This HCP will not be able to View clinic information."
+        },
         "tab": {
-            "hcp-overview": "HCP Profile"
+            "hcp-overview": "HCP Profile",
+            "associated-clinic": "Associated Clinics"
         },
         "patient-assoc": "Patient Association",
+        "patient-associated": "Patient Associated",
+        "clinic-title": "Clinic Association",
         "filter": {
+            "all": "All",
             "active": "Active",
             "inactive": "Inactive",
-            "all": "All"
+            "expired": "Expired",
+            "pending": "Pending"
+        },
+        "status-type": {
+            "active": "Active",
+            "inactive": "Inactive",
+            "pending": "Pending"
+        },
+        "no-clinic-found": "No clinic associated.",
+        "no-hcp-found": "No hcp associated.",
+        "clinicType":{
+            "parent": "Parent",
+            "child": "Child",
+            "satellite": "Satellite"
         }
     }
 }

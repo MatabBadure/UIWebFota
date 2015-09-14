@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hillromvestApp')
-  .controller('LoginController', function($scope, $state, $timeout, Auth, vcRecaptchaService, globalConfig) {
+  .controller('LoginController', function($scope, $state, $timeout, Auth, vcRecaptchaService, globalConfig, $rootScope) {
     $scope.showLogin = true;
     $scope.isEmailExist = true;
     $scope.isFirstLogin = false;
@@ -52,6 +52,9 @@ angular.module('hillromvestApp')
         if (data.status === 200) {
           localStorage.removeItem('loginCount');
           localStorage.setItem('userFirstName', data.data.user.firstName);
+          localStorage.setItem('role', data.data.user.authorities[0].name);
+          localStorage.setItem('userEmail', data.data.user.email);
+          $rootScope.userRole = localStorage.getItem('role');           
           if(data.data.user.authorities[0].name === 'PATIENT'){
             localStorage.setItem('patientID', data.data.user.id);
             $state.go('patientdashboard');
@@ -59,7 +62,6 @@ angular.module('hillromvestApp')
             localStorage.setItem('userId', data.data.user.id);
             $state.go('patientUser');
           }
-
         }
       }).catch(function(data) {
         if (data.status === 401) {
@@ -68,17 +70,20 @@ angular.module('hillromvestApp')
             $scope.authenticationError = true;
             var loginCount = parseInt(localStorage.getItem('loginCount')) || 0;
             localStorage.setItem('loginCount', loginCount + 1);
-            if (loginCount > 2) {
+            if (loginCount > 1) {
+              vcRecaptchaService.reload();
               $scope.showCaptcha = true;
             }
           } else if (data.data.APP_CODE === 'EMAIL_PASSWORD_RESET') {
             localStorage.setItem('token', data.data.token);
+            $scope.message = '';
             $scope.isFirstLogin = true;
             $scope.isEmailExist = false;
             $scope.showLogin = false;
           } else if (data.data.APP_CODE === 'PASSWORD_RESET') {
             localStorage.setItem('token', data.data.token);
             $scope.isFirstLogin = true;
+            $scope.message = '';
             $scope.showLogin = false;
           } else {
             $scope.otherError = true;
@@ -108,7 +113,8 @@ angular.module('hillromvestApp')
           'termsAndConditionsAccepted': $scope.user.tnc
         }).then(function(data) {
           Auth.logout();
-          $state.go('home');
+          $scope.isFirstLogin = false;
+          $scope.showLogin = true;
         }).catch(function(err) {
           Auth.logout();
           if(err.data && err.data.ERROR){

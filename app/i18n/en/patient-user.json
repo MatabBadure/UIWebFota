@@ -10,6 +10,43 @@
           "protocol-device": "Protocol and Device",
           "caregiver-info": "Caregiver Information"
         },
+        "caregiver-caption": {
+          "caregiver-name": "Caregiver Name",
+          "address": "Address",
+          "mobile-number": "Mobile Number",
+          "phone-number": "Phone Number",
+          "relationship": "Relationship",
+          "edit": "Edit",
+          "delete": "Delete"
+        },
+        "clinic-caption": {
+          "clinic-name": "Clinic Name",
+          "address": "Address",
+          "phone-number": "Phone Number",
+          "fax-number": "Fax Number",
+          "hr-id": "Hill-rom ID"
+        },
+        "hcp-caption": {
+          "hcp-name": "HCP Name",
+          "address": "Address",
+          "phone-number": "Phone Number",
+          "fax-number": "Fax Number",
+          "npi-id": "NPI Number"
+        },
+        "protocol-caption": {
+          "type": "Type",
+          "treatment-day": "Treatment per Day",
+          "create-date": "Created Date",
+          "modified-date": "Modified Date"
+        },
+        "device-caption": {
+          "serial-no": "Serial Number",
+          "blutooth-id": "Bluetooth ID",
+          "status": "Status",
+          "created-date": "Created Date",
+          "device": "Device",
+          "modified-date": "Modified Date"
+        },
         "clinic-title": "Clinic",
         "caregiver-title": "Caregivers",
         "device-title": "Device Information",
@@ -19,13 +56,17 @@
         "phone": "Phone:",
         "mobile": "Mobile:",
         "fax": "Fax:",
-        "hr-id": "ID",
+        "hr-id": "ID:",
         "link-clinic": "Link Clinic",
         "link-caregiver": "Add Caregiver",
         "link-device": "Add Device",
         "link-protocol": "Add Protocol",
         "link-hcp": "Link HCP",
         "notes": "Notes",
+        "add-new-point":"Add New Point",
+        "empty-protocol-list-message": "No Protocol Associated",
+        "empty-device-list-message": "No Device Associated",
+        "empty-caregiver-list-message": "No Caregiver Associated",
         "placeholder": {
           "clinic-link": "Search Clinic here",
           "device-link": "Search Device here",
@@ -36,7 +77,9 @@
           "gen-details": "Add Device",
           "serial-no": "Serial No.",
           "bluetoothId": "Bluetooth ID",
-          "hubId": "Hub ID"
+          "hubId": "Hub ID",
+          "active-status": "Active",
+          "inactive-status": "Inactive"
         },
         "protocol": {
           "tm-per-day": "Treatment per Day",
@@ -66,7 +109,8 @@
           "update": "Update",
           "cancel": "Cancel",
           "save": "Save",
-          "update": "update"
+          "edit": "Edit",
+          "deactivate": "Deactivate"
         },
         "caregiver": {
           "gen-details": "Create Caregiver",
@@ -117,7 +161,29 @@
             "device-protocol": "Device and Protocol",
             "clinic-hcp": "Clinic and HCP"
           }
-        }
+        },
+    "errMSG":{
+      "first-name-required": "First Name is required.",
+      "first-name-no-number": "First Name cannot have number or special characters.",
+      "first-name-min-length": "First Name is required to be at least 2 character.",
+      "first-name-max-length": "First Name cannot be longer than 15 characters.",
+      "middle-name-no-number": "Middle Name cannot have number or special characters.",
+      "middle-name-min-length": "Middle Name is required to be at least 2 character.",
+      "middle-name-max-length": "Middle Name cannot be longer than 15 characters.",
+      "last-name-required": "Last Name is required.", 
+      "last-name-no-number": "Last Name cannot have number or special characters.",
+      "last-name-min-length": "Last Name is required to be at least 2 character.",
+      "last-name-max-length": "Last Name cannot be longer than 15 characters.",
+      "address-max-length": "Address cannot be longer than 100 characters. ", 
+      "city-max-length": "City cannot be longer than 15 characters.",
+      "zip-code-invalid": "Zip Code is invalid.",
+      "mobile-phone-invalid": "Mobile number is invalid.",
+      "primary-phone-invalid": "Home phone number is invalid.", 
+      "primary-phone-required": "Home phone number is required.",
+      "email-invalid": "E-mail is invalid.",
+      "email-max-length": "E-mail cannot be longer than 100 characters.",
+      "email-required": "E-mail is required."
+    }
     },
     "clinic" : {
       "name": "Name",
@@ -148,6 +214,49 @@
       "npinumber": "NPI number",      
       "city": "City",
       "state": "State",
-      "status": "Status"
-    }
+      "status": "Status",
+      "active": "Active",
+      "inactive": "Inactive",
+      "pending": "Pending"
+    },    
+    "select-relationship": "Select relationship.",
+    "toggle-navigation": "Toggle navigation",
+     "visi-view": "VisiView",
+     "tm-sup": "TM",
+     "health-portal": "Health Portal",
+     "graph" : {
+        "add-note" : "Add Note",
+        "save": "save",
+        "delete" : "Delete",
+        "edit": "Edit",
+        "can-do": "You can add / view/edit / delete a note",
+        "note": "Note",
+        "export-data": "Export Data",
+        "duration": "Duration",
+        "frequency": "Frequency",
+        "pressure": "Pressure",
+        "statistics": "Statistics",
+        "adherence-score": "Adherence Score",
+        "hmr-runrate": "HMR Runrate",
+        "missed-therapy-days": "Missed Therapy Days",
+        "notification": "Notification",
+        "more": "more",
+        "hmr-data": "HMR Data",
+        "compliance": "Compliance",
+        "day": "Day",
+        "year": "Year",
+        "month": "Month",
+        "next": "Next",
+        "previous": "Previous",
+        "found": "Found",
+        "notes": "Notes",
+        "no-data-found": "No data found.",
+        "please-deselect-one-item": "Please deselect one item.",
+        "min-legend-required": "At least one item should be selected.",
+        "no-notifications": "Doing great. Have a good day !"
+     },
+     "no-clinic-found": "No clinic associated.",
+     "no-hcp-found": "No hcp associated.",
+     "no-protocol-found": "No protocol associated.",
+     "no-device-found": "No device associated."
 }

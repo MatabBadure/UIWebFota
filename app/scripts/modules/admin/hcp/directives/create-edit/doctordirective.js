@@ -9,7 +9,7 @@ angular.module('hillromvestApp')
         onSuccess: '&',
         doctorStatus: '=doctorStatus'
       },
-      controller: function ($scope, $timeout, notyService, $state) {
+      controller: function ($scope, $timeout, notyService, $state, $stateParams, DoctorService) {
 
         $scope.open = function () {
           $scope.showModal = true;
@@ -20,11 +20,21 @@ angular.module('hillromvestApp')
             return clinic.name.toLowerCase().indexOf($query.toLowerCase()) != -1;
           });
         };
-        $scope.close = function () {
-          $scope.showModal = false;
+
+        $scope.cancelUpdate = function(){
+          $state.go('hcpProfile', {'doctorId': $stateParams.doctorId});
         };
 
         $scope.init = function () {
+          if($stateParams.doctorId){
+            $scope.doctorStatus.isCreate = false;
+            $scope.doctorStatus.editMode = true;
+            DoctorService.getDoctor($stateParams.doctorId).then(function(response){
+              var tempHcp = response.data.user;
+              $scope.selectedHcp = tempHcp;
+              $scope.doctor = response.data.user;
+            }).catch(function(response){})
+          }
           $scope.states = [];
           $scope.credentialsList = admin_cont.hcp.credentialsList;
           $scope.submitted = false;
@@ -107,7 +117,7 @@ angular.module('hillromvestApp')
             $scope.doctorStatus.isMessage = true;
             $scope.doctorStatus.message = response.data.message;
             notyService.showMessage($scope.doctorStatus.message, 'success');
-            $scope.reset();
+            $state.go('hcpProfile', {'doctorId': $stateParams.doctorId});
           }).catch(function(response) {
             $scope.doctorStatus.isMessage = true;
             if (response.data.message !== undefined) {
@@ -124,7 +134,7 @@ angular.module('hillromvestApp')
         $scope.newDoctor = function(data) {
           UserService.createUser(data).then(function(response) {
             $scope.doctorStatus.isMessage = true;
-            $scope.doctorStatus.message = "Doctor created successfully";
+            $scope.doctorStatus.message = "HCP created successfully";
             notyService.showMessage($scope.doctorStatus.message, 'success');
             $scope.reset();
           }).catch(function(response) {

@@ -13,6 +13,7 @@
     "middle-name": "Middle Name",
     "last-name": "Last Name",
     "employee-id": "Employee ID",
+    "hr-id": "HR ID",
     "email": "Email",
     "role-text":"Select Role",
     "view-role-text":"Role",
@@ -34,9 +35,42 @@
     "notification": "Notifications",
     "noti-desc": "The Notification will be sent to your registered email address. You can Switch On/Off",
     "noti": {
-      "miss-therapy-days" : "Miss Therapu Days",
+      "miss-therapy-days" : "Miss Therapy Days",
       "hmr-non-adher": "HMR Non-Adherence",
       "setting-deviation": "Setting Deviation"
-    } 
+    },
+    "errorMSG": {
+       "password-required": "password is required.",
+       "password-min-length": "Password is required to be at least 8 character.",
+       "password-max-length": "Password cannot be longer than 50 characters.",
+       "password-criteria": "Password complexity criteria not met.",
+       "new-password-required": "New Password  is required.",
+       "new-password-min-length":"New Password is required to be at least 8 character.",
+       "new-password-max-length": "New Password cannot be longer than 50 characters.",
+       "new-password-criteria": "Password complexity criteria not met.",
+       "cnf-password-required": "Confirm Password Required.",
+       "cnf-password-min-length":"Password is required to be at least 8 character.",
+       "cnf-password-max-length": "Password cannot be longer than 50 characters.",
+       "cnf-password-criteria": "Password complexity criteria not met.",
+       "cnf-password-mismatch": "Password Mismatch.",
+       "first-name-required": "First Name is required.",
+       "first-name-number":"Last Name cannot have number.",
+       "first-name-min-length":"Last Name is required to be at least 2 character.",
+       "first-name-max-length":"Last Name cannot be longer than 15 characters.",
+       "middle-name-number": "Middle Name cannot have number.",
+       "middle-name-min-length":"Middle Name is required to be at least 2 character.",
+       "middle-name-max-length": "Middle Name cannot be longer than 15 characters.",
+       "last-name-required":"Last Name is required.",
+       "last-name-number":"Last Name cannot have number.",
+       "last-name-min-length":"Last Name is required to be at least 2 character.",
+       "last-name-max-length":"Last Name cannot be longer than 15 characters.",
+       "e-mail-requitred": "E-mail is required.",
+       "e-mail-invalid" : " E-mail is invalid.",
+       "email-max-length": " E-mail cannot be longer than 100 characters.",
+       "role-required": "Role is required.",
+       "ans-required": "Answer is required.",
+       "ans-max-required":"Answer cannot be longer than 100 characters."
+    },
+    "select-secutity-question": "-- select a security question --"
   }
 }

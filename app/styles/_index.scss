@@ -101,7 +101,7 @@ a::-moz-focus-inner {
 }
 
 .margin-top {
-	margin-top: 20px;
+	margin-top: 23px;
 }
 
 .margin-top-sm {
@@ -113,7 +113,7 @@ a::-moz-focus-inner {
 }
 
 .custom-dropdown > select {
-  -moz-appearance: none;
+  /*-moz-appearance: none;*/
   border: 0;
 }
 
@@ -127,6 +127,7 @@ a::-moz-focus-inner {
   top: 7px;
   right: 8px;
   z-index: -1;
+  font-weight: 300;
 }
 
 .custom-dropdown {
@@ -213,4 +214,10 @@ a::-moz-focus-inner {
 
 .disabled-box {
   color: $alto;
+}
+
+.word-ellipsis {
+	white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

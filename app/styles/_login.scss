@@ -1,5 +1,5 @@
 .login {   
-  background: url("../images/login-bg.svg") no-repeat scroll center center / cover rgba(0, 0, 0, 0);
+  background: url("../images/login-bg.svg") no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -8,11 +8,8 @@
   height: calc(100% - 100px);
   position: absolute;
   width: 100%;
-  -webkit-backface-visibility: hidden;
-  -moz-backface-visibility:    hidden;
-  -ms-backface-visibility:     hidden;
-  -webkit-transform: translate3d(0, 0, 0);
 }
+
 
 .login .login--position {
   width: 50%;
@@ -101,7 +98,9 @@
     display: block;
     margin: 0 auto;
   }
-
+  .condition_txt{
+    color: $iceberg;
+  }
   .img-man {
     padding-top: 10%;
   }
@@ -118,7 +117,8 @@
   
   a {
     font-weight: 100;
-    color: #ffffff;
+    color: $tuna;
+    font-weight: bold;
   }
 
   .link {
@@ -127,23 +127,24 @@
 
   #forgotpwd a {
     color: #585858;
+    font-weight: normal;
   }
 }
 
 .myButton {
-  background-color:#e4685d;
+  background-color:#ff9829;
   -moz-border-radius:2px;
   -webkit-border-radius:2px;
   border: none;
   border-radius:4px;  
   display:inline-block;
   cursor:pointer;
-  color:#ffffff;
-  font-family:Arial;
-  font-size:15px;
-  padding:2px 25px;
+  color:#363a41;
+  font-size:12px;
+  padding:5px 25px;
   text-decoration:none;
-  text-shadow:0px 1px 0px #b23e35;
+  font-weight: bold;
+  /*text-shadow:0px 1px 0px #b23e35;*/
   float: right;
 }
 

@@ -22,6 +22,7 @@
         "create-caregiver": "Yes",
         "user-name": "User Name",
         "clinic-name":  "Clinic Name",
+        "user-id": "User ID",
         "title": {
                     "name": "Title",
                     "dr":   "Dr", 
@@ -39,17 +40,30 @@
         "role-field": "Role",
         "role": {
             "super-admin": "Super Admin",
-            "account-services": "Account Services",
+            "account-services": "RC Admin",
             "associates":"Associates",
             "default" : "Select a role"
         },
         "placeholder": {
             "search": "Search with Name, Hill-Rom ID or Email"
         },
+        "filter": {
+            "all": "All",
+            "active": "Active",
+            "inactive": "Inactive",
+            "expired": "Expired"
+        },
+        "status-type": {
+            "active": "Active",
+            "inactive": "Inactive",
+            "pending": "Pending"
+        },
+        "status": "Status",
         "first-name": "First Name",
         "middle-name": "Middle Name",
         "last-name": "Last Name",
         "employee-id": "Employee ID",
+        "hrId": "HR ID",
         "address": "Address",
         "city": "City",
         "zipcode": "Zip",
