@@ -1439,4 +1439,13 @@ angular.module('hillromvestApp')
           return chart;
       });
     }
+
+    $scope.clickEventListnerOnGraph = function(elem){  
+       if( ( !elem.target.className  || (typeof elem.target.className != 'string') ) || (elem.target.className.indexOf("custom_check_container")  < 0 &&  elem.target.className.indexOf("check") < 0 && elem.target.className.indexOf("pressure_legend") < 0 && elem.target.className.indexOf("frequency_legend") < 0 && elem.target.className.indexOf("duration_legend") < 0 ) ){        
+         $scope.complianceParamErrMsg = false;
+         $scope.minComplianceParamErrMsg = false;
+       }
+       return true;        
+    }
+    
 });
