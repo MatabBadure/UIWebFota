@@ -402,10 +402,10 @@ angular.module('hillromvestApp')
       $scope.complianceParamErrMsg = false;  
       var count = $scope.getCountLegends();
       if(count === 1){
-        notyService.showMessage('Please deselect one item.','warning' );
+        notyService.showMessage('At least one item should be selected.','warning' );
         $scope.minComplianceParamErrMsg = true; 
       }else if(count >= 2){
-        notyService.showMessage('At least one item should be selected.','warning' );
+        notyService.showMessage('Please deselect one item.','warning' );
         $scope.complianceParamErrMsg = true; 
       }
     };
@@ -1426,14 +1426,6 @@ angular.module('hillromvestApp')
           .transition().duration(500).call(chart);
           return chart;
       });
-    }
-
-    $scope.clickEventListnerOnGraph = function(elem){  
-       if( ( !elem.target.className  || (typeof elem.target.className != 'string') ) || (elem.target.className.indexOf("custom_check_container")  < 0 &&  elem.target.className.indexOf("check") < 0 && elem.target.className.indexOf("pressure_legend") < 0 && elem.target.className.indexOf("frequency_legend") < 0 && elem.target.className.indexOf("duration_legend") < 0 ) ){        
-         $scope.complianceParamErrMsg = false;
-         $scope.minComplianceParamErrMsg = false;
-       }
-       return true;        
     }
     
 });
