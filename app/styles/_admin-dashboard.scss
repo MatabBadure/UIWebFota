@@ -578,6 +578,20 @@ tags-input.ng-invalid .tags {
     box-shadow: none;
 }
 
+tags-input .tags .tag-item {
+  background: $cyan-blue-light;
+  color: $body-bg;
+  border: 1px solid $cyan-blue-light;
+}
+
+tags-input .tags .tag-item .remove-button {
+  color: $body-bg;
+}
+
+tags-input .autocomplete .suggestion-item.selected, tags-input .autocomplete .suggestion-item.selected em {
+  background-color: $iceberg;
+}
+
 .user-detail-info {
   padding: 0px 50px;
   border: 1px solid $celeste;
