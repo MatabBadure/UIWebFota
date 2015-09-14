@@ -28,7 +28,10 @@ var patientDashboard = {
 	"HMRLineGraphColor" : "#4e95c4",
 	"dateFormat" : "MM-DD-YYYY",
 	"maxDurationInMonths" : 12,
-	"serverDateFormat" : "YYYY-MM-DD"
+	"serverDateFormat" : "YYYY-MM-DD",
+	"INDdateFormat" : "DD-MM-YYYY",
+	"minDaysForMonthlyGraph" : 31,
+	"maxDaysForWeeklyGraph" : 7
 }
 
 var profile = {

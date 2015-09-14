@@ -12,8 +12,7 @@ angular.module('hillromvestApp')
       $scope.selectedGraph = 'HMR';
       $scope.selectedDateOption = 'WEEK';
       $scope.disableDatesInDatePicker();
-      $scope.role = localStorage.getItem('role');
-      // Data available for graph for ID 160 only for now 
+      $scope.role = localStorage.getItem('role'); 
       $scope.patientId = parseInt(localStorage.getItem('patientID'));
       var currentRoute = $state.current.name;
       var server_error_msg = "Some internal error occurred. Please try after sometime.";
@@ -133,11 +132,11 @@ angular.module('hillromvestApp')
         $scope.getDayHMRGraphData();
       } else if(days === 0 && $scope.selectedGraph === 'COMPLIANCE'){
         $scope.plotNoDataAvailable();
-      } else if(days <= 7) {
+      } else if(days <= patientDashboard.maxDaysForWeeklyGraph) {
         $scope.weeklyChart($scope.fromTimeStamp);
-      } else if ( days > 7 && days <= 31 ) {
+      } else if ( days > patientDashboard.maxDaysForWeeklyGraph && days <= patientDashboard.minDaysForMonthlyGraph ) {
         $scope.monthlyChart($scope.fromTimeStamp);
-      } else if ( days > 31) {
+      } else if ( days > patientDashboard.minDaysForMonthlyGraph) {
          $scope.yearlyChart($scope.fromTimeStamp);
       }
     };
@@ -678,7 +677,6 @@ angular.module('hillromvestApp')
       $scope.yAxis1Max = 0;
       $scope.yAxis2Max = 0;
     }
-    //console.log("complianceGraphData" + JSON.stringify($scope.complianceGraphData));
   };
 
   $scope.putComplianceGraphLabel = function(chart) {
@@ -820,7 +818,7 @@ angular.module('hillromvestApp')
                   .attr("y" , bgHeight)
                   .attr("class" , "svg_bg");
 
-          /*UI Cganges for Line Graph*/
+          /*UI Changes for Line Graph*/
         d3.selectAll('#complianceGraph svg').selectAll(".nv-axis .tick").append('circle').
         attr("cx" , 0).
         attr("cy", 0).
@@ -849,7 +847,6 @@ angular.module('hillromvestApp')
         attr('class','minRecommendedLevel').
         attr('transform','translate(-45, '+ y1AxisMinTransform + ')').
         append('text').
-        //text($scope.yAxis1MinMark).
         text('MIN').
         style('fill','red');
 
@@ -857,7 +854,6 @@ angular.module('hillromvestApp')
         attr('class','maxRecommendedLevel').
         attr('transform','translate(-45,'+ y1AxisMaxTransform + ')').
         append('text').
-        //text($scope.yAxis1MaxMark).
         text('MAX').
         style('fill','green');
 
@@ -865,7 +861,6 @@ angular.module('hillromvestApp')
         attr('class','minRecommendedLevel').
         attr('transform','translate(20,'+ (y2AxisMinTransform + 3) + ')').
         append('text').
-        //text($scope.yAxis2MinMark).
         text('MIN').
         style('fill','red');
 
@@ -873,7 +868,6 @@ angular.module('hillromvestApp')
         attr('class','maxRecommendedLevel').
         attr('transform','translate(20,'+ (y2AxisMaxTransform + 3) + ')').
         append('text').
-        //text($scope.yAxis2MaxMark).
         text('MAX').
         style('fill','green');
       }
@@ -1003,14 +997,6 @@ angular.module('hillromvestApp')
       $scope.devices = []; $scope.devices.length = 0;   
       patientService.getDevices(localStorage.getItem('patientID')).then(function(response){
         angular.forEach(response.data.deviceList, function(device){
-          // var _date = dateService.getDate(device.createdDate);
-          // var _month = dateService.getMonth(_date.getMonth());
-          // var _day = dateService.getDay(_date.getDate());
-          // var _year = dateService.getYear(_date.getFullYear());
-          // var date = _month + "/" + _day + "/" + _year;
-          // device.createdDate = date;
-
-          // device.days = dateService.getDays(_date);
           device.createdDate = dateService.getDateByTimestamp(device.createdDate);
           device.lastModifiedDate = dateService.getDateByTimestamp(device.lastModifiedDate);
         });
