@@ -135,9 +135,9 @@ angular.module('hillromvestApp')
         $scope.plotNoDataAvailable();
       } else if(days <= 7) {
         $scope.weeklyChart($scope.fromTimeStamp);
-      } else if ( days > 7 && days <= 32 ) {
+      } else if ( days > 7 && days <= 31 ) {
         $scope.monthlyChart($scope.fromTimeStamp);
-      } else if ( days > 32) {
+      } else if ( days > 31) {
          $scope.yearlyChart($scope.fromTimeStamp);
       }
     };
