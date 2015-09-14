@@ -1,5 +1,5 @@
 angular.module('hillromvestApp')
-.controller('hcpGraphController', function($scope) {
+.controller('hcpGraphController',['$scope', '$state', function($scope, $state) {
 
 //---HCP PieChart JS =============
 	$scope.missedtherapyDays = 25;
@@ -63,4 +63,12 @@ $scope.opts = {
       opens: 'left'
     }
 /*Dtate picker js END*/
-});
+
+  $scope.goToPatientDashboard = function(){
+    console.log('Todo');
+  };
+
+  $scope.gotoPatients = function(value){
+    $state.go('hcppatientdashboard');
+  };
+}]);
