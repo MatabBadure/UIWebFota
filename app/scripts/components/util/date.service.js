@@ -63,10 +63,23 @@ angular.module('hillromvestApp')
         var date = new Date(data);
         return this.getMonthName(date) + ' ' + this.getDay(date.getDate()) + ', ' + this.getYear(date.getFullYear(date))
       },
-      getDateFromTimeStamp: function(data) {
+      getDateFromTimeStamp: function(timeStamp,dateFormat,dateSeperator){
+        var date = new Date(timeStamp);
+        switch(dateFormat) {
+          case 'YYYY-MM-DD':
+            return this.getYear(date.getFullYear(date)) + dateSeperator + this.getMonth(date.getMonth(date)) + dateSeperator + this.getDay(date.getDate());
+            break;
+          case 'MM-DD-YYYY':
+            return this.getMonth(date.getMonth(date)) + dateSeperator + this.getDay(date.getDate()) + dateSeperator + this.getYear(date.getFullYear(date));
+            break;
+          case 'DD-MM-YYYY':
+            return this.getDay(date.getDate()) + dateSeperator + this.getMonth(date.getMonth(date)) + dateSeperator + this.getYear(date.getFullYear(date));
+        }
+      },
+      /*getDateFromTimeStamp: function(data) {
         var date = new Date(data);
         return this.getMonth(date.getMonth(date)) + '/' + this.getDay(date.getDate()) + '/' + this.getYear(date.getFullYear(date))
-      },
+      },*/
       getDateDiffIndays: function(fromTimeStamp,toTimeStamp) {
         return Math.ceil((toTimeStamp - fromTimeStamp)/(1000*60*60*24));
       },
