@@ -22,6 +22,7 @@
         "create-caregiver": "Yes",
         "user-name": "User Name",
         "clinic-name":  "Clinic Name",
+        "user-id": "User ID",
         "title": {
                     "name": "Title",
                     "dr":   "Dr", 
