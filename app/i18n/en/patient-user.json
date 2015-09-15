@@ -154,6 +154,10 @@
             "warning": "Are you sure you want to Delete the HCP?",
             "message": "If you delete the HCP, you will no longer be able to view the information."
         },
+        "delete-caregiver":{
+          "warning": "Are you sure you want to Delete the Caregiver?",
+          "message": "If you delete the Caregiver, you will no longer be able to view the information."
+        },
         "profile": {
           "tabs": {
             "mydashboard": "My Dashboard",
