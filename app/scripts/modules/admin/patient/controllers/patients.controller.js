@@ -569,7 +569,7 @@ angular.module('hillromvestApp')
         }).catch(function(response) {});
         var caregiverId = $stateParams.caregiverId;
         patientService.getCaregiverById($stateParams.patientId, caregiverId).then(function(response){
-          $scope.associateCareGiver = response.data.caregiver.user;
+          $scope.associateCareGiver = response.data.caregiver.userPatientAssocPK.user;
           $scope.associateCareGiver.relationship = response.data.caregiver.relationshipLabel;
         }).catch(function(response){});
     };
