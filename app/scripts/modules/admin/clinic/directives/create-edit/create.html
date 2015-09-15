@@ -56,7 +56,7 @@
             </div>
             <div class="col-md-10 dashboard__form--input parent-list reset-padding">
               
-              <input class="form-control" name="parentClinicName" type="text" ng-model="clinic.parentClinic.name" typeahead="clinic as clinic.name for clinic in parentClinics | filter:$viewValue" typeahead-on-select="selectClinicEdit($item)" placeholder="{{'clinic.placeholder.parent-clinic-search' | translate}}" required>
+              <input class="form-control" name="parentClinicName" type="text" ng-model="clinic.parentClinic.name" typeahead="clinic as clinic.name for clinic in parentClinics | filter:$viewValue" typeahead-on-select="selectClinicEdit($item)" placeholder="{{'clinic.placeholder.parent-clinic-search' | translate}}" ng-blur="validateClinicName();" required>
 
               <div ng-show="(form.parentClinicName.$dirty && form.parentClinicName.$showValidationMessage && form.parentClinicName.$invalid) || submitted">
                 <span class="has-error" ng-show="form.parentClinicName.$error.required" translate="error.parentClinicName.required"></span>
