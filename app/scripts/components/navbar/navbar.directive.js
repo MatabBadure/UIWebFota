@@ -84,6 +84,8 @@ angular.module('hillromvestApp')
           $state.go('adminProfile');
         }else if($scope.userRole === "PATIENT"){
           $state.go("patientProfile");
+        } else if($scope.userRole === 'HCP'){
+          $state.go('hcpDashboardProfile');
         }
       };
 
@@ -107,7 +109,7 @@ angular.module('hillromvestApp')
     return {
         restrict: 'A',
         template: "<span id='pop-over-link' class='cursor-pointer'><span class='icon-logged-in-user'></span><span class='user-name'>{{username}}<span class='icon-arrow-down'></span></span></span>" +
-                  "<span style='display:none' id='pop-over-content'><div id='account' ng-click='account()'><span class='hillrom-icon icon-user-account'></span><span>Account</span></div><div ng-click='logout()'><span class='hillrom-icon icon-logout'></span><span>Logout </span></div></span>",
+                  "<span style='display:none' id='pop-over-content'><div id='account' ng-click='account()'><span class='hillrom-icon icon-user-account'></span><span>My Profile</span></div><div ng-click='logout()'><span class='hillrom-icon icon-logout'></span><span>Logout </span></div></span>",
         link: function(scope, elements, attrs) {
             $("#pop-over-link").popover({
                 'placement': 'bottom',
@@ -188,4 +190,23 @@ angular.module('hillromvestApp')
       $scope.getNotifications();
     }
   };
+});
+
+
+angular.module('hillromvestApp')
+.directive('hcpProfileNavbar', function() {
+  return {
+      templateUrl: 'scripts/modules/hcp/profile/views/hcp-profile-navbar.html',
+      restrict: 'E',
+      controller: function ($scope, $location) {
+        $scope.isActive = function(tab) {
+          var path = $location.path();
+          if (path.indexOf(tab) !== -1) {
+            return true;
+          } else {
+            return false;
+          }
+        };
+      }
+    }
 });

@@ -1291,5 +1291,31 @@ angular.module('hillromvestApp')
                         }
                     ]
                 }
+            })
+
+            .state('hcpDashboardProfile', {
+                parent: 'hcp-dashboard',
+                url: '/hcp-profile',
+                data: {
+                    roles: ['HCP'],
+                    pageTitle: 'hcp.title'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/hcp/profile/views/my-profile.html',
+                        controller: 'hcpProfileController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('profile');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
             });
 });
