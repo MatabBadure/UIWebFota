@@ -14,8 +14,9 @@ angular.module('hillromvestApp')
 	};
 
 	$scope.switchPatientTab = function(value){
-		console.log('Some thing is working now...!	');
-		$state.go('hcpPatientDemographic',{'patientId':357});
+		console.log('Some thing is working now...! :', value);
+		value = 'hcp' + value;
+		$state.go(value, {'patientId':357});
 	};
 	$scope.init();
 }]);

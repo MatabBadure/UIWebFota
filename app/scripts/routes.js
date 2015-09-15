@@ -252,7 +252,7 @@ angular.module('hillromvestApp')
                 }
             })
 
-            .state('hcpPatientDemographic', {
+            .state('hcppatientDemographic', {
                 parent: 'hcp-dashboard',
                 url: '/{patientId}/demographic',
                 data: {
