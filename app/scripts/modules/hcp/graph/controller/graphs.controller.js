@@ -69,6 +69,6 @@ $scope.opts = {
   };
 
   $scope.gotoPatients = function(value){
-    $state.go('hcppatientdashboard');
+    $state.go('hcppatientdashboard',{'filter':value});
   };
 }]);

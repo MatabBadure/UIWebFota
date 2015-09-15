@@ -210,7 +210,7 @@ angular.module('hillromvestApp')
                 views: {
                     'content@': {
                         templateUrl: 'scripts/modules/hcp/patient/directives/patient-details.html',
-                        controller: 'graphController'
+                        controller: 'hcpPatientController'
                     }
                 },
                 resolve: {
@@ -237,6 +237,32 @@ angular.module('hillromvestApp')
                     'content@': {
                         templateUrl: 'scripts/modules/admin/patient/directives/patient-info/patient-demographics/detail.html',
                         controller: 'patientsController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient');$translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+
+            .state('hcpPatientDemographic', {
+                parent: 'hcp-dashboard',
+                url: '/{patientId}/demographic',
+                data: {
+                    roles: ['HCP'],
+                    pageTitle: 'patient.title'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/hcp/patient/views/patientdemographics.html',
+                        controller: 'hcpPatientController'
                     }
                 },
                 resolve: {
@@ -1269,7 +1295,7 @@ angular.module('hillromvestApp')
             
             .state('hcppatientdashboard', {
                 parent: 'hcp-dashboard',
-                url: '/hcp-patient',
+                url: '/hcp-patient/{filter}',
                 data: {
                     roles: ['HCP'],
                     pageTitle: 'hcp.title'

@@ -185,7 +185,7 @@ angular.module('hillromvestApp')
           }          
         });
       };
-      $scope.getNotifications();
+      // $scope.getNotifications();
     }
   };
 });
