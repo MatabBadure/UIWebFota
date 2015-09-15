@@ -78,7 +78,7 @@
 
       <div class="col-md-1 reset-padding centered">
         <span class="short-info" ng-if="clinic.parent" translate="clinic.clinicType.parent"></span>
-        <span class="short-info" ng-if="!clinic.parent" translate="clinic.clinicType.child"></span>
+        <span class="short-info" ng-if="!clinic.parent" translate="clinic.clinicType.satellite"></span>
       </div>
 
       <div class="col-md-2 reset-padding centered">
@@ -93,31 +93,10 @@
       <div class="clr"></div>
     </div>
 
-      <!-- <div class="dashboard__manage-view--list" ng-repeat="clinic in clinics | filter: {name: searchItem}"  ng-class="{ 'inactive': clinic.deleted }">
-        <div  ng-click="clinic.deleted || selectClinic(clinic)">
-          <div class="col-md-3 reset-padding-left">
-            <span class="user-name">{{clinic.name}} <sup class="parent-clinic" ng-if="clinic.parent">P</sup></span>
-            <span class="user-home-no">{{clinic.hillromId}}</span>
-          </div>
-          <div class="col-md-4">
-            <span class="user-home-no">{{clinic.city}} {{clinic.state}}</span>
-            <span class="user-address">{{clinic.address}} {{clinic.zipcode}}</span>
-          </div>
-          <div class="col-md-4">
-            <span class="hcp-name">{{clinic.id}}</span>
-            <span class="clinic-name"></span>
-          </div>
-          <div class="col-md-5 reset-padding-right">
-            <span>{{clinic.phoneNumber}} {{clinic.faxNumber}}</span>
-          </div>
-          <div class="clr"></div>
-       </div>
-     </div> -->
-
      <div class="dashboard__manage-view--pagination">
       <div class="col-md-16 reset-padding-right">
         <div class="navbar-right">
-          <span class="record-found" ng-if="clinics.length > 0">{{clinics.length}} Clinics</span>
+          <span class="record-found" ng-if="clinics.length > 0">{{total}} Clinics</span>
           <span class="record-found" ng-if="clinics.length > 0">Found</span>
           <span ng-show="pageCount > 1">
             <span class="navigaion-link cursor-pointer" ng-class="{ 'inactive': !(currentPageIndex > 1) }" ng-click="searchClinics('PREV')">Previous</span>

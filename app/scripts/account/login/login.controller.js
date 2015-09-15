@@ -53,6 +53,7 @@ angular.module('hillromvestApp')
           localStorage.removeItem('loginCount');
           localStorage.setItem('userFirstName', data.data.user.firstName);
           localStorage.setItem('role', data.data.user.authorities[0].name);
+          localStorage.setItem('userEmail', data.data.user.email);
           $rootScope.userRole = localStorage.getItem('role');           
           if(data.data.user.authorities[0].name === 'PATIENT'){
             localStorage.setItem('patientID', data.data.user.id);
@@ -61,7 +62,6 @@ angular.module('hillromvestApp')
             localStorage.setItem('userId', data.data.user.id);
             $state.go('patientUser');
           }
-
         }
       }).catch(function(data) {
         if (data.status === 401) {
@@ -71,6 +71,7 @@ angular.module('hillromvestApp')
             var loginCount = parseInt(localStorage.getItem('loginCount')) || 0;
             localStorage.setItem('loginCount', loginCount + 1);
             if (loginCount > 1) {
+              vcRecaptchaService.reload();
               $scope.showCaptcha = true;
             }
           } else if (data.data.APP_CODE === 'EMAIL_PASSWORD_RESET') {

@@ -18,6 +18,25 @@ angular.module('hillromvestApp')
       return graphDataList;
       }
 
+      this.convertToHMRStepGraph = function(data,colorCode) {
+        var pointSet = [];
+        var graphData = {};
+        var graphDataList =[];
+        var count = 1;
+        angular.forEach(data.actual, function(value) {
+          var point = {};
+          point.x = count++;
+          point.y = Math.floor(value.hmr);
+          point.timeStamp = value.timestamp;
+          pointSet.push(point);
+        });
+        graphData.values = pointSet;
+        graphData.color = colorCode;
+        graphData.area = true;
+        graphDataList.push(graphData);
+      return graphDataList;
+      }
+
       var arrayMax = Function.prototype.apply.bind(Math.max, null);
       var arrayMin = Function.prototype.apply.bind(Math.min, null);
 
@@ -29,9 +48,11 @@ angular.module('hillromvestApp')
         });
         var max = arrayMax(hmrSet);
         var min = arrayMin(hmrSet);
-        range.max = Math.ceil((max + (max-min))/10) * 10;
+        range.max = Math.ceil((max + (max-min)/4)/10) * 10;
         if(min !== 0 && min > (max-min)){
-          range.min = Math.floor((min - ((max-min)/2))/10) * 10;  
+          range.min = Math.floor((min - ((max-min)/4))/10) * 10;  
+        } else {
+          range.min = min;
         }
         return range;
       }
@@ -97,6 +118,22 @@ angular.module('hillromvestApp')
         graphDataList.push(graphData);
       return graphDataList;
       }
+
+      this.convertToHMRBarGraph = function(data,colorCode) {
+        var pointSet = [];
+        var graphData = {};
+        var graphDataList =[];
+        angular.forEach(data, function(value) {
+          var point = {};
+          point.x = value.startTime;
+          point.y = Math.floor(value.hmr/60);
+          pointSet.push(point);
+        });
+        graphData.values = pointSet;
+        graphData.color = colorCode;
+        graphDataList.push(graphData);
+      return graphDataList;
+      }
       var insertData = function(data,value) {
         data.frequency = data.frequency + value.frequency;
         data.pressure = data.pressure + value.pressure;
@@ -146,7 +183,7 @@ angular.module('hillromvestApp')
         angular.forEach(missedTherapyList, function(timeStamp){
               var count = 0;
               angular.forEach(clonedData.actual, function(value){
-                if(dateService.getDateFromTimeStamp(value.timestamp) === dateService.getDateFromTimeStamp(timeStamp)){
+                if(dateService.getDateFromTimeStamp(value.timestamp,patientDashboard.dateFormat,'/') === dateService.getDateFromTimeStamp(timeStamp,patientDashboard.dateFormat,'/')){
                    count = count+1;
                    if(clonedData.actual.length > 1){
                       clonedData.actual.splice(clonedData.actual.indexOf(value),1)

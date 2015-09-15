@@ -12,8 +12,7 @@ angular.module('hillromvestApp')
       $scope.selectedGraph = 'HMR';
       $scope.selectedDateOption = 'WEEK';
       $scope.disableDatesInDatePicker();
-      $scope.role = localStorage.getItem('role');
-      // Data available for graph for ID 160 only for now 
+      $scope.role = localStorage.getItem('role'); 
       $scope.patientId = parseInt(localStorage.getItem('patientID'));
       var currentRoute = $state.current.name;
       var server_error_msg = "Some internal error occurred. Please try after sometime.";
@@ -60,14 +59,13 @@ angular.module('hillromvestApp')
       $scope.edit_date = dateService.convertDateToYyyyMmDdFormat(new Date());
       $scope.getMissedTherapyDaysCount();
       $scope.fromTimeStamp = dateService.getnDaysBackTimeStamp(7);
-      $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp);
-      $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp);   
+      $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
+      $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');   
       $scope.curNotePageIndex = 1;
       $scope.perPageCount = 4;
       $scope.notePageCount = 0;
       $scope.totalNotes = 0;
       $scope.getPatientById($scope.patientId);
-      
     };
 
 
@@ -97,8 +95,8 @@ angular.module('hillromvestApp')
     $scope.calculateDateFromPicker = function(picker) {
       $scope.fromTimeStamp = new Date(picker.startDate._d).getTime();
       $scope.toTimeStamp = new Date(picker.endDate._d).getTime();
-      $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp);
-      $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp);
+      $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
+      $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');
       if ($scope.fromDate === $scope.toDate ) {
         $scope.fromTimeStamp = $scope.toTimeStamp;
       }
@@ -134,11 +132,11 @@ angular.module('hillromvestApp')
         $scope.getDayHMRGraphData();
       } else if(days === 0 && $scope.selectedGraph === 'COMPLIANCE'){
         $scope.plotNoDataAvailable();
-      } else if(days <= 7) {
+      } else if(days <= patientDashboard.maxDaysForWeeklyGraph) {
         $scope.weeklyChart($scope.fromTimeStamp);
-      } else if ( days > 7 && days <= 32 ) {
+      } else if ( days > patientDashboard.maxDaysForWeeklyGraph && days <= patientDashboard.minDaysForMonthlyGraph ) {
         $scope.monthlyChart($scope.fromTimeStamp);
-      } else if ( days > 32) {
+      } else if ( days > patientDashboard.minDaysForMonthlyGraph) {
          $scope.yearlyChart($scope.fromTimeStamp);
       }
     };
@@ -172,7 +170,8 @@ angular.module('hillromvestApp')
     };
     $scope.opts = {
       maxDate: new Date(),
-      format: 'MM-DD-YYYY',
+      format: patientDashboard.dateFormat,
+      dateLimit: {"months":patientDashboard.maxDurationInMonths},
       eventHandlers: {'apply.daterangepicker': function(ev, picker) {
         $scope.hideNotesCSS();
         $scope.calculateDateFromPicker(picker);
@@ -271,13 +270,13 @@ angular.module('hillromvestApp')
     }
   };
 
-    $scope.toolTipContentFunction = function(){
+    $scope.toolTipContentStepChart = function(){
       return function(key, x, y, e, graph) {
         var toolTip = '';
         angular.forEach($scope.completeGraphData.actual, function(value) {
-          if(value.timestamp === e.point[0]){
+          if(value.timestamp === e.point.timeStamp){
               toolTip =
-                '<h6>' + dateService.getDateFromTimeStamp(value.timestamp) + '</h6>' +
+                '<h6>' + dateService.getDateFromTimeStamp(value.timestamp,patientDashboard.dateFormat,'/') + '</h6>' +
                 '<ul class="graph_ul">' +
                   '<li><span class="pull-left">' + 'Treatment/Day ' +'</span><span class="pull-right value">' + value.treatmentsPerDay +'</span></li>' +
                   '<li><span class="pull-left">' + 'Frequency' + '</span><span class="pull-right value">' + value.weightedAvgFrequency  + '</span></li>' +
@@ -294,9 +293,9 @@ angular.module('hillromvestApp')
       return function(key, x, y, e, graph) {
         var toolTip = '';
         angular.forEach($scope.completeGraphData, function(value) {
-          if(value.startTime === e.point[0] && value.hmr !== 0 ){
+          if(value.startTime === e.point.x && value.hmr !== 0 ){
               toolTip =
-                '<h6>' + dateService.getDateFromTimeStamp(value.startTime) + '</h6>' +
+                '<h6>' + dateService.getDateFromTimeStamp(value.startTime,patientDashboard.dateFormat,'/') + '</h6>' +
                 '<ul class="graph_ul">' +
                   '<li><span class="pull-left">' + 'Frequency' + '</span><span class="pull-right value">' + value.frequency  + '</span></li>' +
                   '<li><span class="pull-left">' + 'Pressure' +'</span><span class="pull-right value">' + value.pressure +'</span></li>' +
@@ -314,7 +313,7 @@ angular.module('hillromvestApp')
         angular.forEach(data, function(value) {
           if(value.start === e.point.timeStamp){
               toolTip =
-                '<h6>' + dateService.getDateFromTimeStamp(value.start) + '</h6>' +
+                '<h6>' + dateService.getDateFromTimeStamp(value.start,patientDashboard.dateFormat,'/') + '</h6>' +
                 '<ul class="graph_ul">' +
                   '<li><span class="pull-left">' + 'Treatment/Day' + '</span><span class="pull-right value">' + value.treatmentsPerDay + '</span></li>' +
                   '<li><span class="pull-left">' + 'Frequency' +'</span><span class="pull-right value">' + value.weightedAvgFrequency +'</span></li>' +
@@ -373,7 +372,7 @@ angular.module('hillromvestApp')
     };
     $scope.getNonDayHMRGraphData = function() {
       $scope.getUTCTime();
-      patientDashBoardService.getHMRGraphPoints($scope.patientId, $scope.UTCfromTimestamp, $scope.UTCtoTimestamp, $scope.groupBy).then(function(response){
+      patientDashBoardService.getHMRGraphPoints($scope.patientId, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.groupBy).then(function(response){
         //Will get response data from real time API once api is ready
         $scope.completeGraphData = response.data;
         if($scope.completeGraphData.actual === undefined){
@@ -381,65 +380,9 @@ angular.module('hillromvestApp')
           $scope.plotNoDataAvailable();
         } else {
           $scope.yAxisRangeForHMRLine = graphUtil.getYaxisRangeLineGraph($scope.completeGraphData);
-          $scope.graphData = graphUtil.convertIntoHMRLineGraph($scope.completeGraphData);
-          $scope.customizationInLineGraph = function() {
-
-
-
-
-         var circlesInHMR = d3.select('#HMRLineGraph svg').select('.nv-scatterWrap').select('.nv-group.nv-series-0').selectAll('circle')[0];
-         var count = 0;
-         var missedTherapyCircles = [];
-         angular.forEach($scope.completeGraphData.actual,function(value){
-          if(value.missedTherapy === true){
-            missedTherapyCircles.push(circlesInHMR[count]);
-          }
-          count++;
-         })
-         angular.forEach(missedTherapyCircles,function(circle){
-          d3.select('#HMRLineGraph svg').select('.nv-scatterWrap').select('.nv-group.nv-series-0').append('circle')
-          .attr('cx',circle.attributes.cx.value)
-          .attr('cy',circle.attributes.cy.value)
-          .attr('r',4.5)
-          .attr('class','missed_therapy_node');
-         });
-
-
-         /*UI Cganges for Line Graph*/
-        d3.selectAll('#HMRLineGraph svg').selectAll(".nv-axis .tick").append('circle').
-        attr("cx" , 0).
-        attr("cy", 0).
-        attr("r" , 2).
-        attr("fill" , '#aeb5be');
-
-        d3.selectAll('#HMRLineGraph svg').selectAll(".nv-axis .nv-axislabel").
-        attr("y" , -40);
-
-        
-
-
-          };
-
-          var circleSelectorInHMR = d3.select('#HMRLineGraph svg').select('.nv-scatterWrap').select('.nv-group.nv-series-0').selectAll('circle')[0];
-          var circleCount;
-          if(circleSelectorInHMR !== undefined) {
-            circleCount = circleSelectorInHMR.length;
-          }
-          var count = 10;
-          $scope.waitFunction = function waitHandler() {
-            circleSelectorInHMR = d3.select('#HMRLineGraph svg').select('.nv-scatterWrap').select('.nv-group.nv-series-0').selectAll('circle')[0];
-            if(circleSelectorInHMR !== undefined) {
-            circleCount = circleSelectorInHMR.length;
-            }
-            if(circleCount > 0 || count === 0 ) {
-              $scope.customizationInLineGraph();
-              return false;
-            } else {
-              count --;
-            }
-            $timeout(waitHandler, 1000);
-          }
-          $scope.waitFunction();
+          $scope.graphData = graphUtil.convertToHMRStepGraph($scope.completeGraphData,patientDashboard.HMRLineGraphColor);
+          //$scope.graphData = graphUtil.convertIntoHMRLineGraph($scope.completeGraphData);
+          $scope.drawHMRLineGraph();
         }
       }).catch(function(response) {
         $scope.graphData = [];
@@ -530,7 +473,7 @@ angular.module('hillromvestApp')
 
     $scope.getDayHMRGraphData = function() {
       $scope.getUTCTime();
-      patientDashBoardService.getHMRBarGraphPoints($scope.patientId, $scope.UTCfromTimestamp).then(function(response){
+      patientDashBoardService.getHMRBarGraphPoints($scope.patientId, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-')).then(function(response){
         $scope.completeGraphData = response.data;
         if($scope.completeGraphData.actual === undefined){
            $scope.hmrBarGraphData = [];
@@ -541,8 +484,11 @@ angular.module('hillromvestApp')
          } else {
           $scope.completeGraphData = graphUtil.formatDayWiseDate($scope.completeGraphData.actual);
           $scope.yAxisRangeForHMRBar = graphUtil.getYaxisRangeBarGraph($scope.completeGraphData);
-          $scope.hmrBarGraphData = graphUtil.convertIntoHMRBarGraph($scope.completeGraphData);
-          $scope.customizationForBarGraph = function() {
+          //$scope.hmrBarGraphData = graphUtil.convertIntoHMRBarGraph($scope.completeGraphData);
+          $scope.hmrBarGraphData = graphUtil.convertToHMRBarGraph($scope.completeGraphData,patientDashboard.HMRBarGraphColor);
+          $scope.drawHMRBarGraph();
+          //
+           $scope.customizationForBarGraph = function() {
             var rect_height = d3.select('#hmrBarGraph svg').selectAll('.nv-barsWrap defs rect').attr("height");
             var rect_width = d3.select('#hmrBarGraph svg').selectAll('.nv-barsWrap defs rect').attr("width");
            d3.select('#hmrBarGraph svg').selectAll('rect.nv-bar')
@@ -577,6 +523,7 @@ angular.module('hillromvestApp')
             $timeout(waitHandler, 1000);
           }
           $scope.waitFunction();
+          //
          }
       }).catch(function(response) {
         $scope.hmrBarGraphData = [];
@@ -586,7 +533,7 @@ angular.module('hillromvestApp')
 
     $scope.getComplianceGraphData = function(format) {
       $scope.getUTCTime();
-      patientDashBoardService.getHMRGraphPoints($scope.patientId, $scope.UTCfromTimestamp, $scope.UTCtoTimestamp, $scope.groupBy).then(function(response){
+      patientDashBoardService.getHMRGraphPoints($scope.patientId, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.groupBy).then(function(response){
         $scope.completeComplianceData = response.data;
         if($scope.completeComplianceData.actual === undefined){
           $scope.complianceGraphData = [];
@@ -618,19 +565,19 @@ angular.module('hillromvestApp')
 
     $scope.calculateTimeDuration = function(durationInDays) {
       $scope.toTimeStamp = new Date().getTime();
-      $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp);
+      $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');
       $scope.fromTimeStamp = dateService.getnDaysBackTimeStamp(durationInDays);;
-      $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp);
+      $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
     };
 
-    // Weekly chart
-    $scope.weeklyChart = function(datePicker) {
-      $scope.selectedDateOption = 'WEEK';
+    $scope.drawChart = function(datePicker,dateOption,groupByOption,durationInDays) {
+      $scope.selectedDateOption = dateOption;
       $scope.removeGraph();
       if(datePicker === undefined){
-        $scope.calculateTimeDuration(7);
+        $scope.calculateTimeDuration(parseInt(durationInDays));
+        $scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
       }
-      $scope.format = $scope.groupBy = 'weekly';
+      $scope.format = $scope.groupBy = groupByOption;
       if($scope.hmrGraph) {
         $scope.hmrLineGraph = true;
         $scope.hmrBarGraph = false;
@@ -638,51 +585,33 @@ angular.module('hillromvestApp')
       } else if ($scope.complianceGraph) {
         $scope.getComplianceGraphData();
       }
+    }
+
+    // Weekly chart
+    $scope.weeklyChart = function(datePicker) {
+      $scope.drawChart(datePicker,'WEEK','weekly',7);
     };
 
     // Yearly chart
     $scope.yearlyChart = function(datePicker) {
-      $scope.selectedDateOption = 'YEAR';
-      $scope.removeGraph();
-       if(datePicker === undefined){
-        $scope.calculateTimeDuration(365);
-      }
-       $scope.format = $scope.groupBy = 'yearly';
-        if($scope.hmrGraph) {
-          $scope.hmrLineGraph = true;
-          $scope.hmrBarGraph = false;
-          $scope.getNonDayHMRGraphData();
-      } else if ($scope.complianceGraph) {
-          $scope.getComplianceGraphData();
-      }
+      $scope.drawChart(datePicker,'YEAR','yearly',365);
     };
    
     // Monthly chart
     $scope.monthlyChart = function(datePicker) {
-      $scope.selectedDateOption = 'MONTH';
-      $scope.removeGraph();
-      if(datePicker === undefined){
-        $scope.calculateTimeDuration(30);
-      }
-      $scope.format = $scope.groupBy = 'monthly';
-      if($scope.hmrGraph) {
-        $scope.hmrLineGraph = true;
-        $scope.hmrBarGraph = false;
-        $scope.getNonDayHMRGraphData();
-      } else if ($scope.complianceGraph) {
-        $scope.getComplianceGraphData();
-      }
+      $scope.drawChart(datePicker,'MONTH','monthly',30);
     };
     //hmrDayChart
     $scope.dayChart = function() {
       $scope.selectedDateOption = 'DAY';
+      $scope.dates = {startDate: $scope.fromDate, endDate: $scope.fromDate};
       $scope.removeGraph();
        if($scope.hmrGraph) {
         $scope.format = 'dayWise';
         $scope.hmrLineGraph = false;
         $scope.hmrBarGraph = true;
         $scope.fromTimeStamp = new Date().getTime();
-        $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp);
+        $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
         $scope.toTimeStamp = $scope.fromTimeStamp;
         $scope.toDate = $scope.fromDate
         $scope.getDayHMRGraphData();
@@ -811,6 +740,7 @@ angular.module('hillromvestApp')
             break;
     }
   };
+
   $scope.drawComplianceGraph = function() {
     d3.select('#complianceGraph svg').selectAll("*").remove();
       nv.addGraph(function() {
@@ -888,7 +818,7 @@ angular.module('hillromvestApp')
                   .attr("y" , bgHeight)
                   .attr("class" , "svg_bg");
 
-          /*UI Cganges for Line Graph*/
+          /*UI Changes for Line Graph*/
         d3.selectAll('#complianceGraph svg').selectAll(".nv-axis .tick").append('circle').
         attr("cx" , 0).
         attr("cy", 0).
@@ -917,7 +847,6 @@ angular.module('hillromvestApp')
         attr('class','minRecommendedLevel').
         attr('transform','translate(-45, '+ y1AxisMinTransform + ')').
         append('text').
-        //text($scope.yAxis1MinMark).
         text('MIN').
         style('fill','red');
 
@@ -925,7 +854,6 @@ angular.module('hillromvestApp')
         attr('class','maxRecommendedLevel').
         attr('transform','translate(-45,'+ y1AxisMaxTransform + ')').
         append('text').
-        //text($scope.yAxis1MaxMark).
         text('MAX').
         style('fill','green');
 
@@ -933,7 +861,6 @@ angular.module('hillromvestApp')
         attr('class','minRecommendedLevel').
         attr('transform','translate(20,'+ (y2AxisMinTransform + 3) + ')').
         append('text').
-        //text($scope.yAxis2MinMark).
         text('MIN').
         style('fill','red');
 
@@ -941,7 +868,6 @@ angular.module('hillromvestApp')
         attr('class','maxRecommendedLevel').
         attr('transform','translate(20,'+ (y2AxisMaxTransform + 3) + ')').
         append('text').
-        //text($scope.yAxis2MaxMark).
         text('MAX').
         style('fill','green');
       }
@@ -1071,13 +997,8 @@ angular.module('hillromvestApp')
       $scope.devices = []; $scope.devices.length = 0;   
       patientService.getDevices(localStorage.getItem('patientID')).then(function(response){
         angular.forEach(response.data.deviceList, function(device){
-          var _date = dateService.getDate(device.createdDate);
-          var _month = dateService.getMonth(_date.getMonth());
-          var _day = dateService.getDay(_date.getDate());
-          var _year = dateService.getYear(_date.getFullYear());
-          var date = _month + "/" + _day + "/" + _year;
-          device.createdDate = date;
-          device.days = dateService.getDays(_date);
+          device.createdDate = dateService.getDateByTimestamp(device.createdDate);
+          device.lastModifiedDate = dateService.getDateByTimestamp(device.lastModifiedDate);
         });
         if(response.data.deviceList){
           $scope.devices = response.data.deviceList;
@@ -1100,6 +1021,8 @@ angular.module('hillromvestApp')
         }
         $scope.addProtocol = true;
         angular.forEach($scope.protocols, function(protocol){
+          protocol.createdDate = dateService.getDateByTimestamp(protocol.createdDate);
+          protocol.lastModifiedDate = dateService.getDateByTimestamp(protocol.lastModifiedDate);
           if(!protocol.deleted){
             $scope.addProtocol = false;
           }
@@ -1352,7 +1275,6 @@ angular.module('hillromvestApp')
       }
       var fromDate = dateService.convertDateToYyyyMmDdFormat(fromTimeStamp);
       var toDate = dateService.convertDateToYyyyMmDdFormat(toTimeStamp);
-      console.log("start date : "+dateService.getDateFromTimeStamp(fromTimeStamp)+ " end date : "+dateService.getDateFromTimeStamp(toTimeStamp) + " page no : "+ $scope.curNotePageIndex + " page count : " + $scope.perPageCount); 
       UserService.getNotesOfUserInInterval(patientId, fromDate, toDate, $scope.curNotePageIndex, $scope.perPageCount ).then(function(response){
         $scope.showNotes = true; 
         $scope.notes = response.data; 
@@ -1382,5 +1304,125 @@ angular.module('hillromvestApp')
     };
 
     $scope.init();
-});
 
+
+      $scope.drawHMRLineGraph = function() {
+        nv.addGraph(function() {
+           chart = nv.models.lineChart()
+          .margin({top: 30, right: 100, bottom: 50, left: 100})
+          .showLegend(false)
+          .interpolate('step-after')
+          .color(d3.scale.category10().range());
+         // chart.noData("Nothing to see here.");
+          chart.tooltipContent($scope.toolTipContentStepChart());
+          chart.lines.dispatch.on('elementClick', function(event) {
+            // 
+              $scope.hideNotesCSS();
+              $scope.graphStartDate = null;
+              $scope.graphEndDate = null;   
+              var selectedNodeIndex = null;
+              var graphNodesLength = $scope.completeGraphData.actual.length;
+              if(graphNodesLength && graphNodesLength > 0){
+                angular.forEach($scope.completeGraphData.actual, function(value, index) {
+                  if(value.timestamp === event.point.timeStamp){
+                    selectedNodeIndex = index;
+                    $scope.graphStartDate = value.timestamp;                     
+                  }
+                });
+
+                // selectedNodeIndex exists means start date is present
+                if(selectedNodeIndex != null && selectedNodeIndex > -1 ){
+                  //the selected note is not the last one
+                  if(selectedNodeIndex < (graphNodesLength-1)){            
+                    var d = new Date($scope.completeGraphData.actual[selectedNodeIndex+1].timestamp);
+                    d.setDate(d.getDate()-1);
+                    $scope.graphEndDate = d.getTime();
+                  }else if(selectedNodeIndex === (graphNodesLength-1)){
+                    //this is the last node so,get the end date from dattepicker
+                    $scope.graphEndDate = $scope.toTimeStamp;
+                  }
+                }
+              }
+              $scope.getNotesBetweenDateRange($scope.graphStartDate,$scope.graphEndDate);
+            // 
+          });
+          //this function to put x-axis labels
+          chart.xAxis.tickFormat(function(d) {
+            if(d % 1 === 0) {
+            var timeStamp = $scope.completeGraphData.actual[d-1].timestamp;
+            switch($scope.format) {
+                case "weekly":
+                    return d3.time.format('%A')(new Date(timeStamp));
+                    break;
+                case "monthly":
+                    return 'week ' + dateService.getWeekOfMonth(timeStamp);
+                    break;
+                case "yearly":
+                    return d3.time.format('%B')(new Date(timeStamp));
+                    break;
+                default:
+                    break;
+            }
+          }
+        });
+
+          chart.yAxis.tickFormat(d3.format('d'));
+          chart.forceY([$scope.yAxisRangeForHMRLine.min, $scope.yAxisRangeForHMRLine.max]);
+          chart.yAxis.axisLabel('Minutes');
+            d3.select('#hmrLineGraph svg')
+          .datum($scope.graphData)
+          .transition().duration(500).call(chart);
+         var circlesInHMR = d3.select('#hmrLineGraph svg').select('.nv-scatterWrap').select('.nv-group.nv-series-0').selectAll('circle')[0];
+         var count = 0;
+         var missedTherapyCircles = [];
+         angular.forEach($scope.completeGraphData.actual,function(value){
+          if(value.missedTherapy === true){
+            missedTherapyCircles.push(circlesInHMR[count]);
+          }
+          count++;
+         })
+         angular.forEach(missedTherapyCircles,function(circle){
+          d3.select('#hmrLineGraph svg').select('.nv-scatterWrap').select('.nv-group.nv-series-0').append('circle')
+          .attr('cx',circle.attributes.cx.value)
+          .attr('cy',circle.attributes.cy.value)
+          .attr('r',4.5)
+          .attr('class','missed_therapy_node');
+         })
+
+         d3.selectAll('#hmrLineGraph svg').selectAll(".nv-axis .tick").append('circle').
+        attr("cx" , 0).
+        attr("cy", 0).
+        attr("r" , 2).
+        attr("fill" , '#aeb5be');
+
+        d3.selectAll('#hmrLineGraph svg').selectAll(".nv-axis .nv-axislabel").
+        attr("y" , -40);
+          //
+          return chart;
+      });
+    }
+
+    $scope.drawHMRBarGraph = function() {
+        nv.addGraph(function() {
+           chart = nv.models.multiBarChart()
+          .margin({top: 30, right: 100, bottom: 50, left: 100})
+          .showControls(false)
+          .showLegend(false)
+          .color(d3.scale.category10().range());
+         // chart.noData("Nothing to see here.");
+          chart.tooltipContent($scope.toolTipContentBarChart());
+          //this function to put x-axis labels
+          chart.xAxis.tickFormat(function(d) {
+            return dateService.getTimeIntervalFromTimeStamp(d);
+        });
+
+          chart.yAxis.tickFormat(d3.format('d'));
+          chart.forceY([$scope.yAxisRangeForHMRBar.min, $scope.yAxisRangeForHMRBar.max]);
+          chart.yAxis.axisLabel('Minutes');
+          d3.select('#hmrBarGraph svg')
+          .datum($scope.hmrBarGraphData)
+          .transition().duration(500).call(chart);
+          return chart;
+      });
+    }
+});

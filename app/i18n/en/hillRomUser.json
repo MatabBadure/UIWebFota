@@ -22,6 +22,7 @@
         "create-caregiver": "Yes",
         "user-name": "User Name",
         "clinic-name":  "Clinic Name",
+        "user-id": "User ID",
         "title": {
                     "name": "Title",
                     "dr":   "Dr", 
@@ -52,6 +53,12 @@
             "inactive": "Inactive",
             "expired": "Expired"
         },
+        "status-type": {
+            "active": "Active",
+            "inactive": "Inactive",
+            "pending": "Pending"
+        },
+        "status": "Status",
         "first-name": "First Name",
         "middle-name": "Middle Name",
         "last-name": "Last Name",

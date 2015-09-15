@@ -578,6 +578,20 @@ tags-input.ng-invalid .tags {
     box-shadow: none;
 }
 
+tags-input .tags .tag-item {
+  background: $cyan-blue-light;
+  color: $body-bg;
+  border: 1px solid $cyan-blue-light;
+}
+
+tags-input .tags .tag-item .remove-button {
+  color: $body-bg;
+}
+
+tags-input .autocomplete .suggestion-item.selected, tags-input .autocomplete .suggestion-item.selected em {
+  background-color: $iceberg;
+}
+
 .user-detail-info {
   padding: 0px 50px;
   border: 1px solid $celeste;
@@ -790,9 +804,6 @@ tags-input.ng-invalid .tags {
 .dashboard__manage-view--list > div {
   @extend .word-ellipsis;
   padding-right: 10px;
-  span {
-    padding-right: 10px;
-  }
 }
 
 .dashboard__manage-view--list .main-prim-info {
@@ -900,8 +911,8 @@ tags-input.ng-invalid .tags {
   padding: 0;
   &--name {
     color: $cyan-blue-light;
-    font-size: $font-size-base;
-    font-weight: $font-weight-bold;
+    font-size: $font-size-small;
+    font-weight: 300;
     display: block;
   }
   &--email {
@@ -977,6 +988,30 @@ input[type=radio], input.radio {
     color: $pickled-bluewood;
   }
 }
+.dashboard__manage-view--list {
+  .icon-edit-icon,
+  .icon-delete-icon {
+    color: $bombay;
+    cursor: pointer;
+    &:hover{
+      color: $pickled-bluewood;
+    }
+  }
+}
+
+.empty-list-message {
+  color: $silver-approx;
+  padding: 10px 0;
+  font-weight: $font-weight-medium;
+}
+
+.parent-list ul {
+  width: 100%;
+}
+
+ul.dropdown-menu {
+  margin-bottom: 50px;
+}
 
 /*Condition for IE Browser*/
 
@@ -986,6 +1021,6 @@ input[type=radio], input.radio {
     &:before{
       content: '' !important;
     }
-    }
+  }
 }
 /*END*/

@@ -11,26 +11,42 @@
 
 <div class="container admin-user">
   <div class="col-md-16 admin-views">
-    <span class="admin-views--title" translate="clinic.tab.clinic-admin">
-      
-    </span>
+    <span class="admin-views--title" translate="clinic.tab.clinic-admin"></span>
   </div>
+</div>
+
+<div class="dashboard dashboard--content">
+    <div class="container dashboard__manage-view margin-top">
+      <div class="dashboard__manage-view--header">
+        <div class="col-md-4 header--type">
+          <span translate="clinic.clinic-admin-name"></span>
+        </div>
+        <div class="col-md-10 header--type">
+          <span translate="clinic.email"></span>
+        </div>
+        <div class="clr"></div>
+      </div>
+    </div>
 </div>
 
 <div class="container admin-user">
 	<div class="col-md-16 crud-list" ng-show="clinicAdmin && !clinicAdminEdit">
     <div class="col-md-4">
-      <span>{{clinicAdmin.lastName}} {{clinicAdmin.middleName}} {{clinicAdmin.firstName}}</span>
+      <span>{{clinicAdmin.lastName}} {{clinicAdmin.firstName}}</span>
     </div>
     <div class="col-md-10">
       <span>{{clinicAdmin.email}}</span>
     </div>
-    <div class="col-md-1 icons text-center">
+    <div class="col-md-1 text-center">
       <span class="icon-edit-icon" ng-click="setEditClinicAdmin()"></span>
     </div>
-    <div class="col-md-1 icons text-center">
+    <div class="col-md-1 text-center">
       <span class="icon-delete-icon" ng-click="showDeleteModal()"></span>
     </div>
+  </div>
+
+  <div class="col-md-16 empty-list-message" ng-if="!clinicAdmin">
+    <span translate="clinic.noClinicAdmins"></span>
   </div>
 
   <div class="col-md-16 reset-padding margin-top">

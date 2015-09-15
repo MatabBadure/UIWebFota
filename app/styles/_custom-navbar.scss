@@ -11,6 +11,7 @@ $header--background: $body-bg;
 
 	.navbar-brand{
 		padding: 18px 10px;
+		overflow-y: hidden;
 		.logo {
 			font-size: 97px;
     		line-height: 24px;
@@ -144,7 +145,7 @@ $header--background: $body-bg;
 	.popover {
 		border-radius: 0;
 		right: -13px;
-    width: 170px;
+    width: 180px;
     left: unset !important;
 		background-color: $kashmir-blue;
 		border: 1px solid $blue-bayoux;
@@ -246,4 +247,9 @@ $header--background: $body-bg;
     line-height: 15px; 
     background-color: $sunshade; 
     color: $body-bg; 
+}
+
+.hide-popup {
+	display: none;
+	
 }
