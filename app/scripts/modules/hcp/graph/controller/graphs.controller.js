@@ -139,9 +139,6 @@ $scope.opts = {
           case "weekly":
               return d3.time.format('%A')(new Date(d));
               break;
-          case "dayWise":
-              return dateService.getTimeIntervalFromTimeStamp(d);
-              break;
           case "monthly":
               return 'week ' + dateService.getWeekOfMonth(d);
               break;
@@ -397,176 +394,57 @@ $scope.opts = {
         	//$scope.cumulativeGraphData = response.data;
           //$scope.yAxisRangeForCompliance = graphUtil.getYaxisRangeComplianceGraph($scope.completeComplianceData);
       }).catch(function(response) {
-        	$scope.cumulativeGraphData = [];
-        	$scope.serverCumulativeGraphData = cumulativeGraphData;
-		      //$scope.formatedCumulativeGraphData = graphUtil.convertIntoCumulativeGraph($scope.serverCumulativeGraphData.actual);          
-		      //$scope.createCumulativeGraphData();
-		      $scope.drawCumulativeGraph();
       });
+      /* mocked data starts */
+      $scope.serverCumulativeGraphData = cumulativeGraphData;
+      $scope.formatedCumulativeGraphData = graphUtil.convertIntoCumulativeGraph($scope.serverCumulativeGraphData); 
+      console.log("cumulative Graph Data:" + JSON.stringify($scope.formatedCumulativeGraphData));
+      $scope.drawCumulativeGraph();
+      /* mocked data ends */      
       
     }
 
     $scope.drawCumulativeGraph = function() {
-    	var testdata = [
-    {
-        "key": "Series 1",
-        "area": true,
-        "color": "red",
-        "values": [
-            [
-                1,
-                0
-            ],
-            [
-                2,
-                2.3382185140371
-            ],
-            [
-                3,
-                4.9507873460847
-            ],
-            [
-                4,
-                10.569146943813
-            ],
-            [
-                5,
-                4.4767332317425
-            ],
-            [
-                6,
-                0.50794682203014
-            ],
-            [
-                7,
-                4.5310285460542
-            ]
-        ]
-    },
-    {
-        "key": "Series 2",
-        "area": true,
-        "color": "blue",
-        "values": [
-            [
-                1,
-                1
-            ],
-            [
-                2,
-                2
-            ],
-            [
-                3,
-                3
-            ],
-            [
-                4,
-                4
-            ],
-            [
-                5,
-                5
-            ],
-            [
-                6,
-                6
-            ],
-            [
-                7,
-                7
-            ]
-        ]
-    },
-    {
-        "key": "Series 3",
-        "area": true,
-        "color":"green",
-        "values": [
-            [
-                1,
-                0
-            ],
-            [
-                2,
-                6.3382185140371
-            ],
-            [
-                3,
-                5.9507873460847
-            ],
-            [
-                4,
-                11.569146943813
-            ],
-            [
-                5,
-                5.4767332317425
-            ],
-            [
-                6,
-                0.50794682203014
-            ],
-            [
-                7,
-                5.5310285460542
-            ]
-        ]
-    },
-    {
-        "key": "Series 4",
-        "area": true,
-        "color": "orange",
-        "values": [
-            [
-                1,
-                7.0674410638835
-            ],
-            [
-                2,
-                14.663359292964
-            ],
-            [
-                3,
-                14.10439306054
-            ],
-            [
-                4,
-                23.114477037218
-            ],
-            [
-                5,
-                16.774256687841
-            ],
-            [
-                6,
-                11.902028464
-            ],
-            [
-                7,
-                16.883038668422
-            ]
-        ]
-    }
-];
+    	
 	    nv.addGraph(function() {
-	    var chart = nv.models.cumulativeLineChart()
+	    var chart = nv.models.lineChart()
 	                  .x(function(d) { return d[0] })
-	                  .y(function(d) { return d[1] }) //adjusting, 100% is 1.00, not 100 as it is in the data
+	                  .y(function(d) { return d[1] }) 
 	                  .color(d3.scale.category10().range())
+                    .tooltipContent(function(key, x, y, e, graph) {
+        return '<h3>' + key + ' Custom Text Here ' + x + '</h3> here' + '<p> or here ,' + y + '</p>'
+    })
 	                  .useInteractiveGuideline(true)
 	                  ;
-
-	     chart.xAxis
-	        .tickFormat(function(d) {
-	            return d;
+          chart.xAxis.showMaxMin = true;
+          chart.xAxis.staggerLabels = true,
+          chart.yAxis.axisLabel('No. of patients')
+	        chart.xAxis.tickFormat(function(d) {
+            if(d % 1 === 0){
+              var timeStamp = $scope.serverCumulativeGraphData[d-1].timeStamp;
+              switch($scope.format) {
+                case "weekly":
+                    return d3.time.format('%A')(new Date(timeStamp));
+                    break;
+                case "monthly":
+                    return 'week ' + dateService.getWeekOfMonth(timeStamp);
+                    break;
+                case "yearly":
+                    return d3.time.format('%B')(new Date(timeStamp));
+                    break;
+                default:
+                    break;
+              }
+            }
 	          });
-
+          chart.tooltipContent($scope.toolTipContentFunction);
 	    	chart.yAxis
-	    		.tickFormat(d3.format('.d'));
+	    		.tickFormat(function(d) {  
+              return d;
+            });
 
 	    	d3.select('#cumulativeGraph svg')
-	        .datum(testdata)
+	        .datum($scope.formatedCumulativeGraphData)
 	        .call(chart);
 	    	nv.utils.windowResize(chart.update);
 

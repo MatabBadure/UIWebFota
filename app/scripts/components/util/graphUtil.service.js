@@ -37,6 +37,49 @@ angular.module('hillromvestApp')
       return graphDataList;
       }
 
+      var createCumulativeGraph = function(data,key,color) {
+        var pointSet = [];
+        var graphData = {};
+        var count = 1;
+        angular.forEach(data, function(value) {
+          var point = [];
+          point.push(count++);
+          switch(key){
+            case 'MissedTherapy Days':
+              point.push(value.MissedTherapy);
+              break;
+            case 'HMR Non-Compliance':
+              point.push(value.nonCompliance);
+              break;
+            case 'Setting Deviation':
+              point.push(value.settingDeviation);
+              break;
+            case 'No Events Recorded':
+              point.push(value.noEvent);
+              break;
+          }
+          pointSet.push(point);
+        });
+        graphData.values = pointSet;
+        graphData.key = key;
+        graphData.area = true; 
+        graphData.color = color;
+        return graphData;
+      }
+
+      this.convertIntoCumulativeGraph = function(data) {        
+        var graphDataList =[];
+        graphDataList.push(createCumulativeGraph(data,'MissedTherapy Days','red'));
+        graphDataList.push(createCumulativeGraph(data,'HMR Non-Compliance','green'));
+        graphDataList.push(createCumulativeGraph(data,'Setting Deviation','blue'));
+        graphDataList.push(createCumulativeGraph(data,'No Events Recorded','orange'));
+        return graphDataList;
+      }
+
+      this.getYaxisRangeCumulativeGraph = function() {
+
+      }
+
       var arrayMax = Function.prototype.apply.bind(Math.max, null);
       var arrayMin = Function.prototype.apply.bind(Math.min, null);
 
