@@ -113,7 +113,7 @@
           "deactivate": "Deactivate"
         },
         "caregiver": {
-          "gen-details": "Create Caregiver",
+          "gen-details": "Caregiver Details",
           "title-name": "Title",
           "first-name": "First Name",
           "middle-name":"Middle Name",
