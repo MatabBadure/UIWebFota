@@ -64,6 +64,7 @@
         "yes" : "Yes",
         "noClinics": "No Clinic Associated",
         "noHCPs": "No HCP Associated",
+        "noPatients": "No Patient Associated",
         "noClinicAdmins": "No Clinic Admin Associated",
         "delete": {
             "warning": "Are you sure you want to Deactivate the Clinic?",

@@ -49,11 +49,6 @@ angular.module('hillromvestApp')
         return timeStamp - (timeZoneOffset * 60 * 1000);
       },
       getWeekOfMonth: function(d) {
-        /*var dayCount = this.getDayOfYear(d);
-        var d = new Date(d);
-        var date = d.getDate();
-        var day = d.getDay();
-        var weekOfMonth = Math.ceil((dayCount) / 7);*/
         var date = new Date(d);
         var firstDay = new Date(date.getFullYear(), date.getMonth(), 1).getDay();
         return Math.ceil((date.getDate() + firstDay)/7);
@@ -63,9 +58,18 @@ angular.module('hillromvestApp')
         var date = new Date(data);
         return this.getMonthName(date) + ' ' + this.getDay(date.getDate()) + ', ' + this.getYear(date.getFullYear(date))
       },
-      getDateFromTimeStamp: function(data) {
-        var date = new Date(data);
-        return this.getMonth(date.getMonth(date)) + '/' + this.getDay(date.getDate()) + '/' + this.getYear(date.getFullYear(date))
+      getDateFromTimeStamp: function(timeStamp,dateFormat,dateSeperator){
+        var date = new Date(timeStamp);
+        switch(dateFormat) {
+          case patientDashboard.serverDateFormat:
+            return this.getYear(date.getFullYear(date)) + dateSeperator + this.getMonth(date.getMonth(date)) + dateSeperator + this.getDay(date.getDate());
+            break;
+          case patientDashboard.dateFormat:
+            return this.getMonth(date.getMonth(date)) + dateSeperator + this.getDay(date.getDate()) + dateSeperator + this.getYear(date.getFullYear(date));
+            break;
+          case patientDashboard.INDdateFormat:
+            return this.getDay(date.getDate()) + dateSeperator + this.getMonth(date.getMonth(date)) + dateSeperator + this.getYear(date.getFullYear(date));
+        }
       },
       getDateDiffIndays: function(fromTimeStamp,toTimeStamp) {
         return Math.ceil((toTimeStamp - fromTimeStamp)/(1000*60*60*24));

@@ -12,8 +12,7 @@ angular.module('hillromvestApp')
       $scope.selectedGraph = 'HMR';
       $scope.selectedDateOption = 'WEEK';
       $scope.disableDatesInDatePicker();
-      $scope.role = localStorage.getItem('role');
-      // Data available for graph for ID 160 only for now 
+      $scope.role = localStorage.getItem('role'); 
       $scope.patientId = parseInt(localStorage.getItem('patientID'));
       var currentRoute = $state.current.name;
       var server_error_msg = "Some internal error occurred. Please try after sometime.";
@@ -60,14 +59,13 @@ angular.module('hillromvestApp')
       $scope.edit_date = dateService.convertDateToYyyyMmDdFormat(new Date());
       $scope.getMissedTherapyDaysCount();
       $scope.fromTimeStamp = dateService.getnDaysBackTimeStamp(7);
-      $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp);
-      $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp);   
+      $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
+      $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');   
       $scope.curNotePageIndex = 1;
       $scope.perPageCount = 4;
       $scope.notePageCount = 0;
       $scope.totalNotes = 0;
       $scope.getPatientById($scope.patientId);
-      
     };
 
 
@@ -97,8 +95,8 @@ angular.module('hillromvestApp')
     $scope.calculateDateFromPicker = function(picker) {
       $scope.fromTimeStamp = new Date(picker.startDate._d).getTime();
       $scope.toTimeStamp = new Date(picker.endDate._d).getTime();
-      $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp);
-      $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp);
+      $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
+      $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');
       if ($scope.fromDate === $scope.toDate ) {
         $scope.fromTimeStamp = $scope.toTimeStamp;
       }
@@ -134,11 +132,11 @@ angular.module('hillromvestApp')
         $scope.getDayHMRGraphData();
       } else if(days === 0 && $scope.selectedGraph === 'COMPLIANCE'){
         $scope.plotNoDataAvailable();
-      } else if(days <= 7) {
+      } else if(days <= patientDashboard.maxDaysForWeeklyGraph) {
         $scope.weeklyChart($scope.fromTimeStamp);
-      } else if ( days > 7 && days <= 32 ) {
+      } else if ( days > patientDashboard.maxDaysForWeeklyGraph && days <= patientDashboard.minDaysForMonthlyGraph ) {
         $scope.monthlyChart($scope.fromTimeStamp);
-      } else if ( days > 32) {
+      } else if ( days > patientDashboard.minDaysForMonthlyGraph) {
          $scope.yearlyChart($scope.fromTimeStamp);
       }
     };
@@ -278,7 +276,7 @@ angular.module('hillromvestApp')
         angular.forEach($scope.completeGraphData.actual, function(value) {
           if(value.timestamp === e.point.timeStamp){
               toolTip =
-                '<h6>' + dateService.getDateFromTimeStamp(value.timestamp) + '</h6>' +
+                '<h6>' + dateService.getDateFromTimeStamp(value.timestamp,patientDashboard.dateFormat,'/') + '</h6>' +
                 '<ul class="graph_ul">' +
                   '<li><span class="pull-left">' + 'Treatment/Day ' +'</span><span class="pull-right value">' + value.treatmentsPerDay +'</span></li>' +
                   '<li><span class="pull-left">' + 'Frequency' + '</span><span class="pull-right value">' + value.weightedAvgFrequency  + '</span></li>' +
@@ -297,7 +295,7 @@ angular.module('hillromvestApp')
         angular.forEach($scope.completeGraphData, function(value) {
           if(value.startTime === e.point.x && value.hmr !== 0 ){
               toolTip =
-                '<h6>' + dateService.getDateFromTimeStamp(value.startTime) + '</h6>' +
+                '<h6>' + dateService.getDateFromTimeStamp(value.startTime,patientDashboard.dateFormat,'/') + '</h6>' +
                 '<ul class="graph_ul">' +
                   '<li><span class="pull-left">' + 'Frequency' + '</span><span class="pull-right value">' + value.frequency  + '</span></li>' +
                   '<li><span class="pull-left">' + 'Pressure' +'</span><span class="pull-right value">' + value.pressure +'</span></li>' +
@@ -315,7 +313,7 @@ angular.module('hillromvestApp')
         angular.forEach(data, function(value) {
           if(value.start === e.point.timeStamp){
               toolTip =
-                '<h6>' + dateService.getDateFromTimeStamp(value.start) + '</h6>' +
+                '<h6>' + dateService.getDateFromTimeStamp(value.start,patientDashboard.dateFormat,'/') + '</h6>' +
                 '<ul class="graph_ul">' +
                   '<li><span class="pull-left">' + 'Treatment/Day' + '</span><span class="pull-right value">' + value.treatmentsPerDay + '</span></li>' +
                   '<li><span class="pull-left">' + 'Frequency' +'</span><span class="pull-right value">' + value.weightedAvgFrequency +'</span></li>' +
@@ -374,7 +372,7 @@ angular.module('hillromvestApp')
     };
     $scope.getNonDayHMRGraphData = function() {
       $scope.getUTCTime();
-      patientDashBoardService.getHMRGraphPoints($scope.patientId, $scope.UTCfromTimestamp, $scope.UTCtoTimestamp, $scope.groupBy).then(function(response){
+      patientDashBoardService.getHMRGraphPoints($scope.patientId, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.groupBy).then(function(response){
         //Will get response data from real time API once api is ready
         $scope.completeGraphData = response.data;
         if($scope.completeGraphData.actual === undefined){
@@ -475,7 +473,7 @@ angular.module('hillromvestApp')
 
     $scope.getDayHMRGraphData = function() {
       $scope.getUTCTime();
-      patientDashBoardService.getHMRBarGraphPoints($scope.patientId, $scope.UTCfromTimestamp).then(function(response){
+      patientDashBoardService.getHMRBarGraphPoints($scope.patientId, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-')).then(function(response){
         $scope.completeGraphData = response.data;
         if($scope.completeGraphData.actual === undefined){
            $scope.hmrBarGraphData = [];
@@ -535,7 +533,7 @@ angular.module('hillromvestApp')
 
     $scope.getComplianceGraphData = function(format) {
       $scope.getUTCTime();
-      patientDashBoardService.getHMRGraphPoints($scope.patientId, $scope.UTCfromTimestamp, $scope.UTCtoTimestamp, $scope.groupBy).then(function(response){
+      patientDashBoardService.getHMRGraphPoints($scope.patientId, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.groupBy).then(function(response){
         $scope.completeComplianceData = response.data;
         if($scope.completeComplianceData.actual === undefined){
           $scope.complianceGraphData = [];
@@ -567,9 +565,9 @@ angular.module('hillromvestApp')
 
     $scope.calculateTimeDuration = function(durationInDays) {
       $scope.toTimeStamp = new Date().getTime();
-      $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp);
+      $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');
       $scope.fromTimeStamp = dateService.getnDaysBackTimeStamp(durationInDays);;
-      $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp);
+      $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
     };
 
     $scope.drawChart = function(datePicker,dateOption,groupByOption,durationInDays) {
@@ -613,7 +611,7 @@ angular.module('hillromvestApp')
         $scope.hmrLineGraph = false;
         $scope.hmrBarGraph = true;
         $scope.fromTimeStamp = new Date().getTime();
-        $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp);
+        $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
         $scope.toTimeStamp = $scope.fromTimeStamp;
         $scope.toDate = $scope.fromDate
         $scope.getDayHMRGraphData();
@@ -820,7 +818,7 @@ angular.module('hillromvestApp')
                   .attr("y" , bgHeight)
                   .attr("class" , "svg_bg");
 
-          /*UI Cganges for Line Graph*/
+          /*UI Changes for Line Graph*/
         d3.selectAll('#complianceGraph svg').selectAll(".nv-axis .tick").append('circle').
         attr("cx" , 0).
         attr("cy", 0).
@@ -849,7 +847,6 @@ angular.module('hillromvestApp')
         attr('class','minRecommendedLevel').
         attr('transform','translate(-45, '+ y1AxisMinTransform + ')').
         append('text').
-        //text($scope.yAxis1MinMark).
         text('MIN').
         style('fill','red');
 
@@ -857,7 +854,6 @@ angular.module('hillromvestApp')
         attr('class','maxRecommendedLevel').
         attr('transform','translate(-45,'+ y1AxisMaxTransform + ')').
         append('text').
-        //text($scope.yAxis1MaxMark).
         text('MAX').
         style('fill','green');
 
@@ -865,7 +861,6 @@ angular.module('hillromvestApp')
         attr('class','minRecommendedLevel').
         attr('transform','translate(20,'+ (y2AxisMinTransform + 3) + ')').
         append('text').
-        //text($scope.yAxis2MinMark).
         text('MIN').
         style('fill','red');
 
@@ -873,7 +868,6 @@ angular.module('hillromvestApp')
         attr('class','maxRecommendedLevel').
         attr('transform','translate(20,'+ (y2AxisMaxTransform + 3) + ')').
         append('text').
-        //text($scope.yAxis2MaxMark).
         text('MAX').
         style('fill','green');
       }
@@ -1003,14 +997,6 @@ angular.module('hillromvestApp')
       $scope.devices = []; $scope.devices.length = 0;   
       patientService.getDevices(localStorage.getItem('patientID')).then(function(response){
         angular.forEach(response.data.deviceList, function(device){
-          // var _date = dateService.getDate(device.createdDate);
-          // var _month = dateService.getMonth(_date.getMonth());
-          // var _day = dateService.getDay(_date.getDate());
-          // var _year = dateService.getYear(_date.getFullYear());
-          // var date = _month + "/" + _day + "/" + _year;
-          // device.createdDate = date;
-
-          // device.days = dateService.getDays(_date);
           device.createdDate = dateService.getDateByTimestamp(device.createdDate);
           device.lastModifiedDate = dateService.getDateByTimestamp(device.lastModifiedDate);
         });
