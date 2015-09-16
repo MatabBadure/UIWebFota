@@ -1,8 +1,7 @@
 'use strict';
 
 angular.module('hillromvestApp')
-<<<<<<< HEAD
-.controller('hcpGraphController', function($scope, $state, patientDashBoardService, StorageService, dateService, graphUtil, patientService, UserService, $stateParams, notyService, $timeout) {
+.controller('hcpGraphController',[ '$scope', '$state', 'patientDashBoardService', 'StorageService', 'dateService', 'graphUtil', 'patientService', 'UserService', '$stateParams', 'notyService', '$timeout', function($scope, $state, patientDashBoardService, StorageService, dateService, graphUtil, patientService, UserService, $stateParams, notyService, $timeout) {
     var chart;
     $scope.init = function() {
     	$scope.selectedGraph = 'CUMULATIVE';
@@ -894,5 +893,13 @@ $scope.opts = {
   };
 
     $scope.init();
-});
 
+  $scope.goToPatientDashboard = function(){
+    console.log('Todo');
+  };
+
+  $scope.gotoPatients = function(value){
+    $state.go('hcppatientdashboard');
+  };
+
+}]);

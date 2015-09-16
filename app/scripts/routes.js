@@ -200,6 +200,32 @@ angular.module('hillromvestApp')
                 }
             })
 
+            .state('hcppatientOverview', {
+                parent: 'hcp-dashboard',
+                url: '/{patientId}/overview',
+                data: {
+                    roles: [],
+                    pageTitle: 'patient.title'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/hcp/patient/directives/patient-details.html',
+                        controller: 'graphController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient');$translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+
             .state('patientDemographic', {
                 parent: 'patientUser',
                 url: '/{patientId}/demographic',
@@ -1219,7 +1245,7 @@ angular.module('hillromvestApp')
                 parent: 'hcp-dashboard',
                 url: '/hcp-dashboard',
                 data: {
-                    roles: ['PATIENT'],
+                    roles: ['HCP'],
                     pageTitle: 'hcp.title'
                 },
                 views: {
@@ -1230,7 +1256,59 @@ angular.module('hillromvestApp')
                 },
                 resolve: {
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
-                        $translatePartialLoader.addPart('patient-user');
+                        $translatePartialLoader.addPart('doctor');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+            
+            .state('hcppatientdashboard', {
+                parent: 'hcp-dashboard',
+                url: '/hcp-patient',
+                data: {
+                    roles: ['HCP'],
+                    pageTitle: 'hcp.title'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/hcp/patient/directives/list.html',
+                        controller: 'hcpPatientController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('doctor');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+
+            .state('hcpDashboardProfile', {
+                parent: 'hcp-dashboard',
+                url: '/hcp-profile',
+                data: {
+                    roles: ['HCP'],
+                    pageTitle: 'hcp.title'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/hcp/profile/views/my-profile.html',
+                        controller: 'hcpProfileController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('profile');
                         return $translate.refresh();
                     }],
                     authorize: ['Auth',
