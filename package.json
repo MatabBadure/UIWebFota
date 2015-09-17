@@ -1,6 +1,9 @@
 {
   "name": "qogir",
   "version": "0.0.0",
+  "authors": [
+    "Razorfish, http://razorfish.com"
+  ],
   "dependencies": {},
   "devDependencies": {
     "grunt": "^0.4.1",
@@ -8,7 +11,6 @@
     "grunt-concurrent": "^0.5.0",
     "grunt-connect-proxy": "^0.2.0",
     "grunt-contrib-clean": "^0.5.0",
-    "grunt-contrib-compass": "^0.7.2",
     "grunt-contrib-concat": "^0.4.0",
     "grunt-contrib-connect": "^0.7.1",
     "grunt-contrib-copy": "^0.5.0",
@@ -45,6 +47,8 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "test": "grunt test"
+    "test": "grunt test",
+    "start": "grunt serve",
+    "postinstall": "bower install"
   }
 }
