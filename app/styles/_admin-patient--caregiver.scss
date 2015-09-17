@@ -47,6 +47,14 @@
   font-weight: $font-weight-medium;
 }
 
+.admin-user .caregiver-list__phone .desc-text {
+  font-size: $font-size-smaller;
+}
+
+.admin-user .caregiver-list__phone .contact-detail {
+  font-size: $font-size-small;
+}
+
 .admin-user .caregiver-list__type {
   padding: 0;
   span {
