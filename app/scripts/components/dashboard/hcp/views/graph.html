@@ -17,37 +17,37 @@
 						</div>
 					</div>
 					<div class="stats_chart_container">
-						<div class="col-3" ng-click="gotoPatients('missedtherapy')">
+						<div class="col-3" ng-click="gotoPatients('missed_therapy')">
 							<div class="pie_chart"  easypiechart options="missedtherapy" percent="missedtherapyDays"></div>
 							<div class="stats_chart_content missed">
-								<h4 class="percent" ng-bind="missedtherapyDays"></h4>
+								<h4 class="percent" ng-bind="statistics.patientsWithMissedTherapy"></h4>
 								<span class="patients_txt">Patients</span>
 								<p class="descrip">Missed Therapy</p>
 							</div>
 							<div class="chart_inner_icon icon-lungs"></div>
 						</div>
-						<div class="col-3" ng-click="gotoPatients('HMRNon-Compliance')">
+						<div class="col-3" ng-click="gotoPatients('non_hmr_compliance')">
 							<div class="pie_chart"  easypiechart options="hmr" percent="hmrRunRate"></div>
 							<div class="stats_chart_content hmr">
-								<h4 class="percent"  ng-bind="hmrRunRate"></h4>
+								<h4 class="percent"  ng-bind="statistics.patientsWithHmrNonCompliance"></h4>
 								<span class="patients_txt">Patients</span>
 								<p class="descrip">HMR Non-Compliance</p>
 							</div>
 							<div class="chart_inner_icon icon-notification-bell"></div>
 						</div>
-						<div class="col-3" ng-click="gotoPatients('SettingDeviation')">
+						<div class="col-3" ng-click="gotoPatients('setting_deviation')">
 							<div class="pie_chart" easypiechart options="deviation" percent="deviationDays"></div>
 							<div class="stats_chart_content deviation">
-								<h4 class="percent" ng-bind="deviationDays"></h4>
+								<h4 class="percent" ng-bind="statistics.patientsWithSettingDeviation"></h4>
 								<span class="patients_txt">Patients</span>
 								<p class="descrip">Setting Deviation</p>
 							</div>
 							<div class="chart_inner_icon icon-settings"></div>
 						</div>
-						<div class="col-3" ng-click="gotoPatients('NoEventsRecorded')">
+						<div class="col-3" ng-click="gotoPatients('noevents')">
 							<div class="pie_chart"  easypiechart options="noevent" percent="noeventDays"></div>
 							<div class="stats_chart_content noevent">
-								<h4 class="percent" ng-bind="noeventDays"></h4>
+								<h4 class="percent" ng-bind="statistics.patientsWithNoEventRecorded">{{statistics.patientsWithNoEventRecorded}}</h4>
 								<span class="patients_txt">Patients</span>
 								<p class="descrip">No Events Recorded</p>
 							</div>

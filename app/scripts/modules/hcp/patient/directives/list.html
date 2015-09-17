@@ -23,15 +23,23 @@
         </div>
         <div class="fixed-filter-box reset-padding-left">
           <div class="search-dropdown">
-            <select name="search" ng-model="sortOption" ng-change="searchPatients()">
-              <option value="" selected translate="patient.filter.all">Newly Created</option>
-              <option value="email" translate="patient.filter.active">Email</option>
-              <option value="firstName" translate="patient.filter.inactive">First Name</option>
-              <option value="lastName" translate="patient.filter.expired">Last Name</option>
+            <select name="search" ng-model="sortOption" ng-change="searchPatients(sortOption)">
+              <option value="" selected>All</option>
+              <option value="missed_therapy">Missed Therapy</option>
+              <option value="non_hmr_compliance">Non HMR Compliance</option>
+              <option value="setting_deviation">Setting Deviation</option>
+              <option value="noevents">No Events</option>
             </select>
           </div>
         </div>
       </div>
+      <div class="row">
+        <label><input type="checkbox" ng-model="sortOn.missedTherapy" ng-change="changeSortOption()">Missed Therapy</label> 
+        <label><input type="checkbox" ng-model="sortOn.nonHmrCompliance" ng-change="changeSortOption()">Non HMR Compliance</label>
+        <label><input type="checkbox" ng-model="sortOn.settingDeviation" ng-change="changeSortOption()">Sertting Deviations</label>
+        <label><input type="checkbox" ng-model="sortOn.noEvents" ng-change="changeSortOption()">No Events</label>
+      </div>
+
       <div class="dashboard__manage-view--header">
         <div class="col-md-2 header--type">
           <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="patient.patient-name">Patient Name</span>
@@ -60,7 +68,7 @@
         <div class="clr"></div>
       </div>
 
-      <div class="dashboard__manage-view--list" ng-repeat="patient in patients" ng-click="patient.isDeleted || selectPatient(patient)" ng-readonly="true" ng-class="{'inactive': patient.isDeleted}">
+      <div class="dashboard__manage-view--list" ng-repeat="patient in patients" ng-click=" selectPatient(patient)" ng-readonly="true" ng-class="{'inactive': patient.isDeleted}">
           <div class="col-md-2 reset-padding">
             <span class="main-prim-info">{{patient.lastName}} {{patient.firstName}}</span>
             <span class="main-secon-info">{{patient.dob}}</span>
@@ -135,9 +143,6 @@
             <span class="short-info active centered" ng-if="!patient.isDeleted" translate="patient.status-type.active"></span>
 
             <span class="short-info inactive centered" ng-if="patient.isDeleted" translate="patient.status-type.inactive"></span>
-            
-            <!-- Added it for expired status -->
-            <!-- <span class="short-info expired centered" ng-if="patient.isDeleted" translate="patient.status-type.expired"></span> -->
           </div>
 
           <div class="col-md-1 reset-padding-left centered text-right">

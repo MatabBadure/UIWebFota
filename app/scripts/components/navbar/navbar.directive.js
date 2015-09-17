@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hillromvestApp')
-.directive('activeMenu', function($translate, $locale, tmhDynamicLocale) {
+.directive('activeMenu',['$translate', 'tmhDynamicLocale', function($translate, tmhDynamicLocale) {
   return {
     restrict: 'A',
     link: function (scope, element, attrs) {
@@ -19,9 +19,9 @@ angular.module('hillromvestApp')
       });
     }
   };
-})
+}])
 
-.directive('activeLink', function(location) {
+.directive('activeLink',['location', function(location) {
   return {
     restrict: 'A',
     link: function (scope, element, attrs) {
@@ -38,11 +38,11 @@ angular.module('hillromvestApp')
       });
     }
   };
-});
+}]);
 
 
 angular.module('hillromvestApp')
-.directive('navigationBar', function (Auth, Principal, $state, Account, $location) {
+.directive('navigationBar', ['Auth', '$state', 'Account', '$location', function (Auth, $state, Account, $location) {
   return {
     templateUrl: 'scripts/components/navbar/navbar.html',
     restrict: 'E',
@@ -95,15 +95,19 @@ angular.module('hillromvestApp')
         }
       };
 
+      $scope.gotoPage = function(page){
+        $state.go(page);
+      };
+
       $scope.goToPatientDashboard = function(){
         $state.go("patientdashboard");
       };
     }
   };
-});
+}]);
 
 angular.module('hillromvestApp')
-.directive('navbarPopover', function(Auth, $state, Account, $compile) {
+.directive('navbarPopover',['$compile', function($compile) {
     return {
         restrict: 'A',
         template: "<span id='pop-over-link' class='cursor-pointer'><span class='icon-logged-in-user'></span><span class='user-name'>{{username}}<span class='icon-arrow-down'></span></span></span>" +
@@ -122,10 +126,10 @@ angular.module('hillromvestApp')
           $scope.username = localStorage.getItem('userFirstName');
         }
     }
-});
+}]);
 
 angular.module('hillromvestApp')
-.directive('navigationBarPatient', function (Auth, Principal, $state, Account, $location) {
+.directive('navigationBarPatient',['$location', function ($location) {
   return {
     templateUrl: 'scripts/components/navbar/navbarpatientuser.html',
     restrict: 'E',
@@ -154,12 +158,12 @@ angular.module('hillromvestApp')
       $scope.getNotifications();
     }
   };
-});
+}]);
 
 
 
 angular.module('hillromvestApp')
-.directive('navigationBarHcp', function (Auth, Principal, $state, Account, $location) {
+.directive('navigationBarHcp',['Auth', 'Principal', '$state', 'Account', '$location', function (Auth, Principal, $state, Account, $location) {
   return {
     templateUrl: 'scripts/components/navbar/navbarhcp.html',
     restrict: 'E',
@@ -175,6 +179,10 @@ angular.module('hillromvestApp')
         }
       };
 
+      $scope.account = function(){
+        $state.go("hcpUserProfile");
+      };
+
       $scope.getNotifications = function(){
         UserService.getPatientNotification(localStorage.getItem("patientID"), new Date().getTime()).then(function(response){                  
           $scope.notifications = response.data;
@@ -188,4 +196,4 @@ angular.module('hillromvestApp')
       // $scope.getNotifications();
     }
   };
-});
+}]);

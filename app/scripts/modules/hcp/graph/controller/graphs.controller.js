@@ -1,11 +1,21 @@
 angular.module('hillromvestApp')
-.controller('hcpGraphController',['$scope', '$state', function($scope, $state) {
+.controller('hcpGraphController',['$scope', '$state', 'hcpDashboardService', 'DoctorService', function($scope, $state, hcpDashboardService, DoctorService){
 
 //---HCP PieChart JS =============
-	$scope.missedtherapyDays = 25;
-	$scope.hmrRunRate = 65;
-	$scope.deviationDays = 49;
-	$scope.noeventDays = 76;
+  $scope.init = function(){
+    DoctorService.getClinicsAssociatedToHCP(localStorage.getItem('userId')).then(function(response){
+      localStorage.setItem('clinicId', response.data.clinics[0].id);
+      hcpDashboardService.getStatistics(response.data.clinics[0].id, localStorage.getItem('userId')).then(function(response){
+        $scope.statistics = response.data.statitics;
+      }).catch(function(response){
+        console.log('ERROR1 :',response);
+      });
+    }).catch(function(response){
+      console.log('ERROR :', response);
+    });
+  };
+
+	//Todo For Donut Graph and Main Graph
 	$scope.missedtherapy = {
         animate:{
             duration:3000,
@@ -64,11 +74,13 @@ $scope.opts = {
     }
 /*Dtate picker js END*/
 
-  $scope.goToPatientDashboard = function(){
-    console.log('Todo');
+  $scope.goToPatientDashboard = function(value){
+    $state.go(value);
   };
 
   $scope.gotoPatients = function(value){
     $state.go('hcppatientdashboard',{'filter':value});
   };
+
+  $scope.init();
 }]);
