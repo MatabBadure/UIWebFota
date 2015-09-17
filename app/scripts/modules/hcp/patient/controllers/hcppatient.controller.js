@@ -13,6 +13,7 @@ angular.module('hillromvestApp')
     }else if($state.current.name === 'hcppatientCraegiver'){
       $scope.getCaregiversAssociatedWithPatient($stateParams.patientId);
     }else if($state.current.name === 'hcppatientdashboard'){
+      $scope.sortOption = $stateParams.filter;
       if($stateParams.filter === 'noevents'){
         $scope.getPatientsWithNoEvents($stateParams.filter);
       } else {
