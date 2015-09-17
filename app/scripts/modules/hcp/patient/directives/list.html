@@ -96,52 +96,6 @@
 
           <div class="col-md-1 reset-padding">
             <span class="short-info active centered" ng-if="!patient.isDeleted" translate="patient.status-type.active"></span>
-
-            <span class="short-info inactive centered" ng-if="patient.isDeleted" translate="patient.status-type.inactive"></span>
-            
-            <!-- Added it for expired status -->
-            <!-- <span class="short-info expired centered" ng-if="patient.isDeleted" translate="patient.status-type.expired"></span> -->
-          </div>
-
-          <div class="col-md-1 reset-padding-left centered text-right">
-            <span class="short-info"></span>
-          </div>
-
-          <div class="clr"></div>
-       </div>
-
-
-
-
-       <div class="dashboard__manage-view--list" ng-click="selectPatient()" ng-readonly="true" ng-class="{'inactive': patient.isDeleted}">
-          <div class="col-md-2 reset-padding">
-            <span class="main-prim-info">lastName firstName</span>
-            <span class="main-secon-info">dob</span>
-          </div>
-          <div class="col-md-2 reset-padding centered">
-            <span class="impo-highlight">hillromId</span>
-          </div>
-          <div class="col-md-3 reset-padding centered">
-            <span class="short-info">email</span>
-          </div>
-
-          <div class="col-md-2 reset-padding centered">
-            <span class="short-info">city </span>
-            <span class="short-info" ng-if="patient.state && patient.city">,</span>
-            <span class="short-info">state </span>
-          </div>
-
-          <div class="col-md-2 reset-padding centered">
-            <span class="short-info">.transmission</span>
-          </div>
-
-          <div class="col-md-3 reset-padding centered">
-            <span class="short-info">clinicName</span>
-          </div>
-
-          <div class="col-md-1 reset-padding">
-            <span class="short-info active centered" ng-if="!patient.isDeleted" translate="patient.status-type.active"></span>
-
             <span class="short-info inactive centered" ng-if="patient.isDeleted" translate="patient.status-type.inactive"></span>
           </div>
 
@@ -151,9 +105,6 @@
 
           <div class="clr"></div>
        </div>
-
-
-
 
       <div class="dashboard__manage-view--pagination">
         <div class="col-md-16 reset-padding-right">
