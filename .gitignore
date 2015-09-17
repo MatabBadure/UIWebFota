@@ -1,8 +1,8 @@
+*.css
 *.sublime-workspace
 .idea/
 bower_components
 node_modules
-style.css
 
 # ---------------------------------------------- #
 # Ignore hidden folders #
