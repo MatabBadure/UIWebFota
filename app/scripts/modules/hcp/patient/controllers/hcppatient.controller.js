@@ -75,8 +75,7 @@ angular.module('hillromvestApp')
 
   $scope.getAssociateHCPToPatient = function(patientId){
     patientService.getAssociateHCPToPatient(patientId).then(function(response){
-      console.log('SUCCESS: ', response);
-      // $scope.associatedHCPs = response.data.
+      $scope.associatedHCPs = response.data.hcpUsers
     }).catch(function(response){
       $scope.showWarning(response);
     });

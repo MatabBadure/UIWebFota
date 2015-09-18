@@ -40,7 +40,7 @@
     </div>
     <div class="col-md-4 clinic-list__address">
       <span class="clinic-list__address--primary" ng-bind="aClinic.address"></span>
-      <span class="clinic-list__address--secondary">{{aClinic.city}}, {{aClinic.state}}</span>
+      <span class="clinic-list__address--secondary">{{::aClinic.city}}, {{::aClinic.state}}</span>
     </div>
     <div class="col-md-3 clinic-list__phone">
       <span class="clinic-list__phone--number" ng-bind="aClinic.phoneNumber"></span>
@@ -85,10 +85,10 @@
 
   <div class="col-md-16 clinic-list" ng-repeat="hcp in associatedHCPs track by $index" ng-if="associatedHCPs.length > 0">
     <div class="col-md-3 clinic-list__detail">
-      <span class="clinic-list__detail--name">{{hcp.lastName}} {{hcp.firstName}}</span>
+      <span class="clinic-list__detail--name">{{::hcp.lastName}} {{::hcp.firstName}}</span>
     </div>
     <div class="col-md-4 clinic-list__address">
-      <span class="clinic-list__credentials">{{hcp.credentials}}</span>
+      <span class="clinic-list__credentials">{{::hcp.credentials}}</span>
     </div>
     <div class="col-md-3 clinic-list__phone">
       <span class="clinic-list__phone--number" ng-bind="hcp.primaryPhone"></span>
@@ -98,9 +98,6 @@
     </div>
     <div class="col-md-2 clinic-list__hr-id">
       <span class="clinic-list__fax--number" ng-bind="hcp.npiNumber"></span>
-    </div>
-    <div class="col-md-1 clinic-list__delete">
-      <span class="glyphicon glyphicon-trash" ng-click="deleteHCPModel(hcp)"></span>
     </div>
   </div>
   <div class="col-md-16 empty-list-message" ng-if="associatedHCPs.length === 0">
