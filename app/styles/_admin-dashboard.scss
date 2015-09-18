@@ -410,7 +410,7 @@
 	font-size: $font-size-small;
 	color: $charcoal;
 	font-weight: 600;
-	padding-right: 5px;
+	padding-right: 3px;
 }
 
 .dashboard__manage-view--pagination .navigaion-link,
@@ -1007,6 +1007,10 @@ input[type=radio], input.radio {
 
 .parent-list ul {
   width: 100%;
+}
+
+ul.dropdown-menu {
+  margin-bottom: 50px;
 }
 
 /*Condition for IE Browser*/

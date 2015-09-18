@@ -440,10 +440,18 @@ angular.module('hillromvestApp')
       });
     };
 
-    $scope.disassociateCaregiversFromPatient = function(caregiverId, index){
-        patientService.disassociateCaregiversFromPatient($stateParams.patientId, caregiverId).then(function(response){
-        $scope.caregivers.splice(index, 1);
-      }).catch(function(response){});
+    $scope.disassociateCaregiversFromPatient = function(caregiver){
+      $scope.closeModalCaregiver();
+      patientService.disassociateCaregiversFromPatient($stateParams.patientId, caregiver.id).then(function(response){
+        $scope.caregivers.splice(caregiver.index, 1);
+        notyService.showMessage(response.data.message, 'success');
+      }).catch(function(response){
+        if(response.data.message){
+          notyService.showMessage(response.data.message,'warning');
+        }else if(response.data.ERROR){
+          notyService.showMessage(response.data.ERROR,'warning');
+        }
+      });
     };
 
     $scope.initpatientCraegiver = function (patientId){
@@ -569,7 +577,7 @@ angular.module('hillromvestApp')
         }).catch(function(response) {});
         var caregiverId = $stateParams.caregiverId;
         patientService.getCaregiverById($stateParams.patientId, caregiverId).then(function(response){
-          $scope.associateCareGiver = response.data.caregiver.user;
+          $scope.associateCareGiver = response.data.caregiver.userPatientAssocPK.user;
           $scope.associateCareGiver.relationship = response.data.caregiver.relationshipLabel;
         }).catch(function(response){});
     };
@@ -718,6 +726,13 @@ angular.module('hillromvestApp')
 
     $scope.closePatientDeactivateModal = function(){
       $scope.patientDeactivateModal = false;
+    };
+    $scope.openModalCaregiver = function(caregiverId, index){
+      $scope.showModalCaregiver = true;
+      $scope.deleteCaregiver = {'id':caregiverId, 'index':index};
+    };
+    $scope.closeModalCaregiver = function(){
+      $scope.showModalCaregiver = false;
     };
 
     angular.element('#dp2').datepicker({

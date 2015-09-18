@@ -27,8 +27,11 @@ var patientDashboard = {
 	"HMRBarGraphColor" : "#4e95c4",
 	"HMRLineGraphColor" : "#4e95c4",
 	"dateFormat" : "MM-DD-YYYY",
-	"maxDurationInMonths" : 12
-
+	"maxDurationInMonths" : 12,
+	"serverDateFormat" : "YYYY-MM-DD",
+	"INDdateFormat" : "DD-MM-YYYY",
+	"minDaysForMonthlyGraph" : 31,
+	"maxDaysForWeeklyGraph" : 7
 }
 
 var profile = {
@@ -83,3 +86,9 @@ var hcpDashboard = {
 	}
 }
 
+var notyMessages = {
+	"typeWarning": "warning",
+	"typeSuccess": "success",
+	"maxComplianceError" : "Please deselect one item.",
+	"minComplianceError": "At least one item should be selected."
+}
