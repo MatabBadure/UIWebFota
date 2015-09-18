@@ -402,8 +402,10 @@ angular.module('hillromvestApp')
       $scope.complianceParamErrMsg = false;  
       var count = $scope.getCountLegends();
       if(count === 1){
+        notyService.showMessage(notyMessages.minComplianceError, notyMessages.typeWarning );
         $scope.minComplianceParamErrMsg = true; 
       }else if(count >= 2){
+        notyService.showMessage(notyMessages.maxComplianceError, notyMessages.typeWarning );
         $scope.complianceParamErrMsg = true; 
       }
     };
@@ -1425,4 +1427,5 @@ angular.module('hillromvestApp')
           return chart;
       });
     }
+    
 });

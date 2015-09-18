@@ -31,7 +31,8 @@
           "address": "Address",
           "phone-number": "Phone Number",
           "fax-number": "Fax Number",
-          "npi-id": "NPI Number"
+          "npi-id": "NPI Number",
+          "credentials": "Credentials"
         },
         "protocol-caption": {
           "type": "Type",
