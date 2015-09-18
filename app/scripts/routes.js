@@ -23,6 +23,17 @@ angular.module('hillromvestApp')
                     controller:function ($scope){}
                 // defining the empty controller here coz I can't figure out where to create this controller
 }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('global');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
                 }
             })
             .state('hcp-dashboard', {
