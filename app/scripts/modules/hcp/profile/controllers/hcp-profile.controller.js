@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hillromvestApp')
-  .controller('hcpProfileController', function ($rootScope, $scope, $state, $stateParams, $location, notyService, UserService, Password, Auth, AuthServerProvider) {
+  .controller('hcpProfileController',['$scope', '$state', '$stateParams', '$location', 'notyService', 'UserService', 'Password', 'Auth', 'AuthServerProvider', 'DoctorService', function ($scope, $state, $stateParams, $location, notyService, UserService, Password, Auth, AuthServerProvider, DoctorService) {
 
 
     $scope.isActive = function(tab) {
@@ -24,6 +24,16 @@ angular.module('hillromvestApp')
       AuthServerProvider.getSecurityQuestions().then(function(response){
         $scope.questions = response.data
       }).catch(function(response){});
+      DoctorService.getClinicsAssociatedToHCP(localStorage.getItem('userId')).then(function(response){
+        $scope.clinics = response.data.clinics;
+      }).catch(function(response){
+        if(response.data.message){
+          notyService.showMessage(response.data.message, 'warning');
+        }else if(response.data.ERROR){
+          notyService.showMessage(response.data.ERROR, 'warning');
+        }
+        
+      });
     };
 
     $scope.init = function(){
@@ -109,4 +119,4 @@ angular.module('hillromvestApp')
     };
 
     $scope.init();
-  });
+  }]);

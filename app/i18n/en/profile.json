@@ -15,7 +15,7 @@
     "employee-id": "Employee ID",
     "faxNumber": "Fax Number",
     "credentials": "Credentials",
-    "speaciality": "Speaciality",
+    "speciality": "Speciality",
     "zipcode": "Zipcode",
     "city": "City",
     "primaryPhone":"Primary Phone",
@@ -80,6 +80,24 @@
        "ans-required": "Answer is required.",
        "ans-max-required":"Answer cannot be longer than 100 characters."
     },
-    "select-secutity-question": "-- select a security question --"
+    "select-secutity-question": "-- select a security question --",
+    "clinic":{
+      "clinic-name":"Clinic Name",
+      "address":"Address",
+      "city":"City",
+      "state":"",
+      "phoneNumber":"Phone Number",
+      "type":"Type",
+      "hillRom-id":"Hillrom ID",
+      "status":"Status",
+      "clinicType":{
+        "parent": "Parent",
+        "satellite": "Satellite"
+      },
+      "status-type":{
+        "active":"Active",
+        "inactive":"Inactive"
+      }
+    }
   }
 }
