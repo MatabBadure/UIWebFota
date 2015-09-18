@@ -1,23 +1,24 @@
 # qogir
-
-> Frontend Application for the Hill-Rom Vest project.
+This is a Angular code for the Hill-Rom Vest project.
 
 ## Libraries used
+* Angular.js : 1.4
+* nvd3 : 0.0.7
+* Angular recaptcha : 2.2.4
+* Angular-loading-bar : 0.8.0
 
-* AngularJS : 1.4
+Other libraries are in the bower.json. 
 
-All libraries, frameworks are listed in bower.json and package.json.
-
-## Development
-
+## Build procedure
 * Global libraries to have in the developer machine:
-    - [NodeJS]()
-    - [Grunt]()
-    - [Bower]()
-* Run ```$ npm i```
-* Run ```$ bower i```
-* ```$ grunt serve``` and access it at  http://localhost:9000
+    - node.js - 0.12.0
+    - npm
+    - grunt 
+    - bower
+* Run npm install
+* Run bower install
+* grunt serve --force should get the application up and running on port 9000. Accessible @http://localhost:9000
 
 ## Proxy configurations for the development.
-
-Currently grunt proxy is configured to point to dev.hillromvest.com:8080. This can be changed to anything developer wants to while debugging.
+Currently grunt proxy is configured to point to dev.hillromvest.com:8080. This can be changed to anything developer wants
+to while debugging.

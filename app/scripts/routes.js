@@ -12,18 +12,10 @@ angular.module('hillromvestApp')
                 url: '/admin',
                 abstract: true,
             })
-
-            // creating this base route and view to setup nested views for Patients
             .state('patient-dashboard', {
-               // parent: 'entity',
+                parent: 'entity',
                 url:'/patient',
-                views:{
-                    'content':{
-                    templateUrl:'scripts/modules/patient/graph/views/patient-section.html',
-                    controller:function ($scope){}
-                // defining the empty controller here coz I can't figure out where to create this controller
-}
-                }
+                abstract: true,
             })
             .state('hcp-dashboard', {
                 parent: 'entity',
@@ -838,7 +830,7 @@ angular.module('hillromvestApp')
                     pageTitle: 'patient.title'
                 },
                 views: {
-                    'patient-view': {
+                    'content@': {
                         templateUrl: 'scripts/modules/patient/graph/views/dashboard-landing.html',
                         controller: 'graphController'
                     }
@@ -863,7 +855,7 @@ angular.module('hillromvestApp')
                     pageTitle: 'patient.title'
                 },
                 views: {
-                    'patient-view': {
+                    'content@': {
                         templateUrl: 'scripts/modules/patient/graph/views/caregiverlist.html',
                         controller: 'graphController'
                     }
@@ -880,8 +872,6 @@ angular.module('hillromvestApp')
                     ]
                 }
             })
-
-
             .state('patientdashboardCaregiverAdd', {
                 parent: 'patient-dashboard',
                 url: '/caregiver-add',
@@ -890,7 +880,7 @@ angular.module('hillromvestApp')
                     pageTitle: 'patient.title'
                 },
                 views: {
-                    'patient-view': {
+                    'content@': {
                         templateUrl: 'scripts/modules/patient/graph/views/caregiveradd.html',
                         controller: 'graphController'
                     }
@@ -915,7 +905,7 @@ angular.module('hillromvestApp')
                     pageTitle: 'patient.title'
                 },
                 views: {
-                    'patient-view': {
+                    'content@': {
                         templateUrl: 'scripts/modules/patient/graph/views/caregiveradd.html',
                         controller: 'graphController'
                     }
@@ -940,7 +930,7 @@ angular.module('hillromvestApp')
                     pageTitle: 'patient.title'
                 },
                 views: {
-                    'patient-view': {
+                    'content@': {
                         templateUrl: 'scripts/modules/patient/graph/views/deviceprotocol.html',
                         controller: 'graphController'
                     }
@@ -965,7 +955,7 @@ angular.module('hillromvestApp')
                     pageTitle: 'patient.title'
                 },
                 views: {
-                    'patient-view': {
+                    'content@': {
                         templateUrl: 'scripts/modules/patient/graph/views/clinichcp.html',
                         controller: 'graphController'
                     }
