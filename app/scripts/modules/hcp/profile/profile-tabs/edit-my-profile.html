@@ -125,7 +125,7 @@
             <div class="col-md-6 dashboard__form--label reset-padding">
               <span class="" translate="profile.credentials"></span>
             </div>
-            <div class="col-md-10 dashboard__form--input reset-padding">
+            <div class="col-md-10 dashboard__form__input reset-padding">
               <select ng-model="user.credentials" validate-on-blur name="credential" ng-options="option for option in credentialsList" ng-selected="{{option === user.credentials}}" ng-change="checkCredential()">
                 <option value="" selected >Select a credential</option>
               </select>
@@ -203,7 +203,7 @@
             <div class="col-md-6 dashboard__form--label reset-padding">
               <span class="" translate="profile.state"></span>
             </div>
-            <div class="col-md-10 dashboard__form--input reset-padding selected-box-container">
+            <div class="col-md-10 dashboard__form__input reset-padding selected-box-container">
               <div class="custom-dropdown">
                 <select name="state" ng-readonly="validateADMINorASP()" ng-model="user.state" ng-options="state.name as state.name for state in states">
                   <option  value="" selected="selected">Select a state</option>
