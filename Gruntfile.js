@@ -1,3 +1,4 @@
+// Generated on 2015-08-27 using generator-angular 0.9.8
 'use strict';
 
 // # Globbing
@@ -24,7 +25,7 @@ module.exports = function (grunt) {
   grunt.initConfig({
 
     // Project settings
-    hillrom: appConfig,
+    yeoman: appConfig,
 
     // Watches files for changes and runs tasks based on the changed files
     watch: {
@@ -33,7 +34,7 @@ module.exports = function (grunt) {
         tasks: ['wiredep']
       },
       js: {
-        files: ['<%= hillrom.app %>/scripts/{,*/}*.js'],
+        files: ['<%= yeoman.app %>/scripts/{,*/}*.js'],
         tasks: ['newer:jshint:all'],
         options: {
           livereload: '<%= connect.options.livereload %>'
@@ -43,9 +44,9 @@ module.exports = function (grunt) {
         files: ['test/spec/{,*/}*.js'],
         tasks: ['newer:jshint:test', 'karma']
       },
-      sass: {
-        files: ['<%= hillrom.app %>/styles/{,*/}*.{scss,sass}'],
-        tasks: ['sass:server', 'autoprefixer']
+      compass: {
+        files: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
+        tasks: ['compass:server', 'autoprefixer']
       },
       gruntfile: {
         files: ['Gruntfile.js']
@@ -55,9 +56,9 @@ module.exports = function (grunt) {
           livereload: '<%= connect.options.livereload %>'
         },
         files: [
-          '<%= hillrom.app %>/{,*/}*.html',
+          '<%= yeoman.app %>/{,*/}*.html',
           '.tmp/styles/{,*/}*.css',
-          '<%= hillrom.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
+          '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
         ]
       }
     },
@@ -141,7 +142,7 @@ module.exports = function (grunt) {
       dist: {
         options: {
           open: true,
-          base: '<%= hillrom.dist %>'
+          base: '<%= yeoman.dist %>'
         }
       }
     },
@@ -155,7 +156,7 @@ module.exports = function (grunt) {
       all: {
         src: [
           'Gruntfile.js',
-          '<%= hillrom.app %>/scripts/{,*/}*.js'
+          '<%= yeoman.app %>/scripts/{,*/}*.js'
         ]
       },
       test: {
@@ -173,8 +174,8 @@ module.exports = function (grunt) {
           dot: true,
           src: [
             '.tmp',
-            '<%= hillrom.dist %>/{,*/}*',
-            '!<%= hillrom.dist %>/.git*'
+            '<%= yeoman.dist %>/{,*/}*',
+            '!<%= yeoman.dist %>/.git*'
           ]
         }]
       },
@@ -199,50 +200,52 @@ module.exports = function (grunt) {
     // Automatically inject Bower components into the app
     wiredep: {
       app: {
-        src: ['<%= hillrom.app %>/index.html'],
+        src: ['<%= yeoman.app %>/index.html'],
         ignorePath:  /\.\.\//
       },
       sass: {
-        src: ['<%= hillrom.app %>/styles/{,*/}*.{scss,sass}'],
+        src: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
         ignorePath: /(\.\.\/){1,2}bower_components\//
       }
     },
 
     // Compiles Sass to CSS and generates necessary files if requested
-    sass: {
+    compass: {
+      options: {
+        sassDir: '<%= yeoman.app %>/styles',
+        cssDir: '<%= yeoman.app %>/styles',
+        generatedImagesDir: '<%= yeoman.app %>/images/generated',
+        imagesDir: '<%= yeoman.app %>/images',
+        javascriptsDir: '<%= yeoman.app %>/scripts',
+        fontsDir: '<%= yeoman.app %>/fonts',
+        importPath: '<%= yeoman.app %>/bower_components',
+        httpImagesPath: '/images',
+        httpGeneratedImagesPath: '/images/generated',
+        httpFontsPath: '/fonts',
+        relativeAssets: false,
+        assetCacheBuster: false,
+        raw: 'Sass::Script::Number.precision = 10\n'
+      },
+      dist: {
         options: {
-            includePaths: [
-                'bower_components'
-            ]
-        },
-        dist: {
-            files: [{
-                expand: true,
-                cwd: '<%= hillrom.app %>/styles',
-                src: ['*.scss'],
-                dest: '.tmp/styles',
-                ext: '.css'
-            }]
-        },
-        server: {
-            files: [{
-                expand: true,
-                cwd: '<%= hillrom.app %>/styles',
-                src: ['*.scss'],
-                dest: '.tmp/styles',
-                ext: '.css'
-            }]
+          generatedImagesDir: '<%= yeoman.dist %>/images/generated'
         }
+      },
+      server: {
+        options: {
+          debugInfo: true
+        }
+      }
     },
 
     // Renames files for browser caching purposes
     filerev: {
       dist: {
         src: [
-          '<%= hillrom.dist %>/scripts/{,*/}*.js',
-          '<%= hillrom.dist %>/styles/{,*/}*.css',
-          '<%= hillrom.dist %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
-          '<%= hillrom.dist %>/styles/fonts/*'
+          '<%= yeoman.dist %>/scripts/{,*/}*.js',
+          '<%= yeoman.dist %>/styles/{,*/}*.css',
+          '<%= yeoman.dist %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
+          '<%= yeoman.dist %>/styles/fonts/*'
         ]
       }
     },
@@ -251,9 +254,9 @@ module.exports = function (grunt) {
     // concat, minify and revision files. Creates configurations in memory so
     // additional tasks can operate on them
     useminPrepare: {
-      html: '<%= hillrom.app %>/index.html',
+      html: '<%= yeoman.app %>/index.html',
       options: {
-        dest: '<%= hillrom.dist %>',
+        dest: '<%= yeoman.dist %>',
         flow: {
           html: {
             steps: {
@@ -268,10 +271,10 @@ module.exports = function (grunt) {
 
     // Performs rewrites based on filerev and the useminPrepare configuration
     usemin: {
-      html: ['<%= hillrom.dist %>/{,*/}*.html'],
-      css: ['<%= hillrom.dist %>/styles/{,*/}*.css'],
+      html: ['<%= yeoman.dist %>/{,*/}*.html'],
+      css: ['<%= yeoman.dist %>/styles/{,*/}*.css'],
       options: {
-        assetsDirs: ['<%= hillrom.dist %>','<%= hillrom.dist %>/images']
+        assetsDirs: ['<%= yeoman.dist %>','<%= yeoman.dist %>/images']
       }
     },
 
@@ -282,7 +285,7 @@ module.exports = function (grunt) {
     // cssmin: {
     //   dist: {
     //     files: {
-    //       '<%= hillrom.dist %>/styles/main.css': [
+    //       '<%= yeoman.dist %>/styles/main.css': [
     //         '.tmp/styles/{,*/}*.css'
     //       ]
     //     }
@@ -291,8 +294,8 @@ module.exports = function (grunt) {
     // uglify: {
     //   dist: {
     //     files: {
-    //       '<%= hillrom.dist %>/scripts/scripts.js': [
-    //         '<%= hillrom.dist %>/scripts/scripts.js'
+    //       '<%= yeoman.dist %>/scripts/scripts.js': [
+    //         '<%= yeoman.dist %>/scripts/scripts.js'
     //       ]
     //     }
     //   }
@@ -305,9 +308,9 @@ module.exports = function (grunt) {
       dist: {
         files: [{
           expand: true,
-          cwd: '<%= hillrom.app %>/images',
+          cwd: '<%= yeoman.app %>/images',
           src: '{,*/}*.{png,jpg,jpeg,gif}',
-          dest: '<%= hillrom.dist %>/images'
+          dest: '<%= yeoman.dist %>/images'
         }]
       }
     },
@@ -316,9 +319,9 @@ module.exports = function (grunt) {
       dist: {
         files: [{
           expand: true,
-          cwd: '<%= hillrom.app %>/images',
+          cwd: '<%= yeoman.app %>/images',
           src: '{,*/}*.svg',
-          dest: '<%= hillrom.dist %>/images'
+          dest: '<%= yeoman.dist %>/images'
         }]
       }
     },
@@ -334,9 +337,9 @@ module.exports = function (grunt) {
         },
         files: [{
           expand: true,
-          cwd: '<%= hillrom.dist %>',
+          cwd: '<%= yeoman.dist %>',
           src: ['*.html', 'views/{,*/}*.html'],
-          dest: '<%= hillrom.dist %>'
+          dest: '<%= yeoman.dist %>'
         }]
       }
     },
@@ -357,7 +360,7 @@ module.exports = function (grunt) {
     // Replace Google CDN references
     cdnify: {
       dist: {
-        html: ['<%= hillrom.dist %>/*.html']
+        html: ['<%= yeoman.dist %>/*.html']
       }
     },
 
@@ -367,8 +370,8 @@ module.exports = function (grunt) {
         files: [{
           expand: true,
           dot: true,
-          cwd: '<%= hillrom.app %>',
-          dest: '<%= hillrom.dist %>',
+          cwd: '<%= yeoman.app %>',
+          dest: '<%= yeoman.dist %>',
           src: [
             '*.{ico,png,txt}',
             '.htaccess',
@@ -380,18 +383,18 @@ module.exports = function (grunt) {
         }, {
           expand: true,
           cwd: '.tmp/images',
-          dest: '<%= hillrom.dist %>/images',
+          dest: '<%= yeoman.dist %>/images',
           src: ['generated/*']
         }, {
           expand: true,
           cwd: '.',
           src: 'bower_components/bootstrap-sass-official/assets/fonts/bootstrap/*',
-          dest: '<%= hillrom.dist %>'
+          dest: '<%= yeoman.dist %>'
         }]
       },
       styles: {
         expand: true,
-        cwd: '<%= hillrom.app %>/styles',
+        cwd: '<%= yeoman.app %>/styles',
         dest: '.tmp/styles/',
         src: '{,*/}*.css'
       }
@@ -400,15 +403,13 @@ module.exports = function (grunt) {
     // Run some tasks in parallel to speed up the build process
     concurrent: {
       server: [
-        'sass:server',
-        'copy:styles'
+        'compass:server'
       ],
       test: [
-        'copy:styles'
+        'compass'
       ],
       dist: [
-        'sass',
-        'copy:styles',
+        'compass:dist',
         'imagemin',
         'svgmin'
       ]
