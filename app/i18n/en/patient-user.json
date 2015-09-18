@@ -13,8 +13,9 @@
         "caregiver-caption": {
           "caregiver-name": "Caregiver Name",
           "address": "Address",
-          "mobile-number": "Mobile Number",
-          "phone-number": "Phone Number",
+          "mobile-number": "Mobile",
+          "phone-number": "Phone",
+          "contact-details": "Contact Details",
           "relationship": "Relationship",
           "edit": "Edit",
           "delete": "Delete"
