@@ -7,11 +7,15 @@ angular.module('hillromvestApp')
       localStorage.setItem('clinicId', response.data.clinics[0].id);
       $scope.clinics = response.data.clinics;
       $scope.selectedClinic = response.data.clinics[0];
-      hcpDashboardService.getStatistics(response.data.clinics[0].id, localStorage.getItem('userId')).then(function(response){
-        $scope.statistics = response.data.statitics;
-      }).catch(function(response){
-        $scope.showWarning(response);
-      });
+      $scope.getStatistics($scope.selectedClinic.id, localStorage.getItem('userId'));
+    }).catch(function(response){
+      $scope.showWarning(response);
+    });
+  };
+
+  $scope.getStatistics = function(clinicId, userId){
+    hcpDashboardService.getStatistics(clinicId, userId).then(function(response){
+      $scope.statistics = response.data.statitics;
     }).catch(function(response){
       $scope.showWarning(response);
     });
@@ -26,8 +30,10 @@ angular.module('hillromvestApp')
   };
 
   $scope.switchClinic = function(clinic){
-    $scope.selectedClinic = clinic;
-    console.log('Todo...!');
+    if($scope.selectedClinic.id !== clinic.id){
+      $scope.selectedClinic = clinic;
+      $scope.getStatistics($scope.selectedClinic.id, localStorage.getItem('userId'));
+    }
   };
 
 	//Todo For Donut Graph and Main Graph
