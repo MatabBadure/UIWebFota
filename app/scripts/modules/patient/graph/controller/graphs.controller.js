@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hillromvestApp')
-.controller('graphController', function($scope, $state, patientDashBoardService, StorageService, dateService, graphUtil, patientService, UserService, $stateParams, notyService, $timeout) {
+.controller('graphController', function($scope, $state, patientDashBoardService, StorageService, dateService, graphUtil, patientService, UserService, $stateParams, notyService, $timeout, graphService) {
     var chart;
     $scope.init = function() {
       $scope.hmrLineGraph = true;
@@ -1425,4 +1425,9 @@ angular.module('hillromvestApp')
           return chart;
       });
     }
+
+    $scope.downloadAsPdf = function(){
+      var graphData = ($scope.hmrGraph) ? $scope.completeGraphData : $scope.completeComplianceData;
+      graphService.getPdfForSVGGraph(graphData);
+    };
 });

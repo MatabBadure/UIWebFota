@@ -128,7 +128,7 @@
 	<div class="col-md-16">
 		<div class="btn_group patient_dashdoard_btns">
 			<button class="hillrom-btn btn-submit float-right" ng-click="showAllNotes();" translate="graph.note"></button>
-			<button class="hillrom-btn btn-submit float-right" translate="graph.export-data" id="export-data"></button>
+			<button class="hillrom-btn btn-submit float-right" translate="graph.export-data" id="export-data" ng-click="downloadAsPdf();"></button>
 		</div>
 	</div>
 	<div class="col-md-16 hide_content" id="add_note_container">
@@ -227,61 +227,4 @@
 </div>
 		</div>
 		<div id= "png-container" ></div>
-<script>
-$("#export-data").click(function(){
-	var svgString = new XMLSerializer().serializeToString(document.querySelector('svg'));
-	var canvas = document.createElement('canvas');
-	//canvas.height = "400";
-	//canvas.width = "800";
-	var ctx = canvas.getContext("2d");
-	var DOMURL = self.URL || self.webkitURL || self;
-	var img = new Image();
-	var svg = new Blob([svgString], {type: "image/svg+xml;charset=utf-8"});
-	var url = DOMURL.createObjectURL(svg);
-	img.src = "data:image/svg+xml;base64," + btoa(svgString);
-	img.onload = function() {
-	    ctx.drawImage(img, 0, 0);
-	    var png = canvas.toDataURL("image/jpeg");
-	    document.querySelector('#png-container').innerHTML = '<img src="'+png+'"/>';
-	    DOMURL.revokeObjectURL(png);
-	    var doc = new jsPDF('landscape');
-		doc.addImage(png,0,0,canvas.width,canvas.height);
-    	doc.save('MeterPhotosReport.pdf');
-	};
-	img.src = url;
-});
-
-/*var image = new Image();
-image.onload = function () {
-    // Create canvas 
-    var canvas = document.createElement('canvas');
-    canvas.width = image.width;
-    canvas.height = image.height;
-    var context = canvas.getContext('2d');
-    context.drawImage(image, 0, 0);
-
-    // Save DataURI for later use
-    window.sitescriptdata.dataURI[id] = canvas.toDataURL('image/png');
-    window.sitescriptdata.numDataURIsLoaded++;        
-
-    ...
-
-};
-image.src = uri;
-*/	/*$(function () {
-
-    var specialElementHandlers = {
-        '#editor': function (element,renderer) {
-            return true;
-        }
-    };
- $('#export-data').click(function () {
-        var doc = new jsPDF();
-        doc.fromHTML($('#hmrLineGraph').html(), 15, 15, {
-            'width': 170,'elementHandlers': specialElementHandlers
-        });
-        doc.save('sample-file.pdf');
-    });  
-});*/
-
-</script>
+		<canvas id="canvas" width="1800px" height="1800px" style="display:none;"></canvas>
