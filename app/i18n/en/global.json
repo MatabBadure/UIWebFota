@@ -274,5 +274,13 @@
             "required": "Security question is required."
         }
     },
-    "footer": "Copyright @ Hill-Rom 2015. All Rights Reserved"
+    "footer": {
+        "copyright":"Copyright @ Hill-Rom 2015. All Rights Reserved",
+        "enhancingoutcomes":"Enhancing outcomes for patients and their caregivers",
+        "contuctus":"Contuct Us",
+        "privacypolicy":"Privacy Policy",
+        "termsofuse":"Terms of Use",
+        "hippanotice": "HIPPA Notice of Privacy Practices",
+        "hillromrespiratorycare": "Hill-Rom Respiratory Care Site"
+    }
 }
