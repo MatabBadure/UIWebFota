@@ -45,16 +45,16 @@ angular.module('hillromvestApp')
           var point = [];
           point.push(count++);
           switch(key){
-            case 'MissedTherapy Days':
+            case hcpDashboard.cumulativeGraph.label.missedTherapy:
               point.push(value.MissedTherapy);
               break;
-            case 'HMR Non-Compliance':
+            case hcpDashboard.cumulativeGraph.label.nonCompliance:
               point.push(value.nonCompliance);
               break;
-            case 'Setting Deviation':
+            case hcpDashboard.cumulativeGraph.label.settingDeviation:
               point.push(value.settingDeviation);
               break;
-            case 'No Events Recorded':
+            case hcpDashboard.cumulativeGraph.label.noEvents:
               point.push(value.noEvent);
               break;
           }
@@ -69,10 +69,10 @@ angular.module('hillromvestApp')
 
       this.convertIntoCumulativeGraph = function(data) {        
         var graphDataList =[];
-        graphDataList.push(createCumulativeGraph(data,'MissedTherapy Days','red'));
-        graphDataList.push(createCumulativeGraph(data,'HMR Non-Compliance','green'));
-        graphDataList.push(createCumulativeGraph(data,'Setting Deviation','blue'));
-        graphDataList.push(createCumulativeGraph(data,'No Events Recorded','orange'));
+        graphDataList.push(createCumulativeGraph(data,hcpDashboard.cumulativeGraph.label.missedTherapy,hcpDashboard.cumulativeGraph.color.missedTherapy));
+        graphDataList.push(createCumulativeGraph(data,hcpDashboard.cumulativeGraph.label.nonCompliance,hcpDashboard.cumulativeGraph.color.nonCompliance));
+        graphDataList.push(createCumulativeGraph(data,hcpDashboard.cumulativeGraph.label.settingDeviation,hcpDashboard.cumulativeGraph.color.settingDeviation));
+        graphDataList.push(createCumulativeGraph(data,hcpDashboard.cumulativeGraph.label.noEvents,hcpDashboard.cumulativeGraph.color.noEvents));
         return graphDataList;
       }
 
@@ -356,13 +356,13 @@ angular.module('hillromvestApp')
           treatmentLengthValues.push(treatmentLengthPoint);
         });
         treatmentPerDayObject.values = treatmentPerDayValues;
-        treatmentPerDayObject.key = 'Average Treatments Per Day';
         treatmentPerDayObject.yAxis = 1;
-        treatmentPerDayObject.type = 'area';
+        treatmentPerDayObject.type = hcpDashboard.treatmentGraph.type;
+        treatmentPerDayObject.axisLabel = hcpDashboard.treatmentGraph.label.treatmentPerDay;
         treatmentLengthObject.values = treatmentLengthValues;
-        treatmentLengthObject.key = 'Average Length of Treatment';
         treatmentLengthObject.yAxis = 2;
-        treatmentLengthObject.type = 'area';
+        treatmentLengthObject.type = hcpDashboard.treatmentGraph.type;
+        treatmentLengthObject.axisLabel = hcpDashboard.treatmentGraph.label.treatmentLength;
 
         graphDataList.push(treatmentPerDayObject);
         graphDataList.push(treatmentLengthObject);

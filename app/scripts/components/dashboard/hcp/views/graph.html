@@ -77,36 +77,22 @@
 		</div>
 	</div>
 	<div class="col-md-16" class="all_graph_wrapper">
-		<!-- <div class="row">
-			<div class="col-md-16">
-				<div class="pull-right wrapper_custom_check">
-					<form action="#">
-						<div class="custom_check_container">
-							<input id="missedTHRP" class="check" type="checkbox" name="missedTHRP" ng-disabled="pressureIsDisabled" ng-model="compliance.missedTHRP" ng-change="reCreateComplianceGraph()">
-							<label class="check_label missedTHRP_legend" for="missedTHRP">Missed Therapy</label>
-						</div>	
-						<div class="custom_check_container">
-							<input id="non_comp" class="check" type="checkbox" name="non_comp" ng-disabled="pressureIsDisabled" ng-model="compliance.pressure" ng-change="reCreateComplianceGraph()">
-							<label class="check_label pressure_legend" for="non_comp">Non-Compliance</label>
-						</div>
-						<div class="custom_check_container">
-							<input id="deviation" class="check" type="checkbox" name="frequency" ng-disabled="frequencyIsDisabled" ng-model="compliance.frequency" ng-change="reCreateComplianceGraph()">
-							<label class="check_label frequency_legend" for="deviation" >Setting Deviation</label>
-						</div>
-						<div class="custom_check_container">
-							<input id="non_events" class="check" type="checkbox" name="duration" ng-disabled="durationIsDisabled" ng-model="compliance.duration" ng-change="reCreateComplianceGraph()">
-							<label class="check_label duration_legend" for="non_events">No Events</label>
-						</div>
-					</form>
-				</div>
-			</div>s
-		</div> -->
 		<div class="row hcp_graph_container">
 			<div ng-if="cumulativeGraph" id="cumulativeGraph" class="complianceGraph col-md-16">
-					<svg style="height:350px"> </svg>
+					<svg> </svg>
 			</div>
 			<div ng-if="treatmentGraph" id="treatmentGraph" class="complianceGraph col-md-16">
-					<svg style="height:350px"> </svg>
+					<form action="#">
+						<div class="custom_check_container">
+							<input id="treatmentPerDay" class="check" type="checkbox" name="treatmentPerDay" ng-disabled="isTreatmentPerDayDisabled" ng-model="treatment.treatmentPerDay" ng-change="reCreateTreatmentGraph()">
+							<label class="check_label missedTHRP_legend" for="treatmentPerDay">Average Treatments Per Day</label>
+						</div>	
+						<div class="custom_check_container">
+							<input id="treatmentLength" class="check" type="checkbox" name="treatmentLength" ng-disabled="isTreatmentLengthDisabled" ng-model="treatment.treatmentLength" ng-change="reCreateTreatmentGraph()">
+							<label class="check_label pressure_legend" for="treatmentLength">Average Length of Treatment</label>
+						</div>
+					</form>
+					<svg> </svg>
 			</div>
 
 		</div>

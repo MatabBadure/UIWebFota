@@ -35,3 +35,51 @@ var profile = {
 	'EMAIL_UPDATED_SUCCESSFULLY' : 'Email updated successfully. Please login again.'
 }
 
+var hcpDashboard = {
+	cumulativeGraph : {
+		label : {
+			"missedTherapy" : "MissedTherapy Days",
+			"nonCompliance" : "HMR Non-Compliance",
+			"settingDeviation" : "Setting Deviation",
+			"noEvents" : "No Events Recorded"
+		},
+		color : {
+			"missedTherapy" : "red",
+			"nonCompliance" : "green",
+			"settingDeviation" : "blue",
+			"noEvents" : "orange"
+		},
+		yAxis : {
+			"label" : "No. of patients"
+		}
+	},
+	treatmentGraph : {
+		label : {
+			"treatmentPerDay" : "Treatments",
+			"treatmentLength" : "Minutes"
+		},
+		color : {
+			"treatmentPerDay" : "orange",
+			"treatmentLength" : "green"
+		},
+		"type" : "area"
+	},
+	message : {
+		"noData" : "No Data Available!"
+	},
+	statistics : {
+		"duration" : 3000,
+		"scaleColor" : false,
+		"lineWidth" : 12,
+		"lineCap" : "circle",
+		color : {
+			"track" : "#ccc",
+			"quarter" : "#69be7f",
+			"half" : "#f7a462",
+			"threeQuarters" : "5da0cc",
+			"full" : "#e28181"
+
+		}
+	}
+}
+
