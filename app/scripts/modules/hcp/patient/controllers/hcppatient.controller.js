@@ -1,10 +1,8 @@
 angular.module('hillromvestApp')
-.controller('hcpPatientController',['$scope', '$state', '$stateParams', 'hcpPatientService', 'patientService', 'notyService', function($scope, $state, $stateParams, hcpPatientService, patientService, notyService) { 
+.controller('hcpPatientController',['$scope', '$state', '$stateParams', 'hcpPatientService', 'patientService', 'notyService', 'DoctorService', function($scope, $state, $stateParams, hcpPatientService, patientService, notyService, DoctorService) { 
 	
 	$scope.init = function(){
-    if($state.current.name === 'hcppatientOverview'){
-      console.log('Todo Graphs API Integration');
-    }else if($state.current.name === 'hcppatientDemographic'){
+    if($state.current.name === 'hcppatientDemographic'){
       $scope.getPatientInfo($stateParams.patientId);      
     }else if($state.current.name === 'hcppatientClinics'){
       $scope.getClinicsandHcpAssociatedToPatient($stateParams.patientId);      
@@ -13,6 +11,7 @@ angular.module('hillromvestApp')
     }else if($state.current.name === 'hcppatientCraegiver'){
       $scope.getCaregiversAssociatedWithPatient($stateParams.patientId);
     }else if($state.current.name === 'hcppatientdashboard'){
+      $scope.getClinicsAssociatedToHCP();
       $scope.sortOption = $stateParams.filter;
       if($stateParams.filter === 'noevents'){
         $scope.getPatientsWithNoEvents($stateParams.filter);
@@ -21,6 +20,19 @@ angular.module('hillromvestApp')
       }
     }
 	};
+
+  $scope.getClinicsAssociatedToHCP = function(){
+    DoctorService.getClinicsAssociatedToHCP(localStorage.getItem('userId')).then(function(response){
+      $scope.clinics = response.data.clinics;
+      angular.forEach($scope.clinics, function(clinic){
+        if(clinic.id === $stateParams.clinicId){
+          $scope.selectedClinic =  clinic;
+        }
+      });
+    }).catch(function(response){
+      $scope.showWarning(response);
+    });
+  };
 
   $scope.showWarning = function(response){
     if(response.data.ERROR){

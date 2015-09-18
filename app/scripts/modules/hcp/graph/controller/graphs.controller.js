@@ -5,14 +5,29 @@ angular.module('hillromvestApp')
   $scope.init = function(){
     DoctorService.getClinicsAssociatedToHCP(localStorage.getItem('userId')).then(function(response){
       localStorage.setItem('clinicId', response.data.clinics[0].id);
+      $scope.clinics = response.data.clinics;
+      $scope.selectedClinic = response.data.clinics[0];
       hcpDashboardService.getStatistics(response.data.clinics[0].id, localStorage.getItem('userId')).then(function(response){
         $scope.statistics = response.data.statitics;
       }).catch(function(response){
-        console.log('ERROR1 :',response);
+        $scope.showWarning(response);
       });
     }).catch(function(response){
-      console.log('ERROR :', response);
+      $scope.showWarning(response);
     });
+  };
+
+  $scope.showWarning = function(response){
+    if(response.data.ERROR){
+      notyService.showMessage(response.data.ERROR, 'warning');
+    }else if(response.data.message){
+      notyService.showMessage(response.data.message, 'warning');  
+    }
+  };
+
+  $scope.switchClinic = function(clinic){
+    $scope.selectedClinic = clinic;
+    console.log('Todo...!');
   };
 
 	//Todo For Donut Graph and Main Graph
@@ -79,7 +94,7 @@ $scope.opts = {
   };
 
   $scope.gotoPatients = function(value){
-    $state.go('hcppatientdashboard',{'filter':value});
+    $state.go('hcppatientdashboard',{'filter':value, 'clinicId':$scope.selectedClinic.id});
   };
 
   $scope.init();
