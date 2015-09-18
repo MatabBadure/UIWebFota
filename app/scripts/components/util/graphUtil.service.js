@@ -76,9 +76,6 @@ angular.module('hillromvestApp')
         return graphDataList;
       }
 
-      this.getYaxisRangeCumulativeGraph = function() {
-
-      }
 
       var arrayMax = Function.prototype.apply.bind(Math.max, null);
       var arrayMin = Function.prototype.apply.bind(Math.min, null);
@@ -336,6 +333,40 @@ angular.module('hillromvestApp')
           }
         }
         return data;
+      }
+
+      this.convertIntoTreatmentGraph = function(data) {
+        var graphDataList =[];
+        var treatmentPerDayValues = [];
+        var treatmentLengthValues = [];
+        var treatmentPerDayObject = {};
+        var treatmentLengthObject = {};
+        var count = 0;
+        angular.forEach(data, function(value) {
+          count = count + 1;
+          var treatmentPerDayPoint = {};
+          var treatmentLengthPoint = {};
+          treatmentPerDayPoint.x = count;
+          treatmentPerDayPoint.timeStamp = value.timeStamp;
+          treatmentPerDayPoint.y = value.dailyTreatmentNumber;
+          treatmentPerDayValues.push(treatmentPerDayPoint);
+          treatmentLengthPoint.x = count;
+          treatmentLengthPoint.timeStamp = value.timeStamp;
+          treatmentLengthPoint.y = value.avgTreatmentDuration;
+          treatmentLengthValues.push(treatmentLengthPoint);
+        });
+        treatmentPerDayObject.values = treatmentPerDayValues;
+        treatmentPerDayObject.key = 'Average Treatments Per Day';
+        treatmentPerDayObject.yAxis = 1;
+        treatmentPerDayObject.type = 'area';
+        treatmentLengthObject.values = treatmentLengthValues;
+        treatmentLengthObject.key = 'Average Length of Treatment';
+        treatmentLengthObject.yAxis = 2;
+        treatmentLengthObject.type = 'area';
+
+        graphDataList.push(treatmentPerDayObject);
+        graphDataList.push(treatmentLengthObject);
+      return graphDataList;
       }
 
       this.convertIntoComplianceGraph = function(data) {

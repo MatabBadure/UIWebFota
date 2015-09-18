@@ -103,6 +103,45 @@ var roleEnum = {
         }
 ]
 
+var treatmentGraphData = [  
+        {
+            "timeStamp": 1439471095802,
+            "dailyTreatmentNumber": 7,
+            "avgTreatmentDuration" : 20
+        },
+        {
+            "timeStamp": 1439481095802,
+            "dailyTreatmentNumber": 5,
+            "avgTreatmentDuration" : 34
+        },
+        {
+            "timeStamp": 1439491095802,
+            "dailyTreatmentNumber": 2,
+            "avgTreatmentDuration" : 23
+        },
+        {
+            "timeStamp": 1439501095802,
+            "dailyTreatmentNumber": 1,
+            "avgTreatmentDuration" : 21
+        },
+        {
+            "timeStamp": 1439511095802,
+            "dailyTreatmentNumber": 6,
+            "avgTreatmentDuration" : 16
+        },
+        {
+            "timeStamp": 1439521095802,
+            "dailyTreatmentNumber": 3,
+            "avgTreatmentDuration" : 29
+        },
+        {
+            "timeStamp": 1439531095802,
+            "dailyTreatmentNumber": 5,
+            "avgTreatmentDuration" : 5
+        }
+]
+
+
 var HMRDayGraphData = [
         {
             "id": 1,

@@ -20,3 +20,9 @@ var patient = {
 		baseURL : 'api/users'
 	}
 }
+
+var hcp = {
+	graph : {
+		baseURL : 'api/users'
+	}
+}

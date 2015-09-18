@@ -102,9 +102,13 @@
 			</div>s
 		</div> -->
 		<div class="row hcp_graph_container">
-			<div id="cumulativeGraph" class="complianceGraph col-md-16">
+			<div ng-if="cumulativeGraph" id="cumulativeGraph" class="complianceGraph col-md-16">
 					<svg style="height:350px"> </svg>
 			</div>
+			<div ng-if="treatmentGraph" id="treatmentGraph" class="complianceGraph col-md-16">
+					<svg style="height:350px"> </svg>
+			</div>
+
 		</div>
 	</div>
 </div>

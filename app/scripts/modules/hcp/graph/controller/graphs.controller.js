@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hillromvestApp')
-.controller('hcpGraphController',[ '$scope', '$state', 'patientDashBoardService', 'StorageService', 'dateService', 'graphUtil', 'patientService', 'UserService', '$stateParams', 'notyService', '$timeout', function($scope, $state, patientDashBoardService, StorageService, dateService, graphUtil, patientService, UserService, $stateParams, notyService, $timeout) {
+.controller('hcpGraphController',[ '$scope', '$state', 'hcpDashBoardService', 'dateService', 'graphUtil', '$stateParams', function($scope, $state, hcpDashBoardService, dateService, graphUtil, $stateParams) {
     var chart;
     $scope.init = function() {
     	$scope.selectedGraph = 'CUMULATIVE';
@@ -93,13 +93,7 @@ $scope.opts = {
       d3.selectAll('svg').selectAll("*").remove();
     }
 
-    $scope.hmrLineSetMinMax = function() {
-      var values = [];
-      values.push($scope.yAxisRangeForHMRLine.min);
-      values.push($scope.yAxisRangeForHMRLine.max);
-      return values;
-    }
-
+    
     $scope.drawGraph = function() {
     var days = dateService.getDateDiffIndays($scope.fromTimeStamp,$scope.toTimeStamp);
 		if(days <= 7 && days > 0) {
@@ -111,123 +105,9 @@ $scope.opts = {
       }
     };
 
-    $scope.opts = {
-      eventHandlers: {'apply.daterangepicker': function(ev, picker) {
-        $scope.calculateDateFromPicker(picker);
-        $scope.drawGraph();
-        $scope.selectedDateOption = '';
-        }
-      },
-      opens: 'left'
-    }
 
-  $scope.dates = {startDate: null, endDate: null};
-    
-    $scope.getHmrRunRateAndScore = function() {
-      patientDashBoardService.getHMRrunAndScoreRate($scope.patientId, $scope.toTimeStamp).then(function(response){
-        if(response.status === 200 ){
-          $scope.hmrRunRate = response.data.hmrRunRate;
-          $scope.adherenceScore = response.data.score;
-        }
-      }).catch(function(response) {
-      });
-    }
 
-    $scope.xAxisTickFormatFunction = function(format){
-      return function(d){
-        switch(format) {
-          case "weekly":
-              return d3.time.format('%A')(new Date(d));
-              break;
-          case "monthly":
-              return 'week ' + dateService.getWeekOfMonth(d);
-              break;
-          case "yearly":
-              return d3.time.format('%B')(new Date(d));
-              break;
-          default:
-              break;
-        }
-    }
-  };
-
-    $scope.toolTipContentFunction = function(){
-      return function(key, x, y, e, graph) {
-        var toolTip = '';
-        angular.forEach($scope.completeGraphData.actual, function(value) {
-          if(value.timestamp === e.point[0]){
-              toolTip =
-                '<h6>' + dateService.getDateFromTimeStamp(value.timestamp) + '</h6>' +
-                '<ul class="graph_ul">' +
-                  '<li><span class="pull-left">' + 'Treatment/Day ' +'</span><span class="pull-right value">' + value.treatmentsPerDay +'</span></li>' +
-                  '<li><span class="pull-left">' + 'Frequency' + '</span><span class="pull-right value">' + value.weightedAvgFrequency  + '</span></li>' +
-                  '<li><span class="pull-left">' + 'Pressure' +'</span><span class="pull-right value">' + value.weightedAvgPressure  +'</span></li>' +
-                  '<li><span class="pull-left">' + 'Cough Pauses' +'</span><span class="pull-right value">' + value.normalCoughPauses +'</span></li>' +
-                '</ul>';
-          }
-        });
-      return toolTip;   
-      }
-    };
-
-    $scope.toolTipContentBarChart = function(){
-      return function(key, x, y, e, graph) {
-        var toolTip = '';
-        angular.forEach($scope.completeGraphData, function(value) {
-          if(value.startTime === e.point[0] && value.hmr !== 0 ){
-              toolTip =
-                '<h6>' + dateService.getDateFromTimeStamp(value.startTime) + '</h6>' +
-                '<ul class="graph_ul">' +
-                  '<li><span class="pull-left">' + 'Frequency' + '</span><span class="pull-right value">' + value.frequency  + '</span></li>' +
-                  '<li><span class="pull-left">' + 'Pressure' +'</span><span class="pull-right value">' + value.pressure +'</span></li>' +
-                  '<li><span class="pull-left">' + 'Cough Pauses' +'</span><span class="pull-right value">' + (value.normalCaughPauses + value.programmedCaughPauses) +'</span></li>' +
-                '</ul>';
-          }
-        });
-      return toolTip;   
-      }
-    };
-
-    $scope.toolTipContentForCompliance = function(data){
-      return function(key, x, y, e, graph) {
-        var toolTip = '';
-        angular.forEach(data, function(value) {
-          if(value.start === e.point.timeStamp){
-              toolTip =
-                '<h6>' + dateService.getDateFromTimeStamp(value.start) + '</h6>' +
-                '<ul class="graph_ul">' +
-                  '<li><span class="pull-left">' + 'Treatment/Day' + '</span><span class="pull-right value">' + value.treatmentsPerDay + '</span></li>' +
-                  '<li><span class="pull-left">' + 'Frequency' +'</span><span class="pull-right value">' + value.weightedAvgFrequency +'</span></li>' +
-                  '<li><span class="pull-left">' + 'Pressure' +'</span><span class="pull-right value">' + value.weightedAvgPressure +'</span></li>' +
-                  '<li><span class="pull-left">' + 'Cough Pauses' +'</span><span class="pull-right value">' + value.normalCoughPauses +'</span></li>' +
-                '</ul>';
-          }
-        });
-      return toolTip;   
-      }
-    };
-
-    $scope.xAxisTickValuesFunction = function(){
-    return function(d){
-        var tickVals = [];
-        var values = d[0].values;
-        for(var i in values){
-          tickVals.push(values[i][0]);
-        }
-        return tickVals;
-      };
-    };
-
-    $scope.yAxisFormatFunction = function() {
-      return function(d) {
-        var tickVals = [];
-        var values = d[0].values;
-        for(var i in values){
-          tickVals.push(values[i][0]);
-        }
-        return tickVals;
-      };
-    }
+    $scope.dates = {startDate: null, endDate: null};
 
     $scope.showCumulativeGraph = function() {
       $scope.selectedGraph = 'CUMULATIVE';
@@ -236,161 +116,8 @@ $scope.opts = {
       $scope.getCumulativeGraphData();
     };
 
-    $scope.getNonDayHMRGraphData = function() {
-      patientDashBoardService.getHMRGraphPoints($scope.patientId, $scope.fromTimeStamp, $scope.toTimeStamp, $scope.groupBy).then(function(response){
-        //Will get response data from real time API once api is ready
-        $scope.completeGraphData = response.data;
-        if($scope.completeGraphData.actual === undefined){
-          $scope.graphData = [];
-        } else {
-          $scope.yAxisRangeForHMRLine = graphUtil.getYaxisRangeLineGraph($scope.completeGraphData);
-          $scope.graphData = graphUtil.convertIntoHMRLineGraph($scope.completeGraphData);
-          $scope.customizationInLineGraph = function() {
-
-         var circlesInHMR = d3.select('#HMRLineGraph svg').select('.nv-scatterWrap').select('.nv-group.nv-series-0').selectAll('circle')[0];
-         var count = 0;
-         var missedTherapyCircles = [];
-         angular.forEach($scope.completeGraphData.actual,function(value){
-          if(value.missedTherapy === true){
-            missedTherapyCircles.push(circlesInHMR[count]);
-          }
-          count++;
-         })
-         angular.forEach(missedTherapyCircles,function(circle){
-          d3.select('#HMRLineGraph svg').select('.nv-scatterWrap').select('.nv-group.nv-series-0').append('circle')
-          .attr('cx',circle.attributes.cx.value)
-          .attr('cy',circle.attributes.cy.value)
-          .attr('r',4.5)
-          .attr('class','missed_therapy_node');
-         })
-
-          };
-
-          var circleSelectorInHMR = d3.select('#HMRLineGraph svg').select('.nv-scatterWrap').select('.nv-group.nv-series-0').selectAll('circle')[0];
-          var circleCount;
-          if(circleSelectorInHMR !== undefined) {
-            circleCount = circleSelectorInHMR.length;
-          }
-          var count = 10;
-          $scope.waitFunction = function waitHandler() {
-            circleSelectorInHMR = d3.select('#HMRLineGraph svg').select('.nv-scatterWrap').select('.nv-group.nv-series-0').selectAll('circle')[0];
-            if(circleSelectorInHMR !== undefined) {
-            circleCount = circleSelectorInHMR.length;
-            }
-            if(circleCount > 0 || count === 0 ) {
-              $scope.customizationInLineGraph();
-              return false;
-            } else {
-              count --;
-            }
-            $timeout(waitHandler, 1000);
-          }
-          $scope.waitFunction();
-        }
-      }).catch(function(response) {
-        $scope.graphData = [];
-      });
-    };
-
-    $scope.reCreateCumulativeGraph = function() {
-      $scope.removeGraph();
-      $scope.handlelegends();
-      $scope.createComplianceGraphData();
-      $scope.drawComplianceGraph();
-    };
-
-    $scope.handlelegends = function() {
-      var count = 0 ;
-      if($scope.compliance.pressure === true ){
-        count++;
-      }
-      if($scope.compliance.duration === true ){
-        count++;
-      }
-      if($scope.compliance.frequency === true ){
-        count++;
-      }
-      if(count === 2 ) {
-        if($scope.compliance.pressure === false ){
-          $scope.pressureIsDisabled = true;
-          $scope.frequencyIsDisabled = false;
-          $scope.durationIsDisabled = false;
-        }
-        if($scope.compliance.frequency === false ){
-          $scope.pressureIsDisabled = false;
-          $scope.frequencyIsDisabled = true;
-          $scope.durationIsDisabled = false;
-        }
-        if($scope.compliance.duration === false ){
-          $scope.pressureIsDisabled = false;
-          $scope.frequencyIsDisabled = false;
-          $scope.durationIsDisabled = true;
-        }
-      } else if(count === 1 ) {
-        if($scope.compliance.pressure === true ){
-          $scope.pressureIsDisabled = true;
-          $scope.frequencyIsDisabled = false;
-          $scope.durationIsDisabled = false;
-        }
-        if($scope.compliance.frequency === true ){
-          $scope.pressureIsDisabled = false;
-          $scope.frequencyIsDisabled = true;
-          $scope.durationIsDisabled = false;
-        }
-        if($scope.compliance.duration === true ){
-          $scope.pressureIsDisabled = false;
-          $scope.frequencyIsDisabled = false;
-          $scope.durationIsDisabled = true;
-        }
-      }
-
-    }
-
-    $scope.getDayHMRGraphData = function() {
-      patientDashBoardService.getHMRBarGraphPoints($scope.patientId, $scope.fromTimeStamp).then(function(response){
-        $scope.completeGraphData = response.data;
-        if($scope.completeGraphData.actual === undefined){
-           $scope.hmrBarGraphData = [];
-         } else {
-          $scope.completeGraphData = graphUtil.formatDayWiseDate($scope.completeGraphData.actual);
-          $scope.yAxisRangeForHMRBar = graphUtil.getYaxisRangeBarGraph($scope.completeGraphData);
-          $scope.hmrBarGraphData = graphUtil.convertIntoHMRBarGraph($scope.completeGraphData);
-          $scope.customizationForBarGraph = function() {
-            var rect_height = d3.select('#hmrBarGraph svg').selectAll('.nv-barsWrap defs rect').attr("height");
-            var rect_width = d3.select('#hmrBarGraph svg').selectAll('.nv-barsWrap defs rect').attr("width");
-           d3.select('#hmrBarGraph svg').selectAll('rect.nv-bar')
-              .attr("x", 40)
-              .attr("width", 70);
-
-              d3.select('#hmrBarGraph svg').select('.nv-y .nv-wrap g').append('rect')
-              .attr("width", rect_width)
-              .attr("height" , rect_height)
-              .attr("x" , 0)
-              .attr("y" , 0 )
-              .attr("class" , 'svg_bg');
-          };
-
-          var barCount= d3.select('#hmrBarGraph svg').selectAll('.nv-group .nv-bar')[0].length;
-          var count = 5;
-          $scope.waitFunction = function waitHandler() {
-             barCount = d3.select('#hmrBarGraph svg').selectAll('.nv-group .nv-bar')[0].length;
-            if(barCount > 0 || count === 0 ) {
-              $scope.customizationForBarGraph();
-              return false;
-            } else {
-              count --;
-            }
-            $timeout(waitHandler, 1000);
-          }
-          $scope.waitFunction();
-         }
-      }).catch(function(response) {
-        $scope.hmrBarGraphData = [];
-      });
-    };
-
     $scope.getCumulativeGraphData = function() {
-    	 patientDashBoardService.getHMRGraphPoints($scope.hcpId, $scope.fromTimeStamp, $scope.toTimeStamp, $scope.groupBy).then(function(response){
+    	 hcpDashBoardService.getCumulativeGraphPoints($scope.hcpId, $scope.fromTimeStamp, $scope.toTimeStamp, $scope.groupBy).then(function(response){
         	//$scope.cumulativeGraphData = response.data;
           //$scope.yAxisRangeForCompliance = graphUtil.getYaxisRangeComplianceGraph($scope.completeComplianceData);
       }).catch(function(response) {
@@ -452,29 +179,19 @@ $scope.opts = {
 	  });
     }
 
+
     $scope.getTreatmentGraphData = function() {
-      patientDashBoardService.getHMRGraphPoints($scope.patientId, $scope.fromTimeStamp, $scope.toTimeStamp, $scope.groupBy).then(function(response){
-        $scope.completeComplianceData = response.data;
-        if($scope.completeComplianceData.actual === undefined){
-          $scope.complianceGraphData = [];
-        } else {
-          //recommended values
-          $scope.minFrequency = $scope.completeComplianceData.recommended.minFrequency;
-          $scope.maxFrequency = $scope.completeComplianceData.recommended.maxFrequency;
-          $scope.minPressure = $scope.completeComplianceData.recommended.minPressure;
-          $scope.maxPressure = $scope.completeComplianceData.recommended.maxPressure;
-          $scope.minDuration = $scope.completeComplianceData.recommended.minMinutesPerTreatment * $scope.completeComplianceData.recommended.treatmentsPerDay;
-          $scope.maxDuration = $scope.completeComplianceData.recommended.maxMinutesPerTreatment * $scope.completeComplianceData.recommended.treatmentsPerDay;
-          $scope.yAxisRangeForCompliance = graphUtil.getYaxisRangeComplianceGraph($scope.completeComplianceData);
-          $scope.completecomplianceGraphData = graphUtil.convertIntoComplianceGraph($scope.completeComplianceData.actual);          
-          $scope.yAxis1Max = $scope.yAxisRangeForCompliance.maxDuration;
-          $scope.createComplianceGraphData();
-          $scope.drawComplianceGraph();
-        }
+       hcpDashBoardService.getTreatmentGraphPoints($scope.hcpId, $scope.fromTimeStamp, $scope.toTimeStamp, $scope.groupBy).then(function(response){
+
       }).catch(function(response) {
-        $scope.complianceGraphData = [];
       });
-    };
+      /* mocked data starts */
+      $scope.serverTreatmentGraphData = treatmentGraphData;
+      $scope.formatedTreatmentGraphData = graphUtil.convertIntoTreatmentGraph($scope.serverTreatmentGraphData); 
+      console.log("Treatment Graph Data:" + JSON.stringify($scope.formatedTreatmentGraphData));
+      $scope.drawTreatmentGraph();
+      /* mocked data ends */      
+    }
 
     $scope.calculateTimeDuration = function(durationInDays) {
       $scope.toTimeStamp = new Date().getTime();
@@ -523,7 +240,7 @@ $scope.opts = {
       $scope.format = $scope.groupBy = 'monthly';
       $scope.chooseGraph();
     };
-    //hmrDayChart
+    //hmrDayChartG330
 
     $scope.showTreatmentGraph = function() {
       $scope.selectedGraph = 'TREATMENT';
@@ -585,80 +302,18 @@ $scope.opts = {
     }
   };
 
-  $scope.putComplianceGraphLabel = function(chart) {
-    var data =  $scope.complianceGraphData
-     angular.forEach(data, function(value) {
-          if(value.yAxis === 1){
-            chart.yAxis1.axisLabel(value.key);
-          }
-           if(value.yAxis === 2){
-            chart.yAxis2.axisLabel(value.key);
-          }
-    });
-  };
-
-  $scope.formatXtickForCompliance = function(format,d){
-    switch(format) {
-      case "weekly":
-          return d3.time.format('%A')(new Date(d));
-          break;
-      case "monthly":
-          return 'week ' + dateService.getWeekOfMonth(d);
-          break;
-      case "yearly":
-          return d3.time.format('%B')(new Date(d));
-          break;
-      default:
-          break;
-    }
-  };
-  $scope.getMinMaxForComplianceGraph = function(){
-    switch($scope.compliance.primaryYaxis) {
-        case "duration":
-            $scope.yAxis1MaxMark = $scope.maxDuration;
-            $scope.yAxis1MinMark = $scope.minDuration;
-            break;
-        case "pressure":
-            $scope.yAxis1MaxMark = $scope.maxPressure;
-            $scope.yAxis1MinMark = $scope.minPressure;
-            break;
-        case "frequency":
-            $scope.yAxis1MaxMark = $scope.maxFrequency;
-            $scope.yAxis1MinMark = $scope.minFrequency;
-            break;
-        default:
-            break;
-    }
-    switch($scope.compliance.secondaryYaxis) {
-        case "duration":
-            $scope.yAxis2MaxMark = $scope.maxDuration;
-            $scope.yAxis2MinMark = $scope.minDuration;
-            break;
-        case "pressure":
-            $scope.yAxis2MaxMark = $scope.maxPressure;
-            $scope.yAxis2MinMark = $scope.minPressure;
-            break;
-        case "frequency":
-            $scope.yAxis2MaxMark = $scope.maxFrequency;
-            $scope.yAxis2MinMark = $scope.minFrequency;
-            break;
-        default:
-            break;
-    }
-  };
-  $scope.drawComplianceGraph = function() {
-    d3.select('#complianceGraph svg').selectAll("*").remove();
+  $scope.drawTreatmentGraph = function() {
+    d3.select('#treatmentGraph svg').selectAll("*").remove();
       nv.addGraph(function() {
       var chart = nv.models.multiChart()
       .margin({top: 30, right: 100, bottom: 50, left: 100})
-      .showLegend(false)
       .color(d3.scale.category10().range());
      // chart.noData("Nothing to see here.");
-      chart.tooltipContent($scope.toolTipContentForCompliance($scope.completeComplianceData.actual));
+      //chart.tooltipContent($scope.toolTipContentForCompliance($scope.completeComplianceData.actual));
       //this function to put x-axis labels
       chart.xAxis.tickFormat(function(d) {
           if(d % 1 === 0) {
-            var timeStamp = $scope.completecomplianceGraphData[0].values[d-1].timeStamp;
+            var timeStamp = $scope.serverTreatmentGraphData[d-1].timeStamp;
             switch($scope.format) {
                 case "weekly":
                     return d3.time.format('%A')(new Date(timeStamp));
@@ -676,106 +331,14 @@ $scope.opts = {
         });
       chart.yAxis1.tickFormat(d3.format('d'));
       chart.yAxis2.tickFormat(d3.format('d'));
-      chart.yDomain1([$scope.yAxis1Min,$scope.yAxis1Max]);
-      chart.yDomain2([$scope.yAxis2Min,$scope.yAxis2Max]); 
-      var data =  $scope.complianceGraphData;
-         angular.forEach(data, function(value) {
-              if(value.yAxis === 1){
-                chart.yAxis1.axisLabel(value.key);
-              }
-               if(value.yAxis === 2){
-                chart.yAxis2.axisLabel(value.key);
-              }
-        });
-        d3.select('#complianceGraph svg')
-      .datum($scope.complianceGraphData)
+        d3.select('#treatmentGraph svg')
+      .datum($scope.formatedTreatmentGraphData)
       .transition().duration(500).call(chart);
-
-        if( $scope.compliance.frequency === false && $scope.compliance.duration === false && $scope.compliance.pressure === false){
-
-        } else {
-
-          /* Mark red color for missed therapy  -- start --*/
-         var circlesInCompliance = d3.select('#complianceGraph svg').select('.nv-group.nv-series-0').selectAll('circle')[0];
-         var count = 0;
-         var missedTherapyCircles = [];
-         angular.forEach($scope.completeComplianceData.actual,function(value){
-          if(value.missedTherapy === true){
-            missedTherapyCircles.push(circlesInCompliance[count]);
-          }
-          count++;
-         })
-         angular.forEach(missedTherapyCircles,function(circle){
-          d3.select('#complianceGraph svg').selectAll('.nv-group.nv-series-0').append('circle')
-          .attr('cx',circle.attributes.cx.value)
-          .attr('cy',circle.attributes.cy.value)
-          .attr('r',4.5)
-          .attr('class','missed_therapy_node');
-         })
-
-         /* Mark red color for missed therapy  -- end --*/
-         var bgHeight = d3.select('#complianceGraph svg').selectAll('.x .tick line').attr("y2");;
-         var bgWidth = d3.select('#complianceGraph svg ').selectAll('.y1 .tick line').attr("x2");
-         d3.select('#complianceGraph svg .nv-axis g').append('rect')
-                  .attr("height", Math.abs(bgHeight))
-                  .attr("width", bgWidth)
-                  .attr("x" , 0)
-                  .attr("y" , bgHeight)
-                  .attr("class" , "svg_bg");
-
-        var y1AxisMark = d3.select('#complianceGraph svg').selectAll('.y1.axis').selectAll('.nvd3.nv-wrap.nv-axis');
-        var y2AxisMark = d3.select('#complianceGraph svg').selectAll('.y2.axis').selectAll('.nvd3.nv-wrap.nv-axis');
-        var y1AxisMinMax = d3.select('#complianceGraph svg').selectAll('.y1.axis').selectAll('.nvd3.nv-wrap.nv-axis').select('.nv-axisMaxMin').attr("transform");
-        var y2AxisMinMax = d3.select('#complianceGraph svg').selectAll('.y2.axis').selectAll('.nvd3.nv-wrap.nv-axis').select('.nv-axisMaxMin').attr("transform");
-        var maxTransform = parseInt(y1AxisMinMax.split(',')[1].replace(y1AxisMinMax,')',''));
-        $scope.y1AxisTransformRate = parseInt(y1AxisMinMax.split(',')[1].replace(y1AxisMinMax,')',''))/($scope.yAxis1Max - $scope.yAxis1Min);
-        $scope.y2AxisTransformRate = parseInt(y2AxisMinMax.split(',')[1].replace(y2AxisMinMax,')',''))/($scope.yAxis2Max - $scope.yAxis2Min);
-        var y1LineLength = d3.select('#complianceGraph svg').selectAll('.y1.axis').selectAll('.nvd3.nv-wrap.nv-axis').selectAll('line').attr('x2');
-        var y2LineLength = d3.select('#complianceGraph svg').selectAll('.y2.axis').selectAll('.nvd3.nv-wrap.nv-axis').selectAll('line').attr('x2');
-        $scope.getMinMaxForComplianceGraph();
-        var y1AxisMinTransform = maxTransform - parseInt($scope.y1AxisTransformRate * $scope.yAxis1MinMark);
-        var y1AxisMaxTransform = maxTransform - parseInt($scope.y1AxisTransformRate * $scope.yAxis1MaxMark);
-        var y2AxisMinTransform = maxTransform - parseInt($scope.y2AxisTransformRate * $scope.yAxis2MinMark);
-        var y2AxisMaxTransform = maxTransform - parseInt($scope.y2AxisTransformRate * $scope.yAxis2MaxMark);
-
-        y1AxisMark.append('g').
-        attr('class','minRecommendedLevel').
-        attr('transform','translate(0, '+ y1AxisMinTransform + ')').
-        append('text').
-        text($scope.yAxis1MinMark).
-        style('fill','red');
-
-        y1AxisMark.append('g').
-        attr('class','maxRecommendedLevel').
-        attr('transform','translate(0,'+ y1AxisMaxTransform + ')').
-        append('text').
-        text($scope.yAxis1MaxMark).
-        style('fill','green');
-
-        y2AxisMark.append('g').
-        attr('class','minRecommendedLevel').
-        attr('transform','translate(0,'+ y2AxisMinTransform + ')').
-        append('text').
-        text($scope.yAxis2MinMark).
-        style('fill','red');
-
-        y2AxisMark.append('g').
-        attr('class','maxRecommendedLevel').
-        attr('transform','translate(0,'+ y2AxisMaxTransform + ')').
-        append('text').
-        text($scope.yAxis2MaxMark).
-        style('fill','green');
-      }
       return chart;
     });
-  };
+  }
 
-    $scope.init();
-
-  $scope.goToPatientDashboard = function(){
-    console.log('Todo');
-  };
-
+  $scope.init();
   $scope.gotoPatients = function(value){
     $state.go('hcppatientdashboard');
   };
