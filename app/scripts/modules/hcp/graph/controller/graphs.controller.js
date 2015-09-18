@@ -159,7 +159,6 @@
 			console.log("cumulative Graph Data:" + JSON.stringify($scope.formatedCumulativeGraphData));
 			$scope.drawCumulativeGraph();
 			/* mocked data ends */   
-				//$scope.plotNoDataAvailable();
 			});
 				 
 			
@@ -229,7 +228,6 @@
 			console.log("Treatment Graph Data:" + JSON.stringify($scope.formatedTreatmentGraphData));
 			$scope.drawTreatmentGraph();
 			/* mocked data ends */    
-				//$scope.plotNoDataAvailable();
 			});
 		}
 
