@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hillromvestApp')
-  .controller('LoginController', function($scope, $state, $timeout, Auth, vcRecaptchaService, globalConfig, $rootScope) {
+  .controller('LoginController', function($scope, $state, $timeout, Auth, vcRecaptchaService, globalConfig, $rootScope, loginConstants) {
     $scope.showLogin = true;
     $scope.isEmailExist = true;
     $scope.isFirstLogin = false;
@@ -55,10 +55,10 @@ angular.module('hillromvestApp')
           localStorage.setItem('role', data.data.user.authorities[0].name);
           localStorage.setItem('userEmail', data.data.user.email);
           $rootScope.userRole = localStorage.getItem('role');           
-          if(data.data.user.authorities[0].name === 'PATIENT'){
+          if(data.data.user.authorities[0].name === loginConstants.role.patient){
             localStorage.setItem('patientID', data.data.user.id);
             $state.go('patientdashboard');
-          } else if(data.data.user.authorities[0].name === 'HCP'){
+          } else if(data.data.user.authorities[0].name === loginConstants.role.hcp){
             $state.go('hcpdashboard');
           }else{
             localStorage.setItem('userId', data.data.user.id);

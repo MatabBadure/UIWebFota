@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hillromvestApp')
-    .service('graphUtil', function (dateService) {
+    .service('graphUtil', [ 'dateService','hcpDashboardConstants', function (dateService,hcpDashboardConstants) {
       
       this.convertIntoHMRLineGraph = function(data) {
         var pointSet = [];
@@ -45,16 +45,16 @@ angular.module('hillromvestApp')
           var point = [];
           point.push(count++);
           switch(key){
-            case hcpDashboard.cumulativeGraph.label.missedTherapy:
+            case hcpDashboardConstants.cumulativeGraph.label.missedTherapy:
               point.push(value.MissedTherapy);
               break;
-            case hcpDashboard.cumulativeGraph.label.nonCompliance:
+            case hcpDashboardConstants.cumulativeGraph.label.nonCompliance:
               point.push(value.nonCompliance);
               break;
-            case hcpDashboard.cumulativeGraph.label.settingDeviation:
+            case hcpDashboardConstants.cumulativeGraph.label.settingDeviation:
               point.push(value.settingDeviation);
               break;
-            case hcpDashboard.cumulativeGraph.label.noEvents:
+            case hcpDashboardConstants.cumulativeGraph.label.noEvents:
               point.push(value.noEvent);
               break;
           }
@@ -69,10 +69,10 @@ angular.module('hillromvestApp')
 
       this.convertIntoCumulativeGraph = function(data) {        
         var graphDataList =[];
-        graphDataList.push(createCumulativeGraph(data,hcpDashboard.cumulativeGraph.label.missedTherapy,hcpDashboard.cumulativeGraph.color.missedTherapy));
-        graphDataList.push(createCumulativeGraph(data,hcpDashboard.cumulativeGraph.label.nonCompliance,hcpDashboard.cumulativeGraph.color.nonCompliance));
-        graphDataList.push(createCumulativeGraph(data,hcpDashboard.cumulativeGraph.label.settingDeviation,hcpDashboard.cumulativeGraph.color.settingDeviation));
-        graphDataList.push(createCumulativeGraph(data,hcpDashboard.cumulativeGraph.label.noEvents,hcpDashboard.cumulativeGraph.color.noEvents));
+        graphDataList.push(createCumulativeGraph(data,hcpDashboardConstants.cumulativeGraph.label.missedTherapy,hcpDashboardConstants.cumulativeGraph.color.missedTherapy));
+        graphDataList.push(createCumulativeGraph(data,hcpDashboardConstants.cumulativeGraph.label.nonCompliance,hcpDashboardConstants.cumulativeGraph.color.nonCompliance));
+        graphDataList.push(createCumulativeGraph(data,hcpDashboardConstants.cumulativeGraph.label.settingDeviation,hcpDashboardConstants.cumulativeGraph.color.settingDeviation));
+        graphDataList.push(createCumulativeGraph(data,hcpDashboardConstants.cumulativeGraph.label.noEvents,hcpDashboardConstants.cumulativeGraph.color.noEvents));
         return graphDataList;
       }
 
@@ -357,12 +357,12 @@ angular.module('hillromvestApp')
         });
         treatmentPerDayObject.values = treatmentPerDayValues;
         treatmentPerDayObject.yAxis = 1;
-        treatmentPerDayObject.type = hcpDashboard.treatmentGraph.type;
-        treatmentPerDayObject.axisLabel = hcpDashboard.treatmentGraph.label.treatmentPerDay;
+        treatmentPerDayObject.type = hcpDashboardConstants.treatmentGraph.type;
+        treatmentPerDayObject.axisLabel = hcpDashboardConstants.treatmentGraph.label.treatmentPerDay;
         treatmentLengthObject.values = treatmentLengthValues;
         treatmentLengthObject.yAxis = 2;
-        treatmentLengthObject.type = hcpDashboard.treatmentGraph.type;
-        treatmentLengthObject.axisLabel = hcpDashboard.treatmentGraph.label.treatmentLength;
+        treatmentLengthObject.type = hcpDashboardConstants.treatmentGraph.type;
+        treatmentLengthObject.axisLabel = hcpDashboardConstants.treatmentGraph.label.treatmentLength;
 
         graphDataList.push(treatmentPerDayObject);
         graphDataList.push(treatmentLengthObject);
@@ -414,4 +414,4 @@ angular.module('hillromvestApp')
         graphDataList.push(frequencyObject);
       return graphDataList;
       }
-    });
+    }]);

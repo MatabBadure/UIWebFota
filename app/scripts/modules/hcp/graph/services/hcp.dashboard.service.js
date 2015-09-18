@@ -6,7 +6,7 @@
  *
  */
 angular.module('hillromvestApp')
-  .factory('hcpDashBoardService', ['$http','headerService',function ($http, headerService) {
+  .factory('hcpDashBoardService', ['$http','headerService', 'hcpServiceConstants', function ($http, headerService, hcpServiceConstants) {
     return {
 
       /**
@@ -16,13 +16,9 @@ angular.module('hillromvestApp')
       *
       */
       getCumulativeGraphPoints: function(id, fromTimeStamp, toTimeStamp, groupBy) {
-        var url = hcp.graph.baseURL;
+        var url = hcpServiceConstants.graph.baseURL;
         url  = url + '/' + id + '/therapyData';
-        if ( fromTimeStamp !== undefined && toTimeStamp !== undefined && groupBy !== undefined) {
-          url = url + '?from=' + fromTimeStamp + '&to=' + toTimeStamp + '&groupBy=' + groupBy;
-        } else if(date !== undefined){
-          url = url + '?date=' + date;
-        }
+        url = url + '?from=' + fromTimeStamp + '&to=' + toTimeStamp + '&groupBy=' + groupBy;
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -38,13 +34,9 @@ angular.module('hillromvestApp')
       *
       */
       getTreatmentGraphPoints: function(id, fromTimeStamp, toTimeStamp, groupBy) {
-        var url = hcp.graph.baseURL;
+        var url = hcpServiceConstants.graph.baseURL;
         url  = url + '/' + id + '/complianceLevel';
-        if ( fromTimeStamp !== undefined && toTimeStamp !== undefined && groupBy !== undefined) {
-          url = url + '?from=' + fromTimeStamp + '&to=' + toTimeStamp + '&groupBy=' + groupBy;
-        } else if(date !== undefined){
-          url = url + '?date=' + date;
-        }
+        url = url + '?from=' + fromTimeStamp + '&to=' + toTimeStamp + '&groupBy=' + groupBy;
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {

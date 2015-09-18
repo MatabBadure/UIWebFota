@@ -21,8 +21,9 @@ var patient = {
 	}
 }
 
-var hcp = {
-	graph : {
+
+angular.module('hillromvestApp').constant('hcpServiceConstants', {
+    graph : {
 		baseURL : 'api/users'
 	}
-}
+});

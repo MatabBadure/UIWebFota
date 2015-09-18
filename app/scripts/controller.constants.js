@@ -31,15 +31,23 @@ var patientDashboard = {
 	"serverDateFormat" : "YYYY-MM-DD",
 	"INDdateFormat" : "DD-MM-YYYY",
 	"minDaysForMonthlyGraph" : 31,
-	"maxDaysForWeeklyGraph" : 7
+	"maxDaysForWeeklyGraph" : 6
 }
 
 var profile = {
 	'EMAIL_UPDATED_SUCCESSFULLY' : 'Email updated successfully. Please login again.'
 }
 
-var hcpDashboard = {
-	cumulativeGraph : {
+var notyMessages = {
+	"typeWarning": "warning",
+	"typeSuccess": "success",
+	"maxComplianceError" : "Please deselect one item.",
+	"minComplianceError": "At least one item should be selected."
+}
+
+
+angular.module('hillromvestApp').constant('hcpDashboardConstants', {
+    cumulativeGraph : {
 		label : {
 			"missedTherapy" : "MissedTherapy Days",
 			"nonCompliance" : "HMR Non-Compliance",
@@ -83,12 +91,13 @@ var hcpDashboard = {
 			"full" : "#e28181"
 
 		}
-	}
-}
+	},
+	serverDateFormat : "YYYY-MM-DD"
+})
+.constant('loginConstants',{
+	role : {
+		"patient" : "PATIENT",
+		"hcp" : "HCP"
 
-var notyMessages = {
-	"typeWarning": "warning",
-	"typeSuccess": "success",
-	"maxComplianceError" : "Please deselect one item.",
-	"minComplianceError": "At least one item should be selected."
-}
+	}
+})

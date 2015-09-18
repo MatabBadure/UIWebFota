@@ -1,7 +1,7 @@
 	'use strict';
 
 	angular.module('hillromvestApp')
-	.controller('hcpGraphController',[ '$scope', '$state', 'hcpDashBoardService', 'dateService', 'graphUtil', '$stateParams', function($scope, $state, hcpDashBoardService, dateService, graphUtil, $stateParams) {
+	.controller('hcpGraphController',[ '$scope', '$state', 'hcpDashBoardService', 'dateService', 'graphUtil', '$stateParams', 'hcpDashboardConstants', function($scope, $state, hcpDashBoardService, dateService, graphUtil, $stateParams, hcpDashboardConstants) {
 		var chart;
 		$scope.init = function() {
 			$scope.selectedGraph = 'CUMULATIVE';
@@ -16,18 +16,19 @@
 			$scope.fromTimeStamp = dateService.getnDaysBackTimeStamp(7);
 			$scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp);
 			$scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp);
+			$scope.hcpId = parseInt(localStorage.getItem('hcpID'));
 			$scope.weeklyChart();
 		}; 
 
 		$scope.getBarColor = function(count) {
 			if( count <= 25 && count > 0) {
-				return hcpDashboard.statistics.color.quarter;
+				return hcpDashboardConstants.statistics.color.quarter;
 			} else if(count >25 && count <=50) {
-				return hcpDashboard.statistics.color.half;
+				return hcpDashboardConstants.statistics.color.half;
 			} else if(count >50 && count <=75) {
-				return hcpDashboard.statistics.color.threeQuarters;
+				return hcpDashboardConstants.statistics.color.threeQuarters;
 			} else if( count >75) {
-				return hcpDashboard.statistics.color.full;
+				return hcpDashboardConstants.statistics.color.full;
 			}
 		}
 
@@ -38,47 +39,47 @@
 	$scope.noeventDays = 76;
 	$scope.missedtherapy = {
 				animate:{
-						duration: hcpDashboard.statistics.duration,
+						duration: hcpDashboardConstants.statistics.duration,
 						enabled:true
 				},
 				barColor: $scope.getBarColor($scope.missedtherapyDays),
-				trackColor: hcpDashboard.statistics.color.track,
-				scaleColor: hcpDashboard.statistics.scaleColor,
-				lineWidth: hcpDashboard.statistics.lineWidth,
-				lineCap: hcpDashboard.statistics.lineCap
+				trackColor: hcpDashboardConstants.statistics.color.track,
+				scaleColor: hcpDashboardConstants.statistics.scaleColor,
+				lineWidth: hcpDashboardConstants.statistics.lineWidth,
+				lineCap: hcpDashboardConstants.statistics.lineCap
 		};
 		$scope.hmr = {
 				animate:{
-						duration: hcpDashboard.statistics.duration,
+						duration: hcpDashboardConstants.statistics.duration,
 						enabled:true
 				},
 				barColor: $scope.getBarColor($scope.hmrRunRate),
-				trackColor: hcpDashboard.statistics.color.track,
-				scaleColor: hcpDashboard.statistics.scaleColor,
-				lineWidth: hcpDashboard.statistics.lineWidth,
-				lineCap: hcpDashboard.statistics.lineCap
+				trackColor: hcpDashboardConstants.statistics.color.track,
+				scaleColor: hcpDashboardConstants.statistics.scaleColor,
+				lineWidth: hcpDashboardConstants.statistics.lineWidth,
+				lineCap: hcpDashboardConstants.statistics.lineCap
 		};
 	$scope.deviation = {
 				animate:{
-						duration: hcpDashboard.statistics.duration,
+						duration: hcpDashboardConstants.statistics.duration,
 						enabled:true
 				},
 				barColor: $scope.getBarColor($scope.deviationDays),
-				trackColor: hcpDashboard.statistics.color.track,
-				scaleColor: hcpDashboard.statistics.scaleColor,
-				lineWidth: hcpDashboard.statistics.lineWidth,
-				lineCap: hcpDashboard.statistics.lineCap
+				trackColor: hcpDashboardConstants.statistics.color.track,
+				scaleColor: hcpDashboardConstants.statistics.scaleColor,
+				lineWidth: hcpDashboardConstants.statistics.lineWidth,
+				lineCap: hcpDashboardConstants.statistics.lineCap
 			};
 	$scope.noevent = {
 				animate:{
-						duration: hcpDashboard.statistics.duration,
+						duration: hcpDashboardConstants.statistics.duration,
 						enabled:true
 				},
 				barColor: $scope.getBarColor($scope.noeventDays),
-				trackColor: hcpDashboard.statistics.color.track,
-				scaleColor: hcpDashboard.statistics.scaleColor,
-				lineWidth: hcpDashboard.statistics.lineWidth,
-				lineCap: hcpDashboard.statistics.lineCap
+				trackColor: hcpDashboardConstants.statistics.color.track,
+				scaleColor: hcpDashboardConstants.statistics.scaleColor,
+				lineWidth: hcpDashboardConstants.statistics.lineWidth,
+				lineCap: hcpDashboardConstants.statistics.lineCap
 			};
 	//---HCP PieChart JS =============
 
@@ -132,7 +133,7 @@
 		$scope.plotNoDataAvailable = function() {
 			$scope.removeGraph();
 			d3.selectAll('svg').append('text').
-				text(hcpDashboard.message.noData).
+				text(hcpDashboardConstants.message.noData).
 				attr('class','nvd3 nv-noData').
 				attr('x','560').
 				attr('y','175');
@@ -146,17 +147,15 @@
 		};
 
 		$scope.getCumulativeGraphData = function() {
-			 hcpDashBoardService.getCumulativeGraphPoints($scope.hcpId, $scope.fromTimeStamp, $scope.toTimeStamp, $scope.groupBy).then(function(response){
+			 hcpDashBoardService.getCumulativeGraphPoints($scope.hcpId, dateService.getDateFromTimeStamp($scope.hcpId,$scope.fromTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), $scope.groupBy).then(function(response){
 				$scope.serverCumulativeGraphData = cumulativeGraphData;
 				$scope.formatedCumulativeGraphData = graphUtil.convertIntoCumulativeGraph($scope.serverCumulativeGraphData); 
-				console.log("cumulative Graph Data:" + JSON.stringify($scope.formatedCumulativeGraphData));
 				$scope.drawCumulativeGraph();
 			}).catch(function(response) {
 				//below mocked data section to be removed while integrating with API's
 			/* mocked data starts */
 			$scope.serverCumulativeGraphData = cumulativeGraphData;
 			$scope.formatedCumulativeGraphData = graphUtil.convertIntoCumulativeGraph($scope.serverCumulativeGraphData); 
-			console.log("cumulative Graph Data:" + JSON.stringify($scope.formatedCumulativeGraphData));
 			$scope.drawCumulativeGraph();
 			/* mocked data ends */   
 			});
@@ -176,7 +175,7 @@
 				.useInteractiveGuideline(true);
 				chart.xAxis.showMaxMin = true;
 				chart.xAxis.staggerLabels = true,
-				chart.yAxis.axisLabel(hcpDashboard.cumulativeGraph.yAxis.label)
+				chart.yAxis.axisLabel(hcpDashboardConstants.cumulativeGraph.yAxis.label)
 				chart.xAxis.tickFormat(function(d) {
 					if(d % 1 === 0){
 						var timeStamp = $scope.serverCumulativeGraphData[d-1].timeStamp;
@@ -211,7 +210,7 @@
 
 
 		$scope.getTreatmentGraphData = function() {
-			 hcpDashBoardService.getTreatmentGraphPoints($scope.hcpId, $scope.fromTimeStamp, $scope.toTimeStamp, $scope.groupBy).then(function(response){
+			 hcpDashBoardService.getTreatmentGraphPoints($scope.hcpId, dateService.getDateFromTimeStamp($scope.hcpId,$scope.fromTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), $scope.groupBy).then(function(response){
 				$scope.serverTreatmentGraphData = treatmentGraphData;
 				$scope.formatedTreatmentGraphData = graphUtil.convertIntoTreatmentGraph($scope.serverTreatmentGraphData);
 				$scope.handlelegends();
@@ -316,12 +315,12 @@
 			angular.forEach($scope.formatedTreatmentGraphData, function(value) {
 				if(value.axisLabel === 'Treatments' && $scope.treatment.treatmentPerDay){
 					value.yAxis = ++count;
-					value.color = hcpDashboard.treatmentGraph.color.treatmentPerDay;
+					value.color = hcpDashboardConstants.treatmentGraph.color.treatmentPerDay;
 					$scope.treatmentGraphData.push(value);
 				}
 				if(value.axisLabel === 'Minutes' && $scope.treatment.treatmentLength){
 					value.yAxis = ++count;
-					value.color = hcpDashboard.treatmentGraph.color.treatmentLength;
+					value.color = hcpDashboardConstants.treatmentGraph.color.treatmentLength;
 					$scope.treatmentGraphData.push(value);
 				}
 			});
