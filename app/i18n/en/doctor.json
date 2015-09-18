@@ -29,6 +29,10 @@
         "hcp-name": "HCP Name",
         "emr-id":   "EMR-ID",
         "mrn-id": "MRN-ID",
+        "hcp-text": "HCPs",
+        "found-text": "Found",
+        "previous-text": "Previous",
+        "next-text": "Next",
         "title": {
                     "name": "Title",
                     "mr":   "Mr.",
