@@ -58,7 +58,9 @@ angular.module('hillromvestApp')
           if(data.data.user.authorities[0].name === 'PATIENT'){
             localStorage.setItem('patientID', data.data.user.id);
             $state.go('patientdashboard');
-          } else {
+          } else if(data.data.user.authorities[0].name === 'CLINIC_ADMIN'){
+            $state.go('clinicadmindashboard');
+          }else{
             localStorage.setItem('userId', data.data.user.id);
             $state.go('patientUser');
           }

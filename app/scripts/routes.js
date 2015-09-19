@@ -22,6 +22,11 @@ angular.module('hillromvestApp')
                 url:'/hcp',
                 abstract: true,
             })
+            .state('clinicadmin-dashboard', {
+                parent: 'entity',
+                url:'/clinicadmin',
+                abstract: true,
+            })
             .state('patientUser', {
                 parent: 'admin',
                 url: '/patients?clinicIds',
@@ -822,7 +827,7 @@ angular.module('hillromvestApp')
                 }
             })
 
-             .state('patientdashboard', {
+            .state('patientdashboard', {
                 parent: 'patient-dashboard',
                 url: '/patient-dashboard',
                 data: {
@@ -1231,6 +1236,32 @@ angular.module('hillromvestApp')
                 resolve: {
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+
+            .state('clinicadmindashboard', {
+                parent: 'clinicadmin-dashboard',
+                url: '/clinicadmin-dashboard',
+                data: {
+                    roles: ['CLINIC_ADMIN'],
+                    pageTitle: 'hcp.title'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/hcp/graph/views/dashboard-landing.html',
+                        controller: 'hcpGraphController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('doctor');
                         return $translate.refresh();
                     }],
                     authorize: ['Auth',
