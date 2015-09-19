@@ -1,30 +1,30 @@
 <navigation-bar-hcp></navigation-bar-hcp>
 <hcp-patient-navbar></hcp-patient-navbar>
 <div class="container admin-user">
-  <div class="col-md-16 margin-top">
+  <div class="col-md-16 col-sm-16 margin-top">
    <div class="user-gen-details">
      <span class="user-gen-details--name">{{slectedPatient.firstName}} {{slectedPatient.lastName}}</span>
      <span class="user-gen-details--hr-id">{{slectedPatient.hillromId}}</span>
    </div>
   </div>
 
-  <div class="col-md-16 patient-protocol">
+  <div class="col-md-16 col-sm-16 patient-protocol">
     <span class="patient-protocol--title" translate="patient.protocol-title"></span>
   </div>
 
   <div class="dashboard dashboard--content">
     <div class="dashboard__manage-view margin-top">
       <div class="dashboard__manage-view--header">
-          <div class="col-md-3 header--type">
+          <div class="col-md-3 col-sm-3 header--type">
             <span translate="patient.protocol-caption.type"></span>
           </div>
-          <div class="col-md-3 header--type">
+          <div class="col-md-3 col-sm-3 header--type">
             <span translate="patient.protocol-caption.treatment-day"></span>
           </div>
-          <div class="col-md-4 header--type">
+          <div class="col-md-4 col-sm-4 header--type">
             <span translate="patient.protocol-caption.create-date"></span>
           </div>
-          <div class="col-md-4 header--type">
+          <div class="col-md-4 col-sm-4 header--type">
             <span translate="patient.protocol-caption.modified-date"></span>
           </div>
           <div class="clr"></div>
@@ -32,45 +32,45 @@
     </div>
   </div>
 
-  <div class="col-md-16 protocol-list" ng-repeat="protocol in protocols" ng-class="{'list-inactive':protocol.deleted}">
-    <div class="col-md-3 protocol-list__type">
+  <div class="col-md-16 col-sm-16 protocol-list" ng-repeat="protocol in protocols" ng-class="{'list-inactive':protocol.deleted}">
+    <div class="col-md-3 col-sm-3 protocol-list__type">
       <span> {{protocol.type}}</span>
     </div>
-    <div class="col-md-3 protocol-list__treatment-day">
+    <div class="col-md-3 col-sm-3 protocol-list__treatment-day">
       <span class="protocol-list--value"> {{protocol.treatmentsPerDay}}</span>
     </div>
-    <div class="col-md-4 protocol-list__strt-date">
+    <div class="col-md-4 col-sm-4 protocol-list__strt-date">
       <span class="protocol-list--value"> {{protocol.createdDate}}</span>
     </div>
-    <div class="col-md-4 protocol-list__end-date">
+    <div class="col-md-4 col-sm-4 protocol-list__end-date">
       <span class="protocol-list--value"> {{protocol.lastModifiedDate}}</span>
     </div>
   </div>
-  <div class="col-md-16 empty-list-message" ng-if="!protocols"><span translate="patient.empty-protocol-list-message"></span></div>
+  <div class="col-md-16 col-sm-16 empty-list-message" ng-if="!protocols"><span translate="patient.empty-protocol-list-message"></span></div>
 
-  <div class="col-md-16 patient-device">
+  <div class="col-md-16 col-sm-16 patient-device">
     <span class="patient-device--title" translate="patient.device-title"></span>
   </div>
 
 <div class="dashboard dashboard--content">
   <div class="dashboard__manage-view margin-top">
     <div class="dashboard__manage-view--header">
-        <div class="col-md-3 header--type">
+        <div class="col-md-3 col-sm-2 header--type">
           <span translate="patient.device-caption.serial-no"></span>
         </div>
-        <div class="col-md-2 header--type">
+        <div class="col-md-2 col-sm-2 header--type">
           <span translate="patient.device-caption.blutooth-id"></span>
         </div>
-        <div class="col-md-1 header--type">
+        <div class="col-md-1 col-sm-1 header--type">
           <span translate="patient.device-caption.device"></span>
         </div>
-        <div class="col-md-2 header--type">
+        <div class="col-md-2 col-sm-2 header--type">
           <span translate="patient.device-caption.status"></span>
         </div>
-        <div class="col-md-2 header--type">
+        <div class="col-md-2 col-sm-2 header--type">
           <span translate="patient.device-caption.created-date"></span>
         </div>
-        <div class="col-md-2 header--type">
+        <div class="col-md-2 col-sm-2 header--type">
           <span translate="patient.device-caption.modified-date"></span>
         </div>
         <div class="clr"></div>
@@ -78,26 +78,26 @@
   </div>
 </div>
 
-  <div class="col-md-16 device-list" ng-repeat="device in devices" ng-class="{'list-inactive': !device.active}">
-    <div class="col-md-3 device-list__serial">
+  <div class="col-md-16 col-sm-16 device-list" ng-repeat="device in devices" ng-class="{'list-inactive': !device.active}">
+    <div class="col-md-3 col-sm-3 device-list__serial">
       <span>{{device.serialNumber}}</span>
     </div>
-    <div class="col-md-2 device-list__bt-id">
+    <div class="col-md-2 col-sm-2 device-list__bt-id">
       <span>{{device.bluetoothId}}</span>
     </div>
-    <div class="col-md-1 device-list__bt-id">
+    <div class="col-md-1 col-sm-1 device-list__bt-id">
       <span class="icon-device"></span>
     </div>
-    <div class="col-md-2 device-list__status">
+    <div class="col-md-2 col-sm-2 device-list__status">
       <span ng-if="device.active" class="device--list__status--text" translate="patient.device.active-status">Active</span>
       <span ng-if="!device.active" class="device--list__status--text" translate="patient.device.inactive-status"></span>
     </div>
-    <div class="col-md-2 device-list__date">
+    <div class="col-md-2 col-sm-2 device-list__date">
       <span>{{device.createdDate}}</span>
     </div>
-    <div class="col-md-4 device-list__date">
+    <div class="col-md-4 col-sm-4 device-list__date">
       <span>{{device.lastModifiedDate}}</span>
     </div>
   </div>
-  <div class="col-md-16 empty-list-message" ng-if="!devices"><span translate="patient.empty-device-list-message"></span></div>
+  <div class="col-md-16 col-sm-16 empty-list-message" ng-if="!devices"><span translate="patient.empty-device-list-message"></span></div>
 </div>
