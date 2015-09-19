@@ -229,7 +229,7 @@ module.exports = function (grunt) {
                 expand: true,
                 cwd: '<%= hillrom.app %>/styles',
                 src: ['*.scss'],
-                dest: '.tmp/styles',
+                dest: '<%= hillrom.app %>/styles',
                 ext: '.css'
             }]
         }
