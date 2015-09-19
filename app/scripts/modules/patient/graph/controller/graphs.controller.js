@@ -1428,6 +1428,20 @@ angular.module('hillromvestApp')
 
     $scope.downloadAsPdf = function(){
       var graphData = ($scope.hmrGraph) ? $scope.completeGraphData : $scope.completeComplianceData;
-      graphService.getPdfForSVGGraph(graphData);
+      graphService.getPdfForSVGGraph(graphData);      
+    };
+
+    $scope.downloadAsCsv = function(){
+      $scope.downloadTherapyAndDeviceDataAsCSV();
+    };
+
+    $scope.downloadTherapyAndDeviceDataAsCSV = function(){
+      patientService.getTherapyDataAsCSV($scope.patientId, $scope.fromTimeStamp, $scope.toTimeStamp).then(function(response){
+         graphService.downloadAsCSVFromJSONData(response.data, 'TherapyReport.csv', 'therapy');
+      });
+      patientService.getDeviceDataAsCSV($scope.patientId, $scope.fromTimeStamp, $scope.toTimeStamp).then(function(response){
+         graphService.downloadAsCSVFile(response.data, 'VestDeviceReport.csv', 'vestDevice');
+      });
+      
     };
 });

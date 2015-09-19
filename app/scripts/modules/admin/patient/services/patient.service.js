@@ -304,7 +304,6 @@ angular.module('hillromvestApp')
         });
       },
       updateCaregiver : function(patientId, caregiverId , data){
-        ///api/patient/:patientUserId/caregiver/:id
         var url = admin.patient.baseURL + patientId + '/caregiver/'+caregiverId;
         return $http.put(url, data, {
           headers: headerService.getHeader()
@@ -313,7 +312,6 @@ angular.module('hillromvestApp')
         });
       },
       getCaregiverById : function(patientId, caregiverId ){
-        ///api/patient/:patientUserId/caregiver/:id
         var url = admin.patient.baseURL + patientId + '/caregiver/'+caregiverId;
         return $http.get(url, {
           headers: headerService.getHeader()
@@ -323,6 +321,23 @@ angular.module('hillromvestApp')
       },
       getProtocolById : function(patientId, protocolId){
         var url = admin.patient.baseURL + patientId + '/protocol/'+protocolId;
+        return $http.get(url, {
+          headers: headerService.getHeader()
+        }).success(function(response){
+          return response;
+        });
+      },
+      getTherapyDataAsCSV : function(patientId, startDate, endDate){
+        var url = "/api/users/"+patientId+"/exportTherapyDataCSV?from="+startDate+"&to="+endDate;
+        return $http.get(url, {
+          headers: headerService.getHeader()
+        }).success(function(response){
+          return response;
+        });
+      },
+
+      getDeviceDataAsCSV: function(patientId, startDate, endDate){
+        var url = "/api/users/"+ patientId +"/exportVestDeviceDataCSV?from="+ startDate+"&to="+endDate;
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response){
