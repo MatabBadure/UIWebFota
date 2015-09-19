@@ -44,5 +44,21 @@ angular.module('hillromvestApp')
         });
       },
 
+
+      /**
+      * @ngdoc method
+      * @name getHcpStatistics
+      * @description To get statistics for a hcp based on ID.
+      *
+      */
+      getHcpStatistics: function(id) {
+        var url = hcpServiceConstants.graph.baseURL;
+        url  = url + '/' + id + '/complianceLevel';
+        return $http.get(url, {
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });
+      }
     };
   }]);

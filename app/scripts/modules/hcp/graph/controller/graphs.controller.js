@@ -10,13 +10,16 @@
 			$scope.format = 'weekly';
 			$scope.selectedDateOption = 'WEEK';
 			$scope.toTimeStamp = new Date().getTime();
-			 $scope.treatment = {};
+			$scope.treatment = {};
 			$scope.treatment.treatmentPerDay = true;
 			$scope.treatment.treatmentLength = true;
+			//$scope.cumulativeGraphPlotted = false;
 			$scope.fromTimeStamp = dateService.getnDaysBackTimeStamp(7);
-			$scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp);
-			$scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp);
+			$scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,hcpDashboardConstants.USdateFormat,'/');
+			$scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,hcpDashboardConstants.USdateFormat,'/');
 			$scope.hcpId = parseInt(localStorage.getItem('hcpID'));
+			//$scope.missedtherapyDays = $scope.hmrRunRate = $scope.deviationDays = $scope.noeventDays = 0;
+			$scope.getHcpStatistics();
 			$scope.weeklyChart();
 		}; 
 
@@ -32,78 +35,89 @@
 			}
 		}
 
-	//---HCP PieChart JS =============
-	$scope.missedtherapyDays = 25;
-	$scope.hmrRunRate = 65;
-	$scope.deviationDays = 49;
-	$scope.noeventDays = 76;
-	$scope.missedtherapy = {
-				animate:{
-						duration: hcpDashboardConstants.statistics.duration,
-						enabled:true
-				},
-				barColor: $scope.getBarColor($scope.missedtherapyDays),
-				trackColor: hcpDashboardConstants.statistics.color.track,
-				scaleColor: hcpDashboardConstants.statistics.scaleColor,
-				lineWidth: hcpDashboardConstants.statistics.lineWidth,
-				lineCap: hcpDashboardConstants.statistics.lineCap
-		};
-		$scope.hmr = {
-				animate:{
-						duration: hcpDashboardConstants.statistics.duration,
-						enabled:true
-				},
-				barColor: $scope.getBarColor($scope.hmrRunRate),
-				trackColor: hcpDashboardConstants.statistics.color.track,
-				scaleColor: hcpDashboardConstants.statistics.scaleColor,
-				lineWidth: hcpDashboardConstants.statistics.lineWidth,
-				lineCap: hcpDashboardConstants.statistics.lineCap
-		};
-	$scope.deviation = {
-				animate:{
-						duration: hcpDashboardConstants.statistics.duration,
-						enabled:true
-				},
-				barColor: $scope.getBarColor($scope.deviationDays),
-				trackColor: hcpDashboardConstants.statistics.color.track,
-				scaleColor: hcpDashboardConstants.statistics.scaleColor,
-				lineWidth: hcpDashboardConstants.statistics.lineWidth,
-				lineCap: hcpDashboardConstants.statistics.lineCap
+		//---HCP PieChart JS =============
+		$scope.missedtherapyDays = 25;
+		$scope.hmrRunRate = 55;
+		$scope.deviationDays = 49;
+		$scope.noeventDays = 76;
+		$scope.missedtherapy = {
+					animate:{
+							duration: hcpDashboardConstants.statistics.duration,
+							enabled:true
+					},
+					barColor: $scope.getBarColor($scope.missedtherapyDays),
+					trackColor: hcpDashboardConstants.statistics.color.track,
+					scaleColor: hcpDashboardConstants.statistics.scaleColor,
+					lineWidth: hcpDashboardConstants.statistics.lineWidth,
+					lineCap: hcpDashboardConstants.statistics.lineCap
 			};
-	$scope.noevent = {
-				animate:{
-						duration: hcpDashboardConstants.statistics.duration,
-						enabled:true
-				},
-				barColor: $scope.getBarColor($scope.noeventDays),
-				trackColor: hcpDashboardConstants.statistics.color.track,
-				scaleColor: hcpDashboardConstants.statistics.scaleColor,
-				lineWidth: hcpDashboardConstants.statistics.lineWidth,
-				lineCap: hcpDashboardConstants.statistics.lineCap
+			$scope.hmr = {
+					animate:{
+							duration: hcpDashboardConstants.statistics.duration,
+							enabled:true
+					},
+					barColor: $scope.getBarColor($scope.hmrRunRate),
+					trackColor: hcpDashboardConstants.statistics.color.track,
+					scaleColor: hcpDashboardConstants.statistics.scaleColor,
+					lineWidth: hcpDashboardConstants.statistics.lineWidth,
+					lineCap: hcpDashboardConstants.statistics.lineCap
 			};
-	//---HCP PieChart JS =============
+		$scope.deviation = {
+					animate:{
+							duration: hcpDashboardConstants.statistics.duration,
+							enabled:true
+					},
+					barColor: $scope.getBarColor($scope.deviationDays),
+					trackColor: hcpDashboardConstants.statistics.color.track,
+					scaleColor: hcpDashboardConstants.statistics.scaleColor,
+					lineWidth: hcpDashboardConstants.statistics.lineWidth,
+					lineCap: hcpDashboardConstants.statistics.lineCap
+				};
+		$scope.noevent = {
+					animate:{
+							duration: hcpDashboardConstants.statistics.duration,
+							enabled:true
+					},
+					barColor: $scope.getBarColor($scope.noeventDays),
+					trackColor: hcpDashboardConstants.statistics.color.track,
+					scaleColor: hcpDashboardConstants.statistics.scaleColor,
+					lineWidth: hcpDashboardConstants.statistics.lineWidth,
+					lineCap: hcpDashboardConstants.statistics.lineCap
+				};
+		//---HCP PieChart JS =============
 
-	/*Dtate picker js*/
-	$scope.opts = {
-			maxDate: new Date(),
-			format: patientDashboard.dateFormat,
-			dateLimit: {"months":patientDashboard.maxDurationInMonths},
-			eventHandlers: {'apply.daterangepicker': function(ev, picker) {
-				$scope.calculateDateFromPicker(picker);
-				$scope.drawGraph();
-				$scope.selectedDateOption = '';
-				}
-			},
-			opens: 'left'
-		}
+		/*Dtate picker js*/
+		$scope.opts = {
+				maxDate: new Date(),
+				format: patientDashboard.dateFormat,
+				dateLimit: {"months":patientDashboard.maxDurationInMonths},
+				eventHandlers: {'apply.daterangepicker': function(ev, picker) {
+					$scope.calculateDateFromPicker(picker);
+					$scope.drawGraph();
+					$scope.selectedDateOption = '';
+					}
+				},
+				opens: 'left'
+			}
 
-	/*Dtate picker js END*/
-		
+		/*Dtate picker js END*/
+
+		 $scope.getHcpStatistics = function() {
+	      hcpDashBoardService.getHcpStatistics($scope.hcpId).then(function(response){
+	        if(response.status === 200 ){
+	          $scope.missedtherapyDays = response.data.hmrRunRate;
+	          $scope.hmrRunRate = response.data.score;
+	          $scope.deviationDays = response.data.score;
+	          $scope.noeventDays = response.data.score;
+	        }
+	      });
+	    }
+			
 		$scope.calculateDateFromPicker = function(picker) {
 			$scope.fromTimeStamp = new Date(picker.startDate._d).getTime();
 			$scope.toTimeStamp = new Date(picker.endDate._d).getTime();
-			$scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp);
-			$scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp);
+			$scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,hcpDashboardConstants.USdateFormat,'/');
+			$scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,hcpDashboardConstants.USdateFormat,'/');
 			if ($scope.fromDate === $scope.toDate ) {
 				$scope.fromTimeStamp = $scope.toTimeStamp;
 			}
@@ -147,17 +161,19 @@
 		};
 
 		$scope.getCumulativeGraphData = function() {
+			 //$scope.cumulativeGraphPlotted = false;
 			 hcpDashBoardService.getCumulativeGraphPoints($scope.hcpId, dateService.getDateFromTimeStamp($scope.hcpId,$scope.fromTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), $scope.groupBy).then(function(response){
 				$scope.serverCumulativeGraphData = cumulativeGraphData;
 				$scope.formatedCumulativeGraphData = graphUtil.convertIntoCumulativeGraph($scope.serverCumulativeGraphData); 
 				$scope.drawCumulativeGraph();
+
 			}).catch(function(response) {
 				//below mocked data section to be removed while integrating with API's
 			/* mocked data starts */
 			$scope.serverCumulativeGraphData = cumulativeGraphData;
 			$scope.formatedCumulativeGraphData = graphUtil.convertIntoCumulativeGraph($scope.serverCumulativeGraphData); 
 			$scope.drawCumulativeGraph();
-			/* mocked data ends */   
+						/* mocked data ends */   
 			});
 				 
 			
@@ -169,7 +185,7 @@
 				.x(function(d) { return d[0] })
 				.y(function(d) { return d[1] }) 
 				.color(d3.scale.category10().range())
-				.tooltipContent(function(key, x, y, e, graph) {
+				.tooltips(function(key, x, y, e, graph) {
 				return '<h3>' + key + ' Custom Text Here ' + x + '</h3> here' + '<p> or here ,' + y + '</p>'
 		})
 				.useInteractiveGuideline(true);
@@ -179,6 +195,10 @@
 				chart.xAxis.tickFormat(function(d) {
 					if(d % 1 === 0){
 						var timeStamp = $scope.serverCumulativeGraphData[d-1].timeStamp;
+							if( event !== undefined && event.type === "mousemove") {
+							return d3.time.format('%x')(new Date(timeStamp));
+							}
+						
 						switch($scope.format) {
 							case "weekly":
 									return d3.time.format('%A')(new Date(timeStamp));
@@ -193,8 +213,10 @@
 									break;
 						}
 					}
-					});
-				chart.tooltipContent($scope.toolTipContentFunction);
+				});
+				d3.select('.nv-legendWrap').on('click',function(){
+					console.log("clicked!");
+				})
 				chart.yAxis
 					.tickFormat(function(d) {  
 							return d;
@@ -204,6 +226,7 @@
 					.datum($scope.formatedCumulativeGraphData)
 					.call(chart);
 				nv.utils.windowResize(chart.update);
+				//$scope.cumulativeGraphPlotted = true;
 			return chart;
 		});
 		}
@@ -232,9 +255,9 @@
 
 		$scope.calculateTimeDuration = function(durationInDays) {
 			$scope.toTimeStamp = new Date().getTime();
-			$scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp);
+			$scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,hcpDashboardConstants.USdateFormat,'/');
 			$scope.fromTimeStamp = dateService.getnDaysBackTimeStamp(durationInDays);;
-			$scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp);
+			$scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,hcpDashboardConstants.USdateFormat,'/');
 		};
 
 		$scope.chooseGraph = function() {

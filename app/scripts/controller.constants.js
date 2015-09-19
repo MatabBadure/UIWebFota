@@ -87,12 +87,13 @@ angular.module('hillromvestApp').constant('hcpDashboardConstants', {
 			"track" : "#ccc",
 			"quarter" : "#69be7f",
 			"half" : "#f7a462",
-			"threeQuarters" : "5da0cc",
+			"threeQuarters" : "blue",
 			"full" : "#e28181"
 
 		}
 	},
-	serverDateFormat : "YYYY-MM-DD"
+	serverDateFormat : "YYYY-MM-DD",
+	USdateFormat : "MM-DD-YYYY"
 })
 .constant('loginConstants',{
 	role : {
