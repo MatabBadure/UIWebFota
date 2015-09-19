@@ -173,7 +173,7 @@
 			}).catch(function(response) {
 				//below mocked data section to be removed while integrating with API's
 			/* mocked data starts */
-			$scope.serverCumulativeGraphData = cumulativeGraphData;
+			$scope.serverCumulativeGraphData = cumulativeGraphData.cumulativeStatitics;
 			$scope.formatedCumulativeGraphData = graphUtil.convertIntoCumulativeGraph($scope.serverCumulativeGraphData); 
 			$scope.drawCumulativeGraph();
 						/* mocked data ends */   

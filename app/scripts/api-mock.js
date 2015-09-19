@@ -10,7 +10,8 @@ var roleEnum = {
 };
 
 
-  var cumulativeGraphData = [  
+  var cumulativeGraphData = {  
+    "cumulativeStatitics" : [
         {
             "id": 1,
             "userId": 156,
@@ -101,7 +102,8 @@ var roleEnum = {
             "settingDeviation": 10,
             "noEvent": 39
         }
-]
+    ]
+}
 
 var treatmentGraphData = [  
         {
