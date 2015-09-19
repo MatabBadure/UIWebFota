@@ -59,6 +59,7 @@ angular.module('hillromvestApp')
             localStorage.setItem('patientID', data.data.user.id);
             $state.go('patientdashboard');
           } else if(data.data.user.authorities[0].name === loginConstants.role.hcp){
+            localStorage.setItem('hcpID', data.data.user.id);
             $state.go('hcpdashboard');
           }else{
             localStorage.setItem('userId', data.data.user.id);
