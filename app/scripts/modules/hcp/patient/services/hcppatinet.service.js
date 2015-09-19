@@ -1,10 +1,10 @@
 'use strict';
 
 angular.module('hillromvestApp')
-  .factory('hcpPatientService',['$http', 'headerService', function ($http, headerService) {
+  .factory('hcpPatientService',['$http', 'headerService', 'URL', function ($http, headerService, URL) {
     return {
     	getAssociatedPatientsByFilter : function(filter, clinicId, userId){
-        var url = '/api/users/'+userId+'/clinics/'+clinicId+'/patients?filterBy='+filter
+        var url = URL.getAssociatedPatientsByFilter.replace('USERID',userId).replace('CLINICID',clinicId).replace('FILTER',filter);
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function (response) {
@@ -13,7 +13,7 @@ angular.module('hillromvestApp')
       },
 
       getAssociatedPatientsWithNoEvents : function(filter, clinicId, userId){
-        var url = '/api/users/'+userId+'/clinics/'+clinicId+'/patients/'+filter
+        var url = URL.getAssociatedPatientsWithNoEvents.replace('USERID', userId).replace('CLINICID', clinicId).replace('FILTER', filter);
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function (response) {
