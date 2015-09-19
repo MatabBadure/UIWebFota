@@ -1296,5 +1296,47 @@ angular.module('hillromvestApp')
                         }
                     ]
                 }
+            })
+
+            .state('clinicadminUpdatePassword', {
+                parent: 'clinicadmin-dashboard',
+                url: '/updatepassword',
+                data: {
+                    roles: ['CLINIC_ADMIN'],
+                    pageTitle: 'patient.title'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/clinicadmin/profile/profile-tabs/update-password.html',
+                        controller: 'clinicadminProfileController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('profile');
+                        return $translate.refresh();
+                    }]
+                }
+            })
+
+            .state('editClinicadminProfile', {
+                parent: 'clinicadmin-dashboard',
+                url: '/update',
+                data: {
+                    roles: ['CLINIC_ADMIN'],
+                    pageTitle: 'patient.title'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/clinicadmin/profile/profile-tabs/edit-my-profile.html',
+                        controller: 'clinicadminProfileController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('profile');
+                        return $translate.refresh();
+                    }]
+                }
             });
 });

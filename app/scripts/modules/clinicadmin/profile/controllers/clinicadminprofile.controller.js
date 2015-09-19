@@ -38,13 +38,13 @@ angular.module('hillromvestApp')
 
     $scope.init = function(){
       console.log($state.current.name);
-      if($state.current.name === 'clinicadminUserProfile' || $state.current.name === 'editHCPProfile' ){
+      if($state.current.name === 'clinicadminUserProfile' || $state.current.name === 'editClinicadminProfile' ){
         $scope.initProfile(localStorage.getItem('userId'));
       }
     };
 
     $scope.editMode = function(){
-      $state.go('editHCPProfile');
+      $state.go('editClinicadminProfile');
     };
 
     $scope.switchProfileTab = function(status){
@@ -74,7 +74,7 @@ angular.module('hillromvestApp')
       UserService.editUser($scope.user).then(function(response){        
         if(localStorage.getItem("userEmail") === $scope.user.email){
           notyService.showMessage(response.data.message, 'success');
-          $state.go('hcpUserProfile');
+          $state.go('clinicadminUserProfile');
         }else{
           notyService.showMessage(profile.EMAIL_UPDATED_SUCCESSFULLY, 'success');
           Auth.logout();
