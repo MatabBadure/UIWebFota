@@ -6,4 +6,6 @@ angular.module('hillromvestApp')
 
 .constant('VERSION', '0.0.1-SNAPSHOT')
 
-;
+.constant('URL', {
+	'getClinicsAssociatedToCliniadmin' : '/api/user/USERID/clinics' 
+});

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hillromvestApp')
-  .controller('hcpProfileController',['$scope', '$state', '$stateParams', '$location', 'notyService', 'UserService', 'Password', 'Auth', 'AuthServerProvider', 'DoctorService', function ($scope, $state, $stateParams, $location, notyService, UserService, Password, Auth, AuthServerProvider, DoctorService) {
+  .controller('clinicadminProfileController',['$scope', '$state', '$stateParams', '$location', 'notyService', 'UserService', 'Password', 'Auth', 'AuthServerProvider', 'DoctorService', function ($scope, $state, $stateParams, $location, notyService, UserService, Password, Auth, AuthServerProvider, DoctorService) {
 
 
     $scope.isActive = function(tab) {
@@ -37,7 +37,8 @@ angular.module('hillromvestApp')
     };
 
     $scope.init = function(){
-      if($state.current.name === 'hcpUserProfile' || $state.current.name === 'editHCPProfile' ){
+      console.log($state.current.name);
+      if($state.current.name === 'clinicadminUserProfile' || $state.current.name === 'editHCPProfile' ){
         $scope.initProfile(localStorage.getItem('userId'));
       }
     };
