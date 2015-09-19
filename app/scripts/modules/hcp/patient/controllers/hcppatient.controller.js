@@ -12,11 +12,12 @@ angular.module('hillromvestApp')
       $scope.getCaregiversAssociatedWithPatient($stateParams.patientId);
     }else if($state.current.name === 'hcppatientdashboard'){
       $scope.getClinicsAssociatedToHCP();
+      var clinicId = localStorage.getItem('clinicId');
       $scope.sortOption = $stateParams.filter;
       if($stateParams.filter === 'noevents'){
-        $scope.getPatientsWithNoEvents($stateParams.filter);
+        $scope.getPatientsWithNoEvents($stateParams.filter, clinicId);
       } else {
-        $scope.getPatientsByFilter($stateParams.filter);
+        $scope.getPatientsByFilter($stateParams.filter, clinicId);
       }
     }
 	};
@@ -50,8 +51,8 @@ angular.module('hillromvestApp')
     });
   };
 
-  $scope.getPatientsByFilter = function(filter){
-    var userId = localStorage.getItem('userId'), clinicId = localStorage.getItem('clinicId');
+  $scope.getPatientsByFilter = function(filter, clinicId){
+    var userId = localStorage.getItem('userId');
     hcpPatientService.getAssociatedPatientsByFilter(filter, clinicId, userId).then(function(response){
       $scope.patients = response.data.patientList;
     }).catch(function(response){
@@ -59,8 +60,8 @@ angular.module('hillromvestApp')
     });
   };
 
-	$scope.getPatientsWithNoEvents = function(filter){
-    var userId = localStorage.getItem('userId'), clinicId = localStorage.getItem('clinicId');
+	$scope.getPatientsWithNoEvents = function(filter, clinicId){
+    var userId = localStorage.getItem('userId');
 		hcpPatientService.getAssociatedPatientsWithNoEvents(filter, clinicId, userId).then(function(response){
       $scope.patients = response.data.patientList;
     }).catch(function(response){
@@ -135,8 +136,20 @@ angular.module('hillromvestApp')
 		$state.go('hcppatientdashboard',{'filter':value});
 	};
 
+  $scope.switchClinic = function(clinic){
+    if($scope.selectedClinic.id !== clinic.id){
+      $scope.selectedClinic = clinic;
+      if($stateParams.filter === 'noevents'){
+        $scope.getPatientsWithNoEvents($stateParams.filter, clinic.id);
+      } else {
+        $scope.getPatientsByFilter($stateParams.filter, clinic.id);
+      }
+    }
+  };
+
   $scope.changeSortOption = function(){
     console.log('Todo :Check Box changes', $scope.sortOn);
   };
+
 	$scope.init();
 }]);
