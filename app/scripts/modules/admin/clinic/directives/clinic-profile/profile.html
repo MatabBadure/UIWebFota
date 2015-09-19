@@ -16,7 +16,8 @@
     <div class="col-md-4 user-detail-info__data">
       <span class="user-detail-info__data--key" translate="clinic.type"></span>
       <span class="user-detail-info__data--key">:</span>
-      <span class="user-detail-info__data--value">{{clinic.type}}</span>
+      <span class="user-detail-info__data--value" ng-if="clinic.parent" translate="clinic.clinicType.parent"></span>
+      <span class="user-detail-info__data--value" ng-if="!clinic.parent" translate="clinic.clinicType.satellite"></span>
     </div>
     <div class="col-md-4 user-detail-info__data">
       <span class="user-detail-info__data--key" translate="clinic.status"></span>

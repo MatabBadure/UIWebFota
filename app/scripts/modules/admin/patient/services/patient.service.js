@@ -328,7 +328,7 @@ angular.module('hillromvestApp')
         });
       },
       getTherapyDataAsCSV : function(patientId, startDate, endDate){
-        var url = "/api/users/"+patientId+"/exportTherapyDataCSV?from="+startDate+"&to="+endDate;
+        var url = admin.hillRomUser.users+ "/" +patientId+"/exportTherapyDataCSV?from="+startDate+"&to="+endDate;
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response){
@@ -336,8 +336,8 @@ angular.module('hillromvestApp')
         });
       },
 
-      getDeviceDataAsCSV: function(patientId, startDate, endDate){
-        var url = "/api/users/"+ patientId +"/exportVestDeviceDataCSV?from="+ startDate+"&to="+endDate;
+      getDeviceDataAsCSV: function(patientId, startDateTimestamp, endDateTimestamp){
+        var url = admin.hillRomUser.users+ "/" +patientId +"/exportVestDeviceDataCSV?from="+ startDateTimestamp+"&to="+endDateTimestamp;
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response){

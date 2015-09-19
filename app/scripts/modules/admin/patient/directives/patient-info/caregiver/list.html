@@ -34,9 +34,9 @@
   </div>
 </div>
 
-  <div class="col-md-16 caregiver-list" ng-repeat="caregiver in caregivers track by $index" ng-if="!caregiver.user.deleted">
+  <div class="col-md-16 caregiver-list" ng-repeat="caregiver in caregivers | filter:{user:{deleted: false}} track by $index">
     <div class="col-md-3 caregiver-list__detail">
-      <span class="caregiver-list__detail--name">{{caregiver.user.lastName}}&nbsp;{{caregiver.user.middleName}}&nbsp;{{caregiver.user.firstName}}</span>
+      <span class="caregiver-list__detail--name">{{caregiver.user.lastName}} {{caregiver.user.firstName}}</span>
       <span class="caregiver-list__detail--email">{{caregiver.user.email}}</span>
     </div>
     <div class="col-md-3 caregiver-list__address">
@@ -58,7 +58,7 @@
       <span class="icon-edit-icon" ng-click="goToCaregiverEdit(caregiver.user.id)"></span>
     </div>
     <div class="col-md-1 caregiver-list__delete" >
-      <span class="icon-delete-icon" ng-click="disassociateCaregiversFromPatient(caregiver.user.id, $index)"></span>
+      <span class="icon-delete-icon" ng-click="openModalCaregiver(caregiver.user.id, $index)"></span>
     </div>
   </div>
 
@@ -68,5 +68,25 @@
 
   <div class="col-md-16 reset-padding caregiver-link">
       <buton class="hillrom-btn btn-primary float-right" ng-click="linkCaregiver()" translate="patient.link-caregiver"></buton>
+  </div>
+</div>
+
+<div ng-if="showModalCaregiver" class="modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true">
+  <div class="modal__dialog">
+    <div class="modal__content">
+      <header class="modal__header">
+        <button type="button" class="modal__close" data-dismiss="modal" ng-click="closeModalCaregiver()">&times;</button>
+         <p translate="patient.delete-caregiver.warning"></p>
+      </header>
+      <div class="modal__body">
+         <div class="modal--message" translate="patient.delete-caregiver.message"></div>
+         <div class="row modal--custom-btn">
+          <buton class="hillrom-btn btn-submit float-right" ng-click="disassociateCaregiversFromPatient(deleteCaregiver)">Yes</buton>
+          <buton class="hillrom-btn btn-submit float-right" data-dismiss="modal" ng-click="closeModalCaregiver()">No</buton>
+         </div>
+      </div>
+      <footer class="modal__footer">
+      </footer>
+    </div>
   </div>
 </div>

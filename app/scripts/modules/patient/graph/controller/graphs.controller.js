@@ -402,8 +402,10 @@ angular.module('hillromvestApp')
       $scope.complianceParamErrMsg = false;  
       var count = $scope.getCountLegends();
       if(count === 1){
+        notyService.showMessage(notyMessages.minComplianceError, notyMessages.typeWarning );
         $scope.minComplianceParamErrMsg = true; 
       }else if(count >= 2){
+        notyService.showMessage(notyMessages.maxComplianceError, notyMessages.typeWarning );
         $scope.complianceParamErrMsg = true; 
       }
     };
@@ -1436,7 +1438,7 @@ angular.module('hillromvestApp')
     };
 
     $scope.downloadTherapyAndDeviceDataAsCSV = function(){
-      patientService.getTherapyDataAsCSV($scope.patientId, $scope.fromTimeStamp, $scope.toTimeStamp).then(function(response){
+      patientService.getTherapyDataAsCSV($scope.patientId, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-')).then(function(response){
          graphService.downloadAsCSVFromJSONData(response.data, 'TherapyReport.csv', 'therapy');
       });
       patientService.getDeviceDataAsCSV($scope.patientId, $scope.fromTimeStamp, $scope.toTimeStamp).then(function(response){
@@ -1444,4 +1446,5 @@ angular.module('hillromvestApp')
       });
       
     };
+
 });

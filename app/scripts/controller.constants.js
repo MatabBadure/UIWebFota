@@ -38,3 +38,9 @@ var profile = {
 	'EMAIL_UPDATED_SUCCESSFULLY' : 'Email updated successfully. Please login again.'
 }
 
+var notyMessages = {
+	"typeWarning": "warning",
+	"typeSuccess": "success",
+	"maxComplianceError" : "Please deselect one item.",
+	"minComplianceError": "At least one item should be selected."
+}
