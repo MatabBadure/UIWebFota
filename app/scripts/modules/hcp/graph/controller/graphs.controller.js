@@ -96,7 +96,11 @@ $scope.opts = {
 /*Dtate picker js END*/
 
   $scope.goToPatientDashboard = function(value){
-    $state.go(value);
+    if(value === 'hcppatientdashboard'){
+      $state.go(value, {'clinicId': $scope.selectedClinic.id});
+    }else{
+      $state.go(value);
+    }
   };
 
   $scope.gotoPatients = function(value){
