@@ -222,6 +222,10 @@ a::-moz-focus-inner {
   text-overflow: ellipsis;
 }
 
+.lebel-indent label {
+	padding-left: 0;
+}
+
 .lebel-indent label input {
 	display: inline-block;
 	margin-right: 5px;

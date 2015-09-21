@@ -3,11 +3,11 @@
   <div class="dashboard dashboard--content">
     <div class="container dashboard__manage-view margin-top-xl">
       <div class="dashboard__manage-view--search">
-        <div class="fuid-search-box reset-padding-right">
+        <div class="full-search-box reset-padding-right">
           <input type="text" class="form-control" id="searchListParam" name="userName" ng-model="searchItem" autocomplete="off" placeholder="{{'patient.placeholder.search' | translate}}">
           <span class="search-icon hillrom-icon icon-search-icon"></span>
         </div>
-        <div class="fixed-filter-box reset-padding-left">
+        <!-- <div class="fixed-filter-box reset-padding-left">
           <div class="search-dropdown">
             <select name="search" ng-model="sortOption" ng-change="searchPatients(sortOption)">
               <option value="" >All</option>
@@ -17,10 +17,10 @@
               <option value="noevents">No Events</option>
             </select>
           </div>
-        </div>
+        </div> -->
       </div>
 
-      <div class="row lebel-indent">
+      <div class="col-md-16 col-sm-16 reset-padding lebel-indent">
         <label traslate="patient.email">
           <input type="checkbox" ng-model="filterOn.all" ng-change="changeFilterOption()">
           <span translate="patient.filter.all"></span>
@@ -39,7 +39,7 @@
         </label>
       </div>
 
-      <div class="row lebel-indent">
+      <div class="col-md-16 col-sm-16 reset-padding lebel-indent">
         <label>
           <input type="checkbox" ng-model="sortOn.missedTherapy" ng-change="changeSortOption()">
           <span translate="patient.hcp-dash-filter.missed-therapy"></span>
