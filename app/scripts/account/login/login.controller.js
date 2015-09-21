@@ -63,6 +63,11 @@ angular.module('hillromvestApp')
             $state.go('hcpdashboard');
           }else{
             localStorage.setItem('userId', response.data.user.id);
+          } else if(data.data.user.authorities[0].name === 'CLINIC_ADMIN'){
+            localStorage.setItem('userId', data.data.user.id);
+            $state.go('clinicadmindashboard');
+          }else{
+            localStorage.setItem('userId', data.data.user.id);
             $state.go('patientUser');
           }
         }

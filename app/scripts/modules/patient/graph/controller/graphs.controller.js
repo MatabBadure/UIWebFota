@@ -30,7 +30,7 @@ angular.module('hillromvestApp')
         $scope.initPatientDeviceProtocol();
       }else if(currentRoute === 'patientdashboardClinicHCP'){
         $scope.initPatientClinicHCPs();
-      } else if(currentRoute === 'patientOverview' || currentRoute === 'hcppatientOverview') {
+      } else if(currentRoute === 'patientOverview' || currentRoute === 'hcppatientOverview' || currentRoute === 'clinicadminpatientOverview') {
         $scope.patientId = parseInt($stateParams.patientId);
         $scope.weeklyChart();
       }
