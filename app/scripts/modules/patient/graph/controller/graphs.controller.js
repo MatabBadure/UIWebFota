@@ -1437,14 +1437,16 @@ angular.module('hillromvestApp')
       $scope.downloadTherapyAndDeviceDataAsCSV();
     };
 
-    $scope.downloadTherapyAndDeviceDataAsCSV = function(){
-      patientService.getTherapyDataAsCSV($scope.patientId, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-')).then(function(response){
-         graphService.downloadAsCSVFromJSONData(response.data, 'TherapyReport.csv', 'therapy');
-      });
+    $scope.downloadRawDataAsCsv = function(){
       patientService.getDeviceDataAsCSV($scope.patientId, $scope.fromTimeStamp, $scope.toTimeStamp).then(function(response){
          graphService.downloadAsCSVFile(response.data, 'VestDeviceReport.csv', 'vestDevice');
-      });
-      
+      }); 
     };
 
+    $scope.downloadProcessedDataAsCsv = function(){
+      patientService.getTherapyDataAsCSV($scope.patientId, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-')).then(function(response){
+         graphService.downloadAsCSVFile(response.data, 'TherapyReport.csv', 'therapy');
+      });
+    };
+    
 });

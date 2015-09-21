@@ -261,7 +261,9 @@
         "min-legend-required": "At least one item should be selected.",
         "no-notifications": "Doing great. Have a good day !",
         "export-as-pdf": "PDF",
-        "export-as-csv": "CSV"
+        "export-as-csv": "CSV",
+        "export-raw-data": "Raw Data",
+        "export-processed-data": "Processed Data"
      },
      "no-clinic-found": "No clinic associated.",
      "no-hcp-found": "No hcp associated.",
