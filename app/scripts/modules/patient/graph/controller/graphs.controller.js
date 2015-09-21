@@ -161,6 +161,7 @@ angular.module('hillromvestApp')
       $scope.waitFunction();
     }
     $scope.plotNoDataAvailable = function() {
+      $scope.noDataAvailable = true;
       $scope.removeGraph();
       d3.selectAll('svg').append('text').
         text("No Data Available!").
@@ -360,6 +361,7 @@ angular.module('hillromvestApp')
     };
 
     $scope.showHmrGraph = function() {
+      $scope.noDataAvailable = false;
       $scope.selectedGraph = 'HMR';
       $scope.complianceGraph = false;
       $scope.hmrGraph = true;
@@ -573,6 +575,7 @@ angular.module('hillromvestApp')
     };
 
     $scope.drawChart = function(datePicker,dateOption,groupByOption,durationInDays) {
+      $scope.noDataAvailable = false;
       $scope.selectedDateOption = dateOption;
       $scope.removeGraph();
       if(datePicker === undefined){
@@ -622,6 +625,7 @@ angular.module('hillromvestApp')
 
 
     $scope.showComplianceGraph = function() {
+      $scope.noDataAvailable = false;
       $scope.selectedGraph = 'COMPLIANCE';
       $scope.complianceGraph = true;
       $scope.hmrGraph = false;
