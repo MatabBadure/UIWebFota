@@ -262,8 +262,9 @@
         "no-notifications": "Doing great. Have a good day !",
         "export-as-pdf": "PDF",
         "export-as-csv": "CSV",
-        "export-raw-data": "Raw Data",
-        "export-processed-data": "Processed Data"
+        "export-raw-data": "Raw Data (CSV)",
+        "export-processed-data": "Processed Data (CSV)",
+        "download": "Download"
      },
      "no-clinic-found": "No clinic associated.",
      "no-hcp-found": "No hcp associated.",
