@@ -1,10 +1,13 @@
 angular.module('hillromvestApp')
-.controller('clinicadminPatientController',['$scope', '$state', '$stateParams', 'clinicadminPatientService', 'patientService', 'notyService', 'DoctorService', 'clinicadminService', 'clinicService', function($scope, $state, $stateParams, clinicadminPatientService, patientService, notyService, DoctorService, clinicadminService, clinicService) { 
+.controller('clinicadminPatientController',['$scope', '$state', '$stateParams', 'clinicadminPatientService', 'patientService', 'notyService', 'DoctorService', 'clinicadminService', 'clinicService', 'dateService', 'UserService', function($scope, $state, $stateParams, clinicadminPatientService, patientService, notyService, DoctorService, clinicadminService, clinicService, dateService, UserService) { 
 	
 	$scope.init = function(){
     console.log('Current State: ', $state.current.name);
-    if($state.current.name === 'clinicadminpatientDemographic'){
-      $scope.getPatientInfo($stateParams.patientId);      
+    if($state.current.name === 'clinicadminpatientDemographic' || $state.current.name === 'clinicadmminpatientDemographicEdit'){
+      $scope.getPatientInfo($stateParams.patientId, $scope.setEditMode);
+      if($state.current.name === 'clinicadmminpatientDemographicEdit'){
+        $scope.getStates();
+      }
     }else if($state.current.name === 'clinicadminpatientClinics'){
       $scope.getClinicsandHcpAssociatedToPatient($stateParams.patientId);      
     }else if($state.current.name === 'clinicadminpatientProtocol'){
@@ -24,6 +27,12 @@ angular.module('hillromvestApp')
       }
     }
 	};
+
+  $scope.getStates = function(){
+    UserService.getState().then(function(response) {
+      $scope.states = response.data.states;
+    }).catch(function(response) {});
+  };
 
   $scope.getAllPatientsByClinicId = function(clinicId){
     clinicService.getClinicAssoctPatients(clinicId).then(function(response){
@@ -54,9 +63,12 @@ angular.module('hillromvestApp')
     }
   };
 
-  $scope.getPatientInfo = function(patinetId){
+  $scope.getPatientInfo = function(patinetId, callback){
     patientService.getPatientInfo(patinetId).then(function(response){
       $scope.patient = response.data;
+      if (typeof callback === 'function') {
+        callback($scope.patient);
+      }
     }).catch(function(response){
       $scope.showWarning(response);
     });
@@ -159,6 +171,46 @@ angular.module('hillromvestApp')
 
   $scope.changeSortOption = function(){
     console.log('Todo :Check Box changes', $scope.sortOn);
+  };
+
+  $scope.openEditDetail = function(){
+    console.log('Opening Edit mode...!', $stateParams.patientId);
+    $state.go('clinicadmminpatientDemographicEdit', {'patientId': $stateParams.patientId});
+  };
+
+  $scope.cancelEditDemographics = function(){
+    console.log('Cancel ');
+    $state.go('clinicadminpatientDemographic', {'patientId': $stateParams.patientId});
+  };
+
+  $scope.editPatient = function(){
+    if($scope.form.$invalid){
+      console.log('Returning False...!');
+      return false;
+    }
+    var data = $scope.patient;
+    data.role = 'PATIENT';
+    UserService.editUser(data).then(function (response) {
+      $state.go('clinicadminpatientDemographic', {'patientId': $stateParams.patientId});
+      notyService.showMessage(response.data.message, 'success');
+    }).catch(function(response){
+      $scope.showWarning(response);
+    });
+    console.log('Coming here..!', $scope.patient);
+  };
+
+  $scope.setEditMode = function(patient) {
+    $scope.patient = patient;
+    if (patient.dob !== null) {
+      $scope.patient.age = dateService.getAge(new Date($scope.patient.dob));
+      var _date = dateService.getDate($scope.patient.dob);
+      var _month = dateService.getMonth(_date.getMonth());
+      var _day = dateService.getDay(_date.getDate());
+      var _year = dateService.getYear(_date.getFullYear());
+      var dob = _month + "/" + _day + "/" + _year;
+      $scope.patient.dob = dob;
+      $scope.patient.formatedDOB = _month + "/" + _day + "/" + _year.slice(-2);
+    }
   };
 
 	$scope.init();
