@@ -35,3 +35,24 @@ angular.module('hillromvestApp')
       }
     }
   }]);
+
+  angular.module('hillromvestApp')
+  .directive('validateOnKeyPress', [function () {
+    var ddo = {
+      restrict: "A",
+      require: "ngModel",
+      scope: {},
+      require: 'ngModel',
+      link: function (scope, element, attrs, modelCtrl) {
+        element.on('keydown', function() {
+          modelCtrl.$showValidationMessage = modelCtrl.$dirty;
+          scope.$apply();
+        });
+        element.on('keyup', function() {
+          modelCtrl.$showValidationMessage = modelCtrl.$dirty;
+          scope.$apply();
+        });
+      }
+    }; 
+    return ddo;
+  }]);
