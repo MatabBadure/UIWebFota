@@ -59,6 +59,7 @@
         "transmission": "Transmission",
         "status": "Status",
         "clinic-name": "Clinic Name",
+        "hcp-name": "HCP Name",
         "phone-number": "Phone No",
         "mobile-number": "Mobile No.",
         "home-phone-number": "Home Phone No.",
