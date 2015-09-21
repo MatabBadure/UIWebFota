@@ -7,5 +7,8 @@ angular.module('hillromvestApp')
 .constant('VERSION', '0.0.1-SNAPSHOT')
 
 .constant('URL', {
+	'getStatistics':'/api/users/USERID/clinics/CLINICID/statistics',
+	'getAssociatedPatientsByFilter':'/api/users/USERID/clinics/CLINICID/patients?filterBy=FILTER',
+	'getAssociatedPatientsWithNoEvents':'/api/users/USERID/clinics/CLINICID/patients/FILTER',
 	'getClinicsAssociatedToCliniadmin' : '/api/user/USERID/clinics' 
 });

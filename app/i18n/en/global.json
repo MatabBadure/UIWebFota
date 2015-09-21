@@ -46,7 +46,8 @@
             "manage-clinics": "Clinics",
             "manage-users": "Users",
             "notifications": "Notifications",
-            "dashboard": "Dashboard"
+            "dashboard": "Dashboard",
+            "patients": "Patients"
         },
         "form": {
             "username": "Login",
