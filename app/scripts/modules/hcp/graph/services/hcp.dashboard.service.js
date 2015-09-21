@@ -6,7 +6,7 @@
  *
  */
 angular.module('hillromvestApp')
-  .factory('hcpDashBoardService', ['$http','headerService', 'hcpServiceConstants', function ($http, headerService, hcpServiceConstants) {
+  .factory('hcpDashBoardService', ['$http','headerService', 'hcpServiceConstants', 'URL' function ($http, headerService, hcpServiceConstants, URL) {
     return {
 
       /**
@@ -51,14 +51,14 @@ angular.module('hillromvestApp')
       * @description To get statistics for a hcp based on ID.
       *
       */
-      getHcpStatistics: function(id) {
-        var url = hcpServiceConstants.graph.baseURL;
-        url  = url + '/' + id + '/complianceLevel';
+      getStatistics: function(clinicId, userId){
+        var url = URL.getStatistics.replace('USERID', userId).replace('CLINICID', clinicId);
         return $http.get(url, {
           headers: headerService.getHeader()
-        }).success(function(response) {
+        }).success(function (response) {
           return response;
         });
       }
     };
   }]);
+
