@@ -94,7 +94,7 @@ angular.module('hillromvestApp')
 
   $scope.getClinicsandHcpAssociatedToPatient = function(patientId){
     $scope.getAssociateHCPToPatient(patientId);
-    $scope.getAssociatedClincsToPatient(patientId);
+    $scope.getClinicById($stateParams.clinicId);
   };
 
   $scope.getAssociateHCPToPatient = function(patientId){
@@ -105,9 +105,9 @@ angular.module('hillromvestApp')
     });
   };
 
-  $scope.getAssociatedClincsToPatient = function(patientId){
-    patientService.getClinicsLinkedToPatient(patientId).then(function(response){
-      $scope.associatedClinics = response.data.clinics;
+  $scope.getClinicById = function(clinicId){
+    clinicService.getClinic(clinicId).then(function(response){
+      $scope.clinic = response.data.clinic;
     }).catch(function(response){
       $scope.showWarning(response);
     });
@@ -174,18 +174,15 @@ angular.module('hillromvestApp')
   };
 
   $scope.openEditDetail = function(){
-    console.log('Opening Edit mode...!', $stateParams.patientId);
     $state.go('clinicadmminpatientDemographicEdit', {'patientId': $stateParams.patientId});
   };
 
   $scope.cancelEditDemographics = function(){
-    console.log('Cancel ');
     $state.go('clinicadminpatientDemographic', {'patientId': $stateParams.patientId});
   };
 
   $scope.editPatient = function(){
     if($scope.form.$invalid){
-      console.log('Returning False...!');
       return false;
     }
     var data = $scope.patient;
