@@ -15,7 +15,7 @@
 						</div>
 					</div>
 					<div class="stats_chart_container">
-						<div class="col-3" ng-click="gotoPatients('Missed Therapy')">
+						<div class="col-3" ng-click="gotoPatients('missedtherapy')">
 							<div class="pie_chart"  easypiechart options="missedtherapy" percent="missedtherapyDays"></div>
 							<div class="stats_chart_content missed">
 								<h4 class="percent" ng-bind="missedtherapyDays"></h4>
@@ -24,7 +24,7 @@
 							</div>
 							<div class="chart_inner_icon icon-lungs"></div>
 						</div>
-						<div class="col-3" ng-click="gotoPatients('HMR Non-Compliance')">
+						<div class="col-3" ng-click="gotoPatients('HMRNon-Compliance')">
 							<div class="pie_chart"  easypiechart options="hmr" percent="hmrRunRate"></div>
 							<div class="stats_chart_content hmr">
 								<h4 class="percent"  ng-bind="hmrRunRate"></h4>
@@ -33,7 +33,7 @@
 							</div>
 							<div class="chart_inner_icon icon-notification-bell"></div>
 						</div>
-						<div class="col-3" ng-click="gotoPatients('Setting Deviation')">
+						<div class="col-3" ng-click="gotoPatients('SettingDeviation')">
 							<div class="pie_chart" easypiechart options="deviation" percent="deviationDays"></div>
 							<div class="stats_chart_content deviation">
 								<h4 class="percent" ng-bind="deviationDays"></h4>
@@ -42,7 +42,7 @@
 							</div>
 							<div class="chart_inner_icon icon-settings"></div>
 						</div>
-						<div class="col-3" ng-click="gotoPatients('No Events Recorded')">
+						<div class="col-3" ng-click="gotoPatients('NoEventsRecorded')">
 							<div class="pie_chart"  easypiechart options="noevent" percent="noeventDays"></div>
 							<div class="stats_chart_content noevent">
 								<h4 class="percent" ng-bind="noeventDays"></h4>

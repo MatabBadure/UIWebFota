@@ -379,8 +379,8 @@
 			.color(d3.scale.category10().range());
 		 	
 			chart.tooltipContent($scope.toolTipContentForTreatment());
-			chart.yDomain1([0,$scope.yAxis1Max]);
-      chart.yDomain2([0,$scope.yAxis2Max]); 
+			//chart.yDomain1([0,$scope.yAxis1Max]);
+      		//chart.yDomain2([0,$scope.yAxis2Max]); 
 			//this function to put x-axis labels
 			chart.xAxis.tickFormat(function(d) {
 					if(d % 1 === 0) {
@@ -420,7 +420,7 @@
 
 	$scope.init();
 	$scope.gotoPatients = function(value){
-		$state.go('hcppatientdashboard');
+		$state.go('hcppatientdashboard',{'filter':value});
 	};
 
 	}]);

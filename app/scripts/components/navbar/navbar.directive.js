@@ -187,7 +187,6 @@ angular.module('hillromvestApp')
           }          
         });
       };
-      $scope.getNotifications();
 
       $('html').on('mouseup', function(e) {
         if(!$(e.target).closest('.popover').length) {
@@ -202,6 +201,7 @@ angular.module('hillromvestApp')
     });
     }
   };
+/*<<<<<<< HEAD
 });
 
 
@@ -221,4 +221,6 @@ angular.module('hillromvestApp')
         };
       }
     }
+});
+=======*/
 });
