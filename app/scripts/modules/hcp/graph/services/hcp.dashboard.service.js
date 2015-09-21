@@ -29,6 +29,23 @@ angular.module('hillromvestApp')
 
       /**
       * @ngdoc method
+      * @name getHcpStatistics
+      * @description To get statistics for a hcp based on ID.
+      *
+      */
+      getStatistics: function(clinicId, userId){
+        var url = URL.getStatistics.replace('USERID', userId).replace('CLINICID', clinicId);
+        return $http.get(url, {
+          headers: headerService.getHeader()
+        }).success(function (response) {
+          return response;
+        });
+      },
+
+
+
+      /**
+      * @ngdoc method
       * @name getTreatmentGraphPoints
       * @description To get array of data points for treatment statistics  graph.
       *
@@ -40,22 +57,6 @@ angular.module('hillromvestApp')
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
-          return response;
-        });
-      },
-
-
-      /**
-      * @ngdoc method
-      * @name getHcpStatistics
-      * @description To get statistics for a hcp based on ID.
-      *
-      */
-      getStatistics: function(clinicId, userId){
-        var url = URL.getStatistics.replace('USERID', userId).replace('CLINICID', clinicId);
-        return $http.get(url, {
-          headers: headerService.getHeader()
-        }).success(function (response) {
           return response;
         });
       }

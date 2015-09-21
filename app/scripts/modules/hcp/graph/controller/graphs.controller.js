@@ -4,14 +4,7 @@
 	.controller('hcpGraphController',[ '$scope', '$state', 'hcpDashBoardService', 'dateService', 'graphUtil', '$stateParams', 'hcpDashboardConstants', 'DoctorService', function($scope, $state, hcpDashBoardService, dateService, graphUtil, $stateParams, hcpDashboardConstants, DoctorService) {
 		var chart;
 		$scope.init = function() {
-      DoctorService.getClinicsAssociatedToHCP(localStorage.getItem('userId')).then(function(response){
-        localStorage.setItem('clinicId', response.data.clinics[0].id);
-        $scope.clinics = response.data.clinics;
-        $scope.selectedClinic = response.data.clinics[0];
-        $scope.getStatistics($scope.selectedClinic.id, localStorage.getItem('userId'));
-      }).catch(function(response){
-        $scope.showWarning(response);
-      });
+			$scope.hcpId = parseInt(localStorage.getItem('userId'));
 			$scope.selectedGraph = 'CUMULATIVE';
 			$scope.treatmentGraph = false;
 			$scope.cumulativeGraph = true;
@@ -24,80 +17,8 @@
 			$scope.fromTimeStamp = dateService.getnDaysBackTimeStamp(patientDashboard.maxDaysForWeeklyGraph);
 			$scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,hcpDashboardConstants.USdateFormat,'/');
 			$scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,hcpDashboardConstants.USdateFormat,'/');
-			$scope.hcpId = parseInt(localStorage.getItem('hcpID'));
-			$scope.clinicId = 'HR2015000027';
-			$scope.getHcpStatistics();
-			$scope.weeklyChart();
+			$scope.getClinics($scope.hcpId);
 		}; 
-
-  $scope.getStatistics = function(clinicId, userId){
-    hcpDashboardService.getStatistics(clinicId, userId).then(function(response){
-      $scope.statistics = response.data.statitics;
-    }).catch(function(response){
-      $scope.showWarning(response);
-    });
-  };
-
-  $scope.showWarning = function(response){
-    if(response.data.ERROR){
-      notyService.showMessage(response.data.ERROR, 'warning');
-    }else if(response.data.message){
-      notyService.showMessage(response.data.message, 'warning');  
-    }
-  };
-
-  $scope.switchClinic = function(clinic){
-    if($scope.selectedClinic.id !== clinic.id){
-      $scope.selectedClinic = clinic;
-      $scope.getStatistics($scope.selectedClinic.id, localStorage.getItem('userId'));
-    }
-  };
-
-/*	$scope.missedtherapy = {
-        animate:{
-            duration:3000,
-            enabled:true
-        },
-        barColor:'#69be7f',
-        trackColor: '#ccc',
-        scaleColor: false,
-        lineWidth:12,
-        lineCap:'circle'
-    };
-    $scope.hmr = {
-        animate:{
-            duration:3000,
-            enabled:true
-        },
-        barColor:'#f7a462',
-        trackColor: '#ccc',
-        scaleColor: false,
-        lineWidth:12,
-        lineCap:'circle'
-    };
-  $scope.deviation = {
-          animate:{
-              duration:3000,
-              enabled:true
-          },
-          barColor:'#5da0cc',
-          trackColor: '#ccc',
-          scaleColor: false,
-          lineWidth:12,
-          lineCap:'circle'
-      };
-$scope.noevent = {
-          animate:{
-              duration:3000,
-              enabled:true
-          },
-          barColor:'#e28181',
-          trackColor: '#ccc',
-          scaleColor: false,
-          lineWidth:12,
-          lineCap:'circle'
-      };
-*/
 
 		$scope.getBarColor = function(count) {
 			if( count <= 25 && count > 0) {
@@ -109,6 +30,28 @@ $scope.noevent = {
 			} else if( count >75) {
 				return hcpDashboardConstants.statistics.color.full;
 			}
+		}
+
+		$scope.getStatistics = function(clinicId, userId){
+			console.log('+++++++++++++++++++++++++++++++++++'+ hcpDashboardService+ clinicId+ userId);
+			hcpDashboardService.getStatistics(clinicId, userId).then(function(response){
+				  $scope.statistics = response.data.statitics;
+				}).catch(function(response){
+				  $scope.showWarning(response);
+				});
+	  }
+
+		$scope.getClinics = function(userId) {
+			DoctorService.getClinicsAssociatedToHCP(userId).then(function(response){
+				localStorage.setItem('clinicId', response.data.clinics[0].id);
+				$scope.clinicId = response.data.clinics[0].id;
+				$scope.clinics = response.data.clinics;
+				$scope.selectedClinic = response.data.clinics[0];
+				$scope.weeklyChart();
+				$scope.getStatistics($scope.selectedClinic.id, userId);
+		  }).catch(function(response){
+				$scope.showWarning(response);
+		  });
 		}
 
 		//---HCP PieChart JS =============
@@ -162,11 +105,11 @@ $scope.noevent = {
 				};
 
   $scope.goToPatientDashboard = function(value){
-    if(value === 'hcppatientdashboard'){
-      $state.go(value, {'clinicId': $scope.selectedClinic.id});
-    }else{
-      $state.go(value);
-    }
+	if(value === 'hcppatientdashboard'){
+	  $state.go(value, {'clinicId': $scope.selectedClinic.id});
+	}else{
+	  $state.go(value);
+	}
   };
 
 		/*Dtate picker js*/
@@ -181,20 +124,24 @@ $scope.noevent = {
 					}
 				},
 				opens: 'left'
-			}
+			};
 
 		/*Dtate picker js END*/
 
-		 $scope.getHcpStatistics = function() {
-	      hcpDashBoardService.getHcpStatistics($scope.hcpId).then(function(response){
-	        if(response.status === 200 ){
-	          $scope.missedtherapyDays = response.data.hmrRunRate;
-	          $scope.hmrRunRate = response.data.score;
-	          $scope.deviationDays = response.data.score;
-	          $scope.noeventDays = response.data.score;
-	        }
-	      });
-	    }
+  $scope.showWarning = function(response){
+		if(response.data.ERROR){
+		  notyService.showMessage(response.data.ERROR, 'warning');
+		}else if(response.data.message){
+		  notyService.showMessage(response.data.message, 'warning');  
+		}
+  }
+
+  $scope.switchClinic = function(clinic){
+	if($scope.selectedClinic.id !== clinic.id){
+	  $scope.selectedClinic = clinic;
+	  $scope.getStatistics($scope.selectedClinic.id, localStorage.getItem('userId'));
+		}
+  }
 			
 		$scope.calculateDateFromPicker = function(picker) {
 			$scope.fromTimeStamp = new Date(picker.startDate._d).getTime();
@@ -461,10 +408,10 @@ $scope.noevent = {
 			.showLegend(false)
 			.margin({top: 30, right: 100, bottom: 50, left: 100})
 			.color(d3.scale.category10().range());
-		 	
+			
 			chart.tooltipContent($scope.toolTipContentForTreatment());
 			//chart.yDomain1([0,$scope.yAxis1Max]);
-      		//chart.yDomain2([0,$scope.yAxis2Max]); 
+			//chart.yDomain2([0,$scope.yAxis2Max]); 
 			//this function to put x-axis labels
 			chart.xAxis.tickFormat(function(d) {
 					if(d % 1 === 0) {
@@ -502,11 +449,11 @@ $scope.noevent = {
 		});
 	}
 
-	
+	$scope.init();
+
 	$scope.gotoPatients = function(value){
-    $state.go('hcppatientdashboard',{'filter':value, 'clinicId':$scope.selectedClinic.id});
+	$state.go('hcppatientdashboard',{'filter':value, 'clinicId':$scope.selectedClinic.id});
   };
 
-  $scope.init();
 	}]);
 
