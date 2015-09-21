@@ -87,6 +87,12 @@
             "expired": "Expired",
             "pending": "Pending"
         },
+        "hcp-dash-filter": {
+            "missed-therapy": "Missed Therapy",
+            "non-hmr-compliance": "Non HMR Compliance",
+            "sertting-deviations": "Sertting Deviations",
+            "no-events": "No Events"
+        },
         "delete": {
             "warning": "Are you sure you want to Deactivate the Patient?",
             "message": "If you deactivate the patient, you will no longer be able to view the information."
