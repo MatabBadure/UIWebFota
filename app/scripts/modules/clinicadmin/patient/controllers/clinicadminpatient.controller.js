@@ -1,5 +1,5 @@
 angular.module('hillromvestApp')
-.controller('clinicadminPatientController',['$scope', '$state', '$stateParams', 'clinicadminPatientService', 'patientService', 'notyService', 'DoctorService', 'clinicadminService', function($scope, $state, $stateParams, clinicadminPatientService, patientService, notyService, DoctorService, clinicadminService) { 
+.controller('clinicadminPatientController',['$scope', '$state', '$stateParams', 'clinicadminPatientService', 'patientService', 'notyService', 'DoctorService', 'clinicadminService', 'clinicService', function($scope, $state, $stateParams, clinicadminPatientService, patientService, notyService, DoctorService, clinicadminService, clinicService) { 
 	
 	$scope.init = function(){
     console.log('Current State: ', $state.current.name);
@@ -12,13 +12,11 @@ angular.module('hillromvestApp')
     }else if($state.current.name === 'hcppatientCraegiver'){
       $scope.getCaregiversAssociatedWithPatient($stateParams.patientId);
     }else if($state.current.name === 'clinicadminpatientdashboard'){
-      console.log('$stateParams.filter: ', $stateParams.filter);
-
       $scope.getClinicsAssociatedToHCP();
-      var clinicId = localStorage.getItem('clinicId');
+      var clinicId = $stateParams.clinicId;
       $scope.sortOption = $stateParams.filter;
       if(!$stateParams.filter){
-        // clinicService.getClinicAssoctPatients(clinicId).then(function(response){}).catch(function(response){});
+        $scope.getAllPatientsByClinicId(clinicId);
       }else if($stateParams.filter === 'noevents'){
         $scope.getPatientsWithNoEvents($stateParams.filter, clinicId);
       } else {
@@ -26,6 +24,14 @@ angular.module('hillromvestApp')
       }
     }
 	};
+
+  $scope.getAllPatientsByClinicId = function(clinicId){
+    clinicService.getClinicAssoctPatients(clinicId).then(function(response){
+      $scope.patients = response.data.patientUsers;
+    }).catch(function(response){
+      $scope.showWarning(response);
+    });
+  };
 
   $scope.getClinicsAssociatedToHCP = function(){
     clinicadminService.getClinicsAssociated(localStorage.getItem('userId')).then(function(response){
