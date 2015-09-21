@@ -880,7 +880,6 @@ angular.module('hillromvestApp')
 
     /*this should initiate the list of caregivers associated to the patient*/
     $scope.initPatientCaregiver = function(){
-      $scope.caregivers = [];      
       $scope.getCaregiversForPatient(localStorage.getItem('patientID'));
     };
 
@@ -892,7 +891,9 @@ angular.module('hillromvestApp')
 
     $scope.getCaregiversForPatient = function(patientId){
       patientService.getCaregiversLinkedToPatient(patientId).then(function(response){
-        $scope.caregivers =  response.data.caregivers;
+        $scope.caregivers = (response.data.caregivers) ? response.data.caregivers : [] ;
+      }).catch(function(response){        
+        notyService.showMessage(response.data.ERROR,'warning' );
       });
     };
 
@@ -942,7 +943,8 @@ angular.module('hillromvestApp')
     };
 
     $scope.disassociateCaregiver = function(caregiverId, index){
-        patientService.disassociateCaregiversFromPatient(localStorage.getItem('patientID'), caregiverId).then(function(response){
+      $scope.closeModalCaregiver();
+      patientService.disassociateCaregiversFromPatient(localStorage.getItem('patientID'), caregiverId).then(function(response){
         $scope.caregivers.splice(index, 1);
       }).catch(function(response){
         notyService.showMessage(server_error_msg);
@@ -1447,6 +1449,14 @@ angular.module('hillromvestApp')
       patientService.getTherapyDataAsCSV($scope.patientId, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-')).then(function(response){
          graphService.downloadAsCSVFile(response.data, 'TherapyReport.csv', 'therapy');
       });
+    };
+
+    $scope.openModalCaregiver = function(caregiverId, index){
+      $scope.showModalCaregiver = true;
+      $scope.deleteCaregiver = {'id':caregiverId, 'index':index};
+    };
+    $scope.closeModalCaregiver = function(){
+      $scope.showModalCaregiver = false;
     };
     
 });

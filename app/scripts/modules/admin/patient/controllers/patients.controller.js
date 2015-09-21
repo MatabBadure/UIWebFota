@@ -456,7 +456,6 @@ angular.module('hillromvestApp')
     };
 
     $scope.initpatientCraegiver = function (patientId){
-      $scope.caregivers = [];
       $scope.getPatientById(patientId);
       $scope.getCaregiversForPatient($stateParams.patientId);
     };
