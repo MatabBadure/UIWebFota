@@ -12,10 +12,13 @@
 
       <ul class="nav navbar-nav pull-right right">
         
-        <li class="hcp_hsp_name_arrow">
-          <a ng-href="" ng-class="{active: isActive('patient/clinic-hcp')}" ng-click="switchPatientTab('patientdashboardClinicHCP')">
-            <span class="">Pennsylvania Hospital <span class="hillrom-icon icon-arrow-down"></span></span>
+        <li class="hcp_hsp_name_a" dropdown>
+          <a ng-href="" ng-class="{active: isActive('patient/clinic-hcp')}" id="dropdownMenu1" dropdown-toggle>
+            <span class="">{{selectedClinic.name}} <span class="hillrom-icon icon-arrow-down"></span></span>
           </a>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+              <li role="menuitem" ng-repeat='clinic in clinics' ng-click="switchClinic(clinic)"><a>{{::clinic.name}}</a></li>
+          </ul>
         </li>
       </ul>
     </div>

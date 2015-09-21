@@ -99,8 +99,12 @@ angular.module('hillromvestApp')
         $state.go(page);
       };
 
-      $scope.goToPatientDashboard = function(){
-        $state.go("patientdashboard");
+      $scope.goToPatientDashboard = function(value){
+        if(value){
+          $state.go(value);
+        }else{
+          $state.go("patientdashboard");
+        }
       };
     }
   };

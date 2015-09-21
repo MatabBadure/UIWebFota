@@ -5,14 +5,35 @@ angular.module('hillromvestApp')
   $scope.init = function(){
     DoctorService.getClinicsAssociatedToHCP(localStorage.getItem('userId')).then(function(response){
       localStorage.setItem('clinicId', response.data.clinics[0].id);
-      hcpDashboardService.getStatistics(response.data.clinics[0].id, localStorage.getItem('userId')).then(function(response){
-        $scope.statistics = response.data.statitics;
-      }).catch(function(response){
-        console.log('ERROR1 :',response);
-      });
+      $scope.clinics = response.data.clinics;
+      $scope.selectedClinic = response.data.clinics[0];
+      $scope.getStatistics($scope.selectedClinic.id, localStorage.getItem('userId'));
     }).catch(function(response){
-      console.log('ERROR :', response);
+      $scope.showWarning(response);
     });
+  };
+
+  $scope.getStatistics = function(clinicId, userId){
+    hcpDashboardService.getStatistics(clinicId, userId).then(function(response){
+      $scope.statistics = response.data.statitics;
+    }).catch(function(response){
+      $scope.showWarning(response);
+    });
+  };
+
+  $scope.showWarning = function(response){
+    if(response.data.ERROR){
+      notyService.showMessage(response.data.ERROR, 'warning');
+    }else if(response.data.message){
+      notyService.showMessage(response.data.message, 'warning');  
+    }
+  };
+
+  $scope.switchClinic = function(clinic){
+    if($scope.selectedClinic.id !== clinic.id){
+      $scope.selectedClinic = clinic;
+      $scope.getStatistics($scope.selectedClinic.id, localStorage.getItem('userId'));
+    }
   };
 
 	//Todo For Donut Graph and Main Graph
@@ -75,11 +96,15 @@ $scope.opts = {
 /*Dtate picker js END*/
 
   $scope.goToPatientDashboard = function(value){
-    $state.go(value);
+    if(value === 'hcppatientdashboard'){
+      $state.go(value, {'clinicId': $scope.selectedClinic.id});
+    }else{
+      $state.go(value);
+    }
   };
 
   $scope.gotoPatients = function(value){
-    $state.go('hcppatientdashboard',{'filter':value});
+    $state.go('hcppatientdashboard',{'filter':value, 'clinicId':$scope.selectedClinic.id});
   };
 
   $scope.init();

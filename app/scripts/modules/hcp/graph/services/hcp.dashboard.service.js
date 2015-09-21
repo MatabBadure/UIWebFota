@@ -1,18 +1,10 @@
 'use strict';
 
 angular.module('hillromvestApp')
-  .factory('hcpDashboardService',['$http', 'headerService', function ($http, headerService) {
+  .factory('hcpDashboardService',['$http', 'headerService', 'URL', function ($http, headerService, URL) {
     return {
-      getPatientsDetails : function(){
-        return $http.put(url, data, {
-          headers: headerService.getHeader()
-        }).success(function (response) {
-          return response;
-        });
-      },
-
       getStatistics: function(clinicId, userId){
-        var url = '/api/users/'+userId+'/clinics/'+clinicId+'/statistics'
+        var url = URL.getStatistics.replace('USERID', userId).replace('CLINICID', clinicId);
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function (response) {

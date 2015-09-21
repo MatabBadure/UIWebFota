@@ -37,13 +37,13 @@
       <span> {{protocol.type}}</span>
     </div>
     <div class="col-md-3 col-sm-3 protocol-list__treatment-day">
-      <span class="protocol-list--value"> {{protocol.treatmentsPerDay}}</span>
+      <span class="protocol-list--value"> {{::protocol.treatmentsPerDay}}</span>
     </div>
     <div class="col-md-4 col-sm-4 protocol-list__strt-date">
-      <span class="protocol-list--value"> {{protocol.createdDate}}</span>
+      <span class="protocol-list--value"> {{::protocol.createdDate}}</span>
     </div>
     <div class="col-md-4 col-sm-4 protocol-list__end-date">
-      <span class="protocol-list--value"> {{protocol.lastModifiedDate}}</span>
+      <span class="protocol-list--value"> {{::protocol.lastModifiedDate}}</span>
     </div>
   </div>
   <div class="col-md-16 col-sm-16 empty-list-message" ng-if="!protocols"><span translate="patient.empty-protocol-list-message"></span></div>
@@ -80,10 +80,10 @@
 
   <div class="col-md-16 col-sm-16 device-list" ng-repeat="device in devices" ng-class="{'list-inactive': !device.active}">
     <div class="col-md-3 col-sm-3 device-list__serial">
-      <span>{{device.serialNumber}}</span>
+      <span>{{::device.serialNumber}}</span>
     </div>
     <div class="col-md-2 col-sm-2 device-list__bt-id">
-      <span>{{device.bluetoothId}}</span>
+      <span>{{::device.bluetoothId}}</span>
     </div>
     <div class="col-md-1 col-sm-1 device-list__bt-id">
       <span class="icon-device"></span>
@@ -92,11 +92,12 @@
       <span ng-if="device.active" class="device--list__status--text" translate="patient.device.active-status">Active</span>
       <span ng-if="!device.active" class="device--list__status--text" translate="patient.device.inactive-status"></span>
     </div>
+
     <div class="col-md-4 col-sm-4 device-list__date">
-      <span>{{device.createdDate}}</span>
+      <span>{{::device.createdDate}}</span>
     </div>
     <div class="col-md-4 col-sm-4 device-list__date">
-      <span>{{device.lastModifiedDate}}</span>
+      <span>{{::device.lastModifiedDate}}</span>
     </div>
   </div>
   <div class="col-md-16 col-sm-16 empty-list-message" ng-if="!devices"><span translate="patient.empty-device-list-message"></span></div>

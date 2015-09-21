@@ -40,7 +40,7 @@
     </div>
     <div class="col-md-4 col-sm-4 clinic-list__address">
       <span class="clinic-list__address--primary" ng-bind="aClinic.address"></span>
-      <span class="clinic-list__address--secondary">{{aClinic.city}}, {{aClinic.state}}</span>
+      <span class="clinic-list__address--secondary">{{::aClinic.city}}, {{::aClinic.state}}</span>
     </div>
     <div class="col-md-3 col-sm-3 clinic-list__phone">
       <span class="clinic-list__phone--number" ng-bind="aClinic.phoneNumber"></span>
@@ -85,10 +85,10 @@
 
   <div class="col-md-16 col-sm-16 clinic-list" ng-repeat="hcp in associatedHCPs track by $index" ng-if="associatedHCPs.length > 0">
     <div class="col-md-3 col-sm-3 clinic-list__detail">
-      <span class="clinic-list__detail--name">{{hcp.lastName}} {{hcp.firstName}}</span>
+      <span class="clinic-list__detail--name">{{::hcp.lastName}} {{hcp.firstName}}</span>
     </div>
     <div class="col-md-4 col-sm-4 clinic-list__address">
-      <span class="clinic-list__credentials">{{hcp.credentials}}</span>
+      <span class="clinic-list__credentials">{{::hcp.credentials}}</span>
     </div>
     <div class="col-md-3 col-sm-3 clinic-list__phone">
       <span class="clinic-list__phone--number" ng-bind="hcp.primaryPhone"></span>

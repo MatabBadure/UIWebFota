@@ -54,5 +54,21 @@
 
 .patient-user__navbar .right > li {
   padding-right: 0;
-  padding-left: 50px;
+  padding-left: 10px;
+}
+.patient-user__navbar{
+  .dropdown-menu{
+    padding: 10px 10px;
+    li{
+      padding: 0px;
+      a{
+        color: $gray;
+      }
+    }
+  }
+  .hcp_hsp_name_a.open{
+    a{
+      background-color: transparent;
+    }
+  }
 }
