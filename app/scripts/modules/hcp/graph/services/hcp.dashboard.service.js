@@ -15,9 +15,9 @@ angular.module('hillromvestApp')
       * @description To get array of data points for cumulative statistics graph.
       *
       */
-      getCumulativeGraphPoints: function(id, fromTimeStamp, toTimeStamp, groupBy) {
+      getCumulativeGraphPoints: function(hcpID, clinicID, fromTimeStamp, toTimeStamp, groupBy) {
         var url = hcpServiceConstants.graph.baseURL;
-        url  = url + '/' + id + '/therapyData';
+        url  = url + '/' + hcpID + '/clinics/' + clinicID + '/cumulativeStatistics';
         url = url + '?from=' + fromTimeStamp + '&to=' + toTimeStamp + '&groupBy=' + groupBy;
         return $http.get(url, {
           headers: headerService.getHeader()
@@ -33,9 +33,9 @@ angular.module('hillromvestApp')
       * @description To get array of data points for treatment statistics  graph.
       *
       */
-      getTreatmentGraphPoints: function(id, fromTimeStamp, toTimeStamp, groupBy) {
+      getTreatmentGraphPoints: function(hcpID, clinicID, fromTimeStamp, toTimeStamp, groupBy) {
         var url = hcpServiceConstants.graph.baseURL;
-        url  = url + '/' + id + '/complianceLevel';
+        url  = url + '/' + hcpID + '/clinics/' + clinicID + '/treatmentStatistics';
         url = url + '?from=' + fromTimeStamp + '&to=' + toTimeStamp + '&groupBy=' + groupBy;
         return $http.get(url, {
           headers: headerService.getHeader()

@@ -46,7 +46,7 @@ angular.module('hillromvestApp')
           point.push(count++);
           switch(key){
             case hcpDashboardConstants.cumulativeGraph.label.missedTherapy:
-              point.push(value.MissedTherapy);
+              point.push(value.missedTherapy);
               break;
             case hcpDashboardConstants.cumulativeGraph.label.nonCompliance:
               point.push(value.nonCompliance);
@@ -141,6 +141,21 @@ angular.module('hillromvestApp')
           var maxFrequency = arrayMax(frequencySet);
           maxFrequency = (maxFrequency > data.recommended.maxFrequency) ? maxFrequency : data.recommended.maxFrequency;
           range.maxFrequency = maxFrequency;
+          return range;
+      }
+
+      this.getYaxisRangeTreatmentGraph = function(data) {
+          var range = {};
+          var treatmentPerDaySet = [];
+          var treatmentDurationSet = [];
+          angular.forEach(data, function(value) {
+              treatmentPerDaySet.push(value.avgTreatments);
+              treatmentDurationSet.push(value.avgTreatmentDuration);
+          });
+          var maxTreatmentsPerDay = arrayMax(treatmentPerDaySet);
+          var maxTreatmentDuration = arrayMax(treatmentDurationSet);
+          range.maxTreatmentsPerDay = maxTreatmentsPerDay === 0 ? 1 : maxTreatmentsPerDay;
+          range.maxTreatmentDuration = maxTreatmentDuration === 0 ? 1 : maxTreatmentDuration;
           return range;
       }
 
@@ -347,11 +362,11 @@ angular.module('hillromvestApp')
           var treatmentPerDayPoint = {};
           var treatmentLengthPoint = {};
           treatmentPerDayPoint.x = count;
-          treatmentPerDayPoint.timeStamp = value.timeStamp;
-          treatmentPerDayPoint.y = value.dailyTreatmentNumber;
+          treatmentPerDayPoint.timeStamp = value.startTime;
+          treatmentPerDayPoint.y = value.avgTreatments;
           treatmentPerDayValues.push(treatmentPerDayPoint);
           treatmentLengthPoint.x = count;
-          treatmentLengthPoint.timeStamp = value.timeStamp;
+          treatmentLengthPoint.timeStamp = value.startTime;
           treatmentLengthPoint.y = value.avgTreatmentDuration;
           treatmentLengthValues.push(treatmentLengthPoint);
         });

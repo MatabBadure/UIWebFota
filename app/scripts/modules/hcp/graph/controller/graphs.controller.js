@@ -13,12 +13,11 @@
 			$scope.treatment = {};
 			$scope.treatment.treatmentPerDay = true;
 			$scope.treatment.treatmentLength = true;
-			//$scope.cumulativeGraphPlotted = false;
 			$scope.fromTimeStamp = dateService.getnDaysBackTimeStamp(patientDashboard.maxDaysForWeeklyGraph);
 			$scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,hcpDashboardConstants.USdateFormat,'/');
 			$scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,hcpDashboardConstants.USdateFormat,'/');
 			$scope.hcpId = parseInt(localStorage.getItem('hcpID'));
-			//$scope.missedtherapyDays = $scope.hmrRunRate = $scope.deviationDays = $scope.noeventDays = 0;
+			$scope.clinicId = 'HR2015000027';
 			$scope.getHcpStatistics();
 			$scope.weeklyChart();
 		}; 
@@ -162,21 +161,17 @@
 
 		$scope.getCumulativeGraphData = function() {
 			 //$scope.cumulativeGraphPlotted = false;
-			 hcpDashBoardService.getCumulativeGraphPoints($scope.hcpId, dateService.getDateFromTimeStamp($scope.fromTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), $scope.groupBy).then(function(response){
-				$scope.serverCumulativeGraphData = cumulativeGraphData.cumulativeStatitics;
+			 hcpDashBoardService.getCumulativeGraphPoints($scope.hcpId, $scope.clinicId, dateService.getDateFromTimeStamp($scope.fromTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), $scope.groupBy).then(function(response){
+				$scope.serverCumulativeGraphData = response.data.cumulativeStatitics;
 				if($scope.serverCumulativeGraphData.length !== 0) {
 					$scope.formatedCumulativeGraphData = graphUtil.convertIntoCumulativeGraph($scope.serverCumulativeGraphData); 
+					console.log('Cumulative Graph Data' + JSON.stringify($scope.formatedCumulativeGraphData));
 					$scope.drawCumulativeGraph();
 				} else {
 					$scope.plotNoDataAvailable();
 				}
 			}).catch(function(response) {
-				//below mocked data section to be removed while integrating with API's
-			/* mocked data starts */
-			$scope.serverCumulativeGraphData = cumulativeGraphData.cumulativeStatitics;
-			$scope.formatedCumulativeGraphData = graphUtil.convertIntoCumulativeGraph($scope.serverCumulativeGraphData); 
-			$scope.drawCumulativeGraph();
-						/* mocked data ends */   
+				$scope.plotNoDataAvailable();
 			});	
 		}
 
@@ -189,10 +184,11 @@
 				.useInteractiveGuideline(true);
 				chart.xAxis.showMaxMin = true;
 				chart.xAxis.staggerLabels = true,
-				chart.yAxis.axisLabel(hcpDashboardConstants.cumulativeGraph.yAxis.label)
+				chart.yAxis.axisLabel(hcpDashboardConstants.cumulativeGraph.yAxis.label);
+				//chart.yDomain([0,5]);
 				chart.xAxis.tickFormat(function(d) {
 					if(d % 1 === 0){
-						var timeStamp = $scope.serverCumulativeGraphData[d-1].timeStamp;
+						var timeStamp = $scope.serverCumulativeGraphData[d-1].startTimestamp;
 							if( event !== undefined && event.type === "mousemove") {
 							return d3.time.format('%x')(new Date(timeStamp));
 							}
@@ -220,30 +216,26 @@
 					.datum($scope.formatedCumulativeGraphData)
 					.call(chart);
 				nv.utils.windowResize(chart.update);
-				//$scope.cumulativeGraphPlotted = true;
 			return chart;
 		});
 		}
 
 
 		$scope.getTreatmentGraphData = function() {
-			 hcpDashBoardService.getTreatmentGraphPoints($scope.hcpId, dateService.getDateFromTimeStamp($scope.fromTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), $scope.groupBy).then(function(response){
-				$scope.serverTreatmentGraphData = treatmentGraphData;
-				$scope.formatedTreatmentGraphData = graphUtil.convertIntoTreatmentGraph($scope.serverTreatmentGraphData);
-				$scope.handlelegends();
-				$scope.createTreatmentGraphData(); 
-				console.log("Treatment Graph Data:" + JSON.stringify($scope.formatedTreatmentGraphData));
-				$scope.drawTreatmentGraph();
+			 hcpDashBoardService.getTreatmentGraphPoints($scope.hcpId, $scope.clinicId, dateService.getDateFromTimeStamp($scope.fromTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), $scope.groupBy).then(function(response){
+				if( response !== null && response.data !== null && response.data.treatmentStatitics.length !==0) {
+					$scope.serverTreatmentGraphData = response.data.treatmentStatitics;
+					$scope.formatedTreatmentGraphData = graphUtil.convertIntoTreatmentGraph($scope.serverTreatmentGraphData);
+					$scope.handlelegends();
+					$scope.treatmentGraphRange = graphUtil.getYaxisRangeTreatmentGraph($scope.serverTreatmentGraphData);
+					$scope.createTreatmentGraphData(); 
+					console.log("Treatment Graph Data:" + JSON.stringify($scope.treatmentGraphData));
+					$scope.drawTreatmentGraph();
+				} else {
+					$scope.plotNoDataAvailable();
+				}
 			}).catch(function(response) {
-				//below mocked data section to be removed while integrating with API's
-			/* mocked data starts */
-			$scope.serverTreatmentGraphData = treatmentGraphData;
-			$scope.formatedTreatmentGraphData = graphUtil.convertIntoTreatmentGraph($scope.serverTreatmentGraphData);
-			$scope.handlelegends();
-			$scope.createTreatmentGraphData(); 
-			console.log("Treatment Graph Data:" + JSON.stringify($scope.formatedTreatmentGraphData));
-			$scope.drawTreatmentGraph();
-			/* mocked data ends */    
+			   $scope.plotNoDataAvailable();
 			});
 		}
 
@@ -275,7 +267,7 @@
 
 		// Weekly chart
 		$scope.weeklyChart = function(datePicker) {
-			$scope.drawChart(datePicker,'WEEK','weekly',7);
+			$scope.drawChart(datePicker,'WEEK','weekly',6);
 		};
 
 		// Yearly chart
@@ -325,6 +317,25 @@
 			}
 		}
 
+		$scope.setYaxisRangeForTreatmentGraph = function(axisLabel,count) {
+			switch(axisLabel) {
+				case 'Treatments':
+					if(count === 1) {
+						$scope.yAxis1Max = $scope.treatmentGraphRange.maxTreatmentsPerDay;
+					} else if(count === 2) {
+						$scope.yAxis2Max = $scope.treatmentGraphRange.maxTreatmentDuration;
+					}
+					break;
+				case 'Minutes':
+					if(count === 1) {
+						$scope.yAxis1Max = $scope.treatmentGraphRange.maxTreatmentDuration;
+					} else if(count === 2) {
+						$scope.yAxis2Max = $scope.treatmentGraphRange.maxTreatmentDuration;
+					}
+					break;
+			}
+		}
+
 		$scope.createTreatmentGraphData = function() {
 			delete $scope.treatmentGraphData ;
 			$scope.treatmentGraphData = [];
@@ -332,11 +343,13 @@
 			angular.forEach($scope.formatedTreatmentGraphData, function(value) {
 				if(value.axisLabel === 'Treatments' && $scope.treatment.treatmentPerDay){
 					value.yAxis = ++count;
+					$scope.setYaxisRangeForTreatmentGraph(value.axisLabel,count);
 					value.color = hcpDashboardConstants.treatmentGraph.color.treatmentPerDay;
 					$scope.treatmentGraphData.push(value);
 				}
 				if(value.axisLabel === 'Minutes' && $scope.treatment.treatmentLength){
 					value.yAxis = ++count;
+					$scope.setYaxisRangeForTreatmentGraph(value.axisLabel,count);
 					value.color = hcpDashboardConstants.treatmentGraph.color.treatmentLength;
 					$scope.treatmentGraphData.push(value);
 				}
@@ -364,12 +377,14 @@
 			.showLegend(false)
 			.margin({top: 30, right: 100, bottom: 50, left: 100})
 			.color(d3.scale.category10().range());
-		 // chart.noData("Nothing to see here.");
+		 	
 			chart.tooltipContent($scope.toolTipContentForTreatment());
+			chart.yDomain1([0,$scope.yAxis1Max]);
+      chart.yDomain2([0,$scope.yAxis2Max]); 
 			//this function to put x-axis labels
 			chart.xAxis.tickFormat(function(d) {
 					if(d % 1 === 0) {
-						var timeStamp = $scope.serverTreatmentGraphData[d-1].timeStamp;
+						var timeStamp = $scope.serverTreatmentGraphData[d-1].startTime;
 						switch($scope.format) {
 								case "weekly":
 										return d3.time.format('%A')(new Date(timeStamp));
