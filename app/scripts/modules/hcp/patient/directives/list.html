@@ -20,7 +20,7 @@
         </div> -->
       </div>
 
-      <div class="col-md-16 col-sm-16 reset-padding lebel-indent">
+      <div class="row padding-left lebel-indent">
         <label traslate="patient.email">
           <input type="checkbox" ng-model="filterOn.all" ng-change="changeFilterOption()">
           <span translate="patient.filter.all"></span>
@@ -39,7 +39,7 @@
         </label>
       </div>
 
-      <div class="col-md-16 col-sm-16 reset-padding lebel-indent">
+      <div class="row padding-left lebel-indent">
         <label>
           <input type="checkbox" ng-model="sortOn.missedTherapy" ng-change="changeSortOption()">
           <span translate="patient.hcp-dash-filter.missed-therapy"></span>
@@ -58,7 +58,7 @@
           </label>
       </div>
 
-      <div class="dashboard__manage-view--header">
+      <div class="dashboard__manage-view--header margin-top">
         <div class="col-md-3 col-sm-3 header--type">
           <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="patient.patient-name">Patient Name</span>
         </div>
