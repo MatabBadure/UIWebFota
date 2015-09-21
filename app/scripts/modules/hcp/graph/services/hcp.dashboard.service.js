@@ -6,7 +6,7 @@
  *
  */
 angular.module('hillromvestApp')
-  .factory('hcpDashBoardService', ['$http','headerService', 'hcpServiceConstants', 'URL' function ($http, headerService, hcpServiceConstants, URL) {
+  .factory('hcpDashBoardService', ['$http','headerService', 'hcpServiceConstants', 'URL', function ($http, headerService, hcpServiceConstants, URL) {
     return {
 
       /**

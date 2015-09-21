@@ -1422,6 +1422,8 @@ angular.module('hillromvestApp')
                             return Auth.authorize(false);
                         }
                     ]
+                }
+            })
             
             .state('hcpUserProfile', {
                 parent: 'hcp-dashboard',
