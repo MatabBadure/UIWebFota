@@ -1,5 +1,6 @@
 {
     "doctor" : {
+        "myDashboard": "My Dashboard",
         "required-field":"* Required Fields",
         "home": {
             "title": "doctor",
@@ -118,6 +119,22 @@
             "parent": "Parent",
             "child": "Child",
             "satellite": "Satellite"
-        }
+        },
+        "dashboard":{
+            "missedTherapy": "Missed Therapy",
+            "hmrNonCompliance": "HMR Non-Compliance",
+            "settingDeviation": "Setting Deviation",
+            "noEventsRecorded": "No Events Recorded",
+            "todayStatistics": "Today's Statistics -",
+            "patients": "Patients",
+            "totalPatients":"Total Number of Patients -",
+            "cumulativeStatistics":"Cumulative Statistics",
+            "treatmentStatistics":"Treatment Statistics",
+            "nonCompliance": "Non-Compliance",
+            "noEvents":"No Events",
+            "week":"Week",
+            "month":"Month",
+            "year":"Year"
+         }
     }
 }

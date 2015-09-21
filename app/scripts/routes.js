@@ -1367,7 +1367,7 @@ angular.module('hillromvestApp')
             })
 
             .state('clinicadminpatientOverview', {
-                parent: 'clinicadmin-dashboard',
+                parent: 'clinicadminpatientdashboard',
                 url: '/{patientId}/overview',
                 data: {
                     roles: ['CLINIC_ADMIN'],
@@ -1393,7 +1393,7 @@ angular.module('hillromvestApp')
             })
 
             .state('clinicadminpatientDemographic', {
-                parent: 'clinicadmin-dashboard',
+                parent: 'clinicadminpatientdashboard',
                 url: '/{patientId}/demographic',
                 data: {
                     roles: ['CLINIC_ADMIN'],
@@ -1419,7 +1419,7 @@ angular.module('hillromvestApp')
             })
 
             .state('clinicadminpatientClinics', {
-                parent: 'clinicadmin-dashboard',
+                parent: 'clinicadminpatientdashboard',
                 url: '/{patientId}/clinicInfo',
                 data: {
                     roles: ['CLINIC_ADMIN'],
@@ -1445,7 +1445,7 @@ angular.module('hillromvestApp')
             })
 
             .state('clinicadminpatientProtocol', {
-                parent: 'clinicadmin-dashboard',
+                parent: 'clinicadminpatientdashboard',
                 url: '/{patientId}/protocol-device',
                 data: {
                     roles: ['CLINIC_ADMIN'],
@@ -1471,7 +1471,7 @@ angular.module('hillromvestApp')
             })
 
             .state('clinicadminpatientCraegiver', {
-                parent: 'clinicadmin-dashboard',
+                parent: 'clinicadminpatientdashboard',
                 url: '/{patientId}/caregivers',
                 data: {
                     roles: ['CLINIC_ADMIN'],
