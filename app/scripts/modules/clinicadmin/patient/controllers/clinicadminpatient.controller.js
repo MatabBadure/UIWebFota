@@ -12,10 +12,14 @@ angular.module('hillromvestApp')
     }else if($state.current.name === 'hcppatientCraegiver'){
       $scope.getCaregiversAssociatedWithPatient($stateParams.patientId);
     }else if($state.current.name === 'clinicadminpatientdashboard'){
+      console.log('$stateParams.filter: ', $stateParams.filter);
+
       $scope.getClinicsAssociatedToHCP();
       var clinicId = localStorage.getItem('clinicId');
       $scope.sortOption = $stateParams.filter;
-      if($stateParams.filter === 'noevents'){
+      if(!$stateParams.filter){
+        // clinicService.getClinicAssoctPatients(clinicId).then(function(response){}).catch(function(response){});
+      }else if($stateParams.filter === 'noevents'){
         $scope.getPatientsWithNoEvents($stateParams.filter, clinicId);
       } else {
         $scope.getPatientsByFilter($stateParams.filter, clinicId);
