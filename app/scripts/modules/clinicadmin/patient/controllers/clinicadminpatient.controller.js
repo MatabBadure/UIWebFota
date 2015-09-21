@@ -1,5 +1,5 @@
 angular.module('hillromvestApp')
-.controller('clinicadminPatientController',['$scope', '$state', '$stateParams', 'clinicadminPatientService', 'patientService', 'notyService', 'DoctorService', function($scope, $state, $stateParams, clinicadminPatientService, patientService, notyService, DoctorService) { 
+.controller('clinicadminPatientController',['$scope', '$state', '$stateParams', 'clinicadminPatientService', 'patientService', 'notyService', 'DoctorService', 'clinicadminService', function($scope, $state, $stateParams, clinicadminPatientService, patientService, notyService, DoctorService, clinicadminService) { 
 	
 	$scope.init = function(){
     console.log('Current State: ', $state.current.name);
@@ -24,7 +24,7 @@ angular.module('hillromvestApp')
 	};
 
   $scope.getClinicsAssociatedToHCP = function(){
-    DoctorService.getClinicsAssociatedToHCP(localStorage.getItem('userId')).then(function(response){
+    clinicadminService.getClinicsAssociated(localStorage.getItem('userId')).then(function(response){
       $scope.clinics = response.data.clinics;
       angular.forEach($scope.clinics, function(clinic){
         if(clinic.id === $stateParams.clinicId){
