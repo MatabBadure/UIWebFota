@@ -36,9 +36,18 @@ angular.module('hillromvestApp')
       });
     };
 
+    $scope.initSettings = function(){
+      UserService.getUser(localStorage.getItem('userId')).then(function(response){
+        $scope.user = response.data.user;
+      }).catch(function(response){});
+    };
+
     $scope.init = function(){
+      console.log($state.current.name);
       if($state.current.name === 'hcpUserProfile' || $state.current.name === 'editHCPProfile' ){
         $scope.initProfile(localStorage.getItem('userId'));
+      }else if($state.current.name === 'hcpSettings'){
+        $scope.initSettings();
       }
     };
 
@@ -107,6 +116,23 @@ angular.module('hillromvestApp')
         }else if(response.data.ERROR){
           notyService.showMessage(response.data.ERROR, 'warning');
         }
+      });
+    };
+
+    $scope.toggleNotification = function(notification){
+      var data = {"isMissedTherapyNotification" : $scope.user.missedTherapyNotification, "isNonHMRNotification": $scope.user.nonHMRNotification, "isSettingDeviationNotification": $scope.user.settingDeviationNotification };
+      if(notification === 'missedTherapyNotification'){
+        data.isMissedTherapyNotification = !$scope.user.missedTherapyNotification;
+      }
+      if(notification === 'nonHMRNotification'){
+        data.isNonHMRNotification = !$scope.user.nonHMRNotification;
+      }
+      if(notification === 'settingDeviationNotification'){
+        data.isSettingDeviationNotification = !$scope.user.settingDeviationNotification;
+      }
+      UserService.updatePatientUserNotification(localStorage.getItem('userId'), data).then(function(response){
+        $scope.user = response.data.user;    
+      }).catch(function(){
       });
     };
 
