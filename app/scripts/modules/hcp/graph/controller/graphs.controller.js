@@ -55,7 +55,6 @@
 		$scope.getClinicsForHCP = function(userId) {
 			DoctorService.getClinicsAssociatedToHCP(userId).then(function(response){
 				localStorage.setItem('clinicId', response.data.clinics[0].id);
-				$scope.clinicId = response.data.clinics[0].id;
 				$scope.clinics = response.data.clinics;
 				$scope.selectedClinic = response.data.clinics[0];
 				$scope.weeklyChart();
@@ -68,7 +67,6 @@
 		$scope.getClinicsForClinicAdmin = function(userId) {
 				clinicadminService.getClinicsAssociated(userId).then(function(response){
 		      localStorage.setItem('clinicId', response.data.clinics[0].id);
-		      $scope.clinicId = response.data.clinics[0].id;
 		      $scope.clinics = response.data.clinics;
 		      $scope.selectedClinic = response.data.clinics[0];
 		      $scope.weeklyChart();
@@ -164,7 +162,8 @@
 	if($scope.selectedClinic.id !== clinic.id){
 	  $scope.selectedClinic = clinic;
 	  $scope.getStatistics($scope.selectedClinic.id, localStorage.getItem('userId'));
-		}
+	  $scope.drawGraph();
+	}
   }
 			
 		$scope.calculateDateFromPicker = function(picker) {
@@ -216,11 +215,10 @@
 
 		$scope.getCumulativeGraphData = function() {
 			 //$scope.cumulativeGraphPlotted = false;
-			 hcpDashBoardService.getCumulativeGraphPoints($scope.hcpId, $scope.clinicId, dateService.getDateFromTimeStamp($scope.fromTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), $scope.groupBy).then(function(response){
+			 hcpDashBoardService.getCumulativeGraphPoints($scope.hcpId, $scope.selectedClinic.id, dateService.getDateFromTimeStamp($scope.fromTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), $scope.groupBy).then(function(response){
 				$scope.serverCumulativeGraphData = response.data.cumulativeStatitics;
 				if($scope.serverCumulativeGraphData.length !== 0) {
 					$scope.formatedCumulativeGraphData = graphUtil.convertIntoCumulativeGraph($scope.serverCumulativeGraphData); 
-					console.log('Cumulative Graph Data' + JSON.stringify($scope.formatedCumulativeGraphData));
 					$scope.drawCumulativeGraph();
 				} else {
 					$scope.plotNoDataAvailable();
@@ -277,14 +275,13 @@
 
 
 		$scope.getTreatmentGraphData = function() {
-			 hcpDashBoardService.getTreatmentGraphPoints($scope.hcpId, $scope.clinicId, dateService.getDateFromTimeStamp($scope.fromTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), $scope.groupBy).then(function(response){
+			 hcpDashBoardService.getTreatmentGraphPoints($scope.hcpId, $scope.selectedClinic.id, dateService.getDateFromTimeStamp($scope.fromTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), $scope.groupBy).then(function(response){
 				if( response !== null && response.data !== null && response.data.treatmentStatitics !== undefined) {
 					$scope.serverTreatmentGraphData = response.data.treatmentStatitics;
 					$scope.formatedTreatmentGraphData = graphUtil.convertIntoTreatmentGraph($scope.serverTreatmentGraphData);
 					$scope.handlelegends();
 					$scope.treatmentGraphRange = graphUtil.getYaxisRangeTreatmentGraph($scope.serverTreatmentGraphData);
 					$scope.createTreatmentGraphData(); 
-					console.log("Treatment Graph Data:" + JSON.stringify($scope.treatmentGraphData));
 					$scope.drawTreatmentGraph();
 				} else {
 					$scope.plotNoDataAvailable();

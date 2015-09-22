@@ -12,7 +12,7 @@ angular.module('hillromvestApp')
       $scope.getCaregiversAssociatedWithPatient($stateParams.patientId);
     }else if($state.current.name === 'hcppatientdashboard'){
       $scope.getClinicsAssociatedToHCP();
-      var clinicId = localStorage.getItem('clinicId');
+      var clinicId = $stateParams.clinicId;
       $scope.sortOption = $stateParams.filter;
       if($stateParams.filter === 'noevents'){
         $scope.getPatientsWithNoEvents($stateParams.filter, clinicId);
