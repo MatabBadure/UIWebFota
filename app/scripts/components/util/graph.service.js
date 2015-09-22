@@ -1,6 +1,6 @@
 'use strict';
 angular.module('hillromvestApp')
-  .service('graphService', function(dateService) {
+  .service('graphService', ['dateService', function(dateService) {
       	this.getPdfForSVGGraph = function(graphData) {
 	        canvg('canvas', new XMLSerializer().serializeToString(document.querySelector('svg')));		
 			var canvas = document.getElementById("canvas");
@@ -57,4 +57,4 @@ angular.module('hillromvestApp')
 	        document.body.appendChild(link);
 	        link.click(); 	         	 
 	    }	    
-  });
+  }]);
