@@ -432,6 +432,7 @@ angular.module('hillromvestApp')
 
     $scope.associateCaregiverstoPatient = function(patientId, careGiver){
         patientService.associateCaregiversFromPatient(patientId, careGiver).then(function(response){
+        notyService.showMessage(response.data.message, 'success');
         $scope.caregivers =  response.data.user;
         $scope.associateCareGiver = [];$scope.associateCareGiver.length = 0;
         $scope.switchPatientTab('patientCraegiver');

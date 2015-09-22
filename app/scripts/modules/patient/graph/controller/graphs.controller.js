@@ -1,7 +1,9 @@
 'use strict';
 
 angular.module('hillromvestApp')
-.controller('graphController', function($scope, $state, patientDashBoardService, StorageService, dateService, graphUtil, patientService, UserService, $stateParams, notyService, $timeout) {
+.controller('graphController', 
+  ['$scope', '$state', 'patientDashBoardService', 'StorageService', 'dateService', 'graphUtil', 'patientService', 'UserService', '$stateParams', 'notyService', '$timeout', 'graphService',
+  function($scope, $state, patientDashBoardService, StorageService, dateService, graphUtil, patientService, UserService, $stateParams, notyService, $timeout, graphService) {
     var chart;
     $scope.init = function() {
       $scope.hmrLineGraph = true;
@@ -1427,5 +1429,22 @@ angular.module('hillromvestApp')
           return chart;
       });
     }
+
+    $scope.downloadAsPdf = function(){
+      var graphData = ($scope.hmrGraph) ? $scope.completeGraphData : $scope.completeComplianceData;
+      graphService.getPdfForSVGGraph(graphData);      
+    };
+
+    $scope.downloadRawDataAsCsv = function(){
+      patientService.getDeviceDataAsCSV($scope.patientId, $scope.fromTimeStamp, $scope.toTimeStamp).then(function(response){
+         graphService.downloadAsCSVFile(response.data, 'VestDeviceReport.csv', 'vestDevice');
+      }); 
+    };
+
+    $scope.downloadProcessedDataAsCsv = function(){
+      patientService.getTherapyDataAsCSV($scope.patientId, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-')).then(function(response){
+         graphService.downloadAsCSVFile(response.data, 'TherapyReport.csv', 'therapy');
+      });
+    };
     
-});
+}]);

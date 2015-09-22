@@ -304,7 +304,6 @@ angular.module('hillromvestApp')
         });
       },
       updateCaregiver : function(patientId, caregiverId , data){
-        ///api/patient/:patientUserId/caregiver/:id
         var url = admin.patient.baseURL + patientId + '/caregiver/'+caregiverId;
         return $http.put(url, data, {
           headers: headerService.getHeader()
@@ -313,7 +312,6 @@ angular.module('hillromvestApp')
         });
       },
       getCaregiverById : function(patientId, caregiverId ){
-        ///api/patient/:patientUserId/caregiver/:id
         var url = admin.patient.baseURL + patientId + '/caregiver/'+caregiverId;
         return $http.get(url, {
           headers: headerService.getHeader()
@@ -327,6 +325,19 @@ angular.module('hillromvestApp')
           headers: headerService.getHeader()
         }).success(function(response){
           return response;
+        });
+      },
+      getTherapyDataAsCSV : function(patientId, startDate, endDate){
+        var url = admin.hillRomUser.users+ "/" +patientId+"/exportTherapyDataCSV?from="+startDate+"&to="+endDate;
+        return $http.get(url, {
+          headers: headerService.getHeader()
+        });
+      },
+
+      getDeviceDataAsCSV: function(patientId, startDateTimestamp, endDateTimestamp){
+        var url = admin.hillRomUser.users+ "/" +patientId +"/exportVestDeviceDataCSV?from="+ startDateTimestamp+"&to="+endDateTimestamp;
+        return $http.get(url, {
+          headers: headerService.getHeader()
         });
       }
     };
