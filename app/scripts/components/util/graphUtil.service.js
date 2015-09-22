@@ -25,10 +25,17 @@ angular.module('hillromvestApp')
         var count = 1;
         angular.forEach(data.actual, function(value) {
           var point = {};
-          point.x = count++;
+          /*point.x = count++;
+          point.y = Math.floor(value.hmr);
+          point.timeStamp = value.timestamp;
+          pointSet.push(point);*/
+          /* HILL-714 */
+          point.x = value.timestamp;
           point.y = Math.floor(value.hmr);
           point.timeStamp = value.timestamp;
           pointSet.push(point);
+
+          /*HILL-714 end*/
         });
         graphData.values = pointSet;
         graphData.color = colorCode;
@@ -305,7 +312,7 @@ angular.module('hillromvestApp')
         var durationObject = {};
         var count = 0;
         angular.forEach(data, function(value) {
-          count = count + 1;
+/*          count = count + 1;
           var pressurePoint = {};
           var durationPoint = {};
           var frequencyPoint = {};
@@ -319,6 +326,18 @@ angular.module('hillromvestApp')
           durationValues.push(durationPoint);
           frequencyPoint.x = count;
           frequencyPoint.timeStamp = value.timestamp;
+          frequencyPoint.y = value.weightedAvgFrequency;
+          frequencyValues.push(frequencyPoint);*/
+          var pressurePoint = {};
+          var durationPoint = {};
+          var frequencyPoint = {};
+          pressurePoint.x = value.timestamp;
+          pressurePoint.y = value.weightedAvgPressure;
+          pressureValues.push(pressurePoint);
+          durationPoint.x = value.timestamp;
+          durationPoint.y = value.duration;
+          durationValues.push(durationPoint);
+          frequencyPoint.x = value.timestamp;
           frequencyPoint.y = value.weightedAvgFrequency;
           frequencyValues.push(frequencyPoint);
         });

@@ -311,7 +311,7 @@ angular.module('hillromvestApp')
       return function(key, x, y, e, graph) {
         var toolTip = '';
         angular.forEach(data, function(value) {
-          if(value.start === e.point.timeStamp){
+          if(value.start === e.point.x){
               toolTip =
                 '<h6>' + dateService.getDateFromTimeStamp(value.start,patientDashboard.dateFormat,'/') + '</h6>' +
                 '<ul class="graph_ul">' +
@@ -754,7 +754,7 @@ angular.module('hillromvestApp')
       chart.tooltipContent($scope.toolTipContentForCompliance($scope.completeComplianceData.actual));
       //this function to put x-axis labels
       chart.xAxis.tickFormat(function(d) {
-          if(d % 1 === 0) {
+          /*if(d % 1 === 0) {
             var timeStamp = $scope.completecomplianceGraphData[0].values[d-1].timeStamp;
             switch($scope.format) {
                 case "weekly":
@@ -769,7 +769,10 @@ angular.module('hillromvestApp')
                 default:
                     break;
             }
-          }
+          }*/
+          /* HILL-714*/
+              return d3.time.format(' %d%b%y %H:%M')(new Date(d));
+          /*HILL-714 end*/
         });
       chart.yAxis1.tickFormat(d3.format('d'));
       chart.yAxis2.tickFormat(d3.format('d'));
@@ -1313,7 +1316,7 @@ angular.module('hillromvestApp')
            chart = nv.models.lineChart()
           .margin({top: 30, right: 100, bottom: 50, left: 100})
           .showLegend(false)
-          .interpolate('step-after')
+          //.interpolate('step-after')
           .color(d3.scale.category10().range());
          // chart.noData("Nothing to see here.");
           chart.tooltipContent($scope.toolTipContentStepChart());
@@ -1350,7 +1353,7 @@ angular.module('hillromvestApp')
           });
           //this function to put x-axis labels
           chart.xAxis.tickFormat(function(d) {
-            if(d % 1 === 0) {
+           /* if(d % 1 === 0) {
             var timeStamp = $scope.completeGraphData.actual[d-1].timestamp;
             switch($scope.format) {
                 case "weekly":
@@ -1365,7 +1368,10 @@ angular.module('hillromvestApp')
                 default:
                     break;
             }
-          }
+          }*/
+          /*HILL-714*/
+              return d3.time.format(' %d%b%y %H:%M')(new Date(d));
+          /*HILL-714 End*/
         });
 
           chart.yAxis.tickFormat(d3.format('d'));
