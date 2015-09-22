@@ -757,5 +757,17 @@ angular.module('hillromvestApp')
           $scope.$digest();
         });
 
+    $scope.selectDoctor = function(doctor) {
+      $state.go('hcpProfile',{
+        'doctorId': doctor.id
+      });
+    };
+
+    $scope.selectClinic = function(clinic) {
+       $state.go('clinicProfile', {
+        'clinicId': clinic.id
+      });
+    };
+
     $scope.init();
   });

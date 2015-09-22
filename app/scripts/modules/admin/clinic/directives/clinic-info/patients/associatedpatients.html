@@ -52,10 +52,11 @@
       <div class="col-md-1 header--type">
         <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="clinic.adherence">Adherence</span>
       </div>
+      
       <div class="clr"></div>
     </div>
 
-    <div class="dashboard__manage-view--list" ng-repeat="associatedPatient in associatedPatients" ng-click="associatedPatient.patient.isDeleted || selectAssociatedPatient(associatedPatient.patient)" readonly="true" ng-class="{'inactive': associatedPatient.patient.isDeleted}">
+    <div class="dashboard__manage-view--list" ng-repeat="associatedPatient in associatedPatients" ng-click="associatedPatient.patient.deleted || selectAssociatedPatient(associatedPatient.patient)" readonly="true" ng-class="{'inactive': associatedPatient.patient.deleted}">
       <div class="col-md-2 reset-padding">
         <span class="main-prim-info">{{associatedPatient.patient.lastName}} {{associatedPatient.patient.firstName}}</span>
         <span class="main-secon-info">{{associatedPatient.patient.dob}}</span>
@@ -90,7 +91,7 @@
         <span class="short-info">{{associatedPatient.patient.adherence}}</span>
       </div>
       <div class="col-md-1 reset-padding-left centered text-right" >
-        <span class="icon-delete-icon" ng-click="openPatientDeactivateModal(associatedPatient.patient.id)"></span>
+        <span class="icon-delete-icon" ng-click="openPatientDeactivateModal(associatedPatient.patient.id); $event.stopPropagation();"></span>
       </div>
       <div class="clr"></div>
     </div>

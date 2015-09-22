@@ -225,5 +225,11 @@ angular.module('hillromvestApp')
       });
     };
 
+    $scope.selectClinic = function(clinic) {
+       $state.go('clinicProfile', {
+        'clinicId': clinic.id
+      });
+    };
+
     $scope.init();
   }]);

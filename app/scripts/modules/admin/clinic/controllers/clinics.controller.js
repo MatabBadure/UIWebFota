@@ -617,6 +617,13 @@ angular.module('hillromvestApp')
         'patientId': patient.id
       });
     };
+    
+    $scope.selectDoctor = function(doctor) {
+      $state.go('hcpProfile',{
+        'doctorId': doctor.id
+      });
+    };
+
 
     $scope.init();
   });

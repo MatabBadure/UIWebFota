@@ -28,6 +28,9 @@
   margin-top: 10px;
   border-bottom: 1px solid $celeste;
 }
+.admin-user .clinic-list.default_active{
+  cursor: pointer;
+}
 
 .admin-user .clinic-list__detail {
   padding: 0;
