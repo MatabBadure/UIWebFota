@@ -276,7 +276,7 @@ angular.module('hillromvestApp')
         angular.forEach($scope.completeGraphData.actual, function(value) {
           if(value.timestamp === e.point.x){
               toolTip =
-                '<h6>' + dateService.getDateFromTimeStamp(value.timestamp,patientDashboard.dateFormat,'/') + '</h6>' +
+                '<h6>' + dateService.getDateFromTimeStamp(value.timestamp,patientDashboard.dateFormat,'/') + '  ('+ d3.time.format('%I:%M %p')(new Date(value.timestamp)) + ')' + '</h6>' +
                 '<ul class="graph_ul">' +
                   '<li><span class="pull-left">' + 'Session No. ' +'</span><span class="pull-right value">' + value.sessionNo + '/' + value.treatmentsPerDay +'</span></li>' +
                   '<li><span class="pull-left">' + 'HMR' + '</span><span class="pull-right value">' + Math.floor(value.hmr/60)  + '</span></li>' +
@@ -314,7 +314,7 @@ angular.module('hillromvestApp')
         angular.forEach(data, function(value) {
           if(value.start === e.point.x){
               toolTip =
-                '<h6>' + dateService.getDateFromTimeStamp(value.start,patientDashboard.dateFormat,'/') + '</h6>' +
+                '<h6>' + dateService.getDateFromTimeStamp(value.start,patientDashboard.dateFormat,'/') + '  ('+ d3.time.format('%I:%M %p')(new Date(value.start)) + ')'  + '</h6>' +
                 '<ul class="graph_ul">' +
                   '<li><span class="pull-left">' + 'Session No.' + '</span><span class="pull-right value">' +  value.sessionNo + '/' + value.treatmentsPerDay  + '</span></li>' +
                   '<li><span class="pull-left">' + 'Frequency' +'</span><span class="pull-right value">' + value.frequency +'</span></li>' +
