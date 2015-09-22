@@ -13,37 +13,47 @@ angular.module('hillromvestApp')
       }
     };
 
+    $scope.showWarning = function(response){
+      if(response.data.ERROR){
+        notyService.showMessage(response.data.ERROR, 'warning');
+      }else if(response.data.message){
+        notyService.showMessage(response.data.message, 'warning');  
+      }
+    };
+
     $scope.initProfile = function(adminId){
       UserService.getState().then(function(response) {
        $scope.states = response.data.states;
-      }).catch(function(response) {});
+      }).catch(function(response) {
+        $scope.showWarning(response);
+      });
       $scope.credentialsList = admin_cont.hcp.credentialsList;
       UserService.getUser(adminId).then(function(response){
         $scope.user = response.data.user;
-      }).catch(function(response){});
+      }).catch(function(response){
+        $scope.showWarning(response);
+      });
       AuthServerProvider.getSecurityQuestions().then(function(response){
         $scope.questions = response.data
-      }).catch(function(response){});
+      }).catch(function(response){
+        $scope.showWarning(response);
+      });
       DoctorService.getClinicsAssociatedToHCP(localStorage.getItem('userId')).then(function(response){
         $scope.clinics = response.data.clinics;
       }).catch(function(response){
-        if(response.data.message){
-          notyService.showMessage(response.data.message, 'warning');
-        }else if(response.data.ERROR){
-          notyService.showMessage(response.data.ERROR, 'warning');
-        }
-        
+        $scope.showWarning(response);
       });
     };
 
     $scope.initSettings = function(){
       UserService.getUser(localStorage.getItem('userId')).then(function(response){
         $scope.user = response.data.user;
-      }).catch(function(response){});
+      }).catch(function(response){
+        $scope.showWarning(response);
+      });
     };
 
     $scope.init = function(){
-      console.log($state.current.name);
       if($state.current.name === 'hcpUserProfile' || $state.current.name === 'editHCPProfile' ){
         $scope.initProfile(localStorage.getItem('userId'));
       }else if($state.current.name === 'hcpSettings'){
@@ -71,11 +81,7 @@ angular.module('hillromvestApp')
         };
         AuthServerProvider.changeSecurityQuestion(data, $scope.user.id).then(function(response){
         }).catch(function(response){
-          if(response.data.message){
-            notyService.showMessage(response.data.message, 'warning');
-          } else if(response.data.ERROR){
-            notyService.showMessage(response.data.ERROR, 'warning');
-          }
+          $scope.showWarning(response);
         });
       }
       $scope.user.role = $scope.user.authorities[0].name;
@@ -89,11 +95,7 @@ angular.module('hillromvestApp')
           $state.go('login');
         }
       }).catch(function(response){
-        if(response && response.data && response.data.message){
-          notyService.showMessage(response.data.message, 'warning');
-        } else if(response && response.data && response.data.ERROR){
-          notyService.showMessage(response.data.ERROR, 'warning');
-        }
+        $scope.showWarning(response);
       });
     };
 
@@ -111,11 +113,7 @@ angular.module('hillromvestApp')
         notyService.showMessage(response.data.message, 'success');
         $state.go('login');
       }).catch(function(response){
-        if(response.data.message){
-          notyService.showMessage(response.data.message, 'warning');
-        }else if(response.data.ERROR){
-          notyService.showMessage(response.data.ERROR, 'warning');
-        }
+        $scope.showWarning(response);
       });
     };
 
@@ -132,7 +130,8 @@ angular.module('hillromvestApp')
       }
       UserService.updatePatientUserNotification(localStorage.getItem('userId'), data).then(function(response){
         $scope.user = response.data.user;    
-      }).catch(function(){
+      }).catch(function(response){
+        $scope.showWarning(response);
       });
     };
 
