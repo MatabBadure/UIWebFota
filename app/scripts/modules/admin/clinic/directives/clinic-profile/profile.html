@@ -92,7 +92,7 @@
   </div>
 
 <div class="container admin-user" ng-class="{'margin-top': childClinics.length}" ng-if="clinic.parent">
-  <div class="col-md-16 detail-list" ng-repeat="childClinic in childClinics" ng-click="childClinic.deleted || selectClinic(childClinic)" readonly="true" ng-class="{'inactive': childClinic.deleted}">
+  <div class="col-md-16 detail-list" ng-repeat="childClinic in childClinics" ng-click="childClinic.deleted || selectClinic(childClinic)" readonly="true" ng-class="{'default_active': !childClinic.deleted, 'inactive':childClinic.deleted}">
     <div class="col-md-4 detail-list--title">
       <span>{{childClinic.name}}</span>
     </div>
