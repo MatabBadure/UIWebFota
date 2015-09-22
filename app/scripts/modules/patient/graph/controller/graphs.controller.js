@@ -274,14 +274,14 @@ angular.module('hillromvestApp')
       return function(key, x, y, e, graph) {
         var toolTip = '';
         angular.forEach($scope.completeGraphData.actual, function(value) {
-          if(value.timestamp === e.point.timeStamp){
+          if(value.timestamp === e.point.x){
               toolTip =
                 '<h6>' + dateService.getDateFromTimeStamp(value.timestamp,patientDashboard.dateFormat,'/') + '</h6>' +
                 '<ul class="graph_ul">' +
                   '<li><span class="pull-left">' + 'Treatment/Day ' +'</span><span class="pull-right value">' + value.treatmentsPerDay +'</span></li>' +
-                  '<li><span class="pull-left">' + 'Frequency' + '</span><span class="pull-right value">' + value.weightedAvgFrequency  + '</span></li>' +
-                  '<li><span class="pull-left">' + 'Pressure' +'</span><span class="pull-right value">' + value.weightedAvgPressure  +'</span></li>' +
-                  '<li><span class="pull-left">' + 'Cough Pauses' +'</span><span class="pull-right value">' + value.normalCoughPauses +'</span></li>' +
+                  '<li><span class="pull-left">' + 'Frequency' + '</span><span class="pull-right value">' + value.frequency  + '</span></li>' +
+                  '<li><span class="pull-left">' + 'Pressure' +'</span><span class="pull-right value">' + value.pressure  +'</span></li>' +
+                  '<li><span class="pull-left">' + 'Cough Pauses' +'</span><span class="pull-right value">' + (value.normalCoughPauses+value.programmedCoughPauses) +'</span></li>' +
                 '</ul>';
           }
         });
@@ -373,7 +373,6 @@ angular.module('hillromvestApp')
     $scope.getNonDayHMRGraphData = function() {
       $scope.getUTCTime();
       patientDashBoardService.getHMRGraphPoints($scope.patientId, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.groupBy).then(function(response){
-        //Will get response data from real time API once api is ready
         $scope.completeGraphData = response.data;
         if($scope.completeGraphData.actual === undefined){
           $scope.graphData = [];
@@ -1370,13 +1369,13 @@ angular.module('hillromvestApp')
             }
           }*/
           /*HILL-714*/
-              return d3.time.format(' %d%b%y %H:%M')(new Date(d));
+              return d3.time.format(' %d%b%y')(new Date(d));
           /*HILL-714 End*/
         });
 
           chart.yAxis.tickFormat(d3.format('d'));
           chart.forceY([$scope.yAxisRangeForHMRLine.min, $scope.yAxisRangeForHMRLine.max]);
-          chart.yAxis.axisLabel('Minutes');
+          chart.yAxis.axisLabel('Hours');
             d3.select('#hmrLineGraph svg')
           .datum($scope.graphData)
           .transition().duration(500).call(chart);

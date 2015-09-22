@@ -31,8 +31,7 @@ angular.module('hillromvestApp')
           pointSet.push(point);*/
           /* HILL-714 */
           point.x = value.timestamp;
-          point.y = Math.floor(value.hmr);
-          point.timeStamp = value.timestamp;
+          point.y = Math.floor(value.hmr/60);
           pointSet.push(point);
 
           /*HILL-714 end*/
@@ -51,7 +50,7 @@ angular.module('hillromvestApp')
         var range = {};
         var hmrSet = [];
         angular.forEach(data.actual, function(value) {
-          hmrSet.push(value.hmr);
+          hmrSet.push(Math.floor(value.hmr/60));
         });
         var max = arrayMax(hmrSet);
         var min = arrayMin(hmrSet);
