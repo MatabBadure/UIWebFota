@@ -65,8 +65,8 @@ angular.module('hillromvestApp')
   };
 
   $scope.getPatientInfo = function(patinetId, callback){
-    patientService.getPatientInfo(patinetId).then(function(response){
-      $scope.patient = response.data;
+    clinicadminPatientService.getPatientInfo(patinetId, $stateParams.clinicId).then(function(response){
+      $scope.patient = response.data.patientUser;
       if (typeof callback === 'function') {
         callback($scope.patient);
       }
@@ -188,13 +188,16 @@ angular.module('hillromvestApp')
     }
     var data = $scope.patient;
     data.role = 'PATIENT';
+    data.clinicMRNId.clinicId = $stateParams.clinicId;
+    if(data.clinicMRNId.clinic){
+      delete data.clinicMRNId.clinic;
+    }
     UserService.editUser(data).then(function (response) {
       $state.go('clinicadminpatientDemographic', {'patientId': $stateParams.patientId});
       notyService.showMessage(response.data.message, 'success');
     }).catch(function(response){
       $scope.showWarning(response);
     });
-    console.log('Coming here..!', $scope.patient);
   };
 
   $scope.setEditMode = function(patient) {

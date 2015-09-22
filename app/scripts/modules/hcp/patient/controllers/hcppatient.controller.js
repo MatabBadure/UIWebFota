@@ -1,9 +1,9 @@
 angular.module('hillromvestApp')
-.controller('hcpPatientController',['$scope', '$state', '$stateParams', 'hcpPatientService', 'patientService', 'notyService', 'DoctorService', function($scope, $state, $stateParams, hcpPatientService, patientService, notyService, DoctorService) { 
+.controller('hcpPatientController',['$scope', '$state', '$stateParams', 'hcpPatientService', 'patientService', 'notyService', 'DoctorService', 'clinicadminPatientService', 'dateService', function($scope, $state, $stateParams, hcpPatientService, patientService, notyService, DoctorService, clinicadminPatientService, dateService) { 
 	
 	$scope.init = function(){
     if($state.current.name === 'hcppatientDemographic'){
-      $scope.getPatientInfo($stateParams.patientId);      
+      $scope.getPatientInfo($stateParams.patientId, $scope.setEditMode);
     }else if($state.current.name === 'hcppatientClinics'){
       $scope.getClinicsandHcpAssociatedToPatient($stateParams.patientId);      
     }else if($state.current.name === 'hcppatientProtocol'){
@@ -43,9 +43,12 @@ angular.module('hillromvestApp')
     }
   };
 
-  $scope.getPatientInfo = function(patinetId){
-    patientService.getPatientInfo(patinetId).then(function(response){
-      $scope.patient = response.data;
+  $scope.getPatientInfo = function(patinetId, callback){
+    clinicadminPatientService.getPatientInfo(patinetId, $stateParams.clinicId).then(function(response){
+      $scope.patient = response.data.patientUser;
+      if (typeof callback === 'function') {
+        callback($scope.patient);
+      }
     }).catch(function(response){
       $scope.showWarning(response);
     });
@@ -148,6 +151,20 @@ angular.module('hillromvestApp')
       } else {
         $scope.getPatientsByFilter($stateParams.filter, clinic.id);
       }
+    }
+  };
+
+  $scope.setEditMode = function(patient) {
+    $scope.patient = patient;
+    if (patient.dob !== null) {
+      $scope.patient.age = dateService.getAge(new Date($scope.patient.dob));
+      var _date = dateService.getDate($scope.patient.dob);
+      var _month = dateService.getMonth(_date.getMonth());
+      var _day = dateService.getDay(_date.getDate());
+      var _year = dateService.getYear(_date.getFullYear());
+      var dob = _month + "/" + _day + "/" + _year;
+      $scope.patient.dob = dob;
+      $scope.patient.formatedDOB = _month + "/" + _day + "/" + _year.slice(-2);
     }
   };
 

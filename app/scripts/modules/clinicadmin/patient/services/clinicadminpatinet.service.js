@@ -19,8 +19,14 @@ angular.module('hillromvestApp')
         }).success(function (response) {
           return response;
         });
+      },
+
+
+      getPatientInfo : function(patientId, clinicId){
+        var url = URL.getPatientInfoWithMRN.replace('PATIENTID', patientId).replace('CLINICID', clinicId);
+        return $http.get(url, {
+          headers: headerService.getHeader()
+        });
       }
-
-
     };
 }]);
