@@ -1748,4 +1748,31 @@ angular.module('hillromvestApp')
                     ]
                 }
             })
-        });
+
+            .state('clinicadmminpatientDemographicEdit', {
+                parent: 'clinicadminpatientdashboard',
+                url: '/{patientId}/demographicedit',
+                data: {
+                    roles: ['CLINIC_ADMIN'],
+                    pageTitle: 'patient.title'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/clinicadmin/patient/views/patientdemographicsedit.html',
+                        controller: 'clinicadminPatientController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient');$translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            });
+});
+

@@ -112,7 +112,7 @@ angular.module('hillromvestApp')
     };
 
     $scope.cancel = function(){
-      $state.go('hcpUserProfile');
+      $state.go('clinicadminUserProfile');
     };
 
     $scope.goToPatientDashboard = function(value){
