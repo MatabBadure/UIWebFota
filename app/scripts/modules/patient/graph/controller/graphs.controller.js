@@ -278,7 +278,8 @@ angular.module('hillromvestApp')
               toolTip =
                 '<h6>' + dateService.getDateFromTimeStamp(value.timestamp,patientDashboard.dateFormat,'/') + '</h6>' +
                 '<ul class="graph_ul">' +
-                  '<li><span class="pull-left">' + 'Treatment/Day ' +'</span><span class="pull-right value">' + value.treatmentsPerDay +'</span></li>' +
+                  '<li><span class="pull-left">' + 'Session No. ' +'</span><span class="pull-right value">' + value.sessionNo + '/' + value.treatmentsPerDay +'</span></li>' +
+                  '<li><span class="pull-left">' + 'HMR' + '</span><span class="pull-right value">' + Math.floor(value.hmr/60)  + '</span></li>' +
                   '<li><span class="pull-left">' + 'Frequency' + '</span><span class="pull-right value">' + value.frequency  + '</span></li>' +
                   '<li><span class="pull-left">' + 'Pressure' +'</span><span class="pull-right value">' + value.pressure  +'</span></li>' +
                   '<li><span class="pull-left">' + 'Cough Pauses' +'</span><span class="pull-right value">' + (value.normalCoughPauses+value.programmedCoughPauses) +'</span></li>' +
@@ -315,7 +316,7 @@ angular.module('hillromvestApp')
               toolTip =
                 '<h6>' + dateService.getDateFromTimeStamp(value.start,patientDashboard.dateFormat,'/') + '</h6>' +
                 '<ul class="graph_ul">' +
-                  '<li><span class="pull-left">' + 'Treatment/Day' + '</span><span class="pull-right value">' + value.treatmentsPerDay + '</span></li>' +
+                  '<li><span class="pull-left">' + 'Session No.' + '</span><span class="pull-right value">' +  value.sessionNo + '/' + value.treatmentsPerDay  + '</span></li>' +
                   '<li><span class="pull-left">' + 'Frequency' +'</span><span class="pull-right value">' + value.frequency +'</span></li>' +
                   '<li><span class="pull-left">' + 'Pressure' +'</span><span class="pull-right value">' + value.pressure +'</span></li>' +
                   '<li><span class="pull-left">' + 'Cough Pauses' +'</span><span class="pull-right value">' + (value.normalCoughPauses + value.programmedCoughPauses) +'</span></li>' +
@@ -770,7 +771,7 @@ angular.module('hillromvestApp')
             }
           }*/
           /* HILL-714*/
-              return d3.time.format(' %d%b%y')(new Date(d));
+              return d3.time.format(' %d%b%y %H:%M')(new Date(d));
           /*HILL-714 end*/
         });
       chart.yAxis1.tickFormat(d3.format('d'));
@@ -1369,7 +1370,7 @@ angular.module('hillromvestApp')
             }
           }*/
           /*HILL-714*/
-              return d3.time.format(' %d%b%y')(new Date(d));
+              return d3.time.format(' %d%b%y %H:%M')(new Date(d));
           /*HILL-714 End*/
         });
 
