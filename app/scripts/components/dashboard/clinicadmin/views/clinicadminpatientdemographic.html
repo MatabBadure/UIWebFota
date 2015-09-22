@@ -1,7 +1,7 @@
 <div class="container admin-user">
   <div class="col-md-16 margin-top reset-padding">
    <div class="user-gen-details">
-     <span class="user-gen-details--name">{{::patient.firstName}} {{patient.lastName}}</span>
+     <span class="user-gen-details--name">{{::patient.firstName}} {{::patient.lastName}}</span>
      <span class="user-gen-details--hr-id">{{::patient.hillromId}}</span>
    </div>
   </div>
@@ -18,16 +18,14 @@
 
         <div class="col-md-16 margin-top reset-padding">
           <div class="col-md-7 reset-padding">
-            <div class="col-md-6 dashboard__form--label reset-padding">
-              <span class="" translate="patient.hill-rom-id"></span>
+            <div class="col-md-6 dashboard__form--label reset-padding" translate="patient.hill-rom-id">
             </div>
             <div class="col-md-10 dashboard__form--label-val reset-padding">
               {{::patient.hillromId}}
             </div>
           </div>
           <div class="col-md-7 reset-padding col-md-offset-2">
-            <div class="col-md-6 dashboard__form--label reset-padding">
-              <span class="" translate="patient.mrn-id"></span>
+            <div class="col-md-6 dashboard__form--label reset-padding" translate="patient.mrn-id">
             </div>
             <div class="col-md-10 dashboard__form--label-val reset-padding">
               {{::patient.mrnId}}
@@ -45,8 +43,7 @@
 
         <div class="col-md-16 margin-top reset-padding">
           <div class="col-md-7 reset-padding">
-            <div class="col-md-6 dashboard__form--label reset-padding">
-              <span class="" translate="patient.title.name"></span>
+            <div class="col-md-6 dashboard__form--label reset-padding" translate="patient.title.name">
             </div>
             <div class="col-md-10 dashboard__form--label-val reset-padding">
               {{::patient.title}}
@@ -54,8 +51,7 @@
           </div>
 
           <div class="col-md-7 col-md-offset-2 reset-padding">
-            <div class="col-md-6 dashboard__form--label reset-padding">
-              <span class="" translate="patient.primary-language"></span>
+            <div class="col-md-6 dashboard__form--label reset-padding" translate="patient.primary-language">
             </div>
             <div class="col-md-10 dashboard__form--label-val reset-padding">
               {{::patient.langKey}}
@@ -65,16 +61,14 @@
 
         <div class="col-md-16 reset-padding margin-top">
           <div class="col-md-7 reset-padding">
-            <div class="col-md-6 dashboard__form--label reset-padding">
-              <span class="" translate="patient.first-name"></span>
+            <div class="col-md-6 dashboard__form--label reset-padding" translate="patient.first-name">
             </div>
             <div class="col-md-10 dashboard__form--label-val reset-padding">
               {{::patient.firstName}}
             </div>
           </div>
           <div class="col-md-7 reset-padding col-md-offset-2">
-            <div class="col-md-6 dashboard__form--label reset-padding">
-              <span class="" translate="patient.middle-name"></span>
+            <div class="col-md-6 dashboard__form--label reset-padding" translate="patient.middle-name">
             </div>
             <div class="col-md-10 dashboard__form--label-val reset-padding">
               {{::patient.middleName}}
@@ -84,8 +78,7 @@
 
         <div class="col-md-16 reset-padding margin-top">
           <div class="col-md-7 reset-padding">
-            <div class="col-md-6 dashboard__form--label reset-padding">
-              <span class="" translate="patient.last-name"></span>
+            <div class="col-md-6 dashboard__form--label reset-padding" translate="patient.last-name">
             </div>
             <div class="col-md-10 dashboard__form--label-val reset-padding">
               {{::patient.lastName}}
@@ -93,8 +86,7 @@
           </div>
 
           <div class="col-md-7 reset-padding col-md-offset-2">
-            <div class="col-md-6 dashboard__form--label reset-padding">
-              <span class="" translate="patient.date-of-birth"></span>
+            <div class="col-md-6 dashboard__form--label reset-padding" translate="patient.date-of-birth">
             </div>
             <div class="col-md-6 dashboard__form--label-val reset-padding">
               {{::patient.formatedDOB}}
@@ -104,16 +96,14 @@
 
         <div class="col-md-16 reset-padding margin-top">
           <div class="col-md-7 reset-padding">
-            <div class="col-md-6 dashboard__form--label reset-padding">
-              <span class="" translate="patient.gender.name"></span>
+            <div class="col-md-6 dashboard__form--label reset-padding" translate="patient.gender.name">
             </div>
             <div class="col-md-10 dashboard__form--label-val reset-padding">
               {{::patient.gender}}
             </div>
           </div>
           <div class="col-md-7 reset-padding col-md-offset-2">
-            <div class="col-md-6 dashboard__form--label reset-padding">
-              <span class="" translate="patient.address"></span>
+            <div class="col-md-6 dashboard__form--label reset-padding" translate="patient.address">
             </div>
             <div class="col-md-10 dashboard__form--label-val reset-padding">
               {{::patient.address}}
@@ -123,16 +113,14 @@
 
         <div class="col-md-16 reset-padding margin-top">
           <div class="col-md-7 reset-padding">
-            <div class="col-md-6 dashboard__form--label reset-padding">
-              <span class="" translate="patient.city"></span>
+            <div class="col-md-6 dashboard__form--label reset-padding" translate="patient.city">
             </div>
             <div class="col-md-10 dashboard__form--label-val reset-padding">
               {{::patient.city}}
             </div>
         </div>
         <div class="col-md-7 reset-padding col-md-offset-2">
-          <div class="col-md-6 dashboard__form--label reset-padding">
-            <span class="" translate="patient.state"></span>
+          <div class="col-md-6 dashboard__form--label reset-padding" translate="patient.state">
           </div>
           <div class="col-md-10 dashboard__form--label-val reset-padding">
             {{::patient.state}}
@@ -142,16 +130,14 @@
 
       <div class="col-md-16 reset-padding margin-top">
           <div class="col-md-7 reset-padding">
-            <div class="col-md-6 dashboard__form--label reset-padding">
-              <span class="" translate="patient.zipcode"></span>
+            <div class="col-md-6 dashboard__form--label reset-padding" translate="patient.zipcode">
             </div>
             <div class="col-md-10 dashboard__form--label-val reset-padding">
               {{::patient.zipcode}}
             </div>
         </div>
         <div class="col-md-7 reset-padding col-md-offset-2">
-          <div class="col-md-6 dashboard__form--label reset-padding">
-            <span class="" translate="patient.email"></span>
+          <div class="col-md-6 dashboard__form--label reset-padding" translate="patient.email">
           </div>
           <div class="col-md-10 dashboard__form--label-val reset-padding">
             {{::patient.email}}
@@ -161,16 +147,14 @@
 
       <div class="col-md-16 reset-padding margin-top">
           <div class="col-md-7 reset-padding">
-            <div class="col-md-6 dashboard__form--label reset-padding">
-              <span class="" translate="patient.mobile-number"></span>
+            <div class="col-md-6 dashboard__form--label reset-padding" translate="patient.mobile-number">
             </div>
             <div class="col-md-10 dashboard__form--label-val reset-padding">
               {{::patient.mobilePhone}}
             </div>
         </div>
         <div class="col-md-7 reset-padding col-md-offset-2">
-          <div class="col-md-6 dashboard__form--label reset-padding">
-            <span class="" translate="patient.home-phone-number"></span>
+          <div class="col-md-6 dashboard__form--label reset-padding" translate="patient.home-phone-number">
           </div>
           <div class="col-md-10 dashboard__form--label-val reset-padding">
             {{::patient.primaryPhone}}
