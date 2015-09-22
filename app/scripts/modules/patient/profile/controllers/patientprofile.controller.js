@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('hillromvestApp').controller('patientprofileController', function ($scope, $state, $stateParams, notyService, patientService, UserService, AuthServerProvider,Password, Auth) {
-	$scope.init = function(){
+	
+  $scope.init = function(){
 		var currentRoute = $state.current.name;	
 		$scope.profileTab = currentRoute;	
 		$scope.userRole = localStorage.getItem('role');			
@@ -13,8 +14,7 @@ angular.module('hillromvestApp').controller('patientprofileController', function
 			$scope.initResetPassword();
 		}else if(currentRoute === 'patientSettings'){
 			$scope.initPatientSettings();
-		}
-		
+		}	
 	};
 
 	$scope.isProfileTabActive = function(tab) {
@@ -138,15 +138,15 @@ angular.module('hillromvestApp').controller('patientprofileController', function
     };
 
     $scope.toggleNotification = function(notification){
-    	var data = {"isHMRNotification" : $scope.patientUser.hmrnotification, "isAcceptHMRNotification": $scope.patientUser.acceptHMRNotification, "isAcceptHMRSetting": $scope.patientUser.acceptHMRSetting };
-    	if(notification === 'hmrnotification'){
-    		data.isHMRNotification = !$scope.patientUser.hmrnotification;
+    	var data = {"isMissedTherapyNotification" : $scope.patientUser.missedTherapyNotification, "isNonHMRNotification": $scope.patientUser.nonHMRNotification, "isSettingDeviationNotification": $scope.patientUser.settingDeviationNotification };
+    	if(notification === 'missedTherapyNotification'){
+    		data.isMissedTherapyNotification = !$scope.patientUser.missedTherapyNotification;
     	}
-    	if(notification === 'acceptHMRNotification'){
-    		data.isAcceptHMRNotification = !$scope.patientUser.acceptHMRNotification;
+    	if(notification === 'nonHMRNotification'){
+    		data.isNonHMRNotification = !$scope.patientUser.nonHMRNotification;
     	}
-    	if(notification === 'acceptHMRSetting'){
-    		data.isAcceptHMRSetting = !$scope.patientUser.acceptHMRSetting;
+    	if(notification === 'settingDeviationNotification'){
+    		data.isSettingDeviationNotification = !$scope.patientUser.settingDeviationNotification;
     	}
     	UserService.updatePatientUserNotification(localStorage.getItem('patientID'), data).then(function(response){
 			$scope.patientUser = response.data.user;    
