@@ -3,8 +3,6 @@ angular.module('hillromvestApp')
 
 //---HCP PieChart JS =============
   $scope.init = function(){
-    
-
     clinicadminService.getClinicsAssociated(localStorage.getItem('userId')).then(function(response){
       localStorage.setItem('clinicId', response.data.clinics[0].id);
       $scope.clinics = response.data.clinics;

@@ -61,13 +61,11 @@ angular.module('hillromvestApp')
           } else if(response.data.user.authorities[0].name === loginConstants.role.hcp){
             localStorage.setItem('userId', response.data.user.id);
             $state.go('hcpdashboard');
-          }else{
+          } else if(response.data.user.authorities[0].name === 'CLINIC_ADMIN'){
             localStorage.setItem('userId', response.data.user.id);
-          } else if(data.data.user.authorities[0].name === 'CLINIC_ADMIN'){
-            localStorage.setItem('userId', data.data.user.id);
             $state.go('clinicadmindashboard');
-          }else{
-            localStorage.setItem('userId', data.data.user.id);
+          } else{
+            localStorage.setItem('userId', response.data.user.id);
             $state.go('patientUser');
           }
         }

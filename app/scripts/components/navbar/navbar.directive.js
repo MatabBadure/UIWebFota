@@ -21,6 +21,7 @@ angular.module('hillromvestApp')
   };
 }]);
 
+angular.module('hillromvestApp')
 .directive('activeLink',['$location', function($location) {
   return {
     restrict: 'A',

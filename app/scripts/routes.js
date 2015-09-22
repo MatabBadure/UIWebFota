@@ -1496,6 +1496,9 @@ angular.module('hillromvestApp')
                         return $translate.refresh();
                     }]
 
+                  }
+               })   
+
             .state('clinicadmindashboard', {
                 parent: 'clinicadmin-dashboard',
                 url: '/clinicadmin-dashboard',
@@ -1744,5 +1747,5 @@ angular.module('hillromvestApp')
                         }
                     ]
                 }
-            });
-});
+            })
+        });
