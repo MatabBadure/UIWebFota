@@ -1,7 +1,9 @@
 'use strict';
 
 angular.module('hillromvestApp')
-.controller('graphController', function($scope, $state, patientDashBoardService, StorageService, dateService, graphUtil, patientService, UserService, $stateParams, notyService, $timeout, graphService) {
+.controller('graphController', 
+  ['$scope', '$state', 'patientDashBoardService', 'StorageService', 'dateService', 'graphUtil', 'patientService', 'UserService', '$stateParams', 'notyService', '$timeout', 'graphService',
+  function($scope, $state, patientDashBoardService, StorageService, dateService, graphUtil, patientService, UserService, $stateParams, notyService, $timeout, graphService) {
     var chart;
     $scope.init = function() {
       $scope.hmrLineGraph = true;
@@ -1439,10 +1441,6 @@ angular.module('hillromvestApp')
       graphService.getPdfForSVGGraph(graphData);      
     };
 
-    $scope.downloadAsCsv = function(){
-      $scope.downloadTherapyAndDeviceDataAsCSV();
-    };
-
     $scope.downloadRawDataAsCsv = function(){
       patientService.getDeviceDataAsCSV($scope.patientId, $scope.fromTimeStamp, $scope.toTimeStamp).then(function(response){
          graphService.downloadAsCSVFile(response.data, 'VestDeviceReport.csv', 'vestDevice');
@@ -1463,4 +1461,4 @@ angular.module('hillromvestApp')
       $scope.showModalCaregiver = false;
     };
     
-});
+}]);
