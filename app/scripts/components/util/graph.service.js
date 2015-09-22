@@ -42,6 +42,7 @@ angular.module('hillromvestApp')
 			doc.addPage();
 			doc.autoTable(columns, data);
 	        doc.save('sample-file.pdf');
+	        doc = null;
 	    } 
 
 	    this.downloadAsCSVFile = function(csvText, filename, dataType){ 
