@@ -58,7 +58,7 @@ angular.module('hillromvestApp')
       $scope.getHmrRunRateAndScore();
       $scope.edit_date = dateService.convertDateToYyyyMmDdFormat(new Date());
       $scope.getMissedTherapyDaysCount();
-      $scope.fromTimeStamp = dateService.getnDaysBackTimeStamp(7);
+      $scope.fromTimeStamp = dateService.getnDaysBackTimeStamp(6);
       $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
       $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');   
       $scope.curNotePageIndex = 1;
