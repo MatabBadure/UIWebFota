@@ -133,19 +133,13 @@
 				</button>
 				<ul class="dropdown-menu" role="menu" aria-labelledby="single-button">
 					<li role="menuitem">
-						<a href="#" ng-click="downloadAsPdf();">
-							<span translate="graph.export-as-pdf"></span>
-						</a>
+						<a href="javascript:void(0);" ng-click="downloadAsPdf();" translate="graph.export-as-pdf"></a>
 					</li>					
 					<li role="menuitem">
-						<a href="#" ng-click="downloadProcessedDataAsCsv();">
-							<span translate="graph.export-processed-data"></span>
-						</a>
+						<a href="javascript:void(0);" ng-click="downloadProcessedDataAsCsv();" translate="graph.export-processed-data"></a>
 					</li>
 					<li role="menuitem">
-						<a href="#" ng-click="downloadRawDataAsCsv();">
-							<span translate="graph.export-raw-data" ></span>
-						</a>
+						<a href="javascript:void(0);" ng-click="downloadRawDataAsCsv();" translate="graph.export-raw-data"></a>
 					</li>										
 				</ul>
 
@@ -251,4 +245,4 @@
 </div>
 		</div>
 		<div id= "png-container" ></div>
-		<canvas id="canvas" width="1800px" height="1800px" style="display:none;"></canvas>
+		<canvas id="canvas" width="1800px" height="1800px" class="graph-canvas-hide"></canvas>
