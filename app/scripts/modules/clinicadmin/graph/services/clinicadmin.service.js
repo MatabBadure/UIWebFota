@@ -7,16 +7,12 @@ angular.module('hillromvestApp')
         var url = URL.getStatistics.replace('USERID', userId).replace('CLINICID', clinicId);
         return $http.get(url, {
           headers: headerService.getHeader()
-        }).success(function (response) {
-          return response;
         });
       },
       getClinicsAssociated: function(userId){
         var url = URL.getClinicsAssociatedToCliniadmin.replace('USERID', userId);
         return $http.get(url, {
           headers: headerService.getHeader()
-        }).success(function (response) {
-          return response;
         });
       }
     };
