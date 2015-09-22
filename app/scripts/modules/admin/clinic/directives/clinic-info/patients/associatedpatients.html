@@ -55,7 +55,7 @@
       <div class="clr"></div>
     </div>
 
-    <div class="dashboard__manage-view--list  assoc" ng-repeat="associatedPatient in associatedPatients">
+    <div class="dashboard__manage-view--list" ng-repeat="associatedPatient in associatedPatients" ng-click="associatedPatient.patient.isDeleted || selectAssociatedPatient(associatedPatient.patient)" readonly="true" ng-class="{'inactive': associatedPatient.patient.isDeleted}">
       <div class="col-md-2 reset-padding">
         <span class="main-prim-info">{{associatedPatient.patient.lastName}} {{associatedPatient.patient.firstName}}</span>
         <span class="main-secon-info">{{associatedPatient.patient.dob}}</span>

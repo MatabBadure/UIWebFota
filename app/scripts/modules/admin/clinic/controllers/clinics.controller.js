@@ -612,5 +612,11 @@ angular.module('hillromvestApp')
       });
     };
 
+    $scope.selectAssociatedPatient = function(patient){
+      $state.go('patientOverview', {
+        'patientId': patient.id
+      });
+    };
+
     $scope.init();
   });
