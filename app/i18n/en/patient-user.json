@@ -259,7 +259,12 @@
         "no-data-found": "No data found.",
         "please-deselect-one-item": "Please deselect one item.",
         "min-legend-required": "At least one item should be selected.",
-        "no-notifications": "Doing great. Have a good day !"
+        "no-notifications": "Doing great. Have a good day !",
+        "export-as-pdf": "PDF",
+        "export-as-csv": "CSV",
+        "export-raw-data": "Raw Data (CSV)",
+        "export-processed-data": "Processed Data (CSV)",
+        "download": "Download"
      },
      "no-clinic-found": "No clinic associated.",
      "no-hcp-found": "No hcp associated.",
