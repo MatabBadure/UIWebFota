@@ -151,9 +151,5 @@ angular.module('hillromvestApp')
     }
   };
 
-  $scope.changeSortOption = function(){
-    console.log('Todo :Check Box changes', $scope.sortOn);
-  };
-
 	$scope.init();
 }]);

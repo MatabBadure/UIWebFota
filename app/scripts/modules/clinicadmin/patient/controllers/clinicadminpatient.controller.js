@@ -30,7 +30,9 @@ angular.module('hillromvestApp')
   $scope.getStates = function(){
     UserService.getState().then(function(response) {
       $scope.states = response.data.states;
-    }).catch(function(response) {});
+    }).catch(function(response) {
+      $scope.showWarning(response);
+    });
   };
 
   $scope.getAllPatientsByClinicId = function(clinicId){
