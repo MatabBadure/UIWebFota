@@ -38,7 +38,7 @@
 
 		$scope.getStatistics = function(clinicId, userId){
 			if($state.current.name === 'hcpdashboard'){
-				hcpDashboardService.getStatistics(clinicId, userId).then(function(response){
+				hcpDashBoardService.getStatistics(clinicId, userId).then(function(response){
 					  $scope.statistics = response.data.statitics;
 					}).catch(function(response){
 					  $scope.showWarning(response);

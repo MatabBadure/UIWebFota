@@ -59,7 +59,7 @@ angular.module('hillromvestApp')
   $scope.getPatientsByFilter = function(filter, clinicId){
     var userId = localStorage.getItem('userId');
     clinicadminPatientService.getAssociatedPatientsByFilter(filter, clinicId, userId).then(function(response){
-      $scope.patients = response.data.patientList;
+      $scope.patients = response.data.patientUsers;
     }).catch(function(response){
       $scope.showWarning(response);
     });
@@ -68,7 +68,7 @@ angular.module('hillromvestApp')
 	$scope.getPatientsWithNoEvents = function(filter, clinicId){
     var userId = localStorage.getItem('userId');
 		clinicadminPatientService.getAssociatedPatientsWithNoEvents(filter, clinicId, userId).then(function(response){
-      $scope.patients = response.data.patientList;
+      $scope.patients = response.data.patientUsers;
     }).catch(function(response){
       $scope.showWarning(response);
     });
