@@ -39,19 +39,26 @@ angular.module('hillromvestApp')
     };
 
     $scope.initClinicAssoctPatients = function(clinicId){
-      $scope.isAssociatePatient = false;
+      $scope.isAssociatePatient = $scope.hasNoPatient = false;
+      var patientCount = 0;
       clinicService.getClinicAssoctPatients(clinicId).then(function(response){
         $scope.associatedPatients = response.data.patientUsers;
         clinicService.getPatients().then(function(response){
           $scope.patients = response.data.users;
           if($scope.associatedPatients){
             for(var i=0; i<$scope.associatedPatients.length; i++){
-              for(var j=0; j<$scope.patients.length; j++){
-                if($scope.associatedPatients[i].id === $scope.patients[j].id){
-                  $scope.patients.splice(j,1);
+              if($scope.associatedPatients[i].patient){
+                patientCount++;
+                for(var j=0; j<$scope.patients.length; j++){
+                  if($scope.associatedPatients[i].patient.id === $scope.patients[j].id){
+                    $scope.patients.splice(j,1);
+                  }
                 }
               }
             }
+          }
+          if(patientCount === 0){
+            $scope.hasNoPatient = true;
           }
         }).catch(function(response){});
       }).catch(function(response){});      
@@ -409,6 +416,7 @@ angular.module('hillromvestApp')
     };
 
     $scope.disassociatePatient = function(patientId){
+      $scope.hasNoPatient = false;
       $scope.closePatientDeactivateModal();
       var data = [{'id': $stateParams.clinicId}];
       clinicService.disassociatePatient(patientId, data).then(function(response){
