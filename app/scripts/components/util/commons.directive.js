@@ -42,7 +42,6 @@ angular.module('hillromvestApp')
       restrict: "A",
       require: "ngModel",
       scope: {},
-      require: 'ngModel',
       link: function (scope, element, attrs, modelCtrl) {
         element.on('keydown', function() {
           modelCtrl.$showValidationMessage = modelCtrl.$dirty;
