@@ -2,8 +2,7 @@ angular.module('hillromvestApp')
 .controller('clinicadminPatientController',['$scope', '$state', '$stateParams', 'clinicadminPatientService', 'patientService', 'notyService', 'DoctorService', 'clinicadminService', 'clinicService', 'dateService', 'UserService', function($scope, $state, $stateParams, clinicadminPatientService, patientService, notyService, DoctorService, clinicadminService, clinicService, dateService, UserService) { 
 	
 	$scope.init = function(){
-    console.log('Current State: ', $state.current.name);
-    if($state.current.name === 'clinicadminpatientDemographic' || $state.current.name === 'clinicadmminpatientDemographicEdit'){
+    if($state.current.name === 'clinicadminpatientDemographic'  || $state.current.name === 'clinicadmminpatientDemographicEdit'){
       $scope.getPatientInfo($stateParams.patientId, $scope.setEditMode);
       if($state.current.name === 'clinicadmminpatientDemographicEdit'){
         $scope.getStates();
