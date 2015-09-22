@@ -219,8 +219,7 @@
 			 hcpDashBoardService.getCumulativeGraphPoints($scope.hcpId, $scope.clinicId, dateService.getDateFromTimeStamp($scope.fromTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), $scope.groupBy).then(function(response){
 				$scope.serverCumulativeGraphData = response.data.cumulativeStatitics;
 				if($scope.serverCumulativeGraphData.length !== 0) {
-					$scope.formatedCumulativeGraphData = graphUtil.convertIntoCumulativeGraph($scope.serverCumulativeGraphData); 
-					console.log('Cumulative Graph Data' + JSON.stringify($scope.formatedCumulativeGraphData));
+					$scope.formatedCumulativeGraphData = graphUtil.convertIntoCumulativeGraph($scope.serverCumulativeGraphData);
 					$scope.drawCumulativeGraph();
 				} else {
 					$scope.plotNoDataAvailable();
