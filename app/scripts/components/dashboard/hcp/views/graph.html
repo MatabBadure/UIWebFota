@@ -88,6 +88,7 @@
 					<svg> </svg>
 			</div>
 			<div ng-if="treatmentGraph" id="treatmentGraph" class="complianceGraph col-md-16">
+				<div class="pull-right wrapper_custom_check">
 					<form action="#">
 						<div class="custom_check_container">
 							<input id="treatmentPerDay" class="check" type="checkbox" name="treatmentPerDay" ng-disabled="isTreatmentPerDayDisabled" ng-model="treatment.treatmentPerDay" ng-change="reCreateTreatmentGraph()">
@@ -98,6 +99,7 @@
 							<label class="check_label pressure_legend" for="treatmentLength">Average Length of Treatment</label>
 						</div>
 					</form>
+				</div>
 					<svg> </svg>
 			</div>
 

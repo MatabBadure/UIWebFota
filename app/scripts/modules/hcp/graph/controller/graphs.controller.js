@@ -172,14 +172,16 @@
 				}
 			}).catch(function(response) {
 				$scope.plotNoDataAvailable();
-			});	
+			});
+			
 		}
 
 		$scope.drawCumulativeGraph = function() {
 			nv.addGraph(function() {
 			var chart = nv.models.lineChart()
 				.x(function(d) { return d[0] })
-				.y(function(d) { return d[1] }) 
+				.y(function(d) { return d[1] })
+				.margin({top: 30, right: 10, bottom: 50, left: 10})
 				.color(d3.scale.category10().range())
 				.useInteractiveGuideline(true);
 				chart.xAxis.showMaxMin = true;
@@ -216,6 +218,28 @@
 					.datum($scope.formatedCumulativeGraphData)
 					.call(chart);
 				nv.utils.windowResize(chart.update);
+
+				/*graph Style*/
+				d3.selectAll('#cumulativeGraph svg').selectAll('.nv-legendWrap').
+				attr("transform" , "translate(-28,-65)");
+				d3.selectAll('#cumulativeGraph svg').selectAll('.nv-axislabel').
+				attr("y" , "-40");
+				d3.selectAll('#cumulativeGraph svg').selectAll('.nv-lineChart').
+				attr("transform" , "translate(60,60)");
+				d3.selectAll('#cumulativeGraph svg').selectAll('.nv-axis .tick').append('circle').
+				attr("cx" , "0").
+				attr("cy" , "0").
+				attr("r" , "2").
+				attr("fill" , "#aeb5be");
+				d3.selectAll('#cumulativeGraph svg').select('.nv-series:nth-child(1)').
+				attr("transform" , "translate(-100,5)");
+				d3.selectAll('#cumulativeGraph svg').select('.nv-series:nth-child(2)').
+				attr("transform" , "translate(70,5)");   
+				d3.selectAll('#cumulativeGraph svg').select('.nv-series:nth-child(3)').
+				attr("transform" , "translate(250,5)");  
+
+				          
+
 			return chart;
 		});
 		}
@@ -375,7 +399,7 @@
 			nv.addGraph(function() {
 			var chart = nv.models.multiChart()
 			.showLegend(false)
-			.margin({top: 30, right: 100, bottom: 50, left: 100})
+			.margin({top: 30, right: 30, bottom: 50, left: 30})
 			.color(d3.scale.category10().range());
 		 	
 			chart.tooltipContent($scope.toolTipContentForTreatment());
@@ -414,8 +438,26 @@
 				d3.select('#treatmentGraph svg')
 			.datum($scope.treatmentGraphData)
 			.transition().duration(500).call(chart);
+			var recHeight = document.getElementsByTagName('rect')[0].getAttribute('height');
+			var recWidth = document.getElementsByTagName('rect')[0].getAttribute('width');
+			d3.select("#treatmentGraph svg").select(".nv-groups").append("rect").
+			attr("fill" , "#e3ecf7").
+			attr("height" , recHeight).
+			attr("width" , recWidth);
+
+			d3.selectAll('#treatmentGraph svg').selectAll('.nv-axislabel').
+				attr("y" , "-20");
+			d3.selectAll('#treatmentGraph svg').selectAll('.nv-axis .tick').append('circle').
+				attr("cx" , "0").
+				attr("cy" , "0").
+				attr("r" , "2").
+				attr("fill" , "#aeb5be");
 			return chart;
 		});
+
+
+		
+
 	}
 
 	$scope.init();
