@@ -235,7 +235,6 @@ angular.module('hillromvestApp')
       };
 
       $scope.account = function(){
-        console.log('Is it coming here...!');
         $state.go("clinicadminUserProfile");
       };
     }
