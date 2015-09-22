@@ -1,7 +1,7 @@
 
 	'use strict';
 	angular.module('hillromvestApp')
-	.controller('hcpGraphController',[ '$scope', '$state', 'hcpDashBoardService', 'dateService', 'graphUtil', '$stateParams', 'hcpDashboardConstants', 'DoctorService', function($scope, $state, hcpDashBoardService, dateService, graphUtil, $stateParams, hcpDashboardConstants, DoctorService) {
+	.controller('hcpGraphController',[ '$scope', '$state', 'hcpDashBoardService', 'dateService', 'graphUtil', '$stateParams', 'hcpDashboardConstants', 'DoctorService', 'clinicadminService', 'notyService', function($scope, $state, hcpDashBoardService, dateService, graphUtil, $stateParams, hcpDashboardConstants, DoctorService, clinicadminService, notyService) {
 		var chart;
 		$scope.init = function() {
 			$scope.hcpId = parseInt(localStorage.getItem('userId'));
@@ -17,7 +17,11 @@
 			$scope.fromTimeStamp = dateService.getnDaysBackTimeStamp(patientDashboard.maxDaysForWeeklyGraph);
 			$scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,hcpDashboardConstants.USdateFormat,'/');
 			$scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,hcpDashboardConstants.USdateFormat,'/');
-			$scope.getClinics($scope.hcpId);
+			if($state.current.name === 'hcpdashboard'){
+			  $scope.getClinicsForHCP($scope.hcpId);
+			} else if($state.current.name === 'clinicadmindashboard') {
+				$scope.getClinicsForClinicAdmin($scope.hcpId);
+			}
 		}; 
 
 		$scope.getBarColor = function(count) {
@@ -33,15 +37,22 @@
 		}
 
 		$scope.getStatistics = function(clinicId, userId){
-			console.log('+++++++++++++++++++++++++++++++++++'+ hcpDashboardService+ clinicId+ userId);
-			hcpDashboardService.getStatistics(clinicId, userId).then(function(response){
-				  $scope.statistics = response.data.statitics;
-				}).catch(function(response){
-				  $scope.showWarning(response);
-				});
+			if($state.current.name === 'hcpdashboard'){
+				hcpDashboardService.getStatistics(clinicId, userId).then(function(response){
+					  $scope.statistics = response.data.statitics;
+					}).catch(function(response){
+					  $scope.showWarning(response);
+					});
+			} else if($state.current.name === 'clinicadmindashboard'){
+					clinicadminService.getStatistics(clinicId, userId).then(function(response){
+		      $scope.statistics = response.data.statitics;
+		    }).catch(function(response){
+		      $scope.showWarning(response);
+		    });
+			}
 	  }
 
-		$scope.getClinics = function(userId) {
+		$scope.getClinicsForHCP = function(userId) {
 			DoctorService.getClinicsAssociatedToHCP(userId).then(function(response){
 				localStorage.setItem('clinicId', response.data.clinics[0].id);
 				$scope.clinicId = response.data.clinics[0].id;
@@ -52,7 +63,20 @@
 		  }).catch(function(response){
 				$scope.showWarning(response);
 		  });
-		}
+		};
+
+		$scope.getClinicsForClinicAdmin = function(userId) {
+				clinicadminService.getClinicsAssociated(userId).then(function(response){
+		      localStorage.setItem('clinicId', response.data.clinics[0].id);
+		      $scope.clinicId = response.data.clinics[0].id;
+		      $scope.clinics = response.data.clinics;
+		      $scope.selectedClinic = response.data.clinics[0];
+		      $scope.weeklyChart();
+		      $scope.getStatistics($scope.selectedClinic.id, userId);
+	    }).catch(function(response){
+	      	$scope.showWarning(response);
+	    });
+		};
 
 		//---HCP PieChart JS =============
 		$scope.missedtherapyDays = 25;
@@ -105,7 +129,7 @@
 				};
 
   $scope.goToPatientDashboard = function(value){
-	if(value === 'hcppatientdashboard'){
+	if(value === 'hcppatientdashboard' || value === 'clinicadminpatientdashboard'){
 	  $state.go(value, {'clinicId': $scope.selectedClinic.id});
 	}else{
 	  $state.go(value);
@@ -452,7 +476,11 @@
 	$scope.init();
 
 	$scope.gotoPatients = function(value){
-	$state.go('hcppatientdashboard',{'filter':value, 'clinicId':$scope.selectedClinic.id});
+		if($state.current.name === 'hcpdashboard'){
+			$state.go('hcppatientdashboard',{'filter':value, 'clinicId':$scope.selectedClinic.id});
+		} else if($state.current.name === 'clinicadmindashboard') {
+			$state.go('clinicadminpatientdashboard',{'filter':value, 'clinicId':$scope.selectedClinic.id});
+		}
   };
 
 	}]);

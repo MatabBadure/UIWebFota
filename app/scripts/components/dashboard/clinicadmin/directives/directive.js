@@ -1,7 +1,7 @@
 angular.module('hillromvestApp')
   .directive('clinicadminGraph', function() {
     return {
-        templateUrl: 'scripts/components/dashboard/clinicadmin/views/graph.html',
+        templateUrl: 'scripts/components/dashboard/hcp/views/graph.html',
         restrict: 'E',
       }
   });

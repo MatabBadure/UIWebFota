@@ -1509,7 +1509,7 @@ angular.module('hillromvestApp')
                 views: {
                     'content@': {
                         templateUrl: 'scripts/modules/clinicadmin/graph/views/dashboard-landing.html',
-                        controller: 'clinicadminGraphController'
+                        controller: 'hcpGraphController'
                     }
                 },
                 resolve: {
