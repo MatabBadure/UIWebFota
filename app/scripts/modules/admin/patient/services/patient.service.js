@@ -331,8 +331,6 @@ angular.module('hillromvestApp')
         var url = admin.hillRomUser.users+ "/" +patientId+"/exportTherapyDataCSV?from="+startDate+"&to="+endDate;
         return $http.get(url, {
           headers: headerService.getHeader()
-        }).success(function(response){
-          return response;
         });
       },
 
@@ -340,8 +338,6 @@ angular.module('hillromvestApp')
         var url = admin.hillRomUser.users+ "/" +patientId +"/exportVestDeviceDataCSV?from="+ startDateTimestamp+"&to="+endDateTimestamp;
         return $http.get(url, {
           headers: headerService.getHeader()
-        }).success(function(response){
-          return response;
         });
       }
     };
