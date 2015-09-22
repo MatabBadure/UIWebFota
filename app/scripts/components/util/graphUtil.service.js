@@ -93,8 +93,8 @@ angular.module('hillromvestApp')
           var pressureSet = [];
           angular.forEach(data.actual, function(value) {
               durationSet.push(value.duration);
-              pressureSet.push(value.weightedAvgPressure);
-              frequencySet.push(value.weightedAvgFrequency);
+              pressureSet.push(value.pressure);
+              frequencySet.push(value.frequency);
           });
           var maxDuration = arrayMax(durationSet);
           var maxRecommendedDuration = data.recommended.maxMinutesPerTreatment * data.recommended.treatmentsPerDay;
@@ -331,13 +331,13 @@ angular.module('hillromvestApp')
           var durationPoint = {};
           var frequencyPoint = {};
           pressurePoint.x = value.timestamp;
-          pressurePoint.y = value.weightedAvgPressure;
+          pressurePoint.y = value.pressure;
           pressureValues.push(pressurePoint);
           durationPoint.x = value.timestamp;
           durationPoint.y = value.duration;
           durationValues.push(durationPoint);
           frequencyPoint.x = value.timestamp;
-          frequencyPoint.y = value.weightedAvgFrequency;
+          frequencyPoint.y = value.frequency;
           frequencyValues.push(frequencyPoint);
         });
         pressureObject.values = pressureValues;
