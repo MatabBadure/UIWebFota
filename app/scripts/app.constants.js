@@ -6,4 +6,10 @@ angular.module('hillromvestApp')
 
 .constant('VERSION', '0.0.1-SNAPSHOT')
 
+.constant('URL', {
+	'caregiverDashboard' : {
+		'getPatients' : 'api/user/USERID/patients'
+	}
+});
+
 ;

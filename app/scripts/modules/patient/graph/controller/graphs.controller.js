@@ -2,23 +2,32 @@
 
 angular.module('hillromvestApp')
 .controller('graphController', 
-  ['$scope', '$state', 'patientDashBoardService', 'StorageService', 'dateService', 'graphUtil', 'patientService', 'UserService', '$stateParams', 'notyService', '$timeout', 'graphService',
-  function($scope, $state, patientDashBoardService, StorageService, dateService, graphUtil, patientService, UserService, $stateParams, notyService, $timeout, graphService) {
+  ['$scope', '$state', 'patientDashBoardService', 'StorageService', 'dateService', 'graphUtil', 'patientService', 'UserService', '$stateParams', 'notyService', '$timeout', 'graphService', 'caregiverDashBoardService',
+  function($scope, $state, patientDashBoardService, StorageService, dateService, graphUtil, patientService, UserService, $stateParams, notyService, $timeout, graphService, caregiverDashBoardService) {
     var chart;
     $scope.init = function() {
-      $scope.hmrLineGraph = true;
-      $scope.hmrBarGraph = false;
-      $scope.hmrGraph = true;
-      $scope.isComplianceExist = false;
+      $scope.yAxisRangeForHMRLine = $scope.yAxisRangeForCompliance = $scope.compliance = {};
       $scope.format = 'weekly';
       $scope.selectedGraph = 'HMR';
       $scope.selectedDateOption = 'WEEK';
       $scope.disableDatesInDatePicker();
       $scope.role = localStorage.getItem('role'); 
       $scope.patientId = parseInt(localStorage.getItem('patientID'));
+      $scope.caregiverID = parseInt(localStorage.getItem('userId'));
       var currentRoute = $state.current.name;
       var server_error_msg = "Some internal error occurred. Please try after sometime.";
-      $scope.showNotes = false;
+      $scope.showNotes = $scope.hmrBarGraph = $scope.isComplianceExist = $scope.compliance.frequency = false;
+      $scope.compliance.pressure = $scope.compliance.duration = $scope.hmrLineGraph = $scope.hmrGraph = true;
+      $scope.toTimeStamp = new Date().getTime();
+      $scope.compliance.secondaryYaxis = 'pressure';
+      $scope.compliance.primaryYaxis = 'duration';
+      $scope.hmrRunRate = $scope.adherenceScore = $scope.missedtherapyDays = $scope.minFrequency = $scope.maxFrequency = $scope.minPressure = $scope.maxPressure = $scope.minDuration = $scope.maxDuration = $scope.yAxis1Min = $scope.yAxis2Min = $scope.notePageCount = $scope.totalNotes = 0;
+      $scope.edit_date = dateService.convertDateToYyyyMmDdFormat(new Date());
+      $scope.fromTimeStamp = dateService.getnDaysBackTimeStamp(6);
+      $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
+      $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');   
+      $scope.curNotePageIndex = 1;
+      $scope.perPageCount = 4;
       $scope.patientTab = currentRoute;
       if ($state.current.name === 'patientdashboard') {
         $scope.initPatientDashboard();        
@@ -35,39 +44,9 @@ angular.module('hillromvestApp')
       } else if(currentRoute === 'patientOverview') {
         $scope.patientId = parseInt($stateParams.patientId);
         $scope.weeklyChart();
+      } else if(currentRoute === 'caregiverDashboard'){
+        $scope.getPatientListForCaregiver($scope.caregiverID);
       }
-      $scope.compliance = {};
-      $scope.compliance.pressure = true;
-      $scope.compliance.duration = true;
-      $scope.compliance.frequency = false;
-      $scope.handlelegends();
-      $scope.toTimeStamp = new Date().getTime();
-      $scope.compliance.secondaryYaxis = 'pressure';
-      $scope.compliance.primaryYaxis = 'duration';
-      $scope.hmrRunRate = 0;
-      $scope.adherenceScore = 0;
-      $scope.missedtherapyDays = 0;
-      $scope.minFrequency = 0;
-      $scope.maxFrequency = 0;
-      $scope.minPressure = 0;
-      $scope.maxPressure = 0;
-      $scope.minDuration = 0;
-      $scope.maxDuration = 0;
-      $scope.yAxisRangeForHMRLine = {};
-      $scope.yAxisRangeForCompliance = {};
-      $scope.yAxis1Min = 0;
-      $scope.yAxis2Min = 0;
-      $scope.getHmrRunRateAndScore();
-      $scope.edit_date = dateService.convertDateToYyyyMmDdFormat(new Date());
-      $scope.getMissedTherapyDaysCount();
-      $scope.fromTimeStamp = dateService.getnDaysBackTimeStamp(6);
-      $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
-      $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');   
-      $scope.curNotePageIndex = 1;
-      $scope.perPageCount = 4;
-      $scope.notePageCount = 0;
-      $scope.totalNotes = 0;
-      $scope.getPatientById($scope.patientId);
     };
 
 
@@ -93,7 +72,21 @@ angular.module('hillromvestApp')
           $scope.$digest();   
         });   
 
-
+    /*caregiver code*/
+    $scope.getPatientListForCaregiver = function(caregiverID){
+      caregiverDashBoardService.getPatients(caregiverID).then(function(response){
+        $scope.patients = response.data.patients;
+        $scope.selectedPatient = response.data.patients[0];
+        $scope.patientId = $scope.selectedPatient.user;
+        $scope.getHmrRunRateAndScore();
+        $scope.handlelegends();
+        $scope.getMissedTherapyDaysCount();
+        $scope.weeklyChart();
+      }).catch(function(response){
+        notyService.showError(response);
+      });
+    }
+    /*caregiver code ends*/
     $scope.calculateDateFromPicker = function(picker) {
       $scope.fromTimeStamp = new Date(picker.startDate._d).getTime();
       $scope.toTimeStamp = new Date(picker.endDate._d).getTime();
@@ -1131,6 +1124,10 @@ angular.module('hillromvestApp')
     $scope.initPatientDashboard = function(){
       $scope.editNote = false;
       $scope.textNote = "";
+      $scope.getHmrRunRateAndScore();
+      $scope.handlelegends();
+      $scope.getMissedTherapyDaysCount();
+      $scope.getPatientById($scope.patientId);
       $scope.weeklyChart();
       $scope.getPatientNotification();
     };

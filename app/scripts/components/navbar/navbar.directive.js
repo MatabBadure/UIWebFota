@@ -98,6 +98,10 @@ angular.module('hillromvestApp')
       $scope.goToPatientDashboard = function(){
         $state.go("patientdashboard");
       };
+
+      $scope.goToCaregiverDashboard = function(){
+        $state.go("caregiverDashboard");
+      }
     }
   };
 });
@@ -162,7 +166,7 @@ angular.module('hillromvestApp')
     templateUrl: 'scripts/components/navbar/navbarCaregiverUser.html',
     restrict: 'E',
 
-    controller: function ($scope) {
+    controller: function ($scope, $location) {
       $scope.isActive = function(tab) {
         var path = $location.path();
         if (path.indexOf(tab) !== -1) {
@@ -171,6 +175,17 @@ angular.module('hillromvestApp')
           return false;
         }
       };
+      $('html').on('mouseup', function(e) {
+      if(!$(e.target).closest('.popover').length) {
+        $('.popover').each(function(){
+          $(this.previousSibling).popover('hide');
+          });
+        }
+      });
+
+      $("#account").on('click', function(e) {
+          e.stopPropagation();
+      });
     }
   };
 });
