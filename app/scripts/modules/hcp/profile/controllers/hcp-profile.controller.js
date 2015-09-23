@@ -13,25 +13,16 @@ angular.module('hillromvestApp')
       }
     };
 
-    $scope.showWarning = function(response){
-      if(response.data.ERROR){
-        notyService.showMessage(response.data.ERROR, 'warning');
-      }else if(response.data.message){
-        notyService.showMessage(response.data.message, 'warning');  
-      }
-    };
-
     $scope.initProfile = function(adminId){
       UserService.getState().then(function(response) {
        $scope.states = response.data.states;
       }).catch(function(response) {
-        $scope.showWarning(response);
+        notyService.showError(response);
       });
       $scope.credentialsList = admin_cont.hcp.credentialsList;
       UserService.getUser(adminId).then(function(response){
         $scope.user = response.data.user;
       }).catch(function(response){
-
         notyService.showError(response);
       });
       AuthServerProvider.getSecurityQuestions().then(function(response){
