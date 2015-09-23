@@ -238,7 +238,7 @@ angular.module('hillromvestApp')
 			chart.yAxis.axisLabel(hcpDashboardConstants.cumulativeGraph.yAxis.label);
 			chart.yDomain([0,$scope.cumulativeGraphRange.maxNoOfPatients]);
 			chart.xAxis.tickFormat(function(d) {
-				if(event !== undefined && (event.type === 'mouseout' || event.type === 'mouseover' ||event.type === 'mousemove')){
+				if(window.event !== undefined && (window.event.type === 'mousemove')){
 					console.log(event.type);
 					return dateService.getDateFromTimeStamp(d,patientDashboard.dateFormat,'/') + '  ('+ d3.time.format('%I:%M %p')(new Date(d)) + ')'
 				}else{
