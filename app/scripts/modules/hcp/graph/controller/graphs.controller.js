@@ -21,8 +21,8 @@ angular.module('hillromvestApp')
 		} else if($state.current.name === 'clinicadmindashboard') {
 			$scope.getClinicsForClinicAdmin($scope.hcpId);
 		}
-	}; 
-
+	};
+	
 	$scope.getBarColor = function(count) {
 		if( count <= 25 && count > 0) {
 			return hcpDashboardConstants.statistics.color.quarter;
@@ -253,9 +253,6 @@ angular.module('hillromvestApp')
 			chart.xAxis.tickFormat(function(d) {
 				if(d % 1 === 0){
 					var timeStamp = $scope.serverCumulativeGraphData[d-1].startTimestamp;
-					if( event !== undefined && event.type === "mousemove") {
-						return d3.time.format('%x')(new Date(timeStamp));
-					}
 					switch($scope.format) {
 						case "weekly":
 							return d3.time.format('%A')(new Date(timeStamp));
