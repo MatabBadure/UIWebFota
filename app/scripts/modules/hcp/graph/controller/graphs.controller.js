@@ -40,13 +40,13 @@ angular.module('hillromvestApp')
 			hcpDashBoardService.getStatistics(clinicId, userId).then(function(response){
 				  $scope.statistics = response.data.statitics;
 				}).catch(function(response){
-				  $scope.showWarning(response);
+				  notyService.showError(response);
 				});
 		} else if($state.current.name === 'clinicadmindashboard'){
 				clinicadminService.getStatistics(clinicId, userId).then(function(response){
 	      $scope.statistics = response.data.statitics;
 	    }).catch(function(response){
-	      $scope.showWarning(response);
+	      notyService.showError(response);
 	    });
 		}
   };
@@ -59,7 +59,7 @@ angular.module('hillromvestApp')
 			$scope.weeklyChart();
 			$scope.getStatistics($scope.selectedClinic.id, userId);
 	  }).catch(function(response){
-			$scope.showWarning(response);
+			notyService.showError(response);
 	  });
 	};
 
@@ -71,7 +71,7 @@ angular.module('hillromvestApp')
       $scope.weeklyChart();
       $scope.getStatistics($scope.selectedClinic.id, userId);
     }).catch(function(response){
-      $scope.showWarning(response);
+      notyService.showError(response);
     });
 	};
 
@@ -152,14 +152,6 @@ angular.module('hillromvestApp')
 	};
 
 		/*Dtate picker js END*/
-
-  $scope.showWarning = function(response){
-		if(response.data.ERROR){
-		  notyService.showMessage(response.data.ERROR, 'warning');
-		}else if(response.data.message){
-		  notyService.showMessage(response.data.message, 'warning');  
-		}
-  };
 
   $scope.switchClinic = function(clinic){
   	if($scope.selectedClinic.id !== clinic.id){

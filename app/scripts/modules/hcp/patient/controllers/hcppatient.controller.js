@@ -31,23 +31,15 @@ angular.module('hillromvestApp')
         }
       });
     }).catch(function(response){
-      $scope.showWarning(response);
+      notyService.showError(response);
     });
-  };
-
-  $scope.showWarning = function(response){
-    if(response.data.ERROR){
-      notyService.showMessage(response.data.ERROR, 'warning');
-    }else if(response.data.message){
-      notyService.showMessage(response.data.message, 'warning');  
-    }
   };
 
   $scope.getPatientInfo = function(patinetId){
     patientService.getPatientInfo(patinetId).then(function(response){
       $scope.patient = response.data;
     }).catch(function(response){
-      $scope.showWarning(response);
+      notyService.showError(response);
     });
   };
 
@@ -56,7 +48,7 @@ angular.module('hillromvestApp')
     hcpPatientService.getAssociatedPatientsByFilter(filter, clinicId, userId).then(function(response){
       $scope.patients = response.data.patientUsers;
     }).catch(function(response){
-      $scope.showWarning(response);
+      notyService.showError(response);
     });
   };
 
@@ -65,7 +57,7 @@ angular.module('hillromvestApp')
 		hcpPatientService.getAssociatedPatientsWithNoEvents(filter, clinicId, userId).then(function(response){
       $scope.patients = response.data.patientUsers;
     }).catch(function(response){
-      $scope.showWarning(response);
+      notyService.showError(response);
     });
 	};
 
@@ -78,7 +70,7 @@ angular.module('hillromvestApp')
     patientService.getAssociateHCPToPatient(patientId).then(function(response){
       $scope.associatedHCPs = response.data.hcpUsers
     }).catch(function(response){
-      $scope.showWarning(response);
+      notyService.showError(response);
     });
   };
 
@@ -86,7 +78,7 @@ angular.module('hillromvestApp')
     patientService.getClinicsLinkedToPatient(patientId).then(function(response){
       $scope.associatedClinics = response.data.clinics;
     }).catch(function(response){
-      $scope.showWarning(response);
+      notyService.showError(response);
     });
   };
 
@@ -99,7 +91,7 @@ angular.module('hillromvestApp')
     patientService.getProtocol(patientId).then(function(response){
       $scope.protocols = response.data.protocol;
     }).catch(function(response){
-      $scope.showWarning(response);
+      notyService.showError(response);
     });
   };
 
@@ -107,7 +99,7 @@ angular.module('hillromvestApp')
     patientService.getDevices(patientId).then(function(response){
       $scope.devices = response.data.deviceList;
     }).catch(function(response){
-      $scope.showWarning(response);
+      notyService.showError(response);
     });
   };
 
@@ -115,7 +107,7 @@ angular.module('hillromvestApp')
     patientService.getCaregiversLinkedToPatient(patientId).then(function(response){
       $scope.caregivers = response.data.caregivers
     }).catch(function(response){
-      $scope.showWarning(response);
+      notyService.showError(response);
     });
   };
 
