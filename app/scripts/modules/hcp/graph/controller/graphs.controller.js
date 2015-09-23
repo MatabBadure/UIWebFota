@@ -211,6 +211,7 @@ angular.module('hillromvestApp')
 		hcpDashBoardService.getCumulativeGraphPoints($scope.hcpId, $scope.selectedClinic.id, dateService.getDateFromTimeStamp($scope.fromTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), $scope.groupBy).then(function(response){
 			$scope.serverCumulativeGraphData = response.data.cumulativeStatitics;
 			if($scope.serverCumulativeGraphData.length !== 0) {
+				console.log('BREAKING');
 				$scope.formatedCumulativeGraphData = graphUtil.convertIntoCumulativeGraph($scope.serverCumulativeGraphData); 
 				$scope.drawCumulativeGraph();
 			} else {

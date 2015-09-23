@@ -41,6 +41,11 @@ angular.module('hillromvestApp')
                 url:'/hcp',
                 abstract: true,
             })
+            .state('clinicadmin-dashboard', {
+                parent: 'entity',
+                url:'/clinicadmin',
+                abstract: true,
+            })
             .state('patientUser', {
                 parent: 'admin',
                 url: '/patients?clinicIds',
@@ -1487,6 +1492,126 @@ angular.module('hillromvestApp')
 
                   }
                })  
+
+            .state('clinicadmindashboard', {
+                parent: 'clinicadmin-dashboard',
+                url: '/clinicadmin-dashboard',
+                data: {
+                    roles: ['CLINIC_ADMIN'],
+                    pageTitle: 'hcp.title'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/clinicadmin/graph/views/dashboard-landing.html',
+                        controller: 'hcpGraphController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('doctor');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+
+            .state('clinicadminUserProfile', {
+                parent: 'clinicadmin-dashboard',
+                url: '/profile',
+                data: {
+                    roles: ['CLINIC_ADMIN'],
+                    pageTitle: 'hcp.title'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/clinicadmin/profile/profile-tabs/my-profile.html',
+                        controller: 'clinicadminProfileController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('profile');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+
+            .state('clinicadminUpdatePassword', {
+                parent: 'clinicadmin-dashboard',
+                url: '/updatepassword',
+                data: {
+                    roles: ['CLINIC_ADMIN'],
+                    pageTitle: 'patient.title'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/clinicadmin/profile/profile-tabs/update-password.html',
+                        controller: 'clinicadminProfileController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('profile');
+                        return $translate.refresh();
+                    }]
+                }
+            })
+
+            .state('editClinicadminProfile', {
+                parent: 'clinicadmin-dashboard',
+                url: '/update',
+                data: {
+                    roles: ['CLINIC_ADMIN'],
+                    pageTitle: 'patient.title'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/clinicadmin/profile/profile-tabs/edit-my-profile.html',
+                        controller: 'clinicadminProfileController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('profile');
+                        return $translate.refresh();
+                    }]
+                }
+            })
+
+            .state('clinicadminpatientdashboard', {
+                parent: 'clinicadmin-dashboard',
+                url: '/clinicadmin-patient/{clinicId}/{filter}',
+                data: {
+                    roles: ['CLINIC_ADMIN'],
+                    pageTitle: 'hcp.title'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/clinicadmin/patient/directives/list.html',
+                        controller: 'clinicadminPatientController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
 
             
             .state('contactus', {

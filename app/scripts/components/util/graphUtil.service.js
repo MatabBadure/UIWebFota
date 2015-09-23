@@ -1,7 +1,7 @@
-'use strict';
+  'use strict';
 
 angular.module('hillromvestApp')
-    .service('graphUtil', function (dateService) {
+    .service('graphUtil', ['dateService','hcpDashboardConstants', function (dateService, hcpDashboardConstants) {
       
       this.convertIntoHMRLineGraph = function(data) {
         var pointSet = [];
@@ -35,6 +35,45 @@ angular.module('hillromvestApp')
         graphData.area = true;
         graphDataList.push(graphData);
       return graphDataList;
+      }
+
+      var createCumulativeGraph = function(data,key,color) {
+        var pointSet = [];
+        var graphData = {};
+        var count = 1;
+        angular.forEach(data, function(value) {
+          var point = [];
+          point.push(count++);
+          switch(key){
+            case hcpDashboardConstants.cumulativeGraph.label.missedTherapy:
+              point.push(value.missedTherapy);
+              break;
+            case hcpDashboardConstants.cumulativeGraph.label.nonCompliance:
+              point.push(value.nonCompliance);
+              break;
+            case hcpDashboardConstants.cumulativeGraph.label.settingDeviation:
+              point.push(value.settingDeviation);
+              break;
+            case hcpDashboardConstants.cumulativeGraph.label.noEvents:
+              point.push(value.noEvent);
+              break;
+          }
+          pointSet.push(point);
+        });
+        graphData.values = pointSet;
+        graphData.key = key;
+        graphData.area = true; 
+        graphData.color = color;
+        return graphData;
+      }
+
+      this.convertIntoCumulativeGraph = function(data) {        
+        var graphDataList =[];
+        graphDataList.push(createCumulativeGraph(data,hcpDashboardConstants.cumulativeGraph.label.missedTherapy,hcpDashboardConstants.cumulativeGraph.color.missedTherapy));
+        graphDataList.push(createCumulativeGraph(data,hcpDashboardConstants.cumulativeGraph.label.nonCompliance,hcpDashboardConstants.cumulativeGraph.color.nonCompliance));
+        graphDataList.push(createCumulativeGraph(data,hcpDashboardConstants.cumulativeGraph.label.settingDeviation,hcpDashboardConstants.cumulativeGraph.color.settingDeviation));
+        graphDataList.push(createCumulativeGraph(data,hcpDashboardConstants.cumulativeGraph.label.noEvents,hcpDashboardConstants.cumulativeGraph.color.noEvents));
+        return graphDataList;
       }
 
       var arrayMax = Function.prototype.apply.bind(Math.max, null);
@@ -340,4 +379,4 @@ angular.module('hillromvestApp')
         graphDataList.push(frequencyObject);
       return graphDataList;
       }
-    });
+    }]);
