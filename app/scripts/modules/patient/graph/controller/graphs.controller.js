@@ -486,7 +486,6 @@ angular.module('hillromvestApp')
          } else {
           $scope.completeGraphData = graphUtil.formatDayWiseDate($scope.completeGraphData.actual);
           $scope.yAxisRangeForHMRBar = graphUtil.getYaxisRangeBarGraph($scope.completeGraphData);
-          //$scope.hmrBarGraphData = graphUtil.convertIntoHMRBarGraph($scope.completeGraphData);
           $scope.hmrBarGraphData = graphUtil.convertToHMRBarGraph($scope.completeGraphData,patientDashboard.HMRBarGraphColor);
           $scope.drawHMRBarGraph();
           //
@@ -541,8 +540,10 @@ angular.module('hillromvestApp')
           $scope.complianceGraphData = [];
           $scope.plotNoDataAvailable();
           $scope.isComplianceExist = false;
-          //$scope.drawComplianceGraph();
-        } else {
+        }else if($scope.completeComplianceData.actual.length < 2){
+          $scope.plotNoDataAvailable();
+        }
+         else {
           //recommended values
           $scope.minFrequency = $scope.completeComplianceData.recommended.minFrequency;
           $scope.maxFrequency = $scope.completeComplianceData.recommended.maxFrequency;
@@ -561,7 +562,6 @@ angular.module('hillromvestApp')
         $scope.complianceGraphData = [];
         $scope.plotNoDataAvailable();
         $scope.isComplianceExist = false;
-        //$scope.drawComplianceGraph();
       });
     };
 
@@ -591,7 +591,7 @@ angular.module('hillromvestApp')
 
     // Weekly chart
     $scope.weeklyChart = function(datePicker) {
-      $scope.drawChart(datePicker,'WEEK','weekly',7);
+      $scope.drawChart(datePicker,'WEEK','weekly',6);
     };
 
     // Yearly chart
@@ -626,7 +626,7 @@ angular.module('hillromvestApp')
       $scope.complianceGraph = true;
       $scope.hmrGraph = false;
       if($scope.fromTimeStamp === $scope.toTimeStamp){
-        $scope.calculateTimeDuration(7);
+        $scope.calculateTimeDuration(6);
       }
       $scope.getComplianceGraphData();
   };
@@ -771,7 +771,12 @@ angular.module('hillromvestApp')
             }
           }*/
           /* HILL-714*/
-              return d3.time.format(' %d%b%y %H:%M')(new Date(d));
+          var days = dateService.getDateDiffIndays($scope.fromTimeStamp,$scope.toTimeStamp);
+          if(days > 10){
+            return d3.time.format('%d%b%y')(new Date(d));
+          } else{
+            return d3.time.format('%d%b%y %H:%M')(new Date(d));
+          }
           /*HILL-714 end*/
         });
       chart.yAxis1.tickFormat(d3.format('d'));
@@ -1370,7 +1375,12 @@ angular.module('hillromvestApp')
             }
           }*/
           /*HILL-714*/
-              return d3.time.format(' %d%b%y %H:%M')(new Date(d));
+          var days = dateService.getDateDiffIndays($scope.fromTimeStamp,$scope.toTimeStamp);
+          if(days > 10){
+            return d3.time.format('%d%b%y')(new Date(d));
+          } else{
+            return d3.time.format('%d%b%y %H:%M')(new Date(d));
+          }
           /*HILL-714 End*/
         });
 
@@ -1421,12 +1431,13 @@ angular.module('hillromvestApp')
           chart.tooltipContent($scope.toolTipContentBarChart());
           //this function to put x-axis labels
           chart.xAxis.tickFormat(function(d) {
+            return d3.time.format('%I:%M %p')(new Date(d));
             return dateService.getTimeIntervalFromTimeStamp(d);
         });
 
           chart.yAxis.tickFormat(d3.format('d'));
           chart.forceY([$scope.yAxisRangeForHMRBar.min, $scope.yAxisRangeForHMRBar.max]);
-          chart.yAxis.axisLabel('Minutes');
+          chart.yAxis.axisLabel('Hours');
           d3.select('#hmrBarGraph svg')
           .datum($scope.hmrBarGraphData)
           .transition().duration(500).call(chart);
