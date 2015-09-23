@@ -45,16 +45,8 @@ angular.module('hillromvestApp')
         $scope.patients.push(patientList.patient);
       });
     }).catch(function(response){
-      $scope.showWarning(response);
+      notyService.showError(response);
     });
-  };
-
-  $scope.showWarning = function(response){
-    if(response.data.ERROR){
-      notyService.showMessage(response.data.ERROR, 'warning');
-    }else if(response.data.message){
-      notyService.showMessage(response.data.message, 'warning');  
-    }
   };
 
   $scope.getPatientInfo = function(patinetId, callback){
