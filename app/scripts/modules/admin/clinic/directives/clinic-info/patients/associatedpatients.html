@@ -91,7 +91,7 @@
         <span class="short-info">{{associatedPatient.patient.adherence}}</span>
       </div>
       <div class="col-md-1 reset-padding-left centered text-right" >
-        <span class="icon-delete-icon" ng-click="openPatientDeactivateModal(associatedPatient.patient.id); $event.stopPropagation();"></span>
+        <span class="icon-delete-icon" ng-click="associatedPatient.patient.deleted || openPatientDeactivateModal(associatedPatient.patient.id); $event.stopPropagation();"></span>
       </div>
       <div class="clr"></div>
     </div>
