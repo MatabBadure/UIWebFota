@@ -110,17 +110,20 @@ angular.module('hillromvestApp')
     };
 
     $scope.initPatientAddProtocol = function(){
-      $scope.getPatientById($stateParams.patientId);
-      $scope.protocol = $stateParams.protocol;
-      if(!$scope.protocol){
-        $scope.protocol = {};
-        $scope.protocol.type = 'Normal';
-        $scope.protocol.protocolEntries = [{}];
-      } else {
-        $scope.protocol.type = $scope.protocol.protocol[0].type;
-        $scope.protocol.treatmentsPerDay = $scope.protocol.protocol[0].treatmentsPerDay;
-        $scope.protocol.protocolEntries = $scope.protocol.protocol;
-      }
+      //patientService.getProtocol(patientId).then(function(response){
+        //$scope.protocols = response.data.protocol;
+        $scope.getPatientById($stateParams.patientId);
+        $scope.protocol = $stateParams.protocol;
+        if(!$scope.protocol){
+          $scope.protocol = {};
+          $scope.protocol.type = 'Normal';
+          $scope.protocol.protocolEntries = [{}];
+        } else {
+          $scope.protocol.type = $scope.protocol.protocol[0].type;
+          $scope.protocol.treatmentsPerDay = $scope.protocol.protocol[0].treatmentsPerDay;
+          $scope.protocol.protocolEntries = $scope.protocol.protocol;
+        }
+      //});
     };
 
     $scope.initPatientAddDevice = function(){
