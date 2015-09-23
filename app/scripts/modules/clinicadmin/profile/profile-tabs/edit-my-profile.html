@@ -1,0 +1,276 @@
+<navigation-bar-clinicadmin></navigation-bar-clinicadmin>
+<ng-include src="'scripts/modules/clinicadmin/profile/navbar/navbar.html'"></ng-include>
+<div class="dashboard dashboard--content padding-bottom-ls">
+  <form name="form" ng-submit="updateProfile()" novalidate autocomplete="off">
+    <div class="container dashboard__form">
+      <div class="margin-top-xl">
+        <div class="col-md-16 reset-padding margin-top">
+          <div class="col-md-7 reset-padding">
+            <div class="col-md-6 dashboard__form--label reset-padding">
+              <span class="" translate="profile.title-name"></span>
+            </div>
+            <div class="col-md-10 dashboard__form__input reset-padding selected-box-container">
+              <div class="custom-dropdown">
+                <select ng-model="user.title" name="title" ng-readonly="validateSuperAdmin()" ng-options="option for option in ['Mr.', 'Mrs.', 'Ms.']" ng-selected="{{option === user.title}}">
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-7 reset-padding col-md-offset-2" ng-show="userStatus.editMode">
+            <div class="col-md-6 dashboard__form--label reset-padding">
+              <span class="" >User ID</span>
+            </div>
+            <div class="col-md-10 dashboard__form--input reset-padding">
+              <input class="" type="text" readonly ng-model="user.id">
+            </div>
+          </div>
+
+        </div>
+
+        <div class="col-md-16 reset-padding margin-top">
+          <div class="col-md-7 reset-padding">
+            <div class="col-md-6 dashboard__form--label reset-padding">
+              <span class="" translate="profile.first-name"></span>
+              <span class="">*</span>
+            </div>
+            <div class="col-md-10 dashboard__form--input reset-padding">
+              <input class="" type="text" name="firstName" validate-on-blur ng-model="user.firstName" ng-minlength=2 ng-maxlength=15 ng-pattern="/^[a-z A-Z]+$/" ng-readonly="validateSuperAdmin()" required>
+              <div ng-show="(form.firstName.$dirty && form.firstName.$showValidationMessage && form.firstName.$invalid) || submitted">
+                <span class="has-error" ng-show="form.firstName.$error.required" translate="error.firstName.required"></span>
+                <span class="has-error" ng-show="form.firstName.$error.pattern" translate="error.firstName.pattern"></span>
+                <span class="has-error" ng-show="form.firstName.$error.minlength" translate="error.firstName.minlength"></span>
+                <span class="has-error" ng-show="form.firstName.$error.maxlength" translate="error.firstName.maxlength"></span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-7 reset-padding col-md-offset-2">
+            <div class="col-md-6 dashboard__form--label reset-padding">
+              <span class="" translate="profile.middle-name"></span>
+            </div>
+            <div class="col-md-10 dashboard__form--input reset-padding">
+              <input class="" type="text" name="middleName" validate-on-blur ng-model="user.middleName" ng-pattern="/^[a-z A-Z]+$/" ng-minlength=2 ng-maxlength=15 ng-readonly="validateSuperAdmin()">
+              <div ng-show="(form.middleName.$dirty && form.middleName.$showValidationMessage && form.middleName.$invalid)">
+                <span class="has-error" ng-show="form.middleName.$error.pattern" translate="error.middleName.pattern"></span>
+                <span class="has-error" ng-show="form.middleName.$error.minlength" translate="error.middleName.minlength"></span>
+                <span class="has-error" ng-show="form.middleName.$error.maxlength" translate="error.middleName.maxlength"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-16 reset-padding margin-top">
+          <div class="col-md-7 reset-padding">
+            <div class="col-md-6 dashboard__form--label reset-padding">
+              <span class="" translate="profile.last-name"></span>
+              <span class="">*</span>
+            </div>
+            <div class="col-md-10 dashboard__form--input reset-padding">
+              <input class="" type="text" name="lastName" validate-on-blur ng-pattern="/^[a-z A-Z]+$/" ng-model="user.lastName" ng-minlength=2 ng-maxlength=15 ng-readonly="validateSuperAdmin()" required>
+              <div ng-show="(form.lastName.$dirty && form.lastName.$showValidationMessage && form.lastName.$invalid) || submitted">
+                <span class="has-error" ng-show="form.lastName.$error.required" translate="error.lastName.required"></span>
+                <span class="has-error" ng-show="form.lastName.$error.pattern" translate="error.lastName.pattern"></span>
+                <span class="has-error" ng-show="form.lastName.$error.minlength" translate="error.lastName.minlength"></span>
+                <span class="has-error" ng-show="form.lastName.$error.maxlength" translate="error.lastName.maxlength"></span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-7 reset-padding col-md-offset-2">
+            <div class="col-md-6 dashboard__form--label reset-padding">
+              <span class="" translate="profile.hr-id"></span>
+            </div>
+            <div class="col-md-10 dashboard__form--input reset-padding">
+              <input class="" type="text" name="employeeID" ng-model="user.hillromId" ng-readonly="validateSuperAdmin()">
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-16 reset-padding margin-top">
+          <div class="col-md-7 reset-padding">
+            <div class="col-md-6 dashboard__form--label reset-padding">
+              <span class="" translate="profile.email"></span>
+              <span class="">*</span>
+            </div>
+            <div class="col-md-10 dashboard__form--input reset-padding">
+              <input class="" type="email" name="email" validate-on-blur ng-model="user.email" ng-maxlength=100 ng-readonly="validateSuperAdmin()" required>
+              <div ng-show="(form.email.$dirty && form.email.$showValidationMessage && form.email.$invalid) || submitted">
+                <span class="has-error" ng-show="form.email.$error.required" translate="error.email.required"></span>
+                <span class="has-error" ng-show="form.email.$error.email" translate="error.email.invalid"></span>
+                <span class="has-error" ng-show="form.email.$error.maxlength" translate="error.email.maxlength"></span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-7 reset-padding col-md-offset-2">
+            <div class="col-md-6 dashboard__form--label reset-padding">
+              <span class="" translate="profile.role-text"></span>
+               <span class="">*</span>
+            </div>
+            <div class="col-md-10 dashboard__form__input--option reset-padding">
+              ID Should Come
+            </div>
+          </div>
+        </div>
+
+        <!-- NEW FILEDS -->
+        <div class="col-md-16 reset-padding margin-top">
+          <div class="col-md-7 reset-padding">
+            <div class="col-md-6 dashboard__form--label reset-padding">
+              <span class="" translate="profile.speaciality"></span>
+            </div>
+            <div class="col-md-10 dashboard__form--input reset-padding">
+              <input class="" type="text" name="speciality" validate-on-blur ng-model="user.speciality">
+            </div>
+          </div>
+          <div class="col-md-7 reset-padding col-md-offset-2">
+            <div class="col-md-6 dashboard__form--label reset-padding">
+              <span class="" translate="profile.credentials"></span>
+            </div>
+            <div class="col-md-10 dashboard__form__input reset-padding">
+              <select ng-model="user.credentials" validate-on-blur name="credential" ng-options="option for option in credentialsList" ng-selected="{{option === user.credentials}}" ng-change="checkCredential()">
+                <option value="" selected >Select a credential</option>
+              </select>
+              <div ng-show="(form.credentials.$dirty && form.credentials.$showValidationMessage && form.credentials.$invalid)">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-16 reset-padding margin-top">
+          <div class="col-md-7 reset-padding">
+            <div class="col-md-6 dashboard__form--label reset-padding">
+              <span class="" translate="profile.primaryPhone"></span>
+            </div>
+            <div class="col-md-10 dashboard__form--input reset-padding">
+              <input class="" type="text" name="primaryPhone" validate-on-blur ng-model="user.primaryPhone" mask="(999)-999-9999">
+              <div ng-show="(form.primaryPhone.$dirty && form.primaryPhone.$showValidationMessage && form.primaryPhone.$invalid) || submitted">
+                <span class="has-error" ng-show="form.primaryPhone.$error.mask" translate="error.primaryPhone.mask"></span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-7 reset-padding col-md-offset-2">
+            <div class="col-md-6 dashboard__form--label reset-padding">
+              <span class="" translate="profile.mobilePhone"></span>
+            </div>
+            <div class="col-md-10 dashboard__form--input reset-padding">
+              <input class="" type="text" name="mobilePhone" validate-on-blur ng-model="user.mobilePhone" mask="(999)-999-9999">
+              <div ng-show="(form.mobilePhone.$dirty && form.mobilePhone.$showValidationMessage && form.mobilePhone.$invalid)">
+                <span class="has-error" ng-show="form.mobilePhone.$error.mask" translate="error.mobilePhone.mask"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col-md-16 reset-padding margin-top">
+          <div class="col-md-7 reset-padding">
+            <div class="col-md-6 dashboard__form--label reset-padding">
+              <span class="" translate="profile.faxNumber"></span>
+            </div>
+            <div class="col-md-10 dashboard__form--input reset-padding">
+              <input class="" type="text" name="faxNumber" validate-on-blur ng-model="user.faxNumber" mask="(999)-999-9999">
+              <div ng-show="(form.faxNumber.$dirty && form.faxNumber.$showValidationMessage && form.faxNumber.$invalid) || submitted">
+                <span class="has-error" ng-show="form.faxNumber.$error.pattern" translate="error.faxNumber.mask"></span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-7 reset-padding col-md-offset-2">
+            <div class="col-md-6 dashboard__form--label reset-padding">
+              <span class="" translate="profile.address"></span>
+            </div>
+            <div class="col-md-10 dashboard__form--input reset-padding">
+              <input class="" type="text" name="address" validate-on-blur ng-model="user.address" ng-maxlength="100" ng-readonly="validateSuperAdmin()">
+              <div ng-show="(form.address.$dirty && form.address.$showValidationMessage && form.address.$invalid)">
+                <span class="has-error" ng-show="form.address.$error.maxlength" translate="error.address.maxlength"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col-md-16 reset-padding margin-top">
+          <div class="col-md-7 reset-padding">
+            <div class="col-md-6 dashboard__form--label reset-padding">
+              <span class="" translate="profile.city"></span>
+            </div>
+            <div class="col-md-10 dashboard__form--input reset-padding">
+              <input class="" type="text" name="city" validate-on-blur ng-model="user.city" ng-maxlength=15>
+              <div ng-show="(form.city.$dirty && form.city.$showValidationMessage && form.city.$invalid) || submitted">
+                <span class="has-error" ng-show="form.city.$error.maxlength" translate="error.city.maxlength"></span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-7 reset-padding col-md-offset-2">
+            <div class="col-md-6 dashboard__form--label reset-padding">
+              <span class="" translate="profile.state"></span>
+            </div>
+            <div class="col-md-10 dashboard__form__input reset-padding selected-box-container">
+              <div class="custom-dropdown">
+                <select name="state" ng-readonly="validateADMINorASP()" ng-model="user.state" ng-options="state.name as state.name for state in states">
+                  <option  value="" selected="selected">Select a state</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col-md-16 reset-padding margin-top">
+          <div class="col-md-7 reset-padding">
+            <div class="col-md-6 dashboard__form--label reset-padding">
+              <span class="" translate="profile.zipcode"></span>
+            </div>
+            <div class="col-md-10 dashboard__form--input reset-padding">
+              <input class="" type="text" name="zipcode" validate-on-blur ng-model="user.zipcode" maxlength="5" ng-pattern="/^(?=.*[1-9].*)[0-9]{5}$/" ng-readonly="validateSuperAdmin()" required>
+              <div ng-show="(form.zipcode.$dirty && form.zipcode.$showValidationMessage && form.zipcode.$invalid) || submitted">
+                <span class="has-error" ng-show="form.zipcode.$error.required" translate="error.zipcode.required"></span>
+                <span class="has-error" ng-show="form.zipcode.$error.pattern" translate="error.zipcode.pattern"></span>
+                <span class="has-error" ng-show="form.zipcode.$error.minlength" translate="error.zipcode.minlength"></span>
+                <span class="has-error" ng-show="form.zipcode.$error.maxlength" translate="error.zipcode.maxlength"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- END OF NEW FILEDS -->
+
+        <div class="col-md-16 reset-padding margin-top-xl">
+          <div class="col-md-7 reset-padding">
+            <div class="col-md-6 dashboard__form--label reset-padding">
+              <span class="" translate="profile.security-ques"></span>
+              <span class="">*</span>
+            </div>
+            <div class="col-md-10 dashboard__form__input--sec-option reset-padding">
+              <div class="custom-dropdown">
+                <select class="security-select" name="question" validate-on-blur  ng-model="resetAccount.question" ng-options="question.question for question in questions">
+                  <option value="">-- select a security question --</option>
+                </select>
+            </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-16 reset-padding margin-top" ng-if="resetAccount.question">
+          <div class="col-md-7 reset-padding">
+            <div class="col-md-6 dashboard__form--label reset-padding">
+              <span class="" translate="profile.security-ans"></span>
+              <span class="">*</span>
+            </div>
+            <div class="col-md-10 dashboard__form--input reset-padding">
+              <input class="" type="text" name="answer" validate-on-blur ng-model="resetAccount.answer" ng-maxlength=100 ng-readonly="validateSuperAdmin()" required>
+              <div ng-show="(form.answer.$dirty && form.answer.$showValidationMessage && form.answer.$invalid) || submitted">
+                <span class="has-error" ng-show="form.answer.$error.required" translate="error.answer.required"></span>
+                <span class="has-error" ng-show="form.answer.$error.maxlength" translate="error.answer.maxlength"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="clr"></div>
+      </div>
+      <div class="col-md-16 reset-padding margin-top">
+        <div class="fropile_update_btn_group">
+          <button type="submit" class="hillrom-btn btn-submit float-right" ng-show="!userStatus.isCreate" translate="profile.update-button-text">Update</button>
+          <button type="reset" ng-click="cancel()" ng-show="!userStatus.isCreate" class="cancel hillrom-btn btn-submit float-right" translate="profile.cancel-button-text">Cancel</button>
+          <div class="clr"></div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

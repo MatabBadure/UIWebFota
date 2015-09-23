@@ -10,27 +10,19 @@ var roleEnum = {
 };
 
 
-  var HMRWeeklyGraphData = [  
+  var cumulativeGraphData = {  
+    "cumulativeStatitics" : [
         {
             "id": 1,
-            "patientId": "HR2015000045",
             "userId": 156,
             "dailyTreatmentNumber": 1,
             "sessionType": "Program/Normal",
             "timeStamp": 1439471095802,
             "end": 1439471095802,
-            "treatmentsPerDay": 2,
-            "weightedAvgFrequency": 8.75,
-            "weightedAvgPressure": 8.75,
-            "secondsSpentInTreatment": 12345,
-            "programmedCaughPauses": 2,
-            "normalCaughPauses": 2,
-            "caughPauses": 4,
-            "note": {
-                "id": 1,
-                "createdOn": "2015-08-14",
-                "noteText": "Feeling Good"
-            }
+            "MissedTherapy": 21,
+            "nonCompliance": 28,
+            "settingDeviation": 10,
+            "noEvent": 39
         },
     		{
             "id": 2,
@@ -40,18 +32,10 @@ var roleEnum = {
             "sessionType": "Program/Normal",
             "timeStamp": 1439481095802,
             "end": 1439471095802,
-            "treatmentsPerDay": 2,
-            "weightedAvgFrequency": 8.75,
-            "weightedAvgPressure": 8.75,
-            "secondsSpentInTreatment": 13345,
-            "programmedCaughPauses": 2,
-            "normalCaughPauses": 2,
-            "caughPauses": 4,
-            "note": {
-                "id": 1,
-                "createdOn": "2015-08-14",
-                "noteText": "Feeling Good"
-            }
+            "MissedTherapy": 20,
+            "nonCompliance": 21,
+            "settingDeviation": 8,
+            "noEvent": 35
         },
         {
             "id": 3,
@@ -61,18 +45,10 @@ var roleEnum = {
             "sessionType": "Program/Normal",
             "timeStamp": 1439491095802,
             "end": 1439471095802,
-            "treatmentsPerDay": 2,
-            "weightedAvgFrequency": 8.75,
-            "weightedAvgPressure": 8.75,
-            "secondsSpentInTreatment": 14345,
-            "programmedCaughPauses": 2,
-            "normalCaughPauses": 2,
-            "caughPauses": 4,
-            "note": {
-                "id": 1,
-                "createdOn": "2015-08-14",
-                "noteText": "Feeling Good"
-            }
+            "MissedTherapy": 2,
+            "nonCompliance": 8,
+            "settingDeviation": 1,
+            "noEvent": 9
         },
     		{
             "id": 4,
@@ -82,18 +58,10 @@ var roleEnum = {
             "sessionType": "Program/Normal",
             "timeStamp": 1439501095802,
             "end": 1439471095802,
-            "treatmentsPerDay": 2,
-            "weightedAvgFrequency": 8.75,
-            "weightedAvgPressure": 8.75,
-            "secondsSpentInTreatment": 15345,
-            "programmedCaughPauses": 2,
-            "normalCaughPauses": 2,
-            "caughPauses": 4,
-            "note": {
-                "id": 1,
-                "createdOn": "2015-08-14",
-                "noteText": "Feeling Good"
-            }
+            "MissedTherapy": 12,
+            "nonCompliance": 18,
+            "settingDeviation": 15,
+            "noEvent": 45
         },
         {
             "id": 5,
@@ -103,18 +71,10 @@ var roleEnum = {
             "sessionType": "Program/Normal",
             "timeStamp": 1439511095802,
             "end": 1439471095802,
-            "treatmentsPerDay": 2,
-            "weightedAvgFrequency": 8.75,
-            "weightedAvgPressure": 8.75,
-            "secondsSpentInTreatment": 16345,
-            "programmedCaughPauses": 2,
-            "normalCaughPauses": 2,
-            "caughPauses": 4,
-            "note": {
-                "id": 1,
-                "createdOn": "2015-08-14",
-                "noteText": "Feeling Good"
-            }
+            "MissedTherapy": 23,
+            "nonCompliance": 34,
+            "settingDeviation": 20,
+            "noEvent": 34
         },
     		{
             "id": 6,
@@ -124,18 +84,10 @@ var roleEnum = {
             "sessionType": "Program/Normal",
             "timeStamp": 1439521095802,
             "end": 1439471095802,
-            "treatmentsPerDay": 2,
-            "weightedAvgFrequency": 8.75,
-            "weightedAvgPressure": 8.75,
-            "secondsSpentInTreatment": 17345,
-            "programmedCaughPauses": 2,
-            "normalCaughPauses": 2,
-            "caughPauses": 4,
-            "note": {
-                "id": 1,
-                "createdOn": "2015-08-14",
-                "noteText": "Feeling Good"
-            }
+            "MissedTherapy": 2,
+            "nonCompliance": 2,
+            "settingDeviation": 1,
+            "noEvent": 3
         },
         {
             "id": 7,
@@ -145,20 +97,52 @@ var roleEnum = {
             "sessionType": "Program/Normal",
             "timeStamp": 1439531095802,
             "end": 1439471095802,
-            "treatmentsPerDay": 2,
-            "weightedAvgFrequency": 8.75,
-            "weightedAvgPressure": 8.75,
-            "secondsSpentInTreatment": 18345,
-            "programmedCaughPauses": 2,
-            "normalCaughPauses": 2,
-            "caughPauses": 4,
-            "note": {
-                "id": 1,
-                "createdOn": "2015-08-14",
-                "noteText": "Feeling Good"
-            }
+            "MissedTherapy": 21,
+            "nonCompliance": 28,
+            "settingDeviation": 10,
+            "noEvent": 39
+        }
+    ]
+}
+
+var treatmentGraphData = [  
+        {
+            "timeStamp": 1439471095802,
+            "dailyTreatmentNumber": 7,
+            "avgTreatmentDuration" : 20
+        },
+        {
+            "timeStamp": 1439481095802,
+            "dailyTreatmentNumber": 5,
+            "avgTreatmentDuration" : 34
+        },
+        {
+            "timeStamp": 1439491095802,
+            "dailyTreatmentNumber": 2,
+            "avgTreatmentDuration" : 23
+        },
+        {
+            "timeStamp": 1439501095802,
+            "dailyTreatmentNumber": 1,
+            "avgTreatmentDuration" : 21
+        },
+        {
+            "timeStamp": 1439511095802,
+            "dailyTreatmentNumber": 6,
+            "avgTreatmentDuration" : 16
+        },
+        {
+            "timeStamp": 1439521095802,
+            "dailyTreatmentNumber": 3,
+            "avgTreatmentDuration" : 29
+        },
+        {
+            "timeStamp": 1439531095802,
+            "dailyTreatmentNumber": 5,
+            "avgTreatmentDuration" : 5
         }
 ]
+
 
 var HMRDayGraphData = [
         {
