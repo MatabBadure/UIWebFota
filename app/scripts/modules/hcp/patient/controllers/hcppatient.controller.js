@@ -1,5 +1,5 @@
 angular.module('hillromvestApp')
-.controller('hcpPatientController',['$scope', '$state', '$stateParams', 'hcpPatientService', 'patientService', 'notyService', 'DoctorService', 'clinicadminPatientService', 'dateService', function($scope, $state, $stateParams, hcpPatientService, patientService, notyService, DoctorService, clinicadminPatientService, dateService) { 
+.controller('hcpPatientController',['$scope', '$state', '$stateParams', 'hcpPatientService', 'patientService', 'notyService', 'DoctorService', 'clinicadminPatientService', 'dateService', 'clinicService', function($scope, $state, $stateParams, hcpPatientService, patientService, notyService, DoctorService, clinicadminPatientService, dateService, clinicService) { 
 	
 	$scope.init = function(){
     if($state.current.name === 'hcppatientDemographic'){
@@ -14,7 +14,9 @@ angular.module('hillromvestApp')
       $scope.getClinicsAssociatedToHCP();
       var clinicId = $stateParams.clinicId;
       $scope.sortOption = $stateParams.filter;
-      if($stateParams.filter === 'noevents'){
+      if(!$stateParams.filter){
+        $scope.getAllPatientsByClinicId(clinicId);
+      } else if($stateParams.filter === 'noevents'){
         $scope.getPatientsWithNoEvents($stateParams.filter, clinicId);
       } else {
         $scope.getPatientsByFilter($stateParams.filter, clinicId);
@@ -29,6 +31,18 @@ angular.module('hillromvestApp')
         if(clinic.id === $stateParams.clinicId){
           $scope.selectedClinic =  clinic;
         }
+      });
+    }).catch(function(response){
+      $scope.showWarning(response);
+    });
+  };
+
+  $scope.getAllPatientsByClinicId = function(clinicId){
+    clinicService.getClinicAssoctPatients(clinicId).then(function(response){
+      $scope.patients = [];
+      angular.forEach(response.data.patientUsers, function(patientList){
+        patientList.patient.hcp = patientList.hcp;
+        $scope.patients.push(patientList.patient);
       });
     }).catch(function(response){
       $scope.showWarning(response);
@@ -57,7 +71,13 @@ angular.module('hillromvestApp')
   $scope.getPatientsByFilter = function(filter, clinicId){
     var userId = localStorage.getItem('userId');
     hcpPatientService.getAssociatedPatientsByFilter(filter, clinicId, userId).then(function(response){
-      $scope.patients = response.data.patientUsers;
+      $scope.patients = [];
+      angular.forEach(response.data.patientUsers, function(patient){
+        patient.patientComp.patientUser.hcp = patient.hcp;
+        patient.patientComp.patientUser.adherence = patient.patientComp.score;
+        patient.patientComp.patientUser.transmission  = patient.patientComp.latestTherapyDate;
+        $scope.patients.push(patient.patientComp.patientUser);
+      });
     }).catch(function(response){
       $scope.showWarning(response);
     });
