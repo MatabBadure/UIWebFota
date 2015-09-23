@@ -17,6 +17,11 @@ angular.module('hillromvestApp')
                 url:'/patient',
                 abstract: true,
             })
+            .state('caregiver-dashboard', {
+                parent: 'entity',
+                url:'/caregiver',
+                abstract: true,
+            })
             .state('hcp-dashboard', {
                 parent: 'entity',
                 url:'/hcp',
@@ -1239,5 +1244,31 @@ angular.module('hillromvestApp')
                         }
                     ]
                 }
-            });
+            })
+
+            .state('caregiverDashboard', {
+                parent: 'caregiver-dashboard',
+                url: '/caregiver-dashboard',
+                data: {
+                    roles: ['CARE_GIVER'],
+                    pageTitle: 'caregiver.title'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/caregiver/graph/views/dashboard-landing.html',
+                        controller: 'graphController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('caregiver-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
 });
