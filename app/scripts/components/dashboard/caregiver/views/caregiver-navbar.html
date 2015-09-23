@@ -5,17 +5,17 @@
       <ul class="nav navbar-nav pull-right right">
         
         <li class="hcp_hsp_name_a" dropdown>
-          <a ng-href="" ng-class="{active: isActive('patient/clinic-hcp')}" id="dropdownMenu1" dropdown-toggle>
-            <span class="">patient <span class="hillrom-icon icon-arrow-down"></span></span>
+          <a ng-href="" ng-class="{active: isActive('caregiver/clinic-hcp')}" id="dropdownMenu1" dropdown-toggle>
+            <span class="">{{::selectedPatient.patient.lastName}} {{::selectedPatient.patient.firstName}}<span class="hillrom-icon icon-arrow-down"></span></span>
           </a>
           <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-              <li role="menuitem" ng-repeat='clinic in clinics' ng-click="switchClinic(clinic)"><a>{{::clinic.name}}</a></li>
+              <li role="menuitem" ng-repeat='patient in patients' ng-click="switchPatient(patient)"><a>{{::patient.patient.lastName}} {{::patient.patient.firstName}}</a></li>
           </ul>
         </li>
       </ul>
       <ul class="nav navbar-nav pull-right right patient_nav_link_right">
         <li >
-          <a ng-href="" ng-class="{active: isActive('patient/caregiver')}" ng-click="switchPatientTab('patientdashboardCaregiver')">
+          <a ng-href="" ng-class="{active: isActive('caregiver/clinic-hcp')}" ng-click="switchPatientTab('caregiverDashboardClinicHCP')">
             <span class="" translate="caregiver.tabs.clinic-hcp"></span>
           </a>
         </li>

@@ -1271,4 +1271,30 @@ angular.module('hillromvestApp')
                     ]
                 }
             })
+
+            .state('caregiverDashboardClinicHCP', {
+                parent: 'caregiver-dashboard',
+                url: '/clinic-hcp',
+                data: {
+                    roles: ['CARE_GIVER'],
+                    pageTitle: 'patient.title'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/patient/graph/views/clinichcp.html',
+                        controller: 'graphController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
 });

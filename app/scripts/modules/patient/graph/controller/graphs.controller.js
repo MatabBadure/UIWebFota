@@ -15,6 +15,9 @@ angular.module('hillromvestApp')
       $scope.patientId = parseInt(localStorage.getItem('patientID'));
       $scope.caregiverID = parseInt(localStorage.getItem('userId'));
       var currentRoute = $state.current.name;
+      if( $scope.role === 'CARE_GIVER'){
+        $scope.getPatientListForCaregiver($scope.caregiverID);
+      }
       var server_error_msg = "Some internal error occurred. Please try after sometime.";
       $scope.showNotes = $scope.hmrBarGraph = $scope.isComplianceExist = $scope.compliance.frequency = false;
       $scope.compliance.pressure = $scope.compliance.duration = $scope.hmrLineGraph = $scope.hmrGraph = true;
@@ -44,8 +47,6 @@ angular.module('hillromvestApp')
       } else if(currentRoute === 'patientOverview') {
         $scope.patientId = parseInt($stateParams.patientId);
         $scope.weeklyChart();
-      } else if(currentRoute === 'caregiverDashboard'){
-        $scope.getPatientListForCaregiver($scope.caregiverID);
       }
     };
 
@@ -78,14 +79,26 @@ angular.module('hillromvestApp')
         $scope.patients = response.data.patients;
         $scope.selectedPatient = response.data.patients[0];
         $scope.patientId = $scope.selectedPatient.user;
-        $scope.getHmrRunRateAndScore();
-        $scope.handlelegends();
-        $scope.getMissedTherapyDaysCount();
-        $scope.weeklyChart();
+        $scope.initGraph();
+        if($state.current.name === 'caregiverDashboardClinicHCP'){
+          $scope.initPatientClinicHCPs();
+        }
       }).catch(function(response){
         notyService.showError(response);
       });
-    }
+    };
+
+    $scope.switchPatient = function(patient){
+      if($scope.selectedPatient.user !== patient.user){
+        $scope.selectedPatient = clinic;
+        $scope.initGraph();
+      }
+    };
+
+    $scope.switchCaregiverTab = function(status){
+      $scope.caregiverTab = status;
+      $state.go(status, {'caregiverId': $stateParams.caregiverId});
+    };
     /*caregiver code ends*/
     $scope.calculateDateFromPicker = function(picker) {
       $scope.fromTimeStamp = new Date(picker.startDate._d).getTime();
@@ -1028,7 +1041,7 @@ angular.module('hillromvestApp')
     };
 
     $scope.getClinicsOfPatient = function(){
-      patientService.getClinicsLinkedToPatient(localStorage.getItem('patientID')).then(function(response){
+      patientService.getClinicsLinkedToPatient(localStorage.getItem('patientID') || $scope.patientId).then(function(response){
         if(response.data.clinics){
           $scope.clinics = response.data.clinics;  
         }else if(response.data.message){
@@ -1038,7 +1051,7 @@ angular.module('hillromvestApp')
     };
     
     $scope.getHCPsOfPatient = function(){
-      patientService.getHCPsLinkedToPatient(localStorage.getItem('patientID')).then(function(response){
+      patientService.getHCPsLinkedToPatient(localStorage.getItem('patientID') || $scope.patientId).then(function(response){
         if(response.data.hcpUsers){
           $scope.hcps = response.data.hcpUsers;
         }else if(response.data.message){
@@ -1121,14 +1134,17 @@ angular.module('hillromvestApp')
       $("#note_edit_container").addClass("hide_content");
     };
 
-    $scope.initPatientDashboard = function(){
-      $scope.editNote = false;
-      $scope.textNote = "";
+    $scope.initGraph = function(){
       $scope.getHmrRunRateAndScore();
       $scope.handlelegends();
       $scope.getMissedTherapyDaysCount();
-      $scope.getPatientById($scope.patientId);
       $scope.weeklyChart();
+    }
+    $scope.initPatientDashboard = function(){
+      $scope.editNote = false;
+      $scope.textNote = "";
+      $scope.initGraph();
+      $scope.getPatientById($scope.patientId);
       $scope.getPatientNotification();
     };
 
