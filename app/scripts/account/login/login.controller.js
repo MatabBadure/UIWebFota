@@ -58,7 +58,13 @@ angular.module('hillromvestApp')
           if(data.data.user.authorities[0].name === 'PATIENT'){
             localStorage.setItem('patientID', data.data.user.id);
             $state.go('patientdashboard');
-          } else {
+          } else  if(data.data.user.authorities[0].name === 'HCP'){
+            localStorage.setItem('userId', data.data.user.id);
+            $state.go('hcpdashboard');
+          } else if(data.data.user.authorities[0].name === 'CLINIC_ADMIN'){
+            localStorage.setItem('userId', data.data.user.id);
+            $state.go('clinicadmindashboard');
+          }else{
             localStorage.setItem('userId', data.data.user.id);
             $state.go('patientUser');
           }

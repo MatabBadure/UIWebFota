@@ -38,3 +38,68 @@ var profile = {
 	'EMAIL_UPDATED_SUCCESSFULLY' : 'Email updated successfully. Please login again.'
 }
 
+var notyMessages = {
+	"typeWarning": "warning",
+	"typeSuccess": "success",
+	"maxComplianceError" : "Please deselect one item.",
+	"minComplianceError": "At least one item should be selected."
+}
+
+
+angular.module('hillromvestApp').constant('hcpDashboardConstants', {
+    cumulativeGraph : {
+		label : {
+			"missedTherapy" : "MissedTherapy Days",
+			"nonCompliance" : "HMR Non-Compliance",
+			"settingDeviation" : "Setting Deviation",
+			"noEvents" : "No Events Recorded"
+		},
+		color : {
+			"missedTherapy" : "red",
+			"nonCompliance" : "green",
+			"settingDeviation" : "blue",
+			"noEvents" : "orange"
+		},
+		yAxis : {
+			"label" : "No. of patients"
+		}
+	},
+	treatmentGraph : {
+		label : {
+			"treatmentPerDay" : "Treatments",
+			"treatmentLength" : "Minutes"
+		},
+		color : {
+			"treatmentPerDay" : "orange",
+			"treatmentLength" : "green"
+		},
+		"type" : "area"
+	},
+	message : {
+		"noData" : "No Data Available!"
+	},
+	statistics : {
+		"duration" : 3000,
+		"scaleColor" : false,
+		"lineWidth" : 12,
+		"lineCap" : "circle",
+		color : {
+			"track" : "#ccc",
+			"quarter" : "#69be7f",
+			"half" : "#f7a462",
+			"threeQuarters" : "blue",
+			"full" : "#e28181"
+
+		}
+	},
+	serverDateFormat : "YYYY-MM-DD",
+	USdateFormat : "MM-DD-YYYY"
+})
+
+.constant('loginConstants',{
+	role : {
+		"patient" : "PATIENT",
+		"hcp" : "HCP"
+
+	}
+})

@@ -219,6 +219,32 @@ angular.module('hillromvestApp')
                 }
             })
 
+            .state('hcppatientOverview', {
+                parent: 'hcp-dashboard',
+                url: '/{patientId}/overview',
+                data: {
+                    roles: [],
+                    pageTitle: 'patient.title'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/hcp/patient/directives/patient-details.html',
+                        controller: 'graphController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient');$translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+
             .state('patientDemographic', {
                 parent: 'patientUser',
                 url: '/{patientId}/demographic',
@@ -296,6 +322,85 @@ angular.module('hillromvestApp')
                     ]
                 }
             })
+
+            .state('hcppatientClinics', {
+                parent: 'hcp-dashboard',
+                url: '/{patientId}/clinicInfo',
+                data: {
+                    roles: ['HCP'],
+                    pageTitle: 'patient.title'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/hcp/patient/views/clinicinformation.html',
+                        controller: 'hcpPatientController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+
+            .state('hcppatientProtocol', {
+                parent: 'hcp-dashboard',
+                url: '/{patientId}/protocol-device',
+                data: {
+                    roles: ['HCP'],
+                    pageTitle: 'patient.title'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/hcp/patient/views/deviceprotocol.html',
+                        controller: 'hcpPatientController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+
+            .state('hcppatientCraegiver', {
+                parent: 'hcp-dashboard',
+                url: '/{patientId}/caregivers',
+                data: {
+                    roles: ['HCP'],
+                    pageTitle: 'patient.title'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/hcp/patient/views/caregiverinformation.html',
+                        controller: 'hcpPatientController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+
             .state('patientProtocol', {
                 parent: 'patientUser',
                 url: '/{patientId}/protocol-device',
@@ -1240,7 +1345,7 @@ angular.module('hillromvestApp')
                 parent: 'hcp-dashboard',
                 url: '/hcp-dashboard',
                 data: {
-                    roles: ['PATIENT'],
+                    roles: ['HCP'],
                     pageTitle: 'hcp.title'
                 },
                 views: {
@@ -1251,7 +1356,7 @@ angular.module('hillromvestApp')
                 },
                 resolve: {
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
-                        $translatePartialLoader.addPart('patient-user');
+                        $translatePartialLoader.addPart('doctor');
                         return $translate.refresh();
                     }],
                     authorize: ['Auth',
@@ -1261,6 +1366,127 @@ angular.module('hillromvestApp')
                     ]
                 }
             })
+
+            .state('hcppatientdashboard', {
+                parent: 'hcp-dashboard',
+                url: '/hcp-patient/{clinicId}/{filter}',
+                data: {
+                    roles: ['HCP'],
+                    pageTitle: 'hcp.title'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/hcp/patient/directives/list.html',
+                        controller: 'hcpPatientController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+            
+            .state('hcpDashboardProfile', {
+                parent: 'hcp-dashboard',
+                url: '/hcp-profile',
+                data: {
+                    roles: ['HCP'],
+                    pageTitle: 'hcp.title'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/hcp/profile/views/my-profile.html',
+                        controller: 'hcpProfileController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('profile');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+
+            .state('hcpUserProfile', {
+                parent: 'hcp-dashboard',
+                url: '/profile',
+                data: {
+                    roles: ['HCP'],
+                    pageTitle: 'hcp.title'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/hcp/profile/profile-tabs/my-profile.html',
+                        controller: 'hcpProfileController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('profile');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+
+            .state('hcpUpdatePassword', {
+                parent: 'hcp-dashboard',
+                url: '/updatepassword',
+                data: {
+                    roles: ['HCP'],
+                    pageTitle: 'patient.title'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/hcp/profile/profile-tabs/update-password.html',
+                        controller: 'hcpProfileController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('profile');
+                        return $translate.refresh();
+                    }]
+                }
+            })
+
+            .state('editHCPProfile', {
+                parent: 'hcp-dashboard',
+                url: '/update',
+                data: {
+                    roles: ['HCP'],
+                    pageTitle: 'patient.title'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/hcp/profile/profile-tabs/edit-my-profile.html',
+                        controller: 'hcpProfileController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('profile');
+                        return $translate.refresh();
+                    }]
+
+                  }
+               })  
 
             
             .state('contactus', {
