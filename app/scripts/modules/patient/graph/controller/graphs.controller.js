@@ -381,7 +381,6 @@ angular.module('hillromvestApp')
         } else {
           $scope.yAxisRangeForHMRLine = graphUtil.getYaxisRangeLineGraph($scope.completeGraphData);
           $scope.graphData = graphUtil.convertToHMRStepGraph($scope.completeGraphData,patientDashboard.HMRLineGraphColor);
-          //$scope.graphData = graphUtil.convertIntoHMRLineGraph($scope.completeGraphData);
           $scope.drawHMRLineGraph();
         }
       }).catch(function(response) {
@@ -754,30 +753,12 @@ angular.module('hillromvestApp')
       chart.tooltipContent($scope.toolTipContentForCompliance($scope.completeComplianceData.actual));
       //this function to put x-axis labels
       chart.xAxis.tickFormat(function(d) {
-          /*if(d % 1 === 0) {
-            var timeStamp = $scope.completecomplianceGraphData[0].values[d-1].timeStamp;
-            switch($scope.format) {
-                case "weekly":
-                    return d3.time.format('%A')(new Date(timeStamp));
-                    break;
-                case "monthly":
-                    return 'week ' + dateService.getWeekOfMonth(timeStamp);
-                    break;
-                case "yearly":
-                    return d3.time.format('%B')(new Date(timeStamp));
-                    break;
-                default:
-                    break;
-            }
-          }*/
-          /* HILL-714*/
           var days = dateService.getDateDiffIndays($scope.fromTimeStamp,$scope.toTimeStamp);
           if(days > 10){
             return d3.time.format('%d%b%y')(new Date(d));
           } else{
             return d3.time.format('%d%b%y %H:%M')(new Date(d));
           }
-          /*HILL-714 end*/
         });
       chart.yAxis1.tickFormat(d3.format('d'));
       chart.yAxis2.tickFormat(d3.format('d'));
@@ -1358,30 +1339,12 @@ angular.module('hillromvestApp')
           });
           //this function to put x-axis labels
           chart.xAxis.tickFormat(function(d) {
-           /* if(d % 1 === 0) {
-            var timeStamp = $scope.completeGraphData.actual[d-1].timestamp;
-            switch($scope.format) {
-                case "weekly":
-                    return d3.time.format('%A')(new Date(timeStamp));
-                    break;
-                case "monthly":
-                    return 'week ' + dateService.getWeekOfMonth(timeStamp);
-                    break;
-                case "yearly":
-                    return d3.time.format('%B')(new Date(timeStamp));
-                    break;
-                default:
-                    break;
-            }
-          }*/
-          /*HILL-714*/
           var days = dateService.getDateDiffIndays($scope.fromTimeStamp,$scope.toTimeStamp);
           if(days > 10){
             return d3.time.format('%d%b%y')(new Date(d));
           } else{
             return d3.time.format('%d%b%y %H:%M')(new Date(d));
           }
-          /*HILL-714 End*/
         });
 
           chart.yAxis.tickFormat(d3.format('d'));
