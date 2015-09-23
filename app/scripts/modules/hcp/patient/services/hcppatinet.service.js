@@ -7,8 +7,6 @@ angular.module('hillromvestApp')
         var url = URL.getAssociatedPatientsByFilter.replace('USERID',userId).replace('CLINICID',clinicId).replace('FILTER',filter);
         return $http.get(url, {
           headers: headerService.getHeader()
-        }).success(function (response) {
-          return response;
         });
       },
 
@@ -16,11 +14,7 @@ angular.module('hillromvestApp')
         var url = URL.getAssociatedPatientsWithNoEvents.replace('USERID', userId).replace('CLINICID', clinicId).replace('FILTER', filter);
         return $http.get(url, {
           headers: headerService.getHeader()
-        }).success(function (response) {
-          return response;
         });
       }
-
-
     };
 }]);
