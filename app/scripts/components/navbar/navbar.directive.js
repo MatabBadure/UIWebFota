@@ -48,7 +48,8 @@ angular.module('hillromvestApp')
     restrict: 'E',
 
     controller: function ($scope, $state) {
-      $scope.userRole = localStorage.getItem('role');   
+      $scope.userRole = localStorage.getItem('role');
+      $scope.username = localStorage.getItem('userFirstName');
       $scope.isActive = function(tab) {
         var path = $location.path();
         if (path.indexOf(tab) !== -1) {
@@ -102,27 +103,27 @@ angular.module('hillromvestApp')
   };
 });
 
-angular.module('hillromvestApp')
-.directive('navbarPopover', function(Auth, $state, Account, $compile) {
-    return {
-        restrict: 'A',
-        template: "<span id='pop-over-link' class='cursor-pointer'><span class='icon-logged-in-user'></span><span class='user-name'>{{username}}<span class='icon-arrow-down'></span></span></span>" +
-                  "<span class='hide-popup' id='pop-over-content'><div id='account' ng-click='account()'><span class='hillrom-icon icon-user-account'></span><span>My Profile</span></div><div ng-click='logout()'><span class='hillrom-icon icon-logout'></span><span>Logout </span></div></span>",
-        link: function(scope, elements, attrs) {
-            $("#pop-over-link").popover({
-                'placement': 'bottom',
-                'trigger': 'click',
-                'html': true,
-                'content': function() {
-                    return $compile($("#pop-over-content").html())(scope);
-                }
-            });
-        },
-        controller: function ($scope) {
-          $scope.username = localStorage.getItem('userFirstName');
-        }
-    }
-});
+// angular.module('hillromvestApp')
+// .directive('navbarPopover', function(Auth, $state, Account, $compile) {
+//     return {
+//         restrict: 'A',
+//         template: "<span id='pop-over-link' class='cursor-pointer'><span class='icon-logged-in-user'></span><span class='user-name'>{{username}}<span class='icon-arrow-down'></span></span></span>" +
+//                   "<span class='hide-popup' id='pop-over-content'><div id='account' ng-click='account()'><span class='hillrom-icon icon-user-account'></span><span>My Profile</span></div><div ng-click='logout()'><span class='hillrom-icon icon-logout'></span><span>Logout </span></div></span>",
+//         link: function(scope, elements, attrs) {
+//             $("#pop-over-link").popover({
+//                 'placement': 'bottom',
+//                 'trigger': 'click',
+//                 'html': true,
+//                 'content': function() {
+//                     return $compile($("#pop-over-content").html())(scope);
+//                 }
+//             });
+//         },
+//         controller: function ($scope) {
+//           $scope.username = localStorage.getItem('userFirstName');
+//         }
+//     }
+// });
 
 angular.module('hillromvestApp')
 .directive('navigationBarPatient', function (Auth, Principal, $state, Account, $location) {
@@ -132,6 +133,7 @@ angular.module('hillromvestApp')
 
     controller: function ($scope, UserService) {
       $scope.notifications = 0;
+      $scope.username = localStorage.getItem('userFirstName');
       $scope.isActive = function(tab) {
         var path = $location.path();
         if (path.indexOf(tab) !== -1) {
@@ -163,6 +165,7 @@ angular.module('hillromvestApp')
     restrict: 'E',
 
     controller: function ($scope, UserService) {
+      $scope.username = localStorage.getItem('userFirstName');
       $scope.notifications = 0;
       $scope.isActive = function(tab) {
         var path = $location.path();
@@ -187,18 +190,6 @@ angular.module('hillromvestApp')
           }          
         });
       };
-
-      $('html').on('mouseup', function(e) {
-        if(!$(e.target).closest('.popover').length) {
-          $('.popover').each(function(){
-            $(this.previousSibling).popover('hide');
-          });
-        }
-      });
-
-      $("#account").on('click', function(e) {
-        e.stopPropagation();
-    });
     }
   };
 }]);
@@ -211,6 +202,7 @@ angular.module('hillromvestApp')
     restrict: 'E',
 
     controller: function ($scope, UserService) {
+      $scope.username = localStorage.getItem('userFirstName');
       $scope.notifications = 0;
       $scope.isActive = function(tab) {
         var path = $location.path();

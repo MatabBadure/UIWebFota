@@ -40,6 +40,8 @@
             },
             "language": "Language"
         },
+        "my-dashboard": "My Dashboard",
+        "logout": "Logout",
         "tabs": {
             "manage-patients": "Patients",
             "manage-hcps": "HCPs",
