@@ -21,8 +21,8 @@ angular.module('hillromvestApp')
 		} else if($state.current.name === 'clinicadmindashboard') {
 			$scope.getClinicsForClinicAdmin($scope.hcpId);
 		}
-	}; 
-
+	};
+	
 	$scope.getBarColor = function(count) {
 		if( count <= 25 && count > 0) {
 			return hcpDashboardConstants.statistics.color.quarter;
@@ -40,13 +40,13 @@ angular.module('hillromvestApp')
 			hcpDashBoardService.getStatistics(clinicId, userId).then(function(response){
 				  $scope.statistics = response.data.statitics;
 				}).catch(function(response){
-				  $scope.showWarning(response);
+				  notyService.showError(response);
 				});
 		} else if($state.current.name === 'clinicadmindashboard'){
 				clinicadminService.getStatistics(clinicId, userId).then(function(response){
 	      $scope.statistics = response.data.statitics;
 	    }).catch(function(response){
-	      $scope.showWarning(response);
+	      notyService.showError(response);
 	    });
 		}
   };
@@ -59,7 +59,7 @@ angular.module('hillromvestApp')
 			$scope.weeklyChart();
 			$scope.getStatistics($scope.selectedClinic.id, userId);
 	  }).catch(function(response){
-			$scope.showWarning(response);
+			notyService.showError(response);
 	  });
 	};
 
@@ -71,7 +71,7 @@ angular.module('hillromvestApp')
       $scope.weeklyChart();
       $scope.getStatistics($scope.selectedClinic.id, userId);
     }).catch(function(response){
-      $scope.showWarning(response);
+      notyService.showError(response);
     });
 	};
 
@@ -149,14 +149,6 @@ angular.module('hillromvestApp')
 
 		/*Dtate picker js END*/
 
-  $scope.showWarning = function(response){
-		if(response.data.ERROR){
-		  notyService.showMessage(response.data.ERROR, 'warning');
-		}else if(response.data.message){
-		  notyService.showMessage(response.data.message, 'warning');  
-		}
-  };
-
   $scope.switchClinic = function(clinic){
   	if($scope.selectedClinic.id !== clinic.id){
   	  $scope.selectedClinic = clinic;
@@ -211,20 +203,20 @@ angular.module('hillromvestApp')
 		$scope.getCumulativeGraphData();
 	};
 
-	$scope.getCumulativeGraphData = function() {
-		hcpDashBoardService.getCumulativeGraphPoints($scope.hcpId, $scope.selectedClinic.id, dateService.getDateFromTimeStamp($scope.fromTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), $scope.groupBy).then(function(response){
-			$scope.serverCumulativeGraphData = response.data.cumulativeStatitics;
-			if($scope.serverCumulativeGraphData.length !== 0) {
-				$scope.formatedCumulativeGraphData = graphUtil.convertIntoCumulativeGraph($scope.serverCumulativeGraphData); 
-				$scope.cumulativeGraphRange = graphUtil.getYaxisRangeCumulativeGraph($scope.serverCumulativeGraphData);
-				$scope.drawCumulativeGraph();
-			} else {
+		$scope.getCumulativeGraphData = function() {
+			hcpDashBoardService.getCumulativeGraphPoints($scope.hcpId, $scope.selectedClinic.id, dateService.getDateFromTimeStamp($scope.fromTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), $scope.groupBy).then(function(response){
+				$scope.serverCumulativeGraphData = response.data.cumulativeStatitics;
+				if($scope.serverCumulativeGraphData.length !== 0) {
+					$scope.formatedCumulativeGraphData = graphUtil.convertIntoCumulativeGraph($scope.serverCumulativeGraphData);
+					$scope.cumulativeGraphRange = graphUtil.getYaxisRangeCumulativeGraph($scope.serverCumulativeGraphData);
+					$scope.drawCumulativeGraph();
+				} else {
+					$scope.plotNoDataAvailable();
+				}
+			}).catch(function(response) {
 				$scope.plotNoDataAvailable();
-			}
-		}).catch(function(response) {
-			$scope.plotNoDataAvailable();
-		});	
-	};
+			});	
+		};
 
 	$scope.drawCumulativeGraph = function() {
 		nv.addGraph(function() {
@@ -239,7 +231,6 @@ angular.module('hillromvestApp')
 			chart.yDomain([0,$scope.cumulativeGraphRange.maxNoOfPatients]);
 			chart.xAxis.tickFormat(function(d) {
 				if(window.event !== undefined && (window.event.type === 'mousemove')){
-					console.log(event.type);
 					return dateService.getDateFromTimeStamp(d,patientDashboard.dateFormat,'/') + '  ('+ d3.time.format('%I:%M %p')(new Date(d)) + ')'
 				}else{
 					var days = dateService.getDateDiffIndays($scope.fromTimeStamp,$scope.toTimeStamp);
@@ -249,7 +240,6 @@ angular.module('hillromvestApp')
 						return d3.time.format('%d%b%y %H:%M')(new Date(d));
 					}
 				}
-				
 			});
 			chart.yAxis
 				.tickFormat(function(d) {  
@@ -263,7 +253,6 @@ angular.module('hillromvestApp')
 		  return chart;
 	  });
 	};
-
 
 	$scope.getTreatmentGraphData = function() {
 		hcpDashBoardService.getTreatmentGraphPoints($scope.hcpId, $scope.selectedClinic.id, dateService.getDateFromTimeStamp($scope.fromTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), $scope.groupBy).then(function(response){

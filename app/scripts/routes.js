@@ -206,7 +206,7 @@ angular.module('hillromvestApp')
             })
 
             .state('hcppatientOverview', {
-                parent: 'hcp-dashboard',
+                parent: 'hcppatientdashboard',
                 url: '/{patientId}/overview',
                 data: {
                     roles: [],
@@ -258,7 +258,7 @@ angular.module('hillromvestApp')
             })
 
             .state('hcppatientDemographic', {
-                parent: 'hcp-dashboard',
+                parent: 'hcppatientdashboard',
                 url: '/{patientId}/demographic',
                 data: {
                     roles: ['HCP'],
@@ -336,7 +336,7 @@ angular.module('hillromvestApp')
             })
 
             .state('hcppatientClinics', {
-                parent: 'hcp-dashboard',
+                parent: 'hcppatientdashboard',
                 url: '/{patientId}/clinicInfo',
                 data: {
                     roles: ['HCP'],
@@ -362,7 +362,7 @@ angular.module('hillromvestApp')
             })
 
             .state('hcppatientProtocol', {
-                parent: 'hcp-dashboard',
+                parent: 'hcppatientdashboard',
                 url: '/{patientId}/protocol-device',
                 data: {
                     roles: ['HCP'],
@@ -388,7 +388,7 @@ angular.module('hillromvestApp')
             })
 
             .state('hcppatientCraegiver', {
-                parent: 'hcp-dashboard',
+                parent: 'hcppatientdashboard',
                 url: '/{patientId}/caregivers',
                 data: {
                     roles: ['HCP'],
@@ -1765,6 +1765,58 @@ angular.module('hillromvestApp')
                 resolve: {
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('patient');$translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+
+            .state('clinicadminSettings', {
+                parent: 'clinicadmin-dashboard',
+                url: '/notification-settings',
+                data: {
+                    roles: ['CLINIC_ADMIN'],
+                    pageTitle: 'patient.title'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/clinicadmin/profile/profile-tabs/settings.html',
+                        controller: 'clinicadminProfileController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('profile');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+
+            .state('hcpSettings', {
+                parent: 'hcp-dashboard',
+                url: '/notification-settings',
+                data: {
+                    roles: ['HCP'],
+                    pageTitle: 'patient.title'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/hcp/profile/profile-tabs/settings.html',
+                        controller: 'hcpProfileController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('profile');
                         return $translate.refresh();
                     }],
                     authorize: ['Auth',

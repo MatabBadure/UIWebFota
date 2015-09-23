@@ -1,13 +1,12 @@
 <navigation-bar-hcp></navigation-bar-hcp>
-<hcp-profile-navbar></hcp-profile-navbar>
+<ng-include src="'scripts/modules/hcp/profile/navbar/navbar.html'"></ng-include>
 <div class="dashboard dashboard--content padding-bottom-ls">
   <form name="form" ng-submit="updateProfile()" novalidate autocomplete="off">
     <div class="container dashboard__form">
       <div class="margin-top-xl">
         <div class="col-md-16 reset-padding margin-top">
           <div class="col-md-7 reset-padding">
-            <div class="col-md-6 dashboard__form--label reset-padding">
-              <span class="" translate="profile.title-name"></span>
+            <div class="col-md-6 dashboard__form--label reset-padding" translate="profile.title-name">
             </div>
             <div class="col-md-10 dashboard__form__input reset-padding selected-box-container">
               <div class="custom-dropdown">
@@ -18,8 +17,7 @@
           </div>
 
           <div class="col-md-7 reset-padding col-md-offset-2" ng-show="userStatus.editMode">
-            <div class="col-md-6 dashboard__form--label reset-padding">
-              <span class="" >User ID</span>
+            <div class="col-md-6 dashboard__form--label reset-padding" translate="profile.userId">
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
               <input class="" type="text" readonly ng-model="user.id">
@@ -45,8 +43,7 @@
             </div>
           </div>
           <div class="col-md-7 reset-padding col-md-offset-2">
-            <div class="col-md-6 dashboard__form--label reset-padding">
-              <span class="" translate="profile.middle-name"></span>
+            <div class="col-md-6 dashboard__form--label reset-padding" translate="profile.middle-name">
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
               <input class="" type="text" name="middleName" validate-on-blur ng-model="user.middleName" ng-pattern="/^[a-z A-Z]+$/" ng-minlength=2 ng-maxlength=15 ng-readonly="validateSuperAdmin()">
@@ -76,8 +73,7 @@
             </div>
           </div>
           <div class="col-md-7 reset-padding col-md-offset-2">
-            <div class="col-md-6 dashboard__form--label reset-padding">
-              <span class="" translate="profile.hr-id"></span>
+            <div class="col-md-6 dashboard__form--label reset-padding" translate="profile.hr-id">
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
               <input class="" type="text" name="employeeID" ng-model="user.hillromId" ng-readonly="validateSuperAdmin()">
@@ -114,16 +110,14 @@
         <!-- NEW FILEDS -->
         <div class="col-md-16 reset-padding margin-top">
           <div class="col-md-7 reset-padding">
-            <div class="col-md-6 dashboard__form--label reset-padding">
-              <span class="" translate="profile.speaciality"></span>
+            <div class="col-md-6 dashboard__form--label reset-padding" translate="profile.speaciality">
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
               <input class="" type="text" name="speciality" validate-on-blur ng-model="user.speciality">
             </div>
           </div>
           <div class="col-md-7 reset-padding col-md-offset-2">
-            <div class="col-md-6 dashboard__form--label reset-padding">
-              <span class="" translate="profile.credentials"></span>
+            <div class="col-md-6 dashboard__form--label reset-padding" translate="profile.credentials">
             </div>
             <div class="col-md-10 dashboard__form__input reset-padding">
               <select ng-model="user.credentials" validate-on-blur name="credential" ng-options="option for option in credentialsList" ng-selected="{{option === user.credentials}}" ng-change="checkCredential()">
@@ -137,8 +131,7 @@
 
         <div class="col-md-16 reset-padding margin-top">
           <div class="col-md-7 reset-padding">
-            <div class="col-md-6 dashboard__form--label reset-padding">
-              <span class="" translate="profile.primaryPhone"></span>
+            <div class="col-md-6 dashboard__form--label reset-padding" translate="profile.primaryPhone">
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
               <input class="" type="text" name="primaryPhone" validate-on-blur ng-model="user.primaryPhone" mask="(999)-999-9999">
@@ -148,8 +141,7 @@
             </div>
           </div>
           <div class="col-md-7 reset-padding col-md-offset-2">
-            <div class="col-md-6 dashboard__form--label reset-padding">
-              <span class="" translate="profile.mobilePhone"></span>
+            <div class="col-md-6 dashboard__form--label reset-padding" translate="profile.mobilePhone">
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
               <input class="" type="text" name="mobilePhone" validate-on-blur ng-model="user.mobilePhone" mask="(999)-999-9999">
@@ -163,8 +155,7 @@
 
         <div class="col-md-16 reset-padding margin-top">
           <div class="col-md-7 reset-padding">
-            <div class="col-md-6 dashboard__form--label reset-padding">
-              <span class="" translate="profile.faxNumber"></span>
+            <div class="col-md-6 dashboard__form--label reset-padding" translate="profile.faxNumber">
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
               <input class="" type="text" name="faxNumber" validate-on-blur ng-model="user.faxNumber" mask="(999)-999-9999">
@@ -174,8 +165,7 @@
             </div>
           </div>
           <div class="col-md-7 reset-padding col-md-offset-2">
-            <div class="col-md-6 dashboard__form--label reset-padding">
-              <span class="" translate="profile.address"></span>
+            <div class="col-md-6 dashboard__form--label reset-padding" translate="profile.address">
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
               <input class="" type="text" name="address" validate-on-blur ng-model="user.address" ng-maxlength="100" ng-readonly="validateSuperAdmin()">
@@ -189,8 +179,7 @@
 
         <div class="col-md-16 reset-padding margin-top">
           <div class="col-md-7 reset-padding">
-            <div class="col-md-6 dashboard__form--label reset-padding">
-              <span class="" translate="profile.city"></span>
+            <div class="col-md-6 dashboard__form--label reset-padding" translate="profile.city">
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
               <input class="" type="text" name="city" validate-on-blur ng-model="user.city" ng-maxlength=15>
@@ -200,8 +189,7 @@
             </div>
           </div>
           <div class="col-md-7 reset-padding col-md-offset-2">
-            <div class="col-md-6 dashboard__form--label reset-padding">
-              <span class="" translate="profile.state"></span>
+            <div class="col-md-6 dashboard__form--label reset-padding" translate="profile.state">
             </div>
             <div class="col-md-10 dashboard__form__input reset-padding selected-box-container">
               <div class="custom-dropdown">
@@ -216,8 +204,7 @@
 
         <div class="col-md-16 reset-padding margin-top">
           <div class="col-md-7 reset-padding">
-            <div class="col-md-6 dashboard__form--label reset-padding">
-              <span class="" translate="profile.zipcode"></span>
+            <div class="col-md-6 dashboard__form--label reset-padding" translate="profile.zipcode">
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
               <input class="" type="text" name="zipcode" validate-on-blur ng-model="user.zipcode" maxlength="5" ng-pattern="/^(?=.*[1-9].*)[0-9]{5}$/" ng-readonly="validateSuperAdmin()" required>

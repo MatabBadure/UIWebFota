@@ -1,15 +1,27 @@
 <navigation-bar-hcp></navigation-bar-hcp>
-<hcpdashboard-navbar></hcpdashboard-navbar>
+<ng-include src="'scripts/components/dashboard/hcp/views/navbar.html'"></ng-include>
   <div class="dashboard dashboard--content">
     <div class="container dashboard__manage-view margin-top-xl">
       <div class="dashboard__manage-view--search">
-        <div class="full-search-box reset-padding-right">
+        <div class="fuid-search-box reset-padding-right">
           <input type="text" class="form-control" id="searchListParam" name="userName" ng-model="searchItem" autocomplete="off" placeholder="{{'patient.placeholder.search' | translate}}">
           <span class="search-icon hillrom-icon icon-search-icon"></span>
         </div>
+        <div class="fixed-filter-box reset-padding-left">
+          <div class="search-dropdown">
+            <select name="search" ng-model="sortOption" ng-change="searchPatients(sortOption)">
+              <option value="" >All</option>
+              <option value="missed_therapy">Missed Therapy</option>
+              <option value="non_hmr_compliance">Non HMR Compliance</option>
+              <option value="setting_deviation">Setting Deviation</option>
+              <option value="noevents">No Events</option>
+            </select>
+           </div>
+        </div>
       </div>
 
-      <div class="row padding-left lebel-indent">
+      <!-- Below Checkboxes was suggested by Vinci-->
+      <!--  <div class="row padding-left lebel-indent">
         <label traslate="patient.email">
           <input type="checkbox" ng-model="filterOn.all" ng-change="changeFilterOption()">
           <span translate="patient.filter.all"></span>
@@ -45,7 +57,7 @@
           <input type="checkbox" ng-model="sortOn.noEvents" ng-change="changeSortOption()">
             <span translate="patient.hcp-dash-filter.no-events"></span>
           </label>
-      </div>
+      </div> -->
 
       <div class="dashboard__manage-view--header margin-top">
         <div class="col-md-3 col-sm-3 header--type">
@@ -64,7 +76,7 @@
           <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="patient.transmission">Transmission</span>
         </div>
         <div class="col-md-3 col-sm-3 header--type">
-          <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" translate="patient.clinic-name">Clinic Name</span>
+          <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" translate="patient.hcp-name">HCP Name</span>
         </div>
         <div class="col-md-1 col-sm-1 header--type">
           <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="patient.status">Status</span>
@@ -98,7 +110,7 @@
           </div>
 
           <div class="col-md-3 col-sm-3 reset-padding centered">
-            <span class="short-info">{{patient.clinicName}}</span>
+            <span class="short-info">{{patient.hcp.lastName}} {{patient.hcp.firstName}}</span>
           </div>
 
           <div class="col-md-1 col-sm-1 reset-padding">
@@ -107,7 +119,7 @@
           </div>
 
           <div class="col-md-1 col-sm-1 reset-padding-left centered text-right">
-            <span class="short-info"></span>
+            <span class="short-info">{{patient.adherence}}</span>
           </div>
 
           <div class="clr"></div>

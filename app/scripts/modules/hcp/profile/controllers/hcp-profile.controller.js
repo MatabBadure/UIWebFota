@@ -16,29 +16,40 @@ angular.module('hillromvestApp')
     $scope.initProfile = function(adminId){
       UserService.getState().then(function(response) {
        $scope.states = response.data.states;
-      }).catch(function(response) {});
+      }).catch(function(response) {
+        notyService.showError(response);
+      });
       $scope.credentialsList = admin_cont.hcp.credentialsList;
       UserService.getUser(adminId).then(function(response){
         $scope.user = response.data.user;
-      }).catch(function(response){});
+      }).catch(function(response){
+        notyService.showError(response);
+      });
       AuthServerProvider.getSecurityQuestions().then(function(response){
         $scope.questions = response.data
-      }).catch(function(response){});
+      }).catch(function(response){
+        notyService.showError(response);
+      });
       DoctorService.getClinicsAssociatedToHCP(localStorage.getItem('userId')).then(function(response){
         $scope.clinics = response.data.clinics;
       }).catch(function(response){
-        if(response.data.message){
-          notyService.showMessage(response.data.message, 'warning');
-        }else if(response.data.ERROR){
-          notyService.showMessage(response.data.ERROR, 'warning');
-        }
-        
+        notyService.showError(response);
+      });
+    };
+
+    $scope.initSettings = function(){
+      UserService.getUser(localStorage.getItem('userId')).then(function(response){
+        $scope.user = response.data.user;
+      }).catch(function(response){
+        notyService.showError(response);
       });
     };
 
     $scope.init = function(){
       if($state.current.name === 'hcpUserProfile' || $state.current.name === 'editHCPProfile' ){
         $scope.initProfile(localStorage.getItem('userId'));
+      }else if($state.current.name === 'hcpSettings'){
+        $scope.initSettings();
       }
     };
 
@@ -62,11 +73,7 @@ angular.module('hillromvestApp')
         };
         AuthServerProvider.changeSecurityQuestion(data, $scope.user.id).then(function(response){
         }).catch(function(response){
-          if(response.data.message){
-            notyService.showMessage(response.data.message, 'warning');
-          } else if(response.data.ERROR){
-            notyService.showMessage(response.data.ERROR, 'warning');
-          }
+          notyService.showError(response);
         });
       }
       $scope.user.role = $scope.user.authorities[0].name;
@@ -80,11 +87,7 @@ angular.module('hillromvestApp')
           $state.go('login');
         }
       }).catch(function(response){
-        if(response && response.data && response.data.message){
-          notyService.showMessage(response.data.message, 'warning');
-        } else if(response && response.data && response.data.ERROR){
-          notyService.showMessage(response.data.ERROR, 'warning');
-        }
+        notyService.showError(response);
       });
     };
 
@@ -102,11 +105,25 @@ angular.module('hillromvestApp')
         notyService.showMessage(response.data.message, 'success');
         $state.go('login');
       }).catch(function(response){
-        if(response.data.message){
-          notyService.showMessage(response.data.message, 'warning');
-        }else if(response.data.ERROR){
-          notyService.showMessage(response.data.ERROR, 'warning');
-        }
+        notyService.showError(response);
+      });
+    };
+
+    $scope.toggleNotification = function(notification){
+      var data = {"isMissedTherapyNotification" : $scope.user.missedTherapyNotification, "isNonHMRNotification": $scope.user.nonHMRNotification, "isSettingDeviationNotification": $scope.user.settingDeviationNotification };
+      if(notification === 'missedTherapyNotification'){
+        data.isMissedTherapyNotification = !$scope.user.missedTherapyNotification;
+      }
+      if(notification === 'nonHMRNotification'){
+        data.isNonHMRNotification = !$scope.user.nonHMRNotification;
+      }
+      if(notification === 'settingDeviationNotification'){
+        data.isSettingDeviationNotification = !$scope.user.settingDeviationNotification;
+      }
+      UserService.updatePatientUserNotification(localStorage.getItem('userId'), data).then(function(response){
+        $scope.user = response.data.user;    
+      }).catch(function(response){
+        notyService.showError(response);
       });
     };
 

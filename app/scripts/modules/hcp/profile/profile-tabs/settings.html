@@ -1,6 +1,5 @@
-<navigation-bar-patient></navigation-bar-patient>
-<patient-profile-navbar></patient-profile-navbar>
-
+<navigation-bar-hcp></navigation-bar-hcp>
+<hcp-profile-navbar></hcp-profile-navbar>
 <div class="container specific-user">
   <div class="col-md-16 user-header margin-top">
     <span class="user-header--title" translate="profile.notification"></span>
@@ -16,8 +15,8 @@
         <span translate="profile.noti.miss-therapy-days"></span>
       </div>
       <div class="col-md-6 user-notification--icon" ng-click="toggleNotification('missedTherapyNotification');">
-        <span class="icon-toggle-on active" ng-show="patientUser.missedTherapyNotification" ></span>
-        <span class="icon-toggle-off" ng-show="!patientUser.missedTherapyNotification" ></span>
+        <span class="icon-toggle-on active" ng-show="user.missedTherapyNotification" ></span>
+        <span class="icon-toggle-off" ng-show="!user.missedTherapyNotification" ></span>
       </div>
     </div>
 
@@ -26,8 +25,8 @@
         <span translate="profile.noti.hmr-non-adher"></span>
       </div>
       <div class="col-md-6 user-notification--icon" ng-click="toggleNotification('nonHMRNotification');">
-        <span class="icon-toggle-on active" ng-show="patientUser.nonHMRNotification"></span>
-        <span class="icon-toggle-off" ng-show="!patientUser.nonHMRNotification"></span>
+        <span class="icon-toggle-on active" ng-show="user.nonHMRNotification"></span>
+        <span class="icon-toggle-off" ng-show="!user.nonHMRNotification"></span>
       </div>
     </div>
 
@@ -36,8 +35,8 @@
         <span translate="profile.noti.setting-deviation"></span>
       </div>
       <div class="col-md-6 user-notification--icon" ng-click="toggleNotification('settingDeviationNotification');">
-        <span class="icon-toggle-on active" ng-show="patientUser.settingDeviationNotification"></span>
-        <span class="icon-toggle-off" ng-show="!patientUser.settingDeviationNotification"></span>
+        <span class="icon-toggle-on active" ng-show="user.settingDeviationNotification"></span>
+        <span class="icon-toggle-off" ng-show="!user.settingDeviationNotification"></span>
       </div>
     </div>
   </div>
