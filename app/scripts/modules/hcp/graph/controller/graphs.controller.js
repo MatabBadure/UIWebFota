@@ -76,10 +76,6 @@ angular.module('hillromvestApp')
 	};
 
 	//---HCP PieChart JS =============
-	$scope.missedtherapyDays = 25;
-	$scope.hmrRunRate = 55;
-	$scope.deviationDays = 49;
-	$scope.noeventDays = 76;
 	$scope.missedtherapy = {
 		animate:{
 			duration: hcpDashboardConstants.statistics.duration,
@@ -220,6 +216,7 @@ angular.module('hillromvestApp')
 			$scope.serverCumulativeGraphData = response.data.cumulativeStatitics;
 			if($scope.serverCumulativeGraphData.length !== 0) {
 				$scope.formatedCumulativeGraphData = graphUtil.convertIntoCumulativeGraph($scope.serverCumulativeGraphData); 
+				$scope.cumulativeGraphRange = graphUtil.getYaxisRangeCumulativeGraph($scope.serverCumulativeGraphData);
 				$scope.drawCumulativeGraph();
 			} else {
 				$scope.plotNoDataAvailable();
@@ -239,33 +236,20 @@ angular.module('hillromvestApp')
 			chart.xAxis.showMaxMin = true;
 			chart.xAxis.staggerLabels = true,
 			chart.yAxis.axisLabel(hcpDashboardConstants.cumulativeGraph.yAxis.label);
-			//chart.yDomain([0,5]);
+			chart.yDomain([0,$scope.cumulativeGraphRange.maxNoOfPatients]);
 			chart.xAxis.tickFormat(function(d) {
-				if(d % 1 === 0){
-					var timeStamp = $scope.serverCumulativeGraphData[d-1].startTimestamp;
-					if( event !== undefined && event.type === "mousemove") {
-						return d3.time.format('%x')(new Date(timeStamp));
-					}
-					
-					switch($scope.format) {
-						case "weekly":
-							return d3.time.format('%A')(new Date(timeStamp));
-							break;
-						case "monthly":
-							return 'week ' + dateService.getWeekOfMonth(timeStamp);
-							break;
-						case "yearly":
-							return d3.time.format('%B')(new Date(timeStamp));
-							break;
-						default:
-							break;
-					}
+				var days = dateService.getDateDiffIndays($scope.fromTimeStamp,$scope.toTimeStamp);
+				if(days > 10){
+					return d3.time.format('%d%b%y')(new Date(d));
+				} else{
+					return d3.time.format('%d%b%y %H:%M')(new Date(d));
 				}
 			});
 			chart.yAxis
 				.tickFormat(function(d) {  
 					return d;
 			});
+			chart.yAxis.tickFormat(d3.format('d'));
 			d3.select('#cumulativeGraph svg')
 				.datum($scope.formatedCumulativeGraphData)
 				.call(chart);
@@ -432,25 +416,15 @@ angular.module('hillromvestApp')
 			.color(d3.scale.category10().range());
 			
 			chart.tooltipContent($scope.toolTipContentForTreatment());
-			//chart.yDomain1([0,$scope.yAxis1Max]);
-			//chart.yDomain2([0,$scope.yAxis2Max]); 
+			chart.yDomain1([0,$scope.yAxis1Max]);
+			chart.yDomain2([0,$scope.yAxis2Max]); 
 			//this function to put x-axis labels
 			chart.xAxis.tickFormat(function(d) {
-					if(d % 1 === 0) {
-						var timeStamp = $scope.serverTreatmentGraphData[d-1].startTime;
-						switch($scope.format) {
-								case "weekly":
-										return d3.time.format('%A')(new Date(timeStamp));
-										break;
-								case "monthly":
-										return 'week ' + dateService.getWeekOfMonth(timeStamp);
-										break;
-								case "yearly":
-										return d3.time.format('%B')(new Date(timeStamp));
-										break;
-								default:
-										break;
-						}
+					var days = dateService.getDateDiffIndays($scope.fromTimeStamp,$scope.toTimeStamp);
+					if(days > 10){
+						return d3.time.format('%d%b%y')(new Date(d));
+					} else{
+						return d3.time.format('%d%b%y %H:%M')(new Date(d));
 					}
 				});
 			var data =  $scope.treatmentGraphData;
