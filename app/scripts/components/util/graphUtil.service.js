@@ -25,9 +25,8 @@ angular.module('hillromvestApp')
         var count = 1;
         angular.forEach(data.actual, function(value) {
           var point = {};
-          point.x = count++;
-          point.y = Math.floor(value.hmr);
-          point.timeStamp = value.timestamp;
+          point.x = value.timestamp;
+          point.y = Math.floor(value.hmr/60);
           pointSet.push(point);
         });
         graphData.values = pointSet;
@@ -84,7 +83,7 @@ angular.module('hillromvestApp')
         var range = {};
         var hmrSet = [];
         angular.forEach(data.actual, function(value) {
-          hmrSet.push(value.hmr);
+          hmrSet.push(Math.floor(value.hmr/60));
         });
         var max = arrayMax(hmrSet);
         var min = arrayMin(hmrSet);
@@ -127,8 +126,8 @@ angular.module('hillromvestApp')
           var pressureSet = [];
           angular.forEach(data.actual, function(value) {
               durationSet.push(value.duration);
-              pressureSet.push(value.weightedAvgPressure);
-              frequencySet.push(value.weightedAvgFrequency);
+              pressureSet.push(value.pressure);
+              frequencySet.push(value.frequency);
           });
           var maxDuration = arrayMax(durationSet);
           var maxRecommendedDuration = data.recommended.maxMinutesPerTreatment * data.recommended.treatmentsPerDay;
@@ -394,21 +393,17 @@ angular.module('hillromvestApp')
         var durationObject = {};
         var count = 0;
         angular.forEach(data, function(value) {
-          count = count + 1;
           var pressurePoint = {};
           var durationPoint = {};
           var frequencyPoint = {};
-          pressurePoint.x = count;
-          pressurePoint.timeStamp = value.timestamp;
-          pressurePoint.y = value.weightedAvgPressure;
+          pressurePoint.x = value.timestamp;
+          pressurePoint.y = value.pressure;
           pressureValues.push(pressurePoint);
-          durationPoint.x = count;
-          durationPoint.timeStamp = value.timestamp;
+          durationPoint.x = value.timestamp;
           durationPoint.y = value.duration;
           durationValues.push(durationPoint);
-          frequencyPoint.x = count;
-          frequencyPoint.timeStamp = value.timestamp;
-          frequencyPoint.y = value.weightedAvgFrequency;
+          frequencyPoint.x = value.timestamp;
+          frequencyPoint.y = value.frequency;
           frequencyValues.push(frequencyPoint);
         });
         pressureObject.values = pressureValues;
