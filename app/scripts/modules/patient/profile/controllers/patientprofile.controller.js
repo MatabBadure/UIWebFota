@@ -17,14 +17,6 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
 		}	
 	};
 
-  $scope.showWarning = function(response){
-    if(response.data.ERROR){
-      notyService.showMessage(response.data.ERROR, 'warning');
-    }else if(response.data.message){
-      notyService.showMessage(response.data.message, 'warning');  
-    }
-  };
-
 	$scope.isProfileTabActive = function(tab) {
     if ($scope.profileTab.indexOf(tab) !== -1) {
       return true;
@@ -42,7 +34,7 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
     patientService.getPatientInfo(patientId).then(function(response){
       $scope.patientView = response.data;
     }).catch(function(response){
-      $scope.showWarning(response);
+      notyService.showError(response);
     });
   };
 
@@ -53,7 +45,7 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
 		AuthServerProvider.getSecurityQuestions().then(function(response){
 			$scope.questions = response.data
 		}).catch(function(response){
-      $scope.showWarning(response);
+      notyService.showError(response);
     });
 	};
 
@@ -68,7 +60,7 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
 		AuthServerProvider.getSecurityQuestions().then(function(response){
 			$scope.questions = response.data
 		}).catch(function(response){
-      $scope.showWarning(response);
+      notyService.showError(response);
     });		
 	};
 
@@ -89,7 +81,7 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
       };
       AuthServerProvider.changeSecurityQuestion(data, $scope.editPatientProfile.id).then(function(response){
       }).catch(function(response){
-        $scope.showWarning(response);
+        notyService.showError(response);
       });
     }
     $scope.editPatientProfile.role = $scope.editPatientProfile.authorities[0].name;
@@ -104,7 +96,7 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
         $state.go('login');
       }
     }).catch(function(response){
-      $scope.showWarning(response);
+      notyService.showError(response);
     });
   };
 
@@ -135,7 +127,7 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
 		UserService.getPatientUserNotification(localStorage.getItem('patientID')).then(function(response){
 			$scope.patientUser = response.data.user;
 		}).catch(function(){
-		   $scope.showWarning(response);
+		   notyService.showError(response);
 		});
   };
 
@@ -153,7 +145,7 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
     UserService.updatePatientUserNotification(localStorage.getItem('patientID'), data).then(function(response){
 			$scope.patientUser = response.data.user;    
 		}).catch(function(response){
-      $scope.showWarning(response);
+      notyService.showError(response);
 		});
   };
 
