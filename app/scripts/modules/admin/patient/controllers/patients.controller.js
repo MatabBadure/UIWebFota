@@ -110,20 +110,17 @@ angular.module('hillromvestApp')
     };
 
     $scope.initPatientAddProtocol = function(){
-      //patientService.getProtocol(patientId).then(function(response){
-        //$scope.protocols = response.data.protocol;
-        $scope.getPatientById($stateParams.patientId);
-        $scope.protocol = $stateParams.protocol;
-        if(!$scope.protocol){
-          $scope.protocol = {};
-          $scope.protocol.type = 'Normal';
-          $scope.protocol.protocolEntries = [{}];
-        } else {
-          $scope.protocol.type = $scope.protocol.protocol[0].type;
-          $scope.protocol.treatmentsPerDay = $scope.protocol.protocol[0].treatmentsPerDay;
-          $scope.protocol.protocolEntries = $scope.protocol.protocol;
-        }
-      //});
+          $scope.getPatientById($stateParams.patientId);
+          $scope.protocol = $stateParams.protocol;
+          if(!$scope.protocol){
+            $scope.protocol = {};
+            $scope.protocol.type = 'Normal';
+            $scope.protocol.protocolEntries = [{}];
+          } else {
+            $scope.protocol.type = $scope.protocol.protocol[0].type;
+            $scope.protocol.treatmentsPerDay = $scope.protocol.protocol[0].treatmentsPerDay;
+            $scope.protocol.protocolEntries = $scope.protocol.protocol;
+          }
     };
 
     $scope.initPatientAddDevice = function(){
@@ -161,6 +158,8 @@ angular.module('hillromvestApp')
         $scope.initPatientAddDevice();
       }else if(currentRoute === 'patientDemographicEdit'){
         $scope.initpatientDemographic();
+      }else if(currentRoute === 'patientEditProtocol'){
+        $scope.initpatientEditProtocol();
       }
 
     };
@@ -615,12 +614,15 @@ angular.module('hillromvestApp')
       if(!protocol){
         return false;
       }
-      $scope.protocol = protocol;
+      $state.go('patientEditProtocol', {
+        'protocolId': protocol.id
+      });
+      /*$scope.protocol = protocol;
       patientService.getProtocolById($stateParams.patientId, protocol.id).then(function(response){
         $scope.protocol = response.data;
         $scope.protocol.edit = true;
         $state.go('patientAddProtocol',{protocol: $scope.protocol});
-      }).catch(function(response){});
+      }).catch(function(response){});*/
     };
 
     $scope.openEditDevice = function(device){
@@ -764,6 +766,23 @@ angular.module('hillromvestApp')
 
     $scope.switchtoCustom = function(){
       $scope.submitted = false;      
+    };
+
+    $scope.initpatientEditProtocol = function(){
+      patientService.getProtocolById($stateParams.patientId, $stateParams.protocolId).then(function(response){
+        $scope.protocol = response.data;
+        $scope.protocol.edit = true;  
+        $scope.newProtocolPoint = ($scope.protocol.protocol) ? $scope.protocol.protocol.length : 1;
+        if(!$scope.protocol){
+          $scope.protocol = {};
+          $scope.protocol.type = 'Normal';
+          $scope.protocol.protocolEntries = [{}];
+        } else {
+          $scope.protocol.type = $scope.protocol.protocol[0].type;
+          $scope.protocol.treatmentsPerDay = $scope.protocol.protocol[0].treatmentsPerDay;
+          $scope.protocol.protocolEntries = $scope.protocol.protocol;
+        }      
+      }).catch(function(response){});
     };
 
     $scope.init();
