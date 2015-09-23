@@ -238,12 +238,18 @@ angular.module('hillromvestApp')
 			chart.yAxis.axisLabel(hcpDashboardConstants.cumulativeGraph.yAxis.label);
 			chart.yDomain([0,$scope.cumulativeGraphRange.maxNoOfPatients]);
 			chart.xAxis.tickFormat(function(d) {
-				var days = dateService.getDateDiffIndays($scope.fromTimeStamp,$scope.toTimeStamp);
-				if(days > 10){
-					return d3.time.format('%d%b%y')(new Date(d));
-				} else{
-					return d3.time.format('%d%b%y %H:%M')(new Date(d));
+				if(event !== undefined && (event.type === 'mouseout' || event.type === 'mouseover' ||event.type === 'mousemove')){
+					console.log(event.type);
+					return dateService.getDateFromTimeStamp(d,patientDashboard.dateFormat,'/') + '  ('+ d3.time.format('%I:%M %p')(new Date(d)) + ')'
+				}else{
+					var days = dateService.getDateDiffIndays($scope.fromTimeStamp,$scope.toTimeStamp);
+					if(days > 10){
+						return d3.time.format('%d%b%y')(new Date(d));
+					} else{
+						return d3.time.format('%d%b%y %H:%M')(new Date(d));
+					}
 				}
+				
 			});
 			chart.yAxis
 				.tickFormat(function(d) {  
