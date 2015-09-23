@@ -221,3 +221,17 @@ a::-moz-focus-inner {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.lebel-indent label {
+	padding-left: 0;
+}
+
+.lebel-indent label input {
+	display: inline-block;
+	margin-right: 5px;
+	cursor: pointer;
+}
+
+.lebel-indent label span {
+	cursor: pointer;
+}

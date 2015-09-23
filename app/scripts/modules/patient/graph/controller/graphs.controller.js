@@ -1,7 +1,9 @@
 'use strict';
 
 angular.module('hillromvestApp')
-.controller('graphController', function($scope, $state, patientDashBoardService, StorageService, dateService, graphUtil, patientService, UserService, $stateParams, notyService, $timeout) {
+.controller('graphController', 
+  ['$scope', '$state', 'patientDashBoardService', 'StorageService', 'dateService', 'graphUtil', 'patientService', 'UserService', '$stateParams', 'notyService', '$timeout', 'graphService',
+  function($scope, $state, patientDashBoardService, StorageService, dateService, graphUtil, patientService, UserService, $stateParams, notyService, $timeout, graphService) {
     var chart;
     $scope.init = function() {
       $scope.hmrLineGraph = true;
@@ -161,6 +163,7 @@ angular.module('hillromvestApp')
       $scope.waitFunction();
     }
     $scope.plotNoDataAvailable = function() {
+      $scope.noDataAvailable = true;
       $scope.removeGraph();
       d3.selectAll('svg').append('text').
         text("No Data Available!").
@@ -364,6 +367,7 @@ angular.module('hillromvestApp')
     };
 
     $scope.showHmrGraph = function() {
+      $scope.noDataAvailable = false;
       $scope.selectedGraph = 'HMR';
       $scope.complianceGraph = false;
       $scope.hmrGraph = true;
@@ -540,6 +544,7 @@ angular.module('hillromvestApp')
     $scope.getComplianceGraphData = function(format) {
       $scope.getUTCTime();
       patientDashBoardService.getHMRGraphPoints($scope.patientId, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.groupBy).then(function(response){
+        console.log('compliance graph response'+ JSON.stringify(response));
         $scope.completeComplianceData = response.data;
         if($scope.completeComplianceData.actual === undefined){
           $scope.complianceGraphData = [];
@@ -577,6 +582,7 @@ angular.module('hillromvestApp')
     };
 
     $scope.drawChart = function(datePicker,dateOption,groupByOption,durationInDays) {
+      $scope.noDataAvailable = false;
       $scope.selectedDateOption = dateOption;
       $scope.removeGraph();
       if(datePicker === undefined){
@@ -626,6 +632,7 @@ angular.module('hillromvestApp')
 
 
     $scope.showComplianceGraph = function() {
+      $scope.noDataAvailable = false;
       $scope.selectedGraph = 'COMPLIANCE';
       $scope.complianceGraph = true;
       $scope.hmrGraph = false;
@@ -884,7 +891,6 @@ angular.module('hillromvestApp')
 
     /*this should initiate the list of caregivers associated to the patient*/
     $scope.initPatientCaregiver = function(){
-      $scope.caregivers = [];      
       $scope.getCaregiversForPatient(localStorage.getItem('patientID'));
     };
 
@@ -896,7 +902,9 @@ angular.module('hillromvestApp')
 
     $scope.getCaregiversForPatient = function(patientId){
       patientService.getCaregiversLinkedToPatient(patientId).then(function(response){
-        $scope.caregivers =  response.data.caregivers;
+        $scope.caregivers = (response.data.caregivers) ? response.data.caregivers : [] ;
+      }).catch(function(response){        
+        notyService.showMessage(response.data.ERROR,'warning' );
       });
     };
 
@@ -946,7 +954,8 @@ angular.module('hillromvestApp')
     };
 
     $scope.disassociateCaregiver = function(caregiverId, index){
-        patientService.disassociateCaregiversFromPatient(localStorage.getItem('patientID'), caregiverId).then(function(response){
+      $scope.closeModalCaregiver();
+      patientService.disassociateCaregiversFromPatient(localStorage.getItem('patientID'), caregiverId).then(function(response){
         $scope.caregivers.splice(index, 1);
       }).catch(function(response){
         notyService.showMessage(server_error_msg);
@@ -1431,5 +1440,30 @@ angular.module('hillromvestApp')
           return chart;
       });
     }
+
+    $scope.downloadAsPdf = function(){
+      var graphData = ($scope.hmrGraph) ? $scope.completeGraphData : $scope.completeComplianceData;
+      graphService.getPdfForSVGGraph(graphData);      
+    };
+
+    $scope.downloadRawDataAsCsv = function(){
+      patientService.getDeviceDataAsCSV($scope.patientId, $scope.fromTimeStamp, $scope.toTimeStamp).then(function(response){
+         graphService.downloadAsCSVFile(response.data, 'VestDeviceReport.csv', 'vestDevice');
+      }); 
+    };
+
+    $scope.downloadProcessedDataAsCsv = function(){
+      patientService.getTherapyDataAsCSV($scope.patientId, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-')).then(function(response){
+         graphService.downloadAsCSVFile(response.data, 'TherapyReport.csv', 'therapy');
+      });
+    };
+
+    $scope.openModalCaregiver = function(caregiverId, index){
+      $scope.showModalCaregiver = true;
+      $scope.deleteCaregiver = {'id':caregiverId, 'index':index};
+    };
+    $scope.closeModalCaregiver = function(){
+      $scope.showModalCaregiver = false;
+    };
     
-});
+}]);

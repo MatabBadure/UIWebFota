@@ -8,6 +8,14 @@ angular.module('hillromvestApp')
           ttl: 5000,
           type: type
         });
+      },
+
+      showError: function(response) {
+        if(response.data.ERROR){
+          this.showMessage(response.data.ERROR, 'warning');
+        }else if(response.data.message){
+          this.showMessage(response.data.message, 'warning');  
+        }
       }
     };
   });

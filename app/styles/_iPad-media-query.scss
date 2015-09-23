@@ -1,0 +1,13 @@
+@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : landscape) { 
+
+}
+
+@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : portrait) { 
+.form__container__login .login__container__right-section {
+		margin: 0 auto;
+	}
+
+	.patient-user__navbar ul > li {
+		padding-right: 15px;
+	}
+}
