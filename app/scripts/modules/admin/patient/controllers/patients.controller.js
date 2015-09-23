@@ -654,11 +654,13 @@ angular.module('hillromvestApp')
     };
 
     $scope.addNewProtocolPoint = function (){
+      $scope.submitted = false;
       $scope.newProtocolPoint += 1;
       $scope.protocol.protocolEntries.push({});
     };
 
     $scope.switchtoNormal = function(){
+      $scope.submitted = false;
       $scope.protocol.protocolEntries.splice(1);
     };
 
@@ -756,6 +758,10 @@ angular.module('hillromvestApp')
           angular.element("#dp2").datepicker('hide');
           $scope.$digest();
         });
+
+    $scope.switchtoCustom = function(){
+      $scope.submitted = false;      
+    };
 
     $scope.init();
   });

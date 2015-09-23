@@ -23,7 +23,7 @@
       </span>
       <span>
         <label>
-          <input type="radio" name="protocolType" ng-model="protocol.type" value="Custom" ng-disabled="protocol.edit">
+          <input type="radio" name="protocolType" ng-model="protocol.type" value="Custom" ng-disabled="protocol.edit" ng-change="switchtoCustom()">
           <span class="radio-box-text">Custom</span>
         </label>
       </span>
@@ -64,7 +64,8 @@
         <div class="col-md-16 reset-padding margin-top">
           <div class="col-md-7 reset-padding">
             <div class="col-md-6 dashboard__form--label reset-padding">
-              <span class="" translate="patient.protocol.min-minutes-per-tm"></span>
+              <span class="" translate="patient.protocol.min-minutes-per-tm" ng-if="protocol.type === 'Normal'"></span>
+              <span class="" translate="patient.protocol.min-minutes" ng-if="protocol.type === 'Custom'"></span>
               <span class="">*</span>
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
@@ -79,7 +80,7 @@
               </div>
             </div>
           </div>
-          <div class="col-md-7 reset-padding col-md-offset-2">
+          <div class="col-md-7 reset-padding col-md-offset-2" ng-if="protocol.type === 'Normal'">
             <div class="col-md-6 dashboard__form--label reset-padding">
               <span class="" translate="patient.protocol.max-minutes-per-tm"></span>
               <span class="">*</span>
@@ -101,7 +102,8 @@
         <div class="col-md-16 reset-padding margin-top">
           <div class="col-md-7 reset-padding">
             <div class="col-md-6 dashboard__form--label reset-padding">
-              <span class="" translate="patient.protocol.min-frequency"></span>
+              <span class="" translate="patient.protocol.min-frequency" ng-if="protocol.type === 'Normal'"></span>
+              <span class="" translate="patient.protocol.frequency" ng-if="protocol.type === 'Custom'"></span>
               <span class="">*</span>
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
@@ -116,7 +118,7 @@
               </div>
             </div>
           </div>
-          <div class="col-md-7 reset-padding col-md-offset-2">
+          <div class="col-md-7 reset-padding col-md-offset-2" ng-if="protocol.type === 'Normal'">
             <div class="col-md-6 dashboard__form--label reset-padding">
               <span class="" translate="patient.protocol.max-frequency"></span>
               <span class="">*</span>
@@ -138,7 +140,8 @@
         <div class="col-md-16 reset-padding margin-top">
           <div class="col-md-7 reset-padding">
             <div class="col-md-6 dashboard__form--label reset-padding">
-              <span class="" translate="patient.protocol.min-pressure"></span>
+              <span class="" translate="patient.protocol.min-pressure" ng-if="protocol.type === 'Normal'"></span>
+              <span class="" translate="patient.protocol.pressure" ng-if="protocol.type === 'Custom'"></span>
               <span class="">*</span>
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
@@ -153,7 +156,7 @@
               </div>
             </div>
           </div>
-          <div class="col-md-7 reset-padding col-md-offset-2">
+          <div class="col-md-7 reset-padding col-md-offset-2" ng-if="protocol.type === 'Normal'">
             <div class="col-md-6 dashboard__form--label reset-padding">
               <span class="" translate="patient.protocol.max-pressure"></span>
               <span class="">*</span>
@@ -175,8 +178,8 @@
       <div class="clr"></div>
     </div>
 
-    <div class="col-md-16 margin-top reset-padding">
-    <span class="add-new-point" ng-if="protocol.type === 'Custom'" ng-click="(newProtocolPoint ===7)||addNewProtocolPoint()" translate="patient.add-new-point"></span>
+    <div class="col-md-16 margin-top reset-padding"> newProtocolPoint : {{newProtocolPoint}}
+    <span class="add-new-point" ng-if="protocol.type === 'Custom' && (newProtocolPoint < 7)" ng-click="(newProtocolPoint ===7)||addNewProtocolPoint()" translate="patient.add-new-point"></span>
     </div>
     <div class="col-md-16 margin-top reset-padding">
       <div class="">

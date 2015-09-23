@@ -91,7 +91,10 @@
           "max-frequency": "Max Frequency",
           "min-pressure": "Min Pressure",
           "max-pressure": "Max Pressure",
-          "gen-details": "Add Protocol"
+          "gen-details": "Add Protocol",
+          "min-minutes": "Min Minutes",
+          "frequency": "Frequency",
+          "pressure": "Pressure"
         },
         "overview": {
           "hr-id": "Hillrom ID:",
