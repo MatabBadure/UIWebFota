@@ -37,7 +37,11 @@ angular.module('hillromvestApp')
 
   $scope.getAllPatientsByClinicId = function(clinicId){
     clinicService.getClinicAssoctPatients(clinicId).then(function(response){
-      $scope.patients = response.data.patientUsers;
+      $scope.patients = [];
+      angular.forEach(response.data.patientUsers, function(patientList){
+        patientList.patient.hcp = patientList.hcp;
+        $scope.patients.push(patientList.patient);
+      });
     }).catch(function(response){
       notyService.showError(response);
     });
@@ -57,8 +61,8 @@ angular.module('hillromvestApp')
   };
 
   $scope.getPatientInfo = function(patinetId, callback){
-    patientService.getPatientInfo(patinetId).then(function(response){
-      $scope.patient = response.data;
+    clinicadminPatientService.getPatientInfo(patinetId, $stateParams.clinicId).then(function(response){
+      $scope.patient = response.data.patientUser;
       if (typeof callback === 'function') {
         callback($scope.patient);
       }
@@ -70,7 +74,13 @@ angular.module('hillromvestApp')
   $scope.getPatientsByFilter = function(filter, clinicId){
     var userId = localStorage.getItem('userId');
     clinicadminPatientService.getAssociatedPatientsByFilter(filter, clinicId, userId).then(function(response){
-      $scope.patients = response.data.patientUsers;
+      $scope.patients = [];
+      angular.forEach(response.data.patientUsers, function(patientList){
+        patientList.patientComp.patientUser.hcp = patientList.hcp;
+        patientList.patientComp.patientUser.adherence = patientList.patientComp.score;
+        patientList.patientComp.patientUser.transmission  = patientList.patientComp.latestTherapyDate;
+        $scope.patients.push(patientList.patientComp.patientUser);
+      });
     }).catch(function(response){
       notyService.showError(response);
     });
@@ -180,13 +190,16 @@ angular.module('hillromvestApp')
     }
     var data = $scope.patient;
     data.role = 'PATIENT';
+    data.clinicMRNId.clinicId = $stateParams.clinicId;
+    if(data.clinicMRNId.clinic){
+      delete data.clinicMRNId.clinic;
+    }
     UserService.editUser(data).then(function (response) {
       $state.go('clinicadminpatientDemographic', {'patientId': $stateParams.patientId});
       notyService.showMessage(response.data.message, 'success');
     }).catch(function(response){
       notyService.showError(response);
     });
-    console.log('Coming here..!', $scope.patient);
   };
 
   $scope.setEditMode = function(patient) {

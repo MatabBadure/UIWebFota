@@ -206,7 +206,7 @@ angular.module('hillromvestApp')
             })
 
             .state('hcppatientOverview', {
-                parent: 'hcp-dashboard',
+                parent: 'hcppatientdashboard',
                 url: '/{patientId}/overview',
                 data: {
                     roles: [],
@@ -258,7 +258,7 @@ angular.module('hillromvestApp')
             })
 
             .state('hcppatientDemographic', {
-                parent: 'hcp-dashboard',
+                parent: 'hcppatientdashboard',
                 url: '/{patientId}/demographic',
                 data: {
                     roles: ['HCP'],
@@ -336,7 +336,7 @@ angular.module('hillromvestApp')
             })
 
             .state('hcppatientClinics', {
-                parent: 'hcp-dashboard',
+                parent: 'hcppatientdashboard',
                 url: '/{patientId}/clinicInfo',
                 data: {
                     roles: ['HCP'],
@@ -362,7 +362,7 @@ angular.module('hillromvestApp')
             })
 
             .state('hcppatientProtocol', {
-                parent: 'hcp-dashboard',
+                parent: 'hcppatientdashboard',
                 url: '/{patientId}/protocol-device',
                 data: {
                     roles: ['HCP'],
@@ -388,7 +388,7 @@ angular.module('hillromvestApp')
             })
 
             .state('hcppatientCraegiver', {
-                parent: 'hcp-dashboard',
+                parent: 'hcppatientdashboard',
                 url: '/{patientId}/caregivers',
                 data: {
                     roles: ['HCP'],

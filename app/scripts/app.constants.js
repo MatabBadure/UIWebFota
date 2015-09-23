@@ -10,5 +10,6 @@ angular.module('hillromvestApp')
 	'getStatistics':'/api/users/USERID/clinics/CLINICID/statistics',
 	'getAssociatedPatientsByFilter':'/api/users/USERID/clinics/CLINICID/patients?filterBy=FILTER',
 	'getAssociatedPatientsWithNoEvents':'/api/users/USERID/clinics/CLINICID/patients/FILTER',
-	'getClinicsAssociatedToCliniadmin' : '/api/user/USERID/clinics' 
+	'getClinicsAssociatedToCliniadmin' : '/api/user/USERID/clinics',
+	'getPatientInfoWithMRN': '/api/patient/PATIENTID/clinic/CLINICID/mrnId'
 });
