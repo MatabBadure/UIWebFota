@@ -20,19 +20,18 @@ angular.module('hillromvestApp')
       $scope.credentialsList = admin_cont.hcp.credentialsList;
       UserService.getUser(adminId).then(function(response){
         $scope.user = response.data.user;
-      }).catch(function(response){});
+      }).catch(function(response){
+        notyService.showError(response);
+      });
       AuthServerProvider.getSecurityQuestions().then(function(response){
         $scope.questions = response.data
-      }).catch(function(response){});
+      }).catch(function(response){
+        notyService.showError(response);
+      });
       DoctorService.getClinicsAssociatedToHCP(localStorage.getItem('userId')).then(function(response){
         $scope.clinics = response.data.clinics;
       }).catch(function(response){
-        if(response.data.message){
-          notyService.showMessage(response.data.message, 'warning');
-        }else if(response.data.ERROR){
-          notyService.showMessage(response.data.ERROR, 'warning');
-        }
-        
+        notyService.showError(response);
       });
     };
 
@@ -62,11 +61,7 @@ angular.module('hillromvestApp')
         };
         AuthServerProvider.changeSecurityQuestion(data, $scope.user.id).then(function(response){
         }).catch(function(response){
-          if(response.data.message){
-            notyService.showMessage(response.data.message, 'warning');
-          } else if(response.data.ERROR){
-            notyService.showMessage(response.data.ERROR, 'warning');
-          }
+          notyService.showError(response);
         });
       }
       $scope.user.role = $scope.user.authorities[0].name;
@@ -80,11 +75,7 @@ angular.module('hillromvestApp')
           $state.go('login');
         }
       }).catch(function(response){
-        if(response && response.data && response.data.message){
-          notyService.showMessage(response.data.message, 'warning');
-        } else if(response && response.data && response.data.ERROR){
-          notyService.showMessage(response.data.ERROR, 'warning');
-        }
+        notyService.showError(response);
       });
     };
 
@@ -102,11 +93,7 @@ angular.module('hillromvestApp')
         notyService.showMessage(response.data.message, 'success');
         $state.go('login');
       }).catch(function(response){
-        if(response.data.message){
-          notyService.showMessage(response.data.message, 'warning');
-        }else if(response.data.ERROR){
-          notyService.showMessage(response.data.ERROR, 'warning');
-        }
+        notyService.showError(response);
       });
     };
 

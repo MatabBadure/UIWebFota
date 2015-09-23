@@ -53,12 +53,11 @@
       <span class="caregiver-list__fax--number">{{::caregiver.user.mobilePhone}}</span>
     </div>
     <div class="col-md-2 col-sm-2 caregiver-list__type">
-      <span>{{::caregiver.relationshipLabel}}</span>
+      {{::caregiver.relationshipLabel}}
     </div>
   </div>
 
-  <div class="col-md-16 empty-list-message" ng-if="!caregivers">
-    <span translate="patient.empty-caregiver-list-message"></span>
+  <div class="col-md-16 empty-list-message" ng-if="!caregivers" translate="patient.empty-caregiver-list-message">
   </div>
 
 </div>
