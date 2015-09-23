@@ -85,6 +85,7 @@
         "hillRom-id": "Hill-Rom ID",
         "phoneNumber": "Phone number",
         "link-clinic": "Link Clinic",
+        "mrnid": "MRN ID",
         "delete": {
             "warning": "Are you sure you want to Deactivate the Doctor?",
             "message": "If you deactivate the doctor, you will no longer be able to view the information."

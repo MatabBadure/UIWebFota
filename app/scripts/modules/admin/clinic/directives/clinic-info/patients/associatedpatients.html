@@ -32,7 +32,7 @@
         <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="clinic.patient-name">Patient Name</span>
       </div>
       <div class="col-md-2 header--type">
-        <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="clinic.hillRom-id">Hill-Rom ID</span>
+        <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="clinic.mrn-id">Hill-Rom ID</span>
       </div>
       <div class="col-md-3 header--type">
         <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="clinic.email">Email</span>
@@ -62,7 +62,7 @@
         <span class="main-secon-info">{{associatedPatient.patient.dob}}</span>
       </div>
       <div class="col-md-2 reset-padding centered">
-        <span class="impo-highlight">{{associatedPatient.patient.hillromId}}</span>
+        <span class="impo-highlight">{{associatedPatient.patient.mrnId}}</span>
       </div>
       <div class="col-md-3 reset-padding centered">
         <span class="short-info">{{associatedPatient.patient.email}}</span>
