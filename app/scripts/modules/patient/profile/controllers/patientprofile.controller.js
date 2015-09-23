@@ -1,7 +1,8 @@
 'use strict';
 
-angular.module('hillromvestApp').controller('patientprofileController', function ($scope, $state, $stateParams, notyService, patientService, UserService, AuthServerProvider,Password, Auth) {
-	$scope.init = function(){
+angular.module('hillromvestApp').controller('patientprofileController', ['$scope', '$state', 'notyService', 'patientService', 'UserService', 'AuthServerProvider', 'Password', 'Auth', function ($scope, $state, notyService, patientService, UserService, AuthServerProvider,Password, Auth) {
+	
+  $scope.init = function(){
 		var currentRoute = $state.current.name;	
 		$scope.profileTab = currentRoute;	
 		$scope.userRole = localStorage.getItem('role');			
@@ -13,17 +14,16 @@ angular.module('hillromvestApp').controller('patientprofileController', function
 			$scope.initResetPassword();
 		}else if(currentRoute === 'patientSettings'){
 			$scope.initPatientSettings();
-		}
-		
+		}	
 	};
 
 	$scope.isProfileTabActive = function(tab) {
-      if ($scope.profileTab.indexOf(tab) !== -1) {
-        return true;
-      } else {
-        return false;
-      }
-    };
+    if ($scope.profileTab.indexOf(tab) !== -1) {
+      return true;
+    } else {
+      return false;
+    }
+  };
 
 	$scope.switchProfileTabs = function(tab){
 		$scope.profileTab = tab;
@@ -31,10 +31,12 @@ angular.module('hillromvestApp').controller('patientprofileController', function
 	};
 
 	$scope.getPatientById = function(patientId){
-      patientService.getPatientInfo(patientId).then(function(response){
-        $scope.patientView = response.data;
-      }).catch(function(response){});
-    };
+    patientService.getPatientInfo(patientId).then(function(response){
+      $scope.patientView = response.data;
+    }).catch(function(response){
+      notyService.showError(response);
+    });
+  };
 
 	$scope.initProfileView = function(){
 		UserService.getUser(localStorage.getItem('patientID')).then(function(response){
@@ -42,7 +44,9 @@ angular.module('hillromvestApp').controller('patientprofileController', function
 		}).catch(function(response){});
 		AuthServerProvider.getSecurityQuestions().then(function(response){
 			$scope.questions = response.data
-		}).catch(function(response){});		
+		}).catch(function(response){
+      notyService.showError(response);
+    });
 	};
 
 	$scope.openEditDetail = function(){
@@ -55,7 +59,9 @@ angular.module('hillromvestApp').controller('patientprofileController', function
 		}).catch(function(response){});
 		AuthServerProvider.getSecurityQuestions().then(function(response){
 			$scope.questions = response.data
-		}).catch(function(response){});		
+		}).catch(function(response){
+      notyService.showError(response);
+    });		
 	};
 
 	$scope.cancelEditProfile = function(){
@@ -64,102 +70,88 @@ angular.module('hillromvestApp').controller('patientprofileController', function
 	};	
 
 	$scope.updateProfile = function(){    
-      $scope.submitted = true;
-      if($scope.form.$invalid){
-        return false;
-      }
-      if($scope.resetAccount){
-        var data = {
-          "questionId": $scope.resetAccount.question.id,
-          "answer": $scope.resetAccount.answer
-        };
-        AuthServerProvider.changeSecurityQuestion(data, $scope.editPatientProfile.id).then(function(response){
-        }).catch(function(response){
-          if(response.data.message){
-            notyService.showMessage(response.data.message, 'warning');
-          } else if(response.data.ERROR){
-            notyService.showMessage(response.data.ERROR, 'warning');
-          }
-        });
-      }
-      $scope.editPatientProfile.role = $scope.editPatientProfile.authorities[0].name;
-      $scope.editPatientProfile.dob = null;
-      UserService.editUser($scope.editPatientProfile).then(function(response){        
-        if(localStorage.getItem("userEmail") === $scope.editPatientProfile.email){
-          notyService.showMessage(response.data.message, 'success');
-          $state.go('patientProfile');
-        }else{
-          notyService.showMessage(profile.EMAIL_UPDATED_SUCCESSFULLY, 'success');
-          Auth.logout();
-          $state.go('login');
-        }
-      }).catch(function(response){
-        if(response && response.data && response.data.message){
-          notyService.showMessage(response.data.message, 'warning');
-        } else if(response && response.data && response.data.ERROR){
-          notyService.showMessage(response.data.ERROR, 'warning');
-        }
-      });
-    };
-
-    $scope.initResetPassword = function(){
-    	$scope.profile = {};
-    	//$scope.profile.password = null;
-    };
-
-    $scope.updatePassword = function(){
-      $scope.submitted = true;
-      if($scope.form.$invalid){
-        return false;
-      }
+    $scope.submitted = true;
+    if($scope.form.$invalid){
+      return false;
+    }
+    if($scope.resetAccount){
       var data = {
-        'password': $scope.profile.password,
-        'newPassword': $scope.profile.newPassword
+        "questionId": $scope.resetAccount.question.id,
+        "answer": $scope.resetAccount.answer
       };
-      Password.updatePassword(localStorage.getItem('patientID'), data).then(function(response){
-        Auth.logout();
-        notyService.showMessage(response.data.message, 'success');
-        $state.go('login');
+      AuthServerProvider.changeSecurityQuestion(data, $scope.editPatientProfile.id).then(function(response){
       }).catch(function(response){
-      	if(response && response.data && response.data.ERROR)
-        notyService.showMessage(response.data.ERROR, 'warning');
+        notyService.showError(response);
       });
+    }
+    $scope.editPatientProfile.role = $scope.editPatientProfile.authorities[0].name;
+    $scope.editPatientProfile.dob = null;
+    UserService.editUser($scope.editPatientProfile).then(function(response){        
+      if(localStorage.getItem("userEmail") === $scope.editPatientProfile.email){
+        notyService.showMessage(response.data.message, 'success');
+        $state.go('patientProfile');
+      }else{
+        notyService.showMessage(profile.EMAIL_UPDATED_SUCCESSFULLY, 'success');
+        Auth.logout();
+        $state.go('login');
+      }
+    }).catch(function(response){
+      notyService.showError(response);
+    });
+  };
+
+  $scope.initResetPassword = function(){
+  	$scope.profile = {};
+  };
+
+  $scope.updatePassword = function(){
+    $scope.submitted = true;
+    if($scope.form.$invalid){
+      return false;
+    }
+    var data = {
+      'password': $scope.profile.password,
+      'newPassword': $scope.profile.newPassword
     };
+    Password.updatePassword(localStorage.getItem('patientID'), data).then(function(response){
+      Auth.logout();
+      notyService.showMessage(response.data.message, 'success');
+      $state.go('login');
+    }).catch(function(response){
+    	if(response && response.data && response.data.ERROR)
+      notyService.showMessage(response.data.ERROR, 'warning');
+    });
+  };
 
-
-   
-
-    $scope.initPatientSettings = function(){ 	
+  $scope.initPatientSettings = function(){ 	
 		UserService.getPatientUserNotification(localStorage.getItem('patientID')).then(function(response){
 			$scope.patientUser = response.data.user;
 		}).catch(function(){
-		   // show the error message
+		   notyService.showError(response);
 		});
-    };
+  };
 
-    $scope.toggleNotification = function(notification){
-    	var data = {"isHMRNotification" : $scope.patientUser.hmrnotification, "isAcceptHMRNotification": $scope.patientUser.acceptHMRNotification, "isAcceptHMRSetting": $scope.patientUser.acceptHMRSetting };
-    	if(notification === 'hmrnotification'){
-    		data.isHMRNotification = !$scope.patientUser.hmrnotification;
-    	}
-    	if(notification === 'acceptHMRNotification'){
-    		data.isAcceptHMRNotification = !$scope.patientUser.acceptHMRNotification;
-    	}
-    	if(notification === 'acceptHMRSetting'){
-    		data.isAcceptHMRSetting = !$scope.patientUser.acceptHMRSetting;
-    	}
-    	UserService.updatePatientUserNotification(localStorage.getItem('patientID'), data).then(function(response){
+  $scope.toggleNotification = function(notification){
+    var data = {"isMissedTherapyNotification" : $scope.patientUser.missedTherapyNotification, "isNonHMRNotification": $scope.patientUser.nonHMRNotification, "isSettingDeviationNotification": $scope.patientUser.settingDeviationNotification };
+    if(notification === 'missedTherapyNotification'){
+    	data.isMissedTherapyNotification = !$scope.patientUser.missedTherapyNotification;
+    }
+    if(notification === 'nonHMRNotification'){
+    	data.isNonHMRNotification = !$scope.patientUser.nonHMRNotification;
+    }
+    if(notification === 'settingDeviationNotification'){
+    	data.isSettingDeviationNotification = !$scope.patientUser.settingDeviationNotification;
+    }
+    UserService.updatePatientUserNotification(localStorage.getItem('patientID'), data).then(function(response){
 			$scope.patientUser = response.data.user;    
-		}).catch(function(){
-
+		}).catch(function(response){
+      notyService.showError(response);
 		});
+  };
 
-    };
+  $scope.cancel = function(){
+    $state.go('patientProfile');
+  };
 
-    $scope.cancel = function(){
-      $state.go('patientProfile');
-    };
-
-	$scope.init();
-    
-  });
+	$scope.init();    
+}]);

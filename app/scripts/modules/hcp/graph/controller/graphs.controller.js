@@ -207,19 +207,38 @@ angular.module('hillromvestApp')
 		$scope.getCumulativeGraphData();
 	};
 
-	$scope.getCumulativeGraphData = function() {
-		hcpDashBoardService.getCumulativeGraphPoints($scope.hcpId, $scope.selectedClinic.id, dateService.getDateFromTimeStamp($scope.fromTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), $scope.groupBy).then(function(response){
-			$scope.serverCumulativeGraphData = response.data.cumulativeStatitics;
-			if($scope.serverCumulativeGraphData.length !== 0) {
-				$scope.formatedCumulativeGraphData = graphUtil.convertIntoCumulativeGraph($scope.serverCumulativeGraphData); 
-				$scope.drawCumulativeGraph();
-			} else {
+		$scope.dates = {startDate: null, endDate: null};
+
+
+		$scope.plotNoDataAvailable = function() {
+			$scope.removeGraph();
+			d3.selectAll('svg').append('text').
+				text(hcpDashboardConstants.message.noData).
+				attr('class','nvd3 nv-noData').
+				attr('x','560').
+				attr('y','175');
+		};
+
+		$scope.showCumulativeGraph = function() {
+			$scope.selectedGraph = 'CUMULATIVE';
+			$scope.treatmentGraph = false;
+			$scope.cumulativeGraph = true;
+			$scope.getCumulativeGraphData();
+		};
+
+		$scope.getCumulativeGraphData = function() {
+			hcpDashBoardService.getCumulativeGraphPoints($scope.hcpId, $scope.selectedClinic.id, dateService.getDateFromTimeStamp($scope.fromTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), $scope.groupBy).then(function(response){
+				$scope.serverCumulativeGraphData = response.data.cumulativeStatitics;
+				if($scope.serverCumulativeGraphData.length !== 0) {
+					$scope.formatedCumulativeGraphData = graphUtil.convertIntoCumulativeGraph($scope.serverCumulativeGraphData);
+					$scope.drawCumulativeGraph();
+				} else {
+					$scope.plotNoDataAvailable();
+				}
+			}).catch(function(response) {
 				$scope.plotNoDataAvailable();
-			}
-		}).catch(function(response) {
-			$scope.plotNoDataAvailable();
-		});	
-	};
+			});	
+		};
 
 	$scope.drawCumulativeGraph = function() {
 		nv.addGraph(function() {
@@ -231,7 +250,6 @@ angular.module('hillromvestApp')
 			chart.xAxis.showMaxMin = true;
 			chart.xAxis.staggerLabels = true,
 			chart.yAxis.axisLabel(hcpDashboardConstants.cumulativeGraph.yAxis.label);
-			//chart.yDomain([0,5]);
 			chart.xAxis.tickFormat(function(d) {
 				if(d % 1 === 0){
 					var timeStamp = $scope.serverCumulativeGraphData[d-1].startTimestamp;

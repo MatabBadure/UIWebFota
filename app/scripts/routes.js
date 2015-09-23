@@ -1773,6 +1773,58 @@ angular.module('hillromvestApp')
                         }
                     ]
                 }
+            })
+
+            .state('clinicadminSettings', {
+                parent: 'clinicadmin-dashboard',
+                url: '/notification-settings',
+                data: {
+                    roles: ['CLINIC_ADMIN'],
+                    pageTitle: 'patient.title'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/clinicadmin/profile/profile-tabs/settings.html',
+                        controller: 'clinicadminProfileController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('profile');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+
+            .state('hcpSettings', {
+                parent: 'hcp-dashboard',
+                url: '/notification-settings',
+                data: {
+                    roles: ['HCP'],
+                    pageTitle: 'patient.title'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/hcp/profile/profile-tabs/settings.html',
+                        controller: 'hcpProfileController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('profile');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
             });
 });
 
