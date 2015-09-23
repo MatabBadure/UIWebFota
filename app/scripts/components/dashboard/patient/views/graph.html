@@ -77,15 +77,15 @@
 					</div>
 				</div>
 				<div class="pull-right week_date_container">
-					<span ng-if="fromDate !== toDate"> 
+					<span ng-if="fromDate !== toDate">
 							<span class="date">{{fromDate}}</span> - <span class="date">{{toDate}}</span>
 					</span>
 					<span ng-if="fromDate === toDate" class="date">{{fromDate}}<span>
-				</div>	
+				</div>
 			</div>
 		<div class="col-md-16" class="all_graph_wrapper">
-			<div ng-if="hmrGraph" class="dashboard_line_graph">
-				<div ng-if="hmrLineGraph">
+			<div ng-if="hmrGraph" class="dashboard_line_graph" id="lineGraphWrapper">
+				<div ng-show="hmrLineGraph">
 				<div id="hmrLineGraph" class="complianceGraph col-md-16">
 					<svg> </svg>
 				</div>
@@ -96,7 +96,7 @@
 					</div>
 				</div>
 			</div>
-			<div ng-if="complianceGraph">
+			<div ng-show="complianceGraph" id="complianceGraphWrapper">
 				<div class="col-md-16">
 					<div class="pull-right wrapper_custom_check">
 						<form action="#" ng-if="isComplianceExist">
@@ -111,10 +111,10 @@
 				  		 	<div class="custom_check_container" ng-click="durationIsDisabled && isLegendEnabled('durationIsDisabled');">
 				  		 		<input id="duration" class="check" type="checkbox" name="duration" ng-disabled="durationIsDisabled" ng-model="compliance.duration" ng-change="reCreateComplianceGraph();$event.stopPropagation();">
 				  		 		<label class="check_label duration_legend" for="duration" translate="graph.duration" ></label>
-				  		 	</div>				  		 	
-			  		 	</form>	
+				  		 	</div>
+			  		 	</form>
 			  		 	<!-- <span ng-show="complianceParamErrMsg" translate="graph.please-deselect-one-item" class="has-error graph_check_error" id="max-compliance-err"></span>
-		  		 		<span ng-show="minComplianceParamErrMsg" translate="graph.min-legend-required" class="has-error graph_check_error" id="min-compliance-err"></span> -->		  		 	
+		  		 		<span ng-show="minComplianceParamErrMsg" translate="graph.min-legend-required" class="has-error graph_check_error" id="min-compliance-err"></span> -->
 					</div>
 				</div>
 				<div id="complianceGraph" class="complianceGraph col-md-16">
@@ -128,7 +128,7 @@
 	<div class="col-md-16">
 		<div class="btn_group patient_dashdoard_btns">
 			<button class="hillrom-btn btn-submit float-right" ng-click="showAllNotes();" translate="graph.note"></button>
-			<button class="hillrom-btn btn-submit float-right" translate="graph.export-data" ></button>
+			<button class="hillrom-btn btn-submit float-right" translate="graph.export-data" ng-click="downloadAsPdf();" ></button>
 		</div>
 	</div>
 	<div class="col-md-16 hide_content" id="add_note_container">
@@ -152,18 +152,18 @@
 							</div>
 							<div class="col-md-11 description">
 								<div class="form-group">
-									<textarea id="editedNoteText_{{note.id}}" value="{{note.note}}" maxlength="300"  class="form-control custom_textarea" rows="1"></textarea> 
+									<textarea id="editedNoteText_{{note.id}}" value="{{note.note}}" maxlength="300"  class="form-control custom_textarea" rows="1"></textarea>
 									<span class="has-error" ng-show="noteError" ng-bind="noteError" id="noteError_{{note.id}}"></span>
 								</div>
-							</div>							
-							
+							</div>
+
 							<div class="col-md-3 edit_delete">
 								<div class="pull-right">
-									<input type="button"  value="Cancel" ng-click="cancelEditNote(note.id);" class="hillrom-btn btn-submit float-right" />	
-									<input type="submit" id="submit" value="Update" class="hillrom-btn btn-submit float-right" />	 									
+									<input type="button"  value="Cancel" ng-click="cancelEditNote(note.id);" class="hillrom-btn btn-submit float-right" />
+									<input type="submit" id="submit" value="Update" class="hillrom-btn btn-submit float-right" />
 								</div>
 							</div>
-						</div> 				
+						</div>
 						</form>
 						<div class="col-md-3 edit_delete" ng-show="role === 'PATIENT'">
 							<div class="pull-right view_note_act view_content show_content note_delete_edit" id="viewnoteact_{{note.id}}">
@@ -172,8 +172,8 @@
 
 							</div>
 						</div>
-					</div>			
-				</div> 
+					</div>
+				</div>
 			</div>
 			<div class="notes_content" ng-if="notes.length <= 0 && !addNoteActive">
 				<center><span translate="graph.no-data-found"></span></center>
@@ -208,7 +208,7 @@
 	<div class="dashboard__manage-view--pagination pagination_notes" ng-if="notes.length > 0">
         <div class="col-md-16">
           <div class="navbar-right">
-            <span class="record-found" >{{notes.length}} 
+            <span class="record-found" >{{notes.length}}
 	            <span translate="graph.notes" ng-if="notes.length > 1"></span>
 	            <span translate="graph.note" ng-if="notes.length == 1"></span>
             </span>
