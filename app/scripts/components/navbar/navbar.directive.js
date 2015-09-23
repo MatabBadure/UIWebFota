@@ -155,3 +155,75 @@ angular.module('hillromvestApp')
     }
   };
 });
+
+angular.module('hillromvestApp')
+.directive('navigationBarHcp',['Auth', 'Principal', '$state', 'Account', '$location', function (Auth, Principal, $state, Account, $location) {
+  return {
+    templateUrl: 'scripts/components/navbar/navbarhcp.html',
+    restrict: 'E',
+
+    controller: function ($scope, UserService) {
+      $scope.notifications = 0;
+      $scope.isActive = function(tab) {
+        var path = $location.path();
+        if (path.indexOf(tab) !== -1) {
+          return true;
+        } else {
+          return false;
+        }
+      };
+
+      $scope.account = function(){
+        $state.go("hcpUserProfile");
+      };
+
+      $scope.getNotifications = function(){
+        UserService.getPatientNotification(localStorage.getItem("patientID"), new Date().getTime()).then(function(response){                  
+          $scope.notifications = response.data;
+          if($scope.notifications.length < 2){
+            $scope.no_of_notifications = $scope.notifications.length;
+          }else{
+            $scope.no_of_notifications = 2;
+          }          
+        });
+      };
+
+      $('html').on('mouseup', function(e) {
+        if(!$(e.target).closest('.popover').length) {
+          $('.popover').each(function(){
+            $(this.previousSibling).popover('hide');
+          });
+        }
+      });
+
+      $("#account").on('click', function(e) {
+        e.stopPropagation();
+    });
+    }
+  };
+}]);
+
+
+angular.module('hillromvestApp')
+.directive('navigationBarClinicadmin',['$state', '$location', function ($state, $location) {
+  return {
+    templateUrl: 'scripts/components/navbar/navbarclinicadmin.html',
+    restrict: 'E',
+
+    controller: function ($scope, UserService) {
+      $scope.notifications = 0;
+      $scope.isActive = function(tab) {
+        var path = $location.path();
+        if (path.indexOf(tab) !== -1) {
+          return true;
+        } else {
+          return false;
+        }
+      };
+
+      $scope.account = function(){
+        $state.go("clinicadminUserProfile");
+      };
+    }
+  };
+}]);

@@ -1,5 +1,6 @@
 {
     "doctor" : {
+        "myDashboard": "My Dashboard",
         "required-field":"* Required Fields",
         "home": {
             "title": "doctor",
