@@ -88,7 +88,7 @@
 					<svg> </svg>
 			</div>
 			<div ng-if="treatmentGraph" id="treatmentGraph" class="complianceGraph col-md-16">
-					<form action="#">
+					<form action="#" ng-if="showTreatmentLegends">
 						<div class="custom_check_container">
 							<input id="treatmentPerDay" class="check" type="checkbox" name="treatmentPerDay" ng-disabled="isTreatmentPerDayDisabled" ng-model="treatment.treatmentPerDay" ng-change="reCreateTreatmentGraph()">
 							<label class="check_label missedTHRP_legend" for="treatmentPerDay" translate="doctor.dashboard.missedTherapy">Average Treatments Per Day</label>
