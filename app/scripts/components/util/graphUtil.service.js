@@ -69,9 +69,9 @@ angular.module('hillromvestApp')
       this.convertIntoCumulativeGraph = function(data) {        
         var graphDataList =[];
         graphDataList.push(createCumulativeGraph(data,hcpDashboardConstants.cumulativeGraph.label.missedTherapy,hcpDashboardConstants.cumulativeGraph.color.missedTherapy));
-        graphDataList.push(createCumulativeGraph(data,hcpDashboardConstants.cumulativeGraph.label.nonCompliance,hcpDashboardConstants.cumulativeGraph.color.nonCompliance));
-        graphDataList.push(createCumulativeGraph(data,hcpDashboardConstants.cumulativeGraph.label.settingDeviation,hcpDashboardConstants.cumulativeGraph.color.settingDeviation));
         graphDataList.push(createCumulativeGraph(data,hcpDashboardConstants.cumulativeGraph.label.noEvents,hcpDashboardConstants.cumulativeGraph.color.noEvents));
+        graphDataList.push(createCumulativeGraph(data,hcpDashboardConstants.cumulativeGraph.label.settingDeviation,hcpDashboardConstants.cumulativeGraph.color.settingDeviation));
+        graphDataList.push(createCumulativeGraph(data,hcpDashboardConstants.cumulativeGraph.label.nonCompliance,hcpDashboardConstants.cumulativeGraph.color.nonCompliance));
         return graphDataList;
       }
 
