@@ -777,7 +777,9 @@ angular.module('hillromvestApp')
           $scope.protocol.treatmentsPerDay = $scope.protocol.protocol[0].treatmentsPerDay;
           $scope.protocol.protocolEntries = $scope.protocol.protocol;
         }      
-      }).catch(function(response){});
+      }).catch(function(response){
+        notyService.showError(response);
+      });
     };
 
     $scope.selectDoctor = function(doctor) {
