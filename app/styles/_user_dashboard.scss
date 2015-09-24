@@ -58,24 +58,29 @@
     margin: 25px 0;
     width: 100%;
 	.col-3{
-		width: 33.3333%;
+		width: 32.3333%;
 		display: inline-block;
 		float: left;
 		position: relative;
-
+		margin-right: 1%;
+		background-image: url("../images/Color-HCP-Dashboard.png");
+		background-size: 100% 100%;
+		/*background:-webkit-gradient(linear, 0% 77%, 0% 2%, from(#7ca3dc), to(#fdfcfc));*/
 		.chart_inner_icon{
 			color: #ccc;
 		    display: inline-block;
-		    font-size: 54px;
+		    font-size: 45px;
 		    height: 60px;
-		    left: 27px;
+		    left: 37px;
 		    position: absolute;
-		    top: 26px;
-		    width: 60px;
+		    top: 32px;
+		    width: 45px;
 		}
+
 	}
 	.pie_chart{
 		float: left;
+		margin-left: 5px;
 	}
 
 }
@@ -83,13 +88,13 @@
 	display: inline-block;
     margin: 30px 0 0 15px;
     &.score{
-    	color: #FFC31C;
+    	color: #41ae76;
     }
     &.hmr{
-    	color: #7E2253;
+    	color: #8c6bb1;
     }
     &.missed{
-    	color: #EA766B;
+    	color: #ef6548;
     }
 
     .percent{

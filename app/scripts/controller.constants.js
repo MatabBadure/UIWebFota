@@ -55,10 +55,10 @@ angular.module('hillromvestApp').constant('hcpDashboardConstants', {
 			"noEvents" : "No Events Recorded"
 		},
 		color : {
-			"missedTherapy" : "red",
-			"nonCompliance" : "green",
-			"settingDeviation" : "blue",
-			"noEvents" : "orange"
+			"missedTherapy" : "#ef6548",
+			"nonCompliance" : "#8c6bb1",
+			"settingDeviation" : "#41ae76",
+			"noEvents" : "#4eb3d3"
 		},
 		yAxis : {
 			"label" : "No. of patients"
@@ -70,8 +70,8 @@ angular.module('hillromvestApp').constant('hcpDashboardConstants', {
 			"treatmentLength" : "Minutes"
 		},
 		color : {
-			"treatmentPerDay" : "orange",
-			"treatmentLength" : "green"
+			"treatmentPerDay" : "#ef6548",
+			"treatmentLength" : "#41ae76"
 		},
 		"type" : "area"
 	},
@@ -84,13 +84,13 @@ angular.module('hillromvestApp').constant('hcpDashboardConstants', {
 		"lineWidth" : 12,
 		"lineCap" : "circle",
 		color : {
-			"track" : "#ccc",
-			"quarter" : "#69be7f",
-			"half" : "#f7a462",
-			"threeQuarters" : "blue",
-			"full" : "#e28181"
+			"track" : "#ccc"
+		},
+		"missedTherapy" : "#ef6548",
+		"nonCompliance" : "#8c6bb1",
+		"settingDeviation" : "#41ae76",
+		"noEvents" : "#4eb3d3"
 
-		}
 	},
 	serverDateFormat : "YYYY-MM-DD",
 	USdateFormat : "MM-DD-YYYY"

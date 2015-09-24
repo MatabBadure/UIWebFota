@@ -209,7 +209,7 @@ angular.module('hillromvestApp')
             duration:3000,
             enabled:true
         },
-        barColor:'#e8b33f',
+        barColor:'#41ae76',
         trackColor: '#ccc',
         scaleColor: false,
         lineWidth:12,
@@ -220,7 +220,7 @@ angular.module('hillromvestApp')
             duration:3000,
             enabled:true
         },
-        barColor:'#753452',
+        barColor:'#8c6bb1',
         trackColor: '#ccc',
         scaleColor: false,
         lineWidth:12,
@@ -231,7 +231,7 @@ angular.module('hillromvestApp')
               duration:3000,
               enabled:true
           },
-          barColor:'#e48080',
+          barColor:'#ef6548',
           trackColor: '#ccc',
           scaleColor: false,
           lineWidth:12,
@@ -757,7 +757,7 @@ angular.module('hillromvestApp')
     d3.select('#complianceGraph svg').selectAll("*").remove();
       nv.addGraph(function() {
       var chart = nv.models.multiChart()
-      .margin({top: 30, right: 100, bottom: 50, left: 100})
+      .margin({top: 30, right: 70, bottom: 50, left: 70})
       .showLegend(false)
       .color(d3.scale.category10().range());
      // chart.noData("Nothing to see here.");
@@ -1313,7 +1313,7 @@ angular.module('hillromvestApp')
       $scope.drawHMRLineGraph = function() {
         nv.addGraph(function() {
            chart = nv.models.lineChart()
-          .margin({top: 30, right: 100, bottom: 50, left: 100})
+          .margin({top: 30, right: 50, bottom: 50, left: 50})
           .showLegend(false)
           //.interpolate('step-after')
           .color(d3.scale.category10().range());
@@ -1399,7 +1399,7 @@ angular.module('hillromvestApp')
     $scope.drawHMRBarGraph = function() {
         nv.addGraph(function() {
            chart = nv.models.multiBarChart()
-          .margin({top: 30, right: 100, bottom: 50, left: 100})
+          .margin({top: 30, right: 50, bottom: 50, left: 50})
           .showControls(false)
           .showLegend(false)
           .color(d3.scale.category10().range());
