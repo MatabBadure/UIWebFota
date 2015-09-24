@@ -205,8 +205,8 @@
             },
             "maxMinutesPerTreatment": {
                 "required": "Maximum Minutes per Treatment Required",
-                "min":"Maximum Minutes per Treatment Invalid",
-                "max": "Maximum Minutes per Treatment Invalid",
+                "min":"Maximum Minutes per Treatment should be 0 to 99",
+                "max": "Maximum Minutes per Treatment should be 0 to 99",
                 "invalid": "Maximum Minutes per Treatment is invalid"
             },
             "minFrequency": {
