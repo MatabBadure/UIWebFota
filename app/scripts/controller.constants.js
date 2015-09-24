@@ -45,6 +45,11 @@ var notyMessages = {
 	"minComplianceError": "At least one item should be selected."
 }
 
+requestParam = {
+	"pageNo": 0,
+	"offset": 10
+}
+
 
 angular.module('hillromvestApp').constant('hcpDashboardConstants', {
     cumulativeGraph : {
