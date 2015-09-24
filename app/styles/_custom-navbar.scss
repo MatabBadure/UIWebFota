@@ -144,25 +144,22 @@ $header--background: $body-bg;
 .navbar-secondary .navbar-right .header-popover ul {
 	background-color: $kashmir-blue;
 	border-radius: 3px;
+	li {
+		float: left;
+	  padding: 10px 10px 5px 14px;
+	  text-align: center;
+	  cursor: pointer;
+	  position: relative;
+	  &:first-child:after {
+			height: 35px;
+		  border-right: 1px solid $silver-approx;
+		  content: '';
+		  position: absolute;
+		  top: 11px;
+		  right: 0px;
+		}
+	}
 }
-
-.navbar-secondary .navbar-right .header-popover ul li {
-	float: left;
-  padding: 10px 10px 5px 14px;
-  text-align: center;
-  cursor: pointer;
-  position: relative;
-}
-
-.navbar-secondary .navbar-right .header-popover ul li:first-child:after {
-	height: 35px;
-  border-right: 1px solid $silver-approx;
-  content: '';
-  position: absolute;
-  top: 11px;
-  right: 0px;
-}
-
 
 .navbar-default .navbar-nav > .open > a, 
 .navbar-default .navbar-nav > .open > a:hover, 
