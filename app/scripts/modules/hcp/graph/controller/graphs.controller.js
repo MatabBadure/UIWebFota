@@ -239,7 +239,8 @@ angular.module('hillromvestApp')
 					} else{
 						return d3.time.format('%d%b%y %H:%M')(new Date(d));
 					}
-				});
+				}
+			});
 				chart.yAxis
 					.tickFormat(function(d) {  
 							return d;
@@ -270,34 +271,6 @@ angular.module('hillromvestApp')
 			return chart;
 		});
 		}
-
-
-		$scope.getTreatmentGraphData = function() {
-			 hcpDashBoardService.getTreatmentGraphPoints($scope.hcpId, $scope.clinicId, dateService.getDateFromTimeStamp($scope.fromTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), $scope.groupBy).then(function(response){
-				if( response !== null && response.data !== null && response.data.treatmentStatitics.length !==0) {
-					$scope.serverTreatmentGraphData = response.data.treatmentStatitics;
-					$scope.formatedTreatmentGraphData = graphUtil.convertIntoTreatmentGraph($scope.serverTreatmentGraphData);
-					$scope.handlelegends();
-					$scope.treatmentGraphRange = graphUtil.getYaxisRangeTreatmentGraph($scope.serverTreatmentGraphData);
-					$scope.createTreatmentGraphData(); 
-					console.log("Treatment Graph Data:" + JSON.stringify($scope.treatmentGraphData));
-					$scope.drawTreatmentGraph();
-				} else {
-					$scope.plotNoDataAvailable();
-				}
-			});
-			chart.yAxis
-				.tickFormat(function(d) {  
-					return d;
-			});
-			chart.yAxis.tickFormat(d3.format('d'));
-			d3.select('#cumulativeGraph svg')
-				.datum($scope.formatedCumulativeGraphData)
-				.call(chart);
-			nv.utils.windowResize(chart.update);
-		  return chart;
-	  });
-	};
 
 	$scope.getTreatmentGraphData = function() {
 		hcpDashBoardService.getTreatmentGraphPoints($scope.hcpId, $scope.selectedClinic.id, dateService.getDateFromTimeStamp($scope.fromTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), $scope.groupBy).then(function(response){
