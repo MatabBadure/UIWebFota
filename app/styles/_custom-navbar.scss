@@ -131,7 +131,7 @@ $header--background: $body-bg;
 
 .navbar-secondary .navbar-right  .header-popover a .icon-logged-in-user {
 	display: block;
-   	padding-top: 10px;
+  padding-top: 10px;
 }
 
 .navbar-secondary .navbar-right .header-popover a .user-name {
@@ -148,103 +148,34 @@ $header--background: $body-bg;
 
 .navbar-secondary .navbar-right .header-popover ul li {
 	float: left;
-    padding: 10px 10px 5px 14px;
-    text-align: center;
-    cursor: pointer;
+  padding: 10px 10px 5px 14px;
+  text-align: center;
+  cursor: pointer;
+  position: relative;
 }
 
 .navbar-secondary .navbar-right .header-popover ul li:first-child:after {
-	height: 10px;
-  border-right: 1px solid $bombay;
+	height: 35px;
+  border-right: 1px solid $silver-approx;
   content: '';
+  position: absolute;
+  top: 11px;
+  right: 0px;
 }
 
 
-.header-popover {
-	.popover.bottom {
-	  margin-top: 5px;
-	}
+.navbar-default .navbar-nav > .open > a, 
+.navbar-default .navbar-nav > .open > a:hover, 
+.navbar-default .navbar-nav > .open > a:focus {
+	background-color: $body-bg;
 
-	.popover.bottom > .arrow {
-		left: 89% !important;
-	}
-
-	.popover.bottom > .arrow:after {
-		border-bottom-color: $kashmir-blue;
-	}
-
-	.popover {
-		border-radius: 0;
-		right: -13px;
-    width: 180px;
-    left: unset !important;
-		background-color: $kashmir-blue;
-		border: 1px solid $blue-bayoux;
-	}
-
-	.popover-content {
-		display: table;
-		padding: 10px 14px;
-		div{
-			display: table-cell;
-			text-align: center;
-			border-right: 1px solid $bombay;
-			cursor: pointer;
-			&:nth-last-child(1) {
-				border-right:none;
-			}
-			
-			.hillrom-icon{
-				padding-bottom: 10px;
-			}
-			span {
-				display: block;
-				padding: 0 10px;
-				color: $bombay;
-			}
-			&:hover {
-				color: $bombay;
-			}
-		}
-	}
 }
 
-.header-popover .popover-link .popover * {
-	color: $bombay;
-}
-
-.header-popover .popover-link .icon-logged-in-user {
-	display: block;
-  padding-top: 10px;
-}
-
-.header-popover .popover-link .user-name {
-	display: block;
-  font-size: 12px;
-  padding-top: 5px;
-}
-
-.header-popover .popover-link .popover .popover-content div:hover span {
-	color: $bombay;
-}
-
-.popover-link {
-	cursor: default;
-}
 
 .navbar-secondary .navbar-right li:last-child a:hover span {
     color: $bombay;
 }
 
-.navbar-secondary .navbar-right li:last-child a .icon-arrow-down {
-		font-size: 8px;
-    padding-left: 5px;
-    color: inherit;
-}
-
-.navbar-secondary .navbar-right li:last-child a:hover #pop-over-link, #icon-arrow {
-	color: $bombay;
-}
 .navbar-secondary .navbar-right li .notif-bell { 
     position: relative; 
     padding: 5px 0;

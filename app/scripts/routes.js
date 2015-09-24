@@ -1136,7 +1136,7 @@ angular.module('hillromvestApp')
                     pageTitle: 'patient.title'
                 },
                 views: {
-                    'patient-view': {
+                    'content@': {
                         templateUrl: 'scripts/modules/patient/profile/profile-tabs/my-profile.html',
                         controller: 'patientprofileController'
                     }
@@ -1306,7 +1306,7 @@ angular.module('hillromvestApp')
                     pageTitle: 'patient.title'
                 },
                 views: {
-                    'patient-view': {
+                    'content@': {
                         templateUrl: 'scripts/modules/patient/profile/profile-tabs/update-password.html',
                         controller: 'patientprofileController'
                     }
@@ -1332,7 +1332,7 @@ angular.module('hillromvestApp')
                     pageTitle: 'patient.title'
                 },
                 views: {
-                    'patient-view': {
+                    'content@': {
                         templateUrl: 'scripts/modules/patient/profile/profile-tabs/settings.html',
                         controller: 'patientprofileController'
                     }
