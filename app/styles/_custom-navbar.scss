@@ -159,6 +159,22 @@ $header--background: $body-bg;
 		  right: 0px;
 		}
 	}
+
+	&:before {
+		content: '';
+	  position: absolute;
+	  right: 10px;
+	  top: -10px;
+	  width: 0;
+	  height: 0;
+	  border-left: 10px solid transparent;
+	  border-right: 10px solid transparent;
+	  border-bottom: 10px solid $kashmir-blue;
+	  clear: both;
+	}
+	p {
+		margin: 0;
+	}
 }
 
 .navbar-default .navbar-nav > .open > a, 
@@ -170,23 +186,23 @@ $header--background: $body-bg;
 
 
 .navbar-secondary .navbar-right li:last-child a:hover span {
-    color: $bombay;
+	color: $bombay;
 }
 
 .navbar-secondary .navbar-right li .notif-bell { 
-    position: relative; 
-    padding: 5px 0;
+  position: relative; 
+  padding: 5px 0;
+  color: inherit; 
+  cursor: pointer;
+  .link-text {
+  	color: $lapis-lazuli;
+  }
+  &:hover { 
+    background-color: inherit; 
     color: inherit; 
-    cursor: pointer;
-    .link-text {
-    	color: $lapis-lazuli;
-    }
-    &:hover { 
-        background-color: inherit; 
-        color: inherit; 
-        border-radius: 0; 
-        box-shadow : none; 
-    } 
+    border-radius: 0; 
+    box-shadow : none; 
+  } 
 } 
  
 .navbar-secondary .navbar-right li .notif-bell .icon-notification-bell { 
@@ -194,21 +210,20 @@ $header--background: $body-bg;
 } 
  
 .navbar-secondary .navbar-right li a span.notification-count { 
-    position: absolute; 
-    top: 7px; 
-    left: 37px; 
-    font-size: 10px; 
-    border: 1px solid $sunshade; 
-    border-radius: 50%; 
-    width: 15px; 
-    height: 15px; 
-    text-align: center; 
-    line-height: 15px; 
-    background-color: $sunshade; 
-    color: $body-bg; 
+  position: absolute; 
+  top: 7px; 
+  left: 37px; 
+  font-size: 10px; 
+  border: 1px solid $sunshade; 
+  border-radius: 50%; 
+  width: 15px; 
+  height: 15px; 
+  text-align: center; 
+  line-height: 15px; 
+  background-color: $sunshade; 
+  color: $body-bg; 
 }
 
 .hide-popup {
 	display: none;
-	
 }
