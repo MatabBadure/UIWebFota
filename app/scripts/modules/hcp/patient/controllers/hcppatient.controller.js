@@ -177,6 +177,6 @@ angular.module('hillromvestApp')
       $scope.patient.formatedDOB = _month + "/" + _day + "/" + _year.slice(-2);
     }
   };
-
+  
 	$scope.init();
 }]);
