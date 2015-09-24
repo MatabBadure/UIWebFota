@@ -95,6 +95,7 @@ angular.module('hillromvestApp').constant('hcpDashboardConstants', {
 	serverDateFormat : "YYYY-MM-DD",
 	USdateFormat : "MM-DD-YYYY"
 })
+
 .constant('loginConstants',{
 	role : {
 		"patient" : "PATIENT",

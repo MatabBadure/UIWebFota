@@ -228,7 +228,27 @@ module.exports = function (grunt) {
       },
       dist: {
         options: {
-          generatedImagesDir: '<%= yeoman.dist %>/images/generated'
+            includePaths: [
+                'bower_components'
+            ]
+        },
+        dist: {
+            files: [{
+                expand: true,
+                cwd: '<%= hillrom.app %>/styles',
+                src: ['*.scss'],
+                dest: '.tmp/styles',
+                ext: '.css'
+            }]
+        },
+        server: {
+            files: [{
+                expand: true,
+                cwd: '<%= hillrom.app %>/styles',
+                src: ['*.scss'],
+                dest: '<%= hillrom.app %>/styles',
+                ext: '.css'
+            }]
         }
       },
       server: {

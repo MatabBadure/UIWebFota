@@ -129,6 +129,37 @@ $header--background: $body-bg;
 	}
 }
 
+.navbar-secondary .navbar-right  .header-popover a .icon-logged-in-user {
+	display: block;
+   	padding-top: 10px;
+}
+
+.navbar-secondary .navbar-right .header-popover a .user-name {
+	font-family: 'MyriadWebPro';
+	display: block;
+	padding-top: 5px;
+	font-size: $font-size-small;
+}
+
+.navbar-secondary .navbar-right .header-popover ul {
+	background-color: $kashmir-blue;
+	border-radius: 3px;
+}
+
+.navbar-secondary .navbar-right .header-popover ul li {
+	float: left;
+    padding: 10px 10px 5px 14px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.navbar-secondary .navbar-right .header-popover ul li:first-child:after {
+	height: 10px;
+  border-right: 1px solid $bombay;
+  content: '';
+}
+
+
 .header-popover {
 	.popover.bottom {
 	  margin-top: 5px;

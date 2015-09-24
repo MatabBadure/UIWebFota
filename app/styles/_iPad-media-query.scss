@@ -1,9 +1,24 @@
-@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : landscape) { 
-
+@media only screen and (min-width : 768px) and (max-width : 1024px) and (orientation : landscape) { 
+	/*HCP dashboard Style device-*/
+ 	.stats_chart_container{ 
+		.pie_chart{
+			float: none;
+		}
+		.stats_chart_content{
+			margin: 10px 0px 0px 15px;
+		}
+	}
 }
 
-@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : portrait) { 
-.form__container__login .login__container__right-section {
+@media only screen and (min-width : 768px) and (max-width : 1024px) and (orientation : portrait) { 
+	/*HCP dashboard Style*/
+	.stats_chart_container{ 
+		.pie_chart{
+			float: none;
+		}
+	}
+
+	.form__container__login .login__container__right-section {
 		margin: 0 auto;
 	}
 
