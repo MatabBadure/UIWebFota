@@ -72,3 +72,13 @@
     }
   }
 }
+.patient_nav_link_right{
+  li{
+    display: inline-block;
+    margin-right: 20px;
+    &:last-child{
+      margin-right: 0px;
+    }
+  }
+
+}

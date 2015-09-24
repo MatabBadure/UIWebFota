@@ -432,6 +432,7 @@ angular.module('hillromvestApp')
 
     $scope.associateCaregiverstoPatient = function(patientId, careGiver){
         patientService.associateCaregiversFromPatient(patientId, careGiver).then(function(response){
+        notyService.showMessage(response.data.message, 'success');
         $scope.caregivers =  response.data.user;
         $scope.associateCareGiver = [];$scope.associateCareGiver.length = 0;
         $scope.switchPatientTab('patientCraegiver');
@@ -455,7 +456,6 @@ angular.module('hillromvestApp')
     };
 
     $scope.initpatientCraegiver = function (patientId){
-      $scope.caregivers = [];
       $scope.getPatientById(patientId);
       $scope.getCaregiversForPatient($stateParams.patientId);
     };
@@ -756,6 +756,18 @@ angular.module('hillromvestApp')
           angular.element("#dp2").datepicker('hide');
           $scope.$digest();
         });
+
+    $scope.selectDoctor = function(doctor) {
+      $state.go('hcpProfile',{
+        'doctorId': doctor.id
+      });
+    };
+
+    $scope.selectClinic = function(clinic) {
+       $state.go('clinicProfile', {
+        'clinicId': clinic.id
+      });
+    };
 
     $scope.init();
   });

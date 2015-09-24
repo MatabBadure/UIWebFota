@@ -48,28 +48,31 @@ angular.module('hillromvestApp')
         username: $scope.username,
         password: $scope.password,
         captcha: $scope.user.captcha
-      }).then(function(data) {
-        if (data.status === 200) {
+      }).then(function(response) {
+        if (response.status === 200) {
           localStorage.removeItem('loginCount');
-          localStorage.setItem('userFirstName', data.data.user.firstName);
-          localStorage.setItem('role', data.data.user.authorities[0].name);
-          localStorage.setItem('userEmail', data.data.user.email);
+          localStorage.setItem('userFirstName', response.data.user.firstName);
+          localStorage.setItem('role', response.data.user.authorities[0].name);
+          localStorage.setItem('userEmail', response.data.user.email);
           $rootScope.userRole = localStorage.getItem('role');           
-          if(data.data.user.authorities[0].name === loginConstants.role.patient){
-            localStorage.setItem('patientID', data.data.user.id);
+          if(response.data.user.authorities[0].name === loginConstants.role.patient){
+            localStorage.setItem('patientID', response.data.user.id);
             $state.go('patientdashboard');
-          } else if(data.data.user.authorities[0].name === loginConstants.role.hcp){
-            localStorage.setItem('hcpID', data.data.user.id);
+          } else if(response.data.user.authorities[0].name === loginConstants.role.hcp){
+            localStorage.setItem('userId', response.data.user.id);
             $state.go('hcpdashboard');
-          }else{
-            localStorage.setItem('userId', data.data.user.id);
+          } else if(response.data.user.authorities[0].name === 'CLINIC_ADMIN'){
+            localStorage.setItem('userId', response.data.user.id);
+            $state.go('clinicadmindashboard');
+          } else{
+            localStorage.setItem('userId', response.data.user.id);
             $state.go('patientUser');
           }
         }
-      }).catch(function(data) {
-        if (data.status === 401) {
-          if (!data.data.APP_CODE) {
-            $scope.message = data.data.Error;
+      }).catch(function(response) {
+        if (response.status === 401) {
+          if (!response.data.APP_CODE) {
+            $scope.message = response.data.Error;
             $scope.authenticationError = true;
             var loginCount = parseInt(localStorage.getItem('loginCount')) || 0;
             localStorage.setItem('loginCount', loginCount + 1);
@@ -77,14 +80,14 @@ angular.module('hillromvestApp')
               vcRecaptchaService.reload();
               $scope.showCaptcha = true;
             }
-          } else if (data.data.APP_CODE === 'EMAIL_PASSWORD_RESET') {
-            localStorage.setItem('token', data.data.token);
+          } else if (response.data.APP_CODE === 'EMAIL_PASSWORD_RESET') {
+            localStorage.setItem('token', response.data.token);
             $scope.message = '';
             $scope.isFirstLogin = true;
             $scope.isEmailExist = false;
             $scope.showLogin = false;
-          } else if (data.data.APP_CODE === 'PASSWORD_RESET') {
-            localStorage.setItem('token', data.data.token);
+          } else if (response.data.APP_CODE === 'PASSWORD_RESET') {
+            localStorage.setItem('token', response.data.token);
             $scope.isFirstLogin = true;
             $scope.message = '';
             $scope.showLogin = false;

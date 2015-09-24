@@ -32,7 +32,7 @@
         <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="clinic.patient-name">Patient Name</span>
       </div>
       <div class="col-md-2 header--type">
-        <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="clinic.hillRom-id">Hill-Rom ID</span>
+        <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="clinic.mrn-id">Hill-Rom ID</span>
       </div>
       <div class="col-md-3 header--type">
         <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="clinic.email">Email</span>
@@ -52,80 +52,53 @@
       <div class="col-md-1 header--type">
         <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="clinic.adherence">Adherence</span>
       </div>
+      
       <div class="clr"></div>
     </div>
 
-    <!-- <div class="dashboard__manage-view--list assoc" ng-click="" ng-repeat="patient in associatedPatients" ng-class="{ 'inactive': doctor.deleted }">
-      <div class="col-md-3 reset-padding-left">
-        <span class="user-name">{{patient.lastName}} {{patient.firstName}}</span>
-        <span class="user-email">{{patient.email}}</span>
-      </div>
-      <div class="col-md-4">
-        <span class="user-home-no"></span>
-        <span class="short-info">{{patient.city}} </span>
-        <span class="short-info" ng-if="patient.state && patient.city">,</span>
-        <span class="short-info">{{patient.state}} </span>
-      </div>
-      <div class="col-md-4 middle-detail">
-        <span class="mobile">{{patient.mobilePhone}}</span>
-      </div>
-
-      <div class="col-md-3 middle-detail">
-        <span class="hr-id">{{patient.hillromId}}</span>
-      </div>
-
-      <div class="col-md-1 middle-detail icon-font">
-          <span class="short-info active centered" ng-if="!patient.deleted" translate="clinic.active"></span>
-          <span class="short-info inactive centered" ng-if="patient.deleted" translate="clinic.inactive"></span>
-      </div>
-
-      <div class="col-md-1 reset-padding-left centered text-right" >
-        <span class="icon-delete-icon" ng-click="openPatientDeactivateModal(patient.id)"></span>
-      </div>
-      <div class="clr"></div>
-    </div> -->
-
-    <div class="dashboard__manage-view--list  assoc" ng-repeat="patient in associatedPatients">
+    <div class="dashboard__manage-view--list" ng-repeat="associatedPatient in associatedPatients" readonly="true" ng-class="{'inactive': associatedPatient.patient.deleted}">
+     <span ng-click="associatedPatient.patient.deleted || selectAssociatedPatient(associatedPatient.patient)">
       <div class="col-md-2 reset-padding">
-        <span class="main-prim-info">{{patient.lastName}} {{patient.firstName}}</span>
-        <span class="main-secon-info">{{patient.dob}}</span>
+        <span class="main-prim-info">{{associatedPatient.patient.lastName}} {{associatedPatient.patient.firstName}}</span>
+        <span class="main-secon-info">{{associatedPatient.patient.dob}}</span>
       </div>
       <div class="col-md-2 reset-padding centered">
-        <span class="impo-highlight">{{patient.hillromId}}</span>
+        <span class="impo-highlight">{{associatedPatient.patient.mrnId}}</span>
       </div>
       <div class="col-md-3 reset-padding centered">
-        <span class="short-info">{{patient.email}}</span>
+        <span class="short-info">{{associatedPatient.patient.email}}</span>
       </div>
 
       <div class="col-md-2 reset-padding centered">
-        <span class="short-info">{{patient.city}}</span>
-        <span ng-if="patient.state && patient.city">,</span>
-        <span class="short-info">{{patient.state}}</span>
+        <span class="short-info">{{associatedPatient.patient.city}}</span>
+        <span ng-if="associatedPatient.patient.state && associatedPatientpatient.city">,</span>
+        <span class="short-info">{{associatedPatient.patient.state}}</span>
       </div>
 
       <div class="col-md-2 reset-padding centered">
-        <span class="short-info">{{patient.transmission}}</span>
+        <span class="short-info">{{associatedPatient.patient.transmission}}</span>
       </div>
 
       <div class="col-md-2 reset-padding centered">
-        <span class="short-info">{{patient.clinicName}}</span>
+        <span class="short-info">{{clinic.name}}</span>
       </div>
 
       <div class="col-md-1 reset-padding centered">
-          <span class="short-info active" ng-if="!patient.deleted" translate="clinic.status-type.active"></span>
-          <span class="short-info inactive" ng-if="patient.deleted" translate="clinic.status-type.inactive"></span>
+          <span class="short-info active" ng-if="!associatedPatient.patient.deleted" translate="clinic.status-type.active"></span>
+          <span class="short-info inactive" ng-if="associatedPatient.patient.deleted" translate="clinic.status-type.inactive"></span>
       </div>
 
       <div class="col-md-1 reset-padding-left centered">
-        <span class="short-info">{{patient.adherence}}</span>
+        <span class="short-info">{{associatedPatient.patient.adherence}}</span>
       </div>
+      </span>
       <div class="col-md-1 reset-padding-left centered text-right" >
-        <span class="icon-delete-icon" ng-click="openPatientDeactivateModal(patient.id)"></span>
+        <span class="icon-delete-icon" ng-click="associatedPatient.patient.deleted || openPatientDeactivateModal(associatedPatient.patient.id);"></span>
       </div>
       <div class="clr"></div>
     </div>
 
-    <div class="col-md-16 empty-list-message" ng-if="!associatedPatients">
+    <div class="col-md-16 empty-list-message" ng-if="hasNoPatient">
       <span translate="clinic.noPatients"></span>
     </div>
   </div>

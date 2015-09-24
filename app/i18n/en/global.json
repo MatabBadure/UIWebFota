@@ -250,25 +250,25 @@
             "required": "Password is required.",
             "minlength": "Password is required to be at least 8 character.",
             "maxlength": "Password cannot be longer than 50 characters.",
-            "pattern": "Password complexity criteria not met."
+            "pattern": "Password is required to be at least 8 characters. Password should have atleast one special character, one upper case letter and one number."
         },
         "currentPassword": {
             "required": "Current password is required.",
             "minlength": "Current password is required to be at least 8 character.",
             "maxlength": "Current password cannot be longer than 50 characters.",
-            "pattern": "Current password complexity criteria not met."
+            "pattern": "Current password should have atleast one special character, one upper case letter and one number."
         },
         "newPassword": {
             "required": "New password is required.",
             "minlength": "New password is required to be at least 8 character.",
             "maxlength": "New password cannot be longer than 50 characters.",
-            "pattern": "New password complexity criteria not met."
+            "pattern": "New Password should have atleast one special character, one upper case letter and one number."
         },
         "confirmPassword":{
             "required": "Confirm password is required.",
             "minlength": "Confirm password is required to be at least 8 character.",
             "maxlength": "Confirm password cannot be longer than 50 characters.",
-            "pattern": "Confirm password complexity criteria not met.",
+            "pattern": "Confirm password should have atleast one special character, one upper case letter and one number.",
             "match": "Password Mismatch."
         },
         "securityQuestion":{
