@@ -39,17 +39,28 @@ angular.module('hillromvestApp')
 		if($state.current.name === 'hcpdashboard'){
 			hcpDashBoardService.getStatistics(clinicId, userId).then(function(response){
 				  $scope.statistics = response.data.statitics;
+				  $scope.getPercentageStatistics($scope.statistics);				  
 				}).catch(function(response){
 				  notyService.showError(response);
 				});
 		} else if($state.current.name === 'clinicadmindashboard'){
 				clinicadminService.getStatistics(clinicId, userId).then(function(response){
-	      $scope.statistics = response.data.statitics;
+	            $scope.statistics = response.data.statitics;
+	            $scope.getPercentageStatistics($scope.statistics);
 	    }).catch(function(response){
 	      notyService.showError(response);
 	    });
+
 		}
-  };
+    };
+
+    $scope.getPercentageStatistics = function(statistics){
+		$scope.percentStatistics = {};
+		$scope.percentStatistics.patientsWithMissedTherapy = statistics.patientsWithMissedTherapy; 
+		$scope.percentStatistics.patientsWithHmrNonCompliance = statistics.patientsWithHmrNonCompliance;
+		$scope.percentStatistics.patientsWithSettingDeviation = statistics.patientsWithSettingDeviation; 
+		$scope.percentStatistics.patientsWithNoEventRecorded = statistics.patientsWithNoEventRecorded;
+    }
 
 	$scope.getClinicsForHCP = function(userId) {
 		DoctorService.getClinicsAssociatedToHCP(userId).then(function(response){
