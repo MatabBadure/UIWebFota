@@ -66,7 +66,7 @@
           </div>
 
           <div class="col-md-4 reset-padding centered">
-            <span class="short-info" ng-repeat ="clinic in doctor.clinics">{{clinic.name}}</span>
+            <span class="short-info" ng-repeat ="clinic in doctor.clinics"> {{clinic.name}} <b>{{$last ? '' : ($index=== doctor.clinics.length-2) ? ' and ' : ', '}}</b></span>
           </div>
 
           <div class="col-md-2 reset-padding centered">
