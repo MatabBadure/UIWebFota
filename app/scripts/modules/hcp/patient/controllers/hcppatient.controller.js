@@ -89,7 +89,7 @@ angular.module('hillromvestApp')
 
   $scope.getAssociateHCPToPatient = function(patientId){
     patientService.getAssociateHCPToPatient(patientId).then(function(response){
-      $scope.associatedHCPs = response.data.hcpUsers
+      $scope.associatedHCPs = response.data.hcpUsers;
     }).catch(function(response){
       notyService.showError(response);
     });
@@ -143,7 +143,8 @@ angular.module('hillromvestApp')
 
 	$scope.goToPatientDashboard = function(value){
     if('hcppatientdashboard' === value){
-      $state.go(value, {'clinicId': $scope.selectedClinic.id});
+      var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : $stateParams.clinicId;
+      $state.go(value, {'clinicId': clinicId});
     }else{
       $state.go(value);
     }

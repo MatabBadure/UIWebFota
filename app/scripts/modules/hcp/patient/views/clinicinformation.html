@@ -52,7 +52,7 @@
       <span ng-bind="aClinic.hillromId"></span>
     </div>
   </div>
-  <div class="col-md-16 col-sm-16 empty-list-message" ng-if="associatedClinics.length === 0"> 
+  <div class="col-md-16 col-sm-16 empty-list-message" ng-if="!associatedClinics || associatedClinics.length === 0"> 
     <span translate="no-clinic-found"></span>
   </div>
 
@@ -98,12 +98,9 @@
     </div>
     <div class="col-md-2 col-sm-2 clinic-list__hr-id">
       <span class="clinic-list__fax--number" ng-bind="hcp.npiNumber"></span>
-    </div>
-    <div class="col-md-1 col-sm-1 clinic-list__delete">
-      <span class="glyphicon glyphicon-trash" ng-click="deleteHCPModel(hcp)"></span>
-    </div>
+    </div>    
   </div>
-  <div class="col-md-16 col-sm-16 empty-list-message" ng-if="associatedHCPs.length === 0">
+  <div class="col-md-16 col-sm-16 empty-list-message" ng-if="!associatedHCPs || associatedHCPs.length === 0">
     <span translate="no-hcp-found"> </span>
   </div>
 </div>
