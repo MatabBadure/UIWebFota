@@ -39,7 +39,8 @@
       <div class="clr"></div>
     </div>
 
-    <div class="dashboard__manage-view--list" ng-repeat="clinic in clinicsOfHCP" ng-if="clinicsOfHCP.length > 0"  ng-click="clinic.deleted || selectClinic(clinic)" ng-class="{'inactive': clinic.deleted}">
+    <div class="dashboard__manage-view--list" ng-repeat="clinic in clinicsOfHCP" ng-if="clinicsOfHCP.length > 0"  ng-class="{'inactive': clinic.deleted}">
+      <span ng-click="clinic.deleted || selectClinic(clinic)">
       <div class="col-md-4 reset-padding centered">
         <span class="main-prim-info">{{clinic.name}}</span>
       </div>
@@ -66,8 +67,9 @@
       <div class="col-md-2 reset-padding centered">
         <span class="impo-highlight">{{clinic.hillromId}}</span>
       </div>
+      </span>
 
-      <div class="col-md-1 reset-padding centered"  ng-click="showclinicDisassociatedModal(clinic.id); $event.stopPropagation();">
+      <div class="col-md-1 reset-padding centered"  ng-click="showclinicDisassociatedModal(clinic.id);">
        <span class="icon-delete-icon"></span>
       </div>
       <div class="clr"></div>

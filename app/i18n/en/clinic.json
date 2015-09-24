@@ -66,6 +66,7 @@
         "noHCPs": "No HCP Associated",
         "noPatients": "No Patient Associated",
         "noClinicAdmins": "No Clinic Admin Associated",
+        "mrn-id": "MRN ID",
         "delete": {
             "warning": "Are you sure you want to Deactivate the Clinic?",
             "message": "If you deactivate the clinic, you will no longer be able to view the information."

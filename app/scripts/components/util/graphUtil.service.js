@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hillromvestApp')
-    .service('graphUtil', function (dateService) {
+    .service('graphUtil', [ 'dateService','hcpDashboardConstants', function (dateService,hcpDashboardConstants) {
       
       this.convertIntoHMRLineGraph = function(data) {
         var pointSet = [];
@@ -25,9 +25,8 @@ angular.module('hillromvestApp')
         var count = 1;
         angular.forEach(data.actual, function(value) {
           var point = {};
-          point.x = count++;
-          point.y = Math.floor(value.hmr);
-          point.timeStamp = value.timestamp;
+          point.x = value.timestamp;
+          point.y = Math.floor(value.hmr/60);
           pointSet.push(point);
         });
         graphData.values = pointSet;
@@ -37,6 +36,46 @@ angular.module('hillromvestApp')
       return graphDataList;
       }
 
+      var createCumulativeGraph = function(data,key,color) {
+        var pointSet = [];
+        var graphData = {};
+        var count = 1;
+        angular.forEach(data, function(value) {
+          var point = [];
+          point.push(value.startTimestamp);
+          switch(key){
+            case hcpDashboardConstants.cumulativeGraph.label.missedTherapy:
+              point.push(value.missedTherapy);
+              break;
+            case hcpDashboardConstants.cumulativeGraph.label.nonCompliance:
+              point.push(value.nonCompliance);
+              break;
+            case hcpDashboardConstants.cumulativeGraph.label.settingDeviation:
+              point.push(value.settingDeviation);
+              break;
+            case hcpDashboardConstants.cumulativeGraph.label.noEvents:
+              point.push(value.noEvent);
+              break;
+          }
+          pointSet.push(point);
+        });
+        graphData.values = pointSet;
+        graphData.key = key;
+        graphData.area = true; 
+        graphData.color = color;
+        return graphData;
+      }
+
+      this.convertIntoCumulativeGraph = function(data) {        
+        var graphDataList =[];
+        graphDataList.push(createCumulativeGraph(data,hcpDashboardConstants.cumulativeGraph.label.missedTherapy,hcpDashboardConstants.cumulativeGraph.color.missedTherapy));
+        graphDataList.push(createCumulativeGraph(data,hcpDashboardConstants.cumulativeGraph.label.nonCompliance,hcpDashboardConstants.cumulativeGraph.color.nonCompliance));
+        graphDataList.push(createCumulativeGraph(data,hcpDashboardConstants.cumulativeGraph.label.settingDeviation,hcpDashboardConstants.cumulativeGraph.color.settingDeviation));
+        graphDataList.push(createCumulativeGraph(data,hcpDashboardConstants.cumulativeGraph.label.noEvents,hcpDashboardConstants.cumulativeGraph.color.noEvents));
+        return graphDataList;
+      }
+
+
       var arrayMax = Function.prototype.apply.bind(Math.max, null);
       var arrayMin = Function.prototype.apply.bind(Math.min, null);
 
@@ -44,7 +83,7 @@ angular.module('hillromvestApp')
         var range = {};
         var hmrSet = [];
         angular.forEach(data.actual, function(value) {
-          hmrSet.push(value.hmr);
+          hmrSet.push(Math.floor(value.hmr/60));
         });
         var max = arrayMax(hmrSet);
         var min = arrayMin(hmrSet);
@@ -87,8 +126,8 @@ angular.module('hillromvestApp')
           var pressureSet = [];
           angular.forEach(data.actual, function(value) {
               durationSet.push(value.duration);
-              pressureSet.push(value.weightedAvgPressure);
-              frequencySet.push(value.weightedAvgFrequency);
+              pressureSet.push(value.pressure);
+              frequencySet.push(value.frequency);
           });
           var maxDuration = arrayMax(durationSet);
           var maxRecommendedDuration = data.recommended.maxMinutesPerTreatment * data.recommended.treatmentsPerDay;
@@ -101,6 +140,35 @@ angular.module('hillromvestApp')
           var maxFrequency = arrayMax(frequencySet);
           maxFrequency = (maxFrequency > data.recommended.maxFrequency) ? maxFrequency : data.recommended.maxFrequency;
           range.maxFrequency = maxFrequency;
+          return range;
+      }
+
+      this.getYaxisRangeTreatmentGraph = function(data) {
+          var range = {};
+          var treatmentPerDaySet = [];
+          var treatmentDurationSet = [];
+          angular.forEach(data, function(value) {
+              treatmentPerDaySet.push(value.avgTreatments);
+              treatmentDurationSet.push(value.avgTreatmentDuration);
+          });
+          var maxTreatmentsPerDay = arrayMax(treatmentPerDaySet) + Math.ceil(arrayMax(treatmentPerDaySet)/4);
+          var maxTreatmentDuration = arrayMax(treatmentDurationSet) + arrayMax(treatmentDurationSet)/4;
+          range.maxTreatmentsPerDay = maxTreatmentsPerDay === 0 ? 1 : maxTreatmentsPerDay;
+          range.maxTreatmentDuration = maxTreatmentDuration === 0 ? 1 : maxTreatmentDuration;
+          return range;
+      }
+
+      this.getYaxisRangeCumulativeGraph = function(data){
+          var range = {};
+          var NoOfPatientSet = [];
+          angular.forEach(data, function(value) {
+              NoOfPatientSet.push(value.missedTherapy);
+              NoOfPatientSet.push(value.nonCompliance);
+              NoOfPatientSet.push(value.settingDeviation);
+              NoOfPatientSet.push(value.noEvent);
+          });
+          var maxNoOfPatients = arrayMax(NoOfPatientSet) + Math.ceil(arrayMax(NoOfPatientSet)/4);
+          range.maxNoOfPatients = maxNoOfPatients === 0 ? 1 : maxNoOfPatients;
           return range;
       }
 
@@ -295,6 +363,40 @@ angular.module('hillromvestApp')
         return data;
       }
 
+      this.convertIntoTreatmentGraph = function(data) {
+        var graphDataList =[];
+        var treatmentPerDayValues = [];
+        var treatmentLengthValues = [];
+        var treatmentPerDayObject = {};
+        var treatmentLengthObject = {};
+        var count = 0;
+        angular.forEach(data, function(value) {
+          count = count + 1;
+          var treatmentPerDayPoint = {};
+          var treatmentLengthPoint = {};
+          treatmentPerDayPoint.x = count;
+          treatmentPerDayPoint.timeStamp = value.startTime;
+          treatmentPerDayPoint.y = value.avgTreatments;
+          treatmentPerDayValues.push(treatmentPerDayPoint);
+          treatmentLengthPoint.x = count;
+          treatmentLengthPoint.timeStamp = value.startTime;
+          treatmentLengthPoint.y = value.avgTreatmentDuration;
+          treatmentLengthValues.push(treatmentLengthPoint);
+        });
+        treatmentPerDayObject.values = treatmentPerDayValues;
+        treatmentPerDayObject.yAxis = 1;
+        treatmentPerDayObject.type = hcpDashboardConstants.treatmentGraph.type;
+        treatmentPerDayObject.axisLabel = hcpDashboardConstants.treatmentGraph.label.treatmentPerDay;
+        treatmentLengthObject.values = treatmentLengthValues;
+        treatmentLengthObject.yAxis = 2;
+        treatmentLengthObject.type = hcpDashboardConstants.treatmentGraph.type;
+        treatmentLengthObject.axisLabel = hcpDashboardConstants.treatmentGraph.label.treatmentLength;
+
+        graphDataList.push(treatmentPerDayObject);
+        graphDataList.push(treatmentLengthObject);
+      return graphDataList;
+      }
+
       this.convertIntoComplianceGraph = function(data) {
         var graphDataList =[];
         var pressureValues = [];
@@ -305,21 +407,17 @@ angular.module('hillromvestApp')
         var durationObject = {};
         var count = 0;
         angular.forEach(data, function(value) {
-          count = count + 1;
           var pressurePoint = {};
           var durationPoint = {};
           var frequencyPoint = {};
-          pressurePoint.x = count;
-          pressurePoint.timeStamp = value.timestamp;
-          pressurePoint.y = value.weightedAvgPressure;
+          pressurePoint.x = value.timestamp;
+          pressurePoint.y = value.pressure;
           pressureValues.push(pressurePoint);
-          durationPoint.x = count;
-          durationPoint.timeStamp = value.timestamp;
+          durationPoint.x = value.timestamp;
           durationPoint.y = value.duration;
           durationValues.push(durationPoint);
-          frequencyPoint.x = count;
-          frequencyPoint.timeStamp = value.timestamp;
-          frequencyPoint.y = value.weightedAvgFrequency;
+          frequencyPoint.x = value.timestamp;
+          frequencyPoint.y = value.frequency;
           frequencyValues.push(frequencyPoint);
         });
         pressureObject.values = pressureValues;
@@ -340,4 +438,4 @@ angular.module('hillromvestApp')
         graphDataList.push(frequencyObject);
       return graphDataList;
       }
-    });
+    }]);

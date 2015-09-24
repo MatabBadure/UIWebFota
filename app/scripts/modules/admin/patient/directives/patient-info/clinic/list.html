@@ -33,7 +33,8 @@
     </div>
   </div>
 
-  <div class="col-md-16 clinic-list " ng-repeat="aClinic in associatedClinics track by $index" ng-if="associatedClinics.length > 0" ng-click="aClinic.deleted || selectClinic(aClinic)" readonly="true" ng-class="{'default_active': !aClinic.deleted, 'inactive': aClinic.deleted}">
+  <div class="col-md-16 clinic-list " ng-repeat="aClinic in associatedClinics track by $index" ng-if="associatedClinics.length > 0" readonly="true" ng-class="{'default_active': !aClinic.deleted, 'inactive': aClinic.deleted}">
+    <span  ng-click="aClinic.deleted || selectClinic(aClinic)">
     <div class="col-md-3 clinic-list__detail">
       <span class="clinic-list__detail--name" ng-bind="aClinic.name"></span>
     </div>
@@ -50,7 +51,8 @@
     <div class="col-md-2 clinic-list__hr-id">
       <span ng-bind="aClinic.hillromId"></span>
     </div>
-    <div class="col-md-1 clinic-list__delete" ng-click="aClinic.deleted || deleteClinicModel(aClinic); $event.stopPropagation();">
+    </span>
+    <div class="col-md-1 clinic-list__delete" ng-click="aClinic.deleted || deleteClinicModel(aClinic);">
       <span class="icon-delete-icon"></span>
     </div>
   </div>
@@ -95,7 +97,8 @@
     </div>
   </div>
 
-  <div class="col-md-16 clinic-list" ng-repeat="hcp in associatedHCPs track by $index" ng-if="associatedHCPs.length > 0" ng-click="hcp.deleted || selectDoctor(hcp)" readonly="true" ng-class="{'default_active': !hcp.deleted, 'inactive': hcp.deleted}">
+  <div class="col-md-16 clinic-list" ng-repeat="hcp in associatedHCPs track by $index" ng-if="associatedHCPs.length > 0" readonly="true" ng-class="{'default_active': !hcp.deleted, 'inactive': hcp.deleted}">
+   <span ng-click="hcp.deleted || selectDoctor(hcp)">
     <div class="col-md-3 clinic-list__detail">
       <span class="clinic-list__detail--name">{{hcp.lastName}} {{hcp.firstName}}</span>
     </div>
@@ -111,7 +114,8 @@
     <div class="col-md-2 clinic-list__hr-id">
       <span class="clinic-list__fax--number" ng-bind="hcp.npiNumber"></span>
     </div>
-    <div class="col-md-1 clinic-list__delete" ng-click="hcp.deleted || deleteHCPModel(hcp); $event.stopPropagation();">
+    </span>
+    <div class="col-md-1 clinic-list__delete" ng-click="hcp.deleted || deleteHCPModel(hcp);">
       <span class="glyphicon glyphicon-trash"></span>
     </div>
   </div>

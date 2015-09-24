@@ -90,7 +90,7 @@
           <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="doctor.patient-name">Patient Name</span>
         </div>
         <div class="col-md-2 header--type">
-          <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="doctor.hill-rom-id">Hill-Rom ID</span>
+          <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="doctor.mrnid">Hill-Rom ID</span>
         </div>
         <div class="col-md-3 header--type">
           <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="doctor.email">Email</span>
@@ -119,7 +119,7 @@
         <span class="main-secon-info">{{patient.patientUser.dob}}</span>
       </div>
       <div class="col-md-2 reset-padding centered">
-        <span class="impo-highlight">{{patient.patientUser.hillromId}}</span>
+        <span class="impo-highlight">{{patient.patientUser.mrnId}}</span>
       </div>
       <div class="col-md-3 reset-padding centered">
         <span class="short-info">{{patient.patientUser.email}}</span>

@@ -59,6 +59,7 @@
         "transmission": "Transmission",
         "status": "Status",
         "clinic-name": "Clinic Name",
+        "hcp-name": "HCP Name",
         "phone-number": "Phone No",
         "mobile-number": "Mobile No.",
         "home-phone-number": "Home Phone No.",
@@ -86,6 +87,12 @@
             "inactive": "Inactive",
             "expired": "Expired",
             "pending": "Pending"
+        },
+        "hcp-dash-filter": {
+            "missed-therapy": "Missed Therapy",
+            "non-hmr-compliance": "Non HMR Compliance",
+            "sertting-deviations": "Sertting Deviations",
+            "no-events": "No Events"
         },
         "delete": {
             "warning": "Are you sure you want to Deactivate the Patient?",
