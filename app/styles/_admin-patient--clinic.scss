@@ -28,6 +28,18 @@
   margin-top: 10px;
   border-bottom: 1px solid $celeste;
 }
+.admin-user .clinic-list.default_active{
+  cursor: pointer;
+}
+.admin-user .clinic-list.inactive{
+  cursor: default !important;
+}
+.admin-user .detail-list.default_active{
+  cursor: pointer;
+}
+.admin-user .detail-list.inactive{
+  cursor: default !important;
+}
 
 .admin-user .clinic-list__detail {
   padding: 0;
@@ -79,7 +91,16 @@
     }
   }
 }
-
+.admin-user .clinic-list.inactive{
+    .icon-delete-icon{
+      cursor: default;
+      color: #ccc;
+    }
+    .glyphicon-trash{
+      cursor: default;
+      color: #ccc;
+    }
+}
 .admin-user .clinic-link {
   margin: 30px 0;
   padding: 0;
