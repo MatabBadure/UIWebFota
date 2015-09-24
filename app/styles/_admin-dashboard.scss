@@ -1003,6 +1003,14 @@ input[type=radio], input.radio {
       color: $pickled-bluewood;
     }
   }
+  &.inactive{
+    .icon-delete-icon{
+      cursor: default;
+      &:hover{
+        color: $bombay;
+      }
+    }
+  }
 }
 
 .empty-list-message {

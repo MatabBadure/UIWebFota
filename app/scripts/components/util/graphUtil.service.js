@@ -42,7 +42,7 @@ angular.module('hillromvestApp')
         var count = 1;
         angular.forEach(data, function(value) {
           var point = [];
-          point.push(count++);
+          point.push(value.startTimestamp);
           switch(key){
             case hcpDashboardConstants.cumulativeGraph.label.missedTherapy:
               point.push(value.missedTherapy);
@@ -151,10 +151,24 @@ angular.module('hillromvestApp')
               treatmentPerDaySet.push(value.avgTreatments);
               treatmentDurationSet.push(value.avgTreatmentDuration);
           });
-          var maxTreatmentsPerDay = arrayMax(treatmentPerDaySet);
-          var maxTreatmentDuration = arrayMax(treatmentDurationSet);
+          var maxTreatmentsPerDay = arrayMax(treatmentPerDaySet) + Math.ceil(arrayMax(treatmentPerDaySet)/4);
+          var maxTreatmentDuration = arrayMax(treatmentDurationSet) + arrayMax(treatmentDurationSet)/4;
           range.maxTreatmentsPerDay = maxTreatmentsPerDay === 0 ? 1 : maxTreatmentsPerDay;
           range.maxTreatmentDuration = maxTreatmentDuration === 0 ? 1 : maxTreatmentDuration;
+          return range;
+      }
+
+      this.getYaxisRangeCumulativeGraph = function(data){
+          var range = {};
+          var NoOfPatientSet = [];
+          angular.forEach(data, function(value) {
+              NoOfPatientSet.push(value.missedTherapy);
+              NoOfPatientSet.push(value.nonCompliance);
+              NoOfPatientSet.push(value.settingDeviation);
+              NoOfPatientSet.push(value.noEvent);
+          });
+          var maxNoOfPatients = arrayMax(NoOfPatientSet) + Math.ceil(arrayMax(NoOfPatientSet)/4);
+          range.maxNoOfPatients = maxNoOfPatients === 0 ? 1 : maxNoOfPatients;
           return range;
       }
 
