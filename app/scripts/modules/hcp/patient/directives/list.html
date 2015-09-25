@@ -98,7 +98,7 @@
         <div class="clr"></div>
       </div>
 
-      <div class="dashboard__manage-view--list" ng-repeat="patient in patients" ng-click=" selectPatient(patient)" ng-readonly="true" ng-class="{'inactive': patient.isDeleted}">
+      <div class="dashboard__manage-view--list" ng-repeat="patient in patients" ng-click="patient.deleted || selectPatient(patient)" ng-readonly="true" ng-class="{'inactive': patient.deleted}">
           <div class="col-md-3 col-sm-3 reset-padding">
             <span class="main-prim-info">{{patient.lastName}} {{patient.firstName}}</span>
             <span class="main-secon-info">{{patient.email}}</span>
@@ -125,8 +125,8 @@
           </div>
 
           <div class="col-md-1 col-sm-1 reset-padding">
-            <span class="short-info active centered" ng-if="!patient.isDeleted" translate="patient.status-type.active"></span>
-            <span class="short-info inactive centered" ng-if="patient.isDeleted" translate="patient.status-type.inactive"></span>
+            <span class="short-info active centered" ng-if="!patient.deleted" translate="patient.status-type.active"></span>
+            <span class="short-info inactive centered" ng-if="patient.deleted" translate="patient.status-type.inactive"></span>
           </div>
 
           <div class="col-md-1 col-sm-1 reset-padding-left centered text-right">
