@@ -258,7 +258,7 @@ angular.module('hillromvestApp')
 					.tickFormat(function(d) {  
 							return d;
 				});
-				chart.yAxis.tickFormat(d3.format('d'));
+				chart.yAxis.tickFormat(d3.format('d'));	
 				d3.select('#cumulativeGraph svg')
 					.datum($scope.formatedCumulativeGraphData)
 					.call(chart);
