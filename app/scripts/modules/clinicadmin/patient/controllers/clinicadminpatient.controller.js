@@ -166,6 +166,8 @@ angular.module('hillromvestApp')
       $scope.selectedClinic = clinic;
       if($stateParams.filter === 'noevents'){
         $scope.getPatientsWithNoEvents($stateParams.filter, clinic.id);
+      } else if($stateParams.filter === ''){
+        $scope.getAllPatientsByClinicId(clinic.id);
       } else {
         $scope.getPatientsByFilter($stateParams.filter, clinic.id);
       }
