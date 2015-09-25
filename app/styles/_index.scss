@@ -238,10 +238,10 @@ a::-moz-focus-inner {
 
 .slide.ng-enter,
 .slide.ng-leave {
-    -webkit-transition:0.8s ease-in all;
-    -moz-transition:0.8s ease-in all;
-    -o-transition:0.8s ease-in all;
-    transition:0.8s ease-in all;
+    -webkit-transition:0.5s ease-in all;
+    -moz-transition:0.5s ease-in all;
+    -o-transition:0.5s ease-in all;
+    transition:0.5s ease-in all;
     opacity: 0;
     margin-left: 75px;
 }
