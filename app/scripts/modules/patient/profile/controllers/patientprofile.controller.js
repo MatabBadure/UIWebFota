@@ -25,7 +25,7 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
     }
   };
 
-	$scope.switchProfileTabs = function(tab){
+	$scope.switchProfileTabs = function(tab){alert(tab);
 		$scope.profileTab = tab;
 		$state.go(tab);	
 	};

@@ -16,11 +16,8 @@ angular.module('hillromvestApp')
       }
     };
     return ddo;
-  }]);
+  }])
 
-  
-  
-  angular.module('hillromvestApp')
   .directive('pwCheck', [function () {
     return {
       require: 'ngModel',
@@ -34,9 +31,8 @@ angular.module('hillromvestApp')
         });
       }
     }
-  }]);
+  }])
 
-  angular.module('hillromvestApp')
   .directive('validateOnKeyPress', [function () {
     var ddo = {
       restrict: "A",
@@ -54,4 +50,23 @@ angular.module('hillromvestApp')
       }
     }; 
     return ddo;
-  }]);
+  }])
+
+  .directive('activeTab', ['$location', function(location) {
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs, controller) {
+            var className = attrs.activeTab;
+            var path = attrs.href;
+            path = path.substring(1); //hack because path does bot return including hashbang
+            scope.location = location;
+            scope.$watch('location.path()', function(newPath) {
+                if (path === newPath) {
+                    element.addClass(className);
+                } else {
+                    element.removeClass(className);
+                }
+            });
+        }
+    };
+}]);

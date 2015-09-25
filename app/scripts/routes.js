@@ -18,8 +18,27 @@ angular.module('hillromvestApp')
                 url:'/patient',
                 views:{
                     'content':{
-                    templateUrl:'scripts/modules/patient/graph/views/patient-section.html',
-                    controller:function ($scope){}
+                    templateUrl:'scripts/modules/patient/graph/views/patient-section.html'
+            }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('global');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+             .state('patient-dashboard-profile', {
+               // parent: 'entity',
+                url:'/patient',
+                views:{
+                    'content':{
+                    templateUrl:'scripts/modules/patient/profile/profile-tabs/patient-profile-section.html'
                 // defining the empty controller here coz I can't figure out where to create this controller
             }
                 },
@@ -1129,14 +1148,14 @@ angular.module('hillromvestApp')
             })
 
             .state('patientProfile', {
-                parent: 'patient-dashboard',
+                parent: 'patient-dashboard-profile',
                 url: '/p-profile',
                 data: {
                     roles: ['PATIENT'],
                     pageTitle: 'patient.title'
                 },
                 views: {
-                    'content@': {
+                    'patient-profile-view': {
                         templateUrl: 'scripts/modules/patient/profile/profile-tabs/my-profile.html',
                         controller: 'patientprofileController'
                     }
@@ -1274,14 +1293,14 @@ angular.module('hillromvestApp')
               }
             })
             .state('patientProfileEdit', {
-                parent: 'patient-dashboard',
+                parent: 'patient-dashboard-profile',
                 url: '/p-profile-edit',
                 data: {
                     roles: ['PATIENT'],
                     pageTitle: 'patient.title'
                 },
                 views: {
-                    'patient-view': {
+                    'patient-profile-view': {
                         templateUrl: 'scripts/modules/patient/profile/profile-tabs/edit-my-profile.html',
                         controller: 'patientprofileController'
                     }
@@ -1299,14 +1318,14 @@ angular.module('hillromvestApp')
                 }
             })
             .state('patientResetPassword', {
-                parent: 'patient-dashboard',
+                parent: 'patient-dashboard-profile',
                 url: '/p-reset',
                 data: {
                     roles: ['PATIENT'],
                     pageTitle: 'patient.title'
                 },
                 views: {
-                    'content@': {
+                    'patient-profile-view': {
                         templateUrl: 'scripts/modules/patient/profile/profile-tabs/update-password.html',
                         controller: 'patientprofileController'
                     }
@@ -1325,14 +1344,14 @@ angular.module('hillromvestApp')
             })
 
             .state('patientSettings', {
-                parent: 'patient-dashboard',
+                parent: 'patient-dashboard-profile',
                 url: '/notification-settings',
                 data: {
                     roles: ['PATIENT'],
                     pageTitle: 'patient.title'
                 },
                 views: {
-                    'content@': {
+                    'patient-profile-view': {
                         templateUrl: 'scripts/modules/patient/profile/profile-tabs/settings.html',
                         controller: 'patientprofileController'
                     }
