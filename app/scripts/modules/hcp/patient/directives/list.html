@@ -96,7 +96,7 @@
         <div class="clr"></div>
       </div>
 
-      <div class="dashboard__manage-view--list" ng-repeat="patient in patients" ng-click="patient.deleted || selectPatient(patient)" ng-readonly="true" ng-class="{'inactive': patient.deleted}">
+      <div class="dashboard__manage-view--list" ng-repeat="patient in patients" ng-click="patient.deleted || selectPatient(patient, selectedClinic)" ng-readonly="true" ng-class="{'inactive': patient.deleted}">
           <div class="col-md-3 col-sm-3 reset-padding">
             <span class="main-prim-info">{{patient.lastName}} {{patient.firstName}}</span>
             <span class="main-secon-info">{{patient.email}}</span>

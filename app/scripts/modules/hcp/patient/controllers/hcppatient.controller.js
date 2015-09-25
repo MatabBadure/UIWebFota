@@ -141,13 +141,13 @@ angular.module('hillromvestApp')
     });
   };
 
-	$scope.selectPatient = function(patient){
-    $state.go('hcppatientOverview',{'patientId': patient.id});
+	$scope.selectPatient = function(patient, clinic){
+    $state.go('hcppatientOverview',{'clinicId': clinic.id, 'filter': $scope.sortOption , 'patientId':patient.id});
 	};
 
 	$scope.switchPatientTab = function(value){
-		value = 'hcp' + value;
-		$state.go(value, {'patientId':$stateParams.patientId});
+		value = 'hcp' + value;    
+   	$state.go(value, {'clinicId': $stateParams.clinicId, 'filter': $stateParams.filter , 'patientId':$stateParams.patientId});
 	};
 
 	$scope.goToPatientDashboard = function(value){

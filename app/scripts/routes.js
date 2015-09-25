@@ -52,13 +52,15 @@ angular.module('hillromvestApp')
       }
       ]
     }
+
   })
   .state('hcp-dashboard', {
       // parent: 'entity',
       url:'/hcp',
       views:{
         'content':{
-          templateUrl:'scripts/modules/hcp/graph/views/hcp-section.html'
+          templateUrl:'scripts/modules/hcp/graph/views/hcp-section.html',
+          controller: 'hcpGraphController'
         }
       },
       resolve: {
@@ -257,14 +259,14 @@ angular.module('hillromvestApp')
   })
 
   .state('hcppatientOverview', {
-    parent: 'hcppatientdashboard',
-    url: '/{patientId}/overview',
+    parent: 'hcppatientList',
+    url: '/overview',
     data: {
       roles: [],
       pageTitle: 'patient.title'
     },
     views: {
-      'content@': {
+      'hcp-patient-view': {
         templateUrl: 'scripts/modules/hcp/patient/directives/patient-details.html',
         controller: 'graphController'
       }
@@ -309,14 +311,14 @@ angular.module('hillromvestApp')
   })
 
   .state('hcppatientDemographic', {
-    parent: 'hcppatientdashboard',
-    url: '/{patientId}/demographic',
+    parent: 'hcppatientList',
+    url: '/demographic',
     data: {
       roles: ['HCP'],
       pageTitle: 'patient.title'
     },
     views: {
-      'content@': {
+      'hcp-patient-view': {
         templateUrl: 'scripts/modules/hcp/patient/views/patientdemographics.html',
         controller: 'hcpPatientController'
       }
@@ -387,14 +389,14 @@ angular.module('hillromvestApp')
   })
 
   .state('hcppatientClinics', {
-    parent: 'hcppatientdashboard',
-    url: '/{patientId}/clinicInfo',
+    parent: 'hcppatientList',
+    url: '/clinicInfo',
     data: {
       roles: ['HCP'],
       pageTitle: 'patient.title'
     },
     views: {
-      'content@': {
+      'hcp-patient-view': {
         templateUrl: 'scripts/modules/hcp/patient/views/clinicinformation.html',
         controller: 'hcpPatientController'
       }
@@ -413,14 +415,14 @@ angular.module('hillromvestApp')
   })
 
   .state('hcppatientProtocol', {
-    parent: 'hcppatientdashboard',
-    url: '/{patientId}/protocol-device',
+    parent: 'hcppatientList',
+    url: '/protocol-device',
     data: {
       roles: ['HCP'],
       pageTitle: 'patient.title'
     },
     views: {
-      'content@': {
+      'hcp-patient-view': {
         templateUrl: 'scripts/modules/hcp/patient/views/deviceprotocol.html',
         controller: 'hcpPatientController'
       }
@@ -439,14 +441,14 @@ angular.module('hillromvestApp')
   })
 
   .state('hcppatientCraegiver', {
-    parent: 'hcppatientdashboard',
-    url: '/{patientId}/caregivers',
+    parent: 'hcppatientList',
+    url: '/caregivers',
     data: {
       roles: ['HCP'],
       pageTitle: 'patient.title'
     },
     views: {
-      'content@': {
+      'hcp-patient-view': {
         templateUrl: 'scripts/modules/hcp/patient/views/caregiverinformation.html',
         controller: 'hcpPatientController'
       }
@@ -1454,6 +1456,29 @@ angular.module('hillromvestApp')
     ]
   }
 })
+
+.state('hcppatientList', {
+     // parent: 'entity',
+     url:'/hcp-patient/{clinicId}/{filter}/{patientId}',
+     views:{
+      'content':{
+        templateUrl:'scripts/modules/hcp/patient/directives/hcp-patient-section.html',
+        controller: 'hcpPatientController'
+      }
+    },
+    resolve: {
+      translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+        $translatePartialLoader.addPart('global');
+        return $translate.refresh();
+      }],
+      authorize: ['Auth',
+      function(Auth) {
+        return Auth.authorize(false);
+      }
+      ]
+    }
+
+  })
 
 .state('hcpDashboardProfile', {
   parent: 'hcp-dashboard',
