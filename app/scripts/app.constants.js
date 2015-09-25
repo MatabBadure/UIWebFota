@@ -8,8 +8,8 @@ angular.module('hillromvestApp')
 
 .constant('URL', {
 	'getStatistics':'/api/users/USERID/clinics/CLINICID/statistics',
-	'getAssociatedPatientsByFilter':'/api/users/USERID/clinics/CLINICID/patients?filterBy=FILTER',
-	'getAssociatedPatientsWithNoEvents':'/api/users/USERID/clinics/CLINICID/patients/FILTER',
+	'getAssociatedPatientsByFilter':'/api/users/USERID/clinics/CLINICID/patients?filterBy=FILTER&page=PAGENO&per_page=OFFSET',
+	'getAssociatedPatientsWithNoEvents':'/api/users/USERID/clinics/CLINICID/patients/FILTER?&page=PAGENO&per_page=OFFSET',
 	'getClinicsAssociatedToCliniadmin' : '/api/user/USERID/clinics',
 	'getPatientInfoWithMRN': '/api/patient/PATIENTID/clinic/CLINICID/mrnId'
 });
