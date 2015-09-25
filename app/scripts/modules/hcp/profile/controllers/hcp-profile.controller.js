@@ -22,6 +22,7 @@ angular.module('hillromvestApp')
       $scope.credentialsList = admin_cont.hcp.credentialsList;
       UserService.getUser(adminId).then(function(response){
         $scope.user = response.data.user;
+        $scope.user.role = localStorage.getItem('role');
       }).catch(function(response){
         notyService.showError(response);
       });

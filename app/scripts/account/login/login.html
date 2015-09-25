@@ -70,6 +70,7 @@
       </div>
     <!-- first time login -->
     <div class=" col-md-10 col-lg-10 login__container__right-section">
+    <div class="password_inst" translate="login.instruction"></div>
     <span ng-if="message">{{message}}</span>
       <form class="login-auth-form" role="form" name="confirmForm" ng-submit="submitPassword($event)" novalidate autocomplete="off" show-validation>
         <div class="form-group email" ng-if="!isEmailExist">
