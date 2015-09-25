@@ -1,10 +1,14 @@
   <div class="container login">
     <div class="login--position">
+      <div class="visi_view_container">
+      <!-- <h1 class="login_portal_name">VisiView</h1>
+      <h3 class="login_portal_name_sub">LEALTH PORTAL</h3> -->
+      </div>
       <div class=" form__container__reset login__container col-md-16 col-lg-16">
-        <div class="col-md-4 col-lg-4 ">
+        <!-- <div class="col-md-4 col-lg-4 ">
           <img src="images/man.svg">
-        </div>
-        <div class=" col-md-10 col-lg-10 col-md-offset-2 col-lg-offset-2 login__container__right-section">
+        </div> -->
+        <div class=" col-md-16 col-lg-16 login__container__right-section">
 
           <p><strong>FORGOT YOUR PASSWORD?</strong></p>
           <p ng-show="!success">Please enter the email address registered on your account</p>
@@ -48,7 +52,9 @@
                on-success="setResponse(response)">
              </div>
             </div>
-             <div class="col-md-8 col-lg-8 link reset-padding-right"><a translate="reset.request.form.button" ng-click="requestReset()" class="myButton">LOGIN</a></div>
+             <div class="col-md-8 col-lg-8 link reset-padding-right">
+              <a translate="reset.request.form.button" ng-click="requestReset()" class="myButton_blue">LOGIN</a>
+             </div>
           </form>
         </div>
       </div>
