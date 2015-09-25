@@ -101,7 +101,7 @@
       <span class="clinic-list__fax--number" ng-bind="hcp.npiNumber"></span>
     </div>
   </div>
-  <div class="col-md-16 empty-list-message" ng-if="associatedHCPs.length === 0">
+  <div class="col-md-16 empty-list-message" ng-if="!associatedClinics || associatedHCPs.length === 0">
     <span translate="no-hcp-found"> </span>
   </div>
 </div>
