@@ -23,18 +23,6 @@ angular.module('hillromvestApp')
 			$scope.getClinicsForClinicAdmin($scope.hcpId);
 		}
 	};
-	
-	$scope.getBarColor = function(count) {
-		if( count <= 25 && count > 0) {
-			return hcpDashboardConstants.statistics.color.quarter;
-		} else if(count >25 && count <=50) {
-			return hcpDashboardConstants.statistics.color.half;
-		} else if(count >50 && count <=75) {
-			return hcpDashboardConstants.statistics.color.threeQuarters;
-		} else if( count >75) {
-			return hcpDashboardConstants.statistics.color.full;
-		}
-	};
 
 	$scope.getStatistics = function(clinicId, userId){
 		if($state.current.name === 'hcpdashboard'){
@@ -93,7 +81,7 @@ angular.module('hillromvestApp')
 			duration: hcpDashboardConstants.statistics.duration,
 			enabled:true
 		},
-		barColor: $scope.getBarColor($scope.missedtherapyDays),
+		barColor: hcpDashboardConstants.statistics.missedTherapy,
 		trackColor: hcpDashboardConstants.statistics.color.track,
 		scaleColor: hcpDashboardConstants.statistics.scaleColor,
 		lineWidth: hcpDashboardConstants.statistics.lineWidth,
@@ -105,7 +93,7 @@ angular.module('hillromvestApp')
 			duration: hcpDashboardConstants.statistics.duration,
 			enabled:true
 		},
-		barColor: $scope.getBarColor($scope.hmrRunRate),
+		barColor: hcpDashboardConstants.statistics.nonCompliance,
 		trackColor: hcpDashboardConstants.statistics.color.track,
 		scaleColor: hcpDashboardConstants.statistics.scaleColor,
 		lineWidth: hcpDashboardConstants.statistics.lineWidth,
@@ -117,7 +105,7 @@ angular.module('hillromvestApp')
 			duration: hcpDashboardConstants.statistics.duration,
 			enabled:true
 		},
-		barColor: $scope.getBarColor($scope.deviationDays),
+		barColor: hcpDashboardConstants.statistics.settingDeviation,
 		trackColor: hcpDashboardConstants.statistics.color.track,
 		scaleColor: hcpDashboardConstants.statistics.scaleColor,
 		lineWidth: hcpDashboardConstants.statistics.lineWidth,
@@ -129,7 +117,7 @@ angular.module('hillromvestApp')
 			duration: hcpDashboardConstants.statistics.duration,
 			enabled:true
 		},
-		barColor: $scope.getBarColor($scope.noeventDays),
+		barColor: hcpDashboardConstants.statistics.noEvents,
 		trackColor: hcpDashboardConstants.statistics.color.track,
 		scaleColor: hcpDashboardConstants.statistics.scaleColor,
 		lineWidth: hcpDashboardConstants.statistics.lineWidth,
