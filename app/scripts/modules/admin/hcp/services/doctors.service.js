@@ -6,7 +6,7 @@
  *
  */
 angular.module('hillromvestApp')
-  .factory('DoctorService', function ($http, localStorageService, headerService) {
+  .factory('DoctorService', ['$http', 'localStorageService', 'headerService', 'URL', function ($http, localStorageService, headerService, URL) {
     var token = localStorage.getItem('token');
     return {
 
@@ -92,6 +92,14 @@ angular.module('hillromvestApp')
         }).success(function (response) {
           return response;
         });
+      },
+
+      searchPatientsForHCP : function(searchString, hcpId, clinicId, pageNo, offset){
+        var url = URL.searchPatientsForHCP.replace('HCPID', hcpId).replace('SEARCHSTRING', searchString).replace('PAGENO', pageNo).replace('OFFSET', offset).replace('CLINICID', clinicId);
+        return $http.get(url, {
+          headers: headerService.getHeader()
+        });
       }
+
     };
-  });
+  }]);

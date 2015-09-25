@@ -10,11 +10,19 @@ angular.module('hillromvestApp')
       'isMessage': false,
       'message': ''
     };
+    var searchOnLoad = true;
 
     $scope.init = function(){
       var currentRoute = $state.current.name;
       if (currentRoute === 'hcpProfile') {
-        $scope.getDoctorDetails($stateParams.doctorId, $scope.setEditMode);
+        $scope.currentPageIndex = 1;
+        $scope.perPageCount = 10;
+        $scope.pageCount = 0;
+        $scope.total = 0;        
+        $scope.sortOption ="";
+        $scope.searchItem = "";
+        $scope.searchPatientsForHCP();
+        $scope.getDoctorDetails($stateParams.doctorId, $scope.setEditMode);        
       } else if (currentRoute === 'hcpNew') {
         $scope.createDoctor();
       } else if(currentRoute === 'associatedClinic'){
@@ -43,7 +51,7 @@ angular.module('hillromvestApp')
     };
 
     $scope.getDoctorDetails = function(doctorId,callback){
-      $scope.getPatientsAssociatedToHCP(doctorId, null);
+      //$scope.getPatientsAssociatedToHCP(doctorId, null);
       $scope.getClinicsOfHCP(doctorId);
       var url = '/api/user/' + doctorId + '/hcp';
       UserService.getUser(doctorId, url).then(function(response) {
@@ -229,6 +237,45 @@ angular.module('hillromvestApp')
        $state.go('clinicProfile', {
         'clinicId': clinic.id
       });
+    };
+
+    var timer = false;
+    $scope.$watch('searchItem', function () {
+      if($state.current.name === 'hcpProfile' && !searchOnLoad){
+      if(timer){
+        $timeout.cancel(timer)
+      }
+      timer= $timeout(function () {
+          $scope.searchPatientsForHCP();
+      },1000)
+     }
+    });
+
+    $scope.searchPatientsForHCP = function(track){
+      if (track !== undefined) {
+          if (track === "PREV" && $scope.currentPageIndex > 1) {
+            $scope.currentPageIndex--;
+          }
+          else if (track === "NEXT" && $scope.currentPageIndex < $scope.pageCount){
+              $scope.currentPageIndex++;
+          }
+          else{
+              return false;
+          }
+        }else {
+            $scope.currentPageIndex = 1;
+        } 
+        DoctorService.searchPatientsForHCP($scope.searchItem, $stateParams.doctorId, $scope.sortOption, $scope.currentPageIndex, $scope.perPageCount).then(function (response) {
+          $scope.patients = [];
+          angular.forEach(response.data, function(patient){
+            $scope.patients.push({"patientUser": patient});
+          });
+          $scope.total = (response.headers()['x-total-count']) ? response.headers()['x-total-count'] :$scope.patients.length; 
+          $scope.pageCount = Math.ceil($scope.total / 10);
+          searchOnLoad = false;
+        }).catch(function (response) {
+          notyService.showError(response);
+        });
     };
 
     $scope.init();
