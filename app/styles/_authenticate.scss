@@ -121,8 +121,11 @@
 }
 
 .auth--position {
-	margin: auto;
+	margin: 10% auto;
   	width: 40%;
+  	.visi_view_container{
+  		margin: 0% auto 4%;
+  	}
 }
 
 .form__container__auth {
