@@ -72,6 +72,28 @@
 			stroke-width: 1.5;
 		}
 	}
+	.nv-axis{
+		.tick{
+			line{
+				stroke: transparent;
+				&:hover{
+					stroke: #000;
+				}
+			}
+		}
+	}
+	.nv-linesWrap{
+		.nv-line{
+			> g{
+				> .nv-groups{
+					> .nv-group{
+						stroke: #fff !important;
+					}
+				}
+			}
+		}
+	}
+
 }
 .hmrBarGraph{
 	.svg_bg{
