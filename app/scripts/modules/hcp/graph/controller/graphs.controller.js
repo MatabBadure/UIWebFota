@@ -13,6 +13,7 @@ angular.module('hillromvestApp')
 		$scope.treatment = {};
 		$scope.treatment.treatmentPerDay = true;
 		$scope.treatment.treatmentLength = true;
+		$scope.showTreatmentLegends = false;
 		$scope.fromTimeStamp = dateService.getnDaysBackTimeStamp(patientDashboard.maxDaysForWeeklyGraph);
 		$scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,hcpDashboardConstants.USdateFormat,'/');
 		$scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,hcpDashboardConstants.USdateFormat,'/');
@@ -193,6 +194,7 @@ angular.module('hillromvestApp')
 			 $scope.yearlyChart($scope.fromTimeStamp);
 		} else if(days === 0) {
 			$scope.plotNoDataAvailable();
+			$scope.showTreatmentLegends = false;
 		}
 	};
 
@@ -264,10 +266,10 @@ angular.module('hillromvestApp')
 		  return chart;
 	  });
 	};
-
 	$scope.getTreatmentGraphData = function() {
 		hcpDashBoardService.getTreatmentGraphPoints($scope.hcpId, $scope.selectedClinic.id, dateService.getDateFromTimeStamp($scope.fromTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), $scope.groupBy).then(function(response){
 			if( response !== null && response.data !== null && response.data.treatmentStatitics !== undefined) {
+				$scope.showTreatmentLegends = true;
 				$scope.serverTreatmentGraphData = response.data.treatmentStatitics;
 				$scope.formatedTreatmentGraphData = graphUtil.convertIntoTreatmentGraph($scope.serverTreatmentGraphData);
 				$scope.handlelegends();
@@ -275,9 +277,11 @@ angular.module('hillromvestApp')
 				$scope.createTreatmentGraphData(); 
 				$scope.drawTreatmentGraph();
 			} else {
+				$scope.showTreatmentLegends = true;
 				$scope.plotNoDataAvailable();
 			}
 		}).catch(function(response) {
+			 $scope.showTreatmentLegends = true;
 		   $scope.plotNoDataAvailable();
 		});
 	};
