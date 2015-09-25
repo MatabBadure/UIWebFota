@@ -3,7 +3,7 @@
         "request": {
             "title": "FORGOT YOUR PASSWORD?",
             "form": {
-                "button": "Reset password"
+                "button": "RESET PASSWORD"
             },
             "messages": {
                 "info": "Please enter the email address registered on your account ",
@@ -16,7 +16,7 @@
         "finish" : {
             "title": "Reset password",
             "form": {
-                "button": "Validate new password"
+                "button": "VALIDATE NEW PASSWORD"
             },
             "messages": {
                 "info": "Choose a new password",

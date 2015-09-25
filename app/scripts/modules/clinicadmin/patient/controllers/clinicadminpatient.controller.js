@@ -97,12 +97,20 @@ angular.module('hillromvestApp')
 
   $scope.getClinicsandHcpAssociatedToPatient = function(patientId){
     $scope.getAssociateHCPToPatient(patientId);
-    $scope.getClinicById($stateParams.clinicId);
+    $scope.getAssociatedClincsToPatient(patientId);
   };
 
   $scope.getAssociateHCPToPatient = function(patientId){
     patientService.getAssociateHCPToPatient(patientId).then(function(response){
       $scope.associatedHCPs = response.data.hcpUsers
+    }).catch(function(response){
+      notyService.showError(response);
+    });
+  };
+
+  $scope.getAssociatedClincsToPatient = function(patientId){
+    patientService.getClinicsLinkedToPatient(patientId).then(function(response){
+      $scope.associatedClinics = response.data.clinics;
     }).catch(function(response){
       notyService.showError(response);
     });
@@ -166,6 +174,8 @@ angular.module('hillromvestApp')
       $scope.selectedClinic = clinic;
       if($stateParams.filter === 'noevents'){
         $scope.getPatientsWithNoEvents($stateParams.filter, clinic.id);
+      } else if($stateParams.filter === ''){
+        $scope.getAllPatientsByClinicId(clinic.id);
       } else {
         $scope.getPatientsByFilter($stateParams.filter, clinic.id);
       }

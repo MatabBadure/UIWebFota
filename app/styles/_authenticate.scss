@@ -121,8 +121,11 @@
 }
 
 .auth--position {
-	margin: 5% auto;
-  width: 50%;
+	margin: 10% auto;
+  	width: 40%;
+  	.visi_view_container{
+  		margin: 0% auto 4%;
+  	}
 }
 
 .form__container__auth {
@@ -159,7 +162,7 @@
 	color: $pickled-bluewood;
   font-size: $font-size-base;
   font-weight: $font-weight-bold;
-  margin: 10px 0;
+  margin: 20px 0;
   text-align: center;
   text-transform: uppercase;
 }

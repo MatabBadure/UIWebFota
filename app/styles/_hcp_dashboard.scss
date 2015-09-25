@@ -12,7 +12,7 @@
 	.stats_chart_container{
 		
 		.col-3{
-			width: 25%;
+			width: 24%;
 		    display: inline-block;
 		    float: left;
 		    position: relative;
@@ -30,16 +30,16 @@
 
 	.stats_chart_content{
 	    &.hmr{
-	    	color: #f7a462;
+	    	color: #8c6bb1;
 	    }
 	    &.missed{
-	    	color: #69be7f;
+	    	color: #ef6548;
 	    }
 	    &.deviation{
-	    	color: #5da0cc;
+	    	color: #41ae76;
 	    }
 	    &.noevent{
-	    	color: #e28181;
+	    	color: #4eb3d3;
 	    }
 	}
 }

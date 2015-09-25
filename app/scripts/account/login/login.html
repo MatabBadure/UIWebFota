@@ -1,13 +1,17 @@
 <div class="container login">
   <div class="login--position" ng-show="showLogin">
+    <div class="visi_view_container">
+      <!-- <h1 class="login_portal_name">VisiView</h1>
+      <h3 class="login_portal_name_sub">LEALTH PORTAL</h3> -->
+    </div>
     <div class="form__container__login login__container">
-      <div class="col-md-6">
+      <!-- <div class="col-md-6">
         <img src="images/man.svg">
         <div class="clr"></div>
-      </div>
+      </div> -->
 
       <!-- normal login -->
-      <div class=" col-md-10 col-lg-10 login__container__right-section">
+      <div class=" col-md-16 col-lg-16 login__container__right-section">
         <form class="login-form" role="form" name="form" ng-submit="login($event)" novalidate autocomplete="off">
           <div class="auth-heading">LOGIN TO YOUR ACCOUNT</div>
           <div class="alert alert-danger login-has-error" ng-show="authenticationError">
@@ -44,11 +48,15 @@
           </div>
         </div>
 
-        <div class="col-md-8 col-lg-8 link margin-top" id="forgotpwd">
-          <a class="text-small" href="#/reset/request">Forgot Password?</a>
+        <div class="col-md-8 col-lg-8 link" id="forgotpwd">
+          <div class="row">
+            <a class="text-small" href="#/reset/request">Forgot Password?</a>
+          </div>
         </div>
-        <div class="col-md-8 col-lg-8 link margin-top">
-          <button type="submit" class="myButton" translate="login.form.button">LOGIN</button>
+        <div class="col-md-8 col-lg-8">
+          <div class="row">
+            <button type="submit" class="myButton_blue" translate="login.form.button">LOGIN</button>
+          </div>
         </div>
       </form>
       <div class="clr"></div>
@@ -63,13 +71,17 @@
 
 
 <div class="reset--position"  ng-show="isFirstLogin">
+    <div class="visi_view_container">
+      <!-- <h1 class="login_portal_name">VisiView</h1>
+      <h3 class="login_portal_name_sub">LEALTH PORTAL</h3> -->
+    </div>
     <div class="form__container__login login__container">
-      <div class="col-md-6 img-man">
+      <!-- <div class="col-md-6 img-man">
         <img src="images/man.svg">
         <div class="clr"></div>
-      </div>
+      </div> -->
     <!-- first time login -->
-    <div class=" col-md-10 col-lg-10 login__container__right-section">
+    <div class=" col-md-16 col-lg-16 login__container__right-section">
     <div class="password_inst" translate="login.instruction"></div>
     <span ng-if="message">{{message}}</span>
       <form class="login-auth-form" role="form" name="confirmForm" ng-submit="submitPassword($event)" novalidate autocomplete="off" show-validation>
@@ -153,7 +165,7 @@
         </span>
     </div>
   </div>
-  <button type="submit" class="myButton" ng-click="submitConfirmForm()">Activate account</button>
+  <button type="submit" class="myButton_blue" ng-click="submitConfirmForm()">Activate account</button>
 </form>
 </div>
 <div class="clr"></div>

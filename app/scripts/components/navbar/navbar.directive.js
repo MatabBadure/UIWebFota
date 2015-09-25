@@ -47,6 +47,7 @@ angular.module('hillromvestApp')
         })
         .catch(function() {
           $scope.isAuthenticated = false;
+          $scope.username = null;
           $state.go('login');
         });
       };
@@ -71,10 +72,16 @@ angular.module('hillromvestApp')
       };
 
       $scope.goToHomePage = function(){
-        if($scope.userRole === "ADMIN"){
+        if(!$scope.userRole){
+          $state.go("home");
+        }else if($scope.userRole === "ADMIN"){
           $state.go("patientUser");
         }else if($scope.userRole === "PATIENT"){
           $state.go("patientdashboard");
+        }else if($scope.userRole === "CLINIC_ADMIN" || $scope.userRole === "CLINIC ADMIN"){
+          $state.go("clinicadmindashboard");
+        }else if($scope.userRole === "HCP"){
+          $state.go("hcpdashboard");
         }
       };
 
