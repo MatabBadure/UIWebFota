@@ -41,8 +41,8 @@ var profile = {
 var notyMessages = {
 	"typeWarning": "warning",
 	"typeSuccess": "success",
-	"maxComplianceError" : "Please deselect one item.",
-	"minComplianceError": "At least one item should be selected."
+	"maxComplianceError" : "Please deselect one parameter.",
+	"minComplianceError": "At least one parameter should be selected."
 }
 
 requestParam = {
