@@ -31,7 +31,10 @@ var patientDashboard = {
 	"serverDateFormat" : "YYYY-MM-DD",
 	"INDdateFormat" : "DD-MM-YYYY",
 	"minDaysForMonthlyGraph" : 31,
-	"maxDaysForWeeklyGraph" : 6
+	"maxDaysForWeeklyGraph" : 6,
+	"hmrDayGraph" : "HMRBAR_GRAPH",
+	"hmrNonDayGraph" : "HMRLINE_GRAPH",
+	"complianceGraph" : "COMPLIANCE_GRAPH"
 }
 
 var profile = {
@@ -67,7 +70,8 @@ angular.module('hillromvestApp').constant('hcpDashboardConstants', {
 		},
 		yAxis : {
 			"label" : "No. of patients"
-		}
+		},
+		"name" : "CUMULATIVE_GRAPH"
 	},
 	treatmentGraph : {
 		label : {
@@ -78,7 +82,8 @@ angular.module('hillromvestApp').constant('hcpDashboardConstants', {
 			"treatmentPerDay" : "orange",
 			"treatmentLength" : "green"
 		},
-		"type" : "area"
+		"type" : "area",
+		"name" : "TREATMENT_GRAPH"
 	},
 	message : {
 		"noData" : "No Data Available!"
