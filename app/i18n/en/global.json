@@ -236,8 +236,8 @@
             "required": "Credential is required."
         },
         "parentClinicName": {
-            "required": "Parent Clinic Name is required.",
-            "match": "Parent Clinic Name doesn't exist."
+            "required": "Parent Clinic is required.",
+            "match": "Parent Clinic doesn't exist."
         },
         "clinicName": {
             "required": "Clinic Name is required."
