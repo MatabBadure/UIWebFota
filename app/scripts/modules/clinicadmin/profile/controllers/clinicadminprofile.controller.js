@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hillromvestApp')
-  .controller('clinicadminProfileController',['$scope', '$state', '$stateParams', '$location', 'notyService', 'UserService', 'Password', 'Auth', 'AuthServerProvider', 'DoctorService', function ($scope, $state, $stateParams, $location, notyService, UserService, Password, Auth, AuthServerProvider, DoctorService) {
+  .controller('clinicadminProfileController',['$scope', '$state', '$stateParams', '$location', 'notyService', 'UserService', 'Password', 'Auth', 'AuthServerProvider', 'DoctorService','clinicadminService', function ($scope, $state, $stateParams, $location, notyService, UserService, Password, Auth, AuthServerProvider, DoctorService, clinicadminService) {
 
 
     $scope.isActive = function(tab) {
@@ -31,7 +31,7 @@ angular.module('hillromvestApp')
       }).catch(function(response){
         notyService.showError(response);
       });
-      DoctorService.getClinicsAssociatedToHCP(localStorage.getItem('userId')).then(function(response){
+      clinicadminService.getClinicsAssociated(localStorage.getItem('userId')).then(function(response){
         $scope.clinics = response.data.clinics;
       }).catch(function(response){
         notyService.showError(response);
@@ -115,7 +115,7 @@ angular.module('hillromvestApp')
     };
 
     $scope.goToPatientDashboard = function(value){
-      $state.go(value);
+      $state.go(value, {'clinicId': $scope.clinics[0].id});
     };
 
     $scope.toggleNotification = function(notification){

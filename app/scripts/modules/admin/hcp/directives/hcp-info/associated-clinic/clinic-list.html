@@ -40,7 +40,7 @@
     </div>
 
     <div class="dashboard__manage-view--list" ng-repeat="clinic in clinicsOfHCP" ng-if="clinicsOfHCP.length > 0"  ng-class="{'inactive': clinic.deleted}">
-      <span ng-click="clinic.deleted || selectClinic(clinic)">
+      <span>
       <div class="col-md-4 reset-padding centered">
         <span class="main-prim-info">{{clinic.name}}</span>
       </div>

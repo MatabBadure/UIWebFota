@@ -36,7 +36,7 @@
       </div>
 
       <div class="dashboard__manage-view--list" ng-repeat="hcp in associatedHcps" readonly="true" ng-class="{'inactive': hcp.deleted}">
-          <span ng-click="hcp.deleted || selectDoctor(hcp)" >
+          <span>
             <div class="col-md-3 reset-padding centered">
               <span class="main-prim-info">{{::hcp.lastName}} {{::hcp.firstName}}</span>
             </div>
