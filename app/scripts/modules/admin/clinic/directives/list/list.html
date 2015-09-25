@@ -57,7 +57,7 @@
       <div class="clr"></div>
     </div>
 
-    <div class="dashboard__manage-view--list" ng-repeat="clinic in clinics | filter: {name: searchItem}" ng-click="clinic.deleted || selectClinic(clinic)" ng-class="{'inactive': clinic.deleted}">
+    <div class="dashboard__manage-view--list" ng-repeat="clinic in clinics" ng-click="clinic.deleted || selectClinic(clinic)" ng-class="{'inactive': clinic.deleted}">
       <div class="col-md-4 reset-padding centered">
         <span class="main-prim-info">{{clinic.name}}</span>
       </div>
@@ -98,7 +98,7 @@
         <div class="navbar-right">
           <span class="record-found" ng-if="clinics.length > 0">{{total}} Clinics</span>
           <span class="record-found" ng-if="clinics.length > 0">Found</span>
-          <span ng-show="pageCount > 1">
+          <span ng-show="clinics.length > 0">
             <span class="navigaion-link cursor-pointer" ng-class="{ 'inactive': !(currentPageIndex > 1) }" ng-click="searchClinics('PREV')">Previous</span>
             <span class="navigaion-no">{{currentPageIndex}}</span>
             <span class="navigaion-link cursor-pointer" ng-class="{ 'inactive': !(pageCount > currentPageIndex) }" ng-click="searchClinics('NEXT')">Next</span>
