@@ -86,7 +86,7 @@
       "clinic-name":"Clinic Name",
       "address":"Address",
       "city":"City",
-      "state":"",
+      "state":"State",
       "phoneNumber":"Phone Number",
       "type":"Type",
       "hillRom-id":"Hillrom ID",
@@ -98,7 +98,8 @@
       "status-type":{
         "active":"Active",
         "inactive":"Inactive"
-      }
+      },
+      "clinic-title" : "Clinic"
     }
   }
 }
