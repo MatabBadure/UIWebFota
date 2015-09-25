@@ -22,6 +22,17 @@
 
       <!-- Below Checkboxes was suggested by Vinci-->
       <!--  <div class="row padding-left lebel-indent">
+<hcpdashboard-navbar></hcpdashboard-navbar>
+  <div class="dashboard dashboard--content">
+    <div class="container dashboard__manage-view margin-top-xl">
+      <div class="dashboard__manage-view--search">
+        <div class="full-search-box reset-padding-right">
+          <input type="text" class="form-control" id="searchListParam" name="userName" ng-model="searchItem" autocomplete="off" placeholder="{{'patient.placeholder.search' | translate}}">
+          <span class="search-icon hillrom-icon icon-search-icon"></span>
+        </div>
+      </div>
+
+      <div class="row padding-left lebel-indent">
         <label traslate="patient.email">
           <input type="checkbox" ng-model="filterOn.all" ng-change="changeFilterOption()">
           <span translate="patient.filter.all"></span>

@@ -79,6 +79,7 @@
   span {
     color: $pickled-bluewood;
     font-weight: $font-weight-semibold;
+    word-wrap: break-word;
   }
 }
 
@@ -118,5 +119,13 @@
 .clinic-link, .exist-link{
     .dropdown-menu{
       width: 80%;
+      li{
+        a{
+          word-wrap: break-word;
+          display: inline-block;
+          width: 100%;
+          white-space: inherit;
+        }
+      }
     }
   }

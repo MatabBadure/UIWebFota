@@ -11,10 +11,12 @@ angular.module('hillromvestApp')
       },
 
       showError: function(response) {
-        if(response.data.ERROR){
-          this.showMessage(response.data.ERROR, 'warning');
-        }else if(response.data.message){
-          this.showMessage(response.data.message, 'warning');  
+        if(response.data){
+          if(response.data.ERROR){
+            this.showMessage(response.data.ERROR, 'warning');
+          }else if(response.data.message){
+            this.showMessage(response.data.message, 'warning');  
+          }
         }
       }
     };

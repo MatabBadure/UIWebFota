@@ -1,6 +1,6 @@
-'use strict';
+  'use strict';
 
-angular.module('hillromvestApp')
+angular.module('hillromvestApp')  
     .service('graphUtil', [ 'dateService','hcpDashboardConstants', function (dateService,hcpDashboardConstants) {
       
       this.convertIntoHMRLineGraph = function(data) {
@@ -74,7 +74,6 @@ angular.module('hillromvestApp')
         graphDataList.push(createCumulativeGraph(data,hcpDashboardConstants.cumulativeGraph.label.nonCompliance,hcpDashboardConstants.cumulativeGraph.color.nonCompliance));
         return graphDataList;
       }
-
 
       var arrayMax = Function.prototype.apply.bind(Math.max, null);
       var arrayMin = Function.prototype.apply.bind(Math.min, null);
