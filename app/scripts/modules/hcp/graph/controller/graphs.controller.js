@@ -254,7 +254,6 @@ angular.module('hillromvestApp')
 					}
 				}
 			});
-
 				chart.yAxis
 					.tickFormat(function(d) {  
 							return d;
