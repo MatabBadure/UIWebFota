@@ -3,17 +3,17 @@
     <div class="collapse navbar-collapse patient-user__navbar" id="navbar-collapse">
       <ul class="nav navbar-nav">
         <li >
-          <a active-tab="active" href="#/patient/p-profile">
+          <a ng-class="{active: isActive('/patient/p-profile')}" href="#/patient/p-profile">
             <span translate="profile.tabs.profile-details"></span>
           </a>
         </li>
         <li>
-          <a active-tab="active" href="#/patient/p-reset">
+          <a ng-class="{ active: isActive('/patient/p-reset')}" href="#/patient/p-reset">
             <span translate="profile.tabs.update-password"></span>
           </a>
         </li>
         <li>
-          <a active-tab="active" href="#/patient/notification-settings">
+          <a ng-class="{ active: isActive('/notification-settings')}" href="#/patient/notification-settings">
             <span translate="profile.tabs.setting"></span>
           </a>
         </li>
