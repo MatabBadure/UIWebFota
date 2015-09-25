@@ -141,7 +141,7 @@
           <div class="navbar-right">
             <span class="record-found" ng-if="patients.length > 0">{{total}} Patients</span>
             <span class="record-found" ng-if="patients.length > 0">Found</span>
-            <span ng-show="pageCount > 1">
+            <span ng-if="patients.length > 0">
               <span class="navigaion-link cursor-pointer" ng-class="{ 'inactive': !(currentPageIndex > 1) }" ng-click="searchPatients('PREV')">Previous</span>
               <span class="navigaion-no">{{currentPageIndex}}</span>
               <span class="navigaion-link cursor-pointer" ng-class="{ 'inactive': !(pageCount > currentPageIndex) }" ng-click="searchPatients('NEXT')">Next</span>

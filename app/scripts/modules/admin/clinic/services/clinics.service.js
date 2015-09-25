@@ -62,8 +62,8 @@ angular.module('hillromvestApp')
         });
       },
 
-      getClinicAssoctPatients: function(clinicId){
-        return $http.get('/api/clinics/patients?filter=id:' + clinicId, {
+      getClinicAssoctPatients: function(clinicId, pageNo, offset){
+        return $http.get('/api/clinics/patients?filter=id:' + clinicId+ '&page=' + pageNo + '&per_page=' + offset  , {
           headers: headerService.getHeader()
         }).success(function(response) {
           return response;

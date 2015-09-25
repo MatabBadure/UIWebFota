@@ -254,18 +254,41 @@ angular.module('hillromvestApp')
 					}
 				}
 			});
-			chart.yAxis
-				.tickFormat(function(d) {  
-					return d;
-			});
-			chart.yAxis.tickFormat(d3.format('d'));
-			d3.select('#cumulativeGraph svg')
-				.datum($scope.formatedCumulativeGraphData)
-				.call(chart);
-			nv.utils.windowResize(chart.update);
-		  return chart;
-	  });
-	};
+				chart.yAxis
+					.tickFormat(function(d) {  
+							return d;
+				});
+				chart.yAxis.tickFormat(d3.format('d'));
+				d3.select('#cumulativeGraph svg')
+					.datum($scope.formatedCumulativeGraphData)
+					.call(chart);
+				nv.utils.windowResize(chart.update);
+        $scope.CustomizationInCumulativeGraph();
+			return chart;
+		});
+		}
+
+  $scope.CustomizationInCumulativeGraph = function() {
+
+        /*graph Style*/
+        /*d3.selectAll('#cumulativeGraph svg').selectAll('.nv-legendWrap').
+        attr("transform" , "translate(30,-65)");*/
+        d3.selectAll('#cumulativeGraph svg').selectAll('.nv-axislabel').
+        attr("y" , "-40");
+        /*d3.selectAll('#cumulativeGraph svg').selectAll('.nv-lineChart').
+        attr("transform" , "translate(60,60)");*/
+        d3.selectAll('#cumulativeGraph svg').selectAll('.nv-axis .tick').append('circle').
+        attr("cx" , "0").
+        attr("cy" , "0").
+        attr("r" , "2").
+        attr("fill" , "#aeb5be");
+        /*d3.selectAll('#cumulativeGraph svg').select('.nv-series:nth-child(1)').
+        attr("transform" , "translate(-100,5)");
+        d3.selectAll('#cumulativeGraph svg').select('.nv-series:nth-child(2)').
+        attr("transform" , "translate(70,5)");   
+        d3.selectAll('#cumulativeGraph svg').select('.nv-series:nth-child(3)').
+        attr("transform" , "translate(250,5)");  */
+  }  
 	$scope.getTreatmentGraphData = function() {
 		hcpDashBoardService.getTreatmentGraphPoints($scope.hcpId, $scope.selectedClinic.id, dateService.getDateFromTimeStamp($scope.fromTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), $scope.groupBy).then(function(response){
 			if( response !== null && response.data !== null && response.data.treatmentStatitics !== undefined) {
@@ -422,7 +445,7 @@ angular.module('hillromvestApp')
 			nv.addGraph(function() {
 			var chart = nv.models.multiChart()
 			.showLegend(false)
-			.margin({top: 30, right: 100, bottom: 50, left: 100})
+			.margin({top: 30, right: 30, bottom: 50, left: 30})
 			.color(d3.scale.category10().range());
 			
 			chart.tooltipContent($scope.toolTipContentForTreatment());
@@ -451,6 +474,20 @@ angular.module('hillromvestApp')
 				d3.select('#treatmentGraph svg')
 			.datum($scope.treatmentGraphData)
 			.transition().duration(500).call(chart);
+			var recHeight = document.getElementsByTagName('rect')[0].getAttribute('height');
+			var recWidth = document.getElementsByTagName('rect')[0].getAttribute('width');
+			d3.select("#treatmentGraph svg").select(".nv-groups").append("rect").
+			attr("fill" , "#e3ecf7").
+			attr("height" , recHeight).
+			attr("width" , recWidth);
+
+			d3.selectAll('#treatmentGraph svg').selectAll('.nv-axislabel').
+				attr("y" , "-20");
+			d3.selectAll('#treatmentGraph svg').selectAll('.nv-axis .tick').append('circle').
+				attr("cx" , "0").
+				attr("cy" , "0").
+				attr("r" , "2").
+				attr("fill" , "#aeb5be");
 			return chart;
 		});
 	};
