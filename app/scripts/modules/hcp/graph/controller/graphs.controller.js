@@ -220,6 +220,7 @@ angular.module('hillromvestApp')
 			hcpDashBoardService.getCumulativeGraphPoints($scope.hcpId, $scope.selectedClinic.id, dateService.getDateFromTimeStamp($scope.fromTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), $scope.groupBy).then(function(response){
 				$scope.serverCumulativeGraphData = response.data.cumulativeStatitics;
 				if($scope.serverCumulativeGraphData.length !== 0) {
+					$scope.serverCumulativeGraphData = graphUtil.convertIntoServerTimeZone($scope.serverCumulativeGraphData,hcpDashboardConstants.cumulativeGraph.name);
 					$scope.formatedCumulativeGraphData = graphUtil.convertIntoCumulativeGraph($scope.serverCumulativeGraphData);
 					$scope.cumulativeGraphRange = graphUtil.getYaxisRangeCumulativeGraph($scope.serverCumulativeGraphData);
 					$scope.drawCumulativeGraph();
@@ -269,31 +270,20 @@ angular.module('hillromvestApp')
 		}
 
   $scope.CustomizationInCumulativeGraph = function() {
-
-        /*graph Style*/
-        /*d3.selectAll('#cumulativeGraph svg').selectAll('.nv-legendWrap').
-        attr("transform" , "translate(30,-65)");*/
         d3.selectAll('#cumulativeGraph svg').selectAll('.nv-axislabel').
         attr("y" , "-40");
-        /*d3.selectAll('#cumulativeGraph svg').selectAll('.nv-lineChart').
-        attr("transform" , "translate(60,60)");*/
         d3.selectAll('#cumulativeGraph svg').selectAll('.nv-axis .tick').append('circle').
         attr("cx" , "0").
         attr("cy" , "0").
         attr("r" , "2").
         attr("fill" , "#aeb5be");
-        /*d3.selectAll('#cumulativeGraph svg').select('.nv-series:nth-child(1)').
-        attr("transform" , "translate(-100,5)");
-        d3.selectAll('#cumulativeGraph svg').select('.nv-series:nth-child(2)').
-        attr("transform" , "translate(70,5)");   
-        d3.selectAll('#cumulativeGraph svg').select('.nv-series:nth-child(3)').
-        attr("transform" , "translate(250,5)");  */
   }  
 	$scope.getTreatmentGraphData = function() {
 		hcpDashBoardService.getTreatmentGraphPoints($scope.hcpId, $scope.selectedClinic.id, dateService.getDateFromTimeStamp($scope.fromTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), $scope.groupBy).then(function(response){
 			if( response !== null && response.data !== null && response.data.treatmentStatitics !== undefined) {
 				$scope.showTreatmentLegends = true;
 				$scope.serverTreatmentGraphData = response.data.treatmentStatitics;
+				$scope.serverTreatmentGraphData = graphUtil.convertIntoServerTimeZone($scope.serverTreatmentGraphData,hcpDashboardConstants.treatmentGraph.name);
 				$scope.formatedTreatmentGraphData = graphUtil.convertIntoTreatmentGraph($scope.serverTreatmentGraphData);
 				$scope.handlelegends();
 				$scope.treatmentGraphRange = graphUtil.getYaxisRangeTreatmentGraph($scope.serverTreatmentGraphData);

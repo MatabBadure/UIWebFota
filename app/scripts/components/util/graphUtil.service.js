@@ -36,6 +36,63 @@ angular.module('hillromvestApp')
       return graphDataList;
       }
 
+      this.convertIntoServerTimeZone = function(data,graphType){
+        switch(graphType){
+          case patientDashboard.hmrNonDayGraph:
+            var graphData = {};
+            var actual = [];
+            angular.forEach(data.actual, function(value) {
+              value.timestamp = dateService.getUTCTimeStamp(value.timestamp);
+              value.start = dateService.getUTCTimeStamp(value.start);
+              value.end = dateService.getUTCTimeStamp(value.end);
+              actual.push(value);
+            });
+            graphData.actual = actual;
+            graphData.recommended = data.recommended;
+            return graphData;
+          case hcpDashboardConstants.cumulativeGraph.name:
+            var pointSet = [];
+            angular.forEach(data, function(value) {
+              value.startTimestamp = dateService.getUTCTimeStamp(value.startTimestamp);
+              value.endTimestamp = dateService.getUTCTimeStamp(value.endTimestamp);
+              pointSet.push(value);
+            });
+            return pointSet;
+          case patientDashboard.complianceGraph:
+            var graphData = {};
+            var actual = [];
+            angular.forEach(data.actual, function(value) {
+              value.timestamp = dateService.getUTCTimeStamp(value.timestamp);
+              value.start = dateService.getUTCTimeStamp(value.start);
+              value.end = dateService.getUTCTimeStamp(value.end);
+              actual.push(value);
+            });
+            graphData.actual = actual;
+            graphData.recommended = data.recommended;
+            return graphData;
+          case patientDashboard.hmrDayGraph:
+            var graphData = {};
+            var actual = [];
+            angular.forEach(data.actual, function(value) {
+              value.startTime = dateService.getUTCTimeStamp(value.startTime);
+              value.endTime = dateService.getUTCTimeStamp(value.endTime);
+              actual.push(value);
+            });
+            graphData.actual = actual;
+            graphData.recommended = data.recommended;
+            return graphData;
+          case hcpDashboardConstants.treatmentGraph.name:
+            var pointSet = [];
+            angular.forEach(data, function(value) {
+              value.startTime = dateService.getUTCTimeStamp(value.startTime);
+              value.endTime = dateService.getUTCTimeStamp(value.endTime);
+              pointSet.push(value);
+            });
+            return pointSet;
+        }
+        
+      }
+
       var createCumulativeGraph = function(data,key,color) {
         var pointSet = [];
         var graphData = {};
