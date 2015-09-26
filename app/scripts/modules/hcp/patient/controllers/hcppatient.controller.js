@@ -7,8 +7,10 @@ angular.module('hillromvestApp')
     }else if($state.current.name === 'hcppatientClinics'){
       $scope.getClinicsandHcpAssociatedToPatient($stateParams.patientId);      
     }else if($state.current.name === 'hcppatientProtocol'){
+      $scope.getPatientById($stateParams.patientId);
       $scope.getPatientDevicesandProtocols($stateParams.patientId);
     }else if($state.current.name === 'hcppatientCraegiver'){
+      $scope.getPatientById($stateParams.patientId);
       $scope.getCaregiversAssociatedWithPatient($stateParams.patientId);
     }else if($state.current.name === 'hcppatientdashboard'){
       $scope.currentPageIndex = 1;
@@ -91,7 +93,14 @@ angular.module('hillromvestApp')
     });
 	};
 
+  $scope.getPatientById = function(patientId){
+    patientService.getPatientInfo(patientId).then(function(response){
+      $scope.slectedPatient = response.data;
+    });
+  };
+
   $scope.getClinicsandHcpAssociatedToPatient = function(patientId){
+    $scope.getPatientById(patientId);
     $scope.getAssociateHCPToPatient(patientId);
     $scope.getAssociatedClincsToPatient(patientId);
   };
