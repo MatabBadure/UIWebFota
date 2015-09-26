@@ -91,18 +91,17 @@
 				<div class="pull-right wrapper_custom_check">
 					<form action="#" ng-if="showTreatmentLegends">
 						<div class="custom_check_container">
-							<input id="treatmentPerDay" class="check" type="checkbox" name="treatmentPerDay" ng-disabled="isTreatmentPerDayDisabled" ng-model="treatment.treatmentPerDay" ng-change="reCreateTreatmentGraph()">
+							<input id="treatmentPerDay" class="check" type="checkbox" name="treatmentPerDay" ng-model="treatment.treatmentPerDay" ng-change="reCreateTreatmentGraph('treatmentPerDay')">
 							<label class="check_label missedTHRP_legend" for="treatmentPerDay" translate="doctor.dashboard.missedTherapy">Average Treatments Per Day</label>
 						</div>	
 						<div class="custom_check_container">
-							<input id="treatmentLength" class="check" type="checkbox" name="treatmentLength" ng-disabled="isTreatmentLengthDisabled" ng-model="treatment.treatmentLength" ng-change="reCreateTreatmentGraph()">
+							<input id="treatmentLength" class="check" type="checkbox" name="treatmentLength" ng-model="treatment.treatmentLength" ng-change="reCreateTreatmentGraph('treatmentLength')">
 							<label class="check_label pressure_legend" for="treatmentLength">Average Length of Treatment</label>
 						</div>
 					</form>
 					</div>
 					<svg> </svg>
 			</div>
-
 		</div>
 	</div>
 </div>
