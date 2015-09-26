@@ -58,7 +58,7 @@
 	</div>
 	<div class="col-md-16">
 		<div class="bar_graph_header">
-			<div class="col-md-5 left_header_barchart">
+			<div class="col-md-5 col-sm-9 left_header_barchart">
 				<div class="row">
 					<ul class="nav nav-pills">
 						<li><a ng-class="{active: selectedGraph === 'CUMULATIVE'}" href="" ng-click="showCumulativeGraph()" translate="doctor.dashboard.cumulativeStatistics"></a></li>
@@ -66,7 +66,7 @@
 					</ul>
 				</div>
 			</div>
-			<div class="col-md-11 right_header_barchart">
+			<div class="col-md-11 col-sm-7 right_header_barchart">
 				<ul class="nav nav-pills pull-right ">
 					<li role="presentation" class=""><a ng-class="{active: selectedDateOption === 'WEEK'}" href="" ng-click="weeklyChart()" translate="doctor.dashboard.week"></a></li>
 					<li role="presentation" class=""><a href="" ng-class="{active: selectedDateOption === 'MONTH'}" ng-click="monthlyChart()" translate="doctor.dashboard.month"></a></li>
@@ -91,18 +91,17 @@
 				<div class="pull-right wrapper_custom_check">
 					<form action="#" ng-if="showTreatmentLegends">
 						<div class="custom_check_container">
-							<input id="treatmentPerDay" class="check" type="checkbox" name="treatmentPerDay" ng-disabled="isTreatmentPerDayDisabled" ng-model="treatment.treatmentPerDay" ng-change="reCreateTreatmentGraph()">
+							<input id="treatmentPerDay" class="check" type="checkbox" name="treatmentPerDay" ng-model="treatment.treatmentPerDay" ng-change="reCreateTreatmentGraph('treatmentPerDay')">
 							<label class="check_label missedTHRP_legend" for="treatmentPerDay" translate="doctor.dashboard.missedTherapy">Average Treatments Per Day</label>
 						</div>	
 						<div class="custom_check_container">
-							<input id="treatmentLength" class="check" type="checkbox" name="treatmentLength" ng-disabled="isTreatmentLengthDisabled" ng-model="treatment.treatmentLength" ng-change="reCreateTreatmentGraph()">
+							<input id="treatmentLength" class="check" type="checkbox" name="treatmentLength" ng-model="treatment.treatmentLength" ng-change="reCreateTreatmentGraph('treatmentLength')">
 							<label class="check_label pressure_legend" for="treatmentLength">Average Length of Treatment</label>
 						</div>
 					</form>
 					</div>
 					<svg> </svg>
 			</div>
-
 		</div>
 	</div>
 </div>

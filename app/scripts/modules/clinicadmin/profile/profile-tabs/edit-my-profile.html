@@ -2,19 +2,7 @@
   <form name="form" ng-submit="updateProfile()" novalidate autocomplete="off">
     <div class="container dashboard__form">
       <div class="margin-top-xl">
-        <div class="col-md-16 reset-padding margin-top">
-          <div class="col-md-7 reset-padding">
-            <div class="col-md-6 dashboard__form--label reset-padding">
-              <span class="" translate="profile.title-name"></span>
-            </div>
-            <div class="col-md-10 dashboard__form__input reset-padding selected-box-container">
-              <div class="custom-dropdown">
-                <select ng-model="user.title" name="title" ng-readonly="validateSuperAdmin()" ng-options="option for option in ['Mr.', 'Mrs.', 'Ms.']" ng-selected="{{option === user.title}}">
-                </select>
-              </div>
-            </div>
-          </div>
-
+        <div class="col-md-16 reset-padding margin-top">          
           <div class="col-md-7 reset-padding col-md-offset-2" ng-show="userStatus.editMode">
             <div class="col-md-6 dashboard__form--label reset-padding">
               <span class="" >User ID</span>
@@ -76,9 +64,9 @@
           <div class="col-md-7 reset-padding col-md-offset-2">
             <div class="col-md-6 dashboard__form--label reset-padding">
               <span class="" translate="profile.hr-id"></span>
-            </div>
-            <div class="col-md-10 dashboard__form--input reset-padding">
-              <input class="" type="text" name="employeeID" ng-model="user.hillromId" ng-readonly="validateSuperAdmin()">
+            </div>            
+            <div class="col-md-10 dashboard__form__input--option reset-padding">
+              {{user.hillromId}}
             </div>
           </div>
         </div>

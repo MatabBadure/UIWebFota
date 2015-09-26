@@ -176,13 +176,12 @@ angular.module('hillromvestApp')
     var clinicId = $stateParams.clinicId;
     $scope.sortOption = $stateParams.filter;
     if(!$stateParams.filter){
-      $scope.getAllPatientsByClinicId(clinicId, requestParam.pageNo, requestParam.offset);
+      $scope.getAllPatientsByClinicId(clinicId, $scope.currentPageIndex, requestParam.offset);
     } else if($stateParams.filter === 'noevents'){
       $scope.getPatientsWithNoEvents($stateParams.filter, clinicId, $scope.currentPageIndex, requestParam.offset);
     } else {
       $scope.getPatientsByFilter($stateParams.filter, clinicId, $scope.currentPageIndex, requestParam.offset);
     }
-		//$state.go('hcppatientdashboard',{'filter':value});
 	};
 
   $scope.switchClinic = function(clinic){

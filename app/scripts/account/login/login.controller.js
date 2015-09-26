@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hillromvestApp')
-  .controller('LoginController', function($scope, $state, $timeout, Auth, vcRecaptchaService, globalConfig, $rootScope, loginConstants) {
+  .controller('LoginController', function($scope, $state, $timeout, Auth, vcRecaptchaService, globalConfig, $rootScope, loginConstants,Principal) {
     $scope.showLogin = true;
     $scope.isEmailExist = true;
     $scope.isFirstLogin = false;
@@ -31,9 +31,37 @@ angular.module('hillromvestApp')
       $scope.submitted = true;
     };
 
+    $scope.clearLastLogin = function(){
+      Auth.logout();
+      localStorage.clear();
+      $scope.isAuthenticated = false;
+      $scope.username = null;
+      $scope.password = null;
+      $scope.isLoaded = true;
+    };
+
+    $scope.navigateUser = function(){
+      if(Principal.isAuthenticated()){
+        $scope.userRole = localStorage.getItem('role');
+        if(!$scope.userRole){
+          $scope.clearLastLogin();
+          $state.go("home");
+        }else if($scope.userRole === "ADMIN"){
+          $state.go("patientUser");
+        }else if($scope.userRole === "PATIENT"){
+          $state.go("patientdashboard");
+        }else if($scope.userRole === "CLINIC_ADMIN" || $scope.userRole === "CLINIC ADMIN"){
+          $state.go("clinicadmindashboard");
+        }else if($scope.userRole === "HCP"){
+          $state.go("hcpdashboard");
+        }
+      }else{
+        $scope.clearLastLogin();
+      }
+    }
+
     $scope.init = function() {
-      //Todo : needs to move into Utility Service
-      localStorage.removeItem('token');
+      $scope.navigateUser();      
     };
 
     Auth.getSecurityQuestions().then(function(response) {
