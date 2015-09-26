@@ -1480,22 +1480,19 @@ angular.module('hillromvestApp')
 
   })
 
-.state('hcpDashboardProfile', {
-  parent: 'hcp-dashboard',
-  url: '/hcp-profile',
-  data: {
-    roles: ['HCP'],
-    pageTitle: 'hcp.title'
-  },
-  views: {
-    'hcp-view': {
-      templateUrl: 'scripts/modules/hcp/profile/views/my-profile.html',
-      controller: 'hcpProfileController'
+
+.state('hcp-dashboard-profile', {
+   // parent: 'entity',
+   url:'/hcp',
+   views:{
+    'content':{
+      templateUrl:'scripts/modules/hcp/profile/profile-tabs/hcp-profile-section.html',
+
     }
   },
   resolve: {
     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
-      $translatePartialLoader.addPart('profile');
+      $translatePartialLoader.addPart('global');
       return $translate.refresh();
     }],
     authorize: ['Auth',
@@ -1507,14 +1504,14 @@ angular.module('hillromvestApp')
 })
 
 .state('hcpUserProfile', {
-  parent: 'hcp-dashboard',
+  parent: 'hcp-dashboard-profile',
   url: '/profile',
   data: {
     roles: ['HCP'],
     pageTitle: 'hcp.title'
   },
   views: {
-    'content@': {
+    'hcp-profile-view': {
       templateUrl: 'scripts/modules/hcp/profile/profile-tabs/my-profile.html',
       controller: 'hcpProfileController'
     }
@@ -1533,14 +1530,14 @@ angular.module('hillromvestApp')
 })
 
 .state('hcpUpdatePassword', {
-  parent: 'hcp-dashboard',
+  parent: 'hcp-dashboard-profile',
   url: '/updatepassword',
   data: {
     roles: ['HCP'],
     pageTitle: 'patient.title'
   },
   views: {
-    'content@': {
+    'hcp-profile-view': {
       templateUrl: 'scripts/modules/hcp/profile/profile-tabs/update-password.html',
       controller: 'hcpProfileController'
     }
@@ -1554,14 +1551,14 @@ angular.module('hillromvestApp')
 })
 
 .state('editHCPProfile', {
-  parent: 'hcp-dashboard',
+  parent: 'hcp-dashboard-profile',
   url: '/update',
   data: {
     roles: ['HCP'],
     pageTitle: 'patient.title'
   },
   views: {
-    'content@': {
+    'hcp-profile-view': {
       templateUrl: 'scripts/modules/hcp/profile/profile-tabs/edit-my-profile.html',
       controller: 'hcpProfileController'
     }
@@ -1879,14 +1876,14 @@ angular.module('hillromvestApp')
 })
 
 .state('hcpSettings', {
-  parent: 'hcp-dashboard',
+  parent: 'hcp-dashboard-profile',
   url: '/notification-settings',
   data: {
     roles: ['HCP'],
     pageTitle: 'patient.title'
   },
   views: {
-    'content@': {
+    'hcp-profile-view': {
       templateUrl: 'scripts/modules/hcp/profile/profile-tabs/settings.html',
       controller: 'hcpProfileController'
     }
