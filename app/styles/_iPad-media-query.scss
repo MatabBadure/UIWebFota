@@ -31,7 +31,30 @@
 	.login__container__right-section{
 		width: 100%;
 	}
-	/*Login page Style END*/	
+	/*Login page Style END*/
+
+	/*HCP Patient Dashboar Style*/
+	.stats_chart_container{
+		.pie_chart{
+			text-align: center;
+			margin: 10px 0px 0px;
+		}
+		.col-3{
+			.chart_inner_icon{
+				left: 36%;
+   				top: 22%;
+			}
+		}
+	}
+	.hcp_wrapper{
+		.stats_chart_container{
+			.chart_inner_icon{
+				left: 61px;
+				top: 43px;
+			}
+		}
+	}
+	/*HCP Patient Dashboar Style END*/	
 }
 
 @media only screen and (min-width : 768px) and (max-width : 1024px) and (orientation : portrait) { 
