@@ -31,9 +31,17 @@ angular.module('hillromvestApp')
       $scope.submitted = true;
     };
 
+    $scope.clearLastLogin = function(){
+      Auth.logout();
+      localStorage.clear();
+      $scope.isAuthenticated = false;
+      $scope.username = null;
+      $scope.password = null;
+    };
+
+
     $scope.init = function() {
-      //Todo : needs to move into Utility Service
-      localStorage.removeItem('token');
+      $scope.clearLastLogin();
     };
 
     Auth.getSecurityQuestions().then(function(response) {
