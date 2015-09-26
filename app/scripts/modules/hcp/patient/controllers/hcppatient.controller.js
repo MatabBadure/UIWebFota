@@ -7,10 +7,10 @@ angular.module('hillromvestApp')
     }else if($state.current.name === 'hcppatientClinics'){
       $scope.getClinicsandHcpAssociatedToPatient($stateParams.patientId);      
     }else if($state.current.name === 'hcppatientProtocol'){
-      $scope.getPatientById($stateParams.patientId);
+      $scope.getPatientInfo($stateParams.patientId);
       $scope.getPatientDevicesandProtocols($stateParams.patientId);
     }else if($state.current.name === 'hcppatientCraegiver'){
-      $scope.getPatientById($stateParams.patientId);
+      $scope.getPatientInfo($stateParams.patientId);
       $scope.getCaregiversAssociatedWithPatient($stateParams.patientId);
     }else if($state.current.name === 'hcppatientdashboard'){
       $scope.currentPageIndex = 1;
