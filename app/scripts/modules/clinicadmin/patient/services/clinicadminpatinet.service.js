@@ -3,8 +3,8 @@
 angular.module('hillromvestApp')
   .factory('clinicadminPatientService',['$http', 'headerService', 'URL', function ($http, headerService, URL) {
     return {
-    	getAssociatedPatientsByFilter : function(filter, clinicId, userId){
-        var url = URL.getAssociatedPatientsByFilter.replace('USERID',userId).replace('CLINICID',clinicId).replace('FILTER',filter);
+    	getAssociatedPatientsByFilter : function(filter, clinicId, userId, pageNo, offset){
+        var url = URL.getAssociatedPatientsByFilter.replace('USERID',userId).replace('CLINICID',clinicId).replace('FILTER',filter).replace('PAGENO', pageNo).replace('OFFSET', offset);
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function (response) {
@@ -12,8 +12,8 @@ angular.module('hillromvestApp')
         });
       },
 
-      getAssociatedPatientsWithNoEvents : function(filter, clinicId, userId){
-        var url = URL.getAssociatedPatientsWithNoEvents.replace('USERID', userId).replace('CLINICID', clinicId).replace('FILTER', filter);
+      getAssociatedPatientsWithNoEvents : function(filter, clinicId, userId, pageNo, offset){
+        var url = URL.getAssociatedPatientsWithNoEvents.replace('USERID', userId).replace('CLINICID', clinicId).replace('FILTER', filter).replace('PAGENO', pageNo).replace('OFFSET', offset);
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function (response) {
