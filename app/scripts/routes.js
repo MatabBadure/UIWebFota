@@ -75,11 +75,50 @@ angular.module('hillromvestApp')
       ]
     }
     })
+
   .state('clinicadmin-dashboard', {
-    parent: 'entity',
+    // parent: 'entity',
     url:'/clinicadmin',
-    abstract: true,
+    views:{
+      'content':{
+        templateUrl:'scripts/modules/clinicadmin/graph/views/clinicadmin-section.html',
+        controller: 'hcpGraphController'
+      }
+    },
+    resolve: {
+      translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+        $translatePartialLoader.addPart('global');
+        return $translate.refresh();
+      }],
+      authorize: ['Auth',
+      function(Auth) {
+        return Auth.authorize(false);
+      }
+      ]
+    }
   })
+
+  .state('clinicadmin-dashboard-profile', {
+   // parent: 'entity',
+   url:'/clinicadmin',
+   views:{
+    'content':{
+      templateUrl:'scripts/modules/clinicadmin/profile/profile-tabs/clinicadmin-profile-section.html',
+    }
+  },
+  resolve: {
+    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+      $translatePartialLoader.addPart('global');
+      return $translate.refresh();
+    }],
+    authorize: ['Auth',
+    function(Auth) {
+      return Auth.authorize(false);
+    }
+    ]
+  }
+})
+
   .state('patientUser', {
     parent: 'admin',
     url: '/patients?clinicIds',
@@ -1477,8 +1516,29 @@ angular.module('hillromvestApp')
       }
       ]
     }
-
   })
+
+.state('clinicadminPatientList', {
+   // parent: 'entity',
+   url:'/clinicadmin-patient/{clinicId}/{filter}/{patientId}',
+   views:{
+    'content':{
+      templateUrl:'scripts/modules/clinicadmin/patient/directives/clinicadmin-patient-section.html',
+      controller: 'clinicadminPatientController'
+    }
+  },
+  resolve: {
+    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+      $translatePartialLoader.addPart('global');
+      return $translate.refresh();
+    }],
+    authorize: ['Auth',
+    function(Auth) {
+      return Auth.authorize(false);
+    }
+    ]
+  }
+})
 
 
 .state('hcp-dashboard-profile', {
@@ -1580,7 +1640,7 @@ angular.module('hillromvestApp')
     pageTitle: 'hcp.title'
   },
   views: {
-    'content@': {
+    'clinicadmin-view': {
       templateUrl: 'scripts/modules/clinicadmin/graph/views/dashboard-landing.html',
       controller: 'hcpGraphController'
     }
@@ -1599,14 +1659,14 @@ angular.module('hillromvestApp')
 })
 
 .state('clinicadminUserProfile', {
-  parent: 'clinicadmin-dashboard',
+  parent: 'clinicadmin-dashboard-profile',
   url: '/profile',
   data: {
     roles: ['CLINIC_ADMIN'],
     pageTitle: 'hcp.title'
   },
   views: {
-    'content@': {
+    'clinicadmin-profile-view': {
       templateUrl: 'scripts/modules/clinicadmin/profile/profile-tabs/my-profile.html',
       controller: 'clinicadminProfileController'
     }
@@ -1625,14 +1685,14 @@ angular.module('hillromvestApp')
 })
 
 .state('clinicadminUpdatePassword', {
-  parent: 'clinicadmin-dashboard',
+  parent: 'clinicadmin-dashboard-profile',
   url: '/updatepassword',
   data: {
     roles: ['CLINIC_ADMIN'],
     pageTitle: 'patient.title'
   },
   views: {
-    'content@': {
+    'clinicadmin-profile-view': {
       templateUrl: 'scripts/modules/clinicadmin/profile/profile-tabs/update-password.html',
       controller: 'clinicadminProfileController'
     }
@@ -1646,14 +1706,14 @@ angular.module('hillromvestApp')
 })
 
 .state('editClinicadminProfile', {
-  parent: 'clinicadmin-dashboard',
+  parent: 'clinicadmin-dashboard-profile',
   url: '/update',
   data: {
     roles: ['CLINIC_ADMIN'],
     pageTitle: 'patient.title'
   },
   views: {
-    'content@': {
+    'clinicadmin-profile-view': {
       templateUrl: 'scripts/modules/clinicadmin/profile/profile-tabs/edit-my-profile.html',
       controller: 'clinicadminProfileController'
     }
@@ -1674,7 +1734,7 @@ angular.module('hillromvestApp')
     pageTitle: 'hcp.title'
   },
   views: {
-    'content@': {
+    'clinicadmin-view': {
       templateUrl: 'scripts/modules/clinicadmin/patient/directives/list.html',
       controller: 'clinicadminPatientController'
     }
@@ -1693,14 +1753,14 @@ angular.module('hillromvestApp')
 })
 
 .state('clinicadminpatientOverview', {
-  parent: 'clinicadminpatientdashboard',
-  url: '/{patientId}/overview',
+  parent: 'clinicadminPatientList',
+  url: '/overview',
   data: {
     roles: ['CLINIC_ADMIN'],
     pageTitle: 'patient.title'
   },
   views: {
-    'content@': {
+    'clinicadmin-patient-view': {
       templateUrl: 'scripts/modules/clinicadmin/patient/directives/patient-details.html',
       controller: 'graphController'
     }
@@ -1719,14 +1779,14 @@ angular.module('hillromvestApp')
 })
 
 .state('clinicadminpatientDemographic', {
-  parent: 'clinicadminpatientdashboard',
-  url: '/{patientId}/demographic',
+  parent: 'clinicadminPatientList',
+  url: '/demographic',
   data: {
     roles: ['CLINIC_ADMIN'],
     pageTitle: 'patient.title'
   },
   views: {
-    'content@': {
+    'clinicadmin-patient-view': {
       templateUrl: 'scripts/modules/clinicadmin/patient/views/patientdemographics.html',
       controller: 'clinicadminPatientController'
     }
@@ -1745,14 +1805,14 @@ angular.module('hillromvestApp')
 })
 
 .state('clinicadminpatientClinics', {
-  parent: 'clinicadminpatientdashboard',
-  url: '/{patientId}/clinicInfo',
+  parent: 'clinicadminPatientList',
+  url: '/clinicInfo',
   data: {
     roles: ['CLINIC_ADMIN'],
     pageTitle: 'patient.title'
   },
   views: {
-    'content@': {
+    'clinicadmin-patient-view': {
       templateUrl: 'scripts/modules/clinicadmin/patient/views/clinicinformation.html',
       controller: 'clinicadminPatientController'
     }
@@ -1772,14 +1832,14 @@ angular.module('hillromvestApp')
 
 
 .state('clinicadminpatientProtocol', {
-  parent: 'clinicadminpatientdashboard',
-  url: '/{patientId}/protocol-device',
+  parent: 'clinicadminPatientList',
+  url: '/protocol-device',
   data: {
     roles: ['CLINIC_ADMIN'],
     pageTitle: 'patient.title'
   },
   views: {
-    'content@': {
+    'clinicadmin-patient-view': {
       templateUrl: 'scripts/modules/clinicadmin/patient/views/deviceprotocol.html',
       controller: 'clinicadminPatientController'
     }
@@ -1798,14 +1858,14 @@ angular.module('hillromvestApp')
 })
 
 .state('clinicadminpatientCraegiver', {
-  parent: 'clinicadminpatientdashboard',
-  url: '/{patientId}/caregivers',
+  parent: 'clinicadminPatientList',
+  url: '/caregivers',
   data: {
     roles: ['CLINIC_ADMIN'],
     pageTitle: 'patient.title'
   },
   views: {
-    'content@': {
+    'clinicadmin-patient-view': {
       templateUrl: 'scripts/modules/clinicadmin/patient/views/caregiverinformation.html',
       controller: 'clinicadminPatientController'
     }
@@ -1824,14 +1884,14 @@ angular.module('hillromvestApp')
 })
 
 .state('clinicadmminpatientDemographicEdit', {
-  parent: 'clinicadminpatientdashboard',
-  url: '/{patientId}/demographicedit',
+  parent: 'clinicadminPatientList',
+  url: '/demographicedit',
   data: {
     roles: ['CLINIC_ADMIN'],
     pageTitle: 'patient.title'
   },
   views: {
-    'content@': {
+    'clinicadmin-patient-view': {
       templateUrl: 'scripts/modules/clinicadmin/patient/views/patientdemographicsedit.html',
       controller: 'clinicadminPatientController'
     }
@@ -1850,14 +1910,14 @@ angular.module('hillromvestApp')
 })
 
 .state('clinicadminSettings', {
-  parent: 'clinicadmin-dashboard',
+  parent: 'clinicadmin-dashboard-profile',
   url: '/notification-settings',
   data: {
     roles: ['CLINIC_ADMIN'],
     pageTitle: 'patient.title'
   },
   views: {
-    'content@': {
+    'clinicadmin-profile-view': {
       templateUrl: 'scripts/modules/clinicadmin/profile/profile-tabs/settings.html',
       controller: 'clinicadminProfileController'
     }

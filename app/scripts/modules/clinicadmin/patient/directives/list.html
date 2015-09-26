@@ -1,6 +1,3 @@
-<navigation-bar-clinicadmin></navigation-bar-clinicadmin>
-<ng-include src="'scripts/components/dashboard/clinicadmin/views/navbar.html'"></ng-include>
-
   <div class="dashboard dashboard--content">
     <div class="container dashboard__manage-view margin-top-xl">
       <div class="dashboard__manage-view--search">
@@ -20,15 +17,6 @@
           </div>
         </div>
       </div>
-
-      <!-- Below Checkboxes was suggested by Vinci-->
-      <!-- <div class="row">
-        <label><input type="checkbox" ng-model="sortOn.missedTherapy" ng-change="changeSortOption()">Missed Therapy</label> 
-        <label><input type="checkbox" ng-model="sortOn.nonHmrCompliance" ng-change="changeSortOption()">Non HMR Compliance</label>
-        <label><input type="checkbox" ng-model="sortOn.settingDeviation" ng-change="changeSortOption()">Sertting Deviations</label>
-        <label><input type="checkbox" ng-model="sortOn.noEvents" ng-change="changeSortOption()">No Events</label>
-      </div> -->
-
       <div class="dashboard__manage-view--header">
         <div class="col-md-2 header--type">
           <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="patient.patient-name">Patient Name</span>
@@ -57,7 +45,7 @@
         <div class="clr"></div>
       </div>
 
-      <div class="dashboard__manage-view--list" ng-repeat="patient in patients" ng-click=" selectPatient(patient)" ng-readonly="true" ng-class="{'inactive': patient.isDeleted}">
+      <div class="dashboard__manage-view--list" ng-repeat="patient in patients" ng-click="patient.deleted || selectPatient(patient, selectedClinic)" ng-readonly="true" ng-class="{'inactive': patient.deleted}">
           <div class="col-md-2 reset-padding">
             <span class="main-prim-info">{{::patient.lastName}} {{::patient.firstName}}</span>
             <span class="main-secon-info">{{::patient.dob}}</span>
@@ -84,8 +72,8 @@
           </div>
 
           <div class="col-md-1 reset-padding">
-            <span class="short-info active centered" ng-if="!patient.isDeleted" translate="patient.status-type.active"></span>
-            <span class="short-info inactive centered" ng-if="patient.isDeleted" translate="patient.status-type.inactive"></span>
+            <span class="short-info active centered" ng-if="!patient.deleted" translate="patient.status-type.active"></span>
+            <span class="short-info inactive centered" ng-if="patient.deleted" translate="patient.status-type.inactive"></span>
           </div>
 
           <div class="col-md-1 reset-padding-left centered text-right">
