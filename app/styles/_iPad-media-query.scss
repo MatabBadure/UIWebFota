@@ -8,6 +8,30 @@
 			margin: 10px 0px 0px 15px;
 		}
 	}
+
+	/*Login page Style*/
+	.footer_container {
+		.footer_right{
+			display: none;
+		}
+	}
+	.auth--position{
+		width: 70%;
+		margin: 10% auto 15%;
+	}
+	.login{
+		.login--position{
+			width: 70%;
+			margin: 10% auto 15%;
+		}
+	}
+	.visi_view_container{
+		margin: 0% auto 4%;
+	}
+	.login__container__right-section{
+		width: 100%;
+	}
+	/*Login page Style END*/	
 }
 
 @media only screen and (min-width : 768px) and (max-width : 1024px) and (orientation : portrait) { 
@@ -25,4 +49,27 @@
 	.patient-user__navbar ul > li {
 		padding-right: 15px;
 	}
+	/*Login page Style*/
+	.footer_container {
+		.footer_right{
+			display: none;
+		}
+	}
+	.auth--position{
+		width: 70%;
+		margin: 10% auto 15%;
+	}
+	.login{
+		.login--position{
+			width: 70%;
+			margin: 10% auto 15%;
+		}
+	}
+	.visi_view_container{
+		margin: 0% auto 4%;
+	}
+	.login__container__right-section{
+		width: 100%;
+	}	
+	/*Login page Style END*/
 }
