@@ -44,10 +44,16 @@ angular.module('hillromvestApp')
       }).catch(function(response){
         notyService.showError(response);
       });
+
+      clinicadminService.getClinicsAssociated(localStorage.getItem('userId')).then(function(response){
+        $scope.clinics = response.data.clinics;
+      }).catch(function(response){
+        notyService.showError(response);
+      });
     };
 
     $scope.init = function(){
-      if($state.current.name === 'clinicadminUserProfile' || $state.current.name === 'editClinicadminProfile' ){
+      if($state.current.name === 'clinicadminUserProfile' || $state.current.name === 'editClinicadminProfile' || $state.current.name === 'clinicadminUpdatePassword'){
         $scope.initProfile(localStorage.getItem('userId'));
       }else if($state.current.name === 'clinicadminSettings'){
         $scope.initSettings();
