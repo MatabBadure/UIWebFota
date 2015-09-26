@@ -76,10 +76,12 @@
 
 .admin-user .clinic-list__hr-id {
   padding: 0;
+  text-overflow: ellipsis;
+  overflow: hidden;
   span {
     color: $pickled-bluewood;
     font-weight: $font-weight-semibold;
-    word-wrap: break-word;
+
   }
 }
 
