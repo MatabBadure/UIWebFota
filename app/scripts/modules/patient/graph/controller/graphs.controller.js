@@ -210,7 +210,7 @@ angular.module('hillromvestApp')
             duration:3000,
             enabled:true
         },
-        barColor:'#e8b33f',
+        barColor:'#41ae76',
         trackColor: '#ccc',
         scaleColor: false,
         lineWidth:12,
@@ -221,7 +221,7 @@ angular.module('hillromvestApp')
             duration:3000,
             enabled:true
         },
-        barColor:'#753452',
+        barColor:'#8c6bb1',
         trackColor: '#ccc',
         scaleColor: false,
         lineWidth:12,
@@ -232,7 +232,7 @@ angular.module('hillromvestApp')
               duration:3000,
               enabled:true
           },
-          barColor:'#e48080',
+          barColor:'#ef6548',
           trackColor: '#ccc',
           scaleColor: false,
           lineWidth:12,
@@ -376,18 +376,14 @@ angular.module('hillromvestApp')
       $scope.removeGraph();
       $scope.drawGraph();
     };
-    $scope.getUTCTime = function() {
-      $scope.UTCfromTimestamp = dateService.getUTCTimeStamp($scope.fromTimeStamp);
-      $scope.UTCtoTimestamp = dateService.getUTCTimeStamp($scope.toTimeStamp);
-    };
     $scope.getNonDayHMRGraphData = function() {
-      $scope.getUTCTime();
       patientDashBoardService.getHMRGraphPoints($scope.patientId, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.groupBy).then(function(response){
         $scope.completeGraphData = response.data;
         if($scope.completeGraphData.actual === undefined){
           $scope.graphData = [];
           $scope.plotNoDataAvailable();
         } else {
+          $scope.completeGraphData = graphUtil.convertIntoServerTimeZone($scope.completeGraphData,patientDashboard.hmrNonDayGraph);
           $scope.yAxisRangeForHMRLine = graphUtil.getYaxisRangeLineGraph($scope.completeGraphData);
           $scope.graphData = graphUtil.convertToHMRStepGraph($scope.completeGraphData,patientDashboard.HMRLineGraphColor);
           $scope.drawHMRLineGraph();
@@ -482,7 +478,6 @@ angular.module('hillromvestApp')
     }
 
     $scope.getDayHMRGraphData = function() {
-      $scope.getUTCTime();
       patientDashBoardService.getHMRBarGraphPoints($scope.patientId, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-')).then(function(response){
         $scope.completeGraphData = response.data;
         if($scope.completeGraphData.actual === undefined){
@@ -492,6 +487,7 @@ angular.module('hillromvestApp')
            $scope.yAxisRangeForHMRBar.max = 0;
            $scope.plotNoDataAvailable();
          } else {
+          $scope.completeGraphData = graphUtil.convertIntoServerTimeZone($scope.completeGraphData,patientDashboard.hmrDayGraph);
           $scope.completeGraphData = graphUtil.formatDayWiseDate($scope.completeGraphData.actual);
           $scope.yAxisRangeForHMRBar = graphUtil.getYaxisRangeBarGraph($scope.completeGraphData);
           $scope.hmrBarGraphData = graphUtil.convertToHMRBarGraph($scope.completeGraphData,patientDashboard.HMRBarGraphColor);
@@ -541,9 +537,7 @@ angular.module('hillromvestApp')
     };
 
     $scope.getComplianceGraphData = function(format) {
-      $scope.getUTCTime();
       patientDashBoardService.getHMRGraphPoints($scope.patientId, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.groupBy).then(function(response){
-        console.log('compliance graph response'+ JSON.stringify(response));
         $scope.completeComplianceData = response.data;
         if($scope.completeComplianceData.actual === undefined){
           $scope.complianceGraphData = [];
@@ -554,6 +548,7 @@ angular.module('hillromvestApp')
         }
          else {
           //recommended values
+          $scope.completeComplianceData = graphUtil.convertIntoServerTimeZone($scope.completeComplianceData,patientDashboard.complianceGraph);
           $scope.minFrequency = $scope.completeComplianceData.recommended.minFrequency;
           $scope.maxFrequency = $scope.completeComplianceData.recommended.maxFrequency;
           $scope.minPressure = $scope.completeComplianceData.recommended.minPressure;
@@ -758,7 +753,7 @@ angular.module('hillromvestApp')
     d3.select('#complianceGraph svg').selectAll("*").remove();
       nv.addGraph(function() {
       var chart = nv.models.multiChart()
-      .margin({top: 30, right: 100, bottom: 50, left: 100})
+      .margin({top: 30, right: 70, bottom: 50, left: 70})
       .showLegend(false)
       .color(d3.scale.category10().range());
      // chart.noData("Nothing to see here.");
@@ -830,14 +825,21 @@ angular.module('hillromvestApp')
 
 
 
-
         var y1AxisMark = d3.select('#complianceGraph svg').selectAll('.y1.axis').selectAll('.nvd3.nv-wrap.nv-axis');
         var y2AxisMark = d3.select('#complianceGraph svg').selectAll('.y2.axis').selectAll('.nvd3.nv-wrap.nv-axis');
         var y1AxisMinMax = d3.select('#complianceGraph svg').selectAll('.y1.axis').selectAll('.nvd3.nv-wrap.nv-axis').select('.nv-axisMaxMin').attr("transform");
         var y2AxisMinMax = d3.select('#complianceGraph svg').selectAll('.y2.axis').selectAll('.nvd3.nv-wrap.nv-axis').select('.nv-axisMaxMin').attr("transform");
-        var maxTransform = parseInt(y1AxisMinMax.split(',')[1].replace(y1AxisMinMax,')',''));
-        $scope.y1AxisTransformRate = parseInt(y1AxisMinMax.split(',')[1].replace(y1AxisMinMax,')',''))/($scope.yAxis1Max - $scope.yAxis1Min);
-        $scope.y2AxisTransformRate = parseInt(y2AxisMinMax.split(',')[1].replace(y2AxisMinMax,')',''))/($scope.yAxis2Max - $scope.yAxis2Min);
+        /* fix for IE browser*/
+        var delimiter = ' ';
+        if(y1AxisMinMax.indexOf(",") > -1){
+          delimiter = ','
+        } else if(y2AxisMinMax.indexOf(" ") === -1){
+          y2AxisMinMax = "translate(0 0)";  
+        }
+        /*fix for IE browser ends*/
+        var maxTransform = parseInt(y1AxisMinMax.split(delimiter)[1].replace(y1AxisMinMax,')',''));
+        $scope.y1AxisTransformRate = parseInt(y1AxisMinMax.split(delimiter)[1].replace(y1AxisMinMax,')',''))/($scope.yAxis1Max - $scope.yAxis1Min);
+        $scope.y2AxisTransformRate = parseInt(y2AxisMinMax.split(delimiter)[1].replace(y2AxisMinMax,')',''))/($scope.yAxis2Max - $scope.yAxis2Min);
         var y1LineLength = d3.select('#complianceGraph svg').selectAll('.y1.axis').selectAll('.nvd3.nv-wrap.nv-axis').selectAll('line').attr('x2');
         var y2LineLength = d3.select('#complianceGraph svg').selectAll('.y2.axis').selectAll('.nvd3.nv-wrap.nv-axis').selectAll('line').attr('x2');
         $scope.getMinMaxForComplianceGraph();
@@ -1314,7 +1316,7 @@ angular.module('hillromvestApp')
       $scope.drawHMRLineGraph = function() {
         nv.addGraph(function() {
            chart = nv.models.lineChart()
-          .margin({top: 30, right: 100, bottom: 50, left: 100})
+          .margin({top: 30, right: 50, bottom: 50, left: 50})
           .showLegend(false)
           //.interpolate('step-after')
           .color(d3.scale.category10().range());
@@ -1400,7 +1402,7 @@ angular.module('hillromvestApp')
     $scope.drawHMRBarGraph = function() {
         nv.addGraph(function() {
            chart = nv.models.multiBarChart()
-          .margin({top: 30, right: 100, bottom: 50, left: 100})
+          .margin({top: 30, right: 50, bottom: 50, left: 50})
           .showControls(false)
           .showLegend(false)
           .color(d3.scale.category10().range());

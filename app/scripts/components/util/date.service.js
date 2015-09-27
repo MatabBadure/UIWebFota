@@ -46,7 +46,7 @@ angular.module('hillromvestApp')
       },
       getUTCTimeStamp: function(timeStamp) {
         var timeZoneOffset = new Date(timeStamp).getTimezoneOffset();
-        return timeStamp - (timeZoneOffset * 60 * 1000);
+        return timeStamp + (timeZoneOffset * 60 * 1000);
       },
       getWeekOfMonth: function(d) {
         var date = new Date(d);
