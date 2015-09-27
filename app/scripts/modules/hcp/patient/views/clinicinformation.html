@@ -1,12 +1,14 @@
 <navigation-bar-hcp></navigation-bar-hcp>
 <hcp-patient-navbar></hcp-patient-navbar>
 <div class="container admin-user">
-  <div class="col-md-16 margin-top">
-   <div class="user-gen-details">
-     <span class="user-gen-details--name">{{::slectedPatient.firstName}} {{::slectedPatient.lastName}}</span>
-     <span class="user-gen-details--hr-id">{{::slectedPatient.hillromId}}</span>
-   </div>
+<div class="container admin-user">
+  <div class="col-md-16 margin-top reset-padding">
+    <div class="user-gen-details">
+      <span class="user-gen-details--name">{{slectedPatient.firstName}} {{slectedPatient.lastName}}</span>
+      <span class="user-gen-details--hr-id">{{slectedPatient.hillromId}}</span>
+    </div>
   </div>
+</div>
   <div class="col-md-16 admin-views">
     <span class="admin-views--title" translate="patient.clinic-title"></span>
   </div>
