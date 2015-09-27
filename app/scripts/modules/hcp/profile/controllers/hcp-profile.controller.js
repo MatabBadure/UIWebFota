@@ -133,7 +133,8 @@ angular.module('hillromvestApp')
     };
 
     $scope.goToPatientDashboard = function(value){
-      $state.go(value, {'clinicId': $scope.clinics[0].id});
+      var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : (($scope.clinics && $scope.clinics.length > 0) ? $scope.clinics[0].id : $stateParams.clinicId);
+      $state.go(value, {'clinicId': clinicId});
     };
     $scope.init();
   }]);

@@ -139,7 +139,7 @@ angular.module('hillromvestApp')
     templateUrl: 'scripts/components/navbar/navbarhcp.html',
     restrict: 'E',
 
-    controller: function ($scope, UserService) {
+    controller: function ($scope, UserService, $stateParams) {
       $scope.username = localStorage.getItem('userFirstName');
       $scope.notifications = 0;
       $scope.isActive = function(tab) {
@@ -152,7 +152,8 @@ angular.module('hillromvestApp')
       };
 
       $scope.account = function(){
-        $state.go("hcpUserProfile");
+        var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : $stateParams.clinicId;
+        $state.go("hcpUserProfile",{'clinicId': clinicId});
       };
 
       $scope.getNotifications = function(){
@@ -175,7 +176,7 @@ angular.module('hillromvestApp')
     templateUrl: 'scripts/components/navbar/navbarclinicadmin.html',
     restrict: 'E',
 
-    controller: function ($scope, UserService) {
+    controller: function ($scope, UserService, $stateParams) {
       $scope.username = localStorage.getItem('userFirstName');
       $scope.notifications = 0;
       $scope.isActive = function(tab) {
@@ -188,7 +189,8 @@ angular.module('hillromvestApp')
       };
 
       $scope.account = function(){
-        $state.go("clinicadminUserProfile",{'clinicId': $scope.selectedClinic.id});
+        var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : $stateParams.clinicId;
+        $state.go("clinicadminUserProfile",{'clinicId': clinicId});
       };
     }
   };
