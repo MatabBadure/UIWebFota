@@ -76,7 +76,7 @@ angular.module('hillromvestApp')
 	};
 
 	$scope.getClinicsForClinicAdmin = function(userId) {
-		clinicadminService.getClinicsAssociated(userId).then(function(response){
+	clinicadminService.getClinicsAssociated(userId).then(function(response){
       localStorage.setItem('clinicId', response.data.clinics[0].id);
       $scope.clinics = response.data.clinics;
       $scope.selectedClinic = response.data.clinics[0];

@@ -47,7 +47,7 @@ angular.module('hillromvestApp')
     };
 
     $scope.init = function(){
-      if($state.current.name === 'clinicadminUserProfile' || $state.current.name === 'editClinicadminProfile' ){
+      if($state.current.name === 'clinicadminUserProfile' || $state.current.name === 'editClinicadminProfile' ){        
         $scope.initProfile(localStorage.getItem('userId'));
       }else if($state.current.name === 'clinicadminSettings'){
         $scope.initSettings();
@@ -115,7 +115,8 @@ angular.module('hillromvestApp')
     };
 
     $scope.goToPatientDashboard = function(value){
-      $state.go(value, {'clinicId': $scope.clinics[0].id});
+      var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : (($scope.clinics && $scope.clinics.length > 0) ? $scope.clinics[0].id : $stateParams.clinicId);
+      $state.go(value, {'clinicId': clinicId });
     };
 
     $scope.toggleNotification = function(notification){

@@ -61,7 +61,7 @@ angular.module('hillromvestApp')
         });
       };
 
-      $scope.account = function(){
+      $scope.account = function(){ 
         if($scope.userRole === "ADMIN"){
           $state.go('adminProfile');
         }else if($scope.userRole === "PATIENT"){
@@ -188,7 +188,7 @@ angular.module('hillromvestApp')
       };
 
       $scope.account = function(){
-        $state.go("clinicadminUserProfile");
+        $state.go("clinicadminUserProfile",{'clinicId': $scope.selectedClinic.id});
       };
     }
   };

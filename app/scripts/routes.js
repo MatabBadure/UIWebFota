@@ -54,6 +54,25 @@ angular.module('hillromvestApp')
                     ]
                 }
             })
+            .state('clinic-admin-user-profile', {               
+                url:'/clinicadmin/{clinicId}',
+                views:{
+                    'content':{
+                    templateUrl:'scripts/modules/clinicadmin/profile/profile-tabs/clinic-admin-profile-section.html'                
+            }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('global');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
             .state('hcp-dashboard', {
                 parent: 'entity',
                 url:'/hcp',
@@ -1563,14 +1582,14 @@ angular.module('hillromvestApp')
             })
 
             .state('clinicadminUserProfile', {
-                parent: 'clinicadmin-dashboard',
+                parent: 'clinic-admin-user-profile',
                 url: '/profile',
                 data: {
                     roles: ['CLINIC_ADMIN'],
                     pageTitle: 'hcp.title'
                 },
                 views: {
-                    'content@': {
+                    'clinic-admin-profile-view': {
                         templateUrl: 'scripts/modules/clinicadmin/profile/profile-tabs/my-profile.html',
                         controller: 'clinicadminProfileController'
                     }
@@ -1589,14 +1608,14 @@ angular.module('hillromvestApp')
             })
 
             .state('clinicadminUpdatePassword', {
-                parent: 'clinicadmin-dashboard',
+                parent: 'clinic-admin-user-profile',
                 url: '/updatepassword',
                 data: {
                     roles: ['CLINIC_ADMIN'],
                     pageTitle: 'patient.title'
                 },
                 views: {
-                    'content@': {
+                    'clinic-admin-profile-view': {
                         templateUrl: 'scripts/modules/clinicadmin/profile/profile-tabs/update-password.html',
                         controller: 'clinicadminProfileController'
                     }
@@ -1814,14 +1833,14 @@ angular.module('hillromvestApp')
             })
 
             .state('clinicadminSettings', {
-                parent: 'clinicadmin-dashboard',
+                parent: 'clinic-admin-user-profile',
                 url: '/notification-settings',
                 data: {
                     roles: ['CLINIC_ADMIN'],
                     pageTitle: 'patient.title'
                 },
                 views: {
-                    'content@': {
+                    'clinic-admin-profile-view': {
                         templateUrl: 'scripts/modules/clinicadmin/profile/profile-tabs/settings.html',
                         controller: 'clinicadminProfileController'
                     }
