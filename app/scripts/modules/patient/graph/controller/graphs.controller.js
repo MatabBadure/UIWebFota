@@ -170,6 +170,15 @@ angular.module('hillromvestApp')
         attr('class','nvd3 nv-noData').
         attr('x','560').
         attr('y','175');
+        var count = 3;
+      while(d3.selectAll('svg').text().indexOf('No') === -1 && count > 0 ){
+        d3.selectAll('svg').append('text').
+          text("No Data Available!").
+          attr('class','nvd3 nv-noData').
+          attr('x','560').
+          attr('y','175');
+          count--;
+      }
     };
     $scope.opts = {
       maxDate: new Date(),
