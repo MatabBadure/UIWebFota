@@ -627,7 +627,11 @@ angular.module('hillromvestApp')
       $state.go('patientAddDevice',{device: device});
     };
 
-    $scope.updateProtocol = function(){
+    $scope.updateProtocol = function(){ 
+      $scope.submitted = true;
+      if($scope.addProtocolForm.$invalid){
+        return false;
+      }
       if($scope.protocol.id){
         delete $scope.protocol.id;
       }
