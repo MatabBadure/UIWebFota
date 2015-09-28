@@ -13,7 +13,7 @@
 
 
 .login .login--position {
-  width: 40%;
+  width: 30%;
   margin: auto;
   overflow: hidden;
   padding: 3px;
@@ -169,13 +169,15 @@
   cursor: pointer;
   color: $btn-default-bg;
   font-size: 12px;
-  padding: 5px 25px;
+  padding: 7px 25px 3px;
   text-decoration: none;
   font-weight: normal;
   min-width: 120px;
   /*text-shadow:0px 1px 0px #b23e35;*/
   float: right;
-  
+  &:hover{
+    background-color: $blue-btn-hover;
+  }
 }
 
 .myButton:active {

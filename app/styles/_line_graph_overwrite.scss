@@ -216,13 +216,18 @@
 		width: 100%;
 		.btn{
 			margin: 7px 0px 0px;
-		    background-color: #FF9829;
-		    border: solid 1px #FF9829;
-		    color: #333333;
+		    background-color: $iceberg;
+		    border: 0;
+		    border-bottom: solid 2px $blue-btn-border;
+		    color: $btn-primary-color;
+		    min-width: 120px;
 		    padding: 3px 15px;
-		    border-radius: 4px;
+		    border-radius: 0;
 			&.applyBtn{
 				margin-left: 5px; 
+			}
+			&:hover{
+				background-color: $blue-btn-hover;
 			}
 		}
 	}
