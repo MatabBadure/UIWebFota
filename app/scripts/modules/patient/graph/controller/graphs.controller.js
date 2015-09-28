@@ -978,7 +978,7 @@ angular.module('hillromvestApp')
         });
         var caregiverId = $stateParams.caregiverId;
         patientService.getCaregiverById(localStorage.getItem('patientID'), caregiverId).then(function(response){
-          $scope.associateCareGiver = response.data.caregiver.user;
+          $scope.associateCareGiver = response.data.caregiver.userPatientAssocPK.user;
           $scope.associateCareGiver.relationship = response.data.caregiver.relationshipLabel;
         });
     };
