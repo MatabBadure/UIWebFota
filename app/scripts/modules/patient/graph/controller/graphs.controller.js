@@ -166,11 +166,6 @@ angular.module('hillromvestApp')
     $scope.plotNoDataAvailable = function() {
       $scope.noDataAvailable = true;
       $scope.removeGraph();
-      d3.selectAll('svg').append('text').
-        text("No Data Available!").
-        attr('class','nvd3 nv-noData').
-        attr('x','560').
-        attr('y','175');
     };
     $scope.opts = {
       maxDate: new Date(),
@@ -369,7 +364,6 @@ angular.module('hillromvestApp')
     };
 
     $scope.showHmrGraph = function() {
-      $scope.noDataAvailable = false;
       $scope.selectedGraph = 'HMR';
       $scope.complianceGraph = false;
       $scope.hmrGraph = true;
@@ -383,6 +377,7 @@ angular.module('hillromvestApp')
           $scope.graphData = [];
           $scope.plotNoDataAvailable();
         } else {
+          $scope.noDataAvailable = false;
           $scope.completeGraphData = graphUtil.convertIntoServerTimeZone($scope.completeGraphData,patientDashboard.hmrNonDayGraph);
           $scope.yAxisRangeForHMRLine = graphUtil.getYaxisRangeLineGraph($scope.completeGraphData);
           $scope.graphData = graphUtil.convertToHMRStepGraph($scope.completeGraphData,patientDashboard.HMRLineGraphColor);
@@ -487,6 +482,7 @@ angular.module('hillromvestApp')
            $scope.yAxisRangeForHMRBar.max = 0;
            $scope.plotNoDataAvailable();
          } else {
+          $scope.noDataAvailable = false;
           $scope.completeGraphData = graphUtil.convertIntoServerTimeZone($scope.completeGraphData,patientDashboard.hmrDayGraph);
           $scope.completeGraphData = graphUtil.formatDayWiseDate($scope.completeGraphData.actual);
           $scope.yAxisRangeForHMRBar = graphUtil.getYaxisRangeBarGraph($scope.completeGraphData);
@@ -548,6 +544,7 @@ angular.module('hillromvestApp')
         }
          else {
           //recommended values
+          $scope.noDataAvailable = false;
           $scope.completeComplianceData = graphUtil.convertIntoServerTimeZone($scope.completeComplianceData,patientDashboard.complianceGraph);
           $scope.minFrequency = $scope.completeComplianceData.recommended.minFrequency;
           $scope.maxFrequency = $scope.completeComplianceData.recommended.maxFrequency;
@@ -969,7 +966,7 @@ angular.module('hillromvestApp')
         });
         var caregiverId = $stateParams.caregiverId;
         patientService.getCaregiverById(localStorage.getItem('patientID'), caregiverId).then(function(response){
-          $scope.associateCareGiver = response.data.caregiver.user;
+          $scope.associateCareGiver = response.data.caregiver.userPatientAssocPK.user;
           $scope.associateCareGiver.relationship = response.data.caregiver.relationshipLabel;
         });
     };

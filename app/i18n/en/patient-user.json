@@ -5,10 +5,10 @@
         },
         "tab": {
           "patient-overview": "Overview",
-          "patient-demographics": "Patient Demographics",
-          "clinic-info": "Clinic Information",
-          "protocol-device": "Protocol and Device",
-          "caregiver-info": "Caregiver Information"
+          "patient-demographics": "Patient Info",
+          "clinic-info": "Clinic Info",
+          "protocol-device": "Care Plan and Device",
+          "caregiver-info": "Caregiver Info"
         },
         "caregiver-caption": {
           "caregiver-name": "Caregiver Name",
@@ -204,7 +204,7 @@
       "zipcode": "Zip",
       "city": "City",
       "state": "State",
-      "phoneNumber": "PhoneNumber",
+      "phoneNumber": "Phone Number",
       "fax-number": "Clinic Fax Number",
       "clinic-phone": "Clinic Phone Number",
       "hillromId": "Hillrom ID",

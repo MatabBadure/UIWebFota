@@ -28,20 +28,22 @@ angular.module('hillromvestApp')
 		if($state.current.name === 'hcpdashboard'){
 			hcpDashBoardService.getStatistics(clinicId, userId).then(function(response){
 				  $scope.statistics = response.data.statitics;
+				  $scope.statistics.date = dateService.getDateFromTimeStamp(new Date($scope.statistics.date),hcpDashboardConstants.USdateFormat,'/');
 				  $scope.getPercentageStatistics($scope.statistics);				  
 				}).catch(function(response){
 				  notyService.showError(response);
 				});
 		} else if($state.current.name === 'clinicadmindashboard'){
-				clinicadminService.getStatistics(clinicId, userId).then(function(response){
-	            $scope.statistics = response.data.statitics;
-	            $scope.getPercentageStatistics($scope.statistics);
+			clinicadminService.getStatistics(clinicId, userId).then(function(response){
+          $scope.statistics = response.data.statitics;
+          $scope.statistics.date = dateService.getDateFromTimeStamp(new Date($scope.statistics.date),hcpDashboardConstants.USdateFormat,'/');
+          $scope.getPercentageStatistics($scope.statistics);
 	    }).catch(function(response){
 	      notyService.showError(response);
 	    });
 
 		}
-    };
+   };
 
     $scope.getPercentageStatistics = function(statistics){
 		$scope.percentStatistics = {};
@@ -64,7 +66,7 @@ angular.module('hillromvestApp')
 	};
 
 	$scope.getClinicsForClinicAdmin = function(userId) {
-		clinicadminService.getClinicsAssociated(userId).then(function(response){
+	clinicadminService.getClinicsAssociated(userId).then(function(response){
       localStorage.setItem('clinicId', response.data.clinics[0].id);
       $scope.clinics = response.data.clinics;
       $scope.selectedClinic = response.data.clinics[0];
