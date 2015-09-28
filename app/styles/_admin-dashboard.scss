@@ -826,6 +826,7 @@ tags-input .autocomplete .suggestion-item.selected, tags-input .autocomplete .su
   color: $regent-gray;
   display: block;
   font-weight: $font-weight-medium;
+  @extend .word-ellipsis;
 }
 
 .dashboard__manage-view--list .impo-highlight {
