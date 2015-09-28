@@ -24,7 +24,7 @@ $brand-warning:         #f0ad4e !default;
 $brand-danger:          #d9534f !default;
 
 //HillRom Primary Colours
-$cyan-blue-light:       #7BA4DB  !default;
+$cyan-blue-light:       #7ca3dc  !default;
 
 //HillRom Secondary Colours
 $terracotta:            #ef7164  !default;
@@ -50,12 +50,13 @@ $alto:                  #D6DADE !default;
 $trolley-grey:          #808080 !default;
 $alto-solid:            #dbdbdb !default;
 $gainsboro:             #dddddd !default;
-$sunshade:              #FF9829 !default;
+$sunshade:              #003594 !default;
 $silver-fade:           #C0C0C0 !default;
 $lapis-lazuli:          #276092 !default;
 $storm-dust:            #646568 !default;
-$iceberg:               #7BA4DB !default;
+$iceberg:               #7ca3dc !default;
 $blue-btn:				#7ca3dc !default;
+$blue-btn-hover:        #003594 !default;
 $blue-btn-border: 		#003594 !default;
 $davys-grey:            #555555 !default;
 $kashmir-blue:          #567196 !default;
@@ -754,6 +755,7 @@ $panel-body-padding:          15px !default;
 $panel-heading-padding:       10px 15px !default;
 $panel-footer-padding:        $panel-heading-padding !default;
 $panel-border-radius:         $border-radius-base !default;
+$footer-text-color:           #646568;
 
 //** Border color for elements within panels
 $panel-inner-border:          #ddd !default;
