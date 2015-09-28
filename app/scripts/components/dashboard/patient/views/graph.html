@@ -92,11 +92,14 @@
 				</div>	
 			</div>
 		<div class="col-md-16" class="all_graph_wrapper">
+			<div ng-show="noDataAvailable">
+					<span class="noData"> No Data Available!</span>
+			</div>
 			<div ng-if="hmrGraph" class="dashboard_line_graph">
 				<div ng-if="hmrLineGraph">
-				<div id="hmrLineGraph" class="complianceGraph col-md-16">
-					<svg> </svg>
-				</div>
+					<div id="hmrLineGraph" class="complianceGraph col-md-16">
+						<svg> </svg>
+					</div>
 				</div>
 				<div ng-if="hmrBarGraph">
 					<div id="hmrBarGraph" class="complianceGraph col-md-16">

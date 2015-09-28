@@ -166,20 +166,6 @@ angular.module('hillromvestApp')
     $scope.plotNoDataAvailable = function() {
       $scope.noDataAvailable = true;
       $scope.removeGraph();
-      d3.selectAll('svg').append('text').
-        text("No Data Available!").
-        attr('class','nvd3 nv-noData').
-        attr('x','560').
-        attr('y','175');
-        var count = 3;
-      while(d3.selectAll('svg').text().indexOf('No') === -1 && count > 0 ){
-        d3.selectAll('svg').append('text').
-          text("No Data Available!").
-          attr('class','nvd3 nv-noData').
-          attr('x','560').
-          attr('y','175');
-          count--;
-      }
     };
     $scope.opts = {
       maxDate: new Date(),
@@ -378,7 +364,6 @@ angular.module('hillromvestApp')
     };
 
     $scope.showHmrGraph = function() {
-      $scope.noDataAvailable = false;
       $scope.selectedGraph = 'HMR';
       $scope.complianceGraph = false;
       $scope.hmrGraph = true;
@@ -392,6 +377,7 @@ angular.module('hillromvestApp')
           $scope.graphData = [];
           $scope.plotNoDataAvailable();
         } else {
+          $scope.noDataAvailable = false;
           $scope.completeGraphData = graphUtil.convertIntoServerTimeZone($scope.completeGraphData,patientDashboard.hmrNonDayGraph);
           $scope.yAxisRangeForHMRLine = graphUtil.getYaxisRangeLineGraph($scope.completeGraphData);
           $scope.graphData = graphUtil.convertToHMRStepGraph($scope.completeGraphData,patientDashboard.HMRLineGraphColor);
@@ -496,6 +482,7 @@ angular.module('hillromvestApp')
            $scope.yAxisRangeForHMRBar.max = 0;
            $scope.plotNoDataAvailable();
          } else {
+          $scope.noDataAvailable = false;
           $scope.completeGraphData = graphUtil.convertIntoServerTimeZone($scope.completeGraphData,patientDashboard.hmrDayGraph);
           $scope.completeGraphData = graphUtil.formatDayWiseDate($scope.completeGraphData.actual);
           $scope.yAxisRangeForHMRBar = graphUtil.getYaxisRangeBarGraph($scope.completeGraphData);
@@ -557,6 +544,7 @@ angular.module('hillromvestApp')
         }
          else {
           //recommended values
+          $scope.noDataAvailable = false;
           $scope.completeComplianceData = graphUtil.convertIntoServerTimeZone($scope.completeComplianceData,patientDashboard.complianceGraph);
           $scope.minFrequency = $scope.completeComplianceData.recommended.minFrequency;
           $scope.maxFrequency = $scope.completeComplianceData.recommended.maxFrequency;
