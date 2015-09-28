@@ -1,57 +1,52 @@
 <div class="container admin-user">
-  <div class="col-md-16 margin-top">
-   <div class="user-gen-details">
-     <span class="user-gen-details--name">{{::slectedPatient.firstName}} {{::slectedPatient.lastName}}</span>
-     <span class="user-gen-details--hr-id">{{::slectedPatient.hillromId}}</span>
-   </div>
+<div class="container admin-user">
+  <div class="col-md-16 margin-top reset-padding">
+    <div class="user-gen-details">
+      <span class="user-gen-details--name">{{::slectedPatient.firstName}} {{::slectedPatient.lastName}}</span>
+      <span class="user-gen-details--hr-id">{{::slectedPatient.hillromId}}</span>
+    </div>
   </div>
+</div>
   <div class="col-md-16 admin-views">
-    <span class="admin-views--title" translate="patient.clinic-title"></span>
+    <span class="admin-views--title">{{::clinic.name}}</span>
   </div>
 
-  <div class="dashboard dashboard--content">
-    <div class="dashboard__manage-view margin-top">
-      <div class="dashboard__manage-view--header">
-          <div class="col-md-3 col-sm-3 header--type">
-            <span translate="patient.clinic-caption.clinic-name"></span>
-          </div>
-          <div class="col-md-4 col-sm-4 header--type">
-            <span translate="patient.clinic-caption.address"></span>
-          </div>
-          <div class="col-md-3 col-sm-3 header--type">
-            <span translate="patient.clinic-caption.phone-number"></span>
-          </div>
-          <div class="col-md-3 col-sm-3 header--type">
-            <span translate="patient.clinic-caption.fax-number"></span>
-          </div>
-          <div class="col-md-2 col-sm-2 header--type">
-            <span translate="patient.clinic-caption.hr-id"></span>
-          </div>
-          <div class="clr"></div>
-        </div>
+  <div class="col-md-16 user-detail-info">
+    <div class="col-md-4 user-detail-info__data word-ellipsis">
+      <span class="user-detail-info__data--key" translate="clinic.hillromId"></span>
+      <span class="user-detail-info__data--key">:</span>
+      <span class="user-detail-info__data--value">{{::clinic.hillromId}}</span>
     </div>
-  </div>
+    <div class="col-md-4 user-detail-info__data">
+      <span class="user-detail-info__data--key" translate="clinic.type"></span>
+      <span class="user-detail-info__data--key">:</span>
+      <span class="user-detail-info__data--value" ng-if="clinic.parent" translate="clinic.parent"></span>
+      <span class="user-detail-info__data--value" ng-if="!clinic.parent" translate="clinic.satellite"></span>
+    </div>
+    <div class="col-md-4 user-detail-info__data">
+      <span class="user-detail-info__data--key" translate="clinic.status"></span>
+      <span class="user-detail-info__data--key">:</span>
+      <span class="user-detail-info__data--value" ng-if="clinic.deleted" translate="clinic.inactive"></span>
+      <span class="user-detail-info__data--value" ng-if="!clinic.deleted" translate="clinic.active"></span>
+    </div>
 
-  <div class="col-md-16 col-sm-16 clinic-list" ng-repeat="aClinic in associatedClinics track by $index" ng-if="associatedClinics.length > 0">
-    <div class="col-md-3 col-sm-3 clinic-list__detail">
-      <span class="clinic-list__detail--name" ng-bind="aClinic.name"></span>
+    <div class="col-md-4 user-detail-info__data">
+      <span class="user-detail-info__data--key" translate="clinic.phoneNumber"></span>
+      <span class="user-detail-info__data--key">:</span>
+      <span class="user-detail-info__data--value">{{::clinic.phoneNumber}}</span>
     </div>
-    <div class="col-md-4 col-sm-4 clinic-list__address">
-      <span class="clinic-list__address--primary" ng-bind="aClinic.address"></span>
-      <span class="clinic-list__address--secondary">{{::aClinic.city}}, {{::aClinic.state}}</span>
+
+    <div class="col-md-4 user-detail-info__data word-ellipsis">
+      <span class="user-detail-info__data--key" translate="clinic.address"></span>
+      <span class="user-detail-info__data--key">:</span>
+      <span class="user-detail-info__data--value">{{::clinic.address}}</span>
     </div>
-    <div class="col-md-3 col-sm-3 clinic-list__phone">
-      <span class="clinic-list__phone--number" ng-bind="aClinic.phoneNumber"></span>
+
+    <div class="col-md-4 user-detail-info__data">
+      <span class="user-detail-info__data--key" translate="clinic.city"></span>
+      <span class="user-detail-info__data--key">:</span>
+      <span class="user-detail-info__data--value">{{::clinic.city}}</span>
     </div>
-    <div class="col-md-3 col-sm-3 clinic-list__fax">
-      <span class="clinic-list__fax--number" ng-bind="aClinic.faxNumber"></span>
-    </div>
-    <div class="col-md-2 col-sm-2 clinic-list__hr-id">
-      <span ng-bind="aClinic.hillromId"></span>
-    </div>
-  </div>
-  <div class="col-md-16 col-sm-16 empty-list-message" ng-if="!associatedClinics || associatedClinics.length === 0"> 
-    <span translate="no-clinic-found"></span>
   </div>
 
   <div class="col-md-16 col-sm-16 admin-views">

@@ -34,6 +34,7 @@ angular.module('hillromvestApp')
         $scope.initPatientClinicHCPs();
       } else if(currentRoute === 'patientOverview' || currentRoute === 'hcppatientOverview' || currentRoute === 'clinicadminpatientOverview') {
         $scope.patientId = parseInt($stateParams.patientId);
+        $scope.getPatientById($scope.patientId);
         $scope.weeklyChart();
       }
       $scope.compliance = {};
@@ -170,6 +171,15 @@ angular.module('hillromvestApp')
         attr('class','nvd3 nv-noData').
         attr('x','560').
         attr('y','175');
+        var count = 3;
+      while(d3.selectAll('svg').text().indexOf('No') === -1 && count > 0 ){
+        d3.selectAll('svg').append('text').
+          text("No Data Available!").
+          attr('class','nvd3 nv-noData').
+          attr('x','560').
+          attr('y','175');
+          count--;
+      }
     };
     $scope.opts = {
       maxDate: new Date(),
@@ -968,7 +978,7 @@ angular.module('hillromvestApp')
         });
         var caregiverId = $stateParams.caregiverId;
         patientService.getCaregiverById(localStorage.getItem('patientID'), caregiverId).then(function(response){
-          $scope.associateCareGiver = response.data.caregiver.user;
+          $scope.associateCareGiver = response.data.caregiver.userPatientAssocPK.user;
           $scope.associateCareGiver.relationship = response.data.caregiver.relationshipLabel;
         });
     };
