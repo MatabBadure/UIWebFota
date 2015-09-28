@@ -27,6 +27,13 @@ angular.module('hillromvestApp')
         return $http.get(url, {
           headers: headerService.getHeader()
         });
+      },
+
+      getAssociatedHCPOfPatientClinic : function(patientId, clinicId){
+        var url = URL.getAssociatedHCP.replace('PATIENTID', patientId).replace('CLINICID', clinicId);
+        return $http.get(url, {
+          headers: headerService.getHeader()
+        });
       }
     };
 }]);

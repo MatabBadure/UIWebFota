@@ -106,8 +106,8 @@ angular.module('hillromvestApp')
   };
 
   $scope.getAssociateHCPToPatient = function(patientId){
-    patientService.getAssociateHCPToPatient(patientId).then(function(response){
-      $scope.associatedHCPs = response.data.hcpUsers;
+    clinicadminPatientService.getAssociatedHCPOfPatientClinic(patientId, $stateParams.clinicId).then(function(response){
+      $scope.associatedHCPs = response.data.hcpList
     }).catch(function(response){
       notyService.showError(response);
     });
