@@ -18,8 +18,7 @@ angular.module('hillromvestApp')
       $scope.perPageCount = 10;
       $scope.pageCount = 0;
       $scope.getClinicsAssociatedToHCP();
-      var clinicId = $stateParams.clinicId;
-      $scope.sortOption = $stateParams.filter;
+      var clinicId = $stateParams.clinicId;      
       $scope.searchPatients();            
     }
 	};
