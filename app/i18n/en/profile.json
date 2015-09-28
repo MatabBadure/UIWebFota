@@ -87,6 +87,7 @@
       "address":"Address",
       "city":"City",
       "state":"State",
+      "city-state": "City/State",
       "phoneNumber":"Phone Number",
       "type":"Type",
       "hillRom-id":"Hillrom ID",
