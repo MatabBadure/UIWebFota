@@ -20,7 +20,7 @@ angular.module('hillromvestApp')
       },
 
       controller: function($scope, $timeout, $state,$stateParams, DoctorService, notyService) {
-
+        var searchOnLoad = true;
         $scope.init = function() {
           $scope.doctors = [];
           $scope.doctorInfo = {};
@@ -34,6 +34,7 @@ angular.module('hillromvestApp')
           $scope.sortIconDefault = true;
           $scope.sortIconUp = false;
           $scope.sortIconDown = false;
+          $scope.searchDoctors();
           if($stateParams.clinicIds){                      
             $scope.getAssociatedHCPsToClinic($stateParams.clinicIds);
           }
@@ -42,7 +43,7 @@ angular.module('hillromvestApp')
 
         var timer = false;
         $scope.$watch('searchItem', function() {
-          if($state.current.name === "hcpUser" && !$stateParams.clinicIds){
+          if($state.current.name === "hcpUser" && !$stateParams.clinicIds && !searchOnLoad){
           if (timer) {
             $timeout.cancel(timer)
           }
@@ -84,6 +85,7 @@ angular.module('hillromvestApp')
             } else {
               $scope.noMatchFound = false;
             }
+            searchOnLoad = false;
           }).catch(function(response) {
 
           });

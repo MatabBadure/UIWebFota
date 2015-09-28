@@ -2,6 +2,7 @@
 
 angular.module('hillromvestApp')
   .controller('clinicsController', function ($rootScope, $scope, $state, $stateParams, $timeout, Auth, clinicService, UserService, notyService) {
+    var searchOnLoad = true;
     $scope.clinic = {};
     $scope.clinicStatus = {
       'role':localStorage.getItem('role'),
@@ -19,10 +20,12 @@ angular.module('hillromvestApp')
       } else if (currentRoute === 'clinicNew') {
         $scope.initCreateClinic();
       } else if (currentRoute === 'clinicUser'){
+        $scope.initPaginationVars();
         $scope.initClinicList();
       } else if (currentRoute === 'clinicProfile'){
         $scope.initClinicProfile($stateParams.clinicId);
       } else if(currentRoute === 'clinicAssociatedPatients'){
+        $scope.initPaginationVars();
         $scope.initClinicAssoctPatients($stateParams.clinicId);
       } else if(currentRoute === 'clinicAssociatedHCP'){
         $scope.initClinicAssoctHCPs($stateParams.clinicId);
@@ -60,6 +63,7 @@ angular.module('hillromvestApp')
           if(patientCount === 0){
             $scope.hasNoPatient = true;
           }
+          searchOnLoad = false;
         }).catch(function(response){});
       }).catch(function(response){});      
       $scope.getClinicById(clinicId);
@@ -96,7 +100,7 @@ angular.module('hillromvestApp')
       $scope.sortIconDefault = true;
       $scope.sortIconUp = false;
       $scope.sortIconDown = false;
-      //$scope.searchClinics();
+      $scope.searchClinics();
     };
 
     $scope.initCreateClinic = function(){
@@ -179,7 +183,7 @@ angular.module('hillromvestApp')
 
       var timer = false;
       $scope.$watch('searchItem', function () {
-        if($state.current.name === 'clinicUser'){
+        if($state.current.name === 'clinicUser' && !searchOnLoad){
         if(timer){
           $timeout.cancel(timer)
         }
@@ -207,6 +211,7 @@ angular.module('hillromvestApp')
           $scope.clinics = response.data;
           $scope.total = response.headers()['x-total-count'];
           $scope.pageCount = Math.ceil($scope.total / 10);
+          searchOnLoad = false;
         }).catch(function (response) {
 
         });
@@ -622,6 +627,51 @@ angular.module('hillromvestApp')
       $state.go('hcpProfile',{
         'doctorId': doctor.id
       });
+    };
+
+    $scope.$watch('searAssociatedPatient', function () {
+      if($state.current.name === 'clinicAssociatedPatients' && !searchOnLoad){
+      if(timer){
+        $timeout.cancel(timer)
+      }
+      timer= $timeout(function () {
+          $scope.searchAssociatedPatients();
+      },1000)
+     }
+    });
+
+    $scope.searchAssociatedPatients = function (track) {
+      if (track !== undefined) {
+        if (track === "PREV" && $scope.currentPageIndex > 1) {
+          $scope.currentPageIndex--;
+        }
+        else if (track === "NEXT" && $scope.currentPageIndex < $scope.pageCount){
+            $scope.currentPageIndex++;
+        }
+        else{
+            return false;
+        }
+      }else {
+          $scope.currentPageIndex = 1;
+      }
+      clinicService.searchAssociatedPatientsToClinic($scope.searAssociatedPatient, $scope.sortOption, $scope.currentPageIndex, $scope.perPageCount, $stateParams.clinicId).then(function (response) {
+        $scope.associatedPatients = response.data;
+        $scope.total = response.headers()['x-total-count'];
+        $scope.pageCount = Math.ceil($scope.total / 10);
+        searchOnLoad = false;
+      }).catch(function (response) {
+
+      });
+    };
+
+    $scope.initPaginationVars = function(){
+      $scope.currentPageIndex = 1;
+      $scope.perPageCount = 10;
+      $scope.pageCount = 0;
+      $scope.total = 0;        
+      $scope.sortOption ="";
+      $scope.searchItem = "";
+      $scope.searAssociatedPatient = "";
     };
 
 

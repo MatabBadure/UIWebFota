@@ -1,6 +1,7 @@
 'use strict';
 angular.module('hillromvestApp')
-  .factory('clinicService', function($http, localStorageService, headerService) {
+  .factory('clinicService', ['$http', 'localStorageService', 'headerService', 'URL' ,
+    function($http, localStorageService, headerService, URL) {
     var token = localStorage.getItem('token');
     return {
       createClinic: function(data) {
@@ -172,6 +173,13 @@ angular.module('hillromvestApp')
         }).success(function(response) {
           return response;
         });
+      },
+
+      searchAssociatedPatientsToClinic : function(searchString, filter, pageNo, offset, clinicId){      
+        var url = URL.searchAssociatedPatientsToClinic.replace('SEARCHSTRING', searchString).replace('PAGENO', pageNo).replace('OFFSET', offset).replace('FILTER', filter).replace('CLINICID', clinicId);
+        return $http.get(url, {
+          headers: headerService.getHeader()        
+        });
       }
     };
-  });
+  }]);

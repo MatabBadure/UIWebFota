@@ -23,6 +23,7 @@ angular.module('hillromvestApp')
         })
       },
       controller: function($scope, $timeout, $state) {
+        var searchOnLoad = true;
         $scope.init = function() {
           $scope.users = [];
           $scope.currentPageIndex = 1;
@@ -34,16 +35,20 @@ angular.module('hillromvestApp')
           $scope.sortIconDefault = true;
           $scope.sortIconUp = false;
           $scope.sortIconDown = false;
+          $scope.searchItem = "";
+          $scope.searchUsers();
         };
 
         var timer = false;
         $scope.$watch('searchItem', function () {
-          if (timer) {
-            $timeout.cancel(timer)
+          if(!searchOnLoad){
+            if (timer) {
+              $timeout.cancel(timer)
+            }
+            timer= $timeout(function () {
+                $scope.searchUsers();
+            },1000)
           }
-          timer= $timeout(function () {
-              $scope.searchUsers();
-          },1000)
         });
 
         /**
@@ -83,6 +88,7 @@ angular.module('hillromvestApp')
             $scope.users = response.data;
             $scope.total = response.headers()['x-total-count'];
             $scope.pageCount = Math.ceil($scope.total / 10);
+            searchOnLoad = false;
           }).catch(function(response) {});
         };
 

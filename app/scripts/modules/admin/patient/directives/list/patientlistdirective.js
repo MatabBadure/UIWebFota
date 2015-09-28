@@ -19,7 +19,7 @@ angular.module('hillromvestApp')
       }
       },
       controller: function($scope, $timeout, dateService) {
-
+        var searchOnLoad = true;
         $scope.init = function() {
           $scope.patients = [];
           $scope.patientInfo = {};
@@ -33,6 +33,8 @@ angular.module('hillromvestApp')
           $scope.sortIconDefault = true;
           $scope.sortIconUp = false;
           $scope.sortIconDown = false;
+          $scope.searchItem = "";
+          $scope.searchPatients();
           if($stateParams.clinicIds){
             $scope.getAssociatedPatientsToClinic($stateParams.clinicIds);
           }
@@ -41,7 +43,7 @@ angular.module('hillromvestApp')
 
         var timer = false;
         $scope.$watch('searchItem', function() {
-          if($state.current.name === "patientUser" && !$stateParams.clinicIds){
+          if($state.current.name === "patientUser" && !$stateParams.clinicIds && !searchOnLoad){
             if (timer) {
               $timeout.cancel(timer)
             }
@@ -72,7 +74,7 @@ angular.module('hillromvestApp')
             }
           } else {
             $scope.currentPageIndex = 1;
-          }
+          } 
           patientService.getPatients($scope.searchItem, $scope.sortOption, $scope.currentPageIndex, $scope.perPageCount)
             .then(function(response) {
               $scope.patients = response.data;
@@ -90,6 +92,7 @@ angular.module('hillromvestApp')
               }
               $scope.total = response.headers()['x-total-count'];
               $scope.pageCount = Math.ceil($scope.total / 10);
+              searchOnLoad = false;
             }).catch(function(response) {
               $scope.noMatchFound = true;
             });

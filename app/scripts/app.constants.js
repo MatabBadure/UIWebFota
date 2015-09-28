@@ -13,5 +13,6 @@ angular.module('hillromvestApp')
 	'getClinicsAssociatedToCliniadmin' : '/api/user/USERID/clinics',
 	'getPatientInfoWithMRN': '/api/patient/PATIENTID/clinic/CLINICID/mrnId',
 	'searchPatientsForHCP': '/api/user/hcp/HCPID/patient/search?searchString=SEARCHSTRING&page=PAGENO&per_page=OFFSET&clinicId=CLINICID',
-	'getAssociatedHCP' : '/api/patient/PATIENTID/filteredhcp?filterByClinic=CLINICID'
+	'getAssociatedHCP' : '/api/patient/PATIENTID/filteredhcp?filterByClinic=CLINICID',
+	'searchAssociatedPatientsToClinic' : '/api/user/clinic/CLINICID/patient/search?searchString=SEARCHSTRING&page=PAGENO&per_page=OFFSET&filter=FILTER'
 });

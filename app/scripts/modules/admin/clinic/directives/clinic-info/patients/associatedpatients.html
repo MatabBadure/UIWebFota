@@ -12,12 +12,12 @@
   <div class="container dashboard__manage-view margin-top-xl">
     <div class="dashboard__manage-view--search">
       <div class="fuid-search-box reset-padding-right">
-        <input type="text" class="form-control" id="searchListParam" name="userName" ng-model="searchItem" autocomplete="off" placeholder="{{'clinic.placeholder.search' | translate}}">
+        <input type="text" class="form-control" id="searchListParam" name="userName" ng-model="searAssociatedPatient" autocomplete="off" placeholder="{{'clinic.placeholder.search' | translate}}">
         <span class="search-icon hillrom-icon icon-search-icon"></span>
       </div>
       <div class="fixed-filter-box reset-padding-left">
         <div class="search-dropdown">
-          <select name="search" ng-model="sortOption" ng-change="searchDoctors()">
+          <select name="search" ng-model="sortOption" ng-change="searchAssociatedPatients()">
             <option value="" selected translate="clinic.filter.all">Newly Created</option>
               <option value="email" translate="clinic.filter.active">Email</option>
               <option value="firstName" translate="clinic.filter.inactive">First Name</option>
