@@ -204,7 +204,7 @@
       "zipcode": "Zip",
       "city": "City",
       "state": "State",
-      "phoneNumber": "PhoneNumber",
+      "phoneNumber": "Phone Number",
       "fax-number": "Clinic Fax Number",
       "clinic-phone": "Clinic Phone Number",
       "hillromId": "Hillrom ID",
