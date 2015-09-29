@@ -4,6 +4,10 @@ $header--background: $body-bg;
 	border: 0;
 }
 
+.navbar .navbar-default .navbar-fixed-top {
+	z-index: 9999;
+}
+
 .navbar-default {
 	background-color: $header--background;
 	color: $bombay;
@@ -236,4 +240,26 @@ $header--background: $body-bg;
 			min-height: inherit;
 		}
 	}
+}
+
+#top-shadow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  z-index: 999;
+  -webkit-box-shadow: 0 3px 3px $gray-lighter;
+  -moz-box-shadow: 0 3px 3px $gray-lighter;
+  box-shadow: 0 3px 3px $gray-lighter;
+  display: none;
+}
+
+.navbar.affix {
+  top:0; 
+  width:100%;
+}
+
+.content {
+	margin-top: 62px;
 }
