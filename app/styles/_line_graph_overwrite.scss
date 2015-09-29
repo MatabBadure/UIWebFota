@@ -88,6 +88,9 @@
 				> .nv-groups{
 					> .nv-group{
 						stroke: #fff !important;
+						&:hover{
+							fill-opacity: 1 !important;
+						}
 					}
 				}
 			}
