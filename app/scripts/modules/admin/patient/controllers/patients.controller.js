@@ -59,7 +59,9 @@ angular.module('hillromvestApp')
           }
         });
         $scope.patient.hcpUSers = hcpUsers;
-      }).catch(function(response){});
+      }).catch(function(response){
+        notyService.showError(response);
+      });
     };
 
     $scope.initPatientOverview = function(){
@@ -100,7 +102,9 @@ angular.module('hillromvestApp')
           device.lastModifiedDate = dateService.getDateByTimestamp(device.lastModifiedDate);
         });
         $scope.devices = response.data.deviceList;
-      }).catch(function(response){});
+      }).catch(function(response){
+        notyService.showError(response);
+      });
     };
 
     $scope.initProtocolDevice = function(patientId){
@@ -228,7 +232,7 @@ angular.module('hillromvestApp')
         $scope.getAvailableAndAssociatedClinics($stateParams.patientId);
         notyService.showMessage(response.data.message, 'success');
       }).catch(function(response) {
-        notyService.showMessage(response.data.message, 'warning');
+        notyService.showError(response);
       });
     };
 
@@ -239,11 +243,7 @@ angular.module('hillromvestApp')
         $scope.getAvailableAndAssociatedHCPs($stateParams.patientId);
         notyService.showMessage(response.data.message, 'success');
       }).catch(function(response) {
-        if(response.data.message){
-          notyService.showMessage(response.data.message, 'warning');
-        } else if(response.data.ERROR){
-          notyService.showMessage(response.data.ERROR, 'warning');
-        }
+        notyService.showError(response);
       });
     };
 
@@ -321,7 +321,9 @@ angular.module('hillromvestApp')
     $scope.getAssociatedHCPs = function(patientId){
       patientService.getAssociateHCPToPatient(patientId).then(function(response){
         $scope.associatedHCPs = response.data.hcpUsers
-      }).catch(function(response){});
+      }).catch(function(response){
+        notyService.showError(response);
+      });
     };
 
     $scope.selectHcpForPatient = function(hcp){
@@ -331,18 +333,16 @@ angular.module('hillromvestApp')
         notyService.showMessage(response.data.message, 'success');
         $scope.getAvailableAndAssociatedHCPs($stateParams.patientId);
       }).catch(function(response){
-        if(response.data.message){
-          notyService.showMessage(response.data.message, 'warning');
-        } else if(response.data.ERROR){
-          notyService.showMessage(response.data.ERROR, 'warning');
-        }
+        notyService.showError(response);
       });
     };
 
     $scope.getHCPs = function(){
       DoctorService.getDoctorsList($scope.searchItem, $scope.currentPageIndex, $scope.perPageCount).then(function(response){
         $scope.hcps = response.data;
-      }).catch(function(response){});
+      }).catch(function(response){
+        notyService.showError(response);
+      });
     };
 
     $scope.getClinics = function(){
@@ -422,14 +422,18 @@ angular.module('hillromvestApp')
       patientService.disassociatePatient(disassociatePatient.id).then(function(response){
         notyService.showMessage(response.data.message, 'success');
         $state.go('patientUser');
-      }).catch(function(response){});
+      }).catch(function(response){
+        notyService.showError(response);
+      });
     };
 
     /** start of caregiver tab for admin->patient **/
     $scope.getCaregiversForPatient = function(patientId){
       patientService.getCaregiversLinkedToPatient(patientId).then(function(response){
         $scope.caregivers =  response.data.caregivers;
-      }).catch(function(response){});
+      }).catch(function(response){
+        notyService.showError(response);
+      });
     };
 
     $scope.associateCaregiverstoPatient = function(patientId, careGiver){
@@ -439,7 +443,7 @@ angular.module('hillromvestApp')
         $scope.associateCareGiver = [];$scope.associateCareGiver.length = 0;
         $scope.switchPatientTab('patientCraegiver');
       }).catch(function(response){
-        notyService.showMessage(response.data.ERROR,'warning' );
+        notyService.showError(response);
       });
     };
 
@@ -449,11 +453,7 @@ angular.module('hillromvestApp')
         $scope.caregivers.splice(caregiver.index, 1);
         notyService.showMessage(response.data.message, 'success');
       }).catch(function(response){
-        if(response.data.message){
-          notyService.showMessage(response.data.message,'warning');
-        }else if(response.data.ERROR){
-          notyService.showMessage(response.data.ERROR,'warning');
-        }
+        notyService.showError(response);
       });
     };
 
@@ -504,7 +504,9 @@ angular.module('hillromvestApp')
       }
       patientService.addDevice( $stateParams.patientId, $scope.device).then(function(response){
         $state.go('patientProtocol');
-      }).catch(function(response){});
+      }).catch(function(response){
+        notyService.showError(response);
+      });
     };
 
     $scope.linkProtocol = function(){
@@ -523,7 +525,9 @@ angular.module('hillromvestApp')
       }
       patientService.addProtocol($stateParams.patientId, $scope.protocol).then(function(response){
         $state.go('patientProtocol');
-      }).catch(function(response){});
+      }).catch(function(response){
+        notyService.showError(response);
+      });
     };
 
     $scope.deleteDevice = function(){
@@ -532,7 +536,7 @@ angular.module('hillromvestApp')
         $scope.deviceToDelete.active = false;
         notyService.showMessage(response.data.message, 'success');
       }).catch(function(response){
-        notyService.showMessage(response.data.message, 'warning');
+        notyService.showError(response);
       });
     };
 
@@ -561,7 +565,9 @@ angular.module('hillromvestApp')
       patientService.deleteProtocol($stateParams.patientId, $scope.toDeleteProtocolId).then(function(response){
         notyService.showMessage(response.data.message, 'success');
         $scope.getProtocols($stateParams.patientId);
-      }).catch(function(response){});
+      }).catch(function(response){
+        notyService.showError(response);
+      });
     };
 
     $scope.initpatientCraegiverEdit = function(careGiverId){
@@ -581,7 +587,9 @@ angular.module('hillromvestApp')
         patientService.getCaregiverById($stateParams.patientId, caregiverId).then(function(response){
           $scope.associateCareGiver = response.data.caregiver.userPatientAssocPK.user;
           $scope.associateCareGiver.relationship = response.data.caregiver.relationshipLabel;
-        }).catch(function(response){});
+        }).catch(function(response){
+          notyService.showError(response);
+        });
     };
 
     $scope.updateCaregiver = function(patientId, caregiverId , careGiver){
@@ -603,7 +611,9 @@ angular.module('hillromvestApp')
       patientService.updateCaregiver(patientId,caregiverId, tempCaregiver).then(function(response){
         $scope.associateCareGiver = [];$scope.associateCareGiver.length = 0;
         $scope.switchPatientTab('patientCraegiver');
-      }).catch(function(response){});
+      }).catch(function(response){
+        notyService.showError(response);
+      });
     };
 
     $scope.goToCaregiverEdit = function(careGiverId){
@@ -642,19 +652,25 @@ angular.module('hillromvestApp')
       data[0].treatmentsPerDay = $scope.protocol.treatmentsPerDay;
       patientService.editProtocol($stateParams.patientId, data).then(function(response){
         $state.go('patientProtocol');
-      }).catch(function(response){});
+      }).catch(function(response){
+        notyService.showError(response);
+      });
     };
 
     $scope.getPatientById = function(patientid){
       patientService.getPatientInfo(patientid).then(function(response){
         $scope.slectedPatient = response.data;
-      }).catch(function(response){});
+      }).catch(function(response){
+        notyService.showError(response);
+      });
     };
 
     $scope.updateDevice = function(){
       patientService.addDevice($stateParams.patientId, $scope.device).then(function(response){
         $state.go('patientProtocol');
-      }).catch(function(response){});
+      }).catch(function(response){
+        notyService.showError(response);
+      });
     };
 
     $scope.addNewProtocolPoint = function (){
