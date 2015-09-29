@@ -226,9 +226,13 @@
 /* Dash Doard Note section css */
 .patient_dashdoard_btns{
 	.hillrom-btn{
-		background-color: $sunshade;
-		border: solid 1px $sunshade;
-		color: $gray-dark;
+		background-color: $iceberg;
+		border: 0;
+		border-bottom: solid 2px $blue-btn-border;
+		color: $btn-primary-color;
+		&:hover{
+			background-color: $blue-btn-hover;
+		}
 	}
 }
 .add_note_container{
@@ -340,7 +344,7 @@
 				}
 				&.frequency_legend{
 					&:after{
-						background-color: #7abd50;
+						background-color: #34978f;
 						border: $btn-default-bg;
 					}
 				}

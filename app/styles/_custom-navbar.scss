@@ -4,6 +4,10 @@ $header--background: $body-bg;
 	border: 0;
 }
 
+.navbar .navbar-default .navbar-fixed-top {
+	z-index: 9999;
+}
+
 .navbar-default {
 	background-color: $header--background;
 	color: $bombay;
@@ -21,25 +25,25 @@ $header--background: $body-bg;
 
 	.navbar-brand__desc {
 		display: inline-block;
-		padding-top: 23px;
+		padding-top: 20px;
 		padding-bottom: 16px;
 
 		&--text-primary {
-			color: $sunshade;	
+			color: $gray-dark;	
 			padding-left: 0;
 			padding-right: 5px;
-			font-size: $font-size-base;
+			font-size: $font-size-title;
 		}
 
 		&--text-secondary {
-			color: $silver-approx;
-			font-size: $font-size-small;
+			color: $gray-dark;
+			font-size: $font-size-title;
 		}
 	}
 }
 
 .navbar-default > .container > .navbar-primary {
-	width: 270px;
+	width: 315px;
 }
 
 .navbar-default > .container, 
@@ -206,7 +210,7 @@ $header--background: $body-bg;
 } 
  
 .navbar-secondary .navbar-right li .notif-bell .icon-notification-bell { 
-    color: $lapis-lazuli; 
+	color: $lapis-lazuli; 
 } 
  
 .navbar-secondary .navbar-right li a span.notification-count { 
@@ -226,4 +230,36 @@ $header--background: $body-bg;
 
 .hide-popup {
 	display: none;
+}
+
+.navbar-default > .container > .navbar-secondary ul{
+	min-height: 62px;
+	li {
+		min-height: inherit;
+		a {
+			min-height: inherit;
+		}
+	}
+}
+
+#top-shadow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  z-index: 999;
+  -webkit-box-shadow: 0 3px 3px $gray-lighter;
+  -moz-box-shadow: 0 3px 3px $gray-lighter;
+  box-shadow: 0 3px 3px $gray-lighter;
+  display: none;
+}
+
+.navbar.affix {
+  top:0; 
+  width:100%;
+}
+
+.content {
+	margin-top: 62px;
 }

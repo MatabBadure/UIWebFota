@@ -10,7 +10,7 @@ angular.module('hillromvestApp')
     return val;
   };
 })
-.controller('patientsController', function($scope, $filter, $state, $stateParams, patientService, dateService, notyService, UserService, DoctorService, clinicService,$rootScope,$timeout) {
+.controller('patientsController',['$scope', '$state', '$stateParams', 'patientService', 'dateService', 'notyService', 'UserService', 'DoctorService', 'clinicService', function($scope, $state, $stateParams, patientService, dateService, notyService, UserService, DoctorService, clinicService) {
     $scope.patient = {};
     $scope.patientTab = "";
     $scope.newProtocolPoint = 1;
@@ -627,7 +627,11 @@ angular.module('hillromvestApp')
       $state.go('patientAddDevice',{device: device});
     };
 
-    $scope.updateProtocol = function(){
+    $scope.updateProtocol = function(){ 
+      $scope.submitted = true;
+      if($scope.addProtocolForm.$invalid){
+        return false;
+      }
       if($scope.protocol.id){
         delete $scope.protocol.id;
       }
@@ -795,4 +799,4 @@ angular.module('hillromvestApp')
     };
 
     $scope.init();
-  });
+  }]);

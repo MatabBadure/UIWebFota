@@ -1,6 +1,6 @@
 'use strict';
 angular.module('hillromvestApp')
-  .factory('notyService', function(localStorageService, noty) {
+  .factory('notyService', ['noty', function(noty) {
     return {
       showMessage: function(message, type) {
         noty.showNoty({
@@ -20,4 +20,4 @@ angular.module('hillromvestApp')
         }
       }
     };
-  });
+  }]);

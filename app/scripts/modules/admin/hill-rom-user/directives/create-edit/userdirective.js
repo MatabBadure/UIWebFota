@@ -7,7 +7,7 @@
  * User Directive with create, edit and delete functions
  */
 angular.module('hillromvestApp')
-  .directive('user', function (UserService) {
+  .directive('user', function () {
     return {
       templateUrl: 'scripts/modules/admin/hill-rom-user/directives/create-edit/create.html',
       restrict: 'E',
@@ -17,9 +17,9 @@ angular.module('hillromvestApp')
         onSuccess: '&',
         userStatus: '=userStatus'
       },
-      controller: function ($scope, notyService, $state) {
+      controller: ['$scope', 'notyService', '$state', 'UserService', function ($scope, notyService, $state, UserService) {
 
-         $scope.open = function () {
+        $scope.open = function () {
           $scope.showModal = true;
         };
 
@@ -136,6 +136,6 @@ angular.module('hillromvestApp')
           $scope.submitted = false;
           $state.go('hillRomUser');
         }
-      }
+      }]
     };
   });

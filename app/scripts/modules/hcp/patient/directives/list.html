@@ -7,7 +7,7 @@
         </div>
         <div class="fixed-filter-box reset-padding-left">
           <div class="search-dropdown">
-            <select name="search" ng-model="sortOption" ng-change="searchPatients(sortOption)">
+            <select name="search" ng-model="sortOption" ng-change="searchPatients()">
               <option value="" >All</option>
               <option value="missed_therapy">Missed Therapy</option>
               <option value="non_hmr_compliance">Non HMR Compliance</option>
@@ -30,16 +30,16 @@
         <div class="col-md-2 col-sm-2 header--type">
           <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="patient.city-state">City/State</span>
         </div>
-        <div class="col-md-2 col-sm-2 header--type">
+        <div class="col-md-2 hidden-sm header--type">
           <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="patient.transmission">Transmission</span>
         </div>
         <div class="col-md-3 col-sm-3 header--type">
           <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" translate="patient.hcp-name">HCP Name</span>
         </div>
-        <div class="col-md-1 col-sm-1 header--type">
+        <div class="col-md-1 col-sm-2 header--type">
           <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="patient.status">Status</span>
         </div>
-        <div class="col-md-1 col-sm-1 header--type">
+        <div class="col-md-1 col-sm-2 header--type">
           <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="patient.adherence">Adherence</span>
         </div>
         <div class="clr"></div>
@@ -63,7 +63,7 @@
             <span class="short-info">{{patient.state}} </span>
           </div>
 
-          <div class="col-md-2 col-sm-2 reset-padding centered">
+          <div class="col-md-2 hidden-sm reset-padding centered">
             <span class="short-info">{{patient.transmission}}</span>
           </div>
 
@@ -71,17 +71,20 @@
             <span class="short-info">{{patient.hcp.lastName}} {{patient.hcp.firstName}}</span>
           </div>
 
-          <div class="col-md-1 col-sm-1 reset-padding">
+          <div class="col-md-1 col-sm-2 reset-padding">
             <span class="short-info active centered" ng-if="!patient.deleted" translate="patient.status-type.active"></span>
             <span class="short-info inactive centered" ng-if="patient.deleted" translate="patient.status-type.inactive"></span>
           </div>
 
-          <div class="col-md-1 col-sm-1 reset-padding-left centered text-right">
+          <div class="col-md-1 col-sm-2 reset-padding-left centered">
             <span class="short-info">{{patient.adherence}}</span>
           </div>
 
           <div class="clr"></div>
        </div>
+       <div class="col-md-16 col-sm-16 empty-list-message" ng-if="!patients || patients.length === 0">
+        <span translate="patient.no-patient-found"></span>
+      </div>
 
       <div class="dashboard__manage-view--pagination">
         <div class="col-md-16 col-sm-16 reset-padding-right">

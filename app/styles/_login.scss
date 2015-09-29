@@ -5,7 +5,8 @@
   -o-background-size: cover;
    background-size: cover;
   display: table;
-  height: calc(100% - 123px);
+  /*height: calc(100% - 123px);*/
+  height: 100%;
   position: absolute;
   width: 100%;
   background-size: 100% 100%;
@@ -13,7 +14,7 @@
 
 
 .login .login--position {
-  width: 40%;
+  width: 30%;
   margin: auto;
   overflow: hidden;
   padding: 3px;
@@ -169,13 +170,15 @@
   cursor: pointer;
   color: $btn-default-bg;
   font-size: 12px;
-  padding: 5px 25px;
+  padding: 7px 25px 3px;
   text-decoration: none;
   font-weight: normal;
   min-width: 120px;
   /*text-shadow:0px 1px 0px #b23e35;*/
   float: right;
-  
+  &:hover{
+    background-color: $blue-btn-hover;
+  }
 }
 
 .myButton:active {
@@ -210,4 +213,11 @@
   .login_portal_name_sub{
     margin: 0px;
   }*/
+}
+.login__container__right-section{
+    .login-form{
+      .recaptcha_container{
+        height: auto;
+      }
+    }
 }

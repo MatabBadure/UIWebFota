@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation" data-spy="affix">
   <div class="container" ng-switch="$root.isAuthenticated">
     <div class="navbar-header navbar-primary">
       <button data-target="#navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">
@@ -9,8 +9,8 @@
       </button>
       <a class="navbar-brand" href="" ng-click="goToHomePage();"><span class="logo icon-hill-rom-logo"></span></a>
       <div class="navbar-brand__desc"> 
-        <span class="navbar-brand__desc--text-primary"> VisiView<sup>TM</sup></span>
-        <span class="navbar-brand__desc--text-secondary">Health Portal</span>
+        <span class="navbar-brand__desc--text-primary"><span translate="global.logo-text.visi-view"></span><sup translate="global.logo-text.tm-sup"></sup></span>
+        <span class="navbar-brand__desc--text-secondary" translate="global.logo-text.health-portal"></span>
       </div>
     </div>
     <div class="collapse navbar-collapse navbar-secondary" id="navbar-collapse" ng-if="userRole === 'ADMIN'" ng-switch-when=true>

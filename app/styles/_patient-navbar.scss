@@ -10,9 +10,13 @@
 }
 
 .patient-user--nav {
+  border-radius: 0;
+  display: inline-block;
+  margin-bottom: 0;
+  margin-top: 2px;
   max-height: 40px;
   min-height: 40px;
-  margin-bottom: 0;
+  width: 100%;
 }
 
 .patient-user__navbar {
@@ -37,6 +41,11 @@
       color: white;
     }
   }
+  .nav_drop_arrow{
+    position: relative;
+    top: 2px;
+    left: 4px;
+  }
 }
 
 .patient-user__navbar ul > li > a.active {
@@ -47,7 +56,10 @@
   border-radius: 0;
   padding-bottom: 9px;
 }
-
+.patient-user__navbar ul > li > a.nav_bar_title:hover{
+  box-shadow: none;
+  cursor: default;
+}
 .patient-user__navbar .patient-dashboard > li {
   padding-right: 50px;
 }

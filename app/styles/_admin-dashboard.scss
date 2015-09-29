@@ -142,34 +142,48 @@
 }
 
 .hillrom-btn {
-  padding: 5px 10px;
-  border-radius: 3px;
+  padding: 7px 10px 4px;
+  min-width: 120px;
   text-transform: capitalize;
   font-size: $font-size-small;
   cursor: pointer;
   font-weight: bold;
+  text-align: center;
+  border: 0;
+  border-bottom: solid 2px $blue-btn-border;
+  &:hover{
+    background-color: $blue-btn-hover;
+  } 
 }
 
 .btn-submit {
-  border: 1px solid $sunshade;
-  background-color: $sunshade;
-  color: $tuna;
+  background-color: $blue-btn;
+  color: $btn-primary-color;
   margin-left: 10px;
 }
+.modal__body{
+  overflow: hidden;
+  .modal--custom-btn{
+    float: right;
+    .btn-submit{
+      float: left !important;
+    }
+  }
+}
 .fropile_update_btn_group .cancel{
-  background-color: $texas-rose;
-  border: 1px solid $texas-rose;
+  background-color: $blue-btn;
+  &:hover{
+    background-color: $blue-btn-hover;
+  }
 }
 .btn-primary {
-  border: 1px solid $sunshade;
-  background-color: $sunshade;
-  color: $tuna;
+  background-color: $blue-btn;
+  color: $btn-primary-color;
 }
 
 .btn-secondary {
-  border: 1px solid $texas-rose;
-  background-color: $texas-rose;
-  color: $tuna;
+  background-color: $blue-btn;
+  color: $btn-primary-color;
 }
 
 .btn-inactive {
@@ -278,7 +292,9 @@
   text-indent: 1px;
   text-overflow: '';
 }
-
+.dashboard__manage-view--search select option{
+  padding: 7px 10px; 
+}
 
 
 .search-dropdown:before {
@@ -304,7 +320,7 @@
 }
 
 .dashboard__manage-view--list {
-	border-bottom: 1px solid #f1f1f1;
+	border-bottom: 1px solid $silver-approx;
   padding-top: 10px;
   padding-bottom: 10px;
   cursor: pointer;
@@ -767,8 +783,7 @@ tags-input .autocomplete .suggestion-item.selected, tags-input .autocomplete .su
 }
 
 .dashboard__manage-view--header .header--type {
-  padding: 0;
-  padding-right: 10px;
+  padding: 0 10px;
   color: $cyan-blue-light;
   font-size: $font-size-small;
   font-weight: 300;
@@ -811,7 +826,7 @@ tags-input .autocomplete .suggestion-item.selected, tags-input .autocomplete .su
 
 .dashboard__manage-view--list > div {
   @extend .word-ellipsis;
-  padding-right: 10px;
+  padding: 0 10px;
 }
 
 .dashboard__manage-view--list .main-prim-info {
@@ -826,6 +841,7 @@ tags-input .autocomplete .suggestion-item.selected, tags-input .autocomplete .su
   color: $regent-gray;
   display: block;
   font-weight: $font-weight-medium;
+  @extend .word-ellipsis;
 }
 
 .dashboard__manage-view--list .impo-highlight {
