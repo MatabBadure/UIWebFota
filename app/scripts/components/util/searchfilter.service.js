@@ -10,6 +10,7 @@ angular.module('hillromvestApp')
             searchFilter.isSettingDeviation = false;
             searchFilter.isHMRNonCompliant = false;
             searchFilter.isMissedTherapy = false;
+            searchFilter.userList = searchFilters.patientList;
             return searchFilter;
         }
 
@@ -17,54 +18,58 @@ angular.module('hillromvestApp')
             var searchFilter = {};
             searchFilter.isActive = true;
             searchFilter.isInActive = false;
-            return searchFilter;
+            searchFilter.userList = searchFilters.clinicList;
         }
 
         this.initSearchFiltersForHCP = function() {
             var searchFilter = {};
             searchFilter.isActive = true;
             searchFilter.isInActive = false;
+            searchFilter.userList = searchFilters.hcpList;
             return searchFilter;
         }
 
 
         this.getFilterStringForPatient = function(filter) {
-           var filterString = searchFilters.isActive + searchFilters.colon;
-           filterString += (filter.isActive) ? 1 : 0; 
-           filterString += searchFilters.semicolon;
-           filterString += searchFilters.isDeleted + searchFilters.colon;
-           filterString += (filter.isInActive) ? 1 : 0; 
-           filterString += searchFilters.semicolon;
-           filterString += searchFilters.isSettingsDeviated + searchFilters.colon;
-           filterString += (filter.isSettingsDeviated) ? 1 : 0; 
-           filterString += searchFilters.semicolon;
-           filterString += searchFilters.isHMRNonCompliant + searchFilters.colon;
-           filterString += (filter.isHMRNonCompliant) ? 1 : 0; 
-           filterString += searchFilters.semicolon;
-           filterString += searchFilters.isMissedTherapy + searchFilters.colon;
-           filterString += (filter.isMissedTherapy) ? 1 : 0; 
-           filterString += searchFilters.semicolon;
-           filterString += searchFilters.isNoEvent + searchFilters.colon;
-           filterString += (filter.isNoEvent) ? 1 : 0; 
+           var filterString = searchFilters.emptyString;
+           if(filter.isActive && !filter.isInActive){
+              filterString = searchFilters.isDeleted + searchFilters.colon + 0 + searchFilters.semicolon;
+           }else if(!filter.isActive && filter.isInActive){
+              filterString = searchFilters.isDeleted + searchFilters.colon + 1 + searchFilters.semicolon;
+           }
+           if(filter.isSettingsDeviated){
+             filterString += searchFilters.isSettingsDeviated + searchFilters.colon + 1 + searchFilters.semicolon;
+           }
+           if(filter.isHMRNonCompliant){
+             filterString += searchFilters.isHMRNonCompliant + searchFilters.colon + 1 + searchFilters.semicolon;
+           }
+           if(filter.isMissedTherapy){
+             filterString += searchFilters.isMissedTherapy + searchFilters.colon + 1 + searchFilters.semicolon; 
+           }
+           if(filter.isNoEvent){
+            filterString += searchFilters.isNoEvent + searchFilters.colon + 1 + searchFilters.semicolon; 
+           }
            return filterString;
         }
 
-        this.getFilterStringForClinics = function() {
-          var filterString = searchFilters.isActive + searchFilters.colon;
-          filterString += (filter.isActive) ? 1 : 0; 
-          filterString += searchFilters.semicolon;
-          filterString += searchFilters.isDeleted + searchFilters.colon;
-          filterString += (filter.isInActive) ? 1 : 0; 
-          return searchFilter;
+        this.getFilterStringForClinics = function(filter) {
+          var filterString = searchFilters.emptyString;
+            if(filter.isActive && !filter.isInActive){
+              filterString = searchFilters.isDeleted + searchFilters.colon + 0 + searchFilters.semicolon;
+            }else if(!filter.isActive && filter.isInActive){
+              filterString = searchFilters.isDeleted + searchFilters.colon + 1 + searchFilters.semicolon;
+            }
+          return filterString;
         }
 
-        this.getFilterStringForHCP = function() {
-          var filterString = searchFilters.isActive + searchFilters.colon;
-          filterString += (filter.isActive) ? 1 : 0; 
-          filterString += searchFilters.semicolon;
-          filterString += searchFilters.isDeleted + searchFilters.colon;
-          filterString += (filter.isInActive) ? 1 : 0; 
-          return searchFilter;
+        this.getFilterStringForHCP = function(filter) {
+          var filterString = searchFilters.emptyString;
+            if(filter.isActive && !filter.isInActive){
+              filterString = searchFilters.isDeleted + searchFilters.colon + 0 + searchFilters.semicolon;
+            }else if(!filter.isActive && filter.isInActive){
+              filterString = searchFilters.isDeleted + searchFilters.colon + 1 + searchFilters.semicolon;
+            }
+          return filterString;
         }
 
     }]);
