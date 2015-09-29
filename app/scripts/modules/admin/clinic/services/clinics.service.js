@@ -28,7 +28,8 @@ angular.module('hillromvestApp')
         });
       },
 
-      getClinics: function(searchString, sortOption, pageNo, offset) {
+      getClinics: function(searchString, sortOption, pageNo, offset, filter) {
+        var filterBy = (filter && filter != undefined) ? filter : stringConstants.emptyString;
         if (searchString === undefined) {
           searchString = '';
         }
@@ -39,7 +40,7 @@ angular.module('hillromvestApp')
         } else {
           sortOrder = true;
         };
-        return $http.get('api/clinics/search?searchString=' + searchString + '&page=' + pageNo + '&per_page=' + offset + '&sort_by=' + sortOption + '&asc=' + sortOrder, {
+        return $http.get('api/clinics/search?searchString=' + searchString + '&page=' + pageNo + '&per_page=' + offset + '&sort_by=' + sortOption + '&asc=' + sortOrder + '&filter='+filterBy, {
           headers: headerService.getHeader()
         }).success(function(response) {
           return response;
