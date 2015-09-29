@@ -21,6 +21,33 @@
           </div>
         </div>
       </div>
+
+      
+      <div class="row">
+        <label>
+          <input type="checkbox" ng-model="all" ng-change="setModels()"> All
+        </label>
+        <label>
+          <input type="checkbox" ng-model="isActiveElm" ng-change="triggerCall(isActiveElm, 'isActive')" > Active
+        </label>
+        <label>
+          <input type="checkbox" ng-model="isInActive" ng-change="triggerCall(isInActive, 'isInactive')"> InActive
+        </label>
+        <label> 
+          <input type="checkbox" ng-model="isNoEvent" ng-change="triggerCall(isNoEvent, 'isNoEvent')"> No Events
+        </label>
+        <label>
+          <input type="checkbox" ng-model="isSettingDeviation" ng-change="triggerCall(isSettingDeviation, 'isSettingDeviation')"> Setting Deviation
+        </label>
+        <label>  
+          <input type="checkbox" ng-model="isHMRNonCompliant" ng-change="triggerCall(isHMRNonCompliant, 'isHMRNonCompliant')">HMR Non Compliant
+        </label>
+        <label>  
+          <input type="checkbox" ng-model="isMissedTherapy" ng-change="triggerCall(isMissedTherapy, 'isMissedTherapy')">Missed Therapy
+        </label>
+      </div>
+
+
       <div class="dashboard__manage-view--header">
         <div class="col-md-2 col-sm-3 header--type">
           <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="patient.patient-name">Patient Name</span>

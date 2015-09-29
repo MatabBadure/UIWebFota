@@ -260,5 +260,48 @@ angular.module('hillromvestApp')
     });    
   };
 
+  $scope.all = false;
+  $scope.isActiveElm = false;
+  $scope.isInActive = false;
+  $scope.isNoEvent = false;
+  $scope.isSettingDeviation = false;
+  $scope.isHMRNonCompliant = false;
+  $scope.isMissedTherapy = false;
+
+  $scope.setModels = function() {
+    if($scope.all) {
+      $scope.isActiveElm = true;
+      $scope.isInActive = true;
+      $scope.isNoEvent = true;
+      $scope.isSettingDeviation = true;
+      $scope.isHMRNonCompliant = true;
+      $scope.isMissedTherapy = true;
+    } else {
+      $scope.isActiveElm = false;
+      $scope.isInActive = false;
+      $scope.isNoEvent = false;
+      $scope.isSettingDeviation = false;
+      $scope.isHMRNonCompliant = false;
+      $scope.isMissedTherapy = false;
+    }
+    $scope.filterPatients();
+  };
+  
+  $scope.triggerCall = function(flag, value) {
+    console.log(flag, value);
+    $scope.filterPatients();
+  };
+
+  $scope.filterPatients = function(){
+    console.log($scope.all,
+    $scope.isActiveElm,
+    $scope.isInActive,
+    $scope.isNoEvent,
+    $scope.isSettingDeviation,
+    $scope.isHMRNonCompliant,
+    $scope.isMissedTherapy);
+    console.log('Call Rest API');
+  };
+
 	$scope.init();
 }]);
