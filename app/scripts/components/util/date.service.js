@@ -1,6 +1,6 @@
 'use strict';
 angular.module('hillromvestApp')
-  .factory('dateService', function(localStorageService, noty) {
+  .factory('dateService',[function() {
     return {
       getAge: function(dob) {
         var currentDate = new Date(),
@@ -288,4 +288,4 @@ angular.module('hillromvestApp')
     }
 
     };
-  });
+  }]);

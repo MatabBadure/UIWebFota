@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hillromvestApp')
-  .controller('adminProfileController', function ($rootScope, $scope, $state, $stateParams, $location, notyService, UserService, Password, Auth, AuthServerProvider) {
+  .controller('adminProfileController',['$scope', '$state', '$location', 'notyService', 'UserService', 'Password', 'Auth', 'AuthServerProvider', function ($scope, $state, $location, notyService, UserService, Password, Auth, AuthServerProvider) {
 
 
     $scope.isActive = function(tab) {
@@ -101,4 +101,4 @@ angular.module('hillromvestApp')
     };
 
     $scope.init();
-  });
+  }]);

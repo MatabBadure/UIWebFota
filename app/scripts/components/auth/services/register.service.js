@@ -1,9 +1,7 @@
 'use strict';
 
 angular.module('hillromvestApp')
-    .factory('Register', function ($resource) {
+    .factory('Register', ['$resource', function ($resource) {
         return $resource('api/register', {}, {
         });
-    });
-
-
+    }]);

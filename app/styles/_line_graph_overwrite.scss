@@ -88,6 +88,9 @@
 				> .nv-groups{
 					> .nv-group{
 						stroke: #fff !important;
+						&:hover{
+							fill-opacity: 1 !important;
+						}
 					}
 				}
 			}
@@ -198,7 +201,7 @@
 	.patient_dashdoard_btns{
 		clear: left;
 	    display: inline-block;
-	    margin: 30px 0px 112px;
+	    margin: 30px 0px 20px;
 	    width: 100%;	
 	}
 	/* Grapg ToolTip style */
@@ -216,13 +219,18 @@
 		width: 100%;
 		.btn{
 			margin: 7px 0px 0px;
-		    background-color: #FF9829;
-		    border: solid 1px #FF9829;
-		    color: #333333;
+		    background-color: $iceberg;
+		    border: 0;
+		    border-bottom: solid 2px $blue-btn-border;
+		    color: $btn-primary-color;
+		    min-width: 120px;
 		    padding: 3px 15px;
-		    border-radius: 4px;
+		    border-radius: 0;
 			&.applyBtn{
 				margin-left: 5px; 
+			}
+			&:hover{
+				background-color: $blue-btn-hover;
 			}
 		}
 	}
@@ -309,8 +317,16 @@
 .graph-canvas-hide{
 	display: none;
 }
-.noData{
-	font-size : 18px;
-	padding-left : 500px;
-	font-weight : bold;
+.graph_nodata{
+	width: 180px;
+	margin: 0% auto;
+	text-align: center;
+	height: 250px;
+	.noData_text{
+		font-size : $font-size-large;
+		font-weight : bold;
+		margin-top: 50%;
+		color: $gray;
+		display: inline-block;
+	}
 }

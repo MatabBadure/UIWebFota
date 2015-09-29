@@ -206,7 +206,7 @@
       "zipcode": "Zip",
       "city": "City",
       "state": "State",
-      "phoneNumber": "PhoneNumber",
+      "phoneNumber": "Phone Number",
       "fax-number": "Clinic Fax Number",
       "clinic-phone": "Clinic Phone Number",
       "hillromId": "Hillrom ID",
@@ -219,7 +219,8 @@
       "status": "Status",
       "satellite": "Satellite",
       "active": "Active",
-      "inactive": "Inactive"
+      "inactive": "Inactive",
+      "no-clinic-found": "No clinic associated."
     },
     "hcp":{
       "name": "Name",
@@ -231,7 +232,8 @@
       "status": "Status",
       "active": "Active",
       "inactive": "Inactive",
-      "pending": "Pending"
+      "pending": "Pending",
+      "no-hcp-found": "No HCP associated."
     },    
     "select-relationship": "Select relationship.",
     "toggle-navigation": "Toggle navigation",

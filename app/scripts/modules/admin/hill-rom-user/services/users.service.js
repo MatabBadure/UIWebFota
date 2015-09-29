@@ -6,7 +6,7 @@
  *
  */
 angular.module('hillromvestApp')
-  .factory('UserService', function($http, localStorageService, headerService) {
+  .factory('UserService',['$http', 'headerService', function($http, headerService) {
     return {
 
       /**
@@ -191,4 +191,4 @@ angular.module('hillromvestApp')
       }
       
     };
-  });
+  }]);

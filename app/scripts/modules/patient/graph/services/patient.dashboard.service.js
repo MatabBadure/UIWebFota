@@ -6,7 +6,7 @@
  *
  */
 angular.module('hillromvestApp')
-  .factory('patientDashBoardService', function ($http, headerService) {
+  .factory('patientDashBoardService',['$http', 'headerService', function ($http, headerService) {
     return {
 
       /**
@@ -147,4 +147,4 @@ angular.module('hillromvestApp')
       }
 
     };
-  });
+  }]);
