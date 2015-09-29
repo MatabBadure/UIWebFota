@@ -9,7 +9,7 @@
           <!-- TODO : ng-change="searchPatients();" -->
           <span class="search-icon hillrom-icon icon-search-icon"></span>
         </div>
-        <div class="fixed-filter-box reset-padding-left">
+       <!--  <div class="fixed-filter-box reset-padding-left">
           <div class="search-dropdown">
             <select name="search" ng-model="sortOption" ng-change="searchPatients(sortOption)">
               <option value="" >All</option>
@@ -19,7 +19,7 @@
               <option value="noevents">No Events</option>
             </select>
           </div>
-        </div>
+        </div> -->
       </div>
 
       <ng-include src="'scripts/components/navbar/searchfilter.html'"></ng-include>
@@ -89,6 +89,9 @@
 
           <div class="clr"></div>
        </div>
+       <div class="col-md-16 col-sm-16 empty-list-message" ng-if="!patients || patients.length === 0">
+          <span translate="patient.no-patient-found"></span>
+        </div>
       <div class="dashboard__manage-view--pagination">
         <div class="col-md-16 col-sm-16 reset-padding-right">
           <div class="navbar-right">

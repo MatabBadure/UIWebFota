@@ -929,7 +929,7 @@ angular.module('hillromvestApp')
 
             .state('clinicAdmin', {
               parent: 'clinicEdit',
-              url: '/clinicAdmin',
+              url: '/clinicadmin-clinic-edit',
               data: {
                   roles: ['ADMIN'],
                   pageTitle: 'clinic.title'
