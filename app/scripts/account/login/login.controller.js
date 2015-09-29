@@ -82,7 +82,8 @@ angular.module('hillromvestApp')
           localStorage.setItem('userFirstName', response.data.user.firstName);
           localStorage.setItem('role', response.data.user.authorities[0].name);
           localStorage.setItem('userEmail', response.data.user.email);
-          $rootScope.userRole = localStorage.getItem('role');           
+          $rootScope.userRole = localStorage.getItem('role');
+          $rootScope.username = localStorage.getItem('userFirstName');
           if(response.data.user.authorities[0].name === loginConstants.role.patient){
             localStorage.setItem('patientID', response.data.user.id);
             $state.go('patientdashboard');
