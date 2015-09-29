@@ -45,7 +45,8 @@ angular.module('hillromvestApp')
     };
 
     $scope.initClinicAssoctPatients = function(clinicId){
-      $scope.isAssociatePatient = $scope.hasNoPatient = false;
+      $scope.searchAssociatedPatients();
+      /*$scope.isAssociatePatient = $scope.hasNoPatient = false;
       var patientCount = 0;
       clinicService.getClinicAssoctPatients(clinicId).then(function(response){
         $scope.associatedPatients = response.data.patientUsers;
@@ -68,7 +69,7 @@ angular.module('hillromvestApp')
           }         
           searchOnLoad = false;
         }).catch(function(response){});
-      }).catch(function(response){});      
+      }).catch(function(response){});      */
       $scope.getClinicById(clinicId);
     };
 
