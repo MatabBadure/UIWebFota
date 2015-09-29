@@ -293,5 +293,12 @@
         "termsofuse":"Terms of Use",
         "hippanotice": "HIPPA Notice of Privacy Practices",
         "hillromrespiratorycare": "Hill-Rom Respiratory Care Site"
+    },
+    "search-filter" : {
+        "active" : "Active", 
+        "inactive" : "InActive", "no-event" : "No Events",
+        "setting-deviation" : "Setting Deviation", 
+        "hmr-non-compliant" : "HMR Non Compliant", 
+        "missed-therapy" :"Missed Therapy"
     }
 }
