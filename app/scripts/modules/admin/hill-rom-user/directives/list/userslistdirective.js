@@ -7,7 +7,7 @@
  * User List  Directive To List all the User and Select one for Disassociate or Edit
  */
 angular.module('hillromvestApp')
-  .directive('userList', function(UserService) {
+  .directive('userList', [ 'UserService', 'searchFilterService', function(UserService, searchFilterService) {
     return {
       templateUrl: 'scripts/modules/admin/hill-rom-user/directives/list/list.html',
       restrict: 'E',
@@ -36,6 +36,7 @@ angular.module('hillromvestApp')
           $scope.sortIconUp = false;
           $scope.sortIconDown = false;
           $scope.searchItem = "";
+          $scope.searchFilter = searchFilterService.initSearchFiltersForPatient();
           $scope.searchUsers();
         };
 
@@ -83,8 +84,9 @@ angular.module('hillromvestApp')
           } else {
             $scope.currentPageIndex = 1;
           }
+          var filter = searchFilterService.getFilterStringForPatient($scope.searchFilter);
           var url = 'api/user/search?searchString=';
-          UserService.getUsers(url, $scope.searchItem, $scope.sortOption, $scope.currentPageIndex, $scope.perPageCount).then(function(response) {
+          UserService.getUsers(url, $scope.searchItem, $scope.sortOption, $scope.currentPageIndex, $scope.perPageCount, filter).then(function(response) {
             $scope.users = response.data;
             $scope.total = response.headers()['x-total-count'];
             $scope.pageCount = Math.ceil($scope.total / 10);
@@ -110,8 +112,11 @@ angular.module('hillromvestApp')
             $scope.sortIconDown = true;
           }
         };
+        $scope.searchOnFilters = function(){    
+          $scope.searchUsers();
+        };
 
         $scope.init();
       }
     };
-  });
+  }]);

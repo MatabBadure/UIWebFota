@@ -19,7 +19,7 @@
         <input type="text" class="form-control" id="searchListParam" name="userName" ng-model="searchItem" autocomplete="off" placeholder="{{'user.placeholder.search' | translate}}">
         <span class="search-icon hillrom-icon icon-search-icon"></span>
       </div>
-      <div class="fixed-filter-box reset-padding-left">
+     <!--  <div class="fixed-filter-box reset-padding-left">
         <div class="search-dropdown">
           <select name="search" ng-model="sortOption" ng-change="searchUsers()">
             <option value="" selected translate="user.filter.all"></option>
@@ -27,9 +27,9 @@
             <option value="firstName" translate="user.filter.inactive"></option>
           </select>
         </div>
-      </div>
+      </div> -->
     </div>
-
+    <ng-include src="'scripts/components/navbar/searchfilter.html'"></ng-include>
     <div class="dashboard__manage-view--header">
       <div class="col-md-3 header--type">
         <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="user.user-name"></span>
