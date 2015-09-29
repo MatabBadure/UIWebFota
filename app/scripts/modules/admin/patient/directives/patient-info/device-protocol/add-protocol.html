@@ -90,7 +90,7 @@
               <span class="">*</span>
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
-              <input class="" type="number" name="maxMinutesPerTreatment" ng-model="proto.maxMinutesPerTreatment" required min="{{proto.minMinutesPerTreatment}}">
+              <input class="" type="number" name="maxMinutesPerTreatment" ng-model="proto.maxMinutesPerTreatment"  min="0" max="99"  required >
               <div ng-show="(point.maxMinutesPerTreatment.$dirty && point.maxMinutesPerTreatment.$showValidationMessage && point.maxMinutesPerTreatment.$invalid) || submitted">
                 <span class="has-error" ng-show="point.maxMinutesPerTreatment.$error.required" translate="error.protocol.maxMinutesPerTreatment.required">
                 </span>

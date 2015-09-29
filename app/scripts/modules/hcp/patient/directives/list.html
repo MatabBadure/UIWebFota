@@ -9,7 +9,7 @@
         </div>
         <div class="fixed-filter-box reset-padding-left">
           <div class="search-dropdown">
-            <select name="search" ng-model="sortOption" ng-change="searchPatients(sortOption)">
+            <select name="search" ng-model="sortOption" ng-change="searchPatients()">
               <option value="" >All</option>
               <option value="missed_therapy">Missed Therapy</option>
               <option value="non_hmr_compliance">Non HMR Compliance</option>
@@ -84,6 +84,9 @@
 
           <div class="clr"></div>
        </div>
+       <div class="col-md-16 col-sm-16 empty-list-message" ng-if="!patients || patients.length === 0">
+        <span translate="patient.no-patient-found"></span>
+      </div>
 
       <div class="dashboard__manage-view--pagination">
         <div class="col-md-16 col-sm-16 reset-padding-right">
