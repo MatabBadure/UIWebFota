@@ -1,6 +1,6 @@
 'use strict';
 angular.module('hillromvestApp')
-  .factory('headerService', function(localStorageService) {
+  .factory('headerService',[function() {
     return {
       getHeader: function() {
         var token = localStorage.getItem('token'),
@@ -12,4 +12,4 @@ angular.module('hillromvestApp')
         return header;
       }
     };
-  });
+  }]);

@@ -8,7 +8,7 @@
  */
 
 angular.module('hillromvestApp')
-.directive('mobileNumber', function(){
+.directive('mobileNumber', [function(){
   return {
     restrict: 'E',
     require: "?ngModel",
@@ -26,4 +26,4 @@ angular.module('hillromvestApp')
       };
     }
   };
-});
+}]);

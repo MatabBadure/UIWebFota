@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hillromvestApp')
-    .service('DateUtils', function () {
+    .service('DateUtils', [function () {
       this.convertLocaleDateToServer = function(date) {
         if (date) {
           var utcDate = new Date();
@@ -27,4 +27,4 @@ angular.module('hillromvestApp')
           return null;
         }
       }
-    });
+    }]);
