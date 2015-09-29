@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hillromvestApp')
-.controller('ResetFinishController', function ($scope, $stateParams, $timeout, Auth, localStorageService, $state) {
+.controller('ResetFinishController',['$scope', '$stateParams', '$timeout', 'Auth', '$state', function ($scope, $stateParams, $timeout, Auth, $state) {
 
   $scope.keyMissing = $stateParams.key === undefined;
   $scope.doNotMatch = null;
@@ -145,4 +145,4 @@ $scope.div = function (x){
     return (x*$scope.factorial(x-1));
 
   };
-});
+}]);

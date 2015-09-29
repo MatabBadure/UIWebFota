@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hillromvestApp')
-    .factory('AuthServerProvider', function loginService($http, localStorageService, Base64) {
+    .factory('AuthServerProvider', ['$http', 'localStorageService', function($http, localStorageService) {
         return {
             login: function(credentials) {
                 var data = {
@@ -100,4 +100,4 @@ angular.module('hillromvestApp')
                });
             }
         };
-    });
+    }]);

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hillromvestApp')
-.controller('AuthenticateController', function ($scope, Auth, localStorageService, $state, $stateParams) {
+.controller('AuthenticateController',['$scope', 'Auth', '$state', '$stateParams', function ($scope, Auth, $state, $stateParams) {
 
     $scope.otherError = false;
     $scope.questionsNotLoaded = false;
@@ -148,4 +148,4 @@ $scope.factorial = function (x) {
 
 };
 
-});
+}]);

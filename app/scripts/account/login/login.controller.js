@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hillromvestApp')
-  .controller('LoginController', function($scope, $state, $timeout, Auth, vcRecaptchaService, globalConfig, $rootScope, loginConstants,Principal) {
+  .controller('LoginController',['$scope', '$state', '$timeout', 'Auth', 'vcRecaptchaService', 'globalConfig', '$rootScope', 'loginConstants', 'Principal', function($scope, $state, $timeout, Auth, vcRecaptchaService, globalConfig, $rootScope, loginConstants,Principal) {
     $scope.showLogin = true;
     $scope.isEmailExist = true;
     $scope.isFirstLogin = false;
@@ -277,4 +277,4 @@ angular.module('hillromvestApp')
       return false;
     };
     $scope.init();
-  });
+  }]);

@@ -2,8 +2,8 @@
 
 angular.module('hillromvestApp')
 .controller('graphController', 
-  ['$scope', '$state', 'patientDashBoardService', 'StorageService', 'dateService', 'graphUtil', 'patientService', 'UserService', '$stateParams', 'notyService', '$timeout', 'graphService',
-  function($scope, $state, patientDashBoardService, StorageService, dateService, graphUtil, patientService, UserService, $stateParams, notyService, $timeout, graphService) {
+  ['$scope', '$state', 'patientDashBoardService', 'dateService', 'graphUtil', 'patientService', 'UserService', '$stateParams', 'notyService', '$timeout', 'graphService',
+  function($scope, $state, patientDashBoardService, dateService, graphUtil, patientService, UserService, $stateParams, notyService, $timeout, graphService) {
     var chart;
     $scope.init = function() {
       $scope.hmrLineGraph = true;

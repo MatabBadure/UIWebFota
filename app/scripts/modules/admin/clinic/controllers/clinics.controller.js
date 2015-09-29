@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hillromvestApp')
-  .controller('clinicsController', function ($rootScope, $scope, $state, $stateParams, $timeout, Auth, clinicService, UserService, notyService) {
+  .controller('clinicsController',['$scope', '$state', '$stateParams', '$timeout', 'clinicService', 'UserService', 'notyService', function ($scope, $state, $stateParams, $timeout, clinicService, UserService, notyService) {
     $scope.clinic = {};
     $scope.clinicStatus = {
       'role':localStorage.getItem('role'),
@@ -626,4 +626,4 @@ angular.module('hillromvestApp')
 
 
     $scope.init();
-  });
+  }]);

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hillromvestApp')
-    .controller('ActivationController', function ($scope, $stateParams, Auth) {
+    .controller('ActivationController', ['$scope', '$stateParams', 'Auth', function ($scope, $stateParams, Auth) {
         Auth.activateAccount({key: $stateParams.key}).then(function () {
         	$scope.key = $stateParams.key;
             $scope.error = null;
@@ -10,5 +10,5 @@ angular.module('hillromvestApp')
             $scope.success = null;
             $scope.error = 'ERROR';
         });
-    });
+    }]);
 

@@ -1,6 +1,6 @@
 'use strict';
 angular.module('hillromvestApp')
-  .factory('clinicService', function($http, localStorageService, headerService) {
+  .factory('clinicService',['$http', 'headerService', function($http, headerService) {
     var token = localStorage.getItem('token');
     return {
       createClinic: function(data) {
@@ -174,4 +174,4 @@ angular.module('hillromvestApp')
         });
       }
     };
-  });
+  }]);
