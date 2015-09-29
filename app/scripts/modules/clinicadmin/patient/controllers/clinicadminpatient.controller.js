@@ -1,5 +1,6 @@
 angular.module('hillromvestApp')
-.controller('clinicadminPatientController',['$scope', '$state', '$stateParams', 'clinicadminPatientService', 'patientService', 'notyService', 'DoctorService', 'clinicadminService', 'clinicService', 'dateService', 'UserService', function($scope, $state, $stateParams, clinicadminPatientService, patientService, notyService, DoctorService, clinicadminService, clinicService, dateService, UserService) { 
+.controller('clinicadminPatientController',['$scope', '$state', '$stateParams', 'clinicadminPatientService', 'patientService', 'notyService', 'DoctorService', 'clinicadminService', 'clinicService', 'dateService', 'UserService', 'searchFilterService', 
+  function($scope, $state, $stateParams, clinicadminPatientService, patientService, notyService, DoctorService, clinicadminService, clinicService, dateService, UserService, searchFilterService) { 
 	
 	$scope.init = function(){
     if($state.current.name === 'clinicadminpatientDemographic'  || $state.current.name === 'clinicadmminpatientDemographicEdit'){
@@ -17,6 +18,7 @@ angular.module('hillromvestApp')
       $scope.getPatientInfo($stateParams.patientId);
       $scope.getCaregiversAssociatedWithPatient($stateParams.patientId);
     }else if($state.current.name === 'clinicadminpatientdashboard'){
+      $scope.searchFilter = searchFilterService.initSearchFilters();
       $scope.currentPageIndex = 1;
       $scope.perPageCount = 10;
       $scope.pageCount = 0;
@@ -24,7 +26,7 @@ angular.module('hillromvestApp')
       var clinicId = $stateParams.clinicId;
       $scope.sortOption = $stateParams.filter;
       if(!$stateParams.filter){
-        $scope.getAllPatientsByClinicId(clinicId, requestParam.pageNo, requestParam.offset);
+        $scope.getAllPatientsByClinicId(clinicId);
       }else if($stateParams.filter === 'noevents'){
         $scope.getPatientsWithNoEvents($stateParams.filter, clinicId, requestParam.pageNo, requestParam.offset);
       } else {
@@ -258,6 +260,11 @@ angular.module('hillromvestApp')
     }).catch(function (response) {
       notyService.showError(response);
     });    
+  };
+
+  $scope.searchOnFilters = function(){ alert("exe");
+    $scope.filter = searchFilterService.getFilterString($scope.searchFilter);
+    //$scope.searchPatients();
   };
 
 	$scope.init();
