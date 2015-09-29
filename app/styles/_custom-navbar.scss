@@ -206,7 +206,7 @@ $header--background: $body-bg;
 } 
  
 .navbar-secondary .navbar-right li .notif-bell .icon-notification-bell { 
-    color: $lapis-lazuli; 
+	color: $lapis-lazuli; 
 } 
  
 .navbar-secondary .navbar-right li a span.notification-count { 
@@ -226,4 +226,14 @@ $header--background: $body-bg;
 
 .hide-popup {
 	display: none;
+}
+
+.navbar-default > .container > .navbar-secondary ul{
+	min-height: 62px;
+	li {
+		min-height: inherit;
+		a {
+			min-height: inherit;
+		}
+	}
 }
