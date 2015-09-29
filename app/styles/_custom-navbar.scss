@@ -21,25 +21,25 @@ $header--background: $body-bg;
 
 	.navbar-brand__desc {
 		display: inline-block;
-		padding-top: 23px;
+		padding-top: 20px;
 		padding-bottom: 16px;
 
 		&--text-primary {
-			color: $sunshade;	
+			color: $gray-dark;	
 			padding-left: 0;
 			padding-right: 5px;
-			font-size: $font-size-base;
+			font-size: $font-size-title;
 		}
 
 		&--text-secondary {
-			color: $silver-approx;
-			font-size: $font-size-small;
+			color: $gray-dark;
+			font-size: $font-size-title;
 		}
 	}
 }
 
 .navbar-default > .container > .navbar-primary {
-	width: 270px;
+	width: 315px;
 }
 
 .navbar-default > .container, 

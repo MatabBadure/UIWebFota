@@ -3,8 +3,8 @@
 <div class="container admin-user">
   <div class="col-md-16 col-sm-16 margin-top">
    <div class="user-gen-details">
-     <span class="user-gen-details--name">{{patient.firstName}} {{patient.lastName}}</span>
-     <span class="user-gen-details--hr-id">{{patient.hillromId}}</span>
+     <span class="user-gen-details--name">{{::patient.firstName}} {{::patient.lastName}}</span>
+     <span class="user-gen-details--hr-id">{{::patient.hillromId}}</span>
    </div>
   </div>
 
@@ -34,7 +34,7 @@
 
   <div class="col-md-16 col-sm-16 protocol-list" ng-repeat="protocol in protocols" ng-class="{'list-inactive':protocol.deleted}">
     <div class="col-md-3 col-sm-3 protocol-list__type">
-      <span> {{protocol.type}}</span>
+      <span> {{::protocol.type}}</span>
     </div>
     <div class="col-md-3 col-sm-3 protocol-list__treatment-day">
       <span class="protocol-list--value"> {{::protocol.treatmentsPerDay}}</span>

@@ -217,7 +217,8 @@
       "status": "Status",
       "satellite": "Satellite",
       "active": "Active",
-      "inactive": "Inactive"
+      "inactive": "Inactive",
+      "no-clinic-found": "No clinic associated."
     },
     "hcp":{
       "name": "Name",
@@ -229,7 +230,8 @@
       "status": "Status",
       "active": "Active",
       "inactive": "Inactive",
-      "pending": "Pending"
+      "pending": "Pending",
+      "no-hcp-found": "No HCP associated."
     },    
     "select-relationship": "Select relationship.",
     "toggle-navigation": "Toggle navigation",

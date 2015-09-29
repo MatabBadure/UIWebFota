@@ -53,6 +53,10 @@ requestParam = {
 	"offset": 10
 }
 
+var stringConstants = {
+	"emptyString": ""
+}
+
 
 angular.module('hillromvestApp').constant('hcpDashboardConstants', {
     cumulativeGraph : {
