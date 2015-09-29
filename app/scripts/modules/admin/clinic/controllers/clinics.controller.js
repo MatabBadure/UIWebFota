@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('hillromvestApp')
-  .controller('clinicsController', function ($rootScope, $scope, $state, $stateParams, $timeout, Auth, clinicService, UserService, notyService) {
+  .controller('clinicsController', [ '$rootScope', '$scope', '$state', '$stateParams', '$timeout', 'Auth', 'clinicService', 'UserService', 'notyService', 'searchFilterService',
+    function ($rootScope, $scope, $state, $stateParams, $timeout, Auth, clinicService, UserService, notyService, searchFilterService) {
     var searchOnLoad = true;
     $scope.clinic = {};
     $scope.clinicStatus = {
@@ -21,6 +22,7 @@ angular.module('hillromvestApp')
         $scope.initCreateClinic();
       } else if (currentRoute === 'clinicUser'){
         $scope.initPaginationVars();
+        $scope.searchFilter = searchFilterService.initSearchFiltersForClinic();
         $scope.initClinicList();
       } else if (currentRoute === 'clinicProfile'){
         $scope.initClinicProfile($stateParams.clinicId);
@@ -206,8 +208,9 @@ angular.module('hillromvestApp')
           }
         }else {
             $scope.currentPageIndex = 1;
-        }
-        clinicService.getClinics($scope.searchItem, $scope.sortOption, $scope.currentPageIndex, $scope.perPageCount).then(function (response) {
+        } 
+        var filter = searchFilterService.getFilterStringForClinics($scope.searchFilter);
+        clinicService.getClinics($scope.searchItem, $scope.sortOption, $scope.currentPageIndex, $scope.perPageCount, filter).then(function (response) {
           $scope.clinics = response.data;
           $scope.total = response.headers()['x-total-count'];
           $scope.pageCount = Math.ceil($scope.total / 10);
@@ -671,9 +674,11 @@ angular.module('hillromvestApp')
       $scope.total = 0;        
       $scope.sortOption ="";
       $scope.searchItem = "";
-      $scope.searAssociatedPatient = "";
+      $scope.searAssociatedPatient = "";      
     };
 
-
+    $scope.searchOnFilters = function(){           
+      $scope.searchClinics();
+    };
     $scope.init();
-  });
+  }]);
