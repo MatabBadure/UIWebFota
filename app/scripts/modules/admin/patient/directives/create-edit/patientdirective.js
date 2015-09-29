@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hillromvestApp')
-  .directive('patient', function (UserService, DoctorService, patientService) {
+  .directive('patient', function () {
     return {
       templateUrl: 'scripts/modules/admin/patient/directives/create-edit/create.html',
       restrict: 'E',
@@ -11,7 +11,7 @@ angular.module('hillromvestApp')
         patientStatus: '=patientStatus'
       },
 
-      controller: function ($scope, noty, $state, $timeout, $stateParams, notyService, dateService) {
+      controller: ['$scope', '$state', 'notyService', 'dateService', 'UserService', function ($scope, $state, notyService, dateService, UserService) {
 
         $scope.open = function () {
           $scope.showModal = true;
@@ -179,6 +179,6 @@ angular.module('hillromvestApp')
           angular.element("#dp2").datepicker('hide');
           $scope.$digest();
         });
-      }
+      }]
     };
   });
