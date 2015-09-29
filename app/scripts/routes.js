@@ -55,7 +55,7 @@ angular.module('hillromvestApp')
                 }
             })
             .state('clinic-admin-user-profile', {               
-                url:'/clinicadmin/{clinicId}',
+                url:'/clinicadmin-profile/{clinicId}',
                 views:{
                     'content':{
                     templateUrl:'scripts/modules/clinicadmin/profile/profile-tabs/clinic-admin-profile-section.html'                
