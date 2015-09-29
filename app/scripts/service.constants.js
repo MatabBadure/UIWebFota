@@ -30,7 +30,9 @@ var searchFilters = {
     isMissedTherapy : 'isMissedTherapy',
     isNoEvent: 'isNoEvent',
     equal: '=',
-    amp: '&'
+    amp: '&',
+    colon: ':',
+    semicolon: ';'
 }
 angular.module('hillromvestApp').constant('hcpServiceConstants', {
     graph : {

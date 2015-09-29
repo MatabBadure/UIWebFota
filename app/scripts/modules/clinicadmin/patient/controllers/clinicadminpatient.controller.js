@@ -18,7 +18,7 @@ angular.module('hillromvestApp')
       $scope.getPatientInfo($stateParams.patientId);
       $scope.getCaregiversAssociatedWithPatient($stateParams.patientId);
     }else if($state.current.name === 'clinicadminpatientdashboard'){
-      $scope.searchFilter = searchFilterService.initSearchFilters();
+      $scope.searchFilter = searchFilterService.initSearchFiltersForPatient();
       $scope.currentPageIndex = 1;
       $scope.perPageCount = 10;
       $scope.pageCount = 0;
@@ -262,8 +262,8 @@ angular.module('hillromvestApp')
     });    
   };
 
-  $scope.searchOnFilters = function(){ alert("exe");
-    $scope.filter = searchFilterService.getFilterString($scope.searchFilter);
+  $scope.searchOnFilters = function(){
+    $scope.filter = searchFilterService.getFilterStringForPatient($scope.searchFilter);
     //$scope.searchPatients();
   };
 

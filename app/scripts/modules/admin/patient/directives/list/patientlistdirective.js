@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('hillromvestApp')
-  .directive('patientList', function(UserService, patientService, $state, $stateParams, notyService) {
+  .directive('patientList', [ 'UserService', 'patientService', '$state', '$stateParams', 'notyService', 'searchFilterService', 
+    function(UserService, patientService, $state, $stateParams, notyService, searchFilterService) {
     return {
       templateUrl: 'scripts/modules/admin/patient/directives/list/patientlist.html',
       restrict: 'E',
@@ -21,6 +22,7 @@ angular.module('hillromvestApp')
       controller: function($scope, $timeout, dateService) {
         var searchOnLoad = true;
         $scope.init = function() {
+          $scope.searchFilter = searchFilterService.initSearchFiltersForPatient();
           $scope.patients = [];
           $scope.patientInfo = {};
           $scope.currentPageIndex = 1;
@@ -75,7 +77,8 @@ angular.module('hillromvestApp')
           } else {
             $scope.currentPageIndex = 1;
           } 
-          patientService.getPatients($scope.searchItem, $scope.sortOption, $scope.currentPageIndex, $scope.perPageCount)
+          var filter = searchFilterService.getFilterStringForPatient($scope.searchFilter);
+          patientService.getPatients($scope.searchItem, $scope.sortOption, $scope.currentPageIndex, $scope.perPageCount,filter)
             .then(function(response) {
               $scope.patients = response.data;
               var patientCount = $scope.patients.length;
@@ -132,8 +135,12 @@ angular.module('hillromvestApp')
             $scope.sortIconDown = true;
           }
         };
+        $scope.searchOnFilters = function(){           
+          $scope.searchPatients();
+        };
+
 
         $scope.init();
       }
     };
-  });
+  }]);
