@@ -20,6 +20,17 @@
 		margin: 10% auto 15%;
 	}
 	.login{
+		background: url("../images/bg_ipad_landscape.jpg") no-repeat;
+		-webkit-background-size: cover;
+		-moz-background-size: cover;
+		-o-background-size: cover;
+		background-size: cover;
+		display: table;
+		/*height: calc(100% - 123px);*/
+		height: 100%;
+		position: absolute;
+		width: 100%;
+		background-size: 100% 100%;
 		.login--position{
 			width: 70%;
 			margin: 10% auto 15%;
@@ -83,6 +94,17 @@
 		margin: 10% auto 15%;
 	}
 	.login{
+		background: url("../images/bg_ipad_portrait.jpg") no-repeat;
+		-webkit-background-size: cover;
+		-moz-background-size: cover;
+		-o-background-size: cover;
+		background-size: cover;
+		display: table;
+		/*height: calc(100% - 123px);*/
+		height: 100%;
+		position: absolute;
+		width: 100%;
+		background-size: 100% 100%;
 		.login--position{
 			width: 70%;
 			margin: 10% auto 15%;
@@ -102,3 +124,12 @@
 	}
 	/* User Particular info tab padding  END*/
 }
+@media only screen and (min-width : 1024px){
+	background: url("../images/login_bg.jpg") no-repeat;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+} 
+
+
