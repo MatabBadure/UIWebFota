@@ -21,8 +21,21 @@ var patient = {
 	}
 }
 
+var searchFilters = {
+	isActive : 'isActive', 
+    isInActive : 'isInActive',
+    isDeleted : 'isDeleted', 
+    isSettingsDeviated : 'isSettingsDeviated', 
+    isHMRNonCompliant :'isHMRNonCompliant',
+    isMissedTherapy : 'isMissedTherapy',
+    isNoEvent: 'isNoEvent',
+    equal: '=',
+    amp: '&'
+}
 angular.module('hillromvestApp').constant('hcpServiceConstants', {
     graph : {
 		baseURL : 'api/users'
 	}
 });
+
+
