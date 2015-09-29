@@ -5,7 +5,8 @@
   -o-background-size: cover;
    background-size: cover;
   display: table;
-  height: calc(100% - 123px);
+  /*height: calc(100% - 123px);*/
+  height: 100%;
   position: absolute;
   width: 100%;
   background-size: 100% 100%;
@@ -212,4 +213,11 @@
   .login_portal_name_sub{
     margin: 0px;
   }*/
+}
+.login__container__right-section{
+    .login-form{
+      .recaptcha_container{
+        height: auto;
+      }
+    }
 }
