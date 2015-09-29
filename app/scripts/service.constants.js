@@ -32,7 +32,11 @@ var searchFilters = {
     equal: '=',
     amp: '&',
     colon: ':',
-    semicolon: ';'
+    semicolon: ';',
+    emptyString: '',
+    patientList : "patientList",
+    clinicList: "clinicList",
+    hcpList: "hcpList"
 }
 angular.module('hillromvestApp').constant('hcpServiceConstants', {
     graph : {
