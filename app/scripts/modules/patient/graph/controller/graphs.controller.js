@@ -667,7 +667,7 @@ angular.module('hillromvestApp')
       }
       if(value.key.indexOf("frequency") >= 0  && $scope.compliance.frequency === true){
         value.yAxis = ++count;
-        value.color = '#7abd50';
+        value.color = '#34978f';
         if(count === 1){
           $scope.yAxis1Max = $scope.yAxisRangeForCompliance.maxFrequency;
           $scope.compliance.primaryYaxis = 'frequency';
