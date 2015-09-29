@@ -305,5 +305,7 @@
         "setting-deviation" : "Setting Deviation", 
         "hmr-non-compliant" : "HMR Non Compliant", 
         "missed-therapy" :"Missed Therapy"
-    }
+    },
+
+    "user-not-found" : "No user associated."
 }

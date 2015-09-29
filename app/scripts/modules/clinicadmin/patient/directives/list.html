@@ -6,20 +6,8 @@
       <div class="dashboard__manage-view--search">
         <div class="fuid-search-box reset-padding-right">
           <input type="text" class="form-control" id="searchListParam" name="userName" ng-model="searchItem" autocomplete="off" placeholder="{{'patient.placeholder.search' | translate}}" >
-          <!-- TODO : ng-change="searchPatients();" -->
           <span class="search-icon hillrom-icon icon-search-icon"></span>
         </div>
-       <!--  <div class="fixed-filter-box reset-padding-left">
-          <div class="search-dropdown">
-            <select name="search" ng-model="sortOption" ng-change="searchPatients(sortOption)">
-              <option value="" >All</option>
-              <option value="missed_therapy">Missed Therapy</option>
-              <option value="non_hmr_compliance">Non HMR Compliance</option>
-              <option value="setting_deviation">Setting Deviation</option>
-              <option value="noevents">No Events</option>
-            </select>
-          </div>
-        </div> -->
       </div>
 
       <ng-include src="'scripts/components/navbar/searchfilter.html'"></ng-include>

@@ -36,7 +36,7 @@ angular.module('hillromvestApp')
           $scope.sortIconUp = false;
           $scope.sortIconDown = false;
           $scope.searchItem = "";
-          $scope.searchFilter = searchFilterService.initSearchFiltersForPatient();
+          $scope.searchFilter = searchFilterService.initSearchFiltersForHCP();
           $scope.searchUsers();
         };
 
@@ -84,7 +84,7 @@ angular.module('hillromvestApp')
           } else {
             $scope.currentPageIndex = 1;
           }
-          var filter = searchFilterService.getFilterStringForPatient($scope.searchFilter);
+          var filter = searchFilterService.getFilterStringForHCP($scope.searchFilter);
           var url = 'api/user/search?searchString=';
           UserService.getUsers(url, $scope.searchItem, $scope.sortOption, $scope.currentPageIndex, $scope.perPageCount, filter).then(function(response) {
             $scope.users = response.data;
