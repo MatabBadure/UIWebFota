@@ -41,7 +41,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-md-4 col-sm-4">
+					<div class="col-md-4 col-sm-4" ng-if="role === 'PATIENT'">	
 						<div class="dashboard_noti_section">
 							<div class="header_noti"><h4 translate="graph.notification"></h4></div>
 							<div class="notification_container" ng-show="patientNotifications.length <= 0">
