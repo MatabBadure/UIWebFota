@@ -1,66 +1,62 @@
 <!-- starting clinic -->
-<h2>Clinics</h2>
+<h2 class="admin-views--title">Clinics</h2>
 <div class="row content-list">
-    <div class=" col-md-2 col-sm-2  content-list__detail--name"> Hillrom ID </div>
-    <div class=" col-md-6 col-sm-6 content-list__detail--name" translate="clinic.name" translate="clinic.hillromid"> Clinic Name </div>
-    <div class=" col-md-2 col-sm-2 content-list__detail--name" translate="clinic.phoneNumber"> Phone </div>
-    <div class=" col-md-2 col-sm-2 content-list__detail--name" translate="clinic.type"> Type </div>
-    <div class=" col-md-1 col-sm-1 content-list__detail--name"> Status </div>
+  <div class="col-md-2 col-sm-2 content-list__detail--name" translate="clinic.hillromid"> Hillrom ID </div>
+  <div class="col-md-6 col-sm-6 content-list__detail--name" translate="clinic.name"> Clinic Name </div>
+  <div class="col-md-2 col-sm-4 content-list__detail--name" translate="clinic.phoneNumber"> Phone </div>
+  <div class="col-md-2 col-sm-2 content-list__detail--name" translate="clinic.type"> Type </div>
+  <div class="col-md-1 col-sm-1 content-list__detail--name" translate="clinic.status"> Status </div>
 </div>
+
 <div class="row dashboard__manage-view--list" ng-repeat="clinic in clinics" ng-class="{'inactive': clinic.deleted}">
-    <div class="col-md-2 col-sm-2 reset-padding impo-highlight">
-        {{clinic.hillromId}}
-    </div>
-    <div class="col-md-6 col-sm-6 reset-padding">
-        <span class="impo-highlight">{{clinic.name}}</span>
-        <div class="short-info">
-            {{clinic.address}}</div>
-        <div class="short-info">{{clinic.city}}, {{clinic.state}}</div>
-    </div>
-    <div class="col-md-2 col-sm-2 reset-padding short-info">
-        {{clinic.phoneNumber}}
-    </div>
-    <div class="col-md-2 col-sm-2 reset-padding short-info">
-        {{clinic.type}}
-    </div>
-    <div class="col-md-2 col-sm-2 reset-padding">
-        <span class="short-info active" ng-if="!clinic.deleted" translate="hcp.active"></span>
-        <span class="short-info inactive" ng-if="clinic.deleted" translate="hcp.inactive"></span>
-    </div>
+  <div class="col-md-2 col-sm-2 reset-padding impo-highlight">
+    {{::clinic.hillromId}}
+  </div>
+  <div class="col-md-6 col-sm-6 reset-padding">
+    <span class="impo-highlight">{{::clinic.name}}</span>
+    <div class="short-info">{{::clinic.address}}</div>
+    <div class="short-info" ng-if="clinic.city && clinic.state">{{::clinic.city}}, {{::clinic.state}}</div>
+  </div>
+  <div class="col-md-2 col-sm-4 reset-padding short-info">
+    {{::clinic.phoneNumber}}
+  </div>
+  <div class="col-md-2 col-sm-2 reset-padding short-info">
+    {{::clinic.type}}
+  </div>
+  <div class="col-md-2 col-sm-2 reset-padding">
+    <span class="short-info active" ng-if="!clinic.deleted" translate="hcp.active"></span>
+    <span class="short-info inactive" ng-if="clinic.deleted" translate="hcp.inactive"></span>
+  </div>
 </div>
+
 <div class="col-md-16 col-sm-16 empty-list-message" ng-if="clinics.length === 0 || !clinics">
-    <span translate="clinic.no-clinic-found"></span>
+  <span translate="clinic.no-clinic-found"></span>
 </div>
 
 <!-- HCP Listing starts -->
-<h2>HCP</h2>
+<h2 class="admin-views--title">HCP</h2>
 <div class="row content-list">
-    <div class=" col-md-2 col-sm-2  content-list__detail--name" translate="hcp.npinumber"> NPI Number </div>
-
-    <div class=" col-md-6 col-sm-6 content-list__detail--name" translate="hcp.name"> Name </div>
-
-    <div class=" col-md-4 col-sm-4  content-list__detail--name" translate="hcp.city"> City </div>
-<div class=" col-md-2 col-sm-2  content-list__detail--name" translate="hcp.status"> Status </div>
-
-
+  <div class="col-md-2 col-sm-2 content-list__detail--name" translate="hcp.npinumber"> NPI Number </div>
+  <div class="col-md-6 col-sm-6 content-list__detail--name" translate="hcp.name"> Name </div>
+  <div class="col-md-4 col-sm-4 content-list__detail--name" translate="hcp.city"> City </div>
+  <div class="col-md-2 col-sm-2 content-list__detail--name" translate="hcp.status"> Status </div>
 </div>
+
 <div class="row dashboard__manage-view--list" ng-repeat="hcp in hcps">
-   <div class="col-md-2 col-sm-2 short-info">{{hcp.npiNumber}}</div>
-    <div class="col-md-6 col-sm-6 reset-padding">
-        <span class="impo-highlight">{{hcp.firstName}} {{hcp.lastName}} </span>
-        <br/>
-        <i class="short-info">{{hcp.credentials}}</i>
-    </div>
-
-
-<div class="col-md-4 col-sm-4 short-info">{{hcp.city}}, {{hcp.state}}</div>
-<div class="col-md-2 col-sm-2 reset-padding">
+ <div class="col-md-2 col-sm-2 short-info">{{::hcp.npiNumber}}</div>
+  <div class="col-md-6 col-sm-6 reset-padding">
+    <span class="impo-highlight">{{::hcp.firstName}} {{::hcp.lastName}}</span>
+    <i class="short-info">{{::hcp.credentials}}</i>
+  </div>
+  <div class="col-md-4 col-sm-4 short-info">{{::hcp.city}}, {{::hcp.state}}</div>
+  <div class="col-md-2 col-sm-2 reset-padding">
     <span class="short-info active" ng-if="!hcp.deleted && hcp.activated" translate="hcp.active"></span>
     <span class="short-info inactive" ng-if="hcp.deleted" translate="hcp.inactive"></span>
     <span class="short-info inactive" ng-if="!hcp.deleted && !hcp.activated" translate="hcp.pending"></span>
+  </div>
 </div>
-</div>
+
 <div class="col-md-16 col-sm-16 empty-list-message" ng-if="hcps.length === 0 || !hcps">
-    <span translate="hcp.no-hcp-found"></span>
+  <span translate="hcp.no-hcp-found"></span>
 </div>
 

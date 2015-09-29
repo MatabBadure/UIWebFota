@@ -827,7 +827,7 @@ tags-input .autocomplete .suggestion-item.selected, tags-input .autocomplete .su
 
 .dashboard__manage-view--list > div {
   @extend .word-ellipsis;
-  padding-right: 10px;
+  padding: 0 10px;
 }
 
 .dashboard__manage-view--list .main-prim-info {
