@@ -24,16 +24,19 @@
           "clinic-name": "Clinic Name",
           "address": "Address",
           "phone-number": "Phone Number",
-          "fax-number": "Fax Number",
-          "hr-id": "Hill-rom ID"
+          "hr-id": "Hill-rom ID",
+          "type": "Type",
+          "city": "City",
+          "state": "State"
         },
         "hcp-caption": {
           "hcp-name": "HCP Name",
-          "address": "Address",
           "phone-number": "Phone Number",
-          "fax-number": "Fax Number",
           "npi-id": "NPI Number",
-          "credentials": "Credentials"
+          "credentials": "Credentials",
+          "clinic-name": "Clinic Name",
+          "city": "City",
+          "state": "State"
         },
         "protocol-caption": {
           "type": "Type",
@@ -49,12 +52,11 @@
           "device": "Device",
           "modified-date": "Modified Date"
         },
-        "clinic-title": "Clinic",
+        "clinic-title": "Clinics",
         "caregiver-title": "Caregivers",
         "device-title": "Device Information",
         "protocol-title": "Protocol",
-        "clinic-title": "Clinic",
-        "hcp-title": "HCP",
+        "hcp-title": "HCPs",
         "phone": "Phone:",
         "mobile": "Mobile:",
         "fax": "Fax:",
