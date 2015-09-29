@@ -1947,6 +1947,99 @@ angular.module('hillromvestApp')
                     ]
                 }
             })
-
+            .state('contactus', {
+                parent: 'account',
+                url: '/contactus',
+                data: {
+                    roles: [],
+                    pageTitle: 'login.title'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/components/footer_static_pages/contact_us.html',
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('login');
+                        return $translate.refresh();
+                    }]
+                }
+            })
+            .state('privacyPolicy', {
+                parent: 'account',
+                url: '/privacyPolicy',
+                data: {
+                    roles: [],
+                    pageTitle: 'login.title'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/components/footer_static_pages/privacy_policy.html',
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('login');
+                        return $translate.refresh();
+                    }]
+                }
+            })
+            .state('termsOfUse', {
+                parent: 'account',
+                url: '/termsOfUse',
+                data: {
+                    roles: [],
+                    pageTitle: 'login.title'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/components/footer_static_pages/terms_of_use.html',
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('login');
+                        return $translate.refresh();
+                    }]
+                }
+            })
+            .state('privacyPractices', {
+                parent: 'account',
+                url: '/privacyPractices',
+                data: {
+                    roles: [],
+                    pageTitle: 'login.title'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/components/footer_static_pages/HIPPA_notice_of_privacy_practices.html',
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('login');
+                        return $translate.refresh();
+                    }]
+                }
+            })
+            .state('careSite', {
+                parent: 'account',
+                url: '/careSite',
+                data: {
+                    roles: [],
+                    pageTitle: 'login.title'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/components/footer_static_pages/hill_rom_respiratory.html',
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('login');
+                        return $translate.refresh();
+                    }]
+                }
+            });
 });
-
