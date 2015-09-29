@@ -7,7 +7,7 @@
  * User List  Directive To List all the User and Select one for Disassociate or Edit
  */
 angular.module('hillromvestApp')
-  .directive('userList', [ 'UserService', 'searchFilterService', function(UserService, searchFilterService) {
+  .directive('userList', function() {
     return {
       templateUrl: 'scripts/modules/admin/hill-rom-user/directives/list/list.html',
       restrict: 'E',
@@ -22,7 +22,7 @@ angular.module('hillromvestApp')
           scope.searchUsers();
         })
       },
-      controller: function($scope, $timeout, $state) {
+      controller: ['$scope', '$timeout', '$state', 'UserService', 'searchFilterService', function($scope, $timeout, $state, UserService, searchFilterService) {
         var searchOnLoad = true;
         $scope.init = function() {
           $scope.users = [];
@@ -117,6 +117,6 @@ angular.module('hillromvestApp')
         };
 
         $scope.init();
-      }
+      }]
     };
-  }]);
+  });

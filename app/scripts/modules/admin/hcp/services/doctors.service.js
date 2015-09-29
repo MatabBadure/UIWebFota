@@ -6,7 +6,7 @@
  *
  */
 angular.module('hillromvestApp')
-  .factory('DoctorService', ['$http', 'localStorageService', 'headerService', 'URL', function ($http, localStorageService, headerService, URL) {
+  .factory('DoctorService', ['$http', 'headerService', 'URL', function ($http, headerService, URL) {
     var token = localStorage.getItem('token');
     return {
 

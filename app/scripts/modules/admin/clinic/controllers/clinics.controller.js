@@ -27,6 +27,7 @@ angular.module('hillromvestApp')
       } else if (currentRoute === 'clinicProfile'){
         $scope.initClinicProfile($stateParams.clinicId);
       } else if(currentRoute === 'clinicAssociatedPatients'){
+        $scope.searchFilter = {};    
         $scope.searchFilter = searchFilterService.initSearchFiltersForPatient();
         $scope.initPaginationVars();
         $scope.initClinicAssoctPatients($stateParams.clinicId);
@@ -45,31 +46,7 @@ angular.module('hillromvestApp')
     };
 
     $scope.initClinicAssoctPatients = function(clinicId){
-      $scope.searchAssociatedPatients();
-      /*$scope.isAssociatePatient = $scope.hasNoPatient = false;
-      var patientCount = 0;
-      clinicService.getClinicAssoctPatients(clinicId).then(function(response){
-        $scope.associatedPatients = response.data.patientUsers;
-        clinicService.getPatients().then(function(response){
-          $scope.patients = response.data.users;
-          if($scope.associatedPatients){
-            for(var i=0; i<$scope.associatedPatients.length; i++){
-              if($scope.associatedPatients[i].patient){
-                patientCount++;
-                for(var j=0; j<$scope.patients.length; j++){
-                  if($scope.associatedPatients[i].patient.id === $scope.patients[j].id){
-                    $scope.patients.splice(j,1);
-                  }
-                }
-              }
-            }
-          }
-          if(patientCount === 0){
-            $scope.hasNoPatient = true;
-          }         
-          searchOnLoad = false;
-        }).catch(function(response){});
-      }).catch(function(response){});      */
+      $scope.searchAssociatedPatients();      
       $scope.getClinicById(clinicId);
     };
 
@@ -659,7 +636,7 @@ angular.module('hillromvestApp')
       }else {
           $scope.currentPageIndex = 1;
       }
-      var filter = searchFilterService.getFilterStringForClinics($scope.searchFilter) + $scope.sortOption;
+      var filter = searchFilterService.getFilterStringForPatient($scope.searchFilter) + $scope.sortOption; 
       clinicService.searchAssociatedPatientsToClinic($scope.searAssociatedPatient, filter, $scope.currentPageIndex, $scope.perPageCount, $stateParams.clinicId).then(function (response) {        
         $scope.associatedPatients = [];     
         if(response.data.length < 1){

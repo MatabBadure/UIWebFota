@@ -1,8 +1,7 @@
 'use strict';
 
 angular.module('hillromvestApp')
-  .directive('patientList', [ 'UserService', 'patientService', '$state', '$stateParams', 'notyService', 'searchFilterService', 
-    function(UserService, patientService, $state, $stateParams, notyService, searchFilterService) {
+  .directive('patientList', function($state, $stateParams) {
     return {
       templateUrl: 'scripts/modules/admin/patient/directives/list/patientlist.html',
       restrict: 'E',
@@ -19,7 +18,8 @@ angular.module('hillromvestApp')
         })
       }
       },
-      controller: function($scope, $timeout, dateService) {
+      controller: ['$scope', '$timeout', 'patientService', '$state', '$stateParams', 'notyService','searchFilterService', 
+      function($scope, $timeout, patientService, $state, $stateParams, notyService, searchFilterService) {
         var searchOnLoad = true;
         $scope.init = function() {
           $scope.searchFilter = searchFilterService.initSearchFiltersForPatient();
@@ -141,6 +141,6 @@ angular.module('hillromvestApp')
 
 
         $scope.init();
-      }
+      }]
     };
-  }]);
+  });

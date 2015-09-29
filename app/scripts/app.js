@@ -89,8 +89,7 @@ angular.module('hillromvestApp',
       'abstract': true,
       views: {
         'navbar@': {
-          templateUrl: 'scripts/components/navbar/navbar.html',
-          controller: 'NavbarController'
+          templateUrl: 'scripts/components/navbar/navbar.html'
         }
       },
       resolve: {

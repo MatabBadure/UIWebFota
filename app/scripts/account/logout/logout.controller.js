@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hillromvestApp')
-    .controller('LogoutController', function ($scope, Auth, $state, Principal, Account) {
+    .controller('LogoutController',['$scope', 'Auth', '$state', 'Principal', 'Account', function ($scope, Auth, $state, Principal, Account) {
     	$scope.logout = function(){
 
     		//This it Temp Fix
@@ -18,4 +18,4 @@ angular.module('hillromvestApp')
         	}).catch(function(err) {
         	});
     	};
-    });
+    }]);
