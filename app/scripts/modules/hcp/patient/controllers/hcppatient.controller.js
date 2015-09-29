@@ -1,6 +1,6 @@
 angular.module('hillromvestApp')
-.controller('hcpPatientController',['$scope', '$state', '$stateParams', 'hcpPatientService', 'patientService', 'notyService', 'DoctorService', 'clinicadminPatientService', 'dateService', 'clinicService', '$timeout',
-  function($scope, $state, $stateParams, hcpPatientService, patientService, notyService, DoctorService, clinicadminPatientService, dateService, clinicService, $timeout) {   
+.controller('hcpPatientController',['$scope', '$state', '$stateParams', 'hcpPatientService', 'patientService', 'notyService', 'DoctorService', 'clinicadminPatientService', 'dateService', 'clinicService', '$timeout', 'searchFilterService',
+  function($scope, $state, $stateParams, hcpPatientService, patientService, notyService, DoctorService, clinicadminPatientService, dateService, clinicService, $timeout, searchFilterService) {   
   var searchOnLoad = true;    
 	$scope.init = function(){       
     if($state.current.name === 'hcppatientDemographic'){
@@ -14,6 +14,7 @@ angular.module('hillromvestApp')
       $scope.getPatientInfo($stateParams.patientId);
       $scope.getCaregiversAssociatedWithPatient($stateParams.patientId);
     }else if($state.current.name === 'hcppatientdashboard'){
+      $scope.searchFilter = searchFilterService.initSearchFiltersForPatient();
       $scope.currentPageIndex = 1;
       $scope.perPageCount = 10;
       $scope.pageCount = 0;
@@ -186,7 +187,7 @@ angular.module('hillromvestApp')
     }else {
       $scope.currentPageIndex = 1;
     }
-    var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : $stateParams.clinicId;
+    /*var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : $stateParams.clinicId;
     var filter = ($scope.sortOption) ? $scope.sortOption : ($stateParams.filter ? $stateParams.filter : false);
     if(!filter){
       $scope.getPatientsForClinic(clinicId);
@@ -194,7 +195,17 @@ angular.module('hillromvestApp')
       $scope.getPatientsWithNoEvents(filter, clinicId, requestParam.pageNo, requestParam.offset);
     } else {
       $scope.getPatientsByFilter(filter, clinicId, requestParam.pageNo, requestParam.offset);
-    }         
+    }  */
+    var filter = searchFilterService.getFilterStringForPatient($scope.searchFilter);
+    var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : $stateParams.clinicId;
+    DoctorService.searchPatientsForHCP($scope.searchItem, localStorage.getItem('userId'), clinicId, $scope.currentPageIndex, $scope.perPageCount, filter).then(function (response) {
+      $scope.patients = response.data;      
+      $scope.total = (response.headers()['x-total-count']) ? response.headers()['x-total-count'] :$scope.patients.length; 
+      $scope.pageCount = Math.ceil($scope.total / 10);
+      searchOnLoad = false;
+    }).catch(function (response) {
+      notyService.showError(response);
+    });           
 	};
 
   $scope.switchClinic = function(clinic){
@@ -242,6 +253,10 @@ angular.module('hillromvestApp')
       $scope.searchPatients();
     }, 1000)
    }
-  });  
+  }); 
+
+  $scope.searchOnFilters = function(){    
+    $scope.searchPatients();
+  }; 
 	
 }]);

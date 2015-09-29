@@ -6,21 +6,12 @@
       <div class="dashboard__manage-view--search">
         <div class="fuid-search-box reset-padding-right">
           <input type="text" class="form-control" id="searchListParam" name="userName" ng-model="searchItem" autocomplete="off" placeholder="{{'patient.placeholder.search' | translate}}" >
-          <!-- TODO : ng-change="searchPatients();" -->
           <span class="search-icon hillrom-icon icon-search-icon"></span>
         </div>
-        <div class="fixed-filter-box reset-padding-left">
-          <div class="search-dropdown">
-            <select name="search" ng-model="sortOption" ng-change="searchPatients(sortOption)">
-              <option value="" >All</option>
-              <option value="missed_therapy">Missed Therapy</option>
-              <option value="non_hmr_compliance">Non HMR Compliance</option>
-              <option value="setting_deviation">Setting Deviation</option>
-              <option value="noevents">No Events</option>
-            </select>
-          </div>
-        </div>
       </div>
+
+      <ng-include src="'scripts/components/navbar/searchfilter.html'"></ng-include>
+
       <div class="dashboard__manage-view--header">
         <div class="col-md-3 col-sm-3 header--type">
           <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="patient.patient-name">Patient Name</span>
@@ -86,6 +77,9 @@
 
           <div class="clr"></div>
        </div>
+       <div class="col-md-16 col-sm-16 empty-list-message" ng-if="!patients || patients.length === 0">
+          <span translate="patient.no-patient-found"></span>
+        </div>
       <div class="dashboard__manage-view--pagination">
         <div class="col-md-16 col-sm-16 reset-padding-right">
           <div class="navbar-right">

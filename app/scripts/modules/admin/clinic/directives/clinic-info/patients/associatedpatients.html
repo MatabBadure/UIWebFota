@@ -12,21 +12,13 @@
   <div class="container dashboard__manage-view margin-top-xl">
     <div class="dashboard__manage-view--search">
       <div class="fuid-search-box reset-padding-right">
-        <input type="text" class="form-control" id="searchListParam" name="userName" ng-model="searchItem" autocomplete="off" placeholder="{{'clinic.placeholder.search' | translate}}">
+        <input type="text" class="form-control" id="searchListParam" name="userName" ng-model="searAssociatedPatient" autocomplete="off" placeholder="{{'clinic.placeholder.search' | translate}}">
         <span class="search-icon hillrom-icon icon-search-icon"></span>
-      </div>
-      <div class="fixed-filter-box reset-padding-left">
-        <div class="search-dropdown">
-          <select name="search" ng-model="sortOption" ng-change="searchDoctors()">
-            <option value="" selected translate="clinic.filter.all">Newly Created</option>
-              <option value="email" translate="clinic.filter.active">Email</option>
-              <option value="firstName" translate="clinic.filter.inactive">First Name</option>
-              <option value="lastName" translate="clinic.filter.expired">Last Name</option>
-          </select>
-        </div>
       </div>
     </div>
 
+    <ng-include src="'scripts/components/navbar/searchfilter.html'"></ng-include>
+    
     <div class="dashboard__manage-view--header">
       <div class="col-md-2 header--type">
         <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="clinic.patient-name">Patient Name</span>

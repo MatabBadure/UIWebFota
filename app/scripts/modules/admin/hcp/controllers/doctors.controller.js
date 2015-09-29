@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('hillromvestApp')
-  .controller('DoctorsController',['$rootScope', '$scope', '$state', '$timeout', 'Auth', '$stateParams', 'UserService', 'DoctorService', 'notyService', 'clinicService', function($rootScope, $scope, $state, $timeout, Auth,$stateParams, UserService, DoctorService, notyService, clinicService ) {
+  .controller('DoctorsController',['$rootScope', '$scope', '$state', '$timeout', 'Auth', '$stateParams', 'UserService', 'DoctorService', 'notyService', 'clinicService', 'searchFilterService', 
+    function($rootScope, $scope, $state, $timeout, Auth,$stateParams, UserService, DoctorService, notyService, clinicService,searchFilterService ) {
     $scope.doctor = {};
     $scope.doctorStatus = {
       'role': localStorage.getItem('role'),
@@ -21,6 +22,7 @@ angular.module('hillromvestApp')
         $scope.total = 0;        
         $scope.sortOption ="";
         $scope.searchItem = "";
+        $scope.searchFilter = searchFilterService.initSearchFiltersForPatient();
         $scope.searchPatientsForHCP();
         $scope.getDoctorDetails($stateParams.doctorId, $scope.setEditMode);        
       } else if (currentRoute === 'hcpNew') {
@@ -100,7 +102,7 @@ angular.module('hillromvestApp')
     };
 
     $scope.getPatientsByClinic = function(){
-      $scope.getPatientsAssociatedToHCP($scope.doctor.id, $scope.sortOption);
+      $scope.searchPatientsForHCP();
     };
 
     $scope.getClinicsOfHCP = function(doctorId){
@@ -265,17 +267,21 @@ angular.module('hillromvestApp')
         }else {
             $scope.currentPageIndex = 1;
         } 
-        DoctorService.searchPatientsForHCP($scope.searchItem, $stateParams.doctorId, $scope.sortOption, $scope.currentPageIndex, $scope.perPageCount).then(function (response) {
+
+        var filter = searchFilterService.getFilterStringForPatient($scope.searchFilter);
+        DoctorService.searchPatientsForHCP($scope.searchItem, $stateParams.doctorId, $scope.sortOption, $scope.currentPageIndex, $scope.perPageCount, filter).then(function (response) {
           $scope.patients = [];
           angular.forEach(response.data, function(patient){
             $scope.patients.push({"patientUser": patient});
-          });
+          });          
           $scope.total = (response.headers()['x-total-count']) ? response.headers()['x-total-count'] :$scope.patients.length; 
           $scope.pageCount = Math.ceil($scope.total / 10);
           searchOnLoad = false;
-        }).catch(function (response) {
-          notyService.showError(response);
-        });
+        });    
+    };
+
+    $scope.searchOnFilters = function(){    
+      $scope.searchPatientsForHCP();
     };
 
     $scope.init();

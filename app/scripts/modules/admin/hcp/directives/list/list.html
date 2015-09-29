@@ -18,7 +18,7 @@
           <input type="text" class="form-control" id="searchListParam" name="userName" ng-model="searchItem" autocomplete="off" placeholder="{{'doctor.placeholder.search' | translate}}">
           <span class="search-icon hillrom-icon icon-search-icon"></span>
         </div>
-        <div class="fixed-filter-box reset-padding-left">
+        <!-- <div class="fixed-filter-box reset-padding-left">
           <div class="search-dropdown">
             <select name="search" ng-model="sortOption" ng-change="searchDoctors()">
               <option value="" selected translate="doctor.filter.all"></option>
@@ -26,8 +26,9 @@
               <option value="firstName" translate="doctor.filter.inactive"></option>
             </select>
           </div>
-        </div>
+        </div> -->
       </div>
+      <ng-include src="'scripts/components/navbar/searchfilter.html'"></ng-include>
 
       <div class="dashboard__manage-view--header">
         <div class="col-md-3 header--type">
