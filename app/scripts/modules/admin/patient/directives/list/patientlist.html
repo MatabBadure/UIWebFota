@@ -18,15 +18,7 @@
           <input type="text" class="form-control" id="searchListParam" name="userName" ng-model="searchItem" autocomplete="off" placeholder="{{'patient.placeholder.search' | translate}}">
           <span class="search-icon hillrom-icon icon-search-icon"></span>
         </div>
-        <div class="fixed-filter-box reset-padding-left">
-          <!-- <div class="search-dropdown">
-            <select name="search" ng-model="sortOption" ng-change="searchPatients()">
-              <option value="" selected translate="patient.filter.all"></option>
-              <option value="email" translate="patient.filter.active"></option>
-              <option value="firstName" translate="patient.filter.inactive"></option>
-              <option value="lastName" translate="patient.filter.expired"></option>
-            </select>
-          </div> -->
+        <div class="fixed-filter-box reset-padding-left">          
         </div>
       </div>
       <div class="col-md-16">
@@ -66,7 +58,7 @@
             <span class="main-secon-info">{{patient.email}}</span>
           </div>
           <div class="col-md-2 reset-padding centered">
-            <span class="impo-highlight">{{patient.hillromId}}</span>
+            <span class="impo-highlight">{{patient.mrnId}}</span>
           </div>
           <div class="col-md-2 reset-padding centered">
             <span class="short-info">{{patient.dob}}</span>
