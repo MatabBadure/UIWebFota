@@ -56,9 +56,9 @@ angular.module('hillromvestApp')
         this.getFilterStringForClinics = function(filter) {
           var filterString = searchFilters.emptyString;
             if(filter.isActive && !filter.isInActive){
-              filterString = searchFilters.isDeleted + searchFilters.colon + 0;
+              filterString = searchFilters.isDeleted + searchFilters.colon + 0 + searchFilters.semicolon;
             }else if(!filter.isActive && filter.isInActive){
-              filterString = searchFilters.isDeleted + searchFilters.colon + 1;
+              filterString = searchFilters.isDeleted + searchFilters.colon + 1 + searchFilters.semicolon;
             }
           return filterString;
         }
