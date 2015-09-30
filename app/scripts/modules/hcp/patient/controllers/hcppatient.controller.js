@@ -188,6 +188,9 @@ angular.module('hillromvestApp')
     var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : $stateParams.clinicId;
     DoctorService.searchPatientsForHCP($scope.searchItem, localStorage.getItem('userId'), clinicId, $scope.currentPageIndex, $scope.perPageCount, filter).then(function (response) {
       $scope.patients = response.data;      
+      angular.forEach($scope.patients, function(patient){
+        patient.dob = dateService.getDateFromTimeStamp(patient.dob, patientDashboard.dateFormat, '/')
+      });
       $scope.total = (response.headers()['x-total-count']) ? response.headers()['x-total-count'] :$scope.patients.length; 
       $scope.pageCount = Math.ceil($scope.total / 10);
       searchOnLoad = false;
