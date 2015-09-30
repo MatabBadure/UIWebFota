@@ -134,6 +134,7 @@
             "app/scripts/modules/clinicadmin/patient/directives/navbar/clinicadminpatientnavbar.directive.js",
             "app/scripts/components/util/graph.service.js",
             "app/scripts/components/util/searchfilter.service.js",
+            "app/scripts/components/util/scrollNavbar.js",
             "app/scripts/recaptcha.js"
         ],
         "clean": [
