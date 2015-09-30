@@ -101,7 +101,7 @@
 <div class="container admin-user">
   <div class="col-md-16 reset-padding">
     <div class="col-md-8 clinic-link">
-      <input class="form-control" type="text" ng-model="searchPatient" typeahead="patient as patient.lastName + ' ' + patient.firstName for patient in patients | filter:$viewValue" typeahead-on-select="selectPatient($item)" placeholder="{{'clinic.placeholder.patient-search' | translate}}" ng-show="isAssociatePatient">
+      <input class="form-control" type="text" ng-model="searchPatient" typeahead="patient as patient.lastName + ' ' + patient.firstName for patient in nonAssociatedPatients | filter:$viewValue" typeahead-on-select="selectPatient($item)" placeholder="{{'clinic.placeholder.patient-search' | translate}}" ng-show="isAssociatePatient">
 
     </div>
 
