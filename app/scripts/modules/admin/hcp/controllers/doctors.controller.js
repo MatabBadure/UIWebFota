@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('hillromvestApp')
-  .controller('DoctorsController',['$rootScope', '$scope', '$state', '$timeout', 'Auth', '$stateParams', 'UserService', 'DoctorService', 'notyService', 'clinicService', 'searchFilterService', 
-    function($rootScope, $scope, $state, $timeout, Auth,$stateParams, UserService, DoctorService, notyService, clinicService,searchFilterService ) {
+  .controller('DoctorsController',['$rootScope', '$scope', '$state', '$timeout', 'Auth', '$stateParams', 'UserService', 'DoctorService', 'notyService', 'clinicService', 'searchFilterService', 'dateService',
+    function($rootScope, $scope, $state, $timeout, Auth,$stateParams, UserService, DoctorService, notyService, clinicService,searchFilterService, dateService ) {
     $scope.doctor = {};
     $scope.doctorStatus = {
       'role': localStorage.getItem('role'),
@@ -272,6 +272,7 @@ angular.module('hillromvestApp')
         DoctorService.searchPatientsForHCP($scope.searchItem, $stateParams.doctorId, $scope.sortOption, $scope.currentPageIndex, $scope.perPageCount, filter).then(function (response) {
           $scope.patients = [];
           angular.forEach(response.data, function(patient){
+            patient.dob = dateService.getDateFromTimeStamp(patient.dob, patientDashboard.dateFormat,'/');
             $scope.patients.push({"patientUser": patient});
           });          
           $scope.total = (response.headers()['x-total-count']) ? response.headers()['x-total-count'] :$scope.patients.length; 
