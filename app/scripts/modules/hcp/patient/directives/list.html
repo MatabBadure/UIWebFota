@@ -35,14 +35,14 @@
         <div class="col-md-1 col-sm-2 header--type">
           <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="patient.status">Status</span>
         </div>
-        <div class="col-md-1 col-sm-2 header--type">
+        <div class="col-md-1 col-sm-2 header--type text-centered">
           <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="patient.adherence">Adherence</span>
         </div>
         <div class="clr"></div>
       </div>
 
       <div class="dashboard__manage-view--list" ng-repeat="patient in patients" ng-click="patient.isDeleted || selectPatient(patient)" ng-readonly="true" ng-class="{'inactive': patient.isDeleted}">
-          <div class="col-md-3 col-sm-4 reset-padding">
+          <div class="col-md-3 col-sm-3 reset-padding">
             <span class="main-prim-info">{{patient.lastName}} {{patient.firstName}}</span>
             <span class="main-secon-info">{{patient.email}}</span>
           </div>
@@ -72,7 +72,7 @@
             <span class="short-info inactive centered" ng-if="patient.isDeleted" translate="patient.status-type.inactive"></span>
           </div>
 
-          <div class="col-md-1 col-sm-2 reset-padding-left centered">
+          <div class="col-md-1 col-sm-2 reset-padding-left text-centered">
             <span class="short-info">{{patient.adherence}}</span>
           </div>
 
