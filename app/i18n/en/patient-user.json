@@ -34,6 +34,7 @@
           "phone-number": "Phone Number",
           "npi-id": "NPI Number",
           "credentials": "Credentials",
+          "fax-number": "Fax Number",
           "clinic-name": "Clinic Name",
           "city": "City",
           "state": "State"
