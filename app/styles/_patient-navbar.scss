@@ -26,12 +26,14 @@
 
 .patient-user__navbar ul > li {
   padding-right: 100px;
+  outline: none;
 }
 
 .patient-user__navbar ul > li > a {
   padding: 10px 0px 9px 0px;
   color: $body-bg;
   cursor: pointer;
+  position: relative;
   &:hover {
     background-color: inherit;
     color: inherit;
@@ -43,8 +45,15 @@
   }
   .nav_drop_arrow{
     position: relative;
-    top: 2px;
+    top: 0px;
     left: 4px;
+    font-size: 10px;
+  }
+  .icons{
+    top: 12px;
+    right: 4px;
+    position: absolute;
+
   }
 }
 
@@ -99,6 +108,9 @@
     margin-right: 20px;
     &:last-child{
       margin-right: 0px;
+    }
+    a{
+      padding: 10px 30px 9px 0px !important;
     }
   }
 

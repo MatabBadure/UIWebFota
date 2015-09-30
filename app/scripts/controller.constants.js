@@ -62,7 +62,7 @@ angular.module('hillromvestApp').constant('hcpDashboardConstants', {
     cumulativeGraph : {
 		label : {
 			"missedTherapy" : "MissedTherapy Days",
-			"nonCompliance" : "HMR Non-Compliance",
+			"nonCompliance" : "HMR Non-Adherence",
 			"settingDeviation" : "Setting Deviation",
 			"noEvents" : "No Events Recorded"
 		},

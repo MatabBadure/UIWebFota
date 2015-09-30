@@ -34,6 +34,7 @@
         "found-text": "Found",
         "previous-text": "Previous",
         "next-text": "Next",
+        "date-of-birth": "Date of Birth",
         "title": {
                     "name": "Title",
                     "mr":   "Mr.",
@@ -122,8 +123,8 @@
             "satellite": "Satellite"
         },
         "dashboard":{
-            "missedTherapy": "Missed Therapy",
-            "hmrNonCompliance": "HMR Non-Compliance",
+            "missedTherapy": "Missed Therapy Days",
+            "hmrNonCompliance": "HMR Non-Adherence",
             "settingDeviation": "Setting Deviation",
             "noEventsRecorded": "No Events Recorded",
             "todayStatistics": "Today's Statistics -",

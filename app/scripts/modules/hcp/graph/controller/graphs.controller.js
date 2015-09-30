@@ -126,7 +126,7 @@ angular.module('hillromvestApp')
 		lineCap: hcpDashboardConstants.statistics.lineCap
 	};
 
-  $scope.goToPatientDashboard = function(value){
+  $scope.goToPatientDashboard = function(value){ 
 	  if(value === 'hcppatientdashboard' || value === 'clinicadminpatientdashboard'){
 	  	var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : $stateParams.clinicId;
 	    $state.go(value, {'clinicId': clinicId});
