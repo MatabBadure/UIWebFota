@@ -124,12 +124,15 @@
 	}
 	/* User Particular info tab padding  END*/
 }
-@media only screen and (min-width : 1024px){
-	background: url("../images/login_bg.jpg") no-repeat;
-	-webkit-background-size: cover;
-	-moz-background-size: cover;
-	-o-background-size: cover;
-	background-size: cover;
+@media screen and (min-width : 1024px){
+	.login{
+		background: url("../images/login_bg.jpg") no-repeat;
+		-webkit-background-size: cover;
+		-moz-background-size: cover;
+		-o-background-size: cover;
+		background-size: cover;
+		background-size: 100% 100%;
+	}
 } 
 
 
