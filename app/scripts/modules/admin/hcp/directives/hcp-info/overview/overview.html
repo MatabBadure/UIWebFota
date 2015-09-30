@@ -85,7 +85,9 @@
 
 <div class="dashboard dashboard--content">
   <div class="container dashboard__manage-view margin-top">
-  <ng-include src="'scripts/components/navbar/searchfilter.html'"></ng-include>
+  <div class="col-md-16">
+    <ng-include src="'scripts/components/navbar/searchfilter.html'"></ng-include>
+  </div>
     <div class="dashboard__manage-view--header">
         <div class="col-md-3 header--type">
           <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="doctor.patient-name">Patient Name</span>
