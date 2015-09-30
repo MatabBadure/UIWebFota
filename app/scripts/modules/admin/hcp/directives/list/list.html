@@ -88,6 +88,9 @@
 
           <div class="clr"></div>
        </div>
+       <div class="col-md-16 col-sm-16 empty-list-message" ng-if="!doctors || doctors.length === 0">
+        <span translate="doctor.no-hcp-found"></span>
+      </div>
 
       <div class="dashboard__manage-view--pagination">
         <div class="col-md-16 reset-padding-right">
