@@ -277,6 +277,7 @@
 	.notes_row{
 		border-bottom: $border_default;
 		padding: 10px 0px;
+		overflow: hidden;
 	}
 }
 .edit_delete{
@@ -292,7 +293,7 @@
 	.patient_dashdoard_btns{
 		display: inline-block;
 		width: 100%;
-		margin: 8px 0px 0px;
+		margin: 20px 0px 0px;
 		padding: 0px 10px;
 	}
 	.view_all_btn{
@@ -458,7 +459,7 @@
 }
 .dashboard__manage-view--pagination{
 	&.pagination_notes{
-		margin: 20px 5px 15px !important;
+		margin: 0px 5px 15px !important;
 		display: inline-block;
 		float: right;
 

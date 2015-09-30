@@ -163,30 +163,30 @@
 	<div class="col-md-16 hide_content" id="add_note_container">
 		<div class="add_note_container">
 			<div class="note_header">
-				<div class="col-md-14 note_header_left">
+				<div class="col-md-14 col-sm-12 note_header_left">
 					<span class="note" translate="graph.note"></span>
 					<span class="can_do" translate="graph.can-do" ng-show="role === 'PATIENT'"></span>
 				</div>
-				<div class="col-md-2 note_header_right"><a href="" class="pull-right cross_icon" ng-click="hideNoteContainer();">X</a></div>
+				<div class="col-md-2 col-sm-4 note_header_right"><a href="" class="pull-right cross_icon" ng-click="hideNoteContainer();">X</a></div>
 			</div>
 			<div class="notes_content" ng-repeat="note in notes track by $index" ng-show="note.note.length > 0 && !note.deleted">
 				<div class="col-md-16 notes_row">
 					<div class="notes_row_wrapper">
-						<div class="col-md-2 date_col view_content show_content" id="createdon_{{note.id}}"><span ng-bind="note.createdOn"></span></div>
-						<div class="col-md-11 description view_content show_content" id="viewnote_{{note.id}}" ng-bind="note.note"></div>
+						<div class="col-md-2 col-sm-4 date_col view_content show_content" id="createdon_{{note.id}}"><span ng-bind="note.createdOn"></span></div>
+						<div class="col-md-11 col-sm-8 description view_content show_content" id="viewnote_{{note.id}}" ng-bind="note.note"></div>
 						<form ng-submit="updateNote(note.id, note.createdOn);">
 						<div id="editform_{{note.id}}" class="col-md-16 edit_content hide_content" ng-show="role === 'PATIENT'" >
-							<div class="col-md-2">
+							<div class="col-md-2 col-sm-3">
 								<span ng-bind="note.createdOn"></span>
 							</div>
-							<div class="col-md-9 description">
+							<div class="col-md-9 col-sm-6 description">
 								<div class="form-group">
 									<textarea id="editedNoteText_{{note.id}}" value="{{note.note}}" maxlength="300"  class="form-control custom_textarea" rows="1"></textarea> 
 									<span class="has-error" ng-show="noteError" ng-bind="noteError" id="noteError_{{note.id}}"></span>
 								</div>
 							</div>							
 							
-							<div class="col-md-5 edit_delete">
+							<div class="col-md-5 col-sm-7 edit_delete">
 								<div class="pull-right">
 									<input type="button"  value="Cancel" ng-click="cancelEditNote(note.id);" class="hillrom-btn btn-submit float-right" />	
 									<input type="submit" id="submit" value="Update" class="hillrom-btn btn-submit float-right" />	 									
@@ -194,7 +194,7 @@
 							</div>
 						</div> 				
 						</form>
-						<div class="col-md-3 edit_delete" ng-show="role === 'PATIENT'">
+						<div class="col-md-3 col-sm-4 edit_delete" ng-show="role === 'PATIENT'">
 							<div class="pull-right view_note_act view_content show_content note_delete_edit" id="viewnoteact_{{note.id}}">
 								<span class="edit icon glyphicon glyphicon-pencil" styel="cursor:pointer;" ng-click="openEditNote(note.id, note.note);"></span>
 								<span class="delete icon icon-delete-icon" styel="cursor:pointer;" ng-click="deleteNote(note.id);" ></span>
