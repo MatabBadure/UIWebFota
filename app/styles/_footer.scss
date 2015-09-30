@@ -16,7 +16,7 @@ $footer--background: $body-bg;
 		li{
 			list-style-type: none;
 			float: left;
-			margin-left: 20px;
+			margin-right: 20px;
 			position: relative;
 			a{
 				color: $footer-text-color;
@@ -25,7 +25,7 @@ $footer--background: $body-bg;
 				content: '';
 			    position: absolute;
 			    display: block;
-			    right: -10px;
+			    right: -11px;
 			    top: 13px;
 			    height: 12px;
 			    width: 1px;
@@ -37,7 +37,7 @@ $footer--background: $body-bg;
 				}
 			}
 			&:first-child{
-				margin-left: 0;
+				
 			}
 		}
 	}

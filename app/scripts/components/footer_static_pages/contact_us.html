@@ -1,3 +1,43 @@
-<div class="container static_page_wrapper">
-	<h2 class="text-center">Contacts Us</h2>
+<link rel="stylesheet" href="/styles/styles.css">
+<div id="wrap">
+  <nav class="navbar navbar-default navbar-fixed-top static_page_header" role="navigation" data-spy="affix">
+    <div class="container" ng-switch="$root.isAuthenticated">
+      <div class="navbar-header navbar-primary">
+        <button data-target="#navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="" ng-click="goToHomePage();"><span class="logo icon-hill-rom-logo"></span></a>
+        <div class="navbar-brand__desc"> 
+          <span class="navbar-brand__desc--text-primary"><span translate="global.logo-text.visi-view">VisiView</span><sup translate="global.logo-text.tm-sup">TM</sup></span>
+          <span class="navbar-brand__desc--text-secondary" translate="global.logo-text.health-portal">Health Portal</span>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <div class="container static_page_wrapper">
+  <h2 class="text-center">Contacts Us</h2>
+</div>
+  <footer class="footer navbar-fixed-bottom">
+    <div class="col-md-16 footer_container ">
+      <div class="container">
+        <div class="col-md-10 footer_left">
+            <ul class="footer_left_ul">
+                <li><a href="/scripts/components/footer_static_pages/contact_us.html"  target="_blank">Contact Us</a></li>
+                <li><a href="/scripts/components/footer_static_pages/privacy_policy.html" target="_blank">Privacy Policy</a></li>
+                <li><a href="/scripts/components/footer_static_pages/terms_of_use.html" target="_blank">Terms of Use</a></li>
+                <li><a href="/scripts/components/footer_static_pages/HIPPA_notice_of_privacy_practices.html" target="_blank" >HIPPA Notice of Privacy Practices</a></li>
+                <li><a href="/scripts/components/footer_static_pages/hill_rom_respiratory.html" target="_blank" >Hill-Rom Respiratory Care Site</a></li>
+            </ul>
+            <p class="copyright_txt">Copyright @ Hill-Rom 2015. All Rights Reserved</p>
+        </div>
+        <div class="col-md-6 footer_right">
+            <span class="footer_right_txt pull-right" translate="footer.enhancingoutcomes">Enhancing outcomes for patients and their caregivers</span>
+            <span class="logo icon-hill-rom-logo"></span>
+        </div>
+      </div>
+    </div>
+  </footer>
 </div>
