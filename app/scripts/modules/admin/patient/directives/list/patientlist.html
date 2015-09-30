@@ -94,6 +94,9 @@
 
           <div class="clr"></div>
        </div>
+       <div class="col-md-16 col-sm-16 empty-list-message" ng-if="!patients || patients.length === 0">
+        <span translate="patient.no-patient-found"></span>
+      </div>
 
       <div class="dashboard__manage-view--pagination">
         <div class="col-md-16 reset-padding-right">
