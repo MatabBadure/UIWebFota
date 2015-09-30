@@ -50,7 +50,7 @@
       <div class="clr"></div>
     </div>
 
-    <div class="dashboard__manage-view--list assoc" ng-repeat="associatedPatient in associatedPatients" readonly="true" ng-class="{'inactive': associatedPatient.patient.deleted}">
+    <div class="dashboard__manage-view--list assoc" ng-repeat="associatedPatient in associatedPatients" readonly="true" ng-class="{'inactive': associatedPatient.patient.isDeleted}">
      <span>
       <div class="col-md-3">
         <span class="main-prim-info">{{associatedPatient.patient.lastName}} {{associatedPatient.patient.firstName}}</span>
@@ -78,8 +78,8 @@
       </div>
 
       <div class="col-md-1 centered">
-          <span class="short-info active" ng-if="!associatedPatient.patient.deleted" translate="clinic.status-type.active"></span>
-          <span class="short-info inactive" ng-if="associatedPatient.patient.deleted" translate="clinic.status-type.inactive"></span>
+          <span class="short-info active" ng-if="!associatedPatient.patient.isDeleted" translate="clinic.status-type.active"></span>
+          <span class="short-info inactive" ng-if="associatedPatient.patient.isDeleted" translate="clinic.status-type.inactive"></span>
       </div>
 
       <div class="col-md-1 text-centered">
@@ -87,7 +87,7 @@
       </div>
       </span>
       <div class="col-md-1 reset-padding-left centered text-right" >
-        <span class="icon-delete-icon" ng-click="associatedPatient.patient.deleted || openPatientDeactivateModal(associatedPatient.patient.id);"></span>
+        <span class="icon-delete-icon" ng-click="associatedPatient.patient.isDeleted || openPatientDeactivateModal(associatedPatient.patient.id);"></span>
       </div>
       <div class="clr"></div>
     </div>
