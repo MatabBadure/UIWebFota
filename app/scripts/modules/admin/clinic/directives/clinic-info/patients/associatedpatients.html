@@ -20,14 +20,14 @@
     <ng-include src="'scripts/components/navbar/searchfilter.html'"></ng-include>
     
     <div class="dashboard__manage-view--header">
-      <div class="col-md-2 header--type">
+      <div class="col-md-3 header--type">
         <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="clinic.patient-name">Patient Name</span>
       </div>
       <div class="col-md-2 header--type">
         <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="clinic.mrn-id">Hill-Rom ID</span>
       </div>
       <div class="col-md-3 header--type">
-        <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="clinic.email">Email</span>
+        <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="clinic.date-of-birth">DOB</span>
       </div>
       <div class="col-md-2 header--type">
         <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="clinic.city-state">City/State</span>
@@ -50,15 +50,15 @@
 
     <div class="dashboard__manage-view--list" ng-repeat="associatedPatient in associatedPatients" readonly="true" ng-class="{'inactive': associatedPatient.patient.deleted}">
      <span>
-      <div class="col-md-2 reset-padding">
+      <div class="col-md-3 reset-padding">
         <span class="main-prim-info">{{associatedPatient.patient.lastName}} {{associatedPatient.patient.firstName}}</span>
-        <span class="main-secon-info">{{associatedPatient.patient.dob}}</span>
+        <span class="main-secon-info">{{associatedPatient.patient.email}}</span>
       </div>
       <div class="col-md-2 reset-padding centered">
         <span class="impo-highlight">{{associatedPatient.patient.mrnId}}</span>
       </div>
       <div class="col-md-3 reset-padding centered">
-        <span class="short-info">{{associatedPatient.patient.email}}</span>
+        <span class="short-info">{{associatedPatient.patient.dob}}</span>
       </div>
 
       <div class="col-md-2 reset-padding centered">

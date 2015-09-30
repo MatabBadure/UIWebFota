@@ -94,7 +94,7 @@
           <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="doctor.mrnid">Hill-Rom ID</span>
         </div>
         <div class="col-md-3 header--type">
-          <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="doctor.email">Email</span>
+          <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="doctor.date-of-birth">DOB</span>
         </div>
         <div class="col-md-2 header--type">
           <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="doctor.city-state">City/State</span>
@@ -117,13 +117,13 @@
     <div class="dashboard__manage-view--list" ng-repeat="patient in patients" readonly="true" ng-class="{'inactive': patient.patientUser.isDeleted}">
       <div class="col-md-3 reset-padding">
         <span class="main-prim-info">{{patient.patientUser.lastName}} {{patient.patientUser.firstName}}</span>
-        <span class="main-secon-info">{{patient.patientUser.dob}}</span>
+        <span class="main-secon-info">{{patient.patientUser.email}}</span>
       </div>
       <div class="col-md-2 reset-padding centered">
         <span class="impo-highlight">{{patient.patientUser.mrnId}}</span>
       </div>
       <div class="col-md-3 reset-padding centered">
-        <span class="short-info">{{patient.patientUser.email}}</span>
+        <span class="short-info">{{patient.patientUser.dob}}</span>
       </div>
 
       <div class="col-md-2 reset-padding centered">
