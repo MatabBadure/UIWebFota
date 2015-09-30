@@ -160,6 +160,14 @@
 	.navbar-default > .container > .navbar-secondary ul li{
 		outline: none;
 	}
+
+	.patient-user__navbar .patient-dashboard > li {
+		padding-right: 0;
+	}
+
+	.patient_nav_link_right li {
+		margin-right: 10px;
+	}
 }
 @media screen and (min-width : 1024px){
 	.login{
