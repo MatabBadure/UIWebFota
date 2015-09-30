@@ -61,23 +61,10 @@ angular.module('hillromvestApp')
                 abstract: true,                
             })
             .state('hcp-user-profile', {               
-                url:'/hcp-profile/{clinicId}',
-                views:{
-                    'content':{
-                    templateUrl:'scripts/modules/hcp/profile/profile-tabs/hcp-profile-section.html'                
-            }
-                },
-                resolve: {
-                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
-                        $translatePartialLoader.addPart('global');
-                        return $translate.refresh();
-                    }],
-                    authorize: ['Auth',
-                        function(Auth) {
-                            return Auth.authorize(false);
-                        }
-                    ]
-                }
+                url:'/hcp-profile',
+                params: {"clinicId": null},
+                parent: 'entity',
+                abstract: true,   
             })
             .state('hcp-dashboard', {
                 parent: 'entity',
@@ -1441,7 +1428,8 @@ angular.module('hillromvestApp')
             })
             .state('hcppatientdashboard', {
                 parent: 'hcp-dashboard',
-                url: '/hcp-patient/{clinicId}/{filter}',                
+                url: '/hcp-patients-view',
+                params: {"clinicId": null},                
                 data: {
                     roles: ['HCP'],
                     pageTitle: 'hcp.title'
@@ -1465,7 +1453,8 @@ angular.module('hillromvestApp')
                 }
             })
             .state('hcppatientList', {
-                 url:'/hcp-patient/{clinicId}/{filter}/{patientId}',
+                 url:'/hcp-patient',
+                 params: {"clinicId" : null, "patientId": null},
                  views:{
                   'content':{
                     templateUrl:'scripts/modules/hcp/patient/directives/list.html',
@@ -1519,7 +1508,7 @@ angular.module('hillromvestApp')
                     pageTitle: 'hcp.title'
                 },
                 views: {
-                    'hcp-profile-view': {
+                    'content@': {
                         templateUrl: 'scripts/modules/hcp/profile/profile-tabs/my-profile.html',
                         controller: 'hcpProfileController'
                     }
@@ -1545,7 +1534,7 @@ angular.module('hillromvestApp')
                     pageTitle: 'patient.title'
                 },
                 views: {
-                    'hcp-profile-view': {
+                    'content@': {
                         templateUrl: 'scripts/modules/hcp/profile/profile-tabs/update-password.html',
                         controller: 'hcpProfileController'
                     }
@@ -1559,7 +1548,7 @@ angular.module('hillromvestApp')
             })
 
             .state('editHCPProfile', {
-                parent: 'hcp-dashboard',
+                parent: 'hcp-user-profile',
                 url: '/update',
                 data: {
                     roles: ['HCP'],
@@ -1892,7 +1881,7 @@ angular.module('hillromvestApp')
                     pageTitle: 'patient.title'
                 },
                 views: {
-                    'hcp-profile-view': {
+                    'content@': {
                         templateUrl: 'scripts/modules/hcp/profile/profile-tabs/settings.html',
                         controller: 'hcpProfileController'
                     }
