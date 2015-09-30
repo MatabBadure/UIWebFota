@@ -1,27 +1,18 @@
 {
     "patterns" : {
         "styles": [
-            "./dev/bower_components/normalize.css/normalize.css",
-            "./dev/clientlib-all/css/base/reset.css",
-            "./dev/clientlib-all/css/layout/grid.css",
-            "./dev/clientlib-all/css/layout/view.css",
-            "./dev/clientlib-all/css/layout/component.css",
-            "./dev/clientlib-all/css/layout/wcag.css",
-            "./dev/clientlib-all/css/base/base.css",            
-            "./dev/clientlib-all/css/base/rte-light.css",
-            "./dev/clientlib-all/css/base/fonts.css",
-            "./dev/clientlib-all/css/base/typography.css",
-            "./dev/clientlib-all/css/base/link.css",
-            "./dev/clientlib-all/css/base/list.css",
-            "./dev/clientlib-all/css/base/button.css",
-            "./dev/clientlib-all/css/base/form.css",
-            "./dev/clientlib-all/css/base/form-success.css",
-            "./dev/components/**/**/clientlib/css/*.css"
+            "app/bower_components/ng-tags-input/ng-tags-input.css",
+            "app/bower_components/angular-notys/angular-notys.css",
+            "app/bower_components/bootstrap-daterangepicker/daterangepicker-bs3.css",
+            "app/bower_components/angular-loading-bar/build/loading-bar.css",
+            "app/bower_components/nvd3/src/nv.d3.css",
+            "app/build/css/styles.css"
         ],
-        "myth": [
-            "./dev/clientlib-all/css/**/*.myth",
-            "./dev/components/**/**/clientlib/css/*.myth",
-            "./prototypes/track_and_trace/css/*.myth"
+        "sass": [
+            "app/styles/*.scss"
+        ],
+        "images": [
+            "app/images/"
         ],
 
         "scriptsProject": [
@@ -143,18 +134,9 @@
             "app/scripts/modules/clinicadmin/patient/directives/navbar/clinicadminpatientnavbar.directive.js",
             "app/scripts/components/util/graph.service.js"
         ],
-        "scriptsRequire": [
-            "./clientlib-all/js/build/lazy.js"
-        ],
         "clean": [
-            "./dev/bower_components/",
-            "./clientlib-all/**/lazy.*",
-            "./dev/clientlib-all/**/build/*.js",
-            "./dev/clientlib-all/**/build/*.css",
-            "./dev/components/**/*.css",
-            "./dev/clientlib-all/**/*.css",
-            "./build/",
-            "./integration/"
+            "app/build/",
+            "app/index.html"
         ]
     },
 
@@ -162,53 +144,17 @@
         "deploy" : {
             "styles" : {
                 "virtual" : "" ,
-                "physical" : "./dev/clientlib-all/css/build/"
+                "physical" : "app/build/css"
             },
             "scripts" : {
                 "virtual" : "" ,
-                "physical" : "./dev/clientlib-all/js/build/"
-            }
-        },
-        "dev" : {
-            "styles" : {
-                "virtual" : "",
-                "physical" : ""
+                "physical" : "app/build/js"
+            },
+            "images" : {
+                "virtual" : "" ,
+                "physical" : "app/build/images"
             }
         }
-    },
-
-    "path": {
-        "bower" : "./dev/bower_components/",
-        "styles" : "./clientlib-all/css/",
-        "scripts" : "./clientlib-all/js/"
-    },
-
-    "nightwatch" : {
-        "config" : "./nightwatch.json"
-    },
-
-    "istanbul": {
-        "dest": "./coverage"
-    },
-
-    "header": {
-        "banner":  "/*! <%= pkg.name %> - <%= pkg.copyright %> - v<%= pkg.version %> - <%= pkg.now %>*/"
-    },
-
-
-    "amdClean": {
-        "sourceMap": false,
-        "aggressiveOptimizations": true,
-        "filePath": "",
-        "globalModules": [],
-        "commentCleanName": "amdclean",
-        "ignoreModules": [],
-        "removeModules": [],
-        "removeAllRequires": true,
-        "removeUseStricts": true,
-        "transformAMDChecks": true,
-        "shimOverrides": {},
-        "prefixMode": "camelCase"
     },
 
     "uglify": {

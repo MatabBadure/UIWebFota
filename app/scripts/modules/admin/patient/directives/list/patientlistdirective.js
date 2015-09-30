@@ -143,8 +143,4 @@ angular.module('hillromvestApp')
         $scope.init();
       }]
     };
-<<<<<<< HEAD
   }]);
-=======
-  });
->>>>>>> 495887f83343b4ae079b967db5d215121d32934b

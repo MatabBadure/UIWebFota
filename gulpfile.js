@@ -11,8 +11,10 @@ var gulp             = require('gulp'),
 	plumber          = require('gulp-plumber'),
 	path             = require('path'),
 	gulprc = require("./gulpfile.json"),
+	del = require("del"),
 	htmlreplace = require('gulp-html-replace'),
-	runSequence = require('run-sequence');
+	runSequence = require('run-sequence'),
+	stripCssComments = require('gulp-strip-css-comments');
 //the title and icon that will be used for the Grunt notifications
 var notifyInfo = {
 	title: 'Gulp',
@@ -27,20 +29,46 @@ var plumberErrorHandler = { errorHandler: notify.onError({
 	})
 };
 
+//clean build and index file
+gulp.task("clean", function (done) {
+  del(gulprc.patterns.clean, {force: true}, done);
+});
+
 //styles
-gulp.task('styles', function() {
-	return gulp.src(['src/scss/**/*.scss'])
+gulp.task('styles_process', function() {
+	return gulp.src('app/styles/*.scss')
 		.pipe(plumber(plumberErrorHandler))
 		.pipe(compass({
-			css: 'html/css',
-			sass: 'src/scss',
-			image: 'html/images'
+			css: 'app/build/css',
+			sass: 'app/styles/',
+			image: 'app/build/images',
+			comments: false
 		}))
 		.pipe(autoprefixer('last 2 version', 'safari 5', 'ie 7', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'))
-		.pipe(gulp.dest('html/css'))
+		.pipe(gulp.dest('app/build/css'));
+});
+
+//styles remove comments
+gulp.task('styles_strip_comments', function() {
+	return gulp.src(gulprc.patterns.styles)
+		.pipe(plumber(plumberErrorHandler))
+		.pipe(stripCssComments({preserve: false}))
+		.pipe(gulp.dest('app/build/css'));
+});
+
+//styles minify
+gulp.task('styles_minify', function() {
+	return gulp.src(gulprc.patterns.styles)
+		.pipe(plumber(plumberErrorHandler))
+		.pipe(concat('main.css'))
+		.pipe(gulp.dest('app/build/css'))
 		.pipe(rename({ suffix: '.min' }))
 		.pipe(minifycss())
-		.pipe(gulp.dest('html/css'));
+		.pipe(gulp.dest('app/build/css'));
+});
+
+gulp.task('styles', function (cb) {
+  runSequence('styles_process', 'styles_strip_comments', 'styles_minify', cb);
 });
 
 //scripts
@@ -48,22 +76,23 @@ gulp.task('scripts', function() {
 	return gulp.src(gulprc.patterns.scriptsProject)
 		.pipe(plumber(plumberErrorHandler))
 		.pipe(concat('main.js'))
-		.pipe(gulp.dest('app/build'))
+		.pipe(gulp.dest('app/build/js'))
 		.pipe(rename({ suffix: '.min' }))
 		.pipe(uglify())
-		.pipe(gulp.dest('app/build'));
+		.pipe(gulp.dest('app/build/js'));
 });
 
-gulp.task('html_replace_js', function() {
+gulp.task('html_replace', function() {
   gulp.src('app/index.html')
     .pipe(htmlreplace({
-        'js': 'scripts/build/main.js'
+    	'css': 'app/build/js/main.min.css',
+        'js': 'app/build/js/main.min.js'
     }))
     .pipe(gulp.dest('app/index.html'));
 });
 
 gulp.task('build', function (cb) {
-  runSequence('scripts', 'html_replace_js', cb);
+  runSequence('clean', 'scripts', 'styles', 'html_replace', cb);
 });
 
 
