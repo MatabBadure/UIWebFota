@@ -58,7 +58,8 @@
         },
         "form": {
             "username": "Login",
-            "username.placeholder": "enter your Hill-Rom ID or Email ID",
+            "username.placeholder": "Enter your Hill-Rom ID or Email ID",
+            "password.placeholder": "Password",
             "newpassword": "New password",
             "newpassword.placeholder": "New password",
             "confirmpassword": "New password confirmation",
