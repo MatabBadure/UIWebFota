@@ -146,21 +146,25 @@ $header--background: $body-bg;
 }
 
 .navbar-secondary .navbar-right .header-popover ul {
-	background-color: $kashmir-blue;
+	background-color: $lapis-lazuli;
 	border-radius: 3px;
 	li {
 		float: left;
-	  padding: 10px 10px 5px 14px;
-	  text-align: center;
-	  cursor: pointer;
-	  position: relative;
+		padding: 10px 10px 5px 14px;
+		text-align: center;
+		cursor: pointer;
+		position: relative;
+		color: $silver-approx;
 	  &:first-child:after {
-			height: 35px;
-		  border-right: 1px solid $silver-approx;
-		  content: '';
-		  position: absolute;
-		  top: 11px;
-		  right: 0px;
+		height: 35px;
+		border-right: 1px solid $silver-approx;
+		content: '';
+		position: absolute;
+		top: 11px;
+		right: 0px;
+		}
+		&:hover{
+			color: $btn-primary-color;
 		}
 	}
 
@@ -173,7 +177,7 @@ $header--background: $body-bg;
 	  height: 0;
 	  border-left: 10px solid transparent;
 	  border-right: 10px solid transparent;
-	  border-bottom: 10px solid $kashmir-blue;
+	  border-bottom: 10px solid $lapis-lazuli;
 	  clear: both;
 	}
 	p {

@@ -85,6 +85,7 @@
 
 <div class="dashboard dashboard--content">
   <div class="container dashboard__manage-view margin-top">
+  <ng-include src="'scripts/components/navbar/searchfilter.html'"></ng-include>
     <div class="dashboard__manage-view--header">
         <div class="col-md-3 header--type">
           <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="doctor.patient-name">Patient Name</span>
@@ -113,7 +114,7 @@
         <div class="clr"></div>
       </div>
 
-    <div class="dashboard__manage-view--list" ng-repeat="patient in patients" readonly="true" ng-class="{'inactive': patient.patientUser.deleted}">
+    <div class="dashboard__manage-view--list" ng-repeat="patient in patients" readonly="true" ng-class="{'inactive': patient.patientUser.isDeleted}">
       <div class="col-md-3 reset-padding">
         <span class="main-prim-info">{{patient.patientUser.lastName}} {{patient.patientUser.firstName}}</span>
         <span class="main-secon-info">{{patient.patientUser.dob}}</span>
@@ -140,8 +141,8 @@
       </div>
 
       <div class="col-md-1 reset-padding centered">
-          <span class="short-info active" ng-if="!patient.patientUser.deleted" translate="doctor.status-type.active"></span>
-          <span class="short-info inactive" ng-if="patient.patientUser.deleted" translate="doctor.status-type.inactive"></span>
+          <span class="short-info active" ng-if="!patient.patientUser.isDeleted" translate="doctor.status-type.active"></span>
+          <span class="short-info inactive" ng-if="patient.patientUser.isDeleted" translate="doctor.status-type.inactive"></span>
       </div>
 
       <div class="col-md-1 reset-padding-left centered">

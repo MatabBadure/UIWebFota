@@ -19,16 +19,17 @@
           <span class="search-icon hillrom-icon icon-search-icon"></span>
         </div>
         <div class="fixed-filter-box reset-padding-left">
-          <div class="search-dropdown">
+          <!-- <div class="search-dropdown">
             <select name="search" ng-model="sortOption" ng-change="searchPatients()">
-              <option value="" selected translate="patient.filter.all">Newly Created</option>
-              <option value="email" translate="patient.filter.active">Email</option>
-              <option value="firstName" translate="patient.filter.inactive">First Name</option>
-              <option value="lastName" translate="patient.filter.expired">Last Name</option>
+              <option value="" selected translate="patient.filter.all"></option>
+              <option value="email" translate="patient.filter.active"></option>
+              <option value="firstName" translate="patient.filter.inactive"></option>
+              <option value="lastName" translate="patient.filter.expired"></option>
             </select>
-          </div>
+          </div> -->
         </div>
       </div>
+      <ng-include src="'scripts/components/navbar/searchfilter.html'"></ng-include>
       <div class="dashboard__manage-view--header">
         <div class="col-md-2 header--type">
           <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="patient.patient-name">Patient Name</span>

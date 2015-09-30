@@ -18,18 +18,9 @@
       <div class="fuid-search-box reset-padding-right">
         <input type="text" class="form-control" id="searchListParam" name="userName" ng-model="searchItem" autocomplete="off" placeholder="{{'user.placeholder.search' | translate}}">
         <span class="search-icon hillrom-icon icon-search-icon"></span>
-      </div>
-      <div class="fixed-filter-box reset-padding-left">
-        <div class="search-dropdown">
-          <select name="search" ng-model="sortOption" ng-change="searchUsers()">
-            <option value="" selected translate="user.filter.all"></option>
-            <option value="email" translate="user.filter.active"></option>
-            <option value="firstName" translate="user.filter.inactive"></option>
-          </select>
-        </div>
-      </div>
+      </div>    
     </div>
-
+    <ng-include src="'scripts/components/navbar/searchfilter.html'"></ng-include>
     <div class="dashboard__manage-view--header">
       <div class="col-md-3 header--type">
         <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="user.user-name"></span>
@@ -80,27 +71,9 @@
 
       <div class="clr"></div>
     </div>
-
-
-
-     <!-- <div class="dashboard__manage-view--list" ng-repeat="user in users">
-      <div ng-class="{ 'inactive': user.deleted }" ng-click="user.deleted || selectUser(user)">
-        <div class="col-md-3 reset-padding-left">
-          <span class="user-name">{{user.lastName}} {{user.firstName}}</span>
-          <span class="user-email">{{user.email}}</span>
-        </div>
-        <div class="col-md-4">
-          <span class="user-address">{{user.role}}</span>
-        </div>
-        <div class="col-md-4">
-          <span class="clinic-name">{{user.employeeId}}</span>
-        </div>
-        <div class="col-md-5 reset-padding-right">
-           <span class="clinic-name">{{user.id}}</span>
-        </div>
-        <div class="clr"></div>
-     </div>
-    </div> -->
+     <div class="col-md-16 col-sm-16 empty-list-message" ng-if="!patients || patients.length === 0">
+      <span translate="user-not-found"></span>
+    </div>
     
     <div class="dashboard__manage-view--pagination">
       <div class="col-md-16 reset-padding-right">

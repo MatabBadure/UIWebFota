@@ -55,7 +55,7 @@ angular.module('hillromvestApp')
                 }
             })
             .state('clinic-admin-user-profile', {               
-                url:'/clinicadmin/{clinicId}',
+                url:'/clinicadmin-profile/{clinicId}',
                 views:{
                     'content':{
                     templateUrl:'scripts/modules/clinicadmin/profile/profile-tabs/clinic-admin-profile-section.html'                
@@ -929,7 +929,7 @@ angular.module('hillromvestApp')
 
             .state('clinicAdmin', {
               parent: 'clinicEdit',
-              url: '/clinicAdmin',
+              url: '/clinicadmin-clinic-edit',
               data: {
                   roles: ['ADMIN'],
                   pageTitle: 'clinic.title'
