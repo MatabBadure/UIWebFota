@@ -55,6 +55,7 @@ $header--background: $body-bg;
 	min-height: inherit;
 	background-color: inherit;
 	color: inherit;
+	outline: none;
 }
 
 .navbar-nav.navbar-right:last-child {
@@ -102,7 +103,7 @@ $header--background: $body-bg;
 		box-shadow : 0 -3px 0 0 $sunshade inset;
 		border-radius: 0;
   	span{
-			color: $lapis-lazuli;
+			color: $sunshade;
 		}
 	}
 }
@@ -129,13 +130,13 @@ $header--background: $body-bg;
 	box-shadow : 0 -3px 0 0 $sunshade inset;
 	border-radius: 0;
 	span{
-		color: $lapis-lazuli;
+		color: $iceberg;
 	}
 }
 
 .navbar-secondary .navbar-right  .header-popover a .icon-logged-in-user {
 	display: block;
-  padding-top: 10px;
+  	padding-top: 10px;
 }
 
 .navbar-secondary .navbar-right .header-popover a .user-name {
@@ -194,7 +195,7 @@ $header--background: $body-bg;
 
 
 .navbar-secondary .navbar-right li:last-child a:hover span {
-	color: $bombay;
+	color: $sunshade;
 }
 
 .navbar-secondary .navbar-right li .notif-bell { 

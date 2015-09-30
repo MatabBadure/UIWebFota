@@ -169,7 +169,7 @@
           "tabs": {
             "mydashboard": "My Dashboard",
             "caregiver": "Caregiver",
-            "device-protocol": "Device and Protocol",
+            "device-protocol": "Protocol and Device ",
             "clinic-hcp": "Clinic and HCP"
           }
         },
