@@ -306,11 +306,14 @@
 	}
 	.edit_delete{
 		.save{
-			background-color: $sunshade;
-			border: solid 1px $sunshade;
+			background-color: $iceberg;
+			border:0px;
+			border-bottom: solid 2px $sunshade;
 			margin-right: 15px;
-			color: $gray-dark;
-			
+			color: $btn-primary-color;
+			&:hover{
+				background-color: $sunshade;
+			}
 		}
 	}
 }
