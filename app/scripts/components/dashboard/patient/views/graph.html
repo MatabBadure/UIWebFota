@@ -211,9 +211,9 @@
 
    <div class="col-md-16 note_edit_container hide_content" id="note_edit_container" ng-show="role === 'PATIENT'">
 	<form name="form" ng-submit="createNote();">
-		<div class="col-md-2 date_col">
+		<div class="col-md-2 col-sm-4 date_col">
 			<input class="date_input"  data-provide="datepicker"  data-date-format="yyyy-mm-dd"  bootstrap-datepicker data-date-end-date="0d"  id="edit_note_date" ng-model="textNote.edit_date" placeholder="Date"/></div>
-			<div class="col-md-11 description">
+			<div class="col-md-11 col-sm-8 description">
 				<div class="form-group">
 					<textarea class="form-control custom_textarea" rows="1" id="comment" ng-model="textNote.text" maxlength="300"></textarea>
 				</div>
