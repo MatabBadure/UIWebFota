@@ -13,8 +13,8 @@
         <span class="navbar-brand__desc--text-secondary" translate="global.logo-text.health-portal"></span>
       </div>
     </div>
-    <div class="collapse navbar-collapse navbar-secondary" id="navbar-collapse" ng-if="userRole === 'ADMIN'" ng-switch-when=true>
-      <ul class="nav navbar-nav navbar-right">
+    <div class="collapse navbar-collapse navbar-secondary" id="navbar-collapse" ng-if="userRole === 'ADMIN' && !isFooter" ng-switch-when=true>
+      <ul class="nav navbar-nav navbar-right"> 
         <li class="icon-border">
           <a ng-class="{ active: isActive('admin/patients')}" ng-href="#/admin/patients">
             <span class="icons hillrom-icon icon-patient"></span>
