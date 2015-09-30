@@ -309,5 +309,8 @@
         "missed-therapy" :"Missed Therapy"
     },
 
-    "user-not-found" : "No user associated."
+    "user-not-found" : "No user associated.",
+    "navbar": {
+        "my-dashboard": "My Dashboard"
+    }
 }
