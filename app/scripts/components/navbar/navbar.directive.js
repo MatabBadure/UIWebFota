@@ -65,7 +65,7 @@ angular.module('hillromvestApp')
         if($scope.userRole === "ADMIN"){
           $state.go('adminProfile');
         }else if($scope.userRole === "PATIENT"){
-          $state.go("patientProfile");
+          $state.go("patientResetPassword");
         } else if($scope.userRole === 'HCP'){
           $state.go('hcpDashboardProfile');
         }

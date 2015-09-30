@@ -1160,14 +1160,14 @@ angular.module('hillromvestApp')
             })
 
             .state('patientProfile', {
-                parent: 'patient-dashboard-profile',
+                parent: 'patient-dashboard',
                 url: '/p-profile',
                 data: {
                     roles: ['PATIENT'],
                     pageTitle: 'patient.title'
                 },
                 views: {
-                    'patient-profile-view': {
+                    'patient-view': {
                         templateUrl: 'scripts/modules/patient/profile/profile-tabs/my-profile.html',
                         controller: 'patientprofileController'
                     }
@@ -1305,14 +1305,14 @@ angular.module('hillromvestApp')
               }
             })
             .state('patientProfileEdit', {
-                parent: 'patient-dashboard-profile',
+                parent: 'patient-dashboard',
                 url: '/p-profile-edit',
                 data: {
                     roles: ['PATIENT'],
                     pageTitle: 'patient.title'
                 },
                 views: {
-                    'patient-profile-view': {
+                    'patient-view': {
                         templateUrl: 'scripts/modules/patient/profile/profile-tabs/edit-my-profile.html',
                         controller: 'patientprofileController'
                     }
