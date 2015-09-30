@@ -82,6 +82,7 @@ gulp.task('scripts', function() {
 		.pipe(gulp.dest('app/build/js'));
 });
 
+//html replace with js and css
 gulp.task('html_replace', function() {
   return gulp.src('app/index.html')
     .pipe(htmlreplace({
