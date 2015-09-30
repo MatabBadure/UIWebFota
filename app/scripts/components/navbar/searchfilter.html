@@ -1,0 +1,26 @@
+	<div class="row">
+		<label>
+			<input type="checkbox" ng-model="searchFilter.isActive" ng-click="searchOnFilters()"> 
+			<span translate="search-filter.active"></span> 
+		</label>
+		<label>
+			<input type="checkbox" ng-model="searchFilter.isInActive" ng-click="searchOnFilters()"> 
+			<span translate="search-filter.inactive"></span>
+		</label>
+		<label ng-if="searchFilter.userList === 'patientList'">
+			<input type="checkbox" ng-model="searchFilter.isNoEvent" ng-click="searchOnFilters()"> 
+			<span translate="search-filter.no-event"></span>
+		</label>
+		<label ng-if="searchFilter.userList === 'patientList'">
+			<input type="checkbox" ng-model="searchFilter.isSettingDeviation" ng-click="searchOnFilters()"> 
+			<span translate="search-filter.setting-deviation"></span>
+		</label>
+		<label ng-if="searchFilter.userList === 'patientList'">
+			<input type="checkbox" ng-model="searchFilter.isHMRNonCompliant" ng-click="searchOnFilters()"> 
+			<span translate="search-filter.hmr-non-compliant"></span>
+		</label>
+		<label ng-if="searchFilter.userList === 'patientList'">
+			<input type="checkbox" ng-model="searchFilter.isMissedTherapy" ng-click="searchOnFilters()"> 
+			<span translate="search-filter.missed-therapy"></span>
+		</label>		
+	</div>

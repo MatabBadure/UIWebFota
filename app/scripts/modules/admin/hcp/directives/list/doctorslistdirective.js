@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hillromvestApp')
-  .directive('doctorList', ['UserService', '$state', '$stateParams', function(UserService, $state, $stateParams) {
+  .directive('doctorList', ['UserService', '$state', '$stateParams', 'searchFilterService', function(UserService, $state, $stateParams, searchFilterService) {
     return {
       templateUrl: 'scripts/modules/admin/hcp/directives/list/list.html',
       restrict: 'E',
@@ -18,10 +18,9 @@ angular.module('hillromvestApp')
         })
       }
       },
-
       controller: ['$scope', '$timeout', '$state','$stateParams', 'DoctorService', 'notyService', function($scope, $timeout, $state,$stateParams, DoctorService, notyService) {
-
         $scope.init = function() {
+          $scope.searchFilter = searchFilterService.initSearchFiltersForHCP();
           $scope.doctors = [];
           $scope.doctorInfo = {};
           $scope.currentPageIndex = 1;
@@ -34,6 +33,7 @@ angular.module('hillromvestApp')
           $scope.sortIconDefault = true;
           $scope.sortIconUp = false;
           $scope.sortIconDown = false;
+          $scope.searchDoctors();
           if($stateParams.clinicIds){                      
             $scope.getAssociatedHCPsToClinic($stateParams.clinicIds);
           }
@@ -42,7 +42,7 @@ angular.module('hillromvestApp')
 
         var timer = false;
         $scope.$watch('searchItem', function() {
-          if($state.current.name === "hcpUser" && !$stateParams.clinicIds){
+          if($state.current.name === "hcpUser" && !$stateParams.clinicIds && !searchOnLoad){
           if (timer) {
             $timeout.cancel(timer)
           }
@@ -74,8 +74,10 @@ angular.module('hillromvestApp')
           }else {
             $scope.currentPageIndex = 1;
           }
+
+          var filter = searchFilterService.getFilterStringForHCP($scope.searchFilter);
           var url = 'api/user/hcp/search?searchString=';
-          UserService.getUsers(url, $scope.searchItem, $scope.sortOption, $scope.currentPageIndex, $scope.perPageCount).then(function(response) {
+          UserService.getUsers(url, $scope.searchItem, $scope.sortOption, $scope.currentPageIndex, $scope.perPageCount, filter).then(function(response) {
             $scope.doctors = response.data;
             $scope.total = response.headers()['x-total-count'];
             $scope.pageCount = Math.ceil($scope.total / 10);
@@ -84,6 +86,7 @@ angular.module('hillromvestApp')
             } else {
               $scope.noMatchFound = false;
             }
+            searchOnLoad = false;
           }).catch(function(response) {
 
           });
@@ -121,6 +124,10 @@ angular.module('hillromvestApp')
             $scope.sortIconUp = false;
             $scope.sortIconDown = true;
           }
+        };
+
+        $scope.searchOnFilters = function(){           
+          $scope.searchDoctors();
         };
 
         $scope.init();

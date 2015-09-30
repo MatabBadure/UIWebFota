@@ -22,7 +22,8 @@ angular.module('hillromvestApp')
           scope.searchUsers();
         })
       },
-      controller: ['$scope', '$timeout', '$state', 'UserService', function($scope, $timeout, $state, UserService) {
+      controller: ['$scope', '$timeout', '$state', 'UserService', 'searchFilterService', function($scope, $timeout, $state, UserService, searchFilterService) {
+        var searchOnLoad = true;
         $scope.init = function() {
           $scope.users = [];
           $scope.currentPageIndex = 1;
@@ -34,16 +35,21 @@ angular.module('hillromvestApp')
           $scope.sortIconDefault = true;
           $scope.sortIconUp = false;
           $scope.sortIconDown = false;
+          $scope.searchItem = "";
+          $scope.searchFilter = searchFilterService.initSearchFiltersForHCP();
+          $scope.searchUsers();
         };
 
         var timer = false;
         $scope.$watch('searchItem', function () {
-          if (timer) {
-            $timeout.cancel(timer)
+          if(!searchOnLoad){
+            if (timer) {
+              $timeout.cancel(timer)
+            }
+            timer= $timeout(function () {
+                $scope.searchUsers();
+            },1000)
           }
-          timer= $timeout(function () {
-              $scope.searchUsers();
-          },1000)
         });
 
         /**
@@ -78,11 +84,13 @@ angular.module('hillromvestApp')
           } else {
             $scope.currentPageIndex = 1;
           }
+          var filter = searchFilterService.getFilterStringForHCP($scope.searchFilter);
           var url = 'api/user/search?searchString=';
-          UserService.getUsers(url, $scope.searchItem, $scope.sortOption, $scope.currentPageIndex, $scope.perPageCount).then(function(response) {
+          UserService.getUsers(url, $scope.searchItem, $scope.sortOption, $scope.currentPageIndex, $scope.perPageCount, filter).then(function(response) {
             $scope.users = response.data;
             $scope.total = response.headers()['x-total-count'];
             $scope.pageCount = Math.ceil($scope.total / 10);
+            searchOnLoad = false;
           }).catch(function(response) {});
         };
 
@@ -103,6 +111,9 @@ angular.module('hillromvestApp')
             $scope.sortIconUp = false;
             $scope.sortIconDown = true;
           }
+        };
+        $scope.searchOnFilters = function(){    
+          $scope.searchUsers();
         };
 
         $scope.init();
