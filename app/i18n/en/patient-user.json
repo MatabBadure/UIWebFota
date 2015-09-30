@@ -43,7 +43,11 @@
           "type": "Type",
           "treatment-day": "Treatment per Day",
           "create-date": "Created Date",
-          "modified-date": "Modified Date"
+          "modified-date": "Modified Date",
+          "treatments-per-day": "Treatments Per Day",
+          "minutes-per-treatment": "Minutes Per Treatment",
+          "pressure-per-treatment": "Pressure Per Treatment",
+          "frequency-per-treatment": "Frequency Per Treatment"
         },
         "device-caption": {
           "serial-no": "Serial Number",
@@ -51,7 +55,8 @@
           "status": "Status",
           "created-date": "Created Date",
           "device": "Device",
-          "modified-date": "Modified Date"
+          "modified-date": "Modified Date",
+          "active-or-inactive-date": "Active or Inactive Date"
         },
         "clinic-title": "Clinics",
         "caregiver-title": "Caregivers",
