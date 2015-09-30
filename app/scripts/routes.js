@@ -57,22 +57,8 @@ angular.module('hillromvestApp')
             .state('clinic-admin-user-profile', {               
                 url:'/clinicadmin-profile',
                 params:  {clinicId: null},
-                views:{
-                    'content':{
-                    templateUrl:'scripts/modules/clinicadmin/profile/profile-tabs/clinic-admin-profile-section.html'                
-            }
-                },
-                resolve: {
-                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
-                        $translatePartialLoader.addPart('global');
-                        return $translate.refresh();
-                    }],
-                    authorize: ['Auth',
-                        function(Auth) {
-                            return Auth.authorize(false);
-                        }
-                    ]
-                }
+                parent: 'entity',
+                abstract: true,                
             })
             .state('hcp-user-profile', {               
                 url:'/hcp-profile/{clinicId}',
@@ -1628,7 +1614,7 @@ angular.module('hillromvestApp')
                     pageTitle: 'hcp.title'
                 },
                 views: {
-                    'clinic-admin-profile-view': {
+                    'content@': {
                         templateUrl: 'scripts/modules/clinicadmin/profile/profile-tabs/my-profile.html',
                         controller: 'clinicadminProfileController'
                     }
@@ -1654,7 +1640,7 @@ angular.module('hillromvestApp')
                     pageTitle: 'patient.title'
                 },
                 views: {
-                    'clinic-admin-profile-view': {
+                    'content@': {
                         templateUrl: 'scripts/modules/clinicadmin/profile/profile-tabs/update-password.html',
                         controller: 'clinicadminProfileController'
                     }
@@ -1675,7 +1661,7 @@ angular.module('hillromvestApp')
                     pageTitle: 'patient.title'
                 },
                 views: {
-                    'clinic-admin-profile-view': {
+                    'content@': {
                         templateUrl: 'scripts/modules/clinicadmin/profile/profile-tabs/edit-my-profile.html',
                         controller: 'clinicadminProfileController'
                     }
@@ -1880,7 +1866,7 @@ angular.module('hillromvestApp')
                     pageTitle: 'patient.title'
                 },
                 views: {
-                    'clinic-admin-profile-view': {
+                    'content@': {
                         templateUrl: 'scripts/modules/clinicadmin/profile/profile-tabs/settings.html',
                         controller: 'clinicadminProfileController'
                     }
