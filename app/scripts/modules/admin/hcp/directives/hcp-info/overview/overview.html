@@ -110,7 +110,7 @@
         <div class="col-md-1 header--type">
           <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="doctor.status">Status</span>
         </div>
-        <div class="col-md-1 header--type">
+        <div class="col-md-1 header--type text-centered">
           <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="doctor.adherence">Adherence</span>
         </div>
         <div class="clr"></div>
@@ -147,7 +147,7 @@
           <span class="short-info inactive" ng-if="patient.patientUser.isDeleted" translate="doctor.status-type.inactive"></span>
       </div>
 
-      <div class="col-md-1 reset-padding-left centered">
+      <div class="col-md-1 reset-padding-left text-centered">
         <span class="short-info">{{patient.patientUser.adherence}}</span>
       </div>
       <div class="clr"></div>

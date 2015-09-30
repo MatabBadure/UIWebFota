@@ -96,6 +96,10 @@
     .icon-delete-icon{
       cursor: default;
       color: #ccc;
+      cursor: pointer;
+      &:hover {
+        color: $pickled-bluewood;
+      }
     }
     .glyphicon-trash{
       cursor: default;

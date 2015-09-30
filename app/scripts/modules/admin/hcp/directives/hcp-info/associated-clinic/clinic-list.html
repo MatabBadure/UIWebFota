@@ -39,37 +39,37 @@
       <div class="clr"></div>
     </div>
 
-    <div class="dashboard__manage-view--list" ng-repeat="clinic in clinicsOfHCP" ng-if="clinicsOfHCP.length > 0"  ng-class="{'inactive': clinic.deleted}">
+    <div class="dashboard__manage-view--list assoc" ng-repeat="clinic in clinicsOfHCP" ng-if="clinicsOfHCP.length > 0"  ng-class="{'inactive': clinic.deleted}">
       <span>
-      <div class="col-md-4 reset-padding centered">
+      <div class="col-md-4  centered">
         <span class="main-prim-info">{{clinic.name}}</span>
       </div>
-      <div class="col-md-3 reset-padding centered">
+      <div class="col-md-3  centered">
         <span class="short-info">{{clinic.address}}</span>
       </div>
-      <div class="col-md-2 reset-padding centered">
+      <div class="col-md-2  centered">
         <span class="short-info">{{clinic.city}}</span>
       </div>
 
-      <div class="col-md-1 reset-padding centered">
+      <div class="col-md-1  centered">
         <span class="short-info">{{clinic.state}}</span>
       </div>
 
-      <div class="col-md-2 reset-padding centered">
+      <div class="col-md-2  centered">
         <span class="short-info">{{clinic.phoneNumber}}</span>
       </div>
 
-      <div class="col-md-1 reset-padding centered">
+      <div class="col-md-1  centered">
         <span class="short-info" ng-if="clinic.parent" translate="doctor.clinicType.parent"></span>
         <span class="short-info" ng-if="!clinic.parent" translate="doctor.clinicType.satellite"></span>
       </div>
 
-      <div class="col-md-2 reset-padding centered">
+      <div class="col-md-2  centered">
         <span class="impo-highlight">{{clinic.hillromId}}</span>
       </div>
       </span>
 
-      <div class="col-md-1 reset-padding centered"  ng-click="showclinicDisassociatedModal(clinic.id);">
+      <div class="col-md-1  centered"  ng-click="showclinicDisassociatedModal(clinic.id);">
        <span class="icon-delete-icon"></span>
       </div>
       <div class="clr"></div>

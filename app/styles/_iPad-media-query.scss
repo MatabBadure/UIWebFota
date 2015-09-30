@@ -65,8 +65,8 @@
 	.hcp_wrapper{
 		.stats_chart_container{
 			.chart_inner_icon{
-				left: 92px;
-				top: 33px;
+				left: 39%;
+    			top: 16%;
 			}
 		}
 	}
@@ -75,6 +75,22 @@
 	/*Bug fixes*/
 	.navbar-default > .container > .navbar-secondary ul li{
 		outline: none;
+	}
+
+	.patient-user__navbar .patient-dashboard > li {
+		padding-right: 0;
+	}
+
+	.patient_nav_link_right li {
+		margin-right: 10px;
+		font-size: 12px;
+	}
+	.patient-user__navbar ul > li > a .icons{
+		top: 13px;
+	}
+	.patient-user__navbar{
+		width: 100%;
+		display: inline-block;
 	}
 }
 
@@ -103,8 +119,8 @@
 	.hcp_wrapper{
 		.stats_chart_container{
 			.chart_inner_icon{
-				left: 92px;
-				top: 33px;
+				left: 39%;
+    			top: 16%;
 			}
 		}
 	}
@@ -160,13 +176,17 @@
 	.navbar-default > .container > .navbar-secondary ul li{
 		outline: none;
 	}
+	.patient-user__navbar{
+		width: 100%;
+		display: inline-block;
+	}
 
 	.patient-user__navbar .patient-dashboard > li {
 		padding-right: 0;
 	}
 
 	.patient_nav_link_right li {
-		margin-right: 10px;
+		margin-right: 5px;
 	}
 }
 @media screen and (min-width : 1024px){

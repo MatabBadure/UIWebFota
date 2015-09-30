@@ -168,7 +168,7 @@
         },
         "profile": {
           "tabs": {
-            "mydashboard": "My Dashboard",
+            "mydashboard": "Dashboard",
             "caregiver": "Caregiver",
             "device-protocol": "Device and Protocol",
             "clinic-hcp": "Clinic and HCP",

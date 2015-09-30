@@ -28,7 +28,7 @@
       <div class="col-md-2 header--type">
         <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="clinic.mrn-id">Hill-Rom ID</span>
       </div>
-      <div class="col-md-3 header--type">
+      <div class="col-md-2 header--type">
         <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="clinic.date-of-birth">DOB</span>
       </div>
       <div class="col-md-2 header--type">
@@ -43,46 +43,46 @@
       <div class="col-md-1 header--type">
         <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="clinic.status">Status</span>
       </div>
-      <div class="col-md-1 header--type">
+      <div class="col-md-1 header--type text-centered">
         <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="clinic.adherence">Adherence</span>
       </div>
       
       <div class="clr"></div>
     </div>
 
-    <div class="dashboard__manage-view--list" ng-repeat="associatedPatient in associatedPatients" readonly="true" ng-class="{'inactive': associatedPatient.patient.deleted}">
+    <div class="dashboard__manage-view--list assoc" ng-repeat="associatedPatient in associatedPatients" readonly="true" ng-class="{'inactive': associatedPatient.patient.deleted}">
      <span>
-      <div class="col-md-3 reset-padding">
+      <div class="col-md-3">
         <span class="main-prim-info">{{associatedPatient.patient.lastName}} {{associatedPatient.patient.firstName}}</span>
         <span class="main-secon-info">{{associatedPatient.patient.email}}</span>
       </div>
-      <div class="col-md-2 reset-padding centered">
+      <div class="col-md-2 centered">
         <span class="impo-highlight">{{associatedPatient.patient.mrnId}}</span>
       </div>
-      <div class="col-md-3 reset-padding centered">
+      <div class="col-md-2 centered">
         <span class="short-info">{{associatedPatient.patient.dob}}</span>
       </div>
 
-      <div class="col-md-2 reset-padding centered">
+      <div class="col-md-2 centered">
         <span class="short-info">{{associatedPatient.patient.city}}</span>
         <span ng-if="associatedPatient.patient.state && associatedPatientpatient.city">,</span>
         <span class="short-info">{{associatedPatient.patient.state}}</span>
       </div>
 
-      <div class="col-md-2 reset-padding centered">
+      <div class="col-md-2 centered">
         <span class="short-info">{{associatedPatient.patient.transmission}}</span>
       </div>
 
-      <div class="col-md-2 reset-padding centered">
+      <div class="col-md-2 centered">
         <span class="short-info">{{clinic.name}}</span>
       </div>
 
-      <div class="col-md-1 reset-padding centered">
+      <div class="col-md-1 centered">
           <span class="short-info active" ng-if="!associatedPatient.patient.deleted" translate="clinic.status-type.active"></span>
           <span class="short-info inactive" ng-if="associatedPatient.patient.deleted" translate="clinic.status-type.inactive"></span>
       </div>
 
-      <div class="col-md-1 reset-padding-left centered">
+      <div class="col-md-1 text-centered">
         <span class="short-info">{{associatedPatient.patient.adherence}}</span>
       </div>
       </span>
@@ -101,7 +101,7 @@
 <div class="container admin-user">
   <div class="col-md-16 reset-padding">
     <div class="col-md-8 clinic-link">
-      <input class="form-control" type="text" ng-model="searchPatient" typeahead="patient as patient.lastName + ' ' + patient.firstName for patient in patients | filter:$viewValue" typeahead-on-select="selectPatient($item)" placeholder="{{'clinic.placeholder.patient-search' | translate}}" ng-show="isAssociatePatient">
+      <input class="form-control" type="text" ng-model="searchPatient" typeahead="patient as patient.lastName + ' ' + patient.firstName for patient in nonAssociatedPatients | filter:$viewValue" typeahead-on-select="selectPatient($item)" placeholder="{{'clinic.placeholder.patient-search' | translate}}" ng-show="isAssociatePatient">
 
     </div>
 
