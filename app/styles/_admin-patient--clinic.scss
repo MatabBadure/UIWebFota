@@ -122,6 +122,7 @@
 
 .clinic-link, .exist-link{
     .dropdown-menu{
+      z-index: 9999;
       width: 80%;
       li{
         a{
