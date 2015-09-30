@@ -48,6 +48,15 @@ angular.module('hillromvestApp')
     $scope.initClinicAssoctPatients = function(clinicId){
       $scope.searchAssociatedPatients();      
       $scope.getClinicById(clinicId);
+      $scope.getNonAssociatedPatients(clinicId);
+    };
+
+    $scope.getNonAssociatedPatients = function(clinicId){
+      clinicService.getNonAssocaitedPatients(clinicId).then(function(response){
+        $scope.nonAssociatedPatients = response.data.patientUsers;
+      }).catch(function(response){
+        notyService.showError(response);
+      });
     };
 
     $scope.initClinicAssoctHCPs = function(clinicId){
@@ -447,6 +456,7 @@ angular.module('hillromvestApp')
       clinicService.associatePatient(patient.id, data).then(function(response){
         $scope.initClinicAssoctPatients($stateParams.clinicId);
         notyService.showMessage(response.data.message, 'success');
+        $scope.getNonAssociatedPatients($stateParams.clinicId);
       }).catch(function(response){
         notyService.showMessage(response.data.message, 'warning');
       });
