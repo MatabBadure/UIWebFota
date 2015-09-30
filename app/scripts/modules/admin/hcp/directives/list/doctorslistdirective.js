@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hillromvestApp')
-  .directive('doctorList', function(UserService, $state, $stateParams) {
+  .directive('doctorList', ['UserService', '$state', '$stateParams', function(UserService, $state, $stateParams) {
     return {
       templateUrl: 'scripts/modules/admin/hcp/directives/list/list.html',
       restrict: 'E',
@@ -19,7 +19,7 @@ angular.module('hillromvestApp')
       }
       },
 
-      controller: function($scope, $timeout, $state,$stateParams, DoctorService, notyService) {
+      controller: ['$scope', '$timeout', '$state','$stateParams', 'DoctorService', 'notyService', function($scope, $timeout, $state,$stateParams, DoctorService, notyService) {
 
         $scope.init = function() {
           $scope.doctors = [];
@@ -124,6 +124,6 @@ angular.module('hillromvestApp')
         };
 
         $scope.init();
-      }
+      }]
     };
-  });
+  }]);

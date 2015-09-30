@@ -52,7 +52,7 @@
             "app/bower_components/angular-loading-bar/build/loading-bar.js",
             "app/bower_components/angular-validation-match/dist/angular-validation-match.js",
             "app/bower_components/angular-bootstrap/ui-bootstrap-tpls.js",
-            "app/bower_components/jquery.easy-pie-chart/dist/angular.easypiechart.js",
+            "app/bower_components/jquery.easy-pie-chart/dist/angular.easypiechart.min.js",
             "app/bower_components/requirejs/require.js",
             "app/bower_components/d3/d3.js",
             "app/bower_components/nvd3/nv.d3.js",
