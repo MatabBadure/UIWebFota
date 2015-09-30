@@ -252,7 +252,8 @@
             "match": "Parent Clinic doesn't exist."
         },
         "clinicName": {
-            "required": "Clinic Name is required."
+            "required": "Clinic Name is required.",
+            "maxlength": "Clinic Name cannot be longer than 25 characters."
         },
         "role":{
             "required": "Role is required."
