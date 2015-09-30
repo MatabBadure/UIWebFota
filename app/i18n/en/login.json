@@ -5,7 +5,7 @@
             "password": "Password",
             "password.placeholder": "password",
             "rememberme": "Automatic Login",
-            "button": "SIGN IN"
+            "button": "Sign In"
         },
         "messages": {
             "error": {
