@@ -1665,8 +1665,7 @@ angular.module('hillromvestApp')
 
             .state('clinicadminpatientdashboard', {
                 parent: 'clinicadmin-dashboard',
-                url: '/clinicadmin-patient',
-                params: {"clinicId" : null},
+                url: '/{clinicId}/clinicadmin-patient',
                 data: {
                     roles: ['CLINIC_ADMIN'],
                     pageTitle: 'hcp.title'
