@@ -10,6 +10,18 @@ var gulp             = require('gulp'),
 	livereload       = require('gulp-livereload'),
 	plumber          = require('gulp-plumber'),
 	path             = require('path'),
+	imagemin = require('gulp-imagemin'),
+	pngquant = require('imagemin-pngquant');
+ 
+gulp.task('default', function () {
+    return gulp.src('src/images/*')
+        .pipe(imagemin({
+            progressive: true,
+            svgoPlugins: [{removeViewBox: false}],
+            use: [pngquant()]
+        }))
+        .pipe(gulp.dest('dist/images'));
+});
 	gulprc = require("./gulpfile.json"),
 	del = require("del"),
 	htmlreplace = require('gulp-html-replace'),
@@ -34,6 +46,16 @@ gulp.task("clean", function () {
   return del(gulprc.patterns.clean, {force: true});
 });
 
+gulp.task('images_compress', function () {
+    return gulp.src('app/images/*')
+        .pipe(imagemin({
+            progressive: true,
+            svgoPlugins: [{removeViewBox: false}],
+            use: [pngquant()]
+        }))
+        .pipe(gulp.dest('app/images'));
+});
+
 //styles
 gulp.task('styles_process', function() {
 	return gulp.src('app/styles/*.scss')
@@ -41,7 +63,7 @@ gulp.task('styles_process', function() {
 		.pipe(compass({
 			css: 'app/build/css',
 			sass: 'app/styles/',
-			image: 'app/build/images',
+			image: 'app/images/',
 			comments: false
 		}))
 		.pipe(autoprefixer('last 2 version', 'safari 5', 'ie 7', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'))
@@ -93,7 +115,7 @@ gulp.task('html_replace', function() {
 });
 
 gulp.task('build', function (cb) {
-  runSequence('clean', ['scripts', 'styles', 'html_replace'], cb);
+  runSequence('clean', ['scripts', 'styles', 'images_compress', 'html_replace'], cb);
 });
 
 
