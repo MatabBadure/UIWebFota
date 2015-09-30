@@ -111,16 +111,12 @@ angular.module('hillromvestApp')
   $scope.getAssociateHCPToPatient = function(patientId){
     clinicadminPatientService.getAssociatedHCPOfPatientClinic(patientId, $stateParams.clinicId).then(function(response){
       $scope.associatedHCPs = response.data.hcpList
-    }).catch(function(response){
-      notyService.showError(response);
     });
   };
 
   $scope.getClinicById = function(clinicId){
     clinicService.getClinic(clinicId).then(function(response){
       $scope.clinic = response.data.clinic;
-    }).catch(function(response){
-      notyService.showError(response);
     });
   };
 
