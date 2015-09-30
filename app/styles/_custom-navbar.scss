@@ -249,9 +249,9 @@ $header--background: $body-bg;
   width: 100%;
   height: 60px;
   z-index: 999;
-  -webkit-box-shadow: 0 3px 3px $gray-lighter;
-  -moz-box-shadow: 0 3px 3px $gray-lighter;
-  box-shadow: 0 3px 3px $gray-lighter;
+  -webkit-box-shadow: 0 5px 5px $gray-darken;
+  -moz-box-shadow: 0 5px 5px $gray-darken;
+  box-shadow: 0 5px 5px $gray-darken;
   display: none;
 }
 
