@@ -170,7 +170,8 @@
             "mydashboard": "My Dashboard",
             "caregiver": "Caregiver",
             "device-protocol": "Device and Protocol",
-            "clinic-hcp": "Clinic and HCP"
+            "clinic-hcp": "Clinic and HCP",
+            "patient-demographics": "Patient Demographics"
           }
         },
     "errMSG":{
