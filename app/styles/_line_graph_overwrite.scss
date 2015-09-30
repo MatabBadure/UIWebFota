@@ -202,7 +202,10 @@
 		clear: left;
 	    display: inline-block;
 	    margin: 30px 0px 20px;
-	    width: 100%;	
+	    width: 100%;
+	    .dropdown-menu{
+	    	margin-bottom: 80px;
+	    }	
 	}
 	/* Grapg ToolTip style */
 /* Over write date picker style*/
@@ -330,3 +333,7 @@
 		display: inline-block;
 	}
 }
+.datepicker thead tr:first-child th:hover, .datepicker tfoot tr th:hover, .datepicker thead tr:first-child th{
+	color: $btn-primary-color;
+	background-color: $iceberg;
+}	

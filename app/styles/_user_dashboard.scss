@@ -49,6 +49,7 @@
 		}
 		.sub_txt{
 			line-height: 27px;
+			color: $sunshade;
 		}
 	}
 } 
@@ -113,6 +114,9 @@
     }
 }
 /* Notification Section CSS */
+.dashboard_noti_section{
+	margin-bottom: 20px;
+}
 .dashboard_noti_section{
 	.header_noti{
 		h4{
@@ -332,7 +336,7 @@
 				color: $gray-dark;
 				&.missedTHRP_legend{
 					&:after{
-						background-color: rgb(255, 38, 1);
+						background-color: #4e95c4;
 						border: $btn-default-bg;
 					}
 				}

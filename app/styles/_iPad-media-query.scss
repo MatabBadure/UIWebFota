@@ -5,7 +5,12 @@
 			float: none;
 		}
 		.stats_chart_content{
-			margin: 10px 0px 0px 15px;
+			margin: 0;
+			text-align: center;
+			width: 100%;
+			.percent{
+				float: none;
+			}
 		}
 	}
 
@@ -52,7 +57,7 @@
 		}
 		.col-3{
 			.chart_inner_icon{
-				left: 36%;
+				left: 40%;
    				top: 22%;
 			}
 		}
@@ -66,6 +71,11 @@
 		}
 	}
 	/*HCP Patient Dashboar Style END*/	
+
+	/*Bug fixes*/
+	.navbar-default > .container > .navbar-secondary ul li{
+		outline: none;
+	}
 }
 
 @media only screen and (min-width : 768px) and (max-width : 1024px) and (orientation : portrait) { 
@@ -73,6 +83,15 @@
 	.stats_chart_container{ 
 		.pie_chart{
 			float: none;
+			text-align: center;
+		}
+		.stats_chart_content{
+			margin: 0;
+			text-align: center;
+			width: 100%;
+			.percent{
+				float: none;
+			}
 		}
 	}
 
@@ -123,6 +142,10 @@
 		padding: 0 10px;
 	}
 	/* User Particular info tab padding  END*/
+	/*Bug fixes*/
+	.navbar-default > .container > .navbar-secondary ul li{
+		outline: none;
+	}
 }
 @media screen and (min-width : 1024px){
 	.login{

@@ -122,8 +122,8 @@
             "satellite": "Satellite"
         },
         "dashboard":{
-            "missedTherapy": "Missed Therapy",
-            "hmrNonCompliance": "HMR Non-Compliance",
+            "missedTherapy": "Missed Therapy Days",
+            "hmrNonCompliance": "HMR Non-Adherence",
             "settingDeviation": "Setting Deviation",
             "noEventsRecorded": "No Events Recorded",
             "todayStatistics": "Today's Statistics -",
