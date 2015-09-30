@@ -84,6 +84,10 @@
 	.patient_nav_link_right li {
 		margin-right: 10px;
 	}
+	.patient-user__navbar{
+		width: 100%;
+		display: inline-block;
+	}
 }
 
 @media only screen and (min-width : 768px) and (max-width : 1024px) and (orientation : portrait) { 
@@ -167,6 +171,10 @@
 	/*Bug fixes*/
 	.navbar-default > .container > .navbar-secondary ul li{
 		outline: none;
+	}
+	.patient-user__navbar{
+		width: 100%;
+		display: inline-block;
 	}
 
 	.patient-user__navbar .patient-dashboard > li {
