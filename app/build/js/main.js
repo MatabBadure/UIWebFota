@@ -105269,7 +105269,6 @@ angular.module('hillromvestApp')
       $scope.yAxis1Min = 0;
       $scope.yAxis2Min = 0;
       $scope.getHmrRunRateAndScore();
-      $scope.edit_date = dateService.convertDateToYyyyMmDdFormat(new Date());
       $scope.getMissedTherapyDaysCount();
       $scope.fromTimeStamp = dateService.getnDaysBackTimeStamp(6);
       $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
@@ -106289,18 +106288,18 @@ angular.module('hillromvestApp')
       }
     };
 
-    $scope.createNote = function(){         
+    $scope.createNote = function(){
         $scope.noteTextError =  null;
-        if($scope.textNote && $scope.textNote.length > 0){ 
-          if($scope.edit_date && $scope.edit_date != 'undefined' && $scope.edit_date.length > 0){
-            var editDate = $scope.edit_date;            
+        if($scope.textNote && $scope.textNote.text.length > 0){
+          if($scope.textNote.edit_date && $scope.textNote.edit_date != 'undefined' && $scope.textNote.edit_date.length > 0){
+            var editDate = $scope.textNote.edit_date;
             var data = {};
-            data.noteText = $scope.textNote;
+            data.noteText = $scope.textNote.text;
             data.userId = localStorage.getItem('patientID');
             data.date = editDate;
             UserService.createNote(localStorage.getItem('patientID'), data).then(function(response){
               $scope.addNote = false;
-              $scope.edit_date = dateService.convertDateToYyyyMmDdFormat(new Date());
+              $scope.textNote.edit_date = dateService.convertDateToYyyyMmDdFormat(new Date());
               $scope.textNote = "";     
               $scope.showAllNotes();
               $scope.addNoteActive = false;
@@ -106330,7 +106329,9 @@ angular.module('hillromvestApp')
 
     $scope.openAddNote = function(){    
       $scope.noteTextError =  null;  
-      $scope.textNote = null;
+      $scope.textNote = {};
+      $scope.textNote.edit_date = dateService.convertDateToYyyyMmDdFormat(new Date());
+       $scope.textNote.text = "";
       $scope.addNoteActive = true;
       $("#note_edit_container").removeClass("hide_content");
       $("#note_edit_container").addClass("show_content");  
@@ -109222,3 +109223,82 @@ angular.module('hillromvestApp')
 	        link.click(); 	         	 
 	    }	    
   }]);
+
+'use strict';
+
+angular.module('hillromvestApp')
+    .service('searchFilterService', [function () {
+        this.initSearchFiltersForPatient = function() {
+            var searchFilter = {};
+            searchFilter.isActive = true;
+            searchFilter.isInActive = false;
+            searchFilter.isNoEvent = false;
+            searchFilter.isSettingDeviation = false;
+            searchFilter.isHMRNonCompliant = false;
+            searchFilter.isMissedTherapy = false;
+            searchFilter.userList = searchFilters.patientList;
+            return searchFilter;
+        }
+
+        this.initSearchFiltersForClinic = function() {
+            var searchFilter = {};
+            searchFilter.isActive = true;
+            searchFilter.isInActive = false;
+            searchFilter.userList = searchFilters.clinicList;
+            return searchFilter;
+        }
+
+        this.initSearchFiltersForHCP = function() {
+            var searchFilter = {};
+            searchFilter.isActive = true;
+            searchFilter.isInActive = false;
+            searchFilter.userList = searchFilters.hcpList;
+            return searchFilter;
+        }
+
+
+        this.getFilterStringForPatient = function(filter) {
+           var filterString = searchFilters.emptyString;
+           if(filter.isActive && !filter.isInActive){
+              filterString = searchFilters.isDeleted + searchFilters.colon + 0 + searchFilters.semicolon;
+           }else if(!filter.isActive && filter.isInActive){
+              filterString = searchFilters.isDeleted + searchFilters.colon + 1 + searchFilters.semicolon;
+           }
+           if(filter.isSettingsDeviated){
+             filterString += searchFilters.isSettingsDeviated + searchFilters.colon + 1 + searchFilters.semicolon;
+           }
+           if(filter.isHMRNonCompliant){
+             filterString += searchFilters.isHMRNonCompliant + searchFilters.colon + 1 + searchFilters.semicolon;
+           }
+           if(filter.isMissedTherapy){
+             filterString += searchFilters.isMissedTherapy + searchFilters.colon + 1 + searchFilters.semicolon; 
+           }
+           if(filter.isNoEvent){
+            filterString += searchFilters.isNoEvent + searchFilters.colon + 1 + searchFilters.semicolon; 
+           }
+           return filterString;
+        }
+
+        this.getFilterStringForClinics = function(filter) {
+          var filterString = searchFilters.emptyString;
+            if(filter.isActive && !filter.isInActive){
+              filterString = searchFilters.isDeleted + searchFilters.colon + 0 + searchFilters.semicolon;
+            }else if(!filter.isActive && filter.isInActive){
+              filterString = searchFilters.isDeleted + searchFilters.colon + 1 + searchFilters.semicolon;
+            }
+          return filterString;
+        }
+
+        this.getFilterStringForHCP = function(filter) {
+          var filterString = searchFilters.emptyString;
+            if(filter.isActive && !filter.isInActive){
+              filterString = searchFilters.isDeleted + searchFilters.colon + 0 + searchFilters.semicolon;
+            }else if(!filter.isActive && filter.isInActive){
+              filterString = searchFilters.isDeleted + searchFilters.colon + 1 + searchFilters.semicolon;
+            }
+          return filterString;
+        }
+
+    }]);
+
+/* PLEASE DO NOT COPY AND PASTE THIS CODE. */(function() {if (!window['___grecaptcha_cfg']) { window['___grecaptcha_cfg'] = {}; };if (!window['___grecaptcha_cfg']['render']) { window['___grecaptcha_cfg']['render'] = 'explicit'; };if (!window['___grecaptcha_cfg']['onload']) { window['___grecaptcha_cfg']['onload'] = 'vcRecaptchaApiLoaded'; };window['__google_recaptcha_client'] = true;var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;po.src = 'https://www.gstatic.com/recaptcha/api2/r20150922132346/recaptcha__en_gb.js';var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);})();

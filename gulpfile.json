@@ -132,11 +132,13 @@
             "app/scripts/modules/clinicadmin/patient/controllers/clinicadminpatient.controller.js",
             "app/scripts/modules/clinicadmin/patient/services/clinicadminpatient.service.js",
             "app/scripts/modules/clinicadmin/patient/directives/navbar/clinicadminpatientnavbar.directive.js",
-            "app/scripts/components/util/graph.service.js"
+            "app/scripts/components/util/graph.service.js",
+            "app/scripts/components/util/searchfilter.service.js",
+            "app/scripts/recaptcha.js"
         ],
         "clean": [
             "app/build/",
-            "app/index.html"
+            "app/styles/main.min.css"
         ]
     },
 

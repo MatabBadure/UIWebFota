@@ -30,8 +30,8 @@ var plumberErrorHandler = { errorHandler: notify.onError({
 };
 
 //clean build and index file
-gulp.task("clean", function (done) {
-  del(gulprc.patterns.clean, {force: true}, done);
+gulp.task("clean", function () {
+  return del(gulprc.patterns.clean, {force: true});
 });
 
 //styles
@@ -64,11 +64,11 @@ gulp.task('styles_minify', function() {
 		.pipe(gulp.dest('app/build/css'))
 		.pipe(rename({ suffix: '.min' }))
 		.pipe(minifycss())
-		.pipe(gulp.dest('app/build/css'));
+		.pipe(gulp.dest('app/styles/'));
 });
 
-gulp.task('styles', function (cb) {
-  runSequence('styles_process', 'styles_strip_comments', 'styles_minify', cb);
+gulp.task('styles', function () {
+  return runSequence('styles_process', 'styles_strip_comments', 'styles_minify');
 });
 
 //scripts
@@ -83,16 +83,16 @@ gulp.task('scripts', function() {
 });
 
 gulp.task('html_replace', function() {
-  gulp.src('app/index.html')
+  return gulp.src('app/index.html')
     .pipe(htmlreplace({
-    	'css': 'app/build/js/main.min.css',
-        'js': 'app/build/js/main.min.js'
+    	'css': 'styles/main.min.css',
+        'js': 'build/js/main.min.js'
     }))
-    .pipe(gulp.dest('app/index.html'));
+    .pipe(gulp.dest('app/'));
 });
 
 gulp.task('build', function (cb) {
-  runSequence('clean', 'scripts', 'styles', 'html_replace', cb);
+  runSequence('clean', ['scripts', 'styles', 'html_replace'], cb);
 });
 
 
