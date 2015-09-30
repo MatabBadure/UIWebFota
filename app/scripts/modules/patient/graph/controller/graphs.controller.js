@@ -59,7 +59,6 @@ angular.module('hillromvestApp')
       $scope.yAxis1Min = 0;
       $scope.yAxis2Min = 0;
       $scope.getHmrRunRateAndScore();
-      $scope.edit_date = dateService.convertDateToYyyyMmDdFormat(new Date());
       $scope.getMissedTherapyDaysCount();
       $scope.fromTimeStamp = dateService.getnDaysBackTimeStamp(6);
       $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
@@ -1079,18 +1078,18 @@ angular.module('hillromvestApp')
       }
     };
 
-    $scope.createNote = function(){         
+    $scope.createNote = function(){
         $scope.noteTextError =  null;
-        if($scope.textNote && $scope.textNote.length > 0){ 
-          if($scope.edit_date && $scope.edit_date != 'undefined' && $scope.edit_date.length > 0){
-            var editDate = $scope.edit_date;            
+        if($scope.textNote && $scope.textNote.text.length > 0){
+          if($scope.textNote.edit_date && $scope.textNote.edit_date != 'undefined' && $scope.textNote.edit_date.length > 0){
+            var editDate = $scope.textNote.edit_date;
             var data = {};
-            data.noteText = $scope.textNote;
+            data.noteText = $scope.textNote.text;
             data.userId = localStorage.getItem('patientID');
             data.date = editDate;
             UserService.createNote(localStorage.getItem('patientID'), data).then(function(response){
               $scope.addNote = false;
-              $scope.edit_date = dateService.convertDateToYyyyMmDdFormat(new Date());
+              $scope.textNote.edit_date = dateService.convertDateToYyyyMmDdFormat(new Date());
               $scope.textNote = "";     
               $scope.showAllNotes();
               $scope.addNoteActive = false;
@@ -1120,7 +1119,9 @@ angular.module('hillromvestApp')
 
     $scope.openAddNote = function(){    
       $scope.noteTextError =  null;  
-      $scope.textNote = null;
+      $scope.textNote = {};
+      $scope.textNote.edit_date = dateService.convertDateToYyyyMmDdFormat(new Date());
+       $scope.textNote.text = "";
       $scope.addNoteActive = true;
       $("#note_edit_container").removeClass("hide_content");
       $("#note_edit_container").addClass("show_content");  
