@@ -250,3 +250,14 @@ a::-moz-focus-inner {
     opacity: 1;
     margin-left: 0;
 }
+
+/* Start Customize datepicker for dab UI */
+.custom-date .dropdown-menu {
+	min-width: 200px;
+}
+
+.datepicker table tr td span {
+	font-size: $font-size-base;
+	font-weight: $font-weight-medium;
+}
+/* End Customize datepicker for dab UI */
