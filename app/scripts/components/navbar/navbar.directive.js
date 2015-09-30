@@ -22,7 +22,7 @@ angular.module('hillromvestApp')
 }]);
 
 angular.module('hillromvestApp')
-.directive('navigationBar', ['Auth', '$state', 'Account', '$location', function (Auth, $state, Account, $location) {
+.directive('navigationBar', ['Auth', '$state', 'Account', '$location', '$stateParams', function (Auth, $state, Account, $location,$stateParams) {
   return {
     templateUrl: 'scripts/components/navbar/navbar.html',
     restrict: 'E',
@@ -89,9 +89,9 @@ angular.module('hillromvestApp')
         $state.go(page);
       };
 
-      $scope.goToPatientDashboard = function(value){
+      $scope.goToPatientDashboard = function(value){;
         if(value){
-          $state.go(value);
+          $state.go(value, {"clinicId": $stateParams.clinicId});
         }else{
           $state.go("patientdashboard");
         }
