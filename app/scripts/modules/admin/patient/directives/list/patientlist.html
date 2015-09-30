@@ -77,11 +77,12 @@
           </div>
 
           <div class="col-md-2 reset-padding centered">
-            <span class="short-info">{{patient.transmission}}</span>
+            <span class="short-info">{{patient.lastTransmissionDate}}</span>
           </div>
 
           <div class="col-md-2 reset-padding centered">
-            <span class="short-info">{{patient.clinicName}}</span>
+            <span class="short-info">{{patient.clinicNamesCSV}}</span>
+
           </div>
 
           <div class="col-md-1 reset-padding">
@@ -93,8 +94,8 @@
             <!-- <span class="short-info expired centered" ng-if="patient.isDeleted" translate="patient.status-type.expired"></span> -->
           </div>
 
-          <div class="col-md-2 reset-padding-left centered text-right">
-            <span class="short-info"></span>
+          <div class="col-md-2 reset-padding-left centered">
+            <span class="short-info">{{patient.adherence}}</span>
           </div>
 
           <div class="clr"></div>

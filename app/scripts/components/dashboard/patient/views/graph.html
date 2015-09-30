@@ -179,14 +179,14 @@
 							<div class="col-md-2">
 								<span ng-bind="note.createdOn"></span>
 							</div>
-							<div class="col-md-11 description">
+							<div class="col-md-9 description">
 								<div class="form-group">
 									<textarea id="editedNoteText_{{note.id}}" value="{{note.note}}" maxlength="300"  class="form-control custom_textarea" rows="1"></textarea> 
 									<span class="has-error" ng-show="noteError" ng-bind="noteError" id="noteError_{{note.id}}"></span>
 								</div>
 							</div>							
 							
-							<div class="col-md-3 edit_delete">
+							<div class="col-md-5 edit_delete">
 								<div class="pull-right">
 									<input type="button"  value="Cancel" ng-click="cancelEditNote(note.id);" class="hillrom-btn btn-submit float-right" />	
 									<input type="submit" id="submit" value="Update" class="hillrom-btn btn-submit float-right" />	 									
@@ -212,10 +212,10 @@
    <div class="col-md-16 note_edit_container hide_content" id="note_edit_container" ng-show="role === 'PATIENT'">
 	<form name="form" ng-submit="createNote();">
 		<div class="col-md-2 date_col">
-			<input class="date_input"  data-provide="datepicker"  data-date-format="yyyy-mm-dd"  bootstrap-datepicker data-date-end-date="0d"  id="edit_note_date" ng-model="edit_date" placeholder="Date"/></div>
-			<div class="col-md-12 description">
+			<input class="date_input"  data-provide="datepicker"  data-date-format="yyyy-mm-dd"  bootstrap-datepicker data-date-end-date="0d"  id="edit_note_date" ng-model="textNote.edit_date" placeholder="Date"/></div>
+			<div class="col-md-11 description">
 				<div class="form-group">
-					<textarea class="form-control custom_textarea" rows="1" id="comment" ng-model="textNote" maxlength="300"></textarea>
+					<textarea class="form-control custom_textarea" rows="1" id="comment" ng-model="textNote.text" maxlength="300"></textarea>
 				</div>
 				<div>
 					<span class="has-error" ng-if="noteTextError">
@@ -223,7 +223,7 @@
 					</span>
 				</div>
 			</div>
-			<div class="col-md-2 edit_delete">
+			<div class="col-md-3 edit_delete">
 				<div class="pull-right">
 					<span class="float-right view_all_btn" ng-click="cancelAddNote();">X</span>
 					<button class="hillrom-btn btn-submit float-right save" translate="graph.save"></button>
