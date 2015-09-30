@@ -51,7 +51,7 @@ angular.module('hillromvestApp')
     }
   })
   .state('clinic-admin-user-profile', {               
-    url:'/clinicadmin/{clinicId}',
+    url:'/clinicadmin-profile',
     views:{
       'content':{
         templateUrl:'scripts/modules/clinicadmin/profile/profile-tabs/clinic-admin-profile-section.html'                
@@ -1723,51 +1723,51 @@ resolve: {
 })
 
 .state('clinicadminUserProfile', {
-  parent: 'clinicadmin-dashboard-profile',
+  parent: 'clinic-admin-user-profile',
   url: '/profile',
   data: {
-    roles: ['CLINIC_ADMIN'],
-    pageTitle: 'hcp.title'
+      roles: ['CLINIC_ADMIN'],
+      pageTitle: 'hcp.title'
   },
   views: {
-    'clinicadmin-profile-view': {
-      templateUrl: 'scripts/modules/clinicadmin/profile/profile-tabs/my-profile.html',
-      controller: 'clinicadminProfileController'
-    }
+      'clinic-admin-profile-view': {
+          templateUrl: 'scripts/modules/clinicadmin/profile/profile-tabs/my-profile.html',
+          controller: 'clinicadminProfileController'
+      }
   },
   resolve: {
-    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
-      $translatePartialLoader.addPart('profile');
-      return $translate.refresh();
-    }],
-    authorize: ['Auth',
-    function(Auth) {
-      return Auth.authorize(false);
-    }
-    ]
+      translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+          $translatePartialLoader.addPart('profile');
+          return $translate.refresh();
+      }],
+      authorize: ['Auth',
+          function(Auth) {
+              return Auth.authorize(false);
+          }
+      ]
   }
+})
+.state('clinicadminUpdatePassword', {
+    parent: 'clinic-admin-user-profile',
+    url: '/updatepassword',
+    data: {
+        roles: ['CLINIC_ADMIN'],
+        pageTitle: 'patient.title'
+    },
+    views: {
+        'clinic-admin-profile-view': {
+            templateUrl: 'scripts/modules/clinicadmin/profile/profile-tabs/update-password.html',
+            controller: 'clinicadminProfileController'
+        }
+    },
+    resolve: {
+        translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+            $translatePartialLoader.addPart('profile');
+            return $translate.refresh();
+        }]
+    }
 })
 
-.state('clinicadminUpdatePassword', {
-  parent: 'clinicadmin-dashboard-profile',
-  url: '/updatepassword',
-  data: {
-    roles: ['CLINIC_ADMIN'],
-    pageTitle: 'patient.title'
-  },
-  views: {
-    'clinicadmin-profile-view': {
-      templateUrl: 'scripts/modules/clinicadmin/profile/profile-tabs/update-password.html',
-      controller: 'clinicadminProfileController'
-    }
-  },
-  resolve: {
-    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
-      $translatePartialLoader.addPart('profile');
-      return $translate.refresh();
-    }]
-  }
-})
 
 .state('editClinicadminProfile', {
   parent: 'clinicadmin-dashboard-profile',
@@ -1968,29 +1968,29 @@ resolve: {
   }
 })
 .state('clinicadminSettings', {
-  parent: 'clinicadmin-dashboard-profile',
-  url: '/notification-settings',
-  data: {
-    roles: ['CLINIC_ADMIN'],
-    pageTitle: 'patient.title'
-  },
-  views: {
-    'clinicadmin-profile-view': {
-      templateUrl: 'scripts/modules/clinicadmin/profile/profile-tabs/settings.html',
-      controller: 'clinicadminProfileController'
+    parent: 'clinic-admin-user-profile',
+    url: '/notification-settings',
+    data: {
+        roles: ['CLINIC_ADMIN'],
+        pageTitle: 'patient.title'
+    },
+    views: {
+        'clinic-admin-profile-view': {
+            templateUrl: 'scripts/modules/clinicadmin/profile/profile-tabs/settings.html',
+            controller: 'clinicadminProfileController'
+        }
+    },
+    resolve: {
+        translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+            $translatePartialLoader.addPart('profile');
+            return $translate.refresh();
+        }],
+        authorize: ['Auth',
+            function(Auth) {
+                return Auth.authorize(false);
+            }
+        ]
     }
-  },
-  resolve: {
-    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
-      $translatePartialLoader.addPart('profile');
-      return $translate.refresh();
-    }],
-    authorize: ['Auth',
-    function(Auth) {
-      return Auth.authorize(false);
-    }
-    ]
-  }
 })
 .state('hcpSettings', {
   parent: 'hcp-dashboard-profile',
