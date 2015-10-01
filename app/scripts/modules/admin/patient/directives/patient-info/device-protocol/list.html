@@ -36,13 +36,16 @@
       <span class="protocol-list--value"> {{::protocol.treatmentsPerDay}}</span>
     </div>
     <div class="col-md-3 protocol-list__strt-date">
-      <span class="protocol-list--value"> {{::protocol.minMinutesPerTreatment}}-{{::protocol.maxMinutesPerTreatment}}</span>
+      <span ng-if="protocol.type === 'Custom'" class="protocol-list--value"> {{::protocol.minMinutesPerTreatment}}</span>
+      <span ng-if="protocol.type === 'Normal'" class="protocol-list--value"> {{::protocol.minMinutesPerTreatment}}-{{::protocol.maxMinutesPerTreatment}}</span>
     </div>
     <div class="col-md-4 protocol-list__end-date">
-      <span class="protocol-list--value"> {{::protocol.minFrequency}}-{{::protocol.maxFrequency}}</span>
+    <span ng-if="protocol.type === 'Custom'" class="protocol-list--value"> {{::protocol.minFrequency}}</span>
+      <span ng-if="protocol.type === 'Normal'" class="protocol-list--value"> {{::protocol.minFrequency}}-{{::protocol.maxFrequency}}</span>
     </div>
     <div class="col-md-4 protocol-list__end-date">
-      <span class="protocol-list--value"> {{::protocol.minPressure}}-{{::protocol.maxPressure}}</span>
+    <span ng-if="protocol.type === 'Custom'" class="protocol-list--value"> {{::protocol.minPressure}}</span>
+      <span ng-if="protocol.type === 'Normal'" class="protocol-list--value"> {{::protocol.minPressure}}-{{::protocol.maxPressure}}</span>
     </div>
     <div class="col-md-1 protocol-list__edit icons text-center">
       <span ng-if="!protocol.deleted" class="icon-edit-icon" ng-click="openEditProtocol(protocol)"></span>
