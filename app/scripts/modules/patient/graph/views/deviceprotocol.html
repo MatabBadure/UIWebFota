@@ -6,16 +6,16 @@
     <div class="dashboard__manage-view margin-top">
       <div class="dashboard__manage-view--header">
           <div class="col-md-3 col-sm-3 header--type">
-            <span translate="patient.protocol-caption.type"></span>
-          </div>
-          <div class="col-md-3 col-sm-3 header--type">
-            <span translate="patient.protocol-caption.treatment-day"></span>
+            <span translate="patient.protocol-caption.treatments-per-day"></span>
           </div>
           <div class="col-md-4 col-sm-4 header--type">
-            <span translate="patient.protocol-caption.create-date"></span>
+            <span translate="patient.protocol-caption.minutes-per-treatment"></span>
           </div>
           <div class="col-md-4 col-sm-4 header--type">
-            <span translate="patient.protocol-caption.modified-date"></span>
+            <span translate="patient.protocol-caption.frequency-per-treatment"></span>
+          </div>
+          <div class="col-md-4 col-sm-4 header--type">
+            <span translate="patient.protocol-caption.pressure-per-treatment"></span>
           </div>
           <div class="clr"></div>
         </div>
@@ -24,16 +24,16 @@
 
   <div class="col-md-16 col-sm-16 protocol-list" ng-repeat="protocol in protocols">
     <div class="col-md-3 protocol-list__type">
-      <span> {{protocol.type}}</span>
+      <span> {{::protocol.treatmentsPerDay}}</span>
     </div>
-    <div class="col-md-3 col-sm-3 protocol-list__treatment-day">
-      <span class="protocol-list--value"> {{protocol.treatmentsPerDay}}</span>
+    <div class="col-md-4 col-sm-4 protocol-list__treatment-day">
+      <span class="protocol-list--value"> {{::protocol.minMinutesPerTreatment}}-{{::protocol.maxMinutesPerTreatment}}</span>
     </div>
     <div class="col-md-4 col-sm-4 protocol-list__strt-date">
-      <span class="protocol-list--value">{{protocol.createdDate}}</span>
+      <span class="protocol-list--value"> {{::protocol.minFrequency}}-{{::protocol.maxFrequency}}</span>
     </div>
     <div class="col-md-4 col-sm-4 protocol-list__end-date">
-      <span class="protocol-list--value">{{protocol.lastModifiedDate}}</span>
+      <span class="protocol-list--value"> {{::protocol.minPressure}}-{{::protocol.maxPressure}}</span>
     </div>   
   </div>
   <div class="col-md-16 col-sm-16 empty-list-message" ng-if="protocolsErrMsg">
@@ -57,36 +57,30 @@
           <div class="col-md-3 col-sm-3 header--type">
             <span translate="patient.device-caption.serial-no"></span>
           </div>
-          <div class="col-md-3 col-sm-3 header--type">
+          <div class="col-md-4 col-sm-4 header--type">
             <span translate="patient.device-caption.blutooth-id"></span>
           </div>
-          <div class="col-md-2 col-sm-2 header--type">
+          <div class="col-md-4 col-sm-4 header--type">
             <span translate="patient.device-caption.status"></span>
           </div>
-          <div class="col-md-3 col-sm-3 header--type">
-            <span translate="patient.device-caption.created-date"></span>
-          </div>
-          <div class="col-md-2 col-sm-2 header--type">
-            <span translate="patient.device-caption.modified-date"></span>
-          </div>
+          <div class="col-md-4 col-sm-4 header--type">
+            <span translate="patient.device-caption.active-or-inactive-date"></span>
+          </div>          
           <div class="clr"></div>
         </div>
     </div>
   </div>
 
-  <div class="col-md-16 col-sm-16 device-list" ng-repeat="device in devices" ng-class="{'list-inactive': !device.active}">
+  <div class="col-md-16 col-sm-16 device-list" ng-repeat="device in devices">
     <div class="col-md-3 col-sm-3 device-list__serial">
       <span>{{device.serialNumber}}</span>
     </div>
-    <div class="col-md-3 col-sm-3 device-list__bt-id">
+    <div class="col-md-4 col-sm-4 device-list__bt-id">
       <span>{{device.bluetoothId}}</span>
     </div>
-    <div class="col-md-2 col-sm-2 device-list__status">
+    <div class="col-md-4 col-sm-4 device-list__status">
       <span ng-if="device.active" class="device--list__status--text" translate="patient.device.active-status"></span>
       <span ng-if="!device.active" class="device--list__status--text" translate="patient.device.inactive-status"></span>
-    </div>
-    <div class="col-md-3 col-sm-3 device-list__date">
-      <span>{{device.createdDate}}</span>
     </div>
     <div class="col-md-4 col-sm-4 device-list__date">
       <span>{{device.lastModifiedDate}}</span>

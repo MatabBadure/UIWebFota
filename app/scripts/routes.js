@@ -55,42 +55,16 @@ angular.module('hillromvestApp')
                 }
             })
             .state('clinic-admin-user-profile', {               
-                url:'/clinicadmin-profile/{clinicId}',
-                views:{
-                    'content':{
-                    templateUrl:'scripts/modules/clinicadmin/profile/profile-tabs/clinic-admin-profile-section.html'                
-            }
-                },
-                resolve: {
-                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
-                        $translatePartialLoader.addPart('global');
-                        return $translate.refresh();
-                    }],
-                    authorize: ['Auth',
-                        function(Auth) {
-                            return Auth.authorize(false);
-                        }
-                    ]
-                }
+                url:'/clinicadmin-profile',
+                params:  {clinicId: null},
+                parent: 'entity',
+                abstract: true,                
             })
             .state('hcp-user-profile', {               
-                url:'/hcp-profile/{clinicId}',
-                views:{
-                    'content':{
-                    templateUrl:'scripts/modules/hcp/profile/profile-tabs/hcp-profile-section.html'                
-            }
-                },
-                resolve: {
-                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
-                        $translatePartialLoader.addPart('global');
-                        return $translate.refresh();
-                    }],
-                    authorize: ['Auth',
-                        function(Auth) {
-                            return Auth.authorize(false);
-                        }
-                    ]
-                }
+                url:'/hcp-profile',
+                params: {"clinicId": null},
+                parent: 'entity',
+                abstract: true,   
             })
             .state('hcp-dashboard', {
                 parent: 'entity',
@@ -1186,21 +1160,21 @@ angular.module('hillromvestApp')
             })
 
             .state('patientProfile', {
-                parent: 'patient-dashboard-profile',
+                parent: 'patient-dashboard',
                 url: '/p-profile',
                 data: {
                     roles: ['PATIENT'],
                     pageTitle: 'patient.title'
                 },
                 views: {
-                    'patient-profile-view': {
+                    'patient-view': {
                         templateUrl: 'scripts/modules/patient/profile/profile-tabs/my-profile.html',
                         controller: 'patientprofileController'
                     }
                 },
                 resolve: {
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
-                        $translatePartialLoader.addPart('profile');
+                        $translatePartialLoader.addPart('patient-user');
                         return $translate.refresh();
                     }],
                     authorize: ['Auth',
@@ -1331,21 +1305,21 @@ angular.module('hillromvestApp')
               }
             })
             .state('patientProfileEdit', {
-                parent: 'patient-dashboard-profile',
+                parent: 'patient-dashboard',
                 url: '/p-profile-edit',
                 data: {
                     roles: ['PATIENT'],
                     pageTitle: 'patient.title'
                 },
                 views: {
-                    'patient-profile-view': {
+                    'patient-view': {
                         templateUrl: 'scripts/modules/patient/profile/profile-tabs/edit-my-profile.html',
                         controller: 'patientprofileController'
                     }
                 },
                 resolve: {
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
-                        $translatePartialLoader.addPart('profile');
+                        $translatePartialLoader.addPart('patient-user');
                         return $translate.refresh();
                     }],
                     authorize: ['Auth',
@@ -1454,7 +1428,8 @@ angular.module('hillromvestApp')
             })
             .state('hcppatientdashboard', {
                 parent: 'hcp-dashboard',
-                url: '/hcp-patient/{clinicId}/{filter}',                
+                url: '/hcp-patients-view/{filter}',
+                params: {"clinicId": null},                
                 data: {
                     roles: ['HCP'],
                     pageTitle: 'hcp.title'
@@ -1478,7 +1453,8 @@ angular.module('hillromvestApp')
                 }
             })
             .state('hcppatientList', {
-                 url:'/hcp-patient/{clinicId}/{filter}/{patientId}',
+                 url:'/hcp-patient',
+                 params: {"clinicId" : null, "patientId": null},
                  views:{
                   'content':{
                     templateUrl:'scripts/modules/hcp/patient/directives/list.html',
@@ -1532,7 +1508,7 @@ angular.module('hillromvestApp')
                     pageTitle: 'hcp.title'
                 },
                 views: {
-                    'hcp-profile-view': {
+                    'content@': {
                         templateUrl: 'scripts/modules/hcp/profile/profile-tabs/my-profile.html',
                         controller: 'hcpProfileController'
                     }
@@ -1558,7 +1534,7 @@ angular.module('hillromvestApp')
                     pageTitle: 'patient.title'
                 },
                 views: {
-                    'hcp-profile-view': {
+                    'content@': {
                         templateUrl: 'scripts/modules/hcp/profile/profile-tabs/update-password.html',
                         controller: 'hcpProfileController'
                     }
@@ -1572,7 +1548,7 @@ angular.module('hillromvestApp')
             })
 
             .state('editHCPProfile', {
-                parent: 'hcp-dashboard',
+                parent: 'hcp-user-profile',
                 url: '/update',
                 data: {
                     roles: ['HCP'],
@@ -1627,7 +1603,7 @@ angular.module('hillromvestApp')
                     pageTitle: 'hcp.title'
                 },
                 views: {
-                    'clinic-admin-profile-view': {
+                    'content@': {
                         templateUrl: 'scripts/modules/clinicadmin/profile/profile-tabs/my-profile.html',
                         controller: 'clinicadminProfileController'
                     }
@@ -1653,7 +1629,7 @@ angular.module('hillromvestApp')
                     pageTitle: 'patient.title'
                 },
                 views: {
-                    'clinic-admin-profile-view': {
+                    'content@': {
                         templateUrl: 'scripts/modules/clinicadmin/profile/profile-tabs/update-password.html',
                         controller: 'clinicadminProfileController'
                     }
@@ -1667,7 +1643,7 @@ angular.module('hillromvestApp')
             })
 
             .state('editClinicadminProfile', {
-                parent: 'clinicadmin-dashboard',
+                parent: 'clinic-admin-user-profile',
                 url: '/update',
                 data: {
                     roles: ['CLINIC_ADMIN'],
@@ -1689,7 +1665,7 @@ angular.module('hillromvestApp')
 
             .state('clinicadminpatientdashboard', {
                 parent: 'clinicadmin-dashboard',
-                url: '/clinicadmin-patient/{clinicId}/{filter}',
+                url: '/{clinicId}/clinicadmin-patient/{filter}',
                 data: {
                     roles: ['CLINIC_ADMIN'],
                     pageTitle: 'hcp.title'
@@ -1878,7 +1854,7 @@ angular.module('hillromvestApp')
                     pageTitle: 'patient.title'
                 },
                 views: {
-                    'clinic-admin-profile-view': {
+                    'content@': {
                         templateUrl: 'scripts/modules/clinicadmin/profile/profile-tabs/settings.html',
                         controller: 'clinicadminProfileController'
                     }
@@ -1904,7 +1880,7 @@ angular.module('hillromvestApp')
                     pageTitle: 'patient.title'
                 },
                 views: {
-                    'hcp-profile-view': {
+                    'content@': {
                         templateUrl: 'scripts/modules/hcp/profile/profile-tabs/settings.html',
                         controller: 'hcpProfileController'
                     }

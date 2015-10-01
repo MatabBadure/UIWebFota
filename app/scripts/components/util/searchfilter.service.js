@@ -2,14 +2,31 @@
 
 angular.module('hillromvestApp')
     .service('searchFilterService', [function () {
-        this.initSearchFiltersForPatient = function() {
+        this.initSearchFiltersForPatient = function(filter) {
             var searchFilter = {};
-            searchFilter.isActive = true;
-            searchFilter.isInActive = false;
-            searchFilter.isNoEvent = false;
-            searchFilter.isSettingDeviation = false;
-            searchFilter.isHMRNonCompliant = false;
-            searchFilter.isMissedTherapy = false;
+            if(filter){
+              switch(filter){
+                case 'isActive':searchFilter.isActive = true;
+                break;
+                case 'isInActive':searchFilter.isInActive = true;
+                break;
+                case 'noevents':searchFilter.isNoEvent = true;
+                break;
+                case 'setting_deviation':searchFilter.isSettingsDeviated = true;
+                break;
+                case 'non_hmr_compliance':searchFilter.isHMRNonCompliant = true;
+                break;
+                case 'missed_therapy':searchFilter.isMissedTherapy = true;
+                break;
+              }
+            }else{
+              searchFilter.isActive = true;
+              searchFilter.isInActive = false;
+              searchFilter.isNoEvent = false;
+              searchFilter.isSettingsDeviated = false;
+              searchFilter.isHMRNonCompliant = false;
+              searchFilter.isMissedTherapy = false;
+            }
             searchFilter.userList = searchFilters.patientList;
             return searchFilter;
         }

@@ -24,7 +24,7 @@
         "create-caregiver": "Yes",
         "hill-rom-id":  "Hill-Rom ID",
         "emr-id":   "EMR-ID",
-        "mrn-id": "MRN-ID",
+        "mrn-id": "MRN ID",
         "adherence": "Adherence",
         "title": {
                     "name": "Title",

@@ -57,6 +57,14 @@ var stringConstants = {
 	"emptyString": ""
 }
 
+var footerConstants = {
+	"contactus": "contactus",
+	"privacyPolicy":  "privacyPolicy",
+	"termsOfUse" : "termsOfUse",
+	"privacyPractices" : "privacyPractices",
+	"careSite": "careSite"
+}
+
 
 angular.module('hillromvestApp').constant('hcpDashboardConstants', {
     cumulativeGraph : {

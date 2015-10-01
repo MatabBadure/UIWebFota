@@ -238,7 +238,7 @@
 .dashboard__manage-view--search .fuid-search-box {
     display: inline-block;
     position: relative;
-    width: calc(100% - 145px);
+    width: 100%;
 }
 
 .dashboard__manage-view--search .full-search-box {
@@ -640,7 +640,7 @@ tags-input .autocomplete .suggestion-item.selected, tags-input .autocomplete .su
 }
 
 .admin-user .detail-list--title {
-  padding: 0;
+  padding: 0 10px;
   span {
     font-weight: $font-weight-medium;
     font-size: $font-size-base;
@@ -649,7 +649,7 @@ tags-input .autocomplete .suggestion-item.selected, tags-input .autocomplete .su
 }
 
 .admin-user .detail-list--desc {
-  padding: 0;
+  padding: 0 10px;
   span {
     font-weight: $font-weight-medium;
     font-size: $font-size-small;
@@ -725,23 +725,6 @@ tags-input .autocomplete .suggestion-item.selected, tags-input .autocomplete .su
   margin-bottom: 10px;
 }
 
-.admin-user .detail-list--title {
-  padding: 0;
-  span {
-    font-weight: $font-weight-medium;
-    font-size: $font-size-base;
-    color: $pickled-bluewood;
-  }
-}
-
-.admin-user .detail-list--desc {
-  padding: 0;
-  span {
-    font-weight: $font-weight-medium;
-    font-size: $font-size-small;
-    color: $nevada;
-  }
-}
 
 .admin-user .detail-list--desc .active {
   color: $fruit-salad;
@@ -971,7 +954,7 @@ tags-input .autocomplete .suggestion-item.selected, tags-input .autocomplete .su
   padding: 0;
   margin-top: 20px;
   div {
-    padding: 0;
+    padding: 0 10px;
     span {
       color: $pickled-bluewood;
       font-size: $font-size-base;

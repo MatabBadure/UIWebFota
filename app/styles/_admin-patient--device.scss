@@ -15,8 +15,7 @@
   margin-top: 20px;
   div {
     @extend .word-ellipsis;
-    padding: 0;
-    padding-right: 10px;
+    padding: 0 10px;
     span {
       color: $pickled-bluewood;
       font-size: $font-size-base;
@@ -29,8 +28,7 @@
 
 .admin-user .list-inactive {
   div {
-    padding: 0;
-    padding-right: 10px;
+    padding: 0 10px;
     span {
       color: $silver-approx;
     }
@@ -99,5 +97,11 @@
   }
   input, span {
     cursor: pointer;
+  }
+}
+
+.admin-user .protocol-list {
+  div {
+    padding-left: 4%;
   }
 }

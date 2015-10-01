@@ -20,7 +20,11 @@
         <span class="search-icon hillrom-icon icon-search-icon"></span>
       </div>    
     </div>
-    <ng-include src="'scripts/components/navbar/searchfilter.html'"></ng-include>
+
+    <div class="col-md-16">
+      <ng-include src="'scripts/components/navbar/searchfilter.html'"></ng-include>
+    </div>
+    
     <div class="dashboard__manage-view--header">
       <div class="col-md-3 header--type">
         <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="user.user-name"></span>
@@ -71,7 +75,7 @@
 
       <div class="clr"></div>
     </div>
-     <div class="col-md-16 col-sm-16 empty-list-message" ng-if="!patients || patients.length === 0">
+     <div class="col-md-16 col-sm-16 empty-list-message" ng-if="!users || users.length === 0">
       <span translate="user-not-found"></span>
     </div>
     

@@ -181,6 +181,14 @@ angular.module('hillromvestApp')
         return $http.get(url, {
           headers: headerService.getHeader()        
         });
+      },
+
+      getNonAssocaitedPatients : function(clinicId){
+        var url = URL.nonAssociatedPatientForClinic;
+        url = url.replace('CLINICID', clinicId);
+        return $http.get(url, {
+          headers: headerService.getHeader()        
+        });
       }
     };
   }]);

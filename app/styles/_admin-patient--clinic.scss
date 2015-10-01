@@ -42,12 +42,12 @@
 }
 
 .admin-user .clinic-list__detail {
-  padding: 0;
   &--name {
     color: $pickled-bluewood;
     font-size: $font-size-base;
     font-weight: $font-weight-bold;
     display: block;
+    @extend .word-ellipsis;
   }
   &--email {
     color: $regent-gray;
@@ -58,7 +58,6 @@
 }
 
 .admin-user .clinic-list__address {
-  padding: 0;
   font-size: $font-size-small;
   font-weight: $font-weight-medium;
   color: $regent-gray;
@@ -68,14 +67,13 @@
 }
 
 .admin-user .clinic-list__phone, .admin-user .clinic-list__fax {
-  padding: 0;
   color: $nevada;
   font-size: $font-size-small;
   font-weight: $font-weight-medium;
+  @extend .word-ellipsis;
 }
 
 .admin-user .clinic-list__hr-id {
-  padding: 0;
   text-overflow: ellipsis;
   overflow: hidden;
   span {
@@ -98,6 +96,10 @@
     .icon-delete-icon{
       cursor: default;
       color: #ccc;
+      cursor: pointer;
+      &:hover {
+        color: $pickled-bluewood;
+      }
     }
     .glyphicon-trash{
       cursor: default;
@@ -120,6 +122,7 @@
 
 .clinic-link, .exist-link{
     .dropdown-menu{
+      z-index: 9999;
       width: 80%;
       li{
         a{

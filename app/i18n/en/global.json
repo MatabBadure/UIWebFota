@@ -58,7 +58,8 @@
         },
         "form": {
             "username": "Login",
-            "username.placeholder": "enter your Hill-Rom ID or Email ID",
+            "username.placeholder": "Enter your Hill-Rom ID or Email ID",
+            "password.placeholder": "Password",
             "newpassword": "New password",
             "newpassword.placeholder": "New password",
             "confirmpassword": "New password confirmation",
@@ -252,7 +253,8 @@
             "match": "Parent Clinic doesn't exist."
         },
         "clinicName": {
-            "required": "Clinic Name is required."
+            "required": "Clinic Name is required.",
+            "maxlength": "Clinic Name cannot be longer than 25 characters."
         },
         "role":{
             "required": "Role is required."
@@ -307,5 +309,8 @@
         "missed-therapy" :"Missed Therapy"
     },
 
-    "user-not-found" : "No user associated."
+    "user-not-found" : "No user associated.",
+    "navbar": {
+        "my-dashboard": "My Dashboard"
+    }
 }

@@ -14,13 +14,11 @@ angular.module('hillromvestApp')
       $scope.getPatientInfo($stateParams.patientId);
       $scope.getCaregiversAssociatedWithPatient($stateParams.patientId);
     }else if($state.current.name === 'hcppatientdashboard'){
-      $scope.searchFilter = searchFilterService.initSearchFiltersForPatient();
+      $scope.searchFilter = searchFilterService.initSearchFiltersForPatient($stateParams.filter);
       $scope.currentPageIndex = 1;
       $scope.perPageCount = 10;
       $scope.pageCount = 0;
-      $scope.getClinicsAssociatedToHCP();
-      var clinicId = $stateParams.clinicId;      
-      $scope.searchPatients();            
+      $scope.getClinicsAssociatedToHCP();                 
     }
 	};
 
@@ -37,9 +35,7 @@ angular.module('hillromvestApp')
       }else if($scope.clinics && $scope.clinics.length > 0){
         $scope.selectedClinic =  $scope.clinics[0];
       }
-      if($scope.selectedClinic && $scope.selectedClinic.id){
-        $scope.getPatientsForClinic($scope.selectedClinic.id);
-      }
+      $scope.searchPatients();
     }).catch(function(response){
       notyService.showError(response);
     });
@@ -111,16 +107,12 @@ angular.module('hillromvestApp')
   $scope.getAssociateHCPToPatient = function(patientId){
     clinicadminPatientService.getAssociatedHCPOfPatientClinic(patientId, $stateParams.clinicId).then(function(response){
       $scope.associatedHCPs = response.data.hcpList
-    }).catch(function(response){
-      notyService.showError(response);
     });
   };
 
   $scope.getClinicById = function(clinicId){
     clinicService.getClinic(clinicId).then(function(response){
       $scope.clinic = response.data.clinic;
-    }).catch(function(response){
-      notyService.showError(response);
     });
   };
 
@@ -187,19 +179,14 @@ angular.module('hillromvestApp')
     }else {
       $scope.currentPageIndex = 1;
     }
-    /*var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : $stateParams.clinicId;
-    var filter = ($scope.sortOption) ? $scope.sortOption : ($stateParams.filter ? $stateParams.filter : false);
-    if(!filter){
-      $scope.getPatientsForClinic(clinicId);
-    } else if($stateParams.filter === 'noevents'){
-      $scope.getPatientsWithNoEvents(filter, clinicId, requestParam.pageNo, requestParam.offset);
-    } else {
-      $scope.getPatientsByFilter(filter, clinicId, requestParam.pageNo, requestParam.offset);
-    }  */
+    $scope.searchFilter = ($scope.searchFilter && $scope.searchFilter != undefined) ? $scope.searchFilter :searchFilterService.initSearchFiltersForPatient();
     var filter = searchFilterService.getFilterStringForPatient($scope.searchFilter);
     var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : $stateParams.clinicId;
-    DoctorService.searchPatientsForHCP($scope.searchItem, localStorage.getItem('userId'), clinicId, $scope.currentPageIndex, $scope.perPageCount, filter).then(function (response) {
+    DoctorService.searchPatientsForHCPOrCliniadmin($scope.searchItem, 'hcp',localStorage.getItem('userId'), clinicId, $scope.currentPageIndex, $scope.perPageCount, filter).then(function (response) {
       $scope.patients = response.data;      
+      angular.forEach($scope.patients, function(patient){
+        patient.dob = dateService.getDateFromTimeStamp(patient.dob, patientDashboard.dateFormat, '/')
+      });
       $scope.total = (response.headers()['x-total-count']) ? response.headers()['x-total-count'] :$scope.patients.length; 
       $scope.pageCount = Math.ceil($scope.total / 10);
       searchOnLoad = false;
@@ -230,7 +217,7 @@ angular.module('hillromvestApp')
   };
 
   $scope.getPatientsForClinic = function(clinicId){
-    DoctorService.searchPatientsForHCP($scope.searchItem, localStorage.getItem('userId'), clinicId, $scope.currentPageIndex, $scope.perPageCount).then(function (response) {
+    DoctorService.searchPatientsForHCPOrCliniadmin($scope.searchItem, 'hcp', localStorage.getItem('userId'), clinicId, $scope.currentPageIndex, $scope.perPageCount).then(function (response) {
       $scope.patients = response.data;
       $scope.total = (response.headers()['x-total-count']) ? response.headers()['x-total-count'] :$scope.patients.length; 
       $scope.pageCount = Math.ceil($scope.total / 10);

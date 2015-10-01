@@ -22,7 +22,7 @@ angular.module('hillromvestApp')
 }]);
 
 angular.module('hillromvestApp')
-.directive('navigationBar', ['Auth', '$state', 'Account', '$location', function (Auth, $state, Account, $location) {
+.directive('navigationBar', ['Auth', '$state', 'Account', '$location', '$stateParams', '$rootScope', function (Auth, $state, Account, $location,$stateParams, $rootScope) {
   return {
     templateUrl: 'scripts/components/navbar/navbar.html',
     restrict: 'E',
@@ -65,7 +65,7 @@ angular.module('hillromvestApp')
         if($scope.userRole === "ADMIN"){
           $state.go('adminProfile');
         }else if($scope.userRole === "PATIENT"){
-          $state.go("patientProfile");
+          $state.go("patientResetPassword");
         } else if($scope.userRole === 'HCP'){
           $state.go('hcpDashboardProfile');
         }
@@ -89,9 +89,21 @@ angular.module('hillromvestApp')
         $state.go(page);
       };
 
+      $scope.isFooter = function(){
+        var url = $location.path();
+        $rootScope.isFooter = false;
+        $rootScope.isFooter = (!$rootScope.isFooter && url.indexOf(footerConstants.contactus) !== -1) ? true: false;        
+        $rootScope.isFooter = (!$rootScope.isFooter) ? ((url.indexOf(footerConstants.privacyPolicy) !== -1) ? true: false) : $rootScope.isFooter;        
+        $rootScope.isFooter = (!$rootScope.isFooter) ? ((url.indexOf(footerConstants.termsOfUse) !== -1) ? true: false) : $rootScope.isFooter;        
+        $rootScope.isFooter = (!$rootScope.isFooter ) ? ((url.indexOf(footerConstants.privacyPractices) !== -1) ? true: false) : $rootScope.isFooter;        
+        $rootScope.isFooter = (!$rootScope.isFooter) ? (( url.indexOf(footerConstants.careSite) !== -1) ? true: false ) : $rootScope.isFooter;
+      };
+
+      $scope.isFooter();
+
       $scope.goToPatientDashboard = function(value){
         if(value){
-          $state.go(value);
+          $state.go(value, {"clinicId": $stateParams.clinicId});
         }else{
           $state.go("patientdashboard");
         }
