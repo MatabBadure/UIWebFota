@@ -242,8 +242,6 @@ angular.module('hillromvestApp')
       patientService.disassociateHCPFromPatient($stateParams.patientId, data).then(function(response) {
         $scope.getAvailableAndAssociatedHCPs($stateParams.patientId);
         notyService.showMessage(response.data.message, 'success');
-      }).catch(function(response) {
-        notyService.showError(response);
       });
     };
 
@@ -332,8 +330,6 @@ angular.module('hillromvestApp')
       patientService.associateHCPToPatient(data, $stateParams.patientId).then(function(response){
         notyService.showMessage(response.data.message, 'success');
         $scope.getAvailableAndAssociatedHCPs($stateParams.patientId);
-      }).catch(function(response){
-        notyService.showError(response);
       });
     };
 
