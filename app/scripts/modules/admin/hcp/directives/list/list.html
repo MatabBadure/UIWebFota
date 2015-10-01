@@ -18,7 +18,7 @@
           <input type="text" class="form-control" id="searchListParam" name="userName" ng-model="searchItem" autocomplete="off" placeholder="{{'doctor.placeholder.search' | translate}}">
           <span class="search-icon hillrom-icon icon-search-icon"></span>
         </div>
-        <div class="fixed-filter-box reset-padding-left">
+        <!-- <div class="fixed-filter-box reset-padding-left">
           <div class="search-dropdown">
             <select name="search" ng-model="sortOption" ng-change="searchDoctors()">
               <option value="" selected translate="doctor.filter.all"></option>
@@ -26,7 +26,11 @@
               <option value="firstName" translate="doctor.filter.inactive"></option>
             </select>
           </div>
-        </div>
+        </div> -->
+      </div>
+      
+      <div class="col-md-16">
+        <ng-include src="'scripts/components/navbar/searchfilter.html'"></ng-include>
       </div>
 
       <div class="dashboard__manage-view--header">
@@ -66,7 +70,7 @@
           </div>
 
           <div class="col-md-4 reset-padding centered">
-            <span class="short-info" ng-repeat ="clinic in doctor.clinics">{{clinic.name}}</span>
+            <span class="short-info" ng-repeat ="clinic in doctor.clinics"> {{clinic.name}} <b>{{$last ? '' : ', '}}</b></span>
           </div>
 
           <div class="col-md-2 reset-padding centered">
@@ -84,6 +88,9 @@
 
           <div class="clr"></div>
        </div>
+       <div class="col-md-16 col-sm-16 empty-list-message" ng-if="!doctors || doctors.length === 0">
+        <span translate="doctor.no-hcp-found"></span>
+      </div>
 
       <div class="dashboard__manage-view--pagination">
         <div class="col-md-16 reset-padding-right">

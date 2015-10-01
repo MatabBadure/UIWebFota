@@ -1,11 +1,15 @@
 <div class="container login">
   <div class="row auth--position">
+    <div class="visi_view_container">
+      <!-- <h1 class="login_portal_name">VisiView</h1>
+      <h3 class="login_portal_name_sub">LEALTH PORTAL</h3> -->
+    </div>
     <div class="form__container__auth col-md-16">
-      <div class="col-md-6 login__container__left-section">
+      <!-- <div class="col-md-6 login__container__left-section">
         <img src="images/man.svg">
-      </div>
-      <div class=" col-md-10 login__container__right-section pull-right">
-        <div class="auth-heading">Reset password</div>
+      </div> -->
+      <div class=" col-md-16 login__container__right-section pull-right">
+        <div class="auth-heading" translate="reset.finish.title">Reset password</div>
         <div class="alert alert-danger login-has-error" translate="reset.finish.messages.keymissing" ng-show="keyMissing">
                 <p>The password reset key is missing.</p>
             </div>
@@ -61,11 +65,11 @@
         </div>
 
         <div class="form-group">
-          <div class="auth-heading">security question</div>
+          <div class="auth-heading" translate="reset.finish.sec-title">Answer security question</div>
           <div class="auth-select">
             <div class="custom-dropdown">
               <select class="form-control" name="question" validate-on-blur  ng-model="resetAccount.question" required ng-options="question.question for question in questions">
-                <option value="">-- select a security question --</option>
+                <option value="">-- Select a security question --</option>
               </select>
             </div>
           </div>
@@ -83,7 +87,7 @@
             </div>
           </div>
 
-          <button type="submit" class="btn-primary float-right" ng-click="formSubmit()" translate="reset.finish.form.button">Activate account</button>
+          <button type="submit" class="myButton_blue" ng-click="formSubmit()" translate="reset.finish.form.button">Activate account</button>
         </form>
       </div>
     </div>

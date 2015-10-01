@@ -31,7 +31,10 @@ var patientDashboard = {
 	"serverDateFormat" : "YYYY-MM-DD",
 	"INDdateFormat" : "DD-MM-YYYY",
 	"minDaysForMonthlyGraph" : 31,
-	"maxDaysForWeeklyGraph" : 7
+	"maxDaysForWeeklyGraph" : 6,
+	"hmrDayGraph" : "HMRBAR_GRAPH",
+	"hmrNonDayGraph" : "HMRLINE_GRAPH",
+	"complianceGraph" : "COMPLIANCE_GRAPH"
 }
 
 var profile = {
@@ -41,6 +44,84 @@ var profile = {
 var notyMessages = {
 	"typeWarning": "warning",
 	"typeSuccess": "success",
-	"maxComplianceError" : "Please deselect one item.",
-	"minComplianceError": "At least one item should be selected."
+	"maxComplianceError" : "Please deselect one parameter.",
+	"minComplianceError": "At least one parameter should be selected."
 }
+
+requestParam = {
+	"pageNo": 0,
+	"offset": 10
+}
+
+var stringConstants = {
+	"emptyString": ""
+}
+
+var footerConstants = {
+	"contactus": "contactus",
+	"privacyPolicy":  "privacyPolicy",
+	"termsOfUse" : "termsOfUse",
+	"privacyPractices" : "privacyPractices",
+	"careSite": "careSite"
+}
+
+
+angular.module('hillromvestApp').constant('hcpDashboardConstants', {
+    cumulativeGraph : {
+		label : {
+			"missedTherapy" : "MissedTherapy Days",
+			"nonCompliance" : "HMR Non-Adherence",
+			"settingDeviation" : "Setting Deviation",
+			"noEvents" : "No Events Recorded"
+		},
+		color : {
+			"missedTherapy" : "#ef6548",
+			"nonCompliance" : "#8c6bb1",
+			"settingDeviation" : "#41ae76",
+			"noEvents" : "#4eb3d3"
+		},
+		yAxis : {
+			"label" : "No. of patients"
+		},
+		"name" : "CUMULATIVE_GRAPH"
+	},
+	treatmentGraph : {
+		label : {
+			"treatmentPerDay" : "Treatments",
+			"treatmentLength" : "Minutes"
+		},
+		color : {
+			"treatmentPerDay" : "#ef6548",
+			"treatmentLength" : "#41ae76"
+		},
+		"type" : "area",
+		"name" : "TREATMENT_GRAPH"
+	},
+	message : {
+		"noData" : "No Data Available!"
+	},
+	statistics : {
+		"duration" : 3000,
+		"scaleColor" : false,
+		"lineWidth" : 12,
+		"lineCap" : "circle",
+		color : {
+			"track" : "#ccc"
+		},
+		"missedTherapy" : "#ef6548",
+		"nonCompliance" : "#8c6bb1",
+		"settingDeviation" : "#41ae76",
+		"noEvents" : "#4eb3d3"
+
+	},
+	serverDateFormat : "YYYY-MM-DD",
+	USdateFormat : "MM-DD-YYYY"
+})
+
+.constant('loginConstants',{
+	role : {
+		"patient" : "PATIENT",
+		"hcp" : "HCP"
+
+	}
+})

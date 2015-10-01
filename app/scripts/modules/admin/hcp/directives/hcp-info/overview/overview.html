@@ -85,15 +85,18 @@
 
 <div class="dashboard dashboard--content">
   <div class="container dashboard__manage-view margin-top">
+  <div class="col-md-16">
+    <ng-include src="'scripts/components/navbar/searchfilter.html'"></ng-include>
+  </div>
     <div class="dashboard__manage-view--header">
         <div class="col-md-3 header--type">
           <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="doctor.patient-name">Patient Name</span>
         </div>
         <div class="col-md-2 header--type">
-          <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="doctor.hill-rom-id">Hill-Rom ID</span>
+          <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="doctor.mrnid">Hill-Rom ID</span>
         </div>
         <div class="col-md-3 header--type">
-          <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="doctor.email">Email</span>
+          <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="doctor.date-of-birth">DOB</span>
         </div>
         <div class="col-md-2 header--type">
           <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="doctor.city-state">City/State</span>
@@ -107,22 +110,22 @@
         <div class="col-md-1 header--type">
           <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="doctor.status">Status</span>
         </div>
-        <div class="col-md-1 header--type">
+        <div class="col-md-1 header--type text-centered">
           <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="doctor.adherence">Adherence</span>
         </div>
         <div class="clr"></div>
       </div>
 
-    <div class="dashboard__manage-view--list  assoc" ng-repeat="patient in patients">
+    <div class="dashboard__manage-view--list" ng-repeat="patient in patients" readonly="true" ng-class="{'inactive': patient.patientUser.isDeleted}">
       <div class="col-md-3 reset-padding">
         <span class="main-prim-info">{{patient.patientUser.lastName}} {{patient.patientUser.firstName}}</span>
-        <span class="main-secon-info">{{patient.patientUser.dob}}</span>
+        <span class="main-secon-info">{{patient.patientUser.email}}</span>
       </div>
       <div class="col-md-2 reset-padding centered">
-        <span class="impo-highlight">{{patient.patientUser.hillromId}}</span>
+        <span class="impo-highlight">{{patient.patientUser.mrnId}}</span>
       </div>
       <div class="col-md-3 reset-padding centered">
-        <span class="short-info">{{patient.patientUser.email}}</span>
+        <span class="short-info">{{patient.patientUser.dob}}</span>
       </div>
 
       <div class="col-md-2 reset-padding centered">
@@ -140,18 +143,32 @@
       </div>
 
       <div class="col-md-1 reset-padding centered">
-          <span class="short-info active" ng-if="!patient.patientUser.deleted" translate="doctor.status-type.active"></span>
-          <span class="short-info inactive" ng-if="patient.patientUser.deleted" translate="doctor.status-type.inactive"></span>
+          <span class="short-info active" ng-if="!patient.patientUser.isDeleted" translate="doctor.status-type.active"></span>
+          <span class="short-info inactive" ng-if="patient.patientUser.isDeleted" translate="doctor.status-type.inactive"></span>
       </div>
 
-      <div class="col-md-1 reset-padding-left centered">
+      <div class="col-md-1 reset-padding-left text-centered">
         <span class="short-info">{{patient.patientUser.adherence}}</span>
       </div>
       <div class="clr"></div>
     </div>
     <div class="col-md-16 empty-list-message">
-      <span ng-if="!patients" translate="doctor.noPatient"></span>
+      <span ng-if="!patients || patients.length == 0" translate="doctor.noPatient"></span>
     </div>
+    <div class="dashboard__manage-view--pagination">
+    <div class="col-md-16 reset-padding-right">
+      <div class="navbar-right">
+        <span class="record-found" ng-if="patients.length > 0">{{total}} Patients</span>
+        <span class="record-found" ng-if="patients.length > 0">Found</span> 
+        <span ng-show="patients.length  > 1">
+          <span class="navigaion-link cursor-pointer" ng-class="{ 'inactive': !(currentPageIndex > 1) }" ng-click="searchPatientsForHCP('PREV')">Previous</span>
+          <span class="navigaion-no" ng-bind="currentPageIndex"></span>
+          <span class="navigaion-link cursor-pointer" ng-class="{ 'inactive': !(pageCount > currentPageIndex) }" ng-click="searchPatientsForHCP('NEXT')">Next</span>
+        </span>
+      </div>
+      <div class="clr"></div>
+    </div>
+  </div>
   </div>
 </div>
 

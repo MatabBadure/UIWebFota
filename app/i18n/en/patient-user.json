@@ -5,10 +5,10 @@
         },
         "tab": {
           "patient-overview": "Overview",
-          "patient-demographics": "Patient Demographics",
-          "clinic-info": "Clinic Information",
-          "protocol-device": "Protocol and Device",
-          "caregiver-info": "Caregiver Information"
+          "patient-demographics": "Patient Info",
+          "clinic-info": "Clinic Info",
+          "protocol-device": "Care Plan and Device",
+          "caregiver-info": "Caregiver Info"
         },
         "caregiver-caption": {
           "caregiver-name": "Caregiver Name",
@@ -24,22 +24,30 @@
           "clinic-name": "Clinic Name",
           "address": "Address",
           "phone-number": "Phone Number",
-          "fax-number": "Fax Number",
-          "hr-id": "Hill-rom ID"
+          "hr-id": "Hill-rom ID",
+          "type": "Type",
+          "city": "City",
+          "state": "State"
         },
         "hcp-caption": {
           "hcp-name": "HCP Name",
-          "address": "Address",
           "phone-number": "Phone Number",
-          "fax-number": "Fax Number",
           "npi-id": "NPI Number",
-          "credentials": "Credentials"
+          "credentials": "Credentials",
+          "fax-number": "Fax Number",
+          "clinic-name": "Clinic Name",
+          "city": "City",
+          "state": "State"
         },
         "protocol-caption": {
           "type": "Type",
           "treatment-day": "Treatment per Day",
           "create-date": "Created Date",
-          "modified-date": "Modified Date"
+          "modified-date": "Modified Date",
+          "treatments-per-day": "Treatments Per Day",
+          "minutes-per-treatment": "Minutes Per Treatment",
+          "pressure-per-treatment": "Pressure Per Treatment",
+          "frequency-per-treatment": "Frequency Per Treatment"
         },
         "device-caption": {
           "serial-no": "Serial Number",
@@ -47,14 +55,14 @@
           "status": "Status",
           "created-date": "Created Date",
           "device": "Device",
-          "modified-date": "Modified Date"
+          "modified-date": "Modified Date",
+          "active-or-inactive-date": "Active or Inactive Date"
         },
-        "clinic-title": "Clinic",
+        "clinic-title": "Clinics",
         "caregiver-title": "Caregivers",
         "device-title": "Device Information",
         "protocol-title": "Protocol",
-        "clinic-title": "Clinic",
-        "hcp-title": "HCP",
+        "hcp-title": "HCPs",
         "phone": "Phone:",
         "mobile": "Mobile:",
         "fax": "Fax:",
@@ -91,7 +99,10 @@
           "max-frequency": "Max Frequency",
           "min-pressure": "Min Pressure",
           "max-pressure": "Max Pressure",
-          "gen-details": "Add Protocol"
+          "gen-details": "Add Protocol",
+          "min-minutes": "Min Minutes",
+          "frequency": "Frequency",
+          "pressure": "Pressure"
         },
         "overview": {
           "hr-id": "Hillrom ID:",
@@ -162,10 +173,11 @@
         },
         "profile": {
           "tabs": {
-            "mydashboard": "My Dashboard",
+            "mydashboard": "Dashboard",
             "caregiver": "Caregiver",
             "device-protocol": "Device and Protocol",
-            "clinic-hcp": "Clinic and HCP"
+            "clinic-hcp": "Clinic and HCP",
+            "patient-demographics": "Patient Demographics"
           }
         },
     "errMSG":{
@@ -201,17 +213,21 @@
       "zipcode": "Zip",
       "city": "City",
       "state": "State",
-      "phoneNumber": "PhoneNumber",
+      "phoneNumber": "Phone Number",
       "fax-number": "Clinic Fax Number",
       "clinic-phone": "Clinic Phone Number",
-      "hillromId": "HillromId",
+      "hillromId": "Hillrom ID",
       "parentClinicId": "ParentClinicId",
       "npiNumber": "NpiNumber",
       "user": "user",
       "patients": "patients",
-      "parent": "parent",
+      "parent": "Parent",
       "type": "Type",
-      "status": "Status"
+      "status": "Status",
+      "satellite": "Satellite",
+      "active": "Active",
+      "inactive": "Inactive",
+      "no-clinic-found": "No clinic associated."
     },
     "hcp":{
       "name": "Name",
@@ -223,7 +239,8 @@
       "status": "Status",
       "active": "Active",
       "inactive": "Inactive",
-      "pending": "Pending"
+      "pending": "Pending",
+      "no-hcp-found": "No HCP associated."
     },    
     "select-relationship": "Select relationship.",
     "toggle-navigation": "Toggle navigation",
@@ -257,8 +274,8 @@
         "found": "Found",
         "notes": "Notes",
         "no-data-found": "No data found.",
-        "please-deselect-one-item": "Please deselect one item.",
-        "min-legend-required": "At least one item should be selected.",
+        "please-deselect-one-item": "Please deselect one parameter.",
+        "min-legend-required": "At least one parameter should be selected.",
         "no-notifications": "Doing great. Have a good day !",
         "export-as-pdf": "PDF",
         "export-as-csv": "CSV",
@@ -269,5 +286,109 @@
      "no-clinic-found": "No clinic associated.",
      "no-hcp-found": "No hcp associated.",
      "no-protocol-found": "No protocol associated.",
-     "no-device-found": "No device associated."
+     "no-device-found": "No device associated.",
+     "profile" : {
+    "home": {
+      "title": "Profile"
+    },
+    "tabs": {
+      "profile-details": "Profile Details",
+      "update-password": "Update Password",
+      "setting": "Notification Settings"
+    },
+    "userId":"User ID",
+    "title-name": "Title",
+    "first-name": "First Name",
+    "middle-name": "Middle Name",
+    "last-name": "Last Name",
+    "employee-id": "Employee ID",
+    "faxNumber": "Fax Number",
+    "credentials": "Credentials",
+    "speciality": "Speciality",
+    "zipcode": "Zipcode",
+    "city": "City",
+    "primaryPhone":"Primary Phone",
+    "mobilePhone": "Mobile Phone",
+    "address": "Address",
+    "state": "State",
+    "hr-id": "HR ID",
+    "email": "Email",
+    "role-text":"Select Role",
+    "view-role-text":"Role",
+    "role": {
+      "super-admin": "Super Admin",
+      "account-services": "Account Services",
+      "associates":"Associates",
+      "default" : "Select a role"
+    },
+    "update-button-text": "Update",
+    "cancel-button-text": "Cancel",
+    "edit-button-text": "Edit",
+    "security-ques": "Security Question",
+    "cur-pswd": "Current Password",
+    "new-pswd": "New Password",
+    "confirm-pswd": "Confirm Password",
+    "mobile-no": "Mobile",
+    "security-ans": "Answer",
+    "notification": "Notifications",
+    "noti-desc": "The Notification will be sent to your registered email address. You can Switch On/Off",
+    "noti": {
+      "miss-therapy-days" : "Miss Therapy Days",
+      "hmr-non-adher": "HMR Non-Adherence",
+      "setting-deviation": "Setting Deviation"
+    },
+    "errorMSG": {
+       "password-required": "password is required.",
+       "password-min-length": "Password is required to be at least 8 character.",
+       "password-max-length": "Password cannot be longer than 50 characters.",
+       "password-criteria": "Password complexity criteria not met.",
+       "new-password-required": "New Password  is required.",
+       "new-password-min-length":"New Password is required to be at least 8 character.",
+       "new-password-max-length": "New Password cannot be longer than 50 characters.",
+       "new-password-criteria": "Password complexity criteria not met.",
+       "cnf-password-required": "Confirm Password Required.",
+       "cnf-password-min-length":"Password is required to be at least 8 character.",
+       "cnf-password-max-length": "Password cannot be longer than 50 characters.",
+       "cnf-password-criteria": "Password complexity criteria not met.",
+       "cnf-password-mismatch": "Password Mismatch.",
+       "first-name-required": "First Name is required.",
+       "first-name-number":"Last Name cannot have number.",
+       "first-name-min-length":"Last Name is required to be at least 2 character.",
+       "first-name-max-length":"Last Name cannot be longer than 15 characters.",
+       "middle-name-number": "Middle Name cannot have number.",
+       "middle-name-min-length":"Middle Name is required to be at least 2 character.",
+       "middle-name-max-length": "Middle Name cannot be longer than 15 characters.",
+       "last-name-required":"Last Name is required.",
+       "last-name-number":"Last Name cannot have number.",
+       "last-name-min-length":"Last Name is required to be at least 2 character.",
+       "last-name-max-length":"Last Name cannot be longer than 15 characters.",
+       "e-mail-requitred": "E-mail is required.",
+       "e-mail-invalid" : " E-mail is invalid.",
+       "email-max-length": " E-mail cannot be longer than 100 characters.",
+       "role-required": "Role is required.",
+       "ans-required": "Answer is required.",
+       "ans-max-required":"Answer cannot be longer than 100 characters."
+    },
+    "select-secutity-question": "-- select a security question --",
+    "clinic":{
+      "clinic-name":"Clinic Name",
+      "address":"Address",
+      "city":"City",
+      "state":"State",
+      "city-state": "City/State",
+      "phoneNumber":"Phone Number",
+      "type":"Type",
+      "hillRom-id":"Hillrom ID",
+      "status":"Status",
+      "clinicType":{
+        "parent": "Parent",
+        "satellite": "Satellite"
+      },
+      "status-type":{
+        "active":"Active",
+        "inactive":"Inactive"
+      },
+      "clinic-title" : "Clinic"
+    }
+  }
 }

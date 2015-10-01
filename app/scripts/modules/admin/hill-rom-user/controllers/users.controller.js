@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hillromvestApp')
-  .controller('UsersController', function($scope, UserService, $state, $stateParams) {
+  .controller('UsersController',['$scope', 'UserService', '$state', '$stateParams', function($scope, UserService, $state, $stateParams) {
     $scope.user = {};
     $scope.userStatus = {
       'role': localStorage.getItem('role'),
@@ -56,4 +56,4 @@ angular.module('hillromvestApp')
     };
 
     $scope.init();
-  });
+  }]);

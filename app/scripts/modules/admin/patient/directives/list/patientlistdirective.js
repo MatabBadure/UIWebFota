@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hillromvestApp')
-  .directive('patientList', function(UserService, patientService, $state, $stateParams, notyService) {
+  .directive('patientList', function($state, $stateParams) {
     return {
       templateUrl: 'scripts/modules/admin/patient/directives/list/patientlist.html',
       restrict: 'E',
@@ -18,9 +18,11 @@ angular.module('hillromvestApp')
         })
       }
       },
-      controller: function($scope, $timeout, dateService) {
-
+      controller: ['$scope', '$timeout', 'patientService', '$state', '$stateParams', 'notyService','searchFilterService', 
+      function($scope, $timeout, patientService, $state, $stateParams, notyService, searchFilterService) {
+        var searchOnLoad = true;
         $scope.init = function() {
+          $scope.searchFilter = searchFilterService.initSearchFiltersForPatient();
           $scope.patients = [];
           $scope.patientInfo = {};
           $scope.currentPageIndex = 1;
@@ -33,6 +35,8 @@ angular.module('hillromvestApp')
           $scope.sortIconDefault = true;
           $scope.sortIconUp = false;
           $scope.sortIconDown = false;
+          $scope.searchItem = "";
+          $scope.searchPatients();
           if($stateParams.clinicIds){
             $scope.getAssociatedPatientsToClinic($stateParams.clinicIds);
           }
@@ -41,7 +45,7 @@ angular.module('hillromvestApp')
 
         var timer = false;
         $scope.$watch('searchItem', function() {
-          if($state.current.name === "patientUser" && !$stateParams.clinicIds){
+          if($state.current.name === "patientUser" && !$stateParams.clinicIds && !searchOnLoad){
             if (timer) {
               $timeout.cancel(timer)
             }
@@ -72,8 +76,9 @@ angular.module('hillromvestApp')
             }
           } else {
             $scope.currentPageIndex = 1;
-          }
-          patientService.getPatients($scope.searchItem, $scope.sortOption, $scope.currentPageIndex, $scope.perPageCount)
+          } 
+          var filter = searchFilterService.getFilterStringForPatient($scope.searchFilter);
+          patientService.getPatients($scope.searchItem, $scope.sortOption, $scope.currentPageIndex, $scope.perPageCount,filter)
             .then(function(response) {
               $scope.patients = response.data;
               var patientCount = $scope.patients.length;
@@ -90,6 +95,7 @@ angular.module('hillromvestApp')
               }
               $scope.total = response.headers()['x-total-count'];
               $scope.pageCount = Math.ceil($scope.total / 10);
+              searchOnLoad = false;
             }).catch(function(response) {
               $scope.noMatchFound = true;
             });
@@ -129,8 +135,12 @@ angular.module('hillromvestApp')
             $scope.sortIconDown = true;
           }
         };
+        $scope.searchOnFilters = function(){           
+          $scope.searchPatients();
+        };
+
 
         $scope.init();
-      }
+      }]
     };
   });

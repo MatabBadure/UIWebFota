@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hillromvestApp')
-    .controller('RequestResetController', function ($rootScope, $scope, $state, $timeout, Auth, localStorageService, $http, vcRecaptchaService) {
+    .controller('RequestResetController',['$scope', '$timeout', 'Auth', 'vcRecaptchaService', function ($scope, $timeout, Auth, vcRecaptchaService) {
 
         $scope.success = null;
         $scope.error = null;
@@ -77,4 +77,4 @@ angular.module('hillromvestApp')
        	}     	
         }
 
-    });
+    }]);

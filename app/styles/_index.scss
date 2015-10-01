@@ -17,7 +17,7 @@ body {
 .content-body {
 	background-color: inherit;
 	margin-top: 60px;
-	margin-bottom: 40px;
+	padding-bottom: 100px;
 }
 
 a:focus {
@@ -199,13 +199,13 @@ a::-moz-focus-inner {
 }
 
 #loading-bar .bar {
-	background: $sunshade;
+	background: $blue-btn;
 	height: 4px;
 }
 
 #loading-bar-spinner .spinner-icon {
-	border-top-color:  $sunshade;
-  border-left-color: $sunshade;
+	border-top-color:  $blue-btn;
+  border-left-color: $blue-btn;
 }
 
 .text-right {
@@ -221,3 +221,43 @@ a::-moz-focus-inner {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.lebel-indent label {
+	padding-left: 0;
+}
+
+.lebel-indent label input {
+	display: inline-block;
+	margin-right: 5px;
+	cursor: pointer;
+}
+
+.lebel-indent label span {
+	cursor: pointer;
+}
+
+.slide.ng-enter,
+.slide.ng-leave {
+    -webkit-transition:0.5s ease-in all;
+    -moz-transition:0.5s ease-in all;
+    -o-transition:0.5s ease-in all;
+    transition:0.5s ease-in all;
+    opacity: 0;
+    margin-left: 75px;
+}
+
+.slide.ng-enter-active {
+    opacity: 1;
+    margin-left: 0;
+}
+
+/* Start Customize datepicker for dab UI */
+.custom-date .dropdown-menu {
+	min-width: 200px;
+}
+
+.datepicker table tr td span {
+	font-size: $font-size-base;
+	font-weight: $font-weight-medium;
+}
+/* End Customize datepicker for dab UI */

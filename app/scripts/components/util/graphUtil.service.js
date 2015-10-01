@@ -1,7 +1,7 @@
-'use strict';
+  'use strict';
 
-angular.module('hillromvestApp')
-    .service('graphUtil', function (dateService) {
+angular.module('hillromvestApp')  
+    .service('graphUtil', [ 'dateService','hcpDashboardConstants', function (dateService,hcpDashboardConstants) {
       
       this.convertIntoHMRLineGraph = function(data) {
         var pointSet = [];
@@ -34,6 +34,102 @@ angular.module('hillromvestApp')
         graphData.area = true;
         graphDataList.push(graphData);
       return graphDataList;
+      }
+
+      this.convertIntoServerTimeZone = function(data,graphType){
+        switch(graphType){
+          case patientDashboard.hmrNonDayGraph:
+            var graphData = {};
+            var actual = [];
+            angular.forEach(data.actual, function(value) {
+              value.timestamp = dateService.getUTCTimeStamp(value.timestamp);
+              value.start = dateService.getUTCTimeStamp(value.start);
+              value.end = dateService.getUTCTimeStamp(value.end);
+              actual.push(value);
+            });
+            graphData.actual = actual;
+            graphData.recommended = data.recommended;
+            return graphData;
+          case hcpDashboardConstants.cumulativeGraph.name:
+            var pointSet = [];
+            angular.forEach(data, function(value) {
+              value.startTimestamp = dateService.getUTCTimeStamp(value.startTimestamp);
+              value.endTimestamp = dateService.getUTCTimeStamp(value.endTimestamp);
+              pointSet.push(value);
+            });
+            return pointSet;
+          case patientDashboard.complianceGraph:
+            var graphData = {};
+            var actual = [];
+            angular.forEach(data.actual, function(value) {
+              value.timestamp = dateService.getUTCTimeStamp(value.timestamp);
+              value.start = dateService.getUTCTimeStamp(value.start);
+              value.end = dateService.getUTCTimeStamp(value.end);
+              actual.push(value);
+            });
+            graphData.actual = actual;
+            graphData.recommended = data.recommended;
+            return graphData;
+          case patientDashboard.hmrDayGraph:
+            var graphData = {};
+            var actual = [];
+            angular.forEach(data.actual, function(value) {
+              value.startTime = dateService.getUTCTimeStamp(value.startTime);
+              value.endTime = dateService.getUTCTimeStamp(value.endTime);
+              actual.push(value);
+            });
+            graphData.actual = actual;
+            graphData.recommended = data.recommended;
+            return graphData;
+          case hcpDashboardConstants.treatmentGraph.name:
+            var pointSet = [];
+            angular.forEach(data, function(value) {
+              value.startTime = dateService.getUTCTimeStamp(value.startTime);
+              value.endTime = dateService.getUTCTimeStamp(value.endTime);
+              pointSet.push(value);
+            });
+            return pointSet;
+        }
+        
+      }
+
+      var createCumulativeGraph = function(data,key,color) {
+        var pointSet = [];
+        var graphData = {};
+        var count = 1;
+        angular.forEach(data, function(value) {
+          var point = [];
+          point.push(value.startTimestamp);
+          switch(key){
+            case hcpDashboardConstants.cumulativeGraph.label.missedTherapy:
+              point.push(value.missedTherapy);
+              break;
+            case hcpDashboardConstants.cumulativeGraph.label.nonCompliance:
+              point.push(value.nonCompliance);
+              break;
+            case hcpDashboardConstants.cumulativeGraph.label.settingDeviation:
+              point.push(value.settingDeviation);
+              break;
+            case hcpDashboardConstants.cumulativeGraph.label.noEvents:
+              point.push(value.noEvent);
+              break;
+          }
+          pointSet.push(point);
+        });
+        graphData.values = pointSet;
+        graphData.key = key;
+        graphData.area = true; 
+        graphData.color = color;
+        return graphData;
+      }
+
+      this.convertIntoCumulativeGraph = function(data) {        
+        var graphDataList =[];
+        graphDataList.push(createCumulativeGraph(data,hcpDashboardConstants.cumulativeGraph.label.missedTherapy,hcpDashboardConstants.cumulativeGraph.color.missedTherapy));
+        graphDataList.push(createCumulativeGraph(data,hcpDashboardConstants.cumulativeGraph.label.noEvents,hcpDashboardConstants.cumulativeGraph.color.noEvents));
+        graphDataList.push(createCumulativeGraph(data,hcpDashboardConstants.cumulativeGraph.label.settingDeviation,hcpDashboardConstants.cumulativeGraph.color.settingDeviation));
+        graphDataList.push(createCumulativeGraph(data,hcpDashboardConstants.cumulativeGraph.label.nonCompliance,hcpDashboardConstants.cumulativeGraph.color.nonCompliance));
+        return graphDataList;
       }
 
       var arrayMax = Function.prototype.apply.bind(Math.max, null);
@@ -100,6 +196,35 @@ angular.module('hillromvestApp')
           var maxFrequency = arrayMax(frequencySet);
           maxFrequency = (maxFrequency > data.recommended.maxFrequency) ? maxFrequency : data.recommended.maxFrequency;
           range.maxFrequency = maxFrequency;
+          return range;
+      }
+
+      this.getYaxisRangeTreatmentGraph = function(data) {
+          var range = {};
+          var treatmentPerDaySet = [];
+          var treatmentDurationSet = [];
+          angular.forEach(data, function(value) {
+              treatmentPerDaySet.push(value.avgTreatments);
+              treatmentDurationSet.push(value.avgTreatmentDuration);
+          });
+          var maxTreatmentsPerDay = arrayMax(treatmentPerDaySet) + Math.ceil(arrayMax(treatmentPerDaySet)/4);
+          var maxTreatmentDuration = arrayMax(treatmentDurationSet) + arrayMax(treatmentDurationSet)/4;
+          range.maxTreatmentsPerDay = maxTreatmentsPerDay === 0 ? 1 : maxTreatmentsPerDay;
+          range.maxTreatmentDuration = maxTreatmentDuration === 0 ? 1 : maxTreatmentDuration;
+          return range;
+      }
+
+      this.getYaxisRangeCumulativeGraph = function(data){
+          var range = {};
+          var NoOfPatientSet = [];
+          angular.forEach(data, function(value) {
+              NoOfPatientSet.push(value.missedTherapy);
+              NoOfPatientSet.push(value.nonCompliance);
+              NoOfPatientSet.push(value.settingDeviation);
+              NoOfPatientSet.push(value.noEvent);
+          });
+          var maxNoOfPatients = arrayMax(NoOfPatientSet) + Math.ceil(arrayMax(NoOfPatientSet)/4);
+          range.maxNoOfPatients = maxNoOfPatients === 0 ? 1 : maxNoOfPatients;
           return range;
       }
 
@@ -294,6 +419,40 @@ angular.module('hillromvestApp')
         return data;
       }
 
+      this.convertIntoTreatmentGraph = function(data) {
+        var graphDataList =[];
+        var treatmentPerDayValues = [];
+        var treatmentLengthValues = [];
+        var treatmentPerDayObject = {};
+        var treatmentLengthObject = {};
+        var count = 0;
+        angular.forEach(data, function(value) {
+          count = count + 1;
+          var treatmentPerDayPoint = {};
+          var treatmentLengthPoint = {};
+          treatmentPerDayPoint.x = count;
+          treatmentPerDayPoint.timeStamp = value.startTime;
+          treatmentPerDayPoint.y = value.avgTreatments;
+          treatmentPerDayValues.push(treatmentPerDayPoint);
+          treatmentLengthPoint.x = count;
+          treatmentLengthPoint.timeStamp = value.startTime;
+          treatmentLengthPoint.y = value.avgTreatmentDuration;
+          treatmentLengthValues.push(treatmentLengthPoint);
+        });
+        treatmentPerDayObject.values = treatmentPerDayValues;
+        treatmentPerDayObject.yAxis = 1;
+        treatmentPerDayObject.type = hcpDashboardConstants.treatmentGraph.type;
+        treatmentPerDayObject.axisLabel = hcpDashboardConstants.treatmentGraph.label.treatmentPerDay;
+        treatmentLengthObject.values = treatmentLengthValues;
+        treatmentLengthObject.yAxis = 2;
+        treatmentLengthObject.type = hcpDashboardConstants.treatmentGraph.type;
+        treatmentLengthObject.axisLabel = hcpDashboardConstants.treatmentGraph.label.treatmentLength;
+
+        graphDataList.push(treatmentPerDayObject);
+        graphDataList.push(treatmentLengthObject);
+      return graphDataList;
+      }
+
       this.convertIntoComplianceGraph = function(data) {
         var graphDataList =[];
         var pressureValues = [];
@@ -335,4 +494,4 @@ angular.module('hillromvestApp')
         graphDataList.push(frequencyObject);
       return graphDataList;
       }
-    });
+    }]);

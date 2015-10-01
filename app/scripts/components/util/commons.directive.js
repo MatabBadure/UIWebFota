@@ -16,11 +16,8 @@ angular.module('hillromvestApp')
       }
     };
     return ddo;
-  }]);
+  }])
 
-  
-  
-  angular.module('hillromvestApp')
   .directive('pwCheck', [function () {
     return {
       require: 'ngModel',
@@ -34,9 +31,8 @@ angular.module('hillromvestApp')
         });
       }
     }
-  }]);
+  }])
 
-  angular.module('hillromvestApp')
   .directive('validateOnKeyPress', [function () {
     var ddo = {
       restrict: "A",
@@ -54,4 +50,4 @@ angular.module('hillromvestApp')
       }
     }; 
     return ddo;
-  }]);
+  }])

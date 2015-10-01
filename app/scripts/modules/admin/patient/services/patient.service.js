@@ -6,7 +6,7 @@
  *
  */
 angular.module('hillromvestApp')
-  .factory('patientService', function ($http, localStorageService, headerService) {
+  .factory('patientService',['$http', 'headerService', function ($http, headerService) {
     return {
 
       /**
@@ -15,7 +15,8 @@ angular.module('hillromvestApp')
       * @description To get list of patients.
       *
       */
-      getPatients: function(searchString, sortOption, pageNo, offset) {
+      getPatients: function(searchString, sortOption, pageNo, offset, filter) {
+        var filterBy = (filter && filter != undefined) ? filter : stringConstants.emptyString;
         var url = admin.patient.searchURL;
         var sortOrder;
         if (searchString === undefined) {
@@ -27,7 +28,7 @@ angular.module('hillromvestApp')
         } else {
           sortOrder = true;
         };
-        url = url + '?searchString=' + searchString + '&page=' + pageNo + '&per_page=' + offset + '&sort_by=' + sortOption + '&asc=' + sortOrder;
+        url = url + '?searchString=' + searchString + '&page=' + pageNo + '&per_page=' + offset + '&sort_by=' + sortOption + '&asc=' + sortOrder + '&filter='+filterBy;
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -342,4 +343,4 @@ angular.module('hillromvestApp')
       }
       
     };
-  });
+  }]);

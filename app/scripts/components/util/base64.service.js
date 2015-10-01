@@ -2,7 +2,7 @@
 'use strict';
 
 angular.module('hillromvestApp')
-    .service('Base64', function () {
+    .service('Base64',[ function () {
         var keyStr = 'ABCDEFGHIJKLMNOP' +
             'QRSTUVWXYZabcdef' +
             'ghijklmnopqrstuv' +
@@ -74,8 +74,8 @@ angular.module('hillromvestApp')
                 enc1 = enc2 = enc3 = enc4 = '';
             }
         };
-    })
-    .factory('StorageService', function ($window) {
+    }])
+    .factory('StorageService', ['$window', function ($window) {
         return {
 
             get: function (key) {
@@ -94,5 +94,5 @@ angular.module('hillromvestApp')
                 $window.localStorage.clear();
             }
         };
-    });
+    }]);
 

@@ -1,6 +1,7 @@
 'use strict';
 angular.module('hillromvestApp')
-  .factory('clinicService', function($http, localStorageService, headerService) {
+  .factory('clinicService', ['$http', 'localStorageService', 'headerService', 'URL' ,
+    function($http, localStorageService, headerService, URL) {
     var token = localStorage.getItem('token');
     return {
       createClinic: function(data) {
@@ -27,7 +28,8 @@ angular.module('hillromvestApp')
         });
       },
 
-      getClinics: function(searchString, sortOption, pageNo, offset) {
+      getClinics: function(searchString, sortOption, pageNo, offset, filter) {
+        var filterBy = (filter && filter != undefined) ? filter : stringConstants.emptyString;
         if (searchString === undefined) {
           searchString = '';
         }
@@ -38,7 +40,7 @@ angular.module('hillromvestApp')
         } else {
           sortOrder = true;
         };
-        return $http.get('api/clinics/search?searchString=' + searchString + '&page=' + pageNo + '&per_page=' + offset + '&sort_by=' + sortOption + '&asc=' + sortOrder, {
+        return $http.get('api/clinics/search?searchString=' + searchString + '&page=' + pageNo + '&per_page=' + offset + '&sort_by=' + sortOption + '&asc=' + sortOrder + '&filter='+filterBy, {
           headers: headerService.getHeader()
         }).success(function(response) {
           return response;
@@ -62,8 +64,8 @@ angular.module('hillromvestApp')
         });
       },
 
-      getClinicAssoctPatients: function(clinicId){
-        return $http.get('/api/clinics/patients?filter=id:' + clinicId, {
+      getClinicAssoctPatients: function(clinicId, pageNo, offset){
+        return $http.get('/api/clinics/patients?filter=id:' + clinicId+ '&page=' + pageNo + '&per_page=' + offset  , {
           headers: headerService.getHeader()
         }).success(function(response) {
           return response;
@@ -172,6 +174,21 @@ angular.module('hillromvestApp')
         }).success(function(response) {
           return response;
         });
+      },
+
+      searchAssociatedPatientsToClinic : function(searchString, filter, pageNo, offset, clinicId){      
+        var url = URL.searchAssociatedPatientsToClinic.replace('SEARCHSTRING', searchString).replace('PAGENO', pageNo).replace('OFFSET', offset).replace('FILTER', filter).replace('CLINICID', clinicId);
+        return $http.get(url, {
+          headers: headerService.getHeader()        
+        });
+      },
+
+      getNonAssocaitedPatients : function(clinicId){
+        var url = URL.nonAssociatedPatientForClinic;
+        url = url.replace('CLINICID', clinicId);
+        return $http.get(url, {
+          headers: headerService.getHeader()        
+        });
       }
     };
-  });
+  }]);

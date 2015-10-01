@@ -1,0 +1,206 @@
+@media only screen and (min-width : 768px) and (max-width : 1024px) and (orientation : landscape) { 
+	/*HCP dashboard Style device-*/
+ 	.stats_chart_container{ 
+		.pie_chart{
+			float: none;
+		}
+		.stats_chart_content{
+			margin: 0;
+			text-align: center;
+			width: 100%;
+			.percent{
+				float: none;
+			}
+		}
+	}
+
+	/*Login page Style*/
+	.footer_container {
+		.footer_right{
+			display: none;
+		}
+	}
+	.auth--position{
+		width: 70%;
+		margin: 10% auto 15%;
+	}
+	.login{
+		background: url("../images/bg_ipad_landscape.jpg") no-repeat;
+		-webkit-background-size: cover;
+		-moz-background-size: cover;
+		-o-background-size: cover;
+		background-size: cover;
+		display: table;
+		/*height: calc(100% - 123px);*/
+		height: 100%;
+		position: absolute;
+		width: 100%;
+		background-size: 100% 100%;
+		.login--position{
+			width: 70%;
+			margin: 10% auto 15%;
+		}
+	}
+	.visi_view_container{
+		margin: 0% auto 4%;
+	}
+	.login__container__right-section{
+		width: 100%;
+	}
+	/*Login page Style END*/
+
+	/*HCP Patient Dashboar Style*/
+	.stats_chart_container{
+		.pie_chart{
+			text-align: center;
+			margin: 10px 0px 0px;
+		}
+		.col-3{
+			.chart_inner_icon{
+				left: 40%;
+   				top: 22%;
+			}
+		}
+	}
+	.hcp_wrapper{
+		.stats_chart_container{
+			.chart_inner_icon{
+				left: 37%;
+    			top: 19%;
+			}
+		}
+	}
+	/*HCP Patient Dashboar Style END*/	
+
+	/*Bug fixes*/
+	.navbar-default > .container > .navbar-secondary ul li{
+		outline: none;
+	}
+
+	.patient-user__navbar .patient-dashboard > li {
+		padding-right: 0;
+	}
+
+	.patient_nav_link_right li {
+		margin-right: 10px;
+		font-size: 12px;
+	}
+	.patient-user__navbar ul > li{
+		padding-right: 40px;
+	}
+	.patient-user__navbar ul > li > a .icons{
+		top: 13px;
+	}
+	.patient-user__navbar{
+		width: 100%;
+		display: inline-block;
+	}
+}
+
+@media only screen and (min-width : 768px) and (max-width : 1024px) and (orientation : portrait) { 
+	/*HCP dashboard Style*/
+	.stats_chart_container{ 
+		.pie_chart{
+			float: none;
+			text-align: center;
+		}
+		.col-3{
+			.chart_inner_icon{
+				left: 41%;
+   				top: 18%;
+			}
+		}
+		.stats_chart_content{
+			margin: 0;
+			text-align: center;
+			width: 100%;
+			.percent{
+				float: none;
+			}
+		}
+	}
+	.hcp_wrapper{
+		.stats_chart_container{
+			.chart_inner_icon{
+				left: 39%;
+    			top: 16%;
+			}
+		}
+	}
+
+	.form__container__login .login__container__right-section {
+		margin: 0 auto;
+	}
+
+	.patient-user__navbar ul > li {
+		padding-right: 15px;
+	}
+	/*Login page Style*/
+	.footer_container {
+		.footer_right{
+			display: none;
+		}
+	}
+	.auth--position{
+		width: 70%;
+		margin: 10% auto 15%;
+	}
+	.login{
+		background: url("../images/bg_ipad_portrait.jpg") no-repeat;
+		-webkit-background-size: cover;
+		-moz-background-size: cover;
+		-o-background-size: cover;
+		background-size: cover;
+		display: table;
+		/*height: calc(100% - 123px);*/
+		height: 100%;
+		position: absolute;
+		width: 100%;
+		background-size: 100% 100%;
+		.login--position{
+			width: 70%;
+			margin: 10% auto 15%;
+		}
+	}
+	.visi_view_container{
+		margin: 0% auto 4%;
+	}
+	.login__container__right-section{
+		width: 100%;
+	}	
+	/*Login page Style END*/
+
+	/* User Particular info tab padding */
+	.user-detail-info {
+		padding: 0 10px;
+	}
+	/* User Particular info tab padding  END*/
+	/*Bug fixes*/
+	.navbar-default > .container > .navbar-secondary ul li{
+		outline: none;
+	}
+	.patient-user__navbar{
+		width: 100%;
+		display: inline-block;
+	}
+
+	.patient-user__navbar .patient-dashboard > li {
+		padding-right: 0;
+	}
+
+	.patient_nav_link_right li {
+		margin-right: 5px;
+	}
+}
+@media screen and (min-width : 1024px){
+	.login{
+		background: url("../images/login_bg.jpg") no-repeat;
+		-webkit-background-size: cover;
+		-moz-background-size: cover;
+		-o-background-size: cover;
+		background-size: cover;
+		background-size: 100% 100%;
+	}
+} 
+
+

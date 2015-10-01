@@ -42,7 +42,7 @@
             </div>
             <div class="col-md-10 dashboard__form__input--option reset-padding selected-box-container">
               <div class="custom-dropdown">
-                <select name="type" ng-model="clinic.type" ng-disabled="clinicStatus.editMode || clinicStatus.createSatellite">
+                <select name="type" ng-model="clinic.type" ng-disabled="clinicStatus.createSatellite">
                   <option selected translate="clinic.clinic-option.parent-clinic" value="parent"></option>
                   <option translate="clinic.clinic-option.satellite-clinic" value="child"></option>
                 </select>
@@ -56,11 +56,13 @@
             </div>
             <div class="col-md-10 dashboard__form--input parent-list reset-padding">
               
-              <input class="form-control" name="parentClinicName" type="text" ng-model="clinic.parentClinic.name" typeahead="clinic as clinic.name for clinic in parentClinics | filter:$viewValue" typeahead-on-select="selectClinicEdit($item)" placeholder="{{'clinic.placeholder.parent-clinic-search' | translate}}" ng-blur="validateClinicName();" required>
+              <input class="form-control" name="parentClinicName" ng-disabled="clinicStatus.createSatellite" type="text" ng-model="clinic.parentClinic.name" typeahead="clinic as clinic.name for clinic in parentClinics | filter:$viewValue" typeahead-on-select="selectClinicEdit($item)" placeholder="{{'clinic.placeholder.parent-clinic-search' | translate}}" validate-on-blur required>             
 
               <div ng-show="(form.parentClinicName.$dirty && form.parentClinicName.$showValidationMessage && form.parentClinicName.$invalid) || submitted">
                 <span class="has-error" ng-show="form.parentClinicName.$error.required" translate="error.parentClinicName.required"></span>
+                <span class="has-error" ng-show="form.parentClinicName.$error.match && !form.parentClinicName.$error.required" translate="error.parentClinicName.match"></span>
               </div>
+
             </div>
           </div>
         </div>
@@ -71,9 +73,10 @@
               <span class="">*</span>
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
-              <input class="" type="text" validate-on-blur ng-model="clinic.name" name="name" required>
+              <input class="" type="text" validate-on-blur ng-model="clinic.name" name="name" required ng-maxlength="25">
               <div ng-show="(form.name.$dirty && form.name.$showValidationMessage && form.name.$invalid) || submitted">
-                <span class="has-error" ng-show="form.name.$error.required" translate="error.clinicName.required"></span>
+                <span class="has-error" ng-show="form.name.$error.required" translate="error.clinicName.required"></span>             
+                <span class="login-has-error" ng-show="form.name.$error.maxlength" translate="error.clinicName.maxlength"></span>
               </div>
             </div>
           </div>

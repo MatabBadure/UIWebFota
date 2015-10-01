@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hillromvestApp')
-    .factory('Account', function Account($resource) {
+    .factory('Account', ['$resource', function Account($resource) {
         return $resource('api/account', {}, {
             'get': { method: 'GET', headers:{
             	'x-auth-token': function () {
@@ -17,4 +17,4 @@ angular.module('hillromvestApp')
                 }
             }
         });
-    });
+    }]);

@@ -49,6 +49,7 @@
 		}
 		.sub_txt{
 			line-height: 27px;
+			color: $sunshade;
 		}
 	}
 } 
@@ -58,24 +59,29 @@
     margin: 25px 0;
     width: 100%;
 	.col-3{
-		width: 33.3333%;
+		width: 32.3333%;
 		display: inline-block;
 		float: left;
 		position: relative;
-
+		margin-right: 1%;
+		background-image: url("../images/Color-HCP-Dashboard.png");
+		background-size: 100% 100%;
+		/*background:-webkit-gradient(linear, 0% 77%, 0% 2%, from(#7ca3dc), to(#fdfcfc));*/
 		.chart_inner_icon{
 			color: #ccc;
 		    display: inline-block;
-		    font-size: 54px;
+		    font-size: 45px;
 		    height: 60px;
-		    left: 27px;
+		    left: 37px;
 		    position: absolute;
-		    top: 26px;
-		    width: 60px;
+		    top: 32px;
+		    width: 45px;
 		}
+
 	}
 	.pie_chart{
 		float: left;
+		margin-left: 5px;
 	}
 
 }
@@ -83,13 +89,13 @@
 	display: inline-block;
     margin: 30px 0 0 15px;
     &.score{
-    	color: #FFC31C;
+    	color: #41ae76;
     }
     &.hmr{
-    	color: #7E2253;
+    	color: #8c6bb1;
     }
     &.missed{
-    	color: #EA766B;
+    	color: #ef6548;
     }
 
     .percent{
@@ -108,6 +114,9 @@
     }
 }
 /* Notification Section CSS */
+.dashboard_noti_section{
+	margin-bottom: 20px;
+}
 .dashboard_noti_section{
 	.header_noti{
 		h4{
@@ -221,9 +230,13 @@
 /* Dash Doard Note section css */
 .patient_dashdoard_btns{
 	.hillrom-btn{
-		background-color: $sunshade;
-		border: solid 1px $sunshade;
-		color: $gray-dark;
+		background-color: $iceberg;
+		border: 0;
+		border-bottom: solid 2px $blue-btn-border;
+		color: $btn-primary-color;
+		&:hover{
+			background-color: $blue-btn-hover;
+		}
 	}
 }
 .add_note_container{
@@ -264,6 +277,7 @@
 	.notes_row{
 		border-bottom: $border_default;
 		padding: 10px 0px;
+		overflow: hidden;
 	}
 }
 .edit_delete{
@@ -279,7 +293,7 @@
 	.patient_dashdoard_btns{
 		display: inline-block;
 		width: 100%;
-		margin: 8px 0px 0px;
+		margin: 20px 0px 0px;
 		padding: 0px 10px;
 	}
 	.view_all_btn{
@@ -297,11 +311,14 @@
 	}
 	.edit_delete{
 		.save{
-			background-color: $sunshade;
-			border: solid 1px $sunshade;
+			background-color: $iceberg;
+			border:0px;
+			border-bottom: solid 2px $sunshade;
 			margin-right: 15px;
-			color: $gray-dark;
-			
+			color: $btn-primary-color;
+			&:hover{
+				background-color: $sunshade;
+			}
 		}
 	}
 }
@@ -323,7 +340,7 @@
 				color: $gray-dark;
 				&.missedTHRP_legend{
 					&:after{
-						background-color: rgb(255, 38, 1);
+						background-color: #4e95c4;
 						border: $btn-default-bg;
 					}
 				}
@@ -335,7 +352,7 @@
 				}
 				&.frequency_legend{
 					&:after{
-						background-color: #7abd50;
+						background-color: #34978f;
 						border: $btn-default-bg;
 					}
 				}
@@ -442,7 +459,7 @@
 }
 .dashboard__manage-view--pagination{
 	&.pagination_notes{
-		margin: 20px 5px 15px !important;
+		margin: 0px 5px 15px !important;
 		display: inline-block;
 		float: right;
 

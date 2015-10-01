@@ -24,7 +24,7 @@
         "create-caregiver": "Yes",
         "hill-rom-id":  "Hill-Rom ID",
         "emr-id":   "EMR-ID",
-        "mrn-id": "MRN-ID",
+        "mrn-id": "MRN ID",
         "adherence": "Adherence",
         "title": {
                     "name": "Title",
@@ -59,6 +59,7 @@
         "transmission": "Transmission",
         "status": "Status",
         "clinic-name": "Clinic Name",
+        "hcp-name": "HCP Name",
         "phone-number": "Phone No",
         "mobile-number": "Mobile No.",
         "home-phone-number": "Home Phone No.",
@@ -87,9 +88,16 @@
             "expired": "Expired",
             "pending": "Pending"
         },
+        "hcp-dash-filter": {
+            "missed-therapy": "Missed Therapy",
+            "non-hmr-compliance": "Non HMR Compliance",
+            "sertting-deviations": "Sertting Deviations",
+            "no-events": "No Events"
+        },
         "delete": {
             "warning": "Are you sure you want to Deactivate the Patient?",
             "message": "If you deactivate the patient, you will no longer be able to view the information."
-        }
+        },
+        "no-patient-found": "No patient associated."
     }
 }

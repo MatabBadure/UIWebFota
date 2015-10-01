@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hillromvestApp')
-.directive('activeMenu', function($translate, $locale, tmhDynamicLocale) {
+.directive('activeMenu',['$translate', 'tmhDynamicLocale', function($translate, tmhDynamicLocale) {
   return {
     restrict: 'A',
     link: function (scope, element, attrs) {
@@ -19,36 +19,17 @@ angular.module('hillromvestApp')
       });
     }
   };
-})
-
-.directive('activeLink', function(location) {
-  return {
-    restrict: 'A',
-    link: function (scope, element, attrs) {
-      var clazz = attrs.activeLink;
-      var path = attrs.href;
-      path = path.substring(1); //hack because path does bot return including hashbang
-      scope.location = location;
-      scope.$watch('location.path()', function(newPath) {
-        if (path === newPath) {
-          element.addClass(clazz);
-        } else {
-          element.removeClass(clazz);
-        }
-      });
-    }
-  };
-});
-
+}]);
 
 angular.module('hillromvestApp')
-.directive('navigationBar', function (Auth, Principal, $state, Account, $location) {
+.directive('navigationBar', ['Auth', '$state', 'Account', '$location', '$stateParams', '$rootScope', function (Auth, $state, Account, $location,$stateParams, $rootScope) {
   return {
     templateUrl: 'scripts/components/navbar/navbar.html',
     restrict: 'E',
 
     controller: function ($scope, $state) {
-      $scope.userRole = localStorage.getItem('role');   
+      $scope.userRole = localStorage.getItem('role');
+      $scope.username = localStorage.getItem('userFirstName');
       $scope.isActive = function(tab) {
         var path = $location.path();
         if (path.indexOf(tab) !== -1) {
@@ -66,6 +47,7 @@ angular.module('hillromvestApp')
         })
         .catch(function() {
           $scope.isAuthenticated = false;
+          $scope.username = null;
           $state.go('login');
         });
       };
@@ -79,54 +61,57 @@ angular.module('hillromvestApp')
         });
       };
 
-      $scope.account = function(){
+      $scope.account = function(){ 
         if($scope.userRole === "ADMIN"){
           $state.go('adminProfile');
         }else if($scope.userRole === "PATIENT"){
-          $state.go("patientProfile");
+          $state.go("patientResetPassword");
+        } else if($scope.userRole === 'HCP'){
+          $state.go('hcpDashboardProfile');
         }
       };
 
       $scope.goToHomePage = function(){
-        if($scope.userRole === "ADMIN"){
+        if(!$scope.userRole){
+          $state.go("home");
+        }else if($scope.userRole === "ADMIN"){
           $state.go("patientUser");
         }else if($scope.userRole === "PATIENT"){
           $state.go("patientdashboard");
+        }else if($scope.userRole === "CLINIC_ADMIN" || $scope.userRole === "CLINIC ADMIN"){
+          $state.go("clinicadmindashboard");
+        }else if($scope.userRole === "HCP"){
+          $state.go("hcpdashboard");
         }
       };
 
-      $scope.goToPatientDashboard = function(){
-        $state.go("patientdashboard");
+      $scope.gotoPage = function(page){
+        $state.go(page);
       };
 
       $scope.goToCaregiverDashboard = function(){
         $state.go("caregiverDashboard");
-      }
+      };
+      $scope.goToPatientDashboard = function(value){
+        if(value){
+          $state.go(value, {"clinicId": $stateParams.clinicId});
+        }else{
+          $state.go("patientdashboard");
+        }
+      };
+      $scope.isFooter = function(){
+        var url = $location.path();
+        $rootScope.isFooter = false;
+        $rootScope.isFooter = (!$rootScope.isFooter && url.indexOf(footerConstants.contactus) !== -1) ? true: false;        
+        $rootScope.isFooter = (!$rootScope.isFooter) ? ((url.indexOf(footerConstants.privacyPolicy) !== -1) ? true: false) : $rootScope.isFooter;        
+        $rootScope.isFooter = (!$rootScope.isFooter) ? ((url.indexOf(footerConstants.termsOfUse) !== -1) ? true: false) : $rootScope.isFooter;        
+        $rootScope.isFooter = (!$rootScope.isFooter ) ? ((url.indexOf(footerConstants.privacyPractices) !== -1) ? true: false) : $rootScope.isFooter;        
+        $rootScope.isFooter = (!$rootScope.isFooter) ? (( url.indexOf(footerConstants.careSite) !== -1) ? true: false ) : $rootScope.isFooter;
+      };
+      $scope.isFooter();
     }
   };
-});
-
-angular.module('hillromvestApp')
-.directive('navbarPopover', function(Auth, $state, Account, $compile) {
-    return {
-        restrict: 'A',
-        template: "<span id='pop-over-link' class='cursor-pointer'><span class='icon-logged-in-user'></span><span class='user-name'>{{username}}<span class='icon-arrow-down'></span></span></span>" +
-                  "<span class='hide-popup' id='pop-over-content'><div id='account' ng-click='account()'><span class='hillrom-icon icon-user-account'></span><span>My Profile</span></div><div ng-click='logout()'><span class='hillrom-icon icon-logout'></span><span>Logout </span></div></span>",
-        link: function(scope, elements, attrs) {
-            $("#pop-over-link").popover({
-                'placement': 'bottom',
-                'trigger': 'click',
-                'html': true,
-                'content': function() {
-                    return $compile($("#pop-over-content").html())(scope);
-                }
-            });
-        },
-        controller: function ($scope) {
-          $scope.username = localStorage.getItem('userFirstName');
-        }
-    }
-});
+}]);
 
 angular.module('hillromvestApp')
 .directive('navigationBarPatient', function (Auth, Principal, $state, Account, $location) {
@@ -136,6 +121,7 @@ angular.module('hillromvestApp')
 
     controller: function ($scope, UserService) {
       $scope.notifications = 0;
+      $scope.username = localStorage.getItem('userFirstName');
       $scope.isActive = function(tab) {
         var path = $location.path();
         if (path.indexOf(tab) !== -1) {
@@ -189,3 +175,66 @@ angular.module('hillromvestApp')
     }
   };
 });
+
+angular.module('hillromvestApp')
+.directive('navigationBarHcp',['Auth', 'Principal', '$state', 'Account', '$location', function (Auth, Principal, $state, Account, $location) {
+  return {
+    templateUrl: 'scripts/components/navbar/navbarhcp.html',
+    restrict: 'E',
+
+    controller: function ($scope, UserService, $stateParams) {
+      $scope.username = localStorage.getItem('userFirstName');
+      $scope.notifications = 0;
+      $scope.isActive = function(tab) {
+        var path = $location.path();
+        if (path.indexOf(tab) !== -1) {
+          return true;
+        } else {
+          return false;
+        }
+      };
+
+      $scope.account = function(){
+        var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : $stateParams.clinicId;
+        $state.go("hcpUserProfile",{'clinicId': clinicId});
+      };
+
+      $scope.getNotifications = function(){
+        UserService.getPatientNotification(localStorage.getItem("patientID"), new Date().getTime()).then(function(response){                  
+          $scope.notifications = response.data;
+          if($scope.notifications.length < 2){
+            $scope.no_of_notifications = $scope.notifications.length;
+          }else{
+            $scope.no_of_notifications = 2;
+          }          
+        });
+      };
+    }
+  };
+}]);
+
+angular.module('hillromvestApp')
+.directive('navigationBarClinicadmin',['$state', '$location', function ($state, $location) {
+  return {
+    templateUrl: 'scripts/components/navbar/navbarclinicadmin.html',
+    restrict: 'E',
+
+    controller: function ($scope, UserService, $stateParams) {
+      $scope.username = localStorage.getItem('userFirstName');
+      $scope.notifications = 0;
+      $scope.isActive = function(tab) {
+        var path = $location.path();
+        if (path.indexOf(tab) !== -1) {
+          return true;
+        } else {
+          return false;
+        }
+      };
+
+      $scope.account = function(){
+        var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : $stateParams.clinicId;
+        $state.go("clinicadminUserProfile",{'clinicId': clinicId});
+      };
+    }
+  };
+}]);

@@ -1,5 +1,3 @@
-<!-- HCP DashBoard Content -->
-
 
 <div class="container hcp_wrapper">
 	<div class="col-md-16">
@@ -8,50 +6,50 @@
 				<div class="stats_chart_section">
 					<div class="stats_header">
 						<div class="pull-left">
-							<h4>Today's Statistics -</h4>
-							<span class="sub_txt">08/15/2015</span>
+							<h4 translate="doctor.dashboard.todayStatistics"></h4>
+							<span class="sub_txt">{{statistics.date}}</span>
 						</div>
 						<div class="pull-right">
-							<h4>Total Number of Patients -</h4>
-							<span class="sub_txt">100</span>
+							<h4 translate="doctor.dashboard.totalPatients"></h4>
+							<span class="sub_txt">{{statistics.totalPatientCount}}</span>
 						</div>
 					</div>
 					<div class="stats_chart_container">
-						<div class="col-3">
-							<div class="pie_chart"  easypiechart options="missedtherapy" percent="missedtherapyDays"></div>
+						<div class="col-3" ng-click="gotoPatients('missed_therapy')">
+							<div class="pie_chart"  easypiechart options="missedtherapy" percent="percentStatistics.patientsWithMissedTherapy"></div>
 							<div class="stats_chart_content missed">
-								<h4 class="percent" ng-bind="missedtherapyDays"></h4>
-								<span class="patients_txt">Patients</span>
-								<p class="descrip">Missed Therapy</p>
+								<h4 class="percent" ng-bind="statistics.patientsWithMissedTherapy"></h4>
+								<span class="patients_txt" translate="doctor.dashboard.patients"></span>
+								<p class="descrip" translate="doctor.dashboard.missedTherapy"></p>
 							</div>
 							<div class="chart_inner_icon icon-lungs"></div>
 						</div>
-						<div class="col-3">
-							<div class="pie_chart"  easypiechart options="hmr" percent="hmrRunRate"></div>
+						<div class="col-3" ng-click="gotoPatients('non_hmr_compliance')">
+							<div class="pie_chart"  easypiechart options="hmr" percent="percentStatistics.patientsWithHmrNonCompliance"></div>
 							<div class="stats_chart_content hmr">
-								<h4 class="percent"  ng-bind="hmrRunRate"></h4>
-								<span class="patients_txt">Patients</span>
-								<p class="descrip">HMR Non-Compliance</p>
+								<h4 class="percent"  ng-bind="statistics.patientsWithHmrNonCompliance"></h4>
+								<span class="patients_txt" translate="doctor.dashboard.patients"></span>
+								<p class="descrip" translate="doctor.dashboard.hmrNonCompliance"></p>
 							</div>
-							<div class="chart_inner_icon icon-notification-bell"></div>
+							<div class="chart_inner_icon icon-man-running"></div>
 						</div>
-						<div class="col-3">
-							<div class="pie_chart" easypiechart options="deviation" percent="deviationDays"></div>
+						<div class="col-3" ng-click="gotoPatients('setting_deviation')">
+							<div class="pie_chart" easypiechart options="deviation" percent="percentStatistics.patientsWithSettingDeviation"></div>
 							<div class="stats_chart_content deviation">
-								<h4 class="percent" ng-bind="deviationDays"></h4>
-								<span class="patients_txt">Patients</span>
-								<p class="descrip">Setting Deviation</p>
+								<h4 class="percent" ng-bind="statistics.patientsWithSettingDeviation"></h4>
+								<span class="patients_txt" translate="doctor.dashboard.patients"></span>
+								<p class="descrip" translate="doctor.dashboard.settingDeviation"></p>
 							</div>
 							<div class="chart_inner_icon icon-settings"></div>
 						</div>
-						<div class="col-3">
-							<div class="pie_chart"  easypiechart options="noevent" percent="noeventDays"></div>
+						<div class="col-3" ng-click="gotoPatients('noevents')">
+							<div class="pie_chart"  easypiechart options="noevent" percent="percentStatistics.patientsWithNoEventRecorded"></div>
 							<div class="stats_chart_content noevent">
-								<h4 class="percent" ng-bind="noeventDays"></h4>
-								<span class="patients_txt">Patients</span>
-								<p class="descrip">No Events Recorded</p>
+								<h4 class="percent" ng-bind="statistics.patientsWithNoEventRecorded">{{statistics.patientsWithNoEventRecorded}}</h4>
+								<span class="patients_txt" translate="doctor.dashboard.patients"></span>
+								<p class="descrip" translate="doctor.dashboard.noEventsRecorded"></p>
 							</div>
-							<div class="chart_inner_icon icon-lungs"></div>
+							<div class="chart_inner_icon icon-events"></div>
 						</div>
 					</div>
 				</div>
@@ -60,60 +58,50 @@
 	</div>
 	<div class="col-md-16">
 		<div class="bar_graph_header">
-			<div class="col-md-5 left_header_barchart">
+			<div class="col-md-5 col-sm-9 left_header_barchart">
 				<div class="row">
 					<ul class="nav nav-pills">
-						<li><a ng-class="{active: selectedGraph === 'HMR'}" href="" ng-click="showHmrGraph()">Cumulative Statistics</a></li>
-						<li><a href="" ng-class="{active: selectedGraph === 'COMPLIANCE'}" ng-click="showComplianceGraph()">Treatments Statistics</a></li>
+						<li><a ng-class="{active: selectedGraph === 'CUMULATIVE'}" href="" ng-click="showCumulativeGraph()" translate="doctor.dashboard.cumulativeStatistics"></a></li>
+						<li><a href="" ng-class="{active: selectedGraph === 'TREATMENT'}" ng-click="showTreatmentGraph()" translate="doctor.dashboard.treatmentStatistics"></a></li>
 					</ul>
 				</div>
 			</div>
-			<div class="col-md-11 right_header_barchart">
+			<div class="col-md-11 col-sm-7 right_header_barchart">
 				<ul class="nav nav-pills pull-right ">
-					<li role="presentation" class=""><a ng-class="{active: selectedDateOption === 'WEEK'}" href="" ng-click="weeklyChart()">Week</a></li>
-					<li role="presentation" class=""><a href="" ng-class="{active: selectedDateOption === 'MONTH'}" ng-click="monthlyChart()">Month</a></li>
-					<li role="presentation" class=""><a href="" ng-class="{active: selectedDateOption === 'YEAR'}" ng-click="yearlyChart()">Year</a></li>
+					<li role="presentation" class=""><a ng-class="{active: selectedDateOption === 'WEEK'}" href="" ng-click="weeklyChart()" translate="doctor.dashboard.week"></a></li>
+					<li role="presentation" class=""><a href="" ng-class="{active: selectedDateOption === 'MONTH'}" ng-click="monthlyChart()" translate="doctor.dashboard.month"></a></li>
+					<li role="presentation" class=""><a href="" ng-class="{active: selectedDateOption === 'YEAR'}" ng-click="yearlyChart()" translate="doctor.dashboard.year"></a></li>
 					<li role="presentation" class="" id="dp3"><a href="" date-range-picker class="date-picker" ng-model="dates" parentEl="#dp3" options="opts" ><span class="icon-calendar"></span></a></li>
 				</ul>
 			</div>
 		</div>
-		<!-- <div class="pull-right week_date_container">
-			<span ng-if="fromDate !== toDate"> 
-				<span class="date">{{fromDate}}</span> - <span class="date">{{toDate}}</span>
-			</span>
-			<span ng-if="fromDate === toDate" class="date">{{fromDate}}<span>
-		</div> -->	
 	</div>
+	<div class="pull-right week_date_container">
+		<span ng-if="fromDate !== toDate"> 
+			<span class="date">{{fromDate}}</span> - <span class="date">{{toDate}}</span>
+		</span>
+		<span ng-if="fromDate === toDate" class="date">{{fromDate}}<span>
+	</div> 
 	<div class="col-md-16" class="all_graph_wrapper">
-		<div class="row">
-			<div class="col-md-16">
+		<div class="row hcp_graph_container">
+			<div ng-if="cumulativeGraph" id="cumulativeGraph" class="complianceGraph col-md-16">
+					<svg> </svg>
+			</div>
+			<div ng-if="treatmentGraph" id="treatmentGraph" class="complianceGraph col-md-16">
 				<div class="pull-right wrapper_custom_check">
-					<form action="#">
+					<form action="#" ng-if="showTreatmentLegends">
 						<div class="custom_check_container">
-							<input id="missedTHRP" class="check" type="checkbox" name="missedTHRP" ng-disabled="pressureIsDisabled" ng-model="compliance.missedTHRP" ng-change="reCreateComplianceGraph()">
-							<label class="check_label missedTHRP_legend" for="missedTHRP">Missed Therapy</label>
+							<input id="treatmentPerDay" class="check" type="checkbox" name="treatmentPerDay" ng-model="treatment.treatmentPerDay" ng-change="reCreateTreatmentGraph('treatmentPerDay')">
+							<label class="check_label missedTHRP_legend" for="treatmentPerDay" translate="doctor.dashboard.missedTherapy">Average Treatments Per Day</label>
 						</div>	
 						<div class="custom_check_container">
-							<input id="non_comp" class="check" type="checkbox" name="non_comp" ng-disabled="pressureIsDisabled" ng-model="compliance.pressure" ng-change="reCreateComplianceGraph()">
-							<label class="check_label pressure_legend" for="non_comp">Non-Compliance</label>
-						</div>
-						<div class="custom_check_container">
-							<input id="deviation" class="check" type="checkbox" name="frequency" ng-disabled="frequencyIsDisabled" ng-model="compliance.frequency" ng-change="reCreateComplianceGraph()">
-							<label class="check_label frequency_legend" for="deviation" >Setting Deviation</label>
-						</div>
-						<div class="custom_check_container">
-							<input id="non_events" class="check" type="checkbox" name="duration" ng-disabled="durationIsDisabled" ng-model="compliance.duration" ng-change="reCreateComplianceGraph()">
-							<label class="check_label duration_legend" for="non_events">No Events</label>
+							<input id="treatmentLength" class="check" type="checkbox" name="treatmentLength" ng-model="treatment.treatmentLength" ng-change="reCreateTreatmentGraph('treatmentLength')">
+							<label class="check_label pressure_legend" for="treatmentLength">Average Length of Treatment</label>
 						</div>
 					</form>
-				</div>
+					</div>
+					<svg> </svg>
 			</div>
 		</div>
-		<div class="row hcp_graph_container">
-			<h1>Graph Will Come Here</h1>
-
-		</div>
 	</div>
-
-
 </div>

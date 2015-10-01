@@ -1,11 +1,16 @@
 <div class="container login">
   <div class="row auth--position">
+    <div class="visi_view_container">
+      <!-- <h1 class="login_portal_name">VisiView</h1>
+      <h3 class="login_portal_name_sub">LEALTH PORTAL</h3> -->
+    </div>
     <div class=" form__container__auth  col-md-16 col-lg-16">
-      <div class="col-md-6 col-lg-6 ">
+      <!-- <div class="col-md-6 col-lg-6 ">
         <img src="images/man.svg">
-      </div>
-      <div class=" col-md-10 col-lg-10 login__container__right-section">
-        <div class="auth-heading">Update Your Password </div>
+      </div> -->
+      <div class=" col-md-16 col-lg-16 login__container__right-section">
+        <div class="auth-heading">Set Password </div>
+        <div class="password_inst" translate="authenticate.instruction"></div>
         <div class="alert alert-danger login-has-error" ng-show="otherError">
           <p >Error occured!. Please try again</p>
         </div>
@@ -20,8 +25,8 @@
         </div>
         <form class="login-auth-form" ng-show="!success" name="form" role="form" novalidate ng-submit="authenticate($event)" show-validation>
           <div class="form-group">
-            <input type="password" class="form-control" validate-on-blur name="password" id="passwordBox"
-            ng-model="authenticate.password" ng-minlength=8 ng-maxlength=50 ng-keyup="passwordStrength()" ng-pattern="/^(?=^.{8,}$)(?=.*\d)(?=.*[!@#$%^&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/" required placeholder="{{'authenticate.placeholder.password' | translate}}">
+            <input type="password" class="form-control" validate-on-key-press name="password" id="passwordBox"
+            ng-model="authenticate.password" ng-minlength=8 ng-maxlength=50 ng-pattern="/^(?=^.{8,}$)(?=.*\d)(?=.*[!@#$%^&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/" required placeholder="{{'authenticate.placeholder.password' | translate}}">
             <div ng-show="(form.password.$showValidationMessage && form.password.$invalid) || submitted">
               <span class="login-has-error"
                 ng-show="form.password.$error.required || form.password.$error.minlength || form.password.$error.pattern">
@@ -32,11 +37,7 @@
                 {{'authenticate.password.maxlength' | translate }}
               </span>
             </div>
-            <div ng-show="form.password.$dirty" class="CommonWidth" id="passwordStrengthContainer">
-            </div>
-            <div class="CommonWidth">
-              <span id="status"></span>
-            </div>
+            
           </div>
           <div class="form-group">
             <input type="password" class="form-control" validate-on-blur name="confirmPassword"
@@ -57,7 +58,7 @@
             </div>
           </div>
           <div class="form-group margin-top">
-            <div class="auth-heading">security question</div>
+            <div class="auth-heading">set security question</div>
             <div class="auth-select">
               <div class="custom-dropdown">
                 <select class="form-control" validate-on-blur name="question" ng-model="authenticate.question" required ng-options="question.question for question in questions">
@@ -83,7 +84,7 @@
           </div>
           <div class="form-group">
             <input type="checkbox" name="tnc" ng-model="authenticate.tnc" required>
-            <span class="sec-quest">I agree to the <a href="">Terms and Conditions.</a></span>
+            <span class="sec-quest">I agree to the <a href="">Terms and Conditions</a></span>
             <div ng-show="(form.tnc.$dirty && form.tnc.$invalid) || submitted">
               <span class="login-has-error"
                 ng-show="form.tnc.$error.required">
@@ -91,7 +92,7 @@
               </span>
             </div>
           </div>
-          <button type="submit" class="myButton" ng-click="formSubmit()">Activate account</button>
+          <button type="submit" class="myButton_blue" ng-click="formSubmit()">Activate account</button>
         </form>
       </div>
     </div>

@@ -1,5 +1,6 @@
 {
     "doctor" : {
+        "myDashboard": "My Dashboard",
         "required-field":"* Required Fields",
         "home": {
             "title": "doctor",
@@ -9,9 +10,7 @@
             "manageLabel": "Manage HCPs",
             "updateLabel": "Update HCP"
         },
-        "delete": {
-            "question": "Are you sure you want to delete Doctor {{ id }}?"
-        },
+        
         "detail": {
             "title": "Doctor"
         },
@@ -33,6 +32,7 @@
         "found-text": "Found",
         "previous-text": "Previous",
         "next-text": "Next",
+        "date-of-birth": "Date of Birth",
         "title": {
                     "name": "Title",
                     "mr":   "Mr.",
@@ -85,9 +85,11 @@
         "hillRom-id": "Hill-Rom ID",
         "phoneNumber": "Phone number",
         "link-clinic": "Link Clinic",
+        "mrnid": "MRN ID",
         "delete": {
-            "warning": "Are you sure you want to Deactivate the Doctor?",
-            "message": "If you deactivate the doctor, you will no longer be able to view the information."
+            "question": "Are you sure you want to delete Doctor {{ id }}?",
+            "warning": "Are you sure you want to Deactivate the HCP?",
+            "message": "If you deactivate the HCP,&nbsp you will no longer be able to view the information."
         },
         "clinic-disassociate":{
             "warning": "Are you sure, you want to disassociate Clinic from HCP?",
@@ -118,6 +120,22 @@
             "parent": "Parent",
             "child": "Child",
             "satellite": "Satellite"
+        },
+        "dashboard":{
+            "missedTherapy": "Missed Therapy Days",
+            "hmrNonCompliance": "HMR Non-Adherence",
+            "settingDeviation": "Setting Deviation",
+            "noEventsRecorded": "No Events Recorded",
+            "todayStatistics": "Today's Statistics -",
+            "patients": "Patients",
+            "totalPatients":"Total Number of Patients -",
+            "cumulativeStatistics":"Cumulative Statistics",
+            "treatmentStatistics":"Treatment Statistics",
+            "nonCompliance": "Non-Compliance",
+            "noEvents":"No Events",
+            "week":"Week",
+            "month":"Month",
+            "year":"Year"
         }
     }
 }

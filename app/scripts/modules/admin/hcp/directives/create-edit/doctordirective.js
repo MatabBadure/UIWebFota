@@ -1,6 +1,6 @@
 'use strict';
 angular.module('hillromvestApp')
-  .directive('doctor', function(UserService, clinicService) {
+  .directive('doctor', function() {
     return {
       templateUrl: 'scripts/modules/admin/hcp/directives/create-edit/create.html',
       restrict: 'E',
@@ -9,7 +9,7 @@ angular.module('hillromvestApp')
         onSuccess: '&',
         doctorStatus: '=doctorStatus'
       },
-      controller: function ($scope, $timeout, notyService, $state, $stateParams, DoctorService) {
+      controller: ['$scope', '$timeout', 'notyService', '$state', '$stateParams', 'DoctorService', 'UserService', 'clinicService', function ($scope, $timeout, notyService, $state, $stateParams, DoctorService, UserService, clinicService) {
 
         $scope.open = function () {
           $scope.showModal = true;
@@ -182,6 +182,6 @@ angular.module('hillromvestApp')
           $scope.form.$setPristine();
           $state.go('hcpUser');
         }
-      }
+      }]
     };
   });

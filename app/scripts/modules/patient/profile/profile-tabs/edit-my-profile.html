@@ -1,5 +1,4 @@
-<navigation-bar-patient></navigation-bar-patient>
-<patient-profile-navbar></patient-profile-navbar> 
+ 
 <div class="dashboard dashboard--content padding-bottom-ls">
   <form name="form" ng-submit="updateProfile()" novalidate autocomplete="off">
     <div class="container dashboard__form">
@@ -73,7 +72,7 @@
               <span class="" translate="profile.mobile-no"></span>
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
-              <input class="" type="text" name="employeeID" ng-model="editPatientProfile.employeeID" ng-readonly="validateSuperAdmin()" mask="(999) 999-9999">
+              <input class="" type="text" name="employeeID" ng-model="editPatientProfile.mobilePhone" ng-readonly="validateSuperAdmin()" mask="(999)-999-9999">
             </div>
           </div>
         </div>
@@ -144,7 +143,7 @@
         </div>
         <div class="clr"></div>
       </div>
-      <div class="col-md-16 reset-padding margin-top">
+      <div class="col-md-16 reset-padding margin-top-xl">
         <div class="">
         <button type="submit" class="hillrom-btn btn-submit float-right" ng-click="formSubmit()" ng-show="!userStatus.isCreate" translate="profile.update-button-text" ></button>
           <button type="reset" ng-click="cancelEditProfile()" ng-show="!userStatus.isCreate" class="hillrom-btn btn-submit float-right" translate="profile.cancel-button-text"></button>

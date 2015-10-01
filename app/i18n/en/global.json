@@ -40,17 +40,26 @@
             },
             "language": "Language"
         },
+        "logo-text": {
+            "visi-view": "VisiView",
+            "tm-sup": "TM",
+            "health-portal": "Health Portal"
+        },
+        "my-dashboard": "My Profile",
+        "logout": "Logout",
         "tabs": {
             "manage-patients": "Patients",
             "manage-hcps": "HCPs",
             "manage-clinics": "Clinics",
             "manage-users": "Users",
             "notifications": "Notifications",
-            "dashboard": "Dashboard"
+            "dashboard": "Dashboard",
+            "patients": "Patients"
         },
         "form": {
             "username": "Login",
-            "username.placeholder": "enter your Hill-Rom ID or Email ID",
+            "username.placeholder": "Enter your Hill-Rom ID or Email ID",
+            "password.placeholder": "Password",
             "newpassword": "New password",
             "newpassword.placeholder": "New password",
             "confirmpassword": "New password confirmation",
@@ -192,38 +201,45 @@
         "protocol":{
             "treatmentPerDay": {
                 "required": "Protocol Treatment per Day Required",
-                "min": "Protocol Treatment per Day is invalid",
-                "max": "Protocol Treatment per Day is invalid"
+                "min": "Protocol Treatment per Day should be 0 to 9",
+                "max": "Protocol Treatment per Day should be 0 to 9",
+                "invalid": "Protocol Treatment per Day is invalid"
             },
             "minMinutesPerTreatment": {
                 "required":"Minimum Minutes per Treatment Required",
-                "min":"Minimum Minutes per Treatment Invalid",
-                "max":"Minimum Minutes per Treatment Invalid"
+                "min":"Minimum Minutes per Treatment should be 0 to 99",
+                "max":"Minimum Minutes per Treatment should be 0 to 99",
+                "invalid": "Minimum Minutes per Treatment is invalid"
             },
             "maxMinutesPerTreatment": {
                 "required": "Maximum Minutes per Treatment Required",
-                "min":"Maximum Minutes per Treatment Invalid",
-                "max": "Maximum Minutes per Treatment Invalid"
+                "min":"Maximum Minutes per Treatment should be 0 to 99",
+                "max": "Maximum Minutes per Treatment should be 0 to 99",
+                "invalid": "Maximum Minutes per Treatment is invalid"
             },
             "minFrequency": {
                 "required": "Minimum Frequency Required",
-                "min": "Minimum Frequency Should be between 5 to 20",
-                "max": "Minimum Frequency Should be between 5 to 20"
+                "min": "Minimum Frequency should be between 5 to 20",
+                "max": "Minimum Frequency should be between 5 to 20",
+                "invalid": "Minimum Frequency is invalid"
             },
             "maxFrequency": {
                 "required": "Maximum Frequency Required",
-                "min": "Maximum Frequency Invalid",
-                "max": "Maximum Frequency Invalid"
+                "min": "Maximum Frequency should be between 5 to 20",
+                "max": "Maximum Frequency should be between 5 to 20",
+                "invalid": "Maximum Frequency is invalid"
             },
             "minPressure": {
                 "required": "Minimum Pressure Required",
                 "min": "Minimum Pressure should be between 1 to 10",
-                "max": "Minimum Pressure should be between 1 to 10"
+                "max": "Minimum Pressure should be between 1 to 10",
+                "invalid": "Minimum Pressure is invalid"
             },
             "maxPressure": {
                 "required": "Maximum Pressure Required",
-                "min": "Maximum Pressure Invalid",
-                "max": "Maximum Pressure Invalid"
+                "min": "Maximum Pressure should be between 1 to 10",
+                "max": "Maximum Pressure should be between 1 to 10",
+                "invalid": "Maximum Pressure is invalid"
             }
         },
         "npiNumber":{
@@ -233,10 +249,12 @@
             "required": "Credential is required."
         },
         "parentClinicName": {
-            "required": "Parent Clinic Name is required."
+            "required": "Parent Clinic is required.",
+            "match": "Parent Clinic doesn't exist."
         },
         "clinicName": {
-            "required": "Clinic Name is required."
+            "required": "Clinic Name is required.",
+            "maxlength": "Clinic Name cannot be longer than 25 characters."
         },
         "role":{
             "required": "Role is required."
@@ -274,5 +292,25 @@
             "required": "Security question is required."
         }
     },
-    "footer": "Copyright @ Hill-Rom 2015. All Rights Reserved"
+    "footer": {
+        "copyright":"Copyright @ Hill-Rom 2015. All Rights Reserved",
+        "enhancingoutcomes":"Enhancing outcomes for patients and their caregivers",
+        "contactus":"Contact Us",
+        "privacypolicy":"Privacy Policy",
+        "termsofuse":"Terms of Use",
+        "hippanotice": "HIPPA Notice of Privacy Practices",
+        "hillromrespiratorycare": "Hill-Rom Respiratory Care Site"
+    },
+    "search-filter" : {
+        "active" : "Active", 
+        "inactive" : "InActive", "no-event" : "No Events",
+        "setting-deviation" : "Setting Deviation", 
+        "hmr-non-compliant" : "HMR Non Compliant", 
+        "missed-therapy" :"Missed Therapy"
+    },
+
+    "user-not-found" : "No user associated.",
+    "navbar": {
+        "my-dashboard": "My Dashboard"
+    }
 }

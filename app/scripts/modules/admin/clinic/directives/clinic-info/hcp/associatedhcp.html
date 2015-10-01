@@ -2,8 +2,8 @@
 <div class="container admin-user">
   <div class="col-md-16 margin-top reset-padding">
    <div class="user-gen-details">
-   <span class="user-gen-details--name">{{clinic.name}}</span>
-     <span class="user-gen-details--hr-id">{{clinic.hillromId}}</span>
+   <span class="user-gen-details--name">{{::clinic.name}}</span>
+     <span class="user-gen-details--hr-id">{{::clinic.hillromId}}</span>
    </div>
  </div>
 </div>
@@ -35,35 +35,37 @@
         <div class="clr"></div>
       </div>
 
-      <div class="dashboard__manage-view--list assoc" ng-repeat="hcp in associatedHcps">
-          <div class="col-md-3 reset-padding centered">
-            <span class="main-prim-info">{{hcp.lastName}} {{hcp.firstName}}</span>
-          </div>
-          <div class="col-md-2 reset-padding centered">
-            <span class="impo-highlight">{{hcp.credentials}}</span>
-          </div>
-          <div class="col-md-2 reset-padding centered">
-            <span class="short-info">{{hcp.npiNumber}}</span>
-          </div>
+      <div class="dashboard__manage-view--list assoc" ng-repeat="hcp in associatedHcps" readonly="true" ng-class="{'inactive': hcp.deleted}">
+          <span>
+            <div class="col-md-3 centered">
+              <span class="main-prim-info">{{::hcp.lastName}} {{::hcp.firstName}}</span>
+            </div>
+            <div class="col-md-2 centered">
+              <span class="impo-highlight">{{::hcp.credentials}}</span>
+            </div>
+            <div class="col-md-2 centered">
+              <span class="short-info">{{::hcp.npiNumber}}</span>
+            </div>
 
-          <div class="col-md-3 reset-padding centered">
-            <span class="short-info" ng-repeat ="clinic in doctor.clinics">{{hcp.name}}</span>
-          </div>
+            <div class="col-md-3 centered">
+              <span class="short-info">{{::clinic.name}}</span>
+            </div>
 
-          <div class="col-md-2 reset-padding centered">
-            <span class="short-info">{{hcp.city}}</span>
-          </div>
+            <div class="col-md-2 centered">
+              <span class="short-info">{{::hcp.city}}</span>
+            </div>
 
-          <div class="col-md-2 reset-padding centered">
-            <span class="short-info">{{hcp.state}}</span>
-          </div>
+            <div class="col-md-2 centered">
+              <span class="short-info">{{::hcp.state}}</span>
+            </div>
 
-          <div class="col-md-1 reset-padding centered">
-            <span class="short-info active" ng-if="!hcp.deleted" translate="clinic.status-type.active"></span>
-            <span class="short-info inactive" ng-if="hcp.deleted" translate="clinic.status-type.inactive"></span>
-          </div>
-          <div class="col-md-1 reset-padding-left centered text-right" >
-            <span class="icon-delete-icon" ng-click="openHcpDeactivateModal(hcp.id)"></span>
+            <div class="col-md-1 centered">
+              <span class="short-info active" ng-if="!hcp.deleted" translate="clinic.status-type.active"></span>
+              <span class="short-info inactive" ng-if="hcp.deleted" translate="clinic.status-type.inactive"></span>
+            </div>
+          </span>
+          <div class="col-md-1-left centered text-right" >
+            <span class="icon-delete-icon" ng-click="hcp.deleted || openHcpDeactivateModal(hcp.id);"></span>
           </div>
 
           <div class="clr"></div>

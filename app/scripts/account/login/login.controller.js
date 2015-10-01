@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hillromvestApp')
-  .controller('LoginController', function($scope, $state, $timeout, Auth, vcRecaptchaService, globalConfig, $rootScope) {
+  .controller('LoginController',['$scope', '$state', '$timeout', 'Auth', 'vcRecaptchaService', 'globalConfig', '$rootScope', 'loginConstants', 'Principal', function($scope, $state, $timeout, Auth, vcRecaptchaService, globalConfig, $rootScope, loginConstants,Principal) {
     $scope.showLogin = true;
     $scope.isEmailExist = true;
     $scope.isFirstLogin = false;
@@ -31,9 +31,37 @@ angular.module('hillromvestApp')
       $scope.submitted = true;
     };
 
+    $scope.clearLastLogin = function(){
+      Auth.logout();
+      localStorage.clear();
+      $scope.isAuthenticated = false;
+      $scope.username = null;
+      $scope.password = null;
+      $scope.isLoaded = true;
+    };
+
+    $scope.navigateUser = function(){
+      if(Principal.isAuthenticated()){
+        $scope.userRole = localStorage.getItem('role');
+        if(!$scope.userRole){
+          $scope.clearLastLogin();
+          $state.go("home");
+        }else if($scope.userRole === "ADMIN"){
+          $state.go("patientUser");
+        }else if($scope.userRole === "PATIENT"){
+          $state.go("patientdashboard");
+        }else if($scope.userRole === "CLINIC_ADMIN" || $scope.userRole === "CLINIC ADMIN"){
+          $state.go("clinicadmindashboard");
+        }else if($scope.userRole === "HCP"){
+          $state.go("hcpdashboard");
+        }
+      }else{
+        $scope.clearLastLogin();
+      }
+    }
+
     $scope.init = function() {
-      //Todo : needs to move into Utility Service
-      localStorage.removeItem('token');
+      $scope.navigateUser();      
     };
 
     Auth.getSecurityQuestions().then(function(response) {
@@ -48,28 +76,36 @@ angular.module('hillromvestApp')
         username: $scope.username,
         password: $scope.password,
         captcha: $scope.user.captcha
-      }).then(function(data) {
-        if (data.status === 200) {
+      }).then(function(response) {
+        if (response.status === 200) {
           localStorage.removeItem('loginCount');
-          localStorage.setItem('userFirstName', data.data.user.firstName);
-          localStorage.setItem('role', data.data.user.authorities[0].name);
-          localStorage.setItem('userEmail', data.data.user.email);
-          $rootScope.userRole = localStorage.getItem('role');           
-          if(data.data.user.authorities[0].name === 'PATIENT'){
-            localStorage.setItem('patientID', data.data.user.id);
+          localStorage.setItem('userFirstName', response.data.user.firstName);
+          localStorage.setItem('role', response.data.user.authorities[0].name);
+          localStorage.setItem('userEmail', response.data.user.email);
+          $rootScope.isFooter = false;
+          $rootScope.userRole = localStorage.getItem('role');
+          $rootScope.username = localStorage.getItem('userFirstName');
+          if(response.data.user.authorities[0].name === loginConstants.role.patient){
+            localStorage.setItem('patientID', response.data.user.id);
             $state.go('patientdashboard');
-          }else if(data.data.user.authorities[0].name === 'CARE_GIVER'){
-            localStorage.setItem('userId', data.data.user.id);
+          } else if(response.data.user.authorities[0].name === loginConstants.role.hcp){
+            localStorage.setItem('userId', response.data.user.id);
+            $state.go('hcpdashboard');
+          } else if(response.data.user.authorities[0].name === 'CARE_GIVER'){
+            localStorage.setItem('userId', response.data.user.id);
             $state.go('caregiverDashboard');
-          } else {
-            localStorage.setItem('userId', data.data.user.id);
+          } else if(response.data.user.authorities[0].name === 'CLINIC_ADMIN'){
+            localStorage.setItem('userId', response.data.user.id);
+            $state.go('clinicadmindashboard');
+          } else{
+            localStorage.setItem('userId', response.data.user.id);
             $state.go('patientUser');
           }
         }
-      }).catch(function(data) {
-        if (data.status === 401) {
-          if (!data.data.APP_CODE) {
-            $scope.message = data.data.Error;
+      }).catch(function(response) {
+        if (response.status === 401) {
+          if (!response.data.APP_CODE) {
+            $scope.message = response.data.Error;
             $scope.authenticationError = true;
             var loginCount = parseInt(localStorage.getItem('loginCount')) || 0;
             localStorage.setItem('loginCount', loginCount + 1);
@@ -77,14 +113,14 @@ angular.module('hillromvestApp')
               vcRecaptchaService.reload();
               $scope.showCaptcha = true;
             }
-          } else if (data.data.APP_CODE === 'EMAIL_PASSWORD_RESET') {
-            localStorage.setItem('token', data.data.token);
+          } else if (response.data.APP_CODE === 'EMAIL_PASSWORD_RESET') {
+            localStorage.setItem('token', response.data.token);
             $scope.message = '';
             $scope.isFirstLogin = true;
             $scope.isEmailExist = false;
             $scope.showLogin = false;
-          } else if (data.data.APP_CODE === 'PASSWORD_RESET') {
-            localStorage.setItem('token', data.data.token);
+          } else if (response.data.APP_CODE === 'PASSWORD_RESET') {
+            localStorage.setItem('token', response.data.token);
             $scope.isFirstLogin = true;
             $scope.message = '';
             $scope.showLogin = false;
@@ -246,4 +282,4 @@ angular.module('hillromvestApp')
       return false;
     };
     $scope.init();
-  });
+  }]);

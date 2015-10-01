@@ -1,8 +1,16 @@
 
+<div class="container admin-user">
+	<div class="col-md-16 margin-top reset-padding">
+		<div class="user-gen-details">
+			<span class="user-gen-details--name">{{slectedPatient.firstName}} {{slectedPatient.lastName}}</span>
+			<span class="user-gen-details--hr-id">{{slectedPatient.hillromId}}</span>
+		</div>
+	</div>
+</div>
 		<div class="container patient_wrapper">
 			<div class="col-md-16">
 				<div class="row">
-					<div class="col-md-12">
+					<div class="col-md-12 col-sm-16">
 						<div class="stats_chart_section">
 							<div class="stats_header"><h4 translate="graph.statistics"></h4></div>
 							<div class="stats_chart_container">
@@ -33,7 +41,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-md-4">
+					<div class="col-md-4 col-sm-16 dashboard_noti_mobile" ng-if="role === 'PATIENT'">	
 						<div class="dashboard_noti_section">
 							<div class="header_noti"><h4 translate="graph.notification"></h4></div>
 							<div class="notification_container" ng-show="patientNotifications.length <= 0">
@@ -58,7 +66,7 @@
 			</div>
 			<div class="col-md-16">
 				<div class="bar_graph_header">
-					<div class="col-md-5 left_header_barchart">
+					<div class="col-md-5 col-sm-7 left_header_barchart">
 						<div class="row">
 							<ul class="nav nav-pills">
 							<li><a ng-class="{active: selectedGraph === 'HMR'}" href="" ng-click="showHmrGraph()" translate="graph.hmr-data"></a></li>
@@ -66,7 +74,7 @@
 						</ul>
 						</div>
 					</div>
-					<div class="col-md-11 right_header_barchart">
+					<div class="col-md-11 col-sm-9 right_header_barchart">
 						<ul class="nav nav-pills pull-right ">
 							<li role="presentation" class=""><a href="" ng-class="{active: selectedDateOption === 'DAY'}" ng-hide="complianceGraph" ng-click="dayChart()" translate="graph.day"></a></li>
 							<li role="presentation" class=""><a ng-class="{active: selectedDateOption === 'WEEK'}" href="" ng-click="weeklyChart()">Week</a></li>
@@ -84,15 +92,18 @@
 				</div>	
 			</div>
 		<div class="col-md-16" class="all_graph_wrapper">
+			<div class="graph_nodata" ng-show="noDataAvailable">
+					<span class="noData_text"> No Data Available!</span>
+			</div>
 			<div ng-if="hmrGraph" class="dashboard_line_graph">
 				<div ng-if="hmrLineGraph">
-				<div id="hmrLineGraph" class="complianceGraph col-md-16">
-					<svg> </svg>
-				</div>
+					<div id="hmrLineGraph" class="complianceGraph col-md-16">
+						<svg ng-show="!noDataAvailable"> </svg>
+					</div>
 				</div>
 				<div ng-if="hmrBarGraph">
 					<div id="hmrBarGraph" class="complianceGraph col-md-16">
-						<svg> </svg>
+						<svg ng-show="!noDataAvailable"> </svg>
 					</div>
 				</div>
 			</div>
@@ -118,7 +129,7 @@
 					</div>
 				</div>
 				<div id="complianceGraph" class="complianceGraph col-md-16">
-					<svg> </svg>
+					<svg ng-show="!noDataAvailable"> </svg>
 				</div>
 			</div>
 		</div>
@@ -152,30 +163,30 @@
 	<div class="col-md-16 hide_content" id="add_note_container">
 		<div class="add_note_container">
 			<div class="note_header">
-				<div class="col-md-14 note_header_left">
+				<div class="col-md-14 col-sm-12 note_header_left">
 					<span class="note" translate="graph.note"></span>
 					<span class="can_do" translate="graph.can-do" ng-show="role === 'PATIENT'"></span>
 				</div>
-				<div class="col-md-2 note_header_right"><a href="" class="pull-right cross_icon" ng-click="hideNoteContainer();">X</a></div>
+				<div class="col-md-2 col-sm-4 note_header_right"><a href="" class="pull-right cross_icon" ng-click="hideNoteContainer();">X</a></div>
 			</div>
 			<div class="notes_content" ng-repeat="note in notes track by $index" ng-show="note.note.length > 0 && !note.deleted">
 				<div class="col-md-16 notes_row">
 					<div class="notes_row_wrapper">
-						<div class="col-md-2 date_col view_content show_content" id="createdon_{{note.id}}"><span ng-bind="note.createdOn"></span></div>
-						<div class="col-md-11 description view_content show_content" id="viewnote_{{note.id}}" ng-bind="note.note"></div>
+						<div class="col-md-2 col-sm-4 date_col view_content show_content" id="createdon_{{note.id}}"><span ng-bind="note.createdOn"></span></div>
+						<div class="col-md-11 col-sm-8 description view_content show_content" id="viewnote_{{note.id}}" ng-bind="note.note"></div>
 						<form ng-submit="updateNote(note.id, note.createdOn);">
 						<div id="editform_{{note.id}}" class="col-md-16 edit_content hide_content" ng-show="role === 'PATIENT'" >
-							<div class="col-md-2">
+							<div class="col-md-2 col-sm-3">
 								<span ng-bind="note.createdOn"></span>
 							</div>
-							<div class="col-md-11 description">
+							<div class="col-md-9 col-sm-6 description">
 								<div class="form-group">
 									<textarea id="editedNoteText_{{note.id}}" value="{{note.note}}" maxlength="300"  class="form-control custom_textarea" rows="1"></textarea> 
 									<span class="has-error" ng-show="noteError" ng-bind="noteError" id="noteError_{{note.id}}"></span>
 								</div>
 							</div>							
 							
-							<div class="col-md-3 edit_delete">
+							<div class="col-md-5 col-sm-7 edit_delete">
 								<div class="pull-right">
 									<input type="button"  value="Cancel" ng-click="cancelEditNote(note.id);" class="hillrom-btn btn-submit float-right" />	
 									<input type="submit" id="submit" value="Update" class="hillrom-btn btn-submit float-right" />	 									
@@ -183,10 +194,10 @@
 							</div>
 						</div> 				
 						</form>
-						<div class="col-md-3 edit_delete" ng-show="role === 'PATIENT'">
+						<div class="col-md-3 col-sm-4 edit_delete" ng-show="role === 'PATIENT'">
 							<div class="pull-right view_note_act view_content show_content note_delete_edit" id="viewnoteact_{{note.id}}">
 								<span class="edit icon glyphicon glyphicon-pencil" styel="cursor:pointer;" ng-click="openEditNote(note.id, note.note);"></span>
-								<span class="delete icon glyphicon glyphicon-trash" styel="cursor:pointer;" ng-click="deleteNote(note.id);" ></span>
+								<span class="delete icon icon-delete-icon" styel="cursor:pointer;" ng-click="deleteNote(note.id);" ></span>
 
 							</div>
 						</div>
@@ -200,11 +211,11 @@
 
    <div class="col-md-16 note_edit_container hide_content" id="note_edit_container" ng-show="role === 'PATIENT'">
 	<form name="form" ng-submit="createNote();">
-		<div class="col-md-2 date_col">
-			<input class="date_input"  data-provide="datepicker"  data-date-format="yyyy-mm-dd"  bootstrap-datepicker data-date-end-date="0d"  id="edit_note_date" ng-model="edit_date" placeholder="Date"/></div>
-			<div class="col-md-12 description">
+		<div class="col-md-2 col-sm-4 date_col">
+			<input class="date_input"  data-provide="datepicker"  data-date-format="yyyy-mm-dd"  bootstrap-datepicker data-date-end-date="0d"  id="edit_note_date" ng-model="textNote.edit_date" placeholder="Date"/></div>
+			<div class="col-md-11 col-sm-8 description">
 				<div class="form-group">
-					<textarea class="form-control custom_textarea" rows="1" id="comment" ng-model="textNote" maxlength="300"></textarea>
+					<textarea class="form-control custom_textarea" rows="1" id="comment" ng-model="textNote.text" maxlength="300"></textarea>
 				</div>
 				<div>
 					<span class="has-error" ng-if="noteTextError">
@@ -212,7 +223,7 @@
 					</span>
 				</div>
 			</div>
-			<div class="col-md-2 edit_delete">
+			<div class="col-md-3 edit_delete">
 				<div class="pull-right">
 					<span class="float-right view_all_btn" ng-click="cancelAddNote();">X</span>
 					<button class="hillrom-btn btn-submit float-right save" translate="graph.save"></button>

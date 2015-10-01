@@ -12,30 +12,24 @@
   <div class="container dashboard__manage-view margin-top-xl">
     <div class="dashboard__manage-view--search">
       <div class="fuid-search-box reset-padding-right">
-        <input type="text" class="form-control" id="searchListParam" name="userName" ng-model="searchItem" autocomplete="off" placeholder="{{'clinic.placeholder.search' | translate}}">
+        <input type="text" class="form-control" id="searchListParam" name="userName" ng-model="searAssociatedPatient" autocomplete="off" placeholder="{{'clinic.placeholder.search' | translate}}">
         <span class="search-icon hillrom-icon icon-search-icon"></span>
-      </div>
-      <div class="fixed-filter-box reset-padding-left">
-        <div class="search-dropdown">
-          <select name="search" ng-model="sortOption" ng-change="searchDoctors()">
-            <option value="" selected translate="clinic.filter.all">Newly Created</option>
-              <option value="email" translate="clinic.filter.active">Email</option>
-              <option value="firstName" translate="clinic.filter.inactive">First Name</option>
-              <option value="lastName" translate="clinic.filter.expired">Last Name</option>
-          </select>
-        </div>
       </div>
     </div>
 
+    <div class="col-md-16">
+      <ng-include src="'scripts/components/navbar/searchfilter.html'"></ng-include>
+    </div>
+    
     <div class="dashboard__manage-view--header">
-      <div class="col-md-2 header--type">
+      <div class="col-md-3 header--type">
         <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="clinic.patient-name">Patient Name</span>
       </div>
       <div class="col-md-2 header--type">
-        <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="clinic.hillRom-id">Hill-Rom ID</span>
+        <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="clinic.mrn-id">MRN ID</span>
       </div>
-      <div class="col-md-3 header--type">
-        <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="clinic.email">Email</span>
+      <div class="col-md-2 header--type">
+        <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="clinic.date-of-birth">DOB</span>
       </div>
       <div class="col-md-2 header--type">
         <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="clinic.city-state">City/State</span>
@@ -49,48 +43,51 @@
       <div class="col-md-1 header--type">
         <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="clinic.status">Status</span>
       </div>
-      <div class="col-md-1 header--type">
+      <div class="col-md-1 header--type text-centered">
         <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="clinic.adherence">Adherence</span>
       </div>
+      
       <div class="clr"></div>
     </div>
 
-    <div class="dashboard__manage-view--list  assoc" ng-repeat="associatedPatient in associatedPatients">
-      <div class="col-md-2 reset-padding">
+    <div class="dashboard__manage-view--list assoc" ng-repeat="associatedPatient in associatedPatients" readonly="true" ng-class="{'inactive': associatedPatient.patient.isDeleted}">
+     <span>
+      <div class="col-md-3">
         <span class="main-prim-info">{{associatedPatient.patient.lastName}} {{associatedPatient.patient.firstName}}</span>
-        <span class="main-secon-info">{{associatedPatient.patient.dob}}</span>
+        <span class="main-secon-info">{{associatedPatient.patient.email}}</span>
       </div>
-      <div class="col-md-2 reset-padding centered">
-        <span class="impo-highlight">{{associatedPatient.patient.hillromId}}</span>
+      <div class="col-md-2 centered">
+        <span class="impo-highlight">{{associatedPatient.patient.mrnId}}</span>
       </div>
-      <div class="col-md-3 reset-padding centered">
-        <span class="short-info">{{associatedPatient.patient.email}}</span>
+      <div class="col-md-2 centered">
+        <span class="short-info">{{associatedPatient.patient.dob}}</span>
       </div>
 
-      <div class="col-md-2 reset-padding centered">
+      <div class="col-md-2 centered">
         <span class="short-info">{{associatedPatient.patient.city}}</span>
         <span ng-if="associatedPatient.patient.state && associatedPatientpatient.city">,</span>
         <span class="short-info">{{associatedPatient.patient.state}}</span>
       </div>
 
-      <div class="col-md-2 reset-padding centered">
+      <div class="col-md-2 centered">
         <span class="short-info">{{associatedPatient.patient.transmission}}</span>
       </div>
 
-      <div class="col-md-2 reset-padding centered">
+      <div class="col-md-2 centered">
         <span class="short-info">{{clinic.name}}</span>
       </div>
 
-      <div class="col-md-1 reset-padding centered">
-          <span class="short-info active" ng-if="!associatedPatient.patient.deleted" translate="clinic.status-type.active"></span>
-          <span class="short-info inactive" ng-if="associatedPatient.patient.deleted" translate="clinic.status-type.inactive"></span>
+      <div class="col-md-1 centered">
+          <span class="short-info active" ng-if="!associatedPatient.patient.isDeleted" translate="clinic.status-type.active"></span>
+          <span class="short-info inactive" ng-if="associatedPatient.patient.isDeleted" translate="clinic.status-type.inactive"></span>
       </div>
 
-      <div class="col-md-1 reset-padding-left centered">
+      <div class="col-md-1 text-centered">
         <span class="short-info">{{associatedPatient.patient.adherence}}</span>
       </div>
+      </span>
       <div class="col-md-1 reset-padding-left centered text-right" >
-        <span class="icon-delete-icon" ng-click="openPatientDeactivateModal(associatedPatient.patient.id)"></span>
+        <span class="icon-delete-icon" ng-click="associatedPatient.patient.isDeleted || openPatientDeactivateModal(associatedPatient.patient.id);"></span>
       </div>
       <div class="clr"></div>
     </div>
@@ -104,7 +101,7 @@
 <div class="container admin-user">
   <div class="col-md-16 reset-padding">
     <div class="col-md-8 clinic-link">
-      <input class="form-control" type="text" ng-model="searchPatient" typeahead="patient as patient.lastName + ' ' + patient.firstName for patient in patients | filter:$viewValue" typeahead-on-select="selectPatient($item)" placeholder="{{'clinic.placeholder.patient-search' | translate}}" ng-show="isAssociatePatient">
+      <input class="form-control" type="text" ng-model="searchPatient" typeahead="patient as patient.lastName + ' ' + patient.firstName for patient in nonAssociatedPatients | filter:$viewValue" typeahead-on-select="selectPatient($item)" placeholder="{{'clinic.placeholder.patient-search' | translate}}" ng-show="isAssociatePatient">
 
     </div>
 
@@ -124,8 +121,8 @@
       <div class="modal__body">
          <div class="modal--message" translate="clinic.deletePatient.message"></div>
          <div class="fropile_update_btn_group row modal--custom-btn">
-          <buton class="hillrom-btn btn-submit float-right" ng-click="disassociatePatient(deletePatientId)">Yes</buton>
           <buton class="cancel hillrom-btn btn-submit float-right" data-dismiss="modal" ng-click="closePatientDeactivateModal()">No</buton>
+          <buton class="hillrom-btn btn-submit float-right" ng-click="disassociatePatient(deletePatientId)">Yes</buton>
          </div>
       </div>
       <footer class="modal__footer">

@@ -1,3 +1,4 @@
+
 <div ng-if="role === 'ADMIN' || role === 'PATIENT'">
   <navigation-bar-patient></navigation-bar-patient>
   <patient-navbar></patient-navbar>
@@ -8,137 +9,120 @@
 </div>
 <!-- starting clinic -->
 <div class="container admin-user">
-  <div class="col-md-16 col-sm-16 content-header">
-    <span class="content-header--title" >Clinics</span>
-  </div>
-  <div class="col-md-16 col-sm-16 content-list"> 
-    <div class="col-md-3 col-sm-3 content-list__detail">
-      <span class="content-list__detail--name" translate="clinic.name">Name</span>        
+<div class="col-md-16 col-sm-16 admin-views">
+    <span class="admin-views--title" translate="patient.clinic-title"></span>
+</div>
+<div class="dashboard dashboard--content">
+    <div class="dashboard__manage-view margin-top">
+      <div class="dashboard__manage-view--header">
+          <div class="col-md-3 col-sm-3 header--type">
+            <span translate="patient.clinic-caption.clinic-name"></span>
+          </div>
+          <div class="col-md-1 col-sm-2 header--type">
+            <span translate="patient.clinic-caption.type"></span>
+          </div>
+          <div class="col-md-3 col-sm-2 header--type">
+            <span translate="patient.clinic-caption.address"></span>
+          </div>
+          <div class="col-md-2 col-sm-2 header--type">
+            <span translate="patient.clinic-caption.city"></span>
+          </div>
+          <div class="col-md-2 col-sm-2 header--type">
+            <span translate="patient.clinic-caption.state"></span>
+          </div>
+          <div class="col-md-3 col-sm-3 header--type">
+            <span translate="patient.clinic-caption.phone-number"></span>
+          </div>
+          <div class="col-md-2 col-sm-2 header--type">
+            <span translate="patient.clinic-caption.hr-id"></span>
+          </div>
+          <div class="clr"></div>
+        </div>
     </div>
-    <div class="col-md-2 col-sm-2 content-list__detail">
-      <span class="content-list__detail--name" translate="clinic.hillromid">Hillrom ID</span>        
+</div>
+<div class="col-md-16 col-sm-16 clinic-list" ng-repeat="clinic in clinics" ng-class="{'inactive': clinic.deleted}">
+    <div class="col-md-3 col-sm-3 clinic-list__detail">
+      <span class="clinic-list__detail--name" ng-bind="clinic.name"></span>
     </div>
-    <div class="col-md-1 col-sm-1 content-list__detail">
-      <span class="content-list__detail--name" translate="clinic.type">Type</span>        
+    <div class="col-md-1 col-sm-2 clinic-list__phone">
+      <span class="clinic-list__phone--number" ng-bind="clinic.parent ? 'Parent' : 'Satellite'"></span>
     </div>
-
-    <div class="col-md-2 col-sm-2 content-list__detail">
-      <span class="content-list__detail--name" translate="clinic.phoneNumber">Phone Number</span>        
-    </div>   
-    <div class="col-md-3 col-sm-3 content-list__detail">
-      <span class="content-list__detail--name" translate="clinic.address">Address</span>        
+    <div class="col-md-3 col-sm-2 clinic-list__address">
+      <span class="clinic-list__address--primary" ng-bind="clinic.address"></span>
     </div>
-    <div class="col-md-2 col-sm-2 content-list__detail">
-      <span class="content-list__detail--name" translate="clinic.city">City</span>        
+    <div class="col-md-2 col-sm-2 clinic-list__phone">
+      <span class="clinic-list__phone--number" ng-bind="clinic.city"></span>
     </div>
-    <div class="col-md-2 col-sm-2 content-list__detail">
-      <span class="content-list__detail--name" translate="clinic.state">State</span>
+    <div class="col-md-2 col-sm-2 clinic-list__phone">
+      <span class="clinic-list__phone--number" ng-bind="clinic.state"></span>
     </div>
-
-    <div class="col-md-1 col-sm-1 content-list__detail">
-      <span class="content-list__detail--name" translate="clinic.status">Status</span>
+    <div class="col-md-3 col-sm-3 clinic-list__phone">
+      <span class="clinic-list__phone--number" ng-bind="clinic.phoneNumber"></span>
     </div>
-  </div>
-  <div class="col-md-16 col-sm-16 empty-list-message" ng-if="clinicsOfPatientErrMsg">
+    <div class="col-md-2 col-sm-2 clinic-list__phone">
+      <span ng-bind="clinic.hillromId"></span>
+    </div>
+</div>
+<div class="col-md-16 col-sm-16 empty-list-message" ng-if="clinics.length === 0 || !clinics"> 
     <span translate="no-clinic-found"></span>
-  </div>   
-</div> 
-
-<div class="dashboard dashboard--content">
-  <div class="container dashboard__manage-view clinic-hcp">
-    <div class="dashboard__manage-view--list" ng-repeat="clinic in clinics" ng-class="{ 'inactive': clinic.deleted }">
-      <div class="col-md-3 col-sm-3 reset-padding">
-        <span class="impo-highlight">{{clinic.name}}</span>
-      </div>
-      <div class="col-md-2 col-sm-2 reset-padding">
-        <span class="impo-highlight">{{clinic.hillromId}}</span>
-      </div>
-      <div class="col-md-1 col-sm-1 reset-padding">
-        <span class="impo-highlight">{{clinic.type}}</span>
-      </div>
-
-      <div class="col-md-2 col-sm-2 reset-padding">
-        <span class="short-info">{{clinic.phoneNumber}}</span>
-      </div>
-      <div class="col-md-3 col-sm-3 reset-padding">
-        <span class="short-info">{{clinic.address}}</span>
-      </div>
-      <div class="col-md-2 col-sm-2 reset-padding">
-        <span class="short-info">{{clinic.city}}</span>
-      </div>
-
-      <div class="col-md-2 col-sm-2 reset-padding">
-        <span class="short-info">{{clinic.state}}</span>
-      </div>
-
-      <div class="col-md-1 col-sm-1 reset-padding">
-        <span class="short-info active" ng-if="!clinic.deleted" translate="hcp.active"></span>
-        <span class="short-info inactive" ng-if="clinic.deleted" translate="hcp.inactive"></span>
-      </div>
-
-      <div class="clr"></div>
-    </div>
-  </div>
-</div>
-<!-- end of clinic -->
-<!-- start of HCP -->
-<div class="container admin-user margin-top-xl" >
-  <div class="col-md-16 col-sm-16 content-header">
-    <span class="content-header--title">HCP</span>
-  </div>
-  <div class="col-md-16 col-sm-16 content-list"> 
-    <div class="col-md-3 col-sm-3 content-list__detail">
-      <span class="content-list__detail--name" translate="hcp.name">Name</span>        
-    </div>
-    <div class="col-md-2 col-sm-2 content-list__detail">
-      <span class="content-list__detail--name" translate="hcp.credentials">Credentials</span>        
-    </div>
-    <div class="col-md-2 col-sm-2 content-list__detail">
-      <span class="content-list__detail--name" translate="hcp.npinumber">NPI number</span>        
-    </div>   
-    <div class="col-md-2 col-sm-2 content-list__detail">
-      <span class="content-list__detail--name" translate="hcp.city">City</span>        
-    </div>  
-    <div class="col-md-2 col-sm-2 content-list__detail">
-      <span class="content-list__detail--name" translate="hcp.state">State</span>        
-    </div>
-    <div class="col-md-1 col-sm-1 content-list__detail">
-      <span class="content-list__detail--name" translate="hcp.status">Status</span>        
-    </div>  
-  </div>
-  <div class="col-md-16 col-sm-16 empty-list-message" ng-if="hcpsOfPatientErrMsg"> 
-  <span translate="no-hcp-found"></span>
-  </div>
 </div>
 
-<div class="dashboard dashboard--content">
-  <div class="container dashboard__manage-view clinic-hcp">
-    <div class="dashboard__manage-view--list" ng-repeat="hcp in hcps">
-      <div class="col-md-3 col-sm-3 reset-padding">
-        <span class="impo-highlight">{{hcp.firstName}} {{hcp.lastName}}</span>
-      </div>
-      <div class="col-md-2 col-sm-2 reset-padding">
-        <span class="impo-highlight">{{hcp.credentials}}</span>
-      </div>
-      <div class="col-md-2 col-sm-2 reset-padding">
-        <span class="short-info">{{hcp.npiNumber}}</span>
-      </div>      
-      <div class="col-md-2 col-sm-2 reset-padding">
-        <span class="short-info">{{hcp.city}}</span>
-      </div>
-      <div class="col-md-2 col-sm-2 reset-padding">
-        <span class="short-info">{{hcp.state}}</span>
-      </div>
-
-      <div class="col-md-1 col-sm-1 reset-padding">
-
-        <span class="short-info active" ng-if="!hcp.deleted && hcp.activated" translate="hcp.active" ></span>
-        <span class="short-info inactive" ng-if="hcp.deleted" translate="hcp.inactive" ></span>
-        <span class="short-info inactive" ng-if="!hcp.deleted && !hcp.activated" translate="hcp.pending" ></span>
-      </div>
-
-      <div class="clr"></div>
+<!-- HCP Listing starts -->
+<div class="col-md-16 col-sm-16 admin-views">
+    <span class="admin-views--title" translate="patient.hcp-title"></span>
+</div>
+ <div class="dashboard dashboard--content">
+    <div class="dashboard__manage-view margin-top">
+      <div class="dashboard__manage-view--header">
+          <div class="col-md-3 col-sm-3 header--type">
+            <span translate="patient.hcp-caption.hcp-name"></span>
+          </div>
+          <div class="col-md-2 col-sm-2 header--type">
+            <span translate="patient.hcp-caption.credentials"></span>
+          </div>
+          <div class="col-md-2 col-sm-2 header--type">
+            <span translate="patient.hcp-caption.npi-id"></span>
+          </div>
+          <div class="col-md-3 col-sm-3 header--type">
+            <span translate="patient.hcp-caption.clinic-name"></span>
+          </div>
+          <div class="col-md-2 col-sm-2 header--type">
+            <span translate="patient.hcp-caption.city"></span>
+          </div>
+          <div class="col-md-2 col-sm-2 header--type">
+            <span translate="patient.hcp-caption.state"></span>
+          </div>
+          <div class="col-md-2 col-sm-2 header--type">
+            <span translate="patient.hcp-caption.phone-number"></span>
+          </div>
+          <div class="clr"></div>
+        </div>
     </div>
+ </div>
+<div class="col-md-16 col-sm-16 clinic-list" ng-repeat="hcp in hcps">
+  <div class="col-md-3 col-sm-3 clinic-list__detail">
+    <span class="clinic-list__detail--name">{{hcp.lastName}} {{hcp.firstName}}</span>
+  </div>
+  <div class="col-md-2 col-sm-2 clinic-list__address">
+    <span class="clinic-list__credentials">{{hcp.credentials}}</span>
+  </div>
+  <div class="col-md-2 col-sm-2 clinic-list__address">
+    <span class="clinic-list__fax--number" ng-bind="hcp.npiNumber"></span>
+  </div>
+  <div class="col-md-3 col-sm-3 clinic-list__fax">
+    <span class="clinic-list__fax--number" ng-repeat ="clinic in hcp.clinics">{{clinic.name}} <b>{{$last ? '' : ', '}}</b></span>
+  </div>
+  <div class="col-md-2 col-sm-2 clinic-list__fax">
+    <span class="clinic-list__fax--number" ng-bind="hcp.city"></span>
+  </div>
+  <div class="col-md-2 col-sm-2 clinic-list__phone">
+    <span class="clinic-list__phone--number" ng-bind="hcp.state"></span>
+  </div>
+  <div class="col-md-2 col-sm-2 clinic-list__fax">
+    <span class="clinic-list__fax--number" ng-bind="hcp.primaryPhone"></span>
   </div>
 </div>
-<!-- end of HCP -->
+<div class="col-md-16 col-sm-16 empty-list-message" ng-if="hcps.length === 0 || !hcps">
+    <span translate="no-hcp-found"> </span>
+</div>
+</div>

@@ -6,7 +6,7 @@
  *
  */
 angular.module('hillromvestApp')
-  .factory('UserService', function($http, localStorageService, headerService) {
+  .factory('UserService',['$http', 'headerService', function($http, headerService) {
     return {
 
       /**
@@ -73,8 +73,9 @@ angular.module('hillromvestApp')
        * @description To get list of users matching with search text and other parameter passed to REST api.
        *
        */
-      getUsers: function(url, searchString, sortOption, pageNo, offset) {
+      getUsers: function(url, searchString, sortOption, pageNo, offset, filter) {
         var sortOrder;
+        var filterBy = (filter && filter != undefined) ? filter : stringConstants.emptyString;
         if (searchString === undefined) {
           searchString = '';
         }
@@ -85,7 +86,7 @@ angular.module('hillromvestApp')
           sortOrder = true;
         };
 
-        return $http.get(url + searchString + '&page=' + pageNo + '&per_page=' + offset + '&sort_by=' + sortOption + '&asc=' + sortOrder, {
+        return $http.get(url + searchString + '&page=' + pageNo + '&per_page=' + offset + '&sort_by=' + sortOption + '&asc=' + sortOrder + '&filter='+filter, {
           headers: headerService.getHeader()
         }).success(function(response) {
           return response;
@@ -191,4 +192,4 @@ angular.module('hillromvestApp')
       }
       
     };
-  });
+  }]);
