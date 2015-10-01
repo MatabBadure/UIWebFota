@@ -153,6 +153,7 @@ angular.module('hillromvestApp')
     restrict: 'E',
 
     controller: function ($scope, $location) {
+      $scope.username = localStorage.getItem('userFirstName');
       $scope.isActive = function(tab) {
         var path = $location.path();
         if (path.indexOf(tab) !== -1) {

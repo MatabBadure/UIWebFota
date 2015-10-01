@@ -67,9 +67,24 @@ angular.module('hillromvestApp')
                 abstract: true,   
             })
             .state('caregiver-dashboard', {
-                parent: 'entity',
                 url:'/caregiver',
-                abstract: true,
+                views:{
+                    'content':{
+                    templateUrl:'scripts/modules/caregiver/graph/views/caregiver-section.html'
+            }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('global');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+                
             })
             .state('hcp-dashboard', {
                 parent: 'entity',
@@ -1780,14 +1795,14 @@ angular.module('hillromvestApp')
                     pageTitle: 'caregiver.title'
                 },
                 views: {
-                    'content@': {
+                    'caregiver-view': {
                         templateUrl: 'scripts/modules/caregiver/graph/views/dashboard-landing.html',
                         controller: 'graphController'
                     }
                 },
                 resolve: {
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
-                        $translatePartialLoader.addPart('caregiver-user');
+                        $translatePartialLoader.addPart('patient-user');
                         return $translate.refresh();
                     }],
                     authorize: ['Auth',
@@ -1806,8 +1821,34 @@ angular.module('hillromvestApp')
                     pageTitle: 'patient.title'
                 },
                 views: {
-                    'content@': {
+                    'caregiver-view': {
                         templateUrl: 'scripts/modules/patient/graph/views/clinichcp.html',
+                        controller: 'graphController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+
+            .state('caregiverDashboardDeviceProtocol', {
+                parent: 'caregiver-dashboard',
+                url: '/device-protocol',
+                data: {
+                    roles: ['CARE_GIVER'],
+                    pageTitle: 'patient.title'
+                },
+                views: {
+                    'caregiver-view': {
+                        templateUrl: 'scripts/modules/patient/graph/views/deviceprotocol.html',
                         controller: 'graphController'
                     }
                 },

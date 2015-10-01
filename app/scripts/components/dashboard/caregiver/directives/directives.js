@@ -12,7 +12,21 @@ angular.module('hillromvestApp')
           } else {
             return false;
           }
-        };      
+        };  
+        $scope.$on('getPatients', function(event, data) { 
+          $scope.patients = data;
+        });    
+        $scope.$on('getSelectedPatient', function(event, data) { 
+          $scope.selectedPatient = data;
+        });
+
+        $scope.switchPatient = function(patient){
+          $scope.$broadcast('switchPatientCareGiver',patient);
+        };
+
+        $scope.switchCaregiverTab = function(state){
+          $scope.$broadcast('switchCaregiverTab',state);
+        };
       }
     }
 });

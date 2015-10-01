@@ -21,8 +21,20 @@
             <span class="link-text" translate="global.tabs.dashboard" ></span>
           </a>
         </li>       
-        <li class="header-popover">
-           <a href="javascript:void(0)" class="popover-link cursor-pointer" navbar-popover></a>
+        <li class="header-popover dropdown">
+          <a href="javascript:void(0)" class="dropdown-toggle" ng-class="{ active: isActive('profile') || isActive('/patient/p-reset') || isActive('/notification-settings')}" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            <span class='icon-logged-in-user'></span>
+            <span class='user-name'>{{username}}</span></a>
+          <ul class="dropdown-menu">
+            <li id='account' ng-click='account()'>
+              <span class='hillrom-icon icon-user-account'></span>
+              <p translate="global.my-dashboard">My Profile</p>
+            </li>
+            <li ng-click='logout()'>
+              <span class='hillrom-icon icon-logout'></span>
+              <p translate="global.logout"></p>
+            </li>
+          </ul>
         </li>
       </ul>
     </div>

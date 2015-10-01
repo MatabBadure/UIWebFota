@@ -70,8 +70,6 @@ angular.module('hillromvestApp')
       $scope.yAxisRangeForCompliance = {};
       $scope.yAxis1Min = 0;
       $scope.yAxis2Min = 0;
-      $scope.getHmrRunRateAndScore();
-      $scope.getMissedTherapyDaysCount();
       $scope.fromTimeStamp = dateService.getnDaysBackTimeStamp(6);
       $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
       $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');   
@@ -79,7 +77,6 @@ angular.module('hillromvestApp')
       $scope.perPageCount = 4;
       $scope.notePageCount = 0;
       $scope.totalNotes = 0;
-      $scope.getPatientById($scope.patientId);
     };
 
 
@@ -110,19 +107,32 @@ angular.module('hillromvestApp')
       caregiverDashBoardService.getPatients(caregiverID).then(function(response){
         $scope.patients = response.data.patients;
         $scope.selectedPatient = response.data.patients[0];
+        $scope.$emit('getPatients', $scope.patients);
+        $scope.$emit('getSelectedPatient', $scope.selectedPatient);
         $scope.patientId = $scope.selectedPatient.user;
         $scope.initGraph();
         if($state.current.name === 'caregiverDashboardClinicHCP'){
           $scope.initPatientClinicHCPs();
+        } else if($state.current.name === 'caregiverDashboardDeviceProtocol'){
+          $scope.initPatientDeviceProtocol();
         }
       }).catch(function(response){
         notyService.showError(response);
       });
     };
 
+    $scope.$on('switchPatientCareGiver',function(event,patient){
+      $scope.switchPatient(patient);
+    });
+    
+    $scope.$on('switchCaregiverTab',function(event,state){
+      $scope.switchCaregiverTab(state);
+    });
+
     $scope.switchPatient = function(patient){
       if($scope.selectedPatient.user !== patient.user){
-        $scope.selectedPatient = clinic;
+        $scope.selectedPatient = patient;
+        $scope.patientId = $scope.selectedPatient.user;
         $scope.initGraph();
       }
     };
@@ -1036,7 +1046,7 @@ angular.module('hillromvestApp')
       $scope.devicesErrMsg = null;
       $scope.protocolsErrMsg = null;
       $scope.devices = []; $scope.devices.length = 0;   
-      patientService.getDevices(localStorage.getItem('patientID')).then(function(response){
+      patientService.getDevices(localStorage.getItem('patientID') || $scope.patientId).then(function(response){
         angular.forEach(response.data.deviceList, function(device){
           device.createdDate = dateService.getDateByTimestamp(device.createdDate);
           device.lastModifiedDate = dateService.getDateByTimestamp(device.lastModifiedDate);
@@ -1047,7 +1057,7 @@ angular.module('hillromvestApp')
           $scope.devicesErrMsg = true;
         }
       });
-      $scope.getProtocols(localStorage.getItem('patientID'));    
+      $scope.getProtocols(localStorage.getItem('patientID') || $scope.patientId);    
     };
 
     $scope.getProtocols = function(patientId){
