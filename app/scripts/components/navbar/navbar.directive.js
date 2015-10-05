@@ -82,6 +82,8 @@ angular.module('hillromvestApp')
           $state.go("clinicadmindashboard");
         }else if($scope.userRole === "HCP"){
           $state.go("hcpdashboard");
+        }else if($scope.userRole === "CARE_GIVER"){
+          $state.go("caregiverDashboard");
         }
       };
 
@@ -152,7 +154,7 @@ angular.module('hillromvestApp')
     templateUrl: 'scripts/components/navbar/navbarCaregiverUser.html',
     restrict: 'E',
 
-    controller: function ($scope, $location) {
+    controller: function ($scope, $location,$stateParams, $state) {
       $scope.username = localStorage.getItem('userFirstName');
       $scope.isActive = function(tab) {
         var path = $location.path();
@@ -162,17 +164,10 @@ angular.module('hillromvestApp')
           return false;
         }
       };
-      $('html').on('mouseup', function(e) {
-      if(!$(e.target).closest('.popover').length) {
-        $('.popover').each(function(){
-          $(this.previousSibling).popover('hide');
-          });
-        }
-      });
 
-      $("#account").on('click', function(e) {
-          e.stopPropagation();
-      });
+      $scope.account = function(){
+        $state.go('caregiverProfile', {'caregiverId': $stateParams.caregiverId});
+      };
     }
   };
 });

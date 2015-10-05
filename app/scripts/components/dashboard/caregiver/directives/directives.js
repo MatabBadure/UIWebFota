@@ -38,3 +38,29 @@ angular.module('hillromvestApp')
       restrict: 'E',
     }
 });
+
+
+angular.module('hillromvestApp')
+.directive('caregiverProfileNavbar', function() {
+  return {
+      templateUrl: 'scripts/components/dashboard/caregiver/views/caregiver-profile-navbar.html',
+      restrict: 'E',
+      controller: function($scope, $location) {
+        $scope.isActive = function(tab) {
+          var path = $location.path();
+          if (path.indexOf(tab) !== -1) {
+            return true;
+          } else {
+            return false;
+          }
+        };  
+        $scope.$on('getSelectedPatient', function(event, data) { 
+          $scope.selectedPatient = data;
+        });
+
+        $scope.switchCaregiverTab = function(state){
+          $scope.$broadcast('switchCaregiverTab',state);
+        };
+      }
+    }
+});

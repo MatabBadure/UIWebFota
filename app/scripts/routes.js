@@ -86,6 +86,28 @@ angular.module('hillromvestApp')
                 }
                 
             })
+
+            .state('caregiver-dashboard-profile', {
+                url:'/caregiver',
+                views:{
+                    'content':{
+                    templateUrl:'scripts/modules/caregiver/profile/views/profile-section.html'
+            }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('global');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+                
+            })
+
             .state('hcp-dashboard', {
                 parent: 'entity',
                 url:'/hcp',
@@ -1916,6 +1938,86 @@ angular.module('hillromvestApp')
                     ]
                 }
             })
+
+            .state('caregiverProfile', {
+                parent: 'caregiver-dashboard-profile',
+                url: '/profile',
+                data: {
+                    roles: ['CARE_GIVER'],
+                    pageTitle: 'patient.title'
+                },
+                views: {
+                    'caregiver-profile-view': {
+                        templateUrl: 'scripts/modules/caregiver/profile/views/my-profile.html',
+                        controller: 'caregiverProfileController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+
+            .state('caregiverProfileEdit', {
+                parent: 'caregiver-dashboard-profile',
+                url: '/profile-edit',
+                data: {
+                    roles: ['CARE_GIVER'],
+                    pageTitle: 'patient.title'
+                },
+                views: {
+                    'caregiver-profile-view': {
+                        templateUrl: 'scripts/modules/caregiver/profile/views/edit-my-profile.html',
+                        controller: 'caregiverProfileController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+
+
+            .state('caregiverChangePassword', {
+                parent: 'caregiver-dashboard-profile',
+                url: '/change-password',
+                data: {
+                    roles: ['CARE_GIVER'],
+                    pageTitle: 'patient.title'
+                },
+                views: {
+                    'caregiver-profile-view': {
+                        templateUrl: 'scripts/modules/caregiver/profile/views/update-password.html',
+                        controller: 'caregiverProfileController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+
 
             .state('clinicadminpatientProtocol', {
                 parent: 'clinicadminpatientdashboard',

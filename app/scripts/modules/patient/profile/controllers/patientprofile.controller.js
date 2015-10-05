@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('hillromvestApp').controller('patientprofileController', ['$scope', '$state', 'notyService', 'patientService', 'UserService', 'AuthServerProvider', 'Password', 'Auth', 'caregiverDashBoardService', function ($scope, $state, notyService, patientService, UserService, AuthServerProvider,Password, Auth, caregiverDashBoardService) {
+angular.module('hillromvestApp').controller('patientprofileController', ['$scope', '$state', 'notyService', 'patientService', 'UserService', 'AuthServerProvider', 'Password', 'Auth', 'caregiverDashBoardService', '$stateParams', function ($scope, $state, notyService, patientService, UserService, AuthServerProvider,Password, Auth, caregiverDashBoardService, $stateParams) {
 	
   $scope.init = function(){
 		var currentRoute = $state.current.name;	
@@ -72,7 +72,7 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
 
   $scope.switchCaregiverTab = function(status){
     $scope.caregiverTab = status;
-    $state.go(status);
+    $state.go(status, {'caregiverId': $stateParams.caregiverId});
   };
 
 	$scope.switchProfileTabs = function(tab){
