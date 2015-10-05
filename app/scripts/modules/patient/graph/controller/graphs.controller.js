@@ -5,6 +5,7 @@ angular.module('hillromvestApp')
   ['$scope', '$state', 'patientDashBoardService', 'dateService', 'graphUtil', 'patientService', 'UserService', '$stateParams', 'notyService', '$timeout', 'graphService',
   function($scope, $state, patientDashBoardService, dateService, graphUtil, patientService, UserService, $stateParams, notyService, $timeout, graphService) {
     var chart;
+    var hiddenFrame, htmlDocument;
     $scope.init = function() {
       $scope.hmrLineGraph = true;
       $scope.hmrBarGraph = false;
@@ -1394,9 +1395,64 @@ angular.module('hillromvestApp')
         attr("y" , -40);
           //
           return chart;
+      }, function(){
+        $timeout(function() {
+
+ $(hiddenFrame).remove();
+        var printId1 = "#lineGraphWrapper";
+      //var printId2 = "#complianceGraphWrapper";
+      var graphData = ($scope.hmrGraph) ? $scope.completeGraphData : $scope.completeComplianceData;
+      var element1 = document.querySelectorAll(printId1)[0],
+        //element2 = document.querySelectorAll(printId2)[0],
+            html1 = element1.innerHTML,
+            //html2 = element2.innerHTML,
+            //htmlDocument,
+            doc;
+            hiddenFrame = $('<iframe id="pdfID" style="display: block"></iframe>').appendTo('body')[0];
+            //$scope.complianceGraph =  true;
+            //$scope.hmrLineGraph = true;
+            //$scope.getComplianceGraphData();
+            //$scope.drawGraph();
+      hiddenFrame.contentWindow.printAndRemove = function() {
+
+            //$scope.drawComplianceGraph();
+        $timeout( function(){
+          // hiddenFrame.contentWindow.focus();
+           console.info(doc.readyState)
+          if(doc.readyState == 'complete') {
+              // hiddenFrame.contentWindow.print();
+            //hiddenFrame.contentWindow.print();
+          }
+          //$(hiddenFrame).remove();
+          // $("#complianceGraphWrapper").hide();
+          // d3.selectAll('#complianceGraph svg').selectAll("*").remove();
+          // $scope.complianceGraph =  false;
+        }, 0);
+      };
+      htmlDocument = "<!doctype html>" +
+            '<html style="background: white;"><head>' +
+            '<link rel="stylesheet" href="bower_components/nvd3/src/nv.d3.css" />' +
+            '<link rel="stylesheet" href="styles/style.css">' +
+            '</head>' +
+            '<body onload="printAndRemove();">' + // Print only after document is loaded
+            '<div>Clinic&nbsp;Name</div>' +
+            '<div>Clinic&nbsp;Address</div>' +
+            '<div>Clinic&nbsp;Phone&nbsp;Number</div>' +
+            '<table border=1><tr><td>Tabledata</td></tr><tr><td>Table data</td></tr></table>' +
+            '<br><br><br><br><br>' +
+            html1 +
+            //html2 +
+            '<div class="print-date-range">Extra&nbsp;Content&nbsp;....</div></body>' +
+            "</html>";
+          doc = hiddenFrame.contentWindow.document.open("text/html");
+          doc.write(htmlDocument);
+          doc.close();
+},500);
       });
     }
 
+
+//end
     $scope.drawHMRBarGraph = function() {
         nv.addGraph(function() {
            chart = nv.models.multiBarChart()
@@ -1423,8 +1479,12 @@ angular.module('hillromvestApp')
     }
 
     $scope.downloadAsPdf = function(){
-      var graphData = ($scope.hmrGraph) ? $scope.completeGraphData : $scope.completeComplianceData;
-      graphService.getPdfForSVGGraph(graphData);      
+      /*var graphData = ($scope.hmrGraph) ? $scope.completeGraphData : $scope.completeComplianceData;
+      graphService.getPdfForSVGGraph(graphData);   */ 
+       $scope.drawHMRLineGraph();
+      setTimeout(function() {
+      hiddenFrame.contentWindow.print();
+      },700);
     };
 
     $scope.downloadRawDataAsCsv = function(){
@@ -1446,5 +1506,6 @@ angular.module('hillromvestApp')
     $scope.closeModalCaregiver = function(){
       $scope.showModalCaregiver = false;
     };
+    
     
 }]);
