@@ -1452,6 +1452,8 @@ angular.module('hillromvestApp')
     }
 
 
+
+
 //end
     $scope.drawHMRBarGraph = function() {
         nv.addGraph(function() {
