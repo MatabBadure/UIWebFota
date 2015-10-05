@@ -46,7 +46,7 @@
                     "others": "O"
         },
         "placeholder": {
-            "search": "Search with Name or Email",
+            "search": "Search with HCP Name or Email",
             "link-clinic": "Search Clinic here"
         },
         "npi-number": "NPI Number",

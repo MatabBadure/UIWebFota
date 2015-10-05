@@ -17,7 +17,7 @@
             "title": "Reset Password",
             "sec-title": "Answer Security Question",
             "form": {
-                "button": "Validate New Password"
+                "button": "Reset Password"
             },
             "messages": {
                 "info": "Choose a new password",

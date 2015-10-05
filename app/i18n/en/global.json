@@ -65,7 +65,7 @@
             "confirmpassword": "New password confirmation",
             "confirmpassword.placeholder": "Confirm the new password",
             "email": "E-mail",
-            "email.placeholder": "Your e-mail"
+            "email.placeholder": "Enter Your e-mail Id"
         },
         "messages": {
             "info": {
