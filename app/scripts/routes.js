@@ -1865,6 +1865,58 @@ angular.module('hillromvestApp')
                 }
             })
 
+            .state('patientDashboardPatientInfo', {
+                parent: 'caregiver-dashboard',
+                url: '/patient-info',
+                data: {
+                    roles: ['CARE_GIVER'],
+                    pageTitle: 'patient.title'
+                },
+                views: {
+                    'caregiver-view': {
+                        templateUrl: 'scripts/modules/patient/profile/profile-tabs/my-profile.html',
+                        controller: 'patientprofileController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+
+            .state('patientDashboardNotification', {
+                parent: 'caregiver-dashboard',
+                url: '/notification-settings',
+                data: {
+                    roles: ['CARE_GIVER'],
+                    pageTitle: 'patient.title'
+                },
+                views: {
+                    'caregiver-view': {
+                        templateUrl: 'scripts/modules/patient/profile/profile-tabs/settings.html',
+                        controller: 'patientprofileController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+
             .state('clinicadminpatientProtocol', {
                 parent: 'clinicadminpatientdashboard',
                 url: '/{patientId}/protocol-device',

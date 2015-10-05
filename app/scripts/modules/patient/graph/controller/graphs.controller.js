@@ -110,6 +110,7 @@ angular.module('hillromvestApp')
         $scope.$emit('getPatients', $scope.patients);
         $scope.$emit('getSelectedPatient', $scope.selectedPatient);
         $scope.patientId = $scope.selectedPatient.user;
+        localStorage.setItem('patientID',$scope.patientId);
         $scope.initGraph();
         if($state.current.name === 'caregiverDashboardClinicHCP'){
           $scope.initPatientClinicHCPs();
@@ -133,6 +134,7 @@ angular.module('hillromvestApp')
       if($scope.selectedPatient.user !== patient.user){
         $scope.selectedPatient = patient;
         $scope.patientId = $scope.selectedPatient.user;
+        localStorage.setItem('patientID',$scope.patientId);
         $scope.initGraph();
       }
     };
