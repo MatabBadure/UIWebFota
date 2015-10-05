@@ -44,6 +44,23 @@
             </div>
           </div>
         </div>
+        <div class="col-md-16 margin-top reset-padding">
+          <div class="col-md-7 reset-padding">
+            <div class="col-md-6 dashboard__form--label reset-padding">
+              <span class="" translate="patient.clinic-level-status"></span>
+            </div>
+            <div class="col-md-10 dashboard__form__input--option reset-padding selected-box-container">
+              <div class="custom-dropdown">
+                <spam ng-if="patient.expired" translate="patient.status-type.expired"></spam>
+                <select name="language" ng-readonly="validateADMINorASP()" ng-model="patient.status" ng-if="!patient.expired">
+                  <option value="active" translate="patient.status-type.active"></option>
+                  <option value="inactive" translate="patient.status-type.inactive"></option>
+                  <option value="expired" translate="patient.status-type.expired"></option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="clr"></div>
       </div>
 
