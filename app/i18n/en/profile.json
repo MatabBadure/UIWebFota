@@ -6,7 +6,8 @@
     "tabs": {
       "profile-details": "Profile Details",
       "update-password": "Update Password",
-      "setting": "Notification Settings"
+      "setting": "Notification Settings",
+      "profile-setting": "Profile Settings"
     },
     "userId":"User ID",
     "title-name": "Title",

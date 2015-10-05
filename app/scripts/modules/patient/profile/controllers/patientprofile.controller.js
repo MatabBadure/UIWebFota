@@ -102,12 +102,29 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
 
   $scope.initResetPassword = function(){
   	$scope.profile = {};
+    AuthServerProvider.getSecurityQuestions().then(function(response){
+      $scope.questions = response.data
+    }).catch(function(response){});
   };
 
   $scope.updatePassword = function(){
     $scope.submitted = true;
     if($scope.form.$invalid){
       return false;
+    }
+    if($scope.resetAccount){
+      var data = {
+        "questionId": $scope.resetAccount.question.id,
+        "answer": $scope.resetAccount.answer
+      };
+      AuthServerProvider.changeSecurityQuestion(data, localStorage.getItem('patientID')).then(function(response){
+      }).catch(function(response){
+        if(response.data.message){
+          notyService.showMessage(response.data.message, 'warning');
+        } else if(response.data.ERROR){
+          notyService.showMessage(response.data.ERROR, 'warning');
+        }
+      });
     }
     var data = {
       'password': $scope.profile.password,
