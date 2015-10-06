@@ -6,7 +6,11 @@
           "patient-info": "HillRom | Patient Info",
           "overview": "HillRom | Overview",
           "caregiver-info": "HillRom | Caregiver Info",
-          "careplan-device": "HillRom | Care Plan and Device"
+          "careplan-device": "HillRom | Care Plan and Device",
+          "my-dashboard": "HillRom | My Dashboard",
+          "caregivers": "HillRom | Caregivers",
+          "clinics-hcps": "HillRom | Clinics and HCPs",
+          "add-caregiver": "HillRom | Add Caregiver"
         },
         "home": {
             "title": "Patient"

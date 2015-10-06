@@ -4,7 +4,8 @@
       "my-profile":"HillRom | My Profile",
       "update-password": "HillRom | Update Password",
       "notification-settings": "HillRom | Notification Settings",
-      "profile-update": "HillRom | Profile Update"
+      "profile-update": "HillRom | Profile Update",
+      "profile-settings": "HillRom | Profile Settings"
     },
     "tabs": {
       "profile-details": "Profile Details",
