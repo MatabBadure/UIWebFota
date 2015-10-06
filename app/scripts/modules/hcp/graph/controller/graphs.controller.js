@@ -437,8 +437,8 @@ angular.module('hillromvestApp')
               toolTip =
                 '<h6>' + dateService.getDateFromTimeStamp(value.startTime,patientDashboard.dateFormat,'/') + '  ('+ d3.time.format('%I:%M %p')(new Date(value.startTime)) + ')'  + '</h6>' +
                 '<ul class="graph_ul">' +
-                  '<li><span class="pull-left">' + 'Treatment Duration : ' + '</span><span class="pull-right value">' +  value.avgTreatmentDuration  + '  minutes' + '</span></li>' +
-                  '<li><span class="pull-left">' + 'No of treatments : ' +'</span><span class="pull-right value">' + value.avgTreatments +'</span></li>' +
+                  '<li><span class="pull-left">' + 'Average Length Of Treatment : ' + '</span><span class="pull-right value">' +  value.avgTreatmentDuration  + '  minutes' + '</span></li>' +
+                  '<li><span class="pull-left">' + 'Average Treatments Per Day : ' +'</span><span class="pull-right value">' + value.avgTreatments +'</span></li>' +
                 '</ul>';
           }
         });
