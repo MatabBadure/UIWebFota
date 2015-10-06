@@ -124,6 +124,9 @@
     .dropdown-menu{
       z-index: 9999;
       width: 80%;
+      height: 300px;
+      overflow-y: scroll;
+      margin-bottom: 5%; 
       li{
         a{
           word-wrap: break-word;
