@@ -1598,7 +1598,7 @@ angular.module('hillromvestApp')
                 url: '/profile',
                 data: {
                     roles: ['CLINIC_ADMIN'],
-                    pageTitle: 'hcp.title'
+                    pageTitle: 'profile.page-title.my-profile'
                 },
                 views: {
                     'content@': {
@@ -1624,7 +1624,7 @@ angular.module('hillromvestApp')
                 url: '/updatepassword',
                 data: {
                     roles: ['CLINIC_ADMIN'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'profile.page-title.update-password'
                 },
                 views: {
                     'content@': {
@@ -1645,7 +1645,7 @@ angular.module('hillromvestApp')
                 url: '/update',
                 data: {
                     roles: ['CLINIC_ADMIN'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'profile.page-title.profile-update'
                 },
                 views: {
                     'content@': {
@@ -1849,7 +1849,7 @@ angular.module('hillromvestApp')
                 url: '/notification-settings',
                 data: {
                     roles: ['CLINIC_ADMIN'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'profile.page-title.notification-settings'
                 },
                 views: {
                     'content@': {
