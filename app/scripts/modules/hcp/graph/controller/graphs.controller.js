@@ -469,11 +469,12 @@ angular.module('hillromvestApp')
 			.transition().duration(500).call(chart);
 			var recHeight = document.getElementsByTagName('rect')[0].getAttribute('height');
 			var recWidth = document.getElementsByTagName('rect')[0].getAttribute('width');
-			d3.select("#treatmentGraph svg").select(".nv-groups").append("rect").
+			d3.select("#treatmentGraph svg").select(".nv-wrap").insert("rect", ":first-child").
 			attr("fill" , "#e3ecf7").
+			attr("y" , 0 - recHeight).
 			attr("height" , recHeight).
 			attr("width" , recWidth);
-
+			
 			d3.selectAll('#treatmentGraph svg').selectAll('.nv-axislabel').
 				attr("y" , "-20");
 			d3.selectAll('#treatmentGraph svg').selectAll('.nv-axis .tick').append('circle').

@@ -123,6 +123,7 @@
         },
         "dashboard":{
             "missedTherapy": "Missed Therapy Days",
+            "averageTreatmentsPerDay": "Average Treatments Per Day",
             "hmrNonCompliance": "HMR Non-Adherence",
             "settingDeviation": "Setting Deviation",
             "noEventsRecorded": "No Events Recorded",
