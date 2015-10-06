@@ -1,7 +1,8 @@
 {
   "profile" : {
-    "home": {
-      "title": "Profile"
+    "page-title":{
+      "my-profile":"HillRom | My Profile",
+      "update-password": "HillRom | Update Password"
     },
     "tabs": {
       "profile-details": "Profile Details",

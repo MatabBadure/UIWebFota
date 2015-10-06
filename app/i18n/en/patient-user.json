@@ -1,5 +1,13 @@
 {
     "patient" : {
+        "page-title":{
+          "patient": "HillRom | Patient",
+          "clinic-info" : "HillRom | Clinic Info",
+          "patient-info": "HillRom | Patient Info",
+          "overview": "HillRom | Overview",
+          "caregiver-info": "Caregiver Info",
+          "careplan-device": "Care Plan and Device"
+        },
         "home": {
             "title": "Patient"
         },

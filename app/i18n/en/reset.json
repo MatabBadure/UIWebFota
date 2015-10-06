@@ -1,6 +1,7 @@
 {
     "reset": {
         "request": {
+            "pageTitle": "HillRom | Forgot Password",
             "title": "Forgot Your Password?",
             "form": {
                 "button": "Reset Password"
