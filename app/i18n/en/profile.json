@@ -2,7 +2,9 @@
   "profile" : {
     "page-title":{
       "my-profile":"HillRom | My Profile",
-      "update-password": "HillRom | Update Password"
+      "update-password": "HillRom | Update Password",
+      "notification-settings": "HillRom | Notification Settings",
+      "profile-update": "HillRom | Profile Update"
     },
     "tabs": {
       "profile-details": "Profile Details",
