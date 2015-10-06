@@ -1,6 +1,6 @@
 {
     "login": {
-        "title": "Login To Your Account",
+        "title": "HillRom | Login",
         "form": {
             "password": "Password",
             "password.placeholder": "password",

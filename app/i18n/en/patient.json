@@ -1,7 +1,9 @@
 {
     "patient" : {
+        "page-title":{
+          "patients": "HillRom | Patients"
+        },
         "home": {
-            "title": "Patient",
             "createLabel": "Create Patient",
             "createNewLabel": "Create New Patient",
             "createOrEditLabel": "Create or edit a Patient",
