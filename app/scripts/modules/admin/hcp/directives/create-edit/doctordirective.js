@@ -22,7 +22,12 @@ angular.module('hillromvestApp')
         };
 
         $scope.cancelUpdate = function(){
-          $state.go('hcpProfile', {'doctorId': $stateParams.doctorId});
+          if($state.current.name === 'clinicadminedithcp'){
+            console.log($stateParams);
+            $state.go('clinicadminhcpoverview', {'hcpId': $stateParams.doctorId});
+          }else{
+            $state.go('hcpProfile', {'doctorId': $stateParams.doctorId});
+          }
         };
 
         $scope.init = function () {
@@ -117,7 +122,11 @@ angular.module('hillromvestApp')
             $scope.doctorStatus.isMessage = true;
             $scope.doctorStatus.message = response.data.message;
             notyService.showMessage($scope.doctorStatus.message, 'success');
-            $state.go('hcpProfile', {'doctorId': $stateParams.doctorId});
+            if( $state.current.name ==='clinicadminedithcp'){
+              $state.go('clinicadminhcpoverview', {'hcpId': $stateParams.doctorId});
+            }else{
+              $state.go('hcpProfile', {'doctorId': $stateParams.doctorId});
+            }
           }).catch(function(response) {
             $scope.doctorStatus.isMessage = true;
             if (response.data.message !== undefined) {
@@ -180,7 +189,12 @@ angular.module('hillromvestApp')
           $scope.doctor = {};
           $scope.doctor.clinics = [];
           $scope.form.$setPristine();
-          $state.go('hcpUser');
+          if($state.current.name === 'clinicadminnewhcp')
+          {
+            $state.go('clinicadminhcpdashboard', {'clinicId' : $stateParams.clinicId});
+          }else{
+            $state.go('hcpUser');  
+          }
         }
       }]
     };
