@@ -14,9 +14,16 @@ angular.module('hillromvestApp')
     };
 
     $scope.initProfile = function(adminId){
-      UserService.getUser(adminId).then(function(response){
-        $scope.user = response.data.user;
-      }).catch(function(response){});
+      $scope.associateCareGiver = {};
+      UserService.getRelationships().then(function(response) {
+        $scope.relationships = response.data.relationshipLabels;
+      });
+      UserService.getState().then(function(response) {
+        $scope.states = response.data.states;        
+      });
+      UserService.getUser(localStorage.getItem('userId')).then(function(response){
+          $scope.associateCareGiver = response.data.user;
+      });
     };
 
     $scope.init = function(){
@@ -33,28 +40,22 @@ angular.module('hillromvestApp')
       $state.go('caregiverProfileEdit');
     };
 
+    $scope.updateCaregiver = function(careGiver){
+      careGiver.role = 'CARE_GIVER';
+      UserService.editUser(careGiver).then(function(response){
+        notyService.showMessage(response.data.message, 'success');
+        $state.go('caregiverProfile');
+      }).catch(function(response){
+        notyService.showMessage(response.data.message, 'warning');
+      });
+    };
+
     $scope.updateProfile = function(){
       $scope.submitted = true;
       if($scope.form.$invalid){
         return false;
       }
-      $scope.user.role = $scope.user.authorities[0].name;
-      UserService.editUser($scope.user).then(function(response){        
-        if(localStorage.getItem("userEmail") === $scope.user.email){
-          notyService.showMessage(response.data.message, 'success');
-          $state.go('caregiverProfile');
-        }else{
-          notyService.showMessage(profile.EMAIL_UPDATED_SUCCESSFULLY, 'success');
-          Auth.logout();
-          $state.go('login');
-        }
-      }).catch(function(response){
-        if(response && response.data && response.data.message){
-          notyService.showMessage(response.data.message, 'warning');
-        } else if(response && response.data && response.data.ERROR){
-          notyService.showMessage(response.data.ERROR, 'warning');
-        }
-      });
+      $scope.updateCaregiver($scope.associateCareGiver);
     };
 
     $scope.changePassword = function(){
