@@ -134,6 +134,7 @@ angular.module('hillromvestApp')
         $scope.getDayHMRGraphData();
       } else if(days === 0 && $scope.selectedGraph === 'COMPLIANCE'){
         $scope.plotNoDataAvailable();
+        $scope.isComplianceExist = false;
       } else if(days <= patientDashboard.maxDaysForWeeklyGraph) {
         $scope.weeklyChart($scope.fromTimeStamp);
       } else if ( days > patientDashboard.maxDaysForWeeklyGraph && days <= patientDashboard.minDaysForMonthlyGraph ) {
@@ -540,6 +541,7 @@ angular.module('hillromvestApp')
           $scope.isComplianceExist = false;
         }else if($scope.completeComplianceData.actual.length < 2){
           $scope.plotNoDataAvailable();
+          $scope.isComplianceExist = false;
         }
          else {
           //recommended values
