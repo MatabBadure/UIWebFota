@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hillromvestApp')
-    .factory('Auth',['$rootScope', '$state', '$q', '$translate', 'Principal', 'AuthServerProvider', 'Account', 'Register', 'Activate', 'Password', 'PasswordResetInit', 'PasswordResetFinish', 'StorageService', function Auth($rootScope, $state, $q, $translate, Principal, AuthServerProvider, Account, Register, Activate, Password, PasswordResetInit, PasswordResetFinish, StorageService) {
+    .factory('Auth',['$rootScope', '$state', '$q', '$translate', 'Principal', 'AuthServerProvider', 'Account', 'Register', 'Activate', 'Password', 'PasswordResetInit', 'PasswordResetFinish', 'StorageService','PrincipalService', function Auth($rootScope, $state, $q, $translate, Principal, AuthServerProvider, Account, Register, Activate, Password, PasswordResetInit, PasswordResetFinish, StorageService, PrincipalService) {
         return {
             login: function (credentials, callback) {
                 var cb = callback || angular.noop;
@@ -9,7 +9,7 @@ angular.module('hillromvestApp')
 
                 AuthServerProvider.login(credentials).then(function (data) {
                 	localStorage.setItem('token', data.data.id);
-                    Principal.identity(true).then(function(account) {
+                    PrincipalService.identity(true).then(function(account) {
 
                         localStorage.setItem('role', account.roles[0]);
                         $translate.use(account.langKey);
@@ -45,7 +45,7 @@ angular.module('hillromvestApp')
             },
 
             authorize: function(force) {
-                return Principal.identity(force)
+                return PrincipalService.identity(force)
                     .then(function() {
                         var isAuthenticated = Principal.isAuthenticated();
 
