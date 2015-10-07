@@ -430,11 +430,11 @@ angular.module('hillromvestApp')
           count = count + 1;
           var treatmentPerDayPoint = {};
           var treatmentLengthPoint = {};
-          treatmentPerDayPoint.x = count;
+          treatmentPerDayPoint.x = value.startTime;
           treatmentPerDayPoint.timeStamp = value.startTime;
           treatmentPerDayPoint.y = value.avgTreatments;
           treatmentPerDayValues.push(treatmentPerDayPoint);
-          treatmentLengthPoint.x = count;
+          treatmentLengthPoint.x = value.startTime;
           treatmentLengthPoint.timeStamp = value.startTime;
           treatmentLengthPoint.y = value.avgTreatmentDuration;
           treatmentLengthValues.push(treatmentLengthPoint);

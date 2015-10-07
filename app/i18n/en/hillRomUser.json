@@ -1,7 +1,11 @@
 {
     "user" : {
+
+        "page-title":{
+          "users":"HillRom | Users",
+          "user": "HillRom | User"
+        },
         "home": {
-            "title": "Hill-Rom User",
             "createLabel": "Create Hill-Rom User",
             "createOrEditLabel": "Create or edit a user",
             "updateLabel":"Update Hill-Rom User",

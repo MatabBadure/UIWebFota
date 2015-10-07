@@ -36,7 +36,44 @@ var searchFilters = {
     emptyString: '',
     patientList : "patientList",
     clinicList: "clinicList",
-    hcpList: "hcpList"
+    hcpList: "hcpList",
+    asc:"asc"
+}
+
+var sortConstant = {
+    sortIconDefaultClass : 'sort-icon--default', 
+    sortIconDefault : 'sortIconDefault',
+    sortIconDownClass : 'sort-icon-down', 
+    sortIconDown : 'sortIconDown', 
+    sortIconUpClass :'sort-icon-up',
+    sortIconUp : 'sortIconUp',
+    firstName: 'firstName',
+    lastName: 'lastName',
+    email: 'email',
+    zipcode: 'zipcode',
+    address: 'address',
+    city: 'city',
+    dob : "dob",
+    gender: "gender",
+    state: "state",
+    adherence: "adherence",
+    mrnId: "mrnId",
+    transmission: "transmission",
+    status: "status",
+    sortClass: "sortClass",
+    plastName: "plastName",
+    pemail: "pemail",
+    pfirstName: "pfirstName",
+    pzipcode: "pzipcode",
+    paddress: "paddress",
+    pcity: "pcity",
+    pdob: "pdob",
+    pgender: "pgender",
+    state: "state",
+    adherence: "adherence",
+    mrnid: "mrnid",
+    last_date: "last_date",
+    isDeleted: "isDeleted"
 }
 angular.module('hillromvestApp').constant('hcpServiceConstants', {
     graph : {

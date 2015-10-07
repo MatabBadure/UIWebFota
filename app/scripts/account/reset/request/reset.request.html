@@ -44,7 +44,7 @@
               ng-show="captchaError">
               Please verify again you are not a robot.
             </p>
-            <div  class="form-group recaptcha_container" ng-show="showCaptcha">
+            <div class="form-group recaptcha_container" ng-show="showCaptcha">
              <div vc-recaptcha
                theme="'light'"
                key="siteKey"
@@ -52,8 +52,10 @@
                on-success="setResponse(response)">
              </div>
             </div>
-             <div class="col-md-10 col-lg-10 link reset-padding-right">
-              <a translate="reset.request.form.button" ng-click="requestReset()" class="myButton_blue">LOGIN</a>
+             <div class="col-md-10 col-lg-10 link">
+              <div class="row margin-top">
+                <a translate="reset.request.form.button" ng-click="requestReset()" class="myButton_blue">LOGIN</a>
+              </div>
              </div>
           </form>
         </div>
