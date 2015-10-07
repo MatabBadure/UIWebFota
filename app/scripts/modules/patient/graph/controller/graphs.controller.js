@@ -1139,6 +1139,7 @@ angular.module('hillromvestApp')
     };
 
     $scope.initPatientDashboard = function(){
+      $scope.getPatientDevices(localStorage.getItem("patientID"));
       $scope.editNote = false;
       $scope.textNote = "";
       $scope.weeklyChart();
