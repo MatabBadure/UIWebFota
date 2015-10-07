@@ -290,7 +290,11 @@
 	-webkit-appearance: none;
   -moz-appearance: none;
   text-indent: 1px;
-  text-overflow: '';
+  
+  overflow: hidden;
+  padding-right: 20px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .dashboard__manage-view--search select option{
   padding: 7px 10px; 
@@ -330,7 +334,7 @@
 }
 
 .dashboard__manage-view--list.assoc {
-  cursor: default;
+  /*cursor: default;*/
   padding-bottom: 0;
   &:hover {
     background-color: inherit;

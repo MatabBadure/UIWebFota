@@ -1,7 +1,14 @@
 {
     "clinic" : {
+
+        "page-title": {
+          "clinics": "HillRom | Clinics",
+          "clinic-profile": "HillRom | Clinic Profile",
+          "associated-HCPs": "HillRom | Associated HCPs",
+          "associated-patients" : "HillRom | Associated Patients",
+          "clinic-admin": "Hillrom | Clinic Admin"
+        },
         "home": {
-            "title": "Clinics",
             "createLabel": "Create New Clinic",
             "createOrEditLabel": "Create or edit a Clinic",
             "updateLabel":"Update Clinic",
@@ -20,7 +27,7 @@
             "satellite-clinic": "Satellite Clinic"
         },
         "placeholder": {
-            "search": "Search with Name, Hill-Rom ID or Email",
+            "search": "Search with Clinic Name or Hill-Rom ID",
             "hcp-search": "Search HCP here",
             "patient-search": "Search Patients here",
             "existed-admin": "Search Clinic Admin",

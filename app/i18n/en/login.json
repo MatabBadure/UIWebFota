@@ -1,6 +1,13 @@
 {
     "login": {
-        "title": "Login To Your Account",
+        "title": "HillRom | Login",
+        "page-title":{
+            "contact-us": "HillRom | Contact Us",
+            "privacy-policy": "HillRom | Privacy Policy",
+            "terms-use" : "HillRom | Terms and Conditions",
+            "privacy-practices":"HillRom | Notice Of Privacy Practices",
+            "care-site": "HillRom | Respiratory Care Site"
+        },
         "form": {
             "password": "Password",
             "password.placeholder": "password",

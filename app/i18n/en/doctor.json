@@ -2,8 +2,16 @@
     "doctor" : {
         "myDashboard": "My Dashboard",
         "required-field":"* Required Fields",
+
+        "page-title": {
+          "hcps": "HillRom | HCPs",
+          "hcp-profile" : "HillRom | HCP Profile",
+          "hcp-update": "HillRom | HCP Update",
+          "associated-clinics": "HillRom | Associated Clinics",
+          "my-dashboard": "HillRom | My Dashboard"
+        },
+
         "home": {
-            "title": "doctor",
             "createLabel": "Create HCP",
             "createNewLabel": "Create New HCP",
             "createOrEditLabel": "Create or edit a Doctor",
@@ -46,7 +54,7 @@
                     "others": "O"
         },
         "placeholder": {
-            "search": "Search with Name or Email",
+            "search": "Search with HCP Name or Email",
             "link-clinic": "Search Clinic here"
         },
         "npi-number": "NPI Number",
@@ -123,6 +131,7 @@
         },
         "dashboard":{
             "missedTherapy": "Missed Therapy Days",
+            "averageTreatmentsPerDay": "Average Treatments Per Day",
             "hmrNonCompliance": "HMR Non-Adherence",
             "settingDeviation": "Setting Deviation",
             "noEventsRecorded": "No Events Recorded",

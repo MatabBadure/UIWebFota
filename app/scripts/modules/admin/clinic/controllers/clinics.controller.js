@@ -651,7 +651,9 @@ angular.module('hillromvestApp')
         $scope.associatedPatients = [];     
         if(response.data.length < 1){
           $scope.hasNoPatient = true;
-        }   
+        } else {
+          $scope.hasNoPatient = false;
+        } 
         angular.forEach(response.data, function(patientList, index){
           patientList.dob = dateService.getDateFromTimeStamp(patientList.dob, patientDashboard.dateFormat,'/');
           $scope.associatedPatients.push({"patient": patientList});         

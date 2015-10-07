@@ -1,6 +1,7 @@
 {
     "reset": {
         "request": {
+            "pageTitle": "HillRom | Forgot Password",
             "title": "Forgot Your Password?",
             "form": {
                 "button": "Reset Password"
@@ -17,7 +18,7 @@
             "title": "Reset Password",
             "sec-title": "Answer Security Question",
             "form": {
-                "button": "Validate New Password"
+                "button": "Reset Password"
             },
             "messages": {
                 "info": "Choose a new password",

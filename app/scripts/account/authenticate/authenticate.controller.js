@@ -35,23 +35,31 @@ $scope.authenticate = function(event) {
        "termsAndConditionsAccepted" : $scope.authenticate.tnc,
        "key" : $stateParams.key
    }
-   Auth.configurePassword(data).then(function () {
-    $scope.success = true;
-    $state.go('home');
-}).catch(function (response) {
-    $scope.success = false;
-    if(response.status == 400 && response.data.ERROR == "Invalid Activation Key"){
-       $scope.alreadyActive = true;
-   }else{
-       $scope.otherError = true;
-   }
-});
-}
+   Auth.activateAccount({key: $stateParams.key}).then(function () {
+        $scope.authenticateCred(data);
+    }).catch(function () {
+        $scope.otherError = true;
+    });
+  }
 };
 
 $scope.passwordStrength = function(){
     console.info('passwordStrength Called...!');
     $scope.display_strength('passwordBox','passwordStrengthContainer','status');
+};
+
+$scope.authenticateCred = function(data){
+  Auth.configurePassword(data).then(function () {
+    $scope.success = true;
+    $state.go('home');
+  }).catch(function (response) {
+      $scope.success = false;
+      if(response.status == 400 && response.data.ERROR == "Invalid Activation Key"){
+         $scope.alreadyActive = true;
+     }else{
+         $scope.otherError = true;
+     }
+  });
 };
 
 

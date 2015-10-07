@@ -73,7 +73,7 @@
 	/*HCP Patient Dashboar Style END*/	
 
 	/*Bug fixes*/
-	.navbar-default > .container > .navbar-secondary ul li{
+	ul li, ul li:visited, ul li:focus, a:visited, a:focus{
 		outline: none;
 	}
 
@@ -133,7 +133,7 @@
 	}
 
 	.patient-user__navbar ul > li {
-		padding-right: 15px;
+		padding-right: 30px;
 	}
 	/*Login page Style*/
 	.footer_container {
@@ -176,7 +176,7 @@
 	}
 	/* User Particular info tab padding  END*/
 	/*Bug fixes*/
-	.navbar-default > .container > .navbar-secondary ul li{
+	ul li, ul li:visited, ul li:focus, a:visited, a:focus {
 		outline: none;
 	}
 	.patient-user__navbar{

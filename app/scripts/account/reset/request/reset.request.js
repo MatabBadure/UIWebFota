@@ -7,7 +7,8 @@ angular.module('hillromvestApp')
                 parent: 'account',
                 url: '/reset/request',
                 data: {
-                    roles: []
+                    roles: [],
+                    pageTitle: 'reset.request.pageTitle'
                 },
                 views: {
                     'content@': {
@@ -17,7 +18,7 @@ angular.module('hillromvestApp')
                 },
                 resolve: {
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
-                        $translatePartialLoader.addPart('reset');
+                    $translatePartialLoader.addPart('reset');
                         return $translate.refresh();
                     }]
                 }
