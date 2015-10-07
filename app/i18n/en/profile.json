@@ -50,7 +50,7 @@
     "notification": "Notifications",
     "noti-desc": "The Notification will be sent to your registered email address. You can Switch On/Off",
     "noti": {
-      "miss-therapy-days" : "Miss Therapy Days",
+      "miss-therapy-days" : "Missed Therapy Days",
       "hmr-non-adher": "HMR Non-Adherence",
       "setting-deviation": "Setting Deviation"
     },
