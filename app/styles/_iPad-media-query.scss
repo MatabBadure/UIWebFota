@@ -75,6 +75,8 @@
 	/*Bug fixes*/
 	ul li, ul li:visited, ul li:focus, a:visited, a:focus{
 		outline: none;
+		box-shadow: none;
+		-webkit-box-shadow: none;
 	}
 
 	.patient-user__navbar .patient-dashboard > li {
@@ -178,6 +180,8 @@
 	/*Bug fixes*/
 	ul li, ul li:visited, ul li:focus, a:visited, a:focus {
 		outline: none;
+		box-shadow: none;
+		-webkit-box-shadow: none;
 	}
 	.patient-user__navbar{
 		width: 100%;
