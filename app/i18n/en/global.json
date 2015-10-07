@@ -313,5 +313,9 @@
     "navbar": {
         "my-dashboard": "My Dashboard",
         "create-new-hcp": "Create New HCP +"
+    },
+    "place-holder":{
+        "mobile-number": "Mobile Number",
+        "phone-number": "Phone Number"
     }
 }
