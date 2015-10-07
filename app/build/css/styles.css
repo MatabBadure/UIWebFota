@@ -5775,7 +5775,7 @@ a::-moz-focus-inner {
   color: #D6DADE;
 }
 
-.word-ellipsis, .dashboard__manage-view--list > div, .dashboard__manage-view--list .main-secon-info, .admin-user .device-list div,
+.word-ellipsis, .dashboard__manage-view--list > div, .dashboard__manage-view--list .main-secon-info, .admin-user .clinic-list__detail--name, .admin-user .clinic-list__phone, .admin-user .clinic-list__fax, .admin-user .device-list div,
 .admin-user .protocol-list div {
   white-space: nowrap;
   overflow: hidden;
@@ -5807,6 +5807,17 @@ a::-moz-focus-inner {
   opacity: 1;
   margin-left: 0;
 }
+
+
+.custom-date .dropdown-menu {
+  min-width: 200px;
+}
+
+.datepicker table tr td span {
+  font-size: 14px;
+  font-weight: 400;
+}
+
 
 .navbar {
   border: 0;
@@ -5859,6 +5870,7 @@ a::-moz-focus-inner {
   min-height: inherit;
   background-color: inherit;
   color: inherit;
+  outline: none;
 }
 
 .navbar-nav.navbar-right:last-child {
@@ -5908,7 +5920,7 @@ a::-moz-focus-inner {
   border-radius: 0;
 }
 .navbar-secondary .navbar-right li a:hover span {
-  color: #276092;
+  color: #003594;
 }
 
 .navbar-secondary .navbar-right li:last-child {
@@ -5934,7 +5946,7 @@ a::-moz-focus-inner {
   border-radius: 0;
 }
 .navbar-secondary .navbar-right li a.active span {
-  color: #276092;
+  color: #7ca3dc;
 }
 
 .navbar-secondary .navbar-right .header-popover a .icon-logged-in-user {
@@ -5995,7 +6007,7 @@ a::-moz-focus-inner {
 }
 
 .navbar-secondary .navbar-right li:last-child a:hover span {
-  color: #aeb5be;
+  color: #003594;
 }
 
 .navbar-secondary .navbar-right li .notif-bell {
@@ -6539,7 +6551,7 @@ a::-moz-focus-inner {
 .dashboard__manage-view--search .fuid-search-box {
   display: inline-block;
   position: relative;
-  width: calc(100% - 145px);
+  width: 100%;
 }
 
 .dashboard__manage-view--search .full-search-box {
@@ -6594,7 +6606,10 @@ a::-moz-focus-inner {
   -webkit-appearance: none;
   -moz-appearance: none;
   text-indent: 1px;
-  text-overflow: '';
+  overflow: hidden;
+  padding-right: 20px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .dashboard__manage-view--search select option {
@@ -6940,7 +6955,7 @@ tags-input .autocomplete .suggestion-item.selected, tags-input .autocomplete .su
 }
 
 .admin-user .detail-list--title {
-  padding: 0;
+  padding: 0 10px;
 }
 .admin-user .detail-list--title span {
   font-weight: 400;
@@ -6949,7 +6964,7 @@ tags-input .autocomplete .suggestion-item.selected, tags-input .autocomplete .su
 }
 
 .admin-user .detail-list--desc {
-  padding: 0;
+  padding: 0 10px;
 }
 .admin-user .detail-list--desc span {
   font-weight: 400;
@@ -7019,24 +7034,6 @@ tags-input .autocomplete .suggestion-item.selected, tags-input .autocomplete .su
   margin-bottom: 10px;
 }
 
-.admin-user .detail-list--title {
-  padding: 0;
-}
-.admin-user .detail-list--title span {
-  font-weight: 400;
-  font-size: 14px;
-  color: #34455C;
-}
-
-.admin-user .detail-list--desc {
-  padding: 0;
-}
-.admin-user .detail-list--desc span {
-  font-weight: 400;
-  font-size: 12px;
-  color: #5d6a7d;
-}
-
 .admin-user .detail-list--desc .active {
   color: #5C9B52;
 }
@@ -7083,6 +7080,10 @@ tags-input .autocomplete .suggestion-item.selected, tags-input .autocomplete .su
   font-weight: 300;
 }
 
+.dashboard__manage-view--header .text-centered {
+  text-align: center;
+}
+
 .dashboard__manage-view--header .header--type .sort-icon--default:after {
   font-family: 'hillrom';
   content: "\e613";
@@ -7116,6 +7117,14 @@ tags-input .autocomplete .suggestion-item.selected, tags-input .autocomplete .su
   line-height: 39px;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.dashboard__manage-view--list .text-centered {
+  height: 39px;
+  line-height: 39px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
 }
 
 .dashboard__manage-view--list > div {
@@ -7252,7 +7261,7 @@ tags-input .autocomplete .suggestion-item.selected, tags-input .autocomplete .su
   border-bottom: 1px solid #cccccc;
 }
 .admin-user .crud-list div {
-  padding: 0;
+  padding: 0 10px;
 }
 .admin-user .crud-list div span {
   color: #34455C;
@@ -7364,16 +7373,19 @@ ul.dropdown-menu {
 .patient-user__navbar {
   padding-left: 0;
   min-height: 40px;
+  width: 100%;
 }
 
 .patient-user__navbar ul > li {
   padding-right: 100px;
+  outline: none;
 }
 
 .patient-user__navbar ul > li > a {
   padding: 10px 0px 9px 0px;
   color: #fff;
   cursor: pointer;
+  position: relative;
 }
 .patient-user__navbar ul > li > a:hover {
   background-color: inherit;
@@ -7386,8 +7398,14 @@ ul.dropdown-menu {
 }
 .patient-user__navbar ul > li > a .nav_drop_arrow {
   position: relative;
-  top: 2px;
+  top: 0px;
   left: 4px;
+  font-size: 10px;
+}
+.patient-user__navbar ul > li > a .icons {
+  top: 12px;
+  right: 4px;
+  position: absolute;
 }
 
 .patient-user__navbar ul > li > a.active {
@@ -7439,6 +7457,9 @@ ul.dropdown-menu {
 }
 .patient_nav_link_right li:last-child {
   margin-right: 0px;
+}
+.patient_nav_link_right li a {
+  padding: 10px 30px 9px 0px !important;
 }
 
 .patient-overview {
@@ -7558,9 +7579,6 @@ ul.dropdown-menu {
   cursor: default !important;
 }
 
-.admin-user .clinic-list__detail {
-  padding: 0;
-}
 .admin-user .clinic-list__detail--name {
   color: #34455C;
   font-size: 14px;
@@ -7575,7 +7593,6 @@ ul.dropdown-menu {
 }
 
 .admin-user .clinic-list__address {
-  padding: 0;
   font-size: 12px;
   font-weight: 400;
   color: #858F9D;
@@ -7585,14 +7602,12 @@ ul.dropdown-menu {
 }
 
 .admin-user .clinic-list__phone, .admin-user .clinic-list__fax {
-  padding: 0;
   color: #5d6a7d;
   font-size: 12px;
   font-weight: 400;
 }
 
 .admin-user .clinic-list__hr-id {
-  padding: 0;
   text-overflow: ellipsis;
   overflow: hidden;
 }
@@ -7614,6 +7629,10 @@ ul.dropdown-menu {
 .admin-user .clinic-list.inactive .icon-delete-icon {
   cursor: default;
   color: #ccc;
+  cursor: pointer;
+}
+.admin-user .clinic-list.inactive .icon-delete-icon:hover {
+  color: #34455C;
 }
 .admin-user .clinic-list.inactive .glyphicon-trash {
   cursor: default;
@@ -7634,6 +7653,7 @@ ul.dropdown-menu {
 }
 
 .clinic-link .dropdown-menu, .exist-link .dropdown-menu {
+  z-index: 9999;
   width: 80%;
 }
 .clinic-link .dropdown-menu li a, .exist-link .dropdown-menu li a {
@@ -7660,7 +7680,7 @@ ul.dropdown-menu {
 }
 
 .admin-user .caregiver-list__detail {
-  padding: 0;
+  padding: 0 10px;
 }
 .admin-user .caregiver-list__detail--name {
   color: #7ca3dc;
@@ -7676,7 +7696,7 @@ ul.dropdown-menu {
 }
 
 .admin-user .caregiver-list__address {
-  padding: 0;
+  padding: 0 10px;
   font-size: 12px;
   font-weight: 400;
   color: #858F9D;
@@ -7686,7 +7706,7 @@ ul.dropdown-menu {
 }
 
 .admin-user .caregiver-list__phone, .admin-user .caregiver-list__fax {
-  padding: 0;
+  padding: 0 10px;
   color: #5d6a7d;
   font-size: 12px;
   font-weight: 400;
@@ -7701,7 +7721,7 @@ ul.dropdown-menu {
 }
 
 .admin-user .caregiver-list__type {
-  padding: 0;
+  padding: 0 10px;
 }
 .admin-user .caregiver-list__type span {
   color: #34455C;
@@ -7754,8 +7774,7 @@ ul.dropdown-menu {
 }
 .admin-user .device-list div,
 .admin-user .protocol-list div {
-  padding: 0;
-  padding-right: 10px;
+  padding: 0 10px;
 }
 .admin-user .device-list div span,
 .admin-user .protocol-list div span {
@@ -7765,8 +7784,7 @@ ul.dropdown-menu {
 }
 
 .admin-user .list-inactive div {
-  padding: 0;
-  padding-right: 10px;
+  padding: 0 10px;
 }
 .admin-user .list-inactive div span {
   color: #C1C1C1;
@@ -7839,6 +7857,10 @@ ul.dropdown-menu {
 }
 .admin-user .protocol-radio input, .admin-user .protocol-radio span {
   cursor: pointer;
+}
+
+.admin-user .protocol-list div {
+  padding-left: 4%;
 }
 
 .footer {
@@ -8057,7 +8079,6 @@ ul.dropdown-menu {
   font-weight: 700;
   margin: 20px 0;
   text-align: center;
-  text-transform: uppercase;
 }
 
 .auth-select {
@@ -8116,6 +8137,7 @@ ul.dropdown-menu {
 }
 .stats_chart_section .stats_header .sub_txt {
   line-height: 27px;
+  color: #003594;
 }
 
 .stats_chart_container {
@@ -8177,6 +8199,10 @@ ul.dropdown-menu {
   display: inline-block;
 }
 
+
+.dashboard_noti_section {
+  margin-bottom: 20px;
+}
 
 .dashboard_noti_section .header_noti h4 {
   margin: 0px 0px;
@@ -8321,6 +8347,7 @@ ul.dropdown-menu {
 .notes_content .notes_row {
   border-bottom: solid 1px #dddddd;
   padding: 10px 0px;
+  overflow: hidden;
 }
 
 .edit_delete .icon {
@@ -8334,7 +8361,7 @@ ul.dropdown-menu {
 .add_note_container .patient_dashdoard_btns {
   display: inline-block;
   width: 100%;
-  margin: 8px 0px 0px;
+  margin: 20px 0px 0px;
   padding: 0px 10px;
 }
 .add_note_container .view_all_btn {
@@ -8382,7 +8409,7 @@ ul.dropdown-menu {
   color: #333333;
 }
 .wrapper_custom_check .custom_check_container .check:checked + .check_label.missedTHRP_legend:after {
-  background-color: #ff2601;
+  background-color: #4e95c4;
   border: #fff;
 }
 .wrapper_custom_check .custom_check_container .check:checked + .check_label.pressure_legend:after {
@@ -8475,7 +8502,7 @@ ul.dropdown-menu {
 }
 
 .dashboard__manage-view--pagination.pagination_notes {
-  margin: 20px 5px 15px !important;
+  margin: 0px 5px 15px !important;
   display: inline-block;
   float: right;
 }
@@ -8627,6 +8654,9 @@ ul.dropdown-menu {
   margin: 30px 0px 20px;
   width: 100%;
 }
+.patient_dashdoard_btns .dropdown-menu {
+  margin-bottom: 80px;
+}
 
 
 
@@ -8737,6 +8767,11 @@ ul.dropdown-menu {
   display: inline-block;
 }
 
+.datepicker thead tr:first-child th:hover, .datepicker tfoot tr th:hover, .datepicker thead tr:first-child th {
+  color: #fff;
+  background-color: #7ca3dc;
+}
+
 
 .hcp_hsp_name_arrow .icon-arrow-down {
   margin-left: 5px;
@@ -8785,7 +8820,12 @@ ul.dropdown-menu {
     float: none;
   }
   .stats_chart_container .stats_chart_content {
-    margin: 10px 0px 0px 15px;
+    margin: 0;
+    text-align: center;
+    width: 100%;
+  }
+  .stats_chart_container .stats_chart_content .percent {
+    float: none;
   }
 
   
@@ -8828,21 +8868,65 @@ ul.dropdown-menu {
     margin: 10px 0px 0px;
   }
   .stats_chart_container .col-3 .chart_inner_icon {
-    left: 36%;
+    left: 40%;
     top: 22%;
   }
 
   .hcp_wrapper .stats_chart_container .chart_inner_icon {
-    left: 61px;
-    top: 43px;
+    left: 37%;
+    top: 19%;
   }
 
   
+  
+  .navbar-default > .container > .navbar-secondary ul li {
+    outline: none;
+  }
+
+  .patient-user__navbar .patient-dashboard > li {
+    padding-right: 0;
+  }
+
+  .patient_nav_link_right li {
+    margin-right: 10px;
+    font-size: 12px;
+  }
+
+  .patient-user__navbar ul > li {
+    padding-right: 40px;
+  }
+
+  .patient-user__navbar ul > li > a .icons {
+    top: 13px;
+  }
+
+  .patient-user__navbar {
+    width: 100%;
+    display: inline-block;
+  }
 }
 @media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
   
   .stats_chart_container .pie_chart {
     float: none;
+    text-align: center;
+  }
+  .stats_chart_container .col-3 .chart_inner_icon {
+    left: 41%;
+    top: 18%;
+  }
+  .stats_chart_container .stats_chart_content {
+    margin: 0;
+    text-align: center;
+    width: 100%;
+  }
+  .stats_chart_container .stats_chart_content .percent {
+    float: none;
+  }
+
+  .hcp_wrapper .stats_chart_container .chart_inner_icon {
+    left: 39%;
+    top: 16%;
   }
 
   .form__container__login .login__container__right-section {
@@ -8893,6 +8977,23 @@ ul.dropdown-menu {
   }
 
   
+  
+  .navbar-default > .container > .navbar-secondary ul li {
+    outline: none;
+  }
+
+  .patient-user__navbar {
+    width: 100%;
+    display: inline-block;
+  }
+
+  .patient-user__navbar .patient-dashboard > li {
+    padding-right: 0;
+  }
+
+  .patient_nav_link_right li {
+    margin-right: 5px;
+  }
 }
 @media screen and (min-width: 1024px) {
   .login {

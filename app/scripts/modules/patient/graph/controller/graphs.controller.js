@@ -6,6 +6,12 @@ angular.module('hillromvestApp')
   function($scope, $state, patientDashBoardService, dateService, graphUtil, patientService, UserService, $stateParams, notyService, $timeout, graphService) {
     var chart;
     $scope.init = function() {
+      $scope.lazyLoadParamsPieChart = [
+        'bower_components/jquery.easy-pie-chart/dist/angular.easypiechart.js'
+        ];
+        $scope.lazyLoadParamsDatePicker = [
+        'bower_components/angular-daterangepicker/js/angular-daterangepicker.js'
+        ];
       $scope.hmrLineGraph = true;
       $scope.hmrBarGraph = false;
       $scope.hmrGraph = true;
