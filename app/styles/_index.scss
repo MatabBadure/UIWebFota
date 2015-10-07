@@ -261,3 +261,15 @@ a::-moz-focus-inner {
 	font-weight: $font-weight-medium;
 }
 /* End Customize datepicker for dab UI */
+
+.dropdown.open {
+	.dropdown-menu {
+		z-index: 9999;
+		li {
+			a:hover, a:focus {
+				background-color: #7ca3dc;
+				color: #FFFFFF;
+			}
+		}
+	}
+}

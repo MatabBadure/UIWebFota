@@ -1488,11 +1488,11 @@ angular.module('hillromvestApp')
               '</tr>'+
               '</thead>'+
               '<tr><td class="heading">'+stringConstants.mrn+stringConstants.colon+'</td><td class="desc">'+patientMrnId+'</td></tr>' +
-              '<tr><td class="heading">'+stringConstants.name+stringConstants.colon+'</td><td class="desc">'+patientName+'</td></tr>' +
+              '<tr><td class="heading">'+stringConstants.name+stringConstants.colon+'</td><td class="desc-highlight">'+patientName+'</td></tr>' +
               '<tr><td class="heading">'+stringConstants.address+stringConstants.colon+'</td><td class="desc">'+completePatientAddress+'</td></tr>' +
               '<tr><td class="heading">'+stringConstants.phone+stringConstants.colon+'</td><td class="desc">'+patientPhone+'</td></tr>' +
               '<tr><td class="heading">'+stringConstants.DOB+stringConstants.colon+'</td><td class="desc">'+patientDOB+'</td></tr>' +
-              '<tr><td class="heading">'+stringConstants.adherenceScore+stringConstants.colon+'</td><td class="desc">'+patientAdherence+'</td></tr>' +
+              '<tr><td class="heading">'+stringConstants.adherenceScore+stringConstants.colon+'</td><td class="desc-highlight">'+patientAdherence+'</td></tr>' +
               '</table>' +
             '</div>' +
             '<div class="pdf-container table-left">'+
@@ -1502,7 +1502,7 @@ angular.module('hillromvestApp')
                     '<th colspan="2">'+stringConstants.deviceInformationLabel+'</th>' + 
                   '</tr>'+
                 '</thead>'+
-              '<tr><td class="heading">'+stringConstants.type+stringConstants.colon+'</td><td class="desc">'+patientDeviceType+'</td></tr>' +
+              '<tr><td class="heading">'+stringConstants.type+stringConstants.colon+'</td><td class="desc-highlight">'+patientDeviceType+'</td></tr>' +
               '<tr><td class="heading">'+stringConstants.serialNumber+stringConstants.colon+'</td><td class="desc">'+patientDeviceSlNo+'</td></tr>' +
               '</table>' +
               '<table class="pdf--margin-top" border=1 ng-if="true">' +
@@ -1512,11 +1512,11 @@ angular.module('hillromvestApp')
                   '</tr>'+
                 '</thead>'+ 
               '<tr><td class="heading">'+stringConstants.missedTherapyDays+stringConstants.colon+
-              '</td><td class="desc">'+pdfMissedTherapyDays+'</td></tr>' +
+              '</td><td class="desc-highlight">'+pdfMissedTherapyDays+'</td></tr>' +
               '<tr><td class="heading">'+stringConstants.hmrNonAdherence+stringConstants.colon+
-              '</td><td class="desc">'+pdfHMRNonAdherenceScore+'</td></tr>' +
+              '</td><td class="desc-highlight">'+pdfHMRNonAdherenceScore+'</td></tr>' +
               '<tr><td class="heading">'+stringConstants.settingDeviation+stringConstants.colon+
-              '</td><td class="desc">'+pdfSettingDeviation+'</td></tr>' +
+              '</td><td class="desc-highlight">'+pdfSettingDeviation+'</td></tr>' +
               '</table>' +
             '</div>' +
             '<div class="graph-title"></div>'+
