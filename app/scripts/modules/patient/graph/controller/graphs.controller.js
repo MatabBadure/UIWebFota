@@ -34,6 +34,7 @@ angular.module('hillromvestApp')
       }else if(currentRoute === 'patientdashboardClinicHCP'){
         $scope.initPatientClinicHCPs();
       } else if(currentRoute === 'patientOverview' || currentRoute === 'hcppatientOverview' || currentRoute === 'clinicadminpatientOverview') {
+        $scope.getPatientDevices($stateParams.patientId);
         $scope.patientId = parseInt($stateParams.patientId);
         $scope.getPatientById($scope.patientId);
         $scope.weeklyChart();
@@ -1139,7 +1140,7 @@ angular.module('hillromvestApp')
       $scope.editNote = false;
       $scope.textNote = "";
       $scope.weeklyChart();
-      $scope.getPatientNotification();
+      $scope.getPatientNotification();      
     };
 
     $scope.openEditNote = function(noteId, noteText){
@@ -1308,6 +1309,11 @@ angular.module('hillromvestApp')
       $("#note_edit_container").removeClass("show_content");
       $("#note_edit_container").addClass("hide_content");      
     };
+    $scope.getPatientDevices = function(patientId){
+      patientService.getDevices(patientId).then(function(response){
+        $scope.patientDevices = response.data.deviceList;
+      });
+    };
 
     $scope.init();
 
@@ -1397,24 +1403,22 @@ angular.module('hillromvestApp')
           return chart;
       }, function(){
         $timeout(function() {
-          $scope.testText = "ABCD";
-
- $(hiddenFrame).remove();
+        $(hiddenFrame).remove();
         var printId1 = "#lineGraphWrapper";
-      //var printId2 = "#complianceGraphWrapper";
-      var graphData = ($scope.hmrGraph) ? $scope.completeGraphData : $scope.completeComplianceData;
-      var element1 = document.querySelectorAll(printId1)[0],
+        //var printId2 = "#complianceGraphWrapper";
+        var graphData = ($scope.hmrGraph) ? $scope.completeGraphData : $scope.completeComplianceData;
+        var element1 = document.querySelectorAll(printId1)[0],
         //element2 = document.querySelectorAll(printId2)[0],
-            html1 = element1.innerHTML,
-            //html2 = element2.innerHTML,
-            //htmlDocument,
-            doc;
-            hiddenFrame = $('<iframe id="pdfID" style="display: block"></iframe>').appendTo('body')[0];
-            //$scope.complianceGraph =  true;
-            //$scope.hmrLineGraph = true;
-            //$scope.getComplianceGraphData();
-            //$scope.drawGraph();
-      hiddenFrame.contentWindow.printAndRemove = function() {
+        html1 = element1.innerHTML,
+        //html2 = element2.innerHTML,
+        //htmlDocument,
+        doc;
+        hiddenFrame = $('<iframe id="pdfID" style="display: none"></iframe>').appendTo('body')[0];
+        //$scope.complianceGraph =  true;
+        //$scope.hmrLineGraph = true;
+        //$scope.getComplianceGraphData();
+        //$scope.drawGraph();
+        hiddenFrame.contentWindow.printAndRemove = function() {
 
             //$scope.drawComplianceGraph();
         $timeout( function(){
@@ -1430,66 +1434,101 @@ angular.module('hillromvestApp')
           // $scope.complianceGraph =  false;
         }, 0);
       };
-      $scope.testText = "TEST TEXT";
+
+      var patientDetails = ($scope.slectedPatient) ? $scope.slectedPatient : null;
+      var pdfClinic = ($scope.slectedPatient && $scope.slectedPatient.clinicMRNId && $scope.slectedPatient.clinicMRNId.clinic) ? $scope.slectedPatient.clinicMRNId.clinic : null;
+      var completeAddress = (pdfClinic !== null && pdfClinic.city) ? pdfClinic.city : stringConstants.emptyString;
+      completeAddress += (pdfClinic !== null && pdfClinic.state) ? ((completeAddress.length > 1) ? (stringConstants.comma+pdfClinic.state) : pdfClinic.state) : completeAddress; 
+      completeAddress += (pdfClinic !== null && pdfClinic.address) ? ((completeAddress.length > 1) ? (stringConstants.comma+pdfClinic.address) : pdfClinic.address) : completeAddress;
+      completeAddress += (pdfClinic !== null && pdfClinic.zipcode) ? ((completeAddress.length > 1) ? (stringConstants.comma+pdfClinic.zipcode) : pdfClinic.zipcode) : completeAddress;
+      var pdfClinicName = (pdfClinic !== null && pdfClinic.name) ? pdfClinic.name : stringConstants.notAvailable; 
+      var pdfClinicAddress = (pdfClinic !== null && pdfClinic.address) ? pdfClinic.address : stringConstants.notAvailable;
+      var pdfClinicPhone = (pdfClinic !== null && pdfClinic.phoneNumber) ? pdfClinic.phoneNumber : stringConstants.notAvailable;
+      var reportGenerationDate = dateService.getDateFromTimeStamp(new Date().getTime(),patientDashboard.dateFormat,'/');
+      var patientMrnId = (patientDetails !== null && patientDetails.mrnId)? $scope.slectedPatient.mrnId : stringConstants.notAvailable;
+      var patientName = (patientDetails !== null && patientDetails.firstName)? $scope.slectedPatient.firstName+stringConstants.space+$scope.slectedPatient.lastName : stringConstants.notAvailable;
+      var completePatientAddress = (patientDetails !== null && patientDetails.city) ? patientDetails.city : stringConstants.emptyString;
+      completePatientAddress += (patientDetails !== null && patientDetails.state) ? ((completePatientAddress.length > 1) ? (stringConstants.comma+patientDetails.state) : patientDetails.state) : completePatientAddress; 
+      completePatientAddress += (patientDetails !== null && patientDetails.address) ? ((completePatientAddress.length > 1) ? (stringConstants.comma+patientDetails.address) : patientDetails.address) : completePatientAddress;
+      completePatientAddress += (patientDetails !== null && patientDetails.zipcode) ? ((completePatientAddress.length > 1) ? (stringConstants.comma+patientDetails.zipcode) : patientDetails.zipcode) : completePatientAddress;
+      var patientPhone = (patientDetails !== null && patientDetails.mobilePhone)? $scope.slectedPatient.mobilePhone : stringConstants.notAvailable;
+      var patientDOB = (patientDetails !== null && patientDetails.dob)? dateService.getDateFromTimeStamp(patientDetails.dob,patientDashboard.dateFormat,'/') : stringConstants.notAvailable;
+      var patientAdherence = (patientDetails !== null && patientDetails.adherence)? $scope.slectedPatient.adherence : stringConstants.notAvailable;
+      var patientDeviceType = stringConstants.deviceType;
+      var patientDeviceSlNo = ($scope.patientDevices && $scope.patientDevices[0] && $scope.patientDevices[0].serialNumber) ? $scope.patientDevices[0].serialNumber: stringConstants.notAvailable;
+      var pdfMissedTherapyDays = ($scope.missedtherapyDays !== null && $scope.missedtherapyDays >= 0) ? $scope.missedtherapyDays : stringConstants.notAvailable;
+      var pdfHMRNonAdherenceScore = ($scope.adherenceScore !== null && $scope.adherenceScore >= 0) ? $scope.adherenceScore : stringConstants.notAvailable;
+      var pdfSettingDeviation = stringConstants.notAvailable;
       htmlDocument = "<!doctype html>" +
             '<html style="background: white;"><head>' +
             '<link rel="stylesheet" href="bower_components/nvd3/src/nv.d3.css" />' +
             '<link rel="stylesheet" href="styles/style.css">' +
             '</head>' +
             '<body onload="printAndRemove();">' + // Print only after document is loaded
-            '<div class="pdf__heading-primary">Clinic Name</div>' +
-            '<div class="pdf__heading-secondary">Clinic Address</div>' +
-            '<div class="pdf__heading-secondary pdf--heading-border">Clinic Phone Number</div>' +
+            '<div class="pdf__heading-primary">'+pdfClinicName+'</div>' +
+            '<div class="pdf__heading-secondary">'+completeAddress+'</div>' +
+            '<div class="pdf__heading-secondary pdf--heading-border">'+pdfClinicPhone+'</div>' +
             '<div class="title">'+
-            '<span class="title--heading">'+$scope.testText+'</span>'+
-            '<span class="title--desc">Avnesh</span>'+
+            '<span class="title--heading">'+stringConstants.reportGenerationDateLabel+'</span>'+
+            '<span class="title--desc">'+reportGenerationDate+'</span>'+
             '</div>' +
             '<div class="title">'+
-            '<span class="title--heading">hello:</span>'+
-            '<span class="title--desc">dost</span>'+
+            '<span class="title--heading">'+stringConstants.dateRangeOfReportLabel+stringConstants.colon+'</span>'+
+            '<span class="title--desc">'+$scope.fromDate+stringConstants.minus+$scope.toDate+'</span>'+
             '</div>' +
             '<div class="pdf-container table-right">'+
               '<table border=1>' +
               '<thead>'+
               '<tr>'+
-              '<th colspan="2">Check it</th>' + 
+              '<th colspan="2">'+stringConstants.patientInformationLabel+'</th>' + 
               '</tr>'+
               '</thead>'+
-              '<tr><td class="heading">Tabledata</td><td class="desc">Table data</td></tr>' +
+              '<tr><td class="heading">'+stringConstants.mrn+stringConstants.colon+'</td><td class="desc">'+patientMrnId+'</td></tr>' +
+              '<tr><td class="heading">'+stringConstants.name+stringConstants.colon+'</td><td class="desc">'+patientName+'</td></tr>' +
+              '<tr><td class="heading">'+stringConstants.address+stringConstants.colon+'</td><td class="desc">'+completePatientAddress+'</td></tr>' +
+              '<tr><td class="heading">'+stringConstants.phone+stringConstants.colon+'</td><td class="desc">'+patientPhone+'</td></tr>' +
+              '<tr><td class="heading">'+stringConstants.DOB+stringConstants.colon+'</td><td class="desc">'+patientDOB+'</td></tr>' +
+              '<tr><td class="heading">'+stringConstants.adherenceScore+stringConstants.colon+'</td><td class="desc">'+patientAdherence+'</td></tr>' +
               '</table>' +
             '</div>' +
             '<div class="pdf-container table-left">'+
               '<table border=1>' +
                 '<thead>'+
                   '<tr>'+
-                    '<th colspan="2">Check it</th>' + 
+                    '<th colspan="2">'+stringConstants.deviceInformationLabel+'</th>' + 
                   '</tr>'+
                 '</thead>'+
-              '<tr><td class="heading">Tabledata</td><td class="desc">Table data</td></tr>' +
+              '<tr><td class="heading">'+stringConstants.type+stringConstants.colon+'</td><td class="desc">'+patientDeviceType+'</td></tr>' +
+              '<tr><td class="heading">'+stringConstants.serialNumber+stringConstants.colon+'</td><td class="desc">'+patientDeviceSlNo+'</td></tr>' +
               '</table>' +
               '<table class="pdf--margin-top" border=1 ng-if="true">' +
                 '<thead>'+
                   '<tr>'+
-                    '<th colspan="2">second one</th>' + 
+                    '<th colspan="2">'+stringConstants.NotificationLabel+'</th>' + 
                   '</tr>'+
-                '</thead>'+
-              '<tr><td class="heading">second heaading</td><td class="desc">Table data</td></tr>' +
+                '</thead>'+ 
+              '<tr><td class="heading">'+stringConstants.missedTherapyDays+stringConstants.colon+
+              '</td><td class="desc">'+pdfMissedTherapyDays+'</td></tr>' +
+              '<tr><td class="heading">'+stringConstants.hmrNonAdherence+stringConstants.colon+
+              '</td><td class="desc">'+pdfHMRNonAdherenceScore+'</td></tr>' +
+              '<tr><td class="heading">'+stringConstants.settingDeviation+stringConstants.colon+
+              '</td><td class="desc">'+pdfSettingDeviation+'</td></tr>' +
               '</table>' +
             '</div>' +
-            '<div class="graph-title">Patient Treatment Duretion</div>'+
+            '<div class="graph-title"></div>'+
             '<div>'+
               html1 +
             '</div>'+
-            // '<div class="pdf-signature">'+
-            //   '<div class="pdf-signature--prim">'+
-            //   '<span>hello</span>'+
-            //   '<span>hello</span>'+
-            //   '</div>'+
-            //   '<div class="pdf-signature--secon">'+
-            //   '<span>hello</span>'+
-            //   '<span>hello</span>'+
-            //   '</div>'+
-            // '</div>'+
+            /*'<div class="pdf-signature">'+
+              '<div class="pdf-signature--prim">'+
+              '<span>HCP Name</span>'+
+              '<span>Signature</span>'+
+              '</div>'+
+              '<div class="pdf-signature--secon">'+
+              '<span>Date</span>'+
+              '<span>'+reportGenerationDate+'</span>'+
+              '</div>'+
+            '</div>'+*/
             '</body>' +
             "</html>";
           doc = hiddenFrame.contentWindow.document.open("text/html");
@@ -1555,7 +1594,6 @@ angular.module('hillromvestApp')
     };
     $scope.closeModalCaregiver = function(){
       $scope.showModalCaregiver = false;
-    };
-    
+    };    
     
 }]);
