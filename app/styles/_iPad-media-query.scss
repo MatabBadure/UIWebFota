@@ -83,6 +83,12 @@
 		-moz-box-shadow: none;
 		box-shadow: none;
 		border-radius: 0px;
+		-webkit-border-radius: 0px;
+	}
+	input[type="text"], input[type="email"], input[type="search"], input[type="password"] {
+	-webkit-appearance: caret;
+	-moz-appearance: caret; /* mobile firefox too! */
+	border-radius: 0px;
 	}
 
 	.patient-user__navbar .patient-dashboard > li {
@@ -194,6 +200,12 @@
 		-moz-box-shadow: none;
 		box-shadow: none;
 		border-radius: 0px;
+		-webkit-border-radius: 0px;
+	}
+	input[type="text"], input[type="email"], input[type="search"], input[type="password"] {
+	-webkit-appearance: caret;
+	-moz-appearance: caret; /* mobile firefox too! */
+	border-radius: 0px;
 	}
 	.patient-user__navbar{
 		width: 100%;
