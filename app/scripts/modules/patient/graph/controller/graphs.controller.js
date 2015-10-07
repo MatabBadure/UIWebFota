@@ -1405,6 +1405,9 @@ angular.module('hillromvestApp')
         $timeout(function() {
         $(hiddenFrame).remove();
         var printId1 = "#lineGraphWrapper";
+        if($scope.selectedGraph === "COMPLIANCE"){
+          printId1 = "#complianceGraphWrapper";
+        }
         //var printId2 = "#complianceGraphWrapper";
         var graphData = ($scope.hmrGraph) ? $scope.completeGraphData : $scope.completeComplianceData;
         var element1 = document.querySelectorAll(printId1)[0],
@@ -1413,6 +1416,7 @@ angular.module('hillromvestApp')
         //html2 = element2.innerHTML,
         //htmlDocument,
         doc;
+
         hiddenFrame = $('<iframe id="pdfID" style="display: none"></iframe>').appendTo('body')[0];
         //$scope.complianceGraph =  true;
         //$scope.hmrLineGraph = true;
