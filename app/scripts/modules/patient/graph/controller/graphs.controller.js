@@ -1397,6 +1397,7 @@ angular.module('hillromvestApp')
           return chart;
       }, function(){
         $timeout(function() {
+          $scope.testText = "ABCD";
 
  $(hiddenFrame).remove();
         var printId1 = "#lineGraphWrapper";
@@ -1429,20 +1430,67 @@ angular.module('hillromvestApp')
           // $scope.complianceGraph =  false;
         }, 0);
       };
+      $scope.testText = "TEST TEXT";
       htmlDocument = "<!doctype html>" +
             '<html style="background: white;"><head>' +
             '<link rel="stylesheet" href="bower_components/nvd3/src/nv.d3.css" />' +
             '<link rel="stylesheet" href="styles/style.css">' +
             '</head>' +
             '<body onload="printAndRemove();">' + // Print only after document is loaded
-            '<div>Clinic&nbsp;Name</div>' +
-            '<div>Clinic&nbsp;Address</div>' +
-            '<div>Clinic&nbsp;Phone&nbsp;Number</div>' +
-            '<table border=1><tr><td>Tabledata</td></tr><tr><td>Table data</td></tr></table>' +
-            '<br><br><br><br><br>' +
-            html1 +
-            //html2 +
-            '<div class="print-date-range">Extra&nbsp;Content&nbsp;....</div></body>' +
+            '<div class="pdf__heading-primary">Clinic Name</div>' +
+            '<div class="pdf__heading-secondary">Clinic Address</div>' +
+            '<div class="pdf__heading-secondary pdf--heading-border">Clinic Phone Number</div>' +
+            '<div class="title">'+
+            '<span class="title--heading">'+$scope.testText+'</span>'+
+            '<span class="title--desc">Avnesh</span>'+
+            '</div>' +
+            '<div class="title">'+
+            '<span class="title--heading">hello:</span>'+
+            '<span class="title--desc">dost</span>'+
+            '</div>' +
+            '<div class="pdf-container table-right">'+
+              '<table border=1>' +
+              '<thead>'+
+              '<tr>'+
+              '<th colspan="2">Check it</th>' + 
+              '</tr>'+
+              '</thead>'+
+              '<tr><td class="heading">Tabledata</td><td class="desc">Table data</td></tr>' +
+              '</table>' +
+            '</div>' +
+            '<div class="pdf-container table-left">'+
+              '<table border=1>' +
+                '<thead>'+
+                  '<tr>'+
+                    '<th colspan="2">Check it</th>' + 
+                  '</tr>'+
+                '</thead>'+
+              '<tr><td class="heading">Tabledata</td><td class="desc">Table data</td></tr>' +
+              '</table>' +
+              '<table class="pdf--margin-top" border=1 ng-if="true">' +
+                '<thead>'+
+                  '<tr>'+
+                    '<th colspan="2">second one</th>' + 
+                  '</tr>'+
+                '</thead>'+
+              '<tr><td class="heading">second heaading</td><td class="desc">Table data</td></tr>' +
+              '</table>' +
+            '</div>' +
+            '<div class="graph-title">Patient Treatment Duretion</div>'+
+            '<div>'+
+              html1 +
+            '</div>'+
+            // '<div class="pdf-signature">'+
+            //   '<div class="pdf-signature--prim">'+
+            //   '<span>hello</span>'+
+            //   '<span>hello</span>'+
+            //   '</div>'+
+            //   '<div class="pdf-signature--secon">'+
+            //   '<span>hello</span>'+
+            //   '<span>hello</span>'+
+            //   '</div>'+
+            // '</div>'+
+            '</body>' +
             "</html>";
           doc = hiddenFrame.contentWindow.document.open("text/html");
           doc.write(htmlDocument);

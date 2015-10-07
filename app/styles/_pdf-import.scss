@@ -1,0 +1,81 @@
+.pdf{
+	&__heading-primary {
+		text-align: center; 
+		font-size: 21px; 
+		font-weight: bold;
+		color: #7ca3dc !important;
+	}
+
+	&__heading-secondary {
+		text-align: center; 
+		font-size: 12px;
+		color: #34455c !important;
+	}
+
+	&--heading-border {
+		border-bottom: 1px solid #34455c;
+		margin-bottom: 20px;
+	}
+}
+
+
+.title {
+	width: 50%;
+	display: inline-block;
+	padding-bottom: 20px;
+	&--heading {
+		font-size: 10px;
+		padding-right: 10px;
+		color: #34455c !important;
+	}
+	&--desc {
+		font-size: 12px;
+		color: #7ca3dc !important;
+	}
+}
+
+.pdf-container{
+	width: 50%;
+	display: inline-block;
+	table {
+		width: 100%;
+		thead {
+			background-color: #7ca3dc !important;
+		}
+		th {
+			padding: 5px 10px;
+			color: white !important;
+			font-size: 12px;
+		}
+		td {
+			padding: 5px 10px;
+			color: #34455c !important;
+		}
+		td.heading {
+			font-size: 10px;
+		}
+		td.desc {
+			font-size: 12px;
+		}
+	}
+}
+
+.table-left {
+	padding-left: 10px;
+}
+
+.table-right {
+	padding-right: 10px;
+	float: left;
+}
+
+.pdf--margin-top {
+	margin-top: 10px;
+}
+
+.graph-title {
+	padding: 10px 0;
+	font-size: 14px;
+	font-weight: bold;
+	color: #7ca3dc !important;
+}
