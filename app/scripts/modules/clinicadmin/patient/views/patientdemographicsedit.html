@@ -50,9 +50,9 @@
               <span class="" translate="patient.clinic-level-status"></span>
             </div>
             <div class="col-md-10 dashboard__form__input--option reset-padding selected-box-container">
-              <div class="custom-dropdown">
-                <spam ng-if="patient.expired" translate="patient.status-type.expired"></spam>
-                <select name="language" ng-readonly="validateADMINorASP()" ng-model="patient.status" ng-if="!patient.expired">
+              <spam ng-if="patient.expired" translate="patient.status-type.expired"></spam>
+              <div class="custom-dropdown" ng-if="!patient.expired">
+                <select name="language" ng-readonly="validateADMINorASP()" ng-model="patient.status" >
                   <option value="active" translate="patient.status-type.active"></option>
                   <option value="inactive" translate="patient.status-type.inactive"></option>
                   <option value="expired" translate="patient.status-type.expired"></option>
