@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('hillromvestApp')
-    .controller('PasswordController',['$scope', 'Auth', 'PrincipalService', function ($scope, Auth, PrincipalService) {
-        PrincipalService.identity().then(function(account) {
+    .controller('PasswordController',['$scope', 'Auth', 'Principal', function ($scope, Auth, Principal) {
+        Principal.identity().then(function(account) {
             $scope.account = account;
         });
 

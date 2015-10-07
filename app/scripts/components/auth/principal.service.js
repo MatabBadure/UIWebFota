@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hillromvestApp')
-    .factory('Principal',[function Principal() {
+    .factory('Principal',['$q', '$rootScope', 'Account', function Principal($q, $rootScope, Account) {
         var _identity,
             _authenticated = false;
 
@@ -36,27 +36,17 @@ angular.module('hillromvestApp')
                 _identity = identity;
                 _authenticated = identity !== null;
             },
-            setIdentity: function (identity) {
-                   _identity = identity;
-            },
-            getIdentity: function() {
-                return _identity;
-            },
-            setAuthenticate: function(authenticate) {
-                _authenticated = authenticate;
-            }
-        };
-    }]).service('PrincipalService', ['Account', '$q', 'Principal', '$rootScope', function(Account, $q, Principal, $rootScope) {
-        this.identity = function(force) {
-             var deferred = $q.defer();
-              if (force === true) {
-                    Principal.setIdentity(undefined);
+            identity: function (force) {
+                var deferred = $q.defer();
+
+                if (force === true) {
+                    _identity = undefined;
                 }
 
                 // check and see if we have retrieved the identity data from the server.
                 // if we have, reuse it by immediately resolving
-                if (angular.isDefined(Principal.getIdentity())) {
-                    deferred.resolve(Principal.getIdentity());
+                if (angular.isDefined(_identity)) {
+                    deferred.resolve(_identity);
 
                     return deferred.promise;
                 }
@@ -64,17 +54,18 @@ angular.module('hillromvestApp')
                 // retrieve the identity data from the server, update the identity object, and then resolve.
                 Account.get().$promise
                     .then(function (account) {
-                        Principal.setIdentity(account.data);
-                        Principal.setAuthenticate(true);
+                        _identity = account.data;
+                        _authenticated = true;
                         $rootScope.isAuthenticated = true;
-                        deferred.resolve(account.data);
+                        deferred.resolve(_identity);
                     })
                     .catch(function() {
-                        Principal.setIdentity(null);
-                        Principal.setAuthenticate(false);
+                        _identity = null;
+                        _authenticated = false;
                         $rootScope.isAuthenticated = false;
-                        deferred.resolve(null);
+                        deferred.resolve(_identity);
                     });
                 return deferred.promise;
-        }
+            }
+        };
     }]);
