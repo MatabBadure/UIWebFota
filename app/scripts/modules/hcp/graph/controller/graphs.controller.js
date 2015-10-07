@@ -130,11 +130,8 @@ angular.module('hillromvestApp')
 	  if(value === 'hcppatientdashboard' || value === 'clinicadminpatientdashboard' || value === 'clinicadminhcpdashboard'){
 	  	var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : $stateParams.clinicId;
 	    $state.go(value, {'clinicId': clinicId});
-	  if(value === 'hcppatientdashboard' || value === 'clinicadminpatientdashboard'){
-		var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : $stateParams.clinicId;
-		$state.go(value, {'clinicId': clinicId});
 	  }else{
-		$state.go(value);
+		  $state.go(value);
 	  }
   };
 
