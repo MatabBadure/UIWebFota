@@ -6,7 +6,7 @@
         
         <li class="hcp_hsp_name_a" dropdown>
           <a ng-href="" id="dropdownMenu1" dropdown-toggle>
-            <span class="">{{::selectedPatient.user.lastName}} {{::selectedPatient.user.firstName}}<span class="hillrom-icon icon-arrow-down"></span></span>
+            <span class="">{{selectedPatient.user.lastName}} {{selectedPatient.user.firstName}}<span class="hillrom-icon icon-arrow-down"></span></span>
           </a>
           <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
               <li role="menuitem" ng-repeat='patient in patients' ng-click="switchPatient(patient)"><a>{{::patient.user.lastName}} {{::patient.user.firstName}}</a></li>

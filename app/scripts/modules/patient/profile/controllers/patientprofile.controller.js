@@ -33,11 +33,21 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
   $scope.getPatientListForCaregiver = function(caregiverID){
     caregiverDashBoardService.getPatients(caregiverID).then(function(response){
       $scope.patients = response.data.patients;
-      $scope.selectedPatient = response.data.patients[0];
+      if(localStorage.getItem('patientID') !== undefined){
+          angular.forEach($scope.patients, function(value){
+            if(value.userId === parseInt(localStorage.getItem('patientID'))){
+              $scope.$emit('getSelectedPatient', value);
+              $scope.selectedPatient = value;
+              $scope.patientId = localStorage.getItem('patientID');
+            }
+          });
+      } else{
+          $scope.selectedPatient = response.data.patients[0];
+          $scope.$emit('getSelectedPatient', $scope.selectedPatient);
+          $scope.patientId = $scope.selectedPatient.userId;
+          localStorage.setItem('patientID',$scope.patientId);
+      }
       $scope.$emit('getPatients', $scope.patients);
-      $scope.$emit('getSelectedPatient', $scope.selectedPatient);
-      $scope.patientId = $scope.selectedPatient.userId;
-      localStorage.setItem('patientID',$scope.patientId);
       if($state.current.name === 'patientDashboardPatientInfo'){
         $scope.initProfileView();    
       } else if($state.current.name === 'patientDashboardNotification'){
@@ -58,9 +68,10 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
   });
 
   $scope.switchPatient = function(patient){
-    if($scope.selectedPatient.user !== patient.user){
+    if($scope.selectedPatient.userId !== patient.userId){
       $scope.selectedPatient = patient;
-      $scope.patientId = $scope.selectedPatient.user;
+      $scope.patientId = $scope.selectedPatient.userId;
+      $scope.$emit('getSelectedPatient', $scope.selectedPatient);
       localStorage.setItem('patientID',$scope.patientId);
       if($state.current.name === 'patientDashboardPatientInfo'){
         $scope.initProfileView();    
