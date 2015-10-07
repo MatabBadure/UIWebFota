@@ -36,7 +36,7 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
       $scope.selectedPatient = response.data.patients[0];
       $scope.$emit('getPatients', $scope.patients);
       $scope.$emit('getSelectedPatient', $scope.selectedPatient);
-      $scope.patientId = $scope.selectedPatient.user;
+      $scope.patientId = $scope.selectedPatient.userId;
       localStorage.setItem('patientID',$scope.patientId);
       if($state.current.name === 'patientDashboardPatientInfo'){
         $scope.initProfileView();    

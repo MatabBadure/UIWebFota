@@ -76,8 +76,11 @@
           <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
             <span class="" translate="profile.view-role-text"></span>
           </div>
-          <div class="col-md-6 col-sm-6 dashboard__form--label-val reset-padding">
+          <div class="col-md-6 col-sm-6 dashboard__form--label-val reset-padding" ng-if="role !=='CARE_GIVER'">
             <span ng-bind="userRole"></span>
+          </div>
+          <div class="col-md-6 col-sm-6 dashboard__form--label-val reset-padding" ng-if="role ==='CARE_GIVER'">
+            <span >PATIENT</span>
           </div>
         </div>
       </div>
