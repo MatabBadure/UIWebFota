@@ -64,7 +64,7 @@ angular.module('hillromvestApp',
       }
     };
   })
-  .factory('authInterceptor', function($rootScope, $q, $location, localStorageService, $injector, Principal) {
+  .factory('authInterceptor', function($rootScope, $q, $location, localStorageService) {
     return {
       // Add authorization token to headers
       request: function(config) {
@@ -76,13 +76,6 @@ angular.module('hillromvestApp',
         }
 
         return config;
-      },
-      responseError: function(rejection){
-        if(rejection.status === 401){
-          Principal.authenticate(null);
-          $injector.get('$state').transitionTo('login');
-          return $q.reject(rejection);
-        }
       }
     };
   })
