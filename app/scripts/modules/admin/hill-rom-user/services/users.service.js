@@ -79,14 +79,11 @@ angular.module('hillromvestApp')
         if (searchString === undefined) {
           searchString = '';
         }
-        if (sortOption === "") {
-          sortOption = "createdAt";
-          sortOrder = false;
-        } else {
-          sortOrder = true;
-        };
+        if (sortOption === "" || sortOption === undefined || sortOption === null) {
+          sortOption = searchFilters.amp +searchFilters.asc +searchFilters.equal + true;
+        } 
 
-        return $http.get(url + searchString + '&page=' + pageNo + '&per_page=' + offset + '&sort_by=' + sortOption + '&asc=' + sortOrder + '&filter='+filter, {
+        return $http.get(url + searchString + '&page=' + pageNo + '&per_page=' + offset + '&sort_by=' + sortOption + '&filter='+filter, {
           headers: headerService.getHeader()
         }).success(function(response) {
           return response;
