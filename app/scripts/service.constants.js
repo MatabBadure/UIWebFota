@@ -76,7 +76,9 @@ var sortConstant = {
     isDeleted: "isDeleted",
     credentials: "credentials",
     npiNumber: "npiNumber",
-    clinicName: "clinicName"
+    clinicName: "clinicName",
+    hcity: "hcity",
+    hstate: "hstate"
 }
 
 var stringConstants = {

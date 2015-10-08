@@ -80,7 +80,7 @@ angular.module('hillromvestApp')
           searchString = '';
         }
         if (sortOption === "" || sortOption === undefined || sortOption === null) {
-          sortOption = searchFilters.amp +searchFilters.asc +searchFilters.equal + true;
+          sortOption = sortConstant.lastName + searchFilters.amp +searchFilters.asc +searchFilters.equal + true;
         } 
 
         return $http.get(url + searchString + '&page=' + pageNo + '&per_page=' + offset + '&sort_by=' + sortOption + '&filter='+filter, {

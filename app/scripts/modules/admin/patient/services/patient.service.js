@@ -23,7 +23,7 @@ angular.module('hillromvestApp')
           searchString = '';
         }
         if (sortOption === "" || sortOption === undefined || sortOption === null) {
-          sortOption = searchFilters.amp +searchFilters.asc +searchFilters.equal + true;
+          sortOption = sortConstant.plastName + searchFilters.amp +searchFilters.asc +searchFilters.equal + true;
         } 
         url = url + '?searchString=' + searchString + '&page=' + pageNo + '&per_page=' + offset + '&sort_by=' + sortOption + '&filter='+filterBy;
         return $http.get(url, {

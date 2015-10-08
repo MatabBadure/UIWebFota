@@ -142,7 +142,7 @@ angular.module('hillromvestApp')
             toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortHcpList.city);
             $scope.sortHcpList = sortOptionsService.getSortOptionsForHcpList();
             $scope.sortHcpList.city = toggledSortOptions;
-            $scope.sortOption = sortConstant.city + sortOptionsService.getSortByASCString(toggledSortOptions);
+            $scope.sortOption = sortConstant.hcity + sortOptionsService.getSortByASCString(toggledSortOptions);
             $scope.searchDoctors();
           }else if(sortParam === sortConstant.status){
             toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortHcpList.status);
@@ -154,7 +154,7 @@ angular.module('hillromvestApp')
             toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortHcpList.state);
             $scope.sortHcpList = sortOptionsService.getSortOptionsForHcpList();
             $scope.sortHcpList.state = toggledSortOptions;
-            $scope.sortOption = sortConstant.state + sortOptionsService.getSortByASCString(toggledSortOptions);
+            $scope.sortOption = sortConstant.hstate + sortOptionsService.getSortByASCString(toggledSortOptions);
             $scope.searchDoctors();
           }        
           
