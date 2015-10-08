@@ -311,7 +311,7 @@
 
     "user-not-found" : "No user associated.",
     "navbar": {
-        "my-dashboard": "My Dashboard",
+        "my-dashboard": "Dashboard",
         "create-new-hcp": "Create New HCP +"
     },
     "place-holder":{
