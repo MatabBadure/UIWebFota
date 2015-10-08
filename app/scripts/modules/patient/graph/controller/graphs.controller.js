@@ -383,7 +383,19 @@ angular.module('hillromvestApp')
           $scope.completeGraphData = graphUtil.convertIntoServerTimeZone($scope.completeGraphData,patientDashboard.hmrNonDayGraph);
           $scope.yAxisRangeForHMRLine = graphUtil.getYaxisRangeLineGraph($scope.completeGraphData);
           $scope.graphData = graphUtil.convertToHMRStepGraph($scope.completeGraphData,patientDashboard.HMRLineGraphColor);
-          $scope.drawHMRLineGraph();
+          /* waiting until svg element loads*/
+          var count =5;
+          $scope.waitFunction = function waitHandler() {
+             var svgCount = document.getElementsByTagName('svg').length;
+            if(svgCount > 0 || count === 0 ) {
+              $scope.drawHMRLineGraph();
+              return false;
+            } else {
+              count --;
+            }
+            $timeout(waitHandler, 1000);
+          }
+          $scope.waitFunction();
         }
       }).catch(function(response) {
         $scope.graphData = [];
