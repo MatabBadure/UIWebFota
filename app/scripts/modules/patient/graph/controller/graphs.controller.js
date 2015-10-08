@@ -389,7 +389,7 @@ angular.module('hillromvestApp')
              var svgCount = document.getElementsByTagName('svg').length;
             if(svgCount > 0 || count === 0 ) {
               $scope.drawHMRLineGraph();
-              return false;
+              $timeout.cancel(waitHandler);
             } else {
               count --;
             }
