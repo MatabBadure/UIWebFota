@@ -315,5 +315,9 @@
         "create-new-hcp": "Create New HCP +",
         "manage-hcp": "Manage HCPs",
         "clinic-info": "Clinic Info"
+    },
+    "place-holder":{
+        "mobile-number": "Mobile Number",
+        "phone-number": "Phone Number"
     }
 }

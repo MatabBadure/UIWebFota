@@ -14,7 +14,7 @@ angular.module('hillromvestApp',
    'angular-noty',
    'angular-loading-bar',
    'daterangepicker',
-   'ngMask',
+   'ui.mask',
    'validation.match',
    'ui.bootstrap',
    'easypiechart'
