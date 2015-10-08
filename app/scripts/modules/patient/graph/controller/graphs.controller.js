@@ -306,6 +306,7 @@ angular.module('hillromvestApp')
                   '<li><span class="pull-left">' + 'Frequency' + '</span><span class="pull-right value">' + value.frequency  + '</span></li>' +
                   '<li><span class="pull-left">' + 'Pressure' +'</span><span class="pull-right value">' + value.pressure +'</span></li>' +
                   '<li><span class="pull-left">' + 'Cough Pauses' +'</span><span class="pull-right value">' + (value.normalCaughPauses + value.programmedCaughPauses) +'</span></li>' +
+                  '<li><span class="pull-left">' + 'Duration' +'</span><span class="pull-right value">' + value.durationInMinutes +'</span></li>' +
                 '</ul>';
           }
         });
@@ -390,6 +391,7 @@ angular.module('hillromvestApp')
             if(svgCount > 0 || count === 0 ) {
               $scope.drawHMRLineGraph();
               $timeout.cancel(waitHandler);
+              return false;
             } else {
               count --;
             }
