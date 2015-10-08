@@ -108,7 +108,7 @@ angular.module('hillromvestApp')
     $scope.getPatientListForCaregiver = function(caregiverID){
       caregiverDashBoardService.getPatients(caregiverID).then(function(response){
         $scope.patients = response.data.patients;
-        if(localStorage.getItem('patientID') !== undefined){
+        if(localStorage.getItem('patientID') !== null){
           angular.forEach($scope.patients, function(value){
             if(value.userId === parseInt(localStorage.getItem('patientID'))){
               $scope.$emit('getSelectedPatient', value);
