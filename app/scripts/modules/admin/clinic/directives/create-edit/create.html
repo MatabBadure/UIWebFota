@@ -151,7 +151,7 @@
               <span class="" translate="clinic.clinic-phone"></span>
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
-              <input class="" type="text" name="phone" validate-on-blur ng-model="clinic.phoneNumber" mask="(999)-999-9999">
+              <input class="" type="text" name="phone" validate-on-blur ng-model="clinic.phoneNumber" ui-mask="(999)-999-9999">
               <div ng-show="(form.phone.$showValidationMessage && form.phone.$invalid) || submitted">
                 <span class="has-error" ng-show="form.phone.$error.mask" translate="error.phoneNumber.mask"></span>
               </div>
@@ -162,7 +162,7 @@
               <span class="" translate="clinic.fax-number"></span>
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
-              <input class="" type="text" name="fax" validate-on-blur ng-model="clinic.faxNumber" mask="(999)-999-9999">
+              <input class="" type="text" name="fax" validate-on-blur ng-model="clinic.faxNumber" ui-mask="(999)-999-9999">
               <div ng-show="(form.fax.$showValidationMessage && form.fax.$invalid) || submitted">
                 <span class="has-error" ng-show="form.fax.$error.mask" translate="error.faxNumber.mask"></span>
               </div>
