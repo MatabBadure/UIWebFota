@@ -31,6 +31,7 @@ angular.module('hillromvestApp')
         };
 
         $scope.init = function () {
+          $scope.doctor = {};
           if($stateParams.doctorId){
             $scope.doctorStatus.isCreate = false;
             $scope.doctorStatus.editMode = true;

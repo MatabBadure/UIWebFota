@@ -1692,7 +1692,7 @@ angular.module('hillromvestApp')
                 url: '/{clinicId}/clinicadmin-hcp',
                 data: {
                     roles: ['CLINIC_ADMIN'],
-                    pageTitle: 'hcp.title'
+                    pageTitle: 'doctor.page-title.hcps'
                 },
                 views: {
                     'content@': {
@@ -1703,6 +1703,32 @@ angular.module('hillromvestApp')
                 resolve: {
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('doctor');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+
+            .state('clinicadminclinicdashboard', {
+                parent: 'clinicadmin-dashboard',
+                url: '/{clinicId}/clinicadmin-clinic',
+                data: {
+                    roles: ['CLINIC_ADMIN'],
+                    pageTitle: 'clinic.page-title.clinics'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/clinicadmin/clinic/views/clinicdetail.html',
+                        controller: 'clinicadminclinicController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('clinic');
                         return $translate.refresh();
                     }],
                     authorize: ['Auth',
