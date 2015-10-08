@@ -1,6 +1,6 @@
 angular.module('hillromvestApp')
-.controller('clinicadminHcpController',['$scope', '$state', '$stateParams', 'clinicService', 'DoctorService', 'UserService', 'searchFilterService', '$timeout', 'clinicadminService',
-  function($scope, $state, $stateParams, clinicService, DoctorService, UserService, searchFilterService, $timeout, clinicadminService) {
+.controller('clinicadminHcpController',['$scope', '$state', '$stateParams', 'clinicService', 'DoctorService', 'UserService', 'searchFilterService', '$timeout', 'clinicadminService', 'clinicadminHcpService',
+  function($scope, $state, $stateParams, clinicService, DoctorService, UserService, searchFilterService, $timeout, clinicadminService, clinicadminHcpService) {
 
     var searchOnLoad = true;
   	$scope.init = function(){
@@ -22,7 +22,6 @@ angular.module('hillromvestApp')
   	};
 
     $scope.initClinicadminHcpDashboard = function(){
-      // $scope.getHcps();
       $scope.searchHcps();
     };
 
@@ -40,31 +39,23 @@ angular.module('hillromvestApp')
       $scope.doctorStatus.editMode = true;
     };
 
-    $scope.getHcps = function(){
-      clinicService.getClinicAssoctHCPs(localStorage.getItem('clinicId')).then(function(response){
-        $scope.hcps = response.data.hcpUsers;
-      }).catch(function(response){
-        notyService.showError(response);
-      });
-    };
-
     $scope.searchHcps = function(track){ 
       if (track !== undefined) {
         if (track === "PREV" && $scope.currentPageIndex > 1) {
           $scope.currentPageIndex--;
         }
         else if (track === "NEXT" && $scope.currentPageIndex < $scope.pageCount){
-            $scope.currentPageIndex++;
+          $scope.currentPageIndex++;
         }
         else{
-            return false;
+          return false;
         }
       }else {
         $scope.currentPageIndex = 1;
       }
       var filter = searchFilterService.getFilterStringForPatient($scope.searchFilter);
       var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : $stateParams.clinicId;
-      clinicService.searchAssociatedPatientsToClinic($scope.searchItem, filter, $scope.currentPageIndex, $scope.perPageCount, clinicId).then(function(response){
+      clinicadminHcpService.searchAssociatedHcpsToClinic($scope.searchItem, filter, $scope.currentPageIndex, $scope.perPageCount, localStorage.getItem('userId'), clinicId).then(function(response){
         $scope.hcps = response.data;
         searchOnLoad = false;
       }).catch(function(response){
@@ -91,7 +82,12 @@ angular.module('hillromvestApp')
 
     $scope.disassociateHcp = function(hcp){
       $scope.hcpDisassociateModal = false;
-      UserService.deleteUser($scope.selectedHcp.id).then(function (response) {
+      var data = [
+      {
+        "id": $stateParams.clinicId
+      }
+      ];
+      clinicService.disassociateHCP($scope.selectedHcp.id, data).then(function (response) {
       }).catch(function (response) {
         notyService.showError(response);
       });

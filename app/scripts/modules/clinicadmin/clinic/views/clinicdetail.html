@@ -48,13 +48,11 @@
               <span class="">*</span>
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
-              <input class="" type="text" validate-on-blur name="name" ng-model="clinic.name" ng-readonly="validateADMINorASP()" required>
-              <!-- <div ng-show="(form.firstName.$dirty && form.firstName.$showValidationMessage && form.firstName.$invalid) ||submitted">
-                <span class="has-error" ng-show="form.firstName.$error.required" translate="error.firstName.required"></span>
-                <span class="has-error" ng-show="form.firstName.$error.pattern" translate="error.firstName.pattern"></span>
-                <span class="has-error" ng-show="form.firstName.$error.minlength" translate="error.firstName.minlength"></span>
-                <span class="has-error" ng-show="form.firstName.$error.maxlength" translate="error.firstName.maxlength"></span>
-              </div> -->
+              <input class="" type="text" validate-on-blur name="name" ng-model="clinic.name" ng-readonly="validateADMINorASP()" required ng-maxlength="25">
+              <div ng-show="(form.name.$dirty && form.name.$showValidationMessage && form.name.$invalid) || submitted">
+                <span class="has-error" ng-show="form.name.$error.required" translate="error.clinicName.required"></span>             
+                <span class="login-has-error" ng-show="form.name.$error.maxlength" translate="error.clinicName.maxlength"></span>
+              </div>
             </div>
           </div>
         </div>
@@ -66,20 +64,12 @@
               <span class="">*</span>
             </div>
             <div class="col-md-10 dashboard__form__input--option reset-padding selected-box-container">
-              <!-- <input class="" type="text" validate-on-blur name="type" ng-model="clinic.firstName" ng-readonly="validateADMINorASP()" ng-minlength=2 ng-maxlength=15 ng-pattern="/^[a-z A-Z]+$/" required> -->
               <div class="custom-dropdown">
                 <select name="type" ng-model="clinic.type" ng-disabled="clinicStatus.editMode">
                   <option selected translate="clinic.clinic-option.parent-clinic" value="parent"></option>
                   <option translate="clinic.clinic-option.satellite-clinic" value="child"></option>
                 </select>
               </div>
-
-              <!-- <div ng-show="(form.firstName.$dirty && form.firstName.$showValidationMessage && form.firstName.$invalid) ||submitted">
-                <span class="has-error" ng-show="form.firstName.$error.required" translate="error.firstName.required"></span>
-                <span class="has-error" ng-show="form.firstName.$error.pattern" translate="error.firstName.pattern"></span>
-                <span class="has-error" ng-show="form.firstName.$error.minlength" translate="error.firstName.minlength"></span>
-                <span class="has-error" ng-show="form.firstName.$error.maxlength" translate="error.firstName.maxlength"></span>
-              </div> -->
             </div>
           </div>
           <div class="col-md-7 reset-padding col-md-offset-2">
@@ -88,11 +78,6 @@
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
               <input class="" type="text" validate-on-blur ng-readonly="validateADMINorASP()" name="hillromId" ng-model="clinic.hillromId">
-              <!-- <div ng-show="(form.middleName.$showValidationMessage && form.middleName.$invalid)">
-                <span class="has-error" ng-show="form.middleName.$error.pattern" translate="error.middleName.pattern"></span>
-                <span class="has-error" ng-show="form.middleName.$error.minlength" translate="error.middleName.minlength"></span>
-                <span class="has-error" ng-show="form.middleName.$error.maxlength" translate="error.middleName.maxlength"></span>
-              </div> -->
             </div>
           </div>
         </div>
@@ -103,13 +88,11 @@
               <span class="" translate="clinic.address"></span>
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
-              <input class="" type="text" validate-on-blur name="address" ng-model="clinic.address" ng-readonly="validateADMINorASP()" >
-              <!-- <div ng-show="(form.lastName.$dirty && form.lastName.$showValidationMessage && form.lastName.$invalid) || submitted">
-                <span class="has-error" ng-show="form.lastName.$error.required" translate="error.lastName.required"></span>
-                <span class="has-error" ng-show="form.lastName.$error.pattern" translate="error.lastName.pattern"></span>
-                <span class="has-error" ng-show="form.lastName.$error.minlength" translate="error.lastName.minlength"></span>
-                <span class="has-error" ng-show="form.lastName.$error.maxlength" translate="error.lastName.maxlength"></span>
-              </div> -->
+              <input class="" type="text" validate-on-blur name="address" ng-model="clinic.address" ng-readonly="validateADMINorASP()" ng-maxlength="100">
+              <div ng-show="(form.address.$showValidationMessage && form.address.$invalid) || submitted">
+                <span class="has-error" ng-show="form.address.$error.maxlength" translate="error.address.maxlength">
+                </span>
+              </div>
             </div>
           </div>
 
@@ -118,12 +101,10 @@
               <span class="" translate="clinic.city"></span>
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
-              <input class="" type="text" validate-on-blur ng-readonly="validateADMINorASP()" name="city" ng-model="clinic.city" >
-              <!-- <div ng-show="(form.middleName.$showValidationMessage && form.middleName.$invalid)">
-                <span class="has-error" ng-show="form.middleName.$error.pattern" translate="error.middleName.pattern"></span>
-                <span class="has-error" ng-show="form.middleName.$error.minlength" translate="error.middleName.minlength"></span>
-                <span class="has-error" ng-show="form.middleName.$error.maxlength" translate="error.middleName.maxlength"></span>
-              </div> -->
+              <input class="" type="text" validate-on-blur ng-readonly="validateADMINorASP()" name="city" ng-model="clinic.city" ng-maxlength=15>
+              <div ng-show="(form.city.$showValidationMessage && form.city.$invalid)">
+                <span class="has-error" ng-show="form.city.$error.maxlength" translate="error.city.maxlength"></span>
+              </div>
             </div>
           </div>
         </div>
@@ -146,10 +127,10 @@
               <span class="" translate="clinic.zipcode"></span>
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
-              <input class="" type="text" validate-on-blur ng-model="clinic.zipcode" name="zipcode" ng-readonly="validateADMINorASP()" >
-              <!-- <div ng-show="(form.address.$showValidationMessage && form.address.$invalid)">
-                <span class="has-error" ng-show="form.address.$error.maxlength" translate="error.address.maxlength"></span>
-              </div> -->
+              <input class="" type="text" validate-on-blur ng-model="clinic.zipcode" name="zipcode" ng-readonly="validateADMINorASP()" maxlength="5" ng-pattern="/^(?=.*[1-9].*)[0-9]{5}$/">
+              <div ng-show="(form.zipcode.$showValidationMessage && form.zipcode.$invalid) || submitted">
+                <span class="has-error" ng-show="form.zipcode.$error.pattern" translate="error.zipcode.pattern"></span>
+              </div>
             </div>
           </div>
         </div>
@@ -160,10 +141,10 @@
               <span class="" translate="clinic.phoneNumber"></span>
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
-              <input class="" type="text" validate-on-blur ng-model="clinic.phoneNumber" name="phoneNumber" ng-readonly="validateADMINorASP()" >
-              <!-- <div ng-show="(form.city.$showValidationMessage && form.city.$invalid)">
-                <span class="has-error" ng-show="form.city.$error.maxlength" translate="error.city.maxlength"></span>
-              </div> -->
+              <input class="" type="text" validate-on-blur ng-model="clinic.phoneNumber" name="phoneNumber" ng-readonly="validateADMINorASP()" ui-mask="(999)-999-9999">
+              <div ng-show="(form.phoneNumber.$showValidationMessage && form.phoneNumber.$invalid) || submitted">
+                <span class="has-error" ng-show="form.phoneNumber.$error.mask" translate="error.phoneNumber.mask"></span>
+              </div>
             </div>
         </div>
         <div class="col-md-7 reset-padding col-md-offset-2">
