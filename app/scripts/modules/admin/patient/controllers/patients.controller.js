@@ -296,6 +296,7 @@ angular.module('hillromvestApp')
       $scope.searchItem = "";
       $scope.searchClinicText = false;
       patientService.associateClinicToPatient($stateParams.patientId, data).then(function(response) {
+        $scope.getAvailableAndAssociatedClinics($stateParams.patientId);
         $scope.associatedClinics = response.data.clinics;
       }).catch(function(response) {});
     };
@@ -327,6 +328,7 @@ angular.module('hillromvestApp')
       $scope.searchHcp = "";
       $scope.searchHCPText = false;
       patientService.associateHCPToPatient(data, $stateParams.patientId).then(function(response){
+        $scope.getAvailableAndAssociatedHCPs($stateParams.patientId);
         notyService.showMessage(response.data.message, 'success');
       });
     };
@@ -692,8 +694,8 @@ angular.module('hillromvestApp')
       $scope.associatedClinicsErrMsg = null;
       $scope.associatedHCPsErrMsg = null;            
       patientService.getClinicsLinkedToPatient(patientId).then(function(response) {
-        if(response.data.clinics){
-          $scope.associatedClinics =[]; 
+        $scope.associatedClinics =[];
+        if(response.data.clinics){ 
           $scope.associatedClinics = response.data.clinics;
         }else if(response.data.message){
           $scope.associatedClinicsErrMsg = response.data.message;
@@ -715,9 +717,9 @@ angular.module('hillromvestApp')
     $scope.getAvailableAndAssociatedHCPs = function(patientId){
       $scope.associatedClinicsErrMsg = null;
       $scope.associatedHCPsErrMsg = null;            
-      patientService.getAssociateHCPToPatient(patientId).then(function(response){        
+      patientService.getAssociateHCPToPatient(patientId).then(function(response){ 
+        $scope.associatedHCPs = [];        
         if(response.data.hcpUsers){
-          $scope.associatedHCPs = []; 
           $scope.associatedHCPs = response.data.hcpUsers;          
         }else if(response.data.message){
           $scope.associatedHCPsErrMsg = response.data.message;
