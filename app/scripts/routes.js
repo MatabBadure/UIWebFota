@@ -2030,7 +2030,7 @@ angular.module('hillromvestApp')
                 url: '/contactus',
                 data: {
                     roles: [],
-                    pageTitle: 'login.title'
+                    pageTitle: 'login.page-title.contact-us'
                 },
                 views: {
                     'content@': {
@@ -2049,7 +2049,7 @@ angular.module('hillromvestApp')
                 url: '/privacyPolicy',
                 data: {
                     roles: [],
-                    pageTitle: 'login.title'
+                    pageTitle: 'login.page-title.privacy-policy'
                 },
                 views: {
                     'content@': {
@@ -2068,7 +2068,7 @@ angular.module('hillromvestApp')
                 url: '/termsOfUse',
                 data: {
                     roles: [],
-                    pageTitle: 'login.title'
+                    pageTitle: 'login.page-title.terms-use'
                 },
                 views: {
                     'content@': {
@@ -2087,7 +2087,7 @@ angular.module('hillromvestApp')
                 url: '/privacyPractices',
                 data: {
                     roles: [],
-                    pageTitle: 'login.title'
+                    pageTitle: 'login.page-title.privacy-practices'
                 },
                 views: {
                     'content@': {
@@ -2106,7 +2106,7 @@ angular.module('hillromvestApp')
                 url: '/careSite',
                 data: {
                     roles: [],
-                    pageTitle: 'login.title'
+                    pageTitle: 'login.page-title.care-site'
                 },
                 views: {
                     'content@': {

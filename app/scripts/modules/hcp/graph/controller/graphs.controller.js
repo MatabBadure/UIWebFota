@@ -11,6 +11,7 @@ angular.module('hillromvestApp')
 		$scope.selectedDateOption = 'WEEK';
 		$scope.toTimeStamp = new Date().getTime();
 		$scope.treatment = {};
+    $scope.percentStatistics = {};
 		$scope.treatment.treatmentPerDay = true;
 		$scope.treatment.treatmentLength = true;
 		$scope.showTreatmentLegends = false;
@@ -46,12 +47,15 @@ angular.module('hillromvestApp')
    };
 
 	$scope.getPercentageStatistics = function(statistics){
-		$scope.percentStatistics = {};
-		$scope.percentStatistics.patientsWithMissedTherapy = statistics.patientsWithMissedTherapy; 
-		$scope.percentStatistics.patientsWithHmrNonCompliance = statistics.patientsWithHmrNonCompliance;
-		$scope.percentStatistics.patientsWithSettingDeviation = statistics.patientsWithSettingDeviation; 
-		$scope.percentStatistics.patientsWithNoEventRecorded = statistics.patientsWithNoEventRecorded;
-	}
+		$scope.percentStatistics.patientsWithMissedTherapy = $scope.calulatePercentage(statistics.patientsWithMissedTherapy, statistics.totalPatientCount); 
+		$scope.percentStatistics.patientsWithHmrNonCompliance = $scope.calulatePercentage(statistics.patientsWithHmrNonCompliance, statistics.totalPatientCount);
+		$scope.percentStatistics.patientsWithSettingDeviation = $scope.calulatePercentage(statistics.patientsWithSettingDeviation, statistics.totalPatientCount);
+		$scope.percentStatistics.patientsWithNoEventRecorded = $scope.calulatePercentage(statistics.patientsWithNoEventRecorded, statistics.totalPatientCount);
+	};
+
+  $scope.calulatePercentage = function( count, total){
+    return Math.floor((count/total)*100);
+  };
 
 	$scope.getClinicsForHCP = function(userId) {
 		DoctorService.getClinicsAssociatedToHCP(userId).then(function(response){

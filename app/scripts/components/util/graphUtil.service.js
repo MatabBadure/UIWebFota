@@ -161,9 +161,9 @@ angular.module('hillromvestApp')
         });
         var max = arrayMax(hmrSet);
         var min = arrayMin(hmrSet);
-        range.max = Math.ceil(Math.floor(max/60)/10) * 10;
+        range.max = Math.ceil(Math.floor(max/3600)/10) * 10;
         if(min !== 0 && min > (max-min)){
-          range.min = Math.floor(Math.floor((min - ((max-min)/2))/60)/10) * 10;  
+          range.min = Math.floor(Math.floor((min - ((max-min)/2))/3600)/10) * 10;  
         }
         if(range.min === undefined){
           range.min = 0;
@@ -235,7 +235,7 @@ angular.module('hillromvestApp')
         angular.forEach(data, function(value) {
           var point = [];
           point.push(value.startTime);
-          point.push(Math.floor(value.hmr/60));
+          point.push(Math.floor(value.hmr/3600));
           pointSet.push(point);
         });
         graphData["values"] = pointSet;
@@ -250,7 +250,7 @@ angular.module('hillromvestApp')
         angular.forEach(data, function(value) {
           var point = {};
           point.x = value.startTime;
-          point.y = Math.floor(value.hmr/60);
+          point.y = Math.floor(value.hmr/3600);
           pointSet.push(point);
         });
         graphData.values = pointSet;

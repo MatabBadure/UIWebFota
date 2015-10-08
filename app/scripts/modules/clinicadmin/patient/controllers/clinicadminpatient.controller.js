@@ -185,8 +185,20 @@ angular.module('hillromvestApp')
       return false;
     }
     var data = $scope.patient;
+    switch(data.status){
+      case 'expired':
+      data.expired = true;
+      break;
+      case 'active':
+      data.isDeleted = false;
+      break;
+      case 'inactive':
+      data.isDeleted = true;
+      break;
+    }
     data.role = 'PATIENT';
     data.clinicMRNId.clinicId = $stateParams.clinicId;
+    delete data.status;
     if(data.clinicMRNId.clinic){
       delete data.clinicMRNId.clinic;
     }
@@ -200,7 +212,15 @@ angular.module('hillromvestApp')
   };
 
   $scope.setEditMode = function(patient) {
+
     $scope.patient = patient;
+    if(patient.expired){
+      $scope.patient.status = 'expired';
+    }else if(patient.isDeleted){
+      $scope.patient.status = 'inactive';
+    }else {
+      $scope.patient.status = 'active';
+    }
     if (patient.dob !== null) {
       $scope.patient.age = dateService.getAge(new Date($scope.patient.dob));
       var _date = dateService.getDate($scope.patient.dob);
