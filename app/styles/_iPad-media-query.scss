@@ -75,6 +75,20 @@
 	/*Bug fixes*/
 	ul li, ul li:visited, ul li:focus, a:visited, a:focus{
 		outline: none;
+		box-shadow: none;
+		-webkit-box-shadow: none;
+	}
+	input.form-control{
+		-webkit-box-shadow: none;
+		-moz-box-shadow: none;
+		box-shadow: none;
+		border-radius: 0px;
+		-webkit-border-radius: 0px;
+	}
+	input[type="text"], input[type="email"], input[type="search"], input[type="password"] {
+	-webkit-appearance: caret;
+	-moz-appearance: caret; /* mobile firefox too! */
+	border-radius: 0px;
 	}
 
 	.patient-user__navbar .patient-dashboard > li {
@@ -178,6 +192,20 @@
 	/*Bug fixes*/
 	ul li, ul li:visited, ul li:focus, a:visited, a:focus {
 		outline: none;
+		box-shadow: none;
+		-webkit-box-shadow: none;
+	}
+	input.form-control{
+		-webkit-box-shadow: none;
+		-moz-box-shadow: none;
+		box-shadow: none;
+		border-radius: 0px;
+		-webkit-border-radius: 0px;
+	}
+	input[type="text"], input[type="email"], input[type="search"], input[type="password"] {
+	-webkit-appearance: caret;
+	-moz-appearance: caret; /* mobile firefox too! */
+	border-radius: 0px;
 	}
 	.patient-user__navbar{
 		width: 100%;
