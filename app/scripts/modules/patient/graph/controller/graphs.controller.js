@@ -34,6 +34,7 @@ angular.module('hillromvestApp')
       }else if(currentRoute === 'patientdashboardClinicHCP'){
         $scope.initPatientClinicHCPs();
       } else if(currentRoute === 'patientOverview' || currentRoute === 'hcppatientOverview' || currentRoute === 'clinicadminpatientOverview') {
+        $scope.getAssociatedClinics($stateParams.patientId);
         $scope.getPatientDevices($stateParams.patientId);
         $scope.patientId = parseInt($stateParams.patientId);
         $scope.getPatientById($scope.patientId);
@@ -1331,6 +1332,13 @@ angular.module('hillromvestApp')
         $scope.patientDevices = response.data.deviceList;
       });
     };
+     $scope.getAssociatedClinics = function(patientId){
+      patientService.getClinicsLinkedToPatient(patientId).then(function(response) {
+        if(response.data.clinics){
+          $scope.associatedClinics = response.data.clinics;
+        }
+      });
+     }
 
     $scope.init();
 
@@ -1457,7 +1465,7 @@ angular.module('hillromvestApp')
       };
 
       var patientDetails = ($scope.slectedPatient) ? $scope.slectedPatient : null;
-      var pdfClinic = ($scope.slectedPatient && $scope.slectedPatient.clinicMRNId && $scope.slectedPatient.clinicMRNId.clinic) ? $scope.slectedPatient.clinicMRNId.clinic : null;
+      var pdfClinic = ($scope.associatedClinics && $scope.associatedClinics.length > 0) ? $scope.associatedClinics[0] : null;
       var completeAddress = (pdfClinic !== null && pdfClinic.city) ? pdfClinic.city : stringConstants.emptyString;
       completeAddress += (pdfClinic !== null && pdfClinic.state) ? ((completeAddress.length > 1) ? (stringConstants.comma+pdfClinic.state) : pdfClinic.state) : completeAddress; 
       completeAddress += (pdfClinic !== null && pdfClinic.address) ? ((completeAddress.length > 1) ? (stringConstants.comma+pdfClinic.address) : pdfClinic.address) : completeAddress;
@@ -1482,6 +1490,8 @@ angular.module('hillromvestApp')
       var pdfSettingDeviation = stringConstants.notAvailable;
       htmlDocument = "<!doctype html>" +
             '<html style="background: white;"><head>' +
+            '<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />'+
+            '<meta http-equiv="X-UA-Compatible" content="IE=edge">' +
             '<link rel="stylesheet" href="bower_components/nvd3/src/nv.d3.css" />' +
             '<link rel="stylesheet" href="styles/style.css">' +
             '</head>' +
@@ -1509,7 +1519,7 @@ angular.module('hillromvestApp')
               '<tr><td class="heading">'+stringConstants.address+stringConstants.colon+'</td><td class="desc">'+completePatientAddress+'</td></tr>' +
               '<tr><td class="heading">'+stringConstants.phone+stringConstants.colon+'</td><td class="desc">'+patientPhone+'</td></tr>' +
               '<tr><td class="heading">'+stringConstants.DOB+stringConstants.colon+'</td><td class="desc">'+patientDOB+'</td></tr>' +
-              '<tr><td class="heading">'+stringConstants.adherenceScore+stringConstants.colon+'</td><td class="desc-highlight">'+patientAdherence+'</td></tr>' +
+              '<tr><td class="heading">'+stringConstants.adherenceScore.replace(/ /g, '&nbsp')+stringConstants.colon+'</td><td class="desc-highlight">'+patientAdherence+'</td></tr>' +
               '</table>' +
             '</div>' +
             '<div class="pdf-container table-left">'+
@@ -1519,7 +1529,7 @@ angular.module('hillromvestApp')
                     '<th colspan="2">'+stringConstants.deviceInformationLabel+'</th>' + 
                   '</tr>'+
                 '</thead>'+
-              '<tr><td class="heading">'+stringConstants.type+stringConstants.colon+'</td><td class="desc-highlight">'+patientDeviceType+'</td></tr>' +
+              '<tr><td class="heading">'+stringConstants.type+stringConstants.colon+'</td><td class="desc-highlight">'+patientDeviceType.replace(/ /g, '&nbsp')+'</td></tr>' +
               '<tr><td class="heading">'+stringConstants.serialNumber+stringConstants.colon+'</td><td class="desc">'+patientDeviceSlNo+'</td></tr>' +
               '</table>' +
               '<table class="pdf--margin-top" border=1 ng-if="true">' +
@@ -1540,19 +1550,9 @@ angular.module('hillromvestApp')
             '<div>'+
               html1 +
             '</div>'+
-            /*'<div class="pdf-signature">'+
-              '<div class="pdf-signature--prim">'+
-              '<span>HCP Name</span>'+
-              '<span>Signature</span>'+
-              '</div>'+
-              '<div class="pdf-signature--secon">'+
-              '<span>Date</span>'+
-              '<span>'+reportGenerationDate+'</span>'+
-              '</div>'+
-            '</div>'+*/
             '</body>' +
             "</html>";
-          doc = hiddenFrame.contentWindow.document.open("text/html");
+          doc = hiddenFrame.contentWindow.document.open("Content-Type:text/html;charset=ISO-8859-1");
           doc.write(htmlDocument);
           doc.close();
 },500);
