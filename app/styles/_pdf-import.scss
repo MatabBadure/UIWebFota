@@ -1,5 +1,6 @@
 .pdf{
 	&__heading-primary {
+		font-family:"Apercu Light", Arial, Calibri, sans-serif;
 		text-align: center; 
 		font-size: 21px; 
 		font-weight: bold;
@@ -7,12 +8,14 @@
 	}
 
 	&__heading-secondary {
+		font-family:"Apercu Light", Arial, Calibri, sans-serif;
 		text-align: center; 
 		font-size: 12px;
 		color: #34455c !important;
 	}
 
 	&--heading-border {
+		font-family:"Apercu Light", Arial, Calibri, sans-serif;
 		border-bottom: 1px solid #34455c;
 		margin-bottom: 20px;
 	}
@@ -20,6 +23,7 @@
 
 
 .title {
+	font-family:"Apercu Light", Arial, Calibri, sans-serif;
 	width: 50%;
 	display: inline-block;
 	padding-bottom: 20px;
@@ -35,6 +39,7 @@
 }
 
 .pdf-container{
+	font-family:"Apercu Light", Arial, Calibri, sans-serif;
 	width: 50%;
 	display: inline-block;
 	table {
@@ -66,19 +71,23 @@
 }
 
 .table-left {
+	font-family:"Apercu Light", Arial, Calibri, sans-serif;
 	padding-left: 10px;
 }
 
 .table-right {
+	font-family:"Apercu Light", Arial, Calibri, sans-serif;
 	padding-right: 10px;
 	float: left;
 }
 
 .pdf--margin-top {
+	font-family:"Apercu Light", Arial, Calibri, sans-serif;
 	margin-top: 10px;
 }
 
 .graph-title {
+	font-family:"Apercu Light", Arial, Calibri, sans-serif;
 	padding: 10px 0;
 	font-size: 14px;
 	font-weight: bold;
