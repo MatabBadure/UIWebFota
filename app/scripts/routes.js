@@ -70,7 +70,8 @@ angular.module('hillromvestApp')
                 url:'/caregiver',
                 views:{
                     'content':{
-                    templateUrl:'scripts/modules/caregiver/graph/views/caregiver-section.html'
+                    templateUrl:'scripts/modules/caregiver/graph/views/caregiver-section.html',
+                    controller: 'caregiverNavbarController'
             }
                 },
                 resolve: {
@@ -88,10 +89,11 @@ angular.module('hillromvestApp')
             })
 
             .state('caregiver-dashboard-profile', {
-                url:'/caregiver',
+                url:'/caregiver-p',
                 views:{
                     'content':{
-                    templateUrl:'scripts/modules/caregiver/profile/views/profile-section.html'
+                    templateUrl:'scripts/modules/caregiver/profile/views/profile-section.html',
+                    controller: 'caregiverNavbarController'
             }
                 },
                 resolve: {

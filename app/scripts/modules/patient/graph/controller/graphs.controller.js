@@ -2,8 +2,8 @@
 
 angular.module('hillromvestApp')
 .controller('graphController', 
-  ['$scope', '$state', 'patientDashBoardService', 'StorageService', 'dateService', 'graphUtil', 'patientService', 'UserService', '$stateParams', 'notyService', '$timeout', 'graphService', 'caregiverDashBoardService',
-  function($scope, $state, patientDashBoardService, StorageService, dateService, graphUtil, patientService, UserService, $stateParams, notyService, $timeout, graphService, caregiverDashBoardService) {
+  ['$scope', '$state', 'patientDashBoardService', 'StorageService', 'dateService', 'graphUtil', 'patientService', 'UserService', '$stateParams', 'notyService', '$timeout', 'graphService', 'caregiverDashBoardService', 'loginConstants',
+  function($scope, $state, patientDashBoardService, StorageService, dateService, graphUtil, patientService, UserService, $stateParams, notyService, $timeout, graphService, caregiverDashBoardService, loginConstants) {
     var chart;
     var hiddenFrame, htmlDocument;
     $scope.init = function() {
@@ -16,7 +16,7 @@ angular.module('hillromvestApp')
       $scope.patientId = parseInt(localStorage.getItem('patientID'));
       $scope.caregiverID = parseInt(localStorage.getItem('userId'));
       var currentRoute = $state.current.name;
-      if( $scope.role === 'CARE_GIVER'){
+      if( $scope.role === loginConstants.role.caregiver){
         $scope.getPatientListForCaregiver($scope.caregiverID);
       }
       var server_error_msg = "Some internal error occurred. Please try after sometime.";
@@ -135,6 +135,15 @@ angular.module('hillromvestApp')
       });
     };
 
+    $scope.isActive = function(tab) {
+      var path = $location.path();
+      if (path.indexOf(tab) !== -1) {
+        return true;
+      } else {
+        return false;
+      }
+    };
+
     $scope.$on('switchPatientCareGiver',function(event,patient){
       $scope.switchPatient(patient);
     });
@@ -153,6 +162,8 @@ angular.module('hillromvestApp')
           $scope.initPatientClinicHCPs();
         } else if($state.current.name === 'caregiverDashboardDeviceProtocol'){
           $scope.initPatientDeviceProtocol();
+        } else if($state.current.name === 'caregiverDashboard'){
+          $scope.initGraph();
         }
       }
     };

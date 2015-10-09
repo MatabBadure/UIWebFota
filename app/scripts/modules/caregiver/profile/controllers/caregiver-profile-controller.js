@@ -32,7 +32,7 @@ angular.module('hillromvestApp')
       } else if($state.current.name === 'caregiverChangePassword'){
           AuthServerProvider.getSecurityQuestions().then(function(response){
             $scope.questions = response.data
-          }).catch(function(response){});
+          });
       }
     };
 

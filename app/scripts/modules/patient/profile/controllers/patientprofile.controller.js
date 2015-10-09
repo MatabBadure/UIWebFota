@@ -1,6 +1,7 @@
 'use strict';
 
-angular.module('hillromvestApp').controller('patientprofileController', ['$scope', '$state', 'notyService', 'patientService', 'UserService', 'AuthServerProvider', 'Password', 'Auth', 'caregiverDashBoardService', '$stateParams', function ($scope, $state, notyService, patientService, UserService, AuthServerProvider,Password, Auth, caregiverDashBoardService, $stateParams) {
+angular.module('hillromvestApp').controller('patientprofileController', ['$scope', '$state', 'notyService', 'patientService', 'UserService', 'AuthServerProvider', 'Password', 'Auth', 'caregiverDashBoardService', '$stateParams', 'loginConstants',
+  function ($scope, $state, notyService, patientService, UserService, AuthServerProvider,Password, Auth, caregiverDashBoardService, $stateParams, loginConstants) {
 	
   $scope.init = function(){
 		var currentRoute = $state.current.name;	
@@ -8,7 +9,7 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
 		$scope.userRole = localStorage.getItem('role');		
     $scope.role = localStorage.getItem('role'); 
     $scope.caregiverID = parseInt(localStorage.getItem('userId'));
-    if( $scope.role === 'CARE_GIVER'){
+    if( $scope.role === loginConstants.role.caregiver){
         $scope.getPatientListForCaregiver($scope.caregiverID);
       }	
 		if (currentRoute === 'patientProfile') {

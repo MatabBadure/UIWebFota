@@ -24,7 +24,7 @@
         <li class="header-popover dropdown">
           <a href="javascript:void(0)" class="dropdown-toggle" ng-class="{ active: isActive('profile') || isActive('change-password')}" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
             <span class='icon-logged-in-user'></span>
-            <span class='user-name'>{{username}}</span></a>
+            <span class='user-name'>{{::username}}</span></a>
           <ul class="dropdown-menu">
             <li id='account' ng-click='account()'>
               <span class='hillrom-icon icon-user-account'></span>

@@ -149,30 +149,6 @@ angular.module('hillromvestApp')
 });
 
 angular.module('hillromvestApp')
-.directive('navigationBarCaregiver', function() {
-  return {
-    templateUrl: 'scripts/components/navbar/navbarCaregiverUser.html',
-    restrict: 'E',
-
-    controller: function ($scope, $location,$stateParams, $state) {
-      $scope.username = localStorage.getItem('userFirstName');
-      $scope.isActive = function(tab) {
-        var path = $location.path();
-        if (path.indexOf(tab) !== -1) {
-          return true;
-        } else {
-          return false;
-        }
-      };
-
-      $scope.account = function(){
-        $state.go('caregiverProfile', {'caregiverId': $stateParams.caregiverId});
-      };
-    }
-  };
-});
-
-angular.module('hillromvestApp')
 .directive('navigationBarHcp',['Auth', 'Principal', '$state', 'Account', '$location', function (Auth, Principal, $state, Account, $location) {
   return {
     templateUrl: 'scripts/components/navbar/navbarhcp.html',
