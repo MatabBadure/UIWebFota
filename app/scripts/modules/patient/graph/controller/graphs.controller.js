@@ -1532,7 +1532,7 @@ angular.module('hillromvestApp')
             '</div>'+
             '</body>' +
             "</html>";
-          doc = hiddenFrame.contentWindow.document.open("Content-Type:text/html;charset=ISO-8859-1");
+          doc = hiddenFrame.contentWindow.document.open();
           doc.write(htmlDocument);
           doc.close();
 },500);
