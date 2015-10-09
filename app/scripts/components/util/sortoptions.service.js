@@ -73,4 +73,18 @@ angular.module('hillromvestApp')
             return sortHcpList;
         };
 
+        this.getSortOptionsForClinicList = function(){
+            var sortClinicList = {};
+            sortClinicList.clinicName = sortIcons;
+            sortClinicList.address =  sortIcons;
+            sortClinicList.city = sortIcons;
+            sortClinicList.state = sortIcons;
+            sortClinicList.phoneNumber = sortIcons;
+            sortClinicList.type = sortIcons;
+            sortClinicList.hillromId = sortIcons;
+            sortClinicList.status = sortIcons;
+            return sortClinicList;
+        };
+
+
     }]);
