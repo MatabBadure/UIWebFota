@@ -33,14 +33,10 @@ angular.module('hillromvestApp')
         if (searchString === undefined) {
           searchString = '';
         }
-        var sortOrder;
-        if (sortOption === "") {
-          sortOption = "createdAt";
-          sortOrder = false;
-        } else {
-          sortOrder = true;
-        };
-        return $http.get('api/clinics/search?searchString=' + searchString + '&page=' + pageNo + '&per_page=' + offset + '&sort_by=' + sortOption + '&asc=' + sortOrder + '&filter='+filterBy, {
+        if (sortOption === "" || sortOption === undefined || sortOption === null) {
+          sortOption = sortConstant.name + searchFilters.amp +searchFilters.asc +searchFilters.equal + true;
+        } 
+        return $http.get('api/clinics/search?searchString=' + searchString + '&page=' + pageNo + '&per_page=' + offset + '&sort_by=' + sortOption + '&filter='+filterBy, {
           headers: headerService.getHeader()
         }).success(function(response) {
           return response;

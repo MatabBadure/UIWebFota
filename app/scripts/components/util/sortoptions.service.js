@@ -30,7 +30,8 @@ angular.module('hillromvestApp')
     	};
 
     	this.toggleSortParam = function(sortOption){
-    	  var toggleSortOption = {};    		
+    	  var toggleSortOption = {}; 
+             		
           if(sortOption.isDefault){
             toggleSortOption.isDefault = false;
             toggleSortOption.isDown = true;
@@ -42,8 +43,8 @@ angular.module('hillromvestApp')
             toggleSortOption.isUp = true;
           }
           else if(sortOption.isUp){
-            toggleSortOption.isDefault = true;
-            toggleSortOption.isDown = false;
+            toggleSortOption.isDefault = false;
+            toggleSortOption.isDown = true;
             toggleSortOption.isUp = false;
           }          
           return toggleSortOption;
@@ -57,6 +58,33 @@ angular.module('hillromvestApp')
         	} else{
         		return searchFilters.emptyString;
         	}       	
-        }
+        };
+
+        this.getSortOptionsForHcpList = function(){
+            var sortHcpList = {};
+            sortHcpList.firstName = sortIcons;
+            sortHcpList.lastName =  sortIcons;
+            sortHcpList.credentials = sortIcons;
+            sortHcpList.npiNumber = sortIcons;
+            sortHcpList.clinicName = sortIcons;
+            sortHcpList.city = sortIcons;
+            sortHcpList.state = sortIcons;
+            sortHcpList.status = sortIcons;
+            return sortHcpList;
+        };
+
+        this.getSortOptionsForClinicList = function(){
+            var sortClinicList = {};
+            sortClinicList.clinicName = sortIcons;
+            sortClinicList.address =  sortIcons;
+            sortClinicList.city = sortIcons;
+            sortClinicList.state = sortIcons;
+            sortClinicList.phoneNumber = sortIcons;
+            sortClinicList.type = sortIcons;
+            sortClinicList.hillromId = sortIcons;
+            sortClinicList.status = sortIcons;
+            return sortClinicList;
+        };
+
 
     }]);

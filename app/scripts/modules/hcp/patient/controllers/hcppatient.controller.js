@@ -155,12 +155,7 @@ angular.module('hillromvestApp')
 	};
 
 	$scope.goToPatientDashboard = function(value){
-    if('hcppatientdashboard' === value){
-      var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : $stateParams.clinicId;
-      $state.go(value, {'clinicId': clinicId});
-    }else{
-      $state.go(value);
-    }
+    $state.go(value, {'clinicId': $stateParams.clinicId});
 	};
 
 
@@ -197,8 +192,7 @@ angular.module('hillromvestApp')
 
   $scope.switchClinic = function(clinic){
     if($scope.selectedClinic.id !== clinic.id){
-      $scope.selectedClinic = clinic;
-      $scope.searchPatients();      
+      $state.go($state.current.name, {'clinicId': clinic.id});
     }
   };
 
