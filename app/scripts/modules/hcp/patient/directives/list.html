@@ -64,7 +64,8 @@
           </div>
 
           <div class="col-md-3 col-sm-3 reset-padding centered">
-            <span class="short-info">{{patient.hcpNamesCSV}}</span>
+            <span ng-if="patient.hcpNamesCSV" class="short-info">{{patient.hcpNamesCSV}}</span>
+            <span ng-if="!patient.hcpNamesCSV" class="short-info" translate="global.not-applicable"></span>
           </div>
 
           <div class="col-md-1 col-sm-2 reset-padding">

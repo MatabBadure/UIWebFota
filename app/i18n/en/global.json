@@ -99,7 +99,8 @@
             "super-admin": "Super Admin",
             "account-services": "RC Admin",
             "associates":"Associates"
-        }
+        },
+        "not-applicable": "NA"
     },
     "entity": {
         "action": {
