@@ -294,9 +294,10 @@ angular.module('hillromvestApp')
     $scope.selectClinicForPatient = function(clinic, index){
       var data = [{"id": clinic.id, "mrnId": null, "notes": null}]
       $scope.searchItem = "";
+      $scope.searchClinicText = false;
       patientService.associateClinicToPatient($stateParams.patientId, data).then(function(response) {
-        $scope.associatedClinics = response.data.clinics;
         $scope.getAvailableAndAssociatedClinics($stateParams.patientId);
+        $scope.associatedClinics = response.data.clinics;
       }).catch(function(response) {});
     };
 
@@ -306,11 +307,9 @@ angular.module('hillromvestApp')
       $scope.perPageCount = 90;
       $scope.pageCount = 0;
       $scope.total = 0;
-      $scope.clinics = [];
       $scope.sortOption = "";
       $scope.searchItem = "";
       $scope.searchClinicText = false;
-      $scope.associatedClinics = [];
       $scope.getPatientById(patientId);
       $scope.getAvailableAndAssociatedClinics(patientId);
       $scope.getAvailableAndAssociatedHCPs(patientId);     
@@ -327,9 +326,10 @@ angular.module('hillromvestApp')
     $scope.selectHcpForPatient = function(hcp){
       var data = [{'id': hcp.id}];
       $scope.searchHcp = "";
+      $scope.searchHCPText = false;
       patientService.associateHCPToPatient(data, $stateParams.patientId).then(function(response){
-        notyService.showMessage(response.data.message, 'success');
         $scope.getAvailableAndAssociatedHCPs($stateParams.patientId);
+        notyService.showMessage(response.data.message, 'success');
       });
     };
 
@@ -681,26 +681,27 @@ angular.module('hillromvestApp')
     };
 
     $scope.linkClinic = function(){
+      $scope.getAvailableAndAssociatedClinics($stateParams.patientId);
       $scope.searchClinicText = true;
     };
 
     $scope.linkHCP = function(){
+      $scope.getAvailableAndAssociatedHCPs($stateParams.patientId);
       $scope.searchHCPText = true;
     };
 
     $scope.getAvailableAndAssociatedClinics = function(patientId){
       $scope.associatedClinicsErrMsg = null;
-      $scope.associatedHCPsErrMsg = null;
-      $scope.associatedClinics =[]; 
-      $scope.associatedClinics.length = 0;
-      $scope.clinics = []; $scope.clinics.length = 0;
+      $scope.associatedHCPsErrMsg = null;            
       patientService.getClinicsLinkedToPatient(patientId).then(function(response) {
-        if(response.data.clinics){
+        $scope.associatedClinics =[];
+        if(response.data.clinics){ 
           $scope.associatedClinics = response.data.clinics;
         }else if(response.data.message){
           $scope.associatedClinicsErrMsg = response.data.message;
         }
         clinicService.getClinics($scope.searchItem, $scope.sortOption, $scope.currentPageIndex, $scope.perPageCount).then(function (response) {          
+          $scope.clinics = [];
           $scope.clinics = response.data;
           for(var i=0; i < $scope.associatedClinics.length; i++){
             for(var j=0; j <  $scope.clinics.length; j++ ){
@@ -715,16 +716,16 @@ angular.module('hillromvestApp')
 
     $scope.getAvailableAndAssociatedHCPs = function(patientId){
       $scope.associatedClinicsErrMsg = null;
-      $scope.associatedHCPsErrMsg = null;
-      $scope.associatedHCPs = []; $scope.associatedHCPs.length = 0;
-      $scope.hcps = []; $scope.hcps.length = 0;
-      patientService.getAssociateHCPToPatient(patientId).then(function(response){        
+      $scope.associatedHCPsErrMsg = null;            
+      patientService.getAssociateHCPToPatient(patientId).then(function(response){ 
+        $scope.associatedHCPs = [];        
         if(response.data.hcpUsers){
           $scope.associatedHCPs = response.data.hcpUsers;          
         }else if(response.data.message){
           $scope.associatedHCPsErrMsg = response.data.message;
         }
         DoctorService.getDoctorsList($scope.searchItem, $scope.currentPageIndex, $scope.perPageCount).then(function(response){          
+          $scope.hcps = []; 
           $scope.hcps = response.data;
           for(var i=0; i < $scope.associatedHCPs.length; i++){
             for(var j=0; j <  $scope.hcps.length; j++ ){

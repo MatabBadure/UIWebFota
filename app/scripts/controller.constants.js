@@ -91,8 +91,8 @@ angular.module('hillromvestApp').constant('hcpDashboardConstants', {
 			"treatmentLength" : "Minutes"
 		},
 		color : {
-			"treatmentPerDay" : "#ef6548",
-			"treatmentLength" : "#41ae76"
+			"treatmentPerDay" : "#4e95c4",
+			"treatmentLength" : "#ff9829"
 		},
 		"type" : "area",
 		"name" : "TREATMENT_GRAPH"

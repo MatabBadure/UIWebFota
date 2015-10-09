@@ -137,6 +137,7 @@ angular.module('hillromvestApp')
         $scope.getDayHMRGraphData();
       } else if(days === 0 && $scope.selectedGraph === 'COMPLIANCE'){
         $scope.plotNoDataAvailable();
+        $scope.isComplianceExist = false;
       } else if(days <= patientDashboard.maxDaysForWeeklyGraph) {
         $scope.weeklyChart($scope.fromTimeStamp);
       } else if ( days > patientDashboard.maxDaysForWeeklyGraph && days <= patientDashboard.minDaysForMonthlyGraph ) {
@@ -284,10 +285,10 @@ angular.module('hillromvestApp')
                 '<h6>' + dateService.getDateFromTimeStamp(value.timestamp,patientDashboard.dateFormat,'/') + '  ('+ d3.time.format('%I:%M %p')(new Date(value.timestamp)) + ')' + '</h6>' +
                 '<ul class="graph_ul">' +
                   '<li><span class="pull-left">' + 'Session No. ' +'</span><span class="pull-right value">' + value.sessionNo + '/' + value.treatmentsPerDay +'</span></li>' +
-                  '<li><span class="pull-left">' + 'HMR' + '</span><span class="pull-right value">' + Math.floor(value.hmr/60)  + '</span></li>' +
+                  '<li><span class="pull-left">' + 'Duration' + '</span><span class="pull-right value">' + value.duration  + '</span></li>' +
                   '<li><span class="pull-left">' + 'Frequency' + '</span><span class="pull-right value">' + value.frequency  + '</span></li>' +
                   '<li><span class="pull-left">' + 'Pressure' +'</span><span class="pull-right value">' + value.pressure  +'</span></li>' +
-                  '<li><span class="pull-left">' + 'Cough Pauses' +'</span><span class="pull-right value">' + (value.normalCoughPauses+value.programmedCoughPauses) +'</span></li>' +
+                  '<li><span class="pull-left">' + 'Cough Pauses' +'</span><span class="pull-right value">' + (value.coughPauseDuration) +'</span></li>' +
                 '</ul>';
           }
         });
@@ -305,7 +306,8 @@ angular.module('hillromvestApp')
                 '<ul class="graph_ul">' +
                   '<li><span class="pull-left">' + 'Frequency' + '</span><span class="pull-right value">' + value.frequency  + '</span></li>' +
                   '<li><span class="pull-left">' + 'Pressure' +'</span><span class="pull-right value">' + value.pressure +'</span></li>' +
-                  '<li><span class="pull-left">' + 'Cough Pauses' +'</span><span class="pull-right value">' + (value.normalCaughPauses + value.programmedCaughPauses) +'</span></li>' +
+                  '<li><span class="pull-left">' + 'Cough Pauses' +'</span><span class="pull-right value">' + value.coughPauseDuration +'</span></li>' +
+                  '<li><span class="pull-left">' + 'Duration' +'</span><span class="pull-right value">' + value.durationInMinutes +'</span></li>' +
                 '</ul>';
           }
         });
@@ -324,7 +326,7 @@ angular.module('hillromvestApp')
                   '<li><span class="pull-left">' + 'Session No.' + '</span><span class="pull-right value">' +  value.sessionNo + '/' + value.treatmentsPerDay  + '</span></li>' +
                   '<li><span class="pull-left">' + 'Frequency' +'</span><span class="pull-right value">' + value.frequency +'</span></li>' +
                   '<li><span class="pull-left">' + 'Pressure' +'</span><span class="pull-right value">' + value.pressure +'</span></li>' +
-                  '<li><span class="pull-left">' + 'Cough Pauses' +'</span><span class="pull-right value">' + (value.normalCoughPauses + value.programmedCoughPauses) +'</span></li>' +
+                  '<li><span class="pull-left">' + 'Cough Pauses' +'</span><span class="pull-right value">' + value.coughPauseDuration +'</span></li>' +
                 '</ul>';
           }
         });
@@ -383,7 +385,20 @@ angular.module('hillromvestApp')
           $scope.completeGraphData = graphUtil.convertIntoServerTimeZone($scope.completeGraphData,patientDashboard.hmrNonDayGraph);
           $scope.yAxisRangeForHMRLine = graphUtil.getYaxisRangeLineGraph($scope.completeGraphData);
           $scope.graphData = graphUtil.convertToHMRStepGraph($scope.completeGraphData,patientDashboard.HMRLineGraphColor);
-          $scope.drawHMRLineGraph();
+          /* waiting until svg element loads*/
+          var count =5;
+          $scope.waitFunction = function waitHandler() {
+             var svgCount = document.getElementsByTagName('svg').length;
+            if(svgCount > 0 || count === 0 ) {
+              $scope.drawHMRLineGraph();
+              $timeout.cancel(waitHandler);
+              return false;
+            } else {
+              count --;
+            }
+            $timeout(waitHandler, 1000);
+          }
+          $scope.waitFunction();
         }
       }).catch(function(response) {
         $scope.graphData = [];
@@ -543,6 +558,7 @@ angular.module('hillromvestApp')
           $scope.isComplianceExist = false;
         }else if($scope.completeComplianceData.actual.length < 2){
           $scope.plotNoDataAvailable();
+          $scope.isComplianceExist = false;
         }
          else {
           //recommended values
@@ -1139,6 +1155,7 @@ angular.module('hillromvestApp')
 
     $scope.initPatientDashboard = function(){
       $scope.getAssociatedClinics(localStorage.getItem("patientID"));
+      $scope.getPatientDevices(localStorage.getItem("patientID"));
       $scope.editNote = false;
       $scope.textNote = "";
       $scope.weeklyChart();
@@ -1414,6 +1431,9 @@ angular.module('hillromvestApp')
         $timeout(function() {
         $(hiddenFrame).remove();
         var printId1 = "#lineGraphWrapper";
+        if($scope.selectedGraph === "COMPLIANCE"){
+          printId1 = "#complianceGraphWrapper";
+        }
         //var printId2 = "#complianceGraphWrapper";
         var graphData = ($scope.hmrGraph) ? $scope.completeGraphData : $scope.completeComplianceData;
         var element1 = document.querySelectorAll(printId1)[0],
@@ -1422,6 +1442,7 @@ angular.module('hillromvestApp')
         //html2 = element2.innerHTML,
         //htmlDocument,
         doc;
+
         hiddenFrame = $('<iframe id="pdfID" style="display: none"></iframe>').appendTo('body')[0];
         //$scope.complianceGraph =  true;
         //$scope.hmrLineGraph = true;

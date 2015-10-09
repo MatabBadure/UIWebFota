@@ -33,7 +33,8 @@
     "angular-validation-match": "1.5.2",
     "angular-bootstrap": "~0.13.3",
     "jquery.easy-pie-chart": "~2.1.6",
-    "nvd3": "1.1.15-beta"
+    "nvd3": "1.1.15-beta",
+    "angular-ui-mask": "~1.4.7"
   },
   "devDependencies": {
     "angular-mask": "~3.0.12",

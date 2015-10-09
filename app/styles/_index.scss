@@ -129,6 +129,9 @@ a::-moz-focus-inner {
   z-index: -1;
   font-weight: 300;
 }
+.custom-dropdown.disabled_arrow:before{
+	display: none;
+}
 
 .custom-dropdown {
   background-color: transparent;
