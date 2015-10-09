@@ -111,7 +111,7 @@ angular.module('hillromvestApp')
           }).catch(function (response) {});
         };
 
-        $scope.sortType = function(sortParam){ console.log("sortParam : " + sortParam);
+        $scope.sortType = function(sortParam){ 
           var toggledSortOptions = {};
           $scope.sortOption = "";
           if(sortParam === sortConstant.lastName){                        
@@ -132,7 +132,7 @@ angular.module('hillromvestApp')
             $scope.sortHcpList.npiNumber = toggledSortOptions;
             $scope.sortOption = sortConstant.npiNumber + sortOptionsService.getSortByASCString(toggledSortOptions);
             $scope.searchDoctors();
-          }else if(sortParam === sortConstant.clinicName){console.log("sort by clinic name");
+          }else if(sortParam === sortConstant.clinicName){
             toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortHcpList.clinicName);
             $scope.sortHcpList = sortOptionsService.getSortOptionsForHcpList();
             $scope.sortHcpList.clinicName = toggledSortOptions;
