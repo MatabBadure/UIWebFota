@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('hillromvestApp')
-  .controller('clinicsController', [ '$rootScope', '$scope', '$state', '$stateParams', '$timeout', 'Auth', 'clinicService', 'UserService', 'notyService', 'searchFilterService', 'dateService',
-    function ($rootScope, $scope, $state, $stateParams, $timeout, Auth, clinicService, UserService, notyService, searchFilterService, dateService) {
+  .controller('clinicsController', [ '$rootScope', '$scope', '$state', '$stateParams', '$timeout', 'Auth', 'clinicService', 'UserService', 'notyService', 'searchFilterService', 'dateService', 'sortOptionsService',
+    function ($rootScope, $scope, $state, $stateParams, $timeout, Auth, clinicService, UserService, notyService, searchFilterService, dateService,sortOptionsService) {
     var searchOnLoad = true;
     $scope.clinic = {};
     $scope.clinicStatus = {
@@ -21,6 +21,7 @@ angular.module('hillromvestApp')
       } else if (currentRoute === 'clinicNew') {
         $scope.initCreateClinic();
       } else if (currentRoute === 'clinicUser'){
+        $scope.sortClinicList = sortOptionsService.getSortOptionsForClinicList();
         $scope.initPaginationVars();
         $scope.searchFilter = searchFilterService.initSearchFiltersForClinic();
         $scope.initClinicList();
@@ -86,7 +87,7 @@ angular.module('hillromvestApp')
       $scope.clinics = [];
       $scope.sortOption ="";
       $scope.showModal = false;
-
+      $scope.clinicSortOption = "";
       $scope.sortIconDefault = true;
       $scope.sortIconUp = false;
       $scope.sortIconDown = false;
@@ -198,7 +199,7 @@ angular.module('hillromvestApp')
             $scope.currentPageIndex = 1;
         } 
         var filter = searchFilterService.getFilterStringForClinics($scope.searchFilter);
-        clinicService.getClinics($scope.searchItem, $scope.sortOption, $scope.currentPageIndex, $scope.perPageCount, filter).then(function (response) {
+        clinicService.getClinics($scope.searchItem, $scope.clinicSortOption, $scope.currentPageIndex, $scope.perPageCount, filter).then(function (response) {
           $scope.clinics = response.data;
           $scope.total = response.headers()['x-total-count'];
           $scope.pageCount = Math.ceil($scope.total / 10);
@@ -484,22 +485,59 @@ angular.module('hillromvestApp')
       });
     };
 
-    $scope.sortType = function(){
-      if($scope.sortIconDefault){
-        $scope.sortIconDefault = false;
-        $scope.sortIconUp = false;
-        $scope.sortIconDown = true;
-      }
-      else if($scope.sortIconDown){
-        $scope.sortIconDefault = false;
-        $scope.sortIconDown = false;
-        $scope.sortIconUp = true;
-      }
-      else if($scope.sortIconUp){
-        $scope.sortIconDefault = false;
-        $scope.sortIconUp = false;
-        $scope.sortIconDown = true;
-      }
+    $scope.sortType = function(sortParam){
+      var toggledSortOptions = {};
+      $scope.clinicSortOption = "";
+      if(sortParam === sortConstant.clinicName){                        
+        toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortClinicList.clinicName);
+        $scope.sortClinicList = sortOptionsService.getSortOptionsForClinicList();
+        $scope.sortClinicList.clinicName = toggledSortOptions;
+        $scope.clinicSortOption = sortConstant.name + sortOptionsService.getSortByASCString(toggledSortOptions);
+        $scope.searchClinics();
+      }else if(sortParam === sortConstant.address){
+        toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortClinicList.address);
+        $scope.sortClinicList = sortOptionsService.getSortOptionsForClinicList();
+        $scope.sortClinicList.address = toggledSortOptions;
+        $scope.clinicSortOption = sortConstant.address + sortOptionsService.getSortByASCString(toggledSortOptions);
+        $scope.searchClinics();
+      }else if(sortParam === sortConstant.city){
+        toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortClinicList.city);
+        $scope.sortClinicList = sortOptionsService.getSortOptionsForClinicList();
+        $scope.sortClinicList.city = toggledSortOptions;
+        $scope.clinicSortOption = sortConstant.city + sortOptionsService.getSortByASCString(toggledSortOptions);
+        $scope.searchClinics();
+      }else if(sortParam === sortConstant.state){
+        toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortClinicList.state);
+        $scope.sortClinicList = sortOptionsService.getSortOptionsForClinicList();
+        $scope.sortClinicList.state = toggledSortOptions;
+        $scope.clinicSortOption = sortConstant.state + sortOptionsService.getSortByASCString(toggledSortOptions);
+        $scope.searchClinics();
+      }else if(sortParam === sortConstant.phoneNumber){
+        toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortClinicList.phoneNumber);
+        $scope.sortClinicList = sortOptionsService.getSortOptionsForClinicList();
+        $scope.sortClinicList.phoneNumber = toggledSortOptions;
+        $scope.clinicSortOption = sortConstant.phoneNumber + sortOptionsService.getSortByASCString(toggledSortOptions);
+        $scope.searchClinics();
+      }else if(sortParam === sortConstant.type){
+        toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortClinicList.type);
+        $scope.sortClinicList = sortOptionsService.getSortOptionsForClinicList();
+        $scope.sortClinicList.type = toggledSortOptions;
+        $scope.clinicSortOption = sortConstant.parent + sortOptionsService.getSortByASCString(toggledSortOptions);
+        $scope.searchClinics();
+      }else if(sortParam === sortConstant.hillromId){
+        toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortClinicList.hillromId);
+        $scope.sortClinicList = sortOptionsService.getSortOptionsForClinicList();
+        $scope.sortClinicList.hillromId = toggledSortOptions;
+        $scope.clinicSortOption = sortConstant.hillromId + sortOptionsService.getSortByASCString(toggledSortOptions);
+        $scope.searchClinics();
+      }else if(sortParam === sortConstant.status){
+        toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortClinicList.status);
+        $scope.sortClinicList = sortOptionsService.getSortOptionsForClinicList();
+        $scope.sortClinicList.status = toggledSortOptions;
+        $scope.clinicSortOption = sortConstant.deleted + sortOptionsService.getSortByASCString(toggledSortOptions);
+        $scope.searchClinics();
+      }          
+          
     };
 
     $scope.addClinicAdminShow = function(){
@@ -673,7 +711,8 @@ angular.module('hillromvestApp')
       $scope.total = 0;        
       $scope.sortOption ="";
       $scope.searchItem = "";
-      $scope.searAssociatedPatient = "";      
+      $scope.searAssociatedPatient = ""; 
+      $scope.clinicSortOption = "";     
     };
 
     $scope.searchOnFilters = function(){    
