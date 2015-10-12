@@ -1415,7 +1415,7 @@ angular.module('hillromvestApp')
         var graphData = ($scope.hmrGraph) ? $scope.completeGraphData : $scope.completeComplianceData;
         var element1 = document.querySelectorAll(printId1)[0],
         //element2 = document.querySelectorAll(printId2)[0],
-        html1 = element1.innerHTML,
+        html1 = (element1) ? element1.innerHTML: "",
         //html2 = element2.innerHTML,
         //htmlDocument,
         doc;
