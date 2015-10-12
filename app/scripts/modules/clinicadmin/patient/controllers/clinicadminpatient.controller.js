@@ -325,6 +325,12 @@ angular.module('hillromvestApp')
       $scope.sortPatientList.adherence = toggledSortOptions;
       $scope.sortOption = sortConstant.adherence + sortOptionsService.getSortByASCString(toggledSortOptions);
       $scope.searchPatients();
+    }else if(sortParam === sortConstant.hcp){
+      toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortPatientList.hcp);
+      $scope.sortPatientList = sortOptionsService.getSortOptionsForPatientList();
+      $scope.sortPatientList.hcp = toggledSortOptions;
+      $scope.sortOption = sortConstant.hcpname + sortOptionsService.getSortByASCString(toggledSortOptions);
+      $scope.searchPatients();
     }       
     
   };
