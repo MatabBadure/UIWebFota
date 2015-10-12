@@ -10,7 +10,7 @@ angular.module('hillromvestApp')
         });
       },
       getClinicsAssociated: function(userId){
-        var url = URL.getClinicsAssociatedToCliniadmin.replace('USERID', userId);
+        var url = URL.getClinicsAssociatedToCliniadmin.replace('USERID', userId).replace('NAME', sortConstant.name).replace('ASC', false);
         return $http.get(url, {
           headers: headerService.getHeader()
         });

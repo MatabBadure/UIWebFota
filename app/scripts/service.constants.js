@@ -73,7 +73,8 @@ var sortConstant = {
     adherence: "adherence",
     mrnid: "mrnid",
     last_date: "last_date",
-    isDeleted: "isDeleted"
+    isDeleted: "isDeleted",
+    name: "name"
 }
 
 var stringConstants = {

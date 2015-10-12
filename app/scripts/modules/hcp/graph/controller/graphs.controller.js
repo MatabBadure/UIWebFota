@@ -71,11 +71,23 @@ angular.module('hillromvestApp')
 
 	$scope.getClinicsForClinicAdmin = function(userId) {
 	clinicadminService.getClinicsAssociated(userId).then(function(response){
-	  localStorage.setItem('clinicId', response.data.clinics[0].id);
-	  $scope.clinics = response.data.clinics;
-	  $scope.selectedClinic = response.data.clinics[0];
-	  $scope.weeklyChart();
-	  $scope.getStatistics($scope.selectedClinic.id, userId);
+		$scope.clinics = response.data.clinics;
+		var isClinic = false;	
+		if($stateParams.clinicId !== undefined && $stateParams.clinicId !== null){
+			angular.forEach(response.data.clinics, function(clinic) {
+				if(clinic.id === $stateParams.clinicId){
+					localStorage.setItem('clinicId', clinic.id);
+					$scope.selectedClinic = clinic;
+					isClinic = true;
+				}
+			});
+		}
+		if(!isClinic){
+			localStorage.setItem('clinicId', response.data.clinics[0].id);
+			$scope.selectedClinic = response.data.clinics[0];
+		}	  		
+		$scope.weeklyChart();
+		$scope.getStatistics($scope.selectedClinic.id, userId);
 	}).catch(function(response){
 	  notyService.showError(response);
 	});
