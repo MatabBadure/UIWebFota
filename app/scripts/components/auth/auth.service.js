@@ -12,10 +12,7 @@ angular.module('hillromvestApp')
                     var logged = StorageService.get('logged') || {};
                     logged.token = data.data.id;
                     StorageService.save('logged', logged);
-                	localStorage.setItem('token', data.data.id);
                     Principal.identity(true).then(function(account) {
-
-                        localStorage.setItem('role', account.roles[0]);
                         logged = StorageService.get('logged') || {};
                         logged.role = account.roles[0];
                         StorageService.save('logged', logged);
@@ -46,7 +43,7 @@ angular.module('hillromvestApp')
             },
 
             logout: function () {
-                localStorage.clear();
+                StorageService.clearAll();
                 AuthServerProvider.logout();
                 Principal.authenticate(null);
             },
