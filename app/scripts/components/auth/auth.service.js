@@ -1,17 +1,24 @@
 'use strict';
 
 angular.module('hillromvestApp')
-    .factory('Auth',['$rootScope', '$state', '$q', '$translate', 'Principal', 'AuthServerProvider', 'Account', 'Register', 'Activate', 'Password', 'PasswordResetInit', 'PasswordResetFinish', 'StorageService', function Auth($rootScope, $state, $q, $translate, Principal, AuthServerProvider, Account, Register, Activate, Password, PasswordResetInit, PasswordResetFinish, StorageService) {
+    .factory('Auth',['$rootScope', '$state', '$q', '$translate', 'Principal', 'AuthServerProvider', 'Account', 'Register', 'Activate', 'Password', 'PasswordResetInit', 'PasswordResetFinish', 'StorageService', 
+        function Auth($rootScope, $state, $q, $translate, Principal, AuthServerProvider, Account, Register, Activate, Password, PasswordResetInit, PasswordResetFinish, StorageService) {
         return {
             login: function (credentials, callback) {
                 var cb = callback || angular.noop;
                 var deferred = $q.defer();
 
                 AuthServerProvider.login(credentials).then(function (data) {
+                    var logged = StorageService.get('logged') || {};
+                    logged.token = data.data.id;
+                    StorageService.save('logged', logged);
                 	localStorage.setItem('token', data.data.id);
                     Principal.identity(true).then(function(account) {
 
                         localStorage.setItem('role', account.roles[0]);
+                        logged = StorageService.get('logged') || {};
+                        logged.role = account.roles[0];
+                        StorageService.save('logged', logged);
                         $translate.use(account.langKey);
                         $translate.refresh();
                         deferred.resolve(data);

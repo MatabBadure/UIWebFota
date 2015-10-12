@@ -27,8 +27,8 @@ angular.module('hillromvestApp')
     templateUrl: 'scripts/components/navbar/navbar.html',
     restrict: 'E',
 
-    controller: function ($scope, $state) {
-      $scope.userRole = localStorage.getItem('role');
+    controller: function ($scope, $state, StorageService) {
+      $scope.userRole = StorageService.get('logged').role;
       $scope.username = localStorage.getItem('userFirstName');
       $scope.isActive = function(tab) {
         var path = $location.path();

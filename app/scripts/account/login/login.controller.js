@@ -80,7 +80,6 @@ angular.module('hillromvestApp')
       }).then(function(response) {
         if (response.status === 200) {
           var logged = StorageService.get('logged') || {};
-          StorageService.remove('logged');
           StorageService.remove('loginCount');
           logged.userFirstName = response.data.user.firstName;
           logged.role = response.data.user.authorities[0].name;
@@ -116,7 +115,6 @@ angular.module('hillromvestApp')
             localStorage.setItem('userId', response.data.user.id);
             $state.go('patientUser');
           }
-          console.log('SAVING ', logged);
           StorageService.save('logged', logged);
         }
       }).catch(function(response) {
