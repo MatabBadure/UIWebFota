@@ -87,6 +87,7 @@ angular.module('hillromvestApp')
             },
 
             remove: function (key) {
+                console.log(key);
                 $window.localStorage.removeItem(key);
             },
 

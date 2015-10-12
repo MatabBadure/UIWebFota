@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('hillromvestApp')
-  .controller('LoginController',['$scope', '$state', '$timeout', 'Auth', 'vcRecaptchaService', 'globalConfig', '$rootScope', 'loginConstants', 'Principal', function($scope, $state, $timeout, Auth, vcRecaptchaService, globalConfig, $rootScope, loginConstants,Principal) {
+  .controller('LoginController',['$scope', '$state', '$timeout', 'Auth', 'vcRecaptchaService', 'globalConfig', '$rootScope', 'loginConstants', 'Principal', 'StorageService',
+    function($scope, $state, $timeout, Auth, vcRecaptchaService, globalConfig, $rootScope, loginConstants, Principal, StorageService) {
     $scope.showLogin = true;
     $scope.isEmailExist = true;
     $scope.isFirstLogin = false;
@@ -33,7 +34,7 @@ angular.module('hillromvestApp')
 
     $scope.clearLastLogin = function(){
       Auth.logout();
-      localStorage.clear();
+      StorageService.clearAll();
       $scope.isAuthenticated = false;
       $scope.username = null;
       $scope.password = null;
@@ -42,9 +43,9 @@ angular.module('hillromvestApp')
 
     $scope.navigateUser = function(){
       if(Principal.isAuthenticated()){
-        $scope.userRole = localStorage.getItem('role');
+        $scope.userRole = StorageService.get('logged').role;
         if(!$scope.userRole){
-          $scope.clearLastLogin();
+          $scope.clearLastLogin(); 
           $state.go("home");
         }else if($scope.userRole === "ADMIN"){
           $state.go("patientUser");
@@ -78,46 +79,69 @@ angular.module('hillromvestApp')
         captcha: $scope.user.captcha
       }).then(function(response) {
         if (response.status === 200) {
-          localStorage.removeItem('loginCount');
+          var logged = StorageService.get('logged') || {};
+          StorageService.remove('logged');
+          StorageService.remove('loginCount');
+          logged.userFirstName = response.data.user.firstName;
+          logged.role = response.data.user.authorities[0].name;
+          logged.userEmail = response.data.user.email;
+
           localStorage.setItem('userFirstName', response.data.user.firstName);
           localStorage.setItem('role', response.data.user.authorities[0].name);
-          localStorage.setItem('userEmail', response.data.user.email);
+          
           $rootScope.isFooter = false;
-          $rootScope.userRole = localStorage.getItem('role');
-          $rootScope.username = localStorage.getItem('userFirstName');
+          $rootScope.userRole = response.data.user.authorities[0].name;
+          $rootScope.username = response.data.user.firstName;
+
           if(response.data.user.authorities[0].name === loginConstants.role.patient){
+            logged.patientID = response.data.user.id;
+            
             localStorage.setItem('patientID', response.data.user.id);
+            
             $state.go('patientdashboard');
           } else if(response.data.user.authorities[0].name === loginConstants.role.hcp){
+            logged.userId = response.data.user.id;
+            
             localStorage.setItem('userId', response.data.user.id);
+            
             $state.go('hcpdashboard');
           } else if(response.data.user.authorities[0].name === 'CLINIC_ADMIN'){
+            logged.userId = response.data.user.id;
+            
             localStorage.setItem('userId', response.data.user.id);
+            
             $state.go('clinicadmindashboard');
           } else{
+            logged.userId = response.data.user.id;
             localStorage.setItem('userId', response.data.user.id);
             $state.go('patientUser');
           }
+          console.log('SAVING ', logged);
+          StorageService.save('logged', logged);
         }
       }).catch(function(response) {
         if (response.status === 401) {
           if (!response.data.APP_CODE) {
             $scope.message = response.data.Error;
             $scope.authenticationError = true;
-            var loginCount = parseInt(localStorage.getItem('loginCount')) || 0;
-            localStorage.setItem('loginCount', loginCount + 1);
+            var loginCount = parseInt(StorageService.get('loginCount')) || 0;
+            StorageService.save('loginCount', loginCount + 1);
             if (loginCount > 1) {
               vcRecaptchaService.reload();
               $scope.showCaptcha = true;
             }
           } else if (response.data.APP_CODE === 'EMAIL_PASSWORD_RESET') {
-            localStorage.setItem('token', response.data.token);
+            var logged = StorageService.get('logged') || {};
+            logged.token = response.data.token;
+            StorageService.save('logged', logged);
             $scope.message = '';
             $scope.isFirstLogin = true;
             $scope.isEmailExist = false;
             $scope.showLogin = false;
           } else if (response.data.APP_CODE === 'PASSWORD_RESET') {
-            localStorage.setItem('token', response.data.token);
+            var logged = StorageService.get('logged') || {};
+            logged.token = response.data.token;
+            StorageService.save('logged', logged);
             $scope.isFirstLogin = true;
             $scope.message = '';
             $scope.showLogin = false;
