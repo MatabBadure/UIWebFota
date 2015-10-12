@@ -122,9 +122,9 @@ angular.module('hillromvestApp')
     templateUrl: 'scripts/components/navbar/navbarpatientuser.html',
     restrict: 'E',
 
-    controller: function ($scope, UserService) {
+    controller: function ($scope, UserService, StorageService) {
       $scope.notifications = 0;
-      $scope.username = localStorage.getItem('userFirstName');
+      $scope.username = StorageService.get('logged').userFirstName;
       $scope.isActive = function(tab) {
         var path = $location.path();
         if (path.indexOf(tab) !== -1) {
@@ -135,7 +135,7 @@ angular.module('hillromvestApp')
       };
 
       $scope.getNotifications = function(){
-        UserService.getPatientNotification(localStorage.getItem("patientID"), new Date().getTime()).then(function(response){                  
+        UserService.getPatientNotification(StorageService.get("logged").patientID, new Date().getTime()).then(function(response){
           $scope.notifications = response.data;
           if($scope.notifications.length < 2){
             $scope.no_of_notifications = $scope.notifications.length;
@@ -155,8 +155,8 @@ angular.module('hillromvestApp')
     templateUrl: 'scripts/components/navbar/navbarhcp.html',
     restrict: 'E',
 
-    controller: function ($scope, UserService, $stateParams) {
-      $scope.username = localStorage.getItem('userFirstName');
+    controller: function ($scope, UserService, $stateParams, StorageService) {
+      $scope.username = StorageService.get('logged').userFirstName;
       $scope.notifications = 0;
       $scope.isActive = function(tab) {
         var path = $location.path();
@@ -173,7 +173,7 @@ angular.module('hillromvestApp')
       };
 
       $scope.getNotifications = function(){
-        UserService.getPatientNotification(localStorage.getItem("patientID"), new Date().getTime()).then(function(response){                  
+        UserService.getPatientNotification(localStorage.getItem("patientID"), new Date().getTime()).then(function(response){
           $scope.notifications = response.data;
           if($scope.notifications.length < 2){
             $scope.no_of_notifications = $scope.notifications.length;
