@@ -4986,8 +4986,8 @@ select[multiple].input-lg,
 }
 @font-face {
   font-family: 'hillrom';
-  src: url("fonts/hillrom.eot?x9nx1k");
-  src: url("fonts/hillrom.eot?#iefixx9nx1k") format("embedded-opentype"), url("fonts/hillrom.ttf?x9nx1k") format("truetype"), url("fonts/hillrom.woff?x9nx1k") format("woff"), url("fonts/hillrom.svg?x9nx1k#hillrom") format("svg");
+  src: url("fonts/hillrom.eot?hzkb6r");
+  src: url("fonts/hillrom.eot?hzkb6r#iefix") format("embedded-opentype"), url("fonts/hillrom.ttf?hzkb6r") format("truetype"), url("fonts/hillrom.woff?hzkb6r") format("woff"), url("fonts/hillrom.svg?hzkb6r#hillrom") format("svg");
   font-weight: normal;
   font-style: normal;
 }
@@ -5002,6 +5002,10 @@ select[multiple].input-lg,
   
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-profile-settings:before {
+  content: "\e800";
 }
 
 .icon-logged-in-user:before {
@@ -5689,6 +5693,10 @@ a::-moz-focus-inner {
   font-weight: 300;
 }
 
+.custom-dropdown.disabled_arrow:before {
+  display: none;
+}
+
 .custom-dropdown {
   background-color: transparent;
   background-repeat: no-repeat;
@@ -5818,6 +5826,14 @@ a::-moz-focus-inner {
   font-weight: 400;
 }
 
+
+.dropdown.open .dropdown-menu {
+  z-index: 9999;
+}
+.dropdown.open .dropdown-menu li a:hover, .dropdown.open .dropdown-menu li a:focus {
+  background-color: #7ca3dc;
+  color: #FFFFFF;
+}
 
 .navbar {
   border: 0;
@@ -6079,6 +6095,10 @@ a::-moz-focus-inner {
   margin-top: 62px;
 }
 
+.patient-user__navbar ul > li.create-tab {
+  margin-right: 20px;
+}
+
 .login {
   display: table;
   
@@ -6095,8 +6115,8 @@ a::-moz-focus-inner {
 }
 
 .reset--position {
-  width: 50%;
-  margin: 5% auto;
+  width: 30%;
+  margin: 10% auto;
 }
 
 .login-auth-form .email {
@@ -6481,6 +6501,10 @@ a::-moz-focus-inner {
   float: left !important;
 }
 
+.fropile_update_btn_group {
+  margin-top: 50px;
+}
+
 .fropile_update_btn_group .cancel {
   background-color: #7ca3dc;
 }
@@ -6649,7 +6673,7 @@ a::-moz-focus-inner {
 }
 
 .dashboard__manage-view--list.assoc {
-  cursor: default;
+  
   padding-bottom: 0;
 }
 .dashboard__manage-view--list.assoc:hover {
@@ -7404,7 +7428,7 @@ ul.dropdown-menu {
 }
 .patient-user__navbar ul > li > a .icons {
   top: 12px;
-  right: 4px;
+  left: 4px;
   position: absolute;
 }
 
@@ -7459,7 +7483,7 @@ ul.dropdown-menu {
   margin-right: 0px;
 }
 .patient_nav_link_right li a {
-  padding: 10px 30px 9px 0px !important;
+  padding: 10px 0px 9px 30px !important;
 }
 
 .patient-overview {
@@ -7655,6 +7679,9 @@ ul.dropdown-menu {
 .clinic-link .dropdown-menu, .exist-link .dropdown-menu {
   z-index: 9999;
   width: 80%;
+  height: 300px;
+  overflow-y: scroll;
+  margin-bottom: 5%;
 }
 .clinic-link .dropdown-menu li a, .exist-link .dropdown-menu li a {
   word-wrap: break-word;
@@ -8879,8 +8906,23 @@ ul.dropdown-menu {
 
   
   
-  .navbar-default > .container > .navbar-secondary ul li {
+  ul li, ul li:visited, ul li:focus, a:visited, a:focus {
     outline: none;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+  }
+
+  input.form-control {
+    box-shadow: none;
+    border-radius: 0px;
+    -webkit-border-radius: 0px;
+  }
+
+  input[type="text"], input[type="email"], input[type="search"], input[type="password"] {
+    -webkit-appearance: caret;
+    -moz-appearance: caret;
+    
+    border-radius: 0px;
   }
 
   .patient-user__navbar .patient-dashboard > li {
@@ -8934,7 +8976,7 @@ ul.dropdown-menu {
   }
 
   .patient-user__navbar ul > li {
-    padding-right: 15px;
+    padding-right: 30px;
   }
 
   
@@ -8978,8 +9020,23 @@ ul.dropdown-menu {
 
   
   
-  .navbar-default > .container > .navbar-secondary ul li {
+  ul li, ul li:visited, ul li:focus, a:visited, a:focus {
     outline: none;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+  }
+
+  input.form-control {
+    box-shadow: none;
+    border-radius: 0px;
+    -webkit-border-radius: 0px;
+  }
+
+  input[type="text"], input[type="email"], input[type="search"], input[type="password"] {
+    -webkit-appearance: caret;
+    -moz-appearance: caret;
+    
+    border-radius: 0px;
   }
 
   .patient-user__navbar {

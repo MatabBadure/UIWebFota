@@ -37,7 +37,6 @@
             "app/bower_components/ng-tags-input/ng-tags-input.js",
             "app/bower_components/angular-notys/angular-notys.js",
             "app/bower_components/bootstrap/dist/js/bootstrap.js",           
-            "app/bower_components/angular-mask/dist/ngMask.js",
             "app/bower_components/angular-loading-bar/build/loading-bar.js",
             "app/bower_components/angular-validation-match/dist/angular-validation-match.js",
             "app/bower_components/angular-bootstrap/ui-bootstrap-tpls.js",
@@ -45,6 +44,7 @@
             "app/bower_components/d3/d3.js",
             "app/bower_components/nvd3/nv.d3.js",
             "app/bower_components/oclazyload/dist/ocLazyLoad.js",
+            "app/bower_components/angular-ui-mask/dist/mask.js",
             "app/scripts/app.js",
             "app/scripts/app.constants.js",
             "app/scripts/routes.js",
@@ -126,6 +126,7 @@
             "app/scripts/components/util/graph.service.js",
             "app/scripts/components/util/searchfilter.service.js",
             "app/scripts/components/util/scrollNavbar.js",
+            "app/scripts/components/util/sortoptions.service.js",
             "app/scripts/recaptcha.js"
         ],
         "clean": [

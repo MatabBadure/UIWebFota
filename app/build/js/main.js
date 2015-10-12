@@ -62707,736 +62707,6 @@ if (typeof jQuery === 'undefined') {
 
 }(jQuery);
 
-(function() {
-  'use strict';
-  angular.module('ngMask', []);
-})();(function() {
-  'use strict';
-  angular.module('ngMask')
-    .directive('mask', ['$log', '$timeout', 'MaskService', function($log, $timeout, MaskService) {
-      return {
-        restrict: 'A',
-        require: 'ngModel',
-        compile: function($element, $attrs) { 
-         if (!$attrs.mask || !$attrs.ngModel) {
-            $log.info('Mask and ng-model attributes are required!');
-            return;
-          }
-
-          var maskService = MaskService.create();
-          var timeout;
-          var promise;
-
-          function setSelectionRange(selectionStart){
-            if (typeof selectionStart !== 'number') {
-              return;
-            }
-
-            // using $timeout:
-            // it should run after the DOM has been manipulated by Angular
-            // and after the browser renders (which may cause flicker in some cases)
-            $timeout.cancel(timeout);
-            timeout = $timeout(function(){
-              var selectionEnd = selectionStart + 1;
-              var input = $element[0];
-
-              if (input.setSelectionRange) {
-                input.focus();
-                input.setSelectionRange(selectionStart, selectionEnd);
-              } else if (input.createTextRange) {
-                var range = input.createTextRange();
-
-                range.collapse(true);
-                range.moveEnd('character', selectionEnd);
-                range.moveStart('character', selectionStart);
-                range.select();
-              }
-            });
-          }
-
-          return {
-            pre: function($scope, $element, $attrs, controller) {
-              promise = maskService.generateRegex({
-                mask: $attrs.mask,
-                // repeat mask expression n times
-                repeat: ($attrs.repeat || $attrs.maskRepeat),
-                // clean model value - without divisors
-                clean: (($attrs.clean || $attrs.maskClean) === 'true'),
-                // limit length based on mask length
-                limit: (($attrs.limit || $attrs.maskLimit || 'true') === 'true'),
-                // how to act with a wrong value
-                restrict: ($attrs.restrict || $attrs.maskRestrict || 'select'), //select, reject, accept
-                // set validity mask
-                validate: (($attrs.validate || $attrs.maskValidate || 'true') === 'true'),
-                // default model value
-                model: $attrs.ngModel,
-                // default input value
-                value: $attrs.ngValue
-              });
-            },
-            post: function($scope, $element, $attrs, controller) {
-              promise.then(function() {
-                // get initial options
-                var timeout;
-                var options = maskService.getOptions();
-
-                function parseViewValue(value) {
-                  var untouchedValue = value;
-                  // set default value equal 0
-                  value = value || '';
-
-                  // get view value object
-                  var viewValue = maskService.getViewValue(value);
-
-                  // get mask without question marks
-                  var maskWithoutOptionals = options['maskWithoutOptionals'] || '';
-
-                  // get view values capped
-                  // used on view
-                  var viewValueWithDivisors = viewValue.withDivisors(true);
-                  // used on model
-                  var viewValueWithoutDivisors = viewValue.withoutDivisors(true);
-
-                  try {
-                    // get current regex
-                    var regex = maskService.getRegex(viewValueWithDivisors.length - 1);
-                    var fullRegex = maskService.getRegex(maskWithoutOptionals.length - 1);
-
-                    // current position is valid
-                    var validCurrentPosition = regex.test(viewValueWithDivisors) || fullRegex.test(viewValueWithDivisors);
-
-                    // difference means for select option
-                    var diffValueAndViewValueLengthIsOne = (value.length - viewValueWithDivisors.length) === 1;
-                    var diffMaskAndViewValueIsGreaterThanZero = (maskWithoutOptionals.length - viewValueWithDivisors.length) > 0;
-
-                    if (options.restrict !== 'accept') {
-                      if (options.restrict === 'select' && (!validCurrentPosition || diffValueAndViewValueLengthIsOne)) {
-                        var lastCharInputed = value[(value.length-1)];
-                        var lastCharGenerated = viewValueWithDivisors[(viewValueWithDivisors.length-1)];
-
-                        if ((lastCharInputed !== lastCharGenerated) && diffMaskAndViewValueIsGreaterThanZero) {
-                          viewValueWithDivisors = viewValueWithDivisors + lastCharInputed;
-                        }
-
-                        var wrongPosition = maskService.getFirstWrongPosition(viewValueWithDivisors);
-                        if (angular.isDefined(wrongPosition)) {
-                          setSelectionRange(wrongPosition);
-                        }
-                      } else if (options.restrict === 'reject' && !validCurrentPosition) {
-                        viewValue = maskService.removeWrongPositions(viewValueWithDivisors);
-                        viewValueWithDivisors = viewValue.withDivisors(true);
-                        viewValueWithoutDivisors = viewValue.withoutDivisors(true);
-
-                        // setSelectionRange(viewValueWithDivisors.length);
-                      }
-                    }
-
-                    if (!options.limit) {
-                      viewValueWithDivisors = viewValue.withDivisors(false);
-                      viewValueWithoutDivisors = viewValue.withoutDivisors(false);
-                    }
-
-                    // Set validity
-                    if (options.validate && controller.$dirty) {
-                      if (fullRegex.test(viewValueWithDivisors) || controller.$isEmpty(untouchedValue)) {
-                        controller.$setValidity('mask', true);
-                      } else {
-                        controller.$setValidity('mask', false);
-                      }
-                    }
-
-                    // Update view and model values
-                    if(value !== viewValueWithDivisors){
-                      controller.$setViewValue(angular.copy(viewValueWithDivisors), 'input');
-                      controller.$render();
-                    }
-                  } catch (e) {
-                    $log.error('[mask - parseViewValue]');
-                    throw e;
-                  }
-
-                  // Update model, can be different of view value
-                  if (options.clean) {
-                    return viewValueWithoutDivisors;
-                  } else {
-                    return viewValueWithDivisors;
-                  }
-                }
-
-                controller.$parsers.push(parseViewValue);
-
-                $element.on('click input paste keyup', function() {
-                  timeout = $timeout(function() {
-                    // Manual debounce to prevent multiple execution
-                    $timeout.cancel(timeout);
-
-                    parseViewValue($element.val());
-                    $scope.$apply();
-                  }, 100);
-                });
-
-                // Register the watch to observe remote loading or promised data
-                // Deregister calling returned function
-                var watcher = $scope.$watch($attrs.ngModel, function (newValue, oldValue) {
-                  if (angular.isDefined(newValue)) {
-                    parseViewValue(newValue);
-                    watcher();
-                  }
-                });
-
-                // $evalAsync from a directive
-                // it should run after the DOM has been manipulated by Angular
-                // but before the browser renders
-                if(options.value) {
-                  $scope.$evalAsync(function($scope) {
-                    controller.$setViewValue(angular.copy(options.value), 'input');
-                    controller.$render();
-                  });
-                }
-              });
-            }
-          }
-        }
-      }
-    }]);
-})();
-(function() {
-  'use strict';
-  angular.module('ngMask')
-    .factory('MaskService', ['$q', 'OptionalService', 'UtilService', function($q, OptionalService, UtilService) {
-      function create() {
-        var options;
-        var maskWithoutOptionals;
-        var maskWithoutOptionalsLength = 0;
-        var maskWithoutOptionalsAndDivisorsLength = 0;
-        var optionalIndexes = [];
-        var optionalDivisors = {};
-        var optionalDivisorsCombinations = [];
-        var divisors = [];
-        var divisorElements = {};
-        var regex = [];
-        var patterns = {
-          '9': /[0-9]/,
-          '8': /[0-8]/,
-          '7': /[0-7]/,
-          '6': /[0-6]/,
-          '5': /[0-5]/,
-          '4': /[0-4]/,
-          '3': /[0-3]/,
-          '2': /[0-2]/,
-          '1': /[0-1]/,
-          '0': /[0]/,
-          '*': /./,
-          'w': /\w/,
-          'W': /\W/,
-          'd': /\d/,
-          'D': /\D/,
-          's': /\s/,
-          'S': /\S/,
-          'b': /\b/,
-          'A': /[A-Z]/,
-          'a': /[a-z]/,
-          'Z': /[A-ZÇÀÁÂÃÈÉÊẼÌÍÎĨÒÓÔÕÙÚÛŨ]/,
-          'z': /[a-zçáàãâéèêẽíìĩîóòôõúùũüû]/,
-          '@': /[a-zA-Z]/,
-          '#': /[a-zA-ZçáàãâéèêẽíìĩîóòôõúùũüûÇÀÁÂÃÈÉÊẼÌÍÎĨÒÓÔÕÙÚÛŨ]/,
-          '%': /[0-9a-zA-ZçáàãâéèêẽíìĩîóòôõúùũüûÇÀÁÂÃÈÉÊẼÌÍÎĨÒÓÔÕÙÚÛŨ]/
-        };
-
-        // REGEX
-
-        function generateIntermetiateElementRegex(i, forceOptional) {
-          var charRegex;
-          try {
-            var element = maskWithoutOptionals[i];
-            var elementRegex = patterns[element];
-            var hasOptional = isOptional(i);
-
-            if (elementRegex) {
-              charRegex = '(' + elementRegex.source + ')';
-            } else { // is a divisor
-              if (!isDivisor(i)) {
-                divisors.push(i);
-                divisorElements[i] = element;
-              }
-
-              charRegex = '(' + '\\' + element + ')';
-            }
-          } catch (e) {
-            throw e;
-          }
-
-          if (hasOptional || forceOptional) {
-            charRegex += '?';
-          }
-
-          return new RegExp(charRegex);
-        }
-
-        function generateIntermetiateRegex(i, forceOptional) {
-
-
-          var elementRegex
-          var elementOptionalRegex;
-          try {
-            var intermetiateElementRegex = generateIntermetiateElementRegex(i, forceOptional);
-            elementRegex = intermetiateElementRegex;
-
-            var hasOptional = isOptional(i);
-            var currentRegex = intermetiateElementRegex.source;
-
-            if (hasOptional && ((i+1) < maskWithoutOptionalsLength)) {
-              var intermetiateRegex = generateIntermetiateRegex((i+1), true).elementOptionalRegex();
-              currentRegex += intermetiateRegex.source;
-            }
-
-            elementOptionalRegex = new RegExp(currentRegex);
-          } catch (e) {
-            throw e;
-          }
-          return {
-            elementRegex: function() {
-              return elementRegex;
-            },
-            elementOptionalRegex: function() {
-              // from element regex, gets the flow of regex until first not optional
-              return elementOptionalRegex;
-            }
-          };
-        }
-
-        function generateRegex(opts) {
-          var deferred = $q.defer();
-          options = opts;
-
-          try {
-            var mask = opts['mask'];
-            var repeat = opts['repeat'];
-
-            if (!mask)
-              return;
-
-            if (repeat) {
-              mask = Array((parseInt(repeat)+1)).join(mask);
-            }
-
-            optionalIndexes = OptionalService.getOptionals(mask).fromMaskWithoutOptionals();
-            options['maskWithoutOptionals'] = maskWithoutOptionals = OptionalService.removeOptionals(mask);
-            maskWithoutOptionalsLength = maskWithoutOptionals.length;
-
-            var cumulativeRegex;
-            for (var i=0; i<maskWithoutOptionalsLength; i++) {
-              var charRegex = generateIntermetiateRegex(i);
-              var elementRegex = charRegex.elementRegex();
-              var elementOptionalRegex = charRegex.elementOptionalRegex();
-
-              var newRegex = cumulativeRegex ? cumulativeRegex.source + elementOptionalRegex.source : elementOptionalRegex.source;
-              newRegex = new RegExp(newRegex);
-              cumulativeRegex = cumulativeRegex ? cumulativeRegex.source + elementRegex.source : elementRegex.source;
-              cumulativeRegex = new RegExp(cumulativeRegex);
-
-              regex.push(newRegex);
-            }
-
-            generateOptionalDivisors();
-            maskWithoutOptionalsAndDivisorsLength = removeDivisors(maskWithoutOptionals).length;
-
-            deferred.resolve({
-              options: options,
-              divisors: divisors,
-              divisorElements: divisorElements,
-              optionalIndexes: optionalIndexes,
-              optionalDivisors: optionalDivisors,
-              optionalDivisorsCombinations: optionalDivisorsCombinations
-            });
-          } catch (e) {
-            deferred.reject(e);
-            throw e;
-          }
-
-          return deferred.promise;
-        }
-
-        function getRegex(index) {
-          var currentRegex;
-
-          try {
-            currentRegex = regex[index] ? regex[index].source : '';
-          } catch (e) {
-            throw e;
-          }
-
-          return (new RegExp('^' + currentRegex + '$'));
-        }
-
-        // DIVISOR
-
-        function isOptional(currentPos) {
-          return UtilService.inArray(currentPos, optionalIndexes);
-        }
-
-        function isDivisor(currentPos) {
-          return UtilService.inArray(currentPos, divisors);
-        }
-
-        function generateOptionalDivisors() {
-          function sortNumber(a,b) {
-              return a - b;
-          }
-
-          var sortedDivisors = divisors.sort(sortNumber);
-          var sortedOptionals = optionalIndexes.sort(sortNumber);
-          for (var i = 0; i<sortedDivisors.length; i++) {
-            var divisor = sortedDivisors[i];
-            for (var j = 1; j<=sortedOptionals.length; j++) {
-              var optional = sortedOptionals[(j-1)];
-              if (optional >= divisor) {
-                break;
-              }
-
-              if (optionalDivisors[divisor]) {
-                optionalDivisors[divisor] = optionalDivisors[divisor].concat(divisor-j);
-              } else {
-                optionalDivisors[divisor] = [(divisor-j)];
-              }
-
-              // get the original divisor for alternative divisor
-              divisorElements[(divisor-j)] = divisorElements[divisor];
-            }
-          }
-        }
-
-        function removeDivisors(value) {
-              value = value.toString();
-          try {
-            if (divisors.length > 0 && value) {
-              var keys = Object.keys(divisorElements);
-              var elments = [];
-
-              for (var i = keys.length - 1; i >= 0; i--) {
-                var divisor = divisorElements[keys[i]];
-                if (divisor) {
-                  elments.push(divisor);
-                }
-              }
-
-              elments = UtilService.uniqueArray(elments);
-
-              // remove if it is not pattern
-              var regex = new RegExp(('[' + '\\' + elments.join('\\') + ']'), 'g');
-              return value.replace(regex, '');
-            } else {
-              return value;
-            }
-          } catch (e) {
-            throw e;
-          }
-        }
-
-        function insertDivisors(array, combination) {
-          function insert(array, output) {
-            var out = output;
-            for (var i=0; i<array.length; i++) {
-              var divisor = array[i];
-              if (divisor < out.length) {
-                out.splice(divisor, 0, divisorElements[divisor]);
-              }
-            }
-            return out;
-          }
-
-          var output = array;
-          var divs = divisors.filter(function(it) {
-            var optionalDivisorsKeys = Object.keys(optionalDivisors).map(function(it){
-              return parseInt(it);
-            });
-
-            return !UtilService.inArray(it, combination) && !UtilService.inArray(it, optionalDivisorsKeys);
-          });
-
-          if (!angular.isArray(array) || !angular.isArray(combination)) {
-            return output;
-          }
-
-          // insert not optional divisors
-          output = insert(divs, output);
-
-          // insert optional divisors
-          output = insert(combination, output);
-
-          return output;
-        }
-
-        function tryDivisorConfiguration(value) {
-          var output = value.split('');
-          var defaultDivisors = true;
-
-          // has optional?
-          if (optionalIndexes.length > 0) {
-            var lazyArguments = [];
-            var optionalDivisorsKeys = Object.keys(optionalDivisors);
-
-            // get all optional divisors as array of arrays [[], [], []...]
-            for (var i=0; i<optionalDivisorsKeys.length; i++) {
-              var val = optionalDivisors[optionalDivisorsKeys[i]];
-              lazyArguments.push(val);
-            }
-
-            // generate all possible configurations
-            if (optionalDivisorsCombinations.length === 0) {
-              UtilService.lazyProduct(lazyArguments, function() {
-                // convert arguments to array
-                optionalDivisorsCombinations.push(Array.prototype.slice.call(arguments));
-              });
-            }
-
-            for (var i = optionalDivisorsCombinations.length - 1; i >= 0; i--) {
-              var outputClone = angular.copy(output);
-              outputClone = insertDivisors(outputClone, optionalDivisorsCombinations[i]);
-
-              // try validation
-              var viewValueWithDivisors = outputClone.join('');
-              var regex = getRegex(maskWithoutOptionals.length - 1);
-
-              if (regex.test(viewValueWithDivisors)) {
-                defaultDivisors = false;
-                output = outputClone;
-                break;
-              }
-            }
-          }
-
-          if (defaultDivisors) {
-            output = insertDivisors(output, divisors);
-          }
-
-          return output.join('');
-        }
-
-        // MASK
-
-        function getOptions() {
-          return options;
-        }
-
-        function getViewValue(value) {
-          try {
-            var outputWithoutDivisors = removeDivisors(value);
-            var output = tryDivisorConfiguration(outputWithoutDivisors);
-
-            return {
-              withDivisors: function(capped) {
-                if (capped) {
-                  return output.substr(0, maskWithoutOptionalsLength);
-                } else {
-                  return output;
-                }
-              },
-              withoutDivisors: function(capped) {
-                if (capped) {
-                  return outputWithoutDivisors.substr(0, maskWithoutOptionalsAndDivisorsLength);
-                } else {
-                  return outputWithoutDivisors;
-                }
-              }
-            };
-          } catch (e) {
-            throw e;
-          }
-        }
-
-        // SELECTOR
-
-        function getWrongPositions(viewValueWithDivisors, onlyFirst) {
-          var pos = [];
-
-          if (!viewValueWithDivisors) {
-            return 0;
-          }
-
-          for (var i=0; i<viewValueWithDivisors.length; i++){
-            var pattern = getRegex(i);
-            var value = viewValueWithDivisors.substr(0, (i+1));
-
-            if(pattern && !pattern.test(value)){
-              pos.push(i);
-
-              if (onlyFirst) {
-                break;
-              }
-            }
-          }
-
-          return pos;
-        }
-
-        function getFirstWrongPosition(viewValueWithDivisors) {
-          return getWrongPositions(viewValueWithDivisors, true)[0];
-        }
-
-        function removeWrongPositions(viewValueWithDivisors) {
-          var wrongPositions = getWrongPositions(viewValueWithDivisors, false);
-          var newViewValue = viewValueWithDivisors;
-
-          for(var i = 0; i < wrongPositions.length; i++){
-            var wrongPosition = wrongPositions[i];
-            var viewValueArray = viewValueWithDivisors.split('');
-            viewValueArray.splice(wrongPosition, 1);
-            newViewValue = viewValueArray.join('');
-          }
-
-          return getViewValue(newViewValue);
-        }
-
-        return {
-          getViewValue: getViewValue,
-          generateRegex: generateRegex,
-          getRegex: getRegex,
-          getOptions: getOptions,
-          removeDivisors: removeDivisors,
-          getFirstWrongPosition: getFirstWrongPosition,
-          removeWrongPositions: removeWrongPositions
-        }
-      }
-
-      return {
-        create: create
-      }
-    }]);
-})();
-(function() {
-  'use strict';
-  angular.module('ngMask')
-    .factory('OptionalService', [function() {
-      function getOptionalsIndexes(mask) {
-        var indexes = [];
-
-        try {
-          var regexp = /\?/g;
-          var match = [];
-
-          while ((match = regexp.exec(mask)) != null) {
-            // Save the optional char
-            indexes.push((match.index - 1));
-          }
-        } catch (e) {
-          throw e;
-        }
-
-        return {
-          fromMask: function() {
-            return indexes;
-          },
-          fromMaskWithoutOptionals: function() {
-            return getOptionalsRelativeMaskWithoutOptionals(indexes);
-          }
-        };
-      }
-
-      function getOptionalsRelativeMaskWithoutOptionals(optionals) {
-        var indexes = [];
-        for (var i=0; i<optionals.length; i++) {
-          indexes.push(optionals[i]-i);
-        }
-        return indexes;
-      }
-
-      function removeOptionals(mask) {
-        var newMask;
-
-        try {
-          newMask = mask.replace(/\?/g, '');
-        } catch (e) {
-          throw e;
-        }
-
-        return newMask;
-      }
-
-      return {
-        removeOptionals: removeOptionals,
-        getOptionals: getOptionalsIndexes
-      }
-    }]);
-})();(function() {
-  'use strict';
-  angular.module('ngMask')
-    .factory('UtilService', [function() {
-
-      // sets: an array of arrays
-      // f: your callback function
-      // context: [optional] the `this` to use for your callback
-      // http://phrogz.net/lazy-cartesian-product
-      function lazyProduct(sets, f, context){
-        if (!context){
-          context=this;
-        }
-
-        var p = [];
-        var max = sets.length-1;
-        var lens = [];
-
-        for (var i=sets.length;i--;) {
-          lens[i] = sets[i].length;
-        }
-
-        function dive(d){
-          var a = sets[d];
-          var len = lens[d];
-
-          if (d === max) {
-            for (var i=0;i<len;++i) {
-              p[d] = a[i];
-              f.apply(context, p);
-            }
-          } else {
-            for (var i=0;i<len;++i) {
-              p[d]=a[i];
-              dive(d+1);
-            }
-          }
-
-          p.pop();
-        }
-
-        dive(0);
-      }
-
-      function inArray(i, array) {
-        var output;
-
-        try {
-          output = array.indexOf(i) > -1;
-        } catch (e) {
-          throw e;
-        }
-
-        return output;
-      }
-
-      function uniqueArray(array) {
-        var u = {};
-        var a = [];
-
-        for (var i = 0, l = array.length; i < l; ++i) {
-          if(u.hasOwnProperty(array[i])) {
-            continue;
-          }
-
-          a.push(array[i]);
-          u[array[i]] = 1;
-        }
-
-        return a;
-      }
-
-      return {
-        lazyProduct: lazyProduct,
-        inArray: inArray,
-        uniqueArray: uniqueArray
-      }
-    }]);
-})();
 /*! 
  * angular-loading-bar v0.8.0
  * https://chieffancypants.github.io/angular-loading-bar
@@ -96742,6 +96012,558 @@ if (!Array.prototype.indexOf) {
                 return -1;
         };
 }
+/*!
+ * angular-ui-mask
+ * https://github.com/angular-ui/ui-mask
+ * Version: 1.4.7 - 2015-10-05T04:13:27.168Z
+ * License: MIT
+ */
+
+
+(function () { 
+'use strict';
+/*
+ Attaches input mask onto input element
+ */
+angular.module('ui.mask', [])
+        .value('uiMaskConfig', {
+            maskDefinitions: {
+                '9': /\d/,
+                'A': /[a-zA-Z]/,
+                '*': /[a-zA-Z0-9]/
+            },
+            clearOnBlur: true,
+            eventsToHandle: ['input', 'keyup', 'click', 'focus']
+        })
+        .directive('uiMask', ['uiMaskConfig', function(maskConfig) {
+                function isFocused (elem) {
+                  return elem === document.activeElement && (!document.hasFocus || document.hasFocus()) && !!(elem.type || elem.href || ~elem.tabIndex);
+                }
+
+                return {
+                    priority: 100,
+                    require: 'ngModel',
+                    restrict: 'A',
+                    compile: function uiMaskCompilingFunction() {
+                        var options = maskConfig;
+
+                        return function uiMaskLinkingFunction(scope, iElement, iAttrs, controller) {
+                            var maskProcessed = false, eventsBound = false,
+                                    maskCaretMap, maskPatterns, maskPlaceholder, maskComponents,
+                                    // Minimum required length of the value to be considered valid
+                                    minRequiredLength,
+                                    value, valueMasked, isValid,
+                                    // Vars for initializing/uninitializing
+                                    originalPlaceholder = iAttrs.placeholder,
+                                    originalMaxlength = iAttrs.maxlength,
+                                    // Vars used exclusively in eventHandler()
+                                    oldValue, oldValueUnmasked, oldCaretPosition, oldSelectionLength;
+
+                            function initialize(maskAttr) {
+                                if (!angular.isDefined(maskAttr)) {
+                                    return uninitialize();
+                                }
+                                processRawMask(maskAttr);
+                                if (!maskProcessed) {
+                                    return uninitialize();
+                                }
+                                initializeElement();
+                                bindEventListeners();
+                                return true;
+                            }
+
+                            function initPlaceholder(placeholderAttr) {
+                                if ( ! placeholderAttr) {
+                                    return;
+                                }
+
+                                maskPlaceholder = placeholderAttr;
+
+                                // If the mask is processed, then we need to update the value
+                                if (maskProcessed) {
+                                    iElement.val(maskValue(unmaskValue(iElement.val())));
+                                }
+                            }
+                            var modelViewValue = false;
+                            iAttrs.$observe('modelViewValue', function(val) {
+                                if (val === 'true') {
+                                    modelViewValue = true;
+                                }
+                            });
+
+                            function formatter(fromModelValue) {
+                                if (!maskProcessed) {
+                                    return fromModelValue;
+                                }
+                                value = unmaskValue(fromModelValue || '');
+                                isValid = validateValue(value);
+                                controller.$setValidity('mask', isValid);
+                                return isValid && value.length ? maskValue(value) : undefined;
+                            }
+
+                            function parser(fromViewValue) {
+                                if (!maskProcessed) {
+                                    return fromViewValue;
+                                }
+                                value = unmaskValue(fromViewValue || '');
+                                isValid = validateValue(value);
+                                // We have to set viewValue manually as the reformatting of the input
+                                // value performed by eventHandler() doesn't happen until after
+                                // this parser is called, which causes what the user sees in the input
+                                // to be out-of-sync with what the controller's $viewValue is set to.
+                                controller.$viewValue = value.length ? maskValue(value) : '';
+                                controller.$setValidity('mask', isValid);
+                                if (value === '' && iAttrs.required) {
+                                    controller.$setValidity('required', !controller.$error.required);
+                                }
+                                if (isValid) {
+                                    return modelViewValue ? controller.$viewValue : value;
+                                } else {
+                                    return undefined;
+                                }
+                            }
+
+                            var linkOptions = {};
+
+                            if (iAttrs.uiOptions) {
+                                linkOptions = scope.$eval('[' + iAttrs.uiOptions + ']');
+                                if (angular.isObject(linkOptions[0])) {
+                                    // we can't use angular.copy nor angular.extend, they lack the power to do a deep merge
+                                    linkOptions = (function(original, current) {
+                                        for (var i in original) {
+                                            if (Object.prototype.hasOwnProperty.call(original, i)) {
+                                                if (current[i] === undefined) {
+                                                    current[i] = angular.copy(original[i]);
+                                                } else {
+                                                    if (angular.isObject(current[i])) {
+                                                        angular.extend(current[i], original[i]);
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        return current;
+                                    })(options, linkOptions[0]);
+                                }
+                            } else {
+                                linkOptions = options;
+                            }
+
+                            iAttrs.$observe('uiMask', initialize);
+                            if (angular.isDefined(iAttrs.uiMaskPlaceholder)) {
+                                iAttrs.$observe('uiMaskPlaceholder', initPlaceholder);
+                            }
+                            else {
+                                iAttrs.$observe('placeholder', initPlaceholder);
+                            }
+                            controller.$formatters.push(formatter);
+                            controller.$parsers.push(parser);
+
+                            function uninitialize() {
+                                maskProcessed = false;
+                                unbindEventListeners();
+
+                                if (angular.isDefined(originalPlaceholder)) {
+                                    iElement.attr('placeholder', originalPlaceholder);
+                                } else {
+                                    iElement.removeAttr('placeholder');
+                                }
+
+                                if (angular.isDefined(originalMaxlength)) {
+                                    iElement.attr('maxlength', originalMaxlength);
+                                } else {
+                                    iElement.removeAttr('maxlength');
+                                }
+
+                                iElement.val(controller.$modelValue);
+                                controller.$viewValue = controller.$modelValue;
+                                return false;
+                            }
+
+                            function initializeElement() {
+                                value = oldValueUnmasked = unmaskValue(controller.$modelValue || '');
+                                valueMasked = oldValue = maskValue(value);
+                                isValid = validateValue(value);
+                                if (iAttrs.maxlength) { // Double maxlength to allow pasting new val at end of mask
+                                    iElement.attr('maxlength', maskCaretMap[maskCaretMap.length - 1] * 2);
+                                }
+                                if ( ! originalPlaceholder) {
+                                    iElement.attr('placeholder', maskPlaceholder);
+                                }
+                                var viewValue = controller.$modelValue;
+                                var idx = controller.$formatters.length;
+                                while(idx--) {
+                                    viewValue = controller.$formatters[idx](viewValue);
+                                }
+                                controller.$viewValue = viewValue || '';
+                                controller.$render();
+                                // Not using $setViewValue so we don't clobber the model value and dirty the form
+                                // without any kind of user interaction.
+                            }
+
+                            function bindEventListeners() {
+                                if (eventsBound) {
+                                    return;
+                                }
+                                iElement.bind('blur', blurHandler);
+                                iElement.bind('mousedown mouseup', mouseDownUpHandler);
+                                iElement.bind(linkOptions.eventsToHandle.join(' '), eventHandler);
+                                iElement.bind('paste', onPasteHandler);
+                                eventsBound = true;
+                            }
+
+                            function unbindEventListeners() {
+                                if (!eventsBound) {
+                                    return;
+                                }
+                                iElement.unbind('blur', blurHandler);
+                                iElement.unbind('mousedown', mouseDownUpHandler);
+                                iElement.unbind('mouseup', mouseDownUpHandler);
+                                iElement.unbind('input', eventHandler);
+                                iElement.unbind('keyup', eventHandler);
+                                iElement.unbind('click', eventHandler);
+                                iElement.unbind('focus', eventHandler);
+                                iElement.unbind('paste', onPasteHandler);
+                                eventsBound = false;
+                            }
+
+                            function validateValue(value) {
+                                // Zero-length value validity is ngRequired's determination
+                                return value.length ? value.length >= minRequiredLength : true;
+                            }
+
+                            function unmaskValue(value) {
+                                var valueUnmasked = '',
+                                        maskPatternsCopy = maskPatterns.slice();
+                                // Preprocess by stripping mask components from value
+                                value = value.toString();
+                                angular.forEach(maskComponents, function(component) {
+                                    value = value.replace(component, '');
+                                });
+                                angular.forEach(value.split(''), function(chr) {
+                                    if (maskPatternsCopy.length && maskPatternsCopy[0].test(chr)) {
+                                        valueUnmasked += chr;
+                                        maskPatternsCopy.shift();
+                                    }
+                                });
+                                return valueUnmasked;
+                            }
+
+                            function maskValue(unmaskedValue) {
+                                var valueMasked = '',
+                                        maskCaretMapCopy = maskCaretMap.slice();
+
+                                angular.forEach(maskPlaceholder.split(''), function(chr, i) {
+                                    if (unmaskedValue.length && i === maskCaretMapCopy[0]) {
+                                        valueMasked += unmaskedValue.charAt(0) || '_';
+                                        unmaskedValue = unmaskedValue.substr(1);
+                                        maskCaretMapCopy.shift();
+                                    }
+                                    else {
+                                        valueMasked += chr;
+                                    }
+                                });
+                                return valueMasked;
+                            }
+
+                            function getPlaceholderChar(i) {
+                                var placeholder = angular.isDefined(iAttrs.uiMaskPlaceholder) ? iAttrs.uiMaskPlaceholder : iAttrs.placeholder;
+
+                                if (typeof placeholder !== 'undefined' && placeholder[i]) {
+                                    return placeholder[i];
+                                } else {
+                                    return '_';
+                                }
+                            }
+
+                            // Generate array of mask components that will be stripped from a masked value
+                            // before processing to prevent mask components from being added to the unmasked value.
+                            // E.g., a mask pattern of '+7 9999' won't have the 7 bleed into the unmasked value.
+                            // If a maskable char is followed by a mask char and has a mask
+                            // char behind it, we'll split it into it's own component so if
+                            // a user is aggressively deleting in the input and a char ahead
+                            // of the maskable char gets deleted, we'll still be able to strip
+                            // it in the unmaskValue() preprocessing.
+                            function getMaskComponents() {
+                                return maskPlaceholder.replace(/[_]+/g, '_').replace(/([^_]+)([a-zA-Z0-9])([^_])/g, '$1$2_$3').split('_');
+                            }
+
+                            function processRawMask(mask) {
+                                var characterCount = 0;
+
+                                maskCaretMap = [];
+                                maskPatterns = [];
+                                maskPlaceholder = '';
+
+                                if (typeof mask === 'string') {
+                                    minRequiredLength = 0;
+
+                                    var isOptional = false,
+                                            numberOfOptionalCharacters = 0,
+                                            splitMask = mask.split('');
+
+                                    angular.forEach(splitMask, function(chr, i) {
+                                        if (linkOptions.maskDefinitions[chr]) {
+
+                                            maskCaretMap.push(characterCount);
+
+                                            maskPlaceholder += getPlaceholderChar(i - numberOfOptionalCharacters);
+                                            maskPatterns.push(linkOptions.maskDefinitions[chr]);
+
+                                            characterCount++;
+                                            if (!isOptional) {
+                                                minRequiredLength++;
+                                            }
+                                        }
+                                        else if (chr === '?') {
+                                            isOptional = true;
+                                            numberOfOptionalCharacters++;
+                                        }
+                                        else {
+                                            maskPlaceholder += chr;
+                                            characterCount++;
+                                        }
+                                    });
+                                }
+                                // Caret position immediately following last position is valid.
+                                maskCaretMap.push(maskCaretMap.slice().pop() + 1);
+
+                                maskComponents = getMaskComponents();
+                                maskProcessed = maskCaretMap.length > 1 ? true : false;
+                            }
+
+                            function blurHandler() {
+                                if (linkOptions.clearOnBlur) {
+                                    oldCaretPosition = 0;
+                                    oldSelectionLength = 0;
+                                    if (!isValid || value.length === 0) {
+                                        valueMasked = '';
+                                        iElement.val('');
+                                        scope.$apply(function() {
+                                            controller.$setViewValue('');
+                                        });
+                                    }
+                                }
+                            }
+
+                            function mouseDownUpHandler(e) {
+                                if (e.type === 'mousedown') {
+                                    iElement.bind('mouseout', mouseoutHandler);
+                                } else {
+                                    iElement.unbind('mouseout', mouseoutHandler);
+                                }
+                            }
+
+                            iElement.bind('mousedown mouseup', mouseDownUpHandler);
+
+                            function mouseoutHandler() {
+                                /*jshint validthis: true */
+                                oldSelectionLength = getSelectionLength(this);
+                                iElement.unbind('mouseout', mouseoutHandler);
+                            }
+
+                            function onPasteHandler() {
+                                /*jshint validthis: true */
+                                setCaretPosition(this, iElement.val().length);
+                            }
+
+                            function eventHandler(e) {
+                                /*jshint validthis: true */
+                                e = e || {};
+                                // Allows more efficient minification
+                                var eventWhich = e.which,
+                                        eventType = e.type;
+
+                                // Prevent shift and ctrl from mucking with old values
+                                if (eventWhich === 16 || eventWhich === 91) {
+                                    return;
+                                }
+
+                                var val = iElement.val(),
+                                        valOld = oldValue,
+                                        valMasked,
+                                        valUnmasked = unmaskValue(val),
+                                        valUnmaskedOld = oldValueUnmasked,
+                                        caretPos = getCaretPosition(this) || 0,
+                                        caretPosOld = oldCaretPosition || 0,
+                                        caretPosDelta = caretPos - caretPosOld,
+                                        caretPosMin = maskCaretMap[0],
+                                        caretPosMax = maskCaretMap[valUnmasked.length] || maskCaretMap.slice().shift(),
+                                        selectionLenOld = oldSelectionLength || 0,
+                                        isSelected = getSelectionLength(this) > 0,
+                                        wasSelected = selectionLenOld > 0,
+                                        // Case: Typing a character to overwrite a selection
+                                        isAddition = (val.length > valOld.length) || (selectionLenOld && val.length > valOld.length - selectionLenOld),
+                                        // Case: Delete and backspace behave identically on a selection
+                                        isDeletion = (val.length < valOld.length) || (selectionLenOld && val.length === valOld.length - selectionLenOld),
+                                        isSelection = (eventWhich >= 37 && eventWhich <= 40) && e.shiftKey, // Arrow key codes
+
+                                        isKeyLeftArrow = eventWhich === 37,
+                                        // Necessary due to "input" event not providing a key code
+                                        isKeyBackspace = eventWhich === 8 || (eventType !== 'keyup' && isDeletion && (caretPosDelta === -1)),
+                                        isKeyDelete = eventWhich === 46 || (eventType !== 'keyup' && isDeletion && (caretPosDelta === 0) && !wasSelected),
+                                        // Handles cases where caret is moved and placed in front of invalid maskCaretMap position. Logic below
+                                        // ensures that, on click or leftward caret placement, caret is moved leftward until directly right of
+                                        // non-mask character. Also applied to click since users are (arguably) more likely to backspace
+                                        // a character when clicking within a filled input.
+                                        caretBumpBack = (isKeyLeftArrow || isKeyBackspace || eventType === 'click') && caretPos > caretPosMin;
+
+                                oldSelectionLength = getSelectionLength(this);
+
+                                // These events don't require any action
+                                if (isSelection || (isSelected && (eventType === 'click' || eventType === 'keyup'))) {
+                                    return;
+                                }
+
+                                // Value Handling
+                                // ==============
+
+                                // User attempted to delete but raw value was unaffected--correct this grievous offense
+                                if ((eventType === 'input') && isDeletion && !wasSelected && valUnmasked === valUnmaskedOld) {
+                                    while (isKeyBackspace && caretPos > caretPosMin && !isValidCaretPosition(caretPos)) {
+                                        caretPos--;
+                                    }
+                                    while (isKeyDelete && caretPos < caretPosMax && maskCaretMap.indexOf(caretPos) === -1) {
+                                        caretPos++;
+                                    }
+                                    var charIndex = maskCaretMap.indexOf(caretPos);
+                                    // Strip out non-mask character that user would have deleted if mask hadn't been in the way.
+                                    valUnmasked = valUnmasked.substring(0, charIndex) + valUnmasked.substring(charIndex + 1);
+                                }
+
+                                // Update values
+                                valMasked = maskValue(valUnmasked);
+
+                                oldValue = valMasked;
+                                oldValueUnmasked = valUnmasked;
+                                iElement.val(valMasked);
+                                
+                                scope.$apply(function() {
+                                    controller.$setViewValue(valUnmasked); // $setViewValue should be run in angular context, otherwise the changes will be invisible to angular and user code.
+                                });                                
+
+                                // Caret Repositioning
+                                // ===================
+
+                                // Ensure that typing always places caret ahead of typed character in cases where the first char of
+                                // the input is a mask char and the caret is placed at the 0 position.
+                                if (isAddition && (caretPos <= caretPosMin)) {
+                                    caretPos = caretPosMin + 1;
+                                }
+
+                                if (caretBumpBack) {
+                                    caretPos--;
+                                }
+
+                                // Make sure caret is within min and max position limits
+                                caretPos = caretPos > caretPosMax ? caretPosMax : caretPos < caretPosMin ? caretPosMin : caretPos;
+
+                                // Scoot the caret back or forth until it's in a non-mask position and within min/max position limits
+                                while (!isValidCaretPosition(caretPos) && caretPos > caretPosMin && caretPos < caretPosMax) {
+                                    caretPos += caretBumpBack ? -1 : 1;
+                                }
+
+                                if ((caretBumpBack && caretPos < caretPosMax) || (isAddition && !isValidCaretPosition(caretPosOld))) {
+                                    caretPos++;
+                                }
+                                oldCaretPosition = caretPos;
+                                setCaretPosition(this, caretPos);
+                            }
+
+                            function isValidCaretPosition(pos) {
+                                return maskCaretMap.indexOf(pos) > -1;
+                            }
+
+                            function getCaretPosition(input) {
+                                if (!input)
+                                    return 0;
+                                if (input.selectionStart !== undefined) {
+                                    return input.selectionStart;
+                                } else if (document.selection) {
+                                    if (isFocused(iElement[0])) {
+                                        // Curse you IE
+                                        input.focus();
+                                        var selection = document.selection.createRange();
+                                        selection.moveStart('character', input.value ? -input.value.length : 0);
+                                        return selection.text.length;
+                                    }
+                                }
+                                return 0;
+                            }
+
+                            function setCaretPosition(input, pos) {
+                                if (!input)
+                                    return 0;
+                                if (input.offsetWidth === 0 || input.offsetHeight === 0) {
+                                    return; // Input's hidden
+                                }
+                                if (input.setSelectionRange) {
+                                    if (isFocused(iElement[0])) {
+                                        input.focus();
+                                        input.setSelectionRange(pos, pos);
+                                    }
+                                }
+                                else if (input.createTextRange) {
+                                    // Curse you IE
+                                    var range = input.createTextRange();
+                                    range.collapse(true);
+                                    range.moveEnd('character', pos);
+                                    range.moveStart('character', pos);
+                                    range.select();
+                                }
+                            }
+
+                            function getSelectionLength(input) {
+                                if (!input)
+                                    return 0;
+                                if (input.selectionStart !== undefined) {
+                                    return (input.selectionEnd - input.selectionStart);
+                                }
+                                if (document.selection) {
+                                    return (document.selection.createRange().text.length);
+                                }
+                                return 0;
+                            }
+
+                            // https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Array/indexOf
+                            if (!Array.prototype.indexOf) {
+                                Array.prototype.indexOf = function(searchElement /*, fromIndex */) {
+                                    if (this === null) {
+                                        throw new TypeError();
+                                    }
+                                    var t = Object(this);
+                                    var len = t.length >>> 0;
+                                    if (len === 0) {
+                                        return -1;
+                                    }
+                                    var n = 0;
+                                    if (arguments.length > 1) {
+                                        n = Number(arguments[1]);
+                                        if (n !== n) { // shortcut for verifying if it's NaN
+                                            n = 0;
+                                        } else if (n !== 0 && n !== Infinity && n !== -Infinity) {
+                                            n = (n > 0 || -1) * Math.floor(Math.abs(n));
+                                        }
+                                    }
+                                    if (n >= len) {
+                                        return -1;
+                                    }
+                                    var k = n >= 0 ? n : Math.max(len - Math.abs(n), 0);
+                                    for (; k < len; k++) {
+                                        if (k in t && t[k] === searchElement) {
+                                            return k;
+                                        }
+                                    }
+                                    return -1;
+                                };
+                            }
+
+                        };
+                    }
+                };
+            }
+        ]);
+
+}());
 'use strict';
 
 angular.module('hillromvestApp',
@@ -96757,7 +96579,7 @@ angular.module('hillromvestApp',
    'ngTagsInput',
    'angular-noty',
    'angular-loading-bar',
-   'ngMask',
+   'ui.mask',
    'validation.match',
    'ui.bootstrap',
    'oc.lazyLoad'
@@ -96997,7 +96819,7 @@ angular.module('hillromvestApp')
                 url: '/patients?clinicIds',
                 data: {
                     roles: ['ADMIN'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'patient.page-title.patients'
                 },
                 views: {
                     'content@': {
@@ -97149,7 +96971,7 @@ angular.module('hillromvestApp')
                 url: '/{patientId}/overview',
                 data: {
                     roles: ['ADMIN'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'patient.page-title.overview'
                 },
                 views: {
                     'content@': {
@@ -97180,7 +97002,7 @@ angular.module('hillromvestApp')
                 url: '/overview',
                 data: {
                     roles: [],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'patient.page-title.overview'
                 },
                 views: {
                     'content@': {
@@ -97211,7 +97033,7 @@ angular.module('hillromvestApp')
                 url: '/{patientId}/demographic',
                 data: {
                     roles: ['ADMIN'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'patient.page-title.patient-info'
                 },
                 views: {
                     'content@': {
@@ -97237,7 +97059,7 @@ angular.module('hillromvestApp')
                 url: '/demographic',
                 data: {
                     roles: ['HCP'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'patient.page-title.patient-info'
                 },
                 views: {
                     'content@': {
@@ -97263,7 +97085,7 @@ angular.module('hillromvestApp')
                 url: '/{patientId}/demographicedit',
                 data: {
                     roles: ['ADMIN'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'patient.page-title.patient-info'
                 },
                 views: {
                     'content@': {
@@ -97289,7 +97111,7 @@ angular.module('hillromvestApp')
                 url: '/{patientId}/clinicInfo',
                 data: {
                     roles: ['ADMIN'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'patient.page-title.clinic-info'
                 },
                 views: {
                     'content@': {
@@ -97315,7 +97137,7 @@ angular.module('hillromvestApp')
                 url: '/clinicInfo',
                 data: {
                     roles: ['HCP'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'patient.page-title.clinic-info'
                 },
                 views: {
                     'content@': {
@@ -97341,7 +97163,7 @@ angular.module('hillromvestApp')
                 url: '/protocol-device',
                 data: {
                     roles: ['HCP'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'patient.page-title.careplan-device'
                 },
                 views: {
                     'content@': {
@@ -97367,7 +97189,7 @@ angular.module('hillromvestApp')
                 url: '/caregivers',
                 data: {
                     roles: ['HCP'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'patient.page-title.caregiver-info'
                 },
                 views: {
                     'content@': {
@@ -97394,7 +97216,7 @@ angular.module('hillromvestApp')
                 url: '/{patientId}/protocol-device',
                 data: {
                     roles: ['ADMIN'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'patient.page-title.careplan-device'
                 },
                 views: {
                     'content@': {
@@ -97473,7 +97295,7 @@ angular.module('hillromvestApp')
                 url: '/{patientId}/caregiver',
                 data: {
                     roles: ['ADMIN'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'patient.page-title.caregiver-info'
                 },
                 views: {
                     'content@': {
@@ -97498,7 +97320,7 @@ angular.module('hillromvestApp')
                 url: '/hillRomUsers',
                 data: {
                     roles: ['ADMIN'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'user.page-title.users'
                 },
                 views: {
                     'content@': {
@@ -97548,7 +97370,7 @@ angular.module('hillromvestApp')
                 url: '/{userId}',
                 data: {
                     roles: ['ADMIN'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'user.page-title.user'
                 },
                 views: {
                     'content@': {
@@ -97573,7 +97395,7 @@ angular.module('hillromvestApp')
                 url: '/hcpUsers?clinicIds',
                 data: {
                     roles: ['ADMIN'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'doctor.page-title.hcps'
                 },
                 views: {
                     'content@': {
@@ -97623,7 +97445,7 @@ angular.module('hillromvestApp')
                 url: '/{doctorId}/hcpEdit',
                 data: {
                     roles: ['ADMIN'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'doctor.page-title.hcp-update'
                 },
                 views: {
                     'content@': {
@@ -97648,11 +97470,10 @@ angular.module('hillromvestApp')
                 url: '/{doctorId}/hcpProfile',
                 data: {
                     roles: ['ADMIN'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'doctor.page-title.hcp-profile'
                 },
                 views: {
                     'content@': {
-                        // templateUrl: 'scripts/modules/admin/hcp/views/create-edit/view.html',
                         templateUrl: 'scripts/modules/admin/hcp/directives/hcp-info/overview/overview.html',
                         controller: 'DoctorsController'
                     }
@@ -97675,11 +97496,10 @@ angular.module('hillromvestApp')
                 url: '/{doctorId}/associatedClinic',
                 data: {
                     roles: ['ADMIN'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'doctor.page-title.associated-clinics'
                 },
                 views: {
                     'content@': {
-                        // templateUrl: 'scripts/modules/admin/hcp/views/create-edit/view.html',
                         templateUrl: 'scripts/modules/admin/hcp/directives/hcp-info/associated-clinic/clinic-list.html',
                         controller: 'DoctorsController'
                     }
@@ -97702,7 +97522,7 @@ angular.module('hillromvestApp')
               url: '/clinics',
               data: {
                 roles: ['ADMIN'],
-                pageTitle: 'clinic.title'
+                pageTitle: 'clinic.page-title.clinics'
               },
               views: {
                   'content@': {
@@ -97780,7 +97600,7 @@ angular.module('hillromvestApp')
               url: '/associatedHCP',
               data: {
                   roles: ['ADMIN'],
-                  pageTitle: 'clinic.title'
+                  pageTitle: 'clinic.page-title.associated-HCPs'
               },
               views: {
                   'content@': {
@@ -97806,7 +97626,7 @@ angular.module('hillromvestApp')
               url: '/associatedPatients',
               data: {
                   roles: ['ADMIN'],
-                  pageTitle: 'clinic.title'
+                  pageTitle: 'clinic.page-title.associated-patients'
               },
               views: {
                   'content@': {
@@ -97832,7 +97652,7 @@ angular.module('hillromvestApp')
               url: '/clinicadmin-clinic-edit',
               data: {
                   roles: ['ADMIN'],
-                  pageTitle: 'clinic.title'
+                  pageTitle: 'clinic.page-title.clinic-admin'
               },
               views: {
                   'content@': {
@@ -97944,7 +97764,7 @@ angular.module('hillromvestApp')
                 url: '/patient-dashboard',
                 data: {
                     roles: ['PATIENT'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'patient.page-title.my-dashboard'
                 },
                 views: {
                     'patient-view': {
@@ -97974,7 +97794,7 @@ angular.module('hillromvestApp')
                 url: '/caregiver',
                 data: {
                     roles: ['ADMIN','PATIENT'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'patient.page-title.caregivers'
                 },
                 views: {
                     'patient-view': {
@@ -98004,7 +97824,7 @@ angular.module('hillromvestApp')
                 url: '/caregiver-add',
                 data: {
                     roles: ['ADMIN','PATIENT'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'patient.page-title.add-caregiver'
                 },
                 views: {
                     'patient-view': {
@@ -98064,7 +97884,7 @@ angular.module('hillromvestApp')
                 url: '/device-protocol',
                 data: {
                     roles: ['ADMIN','PATIENT'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'patient.page-title.careplan-device'
                 },
                 views: {
                     'patient-view': {
@@ -98094,7 +97914,7 @@ angular.module('hillromvestApp')
                 url: '/clinic-hcp',
                 data: {
                     roles: ['ADMIN','PATIENT'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'patient.page-title.clinics-hcps'
                 },
                 views: {
                     'patient-view': {
@@ -98125,7 +97945,7 @@ angular.module('hillromvestApp')
                 url: '/p-profile',
                 data: {
                     roles: ['PATIENT'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'patient.page-title.patient-info'
                 },
                 views: {
                     'patient-view': {
@@ -98156,7 +97976,7 @@ angular.module('hillromvestApp')
                 url: '/profile',
                 data: {
                     roles: ['ADMIN'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'profile.page-title.my-profile'
                 },
                 views: {
                     'content@': {
@@ -98213,7 +98033,7 @@ angular.module('hillromvestApp')
                 url: '/updatepassword',
                 data: {
                     roles: ['ADMIN'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'profile.page-title.update-password'
                 },
                 views: {
                     'content@': {
@@ -98270,7 +98090,7 @@ angular.module('hillromvestApp')
               url: '/{clinicId}/clinic-info',
               data: {
                   roles: ['ADMIN'],
-                  pageTitle: 'clinic.title'
+                  pageTitle: 'clinic.page-title.clinic-profile'
               },
               views: {
                   'content@': {
@@ -98295,7 +98115,7 @@ angular.module('hillromvestApp')
                 url: '/p-profile-edit',
                 data: {
                     roles: ['PATIENT'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'patient.page-title.patient-info'
                 },
                 views: {
                     'patient-view': {
@@ -98325,7 +98145,7 @@ angular.module('hillromvestApp')
                 url: '/p-reset',
                 data: {
                     roles: ['PATIENT'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'profile.page-title.profile-settings'
                 },
                 views: {
                     'patient-profile-view': {
@@ -98356,7 +98176,7 @@ angular.module('hillromvestApp')
                 url: '/notification-settings',
                 data: {
                     roles: ['PATIENT'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'profile.page-title.notification-settings'
                 },
                 views: {
                     'patient-profile-view': {
@@ -98404,10 +98224,10 @@ angular.module('hillromvestApp')
 
             .state('hcpdashboard', {
                 parent: 'hcp-dashboard',
-                url: '/hcp-dashboard',
+                url: '/hcp-dashboard/{clinicId}',
                 data: {
                     roles: ['HCP'],
-                    pageTitle: 'hcp.title'
+                    pageTitle: 'doctor.page-title.my-dashboard'
                 },
                 views: {
                     'content@': {
@@ -98434,11 +98254,11 @@ angular.module('hillromvestApp')
             })
             .state('hcppatientdashboard', {
                 parent: 'hcp-dashboard',
-                url: '/hcp-patients-view/{filter}',
+                url: '/hcp-patients-view/{clinicId}',
                 params: {"clinicId": null},                
                 data: {
                     roles: ['HCP'],
-                    pageTitle: 'hcp.title'
+                    pageTitle: 'patient.page-title.patients'
                 },
                 views: {
                     'content@': {
@@ -98511,7 +98331,7 @@ angular.module('hillromvestApp')
                 url: '/profile',
                 data: {
                     roles: ['HCP'],
-                    pageTitle: 'hcp.title'
+                    pageTitle: 'profile.page-title.my-profile'
                 },
                 views: {
                     'content@': {
@@ -98537,7 +98357,7 @@ angular.module('hillromvestApp')
                 url: '/updatepassword',
                 data: {
                     roles: ['HCP'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'profile.page-title.update-password'
                 },
                 views: {
                     'content@': {
@@ -98558,7 +98378,7 @@ angular.module('hillromvestApp')
                 url: '/update',
                 data: {
                     roles: ['HCP'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'profile.page-title.profile-update'
                 },
                 views: {
                     'content@': {
@@ -98577,10 +98397,10 @@ angular.module('hillromvestApp')
 
             .state('clinicadmindashboard', {
                 parent: 'clinicadmin-dashboard',
-                url: '/clinicadmin-dashboard',
+                url: '/clinicadmin-dashboard/{clinicId}',
                 data: {
                     roles: ['CLINIC_ADMIN'],
-                    pageTitle: 'hcp.title'
+                    pageTitle: 'doctor.page-title.my-dashboard'
                 },
                 views: {
                     'content@': {
@@ -98611,7 +98431,7 @@ angular.module('hillromvestApp')
                 url: '/profile',
                 data: {
                     roles: ['CLINIC_ADMIN'],
-                    pageTitle: 'hcp.title'
+                    pageTitle: 'profile.page-title.my-profile'
                 },
                 views: {
                     'content@': {
@@ -98642,7 +98462,7 @@ angular.module('hillromvestApp')
                 url: '/updatepassword',
                 data: {
                     roles: ['CLINIC_ADMIN'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'profile.page-title.update-password'
                 },
                 views: {
                     'content@': {
@@ -98668,7 +98488,7 @@ angular.module('hillromvestApp')
                 url: '/update',
                 data: {
                     roles: ['CLINIC_ADMIN'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'profile.page-title.profile-update'
                 },
                 views: {
                     'content@': {
@@ -98694,7 +98514,7 @@ angular.module('hillromvestApp')
                 url: '/{clinicId}/clinicadmin-patient/{filter}',
                 data: {
                     roles: ['CLINIC_ADMIN'],
-                    pageTitle: 'hcp.title'
+                    pageTitle: 'patient.page-title.patients'
                 },
                 views: {
                     'content@': {
@@ -98725,7 +98545,7 @@ angular.module('hillromvestApp')
                 url: '/{patientId}/overview',
                 data: {
                     roles: ['CLINIC_ADMIN'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'patient.page-title.overview'
                 },
                 views: {
                     'content@': {
@@ -98755,7 +98575,7 @@ angular.module('hillromvestApp')
                 url: '/{patientId}/demographic',
                 data: {
                     roles: ['CLINIC_ADMIN'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'patient.page-title.patients'
                 },
                 views: {
                     'content@': {
@@ -98786,7 +98606,7 @@ angular.module('hillromvestApp')
                 url: '/{patientId}/clinicInfo',
                 data: {
                     roles: ['CLINIC_ADMIN'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'patient.page-title.clinic-info'
                 },
                 views: {
                     'content@': {
@@ -98818,7 +98638,7 @@ angular.module('hillromvestApp')
                 url: '/{patientId}/protocol-device',
                 data: {
                     roles: ['CLINIC_ADMIN'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'patient.page-title.careplan-device'
                 },
                 views: {
                     'content@': {
@@ -98849,7 +98669,7 @@ angular.module('hillromvestApp')
                 url: '/{patientId}/caregivers',
                 data: {
                     roles: ['CLINIC_ADMIN'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'patient.page-title.caregiver-info'
                 },
                 views: {
                     'content@': {
@@ -98880,7 +98700,7 @@ angular.module('hillromvestApp')
                 url: '/{patientId}/demographicedit',
                 data: {
                     roles: ['CLINIC_ADMIN'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'patient.page-title.patient-info'
                 },
                 views: {
                     'content@': {
@@ -98911,7 +98731,7 @@ angular.module('hillromvestApp')
                 url: '/notification-settings',
                 data: {
                     roles: ['CLINIC_ADMIN'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'profile.page-title.notification-settings'
                 },
                 views: {
                     'content@': {
@@ -98942,7 +98762,7 @@ angular.module('hillromvestApp')
                 url: '/notification-settings',
                 data: {
                     roles: ['HCP'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'profile.page-title.notification-settings'
                 },
                 views: {
                     'content@': {
@@ -98993,7 +98813,7 @@ angular.module('hillromvestApp')
                 url: '/contactus',
                 data: {
                     roles: [],
-                    pageTitle: 'login.title'
+                    pageTitle: 'login.page-title.contact-us'
                 },
                 views: {
                     'content@': {
@@ -99012,7 +98832,7 @@ angular.module('hillromvestApp')
                 url: '/privacyPolicy',
                 data: {
                     roles: [],
-                    pageTitle: 'login.title'
+                    pageTitle: 'login.page-title.privacy-policy'
                 },
                 views: {
                     'content@': {
@@ -99031,7 +98851,7 @@ angular.module('hillromvestApp')
                 url: '/termsOfUse',
                 data: {
                     roles: [],
-                    pageTitle: 'login.title'
+                    pageTitle: 'login.page-title.terms-use'
                 },
                 views: {
                     'content@': {
@@ -99050,7 +98870,7 @@ angular.module('hillromvestApp')
                 url: '/privacyPractices',
                 data: {
                     roles: [],
-                    pageTitle: 'login.title'
+                    pageTitle: 'login.page-title.privacy-practices'
                 },
                 views: {
                     'content@': {
@@ -99069,7 +98889,7 @@ angular.module('hillromvestApp')
                 url: '/careSite',
                 data: {
                     roles: [],
-                    pageTitle: 'login.title'
+                    pageTitle: 'login.page-title.care-site'
                 },
                 views: {
                     'content@': {
@@ -100968,7 +100788,8 @@ angular.module('hillromvestApp')
                 parent: 'account',
                 url: '/reset/request',
                 data: {
-                    roles: []
+                    roles: [],
+                    pageTitle: 'reset.request.pageTitle'
                 },
                 views: {
                     'content@': {
@@ -100978,7 +100799,7 @@ angular.module('hillromvestApp')
                 },
                 resolve: {
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
-                        $translatePartialLoader.addPart('reset');
+                    $translatePartialLoader.addPart('reset');
                         return $translate.refresh();
                     }]
                 }
@@ -101303,14 +101124,11 @@ angular.module('hillromvestApp')
         if (searchString === undefined) {
           searchString = '';
         }
-        if (sortOption === "") {
-          sortOption = "createdAt";
-          sortOrder = false;
-        } else {
-          sortOrder = true;
-        };
+        if (sortOption === "" || sortOption === undefined || sortOption === null) {
+          sortOption = sortConstant.lastName + searchFilters.amp +searchFilters.asc +searchFilters.equal + true;
+        } 
 
-        return $http.get(url + searchString + '&page=' + pageNo + '&per_page=' + offset + '&sort_by=' + sortOption + '&asc=' + sortOrder + '&filter='+filter, {
+        return $http.get(url + searchString + '&page=' + pageNo + '&per_page=' + offset + '&sort_by=' + sortOption + '&filter='+filter, {
           headers: headerService.getHeader()
         }).success(function(response) {
           return response;
@@ -102453,8 +102271,8 @@ angular.module('hillromvestApp').constant('hcpDashboardConstants', {
 			"treatmentLength" : "Minutes"
 		},
 		color : {
-			"treatmentPerDay" : "#ef6548",
-			"treatmentLength" : "#41ae76"
+			"treatmentPerDay" : "#4e95c4",
+			"treatmentLength" : "#ff9829"
 		},
 		"type" : "area",
 		"name" : "TREATMENT_GRAPH"
@@ -102525,8 +102343,87 @@ var searchFilters = {
     emptyString: '',
     patientList : "patientList",
     clinicList: "clinicList",
-    hcpList: "hcpList"
+    hcpList: "hcpList",
+    asc:"asc"
 }
+
+var sortConstant = {
+    sortIconDefaultClass : 'sort-icon--default', 
+    sortIconDefault : 'sortIconDefault',
+    sortIconDownClass : 'sort-icon-down', 
+    sortIconDown : 'sortIconDown', 
+    sortIconUpClass :'sort-icon-up',
+    sortIconUp : 'sortIconUp',
+    firstName: 'firstName',
+    lastName: 'lastName',
+    email: 'email',
+    zipcode: 'zipcode',
+    address: 'address',
+    city: 'city',
+    dob : "dob",
+    gender: "gender",
+    state: "state",
+    adherence: "adherence",
+    mrnId: "mrnId",
+    transmission: "transmission",
+    status: "status",
+    sortClass: "sortClass",
+    plastName: "plastName",
+    pemail: "pemail",
+    pfirstName: "pfirstName",
+    pzipcode: "pzipcode",
+    paddress: "paddress",
+    pcity: "pcity",
+    pdob: "pdob",
+    pgender: "pgender",
+    state: "state",
+    adherence: "adherence",
+    mrnid: "mrnid",
+    last_date: "last_date",
+    isDeleted: "isDeleted",
+    credentials: "credentials",
+    npiNumber: "npiNumber",
+    clinicName: "clinicName",
+    hcity: "hcity",
+    hstate: "hstate",
+    hillromId: "hillromId",
+    phoneNumber: "phoneNumber",
+    name: "name",
+    type: "type",
+    parent: "parent",
+    deleted: "deleted"
+}
+
+var stringConstants = {
+    reportGenerationDateLabel: "Report Generation Date",
+    dateRangeOfReportLabel: "Date Range Of Report",
+    patientInformationLabel: "Patient Information",
+    deviceInformationLabel: "Device Information",
+    NotificationLabel: "Notification",
+    minus: "-",
+    colon: ":",
+    mrn: "MRN",
+    name: "Name",
+    address: "Address",
+    phone: "Phone",
+    DOB: "DOB",
+    adherenceScore: "Adherence Score",
+    type: "Type",
+    serialNumber: "Serial Number",
+    missedTherapyDays: "Missed Therapy Days",
+    hmrNonAdherence: "HMR Non-Adherence",
+    settingDeviation: "Setting Deviation",
+    dateLabel: "Date",
+    hcpNameLabel: "HCP Name",
+    signatureLabel: "Signature",
+    space: " ",
+    notAvailable: "N/A",
+    deviceType : "The Vest System",
+    emptyString: "",
+    comma: ", "
+
+}
+
 angular.module('hillromvestApp').constant('hcpServiceConstants', {
     graph : {
 		baseURL : 'api/users'
@@ -102847,9 +102744,10 @@ angular.module('hillromvestApp')
     $scope.selectClinicForPatient = function(clinic, index){
       var data = [{"id": clinic.id, "mrnId": null, "notes": null}]
       $scope.searchItem = "";
+      $scope.searchClinicText = false;
       patientService.associateClinicToPatient($stateParams.patientId, data).then(function(response) {
-        $scope.associatedClinics = response.data.clinics;
         $scope.getAvailableAndAssociatedClinics($stateParams.patientId);
+        $scope.associatedClinics = response.data.clinics;
       }).catch(function(response) {});
     };
 
@@ -102859,11 +102757,9 @@ angular.module('hillromvestApp')
       $scope.perPageCount = 90;
       $scope.pageCount = 0;
       $scope.total = 0;
-      $scope.clinics = [];
       $scope.sortOption = "";
       $scope.searchItem = "";
       $scope.searchClinicText = false;
-      $scope.associatedClinics = [];
       $scope.getPatientById(patientId);
       $scope.getAvailableAndAssociatedClinics(patientId);
       $scope.getAvailableAndAssociatedHCPs(patientId);     
@@ -102880,9 +102776,10 @@ angular.module('hillromvestApp')
     $scope.selectHcpForPatient = function(hcp){
       var data = [{'id': hcp.id}];
       $scope.searchHcp = "";
+      $scope.searchHCPText = false;
       patientService.associateHCPToPatient(data, $stateParams.patientId).then(function(response){
-        notyService.showMessage(response.data.message, 'success');
         $scope.getAvailableAndAssociatedHCPs($stateParams.patientId);
+        notyService.showMessage(response.data.message, 'success');
       });
     };
 
@@ -103234,26 +103131,27 @@ angular.module('hillromvestApp')
     };
 
     $scope.linkClinic = function(){
+      $scope.getAvailableAndAssociatedClinics($stateParams.patientId);
       $scope.searchClinicText = true;
     };
 
     $scope.linkHCP = function(){
+      $scope.getAvailableAndAssociatedHCPs($stateParams.patientId);
       $scope.searchHCPText = true;
     };
 
     $scope.getAvailableAndAssociatedClinics = function(patientId){
       $scope.associatedClinicsErrMsg = null;
-      $scope.associatedHCPsErrMsg = null;
-      $scope.associatedClinics =[]; 
-      $scope.associatedClinics.length = 0;
-      $scope.clinics = []; $scope.clinics.length = 0;
+      $scope.associatedHCPsErrMsg = null;            
       patientService.getClinicsLinkedToPatient(patientId).then(function(response) {
-        if(response.data.clinics){
+        $scope.associatedClinics =[];
+        if(response.data.clinics){ 
           $scope.associatedClinics = response.data.clinics;
         }else if(response.data.message){
           $scope.associatedClinicsErrMsg = response.data.message;
         }
         clinicService.getClinics($scope.searchItem, $scope.sortOption, $scope.currentPageIndex, $scope.perPageCount).then(function (response) {          
+          $scope.clinics = [];
           $scope.clinics = response.data;
           for(var i=0; i < $scope.associatedClinics.length; i++){
             for(var j=0; j <  $scope.clinics.length; j++ ){
@@ -103268,16 +103166,16 @@ angular.module('hillromvestApp')
 
     $scope.getAvailableAndAssociatedHCPs = function(patientId){
       $scope.associatedClinicsErrMsg = null;
-      $scope.associatedHCPsErrMsg = null;
-      $scope.associatedHCPs = []; $scope.associatedHCPs.length = 0;
-      $scope.hcps = []; $scope.hcps.length = 0;
-      patientService.getAssociateHCPToPatient(patientId).then(function(response){        
+      $scope.associatedHCPsErrMsg = null;            
+      patientService.getAssociateHCPToPatient(patientId).then(function(response){ 
+        $scope.associatedHCPs = [];        
         if(response.data.hcpUsers){
           $scope.associatedHCPs = response.data.hcpUsers;          
         }else if(response.data.message){
           $scope.associatedHCPsErrMsg = response.data.message;
         }
         DoctorService.getDoctorsList($scope.searchItem, $scope.currentPageIndex, $scope.perPageCount).then(function(response){          
+          $scope.hcps = []; 
           $scope.hcps = response.data;
           for(var i=0; i < $scope.associatedHCPs.length; i++){
             for(var j=0; j <  $scope.hcps.length; j++ ){
@@ -103390,13 +103288,10 @@ angular.module('hillromvestApp')
         if (searchString === undefined) {
           searchString = '';
         }
-        if (sortOption === "") {
-          sortOption = "createdAt";
-          sortOrder = false;
-        } else {
-          sortOrder = true;
-        };
-        url = url + '?searchString=' + searchString + '&page=' + pageNo + '&per_page=' + offset + '&sort_by=' + sortOption + '&asc=' + sortOrder + '&filter='+filterBy;
+        if (sortOption === "" || sortOption === undefined || sortOption === null) {
+          sortOption = sortConstant.plastName + searchFilters.amp +searchFilters.asc +searchFilters.equal + true;
+        } 
+        url = url + '?searchString=' + searchString + '&page=' + pageNo + '&per_page=' + offset + '&sort_by=' + sortOption + '&filter='+filterBy;
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -104517,7 +104412,8 @@ angular.module('hillromvestApp')
 'use strict';
 
 angular.module('hillromvestApp')
-  .directive('doctorList', ['UserService', '$state', '$stateParams', 'searchFilterService', function(UserService, $state, $stateParams, searchFilterService) {
+  .directive('doctorList', ['UserService', '$state', '$stateParams', 'searchFilterService', 'sortOptionsService',
+    function(UserService, $state, $stateParams, searchFilterService, sortOptionsService) {
     return {
       templateUrl: 'scripts/modules/admin/hcp/directives/list/list.html',
       restrict: 'E',
@@ -104535,6 +104431,8 @@ angular.module('hillromvestApp')
       }
       },
       controller: ['$scope', '$timeout', '$state','$stateParams', 'DoctorService', 'notyService', function($scope, $timeout, $state,$stateParams, DoctorService, notyService) {
+        var searchOnLoad = true;
+        $scope.sortHcpList = sortOptionsService.getSortOptionsForHcpList();
         $scope.init = function() {
           $scope.searchFilter = searchFilterService.initSearchFiltersForHCP();
           $scope.doctors = [];
@@ -104623,23 +104521,53 @@ angular.module('hillromvestApp')
           }).catch(function (response) {});
         };
 
-        $scope.sortType = function(){
-          console.log('hello');
-          if($scope.sortIconDefault){
-            $scope.sortIconDefault = false;
-            $scope.sortIconUp = false;
-            $scope.sortIconDown = true;
-          }
-          else if($scope.sortIconDown){
-            $scope.sortIconDefault = false;
-            $scope.sortIconDown = false;
-            $scope.sortIconUp = true;
-          }
-          else if($scope.sortIconUp){
-            $scope.sortIconDefault = false;
-            $scope.sortIconUp = false;
-            $scope.sortIconDown = true;
-          }
+        $scope.sortType = function(sortParam){ 
+          var toggledSortOptions = {};
+          $scope.sortOption = "";
+          if(sortParam === sortConstant.lastName){                        
+            toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortHcpList.lastName);
+            $scope.sortHcpList = sortOptionsService.getSortOptionsForHcpList();
+            $scope.sortHcpList.lastName = toggledSortOptions;
+            $scope.sortOption = sortConstant.lastName + sortOptionsService.getSortByASCString(toggledSortOptions);
+            $scope.searchDoctors();
+          }else if(sortParam === sortConstant.credentials){
+            toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortHcpList.credentials);
+            $scope.sortHcpList = sortOptionsService.getSortOptionsForHcpList();
+            $scope.sortHcpList.credentials = toggledSortOptions;
+            $scope.sortOption = sortConstant.credentials + sortOptionsService.getSortByASCString(toggledSortOptions);
+            $scope.searchDoctors();
+          }else if(sortParam === sortConstant.npiNumber){
+            toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortHcpList.npiNumber);
+            $scope.sortHcpList = sortOptionsService.getSortOptionsForHcpList();
+            $scope.sortHcpList.npiNumber = toggledSortOptions;
+            $scope.sortOption = sortConstant.npiNumber + sortOptionsService.getSortByASCString(toggledSortOptions);
+            $scope.searchDoctors();
+          }else if(sortParam === sortConstant.clinicName){
+            toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortHcpList.clinicName);
+            $scope.sortHcpList = sortOptionsService.getSortOptionsForHcpList();
+            $scope.sortHcpList.clinicName = toggledSortOptions;
+            $scope.sortOption = sortConstant.clinicName + sortOptionsService.getSortByASCString(toggledSortOptions);
+            $scope.searchDoctors();
+          }else if(sortParam === sortConstant.city){
+            toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortHcpList.city);
+            $scope.sortHcpList = sortOptionsService.getSortOptionsForHcpList();
+            $scope.sortHcpList.city = toggledSortOptions;
+            $scope.sortOption = sortConstant.hcity + sortOptionsService.getSortByASCString(toggledSortOptions);
+            $scope.searchDoctors();
+          }else if(sortParam === sortConstant.status){
+            toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortHcpList.status);
+            $scope.sortHcpList = sortOptionsService.getSortOptionsForHcpList();
+            $scope.sortHcpList.status = toggledSortOptions;
+            $scope.sortOption = sortConstant.isDeleted + sortOptionsService.getSortByASCString(toggledSortOptions);
+            $scope.searchDoctors();
+          }else if(sortParam === sortConstant.state){
+            toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortHcpList.state);
+            $scope.sortHcpList = sortOptionsService.getSortOptionsForHcpList();
+            $scope.sortHcpList.state = toggledSortOptions;
+            $scope.sortOption = sortConstant.hstate + sortOptionsService.getSortByASCString(toggledSortOptions);
+            $scope.searchDoctors();
+          }        
+          
         };
 
         $scope.searchOnFilters = function(){           
@@ -104760,8 +104688,8 @@ angular.module('hillromvestApp')
 'use strict';
 
 angular.module('hillromvestApp')
-  .controller('clinicsController', [ '$rootScope', '$scope', '$state', '$stateParams', '$timeout', 'Auth', 'clinicService', 'UserService', 'notyService', 'searchFilterService', 'dateService',
-    function ($rootScope, $scope, $state, $stateParams, $timeout, Auth, clinicService, UserService, notyService, searchFilterService, dateService) {
+  .controller('clinicsController', [ '$rootScope', '$scope', '$state', '$stateParams', '$timeout', 'Auth', 'clinicService', 'UserService', 'notyService', 'searchFilterService', 'dateService', 'sortOptionsService',
+    function ($rootScope, $scope, $state, $stateParams, $timeout, Auth, clinicService, UserService, notyService, searchFilterService, dateService,sortOptionsService) {
     var searchOnLoad = true;
     $scope.clinic = {};
     $scope.clinicStatus = {
@@ -104780,6 +104708,7 @@ angular.module('hillromvestApp')
       } else if (currentRoute === 'clinicNew') {
         $scope.initCreateClinic();
       } else if (currentRoute === 'clinicUser'){
+        $scope.sortClinicList = sortOptionsService.getSortOptionsForClinicList();
         $scope.initPaginationVars();
         $scope.searchFilter = searchFilterService.initSearchFiltersForClinic();
         $scope.initClinicList();
@@ -104845,7 +104774,7 @@ angular.module('hillromvestApp')
       $scope.clinics = [];
       $scope.sortOption ="";
       $scope.showModal = false;
-
+      $scope.clinicSortOption = "";
       $scope.sortIconDefault = true;
       $scope.sortIconUp = false;
       $scope.sortIconDown = false;
@@ -104957,7 +104886,7 @@ angular.module('hillromvestApp')
             $scope.currentPageIndex = 1;
         } 
         var filter = searchFilterService.getFilterStringForClinics($scope.searchFilter);
-        clinicService.getClinics($scope.searchItem, $scope.sortOption, $scope.currentPageIndex, $scope.perPageCount, filter).then(function (response) {
+        clinicService.getClinics($scope.searchItem, $scope.clinicSortOption, $scope.currentPageIndex, $scope.perPageCount, filter).then(function (response) {
           $scope.clinics = response.data;
           $scope.total = response.headers()['x-total-count'];
           $scope.pageCount = Math.ceil($scope.total / 10);
@@ -105243,22 +105172,59 @@ angular.module('hillromvestApp')
       });
     };
 
-    $scope.sortType = function(){
-      if($scope.sortIconDefault){
-        $scope.sortIconDefault = false;
-        $scope.sortIconUp = false;
-        $scope.sortIconDown = true;
-      }
-      else if($scope.sortIconDown){
-        $scope.sortIconDefault = false;
-        $scope.sortIconDown = false;
-        $scope.sortIconUp = true;
-      }
-      else if($scope.sortIconUp){
-        $scope.sortIconDefault = false;
-        $scope.sortIconUp = false;
-        $scope.sortIconDown = true;
-      }
+    $scope.sortType = function(sortParam){
+      var toggledSortOptions = {};
+      $scope.clinicSortOption = "";
+      if(sortParam === sortConstant.clinicName){                        
+        toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortClinicList.clinicName);
+        $scope.sortClinicList = sortOptionsService.getSortOptionsForClinicList();
+        $scope.sortClinicList.clinicName = toggledSortOptions;
+        $scope.clinicSortOption = sortConstant.name + sortOptionsService.getSortByASCString(toggledSortOptions);
+        $scope.searchClinics();
+      }else if(sortParam === sortConstant.address){
+        toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortClinicList.address);
+        $scope.sortClinicList = sortOptionsService.getSortOptionsForClinicList();
+        $scope.sortClinicList.address = toggledSortOptions;
+        $scope.clinicSortOption = sortConstant.address + sortOptionsService.getSortByASCString(toggledSortOptions);
+        $scope.searchClinics();
+      }else if(sortParam === sortConstant.city){
+        toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortClinicList.city);
+        $scope.sortClinicList = sortOptionsService.getSortOptionsForClinicList();
+        $scope.sortClinicList.city = toggledSortOptions;
+        $scope.clinicSortOption = sortConstant.city + sortOptionsService.getSortByASCString(toggledSortOptions);
+        $scope.searchClinics();
+      }else if(sortParam === sortConstant.state){
+        toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortClinicList.state);
+        $scope.sortClinicList = sortOptionsService.getSortOptionsForClinicList();
+        $scope.sortClinicList.state = toggledSortOptions;
+        $scope.clinicSortOption = sortConstant.state + sortOptionsService.getSortByASCString(toggledSortOptions);
+        $scope.searchClinics();
+      }else if(sortParam === sortConstant.phoneNumber){
+        toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortClinicList.phoneNumber);
+        $scope.sortClinicList = sortOptionsService.getSortOptionsForClinicList();
+        $scope.sortClinicList.phoneNumber = toggledSortOptions;
+        $scope.clinicSortOption = sortConstant.phoneNumber + sortOptionsService.getSortByASCString(toggledSortOptions);
+        $scope.searchClinics();
+      }else if(sortParam === sortConstant.type){
+        toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortClinicList.type);
+        $scope.sortClinicList = sortOptionsService.getSortOptionsForClinicList();
+        $scope.sortClinicList.type = toggledSortOptions;
+        $scope.clinicSortOption = sortConstant.parent + sortOptionsService.getSortByASCString(toggledSortOptions);
+        $scope.searchClinics();
+      }else if(sortParam === sortConstant.hillromId){
+        toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortClinicList.hillromId);
+        $scope.sortClinicList = sortOptionsService.getSortOptionsForClinicList();
+        $scope.sortClinicList.hillromId = toggledSortOptions;
+        $scope.clinicSortOption = sortConstant.hillromId + sortOptionsService.getSortByASCString(toggledSortOptions);
+        $scope.searchClinics();
+      }else if(sortParam === sortConstant.status){
+        toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortClinicList.status);
+        $scope.sortClinicList = sortOptionsService.getSortOptionsForClinicList();
+        $scope.sortClinicList.status = toggledSortOptions;
+        $scope.clinicSortOption = sortConstant.deleted + sortOptionsService.getSortByASCString(toggledSortOptions);
+        $scope.searchClinics();
+      }          
+          
     };
 
     $scope.addClinicAdminShow = function(){
@@ -105432,7 +105398,8 @@ angular.module('hillromvestApp')
       $scope.total = 0;        
       $scope.sortOption ="";
       $scope.searchItem = "";
-      $scope.searAssociatedPatient = "";      
+      $scope.searAssociatedPatient = ""; 
+      $scope.clinicSortOption = "";     
     };
 
     $scope.searchOnFilters = function(){    
@@ -105479,14 +105446,10 @@ angular.module('hillromvestApp')
         if (searchString === undefined) {
           searchString = '';
         }
-        var sortOrder;
-        if (sortOption === "") {
-          sortOption = "createdAt";
-          sortOrder = false;
-        } else {
-          sortOrder = true;
-        };
-        return $http.get('api/clinics/search?searchString=' + searchString + '&page=' + pageNo + '&per_page=' + offset + '&sort_by=' + sortOption + '&asc=' + sortOrder + '&filter='+filterBy, {
+        if (sortOption === "" || sortOption === undefined || sortOption === null) {
+          sortOption = sortConstant.name + searchFilters.amp +searchFilters.asc +searchFilters.equal + true;
+        } 
+        return $http.get('api/clinics/search?searchString=' + searchString + '&page=' + pageNo + '&per_page=' + offset + '&sort_by=' + sortOption + '&filter='+filterBy, {
           headers: headerService.getHeader()
         }).success(function(response) {
           return response;
@@ -105844,9 +105807,10 @@ angular.module('hillromvestApp')
         })
       }
       },
-      controller: ['$scope', '$timeout', 'patientService', '$state', '$stateParams', 'notyService','searchFilterService', 
-      function($scope, $timeout, patientService, $state, $stateParams, notyService, searchFilterService) {
+      controller: ['$scope', '$timeout', 'patientService', '$state', '$stateParams', 'notyService','searchFilterService', 'sortOptionsService',
+      function($scope, $timeout, patientService, $state, $stateParams, notyService, searchFilterService, sortOptionsService) {
         var searchOnLoad = true;
+        $scope.sortPatientList = sortOptionsService.getSortOptionsForPatientList();
         $scope.init = function() {
           $scope.searchFilter = searchFilterService.initSearchFiltersForPatient();
           $scope.patients = [];
@@ -105943,28 +105907,57 @@ angular.module('hillromvestApp')
           }).catch(function (response) {});
         };
 
-        $scope.sortType = function(){
-          console.log('hello');
-          if($scope.sortIconDefault){
-            $scope.sortIconDefault = false;
-            $scope.sortIconUp = false;
-            $scope.sortIconDown = true;
-          }
-          else if($scope.sortIconDown){
-            $scope.sortIconDefault = false;
-            $scope.sortIconDown = false;
-            $scope.sortIconUp = true;
-          }
-          else if($scope.sortIconUp){
-            $scope.sortIconDefault = false;
-            $scope.sortIconUp = false;
-            $scope.sortIconDown = true;
-          }
+        $scope.sortType = function(sortParam){ 
+          var toggledSortOptions = {};
+          $scope.sortOption = "";
+          if(sortParam === sortConstant.lastName){                        
+            toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortPatientList.lastName);
+            $scope.sortPatientList = sortOptionsService.getSortOptionsForPatientList();
+            $scope.sortPatientList.lastName = toggledSortOptions;
+            $scope.sortOption = sortConstant.plastName + sortOptionsService.getSortByASCString(toggledSortOptions);
+            $scope.searchPatients();
+          }else if(sortParam === sortConstant.mrnId){
+            toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortPatientList.mrnId);
+            $scope.sortPatientList = sortOptionsService.getSortOptionsForPatientList();
+            $scope.sortPatientList.mrnId = toggledSortOptions;
+            $scope.sortOption = sortConstant.mrnid + sortOptionsService.getSortByASCString(toggledSortOptions);
+            $scope.searchPatients();
+          }else if(sortParam === sortConstant.dob){
+            toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortPatientList.dob);
+            $scope.sortPatientList = sortOptionsService.getSortOptionsForPatientList();
+            $scope.sortPatientList.dob = toggledSortOptions;
+            $scope.sortOption = sortConstant.pdob + sortOptionsService.getSortByASCString(toggledSortOptions);
+            $scope.searchPatients();
+          }else if(sortParam === sortConstant.city){
+            toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortPatientList.city);
+            $scope.sortPatientList = sortOptionsService.getSortOptionsForPatientList();
+            $scope.sortPatientList.city = toggledSortOptions;
+            $scope.sortOption = sortConstant.pcity + sortOptionsService.getSortByASCString(toggledSortOptions);
+            $scope.searchPatients();
+          }else if(sortParam === sortConstant.transmission){
+            toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortPatientList.transmission);
+            $scope.sortPatientList = sortOptionsService.getSortOptionsForPatientList();
+            $scope.sortPatientList.transmission = toggledSortOptions;
+            $scope.sortOption = sortConstant.last_date + sortOptionsService.getSortByASCString(toggledSortOptions);
+            $scope.searchPatients();
+          }else if(sortParam === sortConstant.status){
+            toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortPatientList.status);
+            $scope.sortPatientList = sortOptionsService.getSortOptionsForPatientList();
+            $scope.sortPatientList.status = toggledSortOptions;
+            $scope.sortOption = sortConstant.isDeleted + sortOptionsService.getSortByASCString(toggledSortOptions);
+            $scope.searchPatients();
+          }else if(sortParam === sortConstant.adherence){
+            toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortPatientList.adherence);
+            $scope.sortPatientList = sortOptionsService.getSortOptionsForPatientList();
+            $scope.sortPatientList.adherence = toggledSortOptions;
+            $scope.sortOption = sortConstant.adherence + sortOptionsService.getSortByASCString(toggledSortOptions);
+            $scope.searchPatients();
+          }        
+          
         };
         $scope.searchOnFilters = function(){           
           $scope.searchPatients();
-        };
-
+        };        
 
         $scope.init();
       }]
@@ -106672,9 +106665,9 @@ angular.module('hillromvestApp')
         });
         var max = arrayMax(hmrSet);
         var min = arrayMin(hmrSet);
-        range.max = Math.ceil(Math.floor(max/60)/10) * 10;
+        range.max = Math.ceil(Math.floor(max/3600)/10) * 10;
         if(min !== 0 && min > (max-min)){
-          range.min = Math.floor(Math.floor((min - ((max-min)/2))/60)/10) * 10;  
+          range.min = Math.floor(Math.floor((min - ((max-min)/2))/3600)/10) * 10;  
         }
         if(range.min === undefined){
           range.min = 0;
@@ -106746,7 +106739,7 @@ angular.module('hillromvestApp')
         angular.forEach(data, function(value) {
           var point = [];
           point.push(value.startTime);
-          point.push(Math.floor(value.hmr/60));
+          point.push(Math.floor(value.hmr/3600));
           pointSet.push(point);
         });
         graphData["values"] = pointSet;
@@ -106761,7 +106754,7 @@ angular.module('hillromvestApp')
         angular.forEach(data, function(value) {
           var point = {};
           point.x = value.startTime;
-          point.y = Math.floor(value.hmr/60);
+          point.y = Math.floor(value.hmr/3600);
           pointSet.push(point);
         });
         graphData.values = pointSet;
@@ -106941,11 +106934,11 @@ angular.module('hillromvestApp')
           count = count + 1;
           var treatmentPerDayPoint = {};
           var treatmentLengthPoint = {};
-          treatmentPerDayPoint.x = count;
+          treatmentPerDayPoint.x = value.startTime;
           treatmentPerDayPoint.timeStamp = value.startTime;
           treatmentPerDayPoint.y = value.avgTreatments;
           treatmentPerDayValues.push(treatmentPerDayPoint);
-          treatmentLengthPoint.x = count;
+          treatmentLengthPoint.x = value.startTime;
           treatmentLengthPoint.timeStamp = value.startTime;
           treatmentLengthPoint.y = value.avgTreatmentDuration;
           treatmentLengthValues.push(treatmentLengthPoint);
@@ -107294,12 +107287,7 @@ angular.module('hillromvestApp')
 	};
 
 	$scope.goToPatientDashboard = function(value){
-    if('hcppatientdashboard' === value){
-      var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : $stateParams.clinicId;
-      $state.go(value, {'clinicId': clinicId});
-    }else{
-      $state.go(value);
-    }
+    $state.go(value, {'clinicId': $stateParams.clinicId});
 	};
 
 
@@ -107336,8 +107324,7 @@ angular.module('hillromvestApp')
 
   $scope.switchClinic = function(clinic){
     if($scope.selectedClinic.id !== clinic.id){
-      $scope.selectedClinic = clinic;
-      $scope.searchPatients();      
+      $state.go($state.current.name, {'clinicId': clinic.id});
     }
   };
 
@@ -107791,4 +107778,94 @@ window.onscroll = function(){
     document.querySelector("#top-shadow").style.opacity = opacity.toString();
   }
 };
+'use strict';
+
+angular.module('hillromvestApp')
+    .service('sortOptionsService', [function () {
+    	var sortIcons = {
+    		"isDefault" : true,
+    		"isDown" : false,
+    		"isUp" : false
+    	};
+
+    	this.getSortOptionsForPatientList = function(){
+    		var sortPatientList = {};
+    		sortPatientList.firstName = sortIcons;
+    		sortPatientList.lastName =  sortIcons;
+    		sortPatientList.email = sortIcons;
+    		sortPatientList.zipcode = sortIcons;
+    		sortPatientList.address = sortIcons;
+    		sortPatientList.city = sortIcons;
+    		sortPatientList.dob = sortIcons;
+    		sortPatientList.gender = sortIcons;
+    		sortPatientList.state = sortIcons;
+    		sortPatientList.adherence = sortIcons;
+    		sortPatientList.mrnId = sortIcons;
+    		sortPatientList.state = sortIcons;
+    		sortPatientList.status = sortIcons;
+    		sortPatientList.transmission = sortIcons;
+    		sortPatientList.clinicName = sortIcons;
+    		sortPatientList.adherence = sortIcons;
+    		return sortPatientList;
+    	};
+
+    	this.toggleSortParam = function(sortOption){
+    	  var toggleSortOption = {}; 
+             		
+          if(sortOption.isDefault){
+            toggleSortOption.isDefault = false;
+            toggleSortOption.isDown = true;
+            toggleSortOption.isUp = false;
+          }
+          else if(sortOption.isDown){
+            toggleSortOption.isDefault = false;
+            toggleSortOption.isDown = false;
+            toggleSortOption.isUp = true;
+          }
+          else if(sortOption.isUp){
+            toggleSortOption.isDefault = false;
+            toggleSortOption.isDown = true;
+            toggleSortOption.isUp = false;
+          }          
+          return toggleSortOption;
+        };
+
+        this.getSortByASCString = function(sortOption){
+        	if(sortOption.isDown){
+        		return searchFilters.amp +searchFilters.asc +searchFilters.equal + false; 
+        	}else if(sortOption.isUp){
+        		return searchFilters.amp +searchFilters.asc +searchFilters.equal + true; 
+        	} else{
+        		return searchFilters.emptyString;
+        	}       	
+        };
+
+        this.getSortOptionsForHcpList = function(){
+            var sortHcpList = {};
+            sortHcpList.firstName = sortIcons;
+            sortHcpList.lastName =  sortIcons;
+            sortHcpList.credentials = sortIcons;
+            sortHcpList.npiNumber = sortIcons;
+            sortHcpList.clinicName = sortIcons;
+            sortHcpList.city = sortIcons;
+            sortHcpList.state = sortIcons;
+            sortHcpList.status = sortIcons;
+            return sortHcpList;
+        };
+
+        this.getSortOptionsForClinicList = function(){
+            var sortClinicList = {};
+            sortClinicList.clinicName = sortIcons;
+            sortClinicList.address =  sortIcons;
+            sortClinicList.city = sortIcons;
+            sortClinicList.state = sortIcons;
+            sortClinicList.phoneNumber = sortIcons;
+            sortClinicList.type = sortIcons;
+            sortClinicList.hillromId = sortIcons;
+            sortClinicList.status = sortIcons;
+            return sortClinicList;
+        };
+
+
+    }]);
 /* PLEASE DO NOT COPY AND PASTE THIS CODE. */(function() {if (!window['___grecaptcha_cfg']) { window['___grecaptcha_cfg'] = {}; };if (!window['___grecaptcha_cfg']['render']) { window['___grecaptcha_cfg']['render'] = 'explicit'; };if (!window['___grecaptcha_cfg']['onload']) { window['___grecaptcha_cfg']['onload'] = 'vcRecaptchaApiLoaded'; };window['__google_recaptcha_client'] = true;var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;po.src = 'https://www.gstatic.com/recaptcha/api2/r20150922132346/recaptcha__en_gb.js';var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);})();
