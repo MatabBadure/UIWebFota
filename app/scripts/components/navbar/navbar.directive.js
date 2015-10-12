@@ -28,8 +28,14 @@ angular.module('hillromvestApp')
     restrict: 'E',
 
     controller: function ($scope, $state, StorageService) {
-      $scope.userRole = StorageService.get('logged').role;
-      $scope.username = localStorage.getItem('userFirstName');
+
+      $scope.userRole = null;
+        $scope.username = null;
+      if(StorageService.get('logged')){
+        $scope.userRole = StorageService.get('logged').role;
+        $scope.username = StorageService.get('logged').userFirstName;  
+      }
+
       $scope.isActive = function(tab) {
         var path = $location.path();
         if (path.indexOf(tab) !== -1) {
@@ -55,7 +61,7 @@ angular.module('hillromvestApp')
       $scope.logout = function(){
         Auth.signOut().then(function(data) {
           Auth.logout();
-          localStorage.clear();
+          StorageService.clearAll();
           $scope.signOut();
         }).catch(function(err) {
         });
