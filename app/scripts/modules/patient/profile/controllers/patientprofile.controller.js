@@ -1,11 +1,12 @@
 'use strict';
 
-angular.module('hillromvestApp').controller('patientprofileController', ['$scope', '$state', 'notyService', 'patientService', 'UserService', 'AuthServerProvider', 'Password', 'Auth', function ($scope, $state, notyService, patientService, UserService, AuthServerProvider,Password, Auth) {
+angular.module('hillromvestApp').controller('patientprofileController', ['$scope', '$state', 'notyService', 'patientService', 'UserService', 'AuthServerProvider', 'Password', 'Auth', 'StorageService',
+  function ($scope, $state, notyService, patientService, UserService, AuthServerProvider,Password, Auth, StorageService) {
 	
   $scope.init = function(){
 		var currentRoute = $state.current.name;	
 		$scope.profileTab = currentRoute;	
-		$scope.userRole = localStorage.getItem('role');			
+		$scope.userRole = StorageService.get('logged').role;			
 		if (currentRoute === 'patientProfile') {
 			$scope.initProfileView();        
 		}else if(currentRoute === 'patientProfileEdit'){
@@ -39,7 +40,7 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
   };
 
 	$scope.initProfileView = function(){
-		UserService.getUser(localStorage.getItem('patientID')).then(function(response){
+		UserService.getUser(role.get('logged').patientID).then(function(response){
 			$scope.patientView = response.data.user;
 		}).catch(function(response){});
 		AuthServerProvider.getSecurityQuestions().then(function(response){
@@ -54,7 +55,7 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
 	};
 
 	$scope.initProfileEdit = function(){
-		UserService.getUser(localStorage.getItem('patientID')).then(function(response){
+		UserService.getUser(StorageService.get('logged').patientID).then(function(response){
 			$scope.editPatientProfile = response.data.user;
 		}).catch(function(response){});
 		AuthServerProvider.getSecurityQuestions().then(function(response){
@@ -87,7 +88,7 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
     $scope.editPatientProfile.role = $scope.editPatientProfile.authorities[0].name;
     $scope.editPatientProfile.dob = null;
     UserService.editUser($scope.editPatientProfile).then(function(response){        
-      if(localStorage.getItem("userEmail") === $scope.editPatientProfile.email){
+      if(StorageService.get('logged').userEmail === $scope.editPatientProfile.email){
         notyService.showMessage(response.data.message, 'success');
         $state.go('patientProfile');
       }else{
@@ -117,7 +118,7 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
         "questionId": $scope.resetAccount.question.id,
         "answer": $scope.resetAccount.answer
       };
-      AuthServerProvider.changeSecurityQuestion(data, localStorage.getItem('patientID')).then(function(response){
+      AuthServerProvider.changeSecurityQuestion(data, StorageService.get('logged').patientID).then(function(response){
       }).catch(function(response){
         if(response.data.message){
           notyService.showMessage(response.data.message, 'warning');
@@ -130,7 +131,7 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
       'password': $scope.profile.password,
       'newPassword': $scope.profile.newPassword
     };
-    Password.updatePassword(localStorage.getItem('patientID'), data).then(function(response){
+    Password.updatePassword(StorageService.get('logged').patientID, data).then(function(response){
       Auth.logout();
       notyService.showMessage(response.data.message, 'success');
       $state.go('login');
@@ -141,7 +142,7 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
   };
 
   $scope.initPatientSettings = function(){ 	
-		UserService.getPatientUserNotification(localStorage.getItem('patientID')).then(function(response){
+		UserService.getPatientUserNotification(StorageService.get('logged').patientID).then(function(response){
 			$scope.patientUser = response.data.user;
 		}).catch(function(){
 		   notyService.showError(response);
@@ -159,7 +160,7 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
     if(notification === 'settingDeviationNotification'){
     	data.isSettingDeviationNotification = !$scope.patientUser.settingDeviationNotification;
     }
-    UserService.updatePatientUserNotification(localStorage.getItem('patientID'), data).then(function(response){
+    UserService.updatePatientUserNotification(StorageService.get('logged').patientID, data).then(function(response){
 			$scope.patientUser = response.data.user;    
 		}).catch(function(response){
       notyService.showError(response);
