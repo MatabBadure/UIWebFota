@@ -34,28 +34,28 @@
     </div>
     <div class="dashboard__manage-view--header">
       <div class="col-md-4 header--type">
-        <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="clinic.clinic-name"></span>
+        <span ng-class="{'sort-icon--default' : sortClinicList.clinicName.isDefault, 'sort-icon-down': sortClinicList.clinicName.isDown, 'sort-icon-up':sortClinicList.clinicName.isUp}" ng-click="sortType('clinicName')" translate="clinic.clinic-name"></span>
       </div>
       <div class="col-md-3 header--type">
-        <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="clinic.address"></span>
+        <span ng-class="{'sort-icon--default' : sortClinicList.address.isDefault, 'sort-icon-down': sortClinicList.address.isDown, 'sort-icon-up':sortClinicList.address.isUp}" ng-click="sortType('address')" translate="clinic.address"></span>
       </div>
       <div class="col-md-2 header--type">
-        <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="clinic.city"></span>
+        <span ng-class="{'sort-icon--default' : sortClinicList.city.isDefault, 'sort-icon-down': sortClinicList.city.isDown, 'sort-icon-up':sortClinicList.city.isUp}" ng-click="sortType('city')" translate="clinic.city"></span>
       </div>
       <div class="col-md-1 header--type">
-        <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="clinic.state"></span>
+        <span ng-class="{'sort-icon--default' : sortClinicList.state.isDefault, 'sort-icon-down': sortClinicList.state.isDown, 'sort-icon-up':sortClinicList.state.isUp}" ng-click="sortType('state')" translate="clinic.state"></span>
       </div>
       <div class="col-md-2 header--type">
-        <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="clinic.phoneNumber"></span>
+        <span ng-class="{'sort-icon--default' : sortClinicList.phoneNumber.isDefault, 'sort-icon-down': sortClinicList.phoneNumber.isDown, 'sort-icon-up':sortClinicList.phoneNumber.isUp}" ng-click="sortType('phoneNumber')" translate="clinic.phoneNumber"></span>
       </div>
       <div class="col-md-1 header--type">
-        <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="clinic.type"></span>
+        <span ng-class="{'sort-icon--default' : sortClinicList.type.isDefault, 'sort-icon-down': sortClinicList.type.isDown, 'sort-icon-up':sortClinicList.type.isUp}" ng-click="sortType('type')" translate="clinic.type"></span>
       </div>
       <div class="col-md-2 header--type">
-        <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" translate="clinic.hillRom-id"></span>
+        <span ng-class="{'sort-icon--default' : sortClinicList.hillromId.isDefault, 'sort-icon-down': sortClinicList.hillromId.isDown, 'sort-icon-up':sortClinicList.hillromId.isUp}" ng-click="sortType('hillromId')" translate="clinic.hillRom-id"></span>
       </div>
       <div class="col-md-1 header--type">
-        <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="clinic.status"></span>
+        <span ng-class="{'sort-icon--default' : sortClinicList.status.isDefault, 'sort-icon-down': sortClinicList.status.isDown, 'sort-icon-up':sortClinicList.status.isUp}" ng-click="sortType('status')" translate="clinic.status"></span>
       </div>
       <div class="clr"></div>
     </div>

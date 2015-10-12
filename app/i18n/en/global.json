@@ -99,7 +99,8 @@
             "super-admin": "Super Admin",
             "account-services": "RC Admin",
             "associates":"Associates"
-        }
+        },
+        "not-applicable": "NA"
     },
     "entity": {
         "action": {
@@ -243,7 +244,8 @@
             }
         },
         "npiNumber":{
-            "pattern": "NPI Number is invalid."
+            "pattern": "NPI Number is invalid.",
+            "maxlength": "NPI Number cannot be more than 15 characters."
         },
         "credential": {
             "required": "Credential is required."
@@ -313,5 +315,9 @@
     "navbar": {
         "my-dashboard": "Dashboard",
         "create-new-hcp": "Create New HCP +"
+    },
+    "place-holder":{
+        "mobile-number": "Mobile Number",
+        "phone-number": "Phone Number"
     }
 }

@@ -22,13 +22,10 @@ angular.module('hillromvestApp')
         if (searchString === undefined) {
           searchString = '';
         }
-        if (sortOption === "") {
-          sortOption = "createdAt";
-          sortOrder = false;
-        } else {
-          sortOrder = true;
-        };
-        url = url + '?searchString=' + searchString + '&page=' + pageNo + '&per_page=' + offset + '&sort_by=' + sortOption + '&asc=' + sortOrder + '&filter='+filterBy;
+        if (sortOption === "" || sortOption === undefined || sortOption === null) {
+          sortOption = sortConstant.plastName + searchFilters.amp +searchFilters.asc +searchFilters.equal + true;
+        } 
+        url = url + '?searchString=' + searchString + '&page=' + pageNo + '&per_page=' + offset + '&sort_by=' + sortOption + '&filter='+filterBy;
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {

@@ -74,7 +74,22 @@ var sortConstant = {
     mrnid: "mrnid",
     last_date: "last_date",
     isDeleted: "isDeleted",
-    name: "name"
+    credentials: "credentials",
+    npiNumber: "npiNumber",
+    clinicName: "clinicName",
+    hcity: "hcity",
+    hstate: "hstate",
+    hillromId: "hillromId",
+    phoneNumber: "phoneNumber",
+    name: "name",
+    type: "type",
+    parent: "parent",
+    deleted: "deleted",
+    role: "role",
+    mobileNumber: "mobileNumber",
+    mobilePhone: "mobilePhone",
+    hcp: "hcp",
+    hcpname: "hcpname"
 }
 
 var stringConstants = {
@@ -106,6 +121,7 @@ var stringConstants = {
     comma: ", "
 
 }
+
 angular.module('hillromvestApp').constant('hcpServiceConstants', {
     graph : {
 		baseURL : 'api/users'
