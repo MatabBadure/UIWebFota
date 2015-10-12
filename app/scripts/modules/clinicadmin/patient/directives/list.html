@@ -31,7 +31,7 @@
           <span ng-class="{'sort-icon--default' : sortPatientList.transmission.isDefault, 'sort-icon-down': sortPatientList.transmission.isDown, 'sort-icon-up':sortPatientList.transmission.isUp}" ng-click="sortType('transmission')" translate="patient.transmission">Transmission</span>
         </div>
         <div class="col-md-2 col-sm-3 header--type">
-          <span translate="patient.hcp-name">HCP Name</span>
+          <span ng-class="{'sort-icon--default' : sortPatientList.hcp.isDefault, 'sort-icon-down': sortPatientList.hcp.isDown, 'sort-icon-up':sortPatientList.hcp.isUp}" ng-click="sortType('hcp')" translate="patient.hcp-name">HCP Name</span>
         </div>
         <div class="col-md-1 col-sm-2 header--type">
           <span ng-class="{'sort-icon--default' : sortPatientList.status.isDefault, 'sort-icon-down': sortPatientList.status.isDown, 'sort-icon-up':sortPatientList.status.isUp}" ng-click="sortType('status')" translate="patient.status">Status</span>

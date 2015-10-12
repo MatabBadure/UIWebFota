@@ -87,7 +87,9 @@ var sortConstant = {
     deleted: "deleted",
     role: "role",
     mobileNumber: "mobileNumber",
-    mobilePhone: "mobilePhone"
+    mobilePhone: "mobilePhone",
+    hcp: "hcp",
+    hcpname: "hcpname"
 }
 
 var stringConstants = {
