@@ -2,8 +2,8 @@
 
 angular.module('hillromvestApp')
 .controller('graphController', 
-  ['$scope', '$state', 'patientDashBoardService', 'dateService', 'graphUtil', 'patientService', 'UserService', '$stateParams', 'notyService', '$timeout', 'graphService',
-  function($scope, $state, patientDashBoardService, dateService, graphUtil, patientService, UserService, $stateParams, notyService, $timeout, graphService) {
+  ['$scope', '$state', 'patientDashBoardService', 'dateService', 'graphUtil', 'patientService', 'UserService', '$stateParams', 'notyService', '$timeout', 'graphService', 'StorageService',
+  function($scope, $state, patientDashBoardService, dateService, graphUtil, patientService, UserService, $stateParams, notyService, $timeout, graphService, StorageService) {
     var chart;
     var hiddenFrame, htmlDocument;
     $scope.init = function() {
@@ -15,8 +15,8 @@ angular.module('hillromvestApp')
       $scope.selectedGraph = 'HMR';
       $scope.selectedDateOption = 'WEEK';
       $scope.disableDatesInDatePicker();
-      $scope.role = localStorage.getItem('role'); 
-      $scope.patientId = parseInt(localStorage.getItem('patientID'));
+      $scope.role = StorageService.get('logged').role; 
+      $scope.patientId = parseInt(StorageService.get('logged').patientID);
       var currentRoute = $state.current.name;
       var server_error_msg = "Some internal error occurred. Please try after sometime.";
       $scope.showNotes = false;
@@ -248,7 +248,7 @@ angular.module('hillromvestApp')
 
     $scope.switchPatientTab = function(status){
       $scope.patientTab = status;
-      if(localStorage.getItem('role') === 'HCP'){
+      if(StorageService.get('logged').role === 'HCP'){
         $state.go('hcp'+status, {'patientId': $stateParams.patientId});
       }else{
         $state.go(status, {'patientId': $stateParams.patientId});
@@ -898,7 +898,7 @@ angular.module('hillromvestApp')
 
     /*this should initiate the list of caregivers associated to the patient*/
     $scope.initPatientCaregiver = function(){
-      $scope.getCaregiversForPatient(localStorage.getItem('patientID'));
+      $scope.getCaregiversForPatient(StorageService.get('logged').patientID);
     };
 
     $scope.getPatientById = function(patientId){
@@ -916,11 +916,11 @@ angular.module('hillromvestApp')
     };
 
     $scope.linkCaregiver = function(){
-      $state.go('patientdashboardCaregiverAdd', {'patientId': localStorage.getItem('patientID')});
+      $state.go('patientdashboardCaregiverAdd', {'patientId': StorageService.get('logged').patientID});
     };
 
     $scope.initpatientCraegiverAdd = function(){
-      $scope.getPatientById(localStorage.getItem('patientID'));
+      $scope.getPatientById(StorageService.get('logged').patientID);
       $scope.careGiverStatus = "new";
       $scope.associateCareGiver = {};
       UserService.getState().then(function(response) {
@@ -940,9 +940,9 @@ angular.module('hillromvestApp')
       var data = $scope.associateCareGiver;
       data.role = 'CARE_GIVER';
       if($scope.careGiverStatus === "new"){
-        $scope.associateCaregiverstoPatient(localStorage.getItem('patientID'), data);
+        $scope.associateCaregiverstoPatient(StorageService.get('logged').patientID, data);
       }else if($scope.careGiverStatus === "edit"){
-        $scope.updateCaregiver(localStorage.getItem('patientID'), $stateParams.caregiverId , data);
+        $scope.updateCaregiver(StorageService.get('logged').patientID, $stateParams.caregiverId , data);
       }
     };
 
@@ -962,7 +962,7 @@ angular.module('hillromvestApp')
 
     $scope.disassociateCaregiver = function(caregiverId, index){
       $scope.closeModalCaregiver();
-      patientService.disassociateCaregiversFromPatient(localStorage.getItem('patientID'), caregiverId).then(function(response){
+      patientService.disassociateCaregiversFromPatient(StorageService.get('logged').patientID, caregiverId).then(function(response){
         $scope.caregivers.splice(index, 1);
       }).catch(function(response){
         notyService.showMessage(server_error_msg);
@@ -971,7 +971,7 @@ angular.module('hillromvestApp')
 
     $scope.initpatientCaregiverEdit = function(caregiverId){
       $scope.careGiverStatus = "edit";
-      $scope.getPatientById(localStorage.getItem('patientID'));
+      $scope.getPatientById(StorageService.get('logged').patientID);
       $scope.editCaregiver(caregiverId);
     };
 
@@ -983,7 +983,7 @@ angular.module('hillromvestApp')
           $scope.relationships = response.data.relationshipLabels;
         });
         var caregiverId = $stateParams.caregiverId;
-        patientService.getCaregiverById(localStorage.getItem('patientID'), caregiverId).then(function(response){
+        patientService.getCaregiverById(StorageService.get('logged').patientID, caregiverId).then(function(response){
           $scope.associateCareGiver = response.data.caregiver.userPatientAssocPK.user;
           $scope.associateCareGiver.relationship = response.data.caregiver.relationshipLabel;
         });
@@ -1017,7 +1017,7 @@ angular.module('hillromvestApp')
       $scope.devicesErrMsg = null;
       $scope.protocolsErrMsg = null;
       $scope.devices = []; $scope.devices.length = 0;   
-      patientService.getDevices(localStorage.getItem('patientID')).then(function(response){
+      patientService.getDevices(StorageService.get('logged').patientID).then(function(response){
         angular.forEach(response.data.deviceList, function(device){
           device.createdDate = dateService.getDateByTimestamp(device.createdDate);
           device.lastModifiedDate = dateService.getDateByTimestamp(device.lastModifiedDate);
@@ -1028,7 +1028,7 @@ angular.module('hillromvestApp')
           $scope.devicesErrMsg = true;
         }
       });
-      $scope.getProtocols(localStorage.getItem('patientID'));    
+      $scope.getProtocols(StorageService.get('logged').patientID);    
     };
 
     $scope.getProtocols = function(patientId){
@@ -1058,7 +1058,7 @@ angular.module('hillromvestApp')
     };
 
     $scope.getClinicsOfPatient = function(){
-      patientService.getClinicsLinkedToPatient(localStorage.getItem('patientID')).then(function(response){
+      patientService.getClinicsLinkedToPatient(StorageService.get('logged').patientID).then(function(response){
         if(response.data.clinics){
           $scope.clinics = response.data.clinics;  
         }else if(response.data.message){
@@ -1068,7 +1068,7 @@ angular.module('hillromvestApp')
     };
     
     $scope.getHCPsOfPatient = function(){
-      patientService.getHCPsLinkedToPatient(localStorage.getItem('patientID')).then(function(response){
+      patientService.getHCPsLinkedToPatient(StorageService.get('logged').patientID).then(function(response){
         if(response.data.hcpUsers){
           $scope.hcps = response.data.hcpUsers;
         }else if(response.data.message){
@@ -1104,9 +1104,9 @@ angular.module('hillromvestApp')
             var editDate = $scope.textNote.edit_date;
             var data = {};
             data.noteText = $scope.textNote.text;
-            data.userId = localStorage.getItem('patientID');
+            data.userId = StorageService.get('logged').patientID;
             data.date = editDate;
-            UserService.createNote(localStorage.getItem('patientID'), data).then(function(response){
+            UserService.createNote(StorageService.get('logged').patientID, data).then(function(response){
               $scope.addNote = false;
               $scope.textNote.edit_date = dateService.convertDateToYyyyMmDdFormat(new Date());
               $scope.textNote = "";     
@@ -1154,8 +1154,8 @@ angular.module('hillromvestApp')
     };
 
     $scope.initPatientDashboard = function(){
-      $scope.getAssociatedClinics(localStorage.getItem("patientID"));
-      $scope.getPatientDevices(localStorage.getItem("patientID"));
+      $scope.getAssociatedClinics(StorageService.get('logged').patientID);
+      $scope.getPatientDevices(StorageService.get('logged').patientID);
       $scope.editNote = false;
       $scope.textNote = "";
       $scope.weeklyChart();
@@ -1205,7 +1205,7 @@ angular.module('hillromvestApp')
     };
 
     $scope.getPatientNotification = function(){
-      UserService.getPatientNotification(localStorage.getItem("patientID"), new Date().getTime()).then(function(response){                  
+      UserService.getPatientNotification(StorageService.get('logged').patientID, new Date().getTime()).then(function(response){                  
         $scope.patientNotifications = response.data;
         angular.forEach($scope.patientNotifications, function(notification, index) {
           var notificationType = notification.notificationType; 
@@ -1294,8 +1294,8 @@ angular.module('hillromvestApp')
 
     $scope.getNotesBetweenDateRange = function(fromTimeStamp, toTimeStamp, scrollUp){ 
       var patientId = null;  
-      if(localStorage.getItem('role') === 'PATIENT'){
-        patientId = localStorage.getItem('patientID');
+      if(StorageService.get('logged').role === 'PATIENT'){
+        patientId = StorageService.get('logged').patientID;
       }else{
         patientId = $stateParams.patientId;
       }
