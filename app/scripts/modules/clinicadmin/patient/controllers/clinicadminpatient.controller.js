@@ -1,6 +1,6 @@
 angular.module('hillromvestApp')
-.controller('clinicadminPatientController',['$scope', '$state', '$stateParams', 'clinicadminPatientService', 'patientService', 'notyService', 'DoctorService', 'clinicadminService', 'clinicService', 'dateService', 'UserService', 'searchFilterService', '$timeout',
-  function($scope, $state, $stateParams, clinicadminPatientService, patientService, notyService, DoctorService, clinicadminService, clinicService, dateService, UserService, searchFilterService, $timeout) { 
+.controller('clinicadminPatientController',['$scope', '$state', '$stateParams', 'clinicadminPatientService', 'patientService', 'notyService', 'DoctorService', 'clinicadminService', 'clinicService', 'dateService', 'UserService', 'searchFilterService', '$timeout', 'sortOptionsService',
+  function($scope, $state, $stateParams, clinicadminPatientService, patientService, notyService, DoctorService, clinicadminService, clinicService, dateService, UserService, searchFilterService, $timeout, sortOptionsService) { 
 	var searchOnLoad = true;
 	$scope.init = function(){
     if($state.current.name === 'clinicadminpatientDemographic'  || $state.current.name === 'clinicadmminpatientDemographicEdit'){
@@ -20,6 +20,7 @@ angular.module('hillromvestApp')
     }else if($state.current.name === 'clinicadminpatientdashboard'){
       $scope.searchItem = "";
       $scope.searchFilter = searchFilterService.initSearchFiltersForPatient($stateParams.filter);
+      $scope.sortPatientList = sortOptionsService.getSortOptionsForPatientList();
       $scope.currentPageIndex = 1;
       $scope.perPageCount = 10;
       $scope.pageCount = 0;
@@ -249,7 +250,7 @@ angular.module('hillromvestApp')
     }
     var filter = searchFilterService.getFilterStringForPatient($scope.searchFilter);
     var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : $stateParams.clinicId;
-    DoctorService.searchPatientsForHCPOrCliniadmin($scope.searchItem, 'clinicadmin', localStorage.getItem('userId'), clinicId, $scope.currentPageIndex, $scope.perPageCount, filter).then(function (response) {
+    DoctorService.searchPatientsForHCPOrCliniadmin($scope.searchItem, 'clinicadmin', localStorage.getItem('userId'), clinicId, $scope.currentPageIndex, $scope.perPageCount, filter, $scope.sortOption).then(function (response) {
       $scope.patients = response.data;      
       angular.forEach($scope.patients, function(patient){
         patient.dob = dateService.getDateFromTimeStamp(patient.dob, patientDashboard.dateFormat, '/');
@@ -279,6 +280,54 @@ angular.module('hillromvestApp')
    }
   });  
   
+  $scope.sortType = function(sortParam){ 
+    var toggledSortOptions = {};
+    $scope.sortOption = "";
+    if(sortParam === sortConstant.lastName){                        
+      toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortPatientList.lastName);
+      $scope.sortPatientList = sortOptionsService.getSortOptionsForPatientList();
+      $scope.sortPatientList.lastName = toggledSortOptions;
+      $scope.sortOption = sortConstant.lastName + sortOptionsService.getSortByASCString(toggledSortOptions);
+      $scope.searchPatients();
+    }else if(sortParam === sortConstant.mrnId){
+      toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortPatientList.mrnId);
+      $scope.sortPatientList = sortOptionsService.getSortOptionsForPatientList();
+      $scope.sortPatientList.mrnId = toggledSortOptions;
+      $scope.sortOption = sortConstant.mrnid + sortOptionsService.getSortByASCString(toggledSortOptions);
+      $scope.searchPatients();
+    }else if(sortParam === sortConstant.dob){
+      toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortPatientList.dob);
+      $scope.sortPatientList = sortOptionsService.getSortOptionsForPatientList();
+      $scope.sortPatientList.dob = toggledSortOptions;
+      $scope.sortOption = sortConstant.dob + sortOptionsService.getSortByASCString(toggledSortOptions);
+      $scope.searchPatients();
+    }else if(sortParam === sortConstant.city){
+      toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortPatientList.city);
+      $scope.sortPatientList = sortOptionsService.getSortOptionsForPatientList();
+      $scope.sortPatientList.city = toggledSortOptions;
+      $scope.sortOption = sortConstant.city + sortOptionsService.getSortByASCString(toggledSortOptions);
+      $scope.searchPatients();
+    }else if(sortParam === sortConstant.transmission){
+      toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortPatientList.transmission);
+      $scope.sortPatientList = sortOptionsService.getSortOptionsForPatientList();
+      $scope.sortPatientList.transmission = toggledSortOptions;
+      $scope.sortOption = sortConstant.last_date + sortOptionsService.getSortByASCString(toggledSortOptions);
+      $scope.searchPatients();
+    }else if(sortParam === sortConstant.status){
+      toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortPatientList.status);
+      $scope.sortPatientList = sortOptionsService.getSortOptionsForPatientList();
+      $scope.sortPatientList.status = toggledSortOptions;
+      $scope.sortOption = sortConstant.isDeleted + sortOptionsService.getSortByASCString(toggledSortOptions);
+      $scope.searchPatients();
+    }else if(sortParam === sortConstant.adherence){
+      toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortPatientList.adherence);
+      $scope.sortPatientList = sortOptionsService.getSortOptionsForPatientList();
+      $scope.sortPatientList.adherence = toggledSortOptions;
+      $scope.sortOption = sortConstant.adherence + sortOptionsService.getSortByASCString(toggledSortOptions);
+      $scope.searchPatients();
+    }       
+    
+  };
 
 	$scope.init();
 }]);

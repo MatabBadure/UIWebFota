@@ -94,8 +94,11 @@ angular.module('hillromvestApp')
         });
       },
 
-      searchPatientsForHCPOrCliniadmin : function(searchString, role, userId, clinicId, pageNo, offset, filter){
-        var url = URL.searchPatientsForHCPOrClinicadmin.replace('ROLE', role).replace('USERID', userId).replace('SEARCHSTRING', searchString).replace('PAGENO', pageNo).replace('OFFSET', offset).replace('CLINICID', clinicId).replace('FILTER', filter);
+      searchPatientsForHCPOrCliniadmin : function(searchString, role, userId, clinicId, pageNo, offset, filter, sortOption){
+        if (sortOption === "" || sortOption === undefined || sortOption === null) {
+          sortOption = sortConstant.lastName + searchFilters.amp +searchFilters.asc +searchFilters.equal + true;
+        } 
+        var url = URL.searchPatientsForHCPOrClinicadmin.replace('ROLE', role).replace('USERID', userId).replace('SEARCHSTRING', searchString).replace('PAGENO', pageNo).replace('OFFSET', offset).replace('CLINICID', clinicId).replace('FILTER', filter).replace('SORTBY',sortOption);
         return $http.get(url, {
           headers: headerService.getHeader()
         });
