@@ -91,11 +91,13 @@
 					<span ng-if="fromDate === toDate" class="date">{{fromDate}}<span>
 				</div>	
 			</div>
+
+			
 		<div class="col-md-16" class="all_graph_wrapper">
 			<div class="graph_nodata" ng-show="noDataAvailable">
 					<span class="noData_text"> No Data Available!</span>
 			</div>
-			<div ng-if="hmrGraph" class="dashboard_line_graph">
+			<div ng-if="hmrGraph" class="dashboard_line_graph" id="lineGraphWrapper">
 				<div ng-if="hmrLineGraph">
 					<div id="hmrLineGraph" class="complianceGraph col-md-16">
 						<svg ng-show="!noDataAvailable"> </svg>
@@ -107,7 +109,7 @@
 					</div>
 				</div>
 			</div>
-			<div ng-if="complianceGraph">
+			<div ng-if="complianceGraph" id="complianceGraphWrapper">
 				<div class="col-md-16">
 					<div class="pull-right wrapper_custom_check">
 						<form action="#" ng-if="isComplianceExist">

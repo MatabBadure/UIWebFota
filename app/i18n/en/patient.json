@@ -1,7 +1,9 @@
 {
     "patient" : {
+        "page-title":{
+          "patients": "HillRom | Patients"
+        },
         "home": {
-            "title": "Patient",
             "createLabel": "Create Patient",
             "createNewLabel": "Create New Patient",
             "createOrEditLabel": "Create or edit a Patient",
@@ -25,6 +27,7 @@
         "hill-rom-id":  "Hill-Rom ID",
         "emr-id":   "EMR-ID",
         "mrn-id": "MRN ID",
+        "clinic-level-status":"Clinic level Status",
         "adherence": "Adherence",
         "title": {
                     "name": "Title",

@@ -18,9 +18,10 @@ angular.module('hillromvestApp')
         })
       }
       },
-      controller: ['$scope', '$timeout', 'patientService', '$state', '$stateParams', 'notyService','searchFilterService', 
-      function($scope, $timeout, patientService, $state, $stateParams, notyService, searchFilterService) {
+      controller: ['$scope', '$timeout', 'patientService', '$state', '$stateParams', 'notyService','searchFilterService', 'sortOptionsService',
+      function($scope, $timeout, patientService, $state, $stateParams, notyService, searchFilterService, sortOptionsService) {
         var searchOnLoad = true;
+        $scope.sortPatientList = sortOptionsService.getSortOptionsForPatientList();
         $scope.init = function() {
           $scope.searchFilter = searchFilterService.initSearchFiltersForPatient();
           $scope.patients = [];
@@ -117,28 +118,57 @@ angular.module('hillromvestApp')
           }).catch(function (response) {});
         };
 
-        $scope.sortType = function(){
-          console.log('hello');
-          if($scope.sortIconDefault){
-            $scope.sortIconDefault = false;
-            $scope.sortIconUp = false;
-            $scope.sortIconDown = true;
-          }
-          else if($scope.sortIconDown){
-            $scope.sortIconDefault = false;
-            $scope.sortIconDown = false;
-            $scope.sortIconUp = true;
-          }
-          else if($scope.sortIconUp){
-            $scope.sortIconDefault = false;
-            $scope.sortIconUp = false;
-            $scope.sortIconDown = true;
-          }
+        $scope.sortType = function(sortParam){ 
+          var toggledSortOptions = {};
+          $scope.sortOption = "";
+          if(sortParam === sortConstant.lastName){                        
+            toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortPatientList.lastName);
+            $scope.sortPatientList = sortOptionsService.getSortOptionsForPatientList();
+            $scope.sortPatientList.lastName = toggledSortOptions;
+            $scope.sortOption = sortConstant.plastName + sortOptionsService.getSortByASCString(toggledSortOptions);
+            $scope.searchPatients();
+          }else if(sortParam === sortConstant.mrnId){
+            toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortPatientList.mrnId);
+            $scope.sortPatientList = sortOptionsService.getSortOptionsForPatientList();
+            $scope.sortPatientList.mrnId = toggledSortOptions;
+            $scope.sortOption = sortConstant.mrnid + sortOptionsService.getSortByASCString(toggledSortOptions);
+            $scope.searchPatients();
+          }else if(sortParam === sortConstant.dob){
+            toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortPatientList.dob);
+            $scope.sortPatientList = sortOptionsService.getSortOptionsForPatientList();
+            $scope.sortPatientList.dob = toggledSortOptions;
+            $scope.sortOption = sortConstant.pdob + sortOptionsService.getSortByASCString(toggledSortOptions);
+            $scope.searchPatients();
+          }else if(sortParam === sortConstant.city){
+            toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortPatientList.city);
+            $scope.sortPatientList = sortOptionsService.getSortOptionsForPatientList();
+            $scope.sortPatientList.city = toggledSortOptions;
+            $scope.sortOption = sortConstant.pcity + sortOptionsService.getSortByASCString(toggledSortOptions);
+            $scope.searchPatients();
+          }else if(sortParam === sortConstant.transmission){
+            toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortPatientList.transmission);
+            $scope.sortPatientList = sortOptionsService.getSortOptionsForPatientList();
+            $scope.sortPatientList.transmission = toggledSortOptions;
+            $scope.sortOption = sortConstant.last_date + sortOptionsService.getSortByASCString(toggledSortOptions);
+            $scope.searchPatients();
+          }else if(sortParam === sortConstant.status){
+            toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortPatientList.status);
+            $scope.sortPatientList = sortOptionsService.getSortOptionsForPatientList();
+            $scope.sortPatientList.status = toggledSortOptions;
+            $scope.sortOption = sortConstant.isDeleted + sortOptionsService.getSortByASCString(toggledSortOptions);
+            $scope.searchPatients();
+          }else if(sortParam === sortConstant.adherence){
+            toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortPatientList.adherence);
+            $scope.sortPatientList = sortOptionsService.getSortOptionsForPatientList();
+            $scope.sortPatientList.adherence = toggledSortOptions;
+            $scope.sortOption = sortConstant.adherence + sortOptionsService.getSortByASCString(toggledSortOptions);
+            $scope.searchPatients();
+          }        
+          
         };
         $scope.searchOnFilters = function(){           
           $scope.searchPatients();
-        };
-
+        };        
 
         $scope.init();
       }]

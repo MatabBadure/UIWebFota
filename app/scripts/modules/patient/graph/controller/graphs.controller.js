@@ -5,6 +5,7 @@ angular.module('hillromvestApp')
   ['$scope', '$state', 'patientDashBoardService', 'dateService', 'graphUtil', 'patientService', 'UserService', '$stateParams', 'notyService', '$timeout', 'graphService',
   function($scope, $state, patientDashBoardService, dateService, graphUtil, patientService, UserService, $stateParams, notyService, $timeout, graphService) {
     var chart;
+    var hiddenFrame, htmlDocument;
     $scope.init = function() {
       $scope.lazyLoadParamsPieChart = [
         'bower_components/jquery.easy-pie-chart/dist/angular.easypiechart.js'
@@ -39,6 +40,8 @@ angular.module('hillromvestApp')
       }else if(currentRoute === 'patientdashboardClinicHCP'){
         $scope.initPatientClinicHCPs();
       } else if(currentRoute === 'patientOverview' || currentRoute === 'hcppatientOverview' || currentRoute === 'clinicadminpatientOverview') {
+        $scope.getAssociatedClinics($stateParams.patientId);
+        $scope.getPatientDevices($stateParams.patientId);
         $scope.patientId = parseInt($stateParams.patientId);
         $scope.getPatientById($scope.patientId);
         $scope.weeklyChart();
@@ -140,6 +143,7 @@ angular.module('hillromvestApp')
         $scope.getDayHMRGraphData();
       } else if(days === 0 && $scope.selectedGraph === 'COMPLIANCE'){
         $scope.plotNoDataAvailable();
+        $scope.isComplianceExist = false;
       } else if(days <= patientDashboard.maxDaysForWeeklyGraph) {
         $scope.weeklyChart($scope.fromTimeStamp);
       } else if ( days > patientDashboard.maxDaysForWeeklyGraph && days <= patientDashboard.minDaysForMonthlyGraph ) {
@@ -287,10 +291,10 @@ angular.module('hillromvestApp')
                 '<h6>' + dateService.getDateFromTimeStamp(value.timestamp,patientDashboard.dateFormat,'/') + '  ('+ d3.time.format('%I:%M %p')(new Date(value.timestamp)) + ')' + '</h6>' +
                 '<ul class="graph_ul">' +
                   '<li><span class="pull-left">' + 'Session No. ' +'</span><span class="pull-right value">' + value.sessionNo + '/' + value.treatmentsPerDay +'</span></li>' +
-                  '<li><span class="pull-left">' + 'HMR' + '</span><span class="pull-right value">' + Math.floor(value.hmr/60)  + '</span></li>' +
+                  '<li><span class="pull-left">' + 'Duration' + '</span><span class="pull-right value">' + value.duration  + '</span></li>' +
                   '<li><span class="pull-left">' + 'Frequency' + '</span><span class="pull-right value">' + value.frequency  + '</span></li>' +
                   '<li><span class="pull-left">' + 'Pressure' +'</span><span class="pull-right value">' + value.pressure  +'</span></li>' +
-                  '<li><span class="pull-left">' + 'Cough Pauses' +'</span><span class="pull-right value">' + (value.normalCoughPauses+value.programmedCoughPauses) +'</span></li>' +
+                  '<li><span class="pull-left">' + 'Cough Pauses' +'</span><span class="pull-right value">' + (value.coughPauseDuration) +'</span></li>' +
                 '</ul>';
           }
         });
@@ -308,7 +312,8 @@ angular.module('hillromvestApp')
                 '<ul class="graph_ul">' +
                   '<li><span class="pull-left">' + 'Frequency' + '</span><span class="pull-right value">' + value.frequency  + '</span></li>' +
                   '<li><span class="pull-left">' + 'Pressure' +'</span><span class="pull-right value">' + value.pressure +'</span></li>' +
-                  '<li><span class="pull-left">' + 'Cough Pauses' +'</span><span class="pull-right value">' + (value.normalCaughPauses + value.programmedCaughPauses) +'</span></li>' +
+                  '<li><span class="pull-left">' + 'Cough Pauses' +'</span><span class="pull-right value">' + value.coughPauseDuration +'</span></li>' +
+                  '<li><span class="pull-left">' + 'Duration' +'</span><span class="pull-right value">' + value.durationInMinutes +'</span></li>' +
                 '</ul>';
           }
         });
@@ -327,7 +332,7 @@ angular.module('hillromvestApp')
                   '<li><span class="pull-left">' + 'Session No.' + '</span><span class="pull-right value">' +  value.sessionNo + '/' + value.treatmentsPerDay  + '</span></li>' +
                   '<li><span class="pull-left">' + 'Frequency' +'</span><span class="pull-right value">' + value.frequency +'</span></li>' +
                   '<li><span class="pull-left">' + 'Pressure' +'</span><span class="pull-right value">' + value.pressure +'</span></li>' +
-                  '<li><span class="pull-left">' + 'Cough Pauses' +'</span><span class="pull-right value">' + (value.normalCoughPauses + value.programmedCoughPauses) +'</span></li>' +
+                  '<li><span class="pull-left">' + 'Cough Pauses' +'</span><span class="pull-right value">' + value.coughPauseDuration +'</span></li>' +
                 '</ul>';
           }
         });
@@ -386,7 +391,20 @@ angular.module('hillromvestApp')
           $scope.completeGraphData = graphUtil.convertIntoServerTimeZone($scope.completeGraphData,patientDashboard.hmrNonDayGraph);
           $scope.yAxisRangeForHMRLine = graphUtil.getYaxisRangeLineGraph($scope.completeGraphData);
           $scope.graphData = graphUtil.convertToHMRStepGraph($scope.completeGraphData,patientDashboard.HMRLineGraphColor);
-          $scope.drawHMRLineGraph();
+          /* waiting until svg element loads*/
+          var count =5;
+          $scope.waitFunction = function waitHandler() {
+             var svgCount = document.getElementsByTagName('svg').length;
+            if(svgCount > 0 || count === 0 ) {
+              $scope.drawHMRLineGraph();
+              $timeout.cancel(waitHandler);
+              return false;
+            } else {
+              count --;
+            }
+            $timeout(waitHandler, 1000);
+          }
+          $scope.waitFunction();
         }
       }).catch(function(response) {
         $scope.graphData = [];
@@ -546,6 +564,7 @@ angular.module('hillromvestApp')
           $scope.isComplianceExist = false;
         }else if($scope.completeComplianceData.actual.length < 2){
           $scope.plotNoDataAvailable();
+          $scope.isComplianceExist = false;
         }
          else {
           //recommended values
@@ -1141,10 +1160,12 @@ angular.module('hillromvestApp')
     };
 
     $scope.initPatientDashboard = function(){
+      $scope.getAssociatedClinics(localStorage.getItem("patientID"));
+      $scope.getPatientDevices(localStorage.getItem("patientID"));
       $scope.editNote = false;
       $scope.textNote = "";
       $scope.weeklyChart();
-      $scope.getPatientNotification();
+      $scope.getPatientNotification();      
     };
 
     $scope.openEditNote = function(noteId, noteText){
@@ -1313,6 +1334,18 @@ angular.module('hillromvestApp')
       $("#note_edit_container").removeClass("show_content");
       $("#note_edit_container").addClass("hide_content");      
     };
+    $scope.getPatientDevices = function(patientId){
+      patientService.getDevices(patientId).then(function(response){
+        $scope.patientDevices = response.data.deviceList;
+      });
+    };
+     $scope.getAssociatedClinics = function(patientId){
+      patientService.getClinicsLinkedToPatient(patientId).then(function(response) {
+        if(response.data.clinics){
+          $scope.associatedClinics = response.data.clinics;
+        }
+      });
+     }
 
     $scope.init();
 
@@ -1400,9 +1433,143 @@ angular.module('hillromvestApp')
         attr("y" , -40);
           //
           return chart;
+      }, function(){
+        $timeout(function() {
+        $(hiddenFrame).remove();
+        var printId1 = "#lineGraphWrapper";
+        if($scope.selectedGraph === "COMPLIANCE"){
+          printId1 = "#complianceGraphWrapper";
+        }
+        //var printId2 = "#complianceGraphWrapper";
+        var graphData = ($scope.hmrGraph) ? $scope.completeGraphData : $scope.completeComplianceData;
+        var element1 = document.querySelectorAll(printId1)[0],
+        //element2 = document.querySelectorAll(printId2)[0],
+        html1 = element1.innerHTML,
+        //html2 = element2.innerHTML,
+        //htmlDocument,
+        doc;
+
+        hiddenFrame = $('<iframe id="pdfID" style="display: none"></iframe>').appendTo('body')[0];
+        //$scope.complianceGraph =  true;
+        //$scope.hmrLineGraph = true;
+        //$scope.getComplianceGraphData();
+        //$scope.drawGraph();
+        hiddenFrame.contentWindow.printAndRemove = function() {
+
+            //$scope.drawComplianceGraph();
+        $timeout( function(){
+          // hiddenFrame.contentWindow.focus();
+           console.info(doc.readyState)
+          if(doc.readyState == 'complete') {
+              // hiddenFrame.contentWindow.print();
+            //hiddenFrame.contentWindow.print();
+          }
+          //$(hiddenFrame).remove();
+          // $("#complianceGraphWrapper").hide();
+          // d3.selectAll('#complianceGraph svg').selectAll("*").remove();
+          // $scope.complianceGraph =  false;
+        }, 0);
+      };
+
+      var patientDetails = ($scope.slectedPatient) ? $scope.slectedPatient : null;
+      var pdfClinic = ($scope.associatedClinics && $scope.associatedClinics.length > 0) ? $scope.associatedClinics[0] : null;
+      var completeAddress = (pdfClinic !== null && pdfClinic.city) ? pdfClinic.city : stringConstants.emptyString;
+      completeAddress += (pdfClinic !== null && pdfClinic.state) ? ((completeAddress.length > 1) ? (stringConstants.comma+pdfClinic.state) : pdfClinic.state) : completeAddress; 
+      completeAddress += (pdfClinic !== null && pdfClinic.address) ? ((completeAddress.length > 1) ? (stringConstants.comma+pdfClinic.address) : pdfClinic.address) : completeAddress;
+      completeAddress += (pdfClinic !== null && pdfClinic.zipcode) ? ((completeAddress.length > 1) ? (stringConstants.comma+pdfClinic.zipcode) : pdfClinic.zipcode) : completeAddress;
+      var pdfClinicName = (pdfClinic !== null && pdfClinic.name) ? pdfClinic.name : stringConstants.notAvailable; 
+      var pdfClinicAddress = (pdfClinic !== null && pdfClinic.address) ? pdfClinic.address : stringConstants.notAvailable;
+      var pdfClinicPhone = (pdfClinic !== null && pdfClinic.phoneNumber) ? pdfClinic.phoneNumber : stringConstants.notAvailable;
+      var reportGenerationDate = dateService.getDateFromTimeStamp(new Date().getTime(),patientDashboard.dateFormat,'/');
+      var patientMrnId = (patientDetails !== null && patientDetails.mrnId)? $scope.slectedPatient.mrnId : stringConstants.notAvailable;
+      var patientName = (patientDetails !== null && patientDetails.firstName)? $scope.slectedPatient.firstName+stringConstants.space+$scope.slectedPatient.lastName : stringConstants.notAvailable;
+      var completePatientAddress = (patientDetails !== null && patientDetails.city) ? patientDetails.city : stringConstants.emptyString;
+      completePatientAddress += (patientDetails !== null && patientDetails.state) ? ((completePatientAddress.length > 1) ? (stringConstants.comma+patientDetails.state) : patientDetails.state) : completePatientAddress; 
+      completePatientAddress += (patientDetails !== null && patientDetails.address) ? ((completePatientAddress.length > 1) ? (stringConstants.comma+patientDetails.address) : patientDetails.address) : completePatientAddress;
+      completePatientAddress += (patientDetails !== null && patientDetails.zipcode) ? ((completePatientAddress.length > 1) ? (stringConstants.comma+patientDetails.zipcode) : patientDetails.zipcode) : completePatientAddress;
+      var patientPhone = (patientDetails !== null && patientDetails.mobilePhone)? $scope.slectedPatient.mobilePhone : stringConstants.notAvailable;
+      var patientDOB = (patientDetails !== null && patientDetails.dob)? dateService.getDateFromTimeStamp(patientDetails.dob,patientDashboard.dateFormat,'/') : stringConstants.notAvailable;
+      var patientAdherence = (patientDetails !== null && patientDetails.adherence)? $scope.slectedPatient.adherence : stringConstants.notAvailable;
+      var patientDeviceType = stringConstants.deviceType;
+      var patientDeviceSlNo = ($scope.patientDevices && $scope.patientDevices[0] && $scope.patientDevices[0].serialNumber) ? $scope.patientDevices[0].serialNumber: stringConstants.notAvailable;
+      var pdfMissedTherapyDays = ($scope.missedtherapyDays !== null && $scope.missedtherapyDays >= 0) ? $scope.missedtherapyDays : stringConstants.notAvailable;
+      var pdfHMRNonAdherenceScore = ($scope.adherenceScore !== null && $scope.adherenceScore >= 0) ? $scope.adherenceScore : stringConstants.notAvailable;
+      var pdfSettingDeviation = stringConstants.notAvailable;
+      htmlDocument = "<!doctype html>" +
+            '<html style="background: white;"><head>' +
+            '<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />'+
+            '<meta http-equiv="X-UA-Compatible" content="IE=edge">' +
+            '<link rel="stylesheet" href="bower_components/nvd3/src/nv.d3.css" />' +
+            '<link rel="stylesheet" href="styles/style.css">' +
+            '</head>' +
+            '<body onload="printAndRemove();">' + // Print only after document is loaded
+            '<div class="pdf__heading-primary">'+pdfClinicName+'</div>' +
+            '<div class="pdf__heading-secondary">'+completeAddress+'</div>' +
+            '<div class="pdf__heading-secondary pdf--heading-border">'+pdfClinicPhone+'</div>' +
+            '<div class="title">'+
+            '<span class="title--heading">'+stringConstants.reportGenerationDateLabel+'</span>'+
+            '<span class="title--desc">'+reportGenerationDate+'</span>'+
+            '</div>' +
+            '<div class="title">'+
+            '<span class="title--heading">'+stringConstants.dateRangeOfReportLabel+stringConstants.colon+'</span>'+
+            '<span class="title--desc">'+$scope.fromDate+stringConstants.minus+$scope.toDate+'</span>'+
+            '</div>' +
+            '<div class="pdf-container table-right">'+
+              '<table border=1>' +
+              '<thead>'+
+              '<tr>'+
+              '<th colspan="2">'+stringConstants.patientInformationLabel+'</th>' + 
+              '</tr>'+
+              '</thead>'+
+              '<tr><td class="heading">'+stringConstants.mrn+stringConstants.colon+'</td><td class="desc">'+patientMrnId+'</td></tr>' +
+              '<tr><td class="heading">'+stringConstants.name+stringConstants.colon+'</td><td class="desc-highlight">'+patientName+'</td></tr>' +
+              '<tr><td class="heading">'+stringConstants.address+stringConstants.colon+'</td><td class="desc">'+completePatientAddress+'</td></tr>' +
+              '<tr><td class="heading">'+stringConstants.phone+stringConstants.colon+'</td><td class="desc">'+patientPhone+'</td></tr>' +
+              '<tr><td class="heading">'+stringConstants.DOB+stringConstants.colon+'</td><td class="desc">'+patientDOB+'</td></tr>' +
+              '<tr><td class="heading">'+stringConstants.adherenceScore.replace(/ /g, '&nbsp')+stringConstants.colon+'</td><td class="desc-highlight">'+patientAdherence+'</td></tr>' +
+              '</table>' +
+            '</div>' +
+            '<div class="pdf-container table-left">'+
+              '<table border=1>' +
+                '<thead>'+
+                  '<tr>'+
+                    '<th colspan="2">'+stringConstants.deviceInformationLabel+'</th>' + 
+                  '</tr>'+
+                '</thead>'+
+              '<tr><td class="heading">'+stringConstants.type+stringConstants.colon+'</td><td class="desc-highlight">'+patientDeviceType.replace(/ /g, '&nbsp')+'</td></tr>' +
+              '<tr><td class="heading">'+stringConstants.serialNumber+stringConstants.colon+'</td><td class="desc">'+patientDeviceSlNo+'</td></tr>' +
+              '</table>' +
+              '<table class="pdf--margin-top" border=1 ng-if="true">' +
+                '<thead>'+
+                  '<tr>'+
+                    '<th colspan="2">'+stringConstants.NotificationLabel+'</th>' + 
+                  '</tr>'+
+                '</thead>'+ 
+              '<tr><td class="heading">'+stringConstants.missedTherapyDays+stringConstants.colon+
+              '</td><td class="desc-highlight">'+pdfMissedTherapyDays+'</td></tr>' +
+              '<tr><td class="heading">'+stringConstants.hmrNonAdherence+stringConstants.colon+
+              '</td><td class="desc-highlight">'+pdfHMRNonAdherenceScore+'</td></tr>' +
+              '<tr><td class="heading">'+stringConstants.settingDeviation+stringConstants.colon+
+              '</td><td class="desc-highlight">'+pdfSettingDeviation+'</td></tr>' +
+              '</table>' +
+            '</div>' +
+            '<div class="graph-title"></div>'+
+            '<div>'+
+              html1 +
+            '</div>'+
+            '</body>' +
+            "</html>";
+          doc = hiddenFrame.contentWindow.document.open();
+          doc.write(htmlDocument);
+          doc.close();
+},500);
       });
     }
 
+
+
+
+//end
     $scope.drawHMRBarGraph = function() {
         nv.addGraph(function() {
            chart = nv.models.multiBarChart()
@@ -1429,8 +1596,12 @@ angular.module('hillromvestApp')
     }
 
     $scope.downloadAsPdf = function(){
-      var graphData = ($scope.hmrGraph) ? $scope.completeGraphData : $scope.completeComplianceData;
-      graphService.getPdfForSVGGraph(graphData);      
+      /*var graphData = ($scope.hmrGraph) ? $scope.completeGraphData : $scope.completeComplianceData;
+      graphService.getPdfForSVGGraph(graphData);   */ 
+       $scope.drawHMRLineGraph();
+      setTimeout(function() {
+      hiddenFrame.contentWindow.print();
+      },700);
     };
 
     $scope.downloadRawDataAsCsv = function(){
@@ -1451,6 +1622,6 @@ angular.module('hillromvestApp')
     };
     $scope.closeModalCaregiver = function(){
       $scope.showModalCaregiver = false;
-    };
+    };    
     
 }]);

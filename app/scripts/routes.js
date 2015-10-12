@@ -81,7 +81,7 @@ angular.module('hillromvestApp')
                 url: '/patients?clinicIds',
                 data: {
                     roles: ['ADMIN'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'patient.page-title.patients'
                 },
                 views: {
                     'content@': {
@@ -233,7 +233,7 @@ angular.module('hillromvestApp')
                 url: '/{patientId}/overview',
                 data: {
                     roles: ['ADMIN'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'patient.page-title.overview'
                 },
                 views: {
                     'content@': {
@@ -264,7 +264,7 @@ angular.module('hillromvestApp')
                 url: '/overview',
                 data: {
                     roles: [],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'patient.page-title.overview'
                 },
                 views: {
                     'content@': {
@@ -295,7 +295,7 @@ angular.module('hillromvestApp')
                 url: '/{patientId}/demographic',
                 data: {
                     roles: ['ADMIN'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'patient.page-title.patient-info'
                 },
                 views: {
                     'content@': {
@@ -321,7 +321,7 @@ angular.module('hillromvestApp')
                 url: '/demographic',
                 data: {
                     roles: ['HCP'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'patient.page-title.patient-info'
                 },
                 views: {
                     'content@': {
@@ -347,7 +347,7 @@ angular.module('hillromvestApp')
                 url: '/{patientId}/demographicedit',
                 data: {
                     roles: ['ADMIN'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'patient.page-title.patient-info'
                 },
                 views: {
                     'content@': {
@@ -373,7 +373,7 @@ angular.module('hillromvestApp')
                 url: '/{patientId}/clinicInfo',
                 data: {
                     roles: ['ADMIN'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'patient.page-title.clinic-info'
                 },
                 views: {
                     'content@': {
@@ -399,7 +399,7 @@ angular.module('hillromvestApp')
                 url: '/clinicInfo',
                 data: {
                     roles: ['HCP'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'patient.page-title.clinic-info'
                 },
                 views: {
                     'content@': {
@@ -425,7 +425,7 @@ angular.module('hillromvestApp')
                 url: '/protocol-device',
                 data: {
                     roles: ['HCP'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'patient.page-title.careplan-device'
                 },
                 views: {
                     'content@': {
@@ -451,7 +451,7 @@ angular.module('hillromvestApp')
                 url: '/caregivers',
                 data: {
                     roles: ['HCP'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'patient.page-title.caregiver-info'
                 },
                 views: {
                     'content@': {
@@ -478,7 +478,7 @@ angular.module('hillromvestApp')
                 url: '/{patientId}/protocol-device',
                 data: {
                     roles: ['ADMIN'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'patient.page-title.careplan-device'
                 },
                 views: {
                     'content@': {
@@ -557,7 +557,7 @@ angular.module('hillromvestApp')
                 url: '/{patientId}/caregiver',
                 data: {
                     roles: ['ADMIN'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'patient.page-title.caregiver-info'
                 },
                 views: {
                     'content@': {
@@ -582,7 +582,7 @@ angular.module('hillromvestApp')
                 url: '/hillRomUsers',
                 data: {
                     roles: ['ADMIN'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'user.page-title.users'
                 },
                 views: {
                     'content@': {
@@ -632,7 +632,7 @@ angular.module('hillromvestApp')
                 url: '/{userId}',
                 data: {
                     roles: ['ADMIN'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'user.page-title.user'
                 },
                 views: {
                     'content@': {
@@ -657,7 +657,7 @@ angular.module('hillromvestApp')
                 url: '/hcpUsers?clinicIds',
                 data: {
                     roles: ['ADMIN'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'doctor.page-title.hcps'
                 },
                 views: {
                     'content@': {
@@ -707,7 +707,7 @@ angular.module('hillromvestApp')
                 url: '/{doctorId}/hcpEdit',
                 data: {
                     roles: ['ADMIN'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'doctor.page-title.hcp-update'
                 },
                 views: {
                     'content@': {
@@ -732,11 +732,10 @@ angular.module('hillromvestApp')
                 url: '/{doctorId}/hcpProfile',
                 data: {
                     roles: ['ADMIN'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'doctor.page-title.hcp-profile'
                 },
                 views: {
                     'content@': {
-                        // templateUrl: 'scripts/modules/admin/hcp/views/create-edit/view.html',
                         templateUrl: 'scripts/modules/admin/hcp/directives/hcp-info/overview/overview.html',
                         controller: 'DoctorsController'
                     }
@@ -759,11 +758,10 @@ angular.module('hillromvestApp')
                 url: '/{doctorId}/associatedClinic',
                 data: {
                     roles: ['ADMIN'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'doctor.page-title.associated-clinics'
                 },
                 views: {
                     'content@': {
-                        // templateUrl: 'scripts/modules/admin/hcp/views/create-edit/view.html',
                         templateUrl: 'scripts/modules/admin/hcp/directives/hcp-info/associated-clinic/clinic-list.html',
                         controller: 'DoctorsController'
                     }
@@ -786,7 +784,7 @@ angular.module('hillromvestApp')
               url: '/clinics',
               data: {
                 roles: ['ADMIN'],
-                pageTitle: 'clinic.title'
+                pageTitle: 'clinic.page-title.clinics'
               },
               views: {
                   'content@': {
@@ -864,7 +862,7 @@ angular.module('hillromvestApp')
               url: '/associatedHCP',
               data: {
                   roles: ['ADMIN'],
-                  pageTitle: 'clinic.title'
+                  pageTitle: 'clinic.page-title.associated-HCPs'
               },
               views: {
                   'content@': {
@@ -890,7 +888,7 @@ angular.module('hillromvestApp')
               url: '/associatedPatients',
               data: {
                   roles: ['ADMIN'],
-                  pageTitle: 'clinic.title'
+                  pageTitle: 'clinic.page-title.associated-patients'
               },
               views: {
                   'content@': {
@@ -916,7 +914,7 @@ angular.module('hillromvestApp')
               url: '/clinicadmin-clinic-edit',
               data: {
                   roles: ['ADMIN'],
-                  pageTitle: 'clinic.title'
+                  pageTitle: 'clinic.page-title.clinic-admin'
               },
               views: {
                   'content@': {
@@ -1028,7 +1026,7 @@ angular.module('hillromvestApp')
                 url: '/patient-dashboard',
                 data: {
                     roles: ['PATIENT'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'patient.page-title.my-dashboard'
                 },
                 views: {
                     'patient-view': {
@@ -1058,7 +1056,7 @@ angular.module('hillromvestApp')
                 url: '/caregiver',
                 data: {
                     roles: ['ADMIN','PATIENT'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'patient.page-title.caregivers'
                 },
                 views: {
                     'patient-view': {
@@ -1088,7 +1086,7 @@ angular.module('hillromvestApp')
                 url: '/caregiver-add',
                 data: {
                     roles: ['ADMIN','PATIENT'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'patient.page-title.add-caregiver'
                 },
                 views: {
                     'patient-view': {
@@ -1148,7 +1146,7 @@ angular.module('hillromvestApp')
                 url: '/device-protocol',
                 data: {
                     roles: ['ADMIN','PATIENT'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'patient.page-title.careplan-device'
                 },
                 views: {
                     'patient-view': {
@@ -1178,7 +1176,7 @@ angular.module('hillromvestApp')
                 url: '/clinic-hcp',
                 data: {
                     roles: ['ADMIN','PATIENT'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'patient.page-title.clinics-hcps'
                 },
                 views: {
                     'patient-view': {
@@ -1209,7 +1207,7 @@ angular.module('hillromvestApp')
                 url: '/p-profile',
                 data: {
                     roles: ['PATIENT'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'patient.page-title.patient-info'
                 },
                 views: {
                     'patient-view': {
@@ -1240,7 +1238,7 @@ angular.module('hillromvestApp')
                 url: '/profile',
                 data: {
                     roles: ['ADMIN'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'profile.page-title.my-profile'
                 },
                 views: {
                     'content@': {
@@ -1297,7 +1295,7 @@ angular.module('hillromvestApp')
                 url: '/updatepassword',
                 data: {
                     roles: ['ADMIN'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'profile.page-title.update-password'
                 },
                 views: {
                     'content@': {
@@ -1354,7 +1352,7 @@ angular.module('hillromvestApp')
               url: '/{clinicId}/clinic-info',
               data: {
                   roles: ['ADMIN'],
-                  pageTitle: 'clinic.title'
+                  pageTitle: 'clinic.page-title.clinic-profile'
               },
               views: {
                   'content@': {
@@ -1379,7 +1377,7 @@ angular.module('hillromvestApp')
                 url: '/p-profile-edit',
                 data: {
                     roles: ['PATIENT'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'patient.page-title.patient-info'
                 },
                 views: {
                     'patient-view': {
@@ -1409,7 +1407,7 @@ angular.module('hillromvestApp')
                 url: '/p-reset',
                 data: {
                     roles: ['PATIENT'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'profile.page-title.profile-settings'
                 },
                 views: {
                     'patient-profile-view': {
@@ -1440,7 +1438,7 @@ angular.module('hillromvestApp')
                 url: '/notification-settings',
                 data: {
                     roles: ['PATIENT'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'profile.page-title.notification-settings'
                 },
                 views: {
                     'patient-profile-view': {
@@ -1488,10 +1486,10 @@ angular.module('hillromvestApp')
 
             .state('hcpdashboard', {
                 parent: 'hcp-dashboard',
-                url: '/hcp-dashboard',
+                url: '/hcp-dashboard/{clinicId}',
                 data: {
                     roles: ['HCP'],
-                    pageTitle: 'hcp.title'
+                    pageTitle: 'doctor.page-title.my-dashboard'
                 },
                 views: {
                     'content@': {
@@ -1518,11 +1516,11 @@ angular.module('hillromvestApp')
             })
             .state('hcppatientdashboard', {
                 parent: 'hcp-dashboard',
-                url: '/hcp-patients-view/{filter}',
+                url: '/hcp-patients-view/{clinicId}',
                 params: {"clinicId": null},                
                 data: {
                     roles: ['HCP'],
-                    pageTitle: 'hcp.title'
+                    pageTitle: 'patient.page-title.patients'
                 },
                 views: {
                     'content@': {
@@ -1595,7 +1593,7 @@ angular.module('hillromvestApp')
                 url: '/profile',
                 data: {
                     roles: ['HCP'],
-                    pageTitle: 'hcp.title'
+                    pageTitle: 'profile.page-title.my-profile'
                 },
                 views: {
                     'content@': {
@@ -1621,7 +1619,7 @@ angular.module('hillromvestApp')
                 url: '/updatepassword',
                 data: {
                     roles: ['HCP'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'profile.page-title.update-password'
                 },
                 views: {
                     'content@': {
@@ -1642,7 +1640,7 @@ angular.module('hillromvestApp')
                 url: '/update',
                 data: {
                     roles: ['HCP'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'profile.page-title.profile-update'
                 },
                 views: {
                     'content@': {
@@ -1661,10 +1659,10 @@ angular.module('hillromvestApp')
 
             .state('clinicadmindashboard', {
                 parent: 'clinicadmin-dashboard',
-                url: '/clinicadmin-dashboard',
+                url: '/clinicadmin-dashboard/{clinicId}',
                 data: {
                     roles: ['CLINIC_ADMIN'],
-                    pageTitle: 'hcp.title'
+                    pageTitle: 'doctor.page-title.my-dashboard'
                 },
                 views: {
                     'content@': {
@@ -1695,7 +1693,7 @@ angular.module('hillromvestApp')
                 url: '/profile',
                 data: {
                     roles: ['CLINIC_ADMIN'],
-                    pageTitle: 'hcp.title'
+                    pageTitle: 'profile.page-title.my-profile'
                 },
                 views: {
                     'content@': {
@@ -1726,7 +1724,7 @@ angular.module('hillromvestApp')
                 url: '/updatepassword',
                 data: {
                     roles: ['CLINIC_ADMIN'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'profile.page-title.update-password'
                 },
                 views: {
                     'content@': {
@@ -1752,7 +1750,7 @@ angular.module('hillromvestApp')
                 url: '/update',
                 data: {
                     roles: ['CLINIC_ADMIN'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'profile.page-title.profile-update'
                 },
                 views: {
                     'content@': {
@@ -1778,7 +1776,7 @@ angular.module('hillromvestApp')
                 url: '/{clinicId}/clinicadmin-patient/{filter}',
                 data: {
                     roles: ['CLINIC_ADMIN'],
-                    pageTitle: 'hcp.title'
+                    pageTitle: 'patient.page-title.patients'
                 },
                 views: {
                     'content@': {
@@ -1809,7 +1807,7 @@ angular.module('hillromvestApp')
                 url: '/{patientId}/overview',
                 data: {
                     roles: ['CLINIC_ADMIN'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'patient.page-title.overview'
                 },
                 views: {
                     'content@': {
@@ -1839,7 +1837,7 @@ angular.module('hillromvestApp')
                 url: '/{patientId}/demographic',
                 data: {
                     roles: ['CLINIC_ADMIN'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'patient.page-title.patients'
                 },
                 views: {
                     'content@': {
@@ -1870,7 +1868,7 @@ angular.module('hillromvestApp')
                 url: '/{patientId}/clinicInfo',
                 data: {
                     roles: ['CLINIC_ADMIN'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'patient.page-title.clinic-info'
                 },
                 views: {
                     'content@': {
@@ -1902,7 +1900,7 @@ angular.module('hillromvestApp')
                 url: '/{patientId}/protocol-device',
                 data: {
                     roles: ['CLINIC_ADMIN'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'patient.page-title.careplan-device'
                 },
                 views: {
                     'content@': {
@@ -1933,7 +1931,7 @@ angular.module('hillromvestApp')
                 url: '/{patientId}/caregivers',
                 data: {
                     roles: ['CLINIC_ADMIN'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'patient.page-title.caregiver-info'
                 },
                 views: {
                     'content@': {
@@ -1964,7 +1962,7 @@ angular.module('hillromvestApp')
                 url: '/{patientId}/demographicedit',
                 data: {
                     roles: ['CLINIC_ADMIN'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'patient.page-title.patient-info'
                 },
                 views: {
                     'content@': {
@@ -1995,7 +1993,7 @@ angular.module('hillromvestApp')
                 url: '/notification-settings',
                 data: {
                     roles: ['CLINIC_ADMIN'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'profile.page-title.notification-settings'
                 },
                 views: {
                     'content@': {
@@ -2026,7 +2024,7 @@ angular.module('hillromvestApp')
                 url: '/notification-settings',
                 data: {
                     roles: ['HCP'],
-                    pageTitle: 'patient.title'
+                    pageTitle: 'profile.page-title.notification-settings'
                 },
                 views: {
                     'content@': {
@@ -2077,7 +2075,7 @@ angular.module('hillromvestApp')
                 url: '/contactus',
                 data: {
                     roles: [],
-                    pageTitle: 'login.title'
+                    pageTitle: 'login.page-title.contact-us'
                 },
                 views: {
                     'content@': {
@@ -2096,7 +2094,7 @@ angular.module('hillromvestApp')
                 url: '/privacyPolicy',
                 data: {
                     roles: [],
-                    pageTitle: 'login.title'
+                    pageTitle: 'login.page-title.privacy-policy'
                 },
                 views: {
                     'content@': {
@@ -2115,7 +2113,7 @@ angular.module('hillromvestApp')
                 url: '/termsOfUse',
                 data: {
                     roles: [],
-                    pageTitle: 'login.title'
+                    pageTitle: 'login.page-title.terms-use'
                 },
                 views: {
                     'content@': {
@@ -2134,7 +2132,7 @@ angular.module('hillromvestApp')
                 url: '/privacyPractices',
                 data: {
                     roles: [],
-                    pageTitle: 'login.title'
+                    pageTitle: 'login.page-title.privacy-practices'
                 },
                 views: {
                     'content@': {
@@ -2153,7 +2151,7 @@ angular.module('hillromvestApp')
                 url: '/careSite',
                 data: {
                     roles: [],
-                    pageTitle: 'login.title'
+                    pageTitle: 'login.page-title.care-site'
                 },
                 views: {
                     'content@': {

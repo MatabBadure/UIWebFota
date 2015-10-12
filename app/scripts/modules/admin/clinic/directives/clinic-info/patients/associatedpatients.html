@@ -65,7 +65,7 @@
 
       <div class="col-md-2 centered">
         <span class="short-info">{{associatedPatient.patient.city}}</span>
-        <span ng-if="associatedPatient.patient.state && associatedPatientpatient.city">,</span>
+        <span ng-if="associatedPatient.patient.city && associatedPatient.patient.state">,</span>
         <span class="short-info">{{associatedPatient.patient.state}}</span>
       </div>
 
@@ -99,6 +99,20 @@
 </div>
 
 <div class="container admin-user">
+  <div class="dashboard__manage-view--pagination">
+    <div class="col-md-16 reset-padding-right">
+      <div class="navbar-right">
+        <span class="record-found" ng-if="associatedPatients.length > 0">{{total}} Patients</span>
+        <span class="record-found" ng-if="associatedPatients.length > 0">Found</span>
+        <span ng-show="associatedPatients.length > 0">
+          <span class="navigaion-link cursor-pointer" ng-class="{ 'inactive': !(currentPageIndex > 1) }" ng-click="searchAssociatedPatients('PREV')">Previous</span>
+          <span class="navigaion-no">{{currentPageIndex}}</span>
+          <span class="navigaion-link cursor-pointer" ng-class="{ 'inactive': !(pageCount > currentPageIndex) }" ng-click="searchAssociatedPatients('NEXT')">Next</span>
+        </span>
+      </div>
+      <div class="clr"></div>
+    </div>
+  </div>
   <div class="col-md-16 reset-padding">
     <div class="col-md-8 clinic-link">
       <input class="form-control" type="text" ng-model="searchPatient" typeahead="patient as patient.lastName + ' ' + patient.firstName for patient in nonAssociatedPatients | filter:$viewValue" typeahead-on-select="selectPatient($item)" placeholder="{{'clinic.placeholder.patient-search' | translate}}" ng-show="isAssociatePatient">

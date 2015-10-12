@@ -170,6 +170,9 @@
     }
   }
 }
+.fropile_update_btn_group{
+  margin-top: 50px;
+}
 .fropile_update_btn_group .cancel{
   background-color: $blue-btn;
   &:hover{
@@ -334,7 +337,7 @@
 }
 
 .dashboard__manage-view--list.assoc {
-  cursor: default;
+  /*cursor: default;*/
   padding-bottom: 0;
   &:hover {
     background-color: inherit;
