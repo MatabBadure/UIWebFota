@@ -1,6 +1,7 @@
 'use strict';
 angular.module('hillromvestApp')
-.controller('hcpGraphController',[ '$scope', '$state', 'hcpDashBoardService', 'dateService', 'graphUtil', '$stateParams', 'hcpDashboardConstants', 'DoctorService', 'clinicadminService', 'notyService', function($scope, $state, hcpDashBoardService, dateService, graphUtil, $stateParams, hcpDashboardConstants, DoctorService, clinicadminService, notyService) {
+.controller('hcpGraphController',[ '$scope', '$state', 'hcpDashBoardService', 'dateService', 'graphUtil', '$stateParams', 'hcpDashboardConstants', 'DoctorService', 'clinicadminService', 'notyService', '$filter',
+	function($scope, $state, hcpDashBoardService, dateService, graphUtil, $stateParams, hcpDashboardConstants, DoctorService, clinicadminService, notyService,$filter) {
 	var chart;
 	$scope.init = function() {
 		$scope.hcpId = parseInt(localStorage.getItem('userId'));
@@ -57,11 +58,23 @@ angular.module('hillromvestApp')
     return Math.floor((count/total)*100);
   };
 
-	$scope.getClinicsForHCP = function(userId) {
+	$scope.getClinicsForHCP = function(userId) {		
 		DoctorService.getClinicsAssociatedToHCP(userId).then(function(response){
-			localStorage.setItem('clinicId', response.data.clinics[0].id);
-			$scope.clinics = response.data.clinics;
-			$scope.selectedClinic = response.data.clinics[0];
+			if(response.data && response.data.clinics){
+				$scope.clinics = $filter('orderBy')(response.data.clinics, "name");
+				var isClinic = false;
+				angular.forEach(response.data.clinics, function(clinic) {
+					if(clinic.id === $stateParams.clinicId){
+						localStorage.setItem('clinicId', clinic.id);
+						$scope.selectedClinic = clinic;
+						isClinic = true;
+					}
+				});	
+				if(!isClinic){
+					localStorage.setItem('clinicId', $scope.clinics[0].id);
+					$scope.selectedClinic = $scope.clinics[0];
+				}
+			}
 			$scope.weeklyChart();
 			$scope.getStatistics($scope.selectedClinic.id, userId);
 	  }).catch(function(response){
@@ -71,20 +84,22 @@ angular.module('hillromvestApp')
 
 	$scope.getClinicsForClinicAdmin = function(userId) {
 	clinicadminService.getClinicsAssociated(userId).then(function(response){
-		$scope.clinics = response.data.clinics;
-		var isClinic = false;	
-		if($stateParams.clinicId !== undefined && $stateParams.clinicId !== null){
-			angular.forEach(response.data.clinics, function(clinic) {
-				if(clinic.id === $stateParams.clinicId){
-					localStorage.setItem('clinicId', clinic.id);
-					$scope.selectedClinic = clinic;
-					isClinic = true;
-				}
-			});
-		}
-		if(!isClinic){
-			localStorage.setItem('clinicId', response.data.clinics[0].id);
-			$scope.selectedClinic = response.data.clinics[0];
+		if(response.data && response.data.clinics){
+			$scope.clinics = $filter('orderBy')(response.data.clinics, "name"); 
+			var isClinic = false;	
+			if($stateParams.clinicId !== undefined && $stateParams.clinicId !== null){
+				angular.forEach(response.data.clinics, function(clinic) {
+					if(clinic.id === $stateParams.clinicId){
+						localStorage.setItem('clinicId', clinic.id);
+						$scope.selectedClinic = clinic;
+						isClinic = true;
+					}
+				});
+			}
+			if(!isClinic){
+				localStorage.setItem('clinicId', $scope.clinics[0].id);
+				$scope.selectedClinic = $scope.clinics[0];
+			}
 		}	  		
 		$scope.weeklyChart();
 		$scope.getStatistics($scope.selectedClinic.id, userId);

@@ -1,6 +1,6 @@
 angular.module('hillromvestApp')
-.controller('clinicadminPatientController',['$scope', '$state', '$stateParams', 'clinicadminPatientService', 'patientService', 'notyService', 'DoctorService', 'clinicadminService', 'clinicService', 'dateService', 'UserService', 'searchFilterService', '$timeout',
-  function($scope, $state, $stateParams, clinicadminPatientService, patientService, notyService, DoctorService, clinicadminService, clinicService, dateService, UserService, searchFilterService, $timeout) { 
+.controller('clinicadminPatientController',['$scope', '$state', '$stateParams', 'clinicadminPatientService', 'patientService', 'notyService', 'DoctorService', 'clinicadminService', 'clinicService', 'dateService', 'UserService', 'searchFilterService', '$timeout', '$filter',
+  function($scope, $state, $stateParams, clinicadminPatientService, patientService, notyService, DoctorService, clinicadminService, clinicService, dateService, UserService, searchFilterService, $timeout, $filter) { 
 	var searchOnLoad = true;
 	$scope.init = function(){
     if($state.current.name === 'clinicadminpatientDemographic'  || $state.current.name === 'clinicadmminpatientDemographicEdit'){
@@ -150,7 +150,8 @@ angular.module('hillromvestApp')
   };
 
 	$scope.selectPatient = function(patient){
-    $state.go('clinicadminpatientOverview',{'patientId': patient.id});
+    var clinicId = ($scope.selectedClinic && $scope.selectedClinic.id) ? $scope.selectedClinic.id : ($stateParams.clinicId ? $stateParams.clinicId : null);
+    $state.go('clinicadminpatientOverview',{'patientId': patient.id, 'clinicId': clinicId});
 	};
 
 	$scope.switchPatientTab = function(value){

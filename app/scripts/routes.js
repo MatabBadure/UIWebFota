@@ -1401,7 +1401,7 @@ angular.module('hillromvestApp')
 
             .state('hcpdashboard', {
                 parent: 'hcp-dashboard',
-                url: '/hcp-dashboard',
+                url: '/hcp-dashboard/{clinicId}',
                 data: {
                     roles: ['HCP'],
                     pageTitle: 'doctor.page-title.my-dashboard'
@@ -1663,7 +1663,7 @@ angular.module('hillromvestApp')
 
             .state('clinicadminpatientdashboard', {
                 parent: 'clinicadmin-dashboard',
-                url: '/{clinicId}/clinicadmin-patient/{filter}',
+                url: '/clinicadmin-patient/{clinicId}/{filter}',
                 data: {
                     roles: ['CLINIC_ADMIN'],
                     pageTitle: 'patient.page-title.patients'
