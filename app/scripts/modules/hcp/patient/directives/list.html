@@ -15,28 +15,28 @@
 
       <div class="dashboard__manage-view--header margin-top">
         <div class="col-md-3 col-sm-3 header--type">
-          <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="patient.patient-name">Patient Name</span>
+          <span ng-class="{'sort-icon--default' : sortPatientList.lastName.isDefault, 'sort-icon-down': sortPatientList.lastName.isDown, 'sort-icon-up':sortPatientList.lastName.isUp}" ng-click="sortType('lastName')" translate="patient.patient-name">Patient Name</span>
         </div>
         <div class="col-md-2 col-sm-2 header--type">
-          <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="patient.mrn-id">MRN ID</span>
+          <span ng-class="{'sort-icon--default' : sortPatientList.mrnId.isDefault, 'sort-icon-down': sortPatientList.mrnId.isDown, 'sort-icon-up':sortPatientList.mrnId.isUp}" ng-click="sortType('mrnId')" translate="patient.mrn-id">MRN ID</span>
         </div>
         <div class="col-md-2 col-sm-2 header--type">
-          <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="patient.date-of-birth">DOB</span>
+          <span ng-class="{'sort-icon--default' : sortPatientList.dob.isDefault, 'sort-icon-down': sortPatientList.dob.isDown, 'sort-icon-up':sortPatientList.dob.isUp}" ng-click="sortType('dob')" translate="patient.date-of-birth">DOB</span>
         </div>
         <div class="col-md-2 col-sm-2 header--type">
-          <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="patient.city-state">City/State</span>
+          <span ng-class="{'sort-icon--default' : sortPatientList.city.isDefault, 'sort-icon-down': sortPatientList.city.isDown, 'sort-icon-up':sortPatientList.city.isUp}" ng-click="sortType('city')" translate="patient.city-state">City/State</span>
         </div>
         <div class="col-md-2 hidden-sm header--type">
-          <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="patient.transmission">Transmission</span>
+          <span ng-class="{'sort-icon--default' : sortPatientList.transmission.isDefault, 'sort-icon-down': sortPatientList.transmission.isDown, 'sort-icon-up':sortPatientList.transmission.isUp}" ng-click="sortType('transmission')" translate="patient.transmission">Transmission</span>
         </div>
         <div class="col-md-3 col-sm-3 header--type">
-          <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" translate="patient.hcp-name">HCP Name</span>
+          <span translate="patient.hcp-name">HCP Name</span>
         </div>
         <div class="col-md-1 col-sm-2 header--type">
-          <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="patient.status">Status</span>
+          <span ng-class="{'sort-icon--default' : sortPatientList.status.isDefault, 'sort-icon-down': sortPatientList.status.isDown, 'sort-icon-up':sortPatientList.status.isUp}" ng-click="sortType('status')" translate="patient.status">Status</span>
         </div>
         <div class="col-md-1 col-sm-2 header--type text-centered">
-          <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="patient.adherence">Adherence</span>
+          <span ng-class="{'sort-icon--default' : sortPatientList.adherence.isDefault, 'sort-icon-down': sortPatientList.adherence.isDown, 'sort-icon-up':sortPatientList.adherence.isUp}" ng-click="sortType('adherence')" translate="patient.adherence">Adherence</span>
         </div>
         <div class="clr"></div>
       </div>
