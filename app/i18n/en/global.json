@@ -100,7 +100,8 @@
             "account-services": "RC Admin",
             "associates":"Associates",
             "caregiver": "CARE GIVER"
-        }
+        },
+        "not-applicable": "NA"
     },
     "entity": {
         "action": {
@@ -244,7 +245,8 @@
             }
         },
         "npiNumber":{
-            "pattern": "NPI Number is invalid."
+            "pattern": "NPI Number is invalid.",
+            "maxlength": "NPI Number cannot be more than 15 characters."
         },
         "credential": {
             "required": "Credential is required."

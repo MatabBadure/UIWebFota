@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('hillromvestApp')
-  .directive('doctorList', ['UserService', '$state', '$stateParams', 'searchFilterService', 
-    function(UserService, $state, $stateParams, searchFilterService) {
+  .directive('doctorList', ['UserService', '$state', '$stateParams', 'searchFilterService', 'sortOptionsService',
+    function(UserService, $state, $stateParams, searchFilterService, sortOptionsService) {
     return {
       templateUrl: 'scripts/modules/admin/hcp/directives/list/list.html',
       restrict: 'E',
@@ -19,9 +19,9 @@ angular.module('hillromvestApp')
         })
       }
       },
-
-      controller: function($scope, $timeout, $state,$stateParams, DoctorService, notyService) {
+      controller: ['$scope', '$timeout', '$state','$stateParams', 'DoctorService', 'notyService', function($scope, $timeout, $state,$stateParams, DoctorService, notyService) {
         var searchOnLoad = true;
+        $scope.sortHcpList = sortOptionsService.getSortOptionsForHcpList();
         $scope.init = function() {
           $scope.searchFilter = searchFilterService.initSearchFiltersForHCP();
           $scope.doctors = [];
@@ -110,23 +110,53 @@ angular.module('hillromvestApp')
           }).catch(function (response) {});
         };
 
-        $scope.sortType = function(){
-          console.log('hello');
-          if($scope.sortIconDefault){
-            $scope.sortIconDefault = false;
-            $scope.sortIconUp = false;
-            $scope.sortIconDown = true;
-          }
-          else if($scope.sortIconDown){
-            $scope.sortIconDefault = false;
-            $scope.sortIconDown = false;
-            $scope.sortIconUp = true;
-          }
-          else if($scope.sortIconUp){
-            $scope.sortIconDefault = false;
-            $scope.sortIconUp = false;
-            $scope.sortIconDown = true;
-          }
+        $scope.sortType = function(sortParam){ 
+          var toggledSortOptions = {};
+          $scope.sortOption = "";
+          if(sortParam === sortConstant.lastName){                        
+            toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortHcpList.lastName);
+            $scope.sortHcpList = sortOptionsService.getSortOptionsForHcpList();
+            $scope.sortHcpList.lastName = toggledSortOptions;
+            $scope.sortOption = sortConstant.lastName + sortOptionsService.getSortByASCString(toggledSortOptions);
+            $scope.searchDoctors();
+          }else if(sortParam === sortConstant.credentials){
+            toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortHcpList.credentials);
+            $scope.sortHcpList = sortOptionsService.getSortOptionsForHcpList();
+            $scope.sortHcpList.credentials = toggledSortOptions;
+            $scope.sortOption = sortConstant.credentials + sortOptionsService.getSortByASCString(toggledSortOptions);
+            $scope.searchDoctors();
+          }else if(sortParam === sortConstant.npiNumber){
+            toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortHcpList.npiNumber);
+            $scope.sortHcpList = sortOptionsService.getSortOptionsForHcpList();
+            $scope.sortHcpList.npiNumber = toggledSortOptions;
+            $scope.sortOption = sortConstant.npiNumber + sortOptionsService.getSortByASCString(toggledSortOptions);
+            $scope.searchDoctors();
+          }else if(sortParam === sortConstant.clinicName){
+            toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortHcpList.clinicName);
+            $scope.sortHcpList = sortOptionsService.getSortOptionsForHcpList();
+            $scope.sortHcpList.clinicName = toggledSortOptions;
+            $scope.sortOption = sortConstant.clinicName + sortOptionsService.getSortByASCString(toggledSortOptions);
+            $scope.searchDoctors();
+          }else if(sortParam === sortConstant.city){
+            toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortHcpList.city);
+            $scope.sortHcpList = sortOptionsService.getSortOptionsForHcpList();
+            $scope.sortHcpList.city = toggledSortOptions;
+            $scope.sortOption = sortConstant.hcity + sortOptionsService.getSortByASCString(toggledSortOptions);
+            $scope.searchDoctors();
+          }else if(sortParam === sortConstant.status){
+            toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortHcpList.status);
+            $scope.sortHcpList = sortOptionsService.getSortOptionsForHcpList();
+            $scope.sortHcpList.status = toggledSortOptions;
+            $scope.sortOption = sortConstant.isDeleted + sortOptionsService.getSortByASCString(toggledSortOptions);
+            $scope.searchDoctors();
+          }else if(sortParam === sortConstant.state){
+            toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortHcpList.state);
+            $scope.sortHcpList = sortOptionsService.getSortOptionsForHcpList();
+            $scope.sortHcpList.state = toggledSortOptions;
+            $scope.sortOption = sortConstant.hstate + sortOptionsService.getSortByASCString(toggledSortOptions);
+            $scope.searchDoctors();
+          }        
+          
         };
 
         $scope.searchOnFilters = function(){           
@@ -134,6 +164,6 @@ angular.module('hillromvestApp')
         };
 
         $scope.init();
-      }
+      }]
     };
   }]);

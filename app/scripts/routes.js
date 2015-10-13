@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hillromvestApp')
-    .config(function($stateProvider) {
+    .config(['$stateProvider', function($stateProvider) {
         $stateProvider
             .state('entity', {
                 abstract: true,
@@ -286,6 +286,11 @@ angular.module('hillromvestApp')
                     }
                 },
                 resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('PatientGraphModule');
+                    }],
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('patient');$translatePartialLoader.addPart('patient-user');
                         return $translate.refresh();
@@ -312,6 +317,11 @@ angular.module('hillromvestApp')
                     }
                 },
                 resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('PatientGraphModule');
+                    }],
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('patient');$translatePartialLoader.addPart('patient-user');
                         return $translate.refresh();
@@ -1038,6 +1048,11 @@ angular.module('hillromvestApp')
                     }
                 },
                 resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('PatientGraphModule');
+                    }],
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('patient-user');
                         return $translate.refresh();
@@ -1064,6 +1079,11 @@ angular.module('hillromvestApp')
                     }
                 },
                 resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('PatientGraphModule');
+                    }],
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('patient-user');
                         return $translate.refresh();
@@ -1089,6 +1109,11 @@ angular.module('hillromvestApp')
                     }
                 },
                 resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('PatientGraphModule');
+                    }],
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('patient-user');
                         return $translate.refresh();
@@ -1114,6 +1139,11 @@ angular.module('hillromvestApp')
                     }
                 },
                 resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('PatientGraphModule');
+                    }],
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('patient-user');
                         return $translate.refresh();
@@ -1139,6 +1169,11 @@ angular.module('hillromvestApp')
                     }
                 },
                 resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('PatientGraphModule');
+                    }],
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('patient-user');
                         return $translate.refresh();
@@ -1164,6 +1199,11 @@ angular.module('hillromvestApp')
                     }
                 },
                 resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('PatientGraphModule');
+                    }],
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('patient-user');
                         return $translate.refresh();
@@ -1189,6 +1229,11 @@ angular.module('hillromvestApp')
                     }
                 },
                 resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('PatientGraphModule');
+                    }],
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('patient-user');
                         return $translate.refresh();
@@ -1215,6 +1260,11 @@ angular.module('hillromvestApp')
                     }
                 },
                 resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('PatientProfileModule');
+                    }],
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('patient-user');
                         return $translate.refresh();
@@ -1241,6 +1291,11 @@ angular.module('hillromvestApp')
                     }
                 },
                 resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('AdminProfileModule');
+                    }],
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('profile');
                         return $translate.refresh();
@@ -1267,6 +1322,11 @@ angular.module('hillromvestApp')
                     }
                 },
                 resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('AdminProfileModule');
+                    }],
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('profile');
                         return $translate.refresh();
@@ -1288,6 +1348,11 @@ angular.module('hillromvestApp')
                     }
                 },
                 resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('AdminProfileModule');
+                    }],
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('profile');
                         return $translate.refresh();
@@ -1309,6 +1374,11 @@ angular.module('hillromvestApp')
                     }
                 },
                 resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time 
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('PatientGraphModule');
+                    }],
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('patient-user');
                         return $translate.refresh();
@@ -1360,6 +1430,11 @@ angular.module('hillromvestApp')
                     }
                 },
                 resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('PatientProfileModule');
+                    }],
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('patient-user');
                         return $translate.refresh();
@@ -1385,6 +1460,11 @@ angular.module('hillromvestApp')
                     }
                 },
                 resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('PatientProfileModule');
+                    }],
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('profile');
                         return $translate.refresh();
@@ -1411,6 +1491,11 @@ angular.module('hillromvestApp')
                     }
                 },
                 resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('PatientProfileModule');
+                    }],
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('profile');
                         return $translate.refresh();
@@ -1445,7 +1530,7 @@ angular.module('hillromvestApp')
 
             .state('hcpdashboard', {
                 parent: 'hcp-dashboard',
-                url: '/hcp-dashboard',
+                url: '/hcp-dashboard/{clinicId}',
                 data: {
                     roles: ['HCP'],
                     pageTitle: 'doctor.page-title.my-dashboard'
@@ -1457,6 +1542,11 @@ angular.module('hillromvestApp')
                     }
                 },
                 resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('HCPGraphModule');
+                    }],
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('doctor');
                         return $translate.refresh();
@@ -1470,7 +1560,7 @@ angular.module('hillromvestApp')
             })
             .state('hcppatientdashboard', {
                 parent: 'hcp-dashboard',
-                url: '/hcp-patients-view/{filter}',
+                url: '/hcp-patients-view/{clinicId}',
                 params: {"clinicId": null},                
                 data: {
                     roles: ['HCP'],
@@ -1613,7 +1703,7 @@ angular.module('hillromvestApp')
 
             .state('clinicadmindashboard', {
                 parent: 'clinicadmin-dashboard',
-                url: '/clinicadmin-dashboard',
+                url: '/clinicadmin-dashboard/{clinicId}',
                 data: {
                     roles: ['CLINIC_ADMIN'],
                     pageTitle: 'doctor.page-title.my-dashboard'
@@ -1625,6 +1715,11 @@ angular.module('hillromvestApp')
                     }
                 },
                 resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('HCPGraphModule');
+                    }],
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('doctor');
                         return $translate.refresh();
@@ -1651,6 +1746,11 @@ angular.module('hillromvestApp')
                     }
                 },
                 resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('ClinicAdminProfileModule');
+                    }],
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('profile');
                         return $translate.refresh();
@@ -1677,6 +1777,11 @@ angular.module('hillromvestApp')
                     }
                 },
                 resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('ClinicAdminProfileModule');
+                    }],
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('profile');
                         return $translate.refresh();
@@ -1698,6 +1803,11 @@ angular.module('hillromvestApp')
                     }
                 },
                 resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('ClinicAdminProfileModule');
+                    }],
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('profile');
                         return $translate.refresh();
@@ -1719,6 +1829,11 @@ angular.module('hillromvestApp')
                     }
                 },
                 resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('ClinicAdminPatientModule');
+                    }],
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('patient');
                         return $translate.refresh();
@@ -1745,6 +1860,11 @@ angular.module('hillromvestApp')
                     }
                 },
                 resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('PatientGraphModule');
+                    }],
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('patient');$translatePartialLoader.addPart('patient-user');
                         return $translate.refresh();
@@ -1756,7 +1876,6 @@ angular.module('hillromvestApp')
                     ]
                 }
             })
-
             .state('clinicadminpatientDemographic', {
                 parent: 'clinicadminpatientdashboard',
                 url: '/{patientId}/demographic',
@@ -1771,6 +1890,11 @@ angular.module('hillromvestApp')
                     }
                 },
                 resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('ClinicAdminPatientModule');
+                    }],
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('patient');$translatePartialLoader.addPart('patient-user');
                         return $translate.refresh();
@@ -1797,6 +1921,11 @@ angular.module('hillromvestApp')
                     }
                 },
                 resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('ClinicAdminPatientModule');
+                    }],
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('patient-user');
                         return $translate.refresh();
@@ -2033,6 +2162,11 @@ angular.module('hillromvestApp')
                     }
                 },
                 resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('ClinicAdminPatientModule');
+                    }],
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('patient-user');
                         return $translate.refresh();
@@ -2059,6 +2193,11 @@ angular.module('hillromvestApp')
                     }
                 },
                 resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('ClinicAdminPatientModule');
+                    }],
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('patient-user');
                         return $translate.refresh();
@@ -2085,6 +2224,11 @@ angular.module('hillromvestApp')
                     }
                 },
                 resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('ClinicAdminPatientModule');
+                    }],
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('patient');$translatePartialLoader.addPart('patient-user');
                         return $translate.refresh();
@@ -2111,6 +2255,11 @@ angular.module('hillromvestApp')
                     }
                 },
                 resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('ClinicAdminProfileModule');
+                    }],
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('profile');
                         return $translate.refresh();
@@ -2269,4 +2418,4 @@ angular.module('hillromvestApp')
                     }]
                 }
             });
-});
+}]);
