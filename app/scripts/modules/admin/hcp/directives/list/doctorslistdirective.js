@@ -19,7 +19,8 @@ angular.module('hillromvestApp')
         })
       }
       },
-      controller: ['$scope', '$timeout', '$state','$stateParams', 'DoctorService', 'notyService', function($scope, $timeout, $state,$stateParams, DoctorService, notyService) {
+
+      controller: function($scope, $timeout, $state,$stateParams, DoctorService, notyService) {
         var searchOnLoad = true;
         $scope.sortHcpList = sortOptionsService.getSortOptionsForHcpList();
         $scope.init = function() {
@@ -164,6 +165,6 @@ angular.module('hillromvestApp')
         };
 
         $scope.init();
-      }]
+      }
     };
   }]);
