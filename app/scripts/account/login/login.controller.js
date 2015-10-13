@@ -84,35 +84,21 @@ angular.module('hillromvestApp')
           logged.userFirstName = response.data.user.firstName;
           logged.role = response.data.user.authorities[0].name;
           logged.userEmail = response.data.user.email;
-
-          localStorage.setItem('userFirstName', response.data.user.firstName);
-          localStorage.setItem('role', response.data.user.authorities[0].name);
-          
           $rootScope.isFooter = false;
           $rootScope.userRole = response.data.user.authorities[0].name;
           $rootScope.username = response.data.user.firstName;
 
           if(response.data.user.authorities[0].name === loginConstants.role.patient){
             logged.patientID = response.data.user.id;
-            
-            localStorage.setItem('patientID', response.data.user.id);
-            
             $state.go('patientdashboard');
           } else if(response.data.user.authorities[0].name === loginConstants.role.hcp){
             logged.userId = response.data.user.id;
-            
-            localStorage.setItem('userId', response.data.user.id);
-            
             $state.go('hcpdashboard');
           } else if(response.data.user.authorities[0].name === 'CLINIC_ADMIN'){
             logged.userId = response.data.user.id;
-            
-            localStorage.setItem('userId', response.data.user.id);
-            
             $state.go('clinicadmindashboard');
           } else{
             logged.userId = response.data.user.id;
-            localStorage.setItem('userId', response.data.user.id);
             $state.go('patientUser');
           }
           StorageService.save('logged', logged);
