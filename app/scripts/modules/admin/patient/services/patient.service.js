@@ -6,7 +6,7 @@
  *
  */
 angular.module('hillromvestApp')
-  .factory('patientService',['$http', 'headerService', function ($http, headerService) {
+  .factory('patientService',['$http', 'headerService', 'URL', function ($http, headerService,URL) {
     return {
 
       /**
@@ -337,7 +337,15 @@ angular.module('hillromvestApp')
         return $http.get(url, {
           headers: headerService.getHeader()
         });
+      },
+
+      getTransmissionDate: function(patientId){
+        var url = URL.getTransmissionDate.replace('PATIENTID', patientId);
+        return $http.get(url, {
+          headers: headerService.getHeader()
+        });
       }
+
       
     };
   }]);
