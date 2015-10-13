@@ -119,11 +119,7 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
       };
       AuthServerProvider.changeSecurityQuestion(data, localStorage.getItem('patientID')).then(function(response){
       }).catch(function(response){
-        if(response.data.message){
-          notyService.showMessage(response.data.message, 'warning');
-        } else if(response.data.ERROR){
-          notyService.showMessage(response.data.ERROR, 'warning');
-        }
+        notyService.showError(response);
       });
     }
     var data = {
@@ -135,8 +131,7 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
       notyService.showMessage(response.data.message, 'success');
       $state.go('login');
     }).catch(function(response){
-    	if(response && response.data && response.data.ERROR)
-      notyService.showMessage(response.data.ERROR, 'warning');
+    	notyService.showError(response);
     });
   };
 
