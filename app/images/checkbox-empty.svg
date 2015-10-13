@@ -1,1 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><path fill="#010101" d="M888.9 111.1v777.8H111.1V111.1h777.8m0-111.1H111.1C50 0 0 50 0 111.1v777.8C0 950 50 1000 111.1 1000h777.8c61.1 0 111.1-50 111.1-111.1V111.1C1000 50 950 0 888.9 0z"/></svg>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 17.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 1000 1000" enable-background="new 0 0 1000 1000" xml:space="preserve">
+<g>
+	<g id="check-box-outline-blank">
+		<path fill="#010101" d="M888.9,111.1v777.8H111.1V111.1H888.9 M888.9,0H111.1C50,0,0,50,0,111.1v777.8C0,950,50,1000,111.1,1000
+			h777.8c61.1,0,111.1-50,111.1-111.1V111.1C1000,50,950,0,888.9,0L888.9,0z"/>
+	</g>
+</g>
+</svg>
