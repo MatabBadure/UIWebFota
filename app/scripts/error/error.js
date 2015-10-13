@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hillromvestApp')
-    .config(function ($stateProvider) {
+    .config(['$stateProvider', function ($stateProvider) {
         $stateProvider
             .state('error', {
                 parent: 'site',
@@ -40,4 +40,4 @@ angular.module('hillromvestApp')
                     }]
                 }
             });
-    });
+    }]);

@@ -8,18 +8,16 @@ angular.module('hillromvestApp',
    'ui.router',
    'ngCookies',
    'ngCacheBuster',
-   'infinite-scroll',
    'vcRecaptcha',
    'ngTagsInput',
    'angular-noty',
    'angular-loading-bar',
-   'daterangepicker',
    'ui.mask',
    'validation.match',
    'ui.bootstrap',
-   'easypiechart'
+   'oc.lazyLoad'
    ])
-.run(function($rootScope, $location, $window, $http, $state, $translate, Language, Auth, Principal, ENV, VERSION) {
+.run(['$rootScope', '$location', '$window', '$http', '$state', '$translate', 'Language', 'Auth', 'Principal', 'ENV', 'VERSION', function($rootScope, $location, $window, $http, $state, $translate, Language, Auth, Principal, ENV, VERSION) {
     $rootScope.ENV = ENV;
     $rootScope.VERSION = VERSION;
     $rootScope.$on('$stateChangeStart', function(event, toState, toStateParams) {
@@ -63,8 +61,8 @@ angular.module('hillromvestApp',
         $state.go($rootScope.previousStateName, $rootScope.previousStateParams);
       }
     };
-  })
-  .factory('authInterceptor', function($rootScope, $q, $location, StorageService) {
+  }])
+  .factory('authInterceptor', ['$rootScope', '$q', '$location', 'StorageService', function($rootScope, $q, $location, StorageService) {
     return {
       // Add authorization token to headers
       request: function(config) {
@@ -79,8 +77,8 @@ angular.module('hillromvestApp',
         return config;
       }
     };
-  })
-  .config(function($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider, $translateProvider, tmhDynamicLocaleProvider, httpRequestInterceptorCacheBusterProvider) {
+  }])
+  .config(['$stateProvider', '$urlRouterProvider', '$httpProvider', '$locationProvider', '$translateProvider', 'tmhDynamicLocaleProvider', 'httpRequestInterceptorCacheBusterProvider','$ocLazyLoadProvider', function($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider, $translateProvider, tmhDynamicLocaleProvider, httpRequestInterceptorCacheBusterProvider, $ocLazyLoadProvider) {
 
     //Cache everything except rest api requests
     httpRequestInterceptorCacheBusterProvider.setMatchlist([/.*api.*/, /.*protected.*/], true);
@@ -122,4 +120,32 @@ angular.module('hillromvestApp',
     tmhDynamicLocaleProvider.useCookieStorage();
     tmhDynamicLocaleProvider.storageKey('NG_TRANSLATE_LANG_KEY');
 
-  });
+
+    //Create lazy load modules
+    $ocLazyLoadProvider.config({
+      modules: [{
+        name: 'PatientGraphModule',
+        files: ['scripts/modules/patient/graph/controller/graphs.controller.js']
+      },{
+        name: 'HCPGraphModule',
+        files: ['scripts/modules/clinicadmin/graph/services/clinicadmin.service.js', 
+                'scripts/modules/hcp/graph/controller/graphs.controller.js']
+      },{
+        name: 'PatientProfileModule',
+        files: ['scripts/modules/patient/profile/controllers/patientprofile.controller.js']
+      },{
+        name: 'AdminProfileModule',
+        files: ['scripts/modules/admin/profile/controller/admin-profile.controller.js']
+      },
+      {
+        name: 'ClinicAdminProfileModule',
+        files: ['scripts/modules/clinicadmin/graph/services/clinicadmin.service.js', 
+                'scripts/modules/clinicadmin/profile/controllers/clinicadminprofile.controller.js']
+      },
+      {
+        name: 'ClinicAdminPatientModule',
+        files: ['scripts/modules/clinicadmin/graph/services/clinicadmin.service.js', 
+                'scripts/modules/clinicadmin/patient/controllers/clinicadminpatient.controller.js']
+      }]
+    });
+  }]);

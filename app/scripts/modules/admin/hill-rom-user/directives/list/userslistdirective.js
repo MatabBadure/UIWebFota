@@ -22,9 +22,11 @@ angular.module('hillromvestApp')
           scope.searchUsers();
         })
       },
-      controller: ['$scope', '$timeout', '$state', 'UserService', 'searchFilterService', function($scope, $timeout, $state, UserService, searchFilterService) {
+      controller: ['$scope', '$timeout', '$state', 'UserService', 'searchFilterService', 'sortOptionsService',
+      function($scope, $timeout, $state, UserService, searchFilterService,sortOptionsService) {
         var searchOnLoad = true;
         $scope.init = function() {
+          $scope.sortUserList = sortOptionsService.getSortOptionsForUserList();
           $scope.users = [];
           $scope.currentPageIndex = 1;
           $scope.perPageCount = 10;
@@ -94,23 +96,47 @@ angular.module('hillromvestApp')
           }).catch(function(response) {});
         };
 
-        $scope.sortType = function(){
-          console.log('hello');
-          if($scope.sortIconDefault){
-            $scope.sortIconDefault = false;
-            $scope.sortIconUp = false;
-            $scope.sortIconDown = true;
-          }
-          else if($scope.sortIconDown){
-            $scope.sortIconDefault = false;
-            $scope.sortIconDown = false;
-            $scope.sortIconUp = true;
-          }
-          else if($scope.sortIconUp){
-            $scope.sortIconDefault = false;
-            $scope.sortIconUp = false;
-            $scope.sortIconDown = true;
-          }
+        $scope.sortType = function(sortParam){
+          var toggledSortOptions = {};
+          $scope.sortOption = "";
+          if(sortParam === sortConstant.lastName){                        
+            toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortUserList.lastName);
+            $scope.sortUserList = sortOptionsService.getSortOptionsForUserList();
+            $scope.sortUserList.lastName = toggledSortOptions;
+            $scope.sortOption = sortConstant.lastName + sortOptionsService.getSortByASCString(toggledSortOptions);
+            $scope.searchUsers();
+          }else if(sortParam === sortConstant.role){
+            toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortUserList.role);
+            $scope.sortUserList = sortOptionsService.getSortOptionsForUserList();
+            $scope.sortUserList.role = toggledSortOptions;
+            $scope.sortOption = sortConstant.name + sortOptionsService.getSortByASCString(toggledSortOptions);
+            $scope.searchUsers();
+          }else if(sortParam === sortConstant.hillromId){
+            toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortUserList.hillromId);
+            $scope.sortUserList = sortOptionsService.getSortOptionsForUserList();
+            $scope.sortUserList.hillromId = toggledSortOptions;
+            $scope.sortOption = sortConstant.hillromId + sortOptionsService.getSortByASCString(toggledSortOptions);
+            $scope.searchUsers();
+          }else if(sortParam === sortConstant.email){
+            toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortUserList.email);
+            $scope.sortUserList = sortOptionsService.getSortOptionsForUserList();
+            $scope.sortUserList.email = toggledSortOptions;
+            $scope.sortOption = sortConstant.email + sortOptionsService.getSortByASCString(toggledSortOptions);
+            $scope.searchUsers();
+          }else if(sortParam === sortConstant.mobileNumber){
+            toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortUserList.mobileNumber);
+            $scope.sortUserList = sortOptionsService.getSortOptionsForUserList();
+            $scope.sortUserList.mobileNumber = toggledSortOptions;
+            $scope.sortOption = sortConstant.mobilePhone + sortOptionsService.getSortByASCString(toggledSortOptions);
+            $scope.searchUsers();
+          }else if(sortParam === sortConstant.status){
+            toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortUserList.status);
+            $scope.sortUserList = sortOptionsService.getSortOptionsForUserList();
+            $scope.sortUserList.status = toggledSortOptions;
+            $scope.sortOption = sortConstant.isDeleted + sortOptionsService.getSortByASCString(toggledSortOptions);
+            $scope.searchUsers();
+          }          
+              
         };
         $scope.searchOnFilters = function(){    
           $scope.searchUsers();
