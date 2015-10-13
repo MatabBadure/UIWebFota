@@ -7,6 +7,12 @@ angular.module('hillromvestApp')
     var chart;
     var hiddenFrame, htmlDocument;
     $scope.init = function() {
+      $scope.lazyLoadParamsPieChart = [
+        'bower_components/jquery.easy-pie-chart/dist/angular.easypiechart.js'
+        ];
+        $scope.lazyLoadParamsDatePicker = [
+        'bower_components/angular-daterangepicker/js/angular-daterangepicker.js'
+        ];
       $scope.hmrLineGraph = true;
       $scope.hmrBarGraph = false;
       $scope.hmrGraph = true;
@@ -1154,6 +1160,7 @@ angular.module('hillromvestApp')
     };
 
     $scope.initPatientDashboard = function(){
+      $scope.getAssociatedClinics(localStorage.getItem("patientID"));
       $scope.getPatientDevices(localStorage.getItem("patientID"));
       $scope.editNote = false;
       $scope.textNote = "";
@@ -1552,7 +1559,7 @@ angular.module('hillromvestApp')
             '</div>'+
             '</body>' +
             "</html>";
-          doc = hiddenFrame.contentWindow.document.open("Content-Type:text/html;charset=ISO-8859-1");
+          doc = hiddenFrame.contentWindow.document.open();
           doc.write(htmlDocument);
           doc.close();
 },500);

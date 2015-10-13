@@ -84,7 +84,12 @@ var sortConstant = {
     name: "name",
     type: "type",
     parent: "parent",
-    deleted: "deleted"
+    deleted: "deleted",
+    role: "role",
+    mobileNumber: "mobileNumber",
+    mobilePhone: "mobilePhone",
+    hcp: "hcp",
+    hcpname: "hcpname"
 }
 
 var stringConstants = {
