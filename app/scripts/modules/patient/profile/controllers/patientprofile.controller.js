@@ -40,7 +40,7 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
   };
 
 	$scope.initProfileView = function(){
-		UserService.getUser(role.get('logged').patientID).then(function(response){
+		UserService.getUser(StorageService.get('logged').patientID).then(function(response){
 			$scope.patientView = response.data.user;
 		}).catch(function(response){});
 		AuthServerProvider.getSecurityQuestions().then(function(response){

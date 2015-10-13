@@ -64,16 +64,15 @@ angular.module('hillromvestApp',
       }
     };
   })
-  .factory('authInterceptor', function($rootScope, $q, $location, localStorageService, StorageService) {
+  .factory('authInterceptor', function($rootScope, $q, $location, StorageService) {
     return {
       // Add authorization token to headers
       request: function(config) {
         config.headers = config.headers || {};
-        var token = localStorageService.get('token');
-        // var token = null;
-        // if(StorageService.get('logged')){
-        //   token = StorageService.get('logged').token;
-        // }
+        var token = null;
+        if(StorageService.get('logged')){
+          token = StorageService.get('logged').token;
+        }
         if (token && token.expires && token.expires > new Date().getTime()) {
           config.headers['x-auth-token'] = token.token;
         }
