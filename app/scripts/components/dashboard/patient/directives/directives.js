@@ -5,7 +5,7 @@ angular.module('hillromvestApp')
   return {
       templateUrl: 'scripts/components/dashboard/patient/views/navbar.html',
       restrict: 'E',
-      controller: ['$scope','$location',function($scope, $location) {
+      controller: function($scope, $location) {
         $scope.isActive = function(tab) {
           var path = $location.path();
           if (path.indexOf(tab) !== -1) {
@@ -14,8 +14,10 @@ angular.module('hillromvestApp')
             return false;
           }
         };
-    }]
-};
+        /**/
+      
+      }
+    }
 });
 
 angular.module('hillromvestApp')

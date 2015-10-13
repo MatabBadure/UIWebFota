@@ -7,6 +7,9 @@ angular.module('hillromvestApp')
 .constant('VERSION', '0.0.1-SNAPSHOT')
 
 .constant('URL', {
+	'caregiverDashboard' : {
+		'getPatients' : 'api/user/USERID/patients'
+	},
 	'getStatistics':'/api/users/USERID/clinics/CLINICID/statistics',
 	'getAssociatedPatientsByFilter':'/api/users/USERID/clinics/CLINICID/patients?filterBy=FILTER&page=PAGENO&per_page=OFFSET',
 	'getAssociatedPatientsWithNoEvents':'/api/users/USERID/clinics/CLINICID/patients/FILTER?&page=PAGENO&per_page=OFFSET',
