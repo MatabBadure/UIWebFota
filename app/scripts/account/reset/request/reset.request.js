@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hillromvestApp')
-    .config(['$stateProvider', function ($stateProvider) {
+    .config(function ($stateProvider) {
         $stateProvider
             .state('requestReset', {
                 parent: 'account',
@@ -23,4 +23,4 @@ angular.module('hillromvestApp')
                     }]
                 }
             });
-    }]);
+    });

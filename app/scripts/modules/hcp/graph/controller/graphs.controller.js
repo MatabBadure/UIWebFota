@@ -4,12 +4,6 @@ angular.module('hillromvestApp')
 	function($scope, $state, hcpDashBoardService, dateService, graphUtil, $stateParams, hcpDashboardConstants, DoctorService, clinicadminService, notyService,$filter) {
 	var chart;
 	$scope.init = function() {
-		$scope.lazyLoadParamsPieChart = [
-        'bower_components/jquery.easy-pie-chart/dist/angular.easypiechart.js'
-        ];
-        $scope.lazyLoadParamsDatePicker = [
-        'bower_components/angular-daterangepicker/js/angular-daterangepicker.js'
-        ];
 		$scope.hcpId = parseInt(localStorage.getItem('userId'));
 		$scope.selectedGraph = 'CUMULATIVE';
 		$scope.treatmentGraph = false;
