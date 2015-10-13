@@ -27,7 +27,7 @@ angular.module('hillromvestApp')
     templateUrl: 'scripts/components/navbar/navbar.html',
     restrict: 'E',
 
-    controller: function ($scope, $state) {
+    controller: ['$scope','$state', function ($scope, $state) {
       $scope.userRole = localStorage.getItem('role');
       $scope.username = localStorage.getItem('userFirstName');
       $scope.isActive = function(tab) {
@@ -89,13 +89,6 @@ angular.module('hillromvestApp')
         $state.go(page);
       };
 
-      $scope.goToPatientDashboard = function(value){
-        if(value){
-          $state.go(value, {"clinicId": $stateParams.clinicId});
-        }else{
-          $state.go("patientdashboard");
-        }
-      };
       $scope.isFooter = function(){
         var url = $location.path();
         $rootScope.isFooter = false;
@@ -105,18 +98,27 @@ angular.module('hillromvestApp')
         $rootScope.isFooter = (!$rootScope.isFooter ) ? ((url.indexOf(footerConstants.privacyPractices) !== -1) ? true: false) : $rootScope.isFooter;        
         $rootScope.isFooter = (!$rootScope.isFooter) ? (( url.indexOf(footerConstants.careSite) !== -1) ? true: false ) : $rootScope.isFooter;
       };
+
       $scope.isFooter();
-    }
+
+      $scope.goToPatientDashboard = function(value){
+        if(value){
+          $state.go(value, {"clinicId": $stateParams.clinicId});
+        }else{
+          $state.go("patientdashboard");
+        }
+      }
+    }]
   };
 }]);
 
 angular.module('hillromvestApp')
-.directive('navigationBarPatient', function (Auth, Principal, $state, Account, $location) {
+.directive('navigationBarPatient', ['Auth', 'Principal', '$state', 'Account', '$location', function (Auth, Principal, $state, Account, $location) {
   return {
     templateUrl: 'scripts/components/navbar/navbarpatientuser.html',
     restrict: 'E',
 
-    controller: function ($scope, UserService) {
+    controller: ['$scope', 'UserService', function ($scope, UserService) {
       $scope.notifications = 0;
       $scope.username = localStorage.getItem('userFirstName');
       $scope.isActive = function(tab) {
@@ -139,9 +141,9 @@ angular.module('hillromvestApp')
         });
       };
       $scope.getNotifications();
-    }
+    }]
   };
-});
+}]);
 
 angular.module('hillromvestApp')
 .directive('navigationBarHcp',['Auth', 'Principal', '$state', 'Account', '$location', function (Auth, Principal, $state, Account, $location) {
@@ -149,7 +151,7 @@ angular.module('hillromvestApp')
     templateUrl: 'scripts/components/navbar/navbarhcp.html',
     restrict: 'E',
 
-    controller: function ($scope, UserService, $stateParams) {
+    controller: ['$scope', 'UserService', '$stateParams', function ($scope, UserService, $stateParams) {
       $scope.username = localStorage.getItem('userFirstName');
       $scope.notifications = 0;
       $scope.isActive = function(tab) {
@@ -159,7 +161,7 @@ angular.module('hillromvestApp')
         } else {
           return false;
         }
-      };
+      }
 
       $scope.account = function(){
         var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : $stateParams.clinicId;
@@ -176,7 +178,7 @@ angular.module('hillromvestApp')
           }          
         });
       };
-    }
+    }]
   };
 }]);
 
@@ -186,7 +188,7 @@ angular.module('hillromvestApp')
     templateUrl: 'scripts/components/navbar/navbarclinicadmin.html',
     restrict: 'E',
 
-    controller: function ($scope, UserService, $stateParams) {
+    controller: ['$scope', 'UserService', '$stateParams', function ($scope, UserService, $stateParams) {
       $scope.username = localStorage.getItem('userFirstName');
       $scope.notifications = 0;
       $scope.isActive = function(tab) {
@@ -202,6 +204,6 @@ angular.module('hillromvestApp')
         var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : $stateParams.clinicId;
         $state.go("clinicadminUserProfile",{'clinicId': clinicId});
       };
-    }
+    }]
   };
 }]);

@@ -13,7 +13,7 @@
 					<div class="col-md-12 col-sm-16">
 						<div class="stats_chart_section">
 							<div class="stats_header"><h4 translate="graph.statistics"></h4></div>
-							<div class="stats_chart_container">
+							<div class="stats_chart_container" oc-lazy-load="lazyLoadParamsPieChart">
 								<div class="col-3">
 									<div class="pie_chart" easypiechart options="adherence" percent="adherenceScore"></div>
 									<div class="stats_chart_content score">
@@ -74,7 +74,7 @@
 						</ul>
 						</div>
 					</div>
-					<div class="col-md-11 col-sm-9 right_header_barchart">
+					<div class="col-md-11 col-sm-9 right_header_barchart" oc-lazy-load="lazyLoadParamsDatePicker">
 						<ul class="nav nav-pills pull-right ">
 							<li role="presentation" class=""><a href="" ng-class="{active: selectedDateOption === 'DAY'}" ng-hide="complianceGraph" ng-click="dayChart()" translate="graph.day"></a></li>
 							<li role="presentation" class=""><a ng-class="{active: selectedDateOption === 'WEEK'}" href="" ng-click="weeklyChart()">Week</a></li>
