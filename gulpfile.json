@@ -27,7 +27,6 @@
             "app/bower_components/angular-translate-storage-cookie/angular-translate-storage-cookie.js",
             "app/bower_components/angular-translate-loader-partial/angular-translate-loader-partial.js",
             "app/bower_components/angular-dynamic-locale/src/tmhDynamicLocale.js",
-            "app/bower_components/angular-local-storage/dist/angular-local-storage.js",
             "app/bower_components/angular-animate/angular-animate.js",
             "app/bower_components/moment/moment.js",
             "app/bower_components/bootstrap-daterangepicker/daterangepicker.js",
