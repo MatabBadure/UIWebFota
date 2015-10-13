@@ -68,6 +68,7 @@ angular.module('hillromvestApp')
 		DoctorService.getClinicsAssociatedToHCP(userId).then(function(response){
 			if(response.data && response.data.clinics){
 				$scope.clinics = $filter('orderBy')(response.data.clinics, "name");
+				//$scope.clinics.push({"id": "others", "name": "Others"});
 				var isClinic = false;
 				angular.forEach(response.data.clinics, function(clinic) {
 					if(clinic.id === $stateParams.clinicId){

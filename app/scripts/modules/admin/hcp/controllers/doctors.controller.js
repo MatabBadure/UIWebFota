@@ -20,7 +20,7 @@ angular.module('hillromvestApp')
         $scope.perPageCount = 10;
         $scope.pageCount = 0;
         $scope.total = 0;        
-        $scope.sortOption ="";
+        $scope.filterClinicId = "all";
         $scope.searchItem = "";
         $scope.searchFilter = searchFilterService.initSearchFiltersForPatient();
         $scope.searchPatientsForHCP();
@@ -108,8 +108,8 @@ angular.module('hillromvestApp')
     $scope.getClinicsOfHCP = function(doctorId){
       DoctorService.getClinicsAssociatedToHCP(doctorId).then(function(response) {
         $scope.clinicsOfHCP =  response.data.clinics;
-        $scope.clinicList = [{"clinicId": "", "name": "ALL"}];
-        $scope.sortOption = $scope.clinicList[0].clinicId;
+        $scope.clinicList = [{"clinicId": "all", "name": "ALL"}];
+        $scope.filterClinicId = $scope.clinicList[0].clinicId;
         if($scope.clinicsOfHCP){
           angular.forEach($scope.clinicsOfHCP, function(clinic){
             $scope.clinicList.push({"clinicId": clinic.id, "name": clinic.name});
@@ -219,7 +219,7 @@ angular.module('hillromvestApp')
             }
           }          
           $scope.clinicList = [{"clinicId": 0, "name": "ALL"}];
-          $scope.sortOption = $scope.clinicList[0].clinicId;
+          $scope.filterClinicId = $scope.clinicList[0].clinicId;
           if($scope.clinicsOfHCP){
             angular.forEach($scope.clinicsOfHCP, function(clinic){
               $scope.clinicList.push({"clinicId": clinic.id, "name": clinic.name});
@@ -269,7 +269,7 @@ angular.module('hillromvestApp')
         } 
 
         var filter = searchFilterService.getFilterStringForPatient($scope.searchFilter);
-        DoctorService.searchPatientsForHCPOrCliniadmin($scope.searchItem, 'hcp' ,$stateParams.doctorId, $scope.sortOption, $scope.currentPageIndex, $scope.perPageCount, filter).then(function (response) {
+        DoctorService.searchPatientsForHCPOrCliniadmin($scope.searchItem, 'hcp' ,$stateParams.doctorId, $scope.filterClinicId, $scope.currentPageIndex, $scope.perPageCount, filter).then(function (response) {
           $scope.patients = [];
           angular.forEach(response.data, function(patient){
             patient.dob = dateService.getDateFromTimeStamp(patient.dob, patientDashboard.dateFormat,'/');

@@ -2,7 +2,7 @@ angular.module('hillromvestApp')
 .controller('hcpPatientController',['$scope', '$state', '$stateParams', 'hcpPatientService', 'patientService', 'notyService', 'DoctorService', 'clinicadminPatientService', 'dateService', 'clinicService', '$timeout', 'searchFilterService', 'sortOptionsService','$filter',
   function($scope, $state, $stateParams, hcpPatientService, patientService, notyService, DoctorService, clinicadminPatientService, dateService, clinicService, $timeout, searchFilterService,sortOptionsService,$filter) {   
   var searchOnLoad = true;    
-	$scope.init = function(){       
+	$scope.init = function(){     
     if($state.current.name === 'hcppatientDemographic'){
       $scope.getPatientInfo($stateParams.patientId, $scope.setEditMode);
     }else if($state.current.name === 'hcppatientClinics'){
@@ -29,6 +29,7 @@ angular.module('hillromvestApp')
     DoctorService.getClinicsAssociatedToHCP(localStorage.getItem('userId')).then(function(response){
       if(response.data && response.data.clinics){
         $scope.clinics = $filter('orderBy')(response.data.clinics, "name");
+        $scope.clinics.push({"id": "others", "name": "Others"});
         if($stateParams.clinicId){
           angular.forEach($scope.clinics, function(clinic){
             if(clinic.id === $stateParams.clinicId){
@@ -39,6 +40,7 @@ angular.module('hillromvestApp')
           $scope.selectedClinic =  $scope.clinics[0];
         }
       }
+      console.log($scope.clinics);
       $scope.searchPatients();
     }).catch(function(response){
       notyService.showError(response);
