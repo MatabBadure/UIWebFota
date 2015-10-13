@@ -158,8 +158,13 @@ angular.module('hillromvestApp')
 		lineCap: hcpDashboardConstants.statistics.lineCap
 	};
 
-  $scope.goToPatientDashboard = function(value){
-	$state.go(value, {'clinicId': $stateParams.clinicId});
+  $scope.goToPatientDashboard = function(value){ 
+	  if(value === 'hcppatientdashboard' || value === 'clinicadminpatientdashboard'){
+		var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : $stateParams.clinicId;
+		$state.go(value, {'clinicId': clinicId});
+	  }else{
+		$state.go(value);
+	  }
   };
 
 	/*Dtate picker js*/
@@ -181,7 +186,9 @@ angular.module('hillromvestApp')
 
   $scope.switchClinic = function(clinic){
 	if($scope.selectedClinic.id !== clinic.id){
-	  $state.go($state.current.name, {'clinicId':clinic.id});
+	  $scope.selectedClinic = clinic;
+	  $scope.getStatistics($scope.selectedClinic.id, localStorage.getItem('userId'));
+	  $scope.drawGraph();
 	}
   };
 			
