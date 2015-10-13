@@ -14,9 +14,9 @@
 
         <div ng-if="deviceAssociatedPatient" >
         <span translate="patient.device-already-linked"></span>
-        <a href="" ng-click="gotoPatient()">{{deviceAssociatedPatient.firstName}} {{deviceAssociatedPatient.lastName}}</a> 
+        <a href="javascript:void(0)" ng-click="gotoPatient()">{{::deviceAssociatedPatient.firstName}} {{::deviceAssociatedPatient.lastName}}</a> 
         <span translate="patient.with"> </span>
-        <a href="" ng-click="gotoPatient()">{{deviceAssociatedPatient.hillromId}}</a>
+        <a href="javascript:void(0)" ng-click="gotoPatient()">{{::deviceAssociatedPatient.hillromId}}</a>
         </div>
         <div class="col-md-16 reset-padding">
           <span class="dashboard__form--type" translate="patient.device.gen-details"></span>
