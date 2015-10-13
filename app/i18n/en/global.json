@@ -98,7 +98,8 @@
         "role":{
             "super-admin": "Super Admin",
             "account-services": "RC Admin",
-            "associates":"Associates"
+            "associates":"Associates",
+            "caregiver": "CARE GIVER"
         },
         "not-applicable": "NA"
     },
