@@ -23,7 +23,6 @@ angular.module('hillromvestApp')
 
         $scope.cancelUpdate = function(){
           if($state.current.name === 'clinicadminedithcp'){
-            console.log($stateParams);
             $state.go('clinicadminhcpoverview', {'hcpId': $stateParams.doctorId});
           }else{
             $state.go('hcpProfile', {'doctorId': $stateParams.doctorId});
