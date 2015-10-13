@@ -1,5 +1,5 @@
 angular.module('hillromvestApp')
-.controller('clinicadminHcpController',['$scope', '$state', '$stateParams', 'clinicService', 'DoctorService', 'UserService', 'searchFilterService', '$timeout', 'clinicadminService', 'clinicadminHcpService',
+.controller('clinicadminHcpController',['$scope', '$state', '$stateParams', 'clinicService', 'DoctorService', 'UserService', 'searchFilterService', '$timeout', 'clinicadminService', 'clinicadminHcpService', 
   function($scope, $state, $stateParams, clinicService, DoctorService, UserService, searchFilterService, $timeout, clinicadminService, clinicadminHcpService) {
 
     var searchOnLoad = true;

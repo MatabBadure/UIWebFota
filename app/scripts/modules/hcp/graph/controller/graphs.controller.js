@@ -131,12 +131,8 @@ angular.module('hillromvestApp')
 	};
 
   $scope.goToPatientDashboard = function(value){ 
-	  if(value === 'hcppatientdashboard' || value === 'clinicadminpatientdashboard'){
 		var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : $stateParams.clinicId;
 		$state.go(value, {'clinicId': clinicId});
-	  }else{
-		$state.go(value);
-	  }
   };
 
 	/*Dtate picker js*/
