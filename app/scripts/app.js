@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hillromvestApp',
-  ['LocalStorageModule',
+  [
    'tmh.dynamicLocale',
    'pascalprecht.translate',
    'ngResource',
