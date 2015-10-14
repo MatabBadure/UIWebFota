@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hillromvestApp')
-    .config(['$stateProvider',function ($stateProvider) {
+    .config(function ($stateProvider) {
         $stateProvider
             .state('password', {
                 parent: 'account',
@@ -25,4 +25,4 @@ angular.module('hillromvestApp')
                     }]
                 }
             });
-    }]);
+    });

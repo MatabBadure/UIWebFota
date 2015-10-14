@@ -131,6 +131,10 @@ angular.module('hillromvestApp')
 
   $scope.getDevices = function(patientId){
     patientService.getDevices(patientId).then(function(response){
+      angular.forEach(response.data.deviceList, function(device){
+        device.createdDate = dateService.getDateByTimestamp(device.createdDate);
+        device.lastModifiedDate = dateService.getDateByTimestamp(device.lastModifiedDate);
+      });
       $scope.devices = response.data.deviceList;
     }).catch(function(response){
       notyService.showError(response);
@@ -155,7 +159,12 @@ angular.module('hillromvestApp')
 	};
 
 	$scope.goToPatientDashboard = function(value){
-    $state.go(value, {'clinicId': $stateParams.clinicId});
+    if('hcppatientdashboard' === value){
+      var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : $stateParams.clinicId;
+      $state.go(value, {'clinicId': clinicId});
+    }else{
+      $state.go(value);
+    }
 	};
 
 
@@ -192,7 +201,8 @@ angular.module('hillromvestApp')
 
   $scope.switchClinic = function(clinic){
     if($scope.selectedClinic.id !== clinic.id){
-      $state.go($state.current.name, {'clinicId': clinic.id});
+      $scope.selectedClinic = clinic;
+      $scope.searchPatients();      
     }
   };
 

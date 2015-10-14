@@ -26,7 +26,19 @@
             <span class="icons hillrom-icon icon-patient"></span>
             <span class="link-text" translate="global.tabs.patients" ></span>
           </a>
-        </li>    
+        </li>
+        <li class="icon-border">
+          <a ng-class="{ active: isActive('/clinicadmin-hcp')}" href="" ng-click="goToPatientDashboard('clinicadminhcpdashboard');" >
+            <span class="icons hillrom-icon icon-doctor"></span>
+            <span class="link-text" translate="global.tabs.manage-hcps" ></span>
+          </a>
+        </li>
+        <li class="icon-border">
+          <a ng-class="{ active: isActive('/clinicadmin-clinic')}" href="" ng-click="goToPatientDashboard('clinicadminclinicdashboard');" >
+            <span class="icons hillrom-icon icon-clinic"></span>
+            <span class="link-text" translate="global.tabs.manage-clinics" ></span>
+          </a>
+        </li>
         <li class="header-popover dropdown">
           <a href="javascript:void(0)" class="dropdown-toggle" ng-class="{ active: isActive('profile')}" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
             <span class='icon-logged-in-user'></span>

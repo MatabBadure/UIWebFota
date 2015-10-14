@@ -1,11 +1,17 @@
 'use strict';
 
-angular.module('hillromvestApp').controller('patientprofileController', ['$scope', '$state', 'notyService', 'patientService', 'UserService', 'AuthServerProvider', 'Password', 'Auth', function ($scope, $state, notyService, patientService, UserService, AuthServerProvider,Password, Auth) {
+angular.module('hillromvestApp').controller('patientprofileController', ['$scope', '$state', 'notyService', 'patientService', 'UserService', 'AuthServerProvider', 'Password', 'Auth', 'caregiverDashBoardService', '$stateParams', 'loginConstants',
+  function ($scope, $state, notyService, patientService, UserService, AuthServerProvider,Password, Auth, caregiverDashBoardService, $stateParams, loginConstants) {
 	
   $scope.init = function(){
 		var currentRoute = $state.current.name;	
 		$scope.profileTab = currentRoute;	
-		$scope.userRole = localStorage.getItem('role');			
+		$scope.userRole = localStorage.getItem('role');		
+    $scope.role = localStorage.getItem('role'); 
+    $scope.caregiverID = parseInt(localStorage.getItem('userId'));
+    if( $scope.role === loginConstants.role.caregiver){
+        $scope.getPatientListForCaregiver($scope.caregiverID);
+      }	
 		if (currentRoute === 'patientProfile') {
 			$scope.initProfileView();        
 		}else if(currentRoute === 'patientProfileEdit'){
@@ -23,6 +29,62 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
     } else {
       return false;
     }
+  };
+
+  $scope.getPatientListForCaregiver = function(caregiverID){
+    caregiverDashBoardService.getPatients(caregiverID).then(function(response){
+      $scope.patients = response.data.patients;
+      if(localStorage.getItem('patientID') !== undefined){
+          angular.forEach($scope.patients, function(value){
+            if(value.userId === parseInt(localStorage.getItem('patientID'))){
+              $scope.$emit('getSelectedPatient', value);
+              $scope.selectedPatient = value;
+              $scope.patientId = localStorage.getItem('patientID');
+            }
+          });
+      } else{
+          $scope.selectedPatient = response.data.patients[0];
+          $scope.$emit('getSelectedPatient', $scope.selectedPatient);
+          $scope.patientId = $scope.selectedPatient.userId;
+          localStorage.setItem('patientID',$scope.patientId);
+      }
+      $scope.$emit('getPatients', $scope.patients);
+      if($state.current.name === 'patientDashboardPatientInfo'){
+        $scope.initProfileView();    
+      } else if($state.current.name === 'patientDashboardNotification'){
+        $scope.initPatientSettings();
+      }
+    }).catch(function(response){
+      notyService.showError(response);
+    });
+  };
+
+
+  $scope.$on('switchPatientCareGiver',function(event,patient){
+    $scope.switchPatient(patient);
+  });
+  
+  $scope.$on('switchCaregiverTab',function(event,state){
+    $scope.switchCaregiverTab(state);
+  });
+
+  $scope.switchPatient = function(patient){
+    if($scope.selectedPatient.userId !== patient.userId){
+      $scope.selectedPatient = patient;
+      $scope.patientId = $scope.selectedPatient.userId;
+      $scope.$emit('getSelectedPatient', $scope.selectedPatient);
+      localStorage.setItem('patientID',$scope.patientId);
+      if($state.current.name === 'patientDashboardPatientInfo'){
+        $scope.initProfileView();    
+      } else if($state.current.name === 'patientDashboardNotification'){
+        $scope.initPatientSettings();
+      }
+    }
+  };
+
+  $scope.switchCaregiverTab = function(status){
+    $scope.caregiverTab = status;
+    $state.go(status, {'caregiverId': $stateParams.caregiverId});
   };
 
 	$scope.switchProfileTabs = function(tab){
@@ -119,11 +181,7 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
       };
       AuthServerProvider.changeSecurityQuestion(data, localStorage.getItem('patientID')).then(function(response){
       }).catch(function(response){
-        if(response.data.message){
-          notyService.showMessage(response.data.message, 'warning');
-        } else if(response.data.ERROR){
-          notyService.showMessage(response.data.ERROR, 'warning');
-        }
+        notyService.showError(response);
       });
     }
     var data = {
@@ -135,8 +193,7 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
       notyService.showMessage(response.data.message, 'success');
       $state.go('login');
     }).catch(function(response){
-    	if(response && response.data && response.data.ERROR)
-      notyService.showMessage(response.data.ERROR, 'warning');
+    	notyService.showError(response);
     });
   };
 

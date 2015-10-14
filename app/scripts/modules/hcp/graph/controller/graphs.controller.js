@@ -65,16 +65,9 @@ angular.module('hillromvestApp')
 
 	$scope.getClinicsForHCP = function(userId) {
 		DoctorService.getClinicsAssociatedToHCP(userId).then(function(response){
+			localStorage.setItem('clinicId', response.data.clinics[0].id);
 			$scope.clinics = response.data.clinics;
-			if($stateParams.clinicId){
-				angular.forEach($scope.clinics, function(clinic){
-					if(clinic.id === $stateParams.clinicId){
-						$scope.selectedClinic = clinic;
-					}
-				});
-			}else{
-				$scope.selectedClinic = response.data.clinics[0];	
-			}
+			$scope.selectedClinic = response.data.clinics[0];
 			$scope.weeklyChart();
 			$scope.getStatistics($scope.selectedClinic.id, userId);
 	  }).catch(function(response){
@@ -84,18 +77,11 @@ angular.module('hillromvestApp')
 
 	$scope.getClinicsForClinicAdmin = function(userId) {
 	clinicadminService.getClinicsAssociated(userId).then(function(response){
+	  localStorage.setItem('clinicId', response.data.clinics[0].id);
 	  $scope.clinics = response.data.clinics;
-	  if($stateParams.clinicId){
-	  	angular.forEach(response.data.clinics, function(clinic){
-	  		if($stateParams.clinicId === clinic.id){
-	  			$scope.selectedClinic = clinic;
-	  		}
-	  	});
-	  }else{
-	  	$scope.selectedClinic = response.data.clinics[0];
-	  }
-	  $scope.getStatistics($scope.selectedClinic.id, userId);
+	  $scope.selectedClinic = response.data.clinics[0];
 	  $scope.weeklyChart();
+	  $scope.getStatistics($scope.selectedClinic.id, userId);
 	}).catch(function(response){
 	  notyService.showError(response);
 	});
@@ -150,8 +136,9 @@ angular.module('hillromvestApp')
 		lineCap: hcpDashboardConstants.statistics.lineCap
 	};
 
-  $scope.goToPatientDashboard = function(value){
-	$state.go(value, {'clinicId': $stateParams.clinicId});
+  $scope.goToPatientDashboard = function(value){ 
+		var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : $stateParams.clinicId;
+		$state.go(value, {'clinicId': clinicId});
   };
 
 	/*Dtate picker js*/
@@ -173,7 +160,9 @@ angular.module('hillromvestApp')
 
   $scope.switchClinic = function(clinic){
 	if($scope.selectedClinic.id !== clinic.id){
-	  $state.go($state.current.name, {'clinicId':clinic.id});
+	  $scope.selectedClinic = clinic;
+	  $scope.getStatistics($scope.selectedClinic.id, localStorage.getItem('userId'));
+	  $scope.drawGraph();
 	}
   };
 			
