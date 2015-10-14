@@ -31,8 +31,7 @@ angular.module('hillromvestApp')
     	};
 
     	this.toggleSortParam = function(sortOption){
-    	  var toggleSortOption = {}; 
-             		
+    	  var toggleSortOption = {};    		
           if(sortOption.isDefault){
             toggleSortOption.isDefault = false;
             toggleSortOption.isDown = true;

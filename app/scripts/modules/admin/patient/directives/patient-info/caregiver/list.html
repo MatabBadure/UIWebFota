@@ -26,7 +26,7 @@
         <div class="col-md-3 header--type">
           <span translate="patient.caregiver-caption.mobile-number"></span>
         </div>
-        <div class="col-md-2 header--type">
+        <div class="col-md-3 header--type">
           <span translate="patient.caregiver-caption.relationship"></span>
         </div>
         <div class="clr"></div>
@@ -51,13 +51,11 @@
     <div class="col-md-3 caregiver-list__fax">
       <span class="caregiver-list__fax--number">{{caregiver.user.mobilePhone}}</span>
     </div>
-    <div class="col-md-2 caregiver-list__type">
+    <div class="col-md-3 caregiver-list__type">
       <span>{{caregiver.relationshipLabel}}</span>
     </div>
     <div class="col-md-1 caregiver-list__delete" >
       <span class="icon-edit-icon" ng-click="goToCaregiverEdit(caregiver.user.id)"></span>
-    </div>
-    <div class="col-md-1 caregiver-list__delete" >
       <span class="icon-delete-icon" ng-click="openModalCaregiver(caregiver.user.id, $index)"></span>
     </div>
   </div>

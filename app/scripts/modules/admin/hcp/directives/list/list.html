@@ -42,7 +42,7 @@
         <div class="col-md-2 header--type">
           <span ng-class="{'sort-icon--default' : sortHcpList.npiNumber.isDefault, 'sort-icon-down': sortHcpList.npiNumber.isDown, 'sort-icon-up':sortHcpList.npiNumber.isUp}" ng-click="sortType('npiNumber')" translate="doctor.npiNumber">NPI Number</span>
         </div>
-        <div class="col-md-4 header--type">
+        <div class="col-md-3 header--type">
           <span ng-class="{'sort-icon--default' : sortHcpList.clinicName.isDefault, 'sort-icon-down': sortHcpList.clinicName.isDown, 'sort-icon-up':sortHcpList.clinicName.isUp}" ng-click="sortType('clinicName')" translate="doctor.clinic-name">Clinic Name</span>
         </div>
         <div class="col-md-2 header--type">
@@ -51,7 +51,7 @@
         <div class="col-md-2 header--type">
           <span ng-class="{'sort-icon--default' : sortHcpList.state.isDefault, 'sort-icon-down': sortHcpList.state.isDown, 'sort-icon-up':sortHcpList.state.isUp}" ng-click="sortType('state')" translate="doctor.state">state</span>
         </div> 
-        <div class="col-md-1 header--type">
+        <div class="col-md-2 header--type">
           <span ng-class="{'sort-icon--default' : sortHcpList.status.isDefault, 'sort-icon-down': sortHcpList.status.isDown, 'sort-icon-up':sortHcpList.status.isUp}" ng-click="sortType('status')" translate="doctor.status">Status</span>
         </div>
         <div class="clr"></div>
@@ -68,7 +68,7 @@
             <span class="short-info">{{doctor.npiNumber}}</span>
           </div>
 
-          <div class="col-md-4 reset-padding centered">
+          <div class="col-md-3 reset-padding centered">
             <span class="short-info" ng-repeat ="clinic in doctor.clinics"> {{clinic.name}} <b>{{$last ? '' : ', '}}</b></span>
           </div>
 
@@ -80,7 +80,7 @@
             <span class="short-info">{{doctor.state}}</span>
           </div>
 
-          <div class="col-md-1 reset-padding centered">
+          <div class="col-md-2 reset-padding centered">
             <span class="short-info active" ng-if="!doctor.deleted" translate="doctor.status-type.active"></span>
             <span class="short-info inactive" ng-if="doctor.deleted" translate="doctor.status-type.inactive"></span>
           </div>

@@ -3,6 +3,12 @@ angular.module('hillromvestApp')
 .controller('hcpGraphController',[ '$scope', '$state', 'hcpDashBoardService', 'dateService', 'graphUtil', '$stateParams', 'hcpDashboardConstants', 'DoctorService', 'clinicadminService', 'notyService', function($scope, $state, hcpDashBoardService, dateService, graphUtil, $stateParams, hcpDashboardConstants, DoctorService, clinicadminService, notyService) {
 	var chart;
 	$scope.init = function() {
+		$scope.lazyLoadParamsPieChart = [
+        'scripts/third_party_library/angular.easypiechart.js'
+        ];
+        $scope.lazyLoadParamsDatePicker = [
+        'bower_components/angular-daterangepicker/js/angular-daterangepicker.js'
+        ];
 		$scope.hcpId = parseInt(localStorage.getItem('userId'));
 		$scope.selectedGraph = 'CUMULATIVE';
 		$scope.treatmentGraph = false;
@@ -131,12 +137,8 @@ angular.module('hillromvestApp')
 	};
 
   $scope.goToPatientDashboard = function(value){ 
-	  if(value === 'hcppatientdashboard' || value === 'clinicadminpatientdashboard'){
 		var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : $stateParams.clinicId;
 		$state.go(value, {'clinicId': clinicId});
-	  }else{
-		$state.go(value);
-	  }
   };
 
 	/*Dtate picker js*/
