@@ -347,6 +347,13 @@ angular.module('hillromvestApp')
         return $http.get(url, {
           headers: headerService.getHeader()
         });
+      },
+
+      getHCPsToLinkToPatient: function(patientId, pageNo, offset, searchString){
+        var url = URL.getHCPsToLinkToPatient.replace('PATIENTID', patientId).replace('SEARCHSTRING', searchString);
+        return $http.get(url, {
+          headers: headerService.getHeader()
+        });
       }
 
       

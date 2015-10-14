@@ -719,8 +719,24 @@ angular.module('hillromvestApp')
 
     $scope.getAvailableAndAssociatedHCPs = function(patientId){
       $scope.associatedClinicsErrMsg = null;
-      $scope.associatedHCPsErrMsg = null;            
-      patientService.getAssociateHCPToPatient(patientId).then(function(response){ 
+      $scope.associatedHCPsErrMsg = null;  
+      var searchString = "";
+      patientService.getHCPsToLinkToPatient(patientId, searchString).then(function(response){
+        $scope.hcps = []; 
+        $scope.hcps = response.data;
+        patientService.getAssociateHCPToPatient(patientId).then(function(response){ 
+          $scope.associatedHCPs = [];  
+          $scope.associatedHCPs = response.data.hcpUsers;
+          for(var i=0; i < $scope.associatedHCPs.length; i++){
+            for(var j=0; j <  $scope.hcps.length; j++ ){
+              if($scope.associatedHCPs[i].id == $scope.hcps[j].id){
+                $scope.hcps.splice(j, 1);
+              }
+            }
+          }
+        });
+      });
+      /*patientService.getAssociateHCPToPatient(patientId).then(function(response){ 
         $scope.associatedHCPs = [];        
         if(response.data.hcpUsers){
           $scope.associatedHCPs = response.data.hcpUsers;          
@@ -738,7 +754,7 @@ angular.module('hillromvestApp')
             }
           }
         });
-      });
+      });*/
     };
 
     $scope.openPatientDeactivateModal = function(patient){
