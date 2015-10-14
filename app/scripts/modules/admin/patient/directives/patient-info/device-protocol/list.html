@@ -14,7 +14,7 @@
   <div class="dashboard dashboard--content">
     <div class="dashboard__manage-view margin-top">
       <div class="dashboard__manage-view--header">
-          <div class="col-md-3 header--type">
+          <div class="col-md-4 header--type">
             <span translate="patient.protocol-caption.treatments-per-day"></span>
           </div>
           <div class="col-md-3 header--type">
@@ -32,7 +32,7 @@
   </div>
 
   <div class="col-md-16 protocol-list" ng-repeat="protocol in protocols" ng-class="{'list-inactive':protocol.deleted}">   
-    <div class="col-md-3 protocol-list__treatment-day">
+    <div class="col-md-4 protocol-list__treatment-day">
       <span class="protocol-list--value"> {{::protocol.treatmentsPerDay}}</span>
     </div>
     <div class="col-md-3 protocol-list__strt-date">
@@ -49,8 +49,6 @@
     </div>
     <div class="col-md-1 protocol-list__edit icons text-center">
       <span ng-if="!protocol.deleted" class="icon-edit-icon" ng-click="openEditProtocol(protocol)"></span>
-    </div>
-    <div class="col-md-1 protocol-list__delete icons text-center">
       <span ng-if="!protocol.deleted" class="icon-delete-icon" ng-click="deleteProtocolModel(protocol.id)"></span>
     </div>
   </div>
@@ -72,7 +70,7 @@
 <div class="dashboard dashboard--content">
   <div class="dashboard__manage-view margin-top">
     <div class="dashboard__manage-view--header">
-        <div class="col-md-3 header--type">
+        <div class="col-md-4 header--type">
           <span translate="patient.device-caption.serial-no"></span>
         </div>
         <div class="col-md-3 header--type">
@@ -90,7 +88,7 @@
 </div>
 
   <div class="col-md-16 device-list" ng-repeat="device in devices" ng-class="{'list-inactive': !device.active}">
-    <div class="col-md-3 device-list__serial">
+    <div class="col-md-4 device-list__serial">
       <span>{{::device.serialNumber}}</span>
     </div>
     <div class="col-md-3 device-list__bt-id">
@@ -105,8 +103,6 @@
     </div>
     <div class="col-md-1 device-list__edit text-center">
       <span ng-if="device.active" class="icon-edit-icon cursor-pointer" ng-click="openEditDevice(device)"></span>
-    </div>
-    <div class="col-md-1 device-list__delete text-center">
       <span ng-if="device.active" class="icon-delete-icon cursor-pointer" ng-click="deleteDeviceModel(device)"></span>
     </div>
   </div>
