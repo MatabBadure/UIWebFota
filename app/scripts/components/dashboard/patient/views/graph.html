@@ -6,7 +6,7 @@
 			<span class="user-gen-details--hr-id">{{slectedPatient.hillromId}}</span>
 		</div>
 	</div>
-</div>
+</div> 
 		<div class="container patient_wrapper">
 			<div class="col-md-16">
 				<div class="row">
@@ -214,7 +214,7 @@
    <div class="col-md-16 note_edit_container hide_content" id="note_edit_container" ng-show="role === 'PATIENT'">
 	<form name="form" ng-submit="createNote();">
 		<div class="col-md-2 col-sm-4 date_col">
-			<input class="date_input"  data-provide="datepicker"  data-date-format="yyyy-mm-dd"  bootstrap-datepicker data-date-end-date="0d"  id="edit_note_date" ng-model="textNote.edit_date" placeholder="Date"/></div>
+			<input class="date_input"  data-provide="datepicker"  data-date-format="yyyy-mm-dd"  bootstrap-datepicker data-date-end-date="0d"   data-date-start-date="{{transmissionDate}}" id="edit_note_date" ng-model="textNote.edit_date" placeholder="Date"/></div>
 			<div class="col-md-11 col-sm-8 description">
 				<div class="form-group">
 					<textarea class="form-control custom_textarea" rows="1" id="comment" ng-model="textNote.text" maxlength="300"></textarea>
@@ -233,7 +233,7 @@
 			</div>
 		</form>
 	</div>
-	<div class="btn_group patient_dashdoard_btns" ng-show="role === 'PATIENT'">
+	<div class="btn_group patient_dashdoard_btns" ng-show="role === 'PATIENT' && hasTransmissionDate">
 		<button class="hillrom-btn btn-submit float-right" ng-click="openAddNote();" translate="graph.add-note"></button>
 	</div>
 	<div class="dashboard__manage-view--pagination pagination_notes" ng-if="notes.length > 0">

@@ -44,6 +44,7 @@ angular.module('hillromvestApp')
       $scope.perPageCount = 4;
       $scope.patientTab = currentRoute;
       if ($state.current.name === 'patientdashboard') {
+        $scope.hasTransmissionDate = false;
         $scope.initPatientDashboard();        
       }else if(currentRoute === 'patientdashboardCaregiver'){
         $scope.initPatientCaregiver();
@@ -1247,6 +1248,7 @@ angular.module('hillromvestApp')
       $scope.weeklyChart();
     }
     $scope.initPatientDashboard = function(){
+      $scope.getTransmissionDateForPatient(localStorage.getItem("patientID"));
       $scope.getAssociatedClinics(localStorage.getItem("patientID"));
       $scope.getPatientDevices(localStorage.getItem("patientID"));
       $scope.editNote = false;
@@ -1427,13 +1429,22 @@ angular.module('hillromvestApp')
         $scope.patientDevices = response.data.deviceList;
       });
     };
-     $scope.getAssociatedClinics = function(patientId){
+    $scope.getAssociatedClinics = function(patientId){
       patientService.getClinicsLinkedToPatient(patientId).then(function(response) {
         if(response.data.clinics){
           $scope.associatedClinics = response.data.clinics;
         }
       });
-     }
+    };
+
+    $scope.getTransmissionDateForPatient = function(patientId){
+      patientService.getTransmissionDate(patientId).then(function(response) {
+        if(response.data && response.data.firstTransmissionDate){
+          $scope.hasTransmissionDate = true;
+          $scope.transmissionDate = response.data.firstTransmissionDate;          
+        }
+      });
+    };
 
     $scope.init();
 
