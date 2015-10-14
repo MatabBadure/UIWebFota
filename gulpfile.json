@@ -121,19 +121,19 @@
             "app/scripts/modules/hcp/patient/directives/navbar/hcppatientnavbar.directive.js",
             "app/scripts/modules/hcp/profile/controllers/hcp-profile.controller.js",
             "app/scripts/modules/hcp/patient/services/hcppatinet.service.js",
-            "app/scripts/modules/clinicadmin/patient/services/clinicadminpatient.service.js",
             "app/scripts/modules/clinicadmin/patient/directives/navbar/clinicadminpatientnavbar.directive.js",
             "app/scripts/modules/caregiver/graph/services/caregiver.dashboard.services.js",
             "app/scripts/modules/caregiver/profile/controllers/caregiver-profile-controller.js",
             "app/scripts/modules/caregiver/graph/controllers/caregiver-navbar-controller.js",
-            "app/scripts/modules/patient/graph/controller/graphs.controller.js",
-            "app/scripts/modules/patient/profile/controllers/patientprofile.controller.js",
             "app/scripts/components/util/graph.service.js",
             "app/scripts/components/util/searchfilter.service.js",
             "app/scripts/components/util/scrollNavbar.js",
+            "app/scripts/modules/clinicadmin/hcp/controllers/clinicadminhcp.controller.js",
+            "app/scripts/modules/clinicadmin/clinic/controllers/clinicadminclinic.controller.js",
+            "app/scripts/modules/clinicadmin/hcp/services/clinicadminhcp.service.js",
             "app/scripts/components/util/sortoptions.service.js",
+            "app/scripts/modules/clinicadmin/patient/services/clinicadminpatient.service.js",
             "app/scripts/recaptcha.js"
-
         ],
         "clean": [
             "app/build/",

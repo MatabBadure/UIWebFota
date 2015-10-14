@@ -1,0 +1,178 @@
+<navigation-bar-clinicadmin></navigation-bar-clinicadmin>
+<div class="navbar patient-user patient-user--nav">
+  <div class="container">
+    <div class="collapse navbar-collapse patient-user__navbar" id="navbar-collapse">
+      <ul class="nav navbar-nav patient-dashboard">
+        <li >
+          <a ng-href="" class="nav_bar_title">
+            <span class="" translate="navbar.clinic-info"></span>
+          </a>
+        </li>
+      </ul>
+
+      <ul class="nav navbar-nav pull-right right">
+        <li class="hcp_hsp_name_a" dropdown>
+          <a ng-href="" id="dropdownMenu1" dropdown-toggle>
+            <span class="">{{selectedClinic.name}} <span class="nav_drop_arrow hillrom-icon icon-arrow-down"></span></span>
+          </a>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+          <li role="menuitem" ng-repeat='clinic in clinics' ng-click="switchClinic(clinic)"><a>{{::clinic.name}}</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="container admin-user">
+  <div class="col-md-16 margin-top reset-padding">
+   <div class="user-gen-details">
+     <span class="user-gen-details--name">* Required Fields</span>
+   </div>
+  </div>
+</div>
+
+
+<div class="dashboard dashboard--content padding-bottom-ls">
+  <form name="form" novalidate autocomplete="off">
+    <div class="container dashboard__form">
+      <div class="margin-top-xl">
+        <div class="col-md-16 reset-padding">
+          <span class="dashboard__form--type" translate="clinic.personal-details">Clinic Details</span>
+        </div>
+
+        <div class="col-md-16 reset-padding margin-top">
+          <div class="col-md-7 reset-padding">
+            <div class="col-md-6 dashboard__form--label reset-padding">
+              <span class="" translate="clinic.clinic-name"></span>
+              <span class="">*</span>
+            </div>
+            <div class="col-md-10 dashboard__form--input reset-padding">
+              <input class="" type="text" validate-on-blur name="name" ng-model="clinic.name" ng-readonly="validateADMINorASP()" required ng-maxlength="25">
+              <div ng-show="(form.name.$dirty && form.name.$showValidationMessage && form.name.$invalid) || submitted">
+                <span class="has-error" ng-show="form.name.$error.required" translate="error.clinicName.required"></span>             
+                <span class="login-has-error" ng-show="form.name.$error.maxlength" translate="error.clinicName.maxlength"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-16 reset-padding margin-top">
+          <div class="col-md-7 reset-padding">
+            <div class="col-md-6 dashboard__form--label reset-padding">
+              <span class="" translate="clinic.clinic-type"></span>
+              <span class="">*</span>
+            </div>
+            <div class="col-md-10 dashboard__form__input--option reset-padding selected-box-container">
+              <div class="custom-dropdown">
+                <select name="type" ng-model="clinic.type" ng-disabled="clinicStatus.editMode">
+                  <option selected translate="clinic.clinic-option.parent-clinic" value="parent"></option>
+                  <option translate="clinic.clinic-option.satellite-clinic" value="child"></option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-7 reset-padding col-md-offset-2">
+            <div class="col-md-6 dashboard__form--label reset-padding">
+              <span class="" translate="clinic.hillromId"></span>
+            </div>
+            <div class="col-md-10 dashboard__form--input reset-padding">
+              <input class="" type="text" validate-on-blur ng-readonly="validateADMINorASP()" name="hillromId" ng-model="clinic.hillromId">
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-16 reset-padding margin-top">
+          <div class="col-md-7 reset-padding">
+            <div class="col-md-6 dashboard__form--label reset-padding">
+              <span class="" translate="clinic.address"></span>
+            </div>
+            <div class="col-md-10 dashboard__form--input reset-padding">
+              <input class="" type="text" validate-on-blur name="address" ng-model="clinic.address" ng-readonly="validateADMINorASP()" ng-maxlength="100">
+              <div ng-show="(form.address.$showValidationMessage && form.address.$invalid) || submitted">
+                <span class="has-error" ng-show="form.address.$error.maxlength" translate="error.address.maxlength">
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-7 reset-padding col-md-offset-2">
+            <div class="col-md-6 dashboard__form--label reset-padding">
+              <span class="" translate="clinic.city"></span>
+            </div>
+            <div class="col-md-10 dashboard__form--input reset-padding">
+              <input class="" type="text" validate-on-blur ng-readonly="validateADMINorASP()" name="city" ng-model="clinic.city" ng-maxlength=15>
+              <div ng-show="(form.city.$showValidationMessage && form.city.$invalid)">
+                <span class="has-error" ng-show="form.city.$error.maxlength" translate="error.city.maxlength"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-16 reset-padding margin-top">
+          <div class="col-md-7 reset-padding">
+            <div class="col-md-6 dashboard__form--label reset-padding">
+              <span class="" translate="clinic.state"></span>
+            </div>
+            <div class="col-md-10 dashboard__form__input reset-padding selected-box-container">
+              <div class="custom-dropdown">
+                <select name="state" ng-model="clinic.state" ng-options="state.name as state.name for state in states">
+                  <option selected="selected">Select a state</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-7 reset-padding col-md-offset-2">
+            <div class="col-md-6 dashboard__form--label reset-padding">
+              <span class="" translate="clinic.zipcode"></span>
+            </div>
+            <div class="col-md-10 dashboard__form--input reset-padding">
+              <input class="" type="text" validate-on-blur ng-model="clinic.zipcode" name="zipcode" ng-readonly="validateADMINorASP()" maxlength="5" ng-pattern="/^(?=.*[1-9].*)[0-9]{5}$/">
+              <div ng-show="(form.zipcode.$showValidationMessage && form.zipcode.$invalid) || submitted">
+                <span class="has-error" ng-show="form.zipcode.$error.pattern" translate="error.zipcode.pattern"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-16 reset-padding margin-top">
+          <div class="col-md-7 reset-padding">
+            <div class="col-md-6 dashboard__form--label reset-padding">
+              <span class="" translate="clinic.phoneNumber"></span>
+            </div>
+            <div class="col-md-10 dashboard__form--input reset-padding">
+              <input class="" type="text" validate-on-blur ng-model="clinic.phoneNumber" name="phoneNumber" ng-readonly="validateADMINorASP()" ui-mask="(999)-999-9999">
+              <div ng-show="(form.phoneNumber.$showValidationMessage && form.phoneNumber.$invalid) || submitted">
+                <span class="has-error" ng-show="form.phoneNumber.$error.mask" translate="error.phoneNumber.mask"></span>
+              </div>
+            </div>
+        </div>
+        <div class="col-md-7 reset-padding col-md-offset-2">
+          <div class="col-md-6 dashboard__form--label reset-padding">
+            <span class="" translate="clinic.status"></span>
+          </div>
+          <div class="col-md-10 dashboard__form__input--option reset-padding selected-box-container">
+            <div class="custom-dropdown">
+              <select name="state" ng-readonly="validateADMINorASP()" ng-model="clinic.status" >
+                <option  value="" selected="selected">Select a state</option>
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      
+      <div class="clr"></div>
+    </div>
+    <div class="col-md-16 margin-top reset-padding">
+      <div class="">
+        <buton type="submit" ng-click="editClinic()" class="hillrom-btn btn-primary float-right btn-margin-left" translate="clinic.update-button-text">Update</buton>
+        <buton type="submit" class="hillrom-btn btn-secondary float-right" ng-click="cancelEditClinic()"translate="clinic.cancel-button-text  " >cancel</buton>
+        <div class="clr"></div>
+      </div>
+    </div>
+    </div>
+  </form>
+</div>
