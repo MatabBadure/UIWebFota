@@ -13,7 +13,7 @@
   <div class="dashboard dashboard--content">
     <div class="dashboard__manage-view margin-top">
       <div class="dashboard__manage-view--header">
-          <div class="col-md-3 header--type">
+          <div class="col-md-2 header--type">
             <span translate="patient.clinic-caption.clinic-name"></span>
           </div>
           <div class="col-md-2 header--type">
@@ -41,7 +41,7 @@
 
   <div class="col-md-16 clinic-list " ng-repeat="aClinic in associatedClinics track by $index" ng-if="associatedClinics.length > 0" readonly="true" ng-class="{'default_active': !aClinic.deleted, 'inactive': aClinic.deleted}">
     <span  ng-click="aClinic.deleted || selectClinic(aClinic)">
-    <div class="col-md-3 clinic-list__detail">
+    <div class="col-md-2 clinic-list__detail">
       <span class="clinic-list__detail--name" ng-bind="aClinic.name"></span>
     </div>
     <div class="col-md-2 clinic-list__phone">
@@ -63,7 +63,7 @@
       <span ng-bind="aClinic.hillromId"></span>
     </div>
     </span>
-    <div class="col-md-1 clinic-list__delete" ng-click="aClinic.deleted || deleteClinicModel(aClinic);">
+    <div class="col-md-2 clinic-list__delete" ng-click="aClinic.deleted || deleteClinicModel(aClinic);">
       <span class="icon-delete-icon"></span>
     </div>
   </div>
@@ -88,7 +88,7 @@
   <div class="dashboard dashboard--content">
     <div class="dashboard__manage-view margin-top">
       <div class="dashboard__manage-view--header">
-          <div class="col-md-3 header--type">
+          <div class="col-md-2 header--type">
             <span translate="patient.hcp-caption.hcp-name"></span>
           </div>
           <div class="col-md-2 header--type">
@@ -116,7 +116,7 @@
 
   <div class="col-md-16 clinic-list" ng-repeat="hcp in associatedHCPs track by $index" ng-if="associatedHCPs.length > 0" readonly="true" ng-class="{'default_active': !hcp.deleted, 'inactive': hcp.deleted}">
    <span ng-click="hcp.deleted || selectDoctor(hcp)">
-    <div class="col-md-3 clinic-list__detail">
+    <div class="col-md-2 clinic-list__detail">
       <span class="clinic-list__detail--name">{{hcp.lastName}} {{hcp.firstName}}</span>
     </div>
     <div class="col-md-2 clinic-list__address">
@@ -138,7 +138,7 @@
       <span class="clinic-list__fax--number" ng-bind="hcp.primaryPhone"></span>
     </div>
     </span>
-    <div class="col-md-1 clinic-list__delete" ng-click="deleteHCPModel(hcp);">
+    <div class="col-md-2 clinic-list__delete" ng-click="deleteHCPModel(hcp);">
       <span class="icon-delete-icon"></span>
     </div>
   </div>
