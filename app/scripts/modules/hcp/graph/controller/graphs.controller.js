@@ -4,7 +4,7 @@ angular.module('hillromvestApp')
 	var chart;
 	$scope.init = function() {
 		$scope.lazyLoadParamsPieChart = [
-        'bower_components/jquery.easy-pie-chart/dist/angular.easypiechart.js'
+        'scripts/third_party_library/angular.easypiechart.js'
         ];
         $scope.lazyLoadParamsDatePicker = [
         'bower_components/angular-daterangepicker/js/angular-daterangepicker.js'
