@@ -1,0 +1,10 @@
+{
+	"caregiver" : {
+		"tabs" : {
+			"clinic-hcp" : "Clinic and HCP",
+			"device-protocol" : "Device and Protocol",
+			"patient-demographics" : "Patient Demographics",
+			"notification-settings" : "Notification Settings"
+		}
+	}
+}

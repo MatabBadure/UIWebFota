@@ -15,22 +15,22 @@
 <div class="dashboard dashboard--content">
   <div class="container dashboard__manage-view margin-top">
     <div class="dashboard__manage-view--header">
-      <div class="col-md-4 header--type">
+      <div class="col-md-2 header--type">
         <span translate="doctor.clinic-name"></span>
       </div>
-      <div class="col-md-3 header--type">
+      <div class="col-md-2 header--type">
         <span translate="doctor.address"></span>
       </div>
       <div class="col-md-2 header--type">
         <span translate="doctor.city"></span>
       </div>
-      <div class="col-md-1 header--type">
+      <div class="col-md-2 header--type">
         <span translate="doctor.state"></span>
       </div>
       <div class="col-md-2 header--type">
         <span translate="doctor.phoneNumber"></span>
       </div>
-      <div class="col-md-1 header--type">
+      <div class="col-md-2 header--type">
         <span translate="doctor.type"></span>
       </div>
       <div class="col-md-2 header--type">
@@ -41,17 +41,17 @@
 
     <div class="dashboard__manage-view--list assoc" ng-repeat="clinic in clinicsOfHCP" ng-if="clinicsOfHCP.length > 0"  ng-class="{'inactive': clinic.deleted}">
       <span>
-      <div class="col-md-4  centered">
+      <div class="col-md-2  centered">
         <span class="main-prim-info">{{clinic.name}}</span>
       </div>
-      <div class="col-md-3  centered">
+      <div class="col-md-2  centered">
         <span class="short-info">{{clinic.address}}</span>
       </div>
       <div class="col-md-2  centered">
         <span class="short-info">{{clinic.city}}</span>
       </div>
 
-      <div class="col-md-1  centered">
+      <div class="col-md-2  centered">
         <span class="short-info">{{clinic.state}}</span>
       </div>
 
@@ -59,7 +59,7 @@
         <span class="short-info">{{clinic.phoneNumber}}</span>
       </div>
 
-      <div class="col-md-1  centered">
+      <div class="col-md-2  centered">
         <span class="short-info" ng-if="clinic.parent" translate="doctor.clinicType.parent"></span>
         <span class="short-info" ng-if="!clinic.parent" translate="doctor.clinicType.satellite"></span>
       </div>
@@ -69,7 +69,7 @@
       </div>
       </span>
 
-      <div class="col-md-1  centered"  ng-click="showclinicDisassociatedModal(clinic.id);">
+      <div class="col-md-2 centered text-center"  ng-click="showclinicDisassociatedModal(clinic.id);">
        <span class="icon-delete-icon"></span>
       </div>
       <div class="clr"></div>

@@ -82,6 +82,8 @@ angular.module('hillromvestApp')
           $state.go("clinicadmindashboard");
         }else if($scope.userRole === "HCP"){
           $state.go("hcpdashboard");
+        }else if($scope.userRole === "CARE_GIVER"){
+          $state.go("caregiverDashboard");
         }
       };
 
@@ -89,6 +91,16 @@ angular.module('hillromvestApp')
         $state.go(page);
       };
 
+      $scope.goToCaregiverDashboard = function(){
+        $state.go("caregiverDashboard");
+      };
+      $scope.goToPatientDashboard = function(value){
+        if(value){
+          $state.go(value, {"clinicId": $stateParams.clinicId});
+        }else{
+          $state.go("patientdashboard");
+        }
+      };
       $scope.isFooter = function(){
         var url = $location.path();
         $rootScope.isFooter = false;

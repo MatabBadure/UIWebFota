@@ -131,7 +131,7 @@
               <span class="">*</span>
             </div>
             <div class="col-md-5 dashboard__form--input custom-date reset-padding">
-              <input class="custom-dob" type="text" name="dob" validate-on-blur class="span2" value="" ng-model="patient.formatedDOB" ng-readonly="validateADMINorASP()" data-date-format="mm/dd/yy" id="dp2" required>
+              <input class="custom-dob" type="text" name="dob" validate-on-blur class="span2" value="" ng-model="patient.formatedDOB" ng-readonly="validateADMINorASP()" data-date-format="mm/dd/yyyy" id="dp2" required>
               <span readonly class="dashboard__form--label-age">{{patient.age}}</span>
               <div ng-show="(form.dob.$dirty && form.dob.$showValidationMessage && form.dob.$invalid) || submitted">
                 <span class="has-error" ng-show="form.dob.$error.required" translate="error.dob.required"></span>
