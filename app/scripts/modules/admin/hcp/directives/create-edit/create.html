@@ -126,9 +126,11 @@
               <span class="" translate="doctor.npi-number"></span>
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
-              <input class="" type="text" name="npi" validate-on-blur ng-pattern="/^[0-9]+$/" ng-model="doctor.npiNumber">
+              <input class="" type="text" name="npi" validate-on-blur ng-pattern="/^[0-9]+$/" ng-model="doctor.npiNumber" ng-maxlength=15 >
               <div ng-show="form.npi.$showValidationMessage && form.npi.$invalid" class="">
                 <span class="has-error" ng-show="form.npi.$error.pattern" translate="error.npiNumber.pattern"></span>
+                <span class="has-error" ng-show="form.npi.$error.maxlength" translate="error.npiNumber.maxlength">
+                </span>
               </div>
             </div>
           </div>
@@ -211,7 +213,7 @@
               <span class="" translate="doctor.mobile-number"></span>
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
-              <input class="" type="text" name="mobilePhone" validate-on-blur ng-model="doctor.mobilePhone" masui-maskk="(999)-999-9999">
+              <input class="" type="text" name="mobilePhone" validate-on-blur ng-model="doctor.mobilePhone" ui-mask="(999)-999-9999">
               <div ng-show="form.mobilePhone.$showValidationMessage && form.mobilePhone.$invalid" class="">
                 <span class="has-error" ng-show="form.mobilePhone.$error.mask" translate="error.mobilePhone.mask"></span>
               </div>

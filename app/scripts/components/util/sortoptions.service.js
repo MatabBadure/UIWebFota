@@ -26,6 +26,7 @@ angular.module('hillromvestApp')
     		sortPatientList.transmission = sortIcons;
     		sortPatientList.clinicName = sortIcons;
     		sortPatientList.adherence = sortIcons;
+            sortPatientList.hcp = sortIcons;
     		return sortPatientList;
     	};
 
@@ -86,5 +87,14 @@ angular.module('hillromvestApp')
             return sortClinicList;
         };
 
-
+        this.getSortOptionsForUserList = function(){
+            var sortUserList = {};
+            sortUserList.lastName = sortIcons;
+            sortUserList.role =  sortIcons;
+            sortUserList.hillromId = sortIcons;
+            sortUserList.email = sortIcons;
+            sortUserList.mobileNumber = sortIcons;
+            sortUserList.status = sortIcons;
+            return sortUserList;
+        };
     }]);

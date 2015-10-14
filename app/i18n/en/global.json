@@ -243,7 +243,8 @@
             }
         },
         "npiNumber":{
-            "pattern": "NPI Number is invalid."
+            "pattern": "NPI Number is invalid.",
+            "maxlength": "NPI Number cannot be more than 15 characters."
         },
         "credential": {
             "required": "Credential is required."
