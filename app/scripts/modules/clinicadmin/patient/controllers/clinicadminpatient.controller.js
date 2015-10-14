@@ -135,6 +135,10 @@ angular.module('hillromvestApp')
 
   $scope.getDevices = function(patientId){
     patientService.getDevices(patientId).then(function(response){
+      angular.forEach(response.data.deviceList, function(device){
+        device.createdDate = dateService.getDateByTimestamp(device.createdDate);
+        device.lastModifiedDate = dateService.getDateByTimestamp(device.lastModifiedDate);
+      });
       $scope.devices = response.data.deviceList;
     }).catch(function(response){
       notyService.showError(response);
