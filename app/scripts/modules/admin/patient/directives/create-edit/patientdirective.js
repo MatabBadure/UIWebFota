@@ -42,9 +42,15 @@ angular.module('hillromvestApp')
         $scope.init();
 
         $scope.createPatient = function () {
+          
           if($scope.form.$invalid){
             return false;
           }
+          angular.forEach($scope.patient, function(value, key){
+            if(value === '' || value === undefined){
+              $scope.patient[key] = null;
+            }
+          });
           if($scope.patientStatus.editMode){
             var data = $scope.patient;
             data.role = 'PATIENT';
