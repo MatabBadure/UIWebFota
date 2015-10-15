@@ -22,7 +22,7 @@
     </div>
     
     <div class="dashboard__manage-view--header">
-      <div class="col-md-3 header--type">
+      <div class="col-md-2 header--type">
         <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="clinic.patient-name">Patient Name</span>
       </div>
       <div class="col-md-2 header--type">
@@ -40,7 +40,7 @@
       <div class="col-md-2 header--type">
         <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" translate="clinic.clinic-name">Clinic Name</span>
       </div>
-      <div class="col-md-1 header--type">
+      <div class="col-md-2 header--type">
         <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="clinic.status">Status</span>
       </div>
       <div class="col-md-1 header--type text-centered">
@@ -52,7 +52,7 @@
 
     <div class="dashboard__manage-view--list assoc" ng-repeat="associatedPatient in associatedPatients" readonly="true" ng-class="{'inactive': associatedPatient.patient.isDeleted}">
      <span>
-      <div class="col-md-3">
+      <div class="col-md-2">
         <span class="main-prim-info">{{associatedPatient.patient.lastName}} {{associatedPatient.patient.firstName}}</span>
         <span class="main-secon-info">{{associatedPatient.patient.email}}</span>
       </div>
@@ -77,7 +77,7 @@
         <span class="short-info">{{clinic.name}}</span>
       </div>
 
-      <div class="col-md-1 centered">
+      <div class="col-md-2 centered">
           <span class="short-info active" ng-if="!associatedPatient.patient.isDeleted" translate="clinic.status-type.active"></span>
           <span class="short-info inactive" ng-if="associatedPatient.patient.isDeleted" translate="clinic.status-type.inactive"></span>
       </div>

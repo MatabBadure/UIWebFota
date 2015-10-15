@@ -121,7 +121,10 @@ angular.module('hillromvestApp').constant('hcpDashboardConstants', {
 .constant('loginConstants',{
 	role : {
 		"patient" : "PATIENT",
-		"hcp" : "HCP"
+		"hcp" : "HCP",
+		"caregiver" : "CARE_GIVER"
 
 	}
 })
+
+

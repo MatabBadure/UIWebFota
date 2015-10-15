@@ -105,3 +105,14 @@
     padding-left: 4%;
   }
 }
+
+.admin-user .protocol-list .protocol-list__edit {
+  padding-left: 10px;
+  span {
+  padding-right: 10px;
+  }
+}
+
+.admin-user .device-list .device-list__edit span {
+  padding-right: 10px;
+}

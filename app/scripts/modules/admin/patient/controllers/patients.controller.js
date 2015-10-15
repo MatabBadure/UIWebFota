@@ -502,6 +502,9 @@ angular.module('hillromvestApp')
       patientService.addDevice( $stateParams.patientId, $scope.device).then(function(response){
         $state.go('patientProtocol');
       }).catch(function(response){
+        if(response.data.user){
+          $scope.deviceAssociatedPatient = response.data.user;
+        }
         notyService.showError(response);
       });
     };
@@ -810,6 +813,10 @@ angular.module('hillromvestApp')
        $state.go('clinicProfile', {
         'clinicId': clinic.id
       });
+    };
+
+    $scope.gotoPatient = function(){
+      $state.go('patientOverview',{'patientId': $scope.deviceAssociatedPatient.id});
     };
 
     $scope.init();
