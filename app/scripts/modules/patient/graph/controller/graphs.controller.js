@@ -1107,11 +1107,10 @@ angular.module('hillromvestApp')
       });
     };
 
-    $scope.initPatientDeviceProtocol = function(){ 
+    $scope.initPatientDeviceProtocol = function(){
       $scope.devicesErrMsg = null;
       $scope.protocolsErrMsg = null;
       $scope.devices = []; $scope.devices.length = 0;
-      patientService.getDevices(StorageService.get('logged').patientID).then(function(response){
       patientService.getDevices(StorageService.get('logged').patientID || $scope.patientId).then(function(response){
         angular.forEach(response.data.deviceList, function(device){
           device.createdDate = dateService.getDateByTimestamp(device.createdDate);
