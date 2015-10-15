@@ -22,6 +22,7 @@
         "detail": {
             "title": "Doctor"
         },
+        "hcp-details": "HCP Details",
         "noClinics": "No Clinic Associated",
         "noPatient": "No Patient Associated.",
         "general-details":  "General Details",
@@ -41,6 +42,7 @@
         "previous-text": "Previous",
         "next-text": "Next",
         "date-of-birth": "Date of Birth",
+        "role":"Role",
         "title": {
                     "name": "Title",
                     "mr":   "Mr.",
@@ -86,6 +88,7 @@
         "submit-button-text": "submit",
         "cancel-button-text": "cancel",
         "deactivate-button-text": "Deactivate",
+        "disassociate-button-text": "Disassociate",
         "update-button-text": "Update",
         "back-button-text": "Back",
         "edit-button-text": "Edit",
