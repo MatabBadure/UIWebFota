@@ -7,7 +7,6 @@
  */
 angular.module('hillromvestApp')
   .factory('DoctorService', ['$http', 'headerService', 'URL', function ($http, headerService, URL) {
-    var token = localStorage.getItem('token');
     return {
 
       /**
@@ -19,11 +18,7 @@ angular.module('hillromvestApp')
 
       getDoctorsList : function(searchString, pageNo, offset){
         return $http.get('api/user/hcp/search?searchString=' + searchString + '&page=' + pageNo + '&per_page=' + offset, {
-          headers: {
-            'Content-Type' : 'application/json',
-            'Accept' : 'application/json',
-            'x-auth-token' : token
-          }
+          headers: headerService.getHeader()
         }).success(function (response) {
           return response;
         });
@@ -37,11 +32,7 @@ angular.module('hillromvestApp')
       */
       getDoctor : function (id) {
         return $http.get('api/user/' + id + '/hcp' ,{
-          headers: {
-            'Content-Type' : 'application/json',
-            'Accept' : 'application/json',
-            'x-auth-token' : token
-          }
+          headers: headerService.getHeader()
         }).success(function (response) {
           return response;
         });
