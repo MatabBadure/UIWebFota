@@ -94,7 +94,6 @@ angular.module('hillromvestApp')
 				});
 			}
 			if(!isClinic){
-				localStorage.setItem('clinicId', $scope.clinics[0].id);
 				$scope.selectedClinic = $scope.clinics[0];
 			}
 		}	  		
