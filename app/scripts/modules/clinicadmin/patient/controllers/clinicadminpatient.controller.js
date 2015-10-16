@@ -194,17 +194,6 @@ angular.module('hillromvestApp')
       return false;
     }
     var data = $scope.patient;
-    switch(data.status){
-      case 'expired':
-      data.expired = true;
-      break;
-      case 'active':
-      data.isDeleted = false;
-      break;
-      case 'inactive':
-      data.isDeleted = true;
-      break;
-    }
     data.role = 'PATIENT';
     data.clinicMRNId.clinicId = $stateParams.clinicId;
     delete data.status;
