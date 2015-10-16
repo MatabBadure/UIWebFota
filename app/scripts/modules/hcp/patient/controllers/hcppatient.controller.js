@@ -40,7 +40,6 @@ angular.module('hillromvestApp')
           $scope.selectedClinic =  $scope.clinics[0];
         }
       }
-      console.log($scope.clinics);
       $scope.searchPatients();
     }).catch(function(response){
       notyService.showError(response);
