@@ -376,6 +376,25 @@ angular.module('hillromvestApp')
         var toolTip = '';
         angular.forEach($scope.completeGraphData.actual, function(value) {
           if(value.timestamp === e.point.x){
+            if(value.note && value.note.note && value.note.note.length > 0){
+              toolTip =
+                '<div class="tooltip_sub_content">'+
+                '<h6 class="after">' + dateService.getDateFromTimeStamp(value.timestamp,patientDashboard.dateFormat,'/') + '  ('+ d3.time.format('%I:%M %p')(new Date(value.timestamp)) + ')' + '</h6>' +
+                '<ul class="graph_ul">' +
+                  '<li><span class="pull-left">' + 'Session No. ' +'</span><span class="pull-right value">' + value.sessionNo + '/' + value.treatmentsPerDay +'</span></li>' +
+                  '<li><span class="pull-left">' + 'Duration' + '</span><span class="pull-right value">' + value.duration  + '</span></li>' +
+                  '<li><span class="pull-left">' + 'Frequency' + '</span><span class="pull-right value">' + value.frequency  + '</span></li>' +
+                  '<li><span class="pull-left">' + 'Pressure' +'</span><span class="pull-right value">' + value.pressure  +'</span></li>' +
+                  '<li><span class="pull-left">' + 'Cough Pauses' +'</span><span class="pull-right value">' + (value.coughPauseDuration) +'</span></li>' +
+                '</ul>'+
+                '</div>'+
+                '<div class="tooltip_sub_content">'+
+                '<h6>' + 'Note' + '</h6>' +
+                '<ul class="graph_ul">' +
+                  '<span class="notes">'+ (value.note.note)+'</span>' +
+                '</ul>'+
+                '</div>';
+            }else {
               toolTip =
                 '<h6>' + dateService.getDateFromTimeStamp(value.timestamp,patientDashboard.dateFormat,'/') + '  ('+ d3.time.format('%I:%M %p')(new Date(value.timestamp)) + ')' + '</h6>' +
                 '<ul class="graph_ul">' +
@@ -384,8 +403,8 @@ angular.module('hillromvestApp')
                   '<li><span class="pull-left">' + 'Frequency' + '</span><span class="pull-right value">' + value.frequency  + '</span></li>' +
                   '<li><span class="pull-left">' + 'Pressure' +'</span><span class="pull-right value">' + value.pressure  +'</span></li>' +
                   '<li><span class="pull-left">' + 'Cough Pauses' +'</span><span class="pull-right value">' + (value.coughPauseDuration) +'</span></li>' +
-                  '<li><span class="pull-left">' + 'Note' +'</span><span class="pull-right value">' + (value.note.note) +'</span></li>' +
                 '</ul>';
+            }
           }
         });
       return toolTip;
@@ -398,13 +417,22 @@ angular.module('hillromvestApp')
         angular.forEach($scope.completeGraphData, function(value) {
           if(value.startTime === e.point.x && value.hmr !== 0 ){
               toolTip =
-                '<h6>' + dateService.getDateFromTimeStamp(value.startTime,patientDashboard.dateFormat,'/') + '</h6>' +
+                '<div class="tooltip_sub_content">'+
+                '<h6 class="after">' + dateService.getDateFromTimeStamp(value.startTime,patientDashboard.dateFormat,'/') + '</h6>' +
                 '<ul class="graph_ul">' +
                   '<li><span class="pull-left">' + 'Frequency' + '</span><span class="pull-right value">' + value.frequency  + '</span></li>' +
                   '<li><span class="pull-left">' + 'Pressure' +'</span><span class="pull-right value">' + value.pressure +'</span></li>' +
                   '<li><span class="pull-left">' + 'Cough Pauses' +'</span><span class="pull-right value">' + value.coughPauseDuration +'</span></li>' +
                   '<li><span class="pull-left">' + 'Duration' +'</span><span class="pull-right value">' + value.durationInMinutes +'</span></li>' +
-                '</ul>';
+                '</ul>'+
+                '</div>'+
+
+                '<div class="tooltip_sub_content">'+
+                '<h6>' + 'Note' + '</h6>' +
+                '<ul class="graph_ul">' +
+                  '<span class="notes">Lorem Ipsum is</br> simply dummy text</br> of the printing </br>.</span>' +
+                '</ul>'+
+                '</div>';
           }
         });
       return toolTip;   
