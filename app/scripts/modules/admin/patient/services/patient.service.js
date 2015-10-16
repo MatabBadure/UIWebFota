@@ -349,7 +349,7 @@ angular.module('hillromvestApp')
         });
       },
 
-      getHCPsToLinkToPatient: function(patientId, pageNo, offset, searchString){
+      getHCPsToLinkToPatient: function(patientId, searchString){
         var url = URL.getHCPsToLinkToPatient.replace('PATIENTID', patientId).replace('SEARCHSTRING', searchString);
         return $http.get(url, {
           headers: headerService.getHeader()

@@ -71,7 +71,17 @@ angular.module('hillromvestApp')
                         }
 
                         if(isAuthenticated && $rootScope.toState.url == "/login"){
-                            $state.go('patientUser');
+                            if(Principal.isInRole('ADMIN')){
+                                $state.go('patientUser');
+                            }else if(Principal.isInRole('PATIENT')){
+                                $state.go('patientdashboard');
+                            }else if(Principal.isInRole('CLINIC ADMIN') || Principal.isInRole('CLINIC_ADMIN')){
+                                $state.go('clinicadmindashboard');
+                            }else if(Principal.isInRole('HCP')){
+                                $state.go("hcpdashboard");
+                            }else if(Principal.isInRole('CARE_GIVER')){
+                                $state.go("caregiverDashboard");
+                            }
                         }
                     });
             },
