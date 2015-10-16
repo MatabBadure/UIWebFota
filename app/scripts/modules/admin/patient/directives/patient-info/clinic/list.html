@@ -117,16 +117,16 @@
   <div class="col-md-16 clinic-list" ng-repeat="hcp in associatedHCPs track by $index" ng-if="associatedHCPs.length > 0" readonly="true" ng-class="{'default_active': !hcp.deleted, 'inactive': hcp.deleted}">
    <span ng-click="hcp.deleted || selectDoctor(hcp)">
     <div class="col-md-2 clinic-list__detail">
-      <span class="clinic-list__detail--name">{{hcp.lastName}} {{hcp.firstName}}</span>
+      <span class="clinic-list__detail--name">{{::hcp.lastName}}, {{::hcp.firstName}}</span>
     </div>
     <div class="col-md-2 clinic-list__address">
-      <span class="clinic-list__credentials">{{hcp.credentials}}</span>
+      <span class="clinic-list__credentials">{{::hcp.credentials}}</span>
     </div>
     <div class="col-md-2 clinic-list__address">
       <span class="clinic-list__fax--number" ng-bind="hcp.npiNumber"></span>
     </div>
     <div class="col-md-2 clinic-list__fax">
-      <span class="clinic-list__fax--number" ng-repeat ="clinic in hcp.clinics">{{clinic.name}} <b>{{$last ? '' : ', '}}</b></span>
+      <span class="clinic-list__fax--number" ng-repeat ="clinic in hcp.clinics">{{::clinic.name}} <b>{{$last ? '' : ', '}}</b></span>
     </div>
     <div class="col-md-2 clinic-list__fax">
       <span class="clinic-list__fax--number" ng-bind="hcp.city"></span>

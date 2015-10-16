@@ -3,8 +3,8 @@
 <div class="container admin-user">
   <div class="col-md-16 margin-top reset-padding">
    <div class="user-gen-details">
-     <span class="user-gen-details--name">{{clinic.name}}</span>
-     <span class="user-gen-details--hr-id">{{clinic.hillromId}}</span>
+     <span class="user-gen-details--name">{{::clinic.name}}</span>
+     <span class="user-gen-details--hr-id">{{::clinic.hillromId}}</span>
    </div>
   </div>
 </div>
@@ -32,10 +32,10 @@
 <div class="container admin-user">
 	<div class="col-md-16 crud-list" ng-show="clinicAdmin && !clinicAdminEdit">
     <div class="col-md-4">
-      <span>{{clinicAdmin.lastName}} {{clinicAdmin.firstName}}</span>
+      <span>{{::clinicAdmin.lastName}}, {{::clinicAdmin.firstName}}</span>
     </div>
     <div class="col-md-10">
-      <span>{{clinicAdmin.email}}</span>
+      <span>{{::clinicAdmin.email}}</span>
     </div>
     <div class="col-md-1 text-center">
       <span class="icon-edit-icon" ng-click="setEditClinicAdmin()"></span>
