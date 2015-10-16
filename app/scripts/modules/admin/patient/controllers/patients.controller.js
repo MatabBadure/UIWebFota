@@ -726,7 +726,7 @@ angular.module('hillromvestApp')
         patientService.getHCPsToLinkToPatient(patientId, searchString),
         patientService.getAssociateHCPToPatient(patientId)
       ]).then(function(data) {        
-        if(data !== undefined && data !== null && data.length > 0 ){
+        if(data){
           if(data[0] !== undefined && data[0] !== null){
             $scope.hcps = []; 
             $scope.hcps = data[0].data.HCPUser; 
