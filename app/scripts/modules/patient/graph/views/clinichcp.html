@@ -93,16 +93,16 @@
  </div>
 <div class="col-md-16 col-sm-16 clinic-list" ng-repeat="hcp in hcps">
   <div class="col-md-3 col-sm-3 clinic-list__detail">
-    <span class="clinic-list__detail--name">{{hcp.lastName}} {{hcp.firstName}}</span>
+    <span class="clinic-list__detail--name">{{::hcp.lastName}}, {{::hcp.firstName}}</span>
   </div>
   <div class="col-md-2 col-sm-2 clinic-list__address">
-    <span class="clinic-list__credentials">{{hcp.credentials}}</span>
+    <span class="clinic-list__credentials">{{::hcp.credentials}}</span>
   </div>
   <div class="col-md-2 col-sm-2 clinic-list__address">
     <span class="clinic-list__fax--number" ng-bind="hcp.npiNumber"></span>
   </div>
   <div class="col-md-3 col-sm-3 clinic-list__fax">
-    <span class="clinic-list__fax--number" ng-repeat ="clinic in hcp.clinics">{{clinic.name}} <b>{{$last ? '' : ', '}}</b></span>
+    <span class="clinic-list__fax--number" ng-repeat ="clinic in hcp.clinics">{{::clinic.name}} <b>{{$last ? '' : ', '}}</b></span>
   </div>
   <div class="col-md-2 col-sm-2 clinic-list__fax">
     <span class="clinic-list__fax--number" ng-bind="hcp.city"></span>
