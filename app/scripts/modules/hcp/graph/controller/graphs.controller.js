@@ -80,26 +80,6 @@ angular.module('hillromvestApp')
 		});
 	};
 
-	$scope.getDashboardForHCPOrPatient = function(response, userId){
-		if(response.data && response.data.clinics){
-			$scope.clinics = $filter('orderBy')(response.data.clinics, "name"); 
-			var isClinic = false;	
-			if($stateParams.clinicId !== undefined && $stateParams.clinicId !== null){
-				angular.forEach(response.data.clinics, function(clinic) {
-					if(clinic.id === $stateParams.clinicId){
-						$scope.selectedClinic = clinic;
-						isClinic = true;
-					}
-				});
-			}
-			if(!isClinic){
-				$scope.selectedClinic = $scope.clinics[0];
-			}
-		}	  		
-		$scope.weeklyChart();
-		$scope.getStatistics($scope.selectedClinic.id, userId);
-	};
-
 	//---HCP PieChart JS =============
 	$scope.missedtherapy = {
 		animate:{
@@ -527,4 +507,24 @@ angular.module('hillromvestApp')
 			$state.go('clinicadminpatientdashboard',{'filter':value, 'clinicId':$scope.selectedClinic.id});
 		}
   };
+
+  $scope.getDashboardForHCPOrPatient = function(response, userId){
+		if(response.data && response.data.clinics){
+			$scope.clinics = $filter('orderBy')(response.data.clinics, "name"); 
+			var isClinic = false;	
+			if($stateParams.clinicId !== undefined && $stateParams.clinicId !== null){
+				angular.forEach(response.data.clinics, function(clinic) {
+					if(clinic.id === $stateParams.clinicId){
+						$scope.selectedClinic = clinic;
+						isClinic = true;
+					}
+				});
+			}
+			if(!isClinic){
+				$scope.selectedClinic = $scope.clinics[0];
+			}
+		}	  		
+		$scope.weeklyChart();
+		$scope.getStatistics($scope.selectedClinic.id, userId);
+	};
 }]);
