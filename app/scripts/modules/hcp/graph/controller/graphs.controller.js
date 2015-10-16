@@ -87,7 +87,6 @@ angular.module('hillromvestApp')
 			if($stateParams.clinicId !== undefined && $stateParams.clinicId !== null){
 				angular.forEach(response.data.clinics, function(clinic) {
 					if(clinic.id === $stateParams.clinicId){
-						localStorage.setItem('clinicId', clinic.id);
 						$scope.selectedClinic = clinic;
 						isClinic = true;
 					}
