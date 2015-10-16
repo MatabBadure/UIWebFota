@@ -231,7 +231,7 @@
               <span class=""></span>
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
-              <input type="text" validate-on-blur class="form-control" name="mobilePhone" ng-readonly="validateADMINorASP()" ng-model="patient.mobilePhone" ui-mask="(999)-999-9999">
+              <input type="text" validate-on-blur class="form-control" name="mobilePhone" ng-readonly="validateADMINorASP()" ng-model="patient.mobilePhone" ui-mask="(999)-999-9999" model-view-value="true">
               <div ng-show="(form.mobilePhone.$showValidationMessage && form.mobilePhone.$invalid) || submitted">
                 <span class="has-error" ng-show="form.mobilePhone.$error.pattern" translate="error.mobilePhone.pattern"></span>
                 <span class="has-error" ng-show="form.mobilePhone.$error.maxlength" translate="error.mobilePhone.maxlength"></span>
@@ -247,7 +247,7 @@
               <span class=""></span>
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
-              <input type="text" class="form-control" validate-on-blur name="primaryPhone" ng-readonly="validateADMINorASP()" ng-model="patient.primaryPhone" ui-mask="(999)-999-9999">
+              <input type="text" class="form-control" validate-on-blur name="primaryPhone" ng-readonly="validateADMINorASP()" ng-model="patient.primaryPhone" ui-mask="(999)-999-9999" model-view-value="true">
               <div ng-show="(form.primaryPhone.$showValidationMessage && form.primaryPhone.$invalid) || submitted">
                 <span class="has-error" ng-show="form.primaryPhone.$error.pattern" translate="error.primaryPhone.pattern"></span>
                 <span class="has-error" ng-show="form.primaryPhone.$error.maxlength" translate="error.primaryPhone.maxlength"></span>

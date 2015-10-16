@@ -47,6 +47,7 @@ angular.module('hillromvestApp')
       $scope.perPageCount = 4;
       $scope.patientTab = currentRoute;
       if ($state.current.name === 'patientdashboard') {
+        $scope.hasTransmissionDate = false;
         $scope.initPatientDashboard();        
       }else if(currentRoute === 'patientdashboardCaregiver'){
         $scope.initPatientCaregiver();
@@ -1254,6 +1255,7 @@ angular.module('hillromvestApp')
       $scope.weeklyChart();
     }
     $scope.initPatientDashboard = function(){
+      $scope.getTransmissionDateForPatient(StorageService.get('logged').patientID);
       $scope.getAssociatedClinics(StorageService.get('logged').patientID);
       $scope.getPatientDevices(StorageService.get('logged').patientID);
       $scope.editNote = false;
@@ -1434,13 +1436,22 @@ angular.module('hillromvestApp')
         $scope.patientDevices = response.data.deviceList;
       });
     };
-     $scope.getAssociatedClinics = function(patientId){
+    $scope.getAssociatedClinics = function(patientId){
       patientService.getClinicsLinkedToPatient(patientId).then(function(response) {
         if(response.data.clinics){
           $scope.associatedClinics = response.data.clinics;
         }
       });
-     }
+    };
+
+    $scope.getTransmissionDateForPatient = function(patientId){
+      patientService.getTransmissionDate(patientId).then(function(response) {
+        if(response.data && response.data.firstTransmissionDate){
+          $scope.hasTransmissionDate = true;
+          $scope.transmissionDate = response.data.firstTransmissionDate;          
+        }
+      });
+    };
 
     $scope.init();
 
@@ -1539,7 +1550,7 @@ angular.module('hillromvestApp')
         var graphData = ($scope.hmrGraph) ? $scope.completeGraphData : $scope.completeComplianceData;
         var element1 = document.querySelectorAll(printId1)[0],
         //element2 = document.querySelectorAll(printId2)[0],
-        html1 = element1.innerHTML,
+        html1 = (element1) ? element1.innerHTML: "",
         //html2 = element2.innerHTML,
         //htmlDocument,
         doc;

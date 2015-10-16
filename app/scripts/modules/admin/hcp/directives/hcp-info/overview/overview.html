@@ -70,8 +70,8 @@
       </div>
       <div class="fixed-filter-box reset-padding-left">
         <div class="search-dropdown">
-          <select ng-model="sortOption" ng-change="getPatientsByClinic()">
-            <option ng-selected="{{hcpClinic.clinicId == sortOption}}"
+          <select ng-model="filterClinicId" ng-change="getPatientsByClinic()">
+            <option ng-selected="{{hcpClinic.clinicId == filterClinicId}}"
             ng-repeat="hcpClinic in clinicList"
             value="{{hcpClinic.clinicId}}">
             {{hcpClinic.name}}
