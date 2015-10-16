@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('hillromvestApp')
-  .controller('clinicadminProfileController',['$scope', '$state', '$stateParams', '$location', 'notyService', 'UserService', 'Password', 'Auth', 'AuthServerProvider', 'DoctorService','clinicadminService', function ($scope, $state, $stateParams, $location, notyService, UserService, Password, Auth, AuthServerProvider, DoctorService, clinicadminService) {
+  .controller('clinicadminProfileController',['$scope', '$state', '$stateParams', '$location', 'notyService', 'UserService', 'Password', 'Auth', 'AuthServerProvider', 'DoctorService','clinicadminService', 'StorageService',
+    function ($scope, $state, $stateParams, $location, notyService, UserService, Password, Auth, AuthServerProvider, DoctorService, clinicadminService, StorageService) {
 
 
     $scope.isActive = function(tab) {
@@ -22,7 +23,7 @@ angular.module('hillromvestApp')
       $scope.credentialsList = admin_cont.hcp.credentialsList;
       UserService.getUser(adminId).then(function(response){
         $scope.user = response.data.user;
-        $scope.user.role = localStorage.getItem('role');
+        $scope.user.role = StorageService.get('logged').role;
       }).catch(function(response){
         notyService.showError(response);
       });
@@ -31,7 +32,7 @@ angular.module('hillromvestApp')
       }).catch(function(response){
         notyService.showError(response);
       });
-      clinicadminService.getClinicsAssociated(localStorage.getItem('userId')).then(function(response){
+      clinicadminService.getClinicsAssociated(StorageService.get('logged').userId).then(function(response){
         $scope.clinics = response.data.clinics;
       }).catch(function(response){
         notyService.showError(response);
@@ -39,13 +40,13 @@ angular.module('hillromvestApp')
     };
 
     $scope.initSettings = function(){
-      UserService.getUser(localStorage.getItem('userId')).then(function(response){
+      UserService.getUser(StorageService.get('logged').userId).then(function(response){
         $scope.user = response.data.user;
       }).catch(function(response){
         notyService.showError(response);
       });
 
-      clinicadminService.getClinicsAssociated(localStorage.getItem('userId')).then(function(response){
+      clinicadminService.getClinicsAssociated(StorageService.get('logged').userId).then(function(response){
         $scope.clinics = response.data.clinics;
       }).catch(function(response){
         notyService.showError(response);
@@ -54,7 +55,7 @@ angular.module('hillromvestApp')
 
     $scope.init = function(){
       if($state.current.name === 'clinicadminUserProfile' || $state.current.name === 'editClinicadminProfile' || $state.current.name === 'clinicadminUpdatePassword'){
-        $scope.initProfile(localStorage.getItem('userId'));
+        $scope.initProfile(StorageService.get('logged').userId);
       }else if($state.current.name === 'clinicadminSettings'){
         $scope.initSettings();
       }
@@ -85,7 +86,7 @@ angular.module('hillromvestApp')
       }
       $scope.user.role = $scope.user.authorities[0].name;
       UserService.editUser($scope.user).then(function(response){        
-        if(localStorage.getItem("userEmail") === $scope.user.email){
+        if(StorageService.get('logged').userEmail === $scope.user.email){
           notyService.showMessage(response.data.message, 'success');
           $state.go('clinicadminUserProfile');
         }else{
@@ -107,7 +108,7 @@ angular.module('hillromvestApp')
         'password': $scope.profile.password,
         'newPassword': $scope.profile.newPassword
       };
-      Password.updatePassword(localStorage.getItem('userId'), data).then(function(response){
+      Password.updatePassword(StorageService.get('logged').userId, data).then(function(response){
         Auth.logout();
         notyService.showMessage(response.data.message, 'success');
         $state.go('login');
@@ -136,7 +137,7 @@ angular.module('hillromvestApp')
       if(notification === 'settingDeviationNotification'){
         data.isSettingDeviationNotification = !$scope.user.settingDeviationNotification;
       }
-      UserService.updatePatientUserNotification(localStorage.getItem('userId'), data).then(function(response){
+      UserService.updatePatientUserNotification(StorageService.get('logged').userId, data).then(function(response){
         $scope.user = response.data.user;    
       }).catch(function(response){
         notyService.showError(response);

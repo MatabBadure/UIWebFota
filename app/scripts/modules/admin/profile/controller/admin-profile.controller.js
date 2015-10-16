@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('hillromvestApp')
-  .controller('adminProfileController',['$scope', '$state', '$location', 'notyService', 'UserService', 'Password', 'Auth', 'AuthServerProvider', function ($scope, $state, $location, notyService, UserService, Password, Auth, AuthServerProvider) {
+  .controller('adminProfileController',['$scope', '$state', '$location', 'notyService', 'UserService', 'Password', 'Auth', 'AuthServerProvider', 'StorageService',
+    function ($scope, $state, $location, notyService, UserService, Password, Auth, AuthServerProvider, StorageService) {
 
 
     $scope.isActive = function(tab) {
@@ -24,7 +25,7 @@ angular.module('hillromvestApp')
 
     $scope.init = function(){
       if($state.current.name === 'adminProfile' || $state.current.name === 'editAdminProfile' ){
-        $scope.initProfile(localStorage.getItem('userId'));
+        $scope.initProfile(StorageService.get('logged').userId);
       }
     };
 
@@ -57,7 +58,7 @@ angular.module('hillromvestApp')
       }
       $scope.user.role = $scope.user.authorities[0].name;
       UserService.editUser($scope.user).then(function(response){        
-        if(localStorage.getItem("userEmail") === $scope.user.email){
+        if(StorageService.get("logged").userEmail === $scope.user.email){
           notyService.showMessage(response.data.message, 'success');
           $state.go('adminProfile');
         }else{
@@ -83,7 +84,7 @@ angular.module('hillromvestApp')
         'password': $scope.profile.password,
         'newPassword': $scope.profile.newPassword
       };
-      Password.updatePassword(localStorage.getItem('userId'), data).then(function(response){
+      Password.updatePassword(StorageService.get('logged').userId, data).then(function(response){
         Auth.logout();
         notyService.showMessage(response.data.message, 'success');
         $state.go('login');
