@@ -1,13 +1,14 @@
 'use strict';
 
 angular.module('hillromvestApp')
-    .controller('LogoutController',['$scope', 'Auth', '$state', 'Principal', 'Account', function ($scope, Auth, $state, Principal, Account) {
+    .controller('LogoutController',['$scope', 'Auth', '$state', 'Principal', 'Account', 'StorageService',
+    	function ($scope, Auth, $state, Principal, Account, StorageService) {
     	$scope.logout = function(){
 
     		//This it Temp Fix
     		Auth.signOut().then(function(data) {
           		Auth.logout();
-          		localStorage.clear();
+          		StorageService.clearAll();
           		Account.get().$promise
 			        .then(function (account) {
 			        })

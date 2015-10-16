@@ -1,9 +1,9 @@
 'use strict';
 angular.module('hillromvestApp')
-  .factory('headerService',[function() {
+  .factory('headerService', ['StorageService', function(StorageService) {
     return {
       getHeader: function() {
-        var token = localStorage.getItem('token'),
+        var token = StorageService.get('logged').token,
           header = {
             'Content-Type': 'application/json',
             'Accept': 'application/json',

@@ -27,9 +27,14 @@ angular.module('hillromvestApp')
     templateUrl: 'scripts/components/navbar/navbar.html',
     restrict: 'E',
 
-    controller: ['$scope','$state', function ($scope, $state) {
-      $scope.userRole = localStorage.getItem('role');
-      $scope.username = localStorage.getItem('userFirstName');
+    controller: ['$scope', '$state', 'StorageService', function ($scope, $state, StorageService) {
+
+      $scope.userRole = null;
+      $scope.username = null;
+      if(StorageService.get('logged')){
+        $scope.userRole = StorageService.get('logged').role;
+        $scope.username = StorageService.get('logged').userFirstName;  
+      }
       $scope.isActive = function(tab) {
         var path = $location.path();
         if (path.indexOf(tab) !== -1) {
@@ -55,7 +60,7 @@ angular.module('hillromvestApp')
       $scope.logout = function(){
         Auth.signOut().then(function(data) {
           Auth.logout();
-          localStorage.clear();
+          StorageService.clearAll();
           $scope.signOut();
         }).catch(function(err) {
         });
@@ -130,9 +135,9 @@ angular.module('hillromvestApp')
     templateUrl: 'scripts/components/navbar/navbarpatientuser.html',
     restrict: 'E',
 
-    controller: ['$scope', 'UserService', function ($scope, UserService) {
+    controller: ['$scope', 'UserService', 'StorageService', function ($scope, UserService, StorageService) {
       $scope.notifications = 0;
-      $scope.username = localStorage.getItem('userFirstName');
+      $scope.username = StorageService.get('logged').userFirstName;
       $scope.isActive = function(tab) {
         var path = $location.path();
         if (path.indexOf(tab) !== -1) {
@@ -143,7 +148,7 @@ angular.module('hillromvestApp')
       };
 
       $scope.getNotifications = function(){
-        UserService.getPatientNotification(localStorage.getItem("patientID"), new Date().getTime()).then(function(response){                  
+        UserService.getPatientNotification(StorageService.get("logged").patientID, new Date().getTime()).then(function(response){
           $scope.notifications = response.data;
           if($scope.notifications.length < 2){
             $scope.no_of_notifications = $scope.notifications.length;
@@ -163,8 +168,8 @@ angular.module('hillromvestApp')
     templateUrl: 'scripts/components/navbar/navbarhcp.html',
     restrict: 'E',
 
-    controller: ['$scope', 'UserService', '$stateParams', function ($scope, UserService, $stateParams) {
-      $scope.username = localStorage.getItem('userFirstName');
+    controller: ['$scope', 'UserService', '$stateParams', 'StorageService', function ($scope, UserService, $stateParams, StorageService) {
+      $scope.username = StorageService.get('logged').userFirstName;
       $scope.notifications = 0;
       $scope.isActive = function(tab) {
         var path = $location.path();
@@ -181,7 +186,7 @@ angular.module('hillromvestApp')
       };
 
       $scope.getNotifications = function(){
-        UserService.getPatientNotification(localStorage.getItem("patientID"), new Date().getTime()).then(function(response){                  
+        UserService.getPatientNotification(StorageService.get('logged').patientID, new Date().getTime()).then(function(response){
           $scope.notifications = response.data;
           if($scope.notifications.length < 2){
             $scope.no_of_notifications = $scope.notifications.length;
@@ -200,8 +205,8 @@ angular.module('hillromvestApp')
     templateUrl: 'scripts/components/navbar/navbarclinicadmin.html',
     restrict: 'E',
 
-    controller: ['$scope', 'UserService', '$stateParams', function ($scope, UserService, $stateParams) {
-      $scope.username = localStorage.getItem('userFirstName');
+    controller: ['$scope', 'UserService', '$stateParams', 'StorageService', function ($scope, UserService, $stateParams, StorageService) {
+      $scope.username = StorageService.get('logged').userFirstName;
       $scope.notifications = 0;
       $scope.isActive = function(tab) {
         var path = $location.path();
