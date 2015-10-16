@@ -66,31 +66,21 @@ angular.module('hillromvestApp')
 
 	$scope.getClinicsForHCP = function(userId) {		
 		DoctorService.getClinicsAssociatedToHCP(userId).then(function(response){
-			if(response.data && response.data.clinics){
-				$scope.clinics = $filter('orderBy')(response.data.clinics, "name");
-				//$scope.clinics.push({"id": "others", "name": "Others"});
-				var isClinic = false;
-				angular.forEach(response.data.clinics, function(clinic) {
-					if(clinic.id === $stateParams.clinicId){
-						localStorage.setItem('clinicId', clinic.id);
-						$scope.selectedClinic = clinic;
-						isClinic = true;
-					}
-				});	
-				if(!isClinic){
-					localStorage.setItem('clinicId', $scope.clinics[0].id);
-					$scope.selectedClinic = $scope.clinics[0];
-				}
-			}
-			$scope.weeklyChart();
-			$scope.getStatistics($scope.selectedClinic.id, userId);
-	  }).catch(function(response){
-			notyService.showError(response);
-	  });
+			$scope.getDashboardForHCPOrPatient(response, userId);	
+		  }).catch(function(response){
+				notyService.showError(response);
+		  });
 	};
 
 	$scope.getClinicsForClinicAdmin = function(userId) {
-	clinicadminService.getClinicsAssociated(userId).then(function(response){
+		clinicadminService.getClinicsAssociated(userId).then(function(response){
+			$scope.getDashboardForHCPOrPatient(response, userId);
+		}).catch(function(response){
+		  notyService.showError(response);
+		});
+	};
+
+	$scope.getDashboardForHCPOrPatient = function(response, userId){
 		if(response.data && response.data.clinics){
 			$scope.clinics = $filter('orderBy')(response.data.clinics, "name"); 
 			var isClinic = false;	
@@ -110,9 +100,6 @@ angular.module('hillromvestApp')
 		}	  		
 		$scope.weeklyChart();
 		$scope.getStatistics($scope.selectedClinic.id, userId);
-	}).catch(function(response){
-	  notyService.showError(response);
-	});
 	};
 
 	//---HCP PieChart JS =============
