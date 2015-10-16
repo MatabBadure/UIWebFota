@@ -35,9 +35,7 @@
             <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding" translate="patient.clinic-level-status">
             </div>
             <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding">
-              <span ng-if="patient.expired" translate="patient.status-type.expired"></span>
-              <span ng-if="!patient.expired && isDeleted" translate="patient.status-type.inactive"></span>
-              <span ng-if="!patient.expired && !isDeleted" translate="patient.status-type.active"></span>
+              <span>{{::patient.clinicMRNId.status}}</span>
             </div>
           </div>
         </div>
