@@ -54,28 +54,28 @@
 
       <div class="dashboard__manage-view--list" ng-repeat="patient in patients" ng-click="patient.isDeleted || selectPatient(patient)" ng-readonly="true" ng-class="{'inactive': patient.isDeleted}">
           <div class="col-md-2 reset-padding">
-            <span class="main-prim-info">{{patient.lastName}} {{patient.firstName}}</span>
-            <span class="main-secon-info">{{patient.email}}</span>
+            <span class="main-prim-info">{{::patient.lastName}}, {{::patient.firstName}}</span>
+            <span class="main-secon-info">{{::patient.email}}</span>
           </div>
           <div class="col-md-2 reset-padding centered">
-            <span class="impo-highlight">{{patient.mrnId}}</span>
+            <span class="impo-highlight">{{::patient.mrnId}}</span>
           </div>
           <div class="col-md-2 reset-padding centered">
-            <span class="short-info">{{patient.dob}}</span>
+            <span class="short-info">{{::patient.dob}}</span>
           </div>
 
           <div class="col-md-2 reset-padding centered">
-            <span class="short-info">{{patient.city}} </span>
+            <span class="short-info">{{::patient.city}} </span>
             <span class="short-info" ng-if="patient.state && patient.city">,</span>
-            <span class="short-info">{{patient.state}} </span>
+            <span class="short-info">{{::patient.state}} </span>
           </div>
 
           <div class="col-md-2 reset-padding centered">
-            <span class="short-info">{{patient.lastTransmissionDate}}</span>
+            <span class="short-info">{{::patient.lastTransmissionDate}}</span>
           </div>
 
           <div class="col-md-2 reset-padding centered">
-            <span class="short-info">{{patient.clinicNamesCSV}}</span>
+            <span class="short-info">{{::patient.clinicNamesCSV}}</span>
 
           </div>
 
@@ -89,7 +89,7 @@
           </div>
 
           <div class="col-md-2 reset-padding-left text-centered">
-            <span class="short-info">{{patient.adherence}}</span>
+            <span class="short-info">{{::patient.adherence}}</span>
           </div>
 
           <div class="clr"></div>
