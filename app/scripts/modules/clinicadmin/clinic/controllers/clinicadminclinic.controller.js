@@ -1,6 +1,6 @@
 angular.module('hillromvestApp')
-.controller('clinicadminclinicController',['$scope', '$state', 'clinicadminService', 'notyService', '$stateParams', 'clinicService', 'UserService',
-  function($scope, $state, clinicadminService, notyService, $stateParams, clinicService, UserService) {
+.controller('clinicadminclinicController',['$scope', '$state', 'clinicadminService', 'notyService', '$stateParams', 'clinicService', 'UserService', 'StorageService',
+  function($scope, $state, clinicadminService, notyService, $stateParams, clinicService, UserService, StorageService) {
 
   	$scope.init = function(){
       var currentRoute = $state.current.name;
@@ -25,7 +25,7 @@ angular.module('hillromvestApp')
     };
 
     $scope.getClinicsAssociatedToClinicadmin = function(){
-      clinicadminService.getClinicsAssociated(localStorage.getItem('userId')).then(function(response){
+      clinicadminService.getClinicsAssociated(StorageService.get('logged').userId).then(function(response){
         $scope.clinics = response.data.clinics;
         angular.forEach($scope.clinics, function(clinic){
           if(clinic.id === $stateParams.clinicId){
