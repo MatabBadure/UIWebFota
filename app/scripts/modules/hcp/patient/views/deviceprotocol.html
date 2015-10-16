@@ -15,7 +15,7 @@
   <div class="dashboard dashboard--content">
     <div class="dashboard__manage-view margin-top">
       <div class="dashboard__manage-view--header">
-          <div class="col-md-3 col-sm-3 header--type">
+          <div class="col-md-4 col-sm-4 header--type">
             <span translate="patient.protocol-caption.treatments-per-day"></span>
           </div>
           <div class="col-md-4 col-sm-4 header--type">
@@ -33,7 +33,7 @@
   </div>
 
   <div class="col-md-16 col-sm-16 protocol-list" ng-repeat="protocol in protocols" ng-class="{'list-inactive':protocol.deleted}">
-    <div class="col-md-3 col-sm-3 protocol-list__type">
+    <div class="col-md-4 col-sm-4 protocol-list__type">
       <span> {{::protocol.treatmentsPerDay}}</span>
     </div>
     <div class="col-md-4 col-sm-4 protocol-list__treatment-day">
@@ -55,7 +55,7 @@
 <div class="dashboard dashboard--content">
   <div class="dashboard__manage-view margin-top">
     <div class="dashboard__manage-view--header">
-        <div class="col-md-3 col-sm-3 header--type">
+        <div class="col-md-4 col-sm-4 header--type">
           <span translate="patient.device-caption.serial-no"></span>
         </div>
         <div class="col-md-4 col-sm-4 header--type">
@@ -73,7 +73,7 @@
 </div>
 
   <div class="col-md-16 col-sm-16 device-list" ng-repeat="device in devices" ng-class="{'list-inactive': !device.active}">
-    <div class="col-md-3 col-sm-3 device-list__serial">
+    <div class="col-md-4 col-sm-4 device-list__serial">
       <span>{{::device.serialNumber}}</span>
     </div>
     <div class="col-md-4 col-sm-4 device-list__bt-id">

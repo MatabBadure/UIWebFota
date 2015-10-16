@@ -6,11 +6,7 @@ angular.module('hillromvestApp')
             changePassword: function(data) {
 
                 return $http.post('api/account/change_password', data, {
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Accept": "application/json",
-                        'x-auth-token': localStorage.getItem('token')
-                    }
+                    headers: headerService.getHeader()
                 }).success(function (data, status, headers, config) {
                     return {'response': data, 'status': status, 'headers' : headers, 'config' : config};
                 });

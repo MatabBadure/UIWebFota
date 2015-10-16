@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('hillromvestApp')
-    .controller('RequestResetController',['$scope', '$timeout', 'Auth', 'vcRecaptchaService', function ($scope, $timeout, Auth, vcRecaptchaService) {
+    .controller('RequestResetController',['$scope', '$timeout', 'Auth', 'vcRecaptchaService', 'StorageService',
+      function ($scope, $timeout, Auth, vcRecaptchaService, StorageService) {
 
         $scope.success = null;
         $scope.error = null;
@@ -35,13 +36,13 @@ angular.module('hillromvestApp')
           		 Auth.resetPasswordInit($scope.resetAccount.email).then(function () {
                        $scope.success = 'OK';
                        $scope.errorEmailNotExists = null;
-                       localStorage.setItem('passResetCount',0);
+                       StorageService.save('passResetCount',0);
                    }).catch(function (response) {
                        $scope.success = null;
                        if (response.status === 400 && response.data.message === 'e-mail address not registered') {
                            $scope.errorEmailNotExists = 'ERROR';
-                           var passResetCount = parseInt(localStorage.getItem('passResetCount')) || 0;
-                           localStorage.setItem('passResetCount', passResetCount + 1);
+                           var passResetCount = parseInt(StorageService.get('passResetCount')) || 0;
+                           StorageService.save('passResetCount', passResetCount + 1);
                            if(passResetCount > 2){
                            	$scope.showCaptcha = true;	 
                            }
@@ -60,13 +61,13 @@ angular.module('hillromvestApp')
        		Auth.resetPasswordInit($scope.resetAccount.email).then(function () {
                 $scope.success = 'OK';
                 $scope.errorEmailNotExists = null;
-                localStorage.setItem('passResetCount',0);
+                StorageService.save('passResetCount',0);
             }).catch(function (response) {
                 $scope.success = null;
                 if (response.status === 400 && response.data.message === 'e-mail address not registered') {
                     $scope.errorEmailNotExists = 'ERROR';
-                    var passResetCount = parseInt(localStorage.getItem('passResetCount')) || 0;
-                    localStorage.setItem('passResetCount', passResetCount + 1);
+                    var passResetCount = parseInt(StorageService.get('passResetCount')) || 0;
+                    StorageService.save('passResetCount', passResetCount + 1);
                     if(passResetCount > 2){
                     	$scope.showCaptcha = true;	 
                     }
