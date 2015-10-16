@@ -42,12 +42,11 @@ angular.module('hillromvestApp')
         $scope.init();
 
         $scope.createPatient = function () {
-          
           if($scope.form.$invalid){
             return false;
           }
           angular.forEach($scope.patient, function(value, key){
-            if(value === '' || value === undefined){
+            if(!value){
               $scope.patient[key] = null;
             }
           });
