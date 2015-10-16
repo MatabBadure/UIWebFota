@@ -727,11 +727,11 @@ angular.module('hillromvestApp')
         patientService.getAssociateHCPToPatient(patientId)
       ]).then(function(data) {        
         if(data){
-          if(data[0] !== undefined && data[0] !== null){
+          if(data[0]){
             $scope.hcps = []; 
             $scope.hcps = data[0].data.HCPUser; 
           }
-          if(data[1] !== undefined && data[1] !== null && data[1].data.hcpUsers !== undefined){
+          if(data[1] && data[1].data.hcpUsers !== undefined){
             $scope.associatedHCPs = [];           
             $scope.associatedHCPs = data[1].data.hcpUsers;
             for(var i=0; i < $scope.associatedHCPs.length; i++){
