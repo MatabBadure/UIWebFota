@@ -1,11 +1,14 @@
 'use strict';
 
 angular.module('hillromvestApp')
-    .factory('Account', ['$resource', function Account($resource) {
+    .factory('Account', ['$resource', 'StorageService', function Account($resource, StorageService) {
         return $resource('api/account', {}, {
             'get': { method: 'GET', headers:{
             	'x-auth-token': function () {
-                    var token = localStorage.getItem('token');
+                    var token = null;
+                    if(StorageService.get('logged')){
+                        token = StorageService.get('logged').token;
+                    }
                     return token;
                 }
             },params: {}, isArray: false,

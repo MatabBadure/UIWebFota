@@ -1,11 +1,11 @@
 'use strict';
 
 angular.module('hillromvestApp')
-  .controller('DoctorsController',['$rootScope', '$scope', '$state', '$timeout', 'Auth', '$stateParams', 'UserService', 'DoctorService', 'notyService', 'clinicService', 'searchFilterService', 'dateService',
-    function($rootScope, $scope, $state, $timeout, Auth,$stateParams, UserService, DoctorService, notyService, clinicService,searchFilterService, dateService ) {
+  .controller('DoctorsController',['$rootScope', '$scope', '$state', '$timeout', 'Auth', '$stateParams', 'UserService', 'DoctorService', 'notyService', 'clinicService', 'searchFilterService', 'dateService', 'StorageService',
+    function($rootScope, $scope, $state, $timeout, Auth,$stateParams, UserService, DoctorService, notyService, clinicService,searchFilterService, dateService, StorageService ) {
     $scope.doctor = {};
     $scope.doctorStatus = {
-      'role': localStorage.getItem('role'),
+      'role': StorageService.get('logged').role,
       'editMode': false,
       'isCreate': false,
       'isMessage': false,
@@ -53,7 +53,6 @@ angular.module('hillromvestApp')
     };
 
     $scope.getDoctorDetails = function(doctorId,callback){
-      //$scope.getPatientsAssociatedToHCP(doctorId, null);
       $scope.getClinicsOfHCP(doctorId);
       var url = '/api/user/' + doctorId + '/hcp';
       UserService.getUser(doctorId, url).then(function(response) {
@@ -81,14 +80,10 @@ angular.module('hillromvestApp')
 
     $scope.viewAssociatedPatients = function(){
       if($scope.doctor.clinics.length === 1){
-        var ids = $scope.doctor.clinics[0].id;
-        localStorage.setItem('ids', ids)
         $state.go('associatedPatients');
       } else {
-        console.log('Returning False...!')
         return false;
       }
-
     };
 
     $scope.onSuccess = function() {

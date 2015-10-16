@@ -1,6 +1,6 @@
 angular.module('hillromvestApp')
-.controller('hcpPatientController',['$scope', '$state', '$stateParams', 'hcpPatientService', 'patientService', 'notyService', 'DoctorService', 'clinicadminPatientService', 'dateService', 'clinicService', '$timeout', 'searchFilterService', 'sortOptionsService','$filter',
-  function($scope, $state, $stateParams, hcpPatientService, patientService, notyService, DoctorService, clinicadminPatientService, dateService, clinicService, $timeout, searchFilterService,sortOptionsService, $filter) {   
+.controller('hcpPatientController',['$scope', '$state', '$stateParams', 'hcpPatientService', 'patientService', 'notyService', 'DoctorService', 'clinicadminPatientService', 'dateService', 'clinicService', '$timeout', 'searchFilterService', 'StorageService', 'sortOptionsService','$filter',
+  function($scope, $state, $stateParams, hcpPatientService, patientService, notyService, DoctorService, clinicadminPatientService, dateService, clinicService, $timeout, searchFilterService, StorageService, sortOptionsService,$filter) {   
   var searchOnLoad = true;    
 	$scope.init = function(){     
     if($state.current.name === 'hcppatientDemographic'){
@@ -71,7 +71,7 @@ angular.module('hillromvestApp')
   };
 
   $scope.getPatientsByFilter = function(filter, clinicId, pageNo, offset){
-    var userId = localStorage.getItem('userId');
+    var userId = StorageService.get('logged').userId;
     hcpPatientService.getAssociatedPatientsByFilter(filter, clinicId, userId, pageNo, offset).then(function(response){
       $scope.patients = [];
       angular.forEach(response.data.patientUsers, function(patient){
@@ -88,7 +88,7 @@ angular.module('hillromvestApp')
   };
 
 	$scope.getPatientsWithNoEvents = function(filter, clinicId, pageNo, offset){
-    var userId = localStorage.getItem('userId');
+    var userId = StorageService.get('logged').userId;
 		hcpPatientService.getAssociatedPatientsWithNoEvents(filter, clinicId, userId, pageNo, offset).then(function(response){
       $scope.patients = response.data.patientUsers;
       $scope.total = (response.headers()['x-total-count']) ? response.headers()['x-total-count'] : $scope.patients.length;
@@ -188,7 +188,7 @@ angular.module('hillromvestApp')
     $scope.searchFilter = ($scope.searchFilter && $scope.searchFilter != undefined) ? $scope.searchFilter :searchFilterService.initSearchFiltersForPatient();
     var filter = searchFilterService.getFilterStringForPatient($scope.searchFilter);
     var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : $stateParams.clinicId;
-    DoctorService.searchPatientsForHCPOrCliniadmin($scope.searchItem, 'hcp',localStorage.getItem('userId'), clinicId, $scope.currentPageIndex, $scope.perPageCount, filter, $scope.sortOption).then(function (response) {
+    DoctorService.searchPatientsForHCPOrCliniadmin($scope.searchItem, 'hcp',StorageService.get('logged').userId, clinicId, $scope.currentPageIndex, $scope.perPageCount, filter, $scope.sortOption).then(function (response) {
       $scope.patients = response.data;      
       angular.forEach($scope.patients, function(patient){
         patient.dob = dateService.getDateFromTimeStamp(patient.dob, patientDashboard.dateFormat, '/')
@@ -223,7 +223,7 @@ angular.module('hillromvestApp')
   };
 
   $scope.getPatientsForClinic = function(clinicId){
-    DoctorService.searchPatientsForHCPOrCliniadmin($scope.searchItem, 'hcp', localStorage.getItem('userId'), clinicId, $scope.currentPageIndex, $scope.perPageCount).then(function (response) {
+    DoctorService.searchPatientsForHCPOrCliniadmin($scope.searchItem, 'hcp', StorageService.get('logged').userId, clinicId, $scope.currentPageIndex, $scope.perPageCount).then(function (response) {
       $scope.patients = response.data;
       $scope.total = (response.headers()['x-total-count']) ? response.headers()['x-total-count'] :$scope.patients.length; 
       $scope.pageCount = Math.ceil($scope.total / 10);

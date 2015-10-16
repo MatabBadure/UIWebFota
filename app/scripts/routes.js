@@ -1560,7 +1560,7 @@ angular.module('hillromvestApp')
             })
             .state('hcppatientdashboard', {
                 parent: 'hcp-dashboard',
-                url: '/hcp-patients-view/{clinicId}',
+                url: '/{clinicId}/hcp-patients-view/{filter}',
                 params: {"clinicId": null},                
                 data: {
                     roles: ['HCP'],

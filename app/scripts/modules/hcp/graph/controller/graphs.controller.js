@@ -1,7 +1,7 @@
 'use strict';
 angular.module('hillromvestApp')
-.controller('hcpGraphController',[ '$scope', '$state', 'hcpDashBoardService', 'dateService', 'graphUtil', '$stateParams', 'hcpDashboardConstants', 'DoctorService', 'clinicadminService', 'notyService', '$filter',
-	function($scope, $state, hcpDashBoardService, dateService, graphUtil, $stateParams, hcpDashboardConstants, DoctorService, clinicadminService, notyService,$filter) {
+.controller('hcpGraphController',[ '$scope', '$state', 'hcpDashBoardService', 'dateService', 'graphUtil', '$stateParams', 'hcpDashboardConstants', 'DoctorService', 'clinicadminService', 'notyService', 'StorageService','$filter',
+	function($scope, $state, hcpDashBoardService, dateService, graphUtil, $stateParams, hcpDashboardConstants, DoctorService, clinicadminService, notyService, StorageService,$filter) {
 	var chart;
 	$scope.init = function() {
 		$scope.lazyLoadParamsPieChart = [
@@ -10,7 +10,7 @@ angular.module('hillromvestApp')
         $scope.lazyLoadParamsDatePicker = [
         'bower_components/angular-daterangepicker/js/angular-daterangepicker.js'
         ];
-		$scope.hcpId = parseInt(localStorage.getItem('userId'));
+		$scope.hcpId = parseInt(StorageService.get('logged').userId);
 		$scope.selectedGraph = 'CUMULATIVE';
 		$scope.treatmentGraph = false;
 		$scope.cumulativeGraph = true;
@@ -189,7 +189,7 @@ angular.module('hillromvestApp')
   $scope.switchClinic = function(clinic){
 	if($scope.selectedClinic.id !== clinic.id){
 	  $scope.selectedClinic = clinic;
-	  $scope.getStatistics($scope.selectedClinic.id, localStorage.getItem('userId'));
+	  $scope.getStatistics($scope.selectedClinic.id, StorageService.get('logged').userId);
 	  $scope.drawGraph();
 	}
   };

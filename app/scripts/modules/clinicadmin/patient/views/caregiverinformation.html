@@ -37,7 +37,7 @@
 
   <div class="col-md-16 col-sm-16 caregiver-list" ng-repeat="caregiver in caregivers track by $index" ng-if="!caregiver.user.deleted">
     <div class="col-md-3 col-sm-3 caregiver-list__detail">
-      <span class="caregiver-list__detail--name">{{::caregiver.user.lastName}} {{::caregiver.user.firstName}}</span>
+      <span class="caregiver-list__detail--name">{{::caregiver.user.lastName}}, {{::caregiver.user.firstName}}</span>
       <span class="caregiver-list__detail--email">{{::caregiver.user.email}}</span>
     </div>
     <div class="col-md-3 col-sm-3 caregiver-list__address">

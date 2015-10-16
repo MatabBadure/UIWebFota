@@ -37,7 +37,6 @@ $scope.finishReset = function() {
      $scope.doNotMatch = null;
      Auth.resetPasswordFinish($stateParams.key,$scope.resetAccount).then(function () {
       $scope.success = 'OK';
-      localStorage.setItem('resetFinishCount',0);
       $state.go('home');
     }).catch(function (response) {
       $scope.success = null;

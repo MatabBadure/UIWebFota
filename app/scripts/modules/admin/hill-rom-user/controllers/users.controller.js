@@ -1,10 +1,11 @@
 'use strict';
 
 angular.module('hillromvestApp')
-  .controller('UsersController',['$scope', 'UserService', '$state', '$stateParams', function($scope, UserService, $state, $stateParams) {
+  .controller('UsersController',['$scope', 'UserService', '$state', '$stateParams', 'StorageService',
+    function($scope, UserService, $state, $stateParams, StorageService) {
     $scope.user = {};
     $scope.userStatus = {
-      'role': localStorage.getItem('role'),
+      'role': StorageService.get('logged').role,
       'editMode': false,
       'isCreate': false,
       'isMessage': false

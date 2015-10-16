@@ -1,6 +1,6 @@
 angular.module('hillromvestApp')
-.controller('clinicadminHcpController',['$scope', '$state', '$stateParams', 'clinicService', 'DoctorService', 'UserService', 'searchFilterService', '$timeout', 'clinicadminService', 'clinicadminHcpService', 
-  function($scope, $state, $stateParams, clinicService, DoctorService, UserService, searchFilterService, $timeout, clinicadminService, clinicadminHcpService) {
+.controller('clinicadminHcpController',['$scope', '$state', '$stateParams', 'clinicService', 'DoctorService', 'UserService', 'searchFilterService', '$timeout', 'clinicadminService', 'clinicadminHcpService', 'notyService', 'StorageService',
+  function($scope, $state, $stateParams, clinicService, DoctorService, UserService, searchFilterService, $timeout, clinicadminService, clinicadminHcpService, notyService, StorageService) {
 
     var searchOnLoad = true;
   	$scope.init = function(){
@@ -55,7 +55,7 @@ angular.module('hillromvestApp')
       }
       var filter = searchFilterService.getFilterStringForPatient($scope.searchFilter);
       var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : $stateParams.clinicId;
-      clinicadminHcpService.searchAssociatedHcpsToClinic($scope.searchItem, filter, $scope.currentPageIndex, $scope.perPageCount, localStorage.getItem('userId'), clinicId).then(function(response){
+      clinicadminHcpService.searchAssociatedHcpsToClinic($scope.searchItem, filter, $scope.currentPageIndex, $scope.perPageCount, StorageService.get('logged').userId, clinicId).then(function(response){
         $scope.hcps = response.data;
         searchOnLoad = false;
       }).catch(function(response){
@@ -115,7 +115,7 @@ angular.module('hillromvestApp')
     };
 
     $scope.getClinicsAssociatedToClinicadmin = function(){
-      clinicadminService.getClinicsAssociated(localStorage.getItem('userId')).then(function(response){
+      clinicadminService.getClinicsAssociated(StorageService.get('logged').userId).then(function(response){
         $scope.clinics = response.data.clinics;
         angular.forEach($scope.clinics, function(clinic){
           if(clinic.id === $stateParams.clinicId){
