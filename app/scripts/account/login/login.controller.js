@@ -95,7 +95,7 @@ angular.module('hillromvestApp')
             logged.userId = response.data.user.id;
             $state.go('hcpdashboard');
           } else if(response.data.user.authorities[0].name === 'CARE_GIVER'){
-            localStorage.setItem('userId', response.data.user.id);
+            logged.userId = response.data.user.id;
             $state.go('caregiverDashboard');
           } else if(response.data.user.authorities[0].name === 'CLINIC_ADMIN'){
             logged.userId = response.data.user.id;
