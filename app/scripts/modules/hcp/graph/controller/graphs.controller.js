@@ -175,7 +175,7 @@ angular.module('hillromvestApp')
   $scope.switchClinic = function(clinic){
 	if($scope.selectedClinic.id !== clinic.id){
 	  $scope.selectedClinic = clinic;
-	  $scope.getStatistics($scope.selectedClinic.id, localStorage.getItem('userId'));
+	  $scope.getStatistics($scope.selectedClinic.id, StorageService.get('logged').userId);
 	  $scope.drawGraph();
 	}
   };
