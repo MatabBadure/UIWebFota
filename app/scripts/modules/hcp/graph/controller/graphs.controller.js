@@ -66,7 +66,6 @@ angular.module('hillromvestApp')
 
 	$scope.getClinicsForHCP = function(userId) {
 		DoctorService.getClinicsAssociatedToHCP(userId).then(function(response){
-			localStorage.setItem('clinicId', response.data.clinics[0].id);
 			$scope.clinics = response.data.clinics;
 			$scope.selectedClinic = response.data.clinics[0];
 			$scope.weeklyChart();
@@ -78,7 +77,6 @@ angular.module('hillromvestApp')
 
 	$scope.getClinicsForClinicAdmin = function(userId) {
 	clinicadminService.getClinicsAssociated(userId).then(function(response){
-	  localStorage.setItem('clinicId', response.data.clinics[0].id);
 	  $scope.clinics = response.data.clinics;
 	  $scope.selectedClinic = response.data.clinics[0];
 	  $scope.weeklyChart();
@@ -162,7 +160,7 @@ angular.module('hillromvestApp')
   $scope.switchClinic = function(clinic){
 	if($scope.selectedClinic.id !== clinic.id){
 	  $scope.selectedClinic = clinic;
-	  $scope.getStatistics($scope.selectedClinic.id, localStorage.getItem('userId'));
+	  $scope.getStatistics($scope.selectedClinic.id, StorageService.get('logged').userId);
 	  $scope.drawGraph();
 	}
   };
