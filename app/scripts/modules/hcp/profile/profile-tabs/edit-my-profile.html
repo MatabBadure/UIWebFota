@@ -134,7 +134,7 @@
             <div class="col-md-6 dashboard__form--label reset-padding" translate="profile.primaryPhone">
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
-              <input class="" type="text" name="primaryPhone" validate-on-blur ng-model="user.primaryPhone" ui-mask="(999)-999-9999">
+              <input class="" type="text" name="primaryPhone" validate-on-blur ng-model="user.primaryPhone" ui-mask="(999)-999-9999" model-view-value="true">
               <div ng-show="(form.primaryPhone.$dirty && form.primaryPhone.$showValidationMessage && form.primaryPhone.$invalid) || submitted">
                 <span class="has-error" ng-show="form.primaryPhone.$error.mask" translate="error.primaryPhone.mask"></span>
               </div>
@@ -144,7 +144,7 @@
             <div class="col-md-6 dashboard__form--label reset-padding" translate="profile.mobilePhone">
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
-              <input class="" type="text" name="mobilePhone" validate-on-blur ng-model="user.mobilePhone" ui-mask="(999)-999-9999">
+              <input class="" type="text" name="mobilePhone" validate-on-blur ng-model="user.mobilePhone" ui-mask="(999)-999-9999" model-view-value="true">
               <div ng-show="(form.mobilePhone.$dirty && form.mobilePhone.$showValidationMessage && form.mobilePhone.$invalid)">
                 <span class="has-error" ng-show="form.mobilePhone.$error.mask" translate="error.mobilePhone.mask"></span>
               </div>
@@ -158,7 +158,7 @@
             <div class="col-md-6 dashboard__form--label reset-padding" translate="profile.faxNumber">
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
-              <input class="" type="text" name="faxNumber" validate-on-blur ng-model="user.faxNumber" ui-mask="(999)-999-9999">
+              <input class="" type="text" name="faxNumber" validate-on-blur ng-model="user.faxNumber" ui-mask="(999)-999-9999" model-view-value="true">
               <div ng-show="(form.faxNumber.$dirty && form.faxNumber.$showValidationMessage && form.faxNumber.$invalid) || submitted">
                 <span class="has-error" ng-show="form.faxNumber.$error.pattern" translate="error.faxNumber.mask"></span>
               </div>

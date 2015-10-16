@@ -10,8 +10,8 @@ angular.module('hillromvestApp')
     return val;
   };
 })
-.controller('patientsController',['$scope', '$state', '$stateParams', 'patientService', 'dateService', 'notyService', 'UserService', 'DoctorService', 'clinicService', 'StorageService',
-  function($scope, $state, $stateParams, patientService, dateService, notyService, UserService, DoctorService, clinicService, StorageService) {
+.controller('patientsController',['$scope', '$state', '$stateParams', 'patientService', 'dateService', 'notyService', 'UserService', 'DoctorService', 'clinicService', '$q', 'StorageService',
+  function($scope, $state, $stateParams, patientService, dateService, notyService, UserService, DoctorService, clinicService, $q, StorageService) {
     $scope.patient = {};
     $scope.patientTab = "";
     $scope.newProtocolPoint = 1;
@@ -720,25 +720,29 @@ angular.module('hillromvestApp')
 
     $scope.getAvailableAndAssociatedHCPs = function(patientId){
       $scope.associatedClinicsErrMsg = null;
-      $scope.associatedHCPsErrMsg = null;            
-      patientService.getAssociateHCPToPatient(patientId).then(function(response){ 
-        $scope.associatedHCPs = [];        
-        if(response.data.hcpUsers){
-          $scope.associatedHCPs = response.data.hcpUsers;          
-        }else if(response.data.message){
-          $scope.associatedHCPsErrMsg = response.data.message;
-        }
-        DoctorService.getDoctorsList($scope.searchItem, $scope.currentPageIndex, $scope.perPageCount).then(function(response){          
-          $scope.hcps = []; 
-          $scope.hcps = response.data;
-          for(var i=0; i < $scope.associatedHCPs.length; i++){
-            for(var j=0; j <  $scope.hcps.length; j++ ){
-              if($scope.associatedHCPs[i].id == $scope.hcps[j].id){
-                $scope.hcps.splice(j, 1);
+      $scope.associatedHCPsErrMsg = null;  
+      var searchString = "";
+      $q.all([
+        patientService.getHCPsToLinkToPatient(patientId, searchString),
+        patientService.getAssociateHCPToPatient(patientId)
+      ]).then(function(data) {        
+        if(data){
+          if(data[0]){
+            $scope.hcps = []; 
+            $scope.hcps = data[0].data.HCPUser; 
+          }
+          if(data[1] && data[1].data.hcpUsers !== undefined){
+            $scope.associatedHCPs = [];           
+            $scope.associatedHCPs = data[1].data.hcpUsers;
+            for(var i=0; i < $scope.associatedHCPs.length; i++){
+              for(var j=0; j <  $scope.hcps.length; j++ ){
+                if($scope.associatedHCPs[i].id == $scope.hcps[j].id){
+                  $scope.hcps.splice(j, 1);
+                }
               }
             }
-          }
-        });
+          }          
+        }
       });
     };
 

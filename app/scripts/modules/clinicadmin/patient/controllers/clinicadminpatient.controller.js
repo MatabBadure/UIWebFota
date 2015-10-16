@@ -1,6 +1,6 @@
 angular.module('hillromvestApp')
-.controller('clinicadminPatientController',['$scope', '$state', '$stateParams', 'clinicadminPatientService', 'patientService', 'notyService', 'DoctorService', 'clinicadminService', 'clinicService', 'dateService', 'UserService', 'searchFilterService', '$timeout', 'StorageService', 'sortOptionsService',
-  function($scope, $state, $stateParams, clinicadminPatientService, patientService, notyService, DoctorService, clinicadminService, clinicService, dateService, UserService, searchFilterService, $timeout, StorageService, sortOptionsService) { 
+.controller('clinicadminPatientController',['$scope', '$state', '$stateParams', 'clinicadminPatientService', 'patientService', 'notyService', 'DoctorService', 'clinicadminService', 'clinicService', 'dateService', 'UserService', 'searchFilterService', '$timeout', 'StorageService', 'sortOptionsService','$filter', 'commonsUserService',
+  function($scope, $state, $stateParams, clinicadminPatientService, patientService, notyService, DoctorService, clinicadminService, clinicService, dateService, UserService, searchFilterService, $timeout, StorageService, sortOptionsService,$filter, commonsUserService) { 
 	var searchOnLoad = true;
 	$scope.init = function(){
     if($state.current.name === 'clinicadminpatientDemographic'  || $state.current.name === 'clinicadmminpatientDemographicEdit'){
@@ -54,12 +54,14 @@ angular.module('hillromvestApp')
 
   $scope.getClinicsAssociatedToHCP = function(){
     clinicadminService.getClinicsAssociated(StorageService.get('logged').userId).then(function(response){
-      $scope.clinics = response.data.clinics;
-      angular.forEach($scope.clinics, function(clinic){
-        if(clinic.id === $stateParams.clinicId){
-          $scope.selectedClinic =  clinic;
+      if(response.data && response.data.clinics){
+        $scope.clinics = $filter('orderBy')(response.data.clinics, "name");
+        if($stateParams.clinicId){
+          $scope.selectedClinic = commonsUserService.getSelectedClinicFromList($scope.clinics, $stateParams.clinicId);
+        }else if($scope.clinics && $scope.clinics.length > 0){
+          $scope.selectedClinic =  $scope.clinics[0];
         }
-      });
+      }
     }).catch(function(response){
       notyService.showError(response);
     });
@@ -155,7 +157,8 @@ angular.module('hillromvestApp')
   };
 
 	$scope.selectPatient = function(patient){
-    $state.go('clinicadminpatientOverview',{'patientId': patient.id});
+    var clinicId = ($scope.selectedClinic && $scope.selectedClinic.id) ? $scope.selectedClinic.id : ($stateParams.clinicId ? $stateParams.clinicId : null);
+    $state.go('clinicadminpatientOverview',{'patientId': patient.id, 'clinicId': clinicId});
 	};
 
 	$scope.switchPatientTab = function(value){
@@ -163,7 +166,8 @@ angular.module('hillromvestApp')
 	};
 
 	$scope.goToPatientDashboard = function(value){
-		$state.go(value,{'clinicId': $stateParams.clinicId});
+    var clinicId = ($scope.selectedClinic && $scope.selectedClinic.id) ? $scope.selectedClinic.id : ($stateParams.clinicId ? $stateParams.clinicId : null);
+		$state.go(value,{'clinicId': clinicId});
 	};
 
   $scope.switchClinic = function(clinic){
