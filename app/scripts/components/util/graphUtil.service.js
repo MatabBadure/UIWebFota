@@ -495,7 +495,7 @@ angular.module('hillromvestApp')
       return graphDataList;
       }
 
-      this.gatToolTipforStepChart = function(value) {
+      this.getToolTipForStepChart = function(value) {
         var toolTip = '';
         if(value.note && value.note.note && value.note.note.length > 0){
           toolTip =

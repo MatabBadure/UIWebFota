@@ -376,7 +376,7 @@ angular.module('hillromvestApp')
         var toolTip = '';
         angular.forEach($scope.completeGraphData.actual, function(value) {
           if(value.timestamp === e.point.x){
-            toolTip = graphUtil.gatToolTipforStepChart(value);
+            toolTip = graphUtil.getToolTipForStepChart(value);
           }
         });
       return toolTip;
