@@ -133,6 +133,7 @@
             "app/scripts/modules/clinicadmin/hcp/services/clinicadminhcp.service.js",
             "app/scripts/components/util/sortoptions.service.js",
             "app/scripts/modules/clinicadmin/patient/services/clinicadminpatient.service.js",
+            "app/scripts/modules/patient/profile/controllers/patientprofile.controller.js",
             "app/scripts/recaptcha.js"
         ],
         "clean": [
