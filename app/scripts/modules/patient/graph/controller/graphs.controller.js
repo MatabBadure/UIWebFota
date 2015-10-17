@@ -450,7 +450,6 @@ angular.module('hillromvestApp')
     $scope.getNonDayHMRGraphData = function() {
       patientDashBoardService.getHMRGraphPoints($scope.patientId, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.groupBy).then(function(response){
         $scope.completeGraphData = response.data;
-        console.log(JSON.stringify($scope.completeGraphData));
         if($scope.completeGraphData.actual === undefined){
           $scope.graphData = [];
           $scope.plotNoDataAvailable();
@@ -1476,8 +1475,6 @@ angular.module('hillromvestApp')
          // chart.noData("Nothing to see here.");
           chart.tooltipContent($scope.toolTipContentStepChart());
           chart.lines.dispatch.on('elementClick', function(event) {
-            //$scope.getNotesOnGraphNode(event.point.x);
-            //console.log(JSON.stringify(event));
             $scope.dayGraphForNode(event.point.x);
           });
           //this function to put x-axis labels
@@ -1549,7 +1546,6 @@ angular.module('hillromvestApp')
             //$scope.drawComplianceGraph();
         $timeout( function(){
           // hiddenFrame.contentWindow.focus();
-           console.info(doc.readyState)
           if(doc.readyState == 'complete') {
               // hiddenFrame.contentWindow.print();
             //hiddenFrame.contentWindow.print();
