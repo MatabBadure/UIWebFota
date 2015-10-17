@@ -64,7 +64,8 @@ angular.module('hillromvestApp')
         $scope.getPatientDevices($stateParams.patientId);
         $scope.patientId = parseInt($stateParams.patientId);
         $scope.getPatientById($scope.patientId);
-        $scope.weeklyChart();
+        $scope.initGraph();
+        //$scope.weeklyChart();
       }
       $scope.compliance = {};
       $scope.compliance.pressure = true;
