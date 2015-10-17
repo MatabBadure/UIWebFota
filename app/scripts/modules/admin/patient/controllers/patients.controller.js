@@ -722,8 +722,10 @@ angular.module('hillromvestApp')
       $scope.associatedClinicsErrMsg = null;
       $scope.associatedHCPsErrMsg = null;  
       var searchString = "";
+      var offset = 100;
+      var pageNo = 1;
       $q.all([
-        patientService.getHCPsToLinkToPatient(patientId, searchString),
+        patientService.getHCPsToLinkToPatient(patientId, searchString, pageNo, offset),
         patientService.getAssociateHCPToPatient(patientId)
       ]).then(function(data) {        
         if(data){

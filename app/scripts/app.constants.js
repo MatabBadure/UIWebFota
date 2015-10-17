@@ -20,6 +20,6 @@ angular.module('hillromvestApp')
 	'searchAssociatedPatientsToClinic' : '/api/user/clinic/CLINICID/patient/search?searchString=SEARCHSTRING&page=PAGENO&per_page=OFFSET&filter=FILTER',
 	'nonAssociatedPatientForClinic':'/api/clinics/CLINICID/notAssociatedPatients?searchString=',
 	'getTransmissionDate':'/api/patient/PATIENTID/firsttrasmissiondate',
-	'getHCPsToLinkToPatient':'/api/patient/PATIENTID/hcpbypatientclinics/search?searchString=SEARCHSTRING',
+	'getHCPsToLinkToPatient':'/api/patient/PATIENTID/hcpbypatientclinics/search?searchString=SEARCHSTRING&page=PAGENO&per_page=OFFSET',
 	'searchAssociatedHcpsToClinic':'/api/user/clinicadmin/CLINICADMINID/hcp/search?searchString=SEARCHSTRING&clinicId=CLINICID&page=PAGE&per_page=PERPAGECOUNT&filter=FILTER'
 });
