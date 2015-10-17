@@ -84,7 +84,7 @@
 
     <div class="dashboard__manage-view--list" ng-repeat="hcp in hcps" ng-click="hcp.isDeleted || selectHcp(hcp)" ng-readonly="true" ng-class="{'inactive': hcp.isDeleted}">    
       <div class="col-md-3 col-sm-3 reset-padding">
-        <span class="main-prim-info">{{::hcp.lastName}} {{::hcp.firstName}}</span>
+        <span class="main-prim-info">{{::hcp.lastName}}, {{::hcp.firstName}}</span>
       </div>
       <div class="col-md-3 col-sm-3 reset-padding centered">
         <span class="impo-highlight">{{::hcp.credentials}}</span>

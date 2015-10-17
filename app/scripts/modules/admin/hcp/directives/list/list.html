@@ -59,25 +59,25 @@
 
       <div class="dashboard__manage-view--list" ng-repeat="doctor in doctors" ng-click="doctor.deleted || selectDoctor(doctor)" ng-class="{'inactive': doctor.deleted}">
           <div class="col-md-3 reset-padding centered">
-            <span class="main-prim-info">{{doctor.lastName}} {{doctor.firstName}}</span>
+            <span class="main-prim-info">{{::doctor.lastName}}, {{::doctor.firstName}}</span>
           </div>
           <div class="col-md-2 reset-padding centered">
-            <span class="impo-highlight">{{doctor.credentials}}</span>
+            <span class="impo-highlight">{{::doctor.credentials}}</span>
           </div>
           <div class="col-md-2 reset-padding centered">
-            <span class="short-info">{{doctor.npiNumber}}</span>
+            <span class="short-info">{{::doctor.npiNumber}}</span>
           </div>
 
           <div class="col-md-3 reset-padding centered">
-            <span class="short-info" ng-repeat ="clinic in doctor.clinics"> {{clinic.name}} <b>{{$last ? '' : ', '}}</b></span>
+            <span class="short-info" ng-repeat ="clinic in doctor.clinics"> {{::clinic.name}} <b>{{$last ? '' : ', '}}</b></span>
           </div>
 
           <div class="col-md-2 reset-padding centered">
-            <span class="short-info">{{doctor.city}}</span>
+            <span class="short-info">{{::doctor.city}}</span>
           </div>
 
           <div class="col-md-2 reset-padding centered">
-            <span class="short-info">{{doctor.state}}</span>
+            <span class="short-info">{{::doctor.state}}</span>
           </div>
 
           <div class="col-md-2 reset-padding centered">

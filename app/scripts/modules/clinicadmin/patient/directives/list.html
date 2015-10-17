@@ -15,7 +15,7 @@
       </div>
 
       <div class="dashboard__manage-view--header">
-        <div class="col-md-3 col-sm-3 header--type">
+        <div class="col-md-2 col-sm-3 header--type">
           <span ng-class="{'sort-icon--default' : sortPatientList.lastName.isDefault, 'sort-icon-down': sortPatientList.lastName.isDown, 'sort-icon-up':sortPatientList.lastName.isUp}" ng-click="sortType('lastName')" translate="patient.patient-name">Patient Name</span>
         </div>
         <div class="col-md-2 col-sm-2 header--type">
@@ -33,18 +33,18 @@
         <div class="col-md-2 col-sm-3 header--type">
           <span ng-class="{'sort-icon--default' : sortPatientList.hcp.isDefault, 'sort-icon-down': sortPatientList.hcp.isDown, 'sort-icon-up':sortPatientList.hcp.isUp}" ng-click="sortType('hcp')" translate="patient.hcp-name">HCP Name</span>
         </div>
-        <div class="col-md-1 col-sm-2 header--type">
+        <div class="col-md-2 col-sm-2 header--type">
           <span ng-class="{'sort-icon--default' : sortPatientList.status.isDefault, 'sort-icon-down': sortPatientList.status.isDown, 'sort-icon-up':sortPatientList.status.isUp}" ng-click="sortType('status')" translate="patient.status">Status</span>
         </div>
-        <div class="col-md-2 col-sm-2 header--type text-centered">
+        <div class="col-md-2 col-sm-2 header--type">
           <span ng-class="{'sort-icon--default' : sortPatientList.adherence.isDefault, 'sort-icon-down': sortPatientList.adherence.isDown, 'sort-icon-up':sortPatientList.adherence.isUp}" ng-click="sortType('adherence')" translate="patient.adherence">Adherence</span>
         </div>
         <div class="clr"></div>
       </div>
 
       <div class="dashboard__manage-view--list" ng-repeat="patient in patients" ng-click="patient.isDeleted || selectPatient(patient)" ng-readonly="true" ng-class="{'inactive': patient.isDeleted}">
-          <div class="col-md-3 col-sm-3 reset-padding">
-            <span class="main-prim-info">{{::patient.lastName}} {{::patient.firstName}}</span>
+          <div class="col-md-2 col-sm-3 reset-padding">
+            <span class="main-prim-info">{{::patient.lastName}}, {{::patient.firstName}}</span>
             <span class="main-secon-info">{{::patient.email}}</span>
           </div>
           <div class="col-md-2 col-sm-2 reset-padding centered">
@@ -69,7 +69,7 @@
             <span ng-if="!patient.hcpNamesCSV" class="short-info" translate="global.not-applicable"></span>
           </div>
 
-          <div class="col-md-1 col-sm-2 reset-padding">
+          <div class="col-md-2 col-sm-2 reset-padding">
             <span class="short-info active centered" ng-if="!patient.isDeleted" translate="patient.status-type.active"></span>
             <span class="short-info inactive centered" ng-if="patient.isDeleted" translate="patient.status-type.inactive"></span>
           </div>

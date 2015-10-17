@@ -10,7 +10,7 @@
           <div class="col-md-3 col-sm-3 header--type">
             <span translate="patient.clinic-caption.clinic-name"></span>
           </div>
-          <div class="col-md-1 col-sm-2 header--type">
+          <div class="col-md-2 col-sm-2 header--type">
             <span translate="patient.clinic-caption.type"></span>
           </div>
           <div class="col-md-3 col-sm-2 header--type">
@@ -22,7 +22,7 @@
           <div class="col-md-2 col-sm-2 header--type">
             <span translate="patient.clinic-caption.state"></span>
           </div>
-          <div class="col-md-3 col-sm-3 header--type">
+          <div class="col-md-2 col-sm-3 header--type">
             <span translate="patient.clinic-caption.phone-number"></span>
           </div>
           <div class="col-md-2 col-sm-2 header--type">
@@ -36,7 +36,7 @@
     <div class="col-md-3 col-sm-3 clinic-list__detail">
       <span class="clinic-list__detail--name" ng-bind="clinic.name"></span>
     </div>
-    <div class="col-md-1 col-sm-2 clinic-list__phone">
+    <div class="col-md-2 col-sm-2 clinic-list__phone">
       <span class="clinic-list__phone--number" ng-bind="clinic.parent ? 'Parent' : 'Satellite'"></span>
     </div>
     <div class="col-md-3 col-sm-2 clinic-list__address">
@@ -48,7 +48,7 @@
     <div class="col-md-2 col-sm-2 clinic-list__phone">
       <span class="clinic-list__phone--number" ng-bind="clinic.state"></span>
     </div>
-    <div class="col-md-3 col-sm-3 clinic-list__phone">
+    <div class="col-md-2 col-sm-3 clinic-list__phone">
       <span class="clinic-list__phone--number" ng-bind="clinic.phoneNumber"></span>
     </div>
     <div class="col-md-2 col-sm-2 clinic-list__phone">
@@ -75,7 +75,7 @@
           <div class="col-md-2 col-sm-2 header--type">
             <span translate="patient.hcp-caption.npi-id"></span>
           </div>
-          <div class="col-md-3 col-sm-3 header--type">
+          <div class="col-md-3 col-sm-2 header--type">
             <span translate="patient.hcp-caption.clinic-name"></span>
           </div>
           <div class="col-md-2 col-sm-2 header--type">
@@ -84,7 +84,7 @@
           <div class="col-md-2 col-sm-2 header--type">
             <span translate="patient.hcp-caption.state"></span>
           </div>
-          <div class="col-md-2 col-sm-2 header--type">
+          <div class="col-md-2 col-sm-3 header--type">
             <span translate="patient.hcp-caption.phone-number"></span>
           </div>
           <div class="clr"></div>
@@ -101,7 +101,7 @@
   <div class="col-md-2 col-sm-2 clinic-list__address">
     <span class="clinic-list__fax--number" ng-bind="hcp.npiNumber"></span>
   </div>
-  <div class="col-md-3 col-sm-3 clinic-list__fax">
+  <div class="col-md-3 col-sm-2 clinic-list__fax">
     <span class="clinic-list__fax--number" ng-repeat ="clinic in hcp.clinics">{{::clinic.name}} <b>{{$last ? '' : ', '}}</b></span>
   </div>
   <div class="col-md-2 col-sm-2 clinic-list__fax">
@@ -110,7 +110,7 @@
   <div class="col-md-2 col-sm-2 clinic-list__phone">
     <span class="clinic-list__phone--number" ng-bind="hcp.state"></span>
   </div>
-  <div class="col-md-2 col-sm-2 clinic-list__fax">
+  <div class="col-md-2 col-sm-3 clinic-list__fax">
     <span class="clinic-list__fax--number" ng-bind="hcp.primaryPhone"></span>
   </div>
 </div>

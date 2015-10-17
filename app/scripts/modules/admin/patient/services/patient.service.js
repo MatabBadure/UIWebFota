@@ -6,15 +6,15 @@
  *
  */
 angular.module('hillromvestApp')
-  .factory('patientService', ['$http', 'headerService', function($http, headerService) {
+  .factory('patientService',['$http', 'headerService', 'URL', function ($http, headerService,URL) {
     return {
 
       /**
-       * @ngdoc method
-       * @name getPatients
-       * @description To get list of patients.
-       *
-       */
+      * @ngdoc method
+      * @name getPatients
+      * @description To get list of patients.
+      *
+      */
       getPatients: function(searchString, sortOption, pageNo, offset, filter) {
         var filterBy = (filter && filter != undefined) ? filter : stringConstants.emptyString;
         var url = admin.patient.searchURL;
@@ -332,12 +332,27 @@ angular.module('hillromvestApp')
         });
       },
 
-      getDeviceDataAsCSV: function(patientId, startDateTimestamp, endDateTimestamp) {
-        var url = admin.hillRomUser.users + "/" + patientId + "/exportVestDeviceDataCSV?from=" + startDateTimestamp + "&to=" + endDateTimestamp;
+      getDeviceDataAsCSV: function(patientId, startDateTimestamp, endDateTimestamp){
+        var url = admin.hillRomUser.users+ "/" +patientId +"/exportVestDeviceDataCSV?from="+ startDateTimestamp+"&to="+endDateTimestamp;
+        return $http.get(url, {
+          headers: headerService.getHeader()
+        });
+      },
+
+      getTransmissionDate: function(patientId){
+        var url = URL.getTransmissionDate.replace('PATIENTID', patientId);
+        return $http.get(url, {
+          headers: headerService.getHeader()
+        });
+      },
+
+      getHCPsToLinkToPatient: function(patientId, searchString){
+        var url = URL.getHCPsToLinkToPatient.replace('PATIENTID', patientId).replace('SEARCHSTRING', searchString);
         return $http.get(url, {
           headers: headerService.getHeader()
         });
       }
 
+      
     };
   }]);
