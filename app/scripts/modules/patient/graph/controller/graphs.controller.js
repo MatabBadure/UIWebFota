@@ -377,24 +377,7 @@ angular.module('hillromvestApp')
         var toolTip = '';
         angular.forEach($scope.completeGraphData.actual, function(value) {
           if(value.timestamp === e.point.x){
-              toolTip =
-                '<div class="tooltip_sub_content">'+
-                '<h6 class="after">' + dateService.getDateFromTimeStamp(value.timestamp,patientDashboard.dateFormat,'/') + '  ('+ d3.time.format('%I:%M %p')(new Date(value.timestamp)) + ')' + '</h6>' +
-                '<ul class="graph_ul">' +
-                  '<li><span class="pull-left">' + 'Session No. ' +'</span><span class="pull-right value">' + value.sessionNo + '/' + value.treatmentsPerDay +'</span></li>' +
-                  '<li><span class="pull-left">' + 'Duration' + '</span><span class="pull-right value">' + value.duration  + '</span></li>' +
-                  '<li><span class="pull-left">' + 'Frequency' + '</span><span class="pull-right value">' + value.frequency  + '</span></li>' +
-                  '<li><span class="pull-left">' + 'Pressure' +'</span><span class="pull-right value">' + value.pressure  +'</span></li>' +
-                  '<li><span class="pull-left">' + 'Cough Pauses' +'</span><span class="pull-right value">' + (value.coughPauseDuration) +'</span></li>' +
-                '</ul>'+
-                '</div>'+
-
-                '<div class="tooltip_sub_content">'+
-                '<h6>' + 'Note' + '</h6>' +
-                '<ul class="graph_ul">' +
-                  '<span class="notes">Lorem Ipsum is</br> simply dummy text</br> of the printing </br>.</span>' +
-                '</ul>'+
-                '</div>';
+            toolTip = graphUtil.getToolTipForStepChart(value);
           }
         });
       return toolTip;
@@ -406,23 +389,7 @@ angular.module('hillromvestApp')
         var toolTip = '';
         angular.forEach($scope.completeGraphData, function(value) {
           if(value.startTime === e.point.x && value.hmr !== 0 ){
-              toolTip =
-                '<div class="tooltip_sub_content">'+
-                '<h6 class="after">' + dateService.getDateFromTimeStamp(value.startTime,patientDashboard.dateFormat,'/') + '</h6>' +
-                '<ul class="graph_ul">' +
-                  '<li><span class="pull-left">' + 'Frequency' + '</span><span class="pull-right value">' + value.frequency  + '</span></li>' +
-                  '<li><span class="pull-left">' + 'Pressure' +'</span><span class="pull-right value">' + value.pressure +'</span></li>' +
-                  '<li><span class="pull-left">' + 'Cough Pauses' +'</span><span class="pull-right value">' + value.coughPauseDuration +'</span></li>' +
-                  '<li><span class="pull-left">' + 'Duration' +'</span><span class="pull-right value">' + value.durationInMinutes +'</span></li>' +
-                '</ul>'+
-                '</div>'+
-
-                '<div class="tooltip_sub_content">'+
-                '<h6>' + 'Note' + '</h6>' +
-                '<ul class="graph_ul">' +
-                  '<span class="notes">Lorem Ipsum is</br> simply dummy text</br> of the printing </br>.</span>' +
-                '</ul>'+
-                '</div>';
+              toolTip = graphUtil.getToolTipForBarChart(value);
           }
         });
       return toolTip;   
@@ -434,14 +401,7 @@ angular.module('hillromvestApp')
         var toolTip = '';
         angular.forEach(data, function(value) {
           if(value.start === e.point.x){
-              toolTip =
-                '<h6>' + dateService.getDateFromTimeStamp(value.start,patientDashboard.dateFormat,'/') + '  ('+ d3.time.format('%I:%M %p')(new Date(value.start)) + ')'  + '</h6>' +
-                '<ul class="graph_ul">' +
-                  '<li><span class="pull-left">' + 'Session No.' + '</span><span class="pull-right value">' +  value.sessionNo + '/' + value.treatmentsPerDay  + '</span></li>' +
-                  '<li><span class="pull-left">' + 'Frequency' +'</span><span class="pull-right value">' + value.frequency +'</span></li>' +
-                  '<li><span class="pull-left">' + 'Pressure' +'</span><span class="pull-right value">' + value.pressure +'</span></li>' +
-                  '<li><span class="pull-left">' + 'Cough Pauses' +'</span><span class="pull-right value">' + value.coughPauseDuration +'</span></li>' +
-                '</ul>';
+              toolTip =  graphUtil.getToolTipForCompliance(value);             
           }
         });
       return toolTip;   
@@ -1474,6 +1434,37 @@ angular.module('hillromvestApp')
 
     $scope.init();
 
+      $scope.getNotesOnGraphNode = function(selectedTimestamp){
+        // 
+        $scope.hideNotesCSS();
+        $scope.graphStartDate = null;
+        $scope.graphEndDate = null;   
+        var selectedNodeIndex = null;
+        var graphNodesLength = $scope.completeGraphData.actual.length;
+        if(graphNodesLength && graphNodesLength > 0){
+          angular.forEach($scope.completeGraphData.actual, function(value, index) {
+            if(value.timestamp === selectedTimestamp){
+              selectedNodeIndex = index;
+              $scope.graphStartDate = value.timestamp;                     
+            }
+          });
+
+          // selectedNodeIndex exists means start date is present
+          if(selectedNodeIndex != null && selectedNodeIndex > -1 ){
+            //the selected note is not the last one
+            if(selectedNodeIndex < (graphNodesLength-1)){            
+              var d = new Date($scope.completeGraphData.actual[selectedNodeIndex+1].timestamp);
+              d.setDate(d.getDate()-1);
+              $scope.graphEndDate = d.getTime();
+            }else if(selectedNodeIndex === (graphNodesLength-1)){
+              //this is the last node so,get the end date from dattepicker
+              $scope.graphEndDate = $scope.toTimeStamp;
+            }
+          }
+        }
+        $scope.getNotesBetweenDateRange($scope.graphStartDate,$scope.graphEndDate);
+      // 
+      }
 
       $scope.drawHMRLineGraph = function() {
         nv.addGraph(function() {
@@ -1485,35 +1476,7 @@ angular.module('hillromvestApp')
          // chart.noData("Nothing to see here.");
           chart.tooltipContent($scope.toolTipContentStepChart());
           chart.lines.dispatch.on('elementClick', function(event) {
-            // 
-              $scope.hideNotesCSS();
-              $scope.graphStartDate = null;
-              $scope.graphEndDate = null;   
-              var selectedNodeIndex = null;
-              var graphNodesLength = $scope.completeGraphData.actual.length;
-              if(graphNodesLength && graphNodesLength > 0){
-                angular.forEach($scope.completeGraphData.actual, function(value, index) {
-                  if(value.timestamp === event.point.timeStamp){
-                    selectedNodeIndex = index;
-                    $scope.graphStartDate = value.timestamp;                     
-                  }
-                });
-
-                // selectedNodeIndex exists means start date is present
-                if(selectedNodeIndex != null && selectedNodeIndex > -1 ){
-                  //the selected note is not the last one
-                  if(selectedNodeIndex < (graphNodesLength-1)){            
-                    var d = new Date($scope.completeGraphData.actual[selectedNodeIndex+1].timestamp);
-                    d.setDate(d.getDate()-1);
-                    $scope.graphEndDate = d.getTime();
-                  }else if(selectedNodeIndex === (graphNodesLength-1)){
-                    //this is the last node so,get the end date from dattepicker
-                    $scope.graphEndDate = $scope.toTimeStamp;
-                  }
-                }
-              }
-              $scope.getNotesBetweenDateRange($scope.graphStartDate,$scope.graphEndDate);
-            // 
+            $scope.dayGraphForNode(event.point.x);
           });
           //this function to put x-axis labels
           chart.xAxis.tickFormat(function(d) {
@@ -1584,7 +1547,6 @@ angular.module('hillromvestApp')
             //$scope.drawComplianceGraph();
         $timeout( function(){
           // hiddenFrame.contentWindow.focus();
-           console.info(doc.readyState)
           if(doc.readyState == 'complete') {
               // hiddenFrame.contentWindow.print();
             //hiddenFrame.contentWindow.print();
@@ -1747,6 +1709,21 @@ angular.module('hillromvestApp')
     };
     $scope.closeModalCaregiver = function(){
       $scope.showModalCaregiver = false;
-    };    
+    }; 
+
+    /*on click of the nodes on graph, the graph should change to a day graph*/   
+    $scope.dayGraphForNode = function(timestamp) {
+      $scope.selectedDateOption = 'DAY';
+      $scope.toDate = $scope.fromDate =  dateService.getDateFromTimeStamp(timestamp,patientDashboard.dateFormat,'/');
+      $scope.dates = {startDate: $scope.fromDate, endDate: $scope.fromDate};
+      $scope.removeGraph();
+       if($scope.hmrGraph) {
+        $scope.format = 'dayWise';
+        $scope.hmrLineGraph = false;
+        $scope.hmrBarGraph = true;       
+        $scope.toTimeStamp = $scope.fromTimeStamp = timestamp;
+        $scope.getDayHMRGraphData();
+      }
+    };
     
 }]);
