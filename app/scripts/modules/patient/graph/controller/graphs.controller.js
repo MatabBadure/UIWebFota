@@ -123,7 +123,7 @@ angular.module('hillromvestApp')
     $scope.getPatientListForCaregiver = function(caregiverID){
       caregiverDashBoardService.getPatients(caregiverID).then(function(response){
         $scope.patients = response.data.patients;
-        if(StorageService.get('logged')  && StorageService.get('logged').patientID !== null){
+        if(StorageService.get('logged')  && StorageService.get('logged').patientID){
           angular.forEach($scope.patients, function(value){
             if(value.userId === parseInt(StorageService.get('logged').patientID)){
               $scope.$emit('getSelectedPatient', value);
