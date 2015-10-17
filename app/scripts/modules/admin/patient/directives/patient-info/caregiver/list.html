@@ -46,10 +46,10 @@
       <span ng-if="caregiver.user.state">{{::caregiver.user.state}} </span></span>
     </div>
     <div class="col-md-3 caregiver-list__phone">
-      <span class="caregiver-list__phone--number">{{::caregiver.user.primaryPhone}}</span>
+      <span class="caregiver-list__phone--number">{{::caregiver.user.primaryPhone | phoneFormat}}</span>
     </div>
     <div class="col-md-3 caregiver-list__fax">
-      <span class="caregiver-list__fax--number">{{::caregiver.user.mobilePhone}}</span>
+      <span class="caregiver-list__fax--number">{{::caregiver.user.mobilePhone | phoneFormat}}</span>
     </div>
     <div class="col-md-3 caregiver-list__type">
       <span>{{::caregiver.relationshipLabel}}</span>
