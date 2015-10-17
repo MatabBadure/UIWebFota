@@ -322,5 +322,8 @@
     "place-holder":{
         "mobile-number": "Mobile Number",
         "phone-number": "Phone Number"
+    },
+    "reset-password":{
+        "set-password": "Set Password"
     }
 }
