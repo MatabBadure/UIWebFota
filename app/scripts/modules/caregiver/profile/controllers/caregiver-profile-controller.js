@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hillromvestApp')
-  .controller('caregiverProfileController',['$scope', '$state', '$location', 'notyService', 'UserService', 'Password', 'Auth', 'AuthServerProvider', function ($scope, $state, $location, notyService, UserService, Password, Auth, AuthServerProvider) {
+  .controller('caregiverProfileController',['$scope', '$state', '$location', 'notyService', 'UserService', 'Password', 'Auth', 'AuthServerProvider', 'StorageService', function ($scope, $state, $location, notyService, UserService, Password, Auth, AuthServerProvider, StorageService) {
 
 
     $scope.isActive = function(tab) {
@@ -13,7 +13,7 @@ angular.module('hillromvestApp')
       }
     };
 
-    $scope.initProfile = function(adminId){
+    $scope.initProfile = function(userId){
       $scope.associateCareGiver = {};
       UserService.getRelationships().then(function(response) {
         $scope.relationships = response.data.relationshipLabels;
@@ -21,14 +21,14 @@ angular.module('hillromvestApp')
       UserService.getState().then(function(response) {
         $scope.states = response.data.states;        
       });
-      UserService.getUser(localStorage.getItem('userId')).then(function(response){
+      UserService.getUser(userId).then(function(response){
           $scope.associateCareGiver = response.data.user;
       });
     };
 
     $scope.init = function(){
       if($state.current.name === 'caregiverProfile' || $state.current.name === 'caregiverProfileEdit' ){
-        $scope.initProfile(localStorage.getItem('userId'));
+        $scope.initProfile(StorageService.get('logged').userId);
       } else if($state.current.name === 'caregiverChangePassword'){
           AuthServerProvider.getSecurityQuestions().then(function(response){
             $scope.questions = response.data
@@ -64,7 +64,7 @@ angular.module('hillromvestApp')
         'newPassword': $scope.profile.newPassword
       };
 
-      Password.updatePassword(localStorage.getItem('userId'), data).then(function(response){
+      Password.updatePassword(StorageService.get('logged').userId, data).then(function(response){
         Auth.logout();
         notyService.showMessage(response.data.message, 'success');
         $state.go('login');
@@ -87,7 +87,7 @@ angular.module('hillromvestApp')
           "questionId": $scope.resetAccount.question.id,
           "answer": $scope.resetAccount.answer
         };
-        AuthServerProvider.changeSecurityQuestion(data, localStorage.getItem('userId')).then(function(response){
+        AuthServerProvider.changeSecurityQuestion(data, StorageService.get('logged').userId).then(function(response){
           $scope.changePassword();
         }).catch(function(response){
           if(response.data.message){

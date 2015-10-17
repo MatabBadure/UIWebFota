@@ -27,6 +27,7 @@
             "app/bower_components/angular-translate-storage-cookie/angular-translate-storage-cookie.js",
             "app/bower_components/angular-translate-loader-partial/angular-translate-loader-partial.js",
             "app/bower_components/angular-dynamic-locale/src/tmhDynamicLocale.js",
+            "app/bower_components/angular-local-storage/dist/angular-local-storage.js",
             "app/bower_components/angular-animate/angular-animate.js",
             "app/bower_components/moment/moment.js",
             "app/bower_components/bootstrap-daterangepicker/daterangepicker.js",
@@ -133,7 +134,11 @@
             "app/scripts/components/util/sortoptions.service.js",
             "app/scripts/modules/clinicadmin/patient/services/clinicadminpatient.service.js",
             "app/scripts/recaptcha.js",
-            "app/scripts/components/util/commonsUsers.service.js"
+            "app/scripts/components/util/commonsUsers.service.js",
+            "app/scripts/modules/patient/profile/controllers/patientprofile.controller.js",
+            "app/scripts/modules/hcp/graph/controller/graphs.controller.js",
+            "app/scripts/modules/patient/graph/controller/graphs.controller.js"
+
         ],
         "clean": [
             "app/build/",
