@@ -539,7 +539,7 @@ angular.module('hillromvestApp')
               '<ul class="graph_ul">' +
                 '<li><span class="pull-left">' + 'Frequency' + '</span><span class="pull-right value">' + value.frequency  + '</span></li>' +
                 '<li><span class="pull-left">' + 'Pressure' +'</span><span class="pull-right value">' + value.pressure +'</span></li>' +
-                '<li><span class="pull-left">' + 'Cough Pauses' +'</span><span class="pull-right value">' + value.coughPauseDuration +'</span></li>' +
+                '<li><span class="pull-left">' + 'Cough Pauses' +'</span><span class="pull-right value">' + value.caughPauseDuration +'</span></li>' +
                 '<li><span class="pull-left">' + 'Duration' +'</span><span class="pull-right value">' + value.durationInMinutes +'</span></li>' +
               '</ul>'+
               '</div>'+
@@ -556,7 +556,7 @@ angular.module('hillromvestApp')
             '<ul class="graph_ul">' +
               '<li><span class="pull-left">' + 'Frequency' + '</span><span class="pull-right value">' + value.frequency  + '</span></li>' +
               '<li><span class="pull-left">' + 'Pressure' +'</span><span class="pull-right value">' + value.pressure +'</span></li>' +
-              '<li><span class="pull-left">' + 'Cough Pauses' +'</span><span class="pull-right value">' + value.coughPauseDuration +'</span></li>' +
+              '<li><span class="pull-left">' + 'Cough Pauses' +'</span><span class="pull-right value">' + value.caughPauseDuration +'</span></li>' +
               '<li><span class="pull-left">' + 'Duration' +'</span><span class="pull-right value">' + value.durationInMinutes +'</span></li>' +
             '</ul>';
         }
