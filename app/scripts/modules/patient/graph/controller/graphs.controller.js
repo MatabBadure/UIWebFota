@@ -858,8 +858,16 @@ angular.module('hillromvestApp')
         });
       chart.yAxis1.tickFormat(d3.format('d'));
       chart.yAxis2.tickFormat(d3.format('d'));
-      chart.yDomain1([$scope.yAxis1Min,$scope.yAxis1Max]);
-      chart.yDomain2([$scope.yAxis2Min,$scope.yAxis2Max]); 
+      if($scope.yAxis1Min === 0 && $scope.yAxis1Max === 0){
+        chart.yDomain1([$scope.yAxis1Min,1]);
+      }else{
+        chart.yDomain1([$scope.yAxis1Min,$scope.yAxis1Max]);
+      }
+      if($scope.yAxis2Min === 0 && $scope.yAxis2Max === 0){
+        chart.yDomain2([$scope.yAxis2Min,1]); 
+      }else{
+        chart.yDomain2([$scope.yAxis2Min,$scope.yAxis2Max]); 
+      }
       var data =  $scope.complianceGraphData;
          angular.forEach(data, function(value) {
               if(value.yAxis === 1){
@@ -927,8 +935,8 @@ angular.module('hillromvestApp')
         }
         /*fix for IE browser ends*/
         var maxTransform = parseInt(y1AxisMinMax.split(delimiter)[1].replace(y1AxisMinMax,')',''));
-        $scope.y1AxisTransformRate = parseInt(y1AxisMinMax.split(delimiter)[1].replace(y1AxisMinMax,')',''))/($scope.yAxis1Max - $scope.yAxis1Min);
-        $scope.y2AxisTransformRate = parseInt(y2AxisMinMax.split(delimiter)[1].replace(y2AxisMinMax,')',''))/($scope.yAxis2Max - $scope.yAxis2Min);
+        $scope.y1AxisTransformRate = (($scope.yAxis1Max - $scope.yAxis1Min) > 0) ? parseInt(y1AxisMinMax.split(delimiter)[1].replace(y1AxisMinMax,')',''))/($scope.yAxis1Max - $scope.yAxis1Min) : 0;
+        $scope.y2AxisTransformRate = (($scope.yAxis2Max - $scope.yAxis2Min) > 0) ? parseInt(y2AxisMinMax.split(delimiter)[1].replace(y2AxisMinMax,')',''))/($scope.yAxis2Max - $scope.yAxis2Min) : 0;
         var y1LineLength = d3.select('#complianceGraph svg').selectAll('.y1.axis').selectAll('.nvd3.nv-wrap.nv-axis').selectAll('line').attr('x2');
         var y2LineLength = d3.select('#complianceGraph svg').selectAll('.y2.axis').selectAll('.nvd3.nv-wrap.nv-axis').selectAll('line').attr('x2');
         $scope.getMinMaxForComplianceGraph();
@@ -936,7 +944,6 @@ angular.module('hillromvestApp')
         var y1AxisMaxTransform = maxTransform - parseInt($scope.y1AxisTransformRate * $scope.yAxis1MaxMark);
         var y2AxisMinTransform = maxTransform - parseInt($scope.y2AxisTransformRate * $scope.yAxis2MinMark);
         var y2AxisMaxTransform = maxTransform - parseInt($scope.y2AxisTransformRate * $scope.yAxis2MaxMark);
-
         y1AxisMark.append('g').
         attr('class','minRecommendedLevel').
         attr('transform','translate(-45, '+ y1AxisMinTransform + ')').
