@@ -131,11 +131,11 @@ angular.module('hillromvestApp')
             $scope.sortPatientList.lastName = toggledSortOptions;
             $scope.sortOption = sortConstant.plastName + sortOptionsService.getSortByASCString(toggledSortOptions);
             $scope.searchPatients();
-          }else if(sortParam === sortConstant.mrnId){
-            toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortPatientList.mrnId);
+          }else if(sortParam === sortConstant.hillromId){
+            toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortPatientList.hillromId);
             $scope.sortPatientList = sortOptionsService.getSortOptionsForPatientList();
-            $scope.sortPatientList.mrnId = toggledSortOptions;
-            $scope.sortOption = sortConstant.mrnid + sortOptionsService.getSortByASCString(toggledSortOptions);
+            $scope.sortPatientList.hillromId = toggledSortOptions;
+            $scope.sortOption = sortConstant.pHillromId + sortOptionsService.getSortByASCString(toggledSortOptions);
             $scope.searchPatients();
           }else if(sortParam === sortConstant.dob){
             toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortPatientList.dob);
