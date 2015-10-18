@@ -1,6 +1,7 @@
 'use strict';
 angular.module('hillromvestApp')
-.controller('hcpGraphController',[ '$scope', '$state', 'hcpDashBoardService', 'dateService', 'graphUtil', '$stateParams', 'hcpDashboardConstants', 'DoctorService', 'clinicadminService', 'notyService', function($scope, $state, hcpDashBoardService, dateService, graphUtil, $stateParams, hcpDashboardConstants, DoctorService, clinicadminService, notyService) {
+.controller('hcpGraphController',[ '$scope', '$state', 'hcpDashBoardService', 'dateService', 'graphUtil', '$stateParams', 'hcpDashboardConstants', 'DoctorService', 'clinicadminService', 'notyService', 'StorageService','$filter', 'commonsUserService',
+	function($scope, $state, hcpDashBoardService, dateService, graphUtil, $stateParams, hcpDashboardConstants, DoctorService, clinicadminService, notyService, StorageService,$filter,commonsUserService) {
 	var chart;
 	$scope.init = function() {
 		$scope.lazyLoadParamsPieChart = [
@@ -9,7 +10,7 @@ angular.module('hillromvestApp')
         $scope.lazyLoadParamsDatePicker = [
         'bower_components/angular-daterangepicker/js/angular-daterangepicker.js'
         ];
-		$scope.hcpId = parseInt(localStorage.getItem('userId'));
+		$scope.hcpId = parseInt(StorageService.get('logged').userId);
 		$scope.selectedGraph = 'CUMULATIVE';
 		$scope.treatmentGraph = false;
 		$scope.cumulativeGraph = true;
@@ -63,28 +64,20 @@ angular.module('hillromvestApp')
     return Math.floor((count/total)*100);
   };
 
-	$scope.getClinicsForHCP = function(userId) {
+	$scope.getClinicsForHCP = function(userId) {		
 		DoctorService.getClinicsAssociatedToHCP(userId).then(function(response){
-			localStorage.setItem('clinicId', response.data.clinics[0].id);
-			$scope.clinics = response.data.clinics;
-			$scope.selectedClinic = response.data.clinics[0];
-			$scope.weeklyChart();
-			$scope.getStatistics($scope.selectedClinic.id, userId);
-	  }).catch(function(response){
-			notyService.showError(response);
-	  });
+			$scope.getDashboardForHCPOrPatient(response, userId);	
+		  }).catch(function(response){
+				notyService.showError(response);
+		  });
 	};
 
 	$scope.getClinicsForClinicAdmin = function(userId) {
-	clinicadminService.getClinicsAssociated(userId).then(function(response){
-	  localStorage.setItem('clinicId', response.data.clinics[0].id);
-	  $scope.clinics = response.data.clinics;
-	  $scope.selectedClinic = response.data.clinics[0];
-	  $scope.weeklyChart();
-	  $scope.getStatistics($scope.selectedClinic.id, userId);
-	}).catch(function(response){
-	  notyService.showError(response);
-	});
+		clinicadminService.getClinicsAssociated(userId).then(function(response){
+			$scope.getDashboardForHCPOrPatient(response, userId);
+		}).catch(function(response){
+		  notyService.showError(response);
+		});
 	};
 
 	//---HCP PieChart JS =============
@@ -161,7 +154,7 @@ angular.module('hillromvestApp')
   $scope.switchClinic = function(clinic){
 	if($scope.selectedClinic.id !== clinic.id){
 	  $scope.selectedClinic = clinic;
-	  $scope.getStatistics($scope.selectedClinic.id, localStorage.getItem('userId'));
+	  $scope.getStatistics($scope.selectedClinic.id, StorageService.get('logged').userId);
 	  $scope.drawGraph();
 	}
   };
@@ -514,4 +507,19 @@ angular.module('hillromvestApp')
 			$state.go('clinicadminpatientdashboard',{'filter':value, 'clinicId':$scope.selectedClinic.id});
 		}
   };
+
+	$scope.getDashboardForHCPOrPatient = function(response, userId){
+		if(response.data && response.data.clinics){
+			$scope.clinics = $filter('orderBy')(response.data.clinics, "name"); 
+			var isClinic = false;	
+			if($stateParams.clinicId !== undefined && $stateParams.clinicId !== null){
+				isClinic = $scope.selectedClinic = commonsUserService.getSelectedClinicFromList($scope.clinics, $stateParams.clinicId);
+			}
+			if(!isClinic){
+				$scope.selectedClinic = $scope.clinics[0];
+			}
+		}	  		
+		$scope.weeklyChart();
+		$scope.getStatistics($scope.selectedClinic.id, userId);
+	};
 }]);

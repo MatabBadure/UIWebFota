@@ -2,7 +2,6 @@
 
 angular.module('hillromvestApp',
   [
-  'LocalStorageModule',
    'tmh.dynamicLocale',
    'pascalprecht.translate',
    'ngResource',
@@ -63,17 +62,18 @@ angular.module('hillromvestApp',
       }
     };
   }])
-  .factory('authInterceptor', ['$rootScope', '$q', '$location', 'localStorageService', function($rootScope, $q, $location, localStorageService) {
+  .factory('authInterceptor', ['$rootScope', '$q', '$location', 'StorageService', function($rootScope, $q, $location, StorageService) {
     return {
       // Add authorization token to headers
       request: function(config) {
         config.headers = config.headers || {};
-        var token = localStorageService.get('token');
-
+        var token = null;
+        if(StorageService.get('logged')){
+          token = StorageService.get('logged').token;
+        }
         if (token && token.expires && token.expires > new Date().getTime()) {
           config.headers['x-auth-token'] = token.token;
         }
-
         return config;
       }
     };

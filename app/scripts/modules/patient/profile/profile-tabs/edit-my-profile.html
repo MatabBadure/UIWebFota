@@ -72,7 +72,7 @@
               <span class="" translate="profile.mobile-no"></span>
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
-              <input class="" type="text" name="employeeID" ng-model="editPatientProfile.mobilePhone" ng-readonly="validateSuperAdmin()" ui-mask="(999)-999-9999">
+              <input class="" type="text" name="employeeID" ng-model="editPatientProfile.mobilePhone" ng-readonly="validateSuperAdmin()" ui-mask="(999)-999-9999" model-view-value="true">
             </div>
           </div>
         </div>
@@ -84,7 +84,7 @@
               <span class="">*</span>
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
-              <input class="" type="email" name="email" validate-on-blur ng-model="editPatientProfile.email" ng-maxlength=100 ng-readonly="validateSuperAdmin()" ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/" required>
+              <input class="" type="email" name="email" validate-on-blur ng-model="editPatientProfile.email" ng-maxlength=100 ng-readonly="validateSuperAdmin()" ng-pattern="/^[a-z][a-z0-9_\+-]+(\.[a-z0-9_\+-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*\.([a-z]{2,4})$/" required>
               <div ng-show="(form.email.$dirty && form.email.$showValidationMessage && form.email.$invalid) || submitted">
                 <span class="has-error" ng-show="form.email.$error.required" translate="profile.errorMSG.e-mail-requitred"></span>                
                 <span class="has-error" ng-show="form.email.$error.maxlength" translate="profile.errorMSG.email-max-length"> </span>
@@ -133,7 +133,7 @@
               <span class="">*</span>
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
-              <input class="" type="text" name="answer" validate-on-blur ng-model="resetAccount.answer" ng-maxlength=100 ng-readonly="validateSuperAdmin()" required>
+              <input class="" type="password" name="answer" validate-on-blur ng-model="resetAccount.answer" ng-maxlength=100 ng-readonly="validateSuperAdmin()" required>
               <div ng-show="(form.answer.$dirty && form.answer.$showValidationMessage && form.answer.$invalid) || submitted">
                 <span class="has-error" ng-show="form.answer.$error.required" translate="profile.errorMSG.ans-required"></span>
                 <span class="has-error" ng-show="form.answer.$error.maxlength" translate="profile.errorMSG.ans-max-required"></span>

@@ -1560,7 +1560,7 @@ angular.module('hillromvestApp')
             })
             .state('hcppatientdashboard', {
                 parent: 'hcp-dashboard',
-                url: '/hcp-patients-view/{clinicId}',
+                url: '/{clinicId}/hcp-patients-view/{filter}',
                 params: {"clinicId": null},                
                 data: {
                     roles: ['HCP'],
@@ -1817,7 +1817,7 @@ angular.module('hillromvestApp')
 
             .state('clinicadminpatientdashboard', {
                 parent: 'clinicadmin-dashboard',
-                url: '/{clinicId}/clinicadmin-patient/{filter}',
+                url: '/clinicadmin-patient/{clinicId}',
                 data: {
                     roles: ['CLINIC_ADMIN'],
                     pageTitle: 'patient.page-title.patients'
@@ -2082,6 +2082,11 @@ angular.module('hillromvestApp')
                     }
                 },
                 resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('PatientGraphModule');
+                    }],
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('patient-user');
                         return $translate.refresh();
@@ -2108,6 +2113,11 @@ angular.module('hillromvestApp')
                     }
                 },
                 resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('PatientGraphModule');
+                    }],
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('patient-user');
                         return $translate.refresh();

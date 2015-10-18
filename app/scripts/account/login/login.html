@@ -81,21 +81,17 @@
         <div class="clr"></div>
       </div> -->
     <!-- first time login -->
+    <div class="auth-heading" translate="reset-password.set-password"> </div>
     <div class=" col-md-16 col-lg-16 login__container__right-section">
     <div class="password_inst" translate="login.instruction"></div>
     <span ng-if="message">{{message}}</span>
       <form class="login-auth-form" role="form" name="confirmForm" ng-submit="submitPassword($event)" novalidate autocomplete="off" show-validation>
         <div class="form-group email" ng-if="!isEmailExist">
-          <input type="email" class="form-control" validate-on-blur name="email" placeholder="Enter Email" ng-model="user.email" ng-maxlength=100 required value="">
+          <input type="email" class="form-control" validate-on-blur name="email" placeholder="Enter Email" ng-model="user.email" ng-maxlength=100 required ng-pattern="/^[a-z][a-z0-9_\+-]+(\.[a-z0-9_\+-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*\.([a-z]{2,4})$/" value="">
           <div ng-show="(confirmForm.email.$showValidationMessage && confirmForm.email.$invalid) || submitted" class="form-error">
-            <span class="login-has-error" ng-show="confirmForm.email.$error.required">
-             E-mail required.
-           </span>
-           <span class="login-has-error" ng-show="confirmForm.email.$error.email">
-            Invalid e-mail.
-          </span>
-          <span class="login-has-error" ng-show="confirmForm.email.$error.maxlength">
-           E-mail cannot be longer than 100 characters.
+            <span class="login-has-error" ng-show="confirmForm.email.$error.required" translate="error.email.required"></span>
+           <span class="login-has-error" ng-show="confirmForm.email.$error.pattern" translate="error.email.invalid"></span>
+          <span class="login-has-error" ng-show="confirmForm.email.$error.maxlength" translate="error.email.maxlength">
          </span>
 
        </div>

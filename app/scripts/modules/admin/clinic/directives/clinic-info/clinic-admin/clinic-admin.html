@@ -3,8 +3,8 @@
 <div class="container admin-user">
   <div class="col-md-16 margin-top reset-padding">
    <div class="user-gen-details">
-     <span class="user-gen-details--name">{{clinic.name}}</span>
-     <span class="user-gen-details--hr-id">{{clinic.hillromId}}</span>
+     <span class="user-gen-details--name">{{::clinic.name}}</span>
+     <span class="user-gen-details--hr-id">{{::clinic.hillromId}}</span>
    </div>
   </div>
 </div>
@@ -32,10 +32,10 @@
 <div class="container admin-user">
 	<div class="col-md-16 crud-list" ng-show="clinicAdmin && !clinicAdminEdit">
     <div class="col-md-4">
-      <span>{{clinicAdmin.lastName}} {{clinicAdmin.firstName}}</span>
+      <span>{{::clinicAdmin.lastName}}, {{::clinicAdmin.firstName}}</span>
     </div>
     <div class="col-md-10">
-      <span>{{clinicAdmin.email}}</span>
+      <span>{{::clinicAdmin.email}}</span>
     </div>
     <div class="col-md-1 text-center">
       <span class="icon-edit-icon" ng-click="setEditClinicAdmin()"></span>
@@ -134,10 +134,10 @@
               <span class="">*</span>
             </div>
            <div class="col-md-10 dashboard__form--input reset-padding">
-              <input class="" type="email" name="email" ng-model="newAdmin.email" required ng-maxlength=100>
+              <input class="" type="email" name="email" ng-model="newAdmin.email" required ng-pattern="/^[a-z][a-z0-9_\+-]+(\.[a-z0-9_\+-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*\.([a-z]{2,4})$/"  ng-maxlength=100>
               <div ng-show="(createClinicAdminForm.email.$dirty && createClinicAdminForm.email.$showValidationMessage && createClinicAdminForm.email.$invalid) || submitted">
                 <span class="has-error" ng-show="createClinicAdminForm.email.$error.required" translate="error.email.required"></span>
-                <span class="has-error" ng-show="createClinicAdminForm.email.$error.email" translate="error.email.invalid"></span>
+                <span class="has-error" ng-show="createClinicAdminForm.email.$error.pattern" translate="error.email.invalid"></span>
                 <span class="has-error" ng-show="createClinicAdminForm.email.$error.maxlength" translate="error.email.maxlength"></span>
               </div>
             </div>
