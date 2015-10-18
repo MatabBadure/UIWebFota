@@ -1560,11 +1560,11 @@ angular.module('hillromvestApp')
 
       var patientDetails = ($scope.slectedPatient) ? $scope.slectedPatient : null;
       var pdfClinic = ($scope.associatedClinics && $scope.associatedClinics.length > 0) ? $scope.associatedClinics[0] : null;
-      var completeAddress = (pdfClinic !== null && pdfClinic.city) ? pdfClinic.city : stringConstants.emptyString;
-      completeAddress += (pdfClinic !== null && pdfClinic.state) ? ((completeAddress.length > 1) ? (stringConstants.comma+pdfClinic.state) : pdfClinic.state) : completeAddress; 
-      completeAddress += (pdfClinic !== null && pdfClinic.address) ? ((completeAddress.length > 1) ? (stringConstants.comma+pdfClinic.address) : pdfClinic.address) : completeAddress;
-      completeAddress += (pdfClinic !== null && pdfClinic.zipcode) ? ((completeAddress.length > 1) ? (stringConstants.comma+pdfClinic.zipcode) : pdfClinic.zipcode) : completeAddress;
-      var pdfClinicName = (pdfClinic !== null && pdfClinic.name) ? pdfClinic.name : stringConstants.notAvailable; 
+      //var completeAddress = (pdfClinic !== null && pdfClinic.city) ? pdfClinic.city : stringConstants.emptyString;
+      //completeAddress += (pdfClinic !== null && pdfClinic.state) ? ((completeAddress.length > 1) ? (stringConstants.comma+pdfClinic.state) : pdfClinic.state) : completeAddress; 
+      //completeAddress += (pdfClinic !== null && pdfClinic.address) ? ((completeAddress.length > 1) ? (stringConstants.comma+pdfClinic.address) : pdfClinic.address) : completeAddress;
+      //completeAddress += (pdfClinic !== null && pdfClinic.zipcode) ? ((completeAddress.length > 1) ? (stringConstants.comma+pdfClinic.zipcode) : pdfClinic.zipcode) : completeAddress;
+      //var pdfClinicName = (pdfClinic !== null && pdfClinic.name) ? pdfClinic.name : stringConstants.notAvailable; 
       var pdfClinicAddress = (pdfClinic !== null && pdfClinic.address) ? pdfClinic.address : stringConstants.notAvailable;
       var pdfClinicPhone = (pdfClinic !== null && pdfClinic.phoneNumber) ? pdfClinic.phoneNumber : stringConstants.notAvailable;
       var reportGenerationDate = dateService.getDateFromTimeStamp(new Date().getTime(),patientDashboard.dateFormat,'/');
@@ -1590,9 +1590,8 @@ angular.module('hillromvestApp')
             '<link rel="stylesheet" href="styles/style.css">' +
             '</head>' +
             '<body onload="printAndRemove();">' + // Print only after document is loaded
-            '<div class="pdf__heading-primary">'+pdfClinicName+'</div>' +
-            '<div class="pdf__heading-secondary">'+completeAddress+'</div>' +
-            '<div class="pdf__heading-secondary pdf--heading-border">'+pdfClinicPhone+'</div>' +
+            '<div class="pdf__heading-primary">HillRom</div>' +
+            '<div class="pdf__heading-secondary">VisiView TM Health Portal</div>' +
             '<div class="title">'+
             '<span class="title--heading">'+stringConstants.reportGenerationDateLabel+'</span>'+
             '<span class="title--desc">'+reportGenerationDate+'</span>'+
@@ -1643,6 +1642,20 @@ angular.module('hillromvestApp')
             '<div class="graph-title"></div>'+
             '<div>'+
               html1 +
+            '</div>'+
+            '<div class="pdf-signature">'+
+              '<div class="pdf-signature--prim">'+
+              '<span class="signature-desc">Name:</span>'+
+              '<span class="user-space"></span>'+
+              '</div>'+
+              '<div class="pdf-signature--secon">'+
+                '<span class="signature-desc">Date:</span>'+
+                '<span class="user-space"></span>'+
+              '</div>'+
+              '<div class="pdf-signature--prim sec-row">'+
+                '<span class="signature-desc">Signature:</span>'+
+                '<span class="user-space"></span>'+
+              '</div>'+
             '</div>'+
             '</body>' +
             "</html>";
