@@ -1,18 +1,22 @@
-.pdf{
+.pdf {
 	&__heading-primary {
-		text-align: center; 
+		font-family:"Apercu Light", Arial, Calibri, sans-serif;
+		text-align: right; 
 		font-size: 21px; 
 		font-weight: bold;
 		color: #7ca3dc !important;
 	}
 
 	&__heading-secondary {
-		text-align: center; 
+		font-family:"Apercu Light", Arial, Calibri, sans-serif;
+		text-align: right; 
 		font-size: 12px;
 		color: #34455c !important;
+		border-bottom: 1px solid;
 	}
 
 	&--heading-border {
+		font-family:"Apercu Light", Arial, Calibri, sans-serif;
 		border-bottom: 1px solid #34455c;
 		margin-bottom: 20px;
 	}
@@ -20,9 +24,10 @@
 
 
 .title {
+	font-family:"Apercu Light", Arial, Calibri, sans-serif;
 	width: 50%;
 	display: inline-block;
-	padding-bottom: 20px;
+	padding: 20px 0;
 	&--heading {
 		font-size: 10px;
 		padding-right: 10px;
@@ -35,6 +40,7 @@
 }
 
 .pdf-container{
+	font-family:"Apercu Light", Arial, Calibri, sans-serif;
 	width: 50%;
 	display: inline-block;
 	table {
@@ -66,21 +72,64 @@
 }
 
 .table-left {
+	font-family:"Apercu Light", Arial, Calibri, sans-serif;
 	padding-left: 10px;
 }
 
 .table-right {
+	font-family:"Apercu Light", Arial, Calibri, sans-serif;
 	padding-right: 10px;
 	float: left;
 }
 
 .pdf--margin-top {
+	font-family:"Apercu Light", Arial, Calibri, sans-serif;
 	margin-top: 10px;
 }
 
 .graph-title {
+	font-family:"Apercu Light", Arial, Calibri, sans-serif;
 	padding: 10px 0;
 	font-size: 14px;
 	font-weight: bold;
 	color: #7ca3dc !important;
+}
+
+.pdf-signature {
+	font-family:"Apercu Light", Arial, Calibri, sans-serif;
+	padding-top: 20px;
+	border-top: 1px solid;
+}
+
+.pdf-signature--prim {
+	text-align: left;
+	float: left;
+	width: 30%;
+} 
+
+.pdf-signature--secon {
+	text-align: right;
+	margin-left: 40%;
+	float: left;
+	width: 30%;
+}
+
+.pdf-signature--prim, .pdf-signature--secon {
+	font-family:"Apercu Light", Arial, Calibri, sans-serif;
+	padding-top: 10px;
+	display: inline-block;
+	.signature-desc {
+		width: 20%;
+		padding-right: 10px;
+		display: inline-block;
+	}
+	.user-space {
+		width: 80%;
+		display: inline-block;
+		border-bottom: 1px solid;
+		padding-left: 20px;
+	}
+}
+.sec-row {
+	clear: both;
 }
