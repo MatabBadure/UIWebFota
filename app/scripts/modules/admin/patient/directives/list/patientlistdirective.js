@@ -96,6 +96,9 @@ angular.module('hillromvestApp')
         };
 
         $scope.getDateFromTimestamp = function(timestamp){
+          if(!timestamp){
+            return searchFilters.emptyString;
+          }
           var _date = new Date(timestamp);
           var _month = (_date.getMonth()+1).toString();
           _month = _month.length > 1 ? _month : '0' + _month;
