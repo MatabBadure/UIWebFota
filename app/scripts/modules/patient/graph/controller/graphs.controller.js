@@ -927,16 +927,19 @@ angular.module('hillromvestApp')
         }
         /*fix for IE browser ends*/
         var maxTransform = parseInt(y1AxisMinMax.split(delimiter)[1].replace(y1AxisMinMax,')',''));
-        $scope.y1AxisTransformRate = parseInt(y1AxisMinMax.split(delimiter)[1].replace(y1AxisMinMax,')',''))/($scope.yAxis1Max - $scope.yAxis1Min);
-        $scope.y2AxisTransformRate = parseInt(y2AxisMinMax.split(delimiter)[1].replace(y2AxisMinMax,')',''))/($scope.yAxis2Max - $scope.yAxis2Min);
+        console.log("y1AxisMinMax : " + y1AxisMinMax + " nom : "+parseInt(y1AxisMinMax.split(delimiter)[1].replace(y1AxisMinMax,')','')) + " denom : "+($scope.yAxis1Max - $scope.yAxis1Min) );
+        $scope.y1AxisTransformRate = (($scope.yAxis1Max - $scope.yAxis1Min) > 0) ? parseInt(y1AxisMinMax.split(delimiter)[1].replace(y1AxisMinMax,')',''))/($scope.yAxis1Max - $scope.yAxis1Min) : 0;
+        $scope.y2AxisTransformRate = (($scope.yAxis2Max - $scope.yAxis2Min) > 0) ? parseInt(y2AxisMinMax.split(delimiter)[1].replace(y2AxisMinMax,')',''))/($scope.yAxis2Max - $scope.yAxis2Min) : 0;
         var y1LineLength = d3.select('#complianceGraph svg').selectAll('.y1.axis').selectAll('.nvd3.nv-wrap.nv-axis').selectAll('line').attr('x2');
         var y2LineLength = d3.select('#complianceGraph svg').selectAll('.y2.axis').selectAll('.nvd3.nv-wrap.nv-axis').selectAll('line').attr('x2');
         $scope.getMinMaxForComplianceGraph();
+        console.log("DONT SEND UNDEFINED !!!!!!!!!!!!!!!!!!!! $scope.y1AxisTransformRate : " + $scope.y1AxisTransformRate + " $scope.yAxis1MinMark "+$scope.yAxis1MinMark);
+        console.log("DONT SEND UNDEFINED !!!!!!!!!!!!!!!!!!!! $scope.y1AxisTransformRate : " + $scope.y1AxisTransformRate + " $scope.yAxis1MinMark "+$scope.yAxis1MinMark+" $scope.yAxis1MaxMark : "+$scope.yAxis1MaxMark+" maxTransform : "+maxTransform);
         var y1AxisMinTransform = maxTransform - parseInt($scope.y1AxisTransformRate * $scope.yAxis1MinMark);
         var y1AxisMaxTransform = maxTransform - parseInt($scope.y1AxisTransformRate * $scope.yAxis1MaxMark);
         var y2AxisMinTransform = maxTransform - parseInt($scope.y2AxisTransformRate * $scope.yAxis2MinMark);
         var y2AxisMaxTransform = maxTransform - parseInt($scope.y2AxisTransformRate * $scope.yAxis2MaxMark);
-
+        console.log("DONT SEND UNDEFINED !!!!!!!!!!!!!!!!!!!!" + y1AxisMinTransform + " -- "+y1AxisMaxTransform);
         y1AxisMark.append('g').
         attr('class','minRecommendedLevel').
         attr('transform','translate(-45, '+ y1AxisMinTransform + ')').
