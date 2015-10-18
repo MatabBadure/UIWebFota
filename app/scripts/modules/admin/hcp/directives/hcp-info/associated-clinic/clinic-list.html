@@ -39,7 +39,7 @@
       <div class="clr"></div>
     </div>
 
-    <div class="dashboard__manage-view--list assoc" ng-repeat="clinic in clinicsOfHCP" ng-if="clinicsOfHCP.length > 0"  ng-class="{'inactive': clinic.deleted}">
+    <div class="dashboard__manage-view--list assoc" ng-repeat="clinic in clinicsOfHCP" ng-if="clinicsOfHCP.length > 0"  ng-class="{'inactive': clinic.deleted}" ng-click="selectClinic(clinic)">
       <span>
       <div class="col-md-2  centered">
         <span class="main-prim-info">{{clinic.name}}</span>
