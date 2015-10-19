@@ -11,5 +11,16 @@ angular.module('hillromvestApp')
 			});
 			return selectedClinic;
     	};
+        
+        this.formatDataForTypehead = function(data){
+          angular.forEach(data, function(object){
+            angular.forEach(object, function(value, key){
+              if(!value){
+                object[key] = "";
+              }
+            });   
+          });
+          return data;
+        };
     	
     }]);

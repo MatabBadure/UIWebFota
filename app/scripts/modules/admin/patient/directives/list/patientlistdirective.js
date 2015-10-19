@@ -96,6 +96,9 @@ angular.module('hillromvestApp')
         };
 
         $scope.getDateFromTimestamp = function(timestamp){
+          if(!timestamp){
+            return searchFilters.emptyString;
+          }
           var _date = new Date(timestamp);
           var _month = (_date.getMonth()+1).toString();
           _month = _month.length > 1 ? _month : '0' + _month;
@@ -130,11 +133,11 @@ angular.module('hillromvestApp')
             $scope.sortPatientList.lastName = toggledSortOptions;
             $scope.sortOption = sortConstant.plastName + sortOptionsService.getSortByASCString(toggledSortOptions);
             $scope.searchPatients();
-          }else if(sortParam === sortConstant.mrnId){
-            toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortPatientList.mrnId);
+          }else if(sortParam === sortConstant.hillromId){
+            toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortPatientList.hillromId);
             $scope.sortPatientList = sortOptionsService.getSortOptionsForPatientList();
-            $scope.sortPatientList.mrnId = toggledSortOptions;
-            $scope.sortOption = sortConstant.mrnid + sortOptionsService.getSortByASCString(toggledSortOptions);
+            $scope.sortPatientList.hillromId = toggledSortOptions;
+            $scope.sortOption = sortConstant.pHillromId + sortOptionsService.getSortByASCString(toggledSortOptions);
             $scope.searchPatients();
           }else if(sortParam === sortConstant.dob){
             toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortPatientList.dob);

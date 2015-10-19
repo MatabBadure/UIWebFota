@@ -39,7 +39,7 @@
       <div class="clr"></div>
     </div>
 
-    <div class="dashboard__manage-view--list assoc" ng-repeat="clinic in clinicsOfHCP" ng-if="clinicsOfHCP.length > 0"  ng-class="{'inactive': clinic.deleted}">
+    <div class="dashboard__manage-view--list assoc" ng-repeat="clinic in clinicsOfHCP" ng-if="clinicsOfHCP.length > 0"  ng-class="{'inactive': clinic.deleted}" ng-click="selectClinic(clinic)">
       <span>
       <div class="col-md-2  centered">
         <span class="main-prim-info">{{clinic.name}}</span>
@@ -85,7 +85,7 @@
 <div class="container admin-user">
   <div class="col-md-16 reset-padding">
     <div class="col-md-8 clinic-link">
-      <input class="form-control" type="text" ng-model="searchItem" typeahead="clinic.name for clinic in clinics | filter:$viewValue" typeahead-on-select="selectClinicFromHCP($item)" placeholder="{{'doctor.placeholder.link-clinic' | translate}}" ng-show="associateClinicSearch">
+      <input class="form-control" type="text" ng-model="searchItem" typeahead="clinic.name +' &nbsp;&nbsp; '+ clinic.city + ' &nbsp;&nbsp; ' + clinic.state for clinic in clinics | filter:$viewValue" typeahead-on-select="selectClinicFromHCP($item)" placeholder="{{'doctor.placeholder.link-clinic' | translate}}" ng-show="associateClinicSearch">
     </div>
 
     <div class="col-md-8 clinic-link" ng-show="!associateClinicSearch">

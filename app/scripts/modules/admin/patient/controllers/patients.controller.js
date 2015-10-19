@@ -215,7 +215,26 @@ angular.module('hillromvestApp')
         }).catch(function (response) {
 
         });
-    }
+    };
+
+    $scope.initializeClinics = function(clinics){
+      $scope.clinics = []; $scope.clinics.length = 0;
+      angular.forEach(clinics, function(clinic, clinicKey){
+        if(!clinic.city){
+          clinic.city = "";
+        }
+        if(!clinic.state){
+         clinic.state = "";
+        }
+
+        angular.forEach($scope.associatedClinics, function(associatedClinic, associatedClinicKey){
+          if(associatedClinic.id === clinic.id){
+            clinics.splice(clinicKey, 1);
+          }
+        });
+      });
+      $scope.clinics = clinics;
+    };
 
     /** starts for patient clinics **/
     $scope.getPatientClinicInfo = function(patientId){
@@ -272,15 +291,7 @@ angular.module('hillromvestApp')
     $scope.initPatientClinics = function(patientId){
       if($scope.searchItem && $scope.searchItem.length > 0){
         clinicService.getClinics($scope.searchItem, $scope.sortOption, $scope.currentPageIndex, $scope.perPageCount).then(function (response) {
-          $scope.clinics = []; $scope.clinics.length = 0;
-          $scope.clinics = response.data;
-          for(var i=0; i < $scope.associatedClinics.length; i++){
-            for(var j=0; j <  $scope.clinics.length; j++ ){
-              if($scope.associatedClinics[i].id == $scope.clinics[j].id){
-                $scope.clinics.splice(j, 1);
-              }
-            }
-          }
+          $scope.initializeClinics(response.data);
           $scope.total = response.headers()['x-total-count'];
           $scope.pageCount = Math.ceil($scope.total / 10);
         }).catch(function (response) {
@@ -344,15 +355,7 @@ angular.module('hillromvestApp')
 
     $scope.getClinics = function(){
       clinicService.getClinics($scope.searchItem, $scope.sortOption, $scope.currentPageIndex, $scope.perPageCount).then(function (response) {
-          $scope.clinics = []; $scope.clinics.length = 0;
-          $scope.clinics = response.data;
-          for(var i=0; i < $scope.associatedClinics.length; i++){
-            for(var j=0; j <  $scope.clinics.length; j++ ){
-              if($scope.associatedClinics[i].id == $scope.clinics[j].id){
-                $scope.clinics.splice(j, 1);
-              }
-            }
-          }
+          $scope.initializeClinics(response.data);
           $scope.total = response.headers()['x-total-count'];
           $scope.pageCount = Math.ceil($scope.total / 10);
         }).catch(function (response) {
@@ -704,16 +707,8 @@ angular.module('hillromvestApp')
         }else if(response.data.message){
           $scope.associatedClinicsErrMsg = response.data.message;
         }
-        clinicService.getClinics($scope.searchItem, $scope.sortOption, $scope.currentPageIndex, $scope.perPageCount).then(function (response) {          
-          $scope.clinics = [];
-          $scope.clinics = response.data;
-          for(var i=0; i < $scope.associatedClinics.length; i++){
-            for(var j=0; j <  $scope.clinics.length; j++ ){
-              if($scope.associatedClinics[i].id == $scope.clinics[j].id){
-                $scope.clinics.splice(j, 1);
-              }
-            }
-          }          
+        clinicService.getClinics($scope.searchItem, $scope.sortOption, $scope.currentPageIndex, $scope.perPageCount).then(function (response) {
+          $scope.initializeClinics(response.data);
         });
       });
     };
@@ -743,7 +738,7 @@ angular.module('hillromvestApp')
                 }
               }
             }
-          }          
+          }
         }
       });
     };

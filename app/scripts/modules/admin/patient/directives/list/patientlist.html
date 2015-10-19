@@ -29,7 +29,7 @@
           <span ng-class="{'sort-icon--default' : sortPatientList.lastName.isDefault, 'sort-icon-down': sortPatientList.lastName.isDown, 'sort-icon-up':sortPatientList.lastName.isUp}" ng-click="sortType('lastName')" translate="patient.patient-name">Patient Name</span>
         </div>
         <div class="col-md-2 header--type">
-          <span ng-class="{'sort-icon--default' : sortPatientList.mrnId.isDefault, 'sort-icon-down': sortPatientList.mrnId.isDown, 'sort-icon-up':sortPatientList.mrnId.isUp}" ng-click="sortType('mrnId')" translate="patient.mrn-id">MRN ID</span>
+          <span ng-class="{'sort-icon--default' : sortPatientList.hillromId.isDefault, 'sort-icon-down': sortPatientList.hillromId.isDown, 'sort-icon-up':sortPatientList.hillromId.isUp}" ng-click="sortType('hillromId')" translate="patient.hillromId">Hillrom ID</span>
         </div>
         <div class="col-md-2 header--type">
           <span ng-class="{'sort-icon--default' : sortPatientList.dob.isDefault, 'sort-icon-down': sortPatientList.dob.isDown, 'sort-icon-up':sortPatientList.dob.isUp}" ng-click="sortType('dob')" translate="patient.date-of-birth">DOB</span>
@@ -52,13 +52,13 @@
         <div class="clr"></div>
       </div>
 
-      <div class="dashboard__manage-view--list" ng-repeat="patient in patients" ng-click="patient.isDeleted || selectPatient(patient)" ng-readonly="true" ng-class="{'inactive': patient.isDeleted}">
+      <div class="dashboard__manage-view--list" ng-repeat="patient in patients" ng-click="selectPatient(patient)" ng-readonly="true">
           <div class="col-md-2 reset-padding">
             <span class="main-prim-info">{{::patient.lastName}}, {{::patient.firstName}}</span>
             <span class="main-secon-info">{{::patient.email}}</span>
           </div>
           <div class="col-md-2 reset-padding centered">
-            <span class="impo-highlight">{{::patient.mrnId}}</span>
+            <span class="impo-highlight">{{::patient.hillromId}}</span>
           </div>
           <div class="col-md-2 reset-padding centered">
             <span class="short-info">{{::patient.dob}}</span>

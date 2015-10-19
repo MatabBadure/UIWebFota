@@ -27,6 +27,7 @@ angular.module('hillromvestApp')
     		sortPatientList.clinicName = sortIcons;
     		sortPatientList.adherence = sortIcons;
             sortPatientList.hcp = sortIcons;
+            sortPatientList.hillromId = sortIcons;
     		return sortPatientList;
     	};
 

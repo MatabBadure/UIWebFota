@@ -144,7 +144,7 @@
             "cumulativeStatistics":"Cumulative Statistics",
             "treatmentStatistics":"Treatment Statistics",
             "nonCompliance": "Non-Compliance",
-            "noEvents":"No Events",
+            "noEvents":"No Transmission",
             "week":"Week",
             "month":"Month",
             "year":"Year"
