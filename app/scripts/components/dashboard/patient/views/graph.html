@@ -10,7 +10,7 @@
 		<div class="container patient_wrapper">
 			<div class="col-md-16">
 				<div class="row">
-					<div class="col-md-12 col-sm-16">
+					<div class="col-md-16 col-sm-16">
 						<div class="stats_chart_section">
 							<div class="stats_header"><h4 translate="graph.statistics"></h4></div>
 							<div class="stats_chart_container" oc-lazy-load="lazyLoadParamsPieChart">
@@ -38,10 +38,18 @@
 									</div>
 									<div class="chart_inner_icon icon-lungs"></div>
 								</div>
+								<div class="col-3">
+									<div class="pie_chart"  easypiechart options="missedtherapy" percent="missedtherapyDays"></div>
+									<div class="stats_chart_content deviation">
+										<h4 class="percent" ng-bind="missedtherapyDays"></h4>
+										<p class="descrip" translate="graph.setting-deviation-days"> </p>
+									</div>
+									<div class="chart_inner_icon icon-settings"></div>
+								</div>
 							</div>
 						</div>
 					</div>
-					<div class="col-md-4 col-sm-16 dashboard_noti_mobile" ng-if="role === 'PATIENT'">	
+					<!-- <div class="col-md-4 col-sm-16 dashboard_noti_mobile" ng-if="role === 'PATIENT'">	
 						<div class="dashboard_noti_section">
 							<div class="header_noti"><h4 translate="graph.notification"></h4></div>
 							<div class="notification_container" ng-show="patientNotifications.length <= 0">
@@ -61,7 +69,7 @@
 								</ul>
 							</div>
 						</div>
-					</div>
+					</div> -->
 				</div>
 			</div>
 			<div class="col-md-16">
