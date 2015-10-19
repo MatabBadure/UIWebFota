@@ -105,7 +105,6 @@ angular.module('hillromvestApp')
           var _day = (_date.getDate()).toString();
           _day = _day.length > 1 ? _day : '0' + _day;
           var _year = (_date.getFullYear()).toString();
-          _year = _year.slice(-2);
           return _month+"/"+_day+"/"+_year;
         };
 

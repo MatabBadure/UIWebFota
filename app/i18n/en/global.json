@@ -156,7 +156,8 @@
         },
         "dob":{
             "required": "Date of Birth is required.",
-            "future": "Date of Birth cannot be future."
+            "future": "Date of Birth cannot be future.",
+            "invalid":"Invalid Date of Birth"
         },
         "address":{
             "maxlength": "Address cannot be longer than 100 characters."
@@ -306,7 +307,7 @@
     },
     "search-filter" : {
         "active" : "Active", 
-        "inactive" : "InActive", "no-event" : "No Events",
+        "inactive" : "InActive", "no-event" : "No Transmission",
         "setting-deviation" : "Setting Deviation", 
         "hmr-non-compliant" : "HMR Non Compliant", 
         "missed-therapy" :"Missed Therapy"
