@@ -378,4 +378,12 @@
 .datepicker thead tr:first-child th:hover, .datepicker tfoot tr th:hover, .datepicker thead tr:first-child th{
 	color: $btn-primary-color;
 	background-color: $iceberg;
-}	
+}
+.datepicker.datepicker-dropdown.datepicker-orient-bottom:after,
+.datepicker.datepicker-dropdown.datepicker-orient-left:after{
+	left: 93px;
+}
+.datepicker.datepicker-dropdown.datepicker-orient-bottom:before, 
+.datepicker.datepicker-dropdown.datepicker-orient-left:before{
+	left: 92px;
+}
