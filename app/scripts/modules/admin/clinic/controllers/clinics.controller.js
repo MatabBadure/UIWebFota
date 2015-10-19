@@ -64,18 +64,24 @@ angular.module('hillromvestApp')
       $scope.isAssociateHCP = false;
       clinicService.getClinicAssoctHCPs(clinicId).then(function(response){
         $scope.associatedHcps = response.data.hcpUsers;
-        clinicService.getHCPs().then(function(response){
-          $scope.hcps = response.data.users;
-          for(var i=0; i < $scope.associatedHcps.length; i++){
-            for(var j=0; j < $scope.hcps.length; j++){
-              if($scope.associatedHcps[i].id === $scope.hcps[j].id){
-                $scope.hcps.splice(j,1);
-              }
-            }
-          }
-        }).catch(function(response){});
-      }).catch(function(response){});
-      
+        clinicService.getHCPsWithClinicName().then(function(response){
+          $scope.hcps = response.data;
+          angular.forEach($scope.hcps, function(hcp, hcpKey){
+            angular.forEach(hcp.clinics, function(clinic, clinicKey){
+              hcp.clinicName = clinic.name;
+              angular.forEach($scope.associatedHcps, function(associatedHcp, associatedHcpKey){
+                if(associatedHcp.id === hcp.id){
+                  $scope.hcps.splice(hcpKey,1);
+                }
+              });
+            });
+          });
+        }).catch(function(response){
+          notyService.showError(response);
+        });
+      }).catch(function(response){
+        notyService.showError(response);
+      });
       $scope.getClinicById(clinicId);
     };
 
