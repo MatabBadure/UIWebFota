@@ -54,7 +54,7 @@ angular.module('hillromvestApp')
 
     $scope.getNonAssociatedPatients = function(clinicId){
       clinicService.getNonAssocaitedPatients(clinicId).then(function(response){
-        $scope.nonAssociatedPatients = response.data.patientUsers;
+        $scope.nonAssociatedPatients = $scope.formatDataForTypehead(response.data.patientUsers);
       }).catch(function(response){
         notyService.showError(response);
       });
@@ -721,6 +721,17 @@ angular.module('hillromvestApp')
       }else if( $state.current.name === 'clinicAssociatedPatients'){
         $scope.searchAssociatedPatients();
       }
+    };
+
+    $scope.formatDataForTypehead = function(patientUsers){
+      angular.forEach(patientUsers, function(user){
+        angular.forEach(user, function(value, key){
+          if(!value){
+            user[key] = "";
+          }
+        });   
+      });
+      return patientUsers;
     };
     $scope.init();
   }]);
