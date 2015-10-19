@@ -848,7 +848,7 @@ angular.module('hillromvestApp')
      // chart.noData("Nothing to see here.");
       chart.tooltipContent($scope.toolTipContentForCompliance($scope.completeComplianceData.actual));
       //this function to put x-axis labels
-      chart.xAxis.tickFormat(function(d) {
+      chart.xAxis.tickValues($scope.complianceGraphData[0].values.map( function(d){return d.x;} ) ).tickFormat(function(d) {
           var days = dateService.getDateDiffIndays($scope.fromTimeStamp,$scope.toTimeStamp);
           if(days > 10){
             return d3.time.format('%d%b%y')(new Date(d));
@@ -1486,7 +1486,7 @@ angular.module('hillromvestApp')
             $scope.dayGraphForNode(event.point.x);
           });
           //this function to put x-axis labels
-          chart.xAxis.tickFormat(function(d) {
+          chart.xAxis.tickValues($scope.graphData[0].values.map( function(d){return d.x;} ) ).tickFormat(function(d) {
           var days = dateService.getDateDiffIndays($scope.fromTimeStamp,$scope.toTimeStamp);
           if(days > 10){
             return d3.time.format('%d%b%y')(new Date(d));
@@ -1687,7 +1687,7 @@ angular.module('hillromvestApp')
          // chart.noData("Nothing to see here.");
           chart.tooltipContent($scope.toolTipContentBarChart());
           //this function to put x-axis labels
-          chart.xAxis.tickFormat(function(d) {
+          chart.xAxis.tickValues($scope.hmrBarGraphData[0].values.map( function(d){return d.x;} ) ).tickFormat(function(d) {
             return d3.time.format('%I:%M %p')(new Date(d));
             return dateService.getTimeIntervalFromTimeStamp(d);
         });
