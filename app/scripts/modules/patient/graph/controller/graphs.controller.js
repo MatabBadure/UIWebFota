@@ -1698,7 +1698,8 @@ angular.module('hillromvestApp')
     $scope.downloadAsPdf = function(){
       /*var graphData = ($scope.hmrGraph) ? $scope.completeGraphData : $scope.completeComplianceData;
       graphService.getPdfForSVGGraph(graphData);   */ 
-       $scope.drawHMRLineGraph();
+      if($scope.selectedGraph === "hmr" && $scope.selectedDateOption !== "DAY")
+      $scope.drawHMRLineGraph();
       setTimeout(function() {
       hiddenFrame.contentWindow.print();
       },700);
