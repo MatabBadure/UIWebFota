@@ -351,6 +351,13 @@ angular.module('hillromvestApp')
         return $http.get(url, {
           headers: headerService.getHeader()
         });
+      },
+
+      getUserSecurityQuestion: function(userId){
+        var url = URL.getUserSecurityQuestion.replace('USERID', userId);
+        return $http.get(url, {
+          headers: headerService.getHeader()
+        });
       }
 
       
