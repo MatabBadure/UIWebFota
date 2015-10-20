@@ -87,7 +87,7 @@
   </div>
 </div>
 
-  <div class="col-md-16 device-list" ng-repeat="device in devices" ng-class="{'list-inactive': !device.active}">
+  <div class="col-md-16 device-list" ng-repeat="device in devices  | orderBy:'active':true" ng-class="{'list-inactive': !device.active}">
     <div class="col-md-4 device-list__serial">
       <span>{{::device.serialNumber}}</span>
     </div>

@@ -1585,8 +1585,7 @@ angular.module('hillromvestApp')
                 }
             })
             .state('hcppatientList', {
-                 url:'/hcp-patient',
-                 params: {"clinicId" : null, "patientId": null},
+                 url:'/hcp-patient/{clinicId}/{patientId}',
                  views:{
                   'content':{
                     templateUrl:'scripts/modules/hcp/patient/directives/list.html',
