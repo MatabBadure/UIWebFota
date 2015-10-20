@@ -1,11 +1,17 @@
 'use strict';
 
-angular.module('hillromvestApp').controller('patientprofileController', ['$scope', '$state', 'notyService', 'patientService', 'UserService', 'AuthServerProvider', 'Password', 'Auth', function ($scope, $state, notyService, patientService, UserService, AuthServerProvider,Password, Auth) {
+angular.module('hillromvestApp').controller('patientprofileController', ['$scope', '$state', 'notyService', 'patientService', 'UserService', 'AuthServerProvider', 'Password', 'Auth', 'StorageService', 'caregiverDashBoardService', '$stateParams', 'loginConstants',
+  function ($scope, $state, notyService, patientService, UserService, AuthServerProvider,Password, Auth, StorageService, caregiverDashBoardService, $stateParams, loginConstants) {
 	
   $scope.init = function(){
 		var currentRoute = $state.current.name;	
 		$scope.profileTab = currentRoute;	
-		$scope.userRole = localStorage.getItem('role');			
+		$scope.userRole = StorageService.get('logged').role;
+    $scope.role = StorageService.get('logged').role;
+    $scope.caregiverID = parseInt(StorageService.get('logged').userId);
+    if( $scope.role === loginConstants.role.caregiver){
+        $scope.getPatientListForCaregiver($scope.caregiverID);
+      }	
 		if (currentRoute === 'patientProfile') {
 			$scope.initProfileView();        
 		}else if(currentRoute === 'patientProfileEdit'){
@@ -25,6 +31,66 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
     }
   };
 
+  $scope.getPatientListForCaregiver = function(caregiverID){
+    caregiverDashBoardService.getPatients(caregiverID).then(function(response){
+      $scope.patients = response.data.patients;
+      if(StorageService.get('logged') && StorageService.get('logged').patientID !== undefined){
+          angular.forEach($scope.patients, function(value){
+            if(value.userId === parseInt(StorageService.get('logged').patientID)){
+              $scope.$emit('getSelectedPatient', value);
+              $scope.selectedPatient = value;
+              $scope.patientId = StorageService.get('logged').patientID;
+            }
+          });
+      } else{
+          $scope.selectedPatient = response.data.patients[0];
+          $scope.$emit('getSelectedPatient', $scope.selectedPatient);
+          $scope.patientId = $scope.selectedPatient.userId;
+          var logged = StorageService.get('logged');
+          logged.patientID = $scope.patientId;
+          StorageService.save('logged',logged);
+      }
+      $scope.$emit('getPatients', $scope.patients);
+      if($state.current.name === 'patientDashboardPatientInfo'){
+        $scope.initProfileView();    
+      } else if($state.current.name === 'patientDashboardNotification'){
+        $scope.initPatientSettings();
+      }
+    }).catch(function(response){
+      notyService.showError(response);
+    });
+  };
+
+
+  $scope.$on('switchPatientCareGiver',function(event,patient){
+    $scope.switchPatient(patient);
+  });
+  
+  $scope.$on('switchCaregiverTab',function(event,state){
+    $scope.switchCaregiverTab(state);
+  });
+
+  $scope.switchPatient = function(patient){
+    if($scope.selectedPatient.userId !== patient.userId){
+      $scope.selectedPatient = patient;
+      $scope.patientId = $scope.selectedPatient.userId;
+      $scope.$emit('getSelectedPatient', $scope.selectedPatient);
+      var logged = StorageService.get('logged');
+      logged.patientID = $scope.patientId;
+      StorageService.save('logged',logged);
+      if($state.current.name === 'patientDashboardPatientInfo'){
+        $scope.initProfileView();    
+      } else if($state.current.name === 'patientDashboardNotification'){
+        $scope.initPatientSettings();
+      }
+    }
+  };
+
+  $scope.switchCaregiverTab = function(status){
+    $scope.caregiverTab = status;
+    $state.go(status, {'caregiverId': $stateParams.caregiverId});
+  };
+
 	$scope.switchProfileTabs = function(tab){
 		$scope.profileTab = tab;
 		$state.go(tab);	
@@ -39,7 +105,7 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
   };
 
 	$scope.initProfileView = function(){
-		UserService.getUser(localStorage.getItem('patientID')).then(function(response){
+		UserService.getUser(StorageService.get('logged').patientID).then(function(response){
 			$scope.patientView = response.data.user;
 		}).catch(function(response){});
 		AuthServerProvider.getSecurityQuestions().then(function(response){
@@ -54,7 +120,7 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
 	};
 
 	$scope.initProfileEdit = function(){
-		UserService.getUser(localStorage.getItem('patientID')).then(function(response){
+		UserService.getUser(StorageService.get('logged').patientID).then(function(response){
 			$scope.editPatientProfile = response.data.user;
 		}).catch(function(response){});
 		AuthServerProvider.getSecurityQuestions().then(function(response){
@@ -87,7 +153,7 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
     $scope.editPatientProfile.role = $scope.editPatientProfile.authorities[0].name;
     $scope.editPatientProfile.dob = null;
     UserService.editUser($scope.editPatientProfile).then(function(response){        
-      if(localStorage.getItem("userEmail") === $scope.editPatientProfile.email){
+      if(StorageService.get('logged').userEmail === $scope.editPatientProfile.email){
         notyService.showMessage(response.data.message, 'success');
         $state.go('patientProfile');
       }else{
@@ -117,31 +183,26 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
         "questionId": $scope.resetAccount.question.id,
         "answer": $scope.resetAccount.answer
       };
-      AuthServerProvider.changeSecurityQuestion(data, localStorage.getItem('patientID')).then(function(response){
+      AuthServerProvider.changeSecurityQuestion(data, StorageService.get('logged').patientID).then(function(response){
       }).catch(function(response){
-        if(response.data.message){
-          notyService.showMessage(response.data.message, 'warning');
-        } else if(response.data.ERROR){
-          notyService.showMessage(response.data.ERROR, 'warning');
-        }
+        notyService.showError(response);
       });
     }
     var data = {
       'password': $scope.profile.password,
       'newPassword': $scope.profile.newPassword
     };
-    Password.updatePassword(localStorage.getItem('patientID'), data).then(function(response){
+    Password.updatePassword(StorageService.get('logged').patientID, data).then(function(response){
       Auth.logout();
       notyService.showMessage(response.data.message, 'success');
       $state.go('login');
     }).catch(function(response){
-    	if(response && response.data && response.data.ERROR)
-      notyService.showMessage(response.data.ERROR, 'warning');
+    	notyService.showError(response);
     });
   };
 
   $scope.initPatientSettings = function(){ 	
-		UserService.getPatientUserNotification(localStorage.getItem('patientID')).then(function(response){
+		UserService.getPatientUserNotification(StorageService.get('logged').patientID).then(function(response){
 			$scope.patientUser = response.data.user;
 		}).catch(function(){
 		   notyService.showError(response);
@@ -159,7 +220,7 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
     if(notification === 'settingDeviationNotification'){
     	data.isSettingDeviationNotification = !$scope.patientUser.settingDeviationNotification;
     }
-    UserService.updatePatientUserNotification(localStorage.getItem('patientID'), data).then(function(response){
+    UserService.updatePatientUserNotification(StorageService.get('logged').patientID, data).then(function(response){
 			$scope.patientUser = response.data.user;    
 		}).catch(function(response){
       notyService.showError(response);

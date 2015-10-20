@@ -6,14 +6,14 @@
 			<span class="user-gen-details--hr-id">{{slectedPatient.hillromId}}</span>
 		</div>
 	</div>
-</div>
+</div> 
 		<div class="container patient_wrapper">
 			<div class="col-md-16">
 				<div class="row">
-					<div class="col-md-12 col-sm-16">
+					<div class="col-md-16 col-sm-16">
 						<div class="stats_chart_section">
 							<div class="stats_header"><h4 translate="graph.statistics"></h4></div>
-							<div class="stats_chart_container">
+							<div class="stats_chart_container" oc-lazy-load="lazyLoadParamsPieChart">
 								<div class="col-3">
 									<div class="pie_chart" easypiechart options="adherence" percent="adherenceScore"></div>
 									<div class="stats_chart_content score">
@@ -38,10 +38,18 @@
 									</div>
 									<div class="chart_inner_icon icon-lungs"></div>
 								</div>
+								<div class="col-3">
+									<div class="pie_chart"  easypiechart options="missedtherapy" percent="missedtherapyDays"></div>
+									<div class="stats_chart_content deviation">
+										<h4 class="percent" ng-bind="missedtherapyDays"></h4>
+										<p class="descrip" translate="graph.setting-deviation-days"> </p>
+									</div>
+									<div class="chart_inner_icon icon-settings"></div>
+								</div>
 							</div>
 						</div>
 					</div>
-					<div class="col-md-4 col-sm-16 dashboard_noti_mobile" ng-if="role === 'PATIENT'">	
+					<!-- <div class="col-md-4 col-sm-16 dashboard_noti_mobile" ng-if="role === 'PATIENT'">	
 						<div class="dashboard_noti_section">
 							<div class="header_noti"><h4 translate="graph.notification"></h4></div>
 							<div class="notification_container" ng-show="patientNotifications.length <= 0">
@@ -61,7 +69,7 @@
 								</ul>
 							</div>
 						</div>
-					</div>
+					</div> -->
 				</div>
 			</div>
 			<div class="col-md-16">
@@ -74,7 +82,7 @@
 						</ul>
 						</div>
 					</div>
-					<div class="col-md-11 col-sm-9 right_header_barchart">
+					<div class="col-md-11 col-sm-9 right_header_barchart" oc-lazy-load="lazyLoadParamsDatePicker">
 						<ul class="nav nav-pills pull-right ">
 							<li role="presentation" class=""><a href="" ng-class="{active: selectedDateOption === 'DAY'}" ng-hide="complianceGraph" ng-click="dayChart()" translate="graph.day"></a></li>
 							<li role="presentation" class=""><a ng-class="{active: selectedDateOption === 'WEEK'}" href="" ng-click="weeklyChart()">Week</a></li>
@@ -178,6 +186,9 @@
 						<div class="col-md-11 col-sm-8 description view_content show_content" id="viewnote_{{note.id}}" ng-bind="note.note"></div>
 						<form ng-submit="updateNote(note.id, note.createdOn);">
 						<div id="editform_{{note.id}}" class="col-md-16 edit_content hide_content" ng-show="role === 'PATIENT'" >
+						<div class="col-md-16">
+   	<p class="col-md-offset-2">System not monitored 24/7. If you have an emergency, please call 911</p>
+   </div>
 							<div class="col-md-2 col-sm-3">
 								<span ng-bind="note.createdOn"></span>
 							</div>
@@ -212,11 +223,15 @@
 
 
    <div class="col-md-16 note_edit_container hide_content" id="note_edit_container" ng-show="role === 'PATIENT'">
+   <div class="col-md-16">
+   	<p class="col-md-offset-2">System not monitored 24/7. If you have an emergency, please call 911</p>
+   </div>
 	<form name="form" ng-submit="createNote();">
 		<div class="col-md-2 col-sm-4 date_col">
-			<input class="date_input"  data-provide="datepicker"  data-date-format="yyyy-mm-dd"  bootstrap-datepicker data-date-end-date="0d"  id="edit_note_date" ng-model="textNote.edit_date" placeholder="Date"/></div>
+			<input class="date_input"  data-provide="datepicker"  data-date-format="yyyy-mm-dd"  bootstrap-datepicker data-date-end-date="0d"   data-date-start-date="{{transmissionDate}}" id="edit_note_date" ng-model="textNote.edit_date" placeholder="Date"/></div>
 			<div class="col-md-11 col-sm-8 description">
 				<div class="form-group">
+
 					<textarea class="form-control custom_textarea" rows="1" id="comment" ng-model="textNote.text" maxlength="300"></textarea>
 				</div>
 				<div>
@@ -233,7 +248,7 @@
 			</div>
 		</form>
 	</div>
-	<div class="btn_group patient_dashdoard_btns" ng-show="role === 'PATIENT'">
+	<div class="btn_group patient_dashdoard_btns" ng-show="role === 'PATIENT' && hasTransmissionDate">
 		<button class="hillrom-btn btn-submit float-right" ng-click="openAddNote();" translate="graph.add-note"></button>
 	</div>
 	<div class="dashboard__manage-view--pagination pagination_notes" ng-if="notes.length > 0">

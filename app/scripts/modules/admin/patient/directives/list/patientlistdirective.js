@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hillromvestApp')
-  .directive('patientList', function($state, $stateParams) {
+  .directive('patientList', ['$state', '$stateParams', function($state, $stateParams) {
     return {
       templateUrl: 'scripts/modules/admin/patient/directives/list/patientlist.html',
       restrict: 'E',
@@ -83,16 +83,9 @@ angular.module('hillromvestApp')
             .then(function(response) {
               $scope.patients = response.data;
               var patientCount = $scope.patients.length;
-              for (var i = 0 ; i < patientCount ; i++) {
-                var _date = new Date($scope.patients[i].dob);
-                var _month = (_date.getMonth()+1).toString();
-                _month = _month.length > 1 ? _month : '0' + _month;
-                var _day = (_date.getDate()).toString();
-                _day = _day.length > 1 ? _day : '0' + _day;
-                var _year = (_date.getFullYear()).toString();
-                _year = _year.slice(-2);
-                var dob = _month+"/"+_day+"/"+_year;
-                $scope.patients[i].dob = dob;
+              for (var i = 0 ; i < patientCount ; i++) {                
+                $scope.patients[i].dob = $scope.getDateFromTimestamp($scope.patients[i].dob);
+                $scope.patients[i].lastTransmissionDate = $scope.getDateFromTimestamp($scope.patients[i].lastTransmissionDate);
               }
               $scope.total = response.headers()['x-total-count'];
               $scope.pageCount = Math.ceil($scope.total / 10);
@@ -100,6 +93,19 @@ angular.module('hillromvestApp')
             }).catch(function(response) {
               $scope.noMatchFound = true;
             });
+        };
+
+        $scope.getDateFromTimestamp = function(timestamp){
+          if(!timestamp){
+            return searchFilters.emptyString;
+          }
+          var _date = new Date(timestamp);
+          var _month = (_date.getMonth()+1).toString();
+          _month = _month.length > 1 ? _month : '0' + _month;
+          var _day = (_date.getDate()).toString();
+          _day = _day.length > 1 ? _day : '0' + _day;
+          var _year = (_date.getFullYear()).toString();
+          return _month+"/"+_day+"/"+_year;
         };
 
         $scope.getAssociatedPatientsToClinic = function(clinicIds){
@@ -127,11 +133,11 @@ angular.module('hillromvestApp')
             $scope.sortPatientList.lastName = toggledSortOptions;
             $scope.sortOption = sortConstant.plastName + sortOptionsService.getSortByASCString(toggledSortOptions);
             $scope.searchPatients();
-          }else if(sortParam === sortConstant.mrnId){
-            toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortPatientList.mrnId);
+          }else if(sortParam === sortConstant.hillromId){
+            toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortPatientList.hillromId);
             $scope.sortPatientList = sortOptionsService.getSortOptionsForPatientList();
-            $scope.sortPatientList.mrnId = toggledSortOptions;
-            $scope.sortOption = sortConstant.mrnid + sortOptionsService.getSortByASCString(toggledSortOptions);
+            $scope.sortPatientList.hillromId = toggledSortOptions;
+            $scope.sortOption = sortConstant.pHillromId + sortOptionsService.getSortByASCString(toggledSortOptions);
             $scope.searchPatients();
           }else if(sortParam === sortConstant.dob){
             toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortPatientList.dob);
@@ -163,6 +169,12 @@ angular.module('hillromvestApp')
             $scope.sortPatientList.adherence = toggledSortOptions;
             $scope.sortOption = sortConstant.adherence + sortOptionsService.getSortByASCString(toggledSortOptions);
             $scope.searchPatients();
+          }else if(sortParam === sortConstant.clinicName){
+            toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortPatientList.clinicName);
+            $scope.sortPatientList = sortOptionsService.getSortOptionsForPatientList();
+            $scope.sortPatientList.clinicName = toggledSortOptions;
+            $scope.sortOption = sortConstant.clinicName + sortOptionsService.getSortByASCString(toggledSortOptions);
+            $scope.searchPatients();
           }        
           
         };
@@ -173,4 +185,4 @@ angular.module('hillromvestApp')
         $scope.init();
       }]
     };
-  });
+  }]);

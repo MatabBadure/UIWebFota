@@ -95,7 +95,7 @@
             "missed-therapy": "Missed Therapy",
             "non-hmr-compliance": "Non HMR Compliance",
             "sertting-deviations": "Sertting Deviations",
-            "no-events": "No Events"
+            "no-events": "No Transmission"
         },
         "delete": {
             "warning": "Are you sure you want to Deactivate the Patient?",

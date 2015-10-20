@@ -11,7 +11,7 @@
 <div class="dashboard dashboard--content">
   <div class="container dashboard__manage-view margin-top-xl">
     <div class="dashboard__manage-view--header">
-        <div class="col-md-3 header--type">
+        <div class="col-md-2 header--type">
           <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="clinic.hcp-name"></span>
         </div>
         <div class="col-md-2 header--type">
@@ -20,7 +20,7 @@
         <div class="col-md-2 header--type">
           <span translate="clinic.npiNumber"></span>
         </div>
-        <div class="col-md-3 header--type">
+        <div class="col-md-2 header--type">
           <span translate="clinic.clinic-name"></span>
         </div>
         <div class="col-md-2 header--type">
@@ -29,42 +29,40 @@
         <div class="col-md-2 header--type">
           <span translate="clinic.state"></span>
         </div>
-        <div class="col-md-1 header--type">
+        <div class="col-md-2 header--type">
           <span translate="clinic.status"></span>
         </div>
         <div class="clr"></div>
       </div>
 
       <div class="dashboard__manage-view--list assoc" ng-repeat="hcp in associatedHcps" readonly="true" ng-class="{'inactive': hcp.deleted}">
-          <span>
-            <div class="col-md-3 centered">
-              <span class="main-prim-info">{{::hcp.lastName}} {{::hcp.firstName}}</span>
-            </div>
-            <div class="col-md-2 centered">
-              <span class="impo-highlight">{{::hcp.credentials}}</span>
-            </div>
-            <div class="col-md-2 centered">
-              <span class="short-info">{{::hcp.npiNumber}}</span>
-            </div>
+          <div class="col-md-2 centered">
+            <span class="main-prim-info">{{::hcp.lastName}}, {{::hcp.firstName}}</span>
+          </div>
+          <div class="col-md-2 centered">
+            <span class="impo-highlight">{{::hcp.credentials}}</span>
+          </div>
+          <div class="col-md-2 centered">
+            <span class="short-info">{{::hcp.npiNumber}}</span>
+          </div>
 
-            <div class="col-md-3 centered">
-              <span class="short-info">{{::clinic.name}}</span>
-            </div>
+          <div class="col-md-2 centered">
+            <span class="short-info">{{::clinic.name}}</span>
+          </div>
 
-            <div class="col-md-2 centered">
-              <span class="short-info">{{::hcp.city}}</span>
-            </div>
+          <div class="col-md-2 centered">
+            <span class="short-info">{{::hcp.city}}</span>
+          </div>
 
-            <div class="col-md-2 centered">
-              <span class="short-info">{{::hcp.state}}</span>
-            </div>
+          <div class="col-md-2 centered">
+            <span class="short-info">{{::hcp.state}}</span>
+          </div>
 
-            <div class="col-md-1 centered">
-              <span class="short-info active" ng-if="!hcp.deleted" translate="clinic.status-type.active"></span>
-              <span class="short-info inactive" ng-if="hcp.deleted" translate="clinic.status-type.inactive"></span>
-            </div>
-          </span>
-          <div class="col-md-1-left centered text-right" >
+          <div class="col-md-2 centered">
+            <span class="short-info active" ng-if="!hcp.deleted" translate="clinic.status-type.active"></span>
+            <span class="short-info inactive" ng-if="hcp.deleted" translate="clinic.status-type.inactive"></span>
+          </div>
+          <div class="col-md-2 centered text-center" >
             <span class="icon-delete-icon" ng-click="hcp.deleted || openHcpDeactivateModal(hcp.id);"></span>
           </div>
 
@@ -81,7 +79,7 @@
 <div class="container admin-user">
   <div class="col-md-16 reset-padding">
     <div class="col-md-8 clinic-link">
-      <input class="form-control" type="text" ng-model="searchHcp" typeahead="hcp as hcp.lastName + ' ' + hcp.firstName +' ' + hcp.email for hcp in hcps | filter:$viewValue" typeahead-on-select="selectHCP($item)" placeholder="{{'clinic.placeholder.hcp-search' | translate}}" ng-show="isAssociateHCP">
+      <input class="form-control" type="text" ng-model="searchHcp" typeahead="hcp as hcp.lastName + ', &nbsp' + hcp.firstName +' ' + hcp.clinicName for hcp in hcps | filter:$viewValue" typeahead-on-select="selectHCP($item)" placeholder="{{'clinic.placeholder.hcp-search' | translate}}" ng-show="isAssociateHCP">
     </div>
 
     <div class="col-md-8 clinic-link">

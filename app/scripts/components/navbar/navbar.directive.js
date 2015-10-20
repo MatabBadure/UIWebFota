@@ -27,9 +27,14 @@ angular.module('hillromvestApp')
     templateUrl: 'scripts/components/navbar/navbar.html',
     restrict: 'E',
 
-    controller: function ($scope, $state) {
-      $scope.userRole = localStorage.getItem('role');
-      $scope.username = localStorage.getItem('userFirstName');
+    controller: ['$scope', '$state', 'StorageService', function ($scope, $state, StorageService) {
+
+      $scope.userRole = null;
+      $scope.username = null;
+      if(StorageService.get('logged')){
+        $scope.userRole = StorageService.get('logged').role;
+        $scope.username = StorageService.get('logged').userFirstName;  
+      }
       $scope.isActive = function(tab) {
         var path = $location.path();
         if (path.indexOf(tab) !== -1) {
@@ -55,7 +60,7 @@ angular.module('hillromvestApp')
       $scope.logout = function(){
         Auth.signOut().then(function(data) {
           Auth.logout();
-          localStorage.clear();
+          StorageService.clearAll();
           $scope.signOut();
         }).catch(function(err) {
         });
@@ -82,6 +87,8 @@ angular.module('hillromvestApp')
           $state.go("clinicadmindashboard");
         }else if($scope.userRole === "HCP"){
           $state.go("hcpdashboard");
+        }else if($scope.userRole === "CARE_GIVER"){
+          $state.go("caregiverDashboard");
         }
       };
 
@@ -89,6 +96,9 @@ angular.module('hillromvestApp')
         $state.go(page);
       };
 
+      $scope.goToCaregiverDashboard = function(){
+        $state.go("caregiverDashboard");
+      };
       $scope.goToPatientDashboard = function(value){
         if(value){
           $state.go(value, {"clinicId": $stateParams.clinicId});
@@ -105,20 +115,29 @@ angular.module('hillromvestApp')
         $rootScope.isFooter = (!$rootScope.isFooter ) ? ((url.indexOf(footerConstants.privacyPractices) !== -1) ? true: false) : $rootScope.isFooter;        
         $rootScope.isFooter = (!$rootScope.isFooter) ? (( url.indexOf(footerConstants.careSite) !== -1) ? true: false ) : $rootScope.isFooter;
       };
+
       $scope.isFooter();
-    }
+
+      $scope.goToPatientDashboard = function(value){
+        if(value){
+          $state.go(value, {"clinicId": $stateParams.clinicId});
+        }else{
+          $state.go("patientdashboard");
+        }
+      }
+    }]
   };
 }]);
 
 angular.module('hillromvestApp')
-.directive('navigationBarPatient', function (Auth, Principal, $state, Account, $location) {
+.directive('navigationBarPatient', ['Auth', 'Principal', '$state', 'Account', '$location', function (Auth, Principal, $state, Account, $location) {
   return {
     templateUrl: 'scripts/components/navbar/navbarpatientuser.html',
     restrict: 'E',
 
-    controller: function ($scope, UserService) {
+    controller: ['$scope', 'UserService', 'StorageService', function ($scope, UserService, StorageService) {
       $scope.notifications = 0;
-      $scope.username = localStorage.getItem('userFirstName');
+      $scope.username = StorageService.get('logged').userFirstName;
       $scope.isActive = function(tab) {
         var path = $location.path();
         if (path.indexOf(tab) !== -1) {
@@ -129,7 +148,7 @@ angular.module('hillromvestApp')
       };
 
       $scope.getNotifications = function(){
-        UserService.getPatientNotification(localStorage.getItem("patientID"), new Date().getTime()).then(function(response){                  
+        UserService.getPatientNotification(StorageService.get("logged").patientID, new Date().getTime()).then(function(response){
           $scope.notifications = response.data;
           if($scope.notifications.length < 2){
             $scope.no_of_notifications = $scope.notifications.length;
@@ -139,9 +158,9 @@ angular.module('hillromvestApp')
         });
       };
       $scope.getNotifications();
-    }
+    }]
   };
-});
+}]);
 
 angular.module('hillromvestApp')
 .directive('navigationBarHcp',['Auth', 'Principal', '$state', 'Account', '$location', function (Auth, Principal, $state, Account, $location) {
@@ -149,8 +168,8 @@ angular.module('hillromvestApp')
     templateUrl: 'scripts/components/navbar/navbarhcp.html',
     restrict: 'E',
 
-    controller: function ($scope, UserService, $stateParams) {
-      $scope.username = localStorage.getItem('userFirstName');
+    controller: ['$scope', 'UserService', '$stateParams', 'StorageService', function ($scope, UserService, $stateParams, StorageService) {
+      $scope.username = StorageService.get('logged').userFirstName;
       $scope.notifications = 0;
       $scope.isActive = function(tab) {
         var path = $location.path();
@@ -159,7 +178,7 @@ angular.module('hillromvestApp')
         } else {
           return false;
         }
-      };
+      }
 
       $scope.account = function(){
         var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : $stateParams.clinicId;
@@ -167,7 +186,7 @@ angular.module('hillromvestApp')
       };
 
       $scope.getNotifications = function(){
-        UserService.getPatientNotification(localStorage.getItem("patientID"), new Date().getTime()).then(function(response){                  
+        UserService.getPatientNotification(StorageService.get('logged').patientID, new Date().getTime()).then(function(response){
           $scope.notifications = response.data;
           if($scope.notifications.length < 2){
             $scope.no_of_notifications = $scope.notifications.length;
@@ -176,7 +195,7 @@ angular.module('hillromvestApp')
           }          
         });
       };
-    }
+    }]
   };
 }]);
 
@@ -186,8 +205,8 @@ angular.module('hillromvestApp')
     templateUrl: 'scripts/components/navbar/navbarclinicadmin.html',
     restrict: 'E',
 
-    controller: function ($scope, UserService, $stateParams) {
-      $scope.username = localStorage.getItem('userFirstName');
+    controller: ['$scope', 'UserService', '$stateParams', 'StorageService', function ($scope, UserService, $stateParams, StorageService) {
+      $scope.username = StorageService.get('logged').userFirstName;
       $scope.notifications = 0;
       $scope.isActive = function(tab) {
         var path = $location.path();
@@ -202,6 +221,6 @@ angular.module('hillromvestApp')
         var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : $stateParams.clinicId;
         $state.go("clinicadminUserProfile",{'clinicId': clinicId});
       };
-    }
+    }]
   };
 }]);

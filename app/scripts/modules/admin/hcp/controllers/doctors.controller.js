@@ -1,11 +1,11 @@
 'use strict';
 
 angular.module('hillromvestApp')
-  .controller('DoctorsController',['$rootScope', '$scope', '$state', '$timeout', 'Auth', '$stateParams', 'UserService', 'DoctorService', 'notyService', 'clinicService', 'searchFilterService', 'dateService',
-    function($rootScope, $scope, $state, $timeout, Auth,$stateParams, UserService, DoctorService, notyService, clinicService,searchFilterService, dateService ) {
+  .controller('DoctorsController',['$rootScope', '$scope', '$state', '$timeout', 'Auth', '$stateParams', 'UserService', 'DoctorService', 'notyService', 'clinicService', 'searchFilterService', 'dateService', 'StorageService', 'commonsUserService',
+    function($rootScope, $scope, $state, $timeout, Auth,$stateParams, UserService, DoctorService, notyService, clinicService,searchFilterService, dateService, StorageService, commonsUserService) {
     $scope.doctor = {};
     $scope.doctorStatus = {
-      'role': localStorage.getItem('role'),
+      'role': StorageService.get('logged').role,
       'editMode': false,
       'isCreate': false,
       'isMessage': false,
@@ -20,7 +20,7 @@ angular.module('hillromvestApp')
         $scope.perPageCount = 10;
         $scope.pageCount = 0;
         $scope.total = 0;        
-        $scope.sortOption ="";
+        $scope.filterClinicId = "all";
         $scope.searchItem = "";
         $scope.searchFilter = searchFilterService.initSearchFiltersForPatient();
         $scope.searchPatientsForHCP();
@@ -53,7 +53,6 @@ angular.module('hillromvestApp')
     };
 
     $scope.getDoctorDetails = function(doctorId,callback){
-      //$scope.getPatientsAssociatedToHCP(doctorId, null);
       $scope.getClinicsOfHCP(doctorId);
       var url = '/api/user/' + doctorId + '/hcp';
       UserService.getUser(doctorId, url).then(function(response) {
@@ -81,14 +80,10 @@ angular.module('hillromvestApp')
 
     $scope.viewAssociatedPatients = function(){
       if($scope.doctor.clinics.length === 1){
-        var ids = $scope.doctor.clinics[0].id;
-        localStorage.setItem('ids', ids)
         $state.go('associatedPatients');
       } else {
-        console.log('Returning False...!')
         return false;
       }
-
     };
 
     $scope.onSuccess = function() {
@@ -108,8 +103,8 @@ angular.module('hillromvestApp')
     $scope.getClinicsOfHCP = function(doctorId){
       DoctorService.getClinicsAssociatedToHCP(doctorId).then(function(response) {
         $scope.clinicsOfHCP =  response.data.clinics;
-        $scope.clinicList = [{"clinicId": "", "name": "ALL"}];
-        $scope.sortOption = $scope.clinicList[0].clinicId;
+        $scope.clinicList = [{"clinicId": "all", "name": "ALL"}];
+        $scope.filterClinicId = $scope.clinicList[0].clinicId;
         if($scope.clinicsOfHCP){
           angular.forEach($scope.clinicsOfHCP, function(clinic){
             $scope.clinicList.push({"clinicId": clinic.id, "name": clinic.name});
@@ -202,7 +197,7 @@ angular.module('hillromvestApp')
       $scope.clinics = []; 
       clinicService.getAllActiveClinics().then(function(response){
         if(response.data)
-        $scope.clinics = response.data;
+        $scope.clinics = commonsUserService.formatDataForTypehead(response.data);
         DoctorService.getClinicsAssociatedToHCP(doctorId).then(function(response) {
           $scope.clinicsOfHCP = [];  $scope.clinicsOfHCP.length = 0;
           if(response.data.clinics){            
@@ -219,7 +214,7 @@ angular.module('hillromvestApp')
             }
           }          
           $scope.clinicList = [{"clinicId": 0, "name": "ALL"}];
-          $scope.sortOption = $scope.clinicList[0].clinicId;
+          $scope.filterClinicId = $scope.clinicList[0].clinicId;
           if($scope.clinicsOfHCP){
             angular.forEach($scope.clinicsOfHCP, function(clinic){
               $scope.clinicList.push({"clinicId": clinic.id, "name": clinic.name});
@@ -269,7 +264,7 @@ angular.module('hillromvestApp')
         } 
 
         var filter = searchFilterService.getFilterStringForPatient($scope.searchFilter);
-        DoctorService.searchPatientsForHCPOrCliniadmin($scope.searchItem, 'hcp' ,$stateParams.doctorId, $scope.sortOption, $scope.currentPageIndex, $scope.perPageCount, filter).then(function (response) {
+        DoctorService.searchPatientsForHCPOrCliniadmin($scope.searchItem, 'hcp' ,$stateParams.doctorId, $scope.filterClinicId, $scope.currentPageIndex, $scope.perPageCount, filter).then(function (response) {
           $scope.patients = [];
           angular.forEach(response.data, function(patient){
             patient.dob = dateService.getDateFromTimeStamp(patient.dob, patientDashboard.dateFormat,'/');

@@ -13,22 +13,22 @@
   <div class="dashboard dashboard--content">
     <div class="dashboard__manage-view margin-top">
       <div class="dashboard__manage-view--header">
-          <div class="col-md-3 header--type">
+          <div class="col-md-2 header--type">
             <span translate="patient.clinic-caption.clinic-name"></span>
           </div>
-          <div class="col-md-1 header--type">
+          <div class="col-md-2 header--type">
             <span translate="patient.clinic-caption.type"></span>
           </div>
-          <div class="col-md-3 header--type">
+          <div class="col-md-2 header--type">
             <span translate="patient.clinic-caption.address"></span>
           </div>
           <div class="col-md-2 header--type">
             <span translate="patient.clinic-caption.city"></span>
           </div>
-          <div class="col-md-1 header--type">
+          <div class="col-md-2 header--type">
             <span translate="patient.clinic-caption.state"></span>
           </div>
-          <div class="col-md-3 header--type">
+          <div class="col-md-2 header--type">
             <span translate="patient.clinic-caption.phone-number"></span>
           </div>
           <div class="col-md-2 header--type">
@@ -41,29 +41,29 @@
 
   <div class="col-md-16 clinic-list " ng-repeat="aClinic in associatedClinics track by $index" ng-if="associatedClinics.length > 0" readonly="true" ng-class="{'default_active': !aClinic.deleted, 'inactive': aClinic.deleted}">
     <span  ng-click="aClinic.deleted || selectClinic(aClinic)">
-    <div class="col-md-3 clinic-list__detail">
+    <div class="col-md-2 clinic-list__detail">
       <span class="clinic-list__detail--name" ng-bind="aClinic.name"></span>
     </div>
-    <div class="col-md-1 clinic-list__phone">
+    <div class="col-md-2 clinic-list__phone">
       <span class="clinic-list__phone--number" ng-bind="aClinic.parent ? 'Parent' : 'Satellite'"></span>
     </div>
-    <div class="col-md-3 clinic-list__address">
+    <div class="col-md-2 clinic-list__address">
       <span class="clinic-list__address--primary" ng-bind="aClinic.address"></span>
     </div>
     <div class="col-md-2 clinic-list__phone">
       <span class="clinic-list__phone--number" ng-bind="aClinic.city"></span>
     </div>
-    <div class="col-md-1 clinic-list__phone">
+    <div class="col-md-2 clinic-list__phone">
       <span class="clinic-list__phone--number" ng-bind="aClinic.state"></span>
     </div>
-    <div class="col-md-3 clinic-list__phone">
+    <div class="col-md-2 clinic-list__phone">
       <span class="clinic-list__phone--number" ng-bind="aClinic.phoneNumber"></span>
     </div>
     <div class="col-md-2 clinic-list__phone">
       <span ng-bind="aClinic.hillromId"></span>
     </div>
     </span>
-    <div class="col-md-1 clinic-list__delete" ng-click="aClinic.deleted || deleteClinicModel(aClinic);">
+    <div class="col-md-2 clinic-list__delete" ng-click="aClinic.deleted || deleteClinicModel(aClinic);">
       <span class="icon-delete-icon"></span>
     </div>
   </div>
@@ -72,7 +72,7 @@
   </div>
   <div class="col-md-16 reset-padding">
     <div class="col-md-8 clinic-link">
-      <input type="text" ng-show="searchClinicText" ng-model="searchItem" typeahead="clinic.name for clinic in clinics | filter:$viewValue | filter:{deleted: false}" typeahead-on-select="selectClinicForPatient($item)" class="form-control" placeholder="{{'patient.placeholder.clinic-link' | translate}}">
+      <input type="text" ng-show="searchClinicText" ng-model="searchItem" typeahead="clinic.name + ' &nbsp ' + clinic.city + '&nbsp'+ clinic.state for clinic in clinics | filter:$viewValue | filter:{deleted: false}" typeahead-on-select="selectClinicForPatient($item)" class="form-control" placeholder="{{'patient.placeholder.clinic-link' | translate}}">
     </div>
 
     <div class="col-md-8 clinic-link">
@@ -88,7 +88,7 @@
   <div class="dashboard dashboard--content">
     <div class="dashboard__manage-view margin-top">
       <div class="dashboard__manage-view--header">
-          <div class="col-md-3 header--type">
+          <div class="col-md-2 header--type">
             <span translate="patient.hcp-caption.hcp-name"></span>
           </div>
           <div class="col-md-2 header--type">
@@ -97,13 +97,13 @@
           <div class="col-md-2 header--type">
             <span translate="patient.hcp-caption.npi-id"></span>
           </div>
-          <div class="col-md-3 header--type">
+          <div class="col-md-2 header--type">
             <span translate="patient.hcp-caption.clinic-name"></span>
           </div>
           <div class="col-md-2 header--type">
             <span translate="patient.hcp-caption.city"></span>
           </div>
-          <div class="col-md-1 header--type">
+          <div class="col-md-2 header--type">
             <span translate="patient.hcp-caption.state"></span>
           </div>
           <div class="col-md-2 header--type">
@@ -116,29 +116,29 @@
 
   <div class="col-md-16 clinic-list" ng-repeat="hcp in associatedHCPs track by $index" ng-if="associatedHCPs.length > 0" readonly="true" ng-class="{'default_active': !hcp.deleted, 'inactive': hcp.deleted}">
    <span ng-click="hcp.deleted || selectDoctor(hcp)">
-    <div class="col-md-3 clinic-list__detail">
-      <span class="clinic-list__detail--name">{{hcp.lastName}} {{hcp.firstName}}</span>
+    <div class="col-md-2 clinic-list__detail">
+      <span class="clinic-list__detail--name">{{::hcp.lastName}}, {{::hcp.firstName}}</span>
     </div>
     <div class="col-md-2 clinic-list__address">
-      <span class="clinic-list__credentials">{{hcp.credentials}}</span>
+      <span class="clinic-list__credentials">{{::hcp.credentials}}</span>
     </div>
     <div class="col-md-2 clinic-list__address">
       <span class="clinic-list__fax--number" ng-bind="hcp.npiNumber"></span>
     </div>
-    <div class="col-md-3 clinic-list__fax">
-      <span class="clinic-list__fax--number" ng-repeat ="clinic in hcp.clinics">{{clinic.name}} <b>{{$last ? '' : ', '}}</b></span>
+    <div class="col-md-2 clinic-list__fax">
+      <span class="clinic-list__fax--number" ng-repeat ="clinic in hcp.clinics">{{::clinic.name}} <b>{{$last ? '' : ', '}}</b></span>
     </div>
     <div class="col-md-2 clinic-list__fax">
       <span class="clinic-list__fax--number" ng-bind="hcp.city"></span>
     </div>
-    <div class="col-md-1 clinic-list__phone">
+    <div class="col-md-2 clinic-list__phone">
       <span class="clinic-list__phone--number" ng-bind="hcp.state"></span>
     </div>
     <div class="col-md-2 clinic-list__fax">
       <span class="clinic-list__fax--number" ng-bind="hcp.primaryPhone"></span>
     </div>
     </span>
-    <div class="col-md-1 clinic-list__delete" ng-click="deleteHCPModel(hcp);">
+    <div class="col-md-2 clinic-list__delete" ng-click="deleteHCPModel(hcp);">
       <span class="icon-delete-icon"></span>
     </div>
   </div>
@@ -147,7 +147,7 @@
   </div>
   <div class="col-md-16 reset-padding">
     <div class="col-md-8 clinic-link">
-      <input type="text" ng-show="searchHCPText" ng-model="searchHcp" typeahead="hcp as hcp.lastName +' ' + hcp.firstName + ' ' + hcp.email for hcp in hcps | filter:$viewValue | filter:{deleted: false}" typeahead-on-select="selectHcpForPatient($item)" class="form-control" placeholder="{{'patient.placeholder.hcp-link' | translate}}">
+      <input type="text" ng-show="searchHCPText" ng-model="searchHcp" typeahead="hcp as hcp.lastName +', &nbsp' + hcp.firstName  + ' &nbsp ' + hcp.clinics[0].name for hcp in hcps | filter:$viewValue | filter:{deleted: false}" typeahead-on-select="selectHcpForPatient($item)" class="form-control" placeholder="{{'patient.placeholder.hcp-link' | translate}}">
     </div>
 
     <div class="col-md-8 clinic-link">

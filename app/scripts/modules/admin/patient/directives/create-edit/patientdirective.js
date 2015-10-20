@@ -45,6 +45,11 @@ angular.module('hillromvestApp')
           if($scope.form.$invalid){
             return false;
           }
+          angular.forEach($scope.patient, function(value, key){
+            if(!value){
+              $scope.patient[key] = null;
+            }
+          });
           if($scope.patientStatus.editMode){
             var data = $scope.patient;
             data.role = 'PATIENT';
@@ -159,22 +164,26 @@ angular.module('hillromvestApp')
         };
 
         angular.element('#dp2').datepicker({
-          endDate: '+0d',
           autoclose: true}).
           on('changeDate', function(ev) {
           var selectedDate = angular.element('#dp2').datepicker("getDate");
-          var _month = (selectedDate.getMonth()+1).toString();
-          _month = _month.length > 1 ? _month : '0' + _month;
-          var _day = (selectedDate.getDate()).toString();
-          _day = _day.length > 1 ? _day : '0' + _day;
-          var _year = (selectedDate.getFullYear()).toString();
-          var dob = _month+"/"+_day+"/"+_year;
-          $scope.patient.dob = dob;
-          var age = dateService.getAge(selectedDate);
-          angular.element('.age').val(age);
-          $scope.patient.age = age;
-          if (age === 0) {
-            $scope.form.$invalid = true;
+          var currentDate = new Date();
+          if(selectedDate > currentDate){
+            $scope.form.dob.$invalid = true;
+          }else{
+            var _month = (selectedDate.getMonth()+1).toString();
+            _month = _month.length > 1 ? _month : '0' + _month;
+            var _day = (selectedDate.getDate()).toString();
+            _day = _day.length > 1 ? _day : '0' + _day;
+            var _year = (selectedDate.getFullYear()).toString();
+            var dob = _month+"/"+_day+"/"+_year;
+            $scope.patient.dob = dob;
+            var age = dateService.getAge(selectedDate);
+            angular.element('.age').val(age);
+            $scope.patient.age = age;
+            if (age === 0) {
+              $scope.form.$invalid = true;
+            }
           }
           angular.element("#dp2").datepicker('hide');
           $scope.$digest();

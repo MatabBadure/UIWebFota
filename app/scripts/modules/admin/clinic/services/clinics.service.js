@@ -1,8 +1,7 @@
 'use strict';
 angular.module('hillromvestApp')
-  .factory('clinicService', ['$http', 'localStorageService', 'headerService', 'URL' ,
-    function($http, localStorageService, headerService, URL) {
-    var token = localStorage.getItem('token');
+  .factory('clinicService', ['$http', 'headerService', 'URL' ,
+    function($http, headerService, URL) {
     return {
       createClinic: function(data) {
         return $http.post('api/clinics', data, {
@@ -117,6 +116,15 @@ angular.module('hillromvestApp')
 
       getHCPs: function(){
         return $http.get('/api/user/all?role=HCP', {
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });
+      },
+
+      getHCPsWithClinicName: function(){
+        var url = URL.getHCPsWithClinicName;
+        return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
           return response;

@@ -52,7 +52,7 @@
             <div class="col-md-10 dashboard__form__input--option reset-padding selected-box-container">
               <spam ng-if="patient.expired" translate="patient.status-type.expired"></spam>
               <div class="custom-dropdown" ng-if="!patient.expired">
-                <select name="language" ng-readonly="validateADMINorASP()" ng-model="patient.status" >
+                <select name="language" ng-readonly="validateADMINorASP()" ng-model="patient.clinicMRNId.status" >
                   <option value="active" translate="patient.status-type.active"></option>
                   <option value="inactive" translate="patient.status-type.inactive"></option>
                   <option value="expired" translate="patient.status-type.expired"></option>
@@ -238,9 +238,9 @@
             <span class=""></span>
           </div>
           <div class="col-md-10 dashboard__form--input reset-padding">
-            <input type="email" class="form-control" validate-on-blur name="email"  ng-readonly="validateADMINorASP()" ng-model="patient.email" ng-maxlength=100>
+            <input type="email" class="form-control" validate-on-blur name="email"  ng-readonly="validateADMINorASP()" ng-model="patient.email" ng-pattern="/^[a-z][a-z0-9_\+-]+(\.[a-z0-9_\+-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*\.([a-z]{2,4})$/" ng-maxlength=100>
             <div ng-show="(form.email.$showValidationMessage && form.email.$invalid) || submitted">
-              <span class="has-error" ng-show="form.email.$error.email" translate="error.email.invalid"></span>
+              <span class="has-error" ng-show="form.email.$error.pattern" translate="error.email.invalid"></span>
               <span class="has-error" ng-show="form.email.$error.maxlength" translate="error.email.maxlength"></span>
             </div>
           </div>
@@ -254,7 +254,7 @@
               <span class=""></span>
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
-              <input type="text" validate-on-blur class="form-control" name="mobilePhone" ng-readonly="validateADMINorASP()" ng-model="patient.mobilePhone" ui-mask="(999)-999-9999">
+              <input type="text" validate-on-blur class="form-control" name="mobilePhone" ng-readonly="validateADMINorASP()" ng-model="patient.mobilePhone" ui-mask="(999)-999-9999" model-view-value="true">
                <div ng-show="(form.mobilePhone.$showValidationMessage && form.mobilePhone.$invalid) || submitted">
                 <span class="has-error" ng-show="form.mobilePhone.$error.mask" translate="error.mobilePhone.mask"></span>
               </div>
@@ -266,7 +266,7 @@
             <span class=""></span>
           </div>
           <div class="col-md-10 dashboard__form--input reset-padding">
-            <input type="text" class="form-control" validate-on-blur  name="primaryPhone"  ng-readonly="validateADMINorASP()" ng-model="patient.primaryPhone" ui-mask="(999)-999-9999">
+            <input type="text" class="form-control" validate-on-blur  name="primaryPhone"  ng-readonly="validateADMINorASP()" ng-model="patient.primaryPhone" ui-mask="(999)-999-9999" model-view-value="true">
             <div ng-show="(form.primaryPhone.$showValidationMessage && form.primaryPhone.$invalid) || submitted">
               <span class="has-error" ng-show="form.primaryPhone.$invalid" translate="error.primaryPhone.mask"></span>
             </div>
