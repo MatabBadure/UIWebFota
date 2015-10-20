@@ -728,12 +728,12 @@ angular.module('hillromvestApp')
             $scope.hcps = []; 
             $scope.hcps = data[0].data.HCPUser; 
           }
+          $scope.associatedHCPs = [];
           if(data[1] && data[1].data.hcpUsers !== undefined){
-            $scope.associatedHCPs = [];           
             $scope.associatedHCPs = data[1].data.hcpUsers;
             for(var i=0; i < $scope.associatedHCPs.length; i++){
               for(var j=0; j <  $scope.hcps.length; j++ ){
-                if($scope.associatedHCPs[i].id == $scope.hcps[j].id){
+                if($scope.associatedHCPs[i].id === $scope.hcps[j].id){
                   $scope.hcps.splice(j, 1);
                 }
               }
