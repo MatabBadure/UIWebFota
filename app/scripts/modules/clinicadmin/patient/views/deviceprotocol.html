@@ -34,16 +34,16 @@
 
   <div class="col-md-16 col-sm-16 protocol-list" ng-repeat="protocol in protocols" ng-class="{'list-inactive':protocol.deleted}">
     <div class="col-md-4 col-sm-4 protocol-list__type">
-      <span> {{::protocol.treatmentsPerDay}}</span>
+      <span> {{protocol.treatmentsPerDay}}</span>
     </div>
     <div class="col-md-4 col-sm-4 protocol-list__treatment-day">
-      <span class="protocol-list--value"> {{::protocol.minMinutesPerTreatment}}-{{::protocol.maxMinutesPerTreatment}} </span>
+      <span class="protocol-list--value"> {{protocol.minMinutesPerTreatment}}-{{protocol.maxMinutesPerTreatment}} </span>
     </div>
     <div class="col-md-4 col-sm-4 protocol-list__strt-date">
-      <span class="protocol-list--value"> {{::protocol.minFrequency}}-{{::protocol.maxFrequency}}</span>
+      <span class="protocol-list--value"> {{protocol.minFrequency}}-{{protocol.maxFrequency}}</span>
     </div>
     <div class="col-md-4 col-sm-4 protocol-list__end-date">
-      <span class="protocol-list--value"> {{::protocol.minPressure}}-{{::protocol.maxPressure}}</span>
+      <span class="protocol-list--value"> {{protocol.minPressure}}-{{protocol.maxPressure}}</span>
     </div>
   </div>
   <div class="col-md-16 col-sm-16 empty-list-message" ng-if="!protocols"><span translate="patient.empty-protocol-list-message"></span></div>
