@@ -16,7 +16,7 @@
             <span class="">{{selectedClinic.name}} <span class="nav_drop_arrow hillrom-icon icon-arrow-down"></span></span>
           </a>
           <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-              <li role="menuitem" ng-repeat='clinic in clinics' ng-click="switchClinic(clinic)"><a>{{::clinic.name}}</a></li>
+              <li role="menuitem" ng-repeat='clinic in clinics' ng-click="switchClinic(clinic)"><a>{{clinic.name}}</a></li>
           </ul>
         </li>
       </ul>
