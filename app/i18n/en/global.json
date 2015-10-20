@@ -156,7 +156,8 @@
         },
         "dob":{
             "required": "Date of Birth is required.",
-            "future": "Date of Birth cannot be future."
+            "future": "Date of Birth cannot be future.",
+            "invalid":"Invalid Date of Birth"
         },
         "address":{
             "maxlength": "Address cannot be longer than 100 characters."

@@ -285,19 +285,13 @@ angular.module('hillromvestApp')
     $scope.getHmrRunRateAndScore = function() {
       patientDashBoardService.getHMRrunAndScoreRate($scope.patientId, $scope.toTimeStamp).then(function(response){
         if(response.status === 200 ){
+          $scope.missedtherapyDays = response.data.missedTherapyCount;
+          $scope.settingsDeviatedDaysCount = response.data.settingsDeviatedDaysCount;
           $scope.hmrRunRate = response.data.hmrRunRate;
           $scope.adherenceScore = response.data.score;
         }
       });
-    }
-
-    $scope.getMissedTherapyDaysCount = function() {
-      patientDashBoardService.getMissedTherapyDaysCount($scope.patientId).then(function(response){
-        if(response.status === 200 ){
-          $scope.missedtherapyDays = response.data.count;
-        }
-      });
-    }
+    };
 
     $scope.adherence = {
         animate:{
@@ -1237,7 +1231,6 @@ angular.module('hillromvestApp')
     $scope.initGraph = function(){
       $scope.getHmrRunRateAndScore();
       $scope.handlelegends();
-      $scope.getMissedTherapyDaysCount();
       $scope.weeklyChart();
     }
     $scope.initPatientDashboard = function(){
