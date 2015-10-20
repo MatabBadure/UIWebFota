@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('hillromvestApp').controller('patientprofileController', ['$scope', '$state', 'notyService', 'patientService', 'UserService', 'AuthServerProvider', 'Password', 'Auth', 'StorageService', 'caregiverDashBoardService', '$stateParams', 'loginConstants',
-  function ($scope, $state, notyService, patientService, UserService, AuthServerProvider,Password, Auth, StorageService, caregiverDashBoardService, $stateParams, loginConstants) {
+angular.module('hillromvestApp').controller('patientprofileController', ['$scope', '$state', 'notyService', 'patientService', 'UserService', 'AuthServerProvider', 'Password', 'Auth', 'StorageService', 'caregiverDashBoardService', '$stateParams', 'loginConstants', '$q',
+  function ($scope, $state, notyService, patientService, UserService, AuthServerProvider,Password, Auth, StorageService, caregiverDashBoardService, $stateParams, loginConstants, $q) {
 	
   $scope.init = function(){
 		var currentRoute = $state.current.name;	
@@ -168,9 +168,24 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
 
   $scope.initResetPassword = function(){
   	$scope.profile = {};
-    AuthServerProvider.getSecurityQuestions().then(function(response){
-      $scope.questions = response.data
-    }).catch(function(response){});
+    $q.all([
+      AuthServerProvider.getSecurityQuestions(),
+      patientService.getUserSecurityQuestion(StorageService.get('logged').patientID)
+    ]).then(function(data) {        
+      if(data){
+        if(data[0]){
+          $scope.questions = data[0].data; 
+          if(data[1]){
+            angular.forEach($scope.questions, function(value, key){
+              if(value.id === data[1].data.question.id){
+                $scope.resetAccount = value;
+              }
+            });
+          }
+          $scope.resetAccount = ($scope.resetAccount) ? $scope.resetAccount : $scope.questions[0];
+        }
+      }
+    });
   };
 
   $scope.updatePassword = function(){
@@ -180,7 +195,7 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
     }
     if($scope.resetAccount){
       var data = {
-        "questionId": $scope.resetAccount.question.id,
+        "questionId": $scope.resetAccount.id,
         "answer": $scope.resetAccount.answer
       };
       AuthServerProvider.changeSecurityQuestion(data, StorageService.get('logged').patientID).then(function(response){
