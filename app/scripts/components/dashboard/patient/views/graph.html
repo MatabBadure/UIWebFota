@@ -210,7 +210,7 @@
 						<div class="col-md-3 col-sm-4 edit_delete" ng-show="role === 'PATIENT'">
 							<div class="pull-right view_note_act view_content show_content note_delete_edit" id="viewnoteact_{{note.id}}">
 								<span class="edit icon glyphicon glyphicon-pencil" styel="cursor:pointer;" ng-click="openEditNote(note.id, note.note);"></span>
-								<span class="delete icon icon-delete-icon" styel="cursor:pointer;" ng-click="deleteNote(note.id);" ></span>
+								<span class="delete icon icon-delete-icon" styel="cursor:pointer;" ng-click="openDeleteNoteModal(note);" ></span>
 
 							</div>
 						</div>
@@ -274,3 +274,24 @@
 		</div>
 		<div id= "png-container" ></div>
 		<canvas id="canvas" width="1800px" height="1800px" class="graph-canvas-hide"></canvas>
+
+
+<div ng-if="deleteNoteModal" class="modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true">
+  <div class="modal__dialog">
+    <div class="modal__content">
+      <header class="modal__header">
+        <button type="button" class="modal__close" data-dismiss="modal" ng-click="closeNoteDeleteModal()">&times;</button>
+         <p translate="patient.delete-note.warning"></p>
+      </header>
+      <div class="modal__body">
+         <div class="modal--message" translate="patient.delete-note.message"></div>
+         <div class="fropile_update_btn_group row modal--custom-btn">
+          <buton class="hillrom-btn btn-submit float-right" ng-click="deleteNote(noteToDelete.id)">Yes</buton>
+          <buton class="cancel hillrom-btn btn-submit float-right" data-dismiss="modal" ng-click="closeNoteDeleteModal()">No</buton>
+         </div>
+      </div>
+      <footer class="modal__footer">
+      </footer>
+    </div>
+  </div>
+</div>
