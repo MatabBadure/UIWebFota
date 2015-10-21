@@ -140,16 +140,6 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
     if($scope.form.$invalid){
       return false;
     }
-    if($scope.resetAccount){
-      var data = {
-        "questionId": $scope.resetAccount.question.id,
-        "answer": $scope.resetAccount.answer
-      };
-      AuthServerProvider.changeSecurityQuestion(data, $scope.editPatientProfile.id).then(function(response){
-      }).catch(function(response){
-        notyService.showError(response);
-      });
-    }
     $scope.editPatientProfile.role = $scope.editPatientProfile.authorities[0].name;
     $scope.editPatientProfile.dob = null;
     UserService.editUser($scope.editPatientProfile).then(function(response){        
