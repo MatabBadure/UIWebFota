@@ -59,11 +59,6 @@ angular.module('hillromvestApp')
       if($scope.form.$invalid){
         return false;
       }
-      if($scope.clinic.status === 'Active'){
-        $scope.clinic.deleted = false;
-      }else if($scope.clinic.status === 'Inactive'){
-        $scope.clinic.deleted = true;
-      }
       var data = $scope.clinic;
       clinicService.updateClinic(data).then(function(response){
         $state.go('clinicadmindashboard');
