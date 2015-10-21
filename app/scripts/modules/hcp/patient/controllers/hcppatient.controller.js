@@ -183,7 +183,7 @@ angular.module('hillromvestApp')
     $scope.searchFilter = ($scope.searchFilter && $scope.searchFilter != undefined) ? $scope.searchFilter :searchFilterService.initSearchFiltersForPatient();
     var filter = searchFilterService.getFilterStringForPatient($scope.searchFilter);
     var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : $stateParams.clinicId;
-    DoctorService.searchPatientsForHCPOrCliniadmin($scope.searchItem, 'hcp',StorageService.get('logged').userId, clinicId, $scope.currentPageIndex, $scope.perPageCount, filter, $scope.sortOption).then(function (response) {
+    DoctorService.searchPatientsForHCP($scope.searchItem, 'hcp',StorageService.get('logged').userId, clinicId, $scope.currentPageIndex, $scope.perPageCount, filter, $scope.sortOption).then(function (response) {
       $scope.patients = response.data;      
       angular.forEach($scope.patients, function(patient){
         patient.dob = dateService.getDateFromTimeStamp(patient.dob, patientDashboard.dateFormat, '/')
@@ -266,7 +266,7 @@ angular.module('hillromvestApp')
       toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortPatientList.dob);
       $scope.sortPatientList = sortOptionsService.getSortOptionsForPatientList();
       $scope.sortPatientList.dob = toggledSortOptions;
-      $scope.sortOption = sortConstant.dob + sortOptionsService.getSortByASCString(toggledSortOptions);
+      $scope.sortOption = sortConstant.patientDoB + sortOptionsService.getSortByASCString(toggledSortOptions);
       $scope.searchPatients();
     }else if(sortParam === sortConstant.city){
       toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortPatientList.city);
