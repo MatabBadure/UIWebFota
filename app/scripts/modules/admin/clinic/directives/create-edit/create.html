@@ -55,8 +55,8 @@
               <span class="">*</span>
             </div>
             <div class="col-md-10 dashboard__form--input parent-list reset-padding">
-              
-              <input class="form-control" name="parentClinicName" ng-disabled="clinicStatus.createSatellite" type="text" ng-model="clinic.parentClinic.name" typeahead="clinic as clinic.name + ' '+clinic.city +' '+ clinic.state for clinic in parentClinics | filter:$viewValue" typeahead-on-select="selectClinicEdit($item)" placeholder="{{'clinic.placeholder.parent-clinic-search' | translate}}" validate-on-blur   match="clinic.parentClinic.name" required>             
+
+              <input class="form-control" name="parentClinicName" ng-disabled="clinicStatus.createSatellite" type="text" ng-model="clinic.parentClinic.name" typeahead="clinic as clinic.name + ' '+clinic.city +' '+ clinic.state for clinic in parentClinics | filter:$viewValue" typeahead-on-select="selectClinicEdit($item)" placeholder="{{'clinic.placeholder.parent-clinic-search' | translate}}" validate-on-blur   match="clinic.parentClinic.name" required>
 
               <div ng-show="(form.parentClinicName.$dirty && form.parentClinicName.$showValidationMessage && form.parentClinicName.$invalid) || submitted">
                 <span class="has-error" ng-show="form.parentClinicName.$error.required" translate="error.parentClinicName.required"></span>
@@ -75,7 +75,7 @@
             <div class="col-md-10 dashboard__form--input reset-padding">
               <input class="" type="text" validate-on-blur ng-model="clinic.name" name="name" required ng-maxlength="25">
               <div ng-show="(form.name.$dirty && form.name.$showValidationMessage && form.name.$invalid) || submitted">
-                <span class="has-error" ng-show="form.name.$error.required" translate="error.clinicName.required"></span>             
+                <span class="has-error" ng-show="form.name.$error.required" translate="error.clinicName.required"></span>
                 <span class="login-has-error" ng-show="form.name.$error.maxlength" translate="error.clinicName.maxlength"></span>
               </div>
             </div>
@@ -183,8 +183,8 @@
       </div>
       <div class="col-md-16 reset-padding margin-top">
         <div class="">
-          <button type="submit" ng-click="formSubmit()" ng-show="!clinicStatus.isCreate" class="hillrom-btn btn-primary btn-margin-left float-right" translate="clinic.update-button-text">Update</button>
-          <button type="submit" ng-click="formSubmit()" ng-show="clinicStatus.isCreate" class="hillrom-btn btn-primary btn-margin-left float-right" translate="clinic.submit-button-text">Submit</button>
+          <button type="button" ng-click="$parent.showUpdateModal=true" ng-show="!clinicStatus.isCreate" class="hillrom-btn btn-primary btn-margin-left float-right" translate="clinic.update-button-text"></button>
+          <button type="submit" ng-click="formSubmit()" ng-show="clinicStatus.isCreate" class="hillrom-btn btn-primary btn-margin-left float-right" translate="clinic.submit-button-text"></button>
           <button type="reset" ng-click="cancel()" class="hillrom-btn btn-secondary float-right" translate="clinic.cancel-button-text">Cancel</button>
           <div class="clr"></div>
         </div>
@@ -205,6 +205,26 @@
          <div class="row modal--custom-btn">
           <buton class="hillrom-btn btn-submit float-right" ng-click="deleteClinic()">Yes</buton>
           <buton class="hillrom-btn btn-submit float-right" data-dismiss="modal" ng-click="close()">No</buton>
+         </div>
+      </div>
+      <footer class="modal__footer">
+      </footer>
+    </div>
+  </div>
+</div>
+
+<div ng-if="showUpdateModal" class="modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true">
+  <div class="modal__dialog">
+    <div class="modal__content">
+      <header class="modal__header">
+        <button type="button" class="modal__close" data-dismiss="modal" ng-click="$parent.showUpdateModal=false">&times;</button>
+         <p translate="clinic.update.warning"></p>
+      </header>
+      <div class="modal__body">
+         <div class="modal--message" translate="clinic.update.message"></div>
+         <div class="row modal--custom-btn">
+          <buton class="hillrom-btn btn-submit float-right" ng-click="formSubmitClinic()">Yes</buton>
+          <buton class="hillrom-btn btn-submit float-right" data-dismiss="modal" ng-click="$parent.showUpdateModal=false">No</buton>
          </div>
       </div>
       <footer class="modal__footer">

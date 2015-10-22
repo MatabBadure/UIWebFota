@@ -101,6 +101,10 @@
             "warning": "Are you sure you want to Deactivate the Patient?",
             "message": "If you deactivate the patient, you will no longer be able to view the information."
         },
+        "update": {
+            "warning": "Do you want to Update the Patient Details",
+            "message": "Are you sure?"
+        },
         "no-patient-found": "No patient associated."
     }
 }
