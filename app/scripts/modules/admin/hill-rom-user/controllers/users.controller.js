@@ -33,6 +33,7 @@ angular.module('hillromvestApp')
         if (typeof callback === 'function') {
           callback($scope.user);
         }
+        $scope.$broadcast('getUserDetail', {user: $scope.user});
       }).catch(function(response) {});
     };
 

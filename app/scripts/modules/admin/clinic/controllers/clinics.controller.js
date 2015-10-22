@@ -87,7 +87,7 @@ angular.module('hillromvestApp')
 
     $scope.initClinicList = function(){
       $scope.currentPageIndex = 1;
-      $scope.perPageCount = "";
+      $scope.perPageCount = 10;
       $scope.pageCount = 0;
       $scope.total = 0;
       $scope.clinics = [];
