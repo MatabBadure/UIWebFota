@@ -264,7 +264,7 @@ angular.module('hillromvestApp')
         } 
 
         var filter = searchFilterService.getFilterStringForPatient($scope.searchFilter);
-        DoctorService.searchPatientsForHCPOrCliniadmin($scope.searchItem, 'hcp' ,$stateParams.doctorId, $scope.filterClinicId, $scope.currentPageIndex, $scope.perPageCount, filter).then(function (response) {
+        DoctorService.searchPatientsForHCPOrClinicadminFromSuperAdmin($scope.searchItem, 'hcp' ,$stateParams.doctorId, $scope.filterClinicId, $scope.currentPageIndex, $scope.perPageCount, filter).then(function (response) {
           $scope.patients = [];
           angular.forEach(response.data, function(patient){
             patient.dob = dateService.getDateFromTimeStamp(patient.dob, patientDashboard.dateFormat,'/');
