@@ -72,7 +72,7 @@ angular.module('hillromvestApp').constant('hcpDashboardConstants', {
 			"missedTherapy" : "MissedTherapy Days",
 			"nonCompliance" : "HMR Non-Adherence",
 			"settingDeviation" : "Setting Deviation",
-			"noEvents" : "No Events Recorded"
+			"noEvents" : "No Transmission Recorded"
 		},
 		color : {
 			"missedTherapy" : "#ef6548",
