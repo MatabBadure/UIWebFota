@@ -90,7 +90,8 @@ var sortConstant = {
     mobilePhone: "mobilePhone",
     hcp: "hcp",
     hcpname: "hcpname",
-    pHillromId: "phillrom_id"
+    pHillromId: "phillrom_id",
+    patientDoB: "patientDoB"
 }
 
 var stringConstants = {
