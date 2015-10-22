@@ -397,6 +397,14 @@ angular.module('hillromvestApp')
     $scope.getParentClinic = function() {
       clinicService.getAllClinics().then(function (response) {
         $scope.parentClinics = response.data;
+        angular.forEach($scope.parentClinics, function(parentClinic, key){
+          if(!parentClinic.city){
+            parentClinic.city = "";
+          }
+          if(!parentClinic.state){
+            parentClinic.state = "";
+          }
+        });
       }).catch(function (response) {});
     };
 

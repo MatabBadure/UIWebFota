@@ -93,6 +93,17 @@ angular.module('hillromvestApp')
         return $http.get(url, {
           headers: headerService.getHeader()
         });
+      },
+
+
+      searchPatientsForHCP : function(searchString, role, userId, clinicId, pageNo, offset, filter, sortOption){
+        if (sortOption === undefined || sortOption === null || sortOption === "") {
+          sortOption = sortConstant.lastName + searchFilters.amp +searchFilters.asc +searchFilters.equal + true;
+        } 
+        var url = URL.searchPatientsForHCP.replace('ROLE', role).replace('USERID', userId).replace('SEARCHSTRING', searchString).replace('PAGENO', pageNo).replace('OFFSET', offset).replace('CLINICID', clinicId).replace('FILTER', filter).replace('SORTBY',sortOption);
+        return $http.get(url, {
+          headers: headerService.getHeader()
+        });
       }
 
     };

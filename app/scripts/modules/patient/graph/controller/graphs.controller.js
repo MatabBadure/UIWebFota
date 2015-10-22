@@ -1209,6 +1209,15 @@ angular.module('hillromvestApp')
       }).catch(function(){
         notyService.showMessage(server_error_msg,'warning' );
       });
+      $scope.closeNoteDeleteModal();
+    };
+
+    $scope.openDeleteNoteModal = function(note){
+      $scope.deleteNoteModal = true;
+      $scope.noteToDelete = note;
+    };
+    $scope.closeNoteDeleteModal = function(){
+      $scope.deleteNoteModal = false;
     };
 
     $scope.openAddNote = function(){    
