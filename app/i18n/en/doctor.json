@@ -18,7 +18,7 @@
             "manageLabel": "Manage HCPs",
             "updateLabel": "Update HCP"
         },
-        
+
         "detail": {
             "title": "Doctor"
         },
@@ -101,6 +101,10 @@
             "question": "Are you sure you want to delete Doctor {{ id }}?",
             "warning": "Are you sure you want to Deactivate the HCP?",
             "message": "If you deactivate the HCP,&nbsp you will no longer be able to view the information."
+        },
+        "update": {
+            "warning": "Do you want to update HCP details?",
+            "message": "Are You Sure?"
         },
         "clinic-disassociate":{
             "warning": "Are you sure, you want to disassociate Clinic from HCP?",
