@@ -11,27 +11,41 @@ var gulp             = require('gulp'),
 	plumber          = require('gulp-plumber'),
 	path             = require('path'),
 	imagemin = require('gulp-imagemin'),
-	pngquant = require('imagemin-pngquant');
- 
-gulp.task('default', function () {
-    return gulp.src('src/images/*')
-        .pipe(imagemin({
-            progressive: true,
-            svgoPlugins: [{removeViewBox: false}],
-            use: [pngquant()]
-        }))
-        .pipe(gulp.dest('dist/images'));
-});
+	pngquant = require('imagemin-pngquant'),
 	gulprc = require("./gulpfile.json"),
 	del = require("del"),
 	htmlreplace = require('gulp-html-replace'),
 	runSequence = require('run-sequence'),
-	stripCssComments = require('gulp-strip-css-comments');
+	stripCssComments = require('gulp-strip-css-comments'),
+	connect = require('gulp-connect'),
+	webserver = require('gulp-webserver');
+
+gulp.task('serve', function(cb) {
+	 return runSequence('clean','scripts_minify','styles_process','webserver', 'watch');
+});
+	
 //the title and icon that will be used for the Grunt notifications
 var notifyInfo = {
 	title: 'Gulp',
 	icon: path.join(__dirname, 'gulp.png')
 };
+
+gulp.task('webserver', function() {
+  gulp.src('app')
+    .pipe(webserver({
+      host:'localhost',
+      port:9000,
+      livereload: true,
+      directoryListing: false,
+      fallback:'dev_index.html',
+      proxies: [{
+            source: '/api',
+            target: 'http://dev.hillromvest.com/api'
+        }],
+      open: true
+    }));
+});
+
 
 //error notification settings for plumber
 var plumberErrorHandler = { errorHandler: notify.onError({
@@ -46,6 +60,7 @@ gulp.task("clean", function () {
   return del(gulprc.patterns.clean, {force: true});
 });
 
+//Compress images. Required only in prod
 gulp.task('images_compress', function () {
     return gulp.src('app/images/*')
         .pipe(imagemin({
@@ -53,10 +68,11 @@ gulp.task('images_compress', function () {
             svgoPlugins: [{removeViewBox: false}],
             use: [pngquant()]
         }))
-        .pipe(gulp.dest('app/images'));
+        .pipe(gulp.dest('app/images'))
+        .pipe(connect.reload());
 });
 
-//styles
+//process scss style to css. Required both in dev and prod
 gulp.task('styles_process', function() {
 	return gulp.src('app/styles/*.scss')
 		.pipe(plumber(plumberErrorHandler))
@@ -67,10 +83,11 @@ gulp.task('styles_process', function() {
 			comments: false
 		}))
 		.pipe(autoprefixer('last 2 version', 'safari 5', 'ie 7', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'))
-		.pipe(gulp.dest('app/build/css'));
+		.pipe(gulp.dest('app/styles'))
+		.pipe(connect.reload());
 });
 
-//styles remove comments
+//styles remove comments need only in the build and not in development mode
 gulp.task('styles_strip_comments', function() {
 	return gulp.src(gulprc.patterns.styles)
 		.pipe(plumber(plumberErrorHandler))
@@ -78,7 +95,7 @@ gulp.task('styles_strip_comments', function() {
 		.pipe(gulp.dest('app/build/css'));
 });
 
-//styles minify
+//styles minify and put them in the build folder app/build/css
 gulp.task('styles_minify', function() {
 	return gulp.src(gulprc.patterns.styles)
 		.pipe(plumber(plumberErrorHandler))
@@ -86,15 +103,30 @@ gulp.task('styles_minify', function() {
 		.pipe(gulp.dest('app/build/css'))
 		.pipe(rename({ suffix: '.min' }))
 		.pipe(minifycss())
-		.pipe(gulp.dest('app/styles/'));
+		.pipe(gulp.dest('app/styles'))
+		.pipe(connect.reload());
 });
 
+//Task to do all style work. Required only in prod
 gulp.task('styles', function () {
   return runSequence('styles_process', 'styles_strip_comments', 'styles_minify');
 });
 
-//scripts
-gulp.task('scripts', function() {
+//Task to minify scripts from the json file
+gulp.task('scripts_minify', function() {
+	return gulp.src(gulprc.patterns.scriptsProject)
+		.pipe(plumber(plumberErrorHandler))
+		.pipe(rename({ suffix: '.min' }))
+		.pipe(uglify())
+		.pipe(gulp.dest(function(file) {
+		    return file.base;
+		}))
+		.pipe(connect.reload());
+});
+
+//Task to concatenate scripts files
+//Task to minify scripts from the json file. Only required in prod
+gulp.task('scripts_concat', function() {
 	return gulp.src(gulprc.patterns.scriptsProject)
 		.pipe(plumber(plumberErrorHandler))
 		.pipe(concat('main.js'))
@@ -102,6 +134,12 @@ gulp.task('scripts', function() {
 		.pipe(rename({ suffix: '.min' }))
 		.pipe(uglify())
 		.pipe(gulp.dest('app/build/js'));
+});
+
+gulp.task('watch', function () {
+  gulp.watch(['./app/scripts/*.js'], ['scripts_minify']);
+  gulp.watch(['./app/styles/*.scss'], ['styles_process']);
+  gulp.watch(['./app/**/*.html'], []);
 });
 
 //html replace with js and css
@@ -115,30 +153,5 @@ gulp.task('html_replace', function() {
 });
 
 gulp.task('build', function (cb) {
-  runSequence('clean', ['scripts', 'styles', 'images_compress', 'html_replace'], cb);
-});
-
-
-//watch
-gulp.task('live', function() {
-	livereload.listen();
-
-	//watch .scss files
-	gulp.watch('src/scss/**/*.scss', ['styles']);
-
-	//watch .js files
-	gulp.watch('src/js/**/*.js', ['scripts']);
-
-	//reload when a template file, the minified css, or the minified js file changes
-	gulp.watch('templates/**/*.html', 'html/css/styles.min.css', 'html/js/main.min.js', function(event) {
-		gulp.src(event.path)
-			.pipe(plumber())
-			.pipe(livereload())
-			.pipe(notify({
-				title: notifyInfo.title,
-				icon: notifyInfo.icon,
-				message: event.path.replace(__dirname, '').replace(/\\/g, '/') + ' was ' + event.type + ' and reloaded'
-			})
-		);
-	});
+  runSequence('clean', ['scripts_minify','scripts_concat', 'styles', 'images_compress', 'html_replace'], cb);
 });

@@ -168,8 +168,9 @@ angular.module('hillromvestApp')
           on('changeDate', function(ev) {
           var selectedDate = angular.element('#dp2').datepicker("getDate");
           var currentDate = new Date();
-          if(selectedDate > currentDate){
+          if(selectedDate > currentDate || $scope.form.dob.$error.pattern){
             $scope.form.dob.$invalid = true;
+            $scope.patient.age = '';
           }else{
             var _month = (selectedDate.getMonth()+1).toString();
             _month = _month.length > 1 ? _month : '0' + _month;

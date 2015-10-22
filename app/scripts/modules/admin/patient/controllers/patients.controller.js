@@ -782,7 +782,8 @@ angular.module('hillromvestApp')
         });
 
     $scope.switchtoCustom = function(){
-      $scope.submitted = false;      
+      $scope.submitted = false;
+      $scope.newProtocolPoint = 1;
     };
 
     $scope.initpatientEditProtocol = function(){

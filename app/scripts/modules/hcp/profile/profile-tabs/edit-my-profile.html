@@ -74,7 +74,7 @@
           </div>
           <div class="col-md-7 reset-padding col-md-offset-2">
             <div class="col-md-6 dashboard__form--label reset-padding" translate="profile.hr-id">
-            </div>            
+            </div>
             <div class="col-md-10 dashboard__form__input--option reset-padding">
               {{user.hillromId}}
             </div>
@@ -193,7 +193,7 @@
             </div>
             <div class="col-md-10 dashboard__form__input reset-padding selected-box-container">
               <div class="custom-dropdown">
-                <select name="state" ng-readonly="validateADMINorASP()" ng-model="user.state" ng-options="state.name as state.name for state in states">
+                <select class="edit-profile-dropdown-state" name="state" ng-readonly="validateADMINorASP()" ng-model="user.state" ng-options="state.name as state.name for state in states">
                   <option  value="" selected="selected">Select a state</option>
                 </select>
               </div>
