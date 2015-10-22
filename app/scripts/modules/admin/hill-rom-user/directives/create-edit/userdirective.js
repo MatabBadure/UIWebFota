@@ -17,7 +17,8 @@ angular.module('hillromvestApp')
         onSuccess: '&',
         userStatus: '=userStatus'
       },
-      controller: ['$scope', 'notyService', '$state', 'UserService', function ($scope, notyService, $state, UserService) {
+      controller: ['$scope', 'notyService', '$state', 'UserService', 'StorageService', 'Auth', function ($scope, notyService, $state, UserService, StorageService, Auth) {
+
 
         $scope.open = function () {
           $scope.showModal = true;
@@ -59,6 +60,13 @@ angular.module('hillromvestApp')
           }
         };
 
+        $scope.$on('getUserDetail', function (event, args){
+          if(args.user.email === StorageService.get('logged').userEmail){
+            $scope.selectedSelf = true;
+            $scope.myHRID = args.user.hillromId;
+          }
+        });
+
         $scope.newUser = function(data) {
           UserService.createUser(data).then(function (response) {
             $scope.userStatus.isMessage = true;
@@ -83,7 +91,12 @@ angular.module('hillromvestApp')
             $scope.userStatus.isMessage = true;
             $scope.userStatus.message = response.data.message;
             notyService.showMessage($scope.userStatus.message, 'success');
-            $scope.reset();
+            if($scope.selectedSelf && (StorageService.get('logged').userEmail !== response.data.user.email || $scope.myHRID !== response.data.user.hillromId) ){
+              Auth.logout();
+              $state.go('login');
+            }else{
+              $scope.reset();
+            }
           }).catch(function (response) {
             $scope.userStatus.isMessage = true;
             if (response.data.message !== undefined) {
