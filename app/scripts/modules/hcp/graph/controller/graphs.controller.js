@@ -237,7 +237,7 @@ angular.module('hillromvestApp')
 			chart.xAxis.staggerLabels = true,
 			chart.yAxis.axisLabel(hcpDashboardConstants.cumulativeGraph.yAxis.label);
 			chart.yDomain([0,$scope.cumulativeGraphRange.maxNoOfPatients]);
-			chart.xAxis.tickFormat(function(d) {
+			chart.xAxis.rotateLabels(-35).tickFormat(function(d) {
 				if(window.event !== undefined && (window.event.type === 'mousemove')){
 					return dateService.getDateFromTimeStamp(d,patientDashboard.dateFormat,'/') + '  ('+ d3.time.format('%I:%M %p')(new Date(d)) + ')'
 				}else{
@@ -457,7 +457,7 @@ angular.module('hillromvestApp')
 			chart.yDomain1([0,$scope.yAxis1Max]);
 			chart.yDomain2([0,$scope.yAxis2Max]); 
 			//this function to put x-axis labels
-			chart.xAxis.tickFormat(function(d) {
+			chart.xAxis.rotateLabels(-35).tickFormat(function(d) {
 					var days = dateService.getDateDiffIndays($scope.fromTimeStamp,$scope.toTimeStamp);
 					if(days > 10){
 						return d3.time.format('%d%b%y')(new Date(d));
@@ -523,3 +523,4 @@ angular.module('hillromvestApp')
 		$scope.getStatistics($scope.selectedClinic.id, userId);
 	};
 }]);
+

@@ -1,6 +1,6 @@
 angular.module('hillromvestApp')
-.controller('clinicadminPatientController',['$scope', '$state', '$stateParams', 'clinicadminPatientService', 'patientService', 'notyService', 'DoctorService', 'clinicadminService', 'clinicService', 'dateService', 'UserService', 'searchFilterService', '$timeout', 'StorageService', 'sortOptionsService','$filter', 'commonsUserService',
-  function($scope, $state, $stateParams, clinicadminPatientService, patientService, notyService, DoctorService, clinicadminService, clinicService, dateService, UserService, searchFilterService, $timeout, StorageService, sortOptionsService,$filter, commonsUserService) { 
+.controller('clinicadminPatientController',['$scope', '$state', '$stateParams', 'clinicadminPatientService', 'patientService', 'notyService', 'DoctorService', 'clinicadminService', 'clinicService', 'dateService', 'UserService', 'searchFilterService', '$timeout', 'StorageService', 'sortOptionsService','$filter', 'commonsUserService', '$q',
+  function($scope, $state, $stateParams, clinicadminPatientService, patientService, notyService, DoctorService, clinicadminService, clinicService, dateService, UserService, searchFilterService, $timeout, StorageService, sortOptionsService,$filter, commonsUserService, $q) { 
 	var searchOnLoad = true;
 	$scope.init = function(){
     if($state.current.name === 'clinicadminpatientDemographic'  || $state.current.name === 'clinicadmminpatientDemographicEdit'){
@@ -330,6 +330,49 @@ angular.module('hillromvestApp')
       $scope.searchPatients();
     }       
     
+  };
+
+  $scope.getAvailableAndAssociatedHCPs = function(patientId){
+    var searchString = "";
+    var offset = 100;
+    var pageNo = 1;
+    $q.all([
+      clinicService.getClinicAssoctHCPs($stateParams.clinicId),
+      clinicadminPatientService.getAssociatedHCPOfPatientClinic(patientId, $stateParams.clinicId)
+    ]).then(function(data) {
+      if(data){
+        if(data[0]){
+          $scope.hcps = [];
+          $scope.hcps = data[0].data.hcpUsers;
+        }
+        if(data[1] && data[1].data.hcpList !== undefined){
+          $scope.associatedHCPs = [];
+          $scope.associatedHCPs = data[1].data.hcpList;
+          for(var i=0; i < $scope.associatedHCPs.length; i++){
+            for(var j=0; j <  $scope.hcps.length; j++ ){
+              if($scope.associatedHCPs[i].id == $scope.hcps[j].id){
+                $scope.hcps.splice(j, 1);
+              }
+            }
+          }
+        }
+      }
+    }).catch(function(data){notyService.showError(response, 'warning');});
+  };
+
+  $scope.selectHcpForPatient = function(hcp){
+    var data = [{'id': hcp.id}];
+    $scope.searchHcp = "";
+    $scope.searchHCPText = false;
+    patientService.associateHCPToPatient(data, $stateParams.patientId).then(function(response){
+      $scope.getAvailableAndAssociatedHCPs($stateParams.patientId);
+      notyService.showMessage(response.data.message, 'success');
+    });
+  };
+
+  $scope.linkHCP = function(){
+    $scope.getAvailableAndAssociatedHCPs($stateParams.patientId);
+    $scope.searchHCPText = true;
   };
 
 	$scope.init();

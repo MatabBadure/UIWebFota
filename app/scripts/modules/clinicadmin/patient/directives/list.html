@@ -44,28 +44,28 @@
 
       <div class="dashboard__manage-view--list" ng-repeat="patient in patients" ng-click="selectPatient(patient)" ng-readonly="true">
           <div class="col-md-2 col-sm-3 reset-padding">
-            <span class="main-prim-info">{{::patient.lastName}}, {{::patient.firstName}}</span>
-            <span class="main-secon-info">{{::patient.email}}</span>
+            <span class="main-prim-info">{{patient.lastName}}, {{patient.firstName}}</span>
+            <span class="main-secon-info">{{patient.email}}</span>
           </div>
           <div class="col-md-2 col-sm-2 reset-padding centered">
-            <span class="impo-highlight">{{::patient.mrnId}}</span>
+            <span class="impo-highlight">{{patient.mrnId}}</span>
           </div>
           <div class="col-md-2 col-sm-2 reset-padding centered">
-            <span class="short-info">{{::patient.dob}}</span>
+            <span class="short-info">{{patient.dob}}</span>
           </div>
 
           <div class="col-md-2 col-sm-2 reset-padding centered">
-            <span class="short-info">{{::patient.city}} </span>
+            <span class="short-info">{{patient.city}} </span>
             <span class="short-info" ng-if="patient.state && patient.city">,</span>
-            <span class="short-info">{{::patient.state}} </span>
+            <span class="short-info">{{patient.state}} </span>
           </div>
 
           <div class="col-md-2 hidden-sm reset-padding centered">
-            <span class="short-info">{{::patient.lastTransmissionDate}}</span>
+            <span class="short-info">{{patient.lastTransmissionDate}}</span>
           </div>
 
           <div class="col-md-2 col-sm-3 reset-padding centered">
-            <span ng-if="patient.hcpNamesCSV" class="short-info">{{::patient.hcpNamesCSV}}</span>
+            <span ng-if="patient.hcpNamesCSV" class="short-info">{{patient.hcpNamesCSV}}</span>
             <span ng-if="!patient.hcpNamesCSV" class="short-info" translate="global.not-applicable"></span>
           </div>
 
@@ -75,7 +75,7 @@
           </div>
 
           <div class="col-md-2 col-sm-2 reset-padding-left text-centered">
-            <span class="short-info">{{::patient.adherence}}</span>
+            <span class="short-info">{{patient.adherence}}</span>
           </div>
 
           <div class="clr"></div>
@@ -90,7 +90,7 @@
             <span class="record-found" ng-if="patients.length > 0">Found</span>
             <span ng-show="patients.length > 0">
               <span class="navigaion-link cursor-pointer" ng-class="{ 'inactive': !(currentPageIndex > 1) }" ng-click="searchPatients('PREV')">Previous</span>
-              <span class="navigaion-no">{{::currentPageIndex}}</span>
+              <span class="navigaion-no">{{currentPageIndex}}</span>
               <span class="navigaion-link cursor-pointer" ng-class="{ 'inactive': !(pageCount > currentPageIndex) }" ng-click="searchPatients('NEXT')">Next</span>
             </span>
           </div>

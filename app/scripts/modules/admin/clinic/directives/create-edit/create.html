@@ -15,8 +15,8 @@
 <div class="container admin-user">
   <div class="col-md-16 margin-top reset-padding">
    <div class="user-gen-details">
-     <span class="user-gen-details--name">{{slectedClinic.name}}</span>
-     <span class="user-gen-details--hr-id">{{slectedClinic.id}}</span>
+     <span class="user-gen-details--name">{{::slectedClinic.name}}</span>
+     <span class="user-gen-details--hr-id">{{::slectedClinic.id}}</span>
    </div>
   </div>
 </div>
@@ -41,7 +41,7 @@
               <span class="">*</span>
             </div>
             <div class="col-md-10 dashboard__form__input--option reset-padding selected-box-container">
-              <div class="custom-dropdown disabled_arrow">
+              <div class="custom-dropdown" ng-class="{'disabled_arrow': clinicStatus.editMode}">
                 <select name="type" ng-model="clinic.type" ng-disabled="clinicStatus.editMode">
                   <option selected translate="clinic.clinic-option.parent-clinic" value="parent"></option>
                   <option translate="clinic.clinic-option.satellite-clinic" value="child"></option>
@@ -56,7 +56,7 @@
             </div>
             <div class="col-md-10 dashboard__form--input parent-list reset-padding">
               
-              <input class="form-control" name="parentClinicName" ng-disabled="clinicStatus.createSatellite" type="text" ng-model="clinic.parentClinic.name" typeahead="clinic as clinic.name for clinic in parentClinics | filter:$viewValue" typeahead-on-select="selectClinicEdit($item)" placeholder="{{'clinic.placeholder.parent-clinic-search' | translate}}" validate-on-blur   match="clinic.parentClinic.name" required>             
+              <input class="form-control" name="parentClinicName" ng-disabled="clinicStatus.createSatellite" type="text" ng-model="clinic.parentClinic.name" typeahead="clinic as clinic.name + ' '+clinic.city +' '+ clinic.state for clinic in parentClinics | filter:$viewValue" typeahead-on-select="selectClinicEdit($item)" placeholder="{{'clinic.placeholder.parent-clinic-search' | translate}}" validate-on-blur   match="clinic.parentClinic.name" required>             
 
               <div ng-show="(form.parentClinicName.$dirty && form.parentClinicName.$showValidationMessage && form.parentClinicName.$invalid) || submitted">
                 <span class="has-error" ng-show="form.parentClinicName.$error.required" translate="error.parentClinicName.required"></span>

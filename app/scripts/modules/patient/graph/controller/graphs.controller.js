@@ -23,9 +23,9 @@ angular.module('hillromvestApp')
       $scope.selectedGraph = 'HMR';
       $scope.selectedDateOption = 'WEEK';
       $scope.disableDatesInDatePicker();
-      $scope.role = StorageService.get('logged').role; 
+      $scope.role = StorageService.get('logged').role;
       $scope.patientId = parseInt(StorageService.get('logged').patientID);
-      $scope.role = StorageService.get('logged').role; 
+      $scope.role = StorageService.get('logged').role;
       $scope.patientId = parseInt(StorageService.get('logged').patientID);
       $scope.caregiverID = parseInt(StorageService.get('logged').userId);
       var currentRoute = $state.current.name;
@@ -42,13 +42,13 @@ angular.module('hillromvestApp')
       $scope.edit_date = dateService.convertDateToYyyyMmDdFormat(new Date());
       $scope.fromTimeStamp = dateService.getnDaysBackTimeStamp(6);
       $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
-      $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');   
+      $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');
       $scope.curNotePageIndex = 1;
       $scope.perPageCount = 4;
       $scope.patientTab = currentRoute;
       if ($state.current.name === 'patientdashboard') {
         $scope.hasTransmissionDate = false;
-        $scope.initPatientDashboard();        
+        $scope.initPatientDashboard();
       }else if(currentRoute === 'patientdashboardCaregiver'){
         $scope.initPatientCaregiver();
       }else if(currentRoute === 'patientdashboardCaregiverAdd'){
@@ -90,7 +90,7 @@ angular.module('hillromvestApp')
       $scope.yAxis2Min = 0;
       $scope.fromTimeStamp = dateService.getnDaysBackTimeStamp(6);
       $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
-      $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');   
+      $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');
       $scope.curNotePageIndex = 1;
       $scope.perPageCount = 4;
       $scope.notePageCount = 0;
@@ -98,27 +98,27 @@ angular.module('hillromvestApp')
     };
 
 
-    angular.element('#edit_date').datepicker({    
-          endDate: '+0d',   
-          autoclose: true}).    
-          on('changeDate', function(ev) {   
-          var selectedDate = angular.element('#edit_date').datepicker("getDate");   
-          var _month = (selectedDate.getMonth()+1).toString();    
-          _month = _month.length > 1 ? _month : '0' + _month;   
-          var _day = (selectedDate.getDate()).toString();   
-          _day = _day.length > 1 ? _day : '0' + _day;   
-          var _year = (selectedDate.getFullYear()).toString();    
-          var dob = _month+"/"+_day+"/"+_year;    
-          $scope.patient.dob = dob;   
-          var age = dateService.getAge(selectedDate);   
-          angular.element('.age').val(age);   
-          $scope.patient.age = age;   
-          if (age === 0) {    
-            $scope.form.$invalid = true;    
-          }   
-          angular.element("#edit_date").datepicker('hide');   
-          $scope.$digest();   
-        });   
+    angular.element('#edit_date').datepicker({
+          endDate: '+0d',
+          autoclose: true}).
+          on('changeDate', function(ev) {
+          var selectedDate = angular.element('#edit_date').datepicker("getDate");
+          var _month = (selectedDate.getMonth()+1).toString();
+          _month = _month.length > 1 ? _month : '0' + _month;
+          var _day = (selectedDate.getDate()).toString();
+          _day = _day.length > 1 ? _day : '0' + _day;
+          var _year = (selectedDate.getFullYear()).toString();
+          var dob = _month+"/"+_day+"/"+_year;
+          $scope.patient.dob = dob;
+          var age = dateService.getAge(selectedDate);
+          angular.element('.age').val(age);
+          $scope.patient.age = age;
+          if (age === 0) {
+            $scope.form.$invalid = true;
+          }
+          angular.element("#edit_date").datepicker('hide');
+          $scope.$digest();
+        });
 
     /*caregiver code*/
     $scope.getPatientListForCaregiver = function(caregiverID){
@@ -165,7 +165,7 @@ angular.module('hillromvestApp')
     $scope.$on('switchPatientCareGiver',function(event,patient){
       $scope.switchPatient(patient);
     });
-    
+
     $scope.$on('switchCaregiverTab',function(event,state){
       $scope.switchCaregiverTab(state);
     });
@@ -281,23 +281,17 @@ angular.module('hillromvestApp')
     }
 
     $scope.dates = {startDate: null, endDate: null};
-    
+
     $scope.getHmrRunRateAndScore = function() {
       patientDashBoardService.getHMRrunAndScoreRate($scope.patientId, $scope.toTimeStamp).then(function(response){
         if(response.status === 200 ){
+          $scope.missedtherapyDays = response.data.missedTherapyCount;
+          $scope.settingsDeviatedDaysCount = response.data.settingsDeviatedDaysCount;
           $scope.hmrRunRate = response.data.hmrRunRate;
           $scope.adherenceScore = response.data.score;
         }
       });
-    }
-
-    $scope.getMissedTherapyDaysCount = function() {
-      patientDashBoardService.getMissedTherapyDaysCount($scope.patientId).then(function(response){
-        if(response.status === 200 ){
-          $scope.missedtherapyDays = response.data.count;
-        }
-      });
-    }
+    };
 
     $scope.adherence = {
         animate:{
@@ -392,7 +386,7 @@ angular.module('hillromvestApp')
               toolTip = graphUtil.getToolTipForBarChart(value);
           }
         });
-      return toolTip;   
+      return toolTip;
       }
     };
 
@@ -401,10 +395,10 @@ angular.module('hillromvestApp')
         var toolTip = '';
         angular.forEach(data, function(value) {
           if(value.start === e.point.x){
-              toolTip =  graphUtil.getToolTipForCompliance(value);             
+              toolTip =  graphUtil.getToolTipForCompliance(value);
           }
         });
-      return toolTip;   
+      return toolTip;
       }
     };
 
@@ -480,7 +474,7 @@ angular.module('hillromvestApp')
       });
     };
 
-    $scope.reCreateComplianceGraph = function() {      
+    $scope.reCreateComplianceGraph = function() {
       $scope.removeGraph();
       $scope.handlelegends();
       $scope.createComplianceGraphData();
@@ -488,19 +482,19 @@ angular.module('hillromvestApp')
     };
 
     $scope.isLegendEnabled = function(legendFlag){
-      $scope.minComplianceParamErrMsg = false; 
-      $scope.complianceParamErrMsg = false;  
+      $scope.minComplianceParamErrMsg = false;
+      $scope.complianceParamErrMsg = false;
       var count = $scope.getCountLegends();
       if(count === 1){
         notyService.showMessage(notyMessages.minComplianceError, notyMessages.typeWarning );
-        $scope.minComplianceParamErrMsg = true; 
+        $scope.minComplianceParamErrMsg = true;
       }else if(count >= 2){
         notyService.showMessage(notyMessages.maxComplianceError, notyMessages.typeWarning );
-        $scope.complianceParamErrMsg = true; 
+        $scope.complianceParamErrMsg = true;
       }
     };
 
-    $scope.getCountLegends = function(){      
+    $scope.getCountLegends = function(){
       var count = 0 ;
       if($scope.compliance.pressure === true ){
         count++;
@@ -511,12 +505,12 @@ angular.module('hillromvestApp')
       if($scope.compliance.frequency === true ){
         count++;
       }
-      return count;      
+      return count;
     };
 
     $scope.handlelegends = function() {
-      $scope.minComplianceParamErrMsg = false; 
-      $scope.complianceParamErrMsg = false;  
+      $scope.minComplianceParamErrMsg = false;
+      $scope.complianceParamErrMsg = false;
       var count = 0 ;
       if($scope.compliance.pressure === true ){
         count++;
@@ -645,7 +639,7 @@ angular.module('hillromvestApp')
           $scope.minDuration = $scope.completeComplianceData.recommended.minMinutesPerTreatment * $scope.completeComplianceData.recommended.treatmentsPerDay;
           $scope.maxDuration = $scope.completeComplianceData.recommended.maxMinutesPerTreatment * $scope.completeComplianceData.recommended.treatmentsPerDay;
           $scope.yAxisRangeForCompliance = graphUtil.getYaxisRangeComplianceGraph($scope.completeComplianceData);
-          $scope.completecomplianceGraphData = graphUtil.convertIntoComplianceGraph($scope.completeComplianceData.actual);          
+          $scope.completecomplianceGraphData = graphUtil.convertIntoComplianceGraph($scope.completeComplianceData.actual);
           $scope.yAxis1Max = $scope.yAxisRangeForCompliance.maxDuration;
           $scope.createComplianceGraphData();
           $scope.isComplianceExist = true;
@@ -692,7 +686,7 @@ angular.module('hillromvestApp')
     $scope.yearlyChart = function(datePicker) {
       $scope.drawChart(datePicker,'YEAR','yearly',365);
     };
-   
+
     // Monthly chart
     $scope.monthlyChart = function(datePicker) {
       $scope.drawChart(datePicker,'MONTH','monthly',30);
@@ -839,7 +833,7 @@ angular.module('hillromvestApp')
   };
 
   $scope.drawComplianceGraph = function() {
-    d3.select('#complianceGraph svg').selectAll("*").remove();
+    //d3.select('#complianceGraph svg').selectAll("*").remove();
       nv.addGraph(function() {
       var chart = nv.models.multiChart()
       .margin({top: 30, right: 70, bottom: 50, left: 70})
@@ -848,7 +842,7 @@ angular.module('hillromvestApp')
      // chart.noData("Nothing to see here.");
       chart.tooltipContent($scope.toolTipContentForCompliance($scope.completeComplianceData.actual));
       //this function to put x-axis labels
-      chart.xAxis.tickFormat(function(d) {
+      chart.xAxis.rotateLabels(-35).tickValues($scope.complianceGraphData[0].values.map( function(d){return d.x;} ) ).tickFormat(function(d) {
           var days = dateService.getDateDiffIndays($scope.fromTimeStamp,$scope.toTimeStamp);
           if(days > 10){
             return d3.time.format('%d%b%y')(new Date(d));
@@ -864,9 +858,9 @@ angular.module('hillromvestApp')
         chart.yDomain1([$scope.yAxis1Min,$scope.yAxis1Max]);
       }
       if($scope.yAxis2Min === 0 && $scope.yAxis2Max === 0){
-        chart.yDomain2([$scope.yAxis2Min,1]); 
+        chart.yDomain2([$scope.yAxis2Min,1]);
       }else{
-        chart.yDomain2([$scope.yAxis2Min,$scope.yAxis2Max]); 
+        chart.yDomain2([$scope.yAxis2Min,$scope.yAxis2Max]);
       }
       var data =  $scope.complianceGraphData;
          angular.forEach(data, function(value) {
@@ -931,7 +925,7 @@ angular.module('hillromvestApp')
         if(y1AxisMinMax.indexOf(",") > -1){
           delimiter = ','
         } else if(y2AxisMinMax.indexOf(" ") === -1){
-          y2AxisMinMax = "translate(0 0)";  
+          y2AxisMinMax = "translate(0 0)";
         }
         /*fix for IE browser ends*/
         var maxTransform = parseInt(y1AxisMinMax.split(delimiter)[1].replace(y1AxisMinMax,')',''));
@@ -973,7 +967,123 @@ angular.module('hillromvestApp')
         style('fill','green');
       }
       return chart;
-    });
+    },function(){
+        $timeout(function() {
+        $(hiddenFrame).remove();
+        var printId1 = "#complianceGraphWrapper";
+        var graphData = $scope.completeComplianceData;
+        var element1 = document.querySelectorAll(printId1)[0],
+        html1 = (element1) ? element1.innerHTML: "",
+        doc;
+        hiddenFrame = $('<iframe id="pdfID" style="display: none"></iframe>').appendTo('body')[0];
+
+
+      var patientDetails = ($scope.slectedPatient) ? $scope.slectedPatient : null;
+      var pdfClinic = ($scope.associatedClinics && $scope.associatedClinics.length > 0) ? $scope.associatedClinics[0] : null;
+      //var completeAddress = (pdfClinic !== null && pdfClinic.city) ? pdfClinic.city : stringConstants.emptyString;
+      //completeAddress += (pdfClinic !== null && pdfClinic.state) ? ((completeAddress.length > 1) ? (stringConstants.comma+pdfClinic.state) : pdfClinic.state) : completeAddress;
+      //completeAddress += (pdfClinic !== null && pdfClinic.address) ? ((completeAddress.length > 1) ? (stringConstants.comma+pdfClinic.address) : pdfClinic.address) : completeAddress;
+      //completeAddress += (pdfClinic !== null && pdfClinic.zipcode) ? ((completeAddress.length > 1) ? (stringConstants.comma+pdfClinic.zipcode) : pdfClinic.zipcode) : completeAddress;
+      //var pdfClinicName = (pdfClinic !== null && pdfClinic.name) ? pdfClinic.name : stringConstants.notAvailable;
+      var pdfClinicAddress = (pdfClinic !== null && pdfClinic.address) ? pdfClinic.address : stringConstants.notAvailable;
+      var pdfClinicPhone = (pdfClinic !== null && pdfClinic.phoneNumber) ? pdfClinic.phoneNumber : stringConstants.notAvailable;
+      var reportGenerationDate = dateService.getDateFromTimeStamp(new Date().getTime(),patientDashboard.dateFormat,'/');
+      var patientMrnId = (patientDetails !== null && patientDetails.mrnId)? $scope.slectedPatient.mrnId : stringConstants.notAvailable;
+      var patientName = (patientDetails !== null && patientDetails.firstName)? $scope.slectedPatient.firstName+stringConstants.space+$scope.slectedPatient.lastName : stringConstants.notAvailable;
+      var completePatientAddress = (patientDetails !== null && patientDetails.city) ? patientDetails.city : stringConstants.emptyString;
+      completePatientAddress += (patientDetails !== null && patientDetails.state) ? ((completePatientAddress.length > 1) ? (stringConstants.comma+patientDetails.state) : patientDetails.state) : completePatientAddress;
+      completePatientAddress += (patientDetails !== null && patientDetails.address) ? ((completePatientAddress.length > 1) ? (stringConstants.comma+patientDetails.address) : patientDetails.address) : completePatientAddress;
+      completePatientAddress += (patientDetails !== null && patientDetails.zipcode) ? ((completePatientAddress.length > 1) ? (stringConstants.comma+patientDetails.zipcode) : patientDetails.zipcode) : completePatientAddress;
+      var patientPhone = (patientDetails !== null && patientDetails.mobilePhone)? $scope.slectedPatient.mobilePhone : stringConstants.notAvailable;
+      var patientDOB = (patientDetails !== null && patientDetails.dob)? dateService.getDateFromTimeStamp(patientDetails.dob,patientDashboard.dateFormat,'/') : stringConstants.notAvailable;
+      var patientAdherence = (patientDetails !== null && patientDetails.adherence)? $scope.slectedPatient.adherence : stringConstants.notAvailable;
+      var patientDeviceType = stringConstants.deviceType;
+      var patientDeviceSlNo = ($scope.patientDevices && $scope.patientDevices[0] && $scope.patientDevices[0].serialNumber) ? $scope.patientDevices[0].serialNumber: stringConstants.notAvailable;
+      var pdfMissedTherapyDays = ($scope.missedtherapyDays !== null && $scope.missedtherapyDays >= 0) ? $scope.missedtherapyDays : stringConstants.notAvailable;
+      var pdfHMRNonAdherenceScore = ($scope.adherenceScore !== null && $scope.adherenceScore >= 0) ? $scope.adherenceScore : stringConstants.notAvailable;
+      var pdfSettingDeviation = stringConstants.notAvailable;
+      htmlDocument = "<!doctype html>" +
+            '<html style="background: white;"><head>' +
+            '<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />'+
+            '<meta http-equiv="X-UA-Compatible" content="IE=edge">' +
+            '<link rel="stylesheet" href="bower_components/nvd3/src/nv.d3.css" />' +
+            '<link rel="stylesheet" href="styles/style.css">' +
+            '</head>' +
+            '<body>' + // Print only after document is loaded
+            '<div class="pdf__heading-primary">HillRom</div>' +
+            '<div class="pdf__heading-secondary">VisiView TM Health Portal</div>' +
+            '<div class="title">'+
+            '<span class="title--heading">'+stringConstants.reportGenerationDateLabel+'</span>'+
+            '<span class="title--desc">'+reportGenerationDate+'</span>'+
+            '</div>' +
+            '<div class="title">'+
+            '<span class="title--heading">'+stringConstants.dateRangeOfReportLabel+stringConstants.colon+'</span>'+
+            '<span class="title--desc">'+$scope.fromDate+stringConstants.minus+$scope.toDate+'</span>'+
+            '</div>' +
+            '<div class="pdf-container table-right">'+
+              '<table border=1>' +
+              '<thead>'+
+              '<tr>'+
+              '<th colspan="2">'+stringConstants.patientInformationLabel+'</th>' +
+              '</tr>'+
+              '</thead>'+
+              '<tr><td class="heading">'+stringConstants.mrn+stringConstants.colon+'</td><td class="desc">'+patientMrnId+'</td></tr>' +
+              '<tr><td class="heading">'+stringConstants.name+stringConstants.colon+'</td><td class="desc-highlight">'+patientName+'</td></tr>' +
+              '<tr><td class="heading">'+stringConstants.address+stringConstants.colon+'</td><td class="desc">'+completePatientAddress+'</td></tr>' +
+              '<tr><td class="heading">'+stringConstants.phone+stringConstants.colon+'</td><td class="desc">'+patientPhone+'</td></tr>' +
+              '<tr><td class="heading">'+stringConstants.DOB+stringConstants.colon+'</td><td class="desc">'+patientDOB+'</td></tr>' +
+              '<tr><td class="heading">'+stringConstants.adherenceScore.replace(/ /g, '&nbsp')+stringConstants.colon+'</td><td class="desc-highlight">'+patientAdherence+'</td></tr>' +
+              '</table>' +
+            '</div>' +
+            '<div class="pdf-container table-left">'+
+              '<table border=1>' +
+                '<thead>'+
+                  '<tr>'+
+                    '<th colspan="2">'+stringConstants.deviceInformationLabel+'</th>' +
+                  '</tr>'+
+                '</thead>'+
+              '<tr><td class="heading">'+stringConstants.type+stringConstants.colon+'</td><td class="desc-highlight">'+patientDeviceType.replace(/ /g, '&nbsp')+'</td></tr>' +
+              '<tr><td class="heading">'+stringConstants.serialNumber+stringConstants.colon+'</td><td class="desc">'+patientDeviceSlNo+'</td></tr>' +
+              '</table>' +
+              '<table class="pdf--margin-top" border=1 ng-if="true">' +
+                '<thead>'+
+                  '<tr>'+
+                    '<th colspan="2">'+stringConstants.NotificationLabel+'</th>' +
+                  '</tr>'+
+                '</thead>'+
+              '<tr><td class="heading">'+stringConstants.missedTherapyDays+stringConstants.colon+
+              '</td><td class="desc-highlight">'+pdfMissedTherapyDays+'</td></tr>' +
+              '<tr><td class="heading">'+stringConstants.hmrNonAdherence+stringConstants.colon+
+              '</td><td class="desc-highlight">'+pdfHMRNonAdherenceScore+'</td></tr>' +
+              '<tr><td class="heading">'+stringConstants.settingDeviation+stringConstants.colon+
+              '</td><td class="desc-highlight">'+pdfSettingDeviation+'</td></tr>' +
+              '</table>' +
+            '</div>' +
+            '<div class="graph-title"></div>'+
+            '<div>'+
+              html1 +
+            '</div>'+
+            '<div class="pdf-signature">'+
+              '<div class="pdf-signature--prim">'+
+              '<span class="signature-desc">Name:</span>'+
+              '<span class="user-space"></span>'+
+              '</div>'+
+              '<div class="pdf-signature--secon">'+
+                '<span class="signature-desc">Date:</span>'+
+                '<span class="user-space"></span>'+
+              '</div>'+
+              '<div class="pdf-signature--prim sec-row">'+
+                '<span class="signature-desc">Signature:</span>'+
+                '<span class="user-space"></span>'+
+              '</div>'+
+            '</div>'+
+            '</body>' +
+            "</html>";
+          doc = hiddenFrame.contentWindow.document.open();
+          doc.write(htmlDocument);
+          doc.close();
+},1500);
+      });
   };
 
 
@@ -991,7 +1101,7 @@ angular.module('hillromvestApp')
     $scope.getCaregiversForPatient = function(patientId){
       patientService.getCaregiversLinkedToPatient(patientId).then(function(response){
         $scope.caregivers = (response.data.caregivers) ? response.data.caregivers : [] ;
-      }).catch(function(response){        
+      }).catch(function(response){
         notyService.showMessage(response.data.ERROR,'warning' );
       });
     };
@@ -1005,7 +1115,7 @@ angular.module('hillromvestApp')
       $scope.careGiverStatus = "new";
       $scope.associateCareGiver = {};
       UserService.getState().then(function(response) {
-        $scope.states = response.data.states;        
+        $scope.states = response.data.states;
       });
       UserService.getRelationships().then(function(response) {
         $scope.relationships = response.data.relationshipLabels;
@@ -1109,7 +1219,7 @@ angular.module('hillromvestApp')
           $scope.devicesErrMsg = true;
         }
       });
-      $scope.getProtocols(StorageService.get('logged').patientID || $scope.patientId);    
+      $scope.getProtocols(StorageService.get('logged').patientID || $scope.patientId);
     };
 
     $scope.getProtocols = function(patientId){
@@ -1141,20 +1251,20 @@ angular.module('hillromvestApp')
     $scope.getClinicsOfPatient = function(){
       patientService.getClinicsLinkedToPatient(StorageService.get('logged').patientID || $scope.patientId).then(function(response){
         if(response.data.clinics){
-          $scope.clinics = response.data.clinics;  
+          $scope.clinics = response.data.clinics;
         }else if(response.data.message){
           $scope.clinicsOfPatientErrMsg = response.data.message;
-        }             
+        }
       });
     };
-    
+
     $scope.getHCPsOfPatient = function(){
       patientService.getHCPsLinkedToPatient(StorageService.get('logged').patientID || $scope.patientId).then(function(response){
         if(response.data.hcpUsers){
           $scope.hcps = response.data.hcpUsers;
         }else if(response.data.message){
           $scope.hcpsOfPatientErrMsg = response.data.message;
-        }              
+        }
       });
     };
 
@@ -1167,7 +1277,7 @@ angular.module('hillromvestApp')
         data.noteText = editedNoteText;
         UserService.updateNote(noteId, new Date(dateCreatedOn).getTime(), data).then(function(response){
           $scope.showAllNotes();
-          makeAllNotesReadable();           
+          makeAllNotesReadable();
         }).catch(function(){
           $scope.errorMsg = "Some internal error occurred. Please try after sometime.";
           notyService.showMessage($scope.errorMsg,'warning' );
@@ -1190,7 +1300,7 @@ angular.module('hillromvestApp')
             UserService.createNote(StorageService.get('logged').patientID, data).then(function(response){
               $scope.addNote = false;
               $scope.textNote.edit_date = dateService.convertDateToYyyyMmDdFormat(new Date());
-              $scope.textNote = "";     
+              $scope.textNote = "";
               $scope.showAllNotes();
               $scope.addNoteActive = false;
               $("#note_edit_container").removeClass("show_content");
@@ -1206,25 +1316,34 @@ angular.module('hillromvestApp')
           $scope.noteTextError = "Please add some text.";
           return false;
         }
-      
+
     };
 
     $scope.deleteNote = function(noteId){
       UserService.deleteNote(noteId).then(function(response){
-      $scope.showAllNotes();                
+      $scope.showAllNotes();
       }).catch(function(){
         notyService.showMessage(server_error_msg,'warning' );
       });
+      $scope.closeNoteDeleteModal();
     };
 
-    $scope.openAddNote = function(){    
-      $scope.noteTextError =  null;  
+    $scope.openDeleteNoteModal = function(note){
+      $scope.deleteNoteModal = true;
+      $scope.noteToDelete = note;
+    };
+    $scope.closeNoteDeleteModal = function(){
+      $scope.deleteNoteModal = false;
+    };
+
+    $scope.openAddNote = function(){
+      $scope.noteTextError =  null;
       $scope.textNote = {};
       $scope.textNote.edit_date = dateService.convertDateToYyyyMmDdFormat(new Date());
        $scope.textNote.text = "";
       $scope.addNoteActive = true;
       $("#note_edit_container").removeClass("hide_content");
-      $("#note_edit_container").addClass("show_content");  
+      $("#note_edit_container").addClass("show_content");
     };
 
     $scope.cancelAddNote = function(){
@@ -1237,7 +1356,6 @@ angular.module('hillromvestApp')
     $scope.initGraph = function(){
       $scope.getHmrRunRateAndScore();
       $scope.handlelegends();
-      $scope.getMissedTherapyDaysCount();
       $scope.weeklyChart();
     }
     $scope.initPatientDashboard = function(){
@@ -1259,7 +1377,7 @@ angular.module('hillromvestApp')
       makeAllNotesReadable();
       // CURRENT NOTE
       makeNoteeditable(noteId);
-      
+
     };
 
     $scope.cancelEditNote = function(){
@@ -1294,10 +1412,10 @@ angular.module('hillromvestApp')
     };
 
     $scope.getPatientNotification = function(){
-      UserService.getPatientNotification(StorageService.get('logged').patientID, new Date().getTime()).then(function(response){                  
+      UserService.getPatientNotification(StorageService.get('logged').patientID, new Date().getTime()).then(function(response){
         $scope.patientNotifications = response.data;
         angular.forEach($scope.patientNotifications, function(notification, index) {
-          var notificationType = notification.notificationType; 
+          var notificationType = notification.notificationType;
           if(notificationType.indexOf("HMR_NON_COMPLIANCE AND SETTINGS_DEVIATION") > -1){
             $scope.patientNotifications[index].message = apiresponse.HMR_NON_COMPLIANCE_AND_SETTINGS_DEVIATION;
             $scope.patientNotifications[index].class = "icon-lungs";
@@ -1318,7 +1436,7 @@ angular.module('hillromvestApp')
       }, 2000);
     };
 
-    
+
     $scope.$on('elementClick.directive', function(angularEvent, event) {
       $scope.hideNotesCSS();
       $scope.graphStartDate = null;
@@ -1329,7 +1447,7 @@ angular.module('hillromvestApp')
         angular.forEach($scope.completeGraphData.actual, function(value, index) {
           if(value.timestamp === event.point[0]){
             selectedNodeIndex = index;
-            $scope.graphStartDate = value.timestamp;                     
+            $scope.graphStartDate = value.timestamp;
           }
           angularEvent.targetScope.$parent.event = event;
           angularEvent.targetScope.$parent.$digest();
@@ -1338,7 +1456,7 @@ angular.module('hillromvestApp')
         // selectedNodeIndex exists means start date is present
         if(selectedNodeIndex != null && selectedNodeIndex > -1 ){
           //the selected note is not the last one
-          if(selectedNodeIndex < (graphNodesLength-1)){            
+          if(selectedNodeIndex < (graphNodesLength-1)){
             var d = new Date($scope.completeGraphData.actual[selectedNodeIndex+1].timestamp);
             d.setDate(d.getDate()-1);
             $scope.graphEndDate = d.getTime();
@@ -1350,8 +1468,8 @@ angular.module('hillromvestApp')
       }
       $scope.getNotesBetweenDateRange($scope.graphStartDate,$scope.graphEndDate);
     });
-    
-    $scope.showAllNotes = function(page){    
+
+    $scope.showAllNotes = function(page){
     if (page !== undefined) {
         if (page === "PREV" && $scope.curNotePageIndex > 1) {
          $scope.curNotePageIndex--;
@@ -1363,7 +1481,7 @@ angular.module('hillromvestApp')
       } else {
         $scope.curNotePageIndex = 1;
       }
-      $scope.getNotesBetweenDateRange($scope.fromTimeStamp, $scope.toTimeStamp, true);        
+      $scope.getNotesBetweenDateRange($scope.fromTimeStamp, $scope.toTimeStamp, true);
     };
 
     $scope.hideNoteContainer = function(){
@@ -1377,12 +1495,12 @@ angular.module('hillromvestApp')
 
     $scope.hideNotesCSS = function(){
       $("#add_note_container").removeClass("show_content");
-      $("#add_note_container").addClass("hide_content");  
+      $("#add_note_container").addClass("hide_content");
     };
 
 
-    $scope.getNotesBetweenDateRange = function(fromTimeStamp, toTimeStamp, scrollUp){ 
-      var patientId = null;  
+    $scope.getNotesBetweenDateRange = function(fromTimeStamp, toTimeStamp, scrollUp){
+      var patientId = null;
       if(StorageService.get('logged').role === 'PATIENT'){
         patientId = StorageService.get('logged').patientID;
       }else{
@@ -1391,31 +1509,31 @@ angular.module('hillromvestApp')
       var fromDate = dateService.convertDateToYyyyMmDdFormat(fromTimeStamp);
       var toDate = dateService.convertDateToYyyyMmDdFormat(toTimeStamp);
       UserService.getNotesOfUserInInterval(patientId, fromDate, toDate, $scope.curNotePageIndex, $scope.perPageCount ).then(function(response){
-        $scope.showNotes = true; 
-        $scope.notes = response.data; 
-        $scope.totalNotes = response.headers()['x-total-count']; 
+        $scope.showNotes = true;
+        $scope.notes = response.data;
+        $scope.totalNotes = response.headers()['x-total-count'];
         $scope.notePageCount = Math.ceil($scope.totalNotes / 4);
         $scope.showNotesCSS();
-        if($scope.notes.length >= 1 || scrollUp){          
-          scrollPageToTop("add_note_container");  
-        }  
-        $scope.hideAddNote();    
-        return 1;        
+        if($scope.notes.length >= 1 || scrollUp){
+          scrollPageToTop("add_note_container");
+        }
+        $scope.hideAddNote();
+        return 1;
       }).catch(function(){
-        $scope.notes = ""; 
-        $scope.hideNotesCSS(); 
+        $scope.notes = "";
+        $scope.hideNotesCSS();
         $scope.hideAddNote();
         return 0;
       });
     };
 
     $scope.chageDateForGraph = function(){
-      $scope.hideNotesCSS(); 
+      $scope.hideNotesCSS();
     };
 
-    $scope.hideAddNote = function(){      
+    $scope.hideAddNote = function(){
       $("#note_edit_container").removeClass("show_content");
-      $("#note_edit_container").addClass("hide_content");      
+      $("#note_edit_container").addClass("hide_content");
     };
     $scope.getPatientDevices = function(patientId){
       patientService.getDevices(patientId).then(function(response){
@@ -1434,7 +1552,7 @@ angular.module('hillromvestApp')
       patientService.getTransmissionDate(patientId).then(function(response) {
         if(response.data && response.data.firstTransmissionDate){
           $scope.hasTransmissionDate = true;
-          $scope.transmissionDate = response.data.firstTransmissionDate;          
+          $scope.transmissionDate = response.data.firstTransmissionDate;
         }
       });
     };
@@ -1442,24 +1560,24 @@ angular.module('hillromvestApp')
     $scope.init();
 
       $scope.getNotesOnGraphNode = function(selectedTimestamp){
-        // 
+        //
         $scope.hideNotesCSS();
         $scope.graphStartDate = null;
-        $scope.graphEndDate = null;   
+        $scope.graphEndDate = null;
         var selectedNodeIndex = null;
         var graphNodesLength = $scope.completeGraphData.actual.length;
         if(graphNodesLength && graphNodesLength > 0){
           angular.forEach($scope.completeGraphData.actual, function(value, index) {
             if(value.timestamp === selectedTimestamp){
               selectedNodeIndex = index;
-              $scope.graphStartDate = value.timestamp;                     
+              $scope.graphStartDate = value.timestamp;
             }
           });
 
           // selectedNodeIndex exists means start date is present
           if(selectedNodeIndex != null && selectedNodeIndex > -1 ){
             //the selected note is not the last one
-            if(selectedNodeIndex < (graphNodesLength-1)){            
+            if(selectedNodeIndex < (graphNodesLength-1)){
               var d = new Date($scope.completeGraphData.actual[selectedNodeIndex+1].timestamp);
               d.setDate(d.getDate()-1);
               $scope.graphEndDate = d.getTime();
@@ -1470,7 +1588,7 @@ angular.module('hillromvestApp')
           }
         }
         $scope.getNotesBetweenDateRange($scope.graphStartDate,$scope.graphEndDate);
-      // 
+      //
       }
 
       $scope.drawHMRLineGraph = function() {
@@ -1486,7 +1604,7 @@ angular.module('hillromvestApp')
             $scope.dayGraphForNode(event.point.x);
           });
           //this function to put x-axis labels
-          chart.xAxis.tickFormat(function(d) {
+          chart.xAxis.rotateLabels(-35).tickValues($scope.graphData[0].values.map( function(d){return d.x;} ) ).tickFormat(function(d) {
           var days = dateService.getDateDiffIndays($scope.fromTimeStamp,$scope.toTimeStamp);
           if(days > 10){
             return d3.time.format('%d%b%y')(new Date(d));
@@ -1568,17 +1686,17 @@ angular.module('hillromvestApp')
       var patientDetails = ($scope.slectedPatient) ? $scope.slectedPatient : null;
       var pdfClinic = ($scope.associatedClinics && $scope.associatedClinics.length > 0) ? $scope.associatedClinics[0] : null;
       //var completeAddress = (pdfClinic !== null && pdfClinic.city) ? pdfClinic.city : stringConstants.emptyString;
-      //completeAddress += (pdfClinic !== null && pdfClinic.state) ? ((completeAddress.length > 1) ? (stringConstants.comma+pdfClinic.state) : pdfClinic.state) : completeAddress; 
+      //completeAddress += (pdfClinic !== null && pdfClinic.state) ? ((completeAddress.length > 1) ? (stringConstants.comma+pdfClinic.state) : pdfClinic.state) : completeAddress;
       //completeAddress += (pdfClinic !== null && pdfClinic.address) ? ((completeAddress.length > 1) ? (stringConstants.comma+pdfClinic.address) : pdfClinic.address) : completeAddress;
       //completeAddress += (pdfClinic !== null && pdfClinic.zipcode) ? ((completeAddress.length > 1) ? (stringConstants.comma+pdfClinic.zipcode) : pdfClinic.zipcode) : completeAddress;
-      //var pdfClinicName = (pdfClinic !== null && pdfClinic.name) ? pdfClinic.name : stringConstants.notAvailable; 
+      //var pdfClinicName = (pdfClinic !== null && pdfClinic.name) ? pdfClinic.name : stringConstants.notAvailable;
       var pdfClinicAddress = (pdfClinic !== null && pdfClinic.address) ? pdfClinic.address : stringConstants.notAvailable;
       var pdfClinicPhone = (pdfClinic !== null && pdfClinic.phoneNumber) ? pdfClinic.phoneNumber : stringConstants.notAvailable;
       var reportGenerationDate = dateService.getDateFromTimeStamp(new Date().getTime(),patientDashboard.dateFormat,'/');
       var patientMrnId = (patientDetails !== null && patientDetails.mrnId)? $scope.slectedPatient.mrnId : stringConstants.notAvailable;
       var patientName = (patientDetails !== null && patientDetails.firstName)? $scope.slectedPatient.firstName+stringConstants.space+$scope.slectedPatient.lastName : stringConstants.notAvailable;
       var completePatientAddress = (patientDetails !== null && patientDetails.city) ? patientDetails.city : stringConstants.emptyString;
-      completePatientAddress += (patientDetails !== null && patientDetails.state) ? ((completePatientAddress.length > 1) ? (stringConstants.comma+patientDetails.state) : patientDetails.state) : completePatientAddress; 
+      completePatientAddress += (patientDetails !== null && patientDetails.state) ? ((completePatientAddress.length > 1) ? (stringConstants.comma+patientDetails.state) : patientDetails.state) : completePatientAddress;
       completePatientAddress += (patientDetails !== null && patientDetails.address) ? ((completePatientAddress.length > 1) ? (stringConstants.comma+patientDetails.address) : patientDetails.address) : completePatientAddress;
       completePatientAddress += (patientDetails !== null && patientDetails.zipcode) ? ((completePatientAddress.length > 1) ? (stringConstants.comma+patientDetails.zipcode) : patientDetails.zipcode) : completePatientAddress;
       var patientPhone = (patientDetails !== null && patientDetails.mobilePhone)? $scope.slectedPatient.mobilePhone : stringConstants.notAvailable;
@@ -1611,7 +1729,7 @@ angular.module('hillromvestApp')
               '<table border=1>' +
               '<thead>'+
               '<tr>'+
-              '<th colspan="2">'+stringConstants.patientInformationLabel+'</th>' + 
+              '<th colspan="2">'+stringConstants.patientInformationLabel+'</th>' +
               '</tr>'+
               '</thead>'+
               '<tr><td class="heading">'+stringConstants.mrn+stringConstants.colon+'</td><td class="desc">'+patientMrnId+'</td></tr>' +
@@ -1626,7 +1744,7 @@ angular.module('hillromvestApp')
               '<table border=1>' +
                 '<thead>'+
                   '<tr>'+
-                    '<th colspan="2">'+stringConstants.deviceInformationLabel+'</th>' + 
+                    '<th colspan="2">'+stringConstants.deviceInformationLabel+'</th>' +
                   '</tr>'+
                 '</thead>'+
               '<tr><td class="heading">'+stringConstants.type+stringConstants.colon+'</td><td class="desc-highlight">'+patientDeviceType.replace(/ /g, '&nbsp')+'</td></tr>' +
@@ -1635,9 +1753,9 @@ angular.module('hillromvestApp')
               '<table class="pdf--margin-top" border=1 ng-if="true">' +
                 '<thead>'+
                   '<tr>'+
-                    '<th colspan="2">'+stringConstants.NotificationLabel+'</th>' + 
+                    '<th colspan="2">'+stringConstants.NotificationLabel+'</th>' +
                   '</tr>'+
-                '</thead>'+ 
+                '</thead>'+
               '<tr><td class="heading">'+stringConstants.missedTherapyDays+stringConstants.colon+
               '</td><td class="desc-highlight">'+pdfMissedTherapyDays+'</td></tr>' +
               '<tr><td class="heading">'+stringConstants.hmrNonAdherence+stringConstants.colon+
@@ -1687,7 +1805,7 @@ angular.module('hillromvestApp')
          // chart.noData("Nothing to see here.");
           chart.tooltipContent($scope.toolTipContentBarChart());
           //this function to put x-axis labels
-          chart.xAxis.tickFormat(function(d) {
+          chart.xAxis.rotateLabels(-35).tickValues($scope.hmrBarGraphData[0].values.map( function(d){return d.x;} ) ).tickFormat(function(d) {
             return d3.time.format('%I:%M %p')(new Date(d));
             return dateService.getTimeIntervalFromTimeStamp(d);
         });
@@ -1704,17 +1822,25 @@ angular.module('hillromvestApp')
 
     $scope.downloadAsPdf = function(){
       /*var graphData = ($scope.hmrGraph) ? $scope.completeGraphData : $scope.completeComplianceData;
-      graphService.getPdfForSVGGraph(graphData);   */ 
-       $scope.drawHMRLineGraph();
-      setTimeout(function() {
-      hiddenFrame.contentWindow.print();
-      },700);
+      graphService.getPdfForSVGGraph(graphData);   */
+      //if($scope.selectedGraph === "hmr" && $scope.selectedDateOption !== "DAY")
+      if($scope.selectedGraph === 'HMR'){
+        $scope.drawHMRLineGraph();
+        setTimeout(function() {
+          hiddenFrame.contentWindow.print();
+        },700);
+      } else if($scope.selectedGraph === 'COMPLIANCE'){
+        $scope.drawComplianceGraph();
+        setTimeout(function() {
+          hiddenFrame.contentWindow.print();
+        },1700);
+      }
     };
 
     $scope.downloadRawDataAsCsv = function(){
       patientService.getDeviceDataAsCSV($scope.patientId, $scope.fromTimeStamp, $scope.toTimeStamp).then(function(response){
          graphService.downloadAsCSVFile(response.data, 'VestDeviceReport.csv', 'vestDevice');
-      }); 
+      });
     };
 
     $scope.downloadProcessedDataAsCsv = function(){
@@ -1729,9 +1855,9 @@ angular.module('hillromvestApp')
     };
     $scope.closeModalCaregiver = function(){
       $scope.showModalCaregiver = false;
-    }; 
+    };
 
-    /*on click of the nodes on graph, the graph should change to a day graph*/   
+    /*on click of the nodes on graph, the graph should change to a day graph*/
     $scope.dayGraphForNode = function(timestamp) {
       $scope.selectedDateOption = 'DAY';
       $scope.toDate = $scope.fromDate =  dateService.getDateFromTimeStamp(timestamp,patientDashboard.dateFormat,'/');
@@ -1740,10 +1866,12 @@ angular.module('hillromvestApp')
        if($scope.hmrGraph) {
         $scope.format = 'dayWise';
         $scope.hmrLineGraph = false;
-        $scope.hmrBarGraph = true;       
+        $scope.hmrBarGraph = true;
         $scope.toTimeStamp = $scope.fromTimeStamp = timestamp;
         $scope.getDayHMRGraphData();
       }
     };
-    
+
 }]);
+
+

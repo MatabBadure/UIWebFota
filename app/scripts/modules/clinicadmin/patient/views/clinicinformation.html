@@ -78,10 +78,10 @@
   </div>
   <div class="col-md-16 col-sm-16 clinic-list" ng-repeat="hcp in associatedHCPs track by $index" ng-if="associatedHCPs.length > 0">
     <div class="col-md-3 col-sm-3 clinic-list__detail">
-      <span class="clinic-list__detail--name">{{::hcp.lastName}}, {{::hcp.firstName}}</span>
+      <span class="clinic-list__detail--name">{{hcp.lastName}}, {{hcp.firstName}}</span>
     </div>
     <div class="col-md-3 col-sm-3 clinic-list__address">
-      <span class="clinic-list__credentials">{{::hcp.credentials}}</span>
+      <span class="clinic-list__credentials">{{hcp.credentials}}</span>
     </div>
     <div class="col-md-3 col-sm-3 clinic-list__phone">
       <span class="clinic-list__phone--number" ng-bind="hcp.primaryPhone"></span>
@@ -95,5 +95,15 @@
   </div>
   <div class="col-md-16 col-sm-16 empty-list-message" ng-if="!associatedHCPs || associatedHCPs.length === 0">
     <span translate="no-hcp-found"> </span>
+  </div>
+
+  <div class="col-md-16 reset-padding">
+    <div class="col-md-8 clinic-link">
+      <input type="text" ng-show="searchHCPText" ng-model="searchHcp" typeahead="hcp as hcp.lastName +', &nbsp' + hcp.firstName  + ' &nbsp ' + hcp.clinics[0].name for hcp in hcps | filter:$viewValue | filter:{deleted: false}" typeahead-on-select="selectHcpForPatient($item)" class="form-control" placeholder="{{'patient.placeholder.hcp-link' | translate}}">
+    </div>
+
+    <div class="col-md-8 clinic-link">
+      <buton class="hillrom-btn btn-primary float-right" ng-show="!searchHCPText" ng-click="linkHCP()" translate="patient.link-hcp"></buton>
+    </div>
   </div>
 </div>

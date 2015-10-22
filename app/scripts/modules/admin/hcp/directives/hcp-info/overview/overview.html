@@ -118,28 +118,28 @@
 
     <div class="dashboard__manage-view--list" ng-repeat="patient in patients" readonly="true" ng-class="{'inactive': patient.patientUser.isDeleted}" ng-click="selectPatient(patient.patientUser)">
       <div class="col-md-2 reset-padding">
-        <span class="main-prim-info">{{::patient.patientUser.lastName}}, {{::patient.patientUser.firstName}}</span>
-        <span class="main-secon-info">{{::patient.patientUser.email}}</span>
+        <span class="main-prim-info">{{patient.patientUser.lastName}}, {{patient.patientUser.firstName}}</span>
+        <span class="main-secon-info">{{patient.patientUser.email}}</span>
       </div>
       <div class="col-md-2 reset-padding centered">
-        <span class="impo-highlight">{{::patient.patientUser.mrnId}}</span>
+        <span class="impo-highlight">{{patient.patientUser.mrnId}}</span>
       </div>
       <div class="col-md-2 reset-padding centered">
-        <span class="short-info">{{::patient.patientUser.dob}}</span>
+        <span class="short-info">{{patient.patientUser.dob}}</span>
       </div>
 
       <div class="col-md-2 reset-padding centered">
-        <span class="short-info">{{::patient.patientUser.city}}</span>
+        <span class="short-info">{{patient.patientUser.city}}</span>
         <span ng-if="patient.patientUser.state && patient.patientUser.city">,</span>
-        <span class="short-info">{{::patient.patientUser.state}}</span>
+        <span class="short-info">{{patient.patientUser.state}}</span>
       </div>
 
       <div class="col-md-2 reset-padding centered">
-        <span class="short-info">{{::patient.patientUser.transmission}}</span>
+        <span class="short-info">{{patient.patientUser.transmission}}</span>
       </div>
 
       <div class="col-md-2 reset-padding centered">
-        <span class="short-info">{{::patient.patientUser.clinicName}}</span>
+        <span class="short-info">{{patient.patientUser.clinicName}}</span>
       </div>
 
       <div class="col-md-2 reset-padding centered">
@@ -148,7 +148,7 @@
       </div>
 
       <div class="col-md-2 reset-padding-left text-centered">
-        <span class="short-info">{{::patient.patientUser.adherence}}</span>
+        <span class="short-info">{{patient.patientUser.adherence}}</span>
       </div>
       <div class="clr"></div>
     </div>

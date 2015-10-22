@@ -37,25 +37,25 @@
 
       <div class="dashboard__manage-view--list assoc" ng-repeat="hcp in associatedHcps" readonly="true" ng-class="{'inactive': hcp.deleted}">
           <div class="col-md-2 centered">
-            <span class="main-prim-info">{{::hcp.lastName}}, {{::hcp.firstName}}</span>
+            <span class="main-prim-info">{{hcp.lastName}}, {{hcp.firstName}}</span>
           </div>
           <div class="col-md-2 centered">
-            <span class="impo-highlight">{{::hcp.credentials}}</span>
+            <span class="impo-highlight">{{hcp.credentials}}</span>
           </div>
           <div class="col-md-2 centered">
-            <span class="short-info">{{::hcp.npiNumber}}</span>
-          </div>
-
-          <div class="col-md-2 centered">
-            <span class="short-info">{{::clinic.name}}</span>
+            <span class="short-info">{{hcp.npiNumber}}</span>
           </div>
 
           <div class="col-md-2 centered">
-            <span class="short-info">{{::hcp.city}}</span>
+            <span class="short-info">{{clinic.name}}</span>
           </div>
 
           <div class="col-md-2 centered">
-            <span class="short-info">{{::hcp.state}}</span>
+            <span class="short-info">{{hcp.city}}</span>
+          </div>
+
+          <div class="col-md-2 centered">
+            <span class="short-info">{{hcp.state}}</span>
           </div>
 
           <div class="col-md-2 centered">
@@ -79,7 +79,7 @@
 <div class="container admin-user">
   <div class="col-md-16 reset-padding">
     <div class="col-md-8 clinic-link">
-      <input class="form-control" type="text" ng-model="searchHcp" typeahead="hcp as hcp.lastName + ' ' + hcp.firstName +' ' + hcp.email for hcp in hcps | filter:$viewValue" typeahead-on-select="selectHCP($item)" placeholder="{{'clinic.placeholder.hcp-search' | translate}}" ng-show="isAssociateHCP">
+      <input class="form-control" type="text" ng-model="searchHcp" typeahead="hcp as hcp.lastName + ', &nbsp' + hcp.firstName +' ' + hcp.clinicName for hcp in hcps | filter:$viewValue" typeahead-on-select="selectHCP($item)" placeholder="{{'clinic.placeholder.hcp-search' | translate}}" ng-show="isAssociateHCP">
     </div>
 
     <div class="col-md-8 clinic-link">

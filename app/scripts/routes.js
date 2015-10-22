@@ -1585,8 +1585,7 @@ angular.module('hillromvestApp')
                 }
             })
             .state('hcppatientList', {
-                 url:'/hcp-patient',
-                 params: {"clinicId" : null, "patientId": null},
+                 url:'/hcp-patient/{clinicId}/{patientId}',
                  views:{
                   'content':{
                     templateUrl:'scripts/modules/hcp/patient/directives/list.html',
@@ -1817,7 +1816,7 @@ angular.module('hillromvestApp')
 
             .state('clinicadminpatientdashboard', {
                 parent: 'clinicadmin-dashboard',
-                url: '/clinicadmin-patient/{clinicId}',
+                url: '/clinicadmin-patient/{clinicId}/{filter}',
                 data: {
                     roles: ['CLINIC_ADMIN'],
                     pageTitle: 'patient.page-title.patients'

@@ -122,6 +122,15 @@ angular.module('hillromvestApp')
         });
       },
 
+      getHCPsWithClinicName: function(){
+        var url = URL.getHCPsWithClinicName;
+        return $http.get(url, {
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });
+      },
+
       getClinicAdmins: function(clinicId){
         return $http.get('/api/clinics/'+clinicId+'/clinicadmin', {
           headers: headerService.getHeader()

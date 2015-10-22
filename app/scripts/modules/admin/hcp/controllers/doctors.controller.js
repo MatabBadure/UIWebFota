@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('hillromvestApp')
-  .controller('DoctorsController',['$rootScope', '$scope', '$state', '$timeout', 'Auth', '$stateParams', 'UserService', 'DoctorService', 'notyService', 'clinicService', 'searchFilterService', 'dateService', 'StorageService',
-    function($rootScope, $scope, $state, $timeout, Auth,$stateParams, UserService, DoctorService, notyService, clinicService,searchFilterService, dateService, StorageService ) {
+  .controller('DoctorsController',['$rootScope', '$scope', '$state', '$timeout', 'Auth', '$stateParams', 'UserService', 'DoctorService', 'notyService', 'clinicService', 'searchFilterService', 'dateService', 'StorageService', 'commonsUserService',
+    function($rootScope, $scope, $state, $timeout, Auth,$stateParams, UserService, DoctorService, notyService, clinicService,searchFilterService, dateService, StorageService, commonsUserService) {
     $scope.doctor = {};
     $scope.doctorStatus = {
       'role': StorageService.get('logged').role,
@@ -197,7 +197,7 @@ angular.module('hillromvestApp')
       $scope.clinics = []; 
       clinicService.getAllActiveClinics().then(function(response){
         if(response.data)
-        $scope.clinics = response.data;
+        $scope.clinics = commonsUserService.formatDataForTypehead(response.data);
         DoctorService.getClinicsAssociatedToHCP(doctorId).then(function(response) {
           $scope.clinicsOfHCP = [];  $scope.clinicsOfHCP.length = 0;
           if(response.data.clinics){            
