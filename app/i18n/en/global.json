@@ -101,7 +101,13 @@
             "associates":"Associates",
             "caregiver": "CARE GIVER"
         },
-        "not-applicable": "NA"
+        "not-applicable": "NA",
+        "notification":{
+            "missed-therapy": "Your recommended therapy is missed by three days.",
+            "setting-deviation": "You are not adherence to frequency defined in protocol.",
+            "hmr-non-compliant": "You are not HMR Compliant.",
+            "hmr-non-compliant-setting-deviation":"Your expected compliant therapy is low as per recommendation"
+        }
     },
     "entity": {
         "action": {

@@ -130,7 +130,10 @@
   -webkit-appearance: none;
   -moz-appearance: none;
   text-indent: 1px;
-  text-overflow: '';
+  overflow: hidden;
+  padding-right: 20px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .label-next input {
@@ -153,7 +156,7 @@
   border-bottom: solid 2px $blue-btn-border;
   &:hover{
     background-color: $blue-btn-hover;
-  } 
+  }
 }
 
 .btn-submit {
@@ -220,6 +223,11 @@
 
 }
 
+.edit-profile-dropdown-state {
+  padding-right: 2em;
+  width: 100% !important;
+}
+
 .dashboard__form--label-age {
   position: absolute;
   right: 0;
@@ -272,15 +280,15 @@
 }
 
 :-moz-placeholder { /* Firefox 18- */
-   color: $silver-approx;  
+   color: $silver-approx;
 }
 
 ::-moz-placeholder {  /* Firefox 19+ */
-   color: $silver-approx;  
+   color: $silver-approx;
 }
 
-:-ms-input-placeholder {  
-   color: $silver-approx;  
+:-ms-input-placeholder {
+   color: $silver-approx;
 }
 .dashboard__manage-view--search select {
 	height: 30px;
@@ -293,14 +301,14 @@
 	-webkit-appearance: none;
   -moz-appearance: none;
   text-indent: 1px;
-  
+
   overflow: hidden;
   padding-right: 20px;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 .dashboard__manage-view--search select option{
-  padding: 7px 10px; 
+  padding: 7px 10px;
 }
 
 
@@ -694,7 +702,7 @@ tags-input .autocomplete .suggestion-item.selected, tags-input .autocomplete .su
     color: $cyan-blue-light;
   }
  }
-  
+
 .radio-box-text {
   font-size: $font-size-base;
   font-weight: $font-weight-medium;
@@ -783,6 +791,12 @@ tags-input .autocomplete .suggestion-item.selected, tags-input .autocomplete .su
   text-align: center;
 }
 
+.dashboard__manage-view--header .header--type .sort-icon--default, 
+.dashboard__manage-view--header .header--type .sort-icon-down, 
+.dashboard__manage-view--header .header--type .sort-icon-up {
+  cursor: pointer;
+}
+
 .dashboard__manage-view--header .header--type .sort-icon--default:after {
   font-family: 'hillrom';
   content: "\e613";
@@ -862,7 +876,7 @@ tags-input .autocomplete .suggestion-item.selected, tags-input .autocomplete .su
   color: $fruit-salad;
 }
 
-.dashboard__manage-view--list .short-info.inactive, 
+.dashboard__manage-view--list .short-info.inactive,
 .dashboard__manage-view--list .short-info.pending {
   color: $silver-approx;
 }
@@ -976,30 +990,30 @@ tags-input .autocomplete .suggestion-item.selected, tags-input .autocomplete .su
 }
 
 
-fieldset { 
+fieldset {
   overflow:hidden
 }
 
-.select-one { 
-  float:left; 
+.select-one {
+  float:left;
   clear:none;
 }
 
-label { 
-  float:left; 
-  clear:none; 
-  display:block; 
+label {
+  float:left;
+  clear:none;
+  display:block;
   padding-top: 3px;
-  padding-left: 5px; 
+  padding-left: 5px;
   padding-right: 20px;
   color: $pickled-bluewood;
   font-weight: $font-weight-medium;
 }
 
-input[type=radio], input.radio { 
-  float:left; 
-  clear:none; 
-  margin: 2px 0 0 2px; 
+input[type=radio], input.radio {
+  float:left;
+  clear:none;
+  margin: 2px 0 0 2px;
 }
 
 .admin-user .exist-link {
