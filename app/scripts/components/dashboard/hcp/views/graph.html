@@ -85,7 +85,29 @@
 	<div class="col-md-16" class="all_graph_wrapper">
 		<div class="row hcp_graph_container">
 			<div ng-if="cumulativeGraph" id="cumulativeGraph" class="complianceGraph col-md-16">
-					<svg> </svg>
+				<div class="col-md-16">
+					<div class="pull-right wrapper_custom_check custom-check-hcp-clinicadmin">
+						<form action="#" >
+							<div class="custom_check_container" ng-click="cumulativeStatitics.isMissedTherapyDays && isLegendEnabled('isMissedTherapyDays');">
+								<input id="missedTherapyDays" class="check" type="checkbox" name="missedTherapyDays" ng-disabled="missedTherapyDaysIsDisabled" ng-model="cumulativeStatitics.isMissedTherapyDays" ng-change="reCreateComplianceGraph();$event.stopPropagation();">
+			  		 			<label class="check_label pressure_legend" for="missedTherapyDays" translate="Missed Therapy Days" ></label>
+							</div>
+				  		 	<div class="custom_check_container" ng-click="cumulativeStatitics.isNoTransmissionRecorded && isLegendEnabled('isNoTransmissionRecorded');">
+				  		 		<input id="noTransmissionRecorded" class="check" type="checkbox" name="noTransmissionRecorded" ng-disabled="noTransmissionRecordedIsDisabled" ng-model="cumulativeStatitics.isNoTransmissionRecorded" ng-change="reCreateComplianceGraph();$event.stopPropagation();">
+				  		 		<label class="check_label frequency_legend" for="noTransmissionRecorded" translate="doctor.dashboard.noEventsRecorded"></label>
+				  		 	</div>
+				  		 	<div class="custom_check_container" ng-click="cumulativeStatitics.isSettingDeviation && isLegendEnabled('isSettingDeviation');">
+				  		 		<input id="settingDeviation" class="check" type="checkbox" name="settingDeviation" ng-disabled="settingDeviationIsDisabled" ng-model="cumulativeStatitics.isSettingDeviation" ng-change="reCreateComplianceGraph();$event.stopPropagation();">
+				  		 		<label class="check_label duration_legend" for="settingDeviation" translate="doctor.dashboard.settingDeviation" ></label>
+				  		 	</div>
+				  		 	<div class="custom_check_container" ng-click="cumulativeStatitics.isHMRNonAdherence && isLegendEnabled('isHMRNonAdherence');">
+				  		 		<input id="HMRNonAdherence" class="check" type="checkbox" name="HMRNonAdherence" ng-disabled="hmrNonAdherenceIsDisabled" ng-model="cumulativeStatitics.isHMRNonAdherence" ng-change="reCreateComplianceGraph();$event.stopPropagation();">
+				  		 		<label class="check_label duration_legend" for="HMRNonAdherence" translate="doctor.dashboard.hmrNonCompliance" ></label>
+				  		 	</div>	
+			  		 	</form> 	
+					</div>
+				</div>
+				<svg> </svg>
 			</div>
 			<div ng-if="treatmentGraph" id="treatmentGraph" class="complianceGraph col-md-16">
 				<div class="pull-right wrapper_custom_check">
