@@ -123,7 +123,8 @@
         "status-type": {
             "active": "Active",
             "inactive": "Inactive",
-            "pending": "Pending"
+            "pending": "Pending",
+            "expired": "Expired"
         },
         "no-clinic-found": "No clinic associated.",
         "no-hcp-found": "No hcp associated.",
