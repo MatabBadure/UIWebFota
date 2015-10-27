@@ -123,11 +123,15 @@ angular.module('hillromvestApp')
         return graphData;
       }
 
-      this.convertIntoCumulativeGraph = function(data) {        
+      this.convertIntoCumulativeGraph = function(data, cumulativeStatitics) {
         var graphDataList =[];
+        if(cumulativeStatitics.isMissedTherapyDays)
         graphDataList.push(createCumulativeGraph(data,hcpDashboardConstants.cumulativeGraph.label.missedTherapy,hcpDashboardConstants.cumulativeGraph.color.missedTherapy));
+        if(cumulativeStatitics.isNoTransmissionRecorded)
         graphDataList.push(createCumulativeGraph(data,hcpDashboardConstants.cumulativeGraph.label.noEvents,hcpDashboardConstants.cumulativeGraph.color.noEvents));
+        if(cumulativeStatitics.isSettingDeviation)
         graphDataList.push(createCumulativeGraph(data,hcpDashboardConstants.cumulativeGraph.label.settingDeviation,hcpDashboardConstants.cumulativeGraph.color.settingDeviation));
+        if(cumulativeStatitics.isHMRNonAdherence)
         graphDataList.push(createCumulativeGraph(data,hcpDashboardConstants.cumulativeGraph.label.nonCompliance,hcpDashboardConstants.cumulativeGraph.color.nonCompliance));
         return graphDataList;
       }
