@@ -22,7 +22,8 @@ angular.module('hillromvestApp')
 }]);
 
 angular.module('hillromvestApp')
-.directive('navigationBar', ['Auth', '$state', 'Account', '$location', '$stateParams', '$rootScope', function (Auth, $state, Account, $location,$stateParams, $rootScope) {
+.directive('navigationBar', ['Auth', '$state', 'Account', '$location', '$stateParams', '$rootScope','loginConstants',
+ function (Auth, $state, Account, $location,$stateParams, $rootScope,loginConstants) {
   return {
     templateUrl: 'scripts/components/navbar/navbar.html',
     restrict: 'E',
@@ -89,6 +90,8 @@ angular.module('hillromvestApp')
           $state.go("hcpdashboard");
         }else if($scope.userRole === "CARE_GIVER"){
           $state.go("caregiverDashboard");
+        }else if($scope.userRole === loginConstants.role.acctservices){
+          $state.go("rcadminPatients");
         }
       };
 
@@ -220,3 +223,25 @@ angular.module('hillromvestApp')
     }]
   };
 }]);
+
+angular.module('hillromvestApp')
+.directive('navigationBarRcadmin', ['Auth', 'Principal', '$state', 'Account', '$location', function (Auth, Principal, $state, Account, $location) {
+  return {
+    templateUrl: 'scripts/components/navbar/navbarrcadmin.html',
+    restrict: 'E',
+
+    controller: ['$scope', 'UserService', 'StorageService', function ($scope, UserService, StorageService) {
+      $scope.username = StorageService.get('logged').userFirstName;
+      $scope.isActive = function(tab) {
+        var path = $location.path();
+        if (path.indexOf(tab) !== -1) {
+          return true;
+        } else {
+          return false;
+        }
+      };
+    }]
+  };
+}]);
+
+

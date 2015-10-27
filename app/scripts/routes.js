@@ -2556,5 +2556,329 @@ angular.module('hillromvestApp')
                         return $translate.refresh();
                     }]
                 }
+            })
+            .state('rcadmin', {
+                url:'/rcadmin',
+                views:{
+                    'content':{
+                    templateUrl:'scripts/modules/rcadmin/patient/view/rcadmin-section.html'
+            }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('global');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+            .state('rcadminPatients', {
+                parent: 'rcadmin',
+                url: '/rcadmin-patients?clinicIds',
+                data: {
+                    roles: ['ACCT_SERVICES'],
+                    pageTitle: 'patient.page-title.patients'
+                },
+                views: {
+                    'rcadmin-view': {
+                        templateUrl: 'scripts/modules/admin/patient/views/list/view.html',
+                        controller: 'patientsController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+            .state('rcadminPatientNew', {
+                parent: 'rcadmin',
+                url: '/rcadmin-new',
+                data: {
+                    roles: ['ACCT_SERVICES'],
+                    pageTitle: 'patient.title'
+                },
+                views: {
+                    'rcadmin-view': {
+                        templateUrl: 'scripts/modules/admin/patient/views/create-edit/view.html',
+                        controller: 'patientsController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+            .state('patientOverviewRcadmin', {
+                parent: 'rcadmin',
+                url: '/{patientId}/overview',
+                data: {
+                    roles: ['ACCT_SERVICES'],
+                    pageTitle: 'patient.page-title.overview'
+                },
+                views: {
+                    'rcadmin-view': {
+                        templateUrl: 'scripts/modules/admin/patient/directives/patient-info/overview/patient-details.html',
+                        controller: 'graphController'
+                    }
+                },
+                resolve: {
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('PatientGraphModule');
+                    }],
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient');$translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+            .state('patientDemographicRcadmin', {
+                parent: 'rcadmin',
+                url: '/{patientId}/demographic',
+                data: {
+                    roles: ['ACCT_SERVICES'],
+                    pageTitle: 'patient.page-title.patient-info'
+                },
+                views: {
+                    'rcadmin-view': {
+                        templateUrl: 'scripts/modules/admin/patient/directives/patient-info/patient-demographics/detail.html',
+                        controller: 'patientsController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient');$translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+            .state('patientClinicsRcadmin', {
+                parent: 'rcadmin',
+                url: '/{patientId}/clinicInfo',
+                data: {
+                    roles: ['ACCT_SERVICES'],
+                    pageTitle: 'patient.page-title.clinic-info'
+                },
+                views: {
+                    'rcadmin-view': {
+                        templateUrl: 'scripts/modules/admin/patient/directives/patient-info/clinic/list.html',
+                        controller: 'patientsController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+            .state('patientProtocolRcadmin', {
+                parent: 'rcadmin',
+                url: '/{patientId}/protocol-device',
+                data: {
+                    roles: ['ACCT_SERVICES'],
+                    pageTitle: 'patient.page-title.careplan-device'
+                },
+                views: {
+                    'rcadmin-view': {
+                        templateUrl: 'scripts/modules/admin/patient/directives/patient-info/device-protocol/list.html',
+                        controller: 'patientsController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+            .state('patientCraegiverRcadmin', {
+                parent: 'rcadmin',
+                url: '/{patientId}/caregiver',
+                data: {
+                    roles: ['ACCT_SERVICES'],
+                    pageTitle: 'patient.page-title.caregiver-info'
+                },
+                views: {
+                    'rcadmin-view': {
+                        templateUrl: 'scripts/modules/admin/patient/directives/patient-info/caregiver/list.html',
+                        controller: 'patientsController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+            .state('patientDemographicEditRcadmin', {
+                parent: 'rcadmin',
+                url: '/{patientId}/demographicedit',
+                data: {
+                    roles: ['ACCT_SERVICES'],
+                    pageTitle: 'patient.page-title.patient-info'
+                },
+                views: {
+                    'rcadmin-view': {
+                        templateUrl: 'scripts/modules/admin/patient/directives/patient-info/patient-demographics/edit.html',
+                        controller: 'patientsController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient');$translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+            .state('patientAddProtocolRcadmin', {
+                parent: 'rcadmin',
+                url: '/{patientId}/addProtocol',
+                params: {protocol: null},
+                data: {
+                    roles: ['ACCT_SERVICES'],
+                    pageTitle: 'patient.title'
+                },
+                views: {
+                    'rcadmin-view': {
+                        templateUrl: 'scripts/modules/admin/patient/directives/patient-info/device-protocol/add-protocol.html',
+                        controller: 'patientsController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+            .state('patientAddDeviceRcadmin', {
+                parent: 'rcadmin',
+                url: '/{patientId}/addDevice',
+                params:{device: null},
+                data: {
+                    roles: ['ACCT_SERVICES'],
+                    pageTitle: 'patient.title'
+                },
+                views: {
+                    'rcadmin-view': {
+                        templateUrl: 'scripts/modules/admin/patient/directives/patient-info/device-protocol/add-device.html',
+                        controller: 'patientsController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+            .state('patientEditProtocolRcadmin', {
+                parent: 'rcadmin',
+                url: '/{patientId}/{protocolId}/editProtocol',
+                data: {
+                    roles: ['ACCT_SERVICES'],
+                    pageTitle: 'patient.title'
+                },
+                views: {
+                    'rcadmin-view': {
+                        templateUrl: 'scripts/modules/admin/patient/directives/patient-info/device-protocol/add-protocol.html',
+                        controller: 'patientsController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+            .state('patientCraegiverEditRcadmin', {
+                parent: 'rcadmin',
+                url: '/{patientId}/{caregiverId}/caregiver-edit',
+                data: {
+                    roles: ['ACCT_SERVICES'],
+                    pageTitle: 'patient.title'
+                },
+                views: {
+                    'rcadmin-view': {
+                        templateUrl: 'scripts/modules/admin/patient/directives/patient-info/caregiver/create.html',
+                        controller: 'patientsController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
             });
 }]);

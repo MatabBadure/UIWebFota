@@ -11,7 +11,8 @@ angular.module('hillromvestApp')
         patientStatus: '=patientStatus'
       },
 
-      controller: ['$scope', '$state', 'notyService', 'dateService', 'UserService', function ($scope, $state, notyService, dateService, UserService) {
+      controller: ['$scope', '$state', 'notyService', 'dateService', 'UserService', 'StorageService', 'loginConstants',
+      function ($scope, $state, notyService, dateService, UserService, StorageService, loginConstants) {
 
         $scope.open = function () {
           $scope.showModal = true;
@@ -26,6 +27,7 @@ angular.module('hillromvestApp')
         };
 
         $scope.init = function () {
+          $scope.userRole = StorageService.get('logged').role;
           $scope.states = [];
           $scope.isAssociateDoctor = false;
           $scope.languages = [{
@@ -160,7 +162,11 @@ angular.module('hillromvestApp')
           $scope.submitted = false;
           $scope.patient = {};
           $scope.form.$setPristine();
-          $state.go('patientUser');
+          if($scope.userRole === loginConstants.role.admin){
+            $state.go('patientUser');
+          }else if($scope.userRole === loginConstants.role.acctservices){
+            $state.go('rcadminPatients');
+          }
         };
 
         angular.element('#dp2').datepicker({

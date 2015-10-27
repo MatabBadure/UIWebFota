@@ -10,8 +10,8 @@ angular.module('hillromvestApp')
     return val;
   };
 })
-.controller('patientsController',['$scope', '$state', '$stateParams', 'patientService', 'dateService', 'notyService', 'UserService', 'DoctorService', 'clinicService', '$q', 'StorageService',
-  function($scope, $state, $stateParams, patientService, dateService, notyService, UserService, DoctorService, clinicService, $q, StorageService) {
+.controller('patientsController',['$scope', '$state', '$stateParams', 'patientService', 'dateService', 'notyService', 'UserService', 'DoctorService', 'clinicService', '$q', 'StorageService', 'loginConstants',
+  function($scope, $state, $stateParams, patientService, dateService, notyService, UserService, DoctorService, clinicService, $q, StorageService, loginConstants) {
     $scope.patient = {};
     $scope.patientTab = "";
     $scope.newProtocolPoint = 1;
@@ -33,7 +33,11 @@ angular.module('hillromvestApp')
 
     $scope.switchPatientTab = function(status){
       $scope.patientTab = status;
-      $state.go(status, {'patientId': $stateParams.patientId});
+      if($scope.patientStatus.role === loginConstants.role.admin){
+        $state.go(status, {'patientId': $stateParams.patientId});
+      }else if($scope.patientStatus.role === loginConstants.role.acctservices){
+        $state.go(status+loginConstants.role.Rcadmin, {'patientId': $stateParams.patientId});
+      }
     };
 
     $scope.setOverviewMode = function(patient){
@@ -79,7 +83,11 @@ angular.module('hillromvestApp')
     };
 
     $scope.openEditDetail = function(){
-      $state.go('patientDemographicEdit', {'patientId': $stateParams.patientId});
+      if($scope.patientStatus.role === loginConstants.role.acctservices){
+        $state.go('patientDemographicEditRcadmin', {'patientId': $stateParams.patientId});
+      }else{
+        $state.go('patientDemographicEdit', {'patientId': $stateParams.patientId});
+      }
     };
 
     $scope.getProtocols = function(patientId){
@@ -137,33 +145,33 @@ angular.module('hillromvestApp')
       var currentRoute = $state.current.name;
       //in case the route is changed from other thatn switching tabs
       $scope.patientTab = currentRoute;
-      if(currentRoute === 'patientOverview'){
+      if(currentRoute === 'patientOverview' || currentRoute === 'patientOverviewRcadmin'){
         $scope.initPatientOverview();
-      }else if(currentRoute === 'patientDemographic'){
+      }else if(currentRoute === 'patientDemographic' || currentRoute === 'patientDemographicRcadmin' ){
         $scope.initpatientDemographic();
       }else if (currentRoute === 'patientEdit') {
         $scope.getPatiendDetails($stateParams.patientId, $scope.setEditMode);
-      } else if (currentRoute === 'patientNew') {
+      } else if (currentRoute === 'patientNew' || currentRoute === 'rcadminPatientNew') {
         $scope.createPatient();
       }else if($state.current.name === 'patientEditClinics'){
         $scope.initPatientClinics($stateParams.patientId);
-      }else if(currentRoute === 'patientClinics'){
+      }else if(currentRoute === 'patientClinics' || currentRoute === 'patientClinicsRcadmin'){
         $scope.initPatientClinicsInfo($stateParams.patientId);
-      }else if(currentRoute === 'patientCraegiver'){
+      }else if(currentRoute === 'patientCraegiver' || currentRoute === 'patientCraegiverRcadmin' ){
         $scope.initpatientCraegiver($stateParams.patientId);
-      } else if($state.current.name === 'patientProtocol'){
+      } else if($state.current.name === 'patientProtocol' || $state.current.name === 'patientProtocolRcadmin'){
         $scope.initProtocolDevice($stateParams.patientId);
       }else if(currentRoute === 'patientCraegiverAdd'){
         $scope.initpatientCraegiverAdd($stateParams.patientId);
-      }else if(currentRoute === 'patientCraegiverEdit'){
+      }else if(currentRoute === 'patientCraegiverEdit' || currentRoute === 'patientCraegiverEditRcadmin'){
         $scope.initpatientCraegiverEdit($stateParams.patientId);
-      }else if(currentRoute === 'patientAddProtocol'){
+      }else if(currentRoute === 'patientAddProtocol' || currentRoute === 'patientAddProtocolRcadmin'){
         $scope.initPatientAddProtocol();
-      }else if(currentRoute === 'patientAddDevice'){
+      }else if(currentRoute === 'patientAddDevice' || currentRoute === 'patientAddDeviceRcadmin'){
         $scope.initPatientAddDevice();
-      }else if(currentRoute === 'patientDemographicEdit'){
+      }else if(currentRoute === 'patientDemographicEdit' || currentRoute === 'patientDemographicEditRcadmin'){
         $scope.initpatientDemographic();
-      }else if(currentRoute === 'patientEditProtocol'){
+      }else if(currentRoute === 'patientEditProtocol' || currentRoute === 'patientEditProtocolRcadmin'){
         $scope.initpatientEditProtocol();
       }
 
@@ -375,7 +383,11 @@ angular.module('hillromvestApp')
           $scope.patientStatus.isMessage = true;
           $scope.patientStatus.message = "Patient updated successfully";
           notyService.showMessage($scope.patientStatus.message, 'success');
-          $state.go('patientDemographic', {'patientId': $stateParams.patientId});
+          if($scope.patientStatus.role === loginConstants.role.acctservices){
+            $state.go('patientDemographicRcadmin', {'patientId': $stateParams.patientId});
+          }else{
+            $state.go('patientDemographic', {'patientId': $stateParams.patientId});
+          }
         } else {
           $scope.patientStatus.message = 'Error occured! Please try again';
           notyService.showMessage($scope.patientStatus.message, 'warning');
@@ -394,11 +406,19 @@ angular.module('hillromvestApp')
     };
 
     $scope.cancelProtocolDevice = function() {
-      $state.go('patientProtocol');
+      if($scope.patientStatus.role === loginConstants.role.acctservices){
+        $state.go('patientProtocolRcadmin', {'patientId': $stateParams.patientId});
+      }else{
+        $state.go('patientProtocol');
+      }
     };
 
     $scope.cancelEditDemographics = function(){
-      $state.go('patientDemographic', {'patientId': $stateParams.patientId});
+      if($scope.patientStatus.role === loginConstants.role.acctservices){
+          $state.go('patientDemographicRcadmin', {'patientId': $stateParams.patientId});
+        }else{
+          $state.go('patientDemographic', {'patientId': $stateParams.patientId});
+        }
     };
 
 
@@ -421,7 +441,11 @@ angular.module('hillromvestApp')
     $scope.disassociatePatient =function(disassociatePatient){
       patientService.disassociatePatient(disassociatePatient.id).then(function(response){
         notyService.showMessage(response.data.message, 'success');
-        $state.go('patientUser');
+        if($scope.patientStatus.role === loginConstants.role.acctservices){
+          $state.go('rcadminPatients');
+        }else{
+          $state.go('patientUser');
+        }
       }).catch(function(response){
         notyService.showError(response);
       });
@@ -494,7 +518,11 @@ angular.module('hillromvestApp')
     };
 
     $scope.linkDevice = function(){
-      $state.go('patientAddDevice');
+      if($scope.patientStatus.role === loginConstants.role.acctservices){
+        $state.go('patientAddDeviceRcadmin',{patientId: $stateParams.patientId});
+      }else{
+        $state.go('patientAddDevice');
+      }
     };
 
     $scope.addDevice = function(){
@@ -503,7 +531,11 @@ angular.module('hillromvestApp')
         return false;
       }
       patientService.addDevice( $stateParams.patientId, $scope.device).then(function(response){
-        $state.go('patientProtocol');
+        if($scope.patientStatus.role === loginConstants.role.acctservices){
+          $state.go('patientProtocolRcadmin', {'patientId': $stateParams.patientId});
+        }else{
+          $state.go('patientProtocol');
+        }
       }).catch(function(response){
         if(response.data.user){
           $scope.deviceAssociatedPatient = response.data.user;
@@ -513,7 +545,11 @@ angular.module('hillromvestApp')
     };
 
     $scope.linkProtocol = function(){
-      $state.go('patientAddProtocol');
+      if($scope.patientStatus.role === loginConstants.role.acctservices){
+        $state.go('patientAddProtocolRcadmin', {'patientId': $stateParams.patientId});
+      }else{
+        $state.go('patientAddProtocol');
+      }
     };
 
     $scope.addProtocol = function(){
@@ -527,7 +563,11 @@ angular.module('hillromvestApp')
         })
       }
       patientService.addProtocol($stateParams.patientId, $scope.protocol).then(function(response){
-        $state.go('patientProtocol');
+        if($scope.patientStatus.role === loginConstants.role.acctservices){
+          $state.go('patientProtocolRcadmin', {'patientId': $stateParams.patientId});
+        }else{
+          $state.go('patientProtocol');
+        }
       }).catch(function(response){
         notyService.showError(response);
       });
@@ -620,16 +660,27 @@ angular.module('hillromvestApp')
     };
 
     $scope.goToCaregiverEdit = function(careGiverId){
-      $state.go('patientCraegiverEdit', {'caregiverId': careGiverId});
+      if($scope.patientStatus.role === loginConstants.role.acctservices){
+        $state.go('patientCraegiverEditRcadmin', {'caregiverId': careGiverId, 'patientId': $stateParams.patientId});
+      }else{
+        $state.go('patientCraegiverEdit', {'caregiverId': careGiverId});
+      }
     };
 
     $scope.openEditProtocol = function(protocol){
       if(!protocol){
         return false;
       }
-      $state.go('patientEditProtocol', {
-        'protocolId': protocol.id
-      });
+      if($scope.patientStatus.role === loginConstants.role.acctservices){
+        $state.go('patientEditProtocolRcadmin', {
+          'patientId': $stateParams.patientId,
+          'protocolId': protocol.id
+        });
+      }else{
+        $state.go('patientEditProtocol', {
+          'protocolId': protocol.id
+        });
+      }
     };
 
     $scope.openEditDevice = function(device){
@@ -637,7 +688,11 @@ angular.module('hillromvestApp')
         return false;
       }
       device.edit = true;
-      $state.go('patientAddDevice',{device: device});
+      if($scope.patientStatus.role === loginConstants.role.acctservices){
+        $state.go('patientAddDeviceRcadmin',{device: device, patientId: $stateParams.patientId});
+      }else{
+        $state.go('patientAddDevice',{device: device});
+      }
     };
 
     $scope.updateProtocol = function(){ 
@@ -654,7 +709,11 @@ angular.module('hillromvestApp')
       var data = $scope.protocol.protocol;
       data[0].treatmentsPerDay = $scope.protocol.treatmentsPerDay;
       patientService.editProtocol($stateParams.patientId, data).then(function(response){
-        $state.go('patientProtocol');
+        if($scope.patientStatus.role === loginConstants.role.acctservices){
+          $state.go('patientProtocolRcadmin', {'patientId': $stateParams.patientId});
+        }else{
+          $state.go('patientProtocol');
+        }
       }).catch(function(response){
         notyService.showError(response);
       });
@@ -670,7 +729,11 @@ angular.module('hillromvestApp')
 
     $scope.updateDevice = function(){
       patientService.addDevice($stateParams.patientId, $scope.device).then(function(response){
-        $state.go('patientProtocol');
+        if($scope.patientStatus.role === loginConstants.role.acctservices){
+          $state.go('patientProtocolRcadmin', {'patientId': $stateParams.patientId});
+        }else{
+          $state.go('patientProtocol');
+        }
       }).catch(function(response){
         notyService.showError(response);
       });

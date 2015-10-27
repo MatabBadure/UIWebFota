@@ -18,11 +18,12 @@ angular.module('hillromvestApp')
         })
       }
       },
-      controller: ['$scope', '$timeout', 'patientService', '$state', '$stateParams', 'notyService','searchFilterService', 'sortOptionsService',
-      function($scope, $timeout, patientService, $state, $stateParams, notyService, searchFilterService, sortOptionsService) {
+      controller: ['$scope', '$timeout', 'patientService', '$state', '$stateParams', 'notyService','searchFilterService', 'sortOptionsService', 'StorageService', 'loginConstants',
+      function($scope, $timeout, patientService, $state, $stateParams, notyService, searchFilterService, sortOptionsService, StorageService,loginConstants) {
         var searchOnLoad = true;
         $scope.sortPatientList = sortOptionsService.getSortOptionsForPatientList();
         $scope.init = function() {
+          $scope.userRole = StorageService.get('logged').role;
           $scope.searchFilter = searchFilterService.initSearchFiltersForPatient();
           $scope.patients = [];
           $scope.patientInfo = {};
@@ -57,13 +58,23 @@ angular.module('hillromvestApp')
         });
 
         $scope.selectPatient = function(patient) {
-          $state.go('patientOverview', {
-            'patientId': patient.id
-          });
+          if($scope.userRole === loginConstants.role.admin){
+            $state.go('patientOverview', {
+              'patientId': patient.id
+            });
+          }else if($scope.userRole === loginConstants.role.acctservices){
+            $state.go('patientOverviewRcadmin', {
+              'patientId': patient.id
+            });
+          }
         };
 
         $scope.createPatient = function() {
-          $state.go('patientNew');
+          if($scope.userRole === loginConstants.role.admin){
+            $state.go('patientNew');
+          }else if($scope.userRole === loginConstants.role.acctservices){
+            $state.go('rcadminPatientNew');
+          }
         };
 
         $scope.searchPatients = function(track) {
