@@ -14,7 +14,7 @@
 							<span class="sub_txt">{{statistics.totalPatientCount}}</span>
 						</div>
 					</div>
-					<div class="stats_chart_container" oc-lazy-load="lazyLoadParamsPieChart">
+					<div class="stats_chart_container">
 						<div class="col-3" ng-click="gotoPatients('missed_therapy')">
 							<div class="pie_chart"  easypiechart options="missedtherapy" percent="percentStatistics.patientsWithMissedTherapy"></div>
 							<div class="stats_chart_content missed">
@@ -66,7 +66,7 @@
 					</ul>
 				</div>
 			</div>
-			<div class="col-md-11 col-sm-7 right_header_barchart" oc-lazy-load="lazyLoadParamsDatePicker">
+			<div class="col-md-11 col-sm-7 right_header_barchart">
 				<ul class="nav nav-pills pull-right">
 					<li role="presentation" class=""><a ng-class="{active: selectedDateOption === 'WEEK'}" href="" ng-click="weeklyChart()" translate="doctor.dashboard.week"></a></li>
 					<li role="presentation" class=""><a href="" ng-class="{active: selectedDateOption === 'MONTH'}" ng-click="monthlyChart()" translate="doctor.dashboard.month"></a></li>
