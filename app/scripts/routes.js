@@ -2880,5 +2880,30 @@ angular.module('hillromvestApp')
                         }
                     ]
                 }
+            })
+            .state('patientCraegiverAddRcadmin', {
+                parent: 'rcadmin',
+                url: '/{patientId}/caregiver-add',
+                data: {
+                    roles: ['ACCT_SERVICES'],
+                    pageTitle: 'patient.title'
+                },
+                views: {
+                    'rcadmin-view': {
+                        templateUrl: 'scripts/modules/admin/patient/directives/patient-info/caregiver/create.html',
+                        controller: 'patientsController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
             });
 }]);

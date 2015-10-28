@@ -161,7 +161,7 @@ angular.module('hillromvestApp')
         $scope.initpatientCraegiver($stateParams.patientId);
       } else if($state.current.name === 'patientProtocol' || $state.current.name === 'patientProtocolRcadmin'){
         $scope.initProtocolDevice($stateParams.patientId);
-      }else if(currentRoute === 'patientCraegiverAdd'){
+      }else if(currentRoute === 'patientCraegiverAdd' || currentRoute === 'patientCraegiverAddRcadmin'){
         $scope.initpatientCraegiverAdd($stateParams.patientId);
       }else if(currentRoute === 'patientCraegiverEdit' || currentRoute === 'patientCraegiverEditRcadmin'){
         $scope.initpatientCraegiverEdit($stateParams.patientId);
@@ -500,7 +500,11 @@ angular.module('hillromvestApp')
     };
 
     $scope.linkCaregiver = function(){
-      $state.go('patientCraegiverAdd', {'patientId': $stateParams.patientId});
+      if($scope.patientStatus.role === loginConstants.role.acctservices){
+        $state.go('patientCraegiverAddRcadmin', {'patientId': $stateParams.patientId});
+      }else{
+        $state.go('patientCraegiverAdd', {'patientId': $stateParams.patientId});
+      }
     };
 
     $scope.formSubmitCaregiver = function(){
