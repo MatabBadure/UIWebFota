@@ -4,6 +4,11 @@ angular.module('hillromvestApp')
 	function($scope, $state, hcpDashBoardService, dateService, graphUtil, $stateParams, hcpDashboardConstants, DoctorService, clinicadminService, notyService, StorageService,$filter,commonsUserService) {
 	var chart;
 	$scope.init = function() {
+		$scope.cumulativeStatitics = {};
+		$scope.cumulativeStatitics.isMissedTherapyDays = true;
+		$scope.cumulativeStatitics.isNoTransmissionRecorded = true;
+		$scope.cumulativeStatitics.isSettingDeviation = true;
+		$scope.cumulativeStatitics.isHMRNonAdherence = true;
 		$scope.hcpId = parseInt(StorageService.get('logged').userId);
 		$scope.selectedGraph = 'CUMULATIVE';
 		$scope.treatmentGraph = false;
@@ -25,6 +30,49 @@ angular.module('hillromvestApp')
 			$scope.getClinicsForClinicAdmin($scope.hcpId);
 		}
 	};
+
+	$scope.isLegendEnabled = function(legendFlag){
+		var count = $scope.getCountLegends();
+    if(count === 1){
+    	$scope.disableLegend(legendFlag);
+    	notyService.showMessage('Error Occured Please look into it', 'warning');
+    }else{
+    	$scope.missedTherapyDaysIsDisabled = false;
+    	$scope.noTransmissionRecordedIsDisabled = false;
+    	$scope.settingDeviationIsDisabled = false;
+    	$scope.hmrNonAdherenceIsDisabled = false;
+    	$scope.showCumulativeGraph();
+    }
+	};
+
+	$scope.disableLegend = function(legendFlag){
+		if(legendFlag === "isMissedTherapyDays"){
+			$scope.missedTherapyDaysIsDisabled = true;
+		}else if(legendFlag === "isNoTransmissionRecorded"){
+			$scope.noTransmissionRecordedIsDisabled = true;
+		}else if(legendFlag === "isSettingDeviation"){
+			$scope.settingDeviationIsDisabled = true;
+		}else if(legendFlag === "isHMRNonAdherence"){
+			$scope.hmrNonAdherenceIsDisabled = false;
+		}
+	};
+
+  $scope.getCountLegends = function(){
+    var count = 0 ;
+    if($scope.cumulativeStatitics.isMissedTherapyDays === true ){
+      count++;
+    }
+    if($scope.cumulativeStatitics.isNoTransmissionRecorded === true ){
+      count++;
+    }
+    if($scope.cumulativeStatitics.isSettingDeviation === true ){
+      count++;
+    }
+    if($scope.cumulativeStatitics.isHMRNonAdherence === true ){
+      count++;
+    }
+    return count;
+  };
 
 	$scope.getStatistics = function(clinicId, userId){
 		if($state.current.name === 'hcpdashboard'){
@@ -209,7 +257,7 @@ angular.module('hillromvestApp')
 					$scope.serverCumulativeGraphData = response.data.cumulativeStatitics;
 					if($scope.serverCumulativeGraphData.length !== 0) {
 						$scope.serverCumulativeGraphData = graphUtil.convertIntoServerTimeZone($scope.serverCumulativeGraphData,hcpDashboardConstants.cumulativeGraph.name);
-						$scope.formatedCumulativeGraphData = graphUtil.convertIntoCumulativeGraph($scope.serverCumulativeGraphData);
+						$scope.formatedCumulativeGraphData = graphUtil.convertIntoCumulativeGraph($scope.serverCumulativeGraphData, $scope.cumulativeStatitics);
 						$scope.cumulativeGraphRange = graphUtil.getYaxisRangeCumulativeGraph($scope.serverCumulativeGraphData);
 						$scope.drawCumulativeGraph();
 					} else {
@@ -226,6 +274,7 @@ angular.module('hillromvestApp')
 			.x(function(d) { return d[0] })
 			.y(function(d) { return d[1] }) 
 			.color(d3.scale.category10().range())
+			.showLegend(false)
 			.useInteractiveGuideline(true);
 			chart.xAxis.showMaxMin = true;
 			chart.xAxis.staggerLabels = true,

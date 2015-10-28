@@ -129,7 +129,7 @@
               <span class="" translate="user.mobile-number"></span>
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
-              <input class="" type="text" name="mobilePhone" validate-on-blur ng-model="user.mobilePhone" ng-maxlength=100 ng-readonly="validateSuperAdmin()" ui-mask="(999)-999-9999" model-view-value="true">
+              <input class="" type="text" name="mobilePhone" validate-on-blur ng-model="user.mobilePhone" ng-maxlength=100 ng-readonly="validateSuperAdmin()" ui-mask="(999)-999-9999" model-view-value="true" ui-options="{clearOnBlur: false}">
               <div ng-show="(form.mobilePhone.$showValidationMessage && form.mobilePhone.$invalid) || submitted">
                 <span class="has-error" ng-show="form.mobilePhone.$error.pattern" translate="error.mobilePhone.pattern"></span>
                 <span class="has-error" ng-show="form.mobilePhone.$error.maxlength" translate="error.mobilePhone.maxlength"></span>
