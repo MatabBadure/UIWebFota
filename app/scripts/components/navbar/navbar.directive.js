@@ -223,25 +223,3 @@ angular.module('hillromvestApp')
     }]
   };
 }]);
-
-angular.module('hillromvestApp')
-.directive('navigationBarRcadmin', ['Auth', 'Principal', '$state', 'Account', '$location', function (Auth, Principal, $state, Account, $location) {
-  return {
-    templateUrl: 'scripts/components/navbar/navbarrcadmin.html',
-    restrict: 'E',
-
-    controller: ['$scope', 'UserService', 'StorageService', function ($scope, UserService, StorageService) {
-      $scope.username = StorageService.get('logged').userFirstName;
-      $scope.isActive = function(tab) {
-        var path = $location.path();
-        if (path.indexOf(tab) !== -1) {
-          return true;
-        } else {
-          return false;
-        }
-      };
-    }]
-  };
-}]);
-
-
