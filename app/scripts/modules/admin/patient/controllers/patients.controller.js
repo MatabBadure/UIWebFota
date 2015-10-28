@@ -869,15 +869,27 @@ angular.module('hillromvestApp')
     };
 
     $scope.selectDoctor = function(doctor) {
-      $state.go('hcpProfile',{
-        'doctorId': doctor.id
-      });
+      if($scope.patientStatus.role === loginConstants.role.acctservices){
+        $state.go('hcpProfileRcadmin',{
+          'doctorId': doctor.id
+        });
+      }else{
+        $state.go('hcpProfile',{
+          'doctorId': doctor.id
+        });
+      }
     };
 
     $scope.selectClinic = function(clinic) {
-       $state.go('clinicProfile', {
-        'clinicId': clinic.id
-      });
+      if($scope.patientStatus.role === loginConstants.role.acctservices){
+        $state.go('clinicProfileRcadmin', {
+          'clinicId': clinic.id
+        });
+      }else{
+        $state.go('clinicProfile', {
+          'clinicId': clinic.id
+        });
+      }
     };
 
     $scope.gotoPatient = function(){

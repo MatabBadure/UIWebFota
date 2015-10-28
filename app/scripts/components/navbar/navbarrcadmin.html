@@ -16,19 +16,19 @@
     <div class="collapse navbar-collapse navbar-secondary" id="navbar-collapse" ng-if="userRole === 'ACCT_SERVICES' && !isFooter" ng-switch-when=true>
       <ul class="nav navbar-nav navbar-right"> 
         <li class="icon-border">
-          <a ng-class="{ active: isActive('admin/patients')}" ng-href="#/rcadmin/rcadmin-patients">
+          <a ng-class="{ active: isActive('rcadminPatients')}" ng-href="#/rcadmin/rcadmin-patients">
             <span class="icons hillrom-icon icon-patient"></span>
             <span class="link-text" translate="global.tabs.manage-patients">Manage Patients</span>
           </a>
         </li>
         <li class="icon-border">
-          <a ng-class="{ active: isActive('admin/hcpUsers')}" ng-href="#/rcadmin/rcadmin-hcps">
+          <a ng-class="{ active: isActive('hcpUserRcadmin')}" ng-href="#/rcadmin/rcadmin-hcps">
             <span class="icons hillrom-icon icon-doctor"></span>
             <span class="link-text" translate="global.tabs.manage-hcps">Manage HCPs</span>
           </a>
         </li>
         <li class="icon-border">
-          <a ng-class="{ active: isActive('admin/clinics')}" ng-href="#/rcadmin/clinics">
+          <a ng-class="{ active: isActive('clinicUserRcadmin')}" ng-href="#/rcadmin/rcadmin-clinics">
             <span class="icons hillrom-icon icon-clinic"></span>
             <span class="link-text" translate="global.tabs.manage-clinics">Manage Clinics</span>
           </a>

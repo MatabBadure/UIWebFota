@@ -47,7 +47,7 @@ angular.module('hillromvestApp')
 
         var timer = false;
         $scope.$watch('searchItem', function() {
-          if($state.current.name === "patientUser" && !$stateParams.clinicIds && !searchOnLoad){
+          if(($state.current.name === "patientUser" || $state.current.name === "rcadminPatients") && !$stateParams.clinicIds && !searchOnLoad){
             if (timer) {
               $timeout.cancel(timer)
             }

@@ -2881,7 +2881,7 @@ angular.module('hillromvestApp')
                     ]
                 }
             })
-            .state('hcpUsersRcadmin', {
+            .state('hcpUserRcadmin', {
                 parent: 'rcadmin',
                 url: '/rcadmin-hcps?clinicIds',
                 data: {
@@ -2905,5 +2905,280 @@ angular.module('hillromvestApp')
                         }
                     ]
                 }
+            })
+            .state('hcpProfileRcadmin', {
+                parent: 'rcadmin',
+                url: '/{doctorId}/hcpProfile',
+                data: {
+                    roles: ['ACCT_SERVICES'],
+                    pageTitle: 'doctor.page-title.hcp-profile'
+                },
+                views: {
+                    'rcadmin-view': {
+                        templateUrl: 'scripts/modules/admin/hcp/directives/hcp-info/overview/overview.html',
+                        controller: 'DoctorsController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('doctor');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+            .state('associatedClinicRcadmin', {
+                parent: 'rcadmin',
+                url: '/{doctorId}/associatedClinic',
+                data: {
+                    roles: ['ACCT_SERVICES'],
+                    pageTitle: 'doctor.page-title.associated-clinics'
+                },
+                views: {
+                    'rcadmin-view': {
+                        templateUrl: 'scripts/modules/admin/hcp/directives/hcp-info/associated-clinic/clinic-list.html',
+                        controller: 'DoctorsController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('doctor');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+            .state('hcpEditRcadmin', {
+                parent: 'rcadmin',
+                url: '/{doctorId}/hcpEdit',
+                data: {
+                    roles: ['ACCT_SERVICES'],
+                    pageTitle: 'doctor.page-title.hcp-update'
+                },
+                views: {
+                    'rcadmin-view': {
+                        templateUrl: 'scripts/modules/admin/hcp/views/create-edit/view.html',
+                        controller: 'DoctorsController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('doctor');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+            .state('clinicProfileRcadmin', {
+              parent: 'rcadmin',
+              url: '/{doctorId}/{clinicId}/clinic-info',
+              data: {
+                  roles: ['ACCT_SERVICES'],
+                  pageTitle: 'clinic.page-title.clinic-profile'
+              },
+              views: {
+                  'rcadmin-view': {
+                      templateUrl: 'scripts/modules/admin/clinic/directives/clinic-profile/profile.html',
+                      controller: 'clinicsController'
+                  }
+              },
+              resolve: {
+                  translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                      $translatePartialLoader.addPart('clinic');
+                      return $translate.refresh();
+                  }],
+                  authorize: ['Auth',
+                      function(Auth) {
+                          return Auth.authorize(false);
+                      }
+                  ]
+              }
+            })
+            .state('clinicUserRcadmin', {
+              parent: 'rcadmin',
+              url: '/rcadmin-clinics',
+              data: {
+                roles: ['ACCT_SERVICES'],
+                pageTitle: 'clinic.page-title.clinics'
+              },
+              views: {
+                  'rcadmin-view': {
+                      templateUrl: 'scripts/modules/admin/clinic/directives/list/list.html',
+                      controller: 'clinicsController'
+                  }
+              },
+              resolve: {
+                  translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                      $translatePartialLoader.addPart('clinic');
+                      return $translate.refresh();
+                  }],
+                  authorize: ['Auth',
+                      function(Auth) {
+                          return Auth.authorize(false);
+                      }
+                  ]
+              }
+            })
+            .state('clinicAssociatedHCPRcadmin', {
+              parent: 'rcadmin',
+              url: '/{clinicId}/associatedHCP',
+              data: {
+                  roles: ['ACCT_SERVICES'],
+                  pageTitle: 'clinic.page-title.associated-HCPs'
+              },
+              views: {
+                  'rcadmin-view': {
+                      templateUrl: 'scripts/modules/admin/clinic/directives/clinic-info/hcp/associatedhcp.html',
+                      controller: 'clinicsController'
+                  }
+              },
+              resolve: {
+                  translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                      $translatePartialLoader.addPart('clinic');
+                      return $translate.refresh();
+                  }],
+                  authorize: ['Auth',
+                      function(Auth) {
+                          return Auth.authorize(false);
+                      }
+                  ]
+              }
+            })
+            .state('clinicAssociatedPatientsRcadmin', {
+              parent: 'rcadmin',
+              url: '/{clinicId}/associatedPatients',
+              data: {
+                  roles: ['ACCT_SERVICES'],
+                  pageTitle: 'clinic.page-title.associated-patients'
+              },
+              views: {
+                  'rcadmin-view': {
+                      templateUrl: 'scripts/modules/admin/clinic/directives/clinic-info/patients/associatedpatients.html',
+                      controller: 'clinicsController'
+                  }
+              },
+              resolve: {
+                  translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                      $translatePartialLoader.addPart('clinic');
+                      return $translate.refresh();
+                  }],
+                  authorize: ['Auth',
+                      function(Auth) {
+                          return Auth.authorize(false);
+                      }
+                  ]
+              }
+            })
+            .state('clinicAdminRcadmin', {
+              parent: 'rcadmin',
+              url: '/{clinicId}/clinicadmin-clinic-edit',
+              data: {
+                  roles: ['ACCT_SERVICES'],
+                  pageTitle: 'clinic.page-title.clinic-admin'
+              },
+              views: {
+                  'rcadmin-view': {
+                      templateUrl: 'scripts/modules/admin/clinic/directives/clinic-info/clinic-admin/clinic-admin.html',
+                      controller: 'clinicsController'
+                  }
+              },
+              resolve: {
+                  translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                      $translatePartialLoader.addPart('clinic');
+                      return $translate.refresh();
+                  }],
+                  authorize: ['Auth',
+                      function(Auth) {
+                          return Auth.authorize(false);
+                      }
+                  ]
+              }
+            })
+            .state('hcpNewRcadmin', {
+                parent: 'rcadmin',
+                url: '/hcp-new',
+                data: {
+                    roles: ['ACCT_SERVICES'],
+                    pageTitle: 'patient.title'
+                },
+                views: {
+                    'rcadmin-view': {
+                        templateUrl: 'scripts/modules/admin/hcp/views/create-edit/view.html',
+                        controller: 'DoctorsController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('doctor');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+            .state('clinicEditRcadmin', {
+              parent: 'rcadmin',
+              url: '/{clinicId}/edit',
+              data: {
+                  roles: ['ACCT_SERVICES'],
+                  pageTitle: 'clinic.title'
+              },
+              views: {
+                  'rcadmin-view': {
+                      templateUrl: 'scripts/modules/admin/clinic/directives/create-edit/create.html',
+                      controller: 'clinicsController'
+                  }
+              },
+              resolve: {
+                  translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                      $translatePartialLoader.addPart('clinic');
+                      return $translate.refresh();
+                  }],
+                  authorize: ['Auth',
+                      function(Auth) {
+                          return Auth.authorize(false);
+                      }
+                  ]
+              }
+            })
+            .state('clinicNewRcadmin', {
+              parent: 'rcadmin',
+              url: '/clinic-new?parentId',
+              data: {
+                  roles: ['ACCT_SERVICES'],
+                  pageTitle: 'clinic.title'
+              },
+              views: {
+                  'rcadmin-view': {
+                      templateUrl: 'scripts/modules/admin/clinic/directives/create-edit/create.html',
+                      controller: 'clinicsController'
+                  }
+              },
+              resolve: {
+                  translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                      $translatePartialLoader.addPart('clinic');
+                      return $translate.refresh();
+                  }],
+                  authorize: ['Auth',
+                      function(Auth) {
+                          return Auth.authorize(false);
+                      }
+                  ]
+              }
             });
 }]);
