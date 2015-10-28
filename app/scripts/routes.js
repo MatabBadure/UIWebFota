@@ -3184,13 +3184,13 @@ angular.module('hillromvestApp')
             })
             .state('patientCraegiverAddRcadmin', {
                 parent: 'rcadmin',
-                url: '//{patientId}/caregiver-add',
+                url: '/{patientId}/caregiver-add',
                 data: {
                     roles: ['ACCT_SERVICES'],
                     pageTitle: 'patient.title'
                 },
                 views: {
-                    'content@': {
+                    'rcadmin-view': {
                         templateUrl: 'scripts/modules/admin/patient/directives/patient-info/caregiver/create.html',
                         controller: 'patientsController'
                     }
@@ -3205,6 +3205,80 @@ angular.module('hillromvestApp')
                             return Auth.authorize(false);
                         }
                     ]
+                }
+            })
+            .state('adminProfileRc', {
+                parent: 'rcadmin',
+                url: '/profile',
+                data: {
+                    roles: ['ACCT_SERVICES'],
+                    pageTitle: 'profile.page-title.my-profile'
+                },
+                views: {
+                    'rcadmin-view': {
+                        templateUrl: 'scripts/modules/admin/profile/profile-tabs/my-profile.html',
+                        controller: 'adminProfileController'
+                    }
+                },
+                resolve: {
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('AdminProfileModule');
+                    }],
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('profile');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+            .state('editAdminProfileRc', {
+                parent: 'rcadmin',
+                url: '/update',
+                data: {
+                    roles: ['ACCT_SERVICES'],
+                    pageTitle: 'patient.title'
+                },
+                views: {
+                    'rcadmin-view': {
+                        templateUrl: 'scripts/modules/admin/profile/profile-tabs/edit-my-profile.html',
+                        controller: 'adminProfileController'
+                    }
+                },
+                resolve: {
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('AdminProfileModule');
+                    }],
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('profile');
+                        return $translate.refresh();
+                    }]
+                }
+            })
+            .state('adminUpdatePasswordRc', {
+                parent: 'rcadmin',
+                url: '/updatepassword',
+                data: {
+                    roles: ['ACCT_SERVICES'],
+                    pageTitle: 'profile.page-title.update-password'
+                },
+                views: {
+                    'rcadmin-view': {
+                        templateUrl: 'scripts/modules/admin/profile/profile-tabs/update-password.html',
+                        controller: 'adminProfileController'
+                    }
+                },
+                resolve: {
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('AdminProfileModule');
+                    }],
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('profile');
+                        return $translate.refresh();
+                    }]
                 }
             });
 }]);

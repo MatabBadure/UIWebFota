@@ -126,7 +126,8 @@ angular.module('hillromvestApp').constant('hcpDashboardConstants', {
 		"acctservices": "ACCT_SERVICES",
 		"clinicadmin": "CLINIC_ADMIN",
 		"admin": "ADMIN",
-		"Rcadmin": "Rcadmin"
+		"Rcadmin": "Rcadmin",
+		"Rc": "Rc"
 
 	}
 })

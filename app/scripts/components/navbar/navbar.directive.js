@@ -74,6 +74,8 @@ angular.module('hillromvestApp')
           $state.go("patientResetPassword");
         } else if($scope.userRole === 'HCP'){
           $state.go('hcpDashboardProfile');
+        }else if($scope.userRole === loginConstants.role.acctservices){
+          $state.go('adminProfileRc');
         }
       };
 
