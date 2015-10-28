@@ -78,8 +78,9 @@
       </div>
 
       <div class="col-md-2 centered">
-          <span class="short-info active" ng-if="!associatedPatient.patient.isDeleted" translate="clinic.status-type.active"></span>
-          <span class="short-info inactive" ng-if="associatedPatient.patient.isDeleted" translate="clinic.status-type.inactive"></span>
+          <span class="short-info expired" ng-if="associatedPatient.patient.expired" translate="clinic.status-type.expired"></span>
+          <span class="short-info active" ng-if="!associatedPatient.patient.expired && !associatedPatient.patient.isDeleted" translate="clinic.status-type.active"></span>
+          <span class="short-info inactive" ng-if="!associatedPatient.patient.expired && associatedPatient.patient.isDeleted" translate="clinic.status-type.inactive"></span>
       </div>
 
       <div class="col-md-1 text-centered">
