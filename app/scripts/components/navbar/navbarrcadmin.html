@@ -21,6 +21,18 @@
             <span class="link-text" translate="global.tabs.manage-patients">Manage Patients</span>
           </a>
         </li>
+        <li class="icon-border">
+          <a ng-class="{ active: isActive('admin/hcpUsers')}" ng-href="#/rcadmin/rcadmin-hcps">
+            <span class="icons hillrom-icon icon-doctor"></span>
+            <span class="link-text" translate="global.tabs.manage-hcps">Manage HCPs</span>
+          </a>
+        </li>
+        <li class="icon-border">
+          <a ng-class="{ active: isActive('admin/clinics')}" ng-href="#/rcadmin/clinics">
+            <span class="icons hillrom-icon icon-clinic"></span>
+            <span class="link-text" translate="global.tabs.manage-clinics">Manage Clinics</span>
+          </a>
+        </li>
         <li class="header-popover dropdown">
           <a href="javascript:void(0)" class="dropdown-toggle" ng-class="{ active: isActive('admin/profile') || isActive('admin/updatepassword')}" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
             <span class='icon-logged-in-user'></span>

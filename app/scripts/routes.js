@@ -2880,5 +2880,30 @@ angular.module('hillromvestApp')
                         }
                     ]
                 }
+            })
+            .state('hcpUsersRcadmin', {
+                parent: 'rcadmin',
+                url: '/rcadmin-hcps?clinicIds',
+                data: {
+                    roles: ['ACCT_SERVICES'],
+                    pageTitle: 'doctor.page-title.hcps'
+                },
+                views: {
+                    'rcadmin-view': {
+                        templateUrl: 'scripts/modules/admin/hcp/views/list/view.html',
+                        controller: 'DoctorsController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('doctor');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
             });
 }]);
