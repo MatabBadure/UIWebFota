@@ -421,7 +421,7 @@ angular.module('hillromvestApp')
     };
 
     $scope.createSatellite = function(parentId){
-      $scope.goToCinicNew();
+      $scope.goToCinicNew(parentId);
     };
 
     $scope.goToEditClinic = function(clinicId){
@@ -778,11 +778,11 @@ angular.module('hillromvestApp')
       }
     };
 
-    $scope.goToCinicNew = function(){
+    $scope.goToCinicNew = function(parentId){
       if($scope.clinicStatus.role === loginConstants.role.acctservices){
-          $state.go('clinicNewRcadmin');
+          $state.go('clinicNewRcadmin', {'parentId': parentId});
         }else{
-          $state.go('clinicNew');
+          $state.go('clinicNew', {'parentId': parentId});
         }
     };
     $scope.init();
