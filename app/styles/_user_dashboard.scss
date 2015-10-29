@@ -489,12 +489,16 @@
 			color: $nevada;
 		}
 	}
+	&--head {
+		color: $cyan-blue-light;
+	}
 
 	&--icon {
 		padding: 0;
 		span {
 			font-size: 30px;
 			line-height: 21px;
+			cursor: pointer;
 		}
 		span.inactive {
 			color: $silver-approx;

@@ -85,11 +85,11 @@
 		border-radius: 0px;
 		-webkit-border-radius: 0px;
 	}
-	input[type="text"], input[type="email"], input[type="search"], input[type="password"] {
+	/*input[type="text"], input[type="email"], input[type="search"], input[type="password"] {
 	-webkit-appearance: caret;
-	-moz-appearance: caret; /* mobile firefox too! */
+	-moz-appearance: caret; 
 	border-radius: 0px;
-	}
+	}*/
 
 	.patient-user__navbar .patient-dashboard > li {
 		padding-right: 0;
@@ -149,6 +149,7 @@
 	.patient-user__navbar ul > li {
 		padding-right: 30px;
 	}
+
 	/*Login page Style*/
 	.footer_container {
 		.footer_right{
@@ -202,11 +203,11 @@
 		border-radius: 0px;
 		-webkit-border-radius: 0px;
 	}
-	input[type="text"], input[type="email"], input[type="search"], input[type="password"] {
+	/*input[type="text"], input[type="email"], input[type="search"], input[type="password"] {
 	-webkit-appearance: caret;
-	-moz-appearance: caret; /* mobile firefox too! */
+	-moz-appearance: caret; 
 	border-radius: 0px;
-	}
+	}*/
 	.patient-user__navbar{
 		width: 100%;
 		display: inline-block;

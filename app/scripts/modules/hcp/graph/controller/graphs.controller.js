@@ -9,13 +9,6 @@ angular.module('hillromvestApp')
 		$scope.cumulativeStatitics.isNoTransmissionRecorded = true;
 		$scope.cumulativeStatitics.isSettingDeviation = true;
 		$scope.cumulativeStatitics.isHMRNonAdherence = true;
-
-		$scope.lazyLoadParamsPieChart = [
-        'scripts/third_party_library/angular.easypiechart.js'
-        ];
-        $scope.lazyLoadParamsDatePicker = [
-        'bower_components/angular-daterangepicker/js/angular-daterangepicker.js'
-        ];
 		$scope.hcpId = parseInt(StorageService.get('logged').userId);
 		$scope.selectedGraph = 'CUMULATIVE';
 		$scope.treatmentGraph = false;

@@ -9,12 +9,6 @@ angular.module('hillromvestApp')
     var hiddenFrame, htmlDocument;
     $scope.init = function() {
       $scope.yAxisRangeForHMRLine = $scope.yAxisRangeForCompliance = $scope.compliance = {};
-      $scope.lazyLoadParamsPieChart = [
-        'scripts/third_party_library/angular.easypiechart.js'
-        ];
-        $scope.lazyLoadParamsDatePicker = [
-        'bower_components/angular-daterangepicker/js/angular-daterangepicker.js'
-        ];
       $scope.hmrLineGraph = true;
       $scope.hmrBarGraph = false;
       $scope.hmrGraph = true;
