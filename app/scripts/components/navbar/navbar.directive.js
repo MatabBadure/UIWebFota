@@ -151,6 +151,12 @@ angular.module('hillromvestApp')
         UserService.getPatientNotification(StorageService.get("logged").patientID, new Date().getTime()).then(function(response){
           $scope.notifications = response.data;
           $scope.no_of_notifications = response.data.length;
+          if(response.data.length === 0){
+            var noNotification = {
+              'notificationType' : 'NO_NOTIFICATION'
+            }
+            $scope.notifications.push(noNotification);
+          }
         });
       };
       $scope.getNotifications();

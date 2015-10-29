@@ -35,6 +35,8 @@
               <div class="notification_container">
                 <ul class="noti-list" ng-repeat="notification in notifications">
                   <li>
+                    <span ng-if="notification.notificationType === 'NO_NOTIFICATION'" translate="global.notification.no-notification">
+                    </span>
                     <span ng-if="notification.notificationType === 'MISSED_THERAPY'">
                       <span class="dsh_icon icon-lungs"></span>
                       <span translate="global.notification.missed-therapy"></span>
