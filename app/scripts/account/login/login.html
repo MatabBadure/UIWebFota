@@ -44,7 +44,7 @@
         <p class="help-block" ng-show="captchaError">Please verify again you are not a robot.</p>
 
         <div class="form-group recaptcha_container"  ng-show="showCaptcha">
-          <div vc-recaptcha theme="'light'" key="siteKey" on-create="setWidgetId(widgetId)" on-success="setResponse(response)">
+          <div vc-recaptcha theme="'light'" key="siteKey" data-type="image" on-create="setWidgetId(widgetId)" on-success="setResponse(response)">
           </div>
         </div>
 
