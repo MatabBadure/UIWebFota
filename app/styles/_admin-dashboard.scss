@@ -365,6 +365,8 @@
   }
 }
 
+
+
 .dashboard__manage-view--list .middle-detail {
   height: 39px;
   line-height: 39px;
@@ -844,7 +846,7 @@ tags-input .autocomplete .suggestion-item.selected, tags-input .autocomplete .su
   padding-left: 3%;
 }
 
-.dashboard__manage-view--list > div {
+.dashboard__manage-view--list div {
   @extend .word-ellipsis;
   padding: 0 10px;
 }
