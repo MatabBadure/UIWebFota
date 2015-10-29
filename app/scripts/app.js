@@ -125,11 +125,15 @@ angular.module('hillromvestApp',
     $ocLazyLoadProvider.config({
       modules: [{
         name: 'PatientGraphModule',
-        files: ['scripts/modules/patient/graph/controller/graphs.controller.js']
+        files: ['scripts/modules/patient/graph/controller/graphs.controller.js',
+                'scripts/third_party_library/angular.easypiechart.js',
+                'bower_components/angular-daterangepicker/js/angular-daterangepicker.js']
       },{
         name: 'HCPGraphModule',
         files: ['scripts/modules/clinicadmin/graph/services/clinicadmin.service.js', 
-                'scripts/modules/hcp/graph/controller/graphs.controller.js']
+                'scripts/modules/hcp/graph/controller/graphs.controller.js',
+                'scripts/third_party_library/angular.easypiechart.js',
+                'bower_components/angular-daterangepicker/js/angular-daterangepicker.js']
       },{
         name: 'PatientProfileModule',
         files: ['scripts/modules/patient/profile/controllers/patientprofile.controller.js']
