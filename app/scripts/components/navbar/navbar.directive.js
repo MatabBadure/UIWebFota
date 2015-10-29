@@ -23,22 +23,14 @@ angular.module('hillromvestApp')
 
 // TODO : Remove these directives and include these htmls wherever the respective directives has been used.
 angular.module('hillromvestApp')
-.directive('navigationBarPatient', ['Auth', 'Principal', '$state', 'Account', '$location', function (Auth, Principal, $state, Account, $location) {
-  return {
-    templateUrl: 'scripts/components/navbar/navbarpatientuser.html',
-    restrict: 'E',
-  };
-}]);
-
-angular.module('hillromvestApp')
-.directive('navigationBarHcp',['Auth', 'Principal', '$state', 'Account', '$location', function (Auth, Principal, $state, Account, $location) {
+.directive('navigationBarHcp',[function () {
   return {
     templateUrl: 'scripts/components/navbar/navbarhcp.html',
     restrict: 'E',
   };
 }]);
 angular.module('hillromvestApp')
-.directive('navigationBarClinicadmin',['$state', '$location', function ($state, $location) {
+.directive('navigationBarClinicadmin',[function () {
   return {
     templateUrl: 'scripts/components/navbar/navbarclinicadmin.html',
     restrict: 'E',
