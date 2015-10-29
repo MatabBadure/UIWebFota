@@ -178,17 +178,11 @@ angular.module('hillromvestApp')
 
     /* init clinic list*/
 
-      var timer = false;
-      $scope.$watch('searchItem', function () {
+      $scope.searchClinicsOnQueryChange = function(){
         if(($state.current.name === 'clinicUser' || $state.current.name === 'clinicUserRcadmin') && !searchOnLoad){
-        if(timer){
-          $timeout.cancel(timer)
+          $scope.searchClinics();
         }
-        timer= $timeout(function () {
-            $scope.searchClinics();
-        },1000)
-       }
-      });
+      };
 
       $scope.searchClinics = function (track) {
         if (track !== undefined) {
@@ -695,16 +689,11 @@ angular.module('hillromvestApp')
       });
     };
 
-    $scope.$watch('searAssociatedPatient', function () {
+    $scope.searchPatientsOnQueryChange = function(){
       if(($state.current.name === 'clinicAssociatedPatients' || $state.current.name === 'clinicAssociatedPatientsRcadmin') && !searchOnLoad){
-      if(timer){
-        $timeout.cancel(timer)
+        $scope.searchAssociatedPatients();
       }
-      timer= $timeout(function () {
-          $scope.searchAssociatedPatients();
-      },1000)
-     }
-    });
+    };
 
     $scope.searchAssociatedPatients = function (track) {
       if (track !== undefined) {

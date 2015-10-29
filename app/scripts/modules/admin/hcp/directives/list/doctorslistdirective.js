@@ -44,18 +44,11 @@ angular.module('hillromvestApp')
           }
         };
 
-
-        var timer = false;
-        $scope.$watch('searchItem', function() {
+        $scope.searchDoctorsOnQueryChange = function(){
           if(($state.current.name === "hcpUser" || $state.current.name === "hcpUserRcadmin") && !$stateParams.clinicIds && !searchOnLoad){
-          if (timer) {
-            $timeout.cancel(timer)
-          }
-          timer = $timeout(function() {
             $scope.searchDoctors();
-          }, 1000)
-         }
-        });
+          }
+        };
 
         $scope.selectDoctor = function(doctor) {
           if($scope.role === loginConstants.role.acctservices){

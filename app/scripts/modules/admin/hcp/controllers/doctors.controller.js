@@ -260,18 +260,12 @@ angular.module('hillromvestApp')
         });
       }
     };
-
-    var timer = false;
-    $scope.$watch('searchItem', function () { 
+    
+    $scope.searchPatientsOnQueryChange = function(){
       if(($state.current.name === 'hcpProfile' || $state.current.name === 'hcpProfileRcadmin') && !searchOnLoad){
-      if(timer){
-        $timeout.cancel(timer)
+        $scope.searchPatientsForHCP();
       }
-      timer= $timeout(function () {
-          $scope.searchPatientsForHCP();
-      },1000)
-     }
-    });
+    };
 
     $scope.searchPatientsForHCP = function(track){
       if (track !== undefined) {
