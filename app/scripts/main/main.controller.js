@@ -47,7 +47,7 @@ angular.module('hillromvestApp')
 	        });
 	      };
 
-	      $scope.account = function(){ 
+	      $scope.profile = function(){ 
 	        if($rootScope.userRole === "ADMIN"){
 	          $state.go('adminProfile');
 	        }else if($rootScope.userRole === "PATIENT"){
@@ -56,6 +56,12 @@ angular.module('hillromvestApp')
 	          $state.go('hcpDashboardProfile');
 	        }else if($rootScope.userRole === loginConstants.role.acctservices){
 	          $state.go('adminProfileRc');
+	        } else if($rootScope.userRole === "CLINIC_ADMIN" || $rootScope.userRole === "CLINIC ADMIN"){
+	        	var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : $stateParams.clinicId;
+        		$state.go("clinicadminUserProfile",{'clinicId': clinicId});
+	        }else if($rootScope.userRole === "HCP"){
+	        	var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : $stateParams.clinicId;
+        		$state.go("hcpUserProfile",{'clinicId': clinicId});
 	        }
 	      };
 
@@ -110,4 +116,13 @@ angular.module('hillromvestApp')
 	          $state.go("patientdashboard");
 	        }
 	      };
+	      $scope.getNotifications = function(){
+	        UserService.getPatientNotification(StorageService.get("logged").patientID, new Date().getTime()).then(function(response){
+	          $scope.notifications = response.data;
+	          $scope.no_of_notifications = response.data.length;
+	        });
+	      };
+	      if($rootScope.userRole === "PATIENT"){
+		      $scope.getNotifications();
+		  }
     }]);

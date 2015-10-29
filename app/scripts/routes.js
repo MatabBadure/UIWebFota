@@ -2603,7 +2603,7 @@ angular.module('hillromvestApp')
             })
             .state('rcadminPatientNew', {
                 parent: 'rcadmin',
-                url: '/rcadmin-new',
+                url: '/patients-new',
                 data: {
                     roles: ['ACCT_SERVICES'],
                     pageTitle: 'patient.title'
@@ -2628,7 +2628,7 @@ angular.module('hillromvestApp')
             })
             .state('patientOverviewRcadmin', {
                 parent: 'rcadmin',
-                url: '/{patientId}/overview',
+                url: '/{patientId}/patients-overview',
                 data: {
                     roles: ['ACCT_SERVICES'],
                     pageTitle: 'patient.page-title.overview'
@@ -2656,7 +2656,7 @@ angular.module('hillromvestApp')
             })
             .state('patientDemographicRcadmin', {
                 parent: 'rcadmin',
-                url: '/{patientId}/demographic',
+                url: '/{patientId}/patients-demographic',
                 data: {
                     roles: ['ACCT_SERVICES'],
                     pageTitle: 'patient.page-title.patient-info'
@@ -2681,7 +2681,7 @@ angular.module('hillromvestApp')
             })
             .state('patientClinicsRcadmin', {
                 parent: 'rcadmin',
-                url: '/{patientId}/clinicInfo',
+                url: '/{patientId}/patients-clinicInfo',
                 data: {
                     roles: ['ACCT_SERVICES'],
                     pageTitle: 'patient.page-title.clinic-info'
@@ -2706,7 +2706,7 @@ angular.module('hillromvestApp')
             })
             .state('patientProtocolRcadmin', {
                 parent: 'rcadmin',
-                url: '/{patientId}/protocol-device',
+                url: '/{patientId}/patients-protocol-device',
                 data: {
                     roles: ['ACCT_SERVICES'],
                     pageTitle: 'patient.page-title.careplan-device'
@@ -2731,7 +2731,7 @@ angular.module('hillromvestApp')
             })
             .state('patientCraegiverRcadmin', {
                 parent: 'rcadmin',
-                url: '/{patientId}/caregiver',
+                url: '/{patientId}/patients-caregiver',
                 data: {
                     roles: ['ACCT_SERVICES'],
                     pageTitle: 'patient.page-title.caregiver-info'
@@ -2756,7 +2756,7 @@ angular.module('hillromvestApp')
             })
             .state('patientDemographicEditRcadmin', {
                 parent: 'rcadmin',
-                url: '/{patientId}/demographicedit',
+                url: '/{patientId}/patients-demographicedit',
                 data: {
                     roles: ['ACCT_SERVICES'],
                     pageTitle: 'patient.page-title.patient-info'
@@ -2781,7 +2781,7 @@ angular.module('hillromvestApp')
             })
             .state('patientAddProtocolRcadmin', {
                 parent: 'rcadmin',
-                url: '/{patientId}/addProtocol',
+                url: '/{patientId}/patients-addProtocol',
                 params: {protocol: null},
                 data: {
                     roles: ['ACCT_SERVICES'],
@@ -2807,7 +2807,7 @@ angular.module('hillromvestApp')
             })
             .state('patientAddDeviceRcadmin', {
                 parent: 'rcadmin',
-                url: '/{patientId}/addDevice',
+                url: '/{patientId}/patients-addDevice',
                 params:{device: null},
                 data: {
                     roles: ['ACCT_SERVICES'],
@@ -2833,7 +2833,7 @@ angular.module('hillromvestApp')
             })
             .state('patientEditProtocolRcadmin', {
                 parent: 'rcadmin',
-                url: '/{patientId}/{protocolId}/editProtocol',
+                url: '/{patientId}/{protocolId}/patients-editProtocol',
                 data: {
                     roles: ['ACCT_SERVICES'],
                     pageTitle: 'patient.title'
@@ -2858,7 +2858,7 @@ angular.module('hillromvestApp')
             })
             .state('patientCraegiverEditRcadmin', {
                 parent: 'rcadmin',
-                url: '/{patientId}/{caregiverId}/caregiver-edit',
+                url: '/{patientId}/{caregiverId}/patients-caregiver-edit',
                 data: {
                     roles: ['ACCT_SERVICES'],
                     pageTitle: 'patient.title'
@@ -2908,7 +2908,7 @@ angular.module('hillromvestApp')
             })
             .state('hcpProfileRcadmin', {
                 parent: 'rcadmin',
-                url: '/{doctorId}/hcpProfile',
+                url: '/{doctorId}/hcps-hcpProfile',
                 data: {
                     roles: ['ACCT_SERVICES'],
                     pageTitle: 'doctor.page-title.hcp-profile'
@@ -2933,7 +2933,7 @@ angular.module('hillromvestApp')
             })
             .state('associatedClinicRcadmin', {
                 parent: 'rcadmin',
-                url: '/{doctorId}/associatedClinic',
+                url: '/{doctorId}/hcps-associatedClinic',
                 data: {
                     roles: ['ACCT_SERVICES'],
                     pageTitle: 'doctor.page-title.associated-clinics'
@@ -2958,7 +2958,7 @@ angular.module('hillromvestApp')
             })
             .state('hcpEditRcadmin', {
                 parent: 'rcadmin',
-                url: '/{doctorId}/hcpEdit',
+                url: '/{doctorId}/hcps-hcpEdit',
                 data: {
                     roles: ['ACCT_SERVICES'],
                     pageTitle: 'doctor.page-title.hcp-update'
@@ -2983,7 +2983,7 @@ angular.module('hillromvestApp')
             })
             .state('clinicProfileRcadmin', {
               parent: 'rcadmin',
-              url: '/{doctorId}/{clinicId}/clinic-info',
+              url: '/{doctorId}/{clinicId}/clinics-clinic-info',
               data: {
                   roles: ['ACCT_SERVICES'],
                   pageTitle: 'clinic.page-title.clinic-profile'
@@ -3033,7 +3033,7 @@ angular.module('hillromvestApp')
             })
             .state('clinicAssociatedHCPRcadmin', {
               parent: 'rcadmin',
-              url: '/{clinicId}/associatedHCP',
+              url: '/{clinicId}/clinics-associatedHCP',
               data: {
                   roles: ['ACCT_SERVICES'],
                   pageTitle: 'clinic.page-title.associated-HCPs'
@@ -3058,7 +3058,7 @@ angular.module('hillromvestApp')
             })
             .state('clinicAssociatedPatientsRcadmin', {
               parent: 'rcadmin',
-              url: '/{clinicId}/associatedPatients',
+              url: '/{clinicId}/clinics-associatedPatients',
               data: {
                   roles: ['ACCT_SERVICES'],
                   pageTitle: 'clinic.page-title.associated-patients'
@@ -3083,7 +3083,7 @@ angular.module('hillromvestApp')
             })
             .state('clinicAdminRcadmin', {
               parent: 'rcadmin',
-              url: '/{clinicId}/clinicadmin-clinic-edit',
+              url: '/{clinicId}/clinics-clinic-edit',
               data: {
                   roles: ['ACCT_SERVICES'],
                   pageTitle: 'clinic.page-title.clinic-admin'
@@ -3108,7 +3108,7 @@ angular.module('hillromvestApp')
             })
             .state('hcpNewRcadmin', {
                 parent: 'rcadmin',
-                url: '/hcp-new',
+                url: '/hcps-hcp-new',
                 data: {
                     roles: ['ACCT_SERVICES'],
                     pageTitle: 'patient.title'
@@ -3134,7 +3134,7 @@ angular.module('hillromvestApp')
             })
             .state('clinicEditRcadmin', {
               parent: 'rcadmin',
-              url: '/{clinicId}/edit',
+              url: '/{clinicId}/clinics-edit',
               data: {
                   roles: ['ACCT_SERVICES'],
                   pageTitle: 'clinic.title'
@@ -3159,7 +3159,7 @@ angular.module('hillromvestApp')
             })
             .state('clinicNewRcadmin', {
               parent: 'rcadmin',
-              url: '/clinic-new?parentId',
+              url: '/clinics-new?parentId',
               data: {
                   roles: ['ACCT_SERVICES'],
                   pageTitle: 'clinic.title'
@@ -3184,7 +3184,7 @@ angular.module('hillromvestApp')
             })
             .state('patientCraegiverAddRcadmin', {
                 parent: 'rcadmin',
-                url: '/{patientId}/caregiver-add',
+                url: '/{patientId}/patients-caregiver-add',
                 data: {
                     roles: ['ACCT_SERVICES'],
                     pageTitle: 'patient.title'
