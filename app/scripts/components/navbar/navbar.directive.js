@@ -21,7 +21,7 @@ angular.module('hillromvestApp')
   };
 }]);
 
-angular.module('hillromvestApp')
+/*angular.module('hillromvestApp')
 .directive('navigationBar', ['Auth', '$state', 'Account', '$location', '$stateParams', '$rootScope','loginConstants',
  function (Auth, $state, Account, $location,$stateParams, $rootScope,loginConstants) {
   return {
@@ -133,7 +133,7 @@ angular.module('hillromvestApp')
     }]
   };
 }]);
-
+*/
 angular.module('hillromvestApp')
 .directive('navigationBarPatient', ['Auth', 'Principal', '$state', 'Account', '$location', function (Auth, Principal, $state, Account, $location) {
   return {
