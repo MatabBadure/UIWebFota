@@ -160,6 +160,41 @@
 
  		}
 	}
+
+#cumulativeGraph{
+	.nvtooltip{
+		&:before { 
+		    content: "";
+		    display: block;
+		    position: absolute;
+		    top: 40%;
+		    left: -20px;
+		    width: 0; 
+			height: 0; 
+			border-top: 10px solid transparent;
+			border-bottom: 10px solid transparent;
+			
+			border-right: 10px solid $iceberg;
+
+ 		}
+ 		&:after { 
+		    content: "";
+		    display: block;
+		    position: absolute;
+		    top: 40%;
+		    left: -17px;
+		    width: 0; 
+			height: 0; 
+			border-top: 9px solid transparent;
+			border-bottom: 9px solid transparent;
+			
+			border-right: 9px solid #fff;
+
+ 		}
+	}
+	}
+
+
 	.nvtooltip{
 		padding: 0px 0px 0px 0px;
 		min-width: 170px;
