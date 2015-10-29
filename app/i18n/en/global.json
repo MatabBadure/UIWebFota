@@ -103,6 +103,7 @@
         },
         "not-applicable": "NA",
         "notification":{
+            "no-notification":"No Notifications for the day",
             "missed-therapy": "Your recommended therapy is missed by three days.",
             "setting-deviation": "You are not adherence to frequency defined in protocol.",
             "hmr-non-compliant": "You are not HMR Compliant.",
