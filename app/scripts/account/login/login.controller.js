@@ -108,6 +108,7 @@ angular.module('hillromvestApp')
         }
       }).catch(function(response) {
         if (response.status === 401) {
+          $scope.response = null;
           if (!response.data.APP_CODE) {
             $scope.message = response.data.Error;
             $scope.authenticationError = true;
