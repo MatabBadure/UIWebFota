@@ -24,7 +24,7 @@
 
 
         <li class="icon-border dropdown header-popover">
-          <a ng-class="{ active: isActive('profile') || isActive('/patient/p-reset') || isActive('/notification-settings')}" href="javascript:void(0)" class="dropdown-toggle noti_bell" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+          <a ng-class="{ active: isActive('profile') || isActive('/notification-settings')}" href="javascript:void(0)" class="dropdown-toggle noti_bell" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
             <span class="icons hillrom-icon icon-notification-bell"></span>
             <span class="link-text" translate="global.tabs.notifications"></span>
             <span class="noti_count">{{no_of_notifications}}</span>
@@ -35,6 +35,8 @@
               <div class="notification_container">
                 <ul class="noti-list" ng-repeat="notification in notifications">
                   <li>
+                    <span ng-if="notification.notificationType === 'NO_NOTIFICATION'" translate="global.notification.no-notification">
+                    </span>
                     <span ng-if="notification.notificationType === 'MISSED_THERAPY'">
                       <span class="dsh_icon icon-lungs"></span>
                       <span translate="global.notification.missed-therapy"></span>

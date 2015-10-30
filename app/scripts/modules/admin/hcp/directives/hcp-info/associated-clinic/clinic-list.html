@@ -38,7 +38,7 @@
       </div>
       <div class="clr"></div>
     </div>
-
+    
     <div class="dashboard__manage-view--list assoc" ng-repeat="clinic in clinicsOfHCP" ng-if="clinicsOfHCP.length > 0"  ng-class="{'inactive': clinic.deleted}" >
       <span ng-click="selectClinic(clinic)">
       <div class="col-md-2  centered">
@@ -67,7 +67,6 @@
       <div class="col-md-2  centered">
         <span class="impo-highlight">{{clinic.hillromId}}</span>
       </div>
-      </span>
 
       <div class="col-md-2 centered text-center">
        <span class="icon-delete-icon" ng-click="showclinicDisassociatedModal(clinic.id);"></span>
