@@ -358,6 +358,15 @@ angular.module('hillromvestApp')
         return $http.get(url, {
           headers: headerService.getHeader()
         });
+      },
+
+      reactivatePatient: function(patientId){
+        var url = URL.reactiavtePatient.replace('PATIENTID', patientId);
+        return $http.put(url, null, {
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });
       }
 
       

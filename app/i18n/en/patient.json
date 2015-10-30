@@ -99,7 +99,11 @@
         },
         "delete": {
             "warning": "Are you sure you want to Deactivate the Patient?",
-            "message": "If you deactivate the patient, you will no longer be able to view the information."
+            "message": "If you deactivate the patient, patient will not be able to access the system."
+        },
+        "activate":{
+            "warning": "Are you sure you want to Activate the Patient?",
+            "message": "If you activate the patient, patient will be able to access the system."
         },
         "no-patient-found": "No patient associated."
     }
