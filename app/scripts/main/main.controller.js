@@ -1,9 +1,8 @@
 'use strict';
 
 angular.module('hillromvestApp')
-    .controller('MainController',['$scope', 'Principal', 'Auth', '$state', 'Account', '$location', '$stateParams', '$rootScope', 'loginConstants', 'StorageService', 
-    	function ($scope, Principal,Auth, $state, Account, $location,$stateParams, $rootScope,loginConstants,StorageService) {
-    		console.log("main controller..................");
+    .controller('MainController',['$scope', 'Principal', 'Auth', '$state', 'Account', '$location', '$stateParams', '$rootScope', 'loginConstants', 'StorageService', 'UserService',
+    	function ($scope, Principal,Auth, $state, Account, $location,$stateParams, $rootScope,loginConstants,StorageService, UserService) {
         Principal.identity().then(function(account) {
             $scope.account = account;
             $scope.isAuthenticated = Principal.isAuthenticated;
@@ -37,7 +36,6 @@ angular.module('hillromvestApp')
 	      };
 
 	      $scope.logout = function(){
-	      	console.log("LOGOUT....................");
 	        Auth.signOut().then(function(data) {
 	          Auth.logout();
 	          StorageService.clearAll();
@@ -118,9 +116,35 @@ angular.module('hillromvestApp')
 	      };
 	      $scope.getNotifications = function(){
 	        UserService.getPatientNotification(StorageService.get("logged").patientID, new Date().getTime()).then(function(response){
-	          $scope.notifications = response.data;
-	          $scope.no_of_notifications = response.data.length;
-	        });
+				$scope.notifications = response.data;
+				$scope.no_of_notifications = response.data.length;
+				switch($rootScope.userRole) {
+				    case "PATIENT":
+				        $scope.getPatientNotifications($scope.notifications);
+				        break;
+				    case "HCP":
+				        $scope.getHCPNotifications($scope.notifications);
+				        break;
+				}				
+				 
+			});
+	      };
+
+	      $scope.getHCPNotifications = function(notifications){
+	      	if(notifications.length < 2){
+				$scope.no_of_notifications = notifications.length;
+			}else{
+				$scope.no_of_notifications = 2;
+			}  
+	      };
+
+	      $scope.getPatientNotifications = function(notifications){
+	      	if(notifications.length === 0){            
+			  	var noNotification = {
+			      'notificationType' : 'NO_NOTIFICATION'
+			    }
+			    $scope.notifications.push(noNotification);
+			}
 	      };
 	      if($rootScope.userRole === "PATIENT"){
 		      $scope.getNotifications();
