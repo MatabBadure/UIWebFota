@@ -45,7 +45,6 @@
             "app/bower_components/nvd3/nv.d3.js",
             "app/bower_components/oclazyload/dist/ocLazyLoad.js",
             "app/bower_components/angular-ui-mask/dist/mask.js",
-            "app/bower_components/ng-debounce/angular-debounce.js",
             "app/scripts/app.js",
             "app/scripts/app.constants.js",
             "app/scripts/routes.js",
