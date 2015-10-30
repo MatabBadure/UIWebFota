@@ -840,7 +840,7 @@ angular.module('hillromvestApp')
       if(days > 30) {
         chart.xAxis.rotateLabels(-35).tickValues(0).tickFormat(function(d) {return d3.time.format('%b%y')(new Date(d));});
       } else {
-        chart.xAxis.rotateLabels(-35).tickValues($scope.complianceGraphData[0].values.map( function(d){return d.x;} ) ).tickFormat(function(d) {
+        chart.xAxis.rotateLabels(-35).showMaxMin(false).tickValues($scope.complianceGraphData[0].values.map( function(d){return d.x;} ) ).tickFormat(function(d) {
             if(days > 10){
               return d3.time.format('%d%b%y')(new Date(d));
             } else{
@@ -1607,7 +1607,7 @@ angular.module('hillromvestApp')
           if(days > 30){
             chart.xAxis.rotateLabels(-35).tickValues(0).tickFormat(function(d) {return d3.time.format('%b %Y')(new Date(d));});
           } else {
-            chart.xAxis.rotateLabels(-35).tickValues($scope.graphData[0].values.map( function(d){return d.x;} ) ).tickFormat(function(d) {
+            chart.xAxis.rotateLabels(-35).showMaxMin(false).tickValues($scope.graphData[0].values.map( function(d){return d.x;} ) ).tickFormat(function(d) {
               if(days > 10){
                 return d3.time.format('%d%b%y')(new Date(d));
               } else{
