@@ -76,7 +76,9 @@
 	font-weight: normal;
 	border-radius: 0;
 }
-
+.dashboard__form--input input::-ms-clear {
+  display: none;
+}
 .dashboard__form--input textarea {
   width: 100%;
   resize: none;
