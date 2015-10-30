@@ -838,14 +838,18 @@ angular.module('hillromvestApp')
      // chart.noData("Nothing to see here.");
       chart.tooltipContent($scope.toolTipContentForCompliance($scope.completeComplianceData.actual));
       //this function to put x-axis labels
-      chart.xAxis.rotateLabels(-35).tickValues($scope.complianceGraphData[0].values.map( function(d){return d.x;} ) ).tickFormat(function(d) {
-          var days = dateService.getDateDiffIndays($scope.fromTimeStamp,$scope.toTimeStamp);
-          if(days > 10){
-            return d3.time.format('%d%b%y')(new Date(d));
-          } else{
-            return d3.time.format('%d%b%y %H:%M')(new Date(d));
-          }
-        });
+      var days = dateService.getDateDiffIndays($scope.fromTimeStamp,$scope.toTimeStamp);
+      if(days > 30) {
+        chart.xAxis.rotateLabels(-35).tickValues(0).tickFormat(function(d) {return d3.time.format('%b%y')(new Date(d));});
+      } else {
+        chart.xAxis.rotateLabels(-35).tickValues($scope.complianceGraphData[0].values.map( function(d){return d.x;} ) ).tickFormat(function(d) {
+            if(days > 10){
+              return d3.time.format('%d%b%y')(new Date(d));
+            } else{
+              return d3.time.format('%d%b%y %H:%M')(new Date(d));
+            }
+          });
+      }
       chart.yAxis1.tickFormat(d3.format('d'));
       chart.yAxis2.tickFormat(d3.format('d'));
       if($scope.yAxis1Min === 0 && $scope.yAxis1Max === 0){
@@ -1600,14 +1604,19 @@ angular.module('hillromvestApp')
             $scope.dayGraphForNode(event.point.x);
           });
           //this function to put x-axis labels
-          chart.xAxis.rotateLabels(-35).tickValues($scope.graphData[0].values.map( function(d){return d.x;} ) ).tickFormat(function(d) {
           var days = dateService.getDateDiffIndays($scope.fromTimeStamp,$scope.toTimeStamp);
-          if(days > 10){
-            return d3.time.format('%d%b%y')(new Date(d));
-          } else{
-            return d3.time.format('%d%b%y %H:%M')(new Date(d));
+
+          if(days > 30){
+            chart.xAxis.rotateLabels(-35).tickValues(0).tickFormat(function(d) {return d3.time.format('%b %Y')(new Date(d));});
+          } else {
+            chart.xAxis.rotateLabels(-35).tickValues($scope.graphData[0].values.map( function(d){return d.x;} ) ).tickFormat(function(d) {
+              if(days > 10){
+                return d3.time.format('%d%b%y')(new Date(d));
+              } else{
+                return d3.time.format('%d%b%y %H:%M')(new Date(d));
+              }
+          });
           }
-        });
 
           chart.yAxis.tickFormat(d3.format('d'));
           chart.forceY([$scope.yAxisRangeForHMRLine.min, $scope.yAxisRangeForHMRLine.max]);
