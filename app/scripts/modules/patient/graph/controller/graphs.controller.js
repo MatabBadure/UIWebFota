@@ -226,6 +226,7 @@ angular.module('hillromvestApp')
         $scope.removeGraph();
         $scope.getDayHMRGraphData();
       } else if(days === 0 && $scope.selectedGraph === 'COMPLIANCE'){
+        $scope.complianceGraphData = [];
         $scope.plotNoDataAvailable();
         $scope.isComplianceExist = false;
       } else if(days <= patientDashboard.maxDaysForWeeklyGraph) {
@@ -1787,9 +1788,6 @@ angular.module('hillromvestApp')
       });
     }
 
-
-
-
 //end
     $scope.drawHMRBarGraph = function() {
         nv.addGraph(function() {
@@ -1805,9 +1803,13 @@ angular.module('hillromvestApp')
             return d3.time.format('%I:%M %p')(new Date(d));
             return dateService.getTimeIntervalFromTimeStamp(d);
         });
-
+          if($scope.yAxisRangeForHMRBar.min === 0 && $scope.yAxisRangeForHMRBar.min === 0){
+            chart.forceY([$scope.yAxisRangeForHMRBar.min,1]);
+          }else{
+            chart.forceY([$scope.yAxisRangeForHMRBar.min, $scope.yAxisRangeForHMRBar.max]);
+          }
           chart.yAxis.tickFormat(d3.format('d'));
-          chart.forceY([$scope.yAxisRangeForHMRBar.min, $scope.yAxisRangeForHMRBar.max]);
+          chart.yAxis.axisLabelDistance(50);
           chart.yAxis.axisLabel('Hours');
           d3.select('#hmrBarGraph svg')
           .datum($scope.hmrBarGraphData)
