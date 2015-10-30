@@ -135,11 +135,12 @@
               <span class="">*</span>
             </div>
             <div class="col-md-5 dashboard__form--input reset-padding">
-              <input type="text" name="dob" validate-on-blur class="custom-dob span2" value="" ng-model="patient.formatedDOB" ng-readonly="validateADMINorASP()" data-date-format="mm/dd/yy" id="dp2" required>
+              <input type="text" name="dob" validate-on-blur class="custom-dob span2" value="" ng-model="patient.dob" ng-readonly="validateADMINorASP()" data-date-format="mm/dd/yyyy" id="dp2" required ng-pattern="/^\d{2}\/\d{2}\/\d{4}$/">
               <span readonly class="dashboard__form--label-age">{{patient.age}}</span>
-              <div ng-show="(form.dob.$dirty && form.dob.$showValidationMessage && form.dob.$invalid) || submitted">
+              <div ng-show="(form.dob.$dirty && form.dob.$invalid) || submitted">
                 <span class="has-error" ng-show="form.dob.$error.required" translate="error.dob.required"></span>
                 <span class="has-error" ng-if="patient.age == 0" translate="error.dob.future"></span>
+                <span class="has-error" ng-show="form.dob.$error.pattern" translate="error.dob.invalid"></span>
               </div>
             </div>
           </div>

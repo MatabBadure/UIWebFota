@@ -354,7 +354,10 @@
     "noti": {
       "miss-therapy-days" : "Miss Therapy Days",
       "hmr-non-adher": "HMR Non-Adherence",
-      "setting-deviation": "Setting Deviation"
+      "setting-deviation": "Setting Deviation",
+      "miss-therapy-days-desc": "You will get Notification email if you missed therapy for three or more days.",
+      "hmr-non-adher-desc": "You will get Notification email if your HMR Non-Adherence is below protocol for three or more days.",
+      "setting-deviation-desc": "You will get Notification email if your frequency is 15% below protocol for three or more days."
     },
     "errorMSG": {
       "password-required": "password is required.",
