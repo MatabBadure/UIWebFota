@@ -13,15 +13,17 @@ angular.module('hillromvestApp')
       },
       link: function(scope, element, attrs) {
         var doctor = scope.doctor;
-        if($state.current.name === "hcpUser" && !$stateParams.clinicIds){
+        if(($state.current.name === "hcpUser" || $state.current.name === "hcpUserRcadmin") && !$stateParams.clinicIds){
         scope.$on('resetList', function() {
           scope.searchDoctors();
         })
       }
       },
-      controller: ['$scope', '$timeout', '$state','$stateParams', 'DoctorService', 'notyService', function($scope, $timeout, $state,$stateParams, DoctorService, notyService) {
+      controller: ['$scope', '$timeout', '$state','$stateParams', 'DoctorService', 'notyService', 'StorageService', 'loginConstants',
+      function($scope, $timeout, $state,$stateParams, DoctorService, notyService, StorageService, loginConstants) {
         var searchOnLoad = true;
         $scope.sortHcpList = sortOptionsService.getSortOptionsForHcpList();
+        $scope.role = StorageService.get('logged').role;
         $scope.init = function() {
           $scope.searchFilter = searchFilterService.initSearchFiltersForHCP();
           $scope.doctors = [];
@@ -42,27 +44,30 @@ angular.module('hillromvestApp')
           }
         };
 
-
-        var timer = false;
-        $scope.$watch('searchItem', function() {
-          if($state.current.name === "hcpUser" && !$stateParams.clinicIds && !searchOnLoad){
-          if (timer) {
-            $timeout.cancel(timer)
-          }
-          timer = $timeout(function() {
+        $scope.searchDoctorsOnQueryChange = function(){
+          if(($state.current.name === "hcpUser" || $state.current.name === "hcpUserRcadmin") && !$stateParams.clinicIds && !searchOnLoad){
             $scope.searchDoctors();
-          }, 1000)
-         }
-        });
+          }
+        };
 
         $scope.selectDoctor = function(doctor) {
-          $state.go('hcpProfile',{
-            'doctorId': doctor.id
-          });
+          if($scope.role === loginConstants.role.acctservices){
+            $state.go('hcpProfileRcadmin',{
+              'doctorId': doctor.id
+            });
+          }else{
+            $state.go('hcpProfile',{
+              'doctorId': doctor.id
+            });
+          }
         };
 
         $scope.createDoctor = function() {
-          $state.go('hcpNew');
+          if($scope.role === loginConstants.role.acctservices){
+            $state.go('hcpNewRcadmin');
+          }else{
+            $state.go('hcpNew');
+          }
         };
 
         $scope.searchDoctors = function(track) {

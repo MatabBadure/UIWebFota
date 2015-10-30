@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('hillromvestApp')
-  .controller('adminProfileController',['$scope', '$state', '$location', 'notyService', 'UserService', 'Password', 'Auth', 'AuthServerProvider', 'StorageService',
-    function ($scope, $state, $location, notyService, UserService, Password, Auth, AuthServerProvider, StorageService) {
+  .controller('adminProfileController',['$scope', '$state', '$location', 'notyService', 'UserService', 'Password', 'Auth', 'AuthServerProvider', 'StorageService', 'loginConstants',
+    function ($scope, $state, $location, notyService, UserService, Password, Auth, AuthServerProvider, StorageService, loginConstants) {
 
 
     $scope.isActive = function(tab) {
@@ -13,7 +13,7 @@ angular.module('hillromvestApp')
         return false;
       }
     };
-
+    $scope.role =StorageService.get('logged').role;
     $scope.initProfile = function(adminId){
       UserService.getUser(adminId).then(function(response){
         $scope.user = response.data.user;
@@ -24,17 +24,25 @@ angular.module('hillromvestApp')
     };
 
     $scope.init = function(){
-      if($state.current.name === 'adminProfile' || $state.current.name === 'editAdminProfile' ){
+      if($state.current.name === 'adminProfile' || $state.current.name === 'editAdminProfile' || $state.current.name === 'adminProfileRc' || $state.current.name === 'editAdminProfileRc'){
         $scope.initProfile(StorageService.get('logged').userId);
       }
     };
 
     $scope.editMode = function(){
-      $state.go('editAdminProfile');
+      if($scope.role === loginConstants.role.acctservices){
+        $state.go('editAdminProfileRc');
+      }else{
+        $state.go('editAdminProfile');
+      }
     };
 
     $scope.switchProfileTab = function(status){
-      $state.go(status);
+      if($scope.role === loginConstants.role.acctservices){
+        $state.go(status+loginConstants.role.Rc);
+      }else{
+        $state.go(status);
+      }
     };
 
     $scope.updateProfile = function(){
@@ -60,7 +68,11 @@ angular.module('hillromvestApp')
       UserService.editUser($scope.user).then(function(response){        
         if(StorageService.get("logged").userEmail === $scope.user.email){
           notyService.showMessage(response.data.message, 'success');
-          $state.go('adminProfile');
+          if($scope.role === loginConstants.role.acctservices){
+            $state.go('adminProfileRc');
+          }else{
+            $state.go('adminProfile');
+          }
         }else{
           notyService.showMessage(profile.EMAIL_UPDATED_SUCCESSFULLY, 'success');
           Auth.logout();
@@ -98,7 +110,11 @@ angular.module('hillromvestApp')
     };
 
     $scope.cancel = function(){
-      $state.go('adminProfile');
+      if($scope.role === loginConstants.role.acctservices){
+        $state.go('adminProfileRc');
+      }else{
+        $state.go('adminProfile');
+      }
     };
 
     $scope.init();

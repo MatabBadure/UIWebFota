@@ -53,7 +53,7 @@ angular.module('hillromvestApp')
         $scope.initPatientDeviceProtocol();
       }else if(currentRoute === 'patientdashboardClinicHCP'){
         $scope.initPatientClinicHCPs();
-      } else if(currentRoute === 'patientOverview' || currentRoute === 'hcppatientOverview' || currentRoute === 'clinicadminpatientOverview') {
+      } else if(currentRoute === 'patientOverview' || currentRoute === 'hcppatientOverview' || currentRoute === 'clinicadminpatientOverview' || currentRoute === 'patientOverviewRcadmin') {
         $scope.getAssociatedClinics($stateParams.patientId);
         $scope.getPatientDevices($stateParams.patientId);
         $scope.patientId = parseInt($stateParams.patientId);
@@ -332,8 +332,10 @@ angular.module('hillromvestApp')
 
     $scope.switchPatientTab = function(status){
       $scope.patientTab = status;
-      if(StorageService.get('logged').role === 'HCP'){
+      if($scope.role === 'HCP'){
         $state.go('hcp'+status, {'patientId': $stateParams.patientId});
+      }else if($scope.role === loginConstants.role.acctservices){
+        $state.go(status+loginConstants.role.Rcadmin, {'patientId': $stateParams.patientId});
       }else{
         $state.go(status, {'patientId': $stateParams.patientId});
       }
