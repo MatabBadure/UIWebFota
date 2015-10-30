@@ -209,6 +209,11 @@ $header--background: $body-bg;
 	background-color: #fff;
 	top: 9px;
 }
+.notification_drop_container .notification_container ul .nodata_noti_text{
+	color: #fff;
+	text-align: center;
+	margin-top: 8% !important;
+}
 .notification_drop_container .notification_container ul li .dsh_icon.icon-adherence{
 	color: #41ae76;
 }
@@ -288,7 +293,7 @@ $header--background: $body-bg;
 }
 
 .navbar-default > .container > .navbar-secondary ul{
-	min-height: 62px;
+	/*min-height: 62px;*/
 	li {
 		min-height: inherit;
 		a {
