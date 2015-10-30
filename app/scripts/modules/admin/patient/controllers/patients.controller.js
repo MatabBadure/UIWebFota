@@ -803,8 +803,8 @@ angular.module('hillromvestApp')
         protocolEntry.maxFrequency = null;
         protocolEntry.minPressure = null;
         protocolEntry.maxPressure = null;
-        $cscope.addProtocolForm.$setPristine();
       });
+      $scope.addProtocolForm.$setPristine();
     };
 
     $scope.initpatientEditProtocol = function(){
