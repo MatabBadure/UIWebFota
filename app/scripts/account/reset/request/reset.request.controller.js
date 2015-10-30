@@ -39,6 +39,7 @@ angular.module('hillromvestApp')
             StorageService.save('passResetCount',0);
           }).catch(function (response) {
             $scope.success = null;
+            $scope.response = null;
             if (response.status === 400 && response.data.message === 'e-mail address not registered') {
               $scope.errorEmailNotExists = 'ERROR';
               var passResetCount = parseInt(StorageService.get('passResetCount')) || 0;

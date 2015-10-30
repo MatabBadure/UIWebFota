@@ -402,6 +402,49 @@
 	}
 }
 
+.wrapper_custom_check.custom-check-hcp-clinicadmin{
+
+.check{
+   
+   &:checked + .check_label{
+    color: $gray-dark;
+    &.missedTHRP_legend{
+     &:after{
+      background-color: #4e95c4;
+      border: $btn-default-bg;
+     }
+    }
+    &.pressure_legend{
+     &:after{
+      background-color: #ef6548;
+      border: $btn-default-bg;
+     }
+    }
+    &.frequency_legend{
+     &:after{
+      background-color: #4eb3d3;
+      border: $btn-default-bg;
+     }
+    }
+    &.duration_legend{
+     &:after{
+      background-color: #41ae76;
+      border: $btn-default-bg;
+     }
+    }
+    &.non_ndherence_legend{
+     &:after{
+      background-color: #8c6bb1;
+      border: $btn-default-bg;
+     }
+    }
+    &:last-child{
+     padding-right: 0px;
+    }
+   }
+  }
+}
+
 
 /* &.sky_blue{
 				&:after{
@@ -446,12 +489,16 @@
 			color: $nevada;
 		}
 	}
+	&--head {
+		color: $cyan-blue-light;
+	}
 
 	&--icon {
 		padding: 0;
 		span {
 			font-size: 30px;
 			line-height: 21px;
+			cursor: pointer;
 		}
 		span.inactive {
 			color: $silver-approx;
