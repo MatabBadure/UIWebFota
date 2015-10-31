@@ -79,6 +79,10 @@
             "warning": "Are you sure you want to Deactivate the Clinic?",
             "message": "If you deactivate the clinic, you will no longer be able to view the information."
         },
+        "update": {
+            "warning": "Do you want to Update the Clinic Details?",
+            "message": "Are you sure?"
+        },
         "deletePatient":{
             "warning": "Are you sure you want to Deactivate the Patient?",
             "message": "If you deactivate the Patient, you will no longer be able to view the information."
@@ -135,6 +139,10 @@
         "deleteClinicAdmin":{
             "warning": "Are you sure, You want to delete Clinic Admin?",
             "message": "After Delete You will not be able to see the Clinic Admin."
+        },
+        "updateClinicAdmin":{
+            "warning": "Do You want to update Clinic Admin details?",
+            "message": "Are You Sure?"
         },
         "clinicType":{
             "parent": "Parent",

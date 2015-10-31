@@ -15,6 +15,7 @@ angular.module('hillromvestApp')
     $scope.patient = {};
     $scope.patientTab = "";
     $scope.newProtocolPoint = 1;
+    $scope.patientActivateModal = false;
     $scope.patientStatus = {
       'role': StorageService.get('logged').role,
       'editMode': false,
@@ -752,6 +753,7 @@ angular.module('hillromvestApp')
     $scope.switchtoNormal = function(){
       $scope.submitted = false;
       $scope.protocol.protocolEntries.splice(1);
+      $scope.clearFn();
     };
 
     $scope.linkClinic = function(){
@@ -857,6 +859,20 @@ angular.module('hillromvestApp')
     $scope.switchtoCustom = function(){
       $scope.submitted = false;
       $scope.newProtocolPoint = 1;
+      $scope.clearFn();
+    };
+
+    $scope.clearFn = function(){
+      $scope.protocol.treatmentsPerDay = null;
+      angular.forEach($scope.protocol.protocolEntries, function(protocolEntry, key){
+        protocolEntry.minMinutesPerTreatment = null;
+        protocolEntry.maxMinutesPerTreatment = null;
+        protocolEntry.minFrequency = null;
+        protocolEntry.maxFrequency = null;
+        protocolEntry.minPressure = null;
+        protocolEntry.maxPressure = null;
+      });
+      $scope.addProtocolForm.$setPristine();
     };
 
     $scope.initpatientEditProtocol = function(){
@@ -904,6 +920,19 @@ angular.module('hillromvestApp')
 
     $scope.gotoPatient = function(){
       $state.go('patientOverview',{'patientId': $scope.deviceAssociatedPatient.id});
+    };
+
+    $scope.activatePatient = function(){
+      patientService.reactivatePatient($scope.patient.id).then(function(response){
+        notyService.showMessage(response.data.message, 'success');
+        $state.go('patientUser');
+      }).catch(function(response){
+        notyService.showError(response);
+      });
+    };
+
+    $scope.toggleReactivationModal = function(){
+      $scope.patientActivateModal = $scope.patientActivateModal ? false:true;
     };
 
     $scope.init();
