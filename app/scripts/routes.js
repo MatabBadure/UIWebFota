@@ -3280,5 +3280,25 @@ angular.module('hillromvestApp')
                         return $translate.refresh();
                     }]
                 }
+            })
+            .state('activateUser', {
+                parent: 'account',
+                url: '/activate',
+                data: {
+                    roles: [],
+                    pageTitle: 'login.title'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/account/login/login.html',
+                        controller: 'LoginController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('login');
+                        return $translate.refresh();
+                    }]
+                }
             });
 }]);
