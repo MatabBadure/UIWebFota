@@ -41,7 +41,7 @@ angular.module('hillromvestApp')
       $scope.isLoaded = true;
     };
 
-    $scope.navigateUser = function(){
+    $scope.navigateUser = function(){       
       if(Principal.isAuthenticated()){
         $rootScope.userRole = StorageService.get('logged').role;
         if(!$rootScope.userRole){
@@ -58,13 +58,33 @@ angular.module('hillromvestApp')
         }else if($rootScope.userRole === loginConstants.role.acctservices){
           $state.go("rcadminPatients");
         }
-      }else{
-        $scope.clearLastLogin();
+      }else{        
+          $scope.clearLastLogin();
       }
-    }
+    };
+
+    $scope.resetForActivateUser = function(){
+      $scope.isAuthenticated = false;
+      $rootScope.username = null;
+      $scope.password = null;
+      $scope.isLoaded = true;
+      $scope.message = '';
+      $scope.isFirstLogin = true;
+      $scope.isEmailExist = false;
+      $scope.showLogin = false;
+    };
 
     $scope.init = function() {
-      $scope.navigateUser();      
+      var currentRoute = $state.current.name;
+      if(currentRoute === "activateUser"){
+        if(StorageService.get('logged') && StorageService.get('logged').token){
+          $scope.resetForActivateUser();  
+        }else{
+          $state.go("activate");
+        }        
+      }else{
+        $scope.navigateUser();  
+      }  
     };
 
     Auth.getSecurityQuestions().then(function(response) {
@@ -127,10 +147,7 @@ angular.module('hillromvestApp')
             var logged = StorageService.get('logged') || {};
             logged.token = response.data.token;
             StorageService.save('logged', logged);
-            $scope.message = '';
-            $scope.isFirstLogin = true;
-            $scope.isEmailExist = false;
-            $scope.showLogin = false;
+            $state.go("activateUser");            
           } else if (response.data.APP_CODE === 'PASSWORD_RESET') {
             var logged = StorageService.get('logged') || {};
             logged.token = response.data.token;
@@ -148,7 +165,7 @@ angular.module('hillromvestApp')
       });
     };
 
-    $scope.submitPassword = function(event) {
+    $scope.submitPassword = function(event) {      
       if ($scope.confirmForm.$invalid) {
         return false;
       }
@@ -166,6 +183,7 @@ angular.module('hillromvestApp')
           'termsAndConditionsAccepted': $scope.user.tnc
         }).then(function(data) {
           Auth.logout();
+          $state.go("login");
           $scope.isFirstLogin = false;
           $scope.showLogin = true;
         }).catch(function(err) {
