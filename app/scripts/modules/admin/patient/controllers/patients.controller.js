@@ -753,6 +753,7 @@ angular.module('hillromvestApp')
     $scope.switchtoNormal = function(){
       $scope.submitted = false;
       $scope.protocol.protocolEntries.splice(1);
+      $scope.clearFn();
     };
 
     $scope.linkClinic = function(){
@@ -858,6 +859,20 @@ angular.module('hillromvestApp')
     $scope.switchtoCustom = function(){
       $scope.submitted = false;
       $scope.newProtocolPoint = 1;
+      $scope.clearFn();
+    };
+
+    $scope.clearFn = function(){
+      $scope.protocol.treatmentsPerDay = null;
+      angular.forEach($scope.protocol.protocolEntries, function(protocolEntry, key){
+        protocolEntry.minMinutesPerTreatment = null;
+        protocolEntry.maxMinutesPerTreatment = null;
+        protocolEntry.minFrequency = null;
+        protocolEntry.maxFrequency = null;
+        protocolEntry.minPressure = null;
+        protocolEntry.maxPressure = null;
+      });
+      $scope.addProtocolForm.$setPristine();
     };
 
     $scope.initpatientEditProtocol = function(){
