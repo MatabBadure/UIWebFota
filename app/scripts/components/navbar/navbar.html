@@ -12,8 +12,9 @@
         <span class="navbar-brand__desc--text-primary"><span translate="global.logo-text.visi-view"></span><sup translate="global.logo-text.tm-sup"></sup></span>
         <span class="navbar-brand__desc--text-secondary" translate="global.logo-text.health-portal"></span>
       </div>
-    </div>
-    <div class="collapse navbar-collapse navbar-secondary" id="navbar-collapse" ng-if="userRole === 'ADMIN' && !isFooter" ng-switch-when=true>
+    </div> 
+    <div ng-show="userRole === 'ADMIN'">
+    <div class="collapse navbar-collapse navbar-secondary" id="navbar-collapse"  ng-switch-when=true>
       <ul class="nav navbar-nav navbar-right"> 
         <li class="icon-border">
           <a ng-class="{ active: isActive('admin/patients')}" ng-href="#/admin/patients">
@@ -44,7 +45,7 @@
             <span class='icon-logged-in-user'></span>
             <span class='user-name'>{{username}}</span></a>
           <ul class="dropdown-menu">
-            <li id='account' ng-click='account()'>
+            <li id='account' ng-click='profile()'>
               <span class='hillrom-icon icon-user-account'></span>
               <p translate="global.my-dashboard">My Profile</p>
             </li>
@@ -55,6 +56,7 @@
           </ul>
         </li>
       </ul>
+    </div>
     </div>
   </div>
 </nav>

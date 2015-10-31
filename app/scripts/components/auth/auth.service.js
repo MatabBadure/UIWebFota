@@ -70,7 +70,7 @@ angular.module('hillromvestApp')
                             }
                         }
 
-                        if(isAuthenticated && $rootScope.toState.url == "/login"){
+                        if(isAuthenticated && $rootScope.toState.url == "/login"){ 
                             if(Principal.isInRole('ADMIN')){
                                 $state.go('patientUser');
                             }else if(Principal.isInRole('PATIENT')){
@@ -81,6 +81,8 @@ angular.module('hillromvestApp')
                                 $state.go("hcpdashboard");
                             }else if(Principal.isInRole('CARE_GIVER')){
                                 $state.go("caregiverDashboard");
+                            }else if(Principal.isInRole('ACCT_SERVICES')){
+                                $state.go("rcadminPatients");
                             }
                         }
                     });

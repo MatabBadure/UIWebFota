@@ -24,7 +24,7 @@
 
 
         <li class="icon-border dropdown header-popover">
-          <a ng-class="{ active: isActive('profile') || isActive('/notification-settings')}" href="javascript:void(0)" class="dropdown-toggle noti_bell" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+          <a href="javascript:void(0)" class="dropdown-toggle noti_bell" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
             <span class="icons hillrom-icon icon-notification-bell"></span>
             <span class="link-text" translate="global.tabs.notifications"></span>
             <span class="noti_count">{{no_of_notifications}}</span>
@@ -34,9 +34,10 @@
 
               <div class="notification_container">
                 <ul class="noti-list" ng-repeat="notification in notifications">
-                  <li>
-                    <span ng-if="notification.notificationType === 'NO_NOTIFICATION'" translate="global.notification.no-notification">
-                    </span>
+                    <p class="nodata_noti_text" ng-if="notification.notificationType === 'NO_NOTIFICATION'" translate="global.notification.no-notification">
+                    </p>
+                  <li ng-if="notification.notificationType !== 'NO_NOTIFICATION'">
+                    
                     <span ng-if="notification.notificationType === 'MISSED_THERAPY'">
                       <span class="dsh_icon icon-lungs"></span>
                       <span translate="global.notification.missed-therapy"></span>
@@ -63,11 +64,11 @@
 
 
         <li class="header-popover dropdown">
-          <a href="javascript:void(0)" class="dropdown-toggle" ng-class="{ active: isActive('profile') || isActive('/patient/p-reset') || isActive('/notification-settings')}" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+          <a href="javascript:void(0)" class="dropdown-toggle" ng-class="{ active: isActive('/patient/p-reset') || isActive('/notification-settings')}" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
             <span class='icon-logged-in-user'></span>
             <span class='user-name'>{{username}}</span></a>
           <ul class="dropdown-menu">
-            <li id='account' ng-click='account()'>
+            <li id='account' ng-click='profile()'>
               <span class='hillrom-icon icon-user-account'></span>
               <p translate="global.my-dashboard">My Profile</p>
             </li>

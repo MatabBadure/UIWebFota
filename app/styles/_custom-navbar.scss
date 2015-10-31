@@ -193,6 +193,7 @@ $header--background: $body-bg;
 	width: 250px;
 	padding: 0px 5px;
 	margin-bottom: 0px;
+	font-family: 'MyriadWebPro';
 }
 .navbar-secondary .navbar-right .header-popover .noti-list li{
 	padding: 12px 10px 20px 60px;
@@ -208,6 +209,11 @@ $header--background: $body-bg;
 	left: 10px;
 	background-color: #fff;
 	top: 9px;
+}
+.notification_drop_container .notification_container ul .nodata_noti_text{
+	color: #fff;
+	text-align: center;
+	margin-top: 9.5% !important;
 }
 .notification_drop_container .notification_container ul li .dsh_icon.icon-adherence{
 	color: #41ae76;
@@ -288,7 +294,7 @@ $header--background: $body-bg;
 }
 
 .navbar-default > .container > .navbar-secondary ul{
-	min-height: 62px;
+	/*min-height: 62px;*/
 	li {
 		min-height: inherit;
 		a {
