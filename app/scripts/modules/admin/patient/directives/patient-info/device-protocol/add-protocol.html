@@ -43,7 +43,7 @@
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
               <input class="" type="number" name="treatmentsPerDay" ng-model= "protocol.treatmentsPerDay" min="0" max="9" step="1" required>
-              <div ng-show="(addProtocolForm.treatmentsPerDay.$dirty && addProtocolForm.treatmentsPerDay.$showValidationMessage && addProtocolForm.treatmentsPerDay.$invalid) || submitted">
+              <div ng-show="(addProtocolForm.treatmentsPerDay.$dirty && addProtocolForm.treatmentsPerDay.$invalid) || submitted">
                 <span class="has-error" ng-show="addProtocolForm.treatmentsPerDay.$error.required" translate="error.protocol.treatmentPerDay.required">
                 </span>
                 <span class="has-error" ng-show="addProtocolForm.treatmentsPerDay.$error.min" translate="error.protocol.treatmentPerDay.min">
@@ -72,7 +72,7 @@
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
               <input class="" type="number" name="minMinutesPerTreatment" ng-model="proto.minMinutesPerTreatment" min="0" max="99" required>
-              <div ng-show="(point.minMinutesPerTreatment.$dirty && point.minMinutesPerTreatment.$showValidationMessage && point.minMinutesPerTreatment.$invalid) || submitted">
+              <div ng-show="(point.minMinutesPerTreatment.$dirty && point.minMinutesPerTreatment.$invalid) || submitted">
                 <span class="has-error" ng-show="point.minMinutesPerTreatment.$error.required" translate="error.protocol.minMinutesPerTreatment.required">
                 </span>
                 <span class="has-error" ng-show="point.minMinutesPerTreatment.$error.min" translate="error.protocol.minMinutesPerTreatment.min">
@@ -91,7 +91,7 @@
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
               <input class="" type="number" name="maxMinutesPerTreatment" ng-model="proto.maxMinutesPerTreatment"  min="{{proto.minMinutesPerTreatment}}" max="99"  required >
-              <div ng-show="(point.maxMinutesPerTreatment.$dirty && point.maxMinutesPerTreatment.$showValidationMessage && point.maxMinutesPerTreatment.$invalid) || submitted">
+              <div ng-show="(point.maxMinutesPerTreatment.$dirty && point.maxMinutesPerTreatment.$invalid) || submitted">
                 <span class="has-error" ng-show="point.maxMinutesPerTreatment.$error.required" translate="error.protocol.maxMinutesPerTreatment.required">
                 </span>
                 <span class="has-error" ng-show="point.maxMinutesPerTreatment.$error.min">Maximum Minutes per Treatment should be {{proto.minMinutesPerTreatment}} and 99
@@ -114,7 +114,7 @@
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
               <input class="" type="number" name="minFrequency" ng-model="proto.minFrequency" required min="5" max="20">
-              <div ng-show="(point.minFrequency.$dirty && point.minFrequency.$showValidationMessage && point.minFrequency.$invalid) || submitted">
+              <div ng-show="(point.minFrequency.$dirty && point.minFrequency.$invalid) || submitted">
                 <span class="has-error" ng-show="point.minFrequency.$error.required" translate="error.protocol.minFrequency.required">
                 </span>
                 <span class="has-error" ng-show="point.minFrequency.$error.min" translate="error.protocol.minFrequency.min">
@@ -133,7 +133,7 @@
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
               <input class="" type="number" name="maxFrequency" ng-model="proto.maxFrequency" required min="{{proto.minFrequency}}" max="20">
-              <div ng-show="(point.maxFrequency.$dirty && point.maxFrequency.$showValidationMessage && point.maxFrequency.$invalid) || submitted">
+              <div ng-show="(point.maxFrequency.$dirty && point.maxFrequency.$invalid) || submitted">
                 <span class="has-error" ng-show="point.maxFrequency.$error.required" translate="error.protocol.maxFrequency.required">
                 </span>
                 <span class="has-error" ng-show="point.maxFrequency.$error.min">Maximum Frequency should be between {{proto.minFrequency}} and 20
@@ -156,7 +156,7 @@
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
               <input class="" type="number" name="minPressure" ng-model="proto.minPressure" required min="1" max="10">
-              <div ng-show="(point.minPressure.$dirty && point.minPressure.$showValidationMessage && point.minPressure.$invalid) || submitted">
+              <div ng-show="(point.minPressure.$dirty && point.minPressure.$invalid) || submitted">
                 <span class="has-error" ng-show="point.minPressure.$error.required" translate="error.protocol.minPressure.required">
                 </span>
                 <span class="has-error" ng-show="point.minPressure.$error.min" translate="error.protocol.minPressure.min">
@@ -175,7 +175,7 @@
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
               <input class="" type="number" name="maxPressure" ng-model="proto.maxPressure" required min="{{proto.minPressure}}" max="10">
-              <div ng-show="(point.maxPressure.$dirty && point.maxPressure.$showValidationMessage && point.maxPressure.$invalid) || submitted">
+              <div ng-show="(point.maxPressure.$dirty && point.maxPressure.$invalid) || submitted">
                 <span class="has-error" ng-show="point.maxPressure.$error.required" translate="error.protocol.maxPressure.required">
                 </span>
                 <span class="has-error" ng-show="point.maxPressure.$error.min">Maximum Pressure should be between {{proto.minPressure}} and 10

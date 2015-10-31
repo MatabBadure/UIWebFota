@@ -15,6 +15,9 @@ angular.module('hillromvestApp')
 				$rootScope.userRole = StorageService.get('logged').role;
 				$rootScope.username = StorageService.get('logged').userFirstName;  
 			}
+			if($rootScope.userRole === 'PATIENT'){
+				$scope.getNotifications();
+			}
         }
 	      
 	      $scope.isActive = function(tab) {

@@ -282,7 +282,7 @@ angular.module('hillromvestApp')
 			chart.yDomain([0,$scope.cumulativeGraphRange.maxNoOfPatients]);
 
 			var days = dateService.getDateDiffIndays($scope.fromTimeStamp,$scope.toTimeStamp);
-			chart.xAxis.rotateLabels(-35).showMaxMin(false).tickFormat(function(d) {
+			chart.xAxis.rotateLabels(-35).tickFormat(function(d) {
 				if(window.event !== undefined && (window.event.type === 'mousemove')){
 					return dateService.getDateFromTimeStamp(d,patientDashboard.dateFormat,'/') + '  ('+ d3.time.format('%I:%M %p')(new Date(d)) + ')'
 				}else{
@@ -508,7 +508,7 @@ angular.module('hillromvestApp')
 			chart.yDomain2([0,$scope.yAxis2Max]);
 			//this function to put x-axis labels
 			var days = dateService.getDateDiffIndays($scope.fromTimeStamp,$scope.toTimeStamp);
-			chart.xAxis.rotateLabels(-35).showMaxMin(false).tickFormat(function(d) {
+			chart.xAxis.rotateLabels(-35).tickFormat(function(d) {
 					if(days > 10){
 						return d3.time.format('%d%b%y')(new Date(d));
 					} else{
