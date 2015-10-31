@@ -9,8 +9,9 @@ angular.module('hillromvestApp')
         onSuccess: '&',
         doctorStatus: '=doctorStatus'
       },
-      controller: ['$scope', '$timeout', 'notyService', '$state', '$stateParams', 'DoctorService', 'UserService', 'clinicService', function ($scope, $timeout, notyService, $state, $stateParams, DoctorService, UserService, clinicService) {
-
+      controller: ['$scope', '$timeout', 'notyService', '$state', '$stateParams', 'DoctorService', 'UserService', 'clinicService', 'StorageService', 'loginConstants', 
+      function ($scope, $timeout, notyService, $state, $stateParams, DoctorService, UserService, clinicService, StorageService, loginConstants) {
+        $scope.role = StorageService.get('logged').role;
         $scope.open = function () {
           $scope.showModal = true;
         };
@@ -25,7 +26,7 @@ angular.module('hillromvestApp')
           if($state.current.name === 'clinicadminedithcp'){
             $state.go('clinicadminhcpoverview', {'hcpId': $stateParams.doctorId});
           }else{
-            $state.go('hcpProfile', {'doctorId': $stateParams.doctorId});
+            $scope.goToHcpProfile();         
           }
         };
 
@@ -125,7 +126,7 @@ angular.module('hillromvestApp')
             if( $state.current.name ==='clinicadminedithcp'){
               $state.go('clinicadminhcpoverview', {'hcpId': $stateParams.doctorId});
             }else{
-              $state.go('hcpProfile', {'doctorId': $stateParams.doctorId});
+              $scope.goToHcpProfile();
             }
           }).catch(function(response) {
             $scope.doctorStatus.isMessage = true;
@@ -193,9 +194,21 @@ angular.module('hillromvestApp')
           {
             $state.go('clinicadminhcpdashboard', {'clinicId' : $stateParams.clinicId});
           }else{
-            $state.go('hcpUser');  
+            if($scope.role === loginConstants.role.acctservices){
+               $state.go('hcpUserRcadmin');
+            }else{
+              $state.go('hcpUser'); 
+            } 
           }
-        }
+        };
+
+        $scope.goToHcpProfile = function(){
+            if($scope.role === loginConstants.role.acctservices){
+              $state.go('hcpProfileRcadmin', {'doctorId': $stateParams.doctorId});
+            }else{
+              $state.go('hcpProfile', {'doctorId': $stateParams.doctorId});
+            } 
+        };
       }]
     };
   });
