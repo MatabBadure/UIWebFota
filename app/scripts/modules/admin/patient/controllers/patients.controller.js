@@ -823,7 +823,6 @@ angular.module('hillromvestApp')
     };
 
     $scope.activatePatient = function(){
-      console.log('Reactivating patient: ');
       patientService.reactivatePatient($scope.patient.id).then(function(response){
         notyService.showMessage(response.data.message, 'success');
         $state.go('patientUser');
