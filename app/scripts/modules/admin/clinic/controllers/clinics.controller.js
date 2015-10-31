@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('hillromvestApp')
-  .controller('clinicsController', [ '$rootScope', '$scope', '$state', '$stateParams', '$timeout', 'Auth', 'clinicService', 'UserService', 'notyService', 'searchFilterService', 'dateService', 'sortOptionsService', 'StorageService',
-    function ($rootScope, $scope, $state, $stateParams, $timeout, Auth, clinicService, UserService, notyService, searchFilterService, dateService,sortOptionsService, StorageService) {
+  .controller('clinicsController', [ '$rootScope', '$scope', '$state', '$stateParams', '$timeout', 'Auth', 'clinicService', 'UserService', 'notyService', 'searchFilterService', 'dateService', 'sortOptionsService', 'StorageService', 'loginConstants',
+    function ($rootScope, $scope, $state, $stateParams, $timeout, Auth, clinicService, UserService, notyService, searchFilterService, dateService,sortOptionsService, StorageService, loginConstants) {
     var searchOnLoad = true;
     $scope.clinic = {};
     $scope.clinicStatus = {
@@ -15,27 +15,27 @@ angular.module('hillromvestApp')
     /*check the state from the route*/
     $scope.init = function() {
       var currentRoute = $state.current.name;
-      if (currentRoute === 'clinicEdit') {
+      if (currentRoute === 'clinicEdit' || currentRoute === 'clinicEditRcadmin') {
         $scope.initClinicEdit($stateParams.clinicId, $scope.setEditMode);
         //$scope.getClinicDetails($stateParams.clinicId, $scope.setEditMode);
-      } else if (currentRoute === 'clinicNew') {
+      } else if (currentRoute === 'clinicNew' || currentRoute === 'clinicNewRcadmin') {
         $scope.initCreateClinic();
-      } else if (currentRoute === 'clinicUser'){
+      } else if (currentRoute === 'clinicUser' || currentRoute === 'clinicUserRcadmin'){
         $scope.sortClinicList = sortOptionsService.getSortOptionsForClinicList();
         $scope.initPaginationVars();
         $scope.searchFilter = searchFilterService.initSearchFiltersForClinic();
         $scope.initClinicList();
-      } else if (currentRoute === 'clinicProfile'){
+      } else if (currentRoute === 'clinicProfile' || currentRoute === 'clinicProfileRcadmin'){
         $scope.initClinicProfile($stateParams.clinicId);
-      } else if(currentRoute === 'clinicAssociatedPatients'){
+      } else if(currentRoute === 'clinicAssociatedPatients' || currentRoute === 'clinicAssociatedPatientsRcadmin'){
         $scope.searchFilter = {};    
         $scope.searchFilter = searchFilterService.initSearchFiltersForPatient();
         $scope.initPaginationVars();
         $scope.initClinicAssoctPatients($stateParams.clinicId);
-      } else if(currentRoute === 'clinicAssociatedHCP'){
+      } else if(currentRoute === 'clinicAssociatedHCP' || currentRoute === 'clinicAssociatedHCPRcadmin'){
         $scope.initClinicAssoctHCPs($stateParams.clinicId);
       }
-      else if(currentRoute === 'clinicAdmin'){
+      else if(currentRoute === 'clinicAdmin' || currentRoute === 'clinicAdminRcadmin'){
         $scope.initClinicAdmin($stateParams.clinicId);
       }
     };
@@ -178,17 +178,11 @@ angular.module('hillromvestApp')
 
     /* init clinic list*/
 
-      var timer = false;
-      $scope.$watch('searchItem', function () {
-        if($state.current.name === 'clinicUser' && !searchOnLoad){
-        if(timer){
-          $timeout.cancel(timer)
+      $scope.searchClinicsOnQueryChange = function(){
+        if(($state.current.name === 'clinicUser' || $state.current.name === 'clinicUserRcadmin') && !searchOnLoad){
+          $scope.searchClinics();
         }
-        timer= $timeout(function () {
-            $scope.searchClinics();
-        },1000)
-       }
-      });
+      };
 
       $scope.searchClinics = function (track) {
         if (track !== undefined) {
@@ -216,13 +210,19 @@ angular.module('hillromvestApp')
       };
 
       $scope.selectClinic = function(clinic) {
-         $state.go('clinicProfile', {
-          'clinicId': clinic.id
-        });
+        if($scope.clinicStatus.role === loginConstants.role.acctservices){
+          $state.go('clinicProfileRcadmin', {
+            'clinicId': clinic.id
+          });          
+        }else{
+          $state.go('clinicProfile', {
+            'clinicId': clinic.id
+          });
+         }
       };
 
       $scope.createClinic = function(){
-          $state.go('clinicNew');
+        $scope.goToCinicNew();
       };
     /* init clinic list*/
 
@@ -310,7 +310,7 @@ angular.module('hillromvestApp')
     $scope.deactivateClinic = function(clinicId){
       $scope.closeModalClinic();
       clinicService.deleteClinic(clinicId).then(function(response){
-        $state.go('clinicUser');
+        $scope.goToClinicUser();
         notyService.showMessage(response.data.message,'success');
       }).catch(function(response){
         if(response.data.message){
@@ -329,7 +329,7 @@ angular.module('hillromvestApp')
         if($scope.clinicStatus.createSatellite){
           $scope.selectClinic(data.data.Clinic.parentClinic);
         }else if($scope.clinicStatus.isCreate){
-          $state.go('clinicUser');
+          $scope.goToClinicUser();
         }
       }).catch(function(response) {
         if (response.data.message !== undefined) {
@@ -367,11 +367,17 @@ angular.module('hillromvestApp')
 
     $scope.cancel = function(){
       if($stateParams.clinicId){
-        $state.go('clinicProfile', {
-          'clinicId': $stateParams.clinicId
-        });
+        if($scope.clinicStatus.role === loginConstants.role.acctservices){
+          $state.go('clinicProfileRcadmin', {
+            'clinicId': $stateParams.clinicId
+          });
+        }else{
+          $state.go('clinicProfile', {
+            'clinicId': $stateParams.clinicId
+          });
+        }
       } else {
-        $state.go('clinicUser');
+        $scope.goToClinicUser();
       }
     };
 
@@ -409,21 +415,31 @@ angular.module('hillromvestApp')
     };
 
     $scope.createSatellite = function(parentId){
-      $state.go('clinicNew', {
-        'parentId': parentId
-      });
+      $scope.goToCinicNew(parentId);
     };
 
     $scope.goToEditClinic = function(clinicId){
-      $state.go('clinicEdit', {
-        'clinicId': clinicId
-      });
+      if($scope.clinicStatus.role === loginConstants.role.acctservices){
+        $state.go('clinicEditRcadmin', {
+          'clinicId': clinicId
+        });
+      }else{
+        $state.go('clinicEdit', {
+          'clinicId': clinicId
+        });
+      }
     };
 
     $scope.switchTab = function(state){
-      $state.go(state, {
-        'clinicId': $stateParams.clinicId
-      });
+      if($scope.clinicStatus.role === loginConstants.role.acctservices){
+        $state.go(state+loginConstants.role.Rcadmin, {
+          'clinicId': $stateParams.clinicId
+        });
+      }else{
+        $state.go(state, {
+          'clinicId': $stateParams.clinicId
+        });
+      }
     };
 
     $scope.disassociatePatient = function(patientId){
@@ -673,16 +689,11 @@ angular.module('hillromvestApp')
       });
     };
 
-    $scope.$watch('searAssociatedPatient', function () {
-      if($state.current.name === 'clinicAssociatedPatients' && !searchOnLoad){
-      if(timer){
-        $timeout.cancel(timer)
+    $scope.searchPatientsOnQueryChange = function(){
+      if(($state.current.name === 'clinicAssociatedPatients' || $state.current.name === 'clinicAssociatedPatientsRcadmin') && !searchOnLoad){
+        $scope.searchAssociatedPatients();
       }
-      timer= $timeout(function () {
-          $scope.searchAssociatedPatients();
-      },1000)
-     }
-    });
+    };
 
     $scope.searchAssociatedPatients = function (track) {
       if (track !== undefined) {
@@ -732,7 +743,7 @@ angular.module('hillromvestApp')
     $scope.searchOnFilters = function(){    
       if($state.current.name === 'clinicUser'){
         $scope.searchClinics();
-      }else if( $state.current.name === 'clinicAssociatedPatients'){
+      }else if( $state.current.name === 'clinicAssociatedPatients' || $state.current.name === 'clinicAssociatedPatientsRcadmin'){
         $scope.searchAssociatedPatients();
       }
     };
@@ -746,6 +757,22 @@ angular.module('hillromvestApp')
         });   
       });
       return patientUsers;
+    };
+
+    $scope.goToClinicUser = function(){
+      if($scope.clinicStatus.role === loginConstants.role.acctservices){
+        $state.go('clinicUserRcadmin');
+      }else{
+        $state.go('clinicUser');
+      }
+    };
+
+    $scope.goToCinicNew = function(parentId){
+      if($scope.clinicStatus.role === loginConstants.role.acctservices){
+          $state.go('clinicNewRcadmin', {'parentId': parentId});
+        }else{
+          $state.go('clinicNew', {'parentId': parentId});
+        }
     };
     $scope.init();
   }]);

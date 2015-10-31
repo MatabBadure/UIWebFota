@@ -53,7 +53,7 @@ angular.module('hillromvestApp')
         $scope.initPatientDeviceProtocol();
       }else if(currentRoute === 'patientdashboardClinicHCP'){
         $scope.initPatientClinicHCPs();
-      } else if(currentRoute === 'patientOverview' || currentRoute === 'hcppatientOverview' || currentRoute === 'clinicadminpatientOverview') {
+      } else if(currentRoute === 'patientOverview' || currentRoute === 'hcppatientOverview' || currentRoute === 'clinicadminpatientOverview' || currentRoute === 'patientOverviewRcadmin') {
         $scope.getAssociatedClinics($stateParams.patientId);
         $scope.getPatientDevices($stateParams.patientId);
         $scope.patientId = parseInt($stateParams.patientId);
@@ -226,6 +226,7 @@ angular.module('hillromvestApp')
         $scope.removeGraph();
         $scope.getDayHMRGraphData();
       } else if(days === 0 && $scope.selectedGraph === 'COMPLIANCE'){
+        $scope.complianceGraphData = [];
         $scope.plotNoDataAvailable();
         $scope.isComplianceExist = false;
       } else if(days <= patientDashboard.maxDaysForWeeklyGraph) {
@@ -332,8 +333,10 @@ angular.module('hillromvestApp')
 
     $scope.switchPatientTab = function(status){
       $scope.patientTab = status;
-      if(StorageService.get('logged').role === 'HCP'){
+      if($scope.role === 'HCP'){
         $state.go('hcp'+status, {'patientId': $stateParams.patientId});
+      }else if($scope.role === loginConstants.role.acctservices){
+        $state.go(status+loginConstants.role.Rcadmin, {'patientId': $stateParams.patientId});
       }else{
         $state.go(status, {'patientId': $stateParams.patientId});
       }
@@ -836,14 +839,18 @@ angular.module('hillromvestApp')
      // chart.noData("Nothing to see here.");
       chart.tooltipContent($scope.toolTipContentForCompliance($scope.completeComplianceData.actual));
       //this function to put x-axis labels
-      chart.xAxis.rotateLabels(-35).tickValues($scope.complianceGraphData[0].values.map( function(d){return d.x;} ) ).tickFormat(function(d) {
-          var days = dateService.getDateDiffIndays($scope.fromTimeStamp,$scope.toTimeStamp);
-          if(days > 10){
-            return d3.time.format('%d%b%y')(new Date(d));
-          } else{
-            return d3.time.format('%d%b%y %H:%M')(new Date(d));
-          }
-        });
+      var days = dateService.getDateDiffIndays($scope.fromTimeStamp,$scope.toTimeStamp);
+      if(days > 30) {
+        chart.xAxis.rotateLabels(-35).tickValues(0).tickFormat(function(d) {return d3.time.format('%b%y')(new Date(d));});
+      } else {
+        chart.xAxis.rotateLabels(-35).showMaxMin(false).tickValues($scope.complianceGraphData[0].values.map( function(d){return d.x;} ) ).tickFormat(function(d) {
+            if(days > 10){
+              return d3.time.format('%d%b%y')(new Date(d));
+            } else{
+              return d3.time.format('%d%b%y %H:%M')(new Date(d));
+            }
+          });
+      }
       chart.yAxis1.tickFormat(d3.format('d'));
       chart.yAxis2.tickFormat(d3.format('d'));
       if($scope.yAxis1Min === 0 && $scope.yAxis1Max === 0){
@@ -1598,14 +1605,19 @@ angular.module('hillromvestApp')
             $scope.dayGraphForNode(event.point.x);
           });
           //this function to put x-axis labels
-          chart.xAxis.rotateLabels(-35).tickValues($scope.graphData[0].values.map( function(d){return d.x;} ) ).tickFormat(function(d) {
           var days = dateService.getDateDiffIndays($scope.fromTimeStamp,$scope.toTimeStamp);
-          if(days > 10){
-            return d3.time.format('%d%b%y')(new Date(d));
-          } else{
-            return d3.time.format('%d%b%y %H:%M')(new Date(d));
+
+          if(days > 30){
+            chart.xAxis.rotateLabels(-35).tickValues(0).tickFormat(function(d) {return d3.time.format('%b %Y')(new Date(d));});
+          } else {
+            chart.xAxis.rotateLabels(-35).showMaxMin(false).tickValues($scope.graphData[0].values.map( function(d){return d.x;} ) ).tickFormat(function(d) {
+              if(days > 10){
+                return d3.time.format('%d%b%y')(new Date(d));
+              } else{
+                return d3.time.format('%d%b%y %H:%M')(new Date(d));
+              }
+          });
           }
-        });
 
           chart.yAxis.tickFormat(d3.format('d'));
           chart.forceY([$scope.yAxisRangeForHMRLine.min, $scope.yAxisRangeForHMRLine.max]);
@@ -1785,9 +1797,6 @@ angular.module('hillromvestApp')
       });
     }
 
-
-
-
 //end
     $scope.drawHMRBarGraph = function() {
         nv.addGraph(function() {
@@ -1803,9 +1812,13 @@ angular.module('hillromvestApp')
             return d3.time.format('%I:%M %p')(new Date(d));
             return dateService.getTimeIntervalFromTimeStamp(d);
         });
-
+          if($scope.yAxisRangeForHMRBar.min === 0 && $scope.yAxisRangeForHMRBar.min === 0){
+            chart.forceY([$scope.yAxisRangeForHMRBar.min,1]);
+          }else{
+            chart.forceY([$scope.yAxisRangeForHMRBar.min, $scope.yAxisRangeForHMRBar.max]);
+          }
           chart.yAxis.tickFormat(d3.format('d'));
-          chart.forceY([$scope.yAxisRangeForHMRBar.min, $scope.yAxisRangeForHMRBar.max]);
+          chart.yAxis.axisLabelDistance(50);
           chart.yAxis.axisLabel('Hours');
           d3.select('#hmrBarGraph svg')
           .datum($scope.hmrBarGraphData)

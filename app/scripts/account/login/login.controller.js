@@ -55,6 +55,8 @@ angular.module('hillromvestApp')
           $state.go("clinicadmindashboard");
         }else if($scope.userRole === "HCP"){
           $state.go("hcpdashboard");
+        }else if($scope.userRole === loginConstants.role.acctservices){
+          $state.go("rcadminPatients");
         }
       }else{
         $scope.clearLastLogin();
@@ -78,7 +80,7 @@ angular.module('hillromvestApp')
         password: $scope.password,
         captcha: $scope.user.captcha
       }).then(function(response) {
-        if (response.status === 200) {
+        if (response.status === 200) { 
           var logged = StorageService.get('logged') || {};
           StorageService.remove('loginCount');
           logged.userFirstName = response.data.user.firstName;
@@ -100,6 +102,9 @@ angular.module('hillromvestApp')
           } else if(response.data.user.authorities[0].name === 'CLINIC_ADMIN'){
             logged.userId = response.data.user.id;
             $state.go('clinicadmindashboard');
+          } else if(response.data.user.authorities[0].name === loginConstants.role.acctservices){
+            logged.userId = response.data.user.id;
+            $state.go('rcadminPatients');
           } else{
             logged.userId = response.data.user.id;
             $state.go('patientUser');
