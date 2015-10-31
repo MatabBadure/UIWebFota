@@ -576,7 +576,8 @@ angular.module('hillromvestApp')
             var rect_width = d3.select('#hmrBarGraph svg').selectAll('.nv-barsWrap defs rect').attr("width");
            d3.select('#hmrBarGraph svg').selectAll('rect.nv-bar')
               .attr("x", 40)
-              .attr("width", 70);
+              .attr("width", 70)
+              .style({'fill-opacity': '1'});
 
               d3.select('#hmrBarGraph svg').select('.nv-y .nv-wrap g').append('rect')
               .attr("width", rect_width)
