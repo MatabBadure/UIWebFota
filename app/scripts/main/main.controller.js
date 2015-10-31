@@ -1,18 +1,25 @@
 'use strict';
 
 angular.module('hillromvestApp')
-    .controller('MainController',['$scope', 'Principal', 'Auth', '$state', 'Account', '$location', '$stateParams', '$rootScope', 'loginConstants', 'StorageService', 'UserService',
-    	function ($scope, Principal,Auth, $state, Account, $location,$stateParams, $rootScope,loginConstants,StorageService, UserService) {
+    .controller('MainController',['$scope', 'Principal', 'Auth', '$state', 'Account', '$location', '$stateParams', '$rootScope', 'loginConstants', 'StorageService', 'UserService', '$window',
+    	function ($scope, Principal,Auth, $state, Account, $location,$stateParams, $rootScope,loginConstants,StorageService, UserService, $window) {
         Principal.identity().then(function(account) {
             $scope.account = account;
             $scope.isAuthenticated = Principal.isAuthenticated;
         });
-	      $rootScope.userRole = null;
-	      $rootScope.username = null;
-	      if(StorageService.get('logged')){
-	        $rootScope.userRole = StorageService.get('logged').role;
-	        $rootScope.username = StorageService.get('logged').userFirstName;  
-	      }
+
+        $scope.mainInit = function(){
+			$rootScope.userRole = null;
+			$rootScope.username = null;
+			if(StorageService.get('logged')){
+				$rootScope.userRole = StorageService.get('logged').role;
+				$rootScope.username = StorageService.get('logged').userFirstName;  
+			}
+			if($rootScope.userRole === 'PATIENT'){
+				$scope.getNotifications();
+			}
+        }
+	      
 	      $scope.isActive = function(tab) {
 	        var path = $location.path();
 	        if (path.indexOf(tab) !== -1) {
@@ -146,7 +153,10 @@ angular.module('hillromvestApp')
 			    $scope.notifications.push(noNotification);
 			}
 	      };
-	      if($rootScope.userRole === "PATIENT"){
-		      $scope.getNotifications();
-		  }
+		$scope.mainInit();
+		$window.onfocus = function(){
+			$scope.mainInit();			
+			Auth.authorize(true);
+		}
+
     }]);

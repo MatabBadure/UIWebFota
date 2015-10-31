@@ -36,26 +36,26 @@ angular.module('hillromvestApp')
       Auth.logout();
       StorageService.clearAll();
       $scope.isAuthenticated = false;
-      $scope.username = null;
+      $rootScope.username = null;
       $scope.password = null;
       $scope.isLoaded = true;
     };
 
     $scope.navigateUser = function(){
       if(Principal.isAuthenticated()){
-        $scope.userRole = StorageService.get('logged').role;
-        if(!$scope.userRole){
+        $rootScope.userRole = StorageService.get('logged').role;
+        if(!$rootScope.userRole){
           $scope.clearLastLogin(); 
           $state.go("home");
-        }else if($scope.userRole === "ADMIN"){
+        }else if($rootScope.userRole === "ADMIN"){
           $state.go("patientUser");
-        }else if($scope.userRole === "PATIENT"){
+        }else if($rootScope.userRole === "PATIENT"){
           $state.go("patientdashboard");
-        }else if($scope.userRole === "CLINIC_ADMIN" || $scope.userRole === "CLINIC ADMIN"){
+        }else if($rootScope.userRole === "CLINIC_ADMIN" || $rootScope.userRole === "CLINIC ADMIN"){
           $state.go("clinicadmindashboard");
-        }else if($scope.userRole === "HCP"){
+        }else if($rootScope.userRole === "HCP"){
           $state.go("hcpdashboard");
-        }else if($scope.userRole === loginConstants.role.acctservices){
+        }else if($rootScope.userRole === loginConstants.role.acctservices){
           $state.go("rcadminPatients");
         }
       }else{
