@@ -23,6 +23,9 @@ angular.module('hillromvestApp')
         };
         $scope.submitted = false;
         $scope.formSubmit = function () {
+          if($scope.form.$invalid){
+            return false;
+          }
           $scope.submitted = true;
         };
 
@@ -173,6 +176,7 @@ angular.module('hillromvestApp')
           var currentDate = new Date();
           if(value && (!$scope.isValidDate(value) || value > currentDate)) {
            $scope.form.dob.$invalid = true;
+           $scope.form.$invalid = true;
           }
          });
 
@@ -200,6 +204,7 @@ angular.module('hillromvestApp')
           var currentDate = new Date();
           if(selectedDate > currentDate || $scope.form.dob.$error.pattern){
             $scope.form.dob.$invalid = true;
+            $scope.form.$invalid = true;
             $scope.patient.age = '';
           } else{
             var _month = (selectedDate.getMonth()+1).toString();
@@ -217,6 +222,7 @@ angular.module('hillromvestApp')
                 $scope.form.$invalid = true;
               }
             } else {
+              $scope.form.$invalid = true;
               $scope.form.dob.$invalid = true;
             }
           }
