@@ -576,7 +576,8 @@ angular.module('hillromvestApp')
             var rect_width = d3.select('#hmrBarGraph svg').selectAll('.nv-barsWrap defs rect').attr("width");
            d3.select('#hmrBarGraph svg').selectAll('rect.nv-bar')
               .attr("x", 40)
-              .attr("width", 70);
+              .attr("width", 70)
+              .style({'fill-opacity': '1'});
 
               d3.select('#hmrBarGraph svg').select('.nv-y .nv-wrap g').append('rect')
               .attr("width", rect_width)
@@ -839,9 +840,17 @@ angular.module('hillromvestApp')
      // chart.noData("Nothing to see here.");
       chart.tooltipContent($scope.toolTipContentForCompliance($scope.completeComplianceData.actual));
       //this function to put x-axis labels
-      var days = dateService.getDateDiffIndays($scope.fromTimeStamp,$scope.toTimeStamp);
+      var days = dateService.getDateDiffIndays($scope.fromTimeStamp,$scope.toTimeStamp),
+      totalDataPoints = $scope.complianceGraphData[0].values.length,
+            tickCount = parseInt(totalDataPoints/12);
       if(days > 30) {
-        chart.xAxis.rotateLabels(-35).tickValues(0).tickFormat(function(d) {return d3.time.format('%b %y')(new Date(d));});
+        chart.xAxis.rotateLabels(-35).showMaxMin(false).tickValues($scope.complianceGraphData[0].values.map( function(d, index){
+          if (index % tickCount === 0) {
+            return d.x;
+          } else {
+            return 0
+          }
+        }) ).tickFormat(function(d) {return d3.time.format('%d %b %y')(new Date(d));});
       } else {
         chart.xAxis.rotateLabels(-35).showMaxMin(false).tickValues($scope.complianceGraphData[0].values.map( function(d){return d.x;} ) ).tickFormat(function(d) {
             if(days > 10){
@@ -1605,10 +1614,16 @@ angular.module('hillromvestApp')
             $scope.dayGraphForNode(event.point.x);
           });
           //this function to put x-axis labels
-          var days = dateService.getDateDiffIndays($scope.fromTimeStamp,$scope.toTimeStamp);
-
+          var days = dateService.getDateDiffIndays($scope.fromTimeStamp,$scope.toTimeStamp),
+            totalDataPoints = $scope.graphData[0].values.length,
+            tickCount = parseInt(totalDataPoints/12);
           if(days > 30){
-            chart.xAxis.rotateLabels(-35).tickValues(0).tickFormat(function(d) {return d3.time.format('%b %Y')(new Date(d));});
+            chart.xAxis.rotateLabels(-35).showMaxMin(false).tickValues($scope.graphData[0].values.map( function(d, index) {
+                if(index % tickCount === 0) {
+                  return d.x;
+                } else {
+                  return 0;
+                }} )).tickFormat(function(d) {return d3.time.format('%d %b %Y')(new Date(d));});
           } else {
             chart.xAxis.rotateLabels(-35).showMaxMin(false).tickValues($scope.graphData[0].values.map( function(d){return d.x;} ) ).tickFormat(function(d) {
               if(days > 10){
