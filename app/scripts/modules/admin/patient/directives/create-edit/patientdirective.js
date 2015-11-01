@@ -169,6 +169,30 @@ angular.module('hillromvestApp')
           }
         };
 
+        $scope.$watch("patient.formatedDOB", function(value) {
+          var currentDate = new Date();
+          if(value && (!$scope.isValidDate(value) || value > currentDate)) {
+           $scope.form.dob.$invalid = true;
+          }
+         });
+
+        $scope.isValidDate = function(dob) {
+          var parts   = dob.split("/"),
+            month   = parseInt(parts[0], 10),
+            day     = parseInt(parts[1], 10),
+            year    = parseInt(parts[2], 10),
+            monthLength = [ 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ];
+          if(year < 1000 || year > 3000 || month == 0 || month > 12) {
+            return false;
+          }
+          //For leap years
+          if(year % 400 == 0 || (year % 100 != 0 && year % 4 == 0)) {
+            monthLength[1] = 29;
+          }
+
+          return day > 0 && day <= monthLength[month - 1];
+        };
+
         angular.element('#dp2').datepicker({
           autoclose: true}).
           on('changeDate', function(ev) {
@@ -177,19 +201,23 @@ angular.module('hillromvestApp')
           if(selectedDate > currentDate || $scope.form.dob.$error.pattern){
             $scope.form.dob.$invalid = true;
             $scope.patient.age = '';
-          }else{
+          } else{
             var _month = (selectedDate.getMonth()+1).toString();
             _month = _month.length > 1 ? _month : '0' + _month;
             var _day = (selectedDate.getDate()).toString();
             _day = _day.length > 1 ? _day : '0' + _day;
             var _year = (selectedDate.getFullYear()).toString();
             var dob = _month+"/"+_day+"/"+_year;
-            $scope.patient.dob = dob;
-            var age = dateService.getAge(selectedDate);
-            angular.element('.age').val(age);
-            $scope.patient.age = age;
-            if (age === 0) {
-              $scope.form.$invalid = true;
+            if($scope.isValidDate(dob)) {
+              $scope.patient.dob = dob;
+              var age = dateService.getAge(selectedDate);
+              angular.element('.age').val(age);
+              $scope.patient.age = age;
+              if (age === 0) {
+                $scope.form.$invalid = true;
+              }
+            } else {
+              $scope.form.dob.$invalid = true;
             }
           }
           angular.element("#dp2").datepicker('hide');
