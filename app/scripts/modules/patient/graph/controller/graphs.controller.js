@@ -226,9 +226,14 @@ angular.module('hillromvestApp')
         $scope.removeGraph();
         $scope.getDayHMRGraphData();
       } else if(days === 0 && $scope.selectedGraph === 'COMPLIANCE'){
-        $scope.complianceGraphData = [];
+        //$scope.toTimeStamp = new Date().getTime();
+        $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');
+        //$scope.fromTimeStamp = dateService.getnDaysBackTimeStamp(durationInDays);;
+        $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
+        /*$scope.complianceGraphData = [];
         $scope.plotNoDataAvailable();
-        $scope.isComplianceExist = false;
+        $scope.isComplianceExist = false;*/
+        $scope.getComplianceGraphData();
       } else if(days <= patientDashboard.maxDaysForWeeklyGraph) {
         $scope.weeklyChart($scope.fromTimeStamp);
       } else if ( days > patientDashboard.maxDaysForWeeklyGraph && days <= patientDashboard.minDaysForMonthlyGraph ) {
@@ -621,10 +626,10 @@ angular.module('hillromvestApp')
           $scope.complianceGraphData = [];
           $scope.plotNoDataAvailable();
           $scope.isComplianceExist = false;
-        }else if($scope.completeComplianceData.actual.length < 2){
+        }/*else if($scope.completeComplianceData.actual.length < 2){
           $scope.plotNoDataAvailable();
           $scope.isComplianceExist = false;
-        }
+        }*/
          else {
           //recommended values
           $scope.noDataAvailable = false;
@@ -711,9 +716,9 @@ angular.module('hillromvestApp')
       $scope.selectedGraph = 'COMPLIANCE';
       $scope.complianceGraph = true;
       $scope.hmrGraph = false;
-      if($scope.fromTimeStamp === $scope.toTimeStamp){
+      /*if($scope.fromTimeStamp === $scope.toTimeStamp){
         $scope.calculateTimeDuration(6);
-      }
+      }*/      
       $scope.getComplianceGraphData();
   };
 
