@@ -1,14 +1,14 @@
 .read_more{
 	color: $sunshade;
 }
-/* ----Left Navbar CSS ----*/ 
+/* ----Left Navbar CSS ----*/
 .brand_name{
 	color: $label-color;
 	padding: $base_padding;
 	display: inline-block;
 	padding-left: 0px;
 }
-/* ----Right Navbar CSS ----*/ 
+/* ----Right Navbar CSS ----*/
 .patient_dash_right_nav{
 	li{
 		&:last-child{
@@ -25,7 +25,7 @@
 			&:focus{
 				background-color: $table-bg;
 			}
-			
+
 		}
 
 	}
@@ -52,7 +52,7 @@
 			color: $sunshade;
 		}
 	}
-} 
+}
 .stats_chart_container{
 	clear: left;
     display: inline-block;
@@ -316,6 +316,9 @@
 	.date_input{
 		width: 100%;
 	}
+	.custom_textarea{
+		height: 80px;
+	}
 	.edit_delete{
 		.save{
 			background-color: $iceberg;
@@ -405,7 +408,7 @@
 .wrapper_custom_check.custom-check-hcp-clinicadmin{
 
 .check{
-   
+
    &:checked + .check_label{
     color: $gray-dark;
     &.missedTHRP_legend{
@@ -460,7 +463,7 @@
 			}
  */
 
-/* Custom check Style END*/ 
+/* Custom check Style END*/
  /* User Profile Setting */
 .specific-user .user-header {
   margin-top: 30px;
@@ -518,7 +521,7 @@
 		float: right;
 
 	}
-	
+
 }
 
 
