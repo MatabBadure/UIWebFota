@@ -2,8 +2,8 @@
 
 angular.module('hillromvestApp')
 .controller('graphController',
-  ['$scope', '$state', 'patientDashBoardService', 'StorageService', 'dateService', 'graphUtil', 'patientService', 'UserService', '$stateParams', 'notyService', '$timeout', 'graphService', 'caregiverDashBoardService', 'loginConstants',
-  function($scope, $state, patientDashBoardService, StorageService, dateService, graphUtil, patientService, UserService, $stateParams, notyService, $timeout, graphService, caregiverDashBoardService, loginConstants) {
+  ['$scope', '$state', 'patientDashBoardService', 'StorageService', 'dateService', 'graphUtil', 'patientService', 'UserService', '$stateParams', 'notyService', '$timeout', 'graphService', 'caregiverDashBoardService', 'loginConstants', '$location',
+  function($scope, $state, patientDashBoardService, StorageService, dateService, graphUtil, patientService, UserService, $stateParams, notyService, $timeout, graphService, caregiverDashBoardService, loginConstants, $location) {
 
     var chart;
     var hiddenFrame, htmlDocument;
@@ -1640,7 +1640,11 @@ angular.module('hillromvestApp')
           }
 
           chart.yAxis.tickFormat(d3.format('d'));
-          chart.forceY([$scope.yAxisRangeForHMRLine.min, $scope.yAxisRangeForHMRLine.max]);
+          if($scope.yAxisRangeForHMRLine.min === 0 && $scope.yAxisRangeForHMRLine.max === 0){
+            chart.forceY([$scope.yAxisRangeForHMRLine.min, 1]);
+          }else{
+            chart.forceY([$scope.yAxisRangeForHMRLine.min, $scope.yAxisRangeForHMRLine.max]);
+          }
           chart.yAxis.axisLabel('Hours');
             d3.select('#hmrLineGraph svg')
           .datum($scope.graphData)
@@ -1832,7 +1836,7 @@ angular.module('hillromvestApp')
             return d3.time.format('%I:%M %p')(new Date(d));
             return dateService.getTimeIntervalFromTimeStamp(d);
         });
-          if($scope.yAxisRangeForHMRBar.min === 0 && $scope.yAxisRangeForHMRBar.min === 0){
+          if($scope.yAxisRangeForHMRBar.min === 0 && $scope.yAxisRangeForHMRBar.max === 0){
             chart.forceY([$scope.yAxisRangeForHMRBar.min,1]);
           }else{
             chart.forceY([$scope.yAxisRangeForHMRBar.min, $scope.yAxisRangeForHMRBar.max]);

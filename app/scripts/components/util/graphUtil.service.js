@@ -26,7 +26,7 @@ angular.module('hillromvestApp')
         angular.forEach(data.actual, function(value) {
           var point = {};
           point.x = value.timestamp;
-          point.y = Math.floor(value.hmr/60);
+          point.y = value.hmr/60;//Math.floor(value.hmr/60);
           pointSet.push(point);
         });
         graphData.values = pointSet;
@@ -254,7 +254,7 @@ angular.module('hillromvestApp')
         angular.forEach(data, function(value) {
           var point = {};
           point.x = value.startTime;
-          point.y = Math.floor(value.hmr/3600);
+          point.y = value.hmr/3600;//Math.floor(value.hmr/3600);
           pointSet.push(point);
         });
         graphData.values = pointSet;
@@ -332,15 +332,19 @@ angular.module('hillromvestApp')
 
       this.formatDayWiseDate = function(data) {
         var list = [];
-        var data1 = {frequency : 0, pressure : 0, durationInMinutes : 0, programmedCaughPauses : 0, 
+        /*var data1 = {frequency : 0, pressure : 0, durationInMinutes : 0, programmedCaughPauses : 0, 
                       normalCaughPauses : 0, caughPauseDuration : 0, hmr : 'null'};
         var data2 = JSON.parse(JSON.stringify(data1));
         var data3 = JSON.parse(JSON.stringify(data1));
         var data4 = JSON.parse(JSON.stringify(data1));
         var data5 = JSON.parse(JSON.stringify(data1));
-        var data6 = JSON.parse(JSON.stringify(data1));
-        angular.forEach(data, function(value) {
-          var timeSlot = dateService.getTimeIntervalFromTimeStamp(value.startTime);
+        var data6 = JSON.parse(JSON.stringify(data1));*/
+        angular.forEach(data, function(value, key) {
+          if(!value.startTime)
+          value.startTime = dateService.getTimeStampForTimeSlot(data[0].date,1);
+          list.push(value);
+
+          /*var timeSlot = dateService.getTimeIntervalFromTimeStamp(value.startTime);
           switch(timeSlot){
             case 'Midnight - 4 AM':
               data1.startTime = dateService.getTimeStampForTimeSlot(value.date,1);
@@ -366,9 +370,9 @@ angular.module('hillromvestApp')
               data6.startTime = dateService.getTimeStampForTimeSlot(value.date,6);
               insertData(data6,value);
               break;
-          }
+          }*/
         });
-        if(data1.startTime !== undefined){
+        /*if(data1.startTime !== undefined){
           list.push(data1);
         } else {
           data1.startTime = dateService.getTimeStampForTimeSlot(data[0].date,1);
@@ -403,7 +407,8 @@ angular.module('hillromvestApp')
         } else {
           data6.startTime = dateService.getTimeStampForTimeSlot(data[0].date,6);
           list.push(data6);
-        }
+        }*/
+        console.log("list : " + JSON.stringify(list));
         return list;
       }
 
