@@ -719,7 +719,7 @@ angular.module('hillromvestApp')
       $scope.hmrGraph = false;
       /*if($scope.fromTimeStamp === $scope.toTimeStamp){
         $scope.calculateTimeDuration(6);
-      }*/      
+      }*/
       $scope.getComplianceGraphData();
   };
 
@@ -1898,6 +1898,10 @@ angular.module('hillromvestApp')
         $scope.getDayHMRGraphData();
       }
     };
+
+    $scope.$watch("textNote.edit_date", function(){
+      angular.element(document.querySelector('.datepicker')).hide();
+    })
 
 }]);
 
