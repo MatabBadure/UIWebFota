@@ -6,7 +6,7 @@
 			<span class="user-gen-details--hr-id">{{slectedPatient.hillromId}}</span>
 		</div>
 	</div>
-</div> 
+</div>
 		<div class="container patient_wrapper">
 			<div class="col-md-16">
 				<div class="row">
@@ -49,7 +49,7 @@
 							</div>
 						</div>
 					</div>
-					<!-- <div class="col-md-4 col-sm-16 dashboard_noti_mobile" ng-if="role === 'PATIENT'">	
+					<!-- <div class="col-md-4 col-sm-16 dashboard_noti_mobile" ng-if="role === 'PATIENT'">
 						<div class="dashboard_noti_section">
 							<div class="header_noti"><h4 translate="graph.notification"></h4></div>
 							<div class="notification_container" ng-show="patientNotifications.length <= 0">
@@ -93,14 +93,14 @@
 					</div>
 				</div>
 				<div class="pull-right week_date_container">
-					<span ng-if="fromDate !== toDate"> 
+					<span ng-if="fromDate !== toDate">
 							<span class="date">{{fromDate}}</span> - <span class="date">{{toDate}}</span>
 					</span>
 					<span ng-if="fromDate === toDate" class="date">{{fromDate}}<span>
-				</div>	
+				</div>
 			</div>
 
-			
+
 		<div class="col-md-16" class="all_graph_wrapper">
 			<div class="graph_nodata" ng-show="noDataAvailable">
 					<span class="noData_text"> No Data Available!</span>
@@ -132,10 +132,10 @@
 				  		 	<div class="custom_check_container" ng-click="durationIsDisabled && isLegendEnabled('durationIsDisabled');">
 				  		 		<input id="duration" class="check" type="checkbox" name="duration" ng-disabled="durationIsDisabled" ng-model="compliance.duration" ng-change="reCreateComplianceGraph();$event.stopPropagation();">
 				  		 		<label class="check_label duration_legend" for="duration" translate="graph.duration" ></label>
-				  		 	</div>				  		 	
-			  		 	</form>	
+				  		 	</div>
+			  		 	</form>
 			  		 	<!-- <span ng-show="complianceParamErrMsg" translate="graph.please-deselect-one-item" class="has-error graph_check_error" id="max-compliance-err"></span>
-		  		 		<span ng-show="minComplianceParamErrMsg" translate="graph.min-legend-required" class="has-error graph_check_error" id="min-compliance-err"></span> -->		  		 	
+		  		 		<span ng-show="minComplianceParamErrMsg" translate="graph.min-legend-required" class="has-error graph_check_error" id="min-compliance-err"></span> -->
 					</div>
 				</div>
 				<div id="complianceGraph" class="complianceGraph col-md-16">
@@ -147,7 +147,7 @@
 
 	<!-- Note section HTML -->
 	<div class="col-md-16">
-		<div class="btn_group patient_dashdoard_btns" >			
+		<div class="btn_group patient_dashdoard_btns" >
 			<div dropdown class="pull-right">
 				<button id="single-button" type="button" class="hillrom-btn btn-submit float-right" dropdown-toggle ng-disabled="disabled" translate="graph.download" >
 					<span class="caret"></span>
@@ -155,19 +155,19 @@
 				<ul class="dropdown-menu" role="menu" aria-labelledby="single-button" ng-if="!noDataAvailable">
 					<li role="menuitem">
 						<a href="javascript:void(0);" ng-click="downloadAsPdf();" translate="graph.export-as-pdf"></a>
-					</li>					
+					</li>
 					<li role="menuitem">
 						<a href="javascript:void(0);" ng-click="downloadProcessedDataAsCsv();" translate="graph.export-processed-data"></a>
 					</li>
 					<li role="menuitem">
 						<a href="javascript:void(0);" ng-click="downloadRawDataAsCsv();" translate="graph.export-raw-data"></a>
-					</li>										
+					</li>
 				</ul>
 
 			</div>
 			 <button class="hillrom-btn btn-submit float-right" ng-click="showAllNotes();" translate="graph.note"></button>
-			
-			
+
+
 		</div>
 	</div>
 	<div class="col-md-16 hide_content" id="add_note_container">
@@ -193,19 +193,19 @@
 								<span ng-bind="note.createdOn"></span>
 							</div>
 							<div class="col-md-9 col-sm-6 description">
-								<div class="form-group">
-									<textarea id="editedNoteText_{{note.id}}" value="{{note.note}}" maxlength="300"  class="form-control custom_textarea" rows="1"></textarea> 
+								<div class="form-group note_edit_container">
+									<textarea id="editedNoteText_{{note.id}}" value="{{note.note}}" maxlength="300"  class="form-control custom_textarea" rows="1"></textarea>
 									<span class="has-error" ng-show="noteError" ng-bind="noteError" id="noteError_{{note.id}}"></span>
 								</div>
-							</div>							
-							
+							</div>
+
 							<div class="col-md-5 col-sm-7 edit_delete">
 								<div class="pull-right">
-									<input type="button"  value="Cancel" ng-click="cancelEditNote(note.id);" class="hillrom-btn btn-submit float-right" />	
-									<input type="submit" id="submit" value="Update" class="hillrom-btn btn-submit float-right" />	 									
+									<input type="button"  value="Cancel" ng-click="cancelEditNote(note.id);" class="hillrom-btn btn-submit float-right" />
+									<input type="submit" id="submit" value="Update" class="hillrom-btn btn-submit float-right" />
 								</div>
 							</div>
-						</div> 				
+						</div>
 						</form>
 						<div class="col-md-3 col-sm-4 edit_delete" ng-show="role === 'PATIENT'">
 							<div class="pull-right view_note_act view_content show_content note_delete_edit" id="viewnoteact_{{note.id}}">
@@ -214,8 +214,8 @@
 
 							</div>
 						</div>
-					</div>			
-				</div> 
+					</div>
+				</div>
 			</div>
 			<div class="notes_content" ng-if="notes.length <= 0 && !addNoteActive">
 				<center><span translate="graph.no-data-found"></span></center>
@@ -254,7 +254,7 @@
 	<div class="dashboard__manage-view--pagination pagination_notes" ng-if="notes.length > 0">
         <div class="col-md-16">
           <div class="navbar-right">
-            <span class="record-found" >{{notes.length}} 
+            <span class="record-found" >{{notes.length}}
 	            <span translate="graph.notes" ng-if="notes.length > 1"></span>
 	            <span translate="graph.note" ng-if="notes.length == 1"></span>
             </span>
