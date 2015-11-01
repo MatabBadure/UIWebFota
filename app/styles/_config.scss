@@ -323,7 +323,7 @@ $zindex-navbar:            1000 !default;
 $zindex-dropdown:          1000 !default;
 $zindex-popover:           1060 !default;
 $zindex-tooltip:           1070 !default;
-$zindex-navbar-fixed:      1030 !default;
+$zindex-navbar-fixed:      999 !default;
 $zindex-modal-background:  1040 !default;
 $zindex-modal:             1050 !default;
 
@@ -917,4 +917,4 @@ $dl-horizontal-offset:        $component-offset-horizontal !default;
 $hr-border:                   $gray-lighter !default;
 //**base padding link.
 $base_padding: 10px 15px;
-$border_default: solid 1px $gainsboro !default;             
+$border_default: solid 1px $gainsboro !default;

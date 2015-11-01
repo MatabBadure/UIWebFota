@@ -17,7 +17,7 @@ angular.module('hillromvestApp')
         onSuccess: '&',
         userStatus: '=userStatus'
       },
-      controller: ['$scope', 'notyService', '$state', 'UserService', 'StorageService', 'Auth', function ($scope, notyService, $state, UserService, StorageService, Auth) {
+      controller: ['$scope', 'notyService', '$state', 'UserService', 'StorageService', 'Auth', '$rootScope', function ($scope, notyService, $state, UserService, StorageService, Auth, $rootScope) {
 
 
         $scope.open = function () {
@@ -92,6 +92,7 @@ angular.module('hillromvestApp')
             $scope.userStatus.message = response.data.message;
             notyService.showMessage($scope.userStatus.message, 'success');
             if($scope.selectedSelf && (StorageService.get('logged').userEmail !== response.data.user.email || $scope.myHRID !== response.data.user.hillromId) ){
+              $rootScope.userRole = null;
               Auth.logout();
               $state.go('login');
             }else{

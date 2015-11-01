@@ -87,7 +87,7 @@
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
               <input class="" type="text" name="firstName" ng-model="newAdmin.firstName" ng-minlength=2 ng-maxlength=15 ng-pattern="/^[a-z A-Z]+$/" required>
-              <div ng-show="(createClinicAdminForm.firstName.$dirty && createClinicAdminForm.firstName.$showValidationMessage && createClinicAdminForm.firstName.$invalid) || submitted">
+              <div ng-show="(createClinicAdminForm.firstName.$dirty && createClinicAdminForm.firstName.$invalid) || submitted">
                 <span class="has-error" ng-show="createClinicAdminForm.firstName.$error.required" translate="error.firstName.required">
                 </span>
                 <span class="has-error" ng-show="createClinicAdminForm.firstName.$error.pattern" translate="error.firstName.pattern"></span>
@@ -103,7 +103,7 @@
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
               <input class="" type="text" name="middleName" ng-model="newAdmin.middleName" ng-pattern="/^[a-z A-Z]+$/" ng-minlength=2 ng-maxlength=15>
-              <div ng-show="(createClinicAdminForm.middleName.$dirty && createClinicAdminForm.middleName.$showValidationMessage && createClinicAdminForm.middleName.$invalid) || submitted">
+              <div ng-show="(createClinicAdminForm.middleName.$dirty && createClinicAdminForm.middleName.$invalid) || submitted">
                 <span class="has-error" ng-show="createClinicAdminForm.middleName.$error.pattern" translate="error.middleName.pattern"></span>
                 <span class="has-error" ng-show="createClinicAdminForm.middleName.$error.minlength" translate="error.middleName.minlength"></span>
                 <span class="has-error" ng-show="createClinicAdminForm.middleName.$error.maxlength" translate="error.middleName.maxlength"></span>
@@ -120,7 +120,7 @@
             </div>
            <div class="col-md-10 dashboard__form--input reset-padding">
               <input class="" type="text" name="lastName" ng-model="newAdmin.lastName" ng-minlength=2 ng-maxlength=15 ng-pattern="/^[a-z A-Z]+$/" required>
-              <div ng-show="(createClinicAdminForm.lastName.$dirty && createClinicAdminForm.lastName.$showValidationMessage && createClinicAdminForm.lastName.$invalid) || submitted">
+              <div ng-show="(createClinicAdminForm.lastName.$dirty && createClinicAdminForm.lastName.$invalid) || submitted">
                 <span class="has-error" ng-show="createClinicAdminForm.lastName.$error.required" translate="error.lastName.required"></span>
                 <span class="has-error" ng-show="createClinicAdminForm.lastName.$error.pattern" translate="error.lastName.pattern"></span>
                 <span class="has-error" ng-show="createClinicAdminForm.lastName.$error.minlength" translate="error.lastName.minlength"></span>
@@ -135,7 +135,7 @@
             </div>
            <div class="col-md-10 dashboard__form--input reset-padding">
               <input class="" type="email" name="email" ng-model="newAdmin.email" required ng-pattern="/^[a-z][a-z0-9_\+-]+(\.[a-z0-9_\+-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*\.([a-z]{2,4})$/"  ng-maxlength=100>
-              <div ng-show="(createClinicAdminForm.email.$dirty && createClinicAdminForm.email.$showValidationMessage && createClinicAdminForm.email.$invalid) || submitted">
+              <div ng-show="(createClinicAdminForm.email.$dirty && createClinicAdminForm.email.$invalid) || submitted">
                 <span class="has-error" ng-show="createClinicAdminForm.email.$error.required" translate="error.email.required"></span>
                 <span class="has-error" ng-show="createClinicAdminForm.email.$error.pattern" translate="error.email.invalid"></span>
                 <span class="has-error" ng-show="createClinicAdminForm.email.$error.maxlength" translate="error.email.maxlength"></span>
@@ -147,7 +147,7 @@
       </div>
       <div class="col-md-16 reset-padding margin-top">
         <div class="">
-          <button type="submit" ng-if="clinicAdminEdit" class="hillrom-btn btn-primary float-right btn-margin-left" translate="clinic.update-button-text">Update</button>
+          <button  type="button" ng-click="$parent.showUpdateClinicModal=true" ng-show="clinicAdminEdit" class="hillrom-btn btn-primary float-right btn-margin-left" translate="clinic.update-button-text"></button>
           <button type="submit" ng-if="!clinicAdminEdit" class="hillrom-btn btn-primary float-right btn-margin-left" translate="clinic.create-button-text">Create</button>
           <button type="button" class="hillrom-btn btn-secondary float-right" translate="clinic.cancel-button-text" ng-click="cancelClinicAdmin()">Cancel</button>
           <div class="clr"></div>
@@ -169,6 +169,26 @@
          <div class="row modal--custom-btn">
           <buton class="hillrom-btn btn-submit float-right" ng-click="deletClinicAdmin()">Yes</buton>
           <buton class="hillrom-btn btn-submit float-right" data-dismiss="modal" ng-click="cancelModelClinicAdmin()">No</buton>
+         </div>
+      </div>
+      <footer class="modal__footer">
+      </footer>
+    </div>
+  </div>
+</div>
+
+<div ng-if="showUpdateClinicModal" class="modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true">
+  <div class="modal__dialog">
+    <div class="modal__content">
+      <header class="modal__header">
+        <button type="button" class="modal__close" data-dismiss="modal" ng-click="$parent.showUpdateClinicModal=false">&times;</button>
+         <p translate="clinic.updateClinicAdmin.warning"></p>
+      </header>
+      <div class="modal__body">
+         <div class="modal--message" translate="clinic.updateClinicAdmin.message"></div>
+         <div class="row modal--custom-btn">
+          <buton class="hillrom-btn btn-submit float-right" ng-click="$parent.showUpdateClinicModal=false;submitClinicAdmin()">Yes</buton>
+          <buton class="hillrom-btn btn-submit float-right" data-dismiss="modal" ng-click="$parent.showUpdateClinicModal=false">No</buton>
          </div>
       </div>
       <footer class="modal__footer">

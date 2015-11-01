@@ -30,6 +30,7 @@ angular.module('hillromvestApp')
       if($state.current.name === 'caregiverProfile' || $state.current.name === 'caregiverProfileEdit' ){
         $scope.initProfile(StorageService.get('logged').userId);
       } else if($state.current.name === 'caregiverChangePassword'){
+          $scope.profile = {};
           AuthServerProvider.getSecurityQuestions().then(function(response){
             $scope.questions = response.data
           });
