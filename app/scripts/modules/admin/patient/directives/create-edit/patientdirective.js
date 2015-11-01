@@ -170,7 +170,8 @@ angular.module('hillromvestApp')
         };
 
         $scope.$watch("patient.formatedDOB", function(value) {
-          if(value && !$scope.isValidDate(value)){
+          var currentDate = new Date();
+          if(value && (!$scope.isValidDate(value) || value > currentDate)) {
            $scope.form.dob.$invalid = true;
           }
          });
