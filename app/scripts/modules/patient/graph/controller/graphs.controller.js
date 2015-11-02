@@ -873,6 +873,12 @@ angular.module('hillromvestApp')
               }
         });
 
+        // TODO: Remove the sorting once the ordering fixed in the backend
+        angular.forEach($scope.complianceGraphData, function(graphData){
+          graphData.values = $filter('orderBy')(graphData.values, 'x');
+        })
+        // TODO: Remove the sorting once the ordering fixed in the backend
+
        d3.select('#complianceGraph svg')
       .datum($scope.complianceGraphData)
       .transition().duration(500).call(chart);
