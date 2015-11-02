@@ -285,6 +285,32 @@ angular.module('hillromvestApp')
 
       var dateFormatted = tempDate.getFullYear()+'-' + tempMonth + '-'+ tempDay;
       return dateFormatted;
+    },
+
+    getDateTimeFromTimeStamp: function(timeStamp,dateFormat,dateSeperator){
+      var date = new Date(timeStamp);
+      //var date = new Date(timeStamp*1000);
+      // Hours part from the timestamp
+      var hours = (date.getHours() >= 10) ? date.getHours() : "0"+date.getHours();
+      // Minutes part from the timestamp
+      var minutes = "0" + date.getMinutes();
+      // Seconds part from the timestamp
+      var seconds = "0" + date.getSeconds();
+
+      // Will display time in 10:30:23 format
+      var formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+
+
+      switch(dateFormat) {
+        case patientDashboard.serverDateFormat:
+          return this.getYear(date.getFullYear(date)) + dateSeperator + this.getMonth(date.getMonth(date)) + dateSeperator + this.getDay(date.getDate()) + " " + formattedTime;
+          break;
+        case patientDashboard.dateFormat:
+          return this.getMonth(date.getMonth(date)) + dateSeperator + this.getDay(date.getDate()) + dateSeperator + this.getYear(date.getFullYear(date)) + " " + formattedTime;
+          break;
+        case patientDashboard.INDdateFormat:
+          return this.getDay(date.getDate()) + dateSeperator + this.getMonth(date.getMonth(date)) + dateSeperator + this.getYear(date.getFullYear(date)) + " " + formattedTime;
+      }
     }
 
     };
