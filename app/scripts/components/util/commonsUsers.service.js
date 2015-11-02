@@ -22,5 +22,34 @@ angular.module('hillromvestApp')
           });
           return data;
         };
+        this.isValidDOBDate = function(dob){
+            var parts   = dob.split("/"),
+            month   = parseInt(parts[0], 10),
+            day     = parseInt(parts[1], 10),
+            year    = parseInt(parts[2], 10),
+            monthLength = [ 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ],
+            currentDate = new Date(),
+            dobTimestamp = new Date(dob).getTime(),
+            currentDateTimestamp = currentDate.getTime(),
+            maxYearRange = currentDate.getFullYear(),            
+            maxMonthRange = 12,
+            maxDayRange = 28;
+            var isValidTimestamp = (dobTimestamp > currentDateTimestamp ) ? false : true;
+            if(month === 2){
+              if(year % 400 == 0 || (year % 100 != 0 && year % 4 == 0)) {
+                maxDayRange = 29;
+              }
+            }else{
+              maxDayRange = monthLength[month - 1];
+            }
+            // date picker considers month>12 as decemeber + (12-1) month, so month check is necessary,
+            // minimum age has been considered as 250
+            // so year range check is required
+            if(!isValidTimestamp || (year < (maxYearRange -250) || year > maxYearRange || month <= 0 || month > maxMonthRange || day <= 0 || day > maxDayRange)){
+              return false;
+            }else{
+              return true;
+            }
+        };
     	
     }]);
