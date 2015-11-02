@@ -38,7 +38,9 @@ var patientDashboard = {
 }
 
 var profile = {
-	'EMAIL_UPDATED_SUCCESSFULLY' : 'Email updated successfully. Please login again.'
+	'EMAIL_UPDATED_SUCCESSFULLY' : 'Email updated successfully. Please login again.',
+	'PASSWORD_REST_ERROR' : 'Current password you entered is invalid.',
+
 }
 
 var notyMessages = {
