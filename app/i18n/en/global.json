@@ -316,7 +316,7 @@
         "active" : "Active", 
         "inactive" : "InActive", "no-event" : "No Transmission",
         "setting-deviation" : "Setting Deviation", 
-        "hmr-non-compliant" : "HMR Non Compliant", 
+        "hmr-non-compliant" : "HMR Non-Adherence", 
         "missed-therapy" :"Missed Therapy"
     },
 
