@@ -283,27 +283,17 @@ angular.module('hillromvestApp')
 				totalDataPoints = $scope.formatedCumulativeGraphData[0].values.length,
 				tickCount = parseInt(totalDataPoints/12);
 
-			chart.xAxis.rotateLabels(-35).showMaxMin(false).tickValues($scope.formatedCumulativeGraphData[0].values.map( function(d, index) { return d[0]; }) ).tickFormat(function(d) {
+			chart.xAxis.showMaxMin(false).tickFormat(function(d) {
 				if(window.event !== undefined && (window.event.type === 'mousemove')){
 					return dateService.getDateFromTimeStamp(d,patientDashboard.dateFormat,'/') + '  ('+ d3.time.format('%I:%M %p')(new Date(d)) + ')'
 				}else{
 					if(days > 10){
 						return d3.time.format('%d %b %y')(new Date(d));
 					} else{
-						return d3.time.format('%d %b %y %H:%M')(new Date(d));
+						return d3.time.format('%d %b %y')(new Date(d));
 					}
 				}
 			});
-
-			if (days > 30) {
-				chart.xAxis.rotateLabels(-35).tickValues($scope.formatedCumulativeGraphData[0].values.map( function(d, index) {
-					if (index % tickCount === 0) {
-						return d[0];
-					} else {
-						return 0;
-					}
-				}) ).showMaxMin(false).tickFormat(function(d) {return d3.time.format('%d %b %y')(new Date(d));});
-			}
 
 
 				chart.yAxis
@@ -518,22 +508,15 @@ angular.module('hillromvestApp')
 			totalDataPoints = $scope.treatmentGraphData[0].values.length,
 			tickCount = parseInt(totalDataPoints/12);
 
-			chart.xAxis.rotateLabels(-35).showMaxMin(false).tickValues($scope.treatmentGraphData[0].values.map( function(d){return d.x;} ) ).tickFormat(function(d) {
+			chart.xAxis.showMaxMin(false).tickFormat(function(d) {
 					if(days > 10){
 						return d3.time.format('%d %b %y')(new Date(d));
 					} else{
 						return d3.time.format('%d %b %y %H:%M')(new Date(d));
 					}
 				});
-			if (days > 30) {
-				chart.xAxis.rotateLabels(-65).tickValues($scope.treatmentGraphData[0].values.map( function(d, index) {
-					if (index % tickCount === 0) {
-						return d.x;
-					} else {
-						return 0;
-					}
-				}) ).showMaxMin(false).tickFormat(function(d) {return d3.time.format('%d %b %y')(new Date(d));});
-			}
+
+
 			var data =  $scope.treatmentGraphData;
 				 angular.forEach(data, function(value) {
 						if(value.yAxis === 1){
