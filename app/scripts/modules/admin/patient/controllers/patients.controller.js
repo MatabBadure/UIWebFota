@@ -10,8 +10,8 @@ angular.module('hillromvestApp')
     return val;
   };
 })
-.controller('patientsController',['$scope', '$state', '$stateParams', 'patientService', 'dateService', 'notyService', 'UserService', 'DoctorService', 'clinicService', '$q', 'StorageService', 'loginConstants',
-  function($scope, $state, $stateParams, patientService, dateService, notyService, UserService, DoctorService, clinicService, $q, StorageService, loginConstants) {
+.controller('patientsController',['$scope', '$state', '$stateParams', 'patientService', 'dateService', 'notyService', 'UserService', 'DoctorService', 'clinicService', '$q', 'StorageService', 'loginConstants', 'commonsUserService',
+  function($scope, $state, $stateParams, patientService, dateService, notyService, UserService, DoctorService, clinicService, $q, StorageService, loginConstants, commonsUserService) {
     $scope.patient = {};
     $scope.patientTab = "";
     $scope.newProtocolPoint = 1;
@@ -830,31 +830,7 @@ angular.module('hillromvestApp')
 
     angular.element('#dp2').datepicker({
           endDate: '+0d',
-          autoclose: true}).
-          on('changeDate', function(ev) {
-          var selectedDate = angular.element('#dp2').datepicker("getDate");
-          var currentDate = new Date();
-          if(selectedDate > currentDate || $scope.form.dob.$error.pattern){
-            $scope.form.dob.$invalid = true;
-            $scope.patient.age = '';
-          }else{
-            var _month = (selectedDate.getMonth()+1).toString();
-            _month = _month.length > 1 ? _month : '0' + _month;
-            var _day = (selectedDate.getDate()).toString();
-            _day = _day.length > 1 ? _day : '0' + _day;
-            var _year = (selectedDate.getFullYear()).toString();
-            var dob = _month+"/"+_day+"/"+_year;
-            $scope.patient.dob = dob;
-            var age = dateService.getAge(selectedDate);
-            angular.element('.age').val(age);
-            $scope.patient.age = age;
-            if (age === 0) {
-              $scope.form.$invalid = true;
-            }
-          }
-          angular.element("#dp2").datepicker('hide');
-          $scope.$digest();
-        });
+          autoclose: true});
 
     $scope.switchtoCustom = function(){
       $scope.submitted = false;
@@ -934,6 +910,23 @@ angular.module('hillromvestApp')
     $scope.toggleReactivationModal = function(){
       $scope.patientActivateModal = $scope.patientActivateModal ? false:true;
     };
+
+    $scope.$watch("patient.dob", function(value) {
+      if(value && (commonsUserService.isValidDOBDate(value))){
+        $scope.patient.dob = value;
+        var age = dateService.getAge(new Date(value));
+        $scope.patient.age = age;
+        if (age === 0) {
+          $scope.form.$invalid = true;
+        }
+      }else{
+        if($scope.form){
+          $scope.form.dob.$invalid = true;
+          $scope.form.$invalid = true;
+          $scope.patient.age = '';
+        }
+      }
+    });
 
     $scope.init();
   }]);
