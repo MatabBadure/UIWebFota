@@ -905,6 +905,7 @@ angular.module('hillromvestApp')
           .attr('class','missed_therapy_node');
          })
 
+
          /* Mark red color for missed therapy  -- end --*/
          var bgHeight = d3.select('#complianceGraph svg').selectAll('.x .tick line').attr("y2");;
          var bgWidth = d3.select('#complianceGraph svg ').selectAll('.y1 .tick line').attr("x2");
@@ -974,6 +975,8 @@ angular.module('hillromvestApp')
         text('MAX').
         style('fill','green');
       }
+      d3.selectAll('#complianceGraph svg').selectAll(".x.axis .tick").selectAll('text').
+        attr("dy" , 12);
       return chart;
     },function(){
         $timeout(function() {
@@ -1648,6 +1651,9 @@ angular.module('hillromvestApp')
         attr("cy", 0).
         attr("r" , 2).
         attr("fill" , '#aeb5be');
+
+
+
 
         d3.selectAll('#hmrLineGraph svg').selectAll(".nv-axis .nv-axislabel").
         attr("y" , -40);

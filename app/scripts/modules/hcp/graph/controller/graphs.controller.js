@@ -306,6 +306,9 @@ angular.module('hillromvestApp')
 					.call(chart);
 				nv.utils.windowResize(chart.update);
 		$scope.CustomizationInCumulativeGraph();
+
+		d3.selectAll('#cumulativeGraph svg').selectAll(".nv-x .tick").selectAll('text').
+        attr("dy" , 12);
 			return chart;
 		});
 		}
@@ -546,6 +549,10 @@ angular.module('hillromvestApp')
 				attr("cy" , "0").
 				attr("r" , "2").
 				attr("fill" , "#aeb5be");
+
+			d3.selectAll('#treatmentGraph svg').selectAll(".x.axis .tick").selectAll('text').
+				attr("dy" , 12);
+
 			return chart;
 		});
 	};
