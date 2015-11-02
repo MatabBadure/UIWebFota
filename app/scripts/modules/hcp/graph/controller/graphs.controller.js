@@ -35,7 +35,7 @@ angular.module('hillromvestApp')
 		var count = $scope.getCountLegends();
     if(count === 1){
     	$scope.disableLegend(legendFlag);
-    	notyService.showMessage('Error Occured Please look into it', 'warning');
+    	notyService.showMessage('At least one parameter should be selected.', 'warning');
     }else{
     	$scope.missedTherapyDaysIsDisabled = false;
     	$scope.noTransmissionRecordedIsDisabled = false;
