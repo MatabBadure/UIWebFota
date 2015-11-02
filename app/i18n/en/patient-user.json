@@ -135,7 +135,8 @@
       "cancel": "Cancel",
       "save": "Save",
       "edit": "Edit",
-      "deactivate": "Deactivate"
+      "deactivate": "Deactivate",
+      "activate": "Activate"
     },
     "caregiver": {
       "gen-details": "Caregiver Details",
