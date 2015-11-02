@@ -392,6 +392,7 @@
 .dashboard_line_graph, .complianceGraph{
 	svg{
 		height: 350px;
+		overflow: visible;
 	}
 }	
 .graph-canvas-hide{
