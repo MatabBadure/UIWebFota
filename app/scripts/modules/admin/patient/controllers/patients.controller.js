@@ -12,6 +12,7 @@ angular.module('hillromvestApp')
 })
 .controller('patientsController',['$scope', '$state', '$stateParams', 'patientService', 'dateService', 'notyService', 'UserService', 'DoctorService', 'clinicService', '$q', 'StorageService', 'loginConstants', 'commonsUserService',
   function($scope, $state, $stateParams, patientService, dateService, notyService, UserService, DoctorService, clinicService, $q, StorageService, loginConstants, commonsUserService) {
+    var isFormLoaded = false;
     $scope.patient = {};
     $scope.patientTab = "";
     $scope.newProtocolPoint = 1;
@@ -920,12 +921,13 @@ angular.module('hillromvestApp')
           $scope.form.$invalid = true;
         }
       }else{
-        if($scope.form){
+        if($scope.form && isFormLoaded){
           $scope.form.dob.$invalid = true;
           $scope.form.$invalid = true;
           $scope.patient.age = '';
         }
       }
+      isFormLoaded = true;
     });
 
     $scope.init();
