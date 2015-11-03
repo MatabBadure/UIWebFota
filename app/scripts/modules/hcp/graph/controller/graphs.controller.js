@@ -546,6 +546,7 @@ angular.module('hillromvestApp')
 				d3.select('#treatmentGraph svg')
 			.datum($scope.treatmentGraphData)
 			.transition().duration(500).call(chart);
+			d3.selectAll('#treatmentGraph svg').style("visibility", "hidden");
 			var recHeight = document.getElementsByTagName('rect')[0].getAttribute('height');
 			var recWidth = document.getElementsByTagName('rect')[0].getAttribute('width');
 			d3.select("#treatmentGraph svg").select(".nv-wrap").insert("rect", ":first-child").
@@ -564,6 +565,18 @@ angular.module('hillromvestApp')
 
 			d3.selectAll('#treatmentGraph svg').selectAll(".x.axis .tick").selectAll('text').
 				attr("dy" , 12);
+
+			if($scope.treatmentGraphData[0] && $scope.treatmentGraphData[0].values.length > 20){
+	      setTimeout(function() {
+	          d3.selectAll('#treatmentGraph svg').selectAll('.multiChart circle.nv-point').attr("r", "0");
+	          d3.selectAll('#treatmentGraph svg').style("visibility", "visible");
+	      }, 500);
+	    } else {
+	      setTimeout(function() {
+	          d3.selectAll('#treatmentGraph svg').selectAll('.multiChart circle.nv-point').attr("r", "1.3");
+	          d3.selectAll('#treatmentGraph svg').style("visibility", "visible");
+	      }, 500);
+	    }
 
 			return chart;
 		});
