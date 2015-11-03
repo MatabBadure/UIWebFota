@@ -47,7 +47,7 @@
       <div class="clr"></div>
     </div>
 
-    <div class="dashboard__manage-view--list" ng-repeat="user in users" ng-class="{ 'inactive': user.deleted }" ng-click="user.deleted || selectUser(user)">
+    <div class="dashboard__manage-view--list" ng-repeat="user in users" ng-click="selectUser(user)">
       <div class="col-md-3 reset-padding centered">
         <span class="main-prim-info">{{user.lastName}}, {{user.firstName}}</span>
       </div>
@@ -68,9 +68,10 @@
         <span class="short-info">{{user.mobilePhone}}</span>
       </div>
       <div class="col-md-1 reset-padding">
-            <span class="short-info active centered" ng-if="!user.deleted" translate="user.status-type.active"></span>
+            <span class="short-info active centered" ng-if="!user.deleted && user.activated" translate="user.status-type.active"></span>
 
             <span class="short-info inactive centered" ng-if="user.deleted" translate="user.status-type.inactive"></span>
+            <span class="short-info inactive centered" ng-if="!user.deleted && !user.activated" translate="user.status-type.pending"></span>
           </div>
 
       <div class="clr"></div>

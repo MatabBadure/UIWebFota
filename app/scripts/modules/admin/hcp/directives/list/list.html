@@ -81,8 +81,9 @@
           </div>
 
           <div class="col-md-2 reset-padding centered">
-            <span class="short-info active" ng-if="!doctor.deleted" translate="doctor.status-type.active"></span>
+            <span class="short-info active" ng-if="!doctor.deleted && doctor.activated" translate="doctor.status-type.active"></span>
             <span class="short-info inactive" ng-if="doctor.deleted" translate="doctor.status-type.inactive"></span>
+            <span class="short-info inactive" ng-if="!doctor.deleted && !doctor.activated" translate="doctor.status-type.pending"></span>
           </div>
 
           <div class="clr"></div>
