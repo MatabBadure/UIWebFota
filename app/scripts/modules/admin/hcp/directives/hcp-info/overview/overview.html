@@ -38,8 +38,9 @@
 <div class="col-md-5 user-detail-info__data">
   <span class="user-detail-info__data--key" translate="doctor.status"></span>
   <span class="user-detail-info__data--key">:</span>
-  <span ng-if="!doctor.deleted" class="user-detail-info__data--value">Active</span>
-  <span ng-if="doctor.deleted" class="user-detail-info__data--value">Inactive</span>
+  <span ng-if="!doctor.deleted && doctor.activated" class="user-detail-info__data--value" translate="doctor.status-type.active">Active</span>
+  <span ng-if="!doctor.deleted && !doctor.activated" class="user-detail-info__data--value" translate="doctor.status-type.pending">Pending</span>
+  <span ng-if="doctor.deleted" class="user-detail-info__data--value" translate="doctor.status-type.inactive">Inactive</span>
 </div>
 <div class="col-md-16 user-detail-info__data">
   <span class="user-detail-info__data--key" translate="doctor.clinic-name"></span>
@@ -51,6 +52,8 @@
 </div>
 
 <div class="col-md-16 reset-padding margin-top">
+
+  <buton class="hillrom-btn btn-primary float-right btn-margin-left" ng-if="!doctor.deleted && !doctor.activated" translate="doctor.reactivate-button-text" ng-click="resendActivationLink()"></buton>
   <buton class="hillrom-btn btn-primary float-right btn-margin-left" translate="doctor.edit-button-text" ng-click="editHCP()"></buton>
   <buton class="hillrom-btn btn-secondary float-right btn-margin-left" translate="doctor.deactivate-button-text" ng-click="showDeactivateModal()"></buton>
 </div>
