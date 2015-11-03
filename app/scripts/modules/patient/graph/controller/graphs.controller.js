@@ -881,7 +881,7 @@ angular.module('hillromvestApp')
        d3.select('#complianceGraph svg')
       .datum($scope.complianceGraphData)
       .transition().duration(500).call(chart);
-
+       d3.selectAll('#complianceGraph svg').style("visibility", "hidden");
         if( $scope.compliance.frequency === false && $scope.compliance.duration === false && $scope.compliance.pressure === false){
 
         } else {
@@ -896,12 +896,22 @@ angular.module('hillromvestApp')
           }
           count++;
          })
+
+         var missedTherapy = {};
+         if($scope.complianceGraphData[0] && $scope.complianceGraphData[0].values.length > 20){
+          missedTherapy.cssClass = 'missed_therapy_year_node';
+          missedTherapy.radius = 0.7;
+         } else {
+          missedTherapy.cssClass = 'missed_therapy_node';
+          missedTherapy.radius = 3;
+         }
+
          angular.forEach(missedTherapyCircles,function(circle){
           d3.select('#complianceGraph svg').selectAll('.nv-group.nv-series-0').append('circle')
           .attr('cx',circle.attributes.cx.value)
           .attr('cy',circle.attributes.cy.value)
-          .attr('r',4.5)
-          .attr('class','missed_therapy_node');
+          .attr('r',missedTherapy.radius)
+          .attr('class', missedTherapy.cssClass);
          })
 
 
@@ -976,6 +986,15 @@ angular.module('hillromvestApp')
       }
       d3.selectAll('#complianceGraph svg').selectAll(".x.axis .tick").selectAll('text').
         attr("dy" , 12);
+        if($scope.complianceGraphData[0] && $scope.complianceGraphData[0].values.length > 20) {
+          setTimeout(function() {
+            d3.selectAll('#complianceGraph svg').selectAll('.multiChart circle.nv-point').attr("r", "0");
+            d3.selectAll('#complianceGraph svg').style("visibility", "visible");
+        }, 500);
+      } else {
+        d3.selectAll('#complianceGraph svg').selectAll('.multiChart circle.nv-point').attr("r", "1.3");
+        d3.selectAll('#complianceGraph svg').style("visibility", "visible");
+      }
       return chart;
     },function(){
         $timeout(function() {
