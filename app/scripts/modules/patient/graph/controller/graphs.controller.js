@@ -1689,7 +1689,6 @@ angular.module('hillromvestApp')
 
         if($scope.graphData[0] && $scope.graphData[0].values.length > 20){
           setTimeout(function() {
-              d3.selectAll('#hmrLineGraph svg').selectAll('.nv-linesWrap').attr("class", "nv-line-year");
               d3.selectAll('#hmrLineGraph svg').selectAll('.nv-lineChart circle.nv-point').attr("r", "0");
               d3.selectAll('#hmrLineGraph svg').style("visibility", "visible");
           }, 500);
