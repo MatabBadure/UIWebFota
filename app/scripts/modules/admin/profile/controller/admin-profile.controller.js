@@ -102,9 +102,9 @@ angular.module('hillromvestApp')
         $state.go('login');
       }).catch(function(response){
         if(response.data.message){
-          notyService.showMessage(response.data.message, 'warning');
+          notyService.showMessage(profile.PASSWORD_REST_ERROR, 'warning');
         }else if(response.data.ERROR){
-          notyService.showMessage(response.data.ERROR, 'warning');
+          notyService.showMessage(profile.PASSWORD_REST_ERROR, 'warning');
         }
       });
     };

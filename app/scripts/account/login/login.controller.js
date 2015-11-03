@@ -306,10 +306,16 @@ angular.module('hillromvestApp')
         stats.innerHTML = value[1];
         stats.style.color = color[1];
       } else {
-        stren.style.width = "25%";
-        stren.style.background = color[0];
-        stats.innerHTML = value[0];
-        stats.style.color = color[0];
+        if($scope.confirmForm.password && $scope.confirmForm.password.$error.required){
+          stren.style.width = "0%";
+          stats.innerHTML = '';
+          stats.style.color = color[0];
+        }else{
+          stren.style.width = "25%";
+          stren.style.background = color[0];
+          stats.innerHTML = value[0];
+          stats.style.color = color[0];
+        } 
       }
       return false;
     };

@@ -211,8 +211,8 @@
         "protocol":{
             "treatmentPerDay": {
                 "required": "Protocol Treatment per Day Required",
-                "min": "Protocol Treatment per Day should be 0 to 9",
-                "max": "Protocol Treatment per Day should be 0 to 9",
+                "min": "Protocol Treatment per Day should be 1 to 9",
+                "max": "Protocol Treatment per Day should be 1 to 9",
                 "invalid": "Protocol Treatment per Day is invalid"
             },
             "minMinutesPerTreatment": {
@@ -316,7 +316,7 @@
         "active" : "Active", 
         "inactive" : "InActive", "no-event" : "No Transmission",
         "setting-deviation" : "Setting Deviation", 
-        "hmr-non-compliant" : "HMR Non Compliant", 
+        "hmr-non-compliant" : "HMR Non-Adherence", 
         "missed-therapy" :"Missed Therapy"
     },
 

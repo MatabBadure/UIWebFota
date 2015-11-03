@@ -11,8 +11,8 @@ angular.module('hillromvestApp')
         patientStatus: '=patientStatus'
       },
 
-      controller: ['$scope', '$state', 'notyService', 'dateService', 'UserService', 'StorageService', 'loginConstants',
-      function ($scope, $state, notyService, dateService, UserService, StorageService, loginConstants) {
+      controller: ['$scope', '$state', 'notyService', 'dateService', 'UserService', 'StorageService', 'loginConstants', 'commonsUserService',
+      function ($scope, $state, notyService, dateService, UserService, StorageService, loginConstants, commonsUserService) {
 
         $scope.open = function () {
           $scope.showModal = true;
@@ -44,7 +44,7 @@ angular.module('hillromvestApp')
         $scope.init();
 
         $scope.createPatient = function () {
-          if($scope.form.$invalid){
+          if($scope.form.$invalid || $scope.form.dob.$invalid){
             return false;
           }
           angular.forEach($scope.patient, function(value, key){
@@ -169,32 +169,23 @@ angular.module('hillromvestApp')
           }
         };
 
-        angular.element('#dp2').datepicker({
-          autoclose: true}).
-          on('changeDate', function(ev) {
-          var selectedDate = angular.element('#dp2').datepicker("getDate");
-          var currentDate = new Date();
-          if(selectedDate > currentDate || $scope.form.dob.$error.pattern){
-            $scope.form.dob.$invalid = true;
-            $scope.patient.age = '';
+        $scope.$watch("patient.formatedDOB", function(value) {
+          if(value && (commonsUserService.isValidDOBDate(value))){
+            $scope.patient.dob = value;
+              var age = dateService.getAge(new Date(value));
+              $scope.patient.age = age;
+              if (age === 0) {
+                $scope.form.$invalid = true;
+              }
           }else{
-            var _month = (selectedDate.getMonth()+1).toString();
-            _month = _month.length > 1 ? _month : '0' + _month;
-            var _day = (selectedDate.getDate()).toString();
-            _day = _day.length > 1 ? _day : '0' + _day;
-            var _year = (selectedDate.getFullYear()).toString();
-            var dob = _month+"/"+_day+"/"+_year;
-            $scope.patient.dob = dob;
-            var age = dateService.getAge(selectedDate);
-            angular.element('.age').val(age);
-            $scope.patient.age = age;
-            if (age === 0) {
-              $scope.form.$invalid = true;
-            }
+            $scope.form.dob.$invalid = true;
+            $scope.form.$invalid = true;
+            $scope.patient.age = '';
           }
-          angular.element("#dp2").datepicker('hide');
-          $scope.$digest();
-        });
+         });
+
+        angular.element('#dp2').datepicker({
+          autoclose: true});
       }]
     };
   });
