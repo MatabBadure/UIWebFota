@@ -1,3 +1,4 @@
+<ng-include src="'scripts/components/navbar/navbar.html'"></ng-include>
 <admin-patient-navbar></admin-patient-navbar>
 <div class="container admin-user">
   <div class="col-md-16 margin-top reset-padding">
@@ -42,7 +43,7 @@
               <span class="">*</span>
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
-              <input class="" type="number" name="treatmentsPerDay" ng-model= "protocol.treatmentsPerDay" min="0" max="9" step="1" required>
+              <input class="" type="number" name="treatmentsPerDay" ng-model= "protocol.treatmentsPerDay" min="1" max="9" step="1" required>
               <div ng-show="(addProtocolForm.treatmentsPerDay.$dirty && addProtocolForm.treatmentsPerDay.$invalid) || submitted">
                 <span class="has-error" ng-show="addProtocolForm.treatmentsPerDay.$error.required" translate="error.protocol.treatmentPerDay.required">
                 </span>

@@ -98,11 +98,11 @@
      </div>
 
      <div class="form-group">
-      <input type="password" class="form-control" validate-on-blur name="password" id="passwordBox"
-      ng-model="user.password" ng-minlength=8 ng-maxlength=50 ng-keyup="passwordStrength()" ng-pattern="/^(?=^.{8,}$)(?=.*\d)(?=.*[!@#$%^&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/" required placeholder="New Password">
+      <input type="password" class="form-control" validate-on-key-press name="password" id="passwordBox"
+      ng-model="user.password" ng-minlength=8 ng-maxlength=50 ng-keyup="passwordStrength()" ng-pattern="/^(?=^.{8,}$)(?=.*\d)(?=.*[!@#$%^&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/" placeholder="New Password" required>
       <div ng-show="(confirmForm.password.$showValidationMessage && confirmForm.password.$invalid) || submitted">
-        <span class="login-has-error" ng-show="confirmForm.password.$error.required || confirmForm.password.$error.minlength || confirmForm.password.$error.pattern">
-         {{'login.password.error' | translate }}
+        <span class="login-has-error" ng-show="confirmForm.password.$error.required">
+         {{'login.password.required' | translate }}
        </span>
        <span class="login-has-error" ng-show="confirmForm.password.$error.maxlength">
          {{'login.password.maxlength' | translate }}
@@ -110,6 +110,7 @@
     </div>
     <div ng-show="form.password.$dirty" class="CommonWidth" id="passwordStrengthContainer">
     </div>
+
     <div class="CommonWidth">
       <span id="status"></span>
     </div>
@@ -119,7 +120,7 @@
     ng-model="user.confirmPassword" ng-minlength=8 ng-maxlength=50 ng-pattern="/^(?=^.{8,}$)(?=.*\d)(?=.*[!@#$%^&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/" required  pw-check="passwordBox" placeholder="Enter New Password">
     <div ng-show="(confirmForm.confirmPassword.$dirty && confirmForm.confirmPassword.$invalid) || submitted">
       <span class="login-has-error" ng-show="confirmForm.confirmPassword.$error.required && !confirmForm.confirmPassword.$error.pwmatch">
-        Password required.
+        {{'login.password.required' | translate }}
       </span>
       <span class="login-has-error" ng-show="confirmForm.confirmPassword.$error.maxlength">
          {{'login.confirm-password.maxlength' | translate }}

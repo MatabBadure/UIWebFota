@@ -26,7 +26,7 @@ angular.module('hillromvestApp')
         angular.forEach(data.actual, function(value) {
           var point = {};
           point.x = value.timestamp;
-          point.y = Math.floor(value.hmr/60);
+          point.y = value.hmr/60;//Math.floor(value.hmr/60);
           pointSet.push(point);
         });
         graphData.values = pointSet;
@@ -254,7 +254,7 @@ angular.module('hillromvestApp')
         angular.forEach(data, function(value) {
           var point = {};
           point.x = value.startTime;
-          point.y = Math.floor(value.hmr/3600);
+          point.y = value.hmr/3600;//Math.floor(value.hmr/3600);
           pointSet.push(point);
         });
         graphData.values = pointSet;
@@ -332,15 +332,19 @@ angular.module('hillromvestApp')
 
       this.formatDayWiseDate = function(data) {
         var list = [];
-        var data1 = {frequency : 0, pressure : 0, durationInMinutes : 0, programmedCaughPauses : 0, 
+        /*var data1 = {frequency : 0, pressure : 0, durationInMinutes : 0, programmedCaughPauses : 0, 
                       normalCaughPauses : 0, caughPauseDuration : 0, hmr : 'null'};
         var data2 = JSON.parse(JSON.stringify(data1));
         var data3 = JSON.parse(JSON.stringify(data1));
         var data4 = JSON.parse(JSON.stringify(data1));
         var data5 = JSON.parse(JSON.stringify(data1));
-        var data6 = JSON.parse(JSON.stringify(data1));
-        angular.forEach(data, function(value) {
-          var timeSlot = dateService.getTimeIntervalFromTimeStamp(value.startTime);
+        var data6 = JSON.parse(JSON.stringify(data1));*/
+        angular.forEach(data, function(value, key) {
+          if(!value.startTime)
+          value.startTime = dateService.getTimeStampForTimeSlot(data[0].date,1);
+          list.push(value);
+
+          /*var timeSlot = dateService.getTimeIntervalFromTimeStamp(value.startTime);
           switch(timeSlot){
             case 'Midnight - 4 AM':
               data1.startTime = dateService.getTimeStampForTimeSlot(value.date,1);
@@ -366,9 +370,9 @@ angular.module('hillromvestApp')
               data6.startTime = dateService.getTimeStampForTimeSlot(value.date,6);
               insertData(data6,value);
               break;
-          }
+          }*/
         });
-        if(data1.startTime !== undefined){
+        /*if(data1.startTime !== undefined){
           list.push(data1);
         } else {
           data1.startTime = dateService.getTimeStampForTimeSlot(data[0].date,1);
@@ -403,7 +407,7 @@ angular.module('hillromvestApp')
         } else {
           data6.startTime = dateService.getTimeStampForTimeSlot(data[0].date,6);
           list.push(data6);
-        }
+        }*/
         return list;
       }
 
@@ -539,7 +543,7 @@ angular.module('hillromvestApp')
         if(value.note && value.note.note && value.note.note.length > 0){
             toolTip =
               '<div class="tooltip_sub_content">'+
-              '<h6 class="after">' + dateService.getDateFromTimeStamp(value.startTime,patientDashboard.dateFormat,'/') + '</h6>' +
+              '<h6 class="after">' + dateService.getDateTimeFromTimeStamp(value.startTime,patientDashboard.dateFormat,'/') + '</h6>' +
               '<ul class="graph_ul">' +
                 '<li><span class="pull-left">' + 'Frequency' + '</span><span class="pull-right value">' + value.frequency  + '</span></li>' +
                 '<li><span class="pull-left">' + 'Pressure' +'</span><span class="pull-right value">' + value.pressure +'</span></li>' +
@@ -556,7 +560,7 @@ angular.module('hillromvestApp')
               '</div>';
         }else {
           toolTip =
-            '<h6>' + dateService.getDateFromTimeStamp(value.startTime,patientDashboard.dateFormat,'/') + '</h6>' +
+            '<h6 class="after">' + dateService.getDateTimeFromTimeStamp(value.startTime,patientDashboard.dateFormat,'/') + '</h6>' +
             '<ul class="graph_ul">' +
               '<li><span class="pull-left">' + 'Frequency' + '</span><span class="pull-right value">' + value.frequency  + '</span></li>' +
               '<li><span class="pull-left">' + 'Pressure' +'</span><span class="pull-right value">' + value.pressure +'</span></li>' +
@@ -568,12 +572,36 @@ angular.module('hillromvestApp')
       }
 
       this.getToolTipForCompliance = function(value) {
-        return '<h6>' + dateService.getDateFromTimeStamp(value.start,patientDashboard.dateFormat,'/') + '  ('+ d3.time.format('%I:%M %p')(new Date(value.start)) + ')'  + '</h6>' +
+        var toolTip = '';
+         if(value.note && value.note.note && value.note.note.length > 0){
+          console.log("note is available");
+          toolTip =  
+                '<div class="tooltip_sub_content">'+
+                '<h6>' + dateService.getDateFromTimeStamp(value.start,patientDashboard.dateFormat,'/') + '  ('+ d3.time.format('%I:%M %p')(new Date(value.start)) + ')'  + '</h6>' +
+                '<ul class="graph_ul">' +
+                  '<li><span class="pull-left">' + 'Session No.' + '</span><span class="pull-right value">' +  value.sessionNo + '/' + value.treatmentsPerDay  + '</span></li>' +
+                  '<li><span class="pull-left">' + 'Frequency' +'</span><span class="pull-right value">' + value.frequency +'</span></li>' +
+                  '<li><span class="pull-left">' + 'Pressure' +'</span><span class="pull-right value">' + value.pressure +'</span></li>' +
+                  '<li><span class="pull-left">' + 'Cough Pauses' +'</span><span class="pull-right value">' + value.coughPauseDuration +'</span></li>' +
+                '</ul>'+
+                '</div>'+
+                '<div class="tooltip_sub_content">'+
+              '<h6>' + 'Note' + '</h6>' +
+              '<ul class="graph_ul">' +
+                '<span class="notes">'+(value.note.note)+'</span>' +
+              '</ul>'+
+              '</div>';
+         }else{
+          console.log("note is not available");
+          toolTip =
+                '<h6>' + dateService.getDateFromTimeStamp(value.start,patientDashboard.dateFormat,'/') + '  ('+ d3.time.format('%I:%M %p')(new Date(value.start)) + ')'  + '</h6>' +
                 '<ul class="graph_ul">' +
                   '<li><span class="pull-left">' + 'Session No.' + '</span><span class="pull-right value">' +  value.sessionNo + '/' + value.treatmentsPerDay  + '</span></li>' +
                   '<li><span class="pull-left">' + 'Frequency' +'</span><span class="pull-right value">' + value.frequency +'</span></li>' +
                   '<li><span class="pull-left">' + 'Pressure' +'</span><span class="pull-right value">' + value.pressure +'</span></li>' +
                   '<li><span class="pull-left">' + 'Cough Pauses' +'</span><span class="pull-right value">' + value.coughPauseDuration +'</span></li>' +
                 '</ul>';
+         }
+        return toolTip;
       }
     }]);
