@@ -153,5 +153,5 @@ gulp.task('html_replace', function() {
 });
 
 gulp.task('build', function (cb) {
-  runSequence('clean', ['scripts_minify','scripts_concat', 'styles', 'html_replace'], cb);
+  runSequence('clean', ['scripts_minify','scripts_concat', 'styles', 'images_compress', 'html_replace'], cb);
 });
