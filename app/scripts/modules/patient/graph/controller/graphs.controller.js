@@ -581,7 +581,6 @@ angular.module('hillromvestApp')
             var rect_width = d3.select('#hmrBarGraph svg').selectAll('.nv-barsWrap defs rect').attr("width");
            d3.select('#hmrBarGraph svg').selectAll('rect.nv-bar')
               .attr("x", 40)
-              .attr("width", 70)
               .style({'fill-opacity': '1'});
 
               d3.select('#hmrBarGraph svg').select('.nv-y .nv-wrap g').append('rect')
@@ -1642,8 +1641,8 @@ angular.module('hillromvestApp')
           d3.select('#hmrLineGraph svg').select('.nv-scatterWrap').select('.nv-group.nv-series-0').append('circle')
           .attr('cx',circle.attributes.cx.value)
           .attr('cy',circle.attributes.cy.value)
-          .attr('r',4.5)
-          .attr('class','missed_therapy_node');
+          .attr('r',0.7)
+          .attr('class','missed_therapy_year_node');
          })
 
          d3.selectAll('#hmrLineGraph svg').selectAll(".nv-axis .tick").append('circle').
@@ -1658,7 +1657,12 @@ angular.module('hillromvestApp')
         d3.selectAll('#hmrLineGraph svg').selectAll(".nv-axis .nv-axislabel").
         attr("y" , -40);
           //
-          return chart;
+        setTimeout(function() {
+            d3.selectAll('#hmrLineGraph svg').selectAll('.nv-linesWrap').attr("class", "nv-line-year");
+            d3.selectAll('#hmrLineGraph svg').selectAll('.nv-lineChart circle.nv-point').attr("r", "0")
+        }, 500);
+
+        return chart;
       }, function(){
         $timeout(function() {
         $(hiddenFrame).remove();
