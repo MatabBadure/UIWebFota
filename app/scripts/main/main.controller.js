@@ -14,6 +14,7 @@ angular.module('hillromvestApp')
 			if(StorageService.get('logged')){
 				$rootScope.userRole = StorageService.get('logged').role;
 				$rootScope.username = StorageService.get('logged').userFirstName;  
+				$rootScope.userEmail = StorageService.get('logged').userEmail;  
 			}
 			if($rootScope.userRole === 'PATIENT'){
 				$scope.getNotifications();
@@ -155,8 +156,21 @@ angular.module('hillromvestApp')
 	      };
 
 		$scope.mainInit();
+		$scope.isUserChanged = function(){
+			Account.get().$promise
+	        .then(function (account) {		
+				var prevLoggedinEmail =  $rootScope.userEmail;
+				var currentLoggedinEmail = (account.data && account.data.email) ? account.data.email : null;
+				if(!prevLoggedinEmail || !currentLoggedinEmail || (prevLoggedinEmail !== currentLoggedinEmail)){
+					window.location.reload();
+				}
+	        }, function(reason) {
+	          if($state.current.name !== "login")	
+			  window.location.reload();
+			});
+		};
 		$window.onfocus = function(){
-			window.location.reload();
+			$scope.isUserChanged();
 		}
 
     }]);
