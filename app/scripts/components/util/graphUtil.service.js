@@ -408,7 +408,6 @@ angular.module('hillromvestApp')
           data6.startTime = dateService.getTimeStampForTimeSlot(data[0].date,6);
           list.push(data6);
         }*/
-        console.log("list : " + JSON.stringify(list));
         return list;
       }
 
@@ -544,7 +543,7 @@ angular.module('hillromvestApp')
         if(value.note && value.note.note && value.note.note.length > 0){
             toolTip =
               '<div class="tooltip_sub_content">'+
-              '<h6 class="after">' + dateService.getDateFromTimeStamp(value.startTime,patientDashboard.dateFormat,'/') + '</h6>' +
+              '<h6 class="after">' + dateService.getDateTimeFromTimeStamp(value.startTime,patientDashboard.dateFormat,'/') + '</h6>' +
               '<ul class="graph_ul">' +
                 '<li><span class="pull-left">' + 'Frequency' + '</span><span class="pull-right value">' + value.frequency  + '</span></li>' +
                 '<li><span class="pull-left">' + 'Pressure' +'</span><span class="pull-right value">' + value.pressure +'</span></li>' +
@@ -561,7 +560,7 @@ angular.module('hillromvestApp')
               '</div>';
         }else {
           toolTip =
-            '<h6>' + dateService.getDateFromTimeStamp(value.startTime,patientDashboard.dateFormat,'/') + '</h6>' +
+            '<h6 class="after">' + dateService.getDateTimeFromTimeStamp(value.startTime,patientDashboard.dateFormat,'/') + '</h6>' +
             '<ul class="graph_ul">' +
               '<li><span class="pull-left">' + 'Frequency' + '</span><span class="pull-right value">' + value.frequency  + '</span></li>' +
               '<li><span class="pull-left">' + 'Pressure' +'</span><span class="pull-right value">' + value.pressure +'</span></li>' +
@@ -573,12 +572,36 @@ angular.module('hillromvestApp')
       }
 
       this.getToolTipForCompliance = function(value) {
-        return '<h6>' + dateService.getDateFromTimeStamp(value.start,patientDashboard.dateFormat,'/') + '  ('+ d3.time.format('%I:%M %p')(new Date(value.start)) + ')'  + '</h6>' +
+        var toolTip = '';
+         if(value.note && value.note.note && value.note.note.length > 0){
+          console.log("note is available");
+          toolTip =  
+                '<div class="tooltip_sub_content">'+
+                '<h6>' + dateService.getDateFromTimeStamp(value.start,patientDashboard.dateFormat,'/') + '  ('+ d3.time.format('%I:%M %p')(new Date(value.start)) + ')'  + '</h6>' +
+                '<ul class="graph_ul">' +
+                  '<li><span class="pull-left">' + 'Session No.' + '</span><span class="pull-right value">' +  value.sessionNo + '/' + value.treatmentsPerDay  + '</span></li>' +
+                  '<li><span class="pull-left">' + 'Frequency' +'</span><span class="pull-right value">' + value.frequency +'</span></li>' +
+                  '<li><span class="pull-left">' + 'Pressure' +'</span><span class="pull-right value">' + value.pressure +'</span></li>' +
+                  '<li><span class="pull-left">' + 'Cough Pauses' +'</span><span class="pull-right value">' + value.coughPauseDuration +'</span></li>' +
+                '</ul>'+
+                '</div>'+
+                '<div class="tooltip_sub_content">'+
+              '<h6>' + 'Note' + '</h6>' +
+              '<ul class="graph_ul">' +
+                '<span class="notes">'+(value.note.note)+'</span>' +
+              '</ul>'+
+              '</div>';
+         }else{
+          console.log("note is not available");
+          toolTip =
+                '<h6>' + dateService.getDateFromTimeStamp(value.start,patientDashboard.dateFormat,'/') + '  ('+ d3.time.format('%I:%M %p')(new Date(value.start)) + ')'  + '</h6>' +
                 '<ul class="graph_ul">' +
                   '<li><span class="pull-left">' + 'Session No.' + '</span><span class="pull-right value">' +  value.sessionNo + '/' + value.treatmentsPerDay  + '</span></li>' +
                   '<li><span class="pull-left">' + 'Frequency' +'</span><span class="pull-right value">' + value.frequency +'</span></li>' +
                   '<li><span class="pull-left">' + 'Pressure' +'</span><span class="pull-right value">' + value.pressure +'</span></li>' +
                   '<li><span class="pull-left">' + 'Cough Pauses' +'</span><span class="pull-right value">' + value.coughPauseDuration +'</span></li>' +
                 '</ul>';
+         }
+        return toolTip;
       }
     }]);

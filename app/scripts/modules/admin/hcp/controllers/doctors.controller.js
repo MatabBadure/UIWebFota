@@ -299,5 +299,13 @@ angular.module('hillromvestApp')
       $scope.searchPatientsForHCP();
     };
 
+    $scope.resendActivationLink = function(){
+      UserService.resendActivationLink($scope.doctor.id).then(function(response){
+        notyService.showMessage(response.data.message, 'success');
+      }).catch(function(response){
+        notyService.showError(response);
+      });
+    };
+
     $scope.init();
   }]);
