@@ -48,7 +48,7 @@
 					}
 				}
 			}
-		} 
+		}
 }
 
 .complianceGraph{
@@ -97,6 +97,21 @@
 		}
 	}
 
+	.nv-line-year.nv-linesWrap{
+		.nv-line{
+			> g{
+				> .nv-groups{
+					> .nv-group{
+						stroke: #4E95C4 !important;
+						&:hover{
+							fill-opacity: 1 !important;
+						}
+					}
+				}
+			}
+		}
+	}
+
 }
 .hmrBarGraph{
 	.svg_bg{
@@ -128,34 +143,39 @@
   fill-opacity: 1;
 }
 
-
+.missed_therapy_year_node {
+  fill: #cf202f;
+  stroke: #cf202f;
+  stroke-width: 1.5;
+  fill-opacity: 0;
+}
 /* Grapg ToolTip style */
 .nvtooltip{
-		&:before { 
+		&:before {
 		    content: "";
 		    display: block;
 		    position: absolute;
 		    bottom: -11px;
 		    left: 45%;
-		    width: 0; 
-			height: 0; 
+		    width: 0;
+			height: 0;
 			border-left: 10px solid transparent;
 			border-right: 10px solid transparent;
-			
+
 			border-top: 10px solid $iceberg;
 
  		}
- 		&:after { 
+ 		&:after {
 		    content: "";
 		    display: block;
 		    position: absolute;
 		    bottom: -9px;
 		    left: 45.5%;
-		    width: 0; 
-			height: 0; 
+		    width: 0;
+			height: 0;
 			border-left: 9px solid transparent;
 			border-right: 9px solid transparent;
-			
+
 			border-top: 9px solid #fff;
 
  		}
@@ -163,31 +183,31 @@
 
 #cumulativeGraph{
 	.nvtooltip{
-		&:before { 
+		&:before {
 		    content: "";
 		    display: block;
 		    position: absolute;
 		    top: 40%;
 		    left: -20px;
-		    width: 0; 
-			height: 0; 
+		    width: 0;
+			height: 0;
 			border-top: 10px solid transparent;
 			border-bottom: 10px solid transparent;
-			
+
 			border-right: 10px solid $iceberg;
 
  		}
- 		&:after { 
+ 		&:after {
 		    content: "";
 		    display: block;
 		    position: absolute;
 		    top: 40%;
 		    left: -17px;
-		    width: 0; 
-			height: 0; 
+		    width: 0;
+			height: 0;
 			border-top: 9px solid transparent;
 			border-bottom: 9px solid transparent;
-			
+
 			border-right: 9px solid #fff;
 
  		}
@@ -216,7 +236,7 @@
 			font-size: 12px;
 			background-color: $iceberg;
 			position: relative;
-			
+
 		}
 		h6.after{
 				&:after{
@@ -225,9 +245,9 @@
 				    position: absolute;
 				    top: 6px;
 				    right: 0;
-				    width: 1px; 
+				    width: 1px;
 					height: 15px;
-					background-color: #fff; 
+					background-color: #fff;
 				}
 			}
 		.tooltip_sub_content{
@@ -250,9 +270,9 @@
 				    position: absolute;
 				    top: 30px;
 				    right: 0;
-				    width: 1px; 
+				    width: 1px;
 					height: 80%;
-					background-color: $gray-lighter; 
+					background-color: $gray-lighter;
 			}
 		}
 		.graph_ul{
@@ -267,7 +287,7 @@
 				list-style-type: none;
 				border-bottom: solid 1px $gray-lighter;
 				padding-top: 3px;
-				overflow: hidden; 
+				overflow: hidden;
 				color: $gray-dark;
 				span{
 					color: $gray-dark;
@@ -282,7 +302,7 @@
 	    width: 100%;
 	    .dropdown-menu{
 	    	margin-bottom: 80px;
-	    }	
+	    }
 	}
 	/* Grapg ToolTip style */
 /* Over write date picker style*/
@@ -307,7 +327,7 @@
 		    padding: 3px 15px;
 		    border-radius: 0;
 			&.applyBtn{
-				margin-left: 5px; 
+				margin-left: 5px;
 			}
 			&:hover{
 				background-color: $blue-btn-hover;
@@ -328,7 +348,7 @@
 	}
 }
 	th{
-		border-radius: 0px; 
+		border-radius: 0px;
 	}
 	th.prev{
 		border-bottom-left-radius: 4px;
@@ -338,8 +358,8 @@
 		border-bottom-right-radius: 4px;
 		border-top-right-radius: 4px;
 	}
-			
-	} 
+
+	}
 	.table-condensed{
 		thead{
 			tr{
@@ -392,8 +412,9 @@
 .dashboard_line_graph, .complianceGraph{
 	svg{
 		height: 350px;
+		overflow: visible;
 	}
-}	
+}
 .graph-canvas-hide{
 	display: none;
 }
@@ -418,7 +439,7 @@
 .datepicker.datepicker-dropdown.datepicker-orient-left:after{
 	left: 93px;
 }
-.datepicker.datepicker-dropdown.datepicker-orient-bottom:before, 
+.datepicker.datepicker-dropdown.datepicker-orient-bottom:before,
 .datepicker.datepicker-dropdown.datepicker-orient-left:before{
 	left: 92px;
 }

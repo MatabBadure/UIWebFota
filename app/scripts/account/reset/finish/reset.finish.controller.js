@@ -95,28 +95,33 @@ $scope.div = function (x){
 
     years = $scope.compute_strength(count[index],(paswd.value).length);
 
-    if(years>= 1000){
-      stren.style.width = "100%";
-      stren.style.background = color[3];
-      stats.innerHTML = value[3];
-      stats.style.color =  color[3];
-    }else if(years>=100 && years<1000){
-      stren.style.width = "75%";
-      stren.style.background = color[2];
-      stats.innerHTML = value[2];
-      stats.style.color = color[2];
-    }
-    else if(years>=10 && years<100){
-      stren.style.width = "50%";
-      stren.style.background = color[1];
-      stats.innerHTML = value[1];
-      stats.style.color = color[1];
-    }else{
-      stren.style.width = "25%";
-      stren.style.background = color[0];
-      stats.innerHTML = value[0];
-      stats.style.color = color[0];
-    }
+    if (years >= 1000 && !($scope.form && $scope.form.password.$error.pattern) ){
+        stren.style.width = "100%";
+        stren.style.background = color[3];
+        stats.innerHTML = value[3];
+        stats.style.color = color[3];
+      } else if (years >= 100 && years < 1000 && ($scope.form && !$scope.form.password.$error.pattern) ){
+        stren.style.width = "75%";
+        stren.style.background = color[2];
+        stats.innerHTML = value[2];
+        stats.style.color = color[2];
+      } else if (years >= 10 && years < 100 && ($scope.form && !$scope.form.password.$error.pattern) ){
+        stren.style.width = "50%";
+        stren.style.background = color[1];
+        stats.innerHTML = value[1];
+        stats.style.color = color[1];
+      } else {
+        if($scope.form.password && $scope.form.password.$error.required){
+          stren.style.width = "0%";
+          stats.innerHTML = '';
+          stats.style.color = color[0];
+        }else{
+          stren.style.width = "25%";
+          stren.style.background = color[0];
+          stats.innerHTML = value[0];
+          stats.style.color = color[0];
+        }        
+      }
     return false;
   };
 

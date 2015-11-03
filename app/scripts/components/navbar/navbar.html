@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default navbar-fixed-top" role="navigation" data-spy="affix" ng-init="mainInit()">
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation"  ng-init="mainInit()" data-spy="affix" ng-show="userRole === 'ADMIN'">
   <div class="container" ng-switch="$root.isAuthenticated">
     <div class="navbar-header navbar-primary">
       <button data-target="#navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">
@@ -13,7 +13,7 @@
         <span class="navbar-brand__desc--text-secondary" translate="global.logo-text.health-portal"></span>
       </div>
     </div> 
-    <div ng-show="userRole === 'ADMIN'">
+    <div>
     <div class="collapse navbar-collapse navbar-secondary" id="navbar-collapse"  ng-switch-when=true>
       <ul class="nav navbar-nav navbar-right"> 
         <li class="icon-border">
