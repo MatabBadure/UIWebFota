@@ -113,6 +113,7 @@
       "max-pressure": "Max Pressure",
       "gen-details": "Add Protocol",
       "min-minutes": "Min Minutes",
+      "minutes": "Minutes",
       "frequency": "Frequency",
       "pressure": "Pressure"
     },
