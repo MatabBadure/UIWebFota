@@ -40,7 +40,7 @@ gulp.task('webserver', function() {
       fallback:'dev_index.html',
       proxies: [{
             source: '/api',
-            target: 'http://dev.hillromvest.com/api'
+            target: 'http://devserver.hillromvest.com/api'
         }],
       open: true
     }));
