@@ -178,7 +178,7 @@
     <div class="col-md-16 margin-top reset-padding">
       <div class="fropile_update_btn_group">
 
-        <buton ng-if="!patient.isDeleted && !patient.lastLoggedInAt" class="hillrom-btn btn-primary float-right btn-margin-left" ng-click="resendActivationLink()" translate="patient.btn.reactivate-button-text">Resend Activation Link</buton>
+        <buton ng-if="!patient.isDeleted && !patient.lastLoggedInAt && patient.email" class="hillrom-btn btn-primary float-right btn-margin-left" ng-click="resendActivationLink()" translate="patient.btn.reactivate-button-text">Resend Activation Link</buton>
 
         <buton class="hillrom-btn btn-primary float-right btn-margin-left" ng-click="openEditDetail()" translate="patient.btn.edit">Edit</buton>
 
