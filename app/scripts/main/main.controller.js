@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hillromvestApp')
-    .controller('MainController',['$scope', 'Principal', 'Auth', '$state', 'Account', '$location', '$stateParams', '$rootScope', 'loginConstants', 'StorageService', 'UserService', '$window',
+    .controller('MainController',['$scope', 'Principal', 'Auth', '$state', 'Account', '$location', '$stateParams', '$rootScope', 'loginConstants', 'StorageService', 'UserService', '$window', 
     	function ($scope, Principal,Auth, $state, Account, $location,$stateParams, $rootScope,loginConstants,StorageService, UserService, $window) {
         Principal.identity().then(function(account) {
             $scope.account = account;
@@ -153,10 +153,10 @@ angular.module('hillromvestApp')
 			    $scope.notifications.push(noNotification);
 			}
 	      };
+
 		$scope.mainInit();
 		$window.onfocus = function(){
-			$scope.mainInit();			
-			Auth.authorize(true);
+			window.location.reload();
 		}
 
     }]);
