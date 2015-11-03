@@ -6,7 +6,7 @@
  *
  */
 angular.module('hillromvestApp')
-  .factory('UserService',['$http', 'headerService', function($http, headerService) {
+  .factory('UserService',['$http', 'headerService', 'URL', function($http, headerService, URL) {
     return {
 
       /**
@@ -186,6 +186,15 @@ angular.module('hillromvestApp')
           return response;
         });
 
+      },
+
+      resendActivationLink : function(userId){
+        var url = URL.resendActivationLink.replace('USERID', userId);
+        return $http.put(url, null,{
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });
       }
       
     };

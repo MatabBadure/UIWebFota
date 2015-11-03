@@ -81,6 +81,7 @@
         "npiNumber": "NpiNumber",
         "parent": "parent",
         "submit-button-text": "submit",
+        "reactivate-button-text":"Resend Activation Link",
         "cancel-button-text": "cancel",
         "deactivate-button-text": "Deactivate",
         "update-button-text": "Update",
