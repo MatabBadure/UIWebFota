@@ -69,7 +69,7 @@ angular.module('hillromvestApp')
         }
       }).catch(function(response) {
         notyService.showError(response);
-        $scope.$scope.redirectToManageHCPs();
+        $scope.redirectToManageHCPs();
       });
     };
 
