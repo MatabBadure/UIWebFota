@@ -179,7 +179,7 @@ angular.module('hillromvestApp')
 			});
 		};
 		$window.onfocus = function(){
-			if($state.current.name !== 'activationLinkErrorPage'  && $state.current.name !== 'postActivateLogin')
+			if($state.current.name !== 'activationLinkErrorPage'  && $state.current.name !== 'postActivateLogin' || $state.current.name !== 'activateUser')
 			$scope.isUserChanged();
 		}
     }]);
