@@ -1069,7 +1069,9 @@ input[type=radio], input.radio {
 ul.dropdown-menu {
   margin-bottom: 20%;
 }
-
+.col-hide-web{
+    display: none;
+  }
 /*Condition for IE Browser*/
 
 @media screen\0 {
