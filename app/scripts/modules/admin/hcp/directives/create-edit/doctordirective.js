@@ -39,7 +39,16 @@ angular.module('hillromvestApp')
               var tempHcp = response.data.user;
               $scope.selectedHcp = tempHcp;
               $scope.doctor = response.data.user;
-            }).catch(function(response){})
+            }).catch(function(response){
+              notyService.showError(response);
+              if(response.status === 400){
+                if(StorageService.get('logged').role === 'ADMIN'){
+                  $state.go('hcpUser');
+                }else if(StorageService.get('logged').role === 'ACCT_SERVICES'){
+                  $state.go('hcpUserRcadmin');
+                }
+              }
+            });
           }
           $scope.states = [];
           $scope.credentialsList = admin_cont.hcp.credentialsList;

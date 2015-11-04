@@ -86,6 +86,8 @@ angular.module('hillromvestApp')
         if(currentRoute === "postActivateLogin"){
           $scope.isLoaded = true;
           $scope.showLogin = true;        
+          $scope.username = '';
+          $rootScope.userRole = false;
         }else{
           $scope.navigateUser();  
         }

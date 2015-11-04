@@ -64,6 +64,9 @@ angular.module('hillromvestApp')
       }
     }).catch(function(response){
       notyService.showError(response);
+      if(response.status === 400){
+        $state.go('hcppatientdashboard',{'clinicId': $stateParams.clinicId});
+      }
     });
   };
 
