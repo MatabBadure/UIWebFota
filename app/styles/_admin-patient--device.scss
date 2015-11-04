@@ -102,7 +102,7 @@
 
 .admin-user .protocol-list {
   div {
-    padding-left: 4%;
+    padding-left: 6%;
   }
 }
 
@@ -116,3 +116,30 @@
 .admin-user .device-list .device-list__edit span {
   padding-right: 10px;
 }
+
+.dashboard__manage-view--header.no_border{
+  border-bottom: 0px; 
+}
+.border-top{
+  border-top: solid 1px #ccc;
+}
+
+.protocol_list_container {
+  border-bottom: solid 1px #ccc;
+  position: relative;
+  padding: 0px 0px;
+}
+.protocol_list_container > div.last{
+  border-bottom: 0px;
+}
+
+
+.admin-user .protocol-list div:first-child{
+  padding-left: 10px;
+}
+.comon_action_div{
+  display: inline-block;
+  position: absolute;
+  margin-top: -6px;
+  top: 50%;
+ }

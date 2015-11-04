@@ -27,5 +27,6 @@ angular.module('hillromvestApp')
 	'searchPatientsForHCP': '/api/user/ROLE/USERID/patient/search?searchString=SEARCHSTRING&page=PAGENO&per_page=OFFSET&clinicId=CLINICID&filter=FILTER&sort_by=SORTBY',
 	'searchPatientsForHCPOrClinicadminFromSuperAdmin': '/api/user/admin/ROLE/USERID/patient/search?searchString=SEARCHSTRING&page=PAGENO&per_page=OFFSET&clinicId=CLINICID&filter=FILTER&sort_by=SORTBY',
 	'reactiavtePatient':'/api/user/PATIENTID/reactivate',
-	'resendActivationLink':'/api/user/USERID/reactivation'
+	'resendActivationLink':'/api/user/USERID/reactivation',
+	'reactiavteUser': '/api/user/USERID/reactivate'
 });

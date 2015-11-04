@@ -30,6 +30,9 @@ angular.module('hillromvestApp')
         $scope.selectedHcp = response.data.user; 
       }).catch(function(response){
         notyService.showError(response);
+        if(response.status === 400){
+          $state.go('clinicadminhcpdashboard');
+        }
       });
     };
 

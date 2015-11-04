@@ -1,8 +1,8 @@
   'use strict';
 
-angular.module('hillromvestApp')  
+angular.module('hillromvestApp')
     .service('graphUtil', [ 'dateService','hcpDashboardConstants', function (dateService,hcpDashboardConstants) {
-      
+
       this.convertIntoHMRLineGraph = function(data) {
         var pointSet = [];
         var graphData = {};
@@ -90,7 +90,7 @@ angular.module('hillromvestApp')
             });
             return pointSet;
         }
-        
+
       }
 
       var createCumulativeGraph = function(data,key,color) {
@@ -118,7 +118,7 @@ angular.module('hillromvestApp')
         });
         graphData.values = pointSet;
         graphData.key = key;
-        graphData.area = true; 
+        graphData.area = true;
         graphData.color = color;
         return graphData;
       }
@@ -149,7 +149,7 @@ angular.module('hillromvestApp')
         var min = arrayMin(hmrSet);
         range.max = Math.ceil((max + (max-min)/4)/10) * 10;
         if(min !== 0 && min > (max-min)){
-          range.min = Math.floor((min - ((max-min)/4))/10) * 10;  
+          range.min = Math.floor((min - ((max-min)/4))/10) * 10;
         } else {
           range.min = min;
         }
@@ -167,7 +167,7 @@ angular.module('hillromvestApp')
         var min = arrayMin(hmrSet);
         range.max = Math.ceil(Math.floor(max/3600)/10) * 10;
         if(min !== 0 && min > (max-min)){
-          range.min = Math.floor(Math.floor((min - ((max-min)/2))/3600)/10) * 10;  
+          range.min = Math.floor(Math.floor((min - ((max-min)/2))/3600)/10) * 10;
         }
         if(range.min === undefined){
           range.min = 0;
@@ -332,7 +332,7 @@ angular.module('hillromvestApp')
 
       this.formatDayWiseDate = function(data) {
         var list = [];
-        /*var data1 = {frequency : 0, pressure : 0, durationInMinutes : 0, programmedCaughPauses : 0, 
+        /*var data1 = {frequency : 0, pressure : 0, durationInMinutes : 0, programmedCaughPauses : 0,
                       normalCaughPauses : 0, caughPauseDuration : 0, hmr : 'null'};
         var data2 = JSON.parse(JSON.stringify(data1));
         var data3 = JSON.parse(JSON.stringify(data1));
@@ -504,11 +504,14 @@ angular.module('hillromvestApp')
       }
 
       this.getToolTipForStepChart = function(value) {
-        var toolTip = '';
+        var toolTip, headerTime = '';
+        if(!value.missedTherapy){
+          headerTime =  '  ('+ d3.time.format('%I:%M %p')(new Date(value.timestamp)) + ')';
+        }
         if(value.note && value.note.note && value.note.note.length > 0){
           toolTip =
             '<div class="tooltip_sub_content">'+
-            '<h6 class="after">' + dateService.getDateFromTimeStamp(value.timestamp,patientDashboard.dateFormat,'/') + '  ('+ d3.time.format('%I:%M %p')(new Date(value.timestamp)) + ')' + '</h6>' +
+            '<h6 class="after">' + dateService.getDateFromTimeStamp(value.timestamp,patientDashboard.dateFormat,'/') + headerTime + '</h6>' +
             '<ul class="graph_ul">' +
               '<li><span class="pull-left">' + 'Session No. ' +'</span><span class="pull-right value">' + value.sessionNo + '/' + value.treatmentsPerDay +'</span></li>' +
               '<li><span class="pull-left">' + 'Duration' + '</span><span class="pull-right value">' + value.duration  + '</span></li>' +
@@ -525,7 +528,7 @@ angular.module('hillromvestApp')
             '</div>';
         }else {
           toolTip =
-            '<h6>' + dateService.getDateFromTimeStamp(value.timestamp,patientDashboard.dateFormat,'/') + '  ('+ d3.time.format('%I:%M %p')(new Date(value.timestamp)) + ')' + '</h6>' +
+            '<h6>' + dateService.getDateFromTimeStamp(value.timestamp,patientDashboard.dateFormat,'/') + headerTime + '</h6>' +
             '<ul class="graph_ul">' +
               '<li><span class="pull-left">' + 'Session No. ' +'</span><span class="pull-right value">' + value.sessionNo + '/' + value.treatmentsPerDay +'</span></li>' +
               '<li><span class="pull-left">' + 'Duration' + '</span><span class="pull-right value">' + value.duration  + '</span></li>' +
@@ -534,7 +537,7 @@ angular.module('hillromvestApp')
               '<li><span class="pull-left">' + 'Cough Pauses' +'</span><span class="pull-right value">' + (value.coughPauseDuration) +'</span></li>' +
               '</ul>';
             }
-          
+
           return toolTip;
       }
 
@@ -575,7 +578,7 @@ angular.module('hillromvestApp')
         var toolTip = '';
          if(value.note && value.note.note && value.note.note.length > 0){
           console.log("note is available");
-          toolTip =  
+          toolTip =
                 '<div class="tooltip_sub_content">'+
                 '<h6>' + dateService.getDateFromTimeStamp(value.start,patientDashboard.dateFormat,'/') + '  ('+ d3.time.format('%I:%M %p')(new Date(value.start)) + ')'  + '</h6>' +
                 '<ul class="graph_ul">' +

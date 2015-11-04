@@ -114,6 +114,9 @@
 	.col-hide-iPad{
 		display: none;
 	}
+	.col-hide-web{
+    	display: block;
+  	}
 	.dashboard__manage-view--header{
 		.header--type{
 			width: 20%;
@@ -233,9 +236,14 @@
 	.patient_nav_link_right li {
 		margin-right: 5px;
 	}
+	/*Admin Responsive column style*/
 	.col-hide-iPad{
 		display: none;
-	} 
+	}
+	.col-hide-web{
+    	display: block;
+  	}
+	
 }
 @media screen and (min-width : 1024px){
 	.login{
