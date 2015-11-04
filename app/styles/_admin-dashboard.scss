@@ -327,11 +327,16 @@
   font-size: 10px;
   font-weight: 300;
   position: absolute;
-  top: 8px !important;
-  right: 9px;
+  top: 5px !important;
+  right: 5px;
   z-index: 1;
   z-index: 1 \0;
   pointer-events: none;
+  width: 20px;
+  height: 19px;
+  line-height: 19px;
+  text-align: center;
+  background-color: $lapis-lazuli;
 }
 
 .search-icon {
@@ -1079,6 +1084,7 @@ ul.dropdown-menu {
 
     &:before{
       content: '' !important;
+      background-color: transparent;
     }
   }
 }
