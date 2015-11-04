@@ -57,9 +57,8 @@ $scope.passwordStrength = function(){
 
 $scope.authenticateCred = function(data){
   Auth.configurePassword(data).then(function () {
-    Auth.logout();
     $scope.success = true;
-    $state.go('home');
+    $state.go('postActivateLogin');
   }).catch(function (response) {
       $scope.success = false;
       if(response.status == 400 && response.data.ERROR == "Invalid Activation Key"){
