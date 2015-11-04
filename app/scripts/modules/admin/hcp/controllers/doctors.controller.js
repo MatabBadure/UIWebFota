@@ -38,12 +38,19 @@ angular.module('hillromvestApp')
       UserService.getUser(doctorId, url).then(function(response) {
         $scope.doctor = response.data.user;
       }).catch(function(response) {
-        if(response.data.message){
-          notyService.showMessage(response.data.message,'warning');
-        } else if(response.data.ERROR){
-          notyService.showMessage(response.data.ERROR,'warning');
+        notyService.showError(response);
+        if(response.status === 400){
+          $scope.redirectToManageHCPs();
         }
       });
+    };
+
+    $scope.redirectToManageHCPs = function(){
+      if(StorageService.get('logged').role === 'ADMIN'){
+        $state.go('hcpUser');
+      }else if(StorageService.get('logged').role === 'ACCT_SERVICES'){
+        $state.go('hcpUserRcadmin');
+      }
     };
 
     $scope.selectedDoctor = function(doctor) {
@@ -60,7 +67,10 @@ angular.module('hillromvestApp')
         if (typeof callback === 'function') {
           callback($scope.doctor);
         }
-      }).catch(function(response) {});
+      }).catch(function(response) {
+        notyService.showError(response);
+        $scope.redirectToManageHCPs();
+      });
     };
 
 
