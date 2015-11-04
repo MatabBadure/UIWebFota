@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('hillromvestApp')
-.controller('AuthenticateController',['$scope', 'Auth', '$state', '$stateParams', function ($scope, Auth, $state, $stateParams) {
+.controller('AuthenticateController',['$scope', 'Auth', '$state', '$stateParams', 'AuthServerProvider',
+  function ($scope, Auth, $state, $stateParams,AuthServerProvider) {
 
     $scope.otherError = false;
     $scope.questionsNotLoaded = false;
@@ -13,12 +14,20 @@ angular.module('hillromvestApp')
     $scope.formSubmit = function(){
        $scope.submitted  = true;
    }
+   
+   AuthServerProvider.isValidActivationKey($stateParams.key).
+   then(function (response) {
+      $scope.isActivateUser = true;
+    }).catch(function (err) {
+       $state.go("activationLinkErrorPage");
+    });
+
    Auth.getSecurityQuestions().
    then(function (response) {
     $scope.questions = response.data;
-}).catch(function (err) {
-    $scope.questionsNotLoaded = true;
-});
+    }).catch(function (err) {
+        $scope.questionsNotLoaded = true;
+    });
 
 $scope.authenticate = function(event) {
    event.preventDefault();
