@@ -40,13 +40,17 @@ angular.module('hillromvestApp')
       }).catch(function(response) {
         notyService.showError(response);
         if(response.status === 400){
-          if(StorageService.get('logged').role === 'ADMIN'){
-            $state.go('hcpUser');
-          }else if(StorageService.get('logged').role === 'ACCT_SERVICES'){
-            $state.go('hcpUserRcadmin');
-          }
+          $scope.$scope.redirectToManageHCPs();
         }
       });
+    };
+
+    $scope.$scope.redirectToManageHCPs = function(){
+      if(StorageService.get('logged').role === 'ADMIN'){
+        $state.go('hcpUser');
+      }else if(StorageService.get('logged').role === 'ACCT_SERVICES'){
+        $state.go('hcpUserRcadmin');
+      }
     };
 
     $scope.selectedDoctor = function(doctor) {
@@ -65,9 +69,7 @@ angular.module('hillromvestApp')
         }
       }).catch(function(response) {
         notyService.showError(response);
-        if(response.status === 404 || response.status === 400){
-          $state.go('hcpUser');
-        }
+        $scope.$scope.redirectToManageHCPs();
       });
     };
 
