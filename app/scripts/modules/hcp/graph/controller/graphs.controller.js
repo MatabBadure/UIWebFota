@@ -283,29 +283,17 @@ angular.module('hillromvestApp')
 				totalDataPoints = $scope.formatedCumulativeGraphData[0].values.length,
 				tickCount = parseInt(totalDataPoints/12);
 
-			chart.xAxis.rotateLabels(-35).showMaxMin(false).tickValues($scope.formatedCumulativeGraphData[0].values.map( function(d, index) { return d[0]; }) ).tickFormat(function(d) {
-				if(window.event !== undefined && (window.event.type === 'mousemove')){
-					return dateService.getDateFromTimeStamp(d,patientDashboard.dateFormat,'/') + '  ('+ d3.time.format('%I:%M %p')(new Date(d)) + ')'
-				}else{
-					if(days > 10){
-						return d3.time.format('%d %b %y')(new Date(d));
-					} else{
-						return d3.time.format('%d %b %y %H:%M')(new Date(d));
+				chart.xAxis.showMaxMin(false).tickFormat(function(d) {
+					if(window.event !== undefined && (window.event.type === 'mousemove')){
+						return dateService.getDateFromTimeStamp(d,patientDashboard.dateFormat,'/') + '  ('+ d3.time.format('%I:%M %p')(new Date(d)) + ')'
+					}else{
+						if(days > 10){
+							return d3.time.format('%d %b %y')(new Date(d));
+						} else{
+							return d3.time.format('%d %b %y')(new Date(d));
+						}
 					}
-				}
-			});
-
-			if (days > 30) {
-				chart.xAxis.rotateLabels(-35).tickValues($scope.formatedCumulativeGraphData[0].values.map( function(d, index) {
-					if (index % tickCount === 0) {
-						return d[0];
-					} else {
-						return 0;
-					}
-				}) ).showMaxMin(false).tickFormat(function(d) {return d3.time.format('%d %b %y')(new Date(d));});
-			}
-
-
+				});
 				chart.yAxis
 					.tickFormat(function(d) {
 							return d;
@@ -315,7 +303,12 @@ angular.module('hillromvestApp')
 					.datum($scope.formatedCumulativeGraphData)
 					.call(chart);
 				nv.utils.windowResize(chart.update);
+        d3.selectAll('#cumulativeGraph svg').style("visibility", "hidden");
 		$scope.CustomizationInCumulativeGraph();
+
+		d3.selectAll('#cumulativeGraph svg').selectAll(".nv-x .tick").selectAll('text').
+        attr("dy" , 12);
+
 			return chart;
 		});
 		}
@@ -328,6 +321,18 @@ angular.module('hillromvestApp')
 		attr("cy" , "0").
 		attr("r" , "2").
 		attr("fill" , "#aeb5be");
+		if($scope.formatedCumulativeGraphData[0] && $scope.formatedCumulativeGraphData[0].values.length > 20){
+      setTimeout(function() {
+          d3.selectAll('#cumulativeGraph svg').selectAll('.nv-lineChart circle.nv-point').attr("r", "0");
+          d3.selectAll('#cumulativeGraph svg').style("visibility", "visible");
+      }, 500);
+    } else {
+      setTimeout(function() {
+          d3.selectAll('#cumulativeGraph svg').selectAll('.nv-lineChart circle.nv-point').attr("r", "1.3");
+          d3.selectAll('#cumulativeGraph svg').style("visibility", "visible");
+      }, 500);
+    }
+
   }
 	$scope.getTreatmentGraphData = function() {
 		hcpDashBoardService.getTreatmentGraphPoints($scope.hcpId, $scope.selectedClinic.id, dateService.getDateFromTimeStamp($scope.fromTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), $scope.groupBy).then(function(response){
@@ -518,22 +523,15 @@ angular.module('hillromvestApp')
 			totalDataPoints = $scope.treatmentGraphData[0].values.length,
 			tickCount = parseInt(totalDataPoints/12);
 
-			chart.xAxis.rotateLabels(-35).showMaxMin(false).tickValues($scope.treatmentGraphData[0].values.map( function(d){return d.x;} ) ).tickFormat(function(d) {
+			chart.xAxis.showMaxMin(false).tickFormat(function(d) {
 					if(days > 10){
 						return d3.time.format('%d %b %y')(new Date(d));
 					} else{
 						return d3.time.format('%d %b %y %H:%M')(new Date(d));
 					}
 				});
-			if (days > 30) {
-				chart.xAxis.rotateLabels(-65).tickValues($scope.treatmentGraphData[0].values.map( function(d, index) {
-					if (index % tickCount === 0) {
-						return d.x;
-					} else {
-						return 0;
-					}
-				}) ).showMaxMin(false).tickFormat(function(d) {return d3.time.format('%d %b %y')(new Date(d));});
-			}
+
+
 			var data =  $scope.treatmentGraphData;
 				 angular.forEach(data, function(value) {
 						if(value.yAxis === 1){
@@ -548,6 +546,7 @@ angular.module('hillromvestApp')
 				d3.select('#treatmentGraph svg')
 			.datum($scope.treatmentGraphData)
 			.transition().duration(500).call(chart);
+			d3.selectAll('#treatmentGraph svg').style("visibility", "hidden");
 			var recHeight = document.getElementsByTagName('rect')[0].getAttribute('height');
 			var recWidth = document.getElementsByTagName('rect')[0].getAttribute('width');
 			d3.select("#treatmentGraph svg").select(".nv-wrap").insert("rect", ":first-child").
@@ -563,6 +562,22 @@ angular.module('hillromvestApp')
 				attr("cy" , "0").
 				attr("r" , "2").
 				attr("fill" , "#aeb5be");
+
+			d3.selectAll('#treatmentGraph svg').selectAll(".x.axis .tick").selectAll('text').
+				attr("dy" , 12);
+
+			if($scope.treatmentGraphData[0] && $scope.treatmentGraphData[0].values.length > 20){
+	      setTimeout(function() {
+	          d3.selectAll('#treatmentGraph svg').selectAll('.multiChart circle.nv-point').attr("r", "0");
+	          d3.selectAll('#treatmentGraph svg').style("visibility", "visible");
+	      }, 500);
+	    } else {
+	      setTimeout(function() {
+	          d3.selectAll('#treatmentGraph svg').selectAll('.multiChart circle.nv-point').attr("r", "1.3");
+	          d3.selectAll('#treatmentGraph svg').style("visibility", "visible");
+	      }, 500);
+	    }
+
 			return chart;
 		});
 	};

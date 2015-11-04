@@ -3300,5 +3300,44 @@ angular.module('hillromvestApp')
                         return $translate.refresh();
                     }]
                 }
+            })
+            .state('activationLinkErrorPage', {
+                parent: 'account',
+                url: '/activationError?key',
+                data: {
+                    roles: [],
+                    pageTitle: 'activate.title'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/account/activate/activationLinkErrorPage.html'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('activate');
+                        return $translate.refresh();
+                    }]
+                }
+            })
+            .state('postActivateLogin', {
+                parent: 'account',
+                url: '/userLogin',
+                data: {
+                    roles: [],
+                    pageTitle: 'login.title'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/account/login/login.html',
+                        controller: 'LoginController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('login');
+                        return $translate.refresh();
+                    }]
+                }
             });
 }]);

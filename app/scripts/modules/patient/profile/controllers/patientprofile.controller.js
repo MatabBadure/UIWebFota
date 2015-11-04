@@ -202,7 +202,7 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
       notyService.showMessage(response.data.message, 'success');
       $state.go('login');
     }).catch(function(response){
-    	notyService.showError(response);
+    	notyService.showMessage(profile.PASSWORD_REST_ERROR, 'warning');
     });
   };
 

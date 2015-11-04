@@ -92,6 +92,7 @@
         "update-button-text": "Update",
         "back-button-text": "Back",
         "edit-button-text": "Edit",
+        "reactivate-button-text":"Resend Activation Link",
         "type": "Type",
         "hillRom-id": "Hill-Rom ID",
         "phoneNumber": "Phone number",

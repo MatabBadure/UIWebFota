@@ -1,4 +1,4 @@
-<div class="container login">
+<div class="container login" ng-show="isActivateUser">
   <div class="row auth--position">
     <div class="visi_view_container">
       <!-- <h1 class="login_portal_name">VisiView</h1>
@@ -26,22 +26,25 @@
         <form class="login-auth-form" ng-show="!success" name="form" role="form" novalidate ng-submit="authenticate($event)" show-validation>
           <div class="form-group">
             <input type="password" class="form-control" validate-on-key-press name="password" id="passwordBox"
-            ng-model="authenticate.password" ng-minlength=8 ng-maxlength=50 ng-pattern="/^(?=^.{8,}$)(?=.*\d)(?=.*[!@#$%^&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/" required placeholder="{{'authenticate.placeholder.password' | translate}}">
+            ng-model="authenticate.password" ng-minlength=8 ng-maxlength=50 ng-pattern="/^(?=^.{8,}$)(?=.*\d)(?=.*[!@#$%^-\{\}|`~<>\[\]\?\\_=+&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/" required placeholder="{{'authenticate.placeholder.password' | translate}}" ng-keyup="passwordStrength()" required>
             <div ng-show="(form.password.$showValidationMessage && form.password.$invalid) || submitted">
               <span class="login-has-error"
-                ng-show="form.password.$error.required || form.password.$error.minlength || form.password.$error.pattern">
-                {{'authenticate.password.error' | translate }}
+                ng-show="form.password.$error.required">
+                {{'authenticate.password.required' | translate }}
               </span>
               <span class="login-has-error"
                 ng-show="form.password.$error.maxlength">
                 {{'authenticate.password.maxlength' | translate }}
               </span>
             </div>
-            
+          
+            <div class="CommonWidth">
+              <span id="status"></span>
+            </div>
           </div>
           <div class="form-group">
             <input type="password" class="form-control" validate-on-blur name="confirmPassword"
-            ng-model="authenticate.confirmPassword" ng-minlength=8 ng-maxlength=50 ng-pattern="/^(?=^.{8,}$)(?=.*\d)(?=.*[!@#$%^&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/" required placeholder="{{'authenticate.placeholder.confirm-password' | translate}}" pw-check="passwordBox">
+            ng-model="authenticate.confirmPassword" ng-minlength=8 ng-maxlength=50 ng-pattern="/^(?=^.{8,}$)(?=.*\d)(?=.*[!@#$%^-\{\}|`~<>\[\]\?\\_=+&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/" required placeholder="{{'authenticate.placeholder.confirm-password' | translate}}" pw-check="passwordBox">
             <div ng-show="(form.confirmPassword.$dirty && form.confirmPassword.$invalid) || submitted ">
               <span class="login-has-error"
                 ng-show="form.confirmPassword.$error.required && !form.confirmPassword.$error.pwmatch">

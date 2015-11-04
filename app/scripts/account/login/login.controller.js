@@ -83,7 +83,12 @@ angular.module('hillromvestApp')
           $state.go("activate");
         }        
       }else{
-        $scope.navigateUser();  
+        if(currentRoute === "postActivateLogin"){
+          $scope.isLoaded = true;
+          $scope.showLogin = true;        
+        }else{
+          $scope.navigateUser();  
+        }
       }  
     };
 
@@ -109,7 +114,8 @@ angular.module('hillromvestApp')
           $rootScope.isFooter = false;
           $rootScope.userRole = response.data.user.authorities[0].name;
           $rootScope.username = response.data.user.firstName;
-
+          $rootScope.userEmail = response.data.user.email;
+          
           if(response.data.user.authorities[0].name === loginConstants.role.patient){
             logged.patientID = response.data.user.id;
             $state.go('patientdashboard');
@@ -306,10 +312,16 @@ angular.module('hillromvestApp')
         stats.innerHTML = value[1];
         stats.style.color = color[1];
       } else {
-        stren.style.width = "25%";
-        stren.style.background = color[0];
-        stats.innerHTML = value[0];
-        stats.style.color = color[0];
+        if($scope.confirmForm.password && $scope.confirmForm.password.$error.required){
+          stren.style.width = "0%";
+          stats.innerHTML = '';
+          stats.style.color = color[0];
+        }else{
+          stren.style.width = "25%";
+          stren.style.background = color[0];
+          stats.innerHTML = value[0];
+          stats.style.color = color[0];
+        } 
       }
       return false;
     };

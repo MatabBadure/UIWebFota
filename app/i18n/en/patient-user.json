@@ -113,6 +113,7 @@
       "max-pressure": "Max Pressure",
       "gen-details": "Add Protocol",
       "min-minutes": "Min Minutes",
+      "minutes": "Minutes",
       "frequency": "Frequency",
       "pressure": "Pressure"
     },
@@ -136,7 +137,8 @@
       "save": "Save",
       "edit": "Edit",
       "deactivate": "Deactivate",
-      "activate": "Activate"
+      "activate": "Activate",
+      "reactivate-button-text":"Resend Activation Link"
     },
     "caregiver": {
       "gen-details": "Caregiver Details",

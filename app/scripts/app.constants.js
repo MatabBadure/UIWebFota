@@ -22,9 +22,10 @@ angular.module('hillromvestApp')
 	'getTransmissionDate':'/api/patient/PATIENTID/firsttrasmissiondate',
 	'getHCPsToLinkToPatient':'/api/patient/PATIENTID/hcpbypatientclinics/search?searchString=SEARCHSTRING&page=PAGENO&per_page=OFFSET',
 	'searchAssociatedHcpsToClinic':'/api/user/clinicadmin/CLINICADMINID/hcp/search?searchString=SEARCHSTRING&clinicId=CLINICID&page=PAGE&per_page=PERPAGECOUNT&filter=FILTER',
-	'getHCPsWithClinicName': 'api/user/hcp/search?searchString=&page=1&per_page=&sort_by=lastName&asc=true',
+	'getHCPsWithClinicName': 'api/user/hcp/search?searchString=&page=1&per_page=&sort_by=lastName&asc=true&filter=isDeleted:0',
 	'getUserSecurityQuestion': 'api/user/USERID/securityQuestion',
 	'searchPatientsForHCP': '/api/user/ROLE/USERID/patient/search?searchString=SEARCHSTRING&page=PAGENO&per_page=OFFSET&clinicId=CLINICID&filter=FILTER&sort_by=SORTBY',
 	'searchPatientsForHCPOrClinicadminFromSuperAdmin': '/api/user/admin/ROLE/USERID/patient/search?searchString=SEARCHSTRING&page=PAGENO&per_page=OFFSET&clinicId=CLINICID&filter=FILTER&sort_by=SORTBY',
-	'reactiavtePatient':'/api/user/PATIENTID/reactivate'
+	'reactiavtePatient':'/api/user/PATIENTID/reactivate',
+	'resendActivationLink':'/api/user/USERID/reactivation'
 });

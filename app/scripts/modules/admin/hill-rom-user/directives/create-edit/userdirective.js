@@ -142,6 +142,14 @@ angular.module('hillromvestApp')
           $scope.reset();
         };
 
+        $scope.resendActivationLink = function(){
+          UserService.resendActivationLink($scope.user.id).then(function(response){
+            notyService.showMessage(response.data.message, 'success'); 
+          }).catch(function(response){
+            notyService.showError(response);
+          });
+        };
+
         $scope.reset = function(){
           $scope.user = {};
           $scope.userStatus.isCreate = false;
