@@ -40,12 +40,12 @@ angular.module('hillromvestApp')
       }).catch(function(response) {
         notyService.showError(response);
         if(response.status === 400){
-          $scope.$scope.redirectToManageHCPs();
+          $scope.redirectToManageHCPs();
         }
       });
     };
 
-    $scope.$scope.redirectToManageHCPs = function(){
+    $scope.redirectToManageHCPs = function(){
       if(StorageService.get('logged').role === 'ADMIN'){
         $state.go('hcpUser');
       }else if(StorageService.get('logged').role === 'ACCT_SERVICES'){
