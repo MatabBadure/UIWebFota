@@ -83,7 +83,12 @@ angular.module('hillromvestApp')
           $state.go("activate");
         }        
       }else{
-        $scope.navigateUser();  
+        if(currentRoute === "postActivateLogin"){
+          $scope.isLoaded = true;
+          $scope.showLogin = true;        
+        }else{
+          $scope.navigateUser();  
+        }
       }  
     };
 
