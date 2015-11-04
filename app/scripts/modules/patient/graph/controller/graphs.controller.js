@@ -1630,7 +1630,11 @@ angular.module('hillromvestApp')
          // chart.noData("Nothing to see here.");
           chart.tooltipContent($scope.toolTipContentStepChart());
           chart.lines.dispatch.on('elementClick', function(event) {
-            $scope.dayGraphForNode(event.point.x);
+            angular.forEach($scope.completeGraphData.actual, function(data){
+              if(data.start === event.point.x && data.missedTherapy !== true){
+                $scope.dayGraphForNode(event.point.x);
+              }
+            })
           });
           //this function to put x-axis labels
           var days = dateService.getDateDiffIndays($scope.fromTimeStamp,$scope.toTimeStamp),
