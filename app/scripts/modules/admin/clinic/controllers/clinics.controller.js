@@ -43,7 +43,16 @@ angular.module('hillromvestApp')
     $scope.getClinicById = function(clinicId){
       clinicService.getClinic(clinicId).then(function(response){
         $scope.clinic = response.data.clinic;
-      }).catch(function(response){});
+      }).catch(function(response){
+        notyService.showError(response);
+        if(response.status === 400){
+          if(StorageService.get('logged').role === 'ADMIN'){
+            $state.go('clinicUser');
+          }else if(StorageService.get('logged').role === 'ACCT_SERVICES'){
+            $state.go('clinicUserRcadmin');
+          }
+        }
+      });
     };
 
     $scope.initClinicAssoctPatients = function(clinicId){

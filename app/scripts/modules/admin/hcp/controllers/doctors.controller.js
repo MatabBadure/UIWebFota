@@ -42,7 +42,7 @@ angular.module('hillromvestApp')
         if(response.status === 400){
           if(StorageService.get('logged').role === 'ADMIN'){
             $state.go('hcpUser');
-          }else if(StorageService.get('logged').role === 'associatedClinicRcadmin'){
+          }else if(StorageService.get('logged').role === 'ACCT_SERVICES'){
             $state.go('hcpUserRcadmin');
           }
         }
