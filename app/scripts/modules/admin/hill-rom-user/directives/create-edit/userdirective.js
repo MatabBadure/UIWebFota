@@ -153,7 +153,7 @@ angular.module('hillromvestApp')
         $scope.activateUser = function(){
           $scope.showActivateModal = false;
           UserService.reactivateUser($scope.user.id).then(function(response){
-           notyService.showMessage(response.message, 'success');
+           notyService.showMessage(response.data.message, 'success');
            $state.go('hillRomUser');
           }).catch(function(response){
            notyService.showError(response);
