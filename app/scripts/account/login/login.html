@@ -87,7 +87,7 @@
     <span ng-if="message">{{message}}</span>
       <form class="login-auth-form" role="form" name="confirmForm" ng-submit="submitPassword($event)" novalidate autocomplete="off" show-validation>
         <div class="form-group email" ng-if="!isEmailExist">
-          <input type="email" class="form-control" validate-on-blur name="email" placeholder="Enter Email" ng-model="user.email" ng-maxlength=100 required ng-pattern="/^[a-z][a-z0-9_\+-]+(\.[a-z0-9_\+-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*\.([a-z]{2,4})$/" value="">
+          <input type="email" class="form-control" validate-on-blur name="email" placeholder="Enter Email" ng-model="user.email" ng-maxlength=100 required ng-pattern="/^[a-zA-Z][a-zA-Z0-9_\+-]+(\.[a-zA-Z0-9_\+-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.([a-zA-Z]{2,4})$/" value="">
           <div ng-show="(confirmForm.email.$showValidationMessage && confirmForm.email.$invalid) || submitted" class="form-error">
             <span class="login-has-error" ng-show="confirmForm.email.$error.required" translate="error.email.required"></span>
            <span class="login-has-error" ng-show="confirmForm.email.$error.pattern" translate="error.email.invalid"></span>
