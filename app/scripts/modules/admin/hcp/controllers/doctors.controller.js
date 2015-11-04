@@ -38,10 +38,13 @@ angular.module('hillromvestApp')
       UserService.getUser(doctorId, url).then(function(response) {
         $scope.doctor = response.data.user;
       }).catch(function(response) {
-        if(response.data.message){
-          notyService.showMessage(response.data.message,'warning');
-        } else if(response.data.ERROR){
-          notyService.showMessage(response.data.ERROR,'warning');
+        notyService.showError(response);
+        if(response.status === 400){
+          if(StorageService.get('logged').role === 'ADMIN'){
+            $state.go('hcpUser');
+          }else if(StorageService.get('logged').role === 'associatedClinicRcadmin'){
+            $state.go('hcpUserRcadmin');
+          }
         }
       });
     };
