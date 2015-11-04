@@ -195,7 +195,15 @@ angular.module('hillromvestApp')
         }).success(function(response) {
           return response;
         });
+      },
+
+      reactivateUser : function(userId){
+        var url = URL.reactiavteUser.replace('USERID', userId);
+        return $http.put(url, null, {
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });
       }
-      
     };
   }]);

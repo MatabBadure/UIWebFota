@@ -84,11 +84,16 @@
         "reactivate-button-text":"Resend Activation Link",
         "cancel-button-text": "cancel",
         "deactivate-button-text": "Deactivate",
+        "activate-button-text":"Activate",
         "update-button-text": "Update",
         "required-field": "* Required Fields",
         "delete": {
             "warning": "Are you sure you want to Deactivate the User?",
             "message": "If you deactivate the hillrom user, you will no longer be able to view the information."
+        },
+        "activate":{
+            "warning": "Are you sure you want to Activate the User?",
+            "message": "If you activate the hillrom user, you will be able to view the information."
         }
     }
 }
