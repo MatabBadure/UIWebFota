@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('hillromvestApp')
-  .controller('UsersController',['$scope', 'UserService', '$state', '$stateParams', 'StorageService',
-    function($scope, UserService, $state, $stateParams, StorageService) {
+  .controller('UsersController',['$scope', 'UserService', '$state', '$stateParams', 'StorageService', 'notyService',
+    function($scope, UserService, $state, $stateParams, StorageService, notyService) {
     $scope.user = {};
     $scope.userStatus = {
       'role': StorageService.get('logged').role,
@@ -34,7 +34,10 @@ angular.module('hillromvestApp')
           callback($scope.user);
         }
         $scope.$broadcast('getUserDetail', {user: $scope.user});
-      }).catch(function(response) {});
+      }).catch(function(response) {
+        notyService.showError(response);
+        $state.go('hillRomUser');
+      });
     };
 
 

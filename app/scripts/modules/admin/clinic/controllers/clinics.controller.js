@@ -156,10 +156,12 @@ angular.module('hillromvestApp')
         }else{
           $scope.clinic.status = "Active";
         }
-        /*if(){
-
-        }*/
-      }).catch(function(response) {});
+      }).catch(function(response) {
+        notyService.showError(response);
+        if(response.status === 400){
+          $state.go('clinicUser');
+        }
+      });
     };
 
     $scope.getclinicAdmin = function(clinicId){

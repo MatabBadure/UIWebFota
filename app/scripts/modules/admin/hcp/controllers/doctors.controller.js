@@ -60,7 +60,12 @@ angular.module('hillromvestApp')
         if (typeof callback === 'function') {
           callback($scope.doctor);
         }
-      }).catch(function(response) {});
+      }).catch(function(response) {
+        notyService.showError(response);
+        if(response.status === 404 || response.status === 400){
+          $state.go('hcpUser');
+        }
+      });
     };
 
 
