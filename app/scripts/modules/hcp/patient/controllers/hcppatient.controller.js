@@ -59,7 +59,9 @@ angular.module('hillromvestApp')
   $scope.getPatientInfo = function(patinetId, callback){
     clinicadminPatientService.getPatientInfo(patinetId, $stateParams.clinicId).then(function(response){
       $scope.patient = response.data.patientUser;
-      callback($scope.patient);
+      if(callback){
+        callback($scope.patient);
+      }
     }).catch(function(response){
       notyService.showError(response);
     });
