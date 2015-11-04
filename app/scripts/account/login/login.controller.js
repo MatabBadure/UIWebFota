@@ -109,7 +109,8 @@ angular.module('hillromvestApp')
           $rootScope.isFooter = false;
           $rootScope.userRole = response.data.user.authorities[0].name;
           $rootScope.username = response.data.user.firstName;
-
+          $rootScope.userEmail = response.data.user.email;
+          
           if(response.data.user.authorities[0].name === loginConstants.role.patient){
             logged.patientID = response.data.user.id;
             $state.go('patientdashboard');
