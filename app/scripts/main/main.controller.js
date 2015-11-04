@@ -30,6 +30,15 @@ angular.module('hillromvestApp')
 	        }
 	      };
 
+	      $scope.isActiveMainBar = function(tab) {
+	        var path = $location.path();
+	        if (path.indexOf(tab) !== -1) {
+	          return true;
+	        } else {
+	          return false;
+	        }
+	      };
+
 	      $scope.signOut = function(){
 	        Account.get().$promise
 	        .then(function (account) {
@@ -172,5 +181,4 @@ angular.module('hillromvestApp')
 		$window.onfocus = function(){
 			$scope.isUserChanged();
 		}
-
     }]);
