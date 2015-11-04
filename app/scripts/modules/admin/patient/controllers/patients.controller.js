@@ -714,6 +714,8 @@ angular.module('hillromvestApp')
       }
       var data = $scope.protocol.protocol;
       data[0].treatmentsPerDay = $scope.protocol.treatmentsPerDay;
+      var index = $scope.protocol.protocol.length - 1;
+      data[index].treatmentLabel = 'point'+$scope.protocol.protocol.length;
       patientService.editProtocol($stateParams.patientId, data).then(function(response){
         if($scope.patientStatus.role === loginConstants.role.acctservices){
           $state.go('patientProtocolRcadmin', {'patientId': $stateParams.patientId});
