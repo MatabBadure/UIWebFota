@@ -67,6 +67,14 @@ var footerConstants = {
 	"careSite": "careSite"
 }
 
+var resetpassword = {
+	error : {
+		"email_is_not_registered" : "E-Mail address isn't registered.",
+		"unauthorized_email" : "Your account is not active in our system. So you cannot reset your password.",
+		"contact_message_for_unauthorized_mail" : " In case you have forgotten your default password, please contact Hill-Rom Respiratory Care Customer Support at 800-426-4224 or you can reach us at visiview@hillrom.com",
+		"conatct_message" : "Please contact Hill-Rom Respiratory Care Customer Support at 800-426-4224 or you can reach us at visiview@hillrom.com. "
+	}
+}
 
 angular.module('hillromvestApp').constant('hcpDashboardConstants', {
     cumulativeGraph : {

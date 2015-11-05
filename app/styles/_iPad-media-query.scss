@@ -125,6 +125,14 @@
 	.dashboard__manage-view--list > div{
 		width: 20%;
 	}
+	.manage_view_list_iPad{
+		.centered{
+			width: 16.666%;
+		}
+		.col-sm-3{
+			width: 16.666%;
+		}
+	}
 }
 
 @media only screen and (min-width : 768px) and (max-width : 1024px) and (orientation : portrait) { 
