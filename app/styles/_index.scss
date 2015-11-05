@@ -126,9 +126,21 @@ a::-moz-focus-inner {
   position: absolute;
   top: 7px;
   right: 8px;
-  z-index: -1;
+  z-index: 1;
   font-weight: 300;
+  background-color: #fff;
+  width: 15px;
+  text-align: center;
 }
+@media screen\0 {
+  .custom-dropdown{
+
+    &:before{
+      content: '' !important;
+      background-color: transparent;
+    }
+  }
+  }
 .custom-dropdown.disabled_arrow:before{
 	display: none;
 }
