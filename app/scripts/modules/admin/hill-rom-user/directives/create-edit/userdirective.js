@@ -46,6 +46,7 @@ angular.module('hillromvestApp')
          * Function to create a user
          */
         $scope.createUser = function () {
+          $scope.showUpdateModal = false;
           if ($scope.form.$invalid) {
             return false;
           }
