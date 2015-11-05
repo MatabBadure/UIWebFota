@@ -820,12 +820,6 @@ window.nv.tooltip.* also has various helper methods.
                 top = pos[1] - height - dist;
                 var tLeft = tooltipLeft(container);
                 var tTop = tooltipTop(container);
-                console.log("top",top);
-                console.log("tTop", tTop);
-                console.log("ScrollTop", scrollTop);
-                console.log("height",height);
-                console.log("totalHeight",(scrollTop+windowHeight));
-                console.log("gravity",gravity);
                 if (tLeft < scrollLeft) left = scrollLeft + 5;
                 if (tLeft + width > windowWidth) left = left - width/2 + 5;
                 //if (scrollTop > tTop) top = scrollTop;
