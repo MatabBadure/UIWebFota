@@ -169,7 +169,6 @@ angular.module('hillromvestApp')
       }).catch(function(response) {
         notyService.showError(response);
         if(response.status === 400){
-          //$state.go('clinicUser');
           $scope.goToClinicUser();
         }
       });
@@ -400,7 +399,6 @@ angular.module('hillromvestApp')
       $scope.submitted = false;
       $scope.clinic = {};
       $scope.form.$setPristine();
-      //$state.go('clinicUser');
       $scope.goToClinicUser();
     };
 
