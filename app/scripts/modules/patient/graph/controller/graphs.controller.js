@@ -601,9 +601,7 @@ angular.module('hillromvestApp')
       setTimeout(function(){
         rect_height = d3.select('#hmrBarGraph svg').select('.nv-barsWrap .nv-wrap rect').attr('height');
         rect_width = d3.select('#hmrBarGraph svg').select('.nv-barsWrap .nv-wrap rect').attr('width');
-        d3.select('#hmrBarGraph svg').selectAll('rect.nv-bar')
-        .attr("x", 40)
-        .style({'fill-opacity': '1'});
+
 
         d3.select('#hmrBarGraph svg').select('.nv-y .nv-wrap g').append('rect')
         .attr("width", rect_width)
@@ -611,13 +609,22 @@ angular.module('hillromvestApp')
         .attr("x" , 0)
         .attr("y" , 0 )
         .attr("class" , 'svg_bg');
-        
+
         d3.selectAll('#hmrBarGraph svg').selectAll(".nv-axis .tick").append('circle').
         attr("cx" , 0).
         attr("cy", 0).
         attr("r" , 2.3).
         attr("fill" , '#aeb5be');
+
+        angular.forEach(d3.select('#hmrBarGraph svg').selectAll('rect.nv-bar')[0], function(bar){
+          d3.select(bar).attr("width", d3.select(bar).attr("width")/4);
+          d3.select(bar).attr("x", d3.select(bar).attr("width")*1.5);
+          d3.select(bar).style({'fill-opacity': '1'});
+        });
+
+        d3.select('#hmrBarGraph svg').style("visibility", "visible");
       },500);
+
     };
 
     $scope.getComplianceGraphData = function(format) {
@@ -920,7 +927,6 @@ angular.module('hillromvestApp')
           .attr('r',missedTherapy.radius)
           .attr('class', missedTherapy.cssClass);
          })
-
 
          /* Mark red color for missed therapy  -- end --*/
          setTimeout(function(){
@@ -1907,6 +1913,7 @@ angular.module('hillromvestApp')
           d3.select('#hmrBarGraph svg')
           .datum($scope.hmrBarGraphData)
           .transition().duration(500).call(chart);
+          d3.select('#hmrBarGraph svg').style("visibility", "hidden");
           return chart;
       });
     }
