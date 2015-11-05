@@ -166,8 +166,10 @@
           <button type="button" class="hillrom-btn btn-primary btn-margin-left float-right" ng-show="!userStatus.isCreate && !user.deleted && !user.activated" ng-click="resendActivationLink()" translate="user.reactivate-button-text">Resend Activation Link</button>
           <button type="submit" class="hillrom-btn btn-primary btn-margin-left float-right" ng-show="userStatus.isCreate" ng-click="formSubmit()" translate="user.submit-button-text">Submit</button>
           <button type="reset" ng-click="cancel()" ng-show="userStatus.isCreate" class="hillrom-btn btn-secondary float-right" translate="user.cancel-button-text">Cancel</button>
-          <button type="submit" class="hillrom-btn btn-primary btn-margin-left float-right" ng-click="formSubmit()" ng-show="!userStatus.isCreate" translate="user.update-button-text">Update</button>
-          <button type="button" class="hillrom-btn btn-secondary float-right" ng-click="open()" ng-show="!userStatus.isCreate" translate="user.deactivate-button-text">Deactivate</button>
+          <button type="button" class="hillrom-btn btn-primary btn-margin-left float-right" ng-click="$parent.showUpdateModal = true" ng-show="!userStatus.isCreate" translate="user.update-button-text">Update</button>
+          <button type="button" class="hillrom-btn btn-secondary float-right" ng-click="open()" ng-show="!userStatus.isCreate && !user.deleted" translate="user.deactivate-button-text">Deactivate</button>
+          <button type="button" class="hillrom-btn btn-secondary float-right" ng-click="$parent.showActivateModal= true" ng-show="!userStatus.isCreate && user.deleted" translate="user.activate-button-text">Activate</button>
+          <div class="clr"></div>
           <div class="clr"></div>
         </div>
       </div>
@@ -187,6 +189,46 @@
          <div class="row modal--custom-btn">
           <buton class="hillrom-btn btn-submit float-right" ng-click="deleteUser()">Yes</buton>
           <buton class="hillrom-btn btn-secondary btn-submit float-right" data-dismiss="modal" ng-click="close()">No</buton>
+         </div>
+      </div>
+      <footer class="modal__footer">
+      </footer>
+    </div>
+  </div>
+</div>
+
+<div ng-if="showActivateModal" class="modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true">
+  <div class="modal__dialog">
+    <div class="modal__content">
+      <header class="modal__header">
+        <button type="button" class="modal__close" data-dismiss="modal" ng-click="$parent.showActivateModal= false">&times;</button>
+         <p translate="user.activate.warning"></p>
+      </header>
+      <div class="modal__body">
+         <div class="modal--message" translate="user.activate.message"></div>
+         <div class="row modal--custom-btn">
+          <buton class="hillrom-btn btn-submit float-right" ng-click="activateUser()">Yes</buton>
+          <buton class="hillrom-btn btn-secondary btn-submit float-right" data-dismiss="modal" ng-click="$parent.showActivateModal= false">No</buton>
+         </div>
+      </div>
+      <footer class="modal__footer">
+      </footer>
+    </div>
+  </div>
+</div>
+
+<div ng-if="showUpdateModal" class="modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true">
+  <div class="modal__dialog">
+    <div class="modal__content">
+      <header class="modal__header">
+        <button type="button" class="modal__close" data-dismiss="modal" ng-click="$parent.showUpdateModal= false">&times;</button>
+         <p translate="user.update.warning"></p>
+      </header>
+      <div class="modal__body">
+         <div class="modal--message" translate="user.update.message"></div>
+         <div class="row modal--custom-btn">
+          <buton class="hillrom-btn btn-submit float-right" ng-click="createUser()">Yes</buton>
+          <buton class="hillrom-btn btn-secondary btn-submit float-right" data-dismiss="modal" ng-click="$parent.showUpdateModal= false">No</buton>
          </div>
       </div>
       <footer class="modal__footer">

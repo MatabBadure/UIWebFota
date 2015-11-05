@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('hillromvestApp')
-.controller('ResetFinishController',['$scope', '$stateParams', '$timeout', 'Auth', '$state', function ($scope, $stateParams, $timeout, Auth, $state) {
+.controller('ResetFinishController',['$scope', '$stateParams', '$timeout', 'Auth', '$state', 'AuthServerProvider',
+function ($scope, $stateParams, $timeout, Auth, $state, AuthServerProvider) {
 
   $scope.keyMissing = $stateParams.key === undefined;
   $scope.doNotMatch = null;
@@ -17,6 +18,13 @@ angular.module('hillromvestApp')
   $scope.formSubmit = function(){
    $scope.submitted  = true;
  }
+
+ AuthServerProvider.isValidResetKey($stateParams.key).
+ then(function (response) {
+    $scope.isActivateUser = true;
+  }).catch(function (err) {
+     $state.go("activationLinkErrorPage");
+  });
  Auth.getSecurityQuestions().
  then(function (response) {
   $scope.questions = response.data;

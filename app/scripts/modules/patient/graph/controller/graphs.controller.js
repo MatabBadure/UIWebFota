@@ -575,29 +575,6 @@ angular.module('hillromvestApp')
           $scope.yAxisRangeForHMRBar = graphUtil.getYaxisRangeBarGraph($scope.completeGraphData);
           $scope.hmrBarGraphData = graphUtil.convertToHMRBarGraph($scope.completeGraphData,patientDashboard.HMRBarGraphColor);
           $scope.drawHMRBarGraph();
-          //
-           $scope.customizationForBarGraph = function() {
-            var rect_height = d3.select('#hmrBarGraph svg').selectAll('.nv-barsWrap defs rect').attr("height");
-            var rect_width = d3.select('#hmrBarGraph svg').selectAll('.nv-barsWrap defs rect').attr("width");
-           d3.select('#hmrBarGraph svg').selectAll('rect.nv-bar')
-              .attr("x", 40)
-              .style({'fill-opacity': '1'});
-
-              d3.select('#hmrBarGraph svg').select('.nv-y .nv-wrap g').append('rect')
-              .attr("width", rect_width)
-              .attr("height" , rect_height)
-              .attr("x" , 0)
-              .attr("y" , 0 )
-              .attr("class" , 'svg_bg');
-
-
-              d3.selectAll('#hmrBarGraph svg').selectAll(".nv-axis .tick").append('circle').
-              attr("cx" , 0).
-              attr("cy", 0).
-              attr("r" , 2.3).
-              attr("fill" , '#aeb5be');
-          };
-
           var barCount= d3.select('#hmrBarGraph svg').selectAll('.nv-group .nv-bar')[0].length;
           var count = 5;
           $scope.waitFunction = function waitHandler() {
@@ -617,6 +594,37 @@ angular.module('hillromvestApp')
         $scope.hmrBarGraphData = [];
         $scope.plotNoDataAvailable();
       });
+    };
+
+    $scope.customizationForBarGraph = function() {
+      var rect_width,  rect_height;
+      setTimeout(function(){
+        rect_height = d3.select('#hmrBarGraph svg').select('.nv-barsWrap .nv-wrap rect').attr('height');
+        rect_width = d3.select('#hmrBarGraph svg').select('.nv-barsWrap .nv-wrap rect').attr('width');
+
+
+        d3.select('#hmrBarGraph svg').select('.nv-y .nv-wrap g').append('rect')
+        .attr("width", rect_width)
+        .attr("height" , rect_height)
+        .attr("x" , 0)
+        .attr("y" , 0 )
+        .attr("class" , 'svg_bg');
+
+        d3.selectAll('#hmrBarGraph svg').selectAll(".nv-axis .tick").append('circle').
+        attr("cx" , 0).
+        attr("cy", 0).
+        attr("r" , 2.3).
+        attr("fill" , '#aeb5be');
+
+        angular.forEach(d3.select('#hmrBarGraph svg').selectAll('rect.nv-bar')[0], function(bar){
+          d3.select(bar).attr("width", d3.select(bar).attr("width")/4);
+          d3.select(bar).attr("x", d3.select(bar).attr("width")*1.5);
+          d3.select(bar).style({'fill-opacity': '1'});
+        });
+
+        d3.select('#hmrBarGraph svg').style("visibility", "visible");
+      },500);
+
     };
 
     $scope.getComplianceGraphData = function(format) {
@@ -847,9 +855,15 @@ angular.module('hillromvestApp')
       var days = dateService.getDateDiffIndays($scope.fromTimeStamp,$scope.toTimeStamp),
       totalDataPoints = $scope.complianceGraphData[0].values.length,
             tickCount = parseInt(totalDataPoints/12);
-
-      chart.xAxis.showMaxMin(false).tickFormat(function(d) {return d3.time.format('%d-%b-%y')(new Date(d));});
-
+      if(days === 0 && $scope.completeComplianceData.actual.length === 1){
+        chart.xAxis.showMaxMin(false).tickValues($scope.complianceGraphData[0].values.map( function(d){return d.x;} ) ).tickFormat(function(d) {
+            return d3.time.format('%I:%M %p')(new Date(d));
+            return dateService.getTimeIntervalFromTimeStamp(d);
+        });
+      }else{
+        chart.xAxis.showMaxMin(false).tickFormat(function(d) {return d3.time.format('%d-%b-%y')(new Date(d));});
+      }
+            
       chart.yAxis1.tickFormat(d3.format('d'));
       chart.yAxis2.tickFormat(d3.format('d'));
       if($scope.yAxis1Min === 0 && $scope.yAxis1Max === 0){
@@ -914,16 +928,18 @@ angular.module('hillromvestApp')
           .attr('class', missedTherapy.cssClass);
          })
 
-
          /* Mark red color for missed therapy  -- end --*/
-         var bgHeight = d3.select('#complianceGraph svg').selectAll('.x .tick line').attr("y2");;
-         var bgWidth = d3.select('#complianceGraph svg ').selectAll('.y1 .tick line').attr("x2");
+         setTimeout(function(){
+
+         var bgHeight = d3.select('#complianceGraph svg').select('.x .tick line').attr("y2");
+         var bgWidth = d3.select('#complianceGraph svg ').select('.y1 .tick line').attr("x2");
          d3.select('#complianceGraph svg .nv-axis g').append('rect')
                   .attr("height", Math.abs(bgHeight))
                   .attr("width", bgWidth)
                   .attr("x" , 0)
                   .attr("y" , bgHeight)
                   .attr("class" , "svg_bg");
+         },500);
 
           /*UI Changes for Line Graph*/
         d3.selectAll('#complianceGraph svg').selectAll(".nv-axis .tick").append('circle').
@@ -986,6 +1002,9 @@ angular.module('hillromvestApp')
       }
       d3.selectAll('#complianceGraph svg').selectAll(".x.axis .tick").selectAll('text').
         attr("dy" , 12);
+        if(days === 0 && $scope.completeComplianceData.actual.length === 1){
+          d3.selectAll('#complianceGraph svg').selectAll(".x.axis .tick").selectAll('text').attr("dx" , 488);
+        }
         if($scope.complianceGraphData[0] && $scope.complianceGraphData[0].values.length > 20) {
           setTimeout(function() {
             d3.selectAll('#complianceGraph svg').selectAll('.multiChart circle.nv-point').attr("r", "0");
@@ -1124,7 +1143,26 @@ angular.module('hillromvestApp')
     $scope.getPatientById = function(patientId){
       patientService.getPatientInfo(patientId).then(function(response){
         $scope.slectedPatient = response.data;
+      }).catch(function(response){
+        notyService.showError(response);
+        if(response.status === 404){
+          $scope.redirectToPatientDashboard();
+        }
       });
+    };
+
+    $scope.redirectToPatientDashboard = function(){
+      var role = StorageService.get('logged').role;
+      switch(role){
+        case 'ADMIN':$state.go('patientUser');
+        break;
+        case 'HCP':$state.go('hcppatientdashboard', {'clinicId':$stateParams.clinicId});
+        break;
+        case 'CLINIC_ADMIN':$state.go('clinicadminpatientdashboard',{'clinicId':$stateParams.clinicId});
+        break;
+        case 'ACCT_SERVICES':$state.go('rcadminPatients');
+        break;
+      }
     };
 
     $scope.getCaregiversForPatient = function(patientId){
@@ -1630,7 +1668,11 @@ angular.module('hillromvestApp')
          // chart.noData("Nothing to see here.");
           chart.tooltipContent($scope.toolTipContentStepChart());
           chart.lines.dispatch.on('elementClick', function(event) {
-            $scope.dayGraphForNode(event.point.x);
+            angular.forEach($scope.completeGraphData.actual, function(data){
+              if(data.start === event.point.x && data.missedTherapy !== true){
+                $scope.dayGraphForNode(event.point.x);
+              }
+            })
           });
           //this function to put x-axis labels
           var days = dateService.getDateDiffIndays($scope.fromTimeStamp,$scope.toTimeStamp),
@@ -1856,7 +1898,7 @@ angular.module('hillromvestApp')
          // chart.noData("Nothing to see here.");
           chart.tooltipContent($scope.toolTipContentBarChart());
           //this function to put x-axis labels
-          chart.xAxis.rotateLabels(-35).tickValues($scope.hmrBarGraphData[0].values.map( function(d){return d.x;} ) ).tickFormat(function(d) {
+          chart.xAxis.tickValues($scope.hmrBarGraphData[0].values.map( function(d){return d.x;} ) ).tickFormat(function(d) {
             return d3.time.format('%I:%M %p')(new Date(d));
             return dateService.getTimeIntervalFromTimeStamp(d);
         });
@@ -1871,6 +1913,7 @@ angular.module('hillromvestApp')
           d3.select('#hmrBarGraph svg')
           .datum($scope.hmrBarGraphData)
           .transition().duration(500).call(chart);
+          d3.select('#hmrBarGraph svg').style("visibility", "hidden");
           return chart;
       });
     }

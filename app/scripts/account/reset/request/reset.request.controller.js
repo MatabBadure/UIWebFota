@@ -26,6 +26,7 @@ angular.module('hillromvestApp')
     };
     
     $scope.requestReset = function () {
+      vcRecaptchaService.reload();
       $scope.submitted = true;
       if($scope.form.email.$invalid ||($scope.showCaptcha && $scope.response === null)){
         return false;
@@ -37,19 +38,24 @@ angular.module('hillromvestApp')
             $scope.success = 'OK';
             $scope.errorEmailNotExists = null;
             StorageService.save('passResetCount',0);
-          }).catch(function (response) {
+          }).catch(function (response) { 
             $scope.success = null;
             $scope.response = null;
-            if (response.status === 400 && response.data.message === 'e-mail address not registered') {
-              $scope.errorEmailNotExists = 'ERROR';
-              var passResetCount = parseInt(StorageService.get('passResetCount')) || 0;
-              StorageService.save('passResetCount', passResetCount + 1);
-              if(passResetCount >= 2){
-                $scope.showCaptcha = true;
-              }
-            } else {
-              $scope.error = 'ERROR';
+            $scope.errorEmailNotExists = 'ERROR';
+            $scope.errorMailMessage = '';
+            $scope.errorMailContact = '';
+            var passResetCount = parseInt(StorageService.get('passResetCount')) || 0;
+            StorageService.save('passResetCount', passResetCount + 1);
+            if(passResetCount >= 2){
+              $scope.showCaptcha = true;
             }
+            if (response.status === 400 && response.data.message === 'e-mail address not registered') {              
+              $scope.errorMailMessage = resetpassword.error.email_is_not_registered;
+              $scope.errorMailContact = resetpassword.error.conatct_message;
+            } else if (response.status === 400 && response.data.message.indexOf('Kindly contact with Administrator') !== -1 ) {
+              $scope.errorMailMessage = resetpassword.error.unauthorized_email;
+              $scope.errorMailContact = resetpassword.error.contact_message_for_unauthorized_mail;
+            } 
           });
         }).catch(function (err) {
           $scope.captchaError = true;
@@ -63,15 +69,20 @@ angular.module('hillromvestApp')
           StorageService.save('passResetCount',0);
         }).catch(function (response) {
           $scope.success = null;
+          $scope.errorEmailNotExists = 'ERROR';
+          $scope.errorMailMessage = '';
+          $scope.errorMailContact = '';
+          var passResetCount = parseInt(StorageService.get('passResetCount')) || 0;
+          StorageService.save('passResetCount', passResetCount + 1);
+          if(passResetCount >= 2){
+            $scope.showCaptcha = true;
+          }
           if (response.status === 400 && response.data.message === 'e-mail address not registered') {
-              $scope.errorEmailNotExists = 'ERROR';
-              var passResetCount = parseInt(StorageService.get('passResetCount')) || 0;
-              StorageService.save('passResetCount', passResetCount + 1);
-              if(passResetCount >= 2){
-              	$scope.showCaptcha = true;
-              }
-          } else {
-              $scope.error = 'ERROR';
+              $scope.errorMailMessage = resetpassword.error.email_is_not_registered;
+              $scope.errorMailContact = resetpassword.error.conatct_message;
+          } else if (response.status === 400 && response.data.message.indexOf('Kindly contact with Administrator') !== -1 ) {
+              $scope.errorMailMessage = resetpassword.error.unauthorized_email;
+              $scope.errorMailContact = resetpassword.error.contact_message_for_unauthorized_mail;
           }
         });
       }     	

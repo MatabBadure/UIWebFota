@@ -30,6 +30,15 @@ angular.module('hillromvestApp')
 	        }
 	      };
 
+	      $scope.isActiveMainBar = function(tab) {
+	        var path = $location.path();
+	        if (path.indexOf(tab) !== -1) {
+	          return true;
+	        } else {
+	          return false;
+	        }
+	      };
+
 	      $scope.signOut = function(){
 	        Account.get().$promise
 	        .then(function (account) {
@@ -170,7 +179,8 @@ angular.module('hillromvestApp')
 			});
 		};
 		$window.onfocus = function(){
-			$scope.isUserChanged();
+			if($state.current.name !== 'activationLinkErrorPage'  && $state.current.name !== 'postActivateLogin' && $state.current.name !== 'activateUser' && $state.current.name !== 'home' &&  $state.current.name !== 'login' && $state.current.name !== 'requestReset' && $state.current.name !== 'finishReset' && $state.current.name !== 'authenticate'){
+				$scope.isUserChanged();
+			}
 		}
-
     }]);

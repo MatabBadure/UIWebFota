@@ -45,8 +45,9 @@ angular.module('hillromvestApp')
         return day
       },
       getUTCTimeStamp: function(timeStamp) {
-        var timeZoneOffset = new Date(timeStamp).getTimezoneOffset();
-        return timeStamp + (timeZoneOffset * 60 * 1000);
+        var timeZoneOffset = new Date(timeStamp).getTimezoneOffset()*60*1000;
+        var qualcommOffset = 6*60*60*1000;
+        return timeStamp + timeZoneOffset - qualcommOffset;
       },
       getWeekOfMonth: function(d) {
         var date = new Date(d);
@@ -263,14 +264,14 @@ angular.module('hillromvestApp')
 
       convertYyyyMmDdToTimestamp: function(date){
         if(date.indexOf("-") > -1){
-          var startDate = date.split("-"); // turning it from yyyy-mm-dd mm/dd/yyyy 
+          var startDate = date.split("-"); // turning it from yyyy-mm-dd mm/dd/yyyy
           var dd = parseInt(startDate[2]) + 1;
-          var tempDate = startDate[1]+"/"+dd+"/"+startDate[0]; 
+          var tempDate = startDate[1]+"/"+dd+"/"+startDate[0];
           return new Date(tempDate).getTime();
         }else{
           return 0;
         }
-        
+
     },
     convertDateToYyyyMmDdFormat: function(date){
       var tempDate = new Date(date);

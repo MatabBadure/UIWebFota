@@ -91,6 +91,24 @@ angular.module('hillromvestApp')
                    success(function(response) {
                    return response;
                });
+            },
+
+            isValidActivationKey: function (keyData){
+                return $http.get('api/validateActivationKey?key='+keyData)
+                .success(function (data, status, headers, config) {
+                    return {'response' : data, 'status' : status, 'headers' : headers, 'config' : config};
+                }).error(function (data, status, headers, config) {
+                    return {'response' : data, 'status' : status, 'headers' : headers, 'config' : config};
+                });
+            },
+            
+            isValidResetKey: function (keyData){
+                return $http.get('api/validateResetKey?key='+keyData)
+                .success(function (data, status, headers, config) {
+                    return {'response' : data, 'status' : status, 'headers' : headers, 'config' : config};
+                }).error(function (data, status, headers, config) {
+                    return {'response' : data, 'status' : status, 'headers' : headers, 'config' : config};
+                });
             }
         };
     }]);

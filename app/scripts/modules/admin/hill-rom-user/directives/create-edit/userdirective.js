@@ -46,6 +46,7 @@ angular.module('hillromvestApp')
          * Function to create a user
          */
         $scope.createUser = function () {
+          $scope.showUpdateModal = false;
           if ($scope.form.$invalid) {
             return false;
           }
@@ -147,6 +148,16 @@ angular.module('hillromvestApp')
             notyService.showMessage(response.data.message, 'success'); 
           }).catch(function(response){
             notyService.showError(response);
+          });
+        };
+
+        $scope.activateUser = function(){
+          $scope.showActivateModal = false;
+          UserService.reactivateUser($scope.user.id).then(function(response){
+           notyService.showMessage(response.data.message, 'success');
+           $state.go('hillRomUser');
+          }).catch(function(response){
+           notyService.showError(response);
           });
         };
 

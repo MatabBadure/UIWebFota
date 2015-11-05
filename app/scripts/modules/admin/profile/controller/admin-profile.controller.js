@@ -47,6 +47,7 @@ angular.module('hillromvestApp')
 
     $scope.updateProfile = function(){
       $scope.submitted = true;
+      $scope.showUpdateModal = false;
       if($scope.form.$invalid){
         return false;
       }

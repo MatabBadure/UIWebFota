@@ -75,6 +75,7 @@ angular.module('hillromvestApp')
       }
     }).catch(function(response){
       notyService.showError(response);
+      $state.go('clinicadminpatientdashboard',{'clinicId':$stateParams.clinicId});
     });
   };
 

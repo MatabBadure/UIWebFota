@@ -1,4 +1,22 @@
-<div class="container login">
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation" data-spy="affix" ng-show="$root.isAuthenticated && userRole">
+  <div class="container">
+    <div class="navbar-header navbar-primary">
+      <button data-target="#navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="" ng-click="goToHomePage();"><span class="logo icon-hill-rom-logo"></span></a>
+      <div class="navbar-brand__desc"> 
+        <span class="navbar-brand__desc--text-primary"><span translate-cloak="global.logo-text.visi-view">VisiView</span><sup translate-cloak="global.logo-text.tm-sup">TM</sup></span>
+        <span class="navbar-brand__desc--text-secondary" translate-cloak="global.logo-text.health-portal">Health Portal</span>
+      </div>
+    </div> 
+  </div>
+</nav>
+
+<div class="container login" ng-show="isActivateUser">
   <div class="row auth--position">
     <div class="visi_view_container">
       <!-- <h1 class="login_portal_name">VisiView</h1>
@@ -11,15 +29,9 @@
       <div class=" col-md-16 col-lg-16 login__container__right-section">
         <div class="auth-heading">Set Password </div>
         <div class="password_inst" translate="authenticate.instruction"></div>
-        <div class="alert alert-danger login-has-error" ng-show="otherError">
-          <p >Error occured!. Please try again</p>
-        </div>
-        <div class="alert alert-danger login-has-error" ng-show="alreadyActive">
-          <p >User is already active and authenticated.</p>
-        </div>
-        <div class="alert alert-danger login-has-error" ng-show="questionsNotLoaded">
-          <p >Security questions failed to load! Please try again</p>
-        </div>
+          <div class="alert alert-danger login-has-error" ng-show="isServerError">
+            <p >{{serverErrorMessage}}</p>
+          </div>
         <div class="alert alert-danger login-has-error" ng-show="doNotMatch">
           The password and its confirmation do not match!
         </div>
