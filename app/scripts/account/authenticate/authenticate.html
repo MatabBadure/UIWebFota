@@ -29,22 +29,16 @@
       <div class=" col-md-16 col-lg-16 login__container__right-section">
         <div class="auth-heading">Set Password </div>
         <div class="password_inst" translate="authenticate.instruction"></div>
-        <div class="alert alert-danger login-has-error" ng-show="otherError">
-          <p >Error occured!. Please try again</p>
-        </div>
-        <div class="alert alert-danger login-has-error" ng-show="alreadyActive">
-          <p >User is already active and authenticated.</p>
-        </div>
-        <div class="alert alert-danger login-has-error" ng-show="questionsNotLoaded">
-          <p >Security questions failed to load! Please try again</p>
-        </div>
+          <div class="alert alert-danger login-has-error" ng-show="isServerError">
+            <p >{{serverErrorMessage}}</p>
+          </div>
         <div class="alert alert-danger login-has-error" ng-show="doNotMatch">
           The password and its confirmation do not match!
         </div>
         <form class="login-auth-form" ng-show="!success" name="form" role="form" novalidate ng-submit="authenticate($event)" show-validation>
           <div class="form-group">
             <input type="password" class="form-control" validate-on-key-press name="password" id="passwordBox"
-            ng-model="authenticate.password" ng-minlength=8 ng-maxlength=50 ng-pattern="/^(?=^.{8,}$)(?=.*\d)(?=.*[!@#$%^&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/" required placeholder="{{'authenticate.placeholder.password' | translate}}" ng-keyup="passwordStrength()" required>
+            ng-model="authenticate.password" ng-minlength=8 ng-maxlength=50 ng-pattern="/^(?=^.{8,}$)(?=.*\d)(?=.*[!@#$%^-\{\}|`~<>\[\]\?\\_=+&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/" required placeholder="{{'authenticate.placeholder.password' | translate}}" ng-keyup="passwordStrength()" required>
             <div ng-show="(form.password.$showValidationMessage && form.password.$invalid) || submitted">
               <span class="login-has-error"
                 ng-show="form.password.$error.required">
@@ -62,7 +56,7 @@
           </div>
           <div class="form-group">
             <input type="password" class="form-control" validate-on-blur name="confirmPassword"
-            ng-model="authenticate.confirmPassword" ng-minlength=8 ng-maxlength=50 ng-pattern="/^(?=^.{8,}$)(?=.*\d)(?=.*[!@#$%^&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/" required placeholder="{{'authenticate.placeholder.confirm-password' | translate}}" pw-check="passwordBox">
+            ng-model="authenticate.confirmPassword" ng-minlength=8 ng-maxlength=50 ng-pattern="/^(?=^.{8,}$)(?=.*\d)(?=.*[!@#$%^-\{\}|`~<>\[\]\?\\_=+&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/" required placeholder="{{'authenticate.placeholder.confirm-password' | translate}}" pw-check="passwordBox">
             <div ng-show="(form.confirmPassword.$dirty && form.confirmPassword.$invalid) || submitted ">
               <span class="login-has-error"
                 ng-show="form.confirmPassword.$error.required && !form.confirmPassword.$error.pwmatch">

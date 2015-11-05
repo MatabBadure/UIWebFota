@@ -109,6 +109,22 @@
 		width: 100%;
 		display: inline-block;
 	}
+
+	/*Admin Responsive column style*/
+	.col-hide-iPad{
+		display: none;
+	}
+	.col-hide-web{
+    	display: block;
+  	}
+	.dashboard__manage-view--header{
+		.header--type{
+			width: 20%;
+		}
+	}
+	.dashboard__manage-view--list > div{
+		width: 20%;
+	}
 }
 
 @media only screen and (min-width : 768px) and (max-width : 1024px) and (orientation : portrait) { 
@@ -220,6 +236,14 @@
 	.patient_nav_link_right li {
 		margin-right: 5px;
 	}
+	/*Admin Responsive column style*/
+	.col-hide-iPad{
+		display: none;
+	}
+	.col-hide-web{
+    	display: block;
+  	}
+	
 }
 @media screen and (min-width : 1024px){
 	.login{

@@ -1124,7 +1124,26 @@ angular.module('hillromvestApp')
     $scope.getPatientById = function(patientId){
       patientService.getPatientInfo(patientId).then(function(response){
         $scope.slectedPatient = response.data;
+      }).catch(function(response){
+        notyService.showError(response);
+        if(response.status === 404){
+          $scope.redirectToPatientDashboard();
+        }
       });
+    };
+
+    $scope.redirectToPatientDashboard = function(){
+      var role = StorageService.get('logged').role;
+      switch(role){
+        case 'ADMIN':$state.go('patientUser');
+        break;
+        case 'HCP':$state.go('hcppatientdashboard', {'clinicId':$stateParams.clinicId});
+        break;
+        case 'CLINIC_ADMIN':$state.go('clinicadminpatientdashboard',{'clinicId':$stateParams.clinicId});
+        break;
+        case 'ACCT_SERVICES':$state.go('rcadminPatients');
+        break;
+      }
     };
 
     $scope.getCaregiversForPatient = function(patientId){
@@ -1630,7 +1649,11 @@ angular.module('hillromvestApp')
          // chart.noData("Nothing to see here.");
           chart.tooltipContent($scope.toolTipContentStepChart());
           chart.lines.dispatch.on('elementClick', function(event) {
-            $scope.dayGraphForNode(event.point.x);
+            angular.forEach($scope.completeGraphData.actual, function(data){
+              if(data.start === event.point.x && data.missedTherapy !== true){
+                $scope.dayGraphForNode(event.point.x);
+              }
+            })
           });
           //this function to put x-axis labels
           var days = dateService.getDateDiffIndays($scope.fromTimeStamp,$scope.toTimeStamp),
@@ -1689,7 +1712,6 @@ angular.module('hillromvestApp')
 
         if($scope.graphData[0] && $scope.graphData[0].values.length > 20){
           setTimeout(function() {
-              d3.selectAll('#hmrLineGraph svg').selectAll('.nv-linesWrap').attr("class", "nv-line-year");
               d3.selectAll('#hmrLineGraph svg').selectAll('.nv-lineChart circle.nv-point').attr("r", "0");
               d3.selectAll('#hmrLineGraph svg').style("visibility", "visible");
           }, 500);
@@ -1857,7 +1879,7 @@ angular.module('hillromvestApp')
          // chart.noData("Nothing to see here.");
           chart.tooltipContent($scope.toolTipContentBarChart());
           //this function to put x-axis labels
-          chart.xAxis.rotateLabels(-35).tickValues($scope.hmrBarGraphData[0].values.map( function(d){return d.x;} ) ).tickFormat(function(d) {
+          chart.xAxis.tickValues($scope.hmrBarGraphData[0].values.map( function(d){return d.x;} ) ).tickFormat(function(d) {
             return d3.time.format('%I:%M %p')(new Date(d));
             return dateService.getTimeIntervalFromTimeStamp(d);
         });

@@ -43,7 +43,12 @@ angular.module('hillromvestApp')
     $scope.getClinicById = function(clinicId){
       clinicService.getClinic(clinicId).then(function(response){
         $scope.clinic = response.data.clinic;
-      }).catch(function(response){});
+      }).catch(function(response){
+        notyService.showError(response);
+        if(response.status === 400){
+          $scope.redirectToManageClinic();
+        }
+      });
     };
 
     $scope.initClinicAssoctPatients = function(clinicId){
@@ -136,7 +141,12 @@ angular.module('hillromvestApp')
         }else{
            $scope.clinic.type = "child";
         }
-      }).catch(function(response) {});
+      }).catch(function(response) {
+        notyService.showError(response);
+        if(response.status === 400){
+          $scope.redirectToManageClinic();
+        }
+      });
     };
 
     $scope.initClinicProfile = function(clinicId){
@@ -156,10 +166,12 @@ angular.module('hillromvestApp')
         }else{
           $scope.clinic.status = "Active";
         }
-        /*if(){
-
-        }*/
-      }).catch(function(response) {});
+      }).catch(function(response) {
+        notyService.showError(response);
+        if(response.status === 400){
+          $state.go('clinicUser');
+        }
+      });
     };
 
     $scope.getclinicAdmin = function(clinicId){
@@ -774,5 +786,14 @@ angular.module('hillromvestApp')
           $state.go('clinicNew', {'parentId': parentId});
         }
     };
+
+    $scope.redirectToManageClinic = function(){
+      if(StorageService.get('logged').role === 'ADMIN'){
+        $state.go('clinicUser');
+      }else if(StorageService.get('logged').role === 'ACCT_SERVICES'){
+        $state.go('clinicUserRcadmin');
+      }
+    };
+
     $scope.init();
   }]);
