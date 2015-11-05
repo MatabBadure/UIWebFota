@@ -855,9 +855,15 @@ angular.module('hillromvestApp')
       var days = dateService.getDateDiffIndays($scope.fromTimeStamp,$scope.toTimeStamp),
       totalDataPoints = $scope.complianceGraphData[0].values.length,
             tickCount = parseInt(totalDataPoints/12);
-
-      chart.xAxis.showMaxMin(false).tickFormat(function(d) {return d3.time.format('%d-%b-%y')(new Date(d));});
-
+      if(days === 0){
+        chart.xAxis.showMaxMin(false).tickValues($scope.complianceGraphData[0].values.map( function(d){return d.x;} ) ).tickFormat(function(d) {
+            return d3.time.format('%I:%M %p')(new Date(d));
+            return dateService.getTimeIntervalFromTimeStamp(d);
+        });
+      }else{
+        chart.xAxis.showMaxMin(false).tickFormat(function(d) {return d3.time.format('%d-%b-%y')(new Date(d));});
+      }
+            
       chart.yAxis1.tickFormat(d3.format('d'));
       chart.yAxis2.tickFormat(d3.format('d'));
       if($scope.yAxis1Min === 0 && $scope.yAxis1Max === 0){
@@ -923,14 +929,17 @@ angular.module('hillromvestApp')
          })
 
          /* Mark red color for missed therapy  -- end --*/
-         var bgHeight = d3.select('#complianceGraph svg').selectAll('.x .tick line').attr("y2");
-         var bgWidth = d3.select('#complianceGraph svg ').selectAll('.y1 .tick line').attr("x2");
+         setTimeout(function(){
+
+         var bgHeight = d3.select('#complianceGraph svg').select('.x .tick line').attr("y2");
+         var bgWidth = d3.select('#complianceGraph svg ').select('.y1 .tick line').attr("x2");
          d3.select('#complianceGraph svg .nv-axis g').append('rect')
                   .attr("height", Math.abs(bgHeight))
                   .attr("width", bgWidth)
                   .attr("x" , 0)
                   .attr("y" , bgHeight)
                   .attr("class" , "svg_bg");
+         },500);
 
           /*UI Changes for Line Graph*/
         d3.selectAll('#complianceGraph svg').selectAll(".nv-axis .tick").append('circle').
@@ -993,6 +1002,9 @@ angular.module('hillromvestApp')
       }
       d3.selectAll('#complianceGraph svg').selectAll(".x.axis .tick").selectAll('text').
         attr("dy" , 12);
+        if(days === 0){
+          d3.selectAll('#complianceGraph svg').selectAll(".x.axis .tick").selectAll('text').attr("dx" , 488);
+        }
         if($scope.complianceGraphData[0] && $scope.complianceGraphData[0].values.length > 20) {
           setTimeout(function() {
             d3.selectAll('#complianceGraph svg').selectAll('.multiChart circle.nv-point').attr("r", "0");
