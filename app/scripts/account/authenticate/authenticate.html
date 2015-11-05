@@ -29,15 +29,9 @@
       <div class=" col-md-16 col-lg-16 login__container__right-section">
         <div class="auth-heading">Set Password </div>
         <div class="password_inst" translate="authenticate.instruction"></div>
-        <div class="alert alert-danger login-has-error" ng-show="otherError">
-          <p >Error occured!. Please try again</p>
-        </div>
-        <div class="alert alert-danger login-has-error" ng-show="alreadyActive">
-          <p >User is already active and authenticated.</p>
-        </div>
-        <div class="alert alert-danger login-has-error" ng-show="questionsNotLoaded">
-          <p >Security questions failed to load! Please try again</p>
-        </div>
+          <div class="alert alert-danger login-has-error" ng-show="isServerError">
+            <p >{{serverErrorMessage}}</p>
+          </div>
         <div class="alert alert-danger login-has-error" ng-show="doNotMatch">
           The password and its confirmation do not match!
         </div>
