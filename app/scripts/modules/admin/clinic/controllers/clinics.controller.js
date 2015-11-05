@@ -169,7 +169,8 @@ angular.module('hillromvestApp')
       }).catch(function(response) {
         notyService.showError(response);
         if(response.status === 400){
-          $state.go('clinicUser');
+          //$state.go('clinicUser');
+          $scope.goToClinicUser();
         }
       });
     };
@@ -399,7 +400,8 @@ angular.module('hillromvestApp')
       $scope.submitted = false;
       $scope.clinic = {};
       $scope.form.$setPristine();
-      $state.go('clinicUser');
+      //$state.go('clinicUser');
+      $scope.goToClinicUser();
     };
 
     $scope.selectClinicEdit = function(clinic) {
@@ -753,7 +755,7 @@ angular.module('hillromvestApp')
     };
 
     $scope.searchOnFilters = function(){    
-      if($state.current.name === 'clinicUser'){
+      if($state.current.name === 'clinicUser' || $state.current.name ==='clinicUserRcadmin'){
         $scope.searchClinics();
       }else if( $state.current.name === 'clinicAssociatedPatients' || $state.current.name === 'clinicAssociatedPatientsRcadmin'){
         $scope.searchAssociatedPatients();
