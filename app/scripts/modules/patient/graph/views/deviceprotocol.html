@@ -34,13 +34,13 @@
       <span> {{::protocol.treatmentsPerDay}}</span>
     </div>
     <div class="col-md-3 col-sm-3 protocol-list__treatment-day">
-      <span class="protocol-list--value"> {{::protocol.minMinutesPerTreatment}}<span ng-if="protocol.maxMinutesPerTreatment!==null">-{{::protocol.maxMinutesPerTreatment}}</span></span>
+      <span class="protocol-list--value"> {{::protocol.minMinutesPerTreatment}}<span ng-if="protocol.type === 'Normal'">-{{::protocol.maxMinutesPerTreatment}}</span></span>
     </div>
     <div class="col-md-3 col-sm-3 protocol-list__strt-date">
-      <span class="protocol-list--value"> {{::protocol.minFrequency}}<span ng-if="protocol.maxFrequency!==null">-{{::protocol.maxFrequency}}</span></span>
+      <span class="protocol-list--value"> {{::protocol.minFrequency}}<span ng-if="protocol.type === 'Normal'">-{{::protocol.maxFrequency}}</span></span>
     </div>
     <div class="col-md-4 col-sm-4 protocol-list__end-date">
-      <span class="protocol-list--value"> {{::protocol.minPressure}}<span ng-if="protocol.maxPressure!==null">-{{::protocol.maxPressure}}</span></span>
+      <span class="protocol-list--value"> {{::protocol.minPressure}}<span ng-if="protocol.type === 'Normal'">-{{::protocol.maxPressure}}</span></span>
     </div>
   </div>
   <div class="col-md-16 col-sm-16 empty-list-message" ng-if="protocolsErrMsg">
