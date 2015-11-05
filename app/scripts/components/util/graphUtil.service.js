@@ -517,7 +517,7 @@ angular.module('hillromvestApp')
               '<li><span class="pull-left">' + 'Duration' + '</span><span class="pull-right value">' + value.duration  + '</span></li>' +
               '<li><span class="pull-left">' + 'Frequency' + '</span><span class="pull-right value">' + value.frequency  + '</span></li>' +
               '<li><span class="pull-left">' + 'Pressure' +'</span><span class="pull-right value">' + value.pressure  +'</span></li>' +
-              '<li><span class="pull-left">' + 'Cough Pauses' +'</span><span class="pull-right value">' + (value.coughPauseDuration) +'</span></li>' +
+              '<li><span class="pull-left">' + 'Cough Pauses' +'</span><span class="pull-right value">' + ( value.programmedCoughPauses +  value.normalCoughPauses) +'</span></li>' +
             '</ul>'+
             '</div>'+
             '<div class="tooltip_sub_content">'+
@@ -534,7 +534,7 @@ angular.module('hillromvestApp')
               '<li><span class="pull-left">' + 'Duration' + '</span><span class="pull-right value">' + value.duration  + '</span></li>' +
               '<li><span class="pull-left">' + 'Frequency' + '</span><span class="pull-right value">' + value.frequency  + '</span></li>' +
               '<li><span class="pull-left">' + 'Pressure' +'</span><span class="pull-right value">' + value.pressure  +'</span></li>' +
-              '<li><span class="pull-left">' + 'Cough Pauses' +'</span><span class="pull-right value">' + (value.coughPauseDuration) +'</span></li>' +
+              '<li><span class="pull-left">' + 'Cough Pauses' +'</span><span class="pull-right value">' + ( value.programmedCoughPauses +  value.normalCoughPauses) +'</span></li>' +
               '</ul>';
             }
 
@@ -548,10 +548,10 @@ angular.module('hillromvestApp')
               '<div class="tooltip_sub_content">'+
               '<h6 class="after">' + dateService.getDateTimeFromTimeStamp(value.startTime,patientDashboard.dateFormat,'/') + '</h6>' +
               '<ul class="graph_ul">' +
+                '<li><span class="pull-left">' + 'Duration' +'</span><span class="pull-right value">' + value.durationInMinutes +'</span></li>' +
                 '<li><span class="pull-left">' + 'Frequency' + '</span><span class="pull-right value">' + value.frequency  + '</span></li>' +
                 '<li><span class="pull-left">' + 'Pressure' +'</span><span class="pull-right value">' + value.pressure +'</span></li>' +
-                '<li><span class="pull-left">' + 'Cough Pauses' +'</span><span class="pull-right value">' + value.caughPauseDuration +'</span></li>' +
-                '<li><span class="pull-left">' + 'Duration' +'</span><span class="pull-right value">' + value.durationInMinutes +'</span></li>' +
+                '<li><span class="pull-left">' + 'Cough Pauses' +'</span><span class="pull-right value">' + ( value.programmedCaughPauses +  value.normalCaughPauses) +'</span></li>' +                
               '</ul>'+
               '</div>'+
 
@@ -565,10 +565,10 @@ angular.module('hillromvestApp')
           toolTip =
             '<h6 class="after">' + dateService.getDateTimeFromTimeStamp(value.startTime,patientDashboard.dateFormat,'/') + '</h6>' +
             '<ul class="graph_ul">' +
+              '<li><span class="pull-left">' + 'Duration' +'</span><span class="pull-right value">' + value.durationInMinutes +'</span></li>' +
               '<li><span class="pull-left">' + 'Frequency' + '</span><span class="pull-right value">' + value.frequency  + '</span></li>' +
               '<li><span class="pull-left">' + 'Pressure' +'</span><span class="pull-right value">' + value.pressure +'</span></li>' +
-              '<li><span class="pull-left">' + 'Cough Pauses' +'</span><span class="pull-right value">' + value.caughPauseDuration +'</span></li>' +
-              '<li><span class="pull-left">' + 'Duration' +'</span><span class="pull-right value">' + value.durationInMinutes +'</span></li>' +
+              '<li><span class="pull-left">' + 'Cough Pauses' +'</span><span class="pull-right value">' + ( value.programmedCaughPauses +  value.normalCaughPauses) +'</span></li>' +              
             '</ul>';
         }
         return toolTip;
@@ -583,9 +583,10 @@ angular.module('hillromvestApp')
                 '<h6>' + dateService.getDateFromTimeStamp(value.start,patientDashboard.dateFormat,'/') + '  ('+ d3.time.format('%I:%M %p')(new Date(value.start)) + ')'  + '</h6>' +
                 '<ul class="graph_ul">' +
                   '<li><span class="pull-left">' + 'Session No.' + '</span><span class="pull-right value">' +  value.sessionNo + '/' + value.treatmentsPerDay  + '</span></li>' +
+                  '<li><span class="pull-left">' + 'Duration' +'</span><span class="pull-right value">' + value.duration +'</span></li>' +
                   '<li><span class="pull-left">' + 'Frequency' +'</span><span class="pull-right value">' + value.frequency +'</span></li>' +
                   '<li><span class="pull-left">' + 'Pressure' +'</span><span class="pull-right value">' + value.pressure +'</span></li>' +
-                  '<li><span class="pull-left">' + 'Cough Pauses' +'</span><span class="pull-right value">' + value.coughPauseDuration +'</span></li>' +
+                  '<li><span class="pull-left">' + 'Cough Pauses' +'</span><span class="pull-right value">' + ( value.programmedCoughPauses +  value.normalCoughPauses) +'</span></li>' +
                 '</ul>'+
                 '</div>'+
                 '<div class="tooltip_sub_content">'+
@@ -600,9 +601,10 @@ angular.module('hillromvestApp')
                 '<h6>' + dateService.getDateFromTimeStamp(value.start,patientDashboard.dateFormat,'/') + '  ('+ d3.time.format('%I:%M %p')(new Date(value.start)) + ')'  + '</h6>' +
                 '<ul class="graph_ul">' +
                   '<li><span class="pull-left">' + 'Session No.' + '</span><span class="pull-right value">' +  value.sessionNo + '/' + value.treatmentsPerDay  + '</span></li>' +
+                  '<li><span class="pull-left">' + 'Duration' +'</span><span class="pull-right value">' + value.duration +'</span></li>' +
                   '<li><span class="pull-left">' + 'Frequency' +'</span><span class="pull-right value">' + value.frequency +'</span></li>' +
                   '<li><span class="pull-left">' + 'Pressure' +'</span><span class="pull-right value">' + value.pressure +'</span></li>' +
-                  '<li><span class="pull-left">' + 'Cough Pauses' +'</span><span class="pull-right value">' + value.coughPauseDuration +'</span></li>' +
+                  '<li><span class="pull-left">' + 'Cough Pauses' +'</span><span class="pull-right value">' +( value.programmedCoughPauses +  value.normalCoughPauses)+'</span></li>' +
                 '</ul>';
          }
         return toolTip;
