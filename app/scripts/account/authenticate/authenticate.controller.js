@@ -4,13 +4,13 @@ angular.module('hillromvestApp')
 .controller('AuthenticateController',['$scope', 'Auth', '$state', '$stateParams', 'AuthServerProvider',
   function ($scope, Auth, $state, $stateParams,AuthServerProvider) {
 
-    $scope.otherError = false;
-    $scope.questionsNotLoaded = false;
     $scope.questionVerificationFailed = false;
     $scope.success = false;
     $scope.doNotMatch = false;
     $scope.alreadyActive = false;
     $scope.authenticate = {};
+    $scope.isServerError = false;
+    $scope.serverErrorMessage = '';
     $scope.formSubmit = function(){
        $scope.submitted  = true;
    }
@@ -25,8 +25,8 @@ angular.module('hillromvestApp')
    Auth.getSecurityQuestions().
    then(function (response) {
     $scope.questions = response.data;
-    }).catch(function (err) {
-        $scope.questionsNotLoaded = true;
+    }).catch(function (response) {
+      $scope.showServerError(response);
     });
 
 $scope.authenticate = function(event) {
@@ -45,8 +45,8 @@ $scope.authenticate = function(event) {
    }
    Auth.activateAccount({key: $stateParams.key}).then(function () {
         $scope.authenticateCred(data);
-    }).catch(function () {
-        $scope.otherError = true;
+    }).catch(function (response) {
+      $scope.showServerError(response);
     });
   }
 };
@@ -61,10 +61,9 @@ $scope.authenticateCred = function(data){
     $state.go('postActivateLogin');
   }).catch(function (response) {
       $scope.success = false;
+      $scope.showServerError(response);
       if(response.status == 400 && response.data.ERROR == "Invalid Activation Key"){
          $scope.alreadyActive = true;
-     }else{
-         $scope.otherError = true;
      }
   });
 };
@@ -154,6 +153,15 @@ $scope.factorial = function (x) {
     x = Math.floor(x);
     return (x*$scope.factorial(x-1));
 
+};
+
+$scope.showServerError = function(response){
+  $scope.isServerError = true;
+  if(response.data.message){
+    $scope.serverErrorMessage = response.data.message;
+  }else if(response.data.ERROR){
+    $scope.serverErrorMessage = response.data.ERROR;
+  }
 };
 
 }]);
