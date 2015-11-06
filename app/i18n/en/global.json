@@ -217,38 +217,47 @@
             },
             "minMinutesPerTreatment": {
                 "required":"Minimum Minutes per Treatment Required",
-                "min":"Minimum Minutes per Treatment should be 0 to 99",
-                "max":"Minimum Minutes per Treatment should be 0 to 99",
-                "invalid": "Minimum Minutes per Treatment is invalid"
+                "min":"Minimum Minutes per Treatment should be 0 to 98",
+                "max":"Minimum Minutes per Treatment should be 0 to 98",
+                "invalid": "Minimum Minutes per Treatment is invalid",
+                "custom-invalid": "Minutes per Treatment is invalid",
+                "custom-required": "Minutes per Treatment is Required",
+                "custom-max-min": "Minutes per Treatment should be between 5 to 20"
             },
             "maxMinutesPerTreatment": {
                 "required": "Maximum Minutes per Treatment Required",
-                "min":"Maximum Minutes per Treatment should be 0 to 99",
-                "max": "Maximum Minutes per Treatment should be 0 to 99",
+                "min":"Maximum Minutes per Treatment should be 1 to 99",
+                "max": "Maximum Minutes per Treatment should be 1 to 99",
                 "invalid": "Maximum Minutes per Treatment is invalid"
             },
             "minFrequency": {
                 "required": "Minimum Frequency Required",
-                "min": "Minimum Frequency should be between 5 to 20",
-                "max": "Minimum Frequency should be between 5 to 20",
-                "invalid": "Minimum Frequency is invalid"
+                "min": "Minimum Frequency should be between 5 to 19",
+                "max": "Minimum Frequency should be between 5 to 19",
+                "invalid": "Minimum Frequency is invalid",
+                "custom-invalid": "Frequency is invalid",
+                "custom-required": "Frequency is Required",
+                "custom-max-min": "Frequency should be between 5 to 20"
             },
             "maxFrequency": {
                 "required": "Maximum Frequency Required",
-                "min": "Maximum Frequency should be between 5 to 20",
-                "max": "Maximum Frequency should be between 5 to 20",
+                "min": "Maximum Frequency should be between 6 to 20",
+                "max": "Maximum Frequency should be between 6 to 20",
                 "invalid": "Maximum Frequency is invalid"
             },
             "minPressure": {
                 "required": "Minimum Pressure Required",
-                "min": "Minimum Pressure should be between 1 to 10",
-                "max": "Minimum Pressure should be between 1 to 10",
-                "invalid": "Minimum Pressure is invalid"
+                "min": "Minimum Pressure should be between 1 to 9",
+                "max": "Minimum Pressure should be between 1 to 9",
+                "invalid": "Minimum Pressure is invalid",
+                "custom-invalid": "Pressure is invalid",
+                "custom-required": "Pressure is Required",
+                "custom-max-min": "Pressure should be between 1 to 9"
             },
             "maxPressure": {
                 "required": "Maximum Pressure Required",
-                "min": "Maximum Pressure should be between 1 to 10",
-                "max": "Maximum Pressure should be between 1 to 10",
+                "min": "Maximum Pressure should be between 2 to 10",
+                "max": "Maximum Pressure should be between 2 to 10",
                 "invalid": "Maximum Pressure is invalid"
             }
         },
