@@ -248,6 +248,12 @@
 .dashboard__form{
   margin-bottom: 20px;
 }
+.dashboard_content_pro{
+  .dashboard__form{
+    padding-bottom: 25px;
+    border-bottom: solid 1px $celeste;
+  }
+}
 .dashboard__manage-view--search {
 	margin-bottom: 30px;
 }

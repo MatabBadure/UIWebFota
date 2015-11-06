@@ -82,7 +82,7 @@
 		</span>
 		<span ng-if="fromDate === toDate" class="date">{{fromDate}}<span>
 	</div> 
-	<div class="col-md-16" class="all_graph_wrapper">
+	<div class="col-md-16" class="all_graph_wrapper" ng-class="{treatmentGraphTL: treatmentGraph}">
 		<div class="row hcp_graph_container">
 			<div ng-if="cumulativeGraph" id="cumulativeGraph" class="complianceGraph col-md-16">
 				<div class="col-md-16">
