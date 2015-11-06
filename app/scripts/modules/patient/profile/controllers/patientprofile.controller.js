@@ -4,7 +4,7 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
   function ($scope, $state, notyService, patientService, UserService, AuthServerProvider,Password, Auth, StorageService, caregiverDashBoardService, $stateParams, loginConstants, $q) {
 	
   $scope.init = function(){
-		var currentRoute = $state.current.name;	
+		var currentRoute = $state.current.name;
 		$scope.profileTab = currentRoute;	
 		$scope.userRole = StorageService.get('logged').role;
     $scope.role = StorageService.get('logged').role;
@@ -160,7 +160,8 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
   	$scope.profile = {};
     $q.all([
       AuthServerProvider.getSecurityQuestions(),
-      patientService.getUserSecurityQuestion(StorageService.get('logged').patientID)
+      patientService.getUserSecurityQuestion(StorageService.get('logged').patientID),
+      patientService.getPatientInfo(StorageService.get('logged').patientID)
     ]).then(function(data) {        
       if(data){
         if(data[0]){
@@ -174,7 +175,40 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
           }
           $scope.resetAccount = ($scope.resetAccount) ? $scope.resetAccount : $scope.questions[0];
         }
+        if(data[2]){
+          $scope.patient = data[2].data;
+        }
       }
+    });
+  };
+
+  $scope.updateSecurityQuestion = function(){
+    $scope.securityFormSubmitted = true;
+    if($scope.securityQuestionForm.$invalid){
+      return false;
+    }
+    var data = {
+      "questionId": $scope.resetAccount.id,
+      "answer": $scope.resetAccount.answer
+    };
+    AuthServerProvider.changeSecurityQuestion(data, StorageService.get('logged').patientID).then(function(response){
+      notyService.showMessage(response.data.message, 'success');  
+    }).catch(function(response){
+      notyService.showError(response);
+    });
+  };
+
+  $scope.updateEmail = function(){
+    $scope.emailFormSubmitted = true;
+    if($scope.emailForm.$invalid){
+      return false;
+    }
+    var data = $scope.patient;
+    data.role = 'PATIENT';
+    UserService.editUser(data).then(function(response){
+      notyService.showMessage(response.data.message);
+    }).catch(function(response){
+      notyService.showError(response);
     });
   };
 
@@ -182,16 +216,6 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
     $scope.submitted = true;
     if($scope.form.$invalid){
       return false;
-    }
-    if($scope.resetAccount){
-      var data = {
-        "questionId": $scope.resetAccount.id,
-        "answer": $scope.resetAccount.answer
-      };
-      AuthServerProvider.changeSecurityQuestion(data, StorageService.get('logged').patientID).then(function(response){
-      }).catch(function(response){
-        notyService.showError(response);
-      });
     }
     var data = {
       'password': $scope.profile.password,
