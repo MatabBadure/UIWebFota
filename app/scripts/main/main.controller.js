@@ -178,9 +178,9 @@ angular.module('hillromvestApp')
 			  window.location.reload();
 			});
 		};
-		$window.onfocus = function(){
-			if($state.current.name !== 'activationLinkErrorPage'  && $state.current.name !== 'postActivateLogin' && $state.current.name !== 'activateUser' && $state.current.name !== 'home' &&  $state.current.name !== 'login' && $state.current.name !== 'requestReset' && $state.current.name !== 'finishReset' && $state.current.name !== 'authenticate'){
+		$window.onfocus = function(){				
+			if($state.current.name && $state.current.name !== 'activationLinkErrorPage'  && $state.current.name !== 'postActivateLogin' && $state.current.name !== 'activateUser' && $state.current.name !== 'home' &&  $state.current.name !== 'login' && $state.current.name !== 'requestReset' && $state.current.name !== 'finishReset' && $state.current.name !== 'authenticate'){
 				$scope.isUserChanged();
 			}
-		}
+		};
     }]);
