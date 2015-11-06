@@ -1842,7 +1842,7 @@ angular.module('hillromvestApp')
               '</table>' +
             '</div>' +
             '<div class="graph-title"></div>'+
-            '<div>'+
+            '<div style=" width: 1200px;">'+
               html1 +
             '</div>'+
             '<div class="pdf-signature">'+
