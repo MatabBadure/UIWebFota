@@ -72,16 +72,24 @@
               <span class="">*</span>
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
-              <input class="" type="number" name="minMinutesPerTreatment" ng-model="proto.minMinutesPerTreatment" min="0" max="99" required>
+              <input class="" type="number" name="minMinutesPerTreatment" ng-model="proto.minMinutesPerTreatment" min="0" max="98" required>
               <div ng-show="(point.minMinutesPerTreatment.$dirty && point.minMinutesPerTreatment.$invalid) || submitted">
-                <span class="has-error" ng-show="point.minMinutesPerTreatment.$error.required" translate="error.protocol.minMinutesPerTreatment.required">
+                <span class="has-error" ng-show="point.minMinutesPerTreatment.$error.required && protocol.type === 'Normal' " translate="error.protocol.minMinutesPerTreatment.required">
                 </span>
-                <span class="has-error" ng-show="point.minMinutesPerTreatment.$error.min" translate="error.protocol.minMinutesPerTreatment.min">
+                <span class="has-error" ng-show="point.minMinutesPerTreatment.$error.min && protocol.type === 'Normal'" translate="error.protocol.minMinutesPerTreatment.min">
                 </span>
-                <span class="has-error" ng-show="point.minMinutesPerTreatment.$error.max" translate="error.protocol.minMinutesPerTreatment.max">
+                <span class="has-error" ng-show="point.minMinutesPerTreatment.$error.max && protocol.type === 'Normal'" translate="error.protocol.minMinutesPerTreatment.max">
                 </span>
-                <span class="has-error" ng-show="point.minMinutesPerTreatment.$error.number" translate="error.protocol.minMinutesPerTreatment.invalid">
+                <span class="has-error" ng-show="point.minMinutesPerTreatment.$error.number && protocol.type === 'Normal'" translate="error.protocol.minMinutesPerTreatment.invalid">
                 </span>
+
+                <span class="has-error" ng-show="(point.minMinutesPerTreatment.$error.min || point.minMinutesPerTreatment.$error.max) && protocol.type === 'Custom'" translate="error.protocol.minMinutesPerTreatment.custom-max-min">
+                </span>
+                <span class="has-error" ng-show="point.minMinutesPerTreatment.$error.required && protocol.type === 'Custom'" translate="error.protocol.minMinutesPerTreatment.custom-required">
+                </span>
+                <span class="has-error" ng-show="point.minMinutesPerTreatment.$error.number && protocol.type === 'Custom'" translate="error.protocol.minMinutesPerTreatment.custom-invalid">
+                </span>
+
               </div>
             </div>
           </div>
@@ -91,11 +99,13 @@
               <span class="">*</span>
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
-              <input class="" type="number" name="maxMinutesPerTreatment" ng-model="proto.maxMinutesPerTreatment"  min="{{proto.minMinutesPerTreatment}}" max="99"  required >
+              <input class="" type="number" name="maxMinutesPerTreatment" ng-model="proto.maxMinutesPerTreatment"  min="{{proto.minMinutesPerTreatment+1}}" max="99"  required >
               <div ng-show="(point.maxMinutesPerTreatment.$dirty && point.maxMinutesPerTreatment.$invalid) || submitted">
                 <span class="has-error" ng-show="point.maxMinutesPerTreatment.$error.required" translate="error.protocol.maxMinutesPerTreatment.required">
                 </span>
-                <span class="has-error" ng-show="point.maxMinutesPerTreatment.$error.min">Maximum Minutes per Treatment should be {{proto.minMinutesPerTreatment}} and 99
+                <span class="has-error" ng-show="point.maxMinutesPerTreatment.$error.min && proto.minMinutesPerTreatment+1 < 99">Maximum Minutes per Treatment should be {{proto.minMinutesPerTreatment+1}} and 99
+                </span>
+                <span class="has-error" ng-show="point.maxMinutesPerTreatment.$error.min && proto.minMinutesPerTreatment+1 === 99">Maximum Minutes per Treatment should be 99
                 </span>
                 <span class="has-error" ng-show="point.maxMinutesPerTreatment.$error.max" translate="error.protocol.maxMinutesPerTreatment.max">
                 </span>
@@ -114,16 +124,24 @@
               <span class="">*</span>
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
-              <input class="" type="number" name="minFrequency" ng-model="proto.minFrequency" required min="5" max="20">
+              <input class="" type="number" name="minFrequency" ng-model="proto.minFrequency" required min="5" max="19">
               <div ng-show="(point.minFrequency.$dirty && point.minFrequency.$invalid) || submitted">
-                <span class="has-error" ng-show="point.minFrequency.$error.required" translate="error.protocol.minFrequency.required">
+                <span class="has-error" ng-show="point.minFrequency.$error.required && protocol.type === 'Normal'" translate="error.protocol.minFrequency.required">
                 </span>
-                <span class="has-error" ng-show="point.minFrequency.$error.min" translate="error.protocol.minFrequency.min">
+                <span class="has-error" ng-show="point.minFrequency.$error.min && protocol.type === 'Normal'" translate="error.protocol.minFrequency.min">
                 </span>
-                <span class="has-error" ng-show="point.minFrequency.$error.max" translate="error.protocol.minFrequency.max">
+                <span class="has-error" ng-show="point.minFrequency.$error.max && protocol.type === 'Normal'" translate="error.protocol.minFrequency.max">
                 </span>
-                <span class="has-error" ng-show="point.minFrequency.$error.number" translate="error.protocol.minFrequency.invalid">
+                <span class="has-error" ng-show="point.minFrequency.$error.number && protocol.type === 'Normal'" translate="error.protocol.minFrequency.invalid">
                 </span>
+
+                <span class="has-error" ng-show="(point.minFrequency.$error.min || point.minFrequency.$error.max) && protocol.type === 'Custom'" translate="error.protocol.minFrequency.custom-max-min">
+                </span>
+                <span class="has-error" ng-show="point.minFrequency.$error.number && protocol.type === 'Custom'" translate="error.protocol.minFrequency.custom-invalid">
+                </span>
+                <span class="has-error" ng-show="point.minFrequency.$error.required && protocol.type === 'Custom'" translate="error.protocol.minFrequency.custom-required">
+                </span>
+
               </div>
             </div>
           </div>
@@ -133,11 +151,13 @@
               <span class="">*</span>
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
-              <input class="" type="number" name="maxFrequency" ng-model="proto.maxFrequency" required min="{{proto.minFrequency}}" max="20">
+              <input class="" type="number" name="maxFrequency" ng-model="proto.maxFrequency" required min="{{proto.minFrequency+1}}" max="20">
               <div ng-show="(point.maxFrequency.$dirty && point.maxFrequency.$invalid) || submitted">
                 <span class="has-error" ng-show="point.maxFrequency.$error.required" translate="error.protocol.maxFrequency.required">
                 </span>
-                <span class="has-error" ng-show="point.maxFrequency.$error.min">Maximum Frequency should be between {{proto.minFrequency}} and 20
+                <span class="has-error" ng-show="point.maxFrequency.$error.min && proto.minFrequency+1 < 20">Maximum Frequency should be between {{proto.minFrequency+1}} and 20
+                </span>
+                <span class="has-error" ng-show="point.maxFrequency.$error.min  && proto.minFrequency+1 === 20">Maximum Frequency should be 20
                 </span>
                 <span class="has-error" ng-show="point.maxFrequency.$error.max" translate="error.protocol.maxFrequency.max">
                 </span>
@@ -156,15 +176,21 @@
               <span class="">*</span>
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
-              <input class="" type="number" name="minPressure" ng-model="proto.minPressure" required min="1" max="10">
+              <input class="" type="number" name="minPressure" ng-model="proto.minPressure" required min="1" max="9">
               <div ng-show="(point.minPressure.$dirty && point.minPressure.$invalid) || submitted">
-                <span class="has-error" ng-show="point.minPressure.$error.required" translate="error.protocol.minPressure.required">
+                <span class="has-error" ng-show="point.minPressure.$error.required && protocol.type === 'Normal'" translate="error.protocol.minPressure.required">
                 </span>
-                <span class="has-error" ng-show="point.minPressure.$error.min" translate="error.protocol.minPressure.min">
+                <span class="has-error" ng-show="point.minPressure.$error.min && protocol.type === 'Normal'" translate="error.protocol.minPressure.min">
                 </span>
-                <span class="has-error" ng-show="point.minPressure.$error.max" translate="error.protocol.minPressure.max">
+                <span class="has-error" ng-show="point.minPressure.$error.max  && protocol.type === 'Normal'" translate="error.protocol.minPressure.max">
                 </span>
-                <span class="has-error" ng-show="point.minPressure.$error.number" translate="error.protocol.minPressure.invalid">
+                <span class="has-error" ng-show="point.minPressure.$error.number && protocol.type === 'Normal'" translate="error.protocol.minPressure.invalid">
+                </span>
+
+                <span class="has-error" ng-show="(point.minPressure.$error.min || point.minPressure.$error.max) &&  protocol.type === 'Custom'" translate="error.protocol.minPressure.custom-max-min">
+                </span>
+                <span class="has-error" ng-show="point.minPressure.$error.required && protocol.type === 'Custom'" translate="error.protocol.minPressure.custom-required"></span>
+                <span class="has-error" ng-show="point.minPressure.$error.number && protocol.type === 'Custom'" translate="error.protocol.minPressure.custom-invalid">
                 </span>
               </div>
             </div>
@@ -175,11 +201,13 @@
               <span class="">*</span>
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
-              <input class="" type="number" name="maxPressure" ng-model="proto.maxPressure" required min="{{proto.minPressure}}" max="10">
+              <input class="" type="number" name="maxPressure" ng-model="proto.maxPressure" required min="{{proto.minPressure+1}}" max="10">
               <div ng-show="(point.maxPressure.$dirty && point.maxPressure.$invalid) || submitted">
                 <span class="has-error" ng-show="point.maxPressure.$error.required" translate="error.protocol.maxPressure.required">
                 </span>
-                <span class="has-error" ng-show="point.maxPressure.$error.min">Maximum Pressure should be between {{proto.minPressure}} and 10
+                <span class="has-error" ng-show="point.maxPressure.$error.min && proto.minPressure+1 < 10" >Maximum Pressure should be between {{proto.minPressure+1}} and 10
+                </span>
+                <span class="has-error" ng-show="point.maxPressure.$error.min && proto.minPressure+1 === 10" >Maximum Pressure should be 10
                 </span>
                 <span class="has-error" ng-show="point.maxPressure.$error.max" translate="error.protocol.maxPressure.max">
                 </span>
