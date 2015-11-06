@@ -40,6 +40,7 @@
     },
     "update-button-text": "Update",
     "cancel-button-text": "Cancel",
+    "reset-button-text": "Reset",
     "edit-button-text": "Edit",
     "security-ques": "Security Question",
     "cur-pswd": "Current Password",
@@ -112,6 +113,18 @@
     },
     "update":{
       "warning" : "Are you sure, you wnat to update the Profile?",
+      "message" : "Updated details will be reflected."
+    },
+    "passwordUpdate":{
+      "warning" : "Are you sure, you wnat to update the Password?",
+      "message" : "After updating password you will be logged out"
+    },
+    "emailUpdate":{
+      "warning" : "Are you sure, you wnat to update the Email?",
+      "message" : "After updating email you will be logged out"
+    },
+    "securityQuestion":{
+      "warning" : "Are you sure, you wnat to update the security question and answer?",
       "message" : "Updated details will be reflected."
     }
   }
