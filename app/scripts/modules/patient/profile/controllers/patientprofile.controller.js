@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('hillromvestApp').controller('patientprofileController', ['$scope', '$state', 'notyService', 'patientService', 'UserService', 'AuthServerProvider', 'Password', 'Auth', 'StorageService', 'caregiverDashBoardService', '$stateParams', 'loginConstants', '$q',
-  function ($scope, $state, notyService, patientService, UserService, AuthServerProvider,Password, Auth, StorageService, caregiverDashBoardService, $stateParams, loginConstants, $q) {
+angular.module('hillromvestApp').controller('patientprofileController', ['$scope', '$state', 'notyService', 'patientService', 'UserService', 'AuthServerProvider', 'Password', 'Auth', 'StorageService', 'caregiverDashBoardService', '$stateParams', 'loginConstants', '$q', 'dateService',
+  function ($scope, $state, notyService, patientService, UserService, AuthServerProvider,Password, Auth, StorageService, caregiverDashBoardService, $stateParams, loginConstants, $q, dateService) {
 	
   $scope.init = function(){
 		var currentRoute = $state.current.name;
@@ -104,6 +104,20 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
     });
   };
 
+  $scope.setOverviewMode = function(patient){
+      $scope.patient = patient;
+      if (patient.dob !== null) {
+        $scope.patient.age = dateService.getAge(new Date($scope.patient.dob));
+        var _date = dateService.getDate($scope.patient.dob);
+        var _month = dateService.getMonth(_date.getMonth());
+        var _day = dateService.getDay(_date.getDate());
+        var _year = dateService.getYear(_date.getFullYear());
+        var dob = _month + "/" + _day + "/" + _year;
+        $scope.patient.dob = dob;
+        $scope.patient.formatedDOB = _month + "/" + _day + "/" + _year.slice(-2);
+      }
+    };
+
 	$scope.initProfileView = function(){
 		UserService.getUser(StorageService.get('logged').patientID).then(function(response){
 			$scope.patientView = response.data.user;
@@ -176,7 +190,7 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
           $scope.resetAccount = ($scope.resetAccount) ? $scope.resetAccount : $scope.questions[0];
         }
         if(data[2]){
-          $scope.patient = data[2].data;
+          $scope.setOverviewMode(data[2].data);
         }
       }
     });
@@ -206,7 +220,7 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
     var data = $scope.patient;
     data.role = 'PATIENT';
     UserService.editUser(data).then(function(response){
-      notyService.showMessage(response.data.message);
+      notyService.showMessage(response.data.message, 'success');
     }).catch(function(response){
       notyService.showError(response);
     });
