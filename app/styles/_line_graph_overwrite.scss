@@ -215,10 +215,9 @@
 
 	.nvtooltip{
 		padding: 0px 0px 0px 0px;
-		min-width: 185px;
+		min-width: 170px;
 		border-radius: 3px;
 		border: solid 1px $iceberg;
-		white-space: nowrap
 
 		p{
 			padding: 0px 0px;
@@ -441,3 +440,9 @@
 .datepicker.datepicker-dropdown.datepicker-orient-left:before{
 	left: 92px;
 }
+
+.treatmentGraphTL{
+	.nvtooltip{
+		width: 270px;
+	}
+	}
