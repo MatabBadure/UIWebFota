@@ -1018,7 +1018,7 @@ angular.module('hillromvestApp')
     },function(){
         $timeout(function() {
         $(hiddenFrame).remove();
-        var printId1 = "#complianceGraphWrapper";
+        var printId1 = "#complianceGraphPrim";
         var graphData = $scope.completeComplianceData;
         var element1 = document.querySelectorAll(printId1)[0],
         html1 = (element1) ? element1.innerHTML: "",
@@ -1050,6 +1050,23 @@ angular.module('hillromvestApp')
       var pdfMissedTherapyDays = ($scope.missedtherapyDays !== null && $scope.missedtherapyDays >= 0) ? $scope.missedtherapyDays : stringConstants.notAvailable;
       var pdfHMRNonAdherenceScore = ($scope.adherenceScore !== null && $scope.adherenceScore >= 0) ? $scope.adherenceScore : stringConstants.notAvailable;
       var pdfSettingDeviation = stringConstants.notAvailable;
+      var pressureClass = ($scope.compliance.pressure) ? "pressure_legend_active" : "";
+      var frequencyClass = ($scope.compliance.frequency) ? "frequency_legend_active" : "";
+      var durationClass = ($scope.compliance.duration) ? "duration_legend_active" : "";
+      var complianceHeader = '<div class="col-md-16">' + '<div class="pull-right wrapper_custom_check">' + 
+                             '<div class="custom_check_container">'+
+                             '<input id="pressure" class="check" type="checkbox" name="pressure"> ' +
+                             '<label class="check_label '+ pressureClass + '">Pressure</label>'+
+                             '</div>'+
+                             '<div class="custom_check_container">'+
+                             '<input id="frequency" class="check" type="checkbox" name="frequency">'+
+                             '<label class="check_label '+ frequencyClass+ '">Frequency</label>'+
+                             '</div>'+
+                             '<div class="custom_check_container">'+
+                             '<input id="duration" class="check" type="checkbox" name="duration">'+
+                             '<label class="check_label '+ durationClass +'">Duration</label>'+
+                             '</div>'+
+                             '</div></div>';
       htmlDocument = "<!doctype html>" +
             '<html style="background: white;"><head>' +
             '<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />'+
@@ -1108,8 +1125,11 @@ angular.module('hillromvestApp')
               '</table>' +
             '</div>' +
             '<div class="graph-title"></div>'+
+            '<div id="complianceGraphWrapper">'+
+            complianceHeader+
             '<div style=" width: 1200px;">'+
               html1 +
+            '</div>'+
             '</div>'+
             '<div class="pdf-signature">'+
               '<div class="pdf-signature--prim">'+
