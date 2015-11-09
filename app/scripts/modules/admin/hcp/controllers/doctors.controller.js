@@ -317,5 +317,14 @@ angular.module('hillromvestApp')
       });
     };
 
+    $scope.reActivateDoctor = function(){
+      UserService.reactivateUser($scope.doctor.id).then(function(response){
+        notyService.showMessage(response.data.message, 'success');
+        $state.go('hcpUser');
+      }).catch(function(response){
+        notyService.showError(response);
+      });
+    };
+
     $scope.init();
   }]);
