@@ -123,23 +123,25 @@
 						<form action="#" ng-if="isComplianceExist">
 							<div class="custom_check_container" ng-click="pressureIsDisabled && isLegendEnabled('pressureIsDisabled');">
 								<input id="pressure" class="check" type="checkbox" name="pressure" ng-disabled="pressureIsDisabled" ng-model="compliance.pressure" ng-change="reCreateComplianceGraph();$event.stopPropagation();">
-			  		 			<label class="check_label pressure_legend" for="pressure" translate="graph.pressure" >Pressure</label>
+			  		 			<label class="check_label pressure_legend" for="pressure" translate="graph.pressure" ></label>
 							</div>
 				  		 	<div class="custom_check_container" ng-click="frequencyIsDisabled && isLegendEnabled('frequencyIsDisabled');">
 				  		 		<input id="frequency" class="check" type="checkbox" name="frequency" ng-disabled="frequencyIsDisabled" ng-model="compliance.frequency" ng-change="reCreateComplianceGraph();$event.stopPropagation();">
-				  		 		<label class="check_label frequency_legend" for="frequency" translate="graph.frequency" >Frequency</label>
+				  		 		<label class="check_label frequency_legend" for="frequency" translate="graph.frequency" ></label>
 				  		 	</div>
 				  		 	<div class="custom_check_container" ng-click="durationIsDisabled && isLegendEnabled('durationIsDisabled');">
 				  		 		<input id="duration" class="check" type="checkbox" name="duration" ng-disabled="durationIsDisabled" ng-model="compliance.duration" ng-change="reCreateComplianceGraph();$event.stopPropagation();">
-				  		 		<label class="check_label duration_legend" for="duration" translate="graph.duration" >Duration</label>
+				  		 		<label class="check_label duration_legend" for="duration" translate="graph.duration" ></label>
 				  		 	</div>
 			  		 	</form>
 			  		 	<!-- <span ng-show="complianceParamErrMsg" translate="graph.please-deselect-one-item" class="has-error graph_check_error" id="max-compliance-err"></span>
 		  		 		<span ng-show="minComplianceParamErrMsg" translate="graph.min-legend-required" class="has-error graph_check_error" id="min-compliance-err"></span> -->
 					</div>
 				</div>
+				<div id="complianceGraphPrim">
 				<div id="complianceGraph" class="complianceGraph col-md-16">
 					<svg ng-show="!noDataAvailable"> </svg>
+				</div>
 				</div>
 			</div>
 		</div>
