@@ -144,3 +144,38 @@
 		width: 80%;
 	}
 }
+
+.wrapper_custom_check .custom_check_container .check_label{
+	position: relative;
+
+}
+.wrapper_custom_check .custom_check_container .check_label:after{
+    border: #fff;
+    display: inline-block;
+    height: 13px;
+    width: 13px;
+    border: solid 1px green;
+    border-radius: 50%;
+    position: absolute;
+    left: -17px;
+    top: 1px;
+}
+
+.wrapper_custom_check .custom_check_container .check_label.pressure_legend_active:after{
+	height: 7px;
+    width: 7px;
+    border: solid 7px #ff9829;
+}
+.wrapper_custom_check .custom_check_container .check_label.frequency_legend_active:after{
+	height: 7px;
+    width: 7px;
+    border: solid 7px #34978f;
+}
+.wrapper_custom_check .custom_check_container .check_label.duration_legend_active:after{
+	height: 7px;
+    width: 7px;
+    border: solid 7px #4e95c4;
+}
+
+
+
