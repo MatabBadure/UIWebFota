@@ -53,9 +53,10 @@
 
 <div class="col-md-16 reset-padding margin-top">
 
-  <buton class="hillrom-btn btn-primary float-right btn-margin-left" ng-if="!doctor.deleted && !doctor.activated" translate="doctor.reactivate-button-text" ng-click="resendActivationLink()"></buton>
-  <buton class="hillrom-btn btn-primary float-right btn-margin-left" translate="doctor.edit-button-text" ng-click="editHCP()"></buton>
-  <buton class="hillrom-btn btn-secondary float-right btn-margin-left" translate="doctor.deactivate-button-text" ng-click="showDeactivateModal()"></buton>
+  <button class="hillrom-btn btn-primary float-right btn-margin-left" ng-if="!doctor.deleted && !doctor.activated" translate="doctor.reactivate-button-text" ng-click="resendActivationLink()"></button>
+  <button class="hillrom-btn btn-primary float-right btn-margin-left" translate="doctor.edit-button-text" ng-click="editHCP()"></button>
+  <button class="hillrom-btn btn-secondary float-right btn-margin-left" ng-if="!doctor.deleted && doctor.activated" translate="doctor.deactivate-button-text" ng-click="showDeactivateModal()"></button>
+  <button class="hillrom-btn btn-secondary float-right btn-margin-left" ng-if="doctor.deleted"  ng-click="$parent.reActivateModal = true" translate="doctor.activate-button-text"></button>
 </div>
 
 
@@ -189,6 +190,26 @@
          <div class="row modal--custom-btn">
           <buton class="hillrom-btn btn-submit float-right" ng-click="deleteDoctor()">Yes</buton>
           <buton class="hillrom-btn btn-submit float-right" data-dismiss="modal" ng-click="close()">No</buton>
+         </div>
+      </div>
+      <footer class="modal__footer">
+      </footer>
+    </div>
+  </div>
+</div>
+
+<div ng-if="reActivateModal" class="modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true">
+  <div class="modal__dialog">
+    <div class="modal__content">
+      <header class="modal__header">
+        <button type="button" class="modal__close" data-dismiss="modal" ng-click="$parent.reActivateModal = false">&times;</button>
+         <p translate="doctor.re-activate.warning"></p>
+      </header>
+      <div class="modal__body">
+         <div class="modal--message" translate="doctor.re-activate.message"></div>
+         <div class="row modal--custom-btn">
+          <buton class="hillrom-btn btn-submit float-right" ng-click="reActivateDoctor(); $parent.reActivateModal = false">Yes</buton>
+          <buton class="hillrom-btn btn-submit float-right" data-dismiss="modal" ng-click="$parent.reActivateModal = false">No</buton>
          </div>
       </div>
       <footer class="modal__footer">
