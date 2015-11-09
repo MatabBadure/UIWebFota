@@ -1116,7 +1116,7 @@ angular.module('hillromvestApp')
               '<span class="signature-desc">Name:</span>'+
               '<span class="user-space"></span>'+
               '</div>'+
-              '<div class="pdf-signature--secon">'+
+              '<div class="pdf-signature--secon signature-date">'+
                 '<span class="signature-desc">Date:</span>'+
                 '<span class="user-space"></span>'+
               '</div>'+
@@ -1869,7 +1869,7 @@ angular.module('hillromvestApp')
               '<span class="signature-desc">Name:</span>'+
               '<span class="user-space"></span>'+
               '</div>'+
-              '<div class="pdf-signature--secon">'+
+              '<div class="pdf-signature--secon signature-date">'+
                 '<span class="signature-desc">Date:</span>'+
                 '<span class="user-space"></span>'+
               '</div>'+

@@ -118,19 +118,29 @@
 	font-family:"Apercu Light", Arial, Calibri, sans-serif;
 	padding-top: 10px;
 	display: inline-block;
-	.signature-desc {
-		width: 30%;
-		padding-right: 10px;
+	.signature-desc{
+		width: 20%;
+		/*padding-right: 10px;*/
 		display: inline-block;
+		float: left;
 	}
 	.user-space {
-		width: 70%;
+		width: 80%;
 		display: inline-block;
 		border-bottom: 1px solid;
 		padding-left: 20px;
-		margin-left: 10px;
+		/*margin-left: 10px;*/
 	}
 }
 .sec-row {
 	clear: both;
+}
+.signature-date{
+	  .signature-desc{
+		width: 20%;
+		padding-right: 20px;
+	}
+	.user-space{
+		width: 80%;
+	}
 }
