@@ -1990,10 +1990,6 @@ angular.module('hillromvestApp')
       }
     };
 
-    $scope.tempFunc = function(){
-      console.log('It is coming here. Display last 7 days adherence score...!');
-    };
-
     $scope.$watch("textNote.edit_date", function(){
       angular.element(document.querySelector('.datepicker')).hide();
     })

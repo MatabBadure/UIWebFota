@@ -14,7 +14,7 @@
 						<div class="stats_chart_section">
 							<div class="stats_header"><h4 translate="graph.statistics"></h4></div>
 							<div class="stats_chart_container">
-								<div class="col-3" ng-click="tempFunc()">
+								<div class="col-3" ng-click="$parent.adherenceTable = true">
 									<div class="pie_chart" easypiechart options="adherence" percent="adherenceScore"></div>
 									<div class="stats_chart_content score">
 										<h4 class="percent" ng-bind="adherenceScore"></h4>
@@ -47,7 +47,7 @@
 									<div class="chart_inner_icon icon-settings"></div>
 								</div>
 							</div>
-							<div class="col-md-16 adherence_details_wrapper">
+							<div class="col-md-16 adherence_details_wrapper" ng-show="adherenceTable">
 								<div class="row">
 									<div class="col-md-16 header_adherence_details">
 									<div class="row">
@@ -55,7 +55,7 @@
 											<p class="head_txt">Adherence Score History for last 7 days</p>
 										</div>
 										<div class="col-md-1">
-											<span class="pull-right"><a class="close" href="#">X</a></span>
+											<span class="pull-right"><a class="close" href="javascript:void(0)" ng-click="$parent.adherenceTable = false">X</a></span>
 										</div>
 									</div>
 								</div>
