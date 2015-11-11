@@ -18,11 +18,15 @@
 		    position: relative;
 		    border-bottom: solid 2px #fff;
 		    cursor: pointer;
+
 		    &:hover{
 		    	
 		    	border-bottom: solid 2px $sunshade;
 		    }
+		    
 		}
+
+
 	}
 	.stats_chart_section{
 		margin-top: 25px;
@@ -85,4 +89,7 @@
 	}
 
 }
+.hover_symbol{
+		cursor: pointer;
+	}
 /*HCP Piechart Style END*/
