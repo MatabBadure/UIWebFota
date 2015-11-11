@@ -84,7 +84,19 @@
 		tr{
 			td{
 				font-size: 12px;
+				.adherence-td-data{
+					display: block;
+				}
 			}
+		}
+		.inner_th, .inner_td{
+			display: inline-block;
+			float: left;
+			border-bottom: 0px;
+		}
+		.inner_tr:first-child{
+
+			padding-bottom: 10px;
 		}
 	}
 

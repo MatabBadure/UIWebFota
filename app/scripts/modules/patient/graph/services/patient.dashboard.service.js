@@ -6,7 +6,7 @@
  *
  */
 angular.module('hillromvestApp')
-  .factory('patientDashBoardService',['$http', 'headerService', function ($http, headerService) {
+  .factory('patientDashBoardService',['$http', 'headerService','URL', function ($http, headerService, URL) {
     return {
 
       /**
@@ -140,6 +140,16 @@ angular.module('hillromvestApp')
         var url = patient.notification.updateNotificationStatus;
         url  = url + '/' + id ;
         return $http.put(url, data, {
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });
+      },
+
+
+      getAdeherenceData : function(userId, fromDate, toDate){
+        var url = URL.getAdeherenceData.replace('USERID', userId).replace('FROMDATE', fromDate).replace('TODATE', toDate)
+        return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
           return response;

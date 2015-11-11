@@ -1996,6 +1996,13 @@ angular.module('hillromvestApp')
 
     //Todo: Remove after Implementing REST API.
     $scope.adherenceScores = adherenceScores;
+    $scope.getAdherenceScore = function(){
+      // patientDashBoardService.getAdeherenceData().then(function(response){
+
+      // }).catch(function(response){
+
+      // });
+    };
 
 }]);
 
