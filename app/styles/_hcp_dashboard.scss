@@ -49,4 +49,40 @@
 		padding: 0px 0px;
 	}
 }
+.adherence_details_wrapper{
+	.header_adherence_details{
+		background-color: $cyan-blue-light;
+		color: $body-bg;
+		padding: 3px 10px;
+	}
+	.close{
+		color: $body-bg;
+		padding: 5px 5px;
+		&:hover{
+			text-decoration: none;
+		}
+	}
+	.head_txt{
+		margin: 0px 0px;
+	}
+	.table{
+		border: solid 1px $pre-border-color;
+		thead{
+			background-color: $dropdown-link-hover-bg;
+
+			th{
+				padding: 3px 8px;
+				border-bottom: solid 1px $pre-border-color;
+				color: $gray;
+				font-size: 12px;
+			}
+		}
+		tr{
+			td{
+				font-size: 12px;
+			}
+		}
+	}
+
+}
 /*HCP Piechart Style END*/
