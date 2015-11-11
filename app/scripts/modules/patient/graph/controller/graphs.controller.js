@@ -1994,14 +1994,22 @@ angular.module('hillromvestApp')
       angular.element(document.querySelector('.datepicker')).hide();
     })
 
-    //Todo: Remove after Implementing REST API.
-    $scope.adherenceScores = adherenceScores;
     $scope.getAdherenceScore = function(){
-      // patientDashBoardService.getAdeherenceData().then(function(response){
-
-      // }).catch(function(response){
-
-      // });
+      var patientId;
+      if($stateParams.patientId){
+        patientId = $stateParams.patientId;
+      }else if(StorageService.get('logged').patientID){
+        patientId = StorageService.get('logged').patientID;
+      }
+      var oneWeekAgo = new Date();
+      oneWeekAgo.setDate(oneWeekAgo.getDate() - 6);
+      var fromDate = dateService.convertDateToYyyyMmDdFormat(oneWeekAgo.getTime());
+      var toDate = dateService.convertDateToYyyyMmDdFormat(new Date().getTime());
+      patientDashBoardService.getAdeherenceData(patientId, fromDate, toDate).then(function(response){
+        $scope.adherenceScores = response.data;
+      }).catch(function(response){
+        notyService.showError(response);
+      });
     };
 
 }]);

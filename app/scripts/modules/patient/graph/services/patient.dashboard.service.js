@@ -147,14 +147,13 @@ angular.module('hillromvestApp')
       },
 
 
-      getAdeherenceData : function(userId, fromDate, toDate){
-        var url = URL.getAdeherenceData.replace('USERID', userId).replace('FROMDATE', fromDate).replace('TODATE', toDate)
+      getAdeherenceData : function(userId, startDate, endDate){
+        var url = URL.getAdeherenceData.replace('USERID', userId).replace('FROMDATE', startDate).replace('TODATE', endDate)
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
           return response;
         });
       }
-
     };
   }]);
