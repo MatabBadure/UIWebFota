@@ -828,3 +828,29 @@ var caregiver = {
     },
     "message": "Caregiver User fetched successfully."
 }
+
+var adherenceScores = [{
+        'date':'10/12/2015',
+        'notifications':'Missed Therapy Days',
+        'change':'-5',
+        'updatedScore':'67'
+    },
+    {
+        'date':'10/12/2015',
+        'notifications':'Missed Therapy Days',
+        'change':'-5',
+        'updatedScore':'67'
+    },
+    {
+        'date':'10/12/2015',
+        'notifications':'Missed Therapy Days',
+        'change':'-5',
+        'updatedScore':'67'
+    },
+    {
+        'date':'10/12/2015',
+        'notifications':'Missed Therapy Days',
+        'change':'-5',
+        'updatedScore':'67'
+    }
+];

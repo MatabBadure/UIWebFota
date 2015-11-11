@@ -52,7 +52,7 @@
 									<div class="col-md-16 header_adherence_details">
 									<div class="row">
 										<div class="col-md-15">
-											<p class="head_txt">Adherence Score History for last 7 days</p>
+											<p class="head_txt" translate="graph.adherence-score-table.title"></p>
 										</div>
 										<div class="col-md-1">
 											<span class="pull-right"><a class="close" href="javascript:void(0)" ng-click="$parent.adherenceTable = false">X</a></span>
@@ -62,30 +62,18 @@
 								<table class="table">
 									<thead>
 										<tr>
-											<th class="col-md-4">Date</th>
-											<th class="col-md-4">Notification</th>
-											<th class="col-md-4">Change</th>
-											<th class="col-md-4">Updated Score</th>
+											<th class="col-md-4" translate="graph.adherence-score-table.date">Date</th>
+											<th class="col-md-4" translate="graph.adherence-score-table.notification">Notification</th>
+											<th class="col-md-4" translate="graph.adherence-score-table.change">Change</th>
+											<th class="col-md-4"translate="graph.adherence-score-table.updated-score">Updated Score</th>
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
-											<td class="col-md-4">1</td>
-											<td class="col-md-4">John</td>
-											<td class="col-md-4">Carter</td>
-											<td class="col-md-4">johncarter@mail.com</td>
-										</tr>
-										<tr>
-											<td class="col-md-4">2</td>
-											<td class="col-md-4">Peter</td>
-											<td class="col-md-4">Parker</td>
-											<td class="col-md-4">peterparker@mail.com</td>
-										</tr>
-										<tr>
-											<td class="col-md-4">3</td>
-											<td class="col-md-4">John</td>
-											<td class="col-md-4">Rambo</td>
-											<td class="col-md-4">johnrambo@mail.com</td>
+										<tr ng-repeat="adherenceScore in adherenceScores">
+											<td class="col-md-4">{{adherenceScore.date}}</td>
+											<td class="col-md-4">{{adherenceScore.notifications}}</td>
+											<td class="col-md-4">{{adherenceScore.change}}</td>
+											<td class="col-md-4">{{adherenceScore.updatedScore}}</td>
 										</tr>
 									</tbody>
 								</table>

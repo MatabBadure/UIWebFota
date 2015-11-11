@@ -303,7 +303,14 @@
     "export-as-csv": "CSV",
     "export-raw-data": "Raw Data (CSV)",
     "export-processed-data": "Processed Data (CSV)",
-    "download": "Download"
+    "download": "Download",
+    "adherence-score-table":{
+      "title":"Adherence Score History for last 7 days",
+      "date": "Date",
+      "notification": "Notification",
+      "change" :"Change",  
+      "updated-score": "Updated Score"
+    }
   },
   "no-clinic-found": "No clinic associated.",
   "no-hcp-found": "No hcp associated.",

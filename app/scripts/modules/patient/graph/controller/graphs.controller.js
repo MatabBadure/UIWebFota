@@ -1994,6 +1994,9 @@ angular.module('hillromvestApp')
       angular.element(document.querySelector('.datepicker')).hide();
     })
 
+    //Todo: Remove after Implementing REST API.
+    $scope.adherenceScores = adherenceScores;
+
 }]);
 
 
