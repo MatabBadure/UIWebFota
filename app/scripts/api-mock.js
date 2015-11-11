@@ -831,26 +831,22 @@ var caregiver = {
 
 var adherenceScores = [{
         'date':'10/12/2015',
-        'notifications':'Missed Therapy Days',
-        'change':'-5',
+        'notificationPoints':{'HMR_NON_COMPLIANCE': -2},
         'updatedScore':'67'
     },
     {
         'date':'10/12/2015',
-        'notifications':'Missed Therapy Days',
-        'change':'-5',
+        'notificationPoints':{'HMR_NON_COMPLIANCE': -2},
         'updatedScore':'67'
     },
     {
         'date':'10/12/2015',
-        'notifications':'Missed Therapy Days',
-        'change':'-5',
+        'notificationPoints':{'No Notification': 0, 'MISSED_THERAPY': 2},
         'updatedScore':'67'
     },
     {
         'date':'10/12/2015',
-        'notifications':'Missed Therapy Days',
-        'change':'-5',
+        'notificationPoints':{'No Notification': 0, 'MISSED_THERAPY': 2},
         'updatedScore':'67'
     }
 ];

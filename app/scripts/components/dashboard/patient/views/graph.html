@@ -71,7 +71,7 @@
 									<tbody>
 										<tr ng-repeat="adherenceScore in adherenceScores">
 											<td class="col-md-4">{{adherenceScore.date}}</td>
-											<td class="col-md-4">{{adherenceScore.notifications}}</td>
+											<td class="col-md-4"><span ng-repeat="(key, val) in adherenceScore.notificationPoints"> {{key}}</span></td>
 											<td class="col-md-4">{{adherenceScore.change}}</td>
 											<td class="col-md-4">{{adherenceScore.updatedScore}}</td>
 										</tr>
