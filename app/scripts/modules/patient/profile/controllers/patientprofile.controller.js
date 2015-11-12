@@ -220,7 +220,9 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
     var data = $scope.patient;
     data.role = 'PATIENT';
     UserService.editUser(data).then(function(response){
+      Auth.logout();
       notyService.showMessage(response.data.message, 'success');
+      $state.go('login');
     }).catch(function(response){
       notyService.showError(response);
     });
@@ -272,6 +274,24 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
 
   $scope.cancel = function(){
     $state.go('patientProfile');
+  };
+
+  $scope.resetEmailForm = function(){
+    $scope.patient.email = null;
+    $scope.emailForm.$setPristine();
+    $scope.emailFormSubmitted = false;
+  };
+
+  $scope.resetPasswordForm = function(){
+    $scope.profile = {};
+    $scope.form.$setPristine();
+    $scope.submitted = false;
+  };
+
+  $scope.resetSecurityQuestionForm = function(){
+    $scope.resetAccount.answer = null;
+    $scope.securityQuestionForm.$setPristine();
+    $scope.securityFormSubmitted = false;
   };
 
 	$scope.init();    
