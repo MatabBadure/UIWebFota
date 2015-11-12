@@ -171,6 +171,7 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
   };
 
   $scope.initResetPassword = function(){
+    $scope.showUpdatePasswordModal = false;
   	$scope.profile = {};
     $q.all([
       AuthServerProvider.getSecurityQuestions(),
@@ -293,6 +294,30 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
     $scope.securityQuestionForm.$setPristine();
     $scope.securityFormSubmitted = false;
   };
+
+  $scope.showModal = function(invalid, modalName){
+      switch(modalName){
+        case 'passwordModal':
+        $scope.submitted = true;
+        if(!invalid){
+          $scope.showUpdatePasswordModal = true;
+        }        
+        break;
+        case 'emailModal':
+        $scope.emailFormSubmitted = true;
+        if(!invalid){
+          $scope.showUpdateEmailModal = true;
+        }
+        break;
+        case 'securityQuestionModal':
+        $scope.securityFormSubmitted = true;
+        if(!invalid){
+          $scope.showSecurityQuestionModal = true;
+        }
+        break;
+      }
+      return !invalid;
+  }
 
 	$scope.init();    
 }]);
