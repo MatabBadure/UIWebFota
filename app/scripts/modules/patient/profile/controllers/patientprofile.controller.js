@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('hillromvestApp').controller('patientprofileController', ['$scope', '$state', 'notyService', 'patientService', 'UserService', 'AuthServerProvider', 'Password', 'Auth', 'StorageService', 'caregiverDashBoardService', '$stateParams', 'loginConstants', '$q', 'dateService',
-  function ($scope, $state, notyService, patientService, UserService, AuthServerProvider,Password, Auth, StorageService, caregiverDashBoardService, $stateParams, loginConstants, $q, dateService) {
+angular.module('hillromvestApp').controller('patientprofileController', ['$scope', '$state', 'notyService', 'patientService', 'UserService', 'AuthServerProvider', 'Password', 'Auth', 'StorageService', 'caregiverDashBoardService', '$stateParams', 'loginConstants', '$q', 'dateService', '$rootScope',
+  function ($scope, $state, notyService, patientService, UserService, AuthServerProvider,Password, Auth, StorageService, caregiverDashBoardService, $stateParams, loginConstants, $q, dateService, $rootScope) {
 	
   $scope.init = function(){
 		var currentRoute = $state.current.name;
@@ -163,6 +163,8 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
       }else{
         notyService.showMessage(profile.EMAIL_UPDATED_SUCCESSFULLY, 'success');
         Auth.logout();
+        StorageService.clearAll();
+        $rootScope.userRole = null;
         $state.go('login');
       }
     }).catch(function(response){
@@ -222,6 +224,8 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
     data.role = 'PATIENT';
     UserService.editUser(data).then(function(response){
       Auth.logout();
+      StorageService.clearAll();
+      $rootScope.userRole = null;
       notyService.showMessage(response.data.message, 'success');
       $state.go('login');
     }).catch(function(response){
@@ -239,7 +243,9 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
       'newPassword': $scope.profile.newPassword
     };
     Password.updatePassword(StorageService.get('logged').patientID, data).then(function(response){
-      Auth.logout();
+        Auth.logout();
+        StorageService.clearAll();
+        $rootScope.userRole = null;
       notyService.showMessage(response.data.message, 'success');
       $state.go('login');
     }).catch(function(response){
@@ -317,7 +323,7 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
         break;
       }
       return !invalid;
-  }
+  };
 
 	$scope.init();    
 }]);
