@@ -14,7 +14,7 @@
 						<div class="stats_chart_section">
 							<div class="stats_header"><h4 translate="graph.statistics"></h4></div>
 							<div class="stats_chart_container">
-								<div class="col-3">
+								<div class="col-3 hover_symbol" ng-click="$parent.adherenceTable = true; getAdherenceScore()">
 									<div class="pie_chart" easypiechart options="adherence" percent="adherenceScore"></div>
 									<div class="stats_chart_content score">
 										<h4 class="percent" ng-bind="adherenceScore"></h4>
@@ -46,6 +46,58 @@
 									</div>
 									<div class="chart_inner_icon icon-settings"></div>
 								</div>
+							</div>
+							<div class="col-md-16 adherence_details_wrapper" ng-show="adherenceTable">
+								<div class="row">
+									<div class="col-md-16 header_adherence_details">
+									<div class="row">
+										<div class="col-md-15">
+											<p class="head_txt" translate="graph.adherence-score-table.title"></p>
+										</div>
+										<div class="col-md-1">
+											<span class="pull-right"><a class="close" href="javascript:void(0)" ng-click="$parent.adherenceTable = false">X</a></span>
+										</div>
+									</div>
+								</div>
+								<table class="table">
+									<thead>
+										<tr>
+											<th class="col-md-4" translate="graph.adherence-score-table.date">Date</th>
+											<th class="col-md-8">
+											<table class="col-md-16 row">
+												<thead>
+													<tr class="col-md-16 row">
+														<th  class="col-md-8 inner_th" translate="graph.adherence-score-table.notification"></th>
+														<th class="col-md-8 inner_th text-center" translate="graph.adherence-score-table.change"></th>
+													</tr>
+												</thead>
+											</table>
+											</th>
+											<!-- <th class="col-md-4 text-center" >Change</th> -->
+											<th class="col-md-4 text-center" translate="graph.adherence-score-table.updated-score">Updated Score</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr ng-repeat="adherenceScore in adherenceScores">
+											<td class="col-md-4">{{adherenceScore.date}}</td>
+											<td class="col-md-8">
+												<table class="col-md-16 row">
+													<tbody>
+														<tr class="col-md-16 row" ng-repeat="(key, val) in adherenceScore.notificationPoints">
+															<td class="inner_td col-md-8">{{key}}</td>
+															<td class="inner_td col-md-8 text-center">{{val}}</td>
+														</tr>
+													</tbody>
+
+												</table>	 
+											</td>
+											<!-- <td class="col-md-4 text-center">{{adherenceScore.change}}</td> -->
+											<td class="col-md-4 text-center">{{adherenceScore.updatedScore}}</td>
+										</tr>
+									</tbody>
+								</table>
+								</div>
+
 							</div>
 						</div>
 					</div>
