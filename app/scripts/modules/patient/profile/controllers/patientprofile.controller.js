@@ -129,10 +129,6 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
     });
 	};
 
-	$scope.openEditDetail = function(){
-		$state.go("patientProfileEdit");	
-	};
-
 	$scope.initProfileEdit = function(){
 		UserService.getUser(StorageService.get('logged').patientID).then(function(response){
 			$scope.editPatientProfile = response.data.user;
@@ -143,34 +139,6 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
       notyService.showError(response);
     });		
 	};
-
-	$scope.cancelEditProfile = function(){
-		$state.go("patientProfile");
-		$scope.editPatientProfile = "";
-	};	
-
-	$scope.updateProfile = function(){    
-    $scope.submitted = true;
-    if($scope.form.$invalid){
-      return false;
-    }
-    $scope.editPatientProfile.role = $scope.editPatientProfile.authorities[0].name;
-    $scope.editPatientProfile.dob = null;
-    UserService.editUser($scope.editPatientProfile).then(function(response){        
-      if(StorageService.get('logged').userEmail === $scope.editPatientProfile.email){
-        notyService.showMessage(response.data.message, 'success');
-        $state.go('patientProfile');
-      }else{
-        notyService.showMessage(profile.EMAIL_UPDATED_SUCCESSFULLY, 'success');
-        Auth.logout();
-        StorageService.clearAll();
-        $rootScope.userRole = null;
-        $state.go('login');
-      }
-    }).catch(function(response){
-      notyService.showError(response);
-    });
-  };
 
   $scope.initResetPassword = function(){
     $scope.showUpdatePasswordModal = false;
