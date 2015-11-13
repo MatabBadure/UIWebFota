@@ -6,7 +6,7 @@
  *
  */
 angular.module('hillromvestApp')
-  .factory('patientDashBoardService',['$http', 'headerService', function ($http, headerService) {
+  .factory('patientDashBoardService',['$http', 'headerService','URL', function ($http, headerService, URL) {
     return {
 
       /**
@@ -144,7 +144,16 @@ angular.module('hillromvestApp')
         }).success(function(response) {
           return response;
         });
-      }
+      },
 
+
+      getAdeherenceData : function(userId, startDate, endDate){
+        var url = URL.getAdeherenceData.replace('USERID', userId).replace('FROMDATE', startDate).replace('TODATE', endDate)
+        return $http.get(url, {
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });
+      }
     };
   }]);

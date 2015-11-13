@@ -137,7 +137,7 @@
   -moz-appearance: none;
   text-indent: 1px;
   overflow: hidden;
-  /*padding-right: 20px;*/
+  padding-right: 20px;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -1093,5 +1093,12 @@ ul.dropdown-menu {
       background-color: transparent;
     }
   }
+  .dashboard__form__input--sec-option .custom-dropdown .security-select{
+    padding-right: 0px;
+  }
 }
 /*END*/
+.complianceGraphPrim_wrapper{
+  display: inline-block;
+  width: 100%;
+}
