@@ -183,6 +183,7 @@ angular.module('hillromvestApp')
       $scope.patientStatus.editMode = true;
       $scope.patientStatus.isCreate = false;
       $scope.patient = patient;
+      $scope.patient.zipcode = commonsUserService.formatZipcode($scope.patient.zipcode);
       if (patient.dob !== null) {
         $scope.patient.age = dateService.getAge(new Date($scope.patient.dob));
         var _date = dateService.getDate($scope.patient.dob);
