@@ -1416,36 +1416,6 @@ angular.module('hillromvestApp')
                   ]
               }
             })
-            .state('patientProfileEdit', {
-                parent: 'patient-dashboard',
-                url: '/p-profile-edit',
-                data: {
-                    roles: ['PATIENT'],
-                    pageTitle: 'patient.page-title.patient-info'
-                },
-                views: {
-                    'patient-view': {
-                        templateUrl: 'scripts/modules/patient/profile/profile-tabs/edit-my-profile.html',
-                        controller: 'patientprofileController'
-                    }
-                },
-                resolve: {
-                    //Lazy loading of controllers and external dependencies so boost intial load
-                    //time
-                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
-                        return $ocLazyLoad.load('PatientProfileModule');
-                    }],
-                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
-                        $translatePartialLoader.addPart('patient-user');
-                        return $translate.refresh();
-                    }],
-                    authorize: ['Auth',
-                        function(Auth) {
-                            return Auth.authorize(false);
-                        }
-                    ]
-                }
-            })
             .state('patientResetPassword', {
                 parent: 'patient-dashboard-profile',
                 url: '/p-reset',
