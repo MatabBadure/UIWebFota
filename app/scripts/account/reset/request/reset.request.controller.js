@@ -26,7 +26,6 @@ angular.module('hillromvestApp')
     };
     
     $scope.requestReset = function () {
-      vcRecaptchaService.reload();
       $scope.submitted = true;
       if($scope.form.email.$invalid ||($scope.showCaptcha && $scope.response === null)){
         return false;
@@ -47,6 +46,7 @@ angular.module('hillromvestApp')
             var passResetCount = parseInt(StorageService.get('passResetCount')) || 0;
             StorageService.save('passResetCount', passResetCount + 1);
             if(passResetCount >= 2){
+              vcRecaptchaService.reload($scope.widgetId);
               $scope.showCaptcha = true;
             }
             if (response.status === 400 && response.data.message === 'e-mail address not registered') {              
@@ -75,6 +75,7 @@ angular.module('hillromvestApp')
           var passResetCount = parseInt(StorageService.get('passResetCount')) || 0;
           StorageService.save('passResetCount', passResetCount + 1);
           if(passResetCount >= 2){
+            vcRecaptchaService.reload($scope.widgetId);
             $scope.showCaptcha = true;
           }
           if (response.status === 400 && response.data.message === 'e-mail address not registered') {
