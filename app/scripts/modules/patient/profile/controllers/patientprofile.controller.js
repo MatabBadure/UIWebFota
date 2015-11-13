@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('hillromvestApp').controller('patientprofileController', ['$scope', '$state', 'notyService', 'patientService', 'UserService', 'AuthServerProvider', 'Password', 'Auth', 'StorageService', 'caregiverDashBoardService', '$stateParams', 'loginConstants', '$q', 'dateService',
-  function ($scope, $state, notyService, patientService, UserService, AuthServerProvider,Password, Auth, StorageService, caregiverDashBoardService, $stateParams, loginConstants, $q, dateService) {
+angular.module('hillromvestApp').controller('patientprofileController', ['$scope', '$state', 'notyService', 'patientService', 'UserService', 'AuthServerProvider', 'Password', 'Auth', 'StorageService', 'caregiverDashBoardService', '$stateParams', 'loginConstants', '$q', 'dateService', '$rootScope',
+  function ($scope, $state, notyService, patientService, UserService, AuthServerProvider,Password, Auth, StorageService, caregiverDashBoardService, $stateParams, loginConstants, $q, dateService, $rootScope) {
 	
   $scope.init = function(){
 		var currentRoute = $state.current.name;
@@ -129,10 +129,6 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
     });
 	};
 
-	$scope.openEditDetail = function(){
-		$state.go("patientProfileEdit");	
-	};
-
 	$scope.initProfileEdit = function(){
 		UserService.getUser(StorageService.get('logged').patientID).then(function(response){
 			$scope.editPatientProfile = response.data.user;
@@ -143,32 +139,6 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
       notyService.showError(response);
     });		
 	};
-
-	$scope.cancelEditProfile = function(){
-		$state.go("patientProfile");
-		$scope.editPatientProfile = "";
-	};	
-
-	$scope.updateProfile = function(){    
-    $scope.submitted = true;
-    if($scope.form.$invalid){
-      return false;
-    }
-    $scope.editPatientProfile.role = $scope.editPatientProfile.authorities[0].name;
-    $scope.editPatientProfile.dob = null;
-    UserService.editUser($scope.editPatientProfile).then(function(response){        
-      if(StorageService.get('logged').userEmail === $scope.editPatientProfile.email){
-        notyService.showMessage(response.data.message, 'success');
-        $state.go('patientProfile');
-      }else{
-        notyService.showMessage(profile.EMAIL_UPDATED_SUCCESSFULLY, 'success');
-        Auth.logout();
-        $state.go('login');
-      }
-    }).catch(function(response){
-      notyService.showError(response);
-    });
-  };
 
   $scope.initResetPassword = function(){
     $scope.showUpdatePasswordModal = false;
@@ -222,6 +192,8 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
     data.role = 'PATIENT';
     UserService.editUser(data).then(function(response){
       Auth.logout();
+      StorageService.clearAll();
+      $rootScope.userRole = null;
       notyService.showMessage(response.data.message, 'success');
       $state.go('login');
     }).catch(function(response){
@@ -239,7 +211,9 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
       'newPassword': $scope.profile.newPassword
     };
     Password.updatePassword(StorageService.get('logged').patientID, data).then(function(response){
-      Auth.logout();
+        Auth.logout();
+        StorageService.clearAll();
+        $rootScope.userRole = null;
       notyService.showMessage(response.data.message, 'success');
       $state.go('login');
     }).catch(function(response){
@@ -317,7 +291,7 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
         break;
       }
       return !invalid;
-  }
+  };
 
 	$scope.init();    
 }]);
