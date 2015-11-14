@@ -1,6 +1,6 @@
 angular.module('hillromvestApp')
-.controller('clinicadminHcpController',['$scope', '$state', '$stateParams', 'clinicService', 'DoctorService', 'UserService', 'searchFilterService', '$timeout', 'clinicadminService', 'clinicadminHcpService', 'notyService', 'StorageService',
-  function($scope, $state, $stateParams, clinicService, DoctorService, UserService, searchFilterService, $timeout, clinicadminService, clinicadminHcpService, notyService, StorageService) {
+.controller('clinicadminHcpController',['$scope', '$state', '$stateParams', 'clinicService', 'DoctorService', 'UserService', 'searchFilterService', '$timeout', 'clinicadminService', 'clinicadminHcpService', 'notyService', 'StorageService', 'commonsUserService',
+  function($scope, $state, $stateParams, clinicService, DoctorService, UserService, searchFilterService, $timeout, clinicadminService, clinicadminHcpService, notyService, StorageService, commonsUserService) {
 
     var searchOnLoad = true;
   	$scope.init = function(){
@@ -27,7 +27,8 @@ angular.module('hillromvestApp')
 
     $scope.hcpOverviewInit = function(){
       DoctorService.getDoctor($stateParams.hcpId).then(function(response){
-        $scope.selectedHcp = response.data.user; 
+        $scope.selectedHcp = response.data.user;
+        $scope.selectedHcp.zipcode = commonsUserService.formatZipcode($scope.selectedHcp.zipcode);
       }).catch(function(response){
         notyService.showError(response);
         if(response.status === 400){
