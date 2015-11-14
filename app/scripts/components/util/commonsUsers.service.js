@@ -51,5 +51,12 @@ angular.module('hillromvestApp')
               return true;
             }
         };
+
+        this.formatZipcode = function(zipcode){
+          while(zipcode.toString().length < 5){
+            zipcode = '0' + zipcode;
+          }
+          return zipcode;
+        };
     	
     }]);

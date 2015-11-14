@@ -183,6 +183,7 @@ angular.module('hillromvestApp')
       $scope.patientStatus.editMode = true;
       $scope.patientStatus.isCreate = false;
       $scope.patient = patient;
+      $scope.patient.zipcode = commonsUserService.formatZipcode($scope.patient.zipcode);
       if (patient.dob !== null) {
         $scope.patient.age = dateService.getAge(new Date($scope.patient.dob));
         var _date = dateService.getDate($scope.patient.dob);
@@ -636,6 +637,7 @@ angular.module('hillromvestApp')
         patientService.getCaregiverById($stateParams.patientId, caregiverId).then(function(response){
           $scope.associateCareGiver = response.data.caregiver.userPatientAssocPK.user;
           $scope.associateCareGiver.relationship = response.data.caregiver.relationshipLabel;
+          $scope.associateCareGiver.zipcode = commonsUserService.formatZipcode($scope.associateCareGiver.zipcode);
         }).catch(function(response){
           notyService.showError(response);
         });
