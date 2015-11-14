@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('hillromvestApp')
-  .controller('clinicsController', [ '$rootScope', '$scope', '$state', '$stateParams', '$timeout', 'Auth', 'clinicService', 'UserService', 'notyService', 'searchFilterService', 'dateService', 'sortOptionsService', 'StorageService', 'loginConstants',
-    function ($rootScope, $scope, $state, $stateParams, $timeout, Auth, clinicService, UserService, notyService, searchFilterService, dateService,sortOptionsService, StorageService, loginConstants) {
+  .controller('clinicsController', [ '$rootScope', '$scope', '$state', '$stateParams', '$timeout', 'Auth', 'clinicService', 'UserService', 'notyService', 'searchFilterService', 'dateService', 'sortOptionsService', 'StorageService', 'loginConstants', 'commonsUserService',
+    function ($rootScope, $scope, $state, $stateParams, $timeout, Auth, clinicService, UserService, notyService, searchFilterService, dateService,sortOptionsService, StorageService, loginConstants, commonsUserService) {
     var searchOnLoad = true;
     $scope.clinic = {};
     $scope.clinicStatus = {
@@ -135,6 +135,7 @@ angular.module('hillromvestApp')
       $scope.getParentClinic();
       clinicService.getClinic(clinicId).then(function(response) {
         $scope.clinic = response.data.clinic;
+        $scope.clinic.zipcode = commonsUserService.formatZipcode($scope.clinic.zipcode);
         $scope.slectedClinic = response.data.clinic;
         if($scope.clinic.parent){
           $scope.clinic.type = "parent";

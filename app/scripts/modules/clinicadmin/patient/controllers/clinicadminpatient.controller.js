@@ -70,6 +70,7 @@ angular.module('hillromvestApp')
   $scope.getPatientInfo = function(patinetId, callback){
     clinicadminPatientService.getPatientInfo(patinetId, $stateParams.clinicId).then(function(response){
       $scope.patient = response.data.patientUser;
+      $scope.patient.zipcode = commonsUserService.formatZipcode($scope.patient.zipcode);
       if (typeof callback === 'function') {
         callback($scope.patient);
       }
