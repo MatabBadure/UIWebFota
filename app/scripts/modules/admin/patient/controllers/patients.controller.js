@@ -637,6 +637,7 @@ angular.module('hillromvestApp')
         patientService.getCaregiverById($stateParams.patientId, caregiverId).then(function(response){
           $scope.associateCareGiver = response.data.caregiver.userPatientAssocPK.user;
           $scope.associateCareGiver.relationship = response.data.caregiver.relationshipLabel;
+          $scope.associateCareGiver.zipcode = commonsUserService.formatZipcode($scope.associateCareGiver.zipcode);
         }).catch(function(response){
           notyService.showError(response);
         });
