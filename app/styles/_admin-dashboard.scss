@@ -91,7 +91,7 @@
 
 .dashboard__form__input select {
 	height: 30px;
-	width: 70px;
+  width: 135px;
 	font-weight: normal;
 	color: $pickled-bluewood;
 	border: 1px solid $bombay;
@@ -198,7 +198,7 @@
   color: $btn-primary-color;
 }
 
-.btn-inactive {
+.btn-inactive , .btn-inactive:hover{
   border: 1px solid $gainsboro;
   background-color: $gainsboro;
   color: $body-bg;

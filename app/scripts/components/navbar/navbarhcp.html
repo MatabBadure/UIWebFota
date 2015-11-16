@@ -22,13 +22,13 @@
           </a>
         </li>
         <li class="icon-border">
-          <a ng-class="{ active: isActive('hcp/hcp-patient')}" href="" ng-click="goToPatientDashboard('hcppatientdashboard');" >
+          <a ng-class="{ active: isActive('hcp-patient')}" href="" ng-click="goToPatientDashboard('hcppatientdashboard');" >
             <span class="icons hillrom-icon icon-patient"></span>
             <span class="link-text" translate="global.tabs.manage-patients" ></span>
           </a>
         </li>    
         <li class="header-popover dropdown">
-          <a href="javascript:void(0)" class="dropdown-toggle" ng-class="{ active: isActive('profile')}" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+          <a ng-href="" data-target="#" class="dropdown-toggle" ng-class="{ active: isActive('profile')}" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
             <span class='icon-logged-in-user'></span>
             <span class='user-name'>{{username}}</span></a>
           <ul class="dropdown-menu">

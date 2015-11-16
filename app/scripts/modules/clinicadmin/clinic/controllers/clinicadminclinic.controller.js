@@ -1,6 +1,6 @@
 angular.module('hillromvestApp')
-.controller('clinicadminclinicController',['$scope', '$state', 'clinicadminService', 'notyService', '$stateParams', 'clinicService', 'UserService', 'StorageService',
-  function($scope, $state, clinicadminService, notyService, $stateParams, clinicService, UserService, StorageService) {
+.controller('clinicadminclinicController',['$scope', '$state', 'clinicadminService', 'notyService', '$stateParams', 'clinicService', 'UserService', 'StorageService', 'commonsUserService',
+  function($scope, $state, clinicadminService, notyService, $stateParams, clinicService, UserService, StorageService, commonsUserService) {
 
   	$scope.init = function(){
       var currentRoute = $state.current.name;
@@ -40,6 +40,7 @@ angular.module('hillromvestApp')
     $scope.getClinic = function(clinicId){
       clinicService.getClinic(clinicId).then(function(response){
         $scope.clinic = response.data.clinic;
+        $scope.clinic.zipcode = commonsUserService.formatZipcode($scope.clinic.zipcode);
         if($scope.clinic.parent){
           $scope.clinic.type = "parent";
         }else{

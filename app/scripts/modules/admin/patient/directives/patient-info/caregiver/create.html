@@ -199,7 +199,7 @@
 
     <div class="col-md-16 margin-top reset-padding">
       <div class="">
-        <buton type="submit" class="hillrom-btn btn-primary float-right btn-margin-left" ng-click="formSubmitCaregiver()" ng-show="!patientStatus.isCreate" translate="patient.btn.update" ng-if="careGiverStatus === 'edit'">Update</buton>
+        <buton type="submit" class="hillrom-btn btn-primary float-right btn-margin-left" ng-click="showCaregiverUpdateModal()" ng-show="!patientStatus.isCreate" translate="patient.btn.update" ng-if="careGiverStatus === 'edit'">Update</buton>
         <buton type="submit" class="hillrom-btn btn-primary float-right btn-margin-left" ng-click="formSubmitCaregiver()" ng-show="!patientStatus.isCreate" translate="patient.btn.save" ng-if="careGiverStatus != 'edit'">Save</buton>
         <buton type="submit" class="hillrom-btn btn-secondary float-right" ng-click="switchPatientTab('patientCraegiver')" ng-show="!patientStatus.isCreate" translate="patient.btn.cancel">cancel</buton>
         <div class="clr"></div>
@@ -207,4 +207,24 @@
     </div>
     </div>
   </form>
+</div>
+
+<div ng-if="caregiverUpdateModal" class="modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true">
+  <div class="modal__dialog">
+    <div class="modal__content">
+      <header class="modal__header">
+        <button type="button" class="modal__close" data-dismiss="modal" ng-click="$parent.caregiverUpdateModal=false">&times;</button>
+        <p translate="patient.caregiver.update.warning"></p>
+      </header>
+      <div class="modal__body">
+        <div class="modal--message" translate="patient.caregiver.update.message"></div>
+        <div class="row modal--custom-btn">
+          <buton class="hillrom-btn btn-submit float-right" ng-click="formSubmitCaregiver()">Yes</buton>
+          <buton class="hillrom-btn btn-submit float-right" data-dismiss="modal" ng-click="$parent.caregiverUpdateModal=false">No</buton>
+        </div>
+      </div>
+      <footer class="modal__footer">
+      </footer>
+    </div>
+  </div>
 </div>

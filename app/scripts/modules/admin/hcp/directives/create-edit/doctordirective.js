@@ -9,8 +9,8 @@ angular.module('hillromvestApp')
         onSuccess: '&',
         doctorStatus: '=doctorStatus'
       },
-      controller: ['$scope', '$timeout', 'notyService', '$state', '$stateParams', 'DoctorService', 'UserService', 'clinicService', 'StorageService', 'loginConstants', 
-      function ($scope, $timeout, notyService, $state, $stateParams, DoctorService, UserService, clinicService, StorageService, loginConstants) {
+      controller: ['$scope', '$timeout', 'notyService', '$state', '$stateParams', 'DoctorService', 'UserService', 'clinicService', 'StorageService', 'loginConstants', 'commonsUserService',
+      function ($scope, $timeout, notyService, $state, $stateParams, DoctorService, UserService, clinicService, StorageService, loginConstants, commonsUserService) {
         $scope.role = StorageService.get('logged').role;
         $scope.open = function () {
           $scope.showModal = true;
@@ -39,6 +39,7 @@ angular.module('hillromvestApp')
               var tempHcp = response.data.user;
               $scope.selectedHcp = tempHcp;
               $scope.doctor = response.data.user;
+              $scope.doctor.zipcode = commonsUserService.formatZipcode($scope.doctor.zipcode);
             }).catch(function(response){
               notyService.showError(response);
               if(response.status === 400){

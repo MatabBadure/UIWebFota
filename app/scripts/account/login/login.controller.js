@@ -39,6 +39,7 @@ angular.module('hillromvestApp')
       $rootScope.username = null;
       $scope.password = null;
       $scope.isLoaded = true;
+      $scope.submitted = false;
     };
 
     $scope.navigateUser = function(){       
@@ -190,10 +191,14 @@ angular.module('hillromvestApp')
           'questionId': $scope.user.question.id,
           'termsAndConditionsAccepted': $scope.user.tnc
         }).then(function(data) {
-          Auth.logout();
-          $state.go("login");
+          $scope.user.email = null;
+          $scope.username = null;
+          $scope.clearLastLogin();
           $scope.isFirstLogin = false;
           $scope.showLogin = true;
+          $scope.form.username.$invalid = false;
+          $scope.form.password.$invalid = false;
+          $state.go("login");
         }).catch(function(err) {
           Auth.logout();
           if(err.data && err.data.ERROR){
@@ -299,28 +304,28 @@ angular.module('hillromvestApp')
       years = $scope.compute_strength(count[index], (paswd.value).length);
 
       if (years >= 1000 && !$scope.confirmForm.password.$error.pattern) {
-        stren.style.width = "100%";
-        stren.style.background = color[3];
+        //stren.style.width = "100%";
+        //stren.style.background = color[3];
         stats.innerHTML = value[3];
         stats.style.color = color[3];
       } else if (years >= 100 && years < 1000 && !$scope.confirmForm.password.$error.pattern) {
-        stren.style.width = "75%";
-        stren.style.background = color[2];
+        //stren.style.width = "75%";
+        //stren.style.background = color[2];
         stats.innerHTML = value[2];
         stats.style.color = color[2];
       } else if (years >= 10 && years < 100 && !$scope.confirmForm.password.$error.pattern) {
-        stren.style.width = "50%";
-        stren.style.background = color[1];
+        //stren.style.width = "50%";
+        //stren.style.background = color[1];
         stats.innerHTML = value[1];
         stats.style.color = color[1];
       } else {
         if($scope.confirmForm.password && $scope.confirmForm.password.$error.required){
-          stren.style.width = "0%";
+          //stren.style.width = "0%";
           stats.innerHTML = '';
           stats.style.color = color[0];
         }else{
-          stren.style.width = "25%";
-          stren.style.background = color[0];
+          //stren.style.width = "25%";
+          //stren.style.background = color[0];
           stats.innerHTML = value[0];
           stats.style.color = color[0];
         } 

@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('hillromvestApp').controller('patientprofileController', ['$scope', '$state', 'notyService', 'patientService', 'UserService', 'AuthServerProvider', 'Password', 'Auth', 'StorageService', 'caregiverDashBoardService', '$stateParams', 'loginConstants', '$q', 'dateService', '$rootScope',
-  function ($scope, $state, notyService, patientService, UserService, AuthServerProvider,Password, Auth, StorageService, caregiverDashBoardService, $stateParams, loginConstants, $q, dateService, $rootScope) {
+angular.module('hillromvestApp').controller('patientprofileController', ['$scope', '$state', 'notyService', 'patientService', 'UserService', 'AuthServerProvider', 'Password', 'Auth', 'StorageService', 'caregiverDashBoardService', '$stateParams', 'loginConstants', '$q', 'dateService', '$rootScope', 'commonsUserService',
+  function ($scope, $state, notyService, patientService, UserService, AuthServerProvider,Password, Auth, StorageService, caregiverDashBoardService, $stateParams, loginConstants, $q, dateService, $rootScope, commonsUserService) {
 	
   $scope.init = function(){
 		var currentRoute = $state.current.name;
@@ -121,6 +121,7 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
 	$scope.initProfileView = function(){
 		UserService.getUser(StorageService.get('logged').patientID).then(function(response){
 			$scope.patientView = response.data.user;
+      $scope.patientView.zipcode = commonsUserService.formatZipcode($scope.patientView.zipcode);
 		}).catch(function(response){});
 		AuthServerProvider.getSecurityQuestions().then(function(response){
 			$scope.questions = response.data

@@ -183,6 +183,7 @@ angular.module('hillromvestApp')
       $scope.patientStatus.editMode = true;
       $scope.patientStatus.isCreate = false;
       $scope.patient = patient;
+      $scope.patient.zipcode = commonsUserService.formatZipcode($scope.patient.zipcode);
       if (patient.dob !== null) {
         $scope.patient.age = dateService.getAge(new Date($scope.patient.dob));
         var _date = dateService.getDate($scope.patient.dob);
@@ -519,8 +520,17 @@ angular.module('hillromvestApp')
       if($scope.careGiverStatus === "new"){
         $scope.associateCaregiverstoPatient($stateParams.patientId, data);
       }else if($scope.careGiverStatus === "edit"){
+        $scope.caregiverUpdateModal = false;
         $scope.updateCaregiver($stateParams.patientId, $stateParams.caregiverId , data);
       }
+    };
+
+    $scope.showCaregiverUpdateModal = function(){
+      $scope.submitted = true;
+      if($scope.form.$invalid){
+        return false;
+      }
+      $scope.caregiverUpdateModal = true;
     };
 
     $scope.linkDevice = function(){
@@ -636,6 +646,9 @@ angular.module('hillromvestApp')
         patientService.getCaregiverById($stateParams.patientId, caregiverId).then(function(response){
           $scope.associateCareGiver = response.data.caregiver.userPatientAssocPK.user;
           $scope.associateCareGiver.relationship = response.data.caregiver.relationshipLabel;
+          if($scope.associateCareGiver.zipcode){
+            $scope.associateCareGiver.zipcode = commonsUserService.formatZipcode($scope.associateCareGiver.zipcode);
+          }
         }).catch(function(response){
           notyService.showError(response);
         });

@@ -174,8 +174,9 @@ angular.module('hillromvestApp')
 					window.location.reload();
 				}
 	        }, function(reason) {
-	          if($state.current.name !== "login")	
-			  window.location.reload();
+	          if($state.current.name !== "login"){
+			  	window.location.reload();
+	          }
 			});
 		};
 		$window.onfocus = function(){				
