@@ -198,7 +198,7 @@
   color: $btn-primary-color;
 }
 
-.btn-inactive {
+.btn-inactive , .btn-inactive:hover{
   border: 1px solid $gainsboro;
   background-color: $gainsboro;
   color: $body-bg;
