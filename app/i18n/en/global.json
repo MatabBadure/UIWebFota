@@ -274,7 +274,7 @@
         },
         "clinicName": {
             "required": "Clinic Name is required.",
-            "maxlength": "Clinic Name cannot be longer than 25 characters."
+            "maxlength": "Clinic Name cannot be longer than 50 characters."
         },
         "role":{
             "required": "Role is required."
