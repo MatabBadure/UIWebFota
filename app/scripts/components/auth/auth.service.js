@@ -5,18 +5,23 @@ angular.module('hillromvestApp')
         function Auth($rootScope, $state, $q, $translate, Principal, AuthServerProvider, Account, Register, Activate, Password, PasswordResetInit, PasswordResetFinish, StorageService) {
         var auth =  {
             goToUserDashboard: function(){
-                if(Principal.isInRole('ADMIN')){
-                    $state.go('patientUser');
-                }else if(Principal.isInRole('PATIENT')){
-                    $state.go('patientdashboard');
-                }else if(Principal.isInRole('CLINIC ADMIN') || Principal.isInRole('CLINIC_ADMIN')){
-                    $state.go('clinicadmindashboard');
-                }else if(Principal.isInRole('HCP')){
-                    $state.go("hcpdashboard");
-                }else if(Principal.isInRole('CARE_GIVER')){
-                    $state.go("caregiverDashboard");
-                }else if(Principal.isInRole('ACCT_SERVICES')){
-                    $state.go("rcadminPatients");
+                var logged = StorageService.get('logged');
+                if(logged.userEmail){
+                    if(Principal.isInRole('ADMIN')){
+                        $state.go('patientUser');
+                    }else if(Principal.isInRole('PATIENT')){
+                        $state.go('patientdashboard');
+                    }else if(Principal.isInRole('CLINIC ADMIN') || Principal.isInRole('CLINIC_ADMIN')){
+                        $state.go('clinicadmindashboard');
+                    }else if(Principal.isInRole('HCP')){
+                        $state.go("hcpdashboard");
+                    }else if(Principal.isInRole('CARE_GIVER')){
+                        $state.go("caregiverDashboard");
+                    }else if(Principal.isInRole('ACCT_SERVICES')){
+                        $state.go("rcadminPatients");
+                    }
+                }else{
+                    $state.go("postActivateLogin");
                 }
             },
 
