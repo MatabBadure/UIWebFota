@@ -153,7 +153,11 @@
       "zipcode": "Zip",
       "email": "Email",
       "phone-no": "Phone No.",
-      "mobile-no": "Mobile No."
+      "mobile-no": "Mobile No.",
+      "update":{
+        "warning": "Do you want to Update the Caregiver Details?",
+        "message": "Are you sure?"
+      }
     },
     "sum": {
       "titlename": "Summary",
