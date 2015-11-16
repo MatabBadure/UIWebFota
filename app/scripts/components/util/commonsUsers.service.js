@@ -17,6 +17,8 @@ angular.module('hillromvestApp')
             angular.forEach(object, function(value, key){
               if(!value){
                 object[key] = "";
+              }else{
+                object[key] = value + " ";
               }
             });   
           });

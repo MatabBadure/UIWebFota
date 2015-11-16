@@ -237,6 +237,11 @@ angular.module('hillromvestApp')
         if(!clinic.state){
          clinic.state = "";
         }
+        if(!clinic.hillromId){
+          clinic.hillromId = "";
+        }else{
+          clinic.hillromId = clinic.hillromId + " ";
+        }
 
         angular.forEach($scope.associatedClinics, function(associatedClinic, associatedClinicKey){
           if(associatedClinic.id === clinic.id){
