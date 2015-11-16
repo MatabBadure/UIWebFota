@@ -53,7 +53,7 @@ angular.module('hillromvestApp')
 		}else if(legendFlag === "isSettingDeviation"){
 			$scope.settingDeviationIsDisabled = true;
 		}else if(legendFlag === "isHMRNonAdherence"){
-			$scope.hmrNonAdherenceIsDisabled = false;
+			$scope.hmrNonAdherenceIsDisabled = true;
 		}
 	};
 
