@@ -1929,7 +1929,7 @@ angular.module('hillromvestApp')
           }
           chart.yAxis.tickFormat(d3.format('d'));
           chart.yAxis.axisLabelDistance(50);
-          chart.yAxis.axisLabel('Hours');
+          chart.yAxis.axisLabel('Minutes');
           d3.select('#hmrBarGraph svg')
           .datum($scope.hmrBarGraphData)
           .transition().duration(500).call(chart);
