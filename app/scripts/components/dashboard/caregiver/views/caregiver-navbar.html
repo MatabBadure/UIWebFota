@@ -5,10 +5,10 @@
       <ul class="nav navbar-nav pull-right right">
         
         <li class="hcp_hsp_name_a" dropdown>
-          <a ng-href="" data-target="#" id="dropdownMenu1" dropdown-toggle>
+          <a ng-href="" data-target="#" id="dropdownMenu11" data-toggle="dropdown">
             <span class="">{{selectedPatient.user.lastName}} {{selectedPatient.user.firstName}}<span class="hillrom-icon icon-arrow-down"></span></span>
           </a>
-          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu11">
               <li role="menuitem" ng-repeat='patient in patients' ng-click="switchPatient(patient)"><a>{{::patient.user.lastName}} {{::patient.user.firstName}}</a></li>
           </ul>
         </li>
