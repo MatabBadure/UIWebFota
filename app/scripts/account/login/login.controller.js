@@ -196,8 +196,8 @@ angular.module('hillromvestApp')
           $scope.clearLastLogin();
           $scope.isFirstLogin = false;
           $scope.showLogin = true;
-          $scope.form.username.$invalid = false;
-          $scope.form.password.$invalid = false;
+          $scope.form.$setValidity("username", true);
+          $scope.form.$setValidity("password", true);          
           $state.go("login");
         }).catch(function(err) {
           Auth.logout();
