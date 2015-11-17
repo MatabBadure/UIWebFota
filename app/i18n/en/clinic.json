@@ -40,6 +40,8 @@
         "hr-id": "HR-ID",
         "personal-details": "Clinic Details",
         "address": "Address",
+        "address1": "Address1",
+        "address2": "Address2",
         "city-state": "City/State",
         "zipcode": "Zip",
         "city": "City",

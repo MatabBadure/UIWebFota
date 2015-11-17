@@ -237,6 +237,11 @@ angular.module('hillromvestApp')
         if(!clinic.state){
          clinic.state = "";
         }
+        if(!clinic.hillromId){
+          clinic.hillromId = "";
+        }else{
+          clinic.hillromId = clinic.hillromId + " ";
+        }
 
         angular.forEach($scope.associatedClinics, function(associatedClinic, associatedClinicKey){
           if(associatedClinic.id === clinic.id){
@@ -726,9 +731,9 @@ angular.module('hillromvestApp')
         delete $scope.protocol.patient;
       }
       var data = $scope.protocol.protocol;
-      data[0].treatmentsPerDay = $scope.protocol.treatmentsPerDay;
       if($scope.protocol.type === 'Custom'){
         angular.forEach(data, function(value, key){
+          value.treatmentsPerDay = $scope.protocol.treatmentsPerDay;
           if(!value.treatmentLabel){
             value.treatmentLabel = 'point'+(key+1);
           }
