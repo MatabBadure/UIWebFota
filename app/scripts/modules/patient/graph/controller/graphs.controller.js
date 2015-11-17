@@ -384,7 +384,7 @@ angular.module('hillromvestApp')
       return function(key, x, y, e, graph) {
         var toolTip = '';
         angular.forEach($scope.completeGraphData, function(value) {
-          if(value.startTime === e.point.x && value.hmr !== 0 ){
+          if(value.startTime === e.point.x){
               toolTip = graphUtil.getToolTipForBarChart(value);
           }
         });
