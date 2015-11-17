@@ -73,7 +73,7 @@
   </div>
   <div class="col-md-16 reset-padding">
     <div class="col-md-8 clinic-link">
-      <input type="text" ng-show="searchClinicText" ng-model="searchItem" typeahead="clinic.name + ' &nbsp ' + clinic.city + '&nbsp'+ clinic.state for clinic in clinics | filter:$viewValue | filter:{deleted: false}" typeahead-on-select="selectClinicForPatient($item)" class="form-control" placeholder="{{'patient.placeholder.clinic-link' | translate}}">
+      <input type="text" ng-show="searchClinicText" ng-model="searchItem" typeahead="clinic.hillromId + '' + clinic.name + ' &nbsp ' + clinic.city + '&nbsp'+ clinic.state for clinic in clinics | filter:$viewValue | filter:{deleted: false}" typeahead-on-select="selectClinicForPatient($item)" class="form-control" placeholder="{{'patient.placeholder.clinic-link' | translate}}">
     </div>
 
     <div class="col-md-8 clinic-link">
