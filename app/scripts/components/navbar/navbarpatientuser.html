@@ -23,7 +23,7 @@
         </li>
 
         <li class="icon-border dropdown header-popover" ng-init="getNotifications()">
-          <a href="javascript:void(0)" class="dropdown-toggle noti_bell" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+          <a ng-href="" data-target="#" class="dropdown-toggle noti_bell" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
             <span class="icons hillrom-icon icon-notification-bell"></span>
             <span class="link-text" translate="global.tabs.notifications"></span>
             <span class="noti_count">{{no_of_notifications}}</span>
@@ -63,7 +63,7 @@
 
 
         <li class="header-popover dropdown">
-          <a href="javascript:void(0)" class="dropdown-toggle" ng-class="{ active: isActive('/patient/p-reset') || isActive('/notification-settings')}" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+          <a ng-href="" data-target="#" class="dropdown-toggle" ng-class="{ active: isActive('/patient/p-reset') || isActive('/notification-settings')}" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
             <span class='icon-logged-in-user'></span>
             <span class='user-name'>{{username}}</span></a>
           <ul class="dropdown-menu">
