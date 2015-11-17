@@ -731,9 +731,9 @@ angular.module('hillromvestApp')
         delete $scope.protocol.patient;
       }
       var data = $scope.protocol.protocol;
-      data[0].treatmentsPerDay = $scope.protocol.treatmentsPerDay;
       if($scope.protocol.type === 'Custom'){
         angular.forEach(data, function(value, key){
+          value.treatmentsPerDay = $scope.protocol.treatmentsPerDay;
           if(!value.treatmentLabel){
             value.treatmentLabel = 'point'+(key+1);
           }
