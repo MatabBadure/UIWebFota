@@ -64,15 +64,43 @@ angular.module('hillromvestApp')
         notyService.showError(response);
       });
     };
-    
-    $scope.searchAssociatedHcps = function(){
-      console.log('Cool We can Implement the changes', $scope.searchItem);
 
+    $scope.searchAssociatedHcps = function(track) {
+      if (track !== undefined) {
+        if (track === "PREV" && $scope.currentPageIndex > 1) {
+          $scope.currentPageIndex--;
+        } else if (track === "NEXT" && $scope.currentPageIndex < $scope.pageCount) {
+          $scope.currentPageIndex++;
+        } else {
+          return false;
+        }
+      }else {
+        $scope.currentPageIndex = 1;
+      }
+      var filter = searchFilterService.getFilterStringForHCP($scope.searchFilter);
+      $scope.perPageCount = 10;
+      if(!$scope.searchItem){
+        $scope.searchItem = '';
+      }
+      clinicService.getAssociatedHCPstoClinic($stateParams.clinicId, $scope.searchItem, filter, $scope.currentPageIndex, $scope.perPageCount).then(function(response) {
+        $scope.associatedHcps = response.data;
+        $scope.total = response.headers()['x-total-count'];
+        $scope.pageCount = Math.ceil($scope.total / 10);
+        if ($scope.total == 0) {
+          $scope.noMatchFound = true;
+        } else {
+          $scope.noMatchFound = false;
+        }
+        searchOnLoad = false;
+      }).catch(function(response) {
+
+      });
     };
 
     $scope.initClinicAssoctHCPs = function(clinicId){
       $scope.isAssociateHCP = false;
-      var filter = 'isDeleted:0';
+      $scope.searchFilter = searchFilterService.initSearchFiltersForClinic();
+      var filter = searchFilterService.getFilterStringForHCP($scope.searchFilter);
       var searchString = '';
       $scope.currentPageIndex = 1;
       clinicService.getAssociatedHCPstoClinic(clinicId, searchString, filter, 1, 10).then(function(response){
@@ -768,6 +796,8 @@ angular.module('hillromvestApp')
         $scope.searchClinics();
       }else if( $state.current.name === 'clinicAssociatedPatients' || $state.current.name === 'clinicAssociatedPatientsRcadmin'){
         $scope.searchAssociatedPatients();
+      }else if($state.current.name === 'clinicAssociatedHCP'){
+        $scope.searchAssociatedHcps();
       }
     };
 

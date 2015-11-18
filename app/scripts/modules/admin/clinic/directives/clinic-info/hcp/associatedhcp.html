@@ -14,7 +14,7 @@
     
     <div class="dashboard__manage-view--search">
       <div class="fuid-search-box reset-padding-right">
-        <input type="text" class="form-control" id="searchListParam" name="userName" ng-model="searchItem" ng-model-options="{ debounce: 1000 }" ng-change="searchAssociatedHcps();" autocomplete="off" placeholder="{{'doctor.placeholder.search' | translate}}">
+        <input type="text" class="form-control" id="searchListParam" name="userName" ng-model="searchItem" ng-model-options="{ debounce: 1000 }" ng-change="searchAssociatedHcps();" autocomplete="off" placeholder="{{'clinic.placeholder.hcp-name-email-search' | translate}}">
         <span class="search-icon hillrom-icon icon-search-icon"></span>
       </div>
     </div>
@@ -92,9 +92,9 @@
             <span class="record-found" ng-if="associatedHcps.length > 0">{{total}}</span><span class="record-found" ng-if="associatedHcps.length > 0" translate="clinic.associated-hcps.hcps">HCPs</span>
             <span class="record-found" ng-if="associatedHcps.length > 0" translate="clinic.associated-hcps.found">Found</span>
             <span ng-show="pageCount > 1">
-              <span class="navigaion-link cursor-pointer" ng-class="{ 'inactive': !(currentPageIndex > 1) }" ng-click="searchDoctors('PREV')" translate="clinic.associated-hcps.previous">Previous</span>
+              <span class="navigaion-link cursor-pointer" ng-class="{ 'inactive': !(currentPageIndex > 1) }" ng-click="searchAssociatedHcps('PREV')" translate="clinic.associated-hcps.previous">Previous</span>
               <span class="navigaion-no">{{currentPageIndex}}</span>
-              <span class="navigaion-link cursor-pointer" ng-class="{ 'inactive': !(pageCount > currentPageIndex) }" ng-click="searchDoctors('NEXT')" translate="clinic.associated-hcps.next">Next</span>
+              <span class="navigaion-link cursor-pointer" ng-class="{ 'inactive': !(pageCount > currentPageIndex) }" ng-click="searchAssociatedHcps('NEXT')" translate="clinic.associated-hcps.next">Next</span>
             </span>
           </div>
           <div class="clr"></div>
