@@ -19,6 +19,7 @@ angular.module('hillromvestApp')
     $scope.firstTimeAccessFailed = false;
     $scope.otherError = false;
     $scope.message = "";
+    $scope.showSubmit = true;
 
     $scope.setResponse = function(response) {
       $scope.response = response;
@@ -71,7 +72,7 @@ angular.module('hillromvestApp')
       $scope.isLoaded = true;
       $scope.message = '';
       $scope.isFirstLogin = true;
-      $scope.isEmailExist = false;
+      $scope.isEmailExist = (StorageService.get('logged') && StorageService.get('logged').activateEmail) ? true : false;
       $scope.showLogin = false;
     };
 
@@ -155,15 +156,16 @@ angular.module('hillromvestApp')
           } else if (response.data.APP_CODE === 'EMAIL_PASSWORD_RESET') {
             var logged = StorageService.get('logged') || {};
             logged.token = response.data.token;
+            logged.activateEmail = null;
             StorageService.save('logged', logged);
             $state.go("activateUser");            
           } else if (response.data.APP_CODE === 'PASSWORD_RESET') {
             var logged = StorageService.get('logged') || {};
             logged.token = response.data.token;
+            logged.userEmail = null;  
+            logged.activateEmail = true;          
             StorageService.save('logged', logged);
-            $scope.isFirstLogin = true;
-            $scope.message = '';
-            $scope.showLogin = false;
+            $state.go("activateUser");     
           } else {
             $scope.otherError = true;
           }
@@ -176,6 +178,7 @@ angular.module('hillromvestApp')
 
     $scope.submitPassword = function(event) {      
       if ($scope.confirmForm.$invalid) {
+        $scope.showSubmit = true;
         return false;
       }
       event.preventDefault();
@@ -183,6 +186,7 @@ angular.module('hillromvestApp')
       if ($scope.user.password !== $scope.user.confirmPassword) {
         $scope.doNotMatch = true;
       } else {
+        $scope.showSubmit = false;
         $scope.doNotMatch = false;
         Auth.submitPassword({
           'email': $scope.user.email,
@@ -190,21 +194,19 @@ angular.module('hillromvestApp')
           'answer': $scope.user.answer,
           'questionId': $scope.user.question.id,
           'termsAndConditionsAccepted': $scope.user.tnc
-        }).then(function(data) {
+        }).then(function(data) {          
           $scope.user.email = null;
           $scope.username = null;
           $scope.clearLastLogin();
           $scope.isFirstLogin = false;
-          $scope.showLogin = true;
-          $scope.form.$setValidity("username", true);
-          $scope.form.$setValidity("password", true);          
-          $state.go("login");
+          $scope.showLogin = true;  
+          $state.go("postActivateLogin");
         }).catch(function(err) {
-          Auth.logout();
+          $scope.showSubmit = true;
           if(err.data && err.data.ERROR){
             $scope.message = err.data.ERROR;
           }
-          $scope.firstTimeAccessFailed = true;
+          $scope.firstTimeAccessFailed = true;          
         });
       }
     };
