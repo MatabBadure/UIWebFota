@@ -79,7 +79,7 @@ angular.module('hillromvestApp')
     $scope.init = function() {
       var currentRoute = $state.current.name;
       if(currentRoute === "activateUser"){
-        if(StorageService.get('logged') && StorageService.get('logged').token){
+        if(StorageService.get('logged') && StorageService.get('logged').token && StorageService.get('logged').isActivate){
           $scope.resetForActivateUser();  
         }else{
           $state.go("activate");
@@ -157,12 +157,14 @@ angular.module('hillromvestApp')
             var logged = StorageService.get('logged') || {};
             logged.token = response.data.token;
             logged.activateEmail = null;
+            logged.isActivate = true;
             StorageService.save('logged', logged);
             $state.go("activateUser");            
           } else if (response.data.APP_CODE === 'PASSWORD_RESET') {
             var logged = StorageService.get('logged') || {};
             logged.token = response.data.token;
-            logged.userEmail = null;  
+            logged.userEmail = null;
+            logged.isActivate = true;  
             logged.activateEmail = true;          
             StorageService.save('logged', logged);
             $state.go("activateUser");     
