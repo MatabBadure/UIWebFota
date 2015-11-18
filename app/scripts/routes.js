@@ -3290,7 +3290,7 @@ angular.module('hillromvestApp')
                 },
                 views: {
                     'content@': {
-                        templateUrl: 'scripts/account/login/login.html',
+                        templateUrl: 'scripts/account/login/activatepatient.html',
                         controller: 'LoginController'
                     }
                 },
