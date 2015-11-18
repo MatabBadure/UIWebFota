@@ -34,7 +34,9 @@
     <div class="col-md-4 user-detail-info__data word-ellipsis">
       <span class="user-detail-info__data--key" translate="clinic.address"></span>
       <span class="user-detail-info__data--key">:</span>
-      <span class="user-detail-info__data--value">{{clinic.address}}</span>
+      <span class="user-detail-info__data--value" ng-if="clinic.address && clinic.address2">{{clinic.address}}, {{clinic.address2}}</span>
+      <span class="user-detail-info__data--value" ng-if="!clinic.address && clinic.address2">{{clinic.address2}}</span>
+      <span class="user-detail-info__data--value" ng-if="clinic.address && !clinic.address2">{{clinic.address}}</span>
     </div>
     <div class="col-md-4 user-detail-info__data">
       <span class="user-detail-info__data--key" translate="clinic.city"></span>
