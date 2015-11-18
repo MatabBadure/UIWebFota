@@ -75,7 +75,7 @@ angular.module('hillromvestApp')
       var filter = 'isDeleted:0';
       var searchString = '';
       $scope.currentPageIndex = 1;
-      clinicService.getAssociatedHCPstoClinic(clinicId, searchString, filter, 1).then(function(response){
+      clinicService.getAssociatedHCPstoClinic(clinicId, searchString, filter, 1, 10).then(function(response){
         $scope.total = response.headers()['x-total-count'];
         $scope.pageCount = Math.ceil($scope.total / 10);
         $scope.associatedHcps = response.data;
