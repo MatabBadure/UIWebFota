@@ -802,7 +802,8 @@ window.nv.tooltip.* also has various helper methods.
                 top = pos[1] - (height / 2);
                 var tLeft = tooltipLeft(container);
                 var tTop = tooltipTop(container);
-                if (tLeft + width > windowWidth) left = pos[0] - width - dist;
+                if (tLeft + width > windowWidth) left = pos[0] - width - dist, container.className = 'nvtooltip ' + 'nvtooltip_right';
+                if (tLeft + width < windowWidth) container.className = 'nvtooltip ' + 'nvtooltip_normal';
                 if (tTop < scrollTop) top = scrollTop + 5;
                 if (tTop + height > scrollTop + windowHeight) top = scrollTop + windowHeight - tTop + top - height;
                 break;
