@@ -151,6 +151,12 @@
             "parent": "Parent",
             "child": "Child",
             "satellite": "Satellite"
+        },
+        "associated-hcps": {
+            "previous": "Previous",
+            "next": "Next",
+            "hcps": "HCPs",
+            "found": "Found"
         }
     }
 }

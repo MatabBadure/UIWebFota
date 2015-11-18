@@ -64,11 +64,21 @@ angular.module('hillromvestApp')
         notyService.showError(response);
       });
     };
+    
+    $scope.searchAssociatedHcps = function(){
+      console.log('Cool We can Implement the changes', $scope.searchItem);
+
+    };
 
     $scope.initClinicAssoctHCPs = function(clinicId){
       $scope.isAssociateHCP = false;
-      clinicService.getClinicAssoctHCPs(clinicId).then(function(response){
-        $scope.associatedHcps = response.data.hcpUsers;
+      var filter = 'isDeleted:0';
+      var searchString = '';
+      $scope.currentPageIndex = 1;
+      clinicService.getAssociatedHCPstoClinic(clinicId, searchString, filter, 1).then(function(response){
+        $scope.total = response.headers()['x-total-count'];
+        $scope.pageCount = Math.ceil($scope.total / 10);
+        $scope.associatedHcps = response.data;
         clinicService.getHCPsWithClinicName().then(function(response){
           $scope.hcps = response.data;
           angular.forEach($scope.hcps, function(hcp, hcpKey){
