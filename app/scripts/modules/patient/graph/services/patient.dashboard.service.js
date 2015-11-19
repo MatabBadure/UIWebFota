@@ -33,7 +33,7 @@ angular.module('hillromvestApp')
       getHMRBarGraphPoints: function(id, date) {
         var url = patient.graph.baseURL;
         url  = url + '/' + id + '/therapyData';
-        url = url + '?date=' + date;
+        url = url + '?from=' + date + '&to=' + date ;
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
