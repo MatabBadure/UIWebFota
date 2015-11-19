@@ -72,6 +72,7 @@ angular.module('hillromvestApp')
       $scope.hmrRunRate = 0;
       $scope.adherenceScore = 0;
       $scope.missedtherapyDays = 0;
+      $scope.settingsDeviatedDaysCount = 0;
       $scope.minFrequency = 0;
       $scope.maxFrequency = 0;
       $scope.minPressure = 0;
@@ -326,6 +327,19 @@ angular.module('hillromvestApp')
           lineWidth:12,
           lineCap:'circle'
       };
+
+    $scope.settingDeviation = {
+          animate:{
+              duration:3000,
+              enabled:true
+          },
+          barColor:'#4eb3d3',
+          trackColor: '#ccc',
+          scaleColor: false,
+          lineWidth:12,
+          lineCap:'circle'
+      };
+
 
  /*---Simple pye chart JS END-----*/
     $scope.isActivePatientTab = function(tab) {
@@ -1049,7 +1063,7 @@ angular.module('hillromvestApp')
       var patientDeviceSlNo = ($scope.patientDevices && $scope.patientDevices[0] && $scope.patientDevices[0].serialNumber) ? $scope.patientDevices[0].serialNumber: stringConstants.notAvailable;
       var pdfMissedTherapyDays = ($scope.missedtherapyDays !== null && $scope.missedtherapyDays >= 0) ? $scope.missedtherapyDays : stringConstants.notAvailable;
       var pdfHMRNonAdherenceScore = ($scope.adherenceScore !== null && $scope.adherenceScore >= 0) ? $scope.adherenceScore : stringConstants.notAvailable;
-      var pdfSettingDeviation = stringConstants.notAvailable;
+      var pdfSettingDeviation = ($scope.settingsDeviatedDaysCount !== null && $scope.settingsDeviatedDaysCount >= 0) ? $scope.settingsDeviatedDaysCount : stringConstants.notAvailable;
       var pressureClass = ($scope.compliance.pressure) ? "pressure_legend_active" : "";
       var frequencyClass = ($scope.compliance.frequency) ? "frequency_legend_active" : "";
       var durationClass = ($scope.compliance.duration) ? "duration_legend_active" : "";
@@ -1822,7 +1836,7 @@ angular.module('hillromvestApp')
       var patientDeviceSlNo = ($scope.patientDevices && $scope.patientDevices[0] && $scope.patientDevices[0].serialNumber) ? $scope.patientDevices[0].serialNumber: stringConstants.notAvailable;
       var pdfMissedTherapyDays = ($scope.missedtherapyDays !== null && $scope.missedtherapyDays >= 0) ? $scope.missedtherapyDays : stringConstants.notAvailable;
       var pdfHMRNonAdherenceScore = ($scope.adherenceScore !== null && $scope.adherenceScore >= 0) ? $scope.adherenceScore : stringConstants.notAvailable;
-      var pdfSettingDeviation = stringConstants.notAvailable;
+      var pdfSettingDeviation = ($scope.settingsDeviatedDaysCount !== null && $scope.settingsDeviatedDaysCount >= 0) ? $scope.settingsDeviatedDaysCount : stringConstants.notAvailable;
       htmlDocument = "<!doctype html>" +
             '<html style="background: white;"><head>' +
             '<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />'+
