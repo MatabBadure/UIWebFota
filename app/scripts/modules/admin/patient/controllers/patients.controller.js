@@ -963,5 +963,13 @@ angular.module('hillromvestApp')
       });
     };
 
+    $scope.showPatientUpdateModal = function(){
+      if($scope.form.$invalid){
+        return false;
+      }else{
+        $scope.showModal = true;
+      }
+    };
+
     $scope.init();
   }]);
