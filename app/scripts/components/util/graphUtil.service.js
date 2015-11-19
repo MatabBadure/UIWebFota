@@ -74,8 +74,8 @@ angular.module('hillromvestApp')
             var graphData = {};
             var actual = [];
             angular.forEach(data.actual, function(value) {
-              value.startTime = dateService.getUTCTimeStamp(value.startTime);
-              value.endTime = dateService.getUTCTimeStamp(value.endTime);
+              value.start = dateService.getUTCTimeStamp(value.start);
+              value.end = dateService.getUTCTimeStamp(value.end);
               actual.push(value);
             });
             graphData.actual = actual;
@@ -165,9 +165,9 @@ angular.module('hillromvestApp')
         });
         var max = arrayMax(hmrSet);
         var min = arrayMin(hmrSet);
-        range.max = Math.ceil(Math.floor(max/3600)/10) * 10;
-        if(min !== 0 && min > (max-min)){
-          range.min = Math.floor(Math.floor((min - ((max-min)/2))/3600)/10) * 10;
+        range.max = Math.ceil(Math.floor(max/60)/10) * 10;
+        if(min !== 0 && min > (max-min)){          
+          range.min = Math.floor(Math.floor((min - ((max-min)/2))/60)/10) * 10;
         }
         if(range.min === undefined){
           range.min = 0;
@@ -238,8 +238,8 @@ angular.module('hillromvestApp')
         var graphDataList =[];
         angular.forEach(data, function(value) {
           var point = [];
-          point.push(value.startTime);
-          point.push(Math.floor(value.hmr/3600));
+          point.push(value.start);
+          point.push((value.hmr/60));
           pointSet.push(point);
         });
         graphData["values"] = pointSet;
@@ -253,8 +253,8 @@ angular.module('hillromvestApp')
         var graphDataList =[];
         angular.forEach(data, function(value) {
           var point = {};
-          point.x = value.startTime;
-          point.y = value.hmr/3600;//Math.floor(value.hmr/3600);
+          point.x = value.start;
+          point.y = value.hmr/60;//Math.floor(value.hmr/3600);
           pointSet.push(point);
         });
         graphData.values = pointSet;
@@ -340,8 +340,8 @@ angular.module('hillromvestApp')
         var data5 = JSON.parse(JSON.stringify(data1));
         var data6 = JSON.parse(JSON.stringify(data1));*/
         angular.forEach(data, function(value, key) {
-          if(!value.startTime)
-          value.startTime = dateService.getTimeStampForTimeSlot(data[0].date,1);
+          if(!value.start)
+          value.start = dateService.getTimeStampForTimeSlot(data[0].date,1);
           list.push(value);
 
           /*var timeSlot = dateService.getTimeIntervalFromTimeStamp(value.startTime);
@@ -546,12 +546,12 @@ angular.module('hillromvestApp')
         if(value.note && value.note.note && value.note.note.length > 0){
             toolTip =
               '<div class="tooltip_sub_content">'+
-              '<h6 class="after">' + dateService.getDateTimeFromTimeStamp(value.startTime,patientDashboard.dateFormat,'/') + '</h6>' +
+              '<h6 class="after">' + dateService.getDateTimeFromTimeStamp(value.start,patientDashboard.dateFormat,'/') + '</h6>' +
               '<ul class="graph_ul">' +
-                '<li><span class="pull-left">' + 'Duration' +'</span><span class="pull-right value">' + value.durationInMinutes +'</span></li>' +
+                '<li><span class="pull-left">' + 'Duration' +'</span><span class="pull-right value">' + value.duration +'</span></li>' +
                 '<li><span class="pull-left">' + 'Frequency' + '</span><span class="pull-right value">' + value.frequency  + '</span></li>' +
                 '<li><span class="pull-left">' + 'Pressure' +'</span><span class="pull-right value">' + value.pressure +'</span></li>' +
-                '<li><span class="pull-left">' + 'Cough Pauses' +'</span><span class="pull-right value">' + ( value.programmedCaughPauses +  value.normalCaughPauses) +'</span></li>' +                
+                '<li><span class="pull-left">' + 'Cough Pauses' +'</span><span class="pull-right value">' + ( value.programmedCoughPauses +  value.normalCoughPauses)  +'</span></li>' +                
               '</ul>'+
               '</div>'+
 
@@ -563,12 +563,12 @@ angular.module('hillromvestApp')
               '</div>';
         }else {
           toolTip =
-            '<h6 class="after">' + dateService.getDateTimeFromTimeStamp(value.startTime,patientDashboard.dateFormat,'/') + '</h6>' +
+            '<h6 class="after">' + dateService.getDateTimeFromTimeStamp(value.start,patientDashboard.dateFormat,'/') + '</h6>' +
             '<ul class="graph_ul">' +
-              '<li><span class="pull-left">' + 'Duration' +'</span><span class="pull-right value">' + value.durationInMinutes +'</span></li>' +
+              '<li><span class="pull-left">' + 'Duration' +'</span><span class="pull-right value">' + value.duration +'</span></li>' +
               '<li><span class="pull-left">' + 'Frequency' + '</span><span class="pull-right value">' + value.frequency  + '</span></li>' +
               '<li><span class="pull-left">' + 'Pressure' +'</span><span class="pull-right value">' + value.pressure +'</span></li>' +
-              '<li><span class="pull-left">' + 'Cough Pauses' +'</span><span class="pull-right value">' + ( value.programmedCaughPauses +  value.normalCaughPauses) +'</span></li>' +              
+              '<li><span class="pull-left">' + 'Cough Pauses' +'</span><span class="pull-right value">' + ( value.programmedCoughPauses +  value.normalCoughPauses)  +'</span></li>' +              
             '</ul>';
         }
         return toolTip;
@@ -577,7 +577,6 @@ angular.module('hillromvestApp')
       this.getToolTipForCompliance = function(value) {
         var toolTip = '';
          if(value.note && value.note.note && value.note.note.length > 0){
-          console.log("note is available");
           toolTip =
                 '<div class="tooltip_sub_content">'+
                 '<h6>' + dateService.getDateFromTimeStamp(value.start,patientDashboard.dateFormat,'/') + '  ('+ d3.time.format('%I:%M %p')(new Date(value.start)) + ')'  + '</h6>' +
@@ -596,7 +595,6 @@ angular.module('hillromvestApp')
               '</ul>'+
               '</div>';
          }else{
-          console.log("note is not available");
           toolTip =
                 '<h6>' + dateService.getDateFromTimeStamp(value.start,patientDashboard.dateFormat,'/') + '  ('+ d3.time.format('%I:%M %p')(new Date(value.start)) + ')'  + '</h6>' +
                 '<ul class="graph_ul">' +
