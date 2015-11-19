@@ -468,7 +468,7 @@ angular.module('hillromvestApp')
           $scope.noDataAvailable = false;
           $scope.completeGraphData = graphUtil.convertIntoServerTimeZone($scope.completeGraphData,patientDashboard.hmrNonDayGraph);
           $scope.yAxisRangeForHMRLine = graphUtil.getYaxisRangeLineGraph($scope.completeGraphData);
-          $scope.graphData = graphUtil.convertToHMRStepGraph($scope.completeGraphData,patientDashboard.HMRLineGraphColor);
+          $scope.graphData = graphUtil.convertToHMRStepGraph($scope.completeGraphData,patientDashboard.HMRLineGraphColor,$scope.yAxisRangeForHMRLine.unit);
           /* waiting until svg element loads*/
           var count =5;
           $scope.waitFunction = function waitHandler() {
@@ -587,7 +587,7 @@ angular.module('hillromvestApp')
           $scope.completeGraphData = graphUtil.convertIntoServerTimeZone($scope.completeGraphData,patientDashboard.hmrDayGraph);
           $scope.completeGraphData = graphUtil.formatDayWiseDate($scope.completeGraphData.actual);
           $scope.yAxisRangeForHMRBar = graphUtil.getYaxisRangeBarGraph($scope.completeGraphData);
-          $scope.hmrBarGraphData = graphUtil.convertToHMRBarGraph($scope.completeGraphData,patientDashboard.HMRBarGraphColor);
+          $scope.hmrBarGraphData = graphUtil.convertToHMRBarGraph($scope.completeGraphData,patientDashboard.HMRBarGraphColor,$scope.yAxisRangeForHMRBar.unit);
           $scope.drawHMRBarGraph();
           var barCount= d3.select('#hmrBarGraph svg').selectAll('.nv-group .nv-bar')[0].length;
           var count = 5;
@@ -1719,7 +1719,7 @@ angular.module('hillromvestApp')
           }else{
             chart.forceY([$scope.yAxisRangeForHMRLine.min, $scope.yAxisRangeForHMRLine.max]);
           }
-          chart.yAxis.axisLabel('Hours');
+          chart.yAxis.axisLabel($scope.yAxisRangeForHMRLine.ylabel);
             d3.select('#hmrLineGraph svg')
           .datum($scope.graphData)
           .transition().duration(500).call(chart);
@@ -1943,7 +1943,7 @@ angular.module('hillromvestApp')
           }
           chart.yAxis.tickFormat(d3.format('d'));
           chart.yAxis.axisLabelDistance(50);
-          chart.yAxis.axisLabel('Minutes');
+          chart.yAxis.axisLabel($scope.yAxisRangeForHMRBar.ylabel);
           d3.select('#hmrBarGraph svg')
           .datum($scope.hmrBarGraphData)
           .transition().duration(500).call(chart);
