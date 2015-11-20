@@ -76,6 +76,14 @@ angular.module('hillromvestApp')
       $state.go('clinicadminclinicdashboard', {'clinicId':clinic.id})
     };
 
+    $scope.showUpdateClinicModal = function(){
+      if($scope.form.$invalid){
+        return false;
+      }else {
+        $scope.showModal = true;
+      }
+    };
+
   	$scope.init();
 
   }]);
