@@ -42,10 +42,13 @@ angular.module('hillromvestApp')
             var graphData = {};
             var actual = [];
             angular.forEach(data.actual, function(value) {
-              value.timestamp = dateService.getUTCTimeStamp(value.timestamp);
-              value.start = dateService.getUTCTimeStamp(value.start);
-              value.end = dateService.getUTCTimeStamp(value.end);
-              actual.push(value);
+              if(value.timestamp){
+                var timestamp = value.timestamp;
+                value.timestamp = dateService.convertMMDDYYYYHHMMSSstamp(value.timestamp);//dateService.getUTCTimeStamp(value.timestamp);
+                value.start = value.start ? dateService.convertMMDDYYYYHHMMSSstamp(value.start) : dateService.convertMMDDYYYYHHMMSSstamp(timestamp);//dateService.getUTCTimeStamp(value.start);
+                value.end = value.end ? dateService.convertMMDDYYYYHHMMSSstamp(value.end) : dateService.convertMMDDYYYYHHMMSSstamp(timestamp);//dateService.getUTCTimeStamp(value.end);
+                actual.push(value);
+              }
             });
             graphData.actual = actual;
             graphData.recommended = data.recommended;
@@ -62,10 +65,13 @@ angular.module('hillromvestApp')
             var graphData = {};
             var actual = [];
             angular.forEach(data.actual, function(value) {
-              value.timestamp = dateService.getUTCTimeStamp(value.timestamp);
-              value.start = dateService.getUTCTimeStamp(value.start);
-              value.end = dateService.getUTCTimeStamp(value.end);
-              actual.push(value);
+              if(value.timestamp){
+                var timestamp = value.timestamp;
+                value.timestamp = dateService.convertMMDDYYYYHHMMSSstamp(value.timestamp);//dateService.getUTCTimeStamp(value.timestamp);
+                value.start = value.start ? dateService.convertMMDDYYYYHHMMSSstamp(value.start) : dateService.convertMMDDYYYYHHMMSSstamp(timestamp);//dateService.getUTCTimeStamp(value.start);
+                value.end = value.end ? dateService.convertMMDDYYYYHHMMSSstamp(value.end) : dateService.convertMMDDYYYYHHMMSSstamp(timestamp);//dateService.getUTCTimeStamp(value.end);
+                actual.push(value);
+              }
             });
             graphData.actual = actual;
             graphData.recommended = data.recommended;
@@ -74,9 +80,13 @@ angular.module('hillromvestApp')
             var graphData = {};
             var actual = [];
             angular.forEach(data.actual, function(value) {
-              value.start = dateService.getUTCTimeStamp(value.start);
-              value.end = dateService.getUTCTimeStamp(value.end);
-              actual.push(value);
+              if(value.timestamp){
+                var timestamp = value.timestamp;
+                value.timestamp = dateService.convertMMDDYYYYHHMMSSstamp(value.timestamp);
+                value.start = value.start ? dateService.convertMMDDYYYYHHMMSSstamp(value.start) : dateService.convertMMDDYYYYHHMMSSstamp(timestamp) ;//dateService.getUTCTimeStamp(value.start);
+                value.end = value.end ? dateService.convertMMDDYYYYHHMMSSstamp(value.end) : dateService.convertMMDDYYYYHHMMSSstamp(timestamp);//dateService.getUTCTimeStamp(value.end);
+                actual.push(value);
+              }
             });
             graphData.actual = actual;
             graphData.recommended = data.recommended;
