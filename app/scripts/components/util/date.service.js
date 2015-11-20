@@ -1,6 +1,6 @@
 'use strict';
 angular.module('hillromvestApp')
-  .factory('dateService',[function() {
+  .factory('dateService',['commonsUserService', function(commonsUserService) {
     return {
       getAge: function(dob) {
         var currentDate = new Date(),
@@ -312,6 +312,19 @@ angular.module('hillromvestApp')
         case patientDashboard.INDdateFormat:
           return this.getDay(date.getDate()) + dateSeperator + this.getMonth(date.getMonth(date)) + dateSeperator + this.getYear(date.getFullYear(date)) + " " + formattedTime;
       }
+    },
+    convertMMDDYYYYHHMMSSstamp: function(date){
+        if(date && date.indexOf("/") > -1 && date.indexOf(" ") > -1 ){
+          var dateTime = date.split(" ");
+          var startDate = dateTime[0].split("/"); // turning it from MM/DD/YYYY HH:MM:SS to timestamp
+          var formattedDate = startDate[2] + "-" + startDate[0] + "-" + startDate[1] + " " + dateTime[1];
+          if(commonsUserService.getBrowser().indexOf("chrome") !== -1){
+            return new Date(formattedDate).getTime();
+          }else{
+            return new Date(formattedDate.replace(/\s/, 'T')).getTime();
+          }
+          
+        }
     }
 
     };

@@ -72,7 +72,8 @@
               <span class="">*</span>
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
-              <input class="" type="number" name="minMinutesPerTreatment" ng-model="proto.minMinutesPerTreatment" min="0" max="98" required>
+              <input class="" type="number" name="minMinutesPerTreatment" ng-model="proto.minMinutesPerTreatment" min="1" max="98" required ng-if="protocol.type === 'Normal'">
+              <input class="" type="number" name="minMinutesPerTreatment" ng-model="proto.minMinutesPerTreatment" min="1" max="99" required ng-if="protocol.type === 'Custom'">
               <div ng-show="(point.minMinutesPerTreatment.$dirty && point.minMinutesPerTreatment.$invalid) || submitted">
                 <span class="has-error" ng-show="point.minMinutesPerTreatment.$error.required && protocol.type === 'Normal' " translate="error.protocol.minMinutesPerTreatment.required">
                 </span>
@@ -124,7 +125,8 @@
               <span class="">*</span>
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
-              <input class="" type="number" name="minFrequency" ng-model="proto.minFrequency" required min="5" max="19">
+              <input class="" type="number" name="minFrequency" ng-model="proto.minFrequency" required min="5" max="19"  ng-if="protocol.type === 'Normal'">
+              <input class="" type="number" name="minFrequency" ng-model="proto.minFrequency" required min="5" max="20"  ng-if="protocol.type === 'Custom'">
               <div ng-show="(point.minFrequency.$dirty && point.minFrequency.$invalid) || submitted">
                 <span class="has-error" ng-show="point.minFrequency.$error.required && protocol.type === 'Normal'" translate="error.protocol.minFrequency.required">
                 </span>
@@ -176,7 +178,8 @@
               <span class="">*</span>
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
-              <input class="" type="number" name="minPressure" ng-model="proto.minPressure" required min="1" max="9">
+              <input class="" type="number" name="minPressure" ng-model="proto.minPressure" required min="1" max="9" ng-if="protocol.type === 'Normal'">
+              <input class="" type="number" name="minPressure" ng-model="proto.minPressure" required min="1" max="10" ng-if="protocol.type === 'Custom'">
               <div ng-show="(point.minPressure.$dirty && point.minPressure.$invalid) || submitted">
                 <span class="has-error" ng-show="point.minPressure.$error.required && protocol.type === 'Normal'" translate="error.protocol.minPressure.required">
                 </span>
