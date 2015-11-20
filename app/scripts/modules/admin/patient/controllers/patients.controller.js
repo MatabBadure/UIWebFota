@@ -731,9 +731,9 @@ angular.module('hillromvestApp')
         delete $scope.protocol.patient;
       }
       var data = $scope.protocol.protocol;
-      data[0].treatmentsPerDay = $scope.protocol.treatmentsPerDay;
       if($scope.protocol.type === 'Custom'){
         angular.forEach(data, function(value, key){
+          value.treatmentsPerDay = $scope.protocol.treatmentsPerDay;
           if(!value.treatmentLabel){
             value.treatmentLabel = 'point'+(key+1);
           }
@@ -961,6 +961,14 @@ angular.module('hillromvestApp')
       }).catch(function(response){
         notyService.showError(response);
       });
+    };
+
+    $scope.showPatientUpdateModal = function(){
+      if($scope.form.$invalid){
+        return false;
+      }else{
+        $scope.showModal = true;
+      }
     };
 
     $scope.init();

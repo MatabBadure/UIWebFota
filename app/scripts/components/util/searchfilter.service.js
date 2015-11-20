@@ -2,8 +2,11 @@
 
 angular.module('hillromvestApp')
     .service('searchFilterService', [function () {
-        this.initSearchFiltersForPatient = function(filter) {
+        this.initSearchFiltersForPatient = function(filter, isActive) {
             var searchFilter = {};
+            if(isActive){
+              searchFilter.isActive = true;
+            }
             if(filter){
               switch(filter){
                 case 'isActive':searchFilter.isActive = true;

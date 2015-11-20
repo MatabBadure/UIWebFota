@@ -32,7 +32,8 @@
             "patient-search": "Search Patients here",
             "existed-admin": "Search Clinic Admin",
             "parent-clinic-search": "Search Parent clinic here",
-            "patient-search" : "Search with Name, Email or Hill-Rom ID"
+            "patient-search" : "Search with Name, Email or Hill-Rom ID",
+            "hcp-name-email-search": "Search HCP with Name or Email"
         },
         "select-parent": "Parent Clinic",
         "general-details": "General Details",
@@ -40,8 +41,8 @@
         "hr-id": "HR-ID",
         "personal-details": "Clinic Details",
         "address": "Address",
-        "address1": "Address1",
-        "address2": "Address2",
+        "address1": "Address 1",
+        "address2": "Address 2",
         "city-state": "City/State",
         "zipcode": "Zip",
         "city": "City",
@@ -151,6 +152,12 @@
             "parent": "Parent",
             "child": "Child",
             "satellite": "Satellite"
+        },
+        "associated-hcps": {
+            "previous": "Previous",
+            "next": "Next",
+            "hcps": "HCPs",
+            "found": "Found"
         }
     }
 }

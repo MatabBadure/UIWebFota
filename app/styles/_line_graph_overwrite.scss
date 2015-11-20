@@ -213,6 +213,37 @@
 	}
 
 
+
+#cumulativeGraph{
+	.nvtooltip.nvtooltip_right{
+		&:before {
+		    
+		    left: 100%;
+			border-top: 10px solid transparent;
+			border-bottom: 10px solid transparent;
+
+			border-right: 0px solid $iceberg;
+			border-left: 10px solid $iceberg;
+
+ 		}
+ 		&:after {
+		    left: 100%;
+			border-top: 9px solid transparent;
+			border-bottom: 9px solid transparent;
+
+			border-right: 0px solid #fff;
+
+			border-left: 9px solid #fff;
+
+ 		}
+	}
+	}
+
+
+
+
+
+
 	.nvtooltip{
 		padding: 0px 0px 0px 0px;
 		min-width: 170px;

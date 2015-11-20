@@ -98,6 +98,15 @@ angular.module('hillromvestApp')
         });
       },
 
+      getAssociatedHCPstoClinic: function(clinicId, searchString, filter, pageNo, offset){
+        var url = URL.getAssociatedHCPtoClinic.replace('CLINICID',clinicId).replace('SEARCHSTRING',searchString).replace('PAGENO',pageNo).replace('OFFSET',offset).replace('FILTER', filter);
+        return $http.get(url, {
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });
+      },
+
       disassociateHCP: function(hcpId, data){
         return $http.put('/api/user/'+hcpId+'/dissociateclinic', data, {
           headers: headerService.getHeader()

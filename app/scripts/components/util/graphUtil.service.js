@@ -18,7 +18,7 @@ angular.module('hillromvestApp')
       return graphDataList;
       }
 
-      this.convertToHMRStepGraph = function(data,colorCode) {
+      this.convertToHMRStepGraph = function(data,colorCode,unit) {
         var pointSet = [];
         var graphData = {};
         var graphDataList =[];
@@ -26,7 +26,7 @@ angular.module('hillromvestApp')
         angular.forEach(data.actual, function(value) {
           var point = {};
           point.x = value.timestamp;
-          point.y = value.hmr/60;//Math.floor(value.hmr/60);
+          point.y = value.hmr/unit;//Math.floor(value.hmr/60);
           pointSet.push(point);
         });
         graphData.values = pointSet;
@@ -42,10 +42,13 @@ angular.module('hillromvestApp')
             var graphData = {};
             var actual = [];
             angular.forEach(data.actual, function(value) {
-              value.timestamp = dateService.getUTCTimeStamp(value.timestamp);
-              value.start = dateService.getUTCTimeStamp(value.start);
-              value.end = dateService.getUTCTimeStamp(value.end);
-              actual.push(value);
+              if(value.timestamp){
+                var timestamp = value.timestamp;
+                value.timestamp = dateService.convertMMDDYYYYHHMMSSstamp(value.timestamp);//dateService.getUTCTimeStamp(value.timestamp);
+                value.start = value.start ? dateService.convertMMDDYYYYHHMMSSstamp(value.start) : dateService.convertMMDDYYYYHHMMSSstamp(timestamp);//dateService.getUTCTimeStamp(value.start);
+                value.end = value.end ? dateService.convertMMDDYYYYHHMMSSstamp(value.end) : dateService.convertMMDDYYYYHHMMSSstamp(timestamp);//dateService.getUTCTimeStamp(value.end);
+                actual.push(value);
+              }
             });
             graphData.actual = actual;
             graphData.recommended = data.recommended;
@@ -62,10 +65,13 @@ angular.module('hillromvestApp')
             var graphData = {};
             var actual = [];
             angular.forEach(data.actual, function(value) {
-              value.timestamp = dateService.getUTCTimeStamp(value.timestamp);
-              value.start = dateService.getUTCTimeStamp(value.start);
-              value.end = dateService.getUTCTimeStamp(value.end);
-              actual.push(value);
+              if(value.timestamp){
+                var timestamp = value.timestamp;
+                value.timestamp = dateService.convertMMDDYYYYHHMMSSstamp(value.timestamp);//dateService.getUTCTimeStamp(value.timestamp);
+                value.start = value.start ? dateService.convertMMDDYYYYHHMMSSstamp(value.start) : dateService.convertMMDDYYYYHHMMSSstamp(timestamp);//dateService.getUTCTimeStamp(value.start);
+                value.end = value.end ? dateService.convertMMDDYYYYHHMMSSstamp(value.end) : dateService.convertMMDDYYYYHHMMSSstamp(timestamp);//dateService.getUTCTimeStamp(value.end);
+                actual.push(value);
+              }
             });
             graphData.actual = actual;
             graphData.recommended = data.recommended;
@@ -74,9 +80,13 @@ angular.module('hillromvestApp')
             var graphData = {};
             var actual = [];
             angular.forEach(data.actual, function(value) {
-              value.startTime = dateService.getUTCTimeStamp(value.startTime);
-              value.endTime = dateService.getUTCTimeStamp(value.endTime);
-              actual.push(value);
+              if(value.timestamp){
+                var timestamp = value.timestamp;
+                value.timestamp = dateService.convertMMDDYYYYHHMMSSstamp(value.timestamp);
+                value.start = value.start ? dateService.convertMMDDYYYYHHMMSSstamp(value.start) : dateService.convertMMDDYYYYHHMMSSstamp(timestamp) ;//dateService.getUTCTimeStamp(value.start);
+                value.end = value.end ? dateService.convertMMDDYYYYHHMMSSstamp(value.end) : dateService.convertMMDDYYYYHHMMSSstamp(timestamp);//dateService.getUTCTimeStamp(value.end);
+                actual.push(value);
+              }
             });
             graphData.actual = actual;
             graphData.recommended = data.recommended;
@@ -143,16 +153,27 @@ angular.module('hillromvestApp')
         var range = {};
         var hmrSet = [];
         angular.forEach(data.actual, function(value) {
-          hmrSet.push(Math.floor(value.hmr/60));
+          //hmrSet.push(Math.floor(value.hmr/60));
+          hmrSet.push(value.hmr);
         });
         var max = arrayMax(hmrSet);
         var min = arrayMin(hmrSet);
+        var unit = 60;
+        var ylabel = "Minutes";
+        if(max > 3600){
+          unit = 3600;
+          ylabel = "Hours";
+        }
+        max = Math.floor(max/unit);
+        min = Math.floor(min/unit);
         range.max = Math.ceil((max + (max-min)/4)/10) * 10;
         if(min !== 0 && min > (max-min)){
           range.min = Math.floor((min - ((max-min)/4))/10) * 10;
         } else {
           range.min = min;
         }
+        range.unit = unit;
+        range.ylabel = ylabel;
         return range;
       }
 
@@ -160,14 +181,21 @@ angular.module('hillromvestApp')
         var range = {};
         var hmrSet = [];
         angular.forEach(data, function(value) {
-          if(value.hmr !== 'null')
+          if(value.hmr !== 'null'){
            hmrSet.push(value.hmr);
+          }
         });
         var max = arrayMax(hmrSet);
         var min = arrayMin(hmrSet);
-        range.max = Math.ceil(Math.floor(max/3600)/10) * 10;
-        if(min !== 0 && min > (max-min)){
-          range.min = Math.floor(Math.floor((min - ((max-min)/2))/3600)/10) * 10;
+        var unit = 60;
+        var ylabel = "Minutes";
+        if(max > 3600){
+          unit = 3600;
+          ylabel = "Hours";
+        }
+        range.max = Math.ceil(Math.floor(max/unit)/10) * 10;
+        if(min !== 0 && min > (max-min)){          
+          range.min = Math.floor(Math.floor((min - ((max-min)/2))/unit)/10) * 10;
         }
         if(range.min === undefined){
           range.min = 0;
@@ -175,6 +203,8 @@ angular.module('hillromvestApp')
         if(range.max === undefined){
           range.max = 0;
         }
+        range.unit = unit;
+        range.ylabel = ylabel;
         return range;
       }
 
@@ -238,8 +268,8 @@ angular.module('hillromvestApp')
         var graphDataList =[];
         angular.forEach(data, function(value) {
           var point = [];
-          point.push(value.startTime);
-          point.push(Math.floor(value.hmr/3600));
+          point.push(value.start);
+          point.push((value.hmr/60));
           pointSet.push(point);
         });
         graphData["values"] = pointSet;
@@ -247,14 +277,14 @@ angular.module('hillromvestApp')
       return graphDataList;
       }
 
-      this.convertToHMRBarGraph = function(data,colorCode) {
+      this.convertToHMRBarGraph = function(data,colorCode,unit) {
         var pointSet = [];
         var graphData = {};
         var graphDataList =[];
         angular.forEach(data, function(value) {
           var point = {};
-          point.x = value.startTime;
-          point.y = value.hmr/3600;//Math.floor(value.hmr/3600);
+          point.x = value.start;
+          point.y = value.hmr/unit;//Math.floor(value.hmr/3600);
           pointSet.push(point);
         });
         graphData.values = pointSet;
@@ -340,8 +370,8 @@ angular.module('hillromvestApp')
         var data5 = JSON.parse(JSON.stringify(data1));
         var data6 = JSON.parse(JSON.stringify(data1));*/
         angular.forEach(data, function(value, key) {
-          if(!value.startTime)
-          value.startTime = dateService.getTimeStampForTimeSlot(data[0].date,1);
+          if(!value.start)
+          value.start = dateService.getTimeStampForTimeSlot(data[0].date,1);
           list.push(value);
 
           /*var timeSlot = dateService.getTimeIntervalFromTimeStamp(value.startTime);
@@ -546,12 +576,12 @@ angular.module('hillromvestApp')
         if(value.note && value.note.note && value.note.note.length > 0){
             toolTip =
               '<div class="tooltip_sub_content">'+
-              '<h6 class="after">' + dateService.getDateTimeFromTimeStamp(value.startTime,patientDashboard.dateFormat,'/') + '</h6>' +
+              '<h6 class="after">' + dateService.getDateTimeFromTimeStamp(value.start,patientDashboard.dateFormat,'/') + '</h6>' +
               '<ul class="graph_ul">' +
-                '<li><span class="pull-left">' + 'Duration' +'</span><span class="pull-right value">' + value.durationInMinutes +'</span></li>' +
+                '<li><span class="pull-left">' + 'Duration' +'</span><span class="pull-right value">' + value.duration +'</span></li>' +
                 '<li><span class="pull-left">' + 'Frequency' + '</span><span class="pull-right value">' + value.frequency  + '</span></li>' +
                 '<li><span class="pull-left">' + 'Pressure' +'</span><span class="pull-right value">' + value.pressure +'</span></li>' +
-                '<li><span class="pull-left">' + 'Cough Pauses' +'</span><span class="pull-right value">' + ( value.programmedCaughPauses +  value.normalCaughPauses) +'</span></li>' +                
+                '<li><span class="pull-left">' + 'Cough Pauses' +'</span><span class="pull-right value">' + ( value.programmedCoughPauses +  value.normalCoughPauses)  +'</span></li>' +                
               '</ul>'+
               '</div>'+
 
@@ -563,12 +593,12 @@ angular.module('hillromvestApp')
               '</div>';
         }else {
           toolTip =
-            '<h6 class="after">' + dateService.getDateTimeFromTimeStamp(value.startTime,patientDashboard.dateFormat,'/') + '</h6>' +
+            '<h6 class="after">' + dateService.getDateTimeFromTimeStamp(value.start,patientDashboard.dateFormat,'/') + '</h6>' +
             '<ul class="graph_ul">' +
-              '<li><span class="pull-left">' + 'Duration' +'</span><span class="pull-right value">' + value.durationInMinutes +'</span></li>' +
+              '<li><span class="pull-left">' + 'Duration' +'</span><span class="pull-right value">' + value.duration +'</span></li>' +
               '<li><span class="pull-left">' + 'Frequency' + '</span><span class="pull-right value">' + value.frequency  + '</span></li>' +
               '<li><span class="pull-left">' + 'Pressure' +'</span><span class="pull-right value">' + value.pressure +'</span></li>' +
-              '<li><span class="pull-left">' + 'Cough Pauses' +'</span><span class="pull-right value">' + ( value.programmedCaughPauses +  value.normalCaughPauses) +'</span></li>' +              
+              '<li><span class="pull-left">' + 'Cough Pauses' +'</span><span class="pull-right value">' + ( value.programmedCoughPauses +  value.normalCoughPauses)  +'</span></li>' +              
             '</ul>';
         }
         return toolTip;
@@ -577,7 +607,6 @@ angular.module('hillromvestApp')
       this.getToolTipForCompliance = function(value) {
         var toolTip = '';
          if(value.note && value.note.note && value.note.note.length > 0){
-          console.log("note is available");
           toolTip =
                 '<div class="tooltip_sub_content">'+
                 '<h6>' + dateService.getDateFromTimeStamp(value.start,patientDashboard.dateFormat,'/') + '  ('+ d3.time.format('%I:%M %p')(new Date(value.start)) + ')'  + '</h6>' +
@@ -596,7 +625,6 @@ angular.module('hillromvestApp')
               '</ul>'+
               '</div>';
          }else{
-          console.log("note is not available");
           toolTip =
                 '<h6>' + dateService.getDateFromTimeStamp(value.start,patientDashboard.dateFormat,'/') + '  ('+ d3.time.format('%I:%M %p')(new Date(value.start)) + ')'  + '</h6>' +
                 '<ul class="graph_ul">' +
