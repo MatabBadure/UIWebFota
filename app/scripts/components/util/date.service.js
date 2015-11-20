@@ -314,15 +314,12 @@ angular.module('hillromvestApp')
       }
     },
     convertMMDDYYYYHHMMSSstamp: function(date){
-        if(date.indexOf("/") > -1 && date.indexOf(" ") > -1 ){
+        if(date && date.indexOf("/") > -1 && date.indexOf(" ") > -1 ){
           var dateTime = date.split(" ");
           var startDate = dateTime[0].split("/"); // turning it from MM/DD/YYYY HH:MM:SS to timestamp
-          var formattedDate = startDate[0] + "-" + startDate[1] + "-" + startDate[2] + " " + dateTime[1];
-          return new Date(formattedDate).getTime();
-        }else{
-          return 0;
+          var formattedDate = startDate[2] + "-" + startDate[0] + "-" + startDate[1] + " " + dateTime[1];
+          return new Date(formattedDate.replace(/\s/, 'T')).getTime();
         }
-
     }
 
     };
