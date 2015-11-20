@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hillromvestApp')
-    .service('commonsUserService', [function () {
+    .service('commonsUserService', ['$window', function ($window) {
     	this.getSelectedClinicFromList= function(clinics, clinicId){
     		var selectedClinic = false;
     		angular.forEach(clinics, function(clinic) {
@@ -61,4 +61,14 @@ angular.module('hillromvestApp')
           return zipcode;
         };
     	
+       this.getBrowser = function(){
+          var userAgent = $window.navigator.userAgent;
+          var browsers = {chrome: /chrome/i, safari: /safari/i, firefox: /firefox/i, ie: /internet explorer/i};
+          for(var key in browsers) {
+              if (browsers[key].test(userAgent)) {
+                  return key;
+              }
+         };
+         return 'unknown';
+       }
     }]);
