@@ -72,6 +72,7 @@ angular.module('hillromvestApp')
       $scope.hmrRunRate = 0;
       $scope.adherenceScore = 0;
       $scope.missedtherapyDays = 0;
+      $scope.settingsDeviatedDaysCount = 0;
       $scope.minFrequency = 0;
       $scope.maxFrequency = 0;
       $scope.minPressure = 0;
@@ -327,6 +328,19 @@ angular.module('hillromvestApp')
           lineCap:'circle'
       };
 
+    $scope.settingDeviation = {
+          animate:{
+              duration:3000,
+              enabled:true
+          },
+          barColor:'#4eb3d3',
+          trackColor: '#ccc',
+          scaleColor: false,
+          lineWidth:12,
+          lineCap:'circle'
+      };
+
+
  /*---Simple pye chart JS END-----*/
     $scope.isActivePatientTab = function(tab) {
       if ($scope.patientTab.indexOf(tab) !== -1) {
@@ -384,7 +398,7 @@ angular.module('hillromvestApp')
       return function(key, x, y, e, graph) {
         var toolTip = '';
         angular.forEach($scope.completeGraphData, function(value) {
-          if(value.startTime === e.point.x){
+          if(value.start === e.point.x){
               toolTip = graphUtil.getToolTipForBarChart(value);
           }
         });
@@ -454,7 +468,7 @@ angular.module('hillromvestApp')
           $scope.noDataAvailable = false;
           $scope.completeGraphData = graphUtil.convertIntoServerTimeZone($scope.completeGraphData,patientDashboard.hmrNonDayGraph);
           $scope.yAxisRangeForHMRLine = graphUtil.getYaxisRangeLineGraph($scope.completeGraphData);
-          $scope.graphData = graphUtil.convertToHMRStepGraph($scope.completeGraphData,patientDashboard.HMRLineGraphColor);
+          $scope.graphData = graphUtil.convertToHMRStepGraph($scope.completeGraphData,patientDashboard.HMRLineGraphColor,$scope.yAxisRangeForHMRLine.unit);
           /* waiting until svg element loads*/
           var count =5;
           $scope.waitFunction = function waitHandler() {
@@ -573,7 +587,7 @@ angular.module('hillromvestApp')
           $scope.completeGraphData = graphUtil.convertIntoServerTimeZone($scope.completeGraphData,patientDashboard.hmrDayGraph);
           $scope.completeGraphData = graphUtil.formatDayWiseDate($scope.completeGraphData.actual);
           $scope.yAxisRangeForHMRBar = graphUtil.getYaxisRangeBarGraph($scope.completeGraphData);
-          $scope.hmrBarGraphData = graphUtil.convertToHMRBarGraph($scope.completeGraphData,patientDashboard.HMRBarGraphColor);
+          $scope.hmrBarGraphData = graphUtil.convertToHMRBarGraph($scope.completeGraphData,patientDashboard.HMRBarGraphColor,$scope.yAxisRangeForHMRBar.unit);
           $scope.drawHMRBarGraph();
           var barCount= d3.select('#hmrBarGraph svg').selectAll('.nv-group .nv-bar')[0].length;
           var count = 5;
@@ -1049,7 +1063,7 @@ angular.module('hillromvestApp')
       var patientDeviceSlNo = ($scope.patientDevices && $scope.patientDevices[0] && $scope.patientDevices[0].serialNumber) ? $scope.patientDevices[0].serialNumber: stringConstants.notAvailable;
       var pdfMissedTherapyDays = ($scope.missedtherapyDays !== null && $scope.missedtherapyDays >= 0) ? $scope.missedtherapyDays : stringConstants.notAvailable;
       var pdfHMRNonAdherenceScore = ($scope.adherenceScore !== null && $scope.adherenceScore >= 0) ? $scope.adherenceScore : stringConstants.notAvailable;
-      var pdfSettingDeviation = stringConstants.notAvailable;
+      var pdfSettingDeviation = ($scope.settingsDeviatedDaysCount !== null && $scope.settingsDeviatedDaysCount >= 0) ? $scope.settingsDeviatedDaysCount : stringConstants.notAvailable;
       var pressureClass = ($scope.compliance.pressure) ? "pressure_legend_active" : "";
       var frequencyClass = ($scope.compliance.frequency) ? "frequency_legend_active" : "";
       var durationClass = ($scope.compliance.duration) ? "duration_legend_active" : "";
@@ -1705,7 +1719,7 @@ angular.module('hillromvestApp')
           }else{
             chart.forceY([$scope.yAxisRangeForHMRLine.min, $scope.yAxisRangeForHMRLine.max]);
           }
-          chart.yAxis.axisLabel('Hours');
+          chart.yAxis.axisLabel($scope.yAxisRangeForHMRLine.ylabel);
             d3.select('#hmrLineGraph svg')
           .datum($scope.graphData)
           .transition().duration(500).call(chart);
@@ -1822,7 +1836,7 @@ angular.module('hillromvestApp')
       var patientDeviceSlNo = ($scope.patientDevices && $scope.patientDevices[0] && $scope.patientDevices[0].serialNumber) ? $scope.patientDevices[0].serialNumber: stringConstants.notAvailable;
       var pdfMissedTherapyDays = ($scope.missedtherapyDays !== null && $scope.missedtherapyDays >= 0) ? $scope.missedtherapyDays : stringConstants.notAvailable;
       var pdfHMRNonAdherenceScore = ($scope.adherenceScore !== null && $scope.adherenceScore >= 0) ? $scope.adherenceScore : stringConstants.notAvailable;
-      var pdfSettingDeviation = stringConstants.notAvailable;
+      var pdfSettingDeviation = ($scope.settingsDeviatedDaysCount !== null && $scope.settingsDeviatedDaysCount >= 0) ? $scope.settingsDeviatedDaysCount : stringConstants.notAvailable;
       htmlDocument = "<!doctype html>" +
             '<html style="background: white;"><head>' +
             '<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />'+
@@ -1929,7 +1943,7 @@ angular.module('hillromvestApp')
           }
           chart.yAxis.tickFormat(d3.format('d'));
           chart.yAxis.axisLabelDistance(50);
-          chart.yAxis.axisLabel('Minutes');
+          chart.yAxis.axisLabel($scope.yAxisRangeForHMRBar.ylabel);
           d3.select('#hmrBarGraph svg')
           .datum($scope.hmrBarGraphData)
           .transition().duration(500).call(chart);
