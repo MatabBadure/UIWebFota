@@ -1016,6 +1016,10 @@ angular.module('hillromvestApp')
       }
       d3.selectAll('#complianceGraph svg').selectAll(".x.axis .tick").selectAll('text').
         attr("dy" , 12);
+
+        d3.selectAll('#complianceGraph svg').selectAll(".x.axis .nv-axisMaxMin").selectAll('text').
+        attr("dy" , 12);
+        
         if(days === 0 && $scope.completeComplianceData.actual.length === 1){
           d3.selectAll('#complianceGraph svg').selectAll(".x.axis .tick").selectAll('text').attr("dx" , 488);
         }
@@ -1712,7 +1716,16 @@ angular.module('hillromvestApp')
           var days = dateService.getDateDiffIndays($scope.fromTimeStamp,$scope.toTimeStamp),
             totalDataPoints = $scope.graphData[0].values.length,
             tickCount = parseInt(totalDataPoints/12);
-          chart.xAxis.showMaxMin(true).tickFormat(function(d) {return d3.time.format('%d-%b-%Y')(new Date(d));});
+          /*chart.xAxis.showMaxMin(true).tickFormat(function(d) {return d3.time.format('%d-%b-%Y')(new Date(d));});
+          */
+          if(days === 0 && $scope.graphData[0].values.length === 1){
+            chart.xAxis.showMaxMin(true).tickValues($scope.graphData[0].values.map( function(d){return d.x;} ) ).tickFormat(function(d) {
+                return d3.time.format('%I:%M %p')(new Date(d));
+                return dateService.getTimeIntervalFromTimeStamp(d);
+            });
+          }else{
+            chart.xAxis.showMaxMin(true).tickFormat(function(d) {return d3.time.format('%d-%b-%y')(new Date(d));});
+          }
           chart.yAxis.tickFormat(d3.format('d'));
           if($scope.yAxisRangeForHMRLine.min === 0 && $scope.yAxisRangeForHMRLine.max === 0){
             chart.forceY([$scope.yAxisRangeForHMRLine.min, 1]);
@@ -1931,11 +1944,20 @@ angular.module('hillromvestApp')
           .color(d3.scale.category10().range());
          // chart.noData("Nothing to see here.");
           chart.tooltipContent($scope.toolTipContentBarChart());
+          var days = dateService.getDateDiffIndays($scope.fromTimeStamp,$scope.toTimeStamp);
           //this function to put x-axis labels
-          chart.xAxis.tickValues($scope.hmrBarGraphData[0].values.map( function(d){return d.x;} ) ).tickFormat(function(d) {
-            return d3.time.format('%I:%M %p')(new Date(d));
-            return dateService.getTimeIntervalFromTimeStamp(d);
-        });
+          if(days === 0 && $scope.hmrBarGraphData[0].values.length === 1){
+            chart.xAxis.showMaxMin(true).tickValues($scope.hmrBarGraphData[0].values.map( function(d){return d.x;} ) ).tickFormat(function(d) {
+              return d3.time.format('%I:%M %p')(new Date(d));
+              return dateService.getTimeIntervalFromTimeStamp(d);
+            });
+          }else{
+            chart.xAxis.tickValues($scope.hmrBarGraphData[0].values.map( function(d){return d.x;} ) ).tickFormat(function(d) {
+              return d3.time.format('%I:%M %p')(new Date(d));
+              return dateService.getTimeIntervalFromTimeStamp(d);
+            });
+          }
+          
           if($scope.yAxisRangeForHMRBar.min === 0 && $scope.yAxisRangeForHMRBar.max === 0){
             chart.forceY([$scope.yAxisRangeForHMRBar.min,1]);
           }else{
