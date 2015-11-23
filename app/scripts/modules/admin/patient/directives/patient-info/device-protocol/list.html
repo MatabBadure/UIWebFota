@@ -46,8 +46,7 @@
       <span class="protocol-list--value"> {{protocol.treatmentsPerDay}}</span>
     </div>
     <div class="col-md-3 protocol-list__strt-date">
-      <span ng-if="protocol.type === 'Custom'" class="protocol-list--value"> {{protocol.minMinutesPerTreatment}}</span>
-      <span ng-if="protocol.type === 'Normal'" class="protocol-list--value"> {{protocol.minMinutesPerTreatment}}-{{protocol.maxMinutesPerTreatment}}</span>
+      <span class="protocol-list--value"> {{protocol.minMinutesPerTreatment}}</span>      
     </div>
     <div class="col-md-3 protocol-list__end-date">
     <span ng-if="protocol.type === 'Custom'" class="protocol-list--value"> {{protocol.minFrequency}}</span>

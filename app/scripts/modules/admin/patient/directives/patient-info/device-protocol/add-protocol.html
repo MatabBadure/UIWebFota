@@ -71,9 +71,8 @@
               <span class="" translate="patient.protocol.minutes" ng-if="protocol.type === 'Custom'"></span>
               <span class="">*</span>
             </div>
-            <div class="col-md-10 dashboard__form--input reset-padding">
-              <input class="" type="number" name="minMinutesPerTreatment" ng-model="proto.minMinutesPerTreatment" min="1" max="98" required ng-if="protocol.type === 'Normal'">
-              <input class="" type="number" name="minMinutesPerTreatment" ng-model="proto.minMinutesPerTreatment" min="1" max="99" required ng-if="protocol.type === 'Custom'">
+            <div class="col-md-10 dashboard__form--input reset-padding">              
+              <input class="" type="number" name="minMinutesPerTreatment" ng-model="proto.minMinutesPerTreatment" min="1" max="99" required >
               <div ng-show="(point.minMinutesPerTreatment.$dirty && point.minMinutesPerTreatment.$invalid) || submitted">
                 <span class="has-error" ng-show="point.minMinutesPerTreatment.$error.required && protocol.type === 'Normal' " translate="error.protocol.minMinutesPerTreatment.required">
                 </span>
@@ -93,28 +92,7 @@
 
               </div>
             </div>
-          </div>
-          <div class="col-md-7 reset-padding col-md-offset-2" ng-if="protocol.type === 'Normal'">
-            <div class="col-md-6 dashboard__form--label reset-padding">
-              <span class="" translate="patient.protocol.max-minutes-per-tm"></span>
-              <span class="">*</span>
-            </div>
-            <div class="col-md-10 dashboard__form--input reset-padding">
-              <input class="" type="number" name="maxMinutesPerTreatment" ng-model="proto.maxMinutesPerTreatment"  min="{{proto.minMinutesPerTreatment+1}}" max="99"  required >
-              <div ng-show="(point.maxMinutesPerTreatment.$dirty && point.maxMinutesPerTreatment.$invalid) || submitted">
-                <span class="has-error" ng-show="point.maxMinutesPerTreatment.$error.required" translate="error.protocol.maxMinutesPerTreatment.required">
-                </span>
-                <span class="has-error" ng-show="point.maxMinutesPerTreatment.$error.min && proto.minMinutesPerTreatment+1 < 99">Maximum Minutes per Treatment should be {{proto.minMinutesPerTreatment+1}} and 99
-                </span>
-                <span class="has-error" ng-show="point.maxMinutesPerTreatment.$error.min && proto.minMinutesPerTreatment+1 === 99">Maximum Minutes per Treatment should be 99
-                </span>
-                <span class="has-error" ng-show="point.maxMinutesPerTreatment.$error.max" translate="error.protocol.maxMinutesPerTreatment.max">
-                </span>
-                <span class="has-error" ng-show="point.maxMinutesPerTreatment.$error.number" translate="error.protocol.maxMinutesPerTreatment.invalid">
-                </span>
-              </div>
-            </div>
-          </div>
+          </div>        
         </div>
 
         <div class="col-md-16 reset-padding margin-top">
