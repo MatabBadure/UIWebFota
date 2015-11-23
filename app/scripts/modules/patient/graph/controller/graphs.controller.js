@@ -8,6 +8,7 @@ angular.module('hillromvestApp')
     var hiddenFrame, htmlDocument;
     var g_str='<style>.nvd3 .nv-point-paths path {stroke: #aaa;stroke-opacity: 0;fill: #eee;fill-opacity: 0;border: 5px red solid;}.nv-point {    stroke-opacity: 1 !important;    stroke-width: 3px !important;}.missed_therapy_node {fill: #cf202f;stroke: #fff;stroke-width: 1.5;fill-opacity: 1;}.nv-lineChart g rect {fill: #e3ecf7;opacity: 1 !important;}.nvd3 .nv-groups path.nv-line {fill: none;}.svg_bg {fill: #e3ecf7;}.nvd3.nv-stackedarea path.nv-area {fill-opacity: .7;stroke-opacity: 0;transition: fill-opacity 250ms linear, stroke-opacity 250ms linear;    -moz-transition: fill-opacity 250ms linear, stroke-opacity 250ms linear;-webkit-transition: fill-opacity 250ms linear, stroke-opacity 250ms inear;}</style>';
     var g_pdfMetaData={};
+    var g_pdfd = boolGraphMetatData;
     $scope.init = function() {
       $scope.yAxisRangeForHMRLine = $scope.yAxisRangeForCompliance = $scope.compliance = {};
       $scope.hmrLineGraph = true;
@@ -121,8 +122,8 @@ angular.module('hillromvestApp')
     //JAY
     $scope.initTmp = function (){
       //alert("in INit");
-      $('<div id=sd>HMR<br/><canvas id=cHMR></canvas>Presssure<br/><canvas id=cPressure></canvas>Duration<br/><canvas id=cDuration></canvas></div>').appendTo("body");
-      $('<div id=hd></div>').appendTo("body");
+      $('<div id=sd >HMR<br/><canvas id=cHMR width=1300 height=350></canvas>Presssure<br/><canvas id=cPressure width=1300 height=350></canvas>Duration<br/><canvas id=cDuration width=1300 height=350></canvas></div>').appendTo("body");
+      $('<div id=hd </div>').appendTo("body");
       $(".footer").remove();
 
     };
@@ -146,25 +147,47 @@ angular.module('hillromvestApp')
 
 
           var myCanvas = document.getElementById(id);
+
           //myCanvas.setAttribute('id', 'canvas');     
       
           var ctx = myCanvas.getContext('2d');
+            ctx.clearRect(0, 0,1300,350);
               var img = new Image;
+              
               img.setAttribute('img','img');
+              
             //img.setAttribute("width","1200px");
             //img.setAttribute("height","350px");
-            
+           // alert("in IMG OUT >" + !!document.createElement('canvas').getContext);
+
           img.onload = function(){
+            //alert("in IMG");
+            img.crossOrigin = 'Anonymous';
             ctx.drawImage(img,0,0); // Or at whatever offset you like
           };
+
+          img.onerror = function() {
+              alert("error image");
+          }
+           img.onabort = function() {
+              alert("broken image");
+          }
+
+
+//ctx.drawImage(img,0,0);
+          
                   
-          var imgsrc = 'data:image/svg+xml;base64,'+ btoa(html);
+          //var imgsrc = 'data:image/svg+xml;base64,'+ window.btoa(html);
+          
+          var imgsrc = 'data:image/svg+xml;base64,'+ window.btoa(html);
           //var imgsrc = 'data:image/svg+xml;base64,'+ btoa($('#mySVG1')[0].outerHTML);
           img.src = imgsrc;
         
-        
-        myCanvas.setAttribute('width', img.width);
-        myCanvas.setAttribute('height',  img.height);
+        //$("body").append(img);
+        //myCanvas.setAttribute('width', img.width);
+        //myCanvas.setAttribute('height',  img.height);
+        //myCanvas.width=img.width;
+        //myCanvas.height=img.height;
         //$('#sd').append(myCanvas);//$("#mDv").append(myCanvas);
 
     }
@@ -272,6 +295,7 @@ angular.module('hillromvestApp')
     }
 
     $scope.drawGraph = function() {
+      alert("draw Graph")
       var days = dateService.getDateDiffIndays($scope.fromTimeStamp,$scope.toTimeStamp);
       if(days === 0 && $scope.selectedGraph === 'HMR'){
         $scope.format = 'dayWise';
@@ -295,6 +319,7 @@ angular.module('hillromvestApp')
       } else if ( days > patientDashboard.minDaysForMonthlyGraph) {
          $scope.yearlyChart($scope.fromTimeStamp);
       }
+
     };
 
     $scope.disableDatesInDatePicker = function() {
@@ -544,6 +569,7 @@ angular.module('hillromvestApp')
     };
 
     $scope.reCreateComplianceGraph = function() {
+      //alert("recreate compliance");
       $scope.removeGraph();
       $scope.handlelegends();
       $scope.createComplianceGraphData();
@@ -1091,6 +1117,10 @@ angular.module('hillromvestApp')
         html1 = (element1) ? element1.innerHTML: "",
         doc;
 
+        // click on compalince button
+        
+
+
          $('#hd').html(html1);
 
         $('#hd').find('svg')
@@ -1105,19 +1135,89 @@ angular.module('hillromvestApp')
         //$('#hd').find('svg').append('<defs>'+g_str+'</defs>')
         //$('#sd').html(element1.innerHTML);
         //alert($('#sd').html());
-       
+       //alert("here");
+       var d = $('#duration').is(':checked'), f = $('#frequency').is(':checked'), p=$('#pressure').is(':checked');
         
-        if($('#duration').is(':checked') && (!$('#frequency').is(':checked') && !$('#pressure').is(':checked'))) {
-          //alert('duration');
-          $scope.drawCanvas('cDuration',$('#hd').find('svg')[0].outerHTML);
-        } else if(!$('#duration').is(':checked') && ($('#frequency').is(':checked') && $('#pressure').is(':checked'))) {
-          //alert('Pressure');
-          $scope.drawCanvas('cPressure',$('#hd').find('svg')[0].outerHTML);
+      var c1 = (p && d) && !f;
+      var c2 = (p && f) && !d;
+      var c3 = !p && (f && d);
+      var c4 = f && (!p && !d);
+
+
+        if(g_pdfd.isPdfCall && c4){
+          return false;
         }
+        if(d && (!f && !p)) {
+          //alert('duration');
+          //$scope.drawCanvas('cDuration',$('#hd').find('svg')[0].outerHTML);
+          $scope.drawCanvas('cDuration',$("#hd").find("svg").parent().html());
+          alert("Duration plotted");
+          setTimeout(function (){$scope.graphStateChange(true,true,false);},100);
+        };
+        
+        if(!d && (f && p)) {
+          //alert("PF plotted");
+          
+          //$scope.drawCanvas('cPressure',$('#hd').find('svg')[0].outerHTML);
+          $scope.drawCanvas('cPressure',$("#hd").find("svg").parent().html());
+         // alert('Pressure');
+          if(g_pdfd.isPdfCall){
+            g_pdfd.isPdfCall=false;
+             /* $.each(g_pdfd, function(k,v){
+                alert(k + " : " +  v);
+              });
+*/
+          
+             //setTimeout(function (){$scope.downloadPDFFile();}, 1000);
+             setTimeout(function (){$scope.graphStateChange(g_pdfd.isPrChkd, g_pdfd.isFqChkd, g_pdfd.isDChkd);}, 2000);
+
+          }
+        }
+
         
 
+      if(g_pdfd.isPdfCall && c1) {
+          $scope.hmrGraph=false;
+           g_pdfd.isPrChkd=$('#pressure').is(':checked');
+          g_pdfd.isFqChkd = $('#frequency').is(':checked');
+          g_pdfd.isDChkd=$('#duration').is(':checked');
+
+
+          setTimeout(function (){$scope.graphStateChange(false,false,true);},1000);
+          //return false;
+        }
+               /*
+        // Automation
+        if(g_pdfd.isPdfCall){
+          if((p && d) && !f){
+            setTimeout(function () {angular.element('#pressure').trigger("click");},1000);
+          }
+
+          if(d && (!f && !p)){
+           setTimeout(function () {angular.element('#frequency').trigger("click");},1000); 
+          }
+
+          if(!p && (f && d)){
+            setTimeout(function () {angular.element('#duration').trigger("click");},1000);
+          }
+
+          if(f && (!p && !d)){
+            setTimeout(function () {angular.element('#pressure').trigger("click");},1000);
+                       
+          }
+
+
+        } */
+      
+
+    /*isPrChkd:false,
+    isFqChkd:false,
+    isDChkd:false,*/
+        
+      
+      /*
         //$("#duration").is(":checked"); $("#frequency").is(":checked")$("#pressure").is(":checked")
-        hiddenFrame = $('<iframe id="pdfID" style="display: abc" width="1000px" height="500px"></iframe>').appendTo('body')[0];
+        hiddenFrame = $('<iframe id="pdfID" style="display: none" width="1000px" height="500px"></iframe>').appendTo('body')[0];
 
 
       var patientDetails = ($scope.slectedPatient) ? $scope.slectedPatient : null;
@@ -1243,7 +1343,7 @@ angular.module('hillromvestApp')
             "</html>";
           doc = hiddenFrame.contentWindow.document.open();
           doc.write(htmlDocument);
-          doc.close();
+          doc.close();*/
 },1500);
       });
   };
@@ -1887,11 +1987,16 @@ angular.module('hillromvestApp')
         //$('#sd').html(element1.innerHTML);
         //alert($('#sd').html());
        
-        
+        //alert("html >" + $("#hd").find("svg").parent().html());
+        $scope.drawCanvas('cHMR',$("#hd").find("svg").parent().html());
+        //$scope.drawCanvas('cHMR',$('#hd').find('svg')[0].outerHTML);
 
-        $scope.drawCanvas('cHMR',$('#hd').find('svg')[0].outerHTML);
+        if(g_pdfd.isPdfCall){
+          setTimeout(function () {$scope.showComplianceGraph()},1000);
+        }
 
-        hiddenFrame = $('<iframe id="pdfID" style="display: abc" width="1000px" height="500px"></iframe>').appendTo('body')[0];
+        /*
+        hiddenFrame = $('<iframe id="pdfID" style="display: none" width="1000px" height="500px"></iframe>').appendTo('body')[0];
         //$scope.complianceGraph =  true;
         //$scope.hmrLineGraph = true;
         //$scope.getComplianceGraphData();
@@ -1911,7 +2016,7 @@ angular.module('hillromvestApp')
           // $scope.complianceGraph =  false;
         }, 0);
       };
-
+*/
       var patientDetails = ($scope.slectedPatient) ? $scope.slectedPatient : null;
       var pdfClinic = ($scope.associatedClinics && $scope.associatedClinics.length > 0) ? $scope.associatedClinics[0] : null;
       //var completeAddress = (pdfClinic !== null && pdfClinic.city) ? pdfClinic.city : stringConstants.emptyString;
@@ -1936,14 +2041,14 @@ angular.module('hillromvestApp')
       var pdfMissedTherapyDays = ($scope.missedtherapyDays !== null && $scope.missedtherapyDays >= 0) ? $scope.missedtherapyDays : stringConstants.notAvailable;
       var pdfHMRNonAdherenceScore = ($scope.adherenceScore !== null && $scope.adherenceScore >= 0) ? $scope.adherenceScore : stringConstants.notAvailable;
       var pdfSettingDeviation = ($scope.settingsDeviatedDaysCount !== null && $scope.settingsDeviatedDaysCount >= 0) ? $scope.settingsDeviatedDaysCount : stringConstants.notAvailable;
-      htmlDocument = "<!doctype html>" +
+   /*   htmlDocument = "<!doctype html>" +
             '<html style="background: white;"><head>' +
             '<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />'+
             '<meta http-equiv="X-UA-Compatible" content="IE=edge">' +
             '<link rel="stylesheet" href="bower_components/nvd3/src/nv.d3.css" />' +
             '<link rel="stylesheet" href="styles/style.css">' +
             '</head>' +
-            '<body onload="printAndRemove();">' + // Print only after document is loaded
+            '<body ">' + // Print only after document is loaded
             '<div class="pdf__heading-primary">HillRom</div>' +
             '<div class="pdf__heading-secondary">VisiView TM Health Portal</div>' +
             '<div class="title">'+
@@ -2016,10 +2121,10 @@ angular.module('hillromvestApp')
           doc = hiddenFrame.contentWindow.document.open();
           doc.write(htmlDocument);
           doc.close();
-
+          */
           g_pdfMetaData = {
             rTitle: 'HillRom'
-            ,rTitle1: 'VisiView TM Health Portal'
+            ,rTitle1: 'VisiView™ Health Portall'
             ,rGenDtLbl : stringConstants.reportGenerationDateLabel
             , rGenDt : reportGenerationDate
             , rRngLble : stringConstants.dateRangeOfReportLabel+stringConstants.colon
@@ -2029,7 +2134,7 @@ angular.module('hillromvestApp')
                 , tData:  [
                   stringConstants.mrn+stringConstants.colon, patientMrnId
                   ,stringConstants.name+stringConstants.colon, patientName
-                  ,stringConstants.address+stringConstants.colon, completePatientAddress
+                  ,stringConstants.address+stringConstants.colon, completePatientAddress// + '5th Main, 7th Cross,\n MalleshPalya, /n Bangalore pin - 560123'
                   ,stringConstants.phone+stringConstants.colon, patientPhone
                   ,stringConstants.DOB+stringConstants.colon, patientDOB
                   ,stringConstants.adherenceScore, patientAdherence
@@ -2088,11 +2193,8 @@ angular.module('hillromvestApp')
       });
     }
 
-    $scope.downloadAsPdf = function(){
-      /*var graphData = ($scope.hmrGraph) ? $scope.completeGraphData : $scope.completeComplianceData;
-      graphService.getPdfForSVGGraph(graphData);   */
-      //if($scope.selectedGraph === "hmr" && $scope.selectedDateOption !== "DAY")
-     alert('downloadPDF');
+    $scope.downloadPDFFile = function (){
+        //alert('downloadPDF');
      
         var pdf = new jsPDF('p', 'pt', 'a4', true), specialElementHandlers = {
              '#bypassme': function(element, renderer){
@@ -2123,13 +2225,14 @@ angular.module('hillromvestApp')
           pdf.setFont("helvetica");
           
        
-          pdf.setFontSize(14);
-          pdf.setTextColor(255,0,0)
-          pdf.text(margins.width-40, margins.titleTop,rTitle);
+          pdf.setFontSize(16);
+          pdf.setTextColor(124,163,220);
+          pdf.text(margins.width-45, margins.titleTop,rTitle);
     
           
-          pdf.setFontSize(9);
-          pdf.text(margins.width-95,   margins.titleTop+10, rTitle1);
+          pdf.setFontSize(8);
+          pdf.setTextColor(0,0,0);
+          pdf.text(margins.width-79,   margins.titleTop+10, rTitle1);
           pdf.line(margins.left, margins.titleTop+13, margins.width+10, margins.titleTop+13);
 
           pdf.text(margins.left,margins.top, g_pdfMetaData.rGenDtLbl + ': ' + g_pdfMetaData.rGenDt);
@@ -2137,68 +2240,74 @@ angular.module('hillromvestApp')
           pdf.text(margins.t2TabLeft, margins.top, g_pdfMetaData.rRngLble + g_pdfMetaData.rRngDt);
           
           // Pat Info Table:
-          var rCount =0;
+          
            //var table = tableToJson(str);
             pdf.cellInitialize();
-            $.each(g_pdfMetaData.rTablePatInfo.tData, function (k, v){
-               //console.debug(row);
-                rCount++;
 
-                 pdf.margins = 1;
-                 pdf.setFont("helvetica");
-                 pdf.setFontSize(9);
-
-  
-                if(rCount==1){
-                  pdf.setTextColor(88,88,88)
-                  pdf.cell(margins.left, margins.top+20, margins.tCapWidth, 20, g_pdfMetaData.rTablePatInfo.title, rCount); 
-                }
-                  pdf.setTextColor(0,0,0)
-                  pdf.cell(margins.left, margins.top, margins.tCellWidth, 20, k, rCount+1);   
-                  pdf.cell(margins.left, margins.top, margins.tCellWidth, 20, v, rCount+1);   
-            })
-
-              pdf.cellInitialize();
-              rCount=0;
-            $.each(g_pdfMetaData.rDeviceInfo.tData, function (k, v){
-                //console.debug(row);
-                rCount++;
-
-                 pdf.margins = 1;
-                 pdf.setFont("helvetica");
-                 pdf.setFontSize(9);
-
-  
-                if(rCount==1){
-                  pdf.setTextColor(88,88,88)
-                  pdf.cell(margins.t2TabLeft, margins.top+20, margins.tCapWidth, 20, g_pdfMetaData.rDeviceInfo.title, rCount); 
-                }
-                  pdf.setTextColor(0,0,0)
-                  pdf.cell(margins.t2TabLeft, margins.top, margins.tCellWidth, 20, k, rCount+1);   
-                  pdf.cell(margins.t2TabLeft, margins.top, margins.tCellWidth, 20, v, rCount+1);   
-            })
-
-                pdf.cellInitialize();
-                rCount=0;
-            $.each(g_pdfMetaData.rNoteInfo.tData, function (k, v){
-                //console.debug(row);
-                rCount++;
-
-                 pdf.margins = 1;
-                 pdf.setFont("helvetica");
-                 pdf.setFontSize(9);
-
-  
-                if(rCount==1){
-                  pdf.setTextColor(88,88,88)
-                  pdf.cell(margins.t2TabLeft, margins.top+85, margins.tCapWidth, 20, g_pdfMetaData.rNoteInfo.title, rCount); 
-                }
-                  pdf.setTextColor(0,0,0)
-                  pdf.cell(margins.t2TabLeft, margins.top+85, margins.tCellWidth, 20, k, rCount+1);   
-                  pdf.cell(margins.t2TabLeft, margins.top+85, margins.tCellWidth, 20, v.toString(), rCount+1);   
-            })
+           pdf.margins = 1;
+           pdf.setFont("helvetica");
            
 
+           //pdf.setTextColor(88,88,88)
+          
+          pdf.cellInitialize();
+           
+           var tabInfo = g_pdfMetaData.rTablePatInfo.tData;
+           var rCount =0;
+           for(var i=0;i<tabInfo.length;i=i+2){
+                 rCount++;
+                if(i==0){
+                  pdf.setFontType("bold");
+                  pdf.cell(margins.left, margins.top+10, margins.tCapWidth, 20, g_pdfMetaData.rTablePatInfo.title); 
+                }
+                pdf.setFontType("normal");
+                pdf.setTextColor(0,0,0)
+                pdf.cell(margins.left, margins.top+30, 70, 20, tabInfo[i], rCount+1);  
+                
+                //if(tabInfo[i].trim()=="Address:"){
+                 // alert(tabInfo[i+1].replace(/([\S\s]{15})/g , '\n'));
+                //  pdf.cell(margins.left, margins.top, margins.tCellWidth, 20, tabInfo[i+1].replace(/([\S\s]{40})/g , '\n'), rCount+1);  
+                //} else {
+                  pdf.cell(margins.left, margins.top+30, 186, 20, tabInfo[i+1], rCount+1);  
+                //}
+                
+            
+           }
+
+          pdf.cellInitialize();
+           tabInfo = g_pdfMetaData.rDeviceInfo.tData;
+           var rCount =0;
+           for(var i=0;i<tabInfo.length;i=i+2){
+                 rCount++;
+                if(i==0){
+                  pdf.setFontType("bold");
+                  pdf.cell(margins.t2TabLeft, margins.top+10, margins.tCapWidth, 20, g_pdfMetaData.rDeviceInfo.title); 
+                }
+               pdf.setTextColor(0,0,0)
+                 pdf.setFontType("normal");
+                pdf.cell(margins.t2TabLeft, margins.top+30, margins.tCellWidth, 20, tabInfo[i], rCount+1);   
+                 pdf.cell(margins.t2TabLeft, margins.top, margins.tCellWidth, 20, tabInfo[i+1], rCount+1);  
+           }
+           
+
+          pdf.cellInitialize();
+           tabInfo = g_pdfMetaData.rNoteInfo.tData;
+           var rCount =0;
+           for(var i=0;i<tabInfo.length;i=i+2){
+                 rCount++;
+                if(i==0){
+                  pdf.setFontType("bold");
+                  pdf.cell(margins.t2TabLeft, margins.top+75, margins.tCapWidth, 20, g_pdfMetaData.rNoteInfo.title); 
+                }
+                pdf.setTextColor(0,0,0)
+                 pdf.setFontType("normal");
+                pdf.cell(margins.t2TabLeft, margins.top+95, margins.tCellWidth, 20, tabInfo[i].toString(), rCount+1);   
+                 pdf.cell(margins.t2TabLeft, margins.top, margins.tCellWidth, 20, tabInfo[i+1].toString(), rCount+1);  
+           }
+
+           /*
+           pdf.setFont("helvetica");
+           pdf.setFontSize(9);
            pdf.setFillColor(255,152,41)
            pdf.circle(margins.t2TabLeft+60, margins.top+178, 4, 'F');
            pdf.fromHTML( "<span>Pressure</span>", margins.t2TabLeft+67 ,margins.top+170)
@@ -2210,23 +2319,140 @@ angular.module('hillromvestApp')
            pdf.setFillColor(78,149, 196);
            pdf.circle(margins.t2TabLeft+195, margins.top+178, 4, 'F');
            pdf.fromHTML( "<span>Duration</span>", margins.t2TabLeft+201, margins.top+170)
-
+          */
 
            /* $('#sd canvas').each(function(i, el){
                 var img = el.toDataURL('image/jpg', 1.0);
                 pdf.addImage(img, 'jpg', 40, (300+(i*1)),margins.width+100, 170);
             });
           */
-                var img = $("#cHMR")[0].toDataURL('image/jpg', 1.0);
-                pdf.addImage(img, 'jpg', 40, (250),margins.width+100, 170);
-                var img = $("#cPressure")[0].toDataURL('image/jpg', 1.0);
-                pdf.addImage(img, 'jpg', 40, (250+170),margins.width+100, 170);
-                var img = $("#cDuration")[0].toDataURL('image/jpg', 1.0);
-                pdf.addImage(img, 'jpg', 40, (250+(170*2)),margins.width+100, 170);
+                pdf.text(40,250, "Patient Treatment Duration:");
+                var img = $("#cDuration")[0].toDataURL('image/png', 1.0);
+               // img.crossOrigin = "Anonymous";
+                pdf.addImage(img, 'png', 40, (250),margins.width+100, 170);
+                
+                pdf.text(40,(250+170), "Frequency / Pressure: ");
+                var img = $("#cPressure")[0].toDataURL('image/png', 1.0);
+                //img.crossOrigin = "Anonymous";
+                pdf.addImage(img, 'png', 40, (250+170),margins.width+100, 170);
 
-    
+
+                pdf.text(40,(250+(170*2)), "Hour Meter: ");
+                var img = new Image();
+                //img.crossOrigin = 'Anonymous';
+                img.src = document.getElementById('cHMR').toDataURL("image/png");//$("#cHMR")[0].toDataURL('image/png', 1.0);
+                //var img = $("#cHMR")[0].toDataURL('image/png`', 1.0);
+                
+                pdf.addImage(img, 'png', 40, (250+(170*2)),margins.width+100, 170);
+
+
+                pdf.text(40,765, "HCP Name: ");
+                pdf.line(90, 770, 350,770); //left, top, right, top
+
+                pdf.text(375,765, "Date: ");
+                pdf.line(400, 770, 560, 770);// left, top, right, top
+
+                pdf.text(40,795, "Signature: ");
+                pdf.line(90, 800, 350,800); //left, top, right, top
       
-    pdf.save('techumber-html-to-pdf.pdf');
+    pdf.save('hillrom.pdf');
+
+    }
+
+    $scope.graphStateChange = function (p, f, d){
+      $scope.compliance.pressure=p;
+      $scope.compliance.frequency=f;
+      $scope.compliance.duration=d;
+      $("#pressure").attr("checked", p);
+      $("#frequency").attr("checked", f);
+      $("#duration").attr("checked", d);
+      //$scope.handlelegends();
+      $scope.reCreateComplianceGraph();
+    }
+
+    $scope.downloadAsPdf = function(){
+      
+      g_pdfd.isPdfCall = true;
+      g_pdfd.isHMR = $scope.hmrGraph;
+      g_pdfd.isCompliance = $scope.complianceGraph;
+      g_pdfd.isPrChkd=$('#pressure').is(':checked');
+      g_pdfd.isFqChkd = $('#frequency').is(':checked');
+      g_pdfd.isDChkd=$('#duration').is(':checked');
+
+      
+
+      if(g_pdfd.isHMR){
+        $scope.selectedGraph ="COMPLIANCE";
+        //$scope.showComplianceGraph();
+        setTimeout(function () {angular.element('li a[translate="graph.compliance"]').trigger("click");},100);
+      } else if(g_pdfd.isCompliance){
+        setTimeout(function (){$scope.graphStateChange(false,false,true);},1000);
+      }
+
+      //setTimeout(function (){$scope.graphStateChange(true,true,false);},2000);
+
+      //alert("set");
+      /*g_pdfd.isPdfCall = true;
+      //alert(g_isPdfCall + " : " + $scope.hmrGraph + " : " + $scope.complianceGraph);
+       ac
+      
+      */
+    //isDay:false,isWeek:false,isMonth:false,isYear:false
+      /*  $.each(g_pdfd, function(k,v){
+          alert(k + " : " +  v);
+        });
+      */
+/*
+      if( g_pdfd.isHMR){
+        alert("go to compliance");
+      } else if(g_pdfd.isCompliance){
+        alert("go to HRM")
+        if(g_pdfd.isDChkd && ()){
+
+        }
+      }
+
+  if(g_pdfd.isCompliance){
+    setTimeout(function () {$scope.showHmrGraph()},2000);
+    } else {
+    setTimeout(function () {$scope.showComplianceGraph()},2000);
+  }
+  */
+  //alert("download");
+  //$scope.downloadPDFFile();
+
+      //setTimeout(function () {angular.element('li a[translate="graph.compliance"]').trigger("click");},100);
+      
+      /*setTimeout(function () {angular.element('#pressure').trigger("click");},3000);
+      setTimeout(function () {angular.element('#frequency').trigger("click");},6000);
+      setTimeout(function () {angular.element('#duration').trigger("click");},9000);
+      setTimeout(function () {angular.element('#pressure').trigger("click");},12000);
+       setTimeout(function () {$scope.downloadPDFFile();},15000);
+        */
+
+    //$scope.downloadPDFFile();
+      /*var graphData = ($scope.hmrGraph) ? $scope.completeGraphData : $scope.completeComplianceData;
+      graphService.getPdfForSVGGraph(graphData);   */
+      //if($scope.selectedGraph === "hmr" && $scope.selectedDateOption !== "DAY")
+        //$scope.downloadPDFFile();
+
+        //alert(g_state.duration + " : " + g_state.pf + " : " + g_state.hmr);
+       /* $.when( $("li a[translate='graph.hmr-data']").trigger("click") ).done(function( x ) {
+          g_state.duration = "Im at HMR";
+        });
+*/
+      //$scope.element('li a[translate='graph.compliance']').trigger('click');
+        //$("li a[translate='graph.compliance']").trigger("click");
+        //$.when( $("li a[translate='graph.compliance']").trigger("click") ).done(function( x ) {
+          //$.when( $("#pressure").trigger("click") ).done(function( x ) {
+              //g_state.duration="Im at Duration";
+              //alert(g_state.duration + " : " + g_state.pf + " : " + g_state.hmr);
+          //});
+        //});
+
+     
+
+       // alert(g_state.duration + " : " + g_state.pf + " : " + g_state.hmr);
  
     };
 

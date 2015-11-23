@@ -118,10 +118,23 @@ var stringConstants = {
     signatureLabel: "Signature",
     space: " ",
     notAvailable: "N/A",
-    deviceType : "The Vest System",
+    deviceType : "Vest® Airway Clearance System",
     emptyString: "",
     comma: ", "
+}
 
+var boolGraphMetatData = {
+    ispdfCall:false,
+    isHMR:false,
+    isCompliance:false,
+    isPrChkd:false,
+    isFqChkd:false,
+    isDChkd:false,
+    isDay:false,
+    isWeek:false,
+    isMonth:false,
+    isYear:false,
+    defaultState:false
 }
 
 angular.module('hillromvestApp').constant('hcpServiceConstants', {
