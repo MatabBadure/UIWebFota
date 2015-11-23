@@ -154,6 +154,16 @@ angular.module('hillromvestApp')
         }).success(function(response) {
           return response;
         });
+      },
+
+      convertSVGToImg : function(data){
+        var url = "/api/graph/pdfDownload";
+        return $http.post(url, data, {
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });
       }
+
     };
   }]);
