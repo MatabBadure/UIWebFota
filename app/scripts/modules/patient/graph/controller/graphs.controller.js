@@ -660,8 +660,7 @@ angular.module('hillromvestApp')
           $scope.maxFrequency = $scope.completeComplianceData.recommended.maxFrequency;
           $scope.minPressure = $scope.completeComplianceData.recommended.minPressure;
           $scope.maxPressure = $scope.completeComplianceData.recommended.maxPressure;
-          $scope.minDuration = $scope.completeComplianceData.recommended.minMinutesPerTreatment * $scope.completeComplianceData.recommended.treatmentsPerDay;
-          $scope.maxDuration = $scope.completeComplianceData.recommended.maxMinutesPerTreatment * $scope.completeComplianceData.recommended.treatmentsPerDay;
+          $scope.minDuration = $scope.completeComplianceData.recommended.minMinutesPerTreatment * $scope.completeComplianceData.recommended.treatmentsPerDay;          
           $scope.yAxisRangeForCompliance = graphUtil.getYaxisRangeComplianceGraph($scope.completeComplianceData);
           $scope.completecomplianceGraphData = graphUtil.convertIntoComplianceGraph($scope.completeComplianceData.actual);
           $scope.yAxis1Max = $scope.yAxisRangeForCompliance.maxDuration;
@@ -995,14 +994,15 @@ angular.module('hillromvestApp')
         var y2AxisMinTransform = maxTransform - parseInt($scope.y2AxisTransformRate * $scope.yAxis2MinMark);
         var y2AxisMaxTransform = maxTransform - parseInt($scope.y2AxisTransformRate * $scope.yAxis2MaxMark);
 
-        if(!$scope.isYAxis1Duration){
-          y1AxisMark.append('g').
-          attr('class','minRecommendedLevel').
-          attr('transform','translate(-45, '+ y1AxisMinTransform + ')').
-          append('text').
-          text('MIN').
-          style('fill','red');
+        
+        y1AxisMark.append('g').
+        attr('class','minRecommendedLevel').
+        attr('transform','translate(-45, '+ y1AxisMinTransform + ')').
+        append('text').
+        text('MIN').
+        style('fill','red');
 
+        if(!$scope.isYAxis1Duration){  
           y1AxisMark.append('g').
           attr('class','maxRecommendedLevel').
           attr('transform','translate(-45,'+ y1AxisMaxTransform + ')').
@@ -1011,14 +1011,15 @@ angular.module('hillromvestApp')
           style('fill','green');
         }
 
-        if(!$scope.isYAxis2Duration){
-          y2AxisMark.append('g').
-          attr('class','minRecommendedLevel').
-          attr('transform','translate(20,'+ (y2AxisMinTransform + 3) + ')').
-          append('text').
-          text('MIN').
-          style('fill','red');
+        
+        y2AxisMark.append('g').
+        attr('class','minRecommendedLevel').
+        attr('transform','translate(20,'+ (y2AxisMinTransform + 3) + ')').
+        append('text').
+        text('MIN').
+        style('fill','red');
 
+        if(!$scope.isYAxis2Duration){
           y2AxisMark.append('g').
           attr('class','maxRecommendedLevel').
           attr('transform','translate(20,'+ (y2AxisMaxTransform + 3) + ')').
@@ -1729,14 +1730,32 @@ angular.module('hillromvestApp')
           var days = dateService.getDateDiffIndays($scope.fromTimeStamp,$scope.toTimeStamp),
             totalDataPoints = $scope.graphData[0].values.length,
             tickCount = parseInt(totalDataPoints/12);
+            var xTicksData = $scope.graphData[0].values;            
+            if(tickCount > 0){
+              xTicksData = [];
+              if(totalDataPoints%12 === 0 ){
+                for(var i=0; i < 12*tickCount; i = (i+tickCount) ){
+                  xTicksData.push($scope.graphData[0].values[i]);
+                }
+              }else{
+                for(var i=0; i < 12*(tickCount-1); i = (i+tickCount) ){
+                  xTicksData.push($scope.graphData[0].values[i]);
+                }
+                xTicksData.push($scope.graphData[0].values[totalDataPoints-1]);
+              }
+            }            
           if(days === 0 && $scope.graphData[0].values.length === 1){
-            chart.xAxis.showMaxMin(true).tickValues($scope.graphData[0].values.map( function(d){return d.x;} ) ).tickFormat(function(d) {
+            chart.xAxis.showMaxMin(true).tickValues(xTicksData.map( function(d){return d.x;} ) ).tickFormat(function(d) {
                 return d3.time.format('%I:%M %p')(new Date(d));
                 return dateService.getTimeIntervalFromTimeStamp(d);
             });
           }else{
-            chart.xAxis.showMaxMin(true).tickFormat(function(d) {return d3.time.format('%d-%b-%y')(new Date(d));});
-          }
+            //chart.xAxis.showMaxMin(true).tickValues(xTicksData.map( function(d){return d.x;} ) ).tickFormat(function(d) {
+              //return d3.time.format('%d-%b-%y')(new Date(d));});
+              chart.forceY([xTicksData[0], xTicksData[xTicksData.length-1]]);
+              chart.xAxis.showMaxMin(true).tickFormat(function(d) {
+              return d3.time.format('%d-%b-%y')(new Date(d));});
+            }
           chart.yAxis.tickFormat(d3.format('d'));
           if($scope.yAxisRangeForHMRLine.min === 0 && $scope.yAxisRangeForHMRLine.max === 0){
             chart.forceY([$scope.yAxisRangeForHMRLine.min, 1]);
