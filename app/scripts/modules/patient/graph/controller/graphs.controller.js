@@ -826,32 +826,40 @@ angular.module('hillromvestApp')
         case "duration":
             $scope.yAxis1MaxMark = $scope.maxDuration;
             $scope.yAxis1MinMark = $scope.minDuration;
+            $scope.isYAxis1Duration = true;
             break;
         case "pressure":
             $scope.yAxis1MaxMark = $scope.maxPressure;
             $scope.yAxis1MinMark = $scope.minPressure;
+            $scope.isYAxis1Duration = false;
             break;
         case "frequency":
             $scope.yAxis1MaxMark = $scope.maxFrequency;
             $scope.yAxis1MinMark = $scope.minFrequency;
+            $scope.isYAxis1Duration = false;
             break;
         default:
+            $scope.isYAxis1Duration = false;
             break;
     }
     switch($scope.compliance.secondaryYaxis) {
         case "duration":
             $scope.yAxis2MaxMark = $scope.maxDuration;
             $scope.yAxis2MinMark = $scope.minDuration;
+            $scope.isYAxis2Duration = true;
             break;
         case "pressure":
             $scope.yAxis2MaxMark = $scope.maxPressure;
             $scope.yAxis2MinMark = $scope.minPressure;
+            $scope.isYAxis2Duration = false;
             break;
         case "frequency":
             $scope.yAxis2MaxMark = $scope.maxFrequency;
             $scope.yAxis2MinMark = $scope.minFrequency;
+            $scope.isYAxis2Duration = false;
             break;
         default:
+            $scope.isYAxis2Duration = false;
             break;
     }
   };
@@ -986,33 +994,38 @@ angular.module('hillromvestApp')
         var y1AxisMaxTransform = maxTransform - parseInt($scope.y1AxisTransformRate * $scope.yAxis1MaxMark);
         var y2AxisMinTransform = maxTransform - parseInt($scope.y2AxisTransformRate * $scope.yAxis2MinMark);
         var y2AxisMaxTransform = maxTransform - parseInt($scope.y2AxisTransformRate * $scope.yAxis2MaxMark);
-        y1AxisMark.append('g').
-        attr('class','minRecommendedLevel').
-        attr('transform','translate(-45, '+ y1AxisMinTransform + ')').
-        append('text').
-        text('MIN').
-        style('fill','red');
 
-        y1AxisMark.append('g').
-        attr('class','maxRecommendedLevel').
-        attr('transform','translate(-45,'+ y1AxisMaxTransform + ')').
-        append('text').
-        text('MAX').
-        style('fill','green');
+        if(!$scope.isYAxis1Duration){
+          y1AxisMark.append('g').
+          attr('class','minRecommendedLevel').
+          attr('transform','translate(-45, '+ y1AxisMinTransform + ')').
+          append('text').
+          text('MIN').
+          style('fill','red');
 
-        y2AxisMark.append('g').
-        attr('class','minRecommendedLevel').
-        attr('transform','translate(20,'+ (y2AxisMinTransform + 3) + ')').
-        append('text').
-        text('MIN').
-        style('fill','red');
+          y1AxisMark.append('g').
+          attr('class','maxRecommendedLevel').
+          attr('transform','translate(-45,'+ y1AxisMaxTransform + ')').
+          append('text').
+          text('MAX').
+          style('fill','green');
+        }
 
-        y2AxisMark.append('g').
-        attr('class','maxRecommendedLevel').
-        attr('transform','translate(20,'+ (y2AxisMaxTransform + 3) + ')').
-        append('text').
-        text('MAX').
-        style('fill','green');
+        if(!$scope.isYAxis2Duration){
+          y2AxisMark.append('g').
+          attr('class','minRecommendedLevel').
+          attr('transform','translate(20,'+ (y2AxisMinTransform + 3) + ')').
+          append('text').
+          text('MIN').
+          style('fill','red');
+
+          y2AxisMark.append('g').
+          attr('class','maxRecommendedLevel').
+          attr('transform','translate(20,'+ (y2AxisMaxTransform + 3) + ')').
+          append('text').
+          text('MAX').
+          style('fill','green');
+        }
       }
       d3.selectAll('#complianceGraph svg').selectAll(".x.axis .tick").selectAll('text').
         attr("dy" , 12);
