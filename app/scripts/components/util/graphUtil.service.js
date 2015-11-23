@@ -26,7 +26,7 @@ angular.module('hillromvestApp')
         angular.forEach(data.actual, function(value) {
           var point = {};
           point.x = value.timestamp;
-          point.y = value.hmr/unit;//Math.floor(value.hmr/60);
+          point.y = value.hmr/unit;
           pointSet.push(point);
         });
         graphData.values = pointSet;
@@ -153,17 +153,13 @@ angular.module('hillromvestApp')
         var range = {};
         var hmrSet = [];
         angular.forEach(data.actual, function(value) {
-          //hmrSet.push(Math.floor(value.hmr/60));
           hmrSet.push(value.hmr);
         });
         var max = arrayMax(hmrSet);
         var min = arrayMin(hmrSet);
-        var unit = 60;
-        var ylabel = "Minutes";
-        if(max > 3600){
-          unit = 3600;
-          ylabel = "Hours";
-        }
+        var unit = 3600;
+        var ylabel = "Hours";
+
         max = Math.floor(max/unit);
         min = Math.floor(min/unit);
         range.max = Math.ceil((max + (max-min)/4)/10) * 10;
@@ -182,17 +178,14 @@ angular.module('hillromvestApp')
         var hmrSet = [];
         angular.forEach(data, function(value) {
           if(value.hmr !== 'null'){
-           hmrSet.push(value.hmr);
+           hmrSet.push(value.duration);
           }
         });
         var max = arrayMax(hmrSet);
         var min = arrayMin(hmrSet);
         var unit = 60;
         var ylabel = "Minutes";
-        if(max > 3600){
-          unit = 3600;
-          ylabel = "Hours";
-        }
+        
         range.max = Math.ceil(Math.floor(max/unit)/10) * 10;
         if(min !== 0 && min > (max-min)){          
           range.min = Math.floor(Math.floor((min - ((max-min)/2))/unit)/10) * 10;
@@ -284,7 +277,7 @@ angular.module('hillromvestApp')
         angular.forEach(data, function(value) {
           var point = {};
           point.x = value.start;
-          point.y = value.hmr/unit;//Math.floor(value.hmr/3600);
+          point.y = value.duration/unit;
           pointSet.push(point);
         });
         graphData.values = pointSet;
