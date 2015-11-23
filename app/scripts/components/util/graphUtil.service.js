@@ -213,9 +213,9 @@ angular.module('hillromvestApp')
               frequencySet.push(value.frequency);
           });
           var maxDuration = arrayMax(durationSet);
-          var maxRecommendedDuration = data.recommended.maxMinutesPerTreatment * data.recommended.treatmentsPerDay;
+          var maxRecommendedDuration = Math.floor(maxDuration/60) * data.recommended.treatmentsPerDay;
           maxDuration = (maxDuration > maxRecommendedDuration) ? maxDuration : maxRecommendedDuration;
-          range.maxDuration = maxDuration;
+          range.maxDuration = maxDuration + Math.ceil(maxDuration/4);
 
           var maxPressure = arrayMax(pressureSet);
           maxPressure = (maxPressure > data.recommended.maxPressure) ? maxPressure : data.recommended.maxPressure;
