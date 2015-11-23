@@ -1019,7 +1019,7 @@ angular.module('hillromvestApp')
 
         d3.selectAll('#complianceGraph svg').selectAll(".x.axis .nv-axisMaxMin").selectAll('text').
         attr("dy" , 12);
-        
+
         if(days === 0 && $scope.completeComplianceData.actual.length === 1){
           d3.selectAll('#complianceGraph svg').selectAll(".x.axis .tick").selectAll('text').attr("dx" , 488);
         }
@@ -1716,8 +1716,6 @@ angular.module('hillromvestApp')
           var days = dateService.getDateDiffIndays($scope.fromTimeStamp,$scope.toTimeStamp),
             totalDataPoints = $scope.graphData[0].values.length,
             tickCount = parseInt(totalDataPoints/12);
-          /*chart.xAxis.showMaxMin(true).tickFormat(function(d) {return d3.time.format('%d-%b-%Y')(new Date(d));});
-          */
           if(days === 0 && $scope.graphData[0].values.length === 1){
             chart.xAxis.showMaxMin(true).tickValues($scope.graphData[0].values.map( function(d){return d.x;} ) ).tickFormat(function(d) {
                 return d3.time.format('%I:%M %p')(new Date(d));

@@ -26,7 +26,7 @@ angular.module('hillromvestApp')
         angular.forEach(data.actual, function(value) {
           var point = {};
           point.x = value.timestamp;
-          point.y = value.hmr/unit;//Math.floor(value.hmr/60);
+          point.y = value.hmr/unit;
           pointSet.push(point);
         });
         graphData.values = pointSet;
@@ -157,12 +157,6 @@ angular.module('hillromvestApp')
         });
         var max = arrayMax(hmrSet);
         var min = arrayMin(hmrSet);
-        /*var unit = 60;
-        var ylabel = "Minutes";
-        if(max > 3600){
-          unit = 3600;
-          ylabel = "Hours";
-        }*/
         var unit = 3600;
         var ylabel = "Hours";
 
@@ -191,10 +185,6 @@ angular.module('hillromvestApp')
         var min = arrayMin(hmrSet);
         var unit = 60;
         var ylabel = "Minutes";
-        /*if(max > 3600){
-          unit = 3600;
-          ylabel = "Hours";
-        }*/
         
         range.max = Math.ceil(Math.floor(max/unit)/10) * 10;
         if(min !== 0 && min > (max-min)){          
