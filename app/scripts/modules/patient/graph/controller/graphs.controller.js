@@ -121,14 +121,25 @@ angular.module('hillromvestApp')
     //JAY
     $scope.initTmp = function (){
       //alert("in INit");
-      $('<div id=sd >HMR<br/><canvas id=cHMR width=1300 height=350></canvas>Presssure<br/><canvas id=cPressure width=1300 height=350></canvas>Duration<br/><canvas id=cDuration width=1300 height=350></canvas></div>').appendTo("body");
+      $('<div id=sd >HMR<br/><canvas id=cGraph width=1300 height=350></canvas></div>').appendTo("body");
       $('<div id=hd </div>').appendTo("body");
       $(".footer").remove();
 
     };
-    $scope.initPdfMetaData = function (){
+    $scope.initPdfMetaData = function (strHtml){
+      $('#hd').html(strHtml);
+        $('#hd').find('svg')
+        .attr('version',1.1)
+        .attr('width','1300px')
+        .attr('height','350px')
+        .attr('font-family', 'helvetica')
+        .attr('font-size', '12px')
+        .attr('xmlns','http://www.w3.org/2000/svg')
+        .append('<defs>'+g_str+'</defs>');
+        $scope.drawCanvas('cGraph',$("#hd").find("svg").parent().html());
+
       
-var patientDetails = ($scope.slectedPatient) ? $scope.slectedPatient : null;
+      var patientDetails = ($scope.slectedPatient) ? $scope.slectedPatient : null;
       var pdfClinic = ($scope.associatedClinics && $scope.associatedClinics.length > 0) ? $scope.associatedClinics[0] : null;
       //var completeAddress = (pdfClinic !== null && pdfClinic.city) ? pdfClinic.city : stringConstants.emptyString;
       //completeAddress += (pdfClinic !== null && pdfClinic.state) ? ((completeAddress.length > 1) ? (stringConstants.comma+pdfClinic.state) : pdfClinic.state) : completeAddress;
@@ -1188,58 +1199,7 @@ var patientDetails = ($scope.slectedPatient) ? $scope.slectedPatient : null;
         var element1 = document.querySelectorAll(printId1)[0],
         html1 = (element1) ? element1.innerHTML: "",
         doc;
-
-        // click on compalince button
-        
-
-
-         $('#hd').html(html1);
-
-        $('#hd').find('svg')
-        .attr('version',1.1)
-        .attr('width','1300px')
-        .attr('height','350px')
-        .attr('font-family', 'helvetica')
-        .attr('font-size', '12px')
-        .attr('xmlns','http://www.w3.org/2000/svg')
-        .append('<defs>'+g_str+'</defs>');
-        // Jay
-        //$('#hd').find('svg').append('<defs>'+g_str+'</defs>')
-        //$('#sd').html(element1.innerHTML);
-        //alert($('#sd').html());
-       //alert("here");
-       var d = $('#duration').is(':checked'), f = $('#frequency').is(':checked'), p=$('#pressure').is(':checked');
-        
-      var c1 = (p && d) && !f;
-      var c2 = (p && f) && !d;
-      var c3 = !p && (f && d);
-      var c4 = f && (!p && !d);
-
-        /*
-        if(g_pdfd.isPdfCall && c4){
-          return false;
-        }*/
-        if(d && (!f && !p)) {
-          //alert('duration');
-          //$scope.drawCanvas('cDuration',$('#hd').find('svg')[0].outerHTML);
-          $scope.drawCanvas('cDuration',$("#hd").find("svg").parent().html());
-         // alert("Duration plotted");
-          setTimeout(function (){$scope.graphStateChange(true,true,false);},2000);
-        } 
-        if(!d && (f && p)) {
-         // alert("PF plotted");
-          
-          //$scope.drawCanvas('cPressure',$('#hd').find('svg')[0].outerHTML);
-          $scope.drawCanvas('cPressure',$("#hd").find("svg").parent().html());
-          //alert('Pressure');
-          if(g_pdfd.isPdfCall){
-            g_pdfd.isPdfCall=false;
-             setTimeout(function (){$scope.downloadPDFFile();}, 1000);
-
-          }
-        }
-      
-      $scope.initPdfMetaData();
+        $scope.initPdfMetaData(html1);
 
 },1500);
       });
@@ -1868,27 +1828,7 @@ var patientDetails = ($scope.slectedPatient) ? $scope.slectedPatient : null;
         //html2 = element2.innerHTML,
         //htmlDocument,
         doc;
-
-        $('#hd').html(html1);
-
-        $('#hd').find('svg')
-        .attr('version',1.1)
-        .attr('width','1300px')
-        .attr('height','350px')
-        .attr('font-family', 'helvetica')
-        .attr('font-size', '12px')
-        .attr('xmlns','http://www.w3.org/2000/svg')
-        .append('<defs>'+g_str+'</defs>');
-        // Jay
-        //$('#hd').find('svg').append('<defs>'+g_str+'</defs>')
-        //$('#sd').html(element1.innerHTML);
-        //alert($('#sd').html());
-       
-        //alert("html >" + $("#hd").find("svg").parent().html());
-        $scope.drawCanvas('cHMR',$("#hd").find("svg").parent().html());
-        //$scope.drawCanvas('cHMR',$('#hd').find('svg')[0].outerHTML);
-    
-        $scope.initPdfMetaData();
+        $scope.initPdfMetaData(html1);
 
 },500);
       });
@@ -2050,7 +1990,7 @@ var patientDetails = ($scope.slectedPatient) ? $scope.slectedPatient : null;
                 pdf.line(90, 800, 350,800); //left, top, right, top
 
                 
-                var img = $("#cHMR")[0].toDataURL('image/png', 1.0);
+                var img = $("#cGraph")[0].toDataURL('image/png', 1.0);
 
                 pdf.addImage(img, 'png', 40, (250),margins.width+100, 170);
                   pdf.save('hillrom.pdf');
