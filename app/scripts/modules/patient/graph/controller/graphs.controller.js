@@ -1743,12 +1743,12 @@ angular.module('hillromvestApp')
                 xTicksData.push($scope.graphData[0].values[totalDataPoints-1]);
               }
             } 
-            
+
             if(xTicksData.length === 1){
               chart.xAxis.showMaxMin(false).tickValues(xTicksData.map( function(d){return d.x;} ) ).tickFormat(function(d) {
               return d3.time.format('%d-%b-%y')(new Date(d));});
             }else{
-              chart.xAxis.showMaxMin(true).tickValues(xTicksData.map( function(d){return d.x;} ) ).tickFormat(function(d) {
+              chart.xAxis.showMaxMin(true).tickFormat(function(d) {
               return d3.time.format('%d-%b-%y')(new Date(d));});
             }         
 
