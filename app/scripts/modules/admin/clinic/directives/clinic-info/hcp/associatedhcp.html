@@ -91,7 +91,7 @@
           <div class="navbar-right">
             <span class="record-found" ng-if="associatedHcps.length > 0">{{total}}</span><span class="record-found" ng-if="associatedHcps.length > 0" translate="clinic.associated-hcps.hcps">HCPs</span>
             <span class="record-found" ng-if="associatedHcps.length > 0" translate="clinic.associated-hcps.found">Found</span>
-            <span ng-show="pageCount > 1">
+            <span ng-show="associatedHcps.length > 0">
               <span class="navigaion-link cursor-pointer" ng-class="{ 'inactive': !(currentPageIndex > 1) }" ng-click="searchAssociatedHcps('PREV')" translate="clinic.associated-hcps.previous">Previous</span>
               <span class="navigaion-no">{{currentPageIndex}}</span>
               <span class="navigaion-link cursor-pointer" ng-class="{ 'inactive': !(pageCount > currentPageIndex) }" ng-click="searchAssociatedHcps('NEXT')" translate="clinic.associated-hcps.next">Next</span>
