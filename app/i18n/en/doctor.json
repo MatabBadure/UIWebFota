@@ -113,7 +113,7 @@
             "message": "Are You Sure?"
         },
         "clinic-disassociate":{
-            "warning": "HCP Board - Dissociate Clinic",
+            "warning": "HCP Dashboard - Dissociate Clinic",
             "message": "Do you want to dissociate Clinic from HCP?"
         },
         "tab": {
