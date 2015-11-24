@@ -504,17 +504,18 @@ angular.module('hillromvestApp')
         var durationObject = {};
         var count = 0;
         angular.forEach(data, function(value) {
+          console.log("value : ", value)
           var pressurePoint = {};
           var durationPoint = {};
           var frequencyPoint = {};
           pressurePoint.x = value.timestamp;
-          pressurePoint.y = (value.pressure) ? value.pressure+0.1 : 0.1;
+          pressurePoint.y = (!value.missedTherapy) ? value.pressure+0.1 :value.pressure;
           pressureValues.push(pressurePoint);
           durationPoint.x = value.timestamp;
-          durationPoint.y = (value.duration) ? value.duration+0.1 : 0.11;
+          durationPoint.y = (!value.missedTherapy) ? value.duration+0.1 : value.duration;
           durationValues.push(durationPoint);
           frequencyPoint.x = value.timestamp;
-          frequencyPoint.y = (value.frequency) ? value.frequency+0.1 : 0.1;
+          frequencyPoint.y = (!value.missedTherapy) ? value.frequency+0.1 : value.frequency;
           frequencyValues.push(frequencyPoint);
         });
         pressureObject.values = pressureValues;
