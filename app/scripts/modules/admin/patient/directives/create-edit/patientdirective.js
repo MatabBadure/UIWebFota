@@ -185,6 +185,7 @@ angular.module('hillromvestApp')
          });
 
         angular.element('#dp2').datepicker({
+          endDate: '+0d',
           autoclose: true});
       }]
     };
