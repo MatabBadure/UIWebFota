@@ -951,7 +951,7 @@ angular.module('hillromvestApp')
          /* Mark red color for missed therapy  -- end --*/
          setTimeout(function(){
 
-         var bgHeight = d3.select('#complianceGraph svg').select('.x .tick line').attr("y2");
+         var bgHeight = d3.select('#complianceGraph svg').select('.y1 .tick line').attr("y2");
          var bgWidth = d3.select('#complianceGraph svg ').select('.y1 .tick line').attr("x2");
          d3.select('#complianceGraph svg .nv-axis g').append('rect')
                   .attr("height", Math.abs(bgHeight))
