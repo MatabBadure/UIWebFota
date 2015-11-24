@@ -240,7 +240,7 @@ angular.module('hillromvestApp')
         if(!clinic.hillromId){
           clinic.hillromId = "";
         }else{
-          clinic.hillromId = clinic.hillromId + " ";
+          clinic.hillromId = clinic.hillromId + "&nbsp;&nbsp;";
         }
 
         angular.forEach($scope.associatedClinics, function(associatedClinic, associatedClinicKey){

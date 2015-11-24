@@ -46,7 +46,12 @@
             "super-admin": "Super Admin",
             "account-services": "RC Admin",
             "associates":"Associates",
-            "default" : "Select a role"
+            "default" : "Select a role",
+            "patient": "Patient",
+            "hcp": "HCP",
+            "clinic-admin": "Clinic Admin",
+            "caregiver": "Caregiver",
+            "associates": "Associates"
         },
         "placeholder": {
             "search": "Search with Name, Hill-Rom ID or Email"

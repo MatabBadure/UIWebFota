@@ -31,13 +31,16 @@ angular.module('hillromvestApp')
 
 $scope.authenticate = function(event) {
    event.preventDefault();
+   if($scope.form.$invalid){
+    return false;
+   }
    $scope.error = null;
    if ($scope.authenticate.password !== $scope.authenticate.confirmPassword) {
     $scope.doNotMatch = 'ERROR';
 } else {
    $scope.doNotMatch = null;
    var data = {
-       "questionId" : $scope.authenticate.question.id,
+       "questionId" : ($scope.authenticate.question && $scope.authenticate.question.id) ? $scope.authenticate.question.id : null,
        "answer" : $scope.authenticate.answer,
        "password" : $scope.authenticate.password,
        "termsAndConditionsAccepted" : $scope.authenticate.tnc,

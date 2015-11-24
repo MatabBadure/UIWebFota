@@ -113,8 +113,8 @@
             "message": "Are You Sure?"
         },
         "clinic-disassociate":{
-            "warning": "Are you sure, you want to disassociate Clinic from HCP?",
-            "message": "If you disassociate the clinic, This HCP will not be able to View clinic information."
+            "warning": "HCP Dashboard - Dissociate Clinic",
+            "message": "Do you want to dissociate Clinic from HCP?"
         },
         "tab": {
             "hcp-overview": "HCP Profile",

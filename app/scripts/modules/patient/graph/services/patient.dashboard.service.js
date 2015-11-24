@@ -154,6 +154,22 @@ angular.module('hillromvestApp')
         }).success(function(response) {
           return response;
         });
+      }, 
+
+
+      getcomplianceGraphData: function(id, fromTimeStamp, toTimeStamp, groupBy, date){
+        var url = patient.graph.baseURL;
+        url  = url + '/' + id + '/complianceGraphData';
+        if ( fromTimeStamp !== undefined && toTimeStamp !== undefined && groupBy !== undefined) {
+          url = url + '?from=' + fromTimeStamp + '&to=' + toTimeStamp + '&groupBy=' + groupBy;
+        } else if(date !== undefined){
+          url = url + '?date=' + date;
+        }
+        return $http.get(url, {
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });
       }
     };
   }]);
