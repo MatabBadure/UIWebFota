@@ -465,6 +465,7 @@ angular.module('hillromvestApp')
           $scope.graphData = [];
           $scope.plotNoDataAvailable();
         } else {
+          $scope.toDate = ($scope.completeGraphData.actual) ? dateService.getDateFromTimeStamp(dateService.convertMMDDYYYYHHMMSSstamp($scope.completeGraphData.actual[$scope.completeGraphData.actual.length-1].timestamp),patientDashboard.dateFormat, '/' ) : dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');
           $scope.noDataAvailable = false;
           $scope.completeGraphData = graphUtil.convertIntoServerTimeZone($scope.completeGraphData,patientDashboard.hmrNonDayGraph);
           $scope.yAxisRangeForHMRLine = graphUtil.getYaxisRangeLineGraph($scope.completeGraphData);
@@ -648,12 +649,10 @@ angular.module('hillromvestApp')
           $scope.complianceGraphData = [];
           $scope.plotNoDataAvailable();
           $scope.isComplianceExist = false;
-        }/*else if($scope.completeComplianceData.actual.length < 2){
-          $scope.plotNoDataAvailable();
-          $scope.isComplianceExist = false;
-        }*/
+        }
          else {
           //recommended values
+          $scope.toDate = ($scope.completeComplianceData.actual) ? dateService.getDateFromTimeStamp(dateService.convertMMDDYYYYHHMMSSstamp($scope.completeComplianceData.actual[$scope.completeComplianceData.actual.length-1].timestamp),patientDashboard.dateFormat, '/' ) : dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');
           $scope.noDataAvailable = false;
           $scope.completeComplianceData = graphUtil.convertIntoServerTimeZone($scope.completeComplianceData,patientDashboard.complianceGraph);
           $scope.minFrequency = $scope.completeComplianceData.recommended.minFrequency;
