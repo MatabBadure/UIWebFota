@@ -168,6 +168,10 @@ angular.module('hillromvestApp')
         } else {
           range.min = min;
         }
+        if(range.min === range.max){
+          range.min = 0;
+          range.max = range.max + Math.ceil(range.max/4);
+        }
         range.unit = unit;
         range.ylabel = ylabel;
         return range;
@@ -186,15 +190,19 @@ angular.module('hillromvestApp')
         var unit = 60;
         var ylabel = "Minutes";
         
-        range.max = Math.ceil(Math.floor(max/unit)/10) * 10;
+        range.max = Math.ceil((max + (max-min)/4)/10) * 10; 
         if(min !== 0 && min > (max-min)){          
-          range.min = Math.floor(Math.floor((min - ((max-min)/2))/unit)/10) * 10;
+          range.min = Math.floor(Math.floor((min - ((max-min)/2)))/10) * 10;
         }
         if(range.min === undefined){
           range.min = 0;
         }
         if(range.max === undefined){
           range.max = 0;
+        }
+        if(range.min === range.max){
+          range.min = 0;
+          range.max = range.max + Math.ceil(range.max/4);
         }
         range.unit = unit;
         range.ylabel = ylabel;
@@ -213,7 +221,8 @@ angular.module('hillromvestApp')
               frequencySet.push(value.frequency);
           });
           var maxDuration = arrayMax(durationSet);
-          var maxRecommendedDuration = Math.floor(maxDuration/60) * data.recommended.treatmentsPerDay;
+          var maxRecommendedDuration = Math.floor(maxDuration) * data.recommended.treatmentsPerDay;
+          maxDuration =  data.recommended.treatmentsPerDay * data.recommended.minMinutesPerTreatment;
           maxDuration = (maxDuration > maxRecommendedDuration) ? maxDuration : maxRecommendedDuration;
           range.maxDuration = maxDuration + Math.ceil(maxDuration/4);
 
@@ -278,7 +287,7 @@ angular.module('hillromvestApp')
         angular.forEach(data, function(value) {
           var point = {};
           point.x = value.start;
-          point.y = value.duration/unit;
+          point.y = value.duration;
           pointSet.push(point);
         });
         graphData.values = pointSet;
