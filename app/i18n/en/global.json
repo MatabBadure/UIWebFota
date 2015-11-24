@@ -99,7 +99,10 @@
             "super-admin": "Super Admin",
             "account-services": "RC Admin",
             "associates":"Associates",
-            "caregiver": "CARE GIVER"
+            "caregiver": "Caregiver",
+            "clinic-admin": "Clinic Admin",
+            "hcp": "HCP",
+            "patient": "Patient"
         },
         "not-applicable": "NA",
         "notification":{
