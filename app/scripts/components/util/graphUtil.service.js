@@ -224,15 +224,15 @@ angular.module('hillromvestApp')
           var maxRecommendedDuration = Math.floor(maxDuration) * data.recommended.treatmentsPerDay;
           maxDuration =  data.recommended.treatmentsPerDay * data.recommended.minMinutesPerTreatment;
           maxDuration = (maxDuration > maxRecommendedDuration) ? maxDuration : maxRecommendedDuration;
-          range.maxDuration = maxDuration + Math.ceil(maxDuration/4);
+          range.maxDuration = maxDuration + Math.ceil(maxDuration/10);
 
           var maxPressure = arrayMax(pressureSet);
           maxPressure = (maxPressure > data.recommended.maxPressure) ? maxPressure : data.recommended.maxPressure;
-          range.maxPressure = maxPressure + Math.ceil(maxPressure/4);
+          range.maxPressure = maxPressure + Math.ceil(maxPressure/10);
 
           var maxFrequency = arrayMax(frequencySet);
           maxFrequency = (maxFrequency > data.recommended.maxFrequency) ? maxFrequency : data.recommended.maxFrequency;
-          range.maxFrequency = maxFrequency + Math.ceil(maxFrequency/4);;
+          range.maxFrequency = maxFrequency + Math.ceil(maxFrequency/10);;
           return range;
       }
 
@@ -508,13 +508,13 @@ angular.module('hillromvestApp')
           var durationPoint = {};
           var frequencyPoint = {};
           pressurePoint.x = value.timestamp;
-          pressurePoint.y = value.pressure;
+          pressurePoint.y = (value.pressure) ? value.pressure+0.1 : 0.1;
           pressureValues.push(pressurePoint);
           durationPoint.x = value.timestamp;
-          durationPoint.y = value.duration;
+          durationPoint.y = (value.duration) ? value.duration+0.1 : 0.11;
           durationValues.push(durationPoint);
           frequencyPoint.x = value.timestamp;
-          frequencyPoint.y = value.frequency;
+          frequencyPoint.y = (value.frequency) ? value.frequency+0.1 : 0.1;
           frequencyValues.push(frequencyPoint);
         });
         pressureObject.values = pressureValues;
