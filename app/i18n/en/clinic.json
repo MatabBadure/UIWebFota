@@ -88,12 +88,12 @@
             "message": "Are you sure?"
         },
         "deletePatient":{
-            "warning": "Are you sure you want to Deactivate the Patient?",
-            "message": "If you deactivate the Patient, you will no longer be able to view the information."
+            "warning": "Clinic Board - Dissociate Patient",
+            "message": "Do you want to dissociate the Patient from the Clinic?"
         },
         "deleteHcp":{
-            "warning": "Are you sure you want to Deactivate the HCP?",
-            "message": "If you deactivate the HCP, you will no longer be able to view the information."
+            "warning": " Clinic Board - Dissociate HCP",
+            "message": "Do you want to dissociate HCP from the Clinic?"
         },
         "hillRom-id": "Hill-Rom ID",
         "type": "Type",
