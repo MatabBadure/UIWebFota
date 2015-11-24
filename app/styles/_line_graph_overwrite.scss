@@ -330,6 +330,7 @@
 	    width: 100%;
 	    .dropdown-menu{
 	    	margin-bottom: 80px;
+	    	z-index: 9999 !important;
 	    }
 	}
 	/* Grapg ToolTip style */
