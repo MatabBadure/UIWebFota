@@ -88,11 +88,11 @@
             "message": "Are you sure?"
         },
         "deletePatient":{
-            "warning": "Clinic Board - Dissociate Patient",
+            "warning": "Clinic Dashboard - Dissociate Patient",
             "message": "Do you want to dissociate the Patient from the Clinic?"
         },
         "deleteHcp":{
-            "warning": " Clinic Board - Dissociate HCP",
+            "warning": " Clinic Dashboard - Dissociate HCP",
             "message": "Do you want to dissociate HCP from the Clinic?"
         },
         "hillRom-id": "Hill-Rom ID",
