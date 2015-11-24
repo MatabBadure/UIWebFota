@@ -26,7 +26,7 @@ angular.module('hillromvestApp')
         angular.forEach(data.actual, function(value) {
           var point = {};
           point.x = value.timestamp;
-          point.y = value.hmr/unit;//Math.floor(value.hmr/60);
+          point.y = value.hmr/unit;
           pointSet.push(point);
         });
         graphData.values = pointSet;
@@ -153,17 +153,13 @@ angular.module('hillromvestApp')
         var range = {};
         var hmrSet = [];
         angular.forEach(data.actual, function(value) {
-          //hmrSet.push(Math.floor(value.hmr/60));
           hmrSet.push(value.hmr);
         });
         var max = arrayMax(hmrSet);
         var min = arrayMin(hmrSet);
-        var unit = 60;
-        var ylabel = "Minutes";
-        if(max > 3600){
-          unit = 3600;
-          ylabel = "Hours";
-        }
+        var unit = 3600;
+        var ylabel = "Hours";
+
         max = Math.floor(max/unit);
         min = Math.floor(min/unit);
         range.max = Math.ceil((max + (max-min)/4)/10) * 10;
@@ -182,17 +178,14 @@ angular.module('hillromvestApp')
         var hmrSet = [];
         angular.forEach(data, function(value) {
           if(value.hmr !== 'null'){
-           hmrSet.push(value.hmr);
+           hmrSet.push(value.duration);
           }
         });
         var max = arrayMax(hmrSet);
         var min = arrayMin(hmrSet);
         var unit = 60;
         var ylabel = "Minutes";
-        if(max > 3600){
-          unit = 3600;
-          ylabel = "Hours";
-        }
+        
         range.max = Math.ceil(Math.floor(max/unit)/10) * 10;
         if(min !== 0 && min > (max-min)){          
           range.min = Math.floor(Math.floor((min - ((max-min)/2))/unit)/10) * 10;
@@ -220,16 +213,17 @@ angular.module('hillromvestApp')
               frequencySet.push(value.frequency);
           });
           var maxDuration = arrayMax(durationSet);
-          var maxRecommendedDuration = data.recommended.maxMinutesPerTreatment * data.recommended.treatmentsPerDay;
+          var maxRecommendedDuration = Math.floor(maxDuration/60) * data.recommended.treatmentsPerDay;
           maxDuration = (maxDuration > maxRecommendedDuration) ? maxDuration : maxRecommendedDuration;
-          range.maxDuration = maxDuration;
+          range.maxDuration = maxDuration + Math.ceil(maxDuration/4);
 
           var maxPressure = arrayMax(pressureSet);
           maxPressure = (maxPressure > data.recommended.maxPressure) ? maxPressure : data.recommended.maxPressure;
-          range.maxPressure = maxPressure;
+          range.maxPressure = maxPressure + Math.ceil(maxPressure/4);
+
           var maxFrequency = arrayMax(frequencySet);
           maxFrequency = (maxFrequency > data.recommended.maxFrequency) ? maxFrequency : data.recommended.maxFrequency;
-          range.maxFrequency = maxFrequency;
+          range.maxFrequency = maxFrequency + Math.ceil(maxFrequency/4);;
           return range;
       }
 
@@ -284,7 +278,7 @@ angular.module('hillromvestApp')
         angular.forEach(data, function(value) {
           var point = {};
           point.x = value.start;
-          point.y = value.hmr/unit;//Math.floor(value.hmr/3600);
+          point.y = value.duration/unit;
           pointSet.push(point);
         });
         graphData.values = pointSet;
@@ -610,8 +604,7 @@ angular.module('hillromvestApp')
           toolTip =
                 '<div class="tooltip_sub_content">'+
                 '<h6>' + dateService.getDateFromTimeStamp(value.start,patientDashboard.dateFormat,'/') + '  ('+ d3.time.format('%I:%M %p')(new Date(value.start)) + ')'  + '</h6>' +
-                '<ul class="graph_ul">' +
-                  '<li><span class="pull-left">' + 'Session No.' + '</span><span class="pull-right value">' +  value.sessionNo + '/' + value.treatmentsPerDay  + '</span></li>' +
+                '<ul class="graph_ul">' +                  
                   '<li><span class="pull-left">' + 'Duration' +'</span><span class="pull-right value">' + value.duration +'</span></li>' +
                   '<li><span class="pull-left">' + 'Frequency' +'</span><span class="pull-right value">' + value.frequency +'</span></li>' +
                   '<li><span class="pull-left">' + 'Pressure' +'</span><span class="pull-right value">' + value.pressure +'</span></li>' +
@@ -627,8 +620,7 @@ angular.module('hillromvestApp')
          }else{
           toolTip =
                 '<h6>' + dateService.getDateFromTimeStamp(value.start,patientDashboard.dateFormat,'/') + '  ('+ d3.time.format('%I:%M %p')(new Date(value.start)) + ')'  + '</h6>' +
-                '<ul class="graph_ul">' +
-                  '<li><span class="pull-left">' + 'Session No.' + '</span><span class="pull-right value">' +  value.sessionNo + '/' + value.treatmentsPerDay  + '</span></li>' +
+                '<ul class="graph_ul">' +                  
                   '<li><span class="pull-left">' + 'Duration' +'</span><span class="pull-right value">' + value.duration +'</span></li>' +
                   '<li><span class="pull-left">' + 'Frequency' +'</span><span class="pull-right value">' + value.frequency +'</span></li>' +
                   '<li><span class="pull-left">' + 'Pressure' +'</span><span class="pull-right value">' + value.pressure +'</span></li>' +
