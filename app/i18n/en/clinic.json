@@ -141,8 +141,8 @@
             "email": "Email"
         },
         "deleteClinicAdmin":{
-            "warning": "Are you sure, You want to delete Clinic Admin?",
-            "message": "After Delete You will not be able to see the Clinic Admin."
+            "warning": "Are you sure you want to delete the Clinic Admin ?",          			
+            "message": "After deleting you will not be able to see the Clinic Admin."            			
         },
         "updateClinicAdmin":{
             "warning": "Do You want to update Clinic Admin details?",
