@@ -127,6 +127,10 @@ angular.module('hillromvestApp')
 
     };
     $scope.initPdfMetaData = function (strHtml){
+      var d = $('#duration').is(':checked')?"Duration":"", f = $('#frequency').is(':checked')?"Frequency":"", p=$('#pressure').is(':checked')?"Pressure":"";
+      var a = [];if(p)a.push(p);if(f)a.push(f);if(d)a.push(d);
+      stringConstants.graphTitle = ($scope.selectedGraph=='HMR')?"Hour Meeter:":'Patient Treatment '+a.join(' / ')+':';
+     // alert("Title > " + stringConstants.graphTitle);
       $('#hd').html(strHtml);
         $('#hd').find('svg')
         .attr('version',1.1)
@@ -626,6 +630,7 @@ angular.module('hillromvestApp')
           $scope.graphData = [];
           $scope.plotNoDataAvailable();
         } else {
+          $scope.toDate = ($scope.completeGraphData.actual) ? dateService.getDateFromTimeStamp(dateService.convertMMDDYYYYHHMMSSstamp($scope.completeGraphData.actual[$scope.completeGraphData.actual.length-1].timestamp),patientDashboard.dateFormat, '/' ) : dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');
           $scope.noDataAvailable = false;
           $scope.completeGraphData = graphUtil.convertIntoServerTimeZone($scope.completeGraphData,patientDashboard.hmrNonDayGraph);
           $scope.yAxisRangeForHMRLine = graphUtil.getYaxisRangeLineGraph($scope.completeGraphData);
@@ -804,26 +809,23 @@ angular.module('hillromvestApp')
     };
 
     $scope.getComplianceGraphData = function(format) {
-      patientDashBoardService.getHMRGraphPoints($scope.patientId, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.groupBy).then(function(response){
+      patientDashBoardService.getcomplianceGraphData($scope.patientId, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.groupBy).then(function(response){
         $scope.completeComplianceData = response.data;
         if($scope.completeComplianceData.actual === undefined){
           $scope.complianceGraphData = [];
           $scope.plotNoDataAvailable();
           $scope.isComplianceExist = false;
-        }/*else if($scope.completeComplianceData.actual.length < 2){
-          $scope.plotNoDataAvailable();
-          $scope.isComplianceExist = false;
-        }*/
+        }
          else {
           //recommended values
+          $scope.toDate = ($scope.completeComplianceData.actual) ? dateService.getDateFromTimeStamp(dateService.convertMMDDYYYYHHMMSSstamp($scope.completeComplianceData.actual[$scope.completeComplianceData.actual.length-1].timestamp),patientDashboard.dateFormat, '/' ) : dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');
           $scope.noDataAvailable = false;
           $scope.completeComplianceData = graphUtil.convertIntoServerTimeZone($scope.completeComplianceData,patientDashboard.complianceGraph);
           $scope.minFrequency = $scope.completeComplianceData.recommended.minFrequency;
           $scope.maxFrequency = $scope.completeComplianceData.recommended.maxFrequency;
           $scope.minPressure = $scope.completeComplianceData.recommended.minPressure;
           $scope.maxPressure = $scope.completeComplianceData.recommended.maxPressure;
-          $scope.minDuration = $scope.completeComplianceData.recommended.minMinutesPerTreatment * $scope.completeComplianceData.recommended.treatmentsPerDay;
-          $scope.maxDuration = $scope.completeComplianceData.recommended.maxMinutesPerTreatment * $scope.completeComplianceData.recommended.treatmentsPerDay;
+          $scope.minDuration = $scope.completeComplianceData.recommended.minMinutesPerTreatment * $scope.completeComplianceData.recommended.treatmentsPerDay;          
           $scope.yAxisRangeForCompliance = graphUtil.getYaxisRangeComplianceGraph($scope.completeComplianceData);
           $scope.completecomplianceGraphData = graphUtil.convertIntoComplianceGraph($scope.completeComplianceData.actual);
           $scope.yAxis1Max = $scope.yAxisRangeForCompliance.maxDuration;
@@ -988,32 +990,40 @@ angular.module('hillromvestApp')
         case "duration":
             $scope.yAxis1MaxMark = $scope.maxDuration;
             $scope.yAxis1MinMark = $scope.minDuration;
+            $scope.isYAxis1Duration = true;
             break;
         case "pressure":
             $scope.yAxis1MaxMark = $scope.maxPressure;
             $scope.yAxis1MinMark = $scope.minPressure;
+            $scope.isYAxis1Duration = false;
             break;
         case "frequency":
             $scope.yAxis1MaxMark = $scope.maxFrequency;
             $scope.yAxis1MinMark = $scope.minFrequency;
+            $scope.isYAxis1Duration = false;
             break;
         default:
+            $scope.isYAxis1Duration = false;
             break;
     }
     switch($scope.compliance.secondaryYaxis) {
         case "duration":
             $scope.yAxis2MaxMark = $scope.maxDuration;
             $scope.yAxis2MinMark = $scope.minDuration;
+            $scope.isYAxis2Duration = true;
             break;
         case "pressure":
             $scope.yAxis2MaxMark = $scope.maxPressure;
             $scope.yAxis2MinMark = $scope.minPressure;
+            $scope.isYAxis2Duration = false;
             break;
         case "frequency":
             $scope.yAxis2MaxMark = $scope.maxFrequency;
             $scope.yAxis2MinMark = $scope.minFrequency;
+            $scope.isYAxis2Duration = false;
             break;
         default:
+            $scope.isYAxis2Duration = false;
             break;
     }
   };
@@ -1148,6 +1158,8 @@ angular.module('hillromvestApp')
         var y1AxisMaxTransform = maxTransform - parseInt($scope.y1AxisTransformRate * $scope.yAxis1MaxMark);
         var y2AxisMinTransform = maxTransform - parseInt($scope.y2AxisTransformRate * $scope.yAxis2MinMark);
         var y2AxisMaxTransform = maxTransform - parseInt($scope.y2AxisTransformRate * $scope.yAxis2MaxMark);
+
+        
         y1AxisMark.append('g').
         attr('class','minRecommendedLevel').
         attr('transform','translate(-45, '+ y1AxisMinTransform + ')').
@@ -1155,13 +1167,16 @@ angular.module('hillromvestApp')
         text('MIN').
         style('fill','red');
 
-        y1AxisMark.append('g').
-        attr('class','maxRecommendedLevel').
-        attr('transform','translate(-45,'+ y1AxisMaxTransform + ')').
-        append('text').
-        text('MAX').
-        style('fill','green');
+        if(!$scope.isYAxis1Duration){  
+          y1AxisMark.append('g').
+          attr('class','maxRecommendedLevel').
+          attr('transform','translate(-45,'+ y1AxisMaxTransform + ')').
+          append('text').
+          text('MAX').
+          style('fill','green');
+        }
 
+        
         y2AxisMark.append('g').
         attr('class','minRecommendedLevel').
         attr('transform','translate(20,'+ (y2AxisMinTransform + 3) + ')').
@@ -1169,15 +1184,21 @@ angular.module('hillromvestApp')
         text('MIN').
         style('fill','red');
 
-        y2AxisMark.append('g').
-        attr('class','maxRecommendedLevel').
-        attr('transform','translate(20,'+ (y2AxisMaxTransform + 3) + ')').
-        append('text').
-        text('MAX').
-        style('fill','green');
+        if(!$scope.isYAxis2Duration){
+          y2AxisMark.append('g').
+          attr('class','maxRecommendedLevel').
+          attr('transform','translate(20,'+ (y2AxisMaxTransform + 3) + ')').
+          append('text').
+          text('MAX').
+          style('fill','green');
+        }
       }
       d3.selectAll('#complianceGraph svg').selectAll(".x.axis .tick").selectAll('text').
         attr("dy" , 12);
+
+        d3.selectAll('#complianceGraph svg').selectAll(".x.axis .nv-axisMaxMin").selectAll('text').
+        attr("dy" , 12);
+
         if(days === 0 && $scope.completeComplianceData.actual.length === 1){
           d3.selectAll('#complianceGraph svg').selectAll(".x.axis .tick").selectAll('text').attr("dx" , 488);
         }
@@ -1749,7 +1770,32 @@ angular.module('hillromvestApp')
           var days = dateService.getDateDiffIndays($scope.fromTimeStamp,$scope.toTimeStamp),
             totalDataPoints = $scope.graphData[0].values.length,
             tickCount = parseInt(totalDataPoints/12);
-          chart.xAxis.showMaxMin(true).tickFormat(function(d) {return d3.time.format('%d-%b-%Y')(new Date(d));});
+            var xTicksData = $scope.graphData[0].values;            
+            if(tickCount > 0){
+              xTicksData = [];
+              if(totalDataPoints%12 === 0 ){
+                for(var i=0; i < 12*tickCount; i = (i+tickCount) ){
+                  xTicksData.push($scope.graphData[0].values[i]);
+                }
+              }else{
+                for(var i=0; i < 12*(tickCount-1); i = (i+tickCount) ){
+                  xTicksData.push($scope.graphData[0].values[i]);
+                }
+                xTicksData.push($scope.graphData[0].values[totalDataPoints-1]);
+              }
+            }            
+          if(days === 0 && $scope.graphData[0].values.length === 1){
+            chart.xAxis.showMaxMin(true).tickValues(xTicksData.map( function(d){return d.x;} ) ).tickFormat(function(d) {
+                return d3.time.format('%I:%M %p')(new Date(d));
+                return dateService.getTimeIntervalFromTimeStamp(d);
+            });
+          }else{
+            //chart.xAxis.showMaxMin(true).tickValues(xTicksData.map( function(d){return d.x;} ) ).tickFormat(function(d) {
+              //return d3.time.format('%d-%b-%y')(new Date(d));});
+              chart.forceY([xTicksData[0], xTicksData[xTicksData.length-1]]);
+              chart.xAxis.showMaxMin(true).tickFormat(function(d) {
+              return d3.time.format('%d-%b-%y')(new Date(d));});
+            }
           chart.yAxis.tickFormat(d3.format('d'));
           if($scope.yAxisRangeForHMRLine.min === 0 && $scope.yAxisRangeForHMRLine.max === 0){
             chart.forceY([$scope.yAxisRangeForHMRLine.min, 1]);
@@ -1844,11 +1890,20 @@ angular.module('hillromvestApp')
           .color(d3.scale.category10().range());
          // chart.noData("Nothing to see here.");
           chart.tooltipContent($scope.toolTipContentBarChart());
+          var days = dateService.getDateDiffIndays($scope.fromTimeStamp,$scope.toTimeStamp);
           //this function to put x-axis labels
-          chart.xAxis.tickValues($scope.hmrBarGraphData[0].values.map( function(d){return d.x;} ) ).tickFormat(function(d) {
-            return d3.time.format('%I:%M %p')(new Date(d));
-            return dateService.getTimeIntervalFromTimeStamp(d);
-        });
+          if(days === 0 && $scope.hmrBarGraphData[0].values.length === 1){
+            chart.xAxis.showMaxMin(true).tickValues($scope.hmrBarGraphData[0].values.map( function(d){return d.x;} ) ).tickFormat(function(d) {
+              return d3.time.format('%I:%M %p')(new Date(d));
+              return dateService.getTimeIntervalFromTimeStamp(d);
+            });
+          }else{
+            chart.xAxis.tickValues($scope.hmrBarGraphData[0].values.map( function(d){return d.x;} ) ).tickFormat(function(d) {
+              return d3.time.format('%I:%M %p')(new Date(d));
+              return dateService.getTimeIntervalFromTimeStamp(d);
+            });
+          }
+          
           if($scope.yAxisRangeForHMRBar.min === 0 && $scope.yAxisRangeForHMRBar.max === 0){
             chart.forceY([$scope.yAxisRangeForHMRBar.min,1]);
           }else{
@@ -1977,23 +2032,24 @@ angular.module('hillromvestApp')
                  pdf.cell(margins.t2TabLeft, margins.top, margins.tCellWidth, 20, tabInfo[i+1].toString(), rCount+1);  
            }
 
-                pdf.text(40,250, "Patient Treatment Duration:");
+              //Patient Treatment Duration:; Frequency / Pressure: Hour Meter: 
+                pdf.text(40,250, stringConstants.graphTitle);
                 //var img = $("#cHMR")[0].toDataURL('image/png', 1.0);
 
-                pdf.text(40,765, "HCP Name: ");
-                pdf.line(90, 770, 350,770); //left, top, right, top
+                pdf.text(40,500, "HCP Name: ");
+                pdf.line(90, 505, 350,505); //left, top, right, top
 
-                pdf.text(375,765, "Date: ");
-                pdf.line(400, 770, 560, 770);// left, top, right, top
+                pdf.text(375,500, "Date: ");
+                pdf.line(400, 505, 560, 505);// left, top, right, top
 
-                pdf.text(40,795, "Signature: ");
-                pdf.line(90, 800, 350,800); //left, top, right, top
+                pdf.text(40,530, "Signature: ");
+                pdf.line(90, 535, 350,535); //left, top, right, top
 
                 
                 var img = $("#cGraph")[0].toDataURL('image/png', 1.0);
 
                 pdf.addImage(img, 'png', 40, (250),margins.width+100, 170);
-                  pdf.save('hillrom.pdf');
+                  pdf.save('VisiView™.pdf');
                 /*
                 var data = {"Encoded String": 'data:image/svg+xml;base64,'+ window.btoa($("#hd").find("svg").parent().html())};
                   patientDashBoardService.convertSVGToImg(data).then(function(response){

@@ -120,7 +120,8 @@ var stringConstants = {
     notAvailable: "N/A",
     deviceType : "Vest® Airway Clearance System",
     emptyString: "",
-    comma: ", "
+    comma: ", ",
+    graphTitle:''
 }
 
 var boolGraphMetatData = {
