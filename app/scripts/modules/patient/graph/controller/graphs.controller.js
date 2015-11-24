@@ -951,7 +951,7 @@ angular.module('hillromvestApp')
          /* Mark red color for missed therapy  -- end --*/
          setTimeout(function(){
 
-         var bgHeight = d3.select('#complianceGraph svg').select('.x .tick line').attr("y2");
+         var bgHeight = d3.select('#complianceGraph svg').select('.y1 .tick line').attr("y2");
          var bgWidth = d3.select('#complianceGraph svg ').select('.y1 .tick line').attr("x2");
          d3.select('#complianceGraph svg .nv-axis g').append('rect')
                   .attr("height", Math.abs(bgHeight))
@@ -1742,19 +1742,16 @@ angular.module('hillromvestApp')
                 }
                 xTicksData.push($scope.graphData[0].values[totalDataPoints-1]);
               }
-            }            
-          if(days === 0 && $scope.graphData[0].values.length === 1){
-            chart.xAxis.showMaxMin(true).tickValues(xTicksData.map( function(d){return d.x;} ) ).tickFormat(function(d) {
-                return d3.time.format('%I:%M %p')(new Date(d));
-                return dateService.getTimeIntervalFromTimeStamp(d);
-            });
-          }else{
-            //chart.xAxis.showMaxMin(true).tickValues(xTicksData.map( function(d){return d.x;} ) ).tickFormat(function(d) {
-              //return d3.time.format('%d-%b-%y')(new Date(d));});
-              chart.forceY([xTicksData[0], xTicksData[xTicksData.length-1]]);
+            } 
+
+            if(xTicksData.length === 1){
+              chart.xAxis.showMaxMin(false).tickValues(xTicksData.map( function(d){return d.x;} ) ).tickFormat(function(d) {
+              return d3.time.format('%d-%b-%y')(new Date(d));});
+            }else{
               chart.xAxis.showMaxMin(true).tickFormat(function(d) {
               return d3.time.format('%d-%b-%y')(new Date(d));});
-            }
+            }         
+
           chart.yAxis.tickFormat(d3.format('d'));
           if($scope.yAxisRangeForHMRLine.min === 0 && $scope.yAxisRangeForHMRLine.max === 0){
             chart.forceY([$scope.yAxisRangeForHMRLine.min, 1]);
