@@ -119,6 +119,11 @@
       },
       "clinic-title" : "Clinic"
     },
+
+    "hcp-profile-update":{
+      "warning": "HCP Profile - Details",
+      "message": "You have made changes/updates for HCP Profile. Are you sure to make updates?"
+    },
     "update":{
       "warning" : "Are you sure, you want to update the Profile?",
       "message" : "Updated details will be reflected."
