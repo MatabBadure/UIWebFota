@@ -104,7 +104,7 @@
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
               <input class="" type="text" validate-on-blur ng-readonly="validateADMINorASP()" name="middleName" ng-model="patient.middleName" ng-pattern="/^[a-z A-Z]+$/" ng-minlength=2 ng-maxlength=15>
-              <div ng-show="(form.middleName.$showValidationMessage && form.middleName.$invalid)">
+              <div ng-show="(form.middleName.$showValidationMessage && form.middleName.$invalid) || submitted">
                 <span class="has-error" ng-show="form.middleName.$error.pattern" translate="error.middleName.pattern"></span>
                 <span class="has-error" ng-show="form.middleName.$error.minlength" translate="error.middleName.minlength"></span>
                 <span class="has-error" ng-show="form.middleName.$error.maxlength" translate="error.middleName.maxlength"></span>
@@ -147,6 +147,7 @@
           </div>
         </div>
 
+
         <div class="col-md-16 reset-padding margin-top">
           <div class="col-md-7 reset-padding">
             <div class="col-md-6 dashboard__form--label reset-padding">
@@ -169,7 +170,7 @@
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
               <input class="" type="text" validate-on-blur ng-model="patient.address" name="address" ng-readonly="validateADMINorASP()" ng-maxlength=100>
-              <div ng-show="(form.address.$showValidationMessage && form.address.$invalid)">
+              <div ng-show="(form.address.$showValidationMessage && form.address.$invalid) || submitted">
                 <span class="has-error" ng-show="form.address.$error.maxlength" translate="error.address.maxlength"></span>
               </div>
             </div>
@@ -183,7 +184,7 @@
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
               <input class="" type="text" validate-on-blur ng-model="patient.city" name="city" ng-readonly="validateADMINorASP()" ng-maxlength=15>
-              <div ng-show="(form.city.$showValidationMessage && form.city.$invalid)">
+              <div ng-show="(form.city.$showValidationMessage && form.city.$invalid) || submitted">
                 <span class="has-error" ng-show="form.city.$error.maxlength" translate="error.city.maxlength"></span>
               </div>
             </div>
@@ -201,6 +202,7 @@
           </div>
         </div>
       </div>
+
 
       <div class="col-md-16 reset-padding margin-top">
           <div class="col-md-7 reset-padding">
