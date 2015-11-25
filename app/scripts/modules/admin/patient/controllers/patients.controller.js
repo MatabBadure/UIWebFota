@@ -964,7 +964,8 @@ angular.module('hillromvestApp')
     };
 
     $scope.showPatientUpdateModal = function(){
-      if($scope.form.$invalid){
+      if($scope.form.$invalid){        
+        $scope.submitted = true;
         return false;
       }else{
         $scope.showModal = true;

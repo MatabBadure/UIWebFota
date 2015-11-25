@@ -876,7 +876,7 @@ angular.module('hillromvestApp')
       totalDataPoints = $scope.complianceGraphData[0].values.length,
             tickCount = parseInt(totalDataPoints/12);
       if(days === 0 && $scope.completeComplianceData.actual.length === 1){
-        chart.xAxis.showMaxMin(true).tickValues($scope.complianceGraphData[0].values.map( function(d){return d.x;} ) ).tickFormat(function(d) {
+        chart.xAxis.showMaxMin(false).tickValues($scope.complianceGraphData[0].values.map( function(d){return d.x;} ) ).tickFormat(function(d) {
             return d3.time.format('%I:%M %p')(new Date(d));
             return dateService.getTimeIntervalFromTimeStamp(d);
         });
