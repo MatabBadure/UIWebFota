@@ -224,15 +224,15 @@ angular.module('hillromvestApp')
           var maxRecommendedDuration = Math.floor(maxDuration) * data.recommended.treatmentsPerDay;
           maxDuration =  data.recommended.treatmentsPerDay * data.recommended.minMinutesPerTreatment;
           maxDuration = (maxDuration > maxRecommendedDuration) ? maxDuration : maxRecommendedDuration;
-          range.maxDuration = maxDuration + Math.ceil(maxDuration/10);
+          range.maxDuration = maxDuration;
 
           var maxPressure = arrayMax(pressureSet);
           maxPressure = (maxPressure > data.recommended.maxPressure) ? maxPressure : data.recommended.maxPressure;
-          range.maxPressure = maxPressure + Math.ceil(maxPressure/10);
+          range.maxPressure = maxPressure;
 
           var maxFrequency = arrayMax(frequencySet);
           maxFrequency = (maxFrequency > data.recommended.maxFrequency) ? maxFrequency : data.recommended.maxFrequency;
-          range.maxFrequency = maxFrequency + Math.ceil(maxFrequency/10);;
+          range.maxFrequency = maxFrequency;
           return range;
       }
 

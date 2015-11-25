@@ -55,7 +55,7 @@ angular.module('hillromvestApp')
         };
 
         this.formatZipcode = function(zipcode){
-          while(zipcode.toString().length < 5){
+          while(zipcode && zipcode.toString().length < 5){
             zipcode = '0' + zipcode;
           }
           return zipcode;

@@ -135,8 +135,8 @@
               <span readonly class="dashboard__form--label-age">{{patient.age}}</span>
               <div ng-show="(form.dob.$dirty && form.dob.$invalid) || submitted">
                 <span class="has-error" ng-show="form.dob.$error.required" translate="error.dob.required"></span>
-                <span class="has-error" ng-if="patient.age == 0" translate="error.dob.future"></span>
-                <span class="has-error" ng-show="form.dob.$error.pattern" translate="error.dob.invalid"></span>                
+                <span class="has-error" ng-if="patient.age == 0 && !form.dob.$error.required && !form.dob.$error.pattern" translate="error.dob.future"></span>
+                <span class="has-error" ng-show="form.dob.$error.pattern && !form.dob.$error.required" translate="error.dob.invalid"></span>                
               </div>
             </div>
           </div>
