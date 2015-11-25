@@ -155,8 +155,8 @@
       "phone-no": "Phone No.",
       "mobile-no": "Mobile No.",
       "update":{
-        "warning": "Do you want to Update the Caregiver Details?",
-        "message": "Are you sure?"
+        "warning": "Caregiver Info - Details",
+        "message": "You have made changes/updates for Caregiver details. Are you sure to make updates?"
       }
     },
     "sum": {
