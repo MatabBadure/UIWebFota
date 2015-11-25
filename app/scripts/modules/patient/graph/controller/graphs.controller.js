@@ -1728,7 +1728,7 @@ angular.module('hillromvestApp')
           //this function to put x-axis labels
           var days = dateService.getDateDiffIndays($scope.fromTimeStamp,$scope.toTimeStamp),
             totalDataPoints = $scope.graphData[0].values.length,
-            tickCount = parseInt(totalDataPoints/12);
+            tickCount = parseInt(totalDataPoints/12);            
             var xTicksData = $scope.graphData[0].values;            
             if(tickCount > 0){
               xTicksData = [];
@@ -1744,10 +1744,10 @@ angular.module('hillromvestApp')
               }
             } 
 
-            if(xTicksData.length === 1){
-              chart.xAxis.showMaxMin(false).tickValues(xTicksData.map( function(d){return d.x;} ) ).tickFormat(function(d) {
+            if($scope.graphData[0].values.length === 1){              
+              chart.xAxis.showMaxMin(false).tickValues($scope.graphData[0].values.map( function(d){return d.x;} ) ).tickFormat(function(d) {
               return d3.time.format('%d-%b-%y')(new Date(d));});
-            }else{
+            }else{              
               chart.xAxis.showMaxMin(true).tickFormat(function(d) {
               return d3.time.format('%d-%b-%y')(new Date(d));});
             }         
