@@ -220,8 +220,8 @@
             },
             "minMinutesPerTreatment": {
                 "required":"Minimum Minutes per Treatment Required",
-                "min":"Minimum Minutes per Treatment should be 1 to 98",
-                "max":"Minimum Minutes per Treatment should be 1 to 98",
+                "min":"Minimum Minutes per Treatment should be 1 to 99",
+                "max":"Minimum Minutes per Treatment should be 1 to 99",
                 "invalid": "Minimum Minutes per Treatment is invalid",
                 "custom-invalid": "Minutes per Treatment is invalid",
                 "custom-required": "Minutes per Treatment is Required",
