@@ -134,8 +134,8 @@
       "message" : "Updated details will be reflected."
     },
     "passwordUpdate":{
-      "warning" : "Are you sure, you want to update the Password?",
-      "message" : "After updating password you will be logged out"
+      "warning" : "Update Password",
+      "message" : "Are you sure to update your password?"
     },
     "emailUpdate":{
       "warning" : "Are you sure, you want to update the Email?",
