@@ -132,6 +132,9 @@
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
               <input class="" type="number" name="maxFrequency" ng-model="proto.maxFrequency" required min="{{proto.minFrequency+1}}" max="20">
+
+              
+              <span class="has-error" ng-show="point.maxFrequency.$dirty && proto.maxFrequency < 6" translate="error.protocol.maxFrequency.min"></span>
               <div ng-show="(point.maxFrequency.$dirty && point.maxFrequency.$invalid) || submitted">
                 <span class="has-error" ng-show="point.maxFrequency.$error.required" translate="error.protocol.maxFrequency.required">
                 </span>
@@ -183,6 +186,7 @@
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
               <input class="" type="number" name="maxPressure" ng-model="proto.maxPressure" required min="{{proto.minPressure+1}}" max="10">
+              <span class="has-error" ng-show="point.maxPressure.$dirty && proto.maxPressure < 2" translate="error.protocol.maxPressure.min"></span>
               <div ng-show="(point.maxPressure.$dirty && point.maxPressure.$invalid) || submitted">
                 <span class="has-error" ng-show="point.maxPressure.$error.required" translate="error.protocol.maxPressure.required">
                 </span>
