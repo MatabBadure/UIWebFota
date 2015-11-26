@@ -174,6 +174,14 @@
       "warning": "Are you sure you want to Delete the Protocol?",
       "message": "If you delete the protocol, you will no longer be able to view the information."
     },
+    "update-protocol":{
+      "warning": "Patient Care Plan - Protocol",
+      "message": "You have made changes/updates for Protocol. Are you sure to make updates?"
+    },
+    "update-device":{
+      "warning": "Patient Device - Update",
+      "message": "You have made changes/updates for Device. Are you sure to make updates?"
+    },
     "delete-device": {
       "warning": "Are you sure you want to Delete the Device?",
       "message": "If you delete the Device, you will no longer be able to view the information."
