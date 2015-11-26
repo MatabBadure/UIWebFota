@@ -59,7 +59,24 @@ angular.module('hillromvestApp')
             $scope.states = response.data.states;
           }).catch(function(response) {
           });
-          $scope.getParentClinics();
+          if($state.current.name === 'clinicadminnewhcp'){
+            $scope.getClinicsByClinicAdmin(StorageService.get('logged').userId);
+          }else{
+            $scope.getParentClinics();
+          }
+        };
+
+        $scope.getClinicsByClinicAdmin = function(clinicAdminId){
+          clinicService.getClinicsByClinicadmin(clinicAdminId).then(function(response){
+            $scope.clinics = response.data.clinics;
+            angular.forEach($scope.clinics, function(clinic) {
+              if(clinic.city) {
+                clinic.nameAndCity = clinic.name + "," + clinic.city;
+              } else {
+                clinic.nameAndCity = clinic.name;
+              }
+            });
+          }).catch(function(response){});
         };
 
         $scope.getParentClinics = function() {
