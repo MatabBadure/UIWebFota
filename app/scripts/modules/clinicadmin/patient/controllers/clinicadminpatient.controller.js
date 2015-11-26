@@ -379,5 +379,14 @@ angular.module('hillromvestApp')
     $scope.searchHCPText = true;
   };
 
+  $scope.showUpdatePatientModal = function(){
+    $scope.submitted = true;
+    if($scope.form.$invalid){
+      return false;
+    }else{
+      $scope.updateModal = true;
+    }
+  };
+
 	$scope.init();
 }]);
