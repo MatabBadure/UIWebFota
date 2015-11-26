@@ -202,6 +202,16 @@ angular.module('hillromvestApp')
         return $http.get(url, {
           headers: headerService.getHeader()        
         });
+      },
+
+
+      getClinicsByClinicadmin : function(clinicadmin){
+        var url = URL.getClinicsByClinicadmin.replace('CLINICADMIN', clinicadmin);
+        return $http.get(url, {
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });
       }
     };
   }]);
