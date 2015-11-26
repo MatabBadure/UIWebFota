@@ -135,15 +135,15 @@
     },
     "passwordUpdate":{
       "warning" : "Update Password",
-      "message" : "Are you sure to update your password?"
+      "message" : "You are updating your password and will no longer be able to access using this password again. Are you sure to continue?"
     },
     "emailUpdate":{
-      "warning" : "Are you sure, you want to update the Email?",
-      "message" : "After updating email you will be logged out"
+      "warning" : "Update Email",
+      "message" : "You are updating your email and will no longer be able to access using this email again. Are you sure to continue?"
     },
     "securityQuestion":{
-      "warning" : "Are you sure, you want to update the security question and answer?",
-      "message" : "Updated details will be reflected."
+      "warning" : "Update Security Q & A",
+      "message" : "Are you sure to update your Security Question and Answer?"
     }
   }
 }
