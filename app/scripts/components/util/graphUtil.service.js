@@ -503,8 +503,7 @@ angular.module('hillromvestApp')
         var frequencyObject = {};
         var durationObject = {};
         var count = 0;
-        angular.forEach(data, function(value) {
-          console.log("value : ", value)
+        angular.forEach(data, function(value) {          
           var pressurePoint = {};
           var durationPoint = {};
           var frequencyPoint = {};
