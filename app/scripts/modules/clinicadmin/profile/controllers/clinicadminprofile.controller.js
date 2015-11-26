@@ -101,6 +101,7 @@ angular.module('hillromvestApp')
 
     $scope.updatePassword = function(){
       $scope.submitted = true;
+      $scope.passordUpdateModal = false;
       if($scope.form.$invalid){
         return false;
       }
@@ -142,6 +143,15 @@ angular.module('hillromvestApp')
       }).catch(function(response){
         notyService.showError(response);
       });
+    };
+
+    $scope.showPassordUpdateModal = function(){
+      $scope.submitted = true;
+      if($scope.form.$invalid){
+        return false;
+      }else{
+        $scope.passordUpdateModal = true;
+      }
     };
 
     $scope.init();
