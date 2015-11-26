@@ -84,8 +84,8 @@
             "message": "If you deactivate the clinic, you will no longer be able to view the information."
         },
         "update": {
-            "warning": "Do you want to Update the Clinic Details?",
-            "message": "Are you sure?"
+            "warning": "Clinic - Details",
+            "message": "You have made changes/updates for Clinic details. Are you sure to make updates?"
         },
         "deletePatient":{
             "warning": "Clinic Dashboard - Dissociate Patient",
@@ -145,8 +145,8 @@
             "message": "After deleting you will not be able to see the Clinic Admin."            			
         },
         "updateClinicAdmin":{
-            "warning": "Do You want to update Clinic Admin details?",
-            "message": "Are You Sure?"
+            "warning": "Clinic Admin - Details",
+            "message": "You have made changes/updates for Clinic Admin. Are you sure to make updates?"
         },
         "clinicType":{
             "parent": "Parent",

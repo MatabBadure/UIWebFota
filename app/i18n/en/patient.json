@@ -106,8 +106,8 @@
             "message": "If you activate the patient, patient will be able to access the system."
         },
         "update": {
-            "warning": "Do you want to Update the Patient Details",
-            "message": "Are you sure?"
+            "warning": "Patient Info - Details",
+            "message": "You have made changes/updates in Patient Info. Are you sure to make updates?"
         },
         "no-patient-found": "No patient associated."
     }

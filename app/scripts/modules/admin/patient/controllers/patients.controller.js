@@ -721,6 +721,7 @@ angular.module('hillromvestApp')
 
     $scope.updateProtocol = function(){ 
       $scope.submitted = true;
+      $scope.protocolUpdateModal =false;
       if($scope.addProtocolForm.$invalid){
         return false;
       }
@@ -759,6 +760,7 @@ angular.module('hillromvestApp')
     };
 
     $scope.updateDevice = function(){
+      $scope.deviceUpdateModal =true;
       patientService.addDevice($stateParams.patientId, $scope.device).then(function(response){
         if($scope.patientStatus.role === loginConstants.role.acctservices){
           $state.go('patientProtocolRcadmin', {'patientId': $stateParams.patientId});
@@ -969,6 +971,24 @@ angular.module('hillromvestApp')
         return false;
       }else{
         $scope.showModal = true;
+      }
+    };
+
+    $scope.showPrtocolUpdateModal = function(){
+      $scope.submitted = true;
+      if($scope.addProtocolForm.$invalid){
+        return false;
+      }else{
+        $scope.protocolUpdateModal =true;  
+      }
+    };
+
+    $scope.showDeviceUpdateModal = function(){
+      $scope.submitted = true;
+      if($scope.addDeviceForm.$invalid){
+        return false;
+      }else{
+        $scope.deviceUpdateModal =true;
       }
     };
 

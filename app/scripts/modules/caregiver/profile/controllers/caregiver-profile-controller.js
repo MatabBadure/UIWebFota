@@ -81,6 +81,7 @@ angular.module('hillromvestApp')
 
     $scope.updatePassword = function(){
       $scope.submitted = true;
+      $scope.passwordUpdateModal = false;
       if($scope.form.$invalid){
         return false;
       }
@@ -105,6 +106,16 @@ angular.module('hillromvestApp')
 
     $scope.cancel = function(){
       $state.go('caregiverProfile');
+    };
+
+    $scope.showPasswordUpdateModal = function(){
+      $scope.submitted = true;
+      if($scope.form.$invalid){
+        console.log('Is itr comijngfoe gdsjhfk');
+        return false;
+      }else{
+        $scope.passwordUpdateModal = true;
+      }
     };
 
     $scope.init();

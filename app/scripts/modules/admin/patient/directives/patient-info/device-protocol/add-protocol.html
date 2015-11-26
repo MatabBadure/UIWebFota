@@ -33,7 +33,7 @@
 </div>
 
 <div class="dashboard dashboard--content padding-bottom-ls">
-  <form name="addProtocolForm" ng-submit="editPatient()" novalidate autocomplete="off">
+  <form name="addProtocolForm" novalidate autocomplete="off">
     <div class="container dashboard__form">
       <div>
         <div class="col-md-16 reset-padding margin-top">
@@ -212,11 +212,31 @@
     <div class="col-md-16 margin-top reset-padding">
       <div class="">
         <buton ng-if="!protocol.edit" type="submit" class="hillrom-btn btn-primary float-right btn-margin-left" ng-click="addProtocol()" translate="patient.btn.save">Save</buton>
-        <buton ng-if="protocol.edit" type="submit" class="hillrom-btn btn-primary float-right btn-margin-left" ng-click="updateProtocol()" >Update</buton>
+        <buton ng-if="protocol.edit" type="submit" class="hillrom-btn btn-primary float-right btn-margin-left" ng-click="showPrtocolUpdateModal()" >Update</buton>
         <buton type="submit" class="hillrom-btn btn-secondary float-right" ng-click="cancelProtocolDevice()" translate="patient.btn.cancel">cancel</buton>
         <div class="clr"></div>
       </div>
     </div>
     </div>
   </form>
+</div>
+
+<div ng-if="protocolUpdateModal" class="modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true">
+  <div class="modal__dialog">
+    <div class="modal__content">
+      <header class="modal__header">
+        <button type="button" class="modal__close" data-dismiss="modal" ng-click="$parent.protocolUpdateModal= false">&times;</button>
+         <p translate="patient.update-protocol.warning"></p>
+      </header>
+      <div class="modal__body">
+         <div class="modal--message" translate="patient.update-protocol.message"></div>
+         <div class="row modal--custom-btn">
+          <buton class="hillrom-btn btn-submit float-right" ng-click="updateProtocol()">Yes</buton>
+          <buton class="hillrom-btn btn-secondary btn-submit float-right" data-dismiss="modal" ng-click="$parent.protocolUpdateModal= false">No</buton>
+         </div>
+      </div>
+      <footer class="modal__footer">
+      </footer>
+    </div>
+  </div>
 </div>

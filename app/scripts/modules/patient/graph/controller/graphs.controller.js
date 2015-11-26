@@ -1243,6 +1243,7 @@ angular.module('hillromvestApp')
 
     $scope.formSubmitCaregiver = function(){
       $scope.submitted = true;
+      $scope.caregiverUpdateModal = false;
       if($scope.form.$invalid){
         return false;
       }
@@ -1252,6 +1253,15 @@ angular.module('hillromvestApp')
         $scope.associateCaregiverstoPatient(StorageService.get('logged').patientID, data);
       }else if($scope.careGiverStatus === "edit"){
         $scope.updateCaregiver(StorageService.get('logged').patientID, $stateParams.caregiverId , data);
+      }
+    };
+
+    $scope.showCaregiverUpdateModal = function(){
+      $scope.submitted = true;
+      if($scope.form.$invalid){
+        return false;
+      }else{
+        $scope.caregiverUpdateModal = true;
       }
     };
 

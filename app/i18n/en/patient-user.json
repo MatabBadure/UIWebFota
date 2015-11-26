@@ -155,8 +155,8 @@
       "phone-no": "Phone No.",
       "mobile-no": "Mobile No.",
       "update":{
-        "warning": "Do you want to Update the Caregiver Details?",
-        "message": "Are you sure?"
+        "warning": "Caregiver Info - Details",
+        "message": "You have made changes/updates for Caregiver details. Are you sure to make updates?"
       }
     },
     "sum": {
@@ -173,6 +173,14 @@
     "delete-protocol": {
       "warning": "Are you sure you want to Delete the Protocol?",
       "message": "If you delete the protocol, you will no longer be able to view the information."
+    },
+    "update-protocol":{
+      "warning": "Patient Care Plan - Protocol",
+      "message": "You have made changes/updates for Protocol. Are you sure to make updates?"
+    },
+    "update-device":{
+      "warning": "Patient Device - Update",
+      "message": "You have made changes/updates for Device. Are you sure to make updates?"
     },
     "delete-device": {
       "warning": "Are you sure you want to Delete the Device?",
@@ -330,8 +338,8 @@
       "setting": "Notification Settings"
     },
     "update":{
-      "warning":"Are you sure, you want to update the Profile?",
-      "message":"Updated details will be reflected."
+      "warning":"Update Profile",
+      "message":"You have made changes/updates for your profile. Are you sure to make updates?"
     },
     "userId":"User ID",
     "title-name": "Title",
