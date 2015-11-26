@@ -2245,7 +2245,7 @@ angular.module('hillromvestApp')
                 },
                 resolve: {
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
-                        $translatePartialLoader.addPart('patient-user');
+                        $translatePartialLoader.addPart('profile');
                         return $translate.refresh();
                     }],
                     authorize: ['Auth',
