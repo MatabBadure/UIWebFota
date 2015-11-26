@@ -95,6 +95,7 @@ angular.module('hillromvestApp')
 
     $scope.updatePassword = function(){
       $scope.submitted = true;
+      $scope.passwordUpdateModal = false;
       if($scope.form.$invalid){
         return false;
       }
@@ -138,5 +139,15 @@ angular.module('hillromvestApp')
       var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : (($scope.clinics && $scope.clinics.length > 0) ? $scope.clinics[0].id : $stateParams.clinicId);
       $state.go(value, {'clinicId': clinicId});
     };
+
+    $scope.showPasswordUpdateModal = function(){
+      $scope.submitted = true;
+      if($scope.form.$invalid){
+        return false;
+      }else{
+        $scope.passwordUpdateModal = true;
+      }
+    };
+
     $scope.init();
   }]);
