@@ -90,6 +90,7 @@ angular.module('hillromvestApp')
 
     $scope.updatePassword = function(){
       $scope.submitted = true;
+      $scope.paasordUpdateModal = false;
       if($scope.form.$invalid){
         return false;
       }
@@ -115,6 +116,15 @@ angular.module('hillromvestApp')
         $state.go('adminProfileRc');
       }else{
         $state.go('adminProfile');
+      }
+    };
+
+    $scope.showPasswordUpdateModal = function(){
+      $scope.submitted = true;
+      if($scope.form.$invalid){
+        return false;
+      }else {
+        $scope.paasordUpdateModal = true;
       }
     };
 

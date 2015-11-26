@@ -109,8 +109,8 @@
             "message": "If you reactivate the HCP,&nbsp you will able to view the information."
         },
         "update": {
-            "warning": "Do you want to update HCP details?",
-            "message": "Are You Sure?"
+            "warning": "HCP - Details",
+            "message": "You have made changes/updates for HCP details. Are you sure to make updates?"
         },
         "clinic-disassociate":{
             "warning": "HCP Dashboard - Dissociate Clinic",

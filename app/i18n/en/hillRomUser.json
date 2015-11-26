@@ -101,8 +101,8 @@
             "message": "If you activate the hillrom user, you will be able to view the information."
         },
         "update":{
-            "warning": "Are you sure you want to Update the User?",
-            "message": "If you update the user, updated user values will be reflected"
+            "warning": "Hill-Rom User - Details",
+            "message": "You have made changes/updates for Hill-Rom User. Are you sure to make updates?"
         }
     }
 }

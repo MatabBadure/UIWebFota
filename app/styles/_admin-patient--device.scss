@@ -102,10 +102,14 @@
 
 .admin-user .protocol-list {
   div {
-    padding-left: 6%;
+    text-align: center;
   }
 }
-
+.care_plan_and_device{
+  .header--type{
+    text-align: center;
+  }
+}
 .admin-user .protocol-list .protocol-list__edit {
   padding-left: 10px;
   span {
@@ -125,9 +129,15 @@
 }
 
 .protocol_list_container {
-  border-bottom: solid 1px #ccc;
   position: relative;
+  border-bottom: solid 1px #ccc;
   padding: 0px 0px;
+  &.no_border{
+    border-bottom: 0px;
+  }
+  .protocol-list:last-child{
+    border: 0px;
+  }
 }
 .protocol_list_container > div.last{
   border-bottom: 0px;
@@ -142,4 +152,12 @@
   position: absolute;
   margin-top: -6px;
   top: 50%;
+ }
+ .treatments_per_day_count{
+      position: absolute;
+      text-align: center;
+      top: 50%;
+      margin-top: -6px;
+    .v_middle{
+    }
  }
