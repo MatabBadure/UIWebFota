@@ -147,6 +147,12 @@
             "minlength": "First Name is required to be at least 2 character.",
             "maxlength": "First Name cannot be longer than 15 characters."
         },
+        "patient-lastName":{
+            "required": "Last Name is required.",
+            "pattern": "Last Name can be a combination of alphabets and Hypen placed between alphabets",
+            "minlength": "Last Name is required to be at least 2 character.",
+            "maxlength": "Last Name cannot be longer than 50 characters."
+        },
         "lastName":{
             "required": "Last Name is required.",
             "pattern": "Last Name cannot have number and special characters.",
