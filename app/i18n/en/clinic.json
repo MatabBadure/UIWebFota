@@ -80,8 +80,8 @@
         "mrn-id": "MRN ID",
         "date-of-birth": "Date of Birth",
         "delete": {
-            "warning": "Are you sure you want to Deactivate the Clinic?",
-            "message": "If you deactivate the clinic, you will no longer be able to view the information."
+            "warning": "Deactivate Clinic",
+            "message": "You are deactivating Clinic from the system and . Are you sure to continue?"
         },
         "update": {
             "warning": "Clinic - Details",
@@ -141,8 +141,8 @@
             "email": "Email"
         },
         "deleteClinicAdmin":{
-            "warning": "Are you sure you want to delete the Clinic Admin ?",          			
-            "message": "After deleting you will not be able to see the Clinic Admin."            			
+            "warning": "Clinic Dashboard - Dissociate Clinic Admin",          			
+            "message": "Do you want to dissociate Clinic Admin from the Clinic?"
         },
         "updateClinicAdmin":{
             "warning": "Clinic Admin - Details",
