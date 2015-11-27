@@ -221,7 +221,7 @@ angular.module('hillromvestApp')
               frequencySet.push(value.frequency);
           });
           var maxDuration = arrayMax(durationSet);
-          var maxRecommendedDuration = Math.floor(maxDuration) * data.recommended.treatmentsPerDay;
+          var maxRecommendedDuration = Math.floor(maxDuration);
           maxDuration =  data.recommended.treatmentsPerDay * data.recommended.minMinutesPerTreatment;
           maxDuration = (maxDuration > maxRecommendedDuration) ? maxDuration : maxRecommendedDuration;
           range.maxDuration = maxDuration;
@@ -232,7 +232,7 @@ angular.module('hillromvestApp')
 
           var maxFrequency = arrayMax(frequencySet);
           maxFrequency = (maxFrequency > data.recommended.maxFrequency) ? maxFrequency : data.recommended.maxFrequency;
-          range.maxFrequency = maxFrequency;
+          range.maxFrequency = maxFrequency;          
           return range;
       }
 
