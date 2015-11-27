@@ -171,8 +171,8 @@
       "avr-freq-trt": "Average frequency/treatment"
     },
     "delete-protocol": {
-      "warning": "Are you sure you want to Delete the Protocol?",
-      "message": "If you delete the protocol, you will no longer be able to view the information."
+      "warning": "Delete Protocol",
+      "message": "If you delete the protocol, you will no longer be able to view the information. Are you sure to delete?"
     },
     "update-protocol":{
       "warning": "Patient Care Plan - Protocol",
@@ -183,8 +183,8 @@
       "message": "You have made changes/updates for Device. Are you sure to make updates?"
     },
     "delete-device": {
-      "warning": "Are you sure you want to Delete the Device?",
-      "message": "If you delete the Device, you will no longer be able to view the information."
+      "warning": "Delete Device",
+      "message": "If you delete the Device, you will no longer be able to view the information. Are you sure to delete?"
     },
     "delete-clinic-info": {
       "warning": "Patient Dashboard - Dissociate the Clinic",
@@ -195,8 +195,8 @@
       "message": "Do you want to dissociate HCP from Patient?"
     },
     "delete-caregiver":{
-      "warning": "Are you sure you want to Delete the Caregiver?",
-      "message": "If you delete the Caregiver, you will no longer be able to view the information."
+      "warning": "Patient Dashboard - Delete Caregiver",
+      "message": "Do you want to delete Caregiver from the Patient Dashboard?"
     },
     "delete-note":{
       "warning":"Are you sure you want to delete the Note?",
