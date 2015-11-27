@@ -101,8 +101,8 @@
         "mrnid": "MRN ID",
         "delete": {
             "question": "Are you sure you want to delete Doctor {{ id }}?",
-            "warning": "Are you sure you want to Deactivate the HCP?",
-            "message": "If you deactivate the HCP,&nbsp you will no longer be able to view the information."
+            "warning": "Deactivate HCP",
+            "message": "You are deactivating HCP from the system and HCP user will no longer be able to access Hill-Rom application. Are you sure to continue?"
         },
         "re-activate": {
             "warning": "Are you sure you want to reactivate the HCP?",

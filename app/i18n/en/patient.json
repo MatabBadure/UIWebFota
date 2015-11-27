@@ -98,8 +98,8 @@
             "no-events": "No Transmission"
         },
         "delete": {
-            "warning": "Are you sure you want to Deactivate the Patient?",
-            "message": "If you deactivate the patient, patient will not be able to access the system."
+            "warning": "Deactivate Patient",
+            "message": "You are deactivating Patient from the system and patient user will no longer be able to access Hill-Rom application. Are you sure to continue?"
         },
         "activate":{
             "warning": "Are you sure you want to Activate the Patient?",
