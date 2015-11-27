@@ -104,6 +104,10 @@
             "warning": "Deactivate HCP",
             "message": "You are deactivating HCP from the system and HCP user will no longer be able to access Hill-Rom application. Are you sure to continue?"
         },
+        "disassociate":{
+            "warning": "HCP Dashboard - Disassociate HCP",
+            "message": "Do you want to dissociate HCP from Clinic?"
+        },
         "re-activate": {
             "warning": "Are you sure you want to reactivate the HCP?",
             "message": "If you reactivate the HCP,&nbsp you will able to view the information."
