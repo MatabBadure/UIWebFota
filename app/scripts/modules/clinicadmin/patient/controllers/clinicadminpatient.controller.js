@@ -231,7 +231,7 @@ angular.module('hillromvestApp')
       var _year = dateService.getYear(_date.getFullYear());
       var dob = _month + "/" + _day + "/" + _year;
       $scope.patient.dob = dob;
-      $scope.patient.formatedDOB = _month + "/" + _day + "/" + _year.slice(-2);
+      $scope.patient.formatedDOB = _month + "/" + _day + "/" + _year;
     }
   };
 
@@ -389,4 +389,29 @@ angular.module('hillromvestApp')
   };
 
 	$scope.init();
+
+  $scope.$watch("patient.formatedDOB", function(value) {
+    if($state.current.name === 'clinicadmminpatientDemographicEdit'){
+      if(value && (commonsUserService.isValidDOBDate(value))){
+      $scope.patient.dob = value;
+        var age = dateService.getAge(new Date(value));
+        $scope.patient.age = age;
+        if (age === 0) {
+          $scope.form.$invalid = true;
+        }
+      }else{
+        $scope.form.dob.$invalid = true;
+        $scope.form.$invalid = true;
+        if($scope.patient){
+          $scope.patient.age = '';
+        }
+      }
+    }
+  });
+
+  angular.element('#dp2').datepicker({
+    endDate: '+0d',
+    autoclose: true
+  });
+
 }]);
