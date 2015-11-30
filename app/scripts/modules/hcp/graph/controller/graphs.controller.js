@@ -344,6 +344,7 @@ angular.module('hillromvestApp')
 				$scope.handlelegends();
 				$scope.treatmentGraphRange = graphUtil.getYaxisRangeTreatmentGraph($scope.serverTreatmentGraphData);
 				$scope.createTreatmentGraphData();
+				$scope.serverTreatmentGraphDataForTooltip = graphUtil.convertIntoTreatmentGraphTooltipData($scope.serverTreatmentGraphData);
 				$scope.drawTreatmentGraph();
 			} else {
 				$scope.showTreatmentLegends = false;
@@ -493,7 +494,7 @@ angular.module('hillromvestApp')
 	$scope.toolTipContentForTreatment = function(data){
       return function(key, x, y, e, graph) {
         var toolTip = '';
-        angular.forEach(data, function(value) {
+        angular.forEach($scope.serverTreatmentGraphDataForTooltip, function(value) {
           if(value.startTime === e.point.x){
               toolTip =
                 '<h6>' + dateService.getDateFromTimeStamp(value.startTime,patientDashboard.dateFormat,'/') + '  ('+ d3.time.format('%I:%M %p')(new Date(value.startTime)) + ')'  + '</h6>' +
@@ -517,7 +518,7 @@ angular.module('hillromvestApp')
 
 			chart.tooltipContent($scope.toolTipContentForTreatment($scope.serverTreatmentGraphData));
 			chart.yDomain1([0,$scope.yAxis1Max]);
-			chart.yDomain2([0,$scope.yAxis2Max]);
+			chart.yDomain2([0,$scope.yAxis2Max]);			
 			//this function to put x-axis labels
 			var days = dateService.getDateDiffIndays($scope.fromTimeStamp,$scope.toTimeStamp),
 			totalDataPoints = $scope.treatmentGraphData[0].values.length,
