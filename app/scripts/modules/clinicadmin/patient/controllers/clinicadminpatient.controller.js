@@ -231,7 +231,7 @@ angular.module('hillromvestApp')
       var _year = dateService.getYear(_date.getFullYear());
       var dob = _month + "/" + _day + "/" + _year;
       $scope.patient.dob = dob;
-      $scope.patient.formatedDOB = _month + "/" + _day + "/" + _year.slice(-2);
+      $scope.patient.formatedDOB = _month + "/" + _day + "/" + _year;
     }
   };
 
@@ -388,5 +388,9 @@ angular.module('hillromvestApp')
     }
   };
 
+  angular.element('#dp2').datepicker({
+          endDate: '+0d',
+          autoclose: true});
+  
 	$scope.init();
 }]);
