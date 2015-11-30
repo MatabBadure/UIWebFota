@@ -96,6 +96,8 @@ angular.module('hillromvestApp')
             angular.forEach(data, function(value) {
               value.startTime = dateService.getUTCTimeStamp(value.startTime);
               value.endTime = dateService.getUTCTimeStamp(value.endTime);
+              value.avgTreatments = (value.avgTreatments === 0) ? 0.005: value.avgTreatments;
+              value.avgTreatmentDuration = (value.avgTreatmentDuration === 0) ? 0.005 : value.avgTreatmentDuration;
               pointSet.push(value);
             });
             return pointSet;
@@ -244,10 +246,10 @@ angular.module('hillromvestApp')
               treatmentPerDaySet.push(value.avgTreatments);
               treatmentDurationSet.push(value.avgTreatmentDuration);
           });
-          var maxTreatmentsPerDay = arrayMax(treatmentPerDaySet) + Math.ceil(arrayMax(treatmentPerDaySet)/4);
-          var maxTreatmentDuration = arrayMax(treatmentDurationSet) + arrayMax(treatmentDurationSet)/4;
-          range.maxTreatmentsPerDay = maxTreatmentsPerDay === 0 ? 1 : maxTreatmentsPerDay;
-          range.maxTreatmentDuration = maxTreatmentDuration === 0 ? 1 : maxTreatmentDuration;
+          var maxTreatmentsPerDay = arrayMax(treatmentPerDaySet);// + Math.ceil(arrayMax(treatmentPerDaySet)/4);
+          var maxTreatmentDuration = arrayMax(treatmentDurationSet);// + arrayMax(treatmentDurationSet)/4;
+          range.maxTreatmentsPerDay = maxTreatmentsPerDay < 1 ? 1 : maxTreatmentsPerDay;
+          range.maxTreatmentDuration = maxTreatmentDuration < 1 ? 1 : maxTreatmentDuration;          
           return range;
       }
 
@@ -508,13 +510,13 @@ angular.module('hillromvestApp')
           var durationPoint = {};
           var frequencyPoint = {};
           pressurePoint.x = value.timestamp;
-          pressurePoint.y = (!value.missedTherapy) ? value.pressure+0.1 :value.pressure;
+          pressurePoint.y = (!value.pressure) ? 0.005 :value.pressure;
           pressureValues.push(pressurePoint);
           durationPoint.x = value.timestamp;
-          durationPoint.y = (!value.missedTherapy) ? value.duration+0.1 : value.duration;
+          durationPoint.y = (!value.pressure) ? 0.005 : value.duration;
           durationValues.push(durationPoint);
           frequencyPoint.x = value.timestamp;
-          frequencyPoint.y = (!value.missedTherapy) ? value.frequency+0.1 : value.frequency;
+          frequencyPoint.y = (!value.pressure) ? 0.005 : value.frequency;
           frequencyValues.push(frequencyPoint);
         });
         pressureObject.values = pressureValues;
@@ -637,5 +639,15 @@ angular.module('hillromvestApp')
                 '</ul>';
          }
         return toolTip;
+      }
+
+      this.convertIntoTreatmentGraphTooltipData = function(data){
+        var formattedData = [];
+         angular.forEach(data, function(value) {            
+            value.avgTreatments = (value.avgTreatments < 1) ? 0 : value.avgTreatments;
+            value.avgTreatmentDuration = (value.avgTreatmentDuration < 1) ? 0 : value.avgTreatmentDuration;
+            formattedData.push(value);
+          });
+         return formattedData;
       }
     }]);
