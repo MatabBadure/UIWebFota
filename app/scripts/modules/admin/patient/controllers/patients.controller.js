@@ -858,6 +858,7 @@ angular.module('hillromvestApp')
 
     angular.element('#dp2').datepicker({
           endDate: '+0d',
+          startDate: '-100y',
           autoclose: true});
 
     $scope.switchtoCustom = function(){
