@@ -882,6 +882,7 @@ angular.module('hillromvestApp')
     };
 
     $scope.initpatientEditProtocol = function(){
+      $scope.getPatientById($stateParams.patientId);
       patientService.getProtocolById($stateParams.patientId, $stateParams.protocolId).then(function(response){
         $scope.protocol = response.data;
         $scope.protocol.edit = true;  
