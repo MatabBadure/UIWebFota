@@ -1086,7 +1086,7 @@ ul.dropdown-menu {
   }
 /*Condition for IE Browser*/
 
-@media screen\0 {
+@media screen and (min-width:0\0) {
   .search-dropdown{
 
     &:before{
@@ -1094,8 +1094,11 @@ ul.dropdown-menu {
       background-color: transparent;
     }
   }
-  .dashboard__form__input--sec-option .custom-dropdown .security-select{
+  .dashboard__form__input--sec-option .custom-dropdown .security-select, .edit-profile-dropdown-state, .dashboard__manage-view--search select{
     padding-right: 0px;
+  }
+  input[type="text"]:-ms-input-placeholder{
+    color: #ccc;
   }
 }
 /*END*/

@@ -74,8 +74,8 @@
         <span class="search-icon hillrom-icon icon-search-icon"></span>
       </div>
       <div class="fixed-filter-box reset-padding-left">
-        <div class="search-dropdown">
-          <select ng-model="filterClinicId" ng-change="getPatientsByClinic()">
+        <div class="search-dropdown custom-dropdown">
+          <select class="security-select" ng-model="filterClinicId" ng-change="getPatientsByClinic()">
             <option ng-selected="{{hcpClinic.clinicId == filterClinicId}}"
             ng-repeat="hcpClinic in clinicList"
             value="{{hcpClinic.clinicId}}">
