@@ -35,10 +35,10 @@
           </div>
           <div class="col-md-7 col-sm-7 reset-padding col-md-offset-2">
             <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
-              <span class="" translate="profile.hr-id"></span>
+              <span class="" translate="profile.view-role-text"></span>
             </div>
-            <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding">
-              <span>{{user.hillromId}}</span>
+            <div class="col-md-6 col-sm-6 dashboard__form--label-val reset-padding">
+              <span nf-if="user.role === 'CLINIC_ADMIN'">Clinic Admin</span>
             </div>
           </div>
         </div>
@@ -52,16 +52,6 @@
               <span>{{user.email}}</span>
             </div>
           </div>
-
-          <div class="col-md-7 col-sm-7 reset-padding col-md-offset-2">
-            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
-              <span class="" translate="profile.view-role-text"></span>
-            </div>
-            <div class="col-md-6 col-sm-6 dashboard__form--label-val reset-padding">
-              <span>{{user.role}}</span>
-            </div>
-          </div>
-
         </div>
       <div class="clr"></div>
     </div>

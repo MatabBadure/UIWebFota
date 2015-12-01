@@ -19,7 +19,11 @@ angular.module('hillromvestApp')
       },
       controller: ['$scope', 'notyService', '$state', 'UserService', 'StorageService', 'Auth', '$rootScope', function ($scope, notyService, $state, UserService, StorageService, Auth, $rootScope) {
 
-
+        $scope.init = function(){
+          if($state.current.name === 'hillRomUserEdit'){
+            $scope.loggedUserId = StorageService.get('logged').userId;
+          }
+        };
         $scope.open = function () {
           $scope.showModal = true;
         };
@@ -168,7 +172,9 @@ angular.module('hillromvestApp')
           $scope.form.$setPristine();
           $scope.submitted = false;
           $state.go('hillRomUser');
-        }
+        };
+
+        $scope.init();
       }]
     };
   });

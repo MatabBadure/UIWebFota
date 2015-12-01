@@ -114,6 +114,14 @@
   padding-left: 10px;
   span {
   padding-right: 10px;
+  
+  }
+}
+.protocol-list__edit{
+  span{
+    &:hover{
+      color: $pickled-bluewood;
+    }
   }
 }
 
@@ -137,6 +145,11 @@
   }
   .protocol-list:last-child{
     border: 0px;
+  }
+  .protocol-list, .treatments_per_day_count{
+    span{
+      color: $pickled-bluewood;
+    }
   }
 }
 .protocol_list_container > div.last{

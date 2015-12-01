@@ -719,7 +719,7 @@ angular.module('hillromvestApp')
       }
     };
 
-    $scope.updateProtocol = function(){ 
+    $scope.updateProtocol = function(){
       $scope.submitted = true;
       $scope.protocolUpdateModal =false;
       if($scope.addProtocolForm.$invalid){
@@ -739,6 +739,8 @@ angular.module('hillromvestApp')
             value.treatmentLabel = 'point'+(key+1);
           }
         });
+      }else{
+        data[0].treatmentsPerDay = $scope.protocol.treatmentsPerDay;
       }
       patientService.editProtocol($stateParams.patientId, data).then(function(response){
         if($scope.patientStatus.role === loginConstants.role.acctservices){
@@ -858,6 +860,7 @@ angular.module('hillromvestApp')
 
     angular.element('#dp2').datepicker({
           endDate: '+0d',
+          startDate: '-100y',
           autoclose: true});
 
     $scope.switchtoCustom = function(){
@@ -880,6 +883,7 @@ angular.module('hillromvestApp')
     };
 
     $scope.initpatientEditProtocol = function(){
+      $scope.getPatientById($stateParams.patientId);
       patientService.getProtocolById($stateParams.patientId, $stateParams.protocolId).then(function(response){
         $scope.protocol = response.data;
         $scope.protocol.edit = true;  
