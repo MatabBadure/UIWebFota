@@ -65,6 +65,8 @@ angular.module('hillromvestApp')
 	      $scope.profile = function(){ 
 	        if($rootScope.userRole === "ADMIN"){
 	          $state.go('adminProfile');
+	        }else if($rootScope.userRole === "ASSOCIATES"){
+		          $state.go("adminProfile");	          
 	        }else if($rootScope.userRole === "PATIENT"){
 	          $state.go("patientResetPassword");
 	        } else if($rootScope.userRole === 'HCP'){
@@ -85,6 +87,8 @@ angular.module('hillromvestApp')
 	          $state.go("home");
 	        }else if($rootScope.userRole === "ADMIN"){
 	          $state.go("patientUser");
+	        }else if($rootScope.userRole === "ASSOCIATES"){
+		          $state.go("patientUser");	          
 	        }else if($rootScope.userRole === "PATIENT"){
 	          $state.go("patientdashboard");
 	        }else if($rootScope.userRole === "CLINIC_ADMIN" || $rootScope.userRole === "CLINIC ADMIN"){
