@@ -82,6 +82,7 @@ angular.module('hillromvestApp')
 	        }
 	      };
 
+	      
 	      $scope.goToHomePage = function(){
 	        if(!$rootScope.userRole){
 	          $state.go("home");
