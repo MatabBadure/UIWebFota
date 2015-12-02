@@ -1901,7 +1901,7 @@ angular.module('hillromvestApp')
             '<span class="title--desc">'+reportGenerationDate+'</span>'+
             '</div>' +
             '<div class="title">'+
-            '<span class="title--heading">'+stringConstants.dateRangeOfReportLabel+stringConstants.colon+'</span>'+
+            '<span class="title--heading date_range">'+stringConstants.dateRangeOfReportLabel+stringConstants.colon+'</span>'+
             '<span class="title--desc">'+$scope.fromDate+stringConstants.minus+$scope.toDate+'</span>'+
             '</div>' +
             '<div class="pdf-container table-right">'+
