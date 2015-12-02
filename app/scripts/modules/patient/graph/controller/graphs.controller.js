@@ -2,8 +2,8 @@
 
 angular.module('hillromvestApp')
 .controller('graphController',
-  ['$scope', '$state', 'patientDashBoardService', 'StorageService', 'dateService', 'graphUtil', 'patientService', 'UserService', '$stateParams', 'notyService', '$timeout', 'graphService', 'caregiverDashBoardService', 'loginConstants', '$location','$filter',
-  function($scope, $state, patientDashBoardService, StorageService, dateService, graphUtil, patientService, UserService, $stateParams, notyService, $timeout, graphService, caregiverDashBoardService, loginConstants, $location, $filter) {
+  ['$scope', '$state', 'patientDashBoardService', 'StorageService', 'dateService', 'graphUtil', 'patientService', 'UserService', '$stateParams', 'notyService', '$timeout', 'graphService', 'caregiverDashBoardService', 'loginConstants', '$location','$filter', 'commonsUserService',
+  function($scope, $state, patientDashBoardService, StorageService, dateService, graphUtil, patientService, UserService, $stateParams, notyService, $timeout, graphService, caregiverDashBoardService, loginConstants, $location, $filter, commonsUserService) {
 
     var chart;
     var hiddenFrame, htmlDocument;
@@ -11,14 +11,21 @@ angular.module('hillromvestApp')
     var g_pdfMetaData={};
     $scope.addCanvasToDOM = function (){      
       $('<div id=hmrLineCanContainer >HMR Line<br/><canvas id=hmrLineCanvas width=1300 height=350></canvas></div>').appendTo("body");
-      $('<div id=hmrLineDiv </div>').appendTo("body");
+      $('<div id=hmrLineDiv> </div>').appendTo("body");
       $('<div id=hmrBarCanContainer >HMR<br/><canvas id=hmrBarCanvas width=1300 height=350></canvas></div>').appendTo("body");
-      $('<div id=hmrBarDiv </div>').appendTo("body");
+      $('<div id=hmrBarDiv> </div>').appendTo("body");
       $('<div id=complianceCanContainer >HMR<br/><canvas id=complianceCanvas width=1300 height=350></canvas></div>').appendTo("body");
-      $('<div id=complianceDiv </div>').appendTo("body");
+      $('<div id=complianceDiv> </div>').appendTo("body");
       //$(".footer").remove();
+    };        
+    $scope.isIE = function(){
+      if(commonsUserService.getBrowser().indexOf("internet explorer") !== -1){
+        return true
+      }else{
+        return false;
+      }
     };
-
+    var isIEBrowser = $scope.isIE();
     $scope.init = function() {
       $scope.yAxisRangeForHMRLine = $scope.yAxisRangeForCompliance = $scope.compliance = {};
       $scope.hmrLineGraph = true;
@@ -1863,16 +1870,25 @@ angular.module('hillromvestApp')
               hmrLineIndex = -1, hmrBarIndex = 0, complianceIndex = 1;
               graphRequests.splice(0,1);
               $scope.addHTMLToNode("hmrLineDiv", strHtml);
+              if(!isIEBrowser){
+                $scope.drawCanvas('hmrLineCanvas',$("#hmrLineDiv").find("svg").parent().html());
+              }              
               break;
           case 'hmrBar':
               hmrLineIndex = 0, hmrBarIndex = -1, complianceIndex = 1;
               graphRequests.splice(1,1);
               $scope.addHTMLToNode("hmrBarDiv", strHtml);
+              if(!isIEBrowser){
+                $scope.drawCanvas('hmrBarCanvas',$("#hmrBarDiv").find("svg").parent().html().trim());
+              } 
               break;
           case 'compliance':
               hmrLineIndex = 0, hmrBarIndex = 1, complianceIndex = -1;
               graphRequests.splice(2,1);
               $scope.addHTMLToNode("complianceDiv", strHtml);
+              if(!isIEBrowser){
+                $scope.drawCanvas('complianceCanvas',$("#complianceDiv").find("svg").parent().html().trim());
+              } 
               break;
           default:
               break;
@@ -2011,27 +2027,33 @@ angular.module('hillromvestApp')
       var imgY = 250;
 
       if($("#hmrLineDiv").find("svg").length > 0){
-        var canvas = document.getElementById('hmrLineCanvas');               
-        var ctx = canvas.getContext('2d');
-        canvg(canvas, $("#hmrLineDiv").find("svg").parent().html().trim());
+        if(isIEBrowser){
+          var canvas = document.getElementById('hmrLineCanvas');               
+          var ctx = canvas.getContext('2d');
+          canvg(canvas, $("#hmrLineDiv").find("svg").parent().html().trim());
+        }        
         var img = $("#hmrLineCanvas")[0].toDataURL('image/png', 1.0);
         pdf.addImage(img, 'png', 40, (imgY),margins.width+100, 170);
         imgY = imgY + 20;
       }
 
       if($("#hmrBarDiv").find("svg").length > 0){
-        var canvas = document.getElementById('hmrBarCanvas');               
-        var ctx = canvas.getContext('2d');
-        canvg(canvas, $("#hmrBarDiv").find("svg").parent().html().trim());
+        if(isIEBrowser){
+          var canvas = document.getElementById('hmrBarCanvas');               
+          var ctx = canvas.getContext('2d');
+          canvg(canvas, $("#hmrBarDiv").find("svg").parent().html().trim());
+        }
         var img = $("#hmrBarCanvas")[0].toDataURL('image/png', 1.0);
         pdf.addImage(img, 'png', 40, (imgY),margins.width+100, 170);
         imgY = imgY + 20;
       }
 
       if($("#complianceDiv").find("svg").length > 0){
-        var canvas = document.getElementById('complianceCanvas');               
-        var ctx = canvas.getContext('2d');
-        canvg(canvas, $("#complianceDiv").find("svg").parent().html().trim());
+        if(isIEBrowser){
+          var canvas = document.getElementById('complianceCanvas');               
+          var ctx = canvas.getContext('2d');
+          canvg(canvas, $("#complianceDiv").find("svg").parent().html().trim());
+        }
         var img = $("#complianceCanvas")[0].toDataURL('image/png', 1.0);
         pdf.addImage(img, 'png', 40, (imgY),margins.width+100, 170);
         imgY = imgY + 20;
@@ -2111,6 +2133,32 @@ angular.module('hillromvestApp')
 
           }
     };
+
+    $scope.drawCanvas = function(id, html){
+      console.log("draw canvas....."+id);
+      var myCanvas = document.getElementById(id);   
+      var ctx = myCanvas.getContext('2d');
+      ctx.clearRect(0, 0,1300,350);
+      var img = new Image();
+      img.setAttribute('img','img');
+      img.onload = function(){
+        img.crossOrigin = 'Anonymous';
+        ctx.drawImage(img,0,0); // Or at whatever offset you like
+      };
+      img.onerror = function() {console.log("error");
+      }
+      img.onabort = function() {console.log("stopped");
+      }
+      var imgsrc = 'data:image/svg+xml;base64,'+ window.btoa(html);
+      var data = {"Encoded String": imgsrc};
+      patientDashBoardService.convertSVGToImg(data).then(function(response){        
+        img.src = response.data['Encoded String'];
+      }).catch(function(response){
+        console.log("error : ",response);
+      });
+
+    }
+
     
 
 }]);
