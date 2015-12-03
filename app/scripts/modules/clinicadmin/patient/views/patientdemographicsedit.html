@@ -120,7 +120,7 @@
               <span class="" translate="patient.middle-name"></span>
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
-              <input class="" type="text" validate-on-blur ng-readonly="validateADMINorASP()" name="middleName" ng-model="patient.middleName" ng-pattern="/^[a-z A-Z]+$/" ng-minlength=2 ng-maxlength=15>
+              <input class="" type="text" validate-on-blur ng-readonly="validateADMINorASP()" name="middleName" ng-model="patient.middleName" ng-pattern="/^[a-z A-Z]+$/" ng-minlength=1 ng-maxlength=15>
               <div ng-show="(form.middleName.$showValidationMessage && form.middleName.$invalid) || submitted">
                 <span class="has-error" ng-show="form.middleName.$error.pattern" translate="error.middleName.pattern"></span>
                 <span class="has-error" ng-show="form.middleName.$error.minlength" translate="error.middleName.minlength"></span>
