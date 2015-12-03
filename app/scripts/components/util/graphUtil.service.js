@@ -159,8 +159,8 @@ angular.module('hillromvestApp')
         });
         var max = arrayMax(hmrSet);
         var min = arrayMin(hmrSet);
-        var unit = 3600;
-        var ylabel = "Hours";
+        var unit = 60; //hmr values are in minutes
+        var ylabel = "HMR";
 
         max = Math.floor(max/unit);
         min = Math.floor(min/unit);
@@ -222,19 +222,20 @@ angular.module('hillromvestApp')
               pressureSet.push(value.pressure);
               frequencySet.push(value.frequency);
           });
+
           var maxDuration = arrayMax(durationSet);
           var maxRecommendedDuration = Math.floor(maxDuration);
           maxDuration =  data.recommended.treatmentsPerDay * data.recommended.minMinutesPerTreatment;
           maxDuration = (maxDuration > maxRecommendedDuration) ? maxDuration : maxRecommendedDuration;
-          range.maxDuration = maxDuration;
+          range.maxDuration = maxDuration + Math.ceil(maxDuration/4);
 
           var maxPressure = arrayMax(pressureSet);
           maxPressure = (maxPressure > data.recommended.maxPressure) ? maxPressure : data.recommended.maxPressure;
-          range.maxPressure = maxPressure;
+          range.maxPressure = maxPressure + Math.ceil(maxPressure/4);
 
           var maxFrequency = arrayMax(frequencySet);
           maxFrequency = (maxFrequency > data.recommended.maxFrequency) ? maxFrequency : data.recommended.maxFrequency;
-          range.maxFrequency = maxFrequency;          
+          range.maxFrequency = maxFrequency + Math.ceil(maxFrequency/4);          
           return range;
       }
 
@@ -577,11 +578,15 @@ angular.module('hillromvestApp')
       }
 
       this.getToolTipForBarChart = function(value) {
-        var toolTip = '';
+        var toolTip = '', headerTime = '';
+
+        if(!value.missedTherapy){
+          headerTime =  '  ('+ d3.time.format('%I:%M %p')(new Date(value.start)) + ')';
+        }
         if(value.note && value.note.note && value.note.note.length > 0){
             toolTip =
               '<div class="tooltip_sub_content">'+
-              '<h6 class="after">' + dateService.getDateTimeFromTimeStamp(value.start,patientDashboard.dateFormat,'/') + '</h6>' +
+              '<h6 class="after">' + dateService.getDateFromTimeStamp(value.start,patientDashboard.dateFormat,'/') + headerTime + '</h6>' +
               '<ul class="graph_ul">' +
                 '<li><span class="pull-left">' + 'Duration' +'</span><span class="pull-right value">' + value.duration +'</span></li>' +
                 '<li><span class="pull-left">' + 'Frequency' + '</span><span class="pull-right value">' + value.frequency  + '</span></li>' +
@@ -598,7 +603,7 @@ angular.module('hillromvestApp')
               '</div>';
         }else {
           toolTip =
-            '<h6 class="after">' + dateService.getDateTimeFromTimeStamp(value.start,patientDashboard.dateFormat,'/') + '</h6>' +
+            '<h6 class="after">' + dateService.getDateFromTimeStamp(value.start,patientDashboard.dateFormat,'/') + headerTime + '</h6>' +
             '<ul class="graph_ul">' +
               '<li><span class="pull-left">' + 'Duration' +'</span><span class="pull-right value">' + value.duration +'</span></li>' +
               '<li><span class="pull-left">' + 'Frequency' + '</span><span class="pull-right value">' + value.frequency  + '</span></li>' +
