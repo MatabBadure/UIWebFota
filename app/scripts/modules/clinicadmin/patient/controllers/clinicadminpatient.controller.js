@@ -394,6 +394,10 @@ angular.module('hillromvestApp')
     }
   };
 
+ angular.element('#dp2').datepicker({
+          endDate: '+0d',
+          startDate: '-100y',
+          autoclose: true});
 	$scope.init();
 
   $scope.$watch("patient.formatedDOB", function(value) {
@@ -414,10 +418,5 @@ angular.module('hillromvestApp')
       }
     }
   });
-
-  angular.element('#dp2').datepicker({
-    endDate: '+0d',
-    autoclose: true
-  });
-
+ 
 }]);

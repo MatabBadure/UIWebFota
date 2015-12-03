@@ -422,6 +422,7 @@
 
    .show_content{
 		display: block;
+		word-wrap: break-word;
 	}
 	.hide_content{
 		display: none;
@@ -475,6 +476,11 @@
 
 .treatmentGraphTL{
 	.nvtooltip{
-		width: 270px;
+		width: 280px;
+		margin-top: 40px;
+	}
+	.value{
+		text-align: left;
+		width: 70px;
 	}
 	}
