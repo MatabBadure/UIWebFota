@@ -321,6 +321,9 @@
 					color: $gray-dark;
 				}
 			}
+			.notes{
+				padding-right: 7px;
+			}
 		}
 	}
 	.patient_dashdoard_btns{
@@ -422,6 +425,7 @@
 
    .show_content{
 		display: block;
+		word-wrap: break-word;
 	}
 	.hide_content{
 		display: none;

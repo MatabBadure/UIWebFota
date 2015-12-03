@@ -255,6 +255,7 @@ angular.module('hillromvestApp')
       $scope.patients = response.data;      
       angular.forEach($scope.patients, function(patient){
         patient.dob = dateService.getDateFromTimeStamp(patient.dob, patientDashboard.dateFormat, '/');
+        patient.lastTransmissionDate = (patient.lastTransmissionDate) ? dateService.getDateFromYYYYMMDD(patient.lastTransmissionDate, '/') : patient.lastTransmissionDate;
       });
       $scope.total = (response.headers()['x-total-count']) ? response.headers()['x-total-count'] :$scope.patients.length; 
       $scope.pageCount = Math.ceil($scope.total / 10);
@@ -364,12 +365,18 @@ angular.module('hillromvestApp')
     }).catch(function(data){notyService.showError(response, 'warning');});
   };
 
-  $scope.selectHcpForPatient = function(hcp){
-    var data = [{'id': hcp.id}];
+  $scope.showAssociateHCPModal = function(hcp){
+    $scope.selectedHCP = hcp;
+    $scope.associateHCPModal = true;
+  };
+
+  $scope.selectHcpForPatient = function(){
+    $scope.associateHCPModal = false;
+    var data = [{'id': $scope.selectedHCP.id}];
     $scope.searchHcp = "";
-    $scope.searchHCPText = false;
     patientService.associateHCPToPatient(data, $stateParams.patientId).then(function(response){
       $scope.getAvailableAndAssociatedHCPs($stateParams.patientId);
+      $scope.searchHCPText = false;
       notyService.showMessage(response.data.message, 'success');
     });
   };

@@ -194,11 +194,18 @@ angular.module('hillromvestApp')
       }).catch(function(response){});
     };
 
-    $scope.selectClinicFromHCP = function(clinic){
+    $scope.showAssociateClinicModal = function(clinic){
+      $scope.selectedclinic = clinic;
+      $scope.associatedClinicModal = true;
+    };
+
+    $scope.selectClinicFromHCP = function(){
+      $scope.associatedClinicModal = false;
       $scope.searchItem = "";
       var data = [{'id': $stateParams.doctorId}];
-      clinicService.associateHcp(clinic.id, data).then(function(response){
+      clinicService.associateHcp($scope.selectedclinic.id, data).then(function(response){
         $scope.getAvailableclinics($stateParams.doctorId);
+        $scope.associateClinicSearch = false;
         notyService.showMessage(response.data.message, 'success');
       }).catch(function(response){
          if (response.data.message !== undefined) {
