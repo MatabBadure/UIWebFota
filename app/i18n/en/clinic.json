@@ -95,6 +95,14 @@
             "warning": " Clinic Dashboard - Dissociate HCP",
             "message": "Do you want to dissociate HCP from the Clinic?"
         },
+        "associateHcp":{
+            "warning": "Clinic Dashboard - Associate HCP",
+            "message": "Do you want to associate HCP to the Clinic?"
+        },
+        "associatePatient":{
+            "warning": "Clinic Dashboard - Associate Patient",
+            "message": "Do you want to associate the Patient to the Clinic?"
+        },
         "hillRom-id": "Hill-Rom ID",
         "type": "Type",
         "status": "Status",
