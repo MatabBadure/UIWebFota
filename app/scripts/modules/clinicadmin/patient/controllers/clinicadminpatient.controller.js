@@ -364,12 +364,18 @@ angular.module('hillromvestApp')
     }).catch(function(data){notyService.showError(response, 'warning');});
   };
 
-  $scope.selectHcpForPatient = function(hcp){
-    var data = [{'id': hcp.id}];
+  $scope.showAssociateHCPModal = function(hcp){
+    $scope.selectedHCP = hcp;
+    $scope.associateHCPModal = true;
+  };
+
+  $scope.selectHcpForPatient = function(){
+    $scope.associateHCPModal = false;
+    var data = [{'id': $scope.selectedHCP.id}];
     $scope.searchHcp = "";
-    $scope.searchHCPText = false;
     patientService.associateHCPToPatient(data, $stateParams.patientId).then(function(response){
       $scope.getAvailableAndAssociatedHCPs($stateParams.patientId);
+      $scope.searchHCPText = false;
       notyService.showMessage(response.data.message, 'success');
     });
   };
