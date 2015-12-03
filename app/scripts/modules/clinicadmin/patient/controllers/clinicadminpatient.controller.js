@@ -255,6 +255,7 @@ angular.module('hillromvestApp')
       $scope.patients = response.data;      
       angular.forEach($scope.patients, function(patient){
         patient.dob = dateService.getDateFromTimeStamp(patient.dob, patientDashboard.dateFormat, '/');
+        patient.lastTransmissionDate = (patient.lastTransmissionDate) ? dateService.getDateFromYYYYMMDD(patient.lastTransmissionDate, '/') : patient.lastTransmissionDate;
       });
       $scope.total = (response.headers()['x-total-count']) ? response.headers()['x-total-count'] :$scope.patients.length; 
       $scope.pageCount = Math.ceil($scope.total / 10);
