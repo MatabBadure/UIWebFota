@@ -62,9 +62,9 @@
       "miss-therapy-days" : "Missed Therapy Days",
       "hmr-non-adher": "HMR Non-Adherence",
       "setting-deviation": "Setting Deviation",
-      "miss-therapy-days-desc": "You will get Notification email for Patients who has missed therapy for three or more days.",
-      "hmr-non-adher-desc": "You will get Notification email for Patients if any patients HMR Non-Adherence is below protocol for three or more days.",
-      "setting-deviation-desc": "You will get Notification email for Patients Setting Deviation if any patients frequency is 15% below protocol for three or more days."
+      "miss-therapy-days-desc": "You will get Notification email for Patients, who has missed therapy for three or more days.",
+      "hmr-non-adher-desc": "You will get Notification email for Patients,who has HMR Non-Adherence below protocol for three or more days.",
+      "setting-deviation-desc": "You will get Notification email for Patients,who has Setting Deviation 15% below protocol for three or more days."
     },
     "errorMSG": {
        "password-required": "password is required.",
