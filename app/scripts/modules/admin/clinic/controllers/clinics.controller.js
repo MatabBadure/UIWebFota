@@ -550,6 +550,7 @@ angular.module('hillromvestApp')
       var data = [{'id': $stateParams.clinicId}];
       clinicService.associatePatient($scope.selectedPatient.id, data).then(function(response){
         $scope.initClinicAssoctPatients($stateParams.clinicId);
+        $scope.isAssociatePatient = false;
         notyService.showMessage(response.data.message, 'success');
         $scope.getNonAssociatedPatients($stateParams.clinicId);
       }).catch(function(response){

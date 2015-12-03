@@ -205,6 +205,7 @@ angular.module('hillromvestApp')
       var data = [{'id': $stateParams.doctorId}];
       clinicService.associateHcp($scope.selectedclinic.id, data).then(function(response){
         $scope.getAvailableclinics($stateParams.doctorId);
+        $scope.associateClinicSearch = false;
         notyService.showMessage(response.data.message, 'success');
       }).catch(function(response){
          if (response.data.message !== undefined) {
