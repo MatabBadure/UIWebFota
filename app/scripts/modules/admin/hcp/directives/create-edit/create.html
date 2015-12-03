@@ -296,7 +296,7 @@
     </div>
   </form>
 </div>
-
+<!-- 
 <div ng-if="showModal" class="modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true">
   <div class="modal__dialog">
     <div class="modal__content">
@@ -315,4 +315,7 @@
       </footer>
     </div>
   </div>
-</div>
+</div> -->
+
+<modal ng-if="showModal" modall="showModal" onyes="createDoctor()" onno="$parent.showModal = false" header="{{'doctor.update.warning' | translate}}" message="{{'doctor.update.message' | translate}}">
+</modal>

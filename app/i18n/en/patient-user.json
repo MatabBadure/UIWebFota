@@ -194,6 +194,14 @@
       "warning": "Patient Dashboard - Dissociate HCP",
       "message": "Do you want to dissociate HCP from Patient?"
     },
+    "associate-clinic-info":{
+      "warning":"Patient Dashboard - Associate the Clinic",
+      "message":"Do you want to Associate Clinic to the Patient?"
+    },
+    "associate-hcp-info":{
+      "warning":" Patient Dashboard - Associate HCP",
+      "message":"Do you want to Associate HCP to Patient?"
+    },
     "delete-caregiver":{
       "warning": "Patient Dashboard - Delete Caregiver",
       "message": "Do you want to delete Caregiver from the Patient Dashboard?"

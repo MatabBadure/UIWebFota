@@ -117,7 +117,7 @@
   </div>
   <div class="col-md-16 reset-padding">
     <div class="col-md-8 clinic-link">
-      <input class="form-control" type="text" ng-model="searchPatient" typeahead="patient as patient.lastName + ' ' + patient.firstName + '&nbsp;&nbsp; ' + patient.hillromId + ' &nbsp;&nbsp; '+ patient.city + '  &nbsp;&nbsp; '+ patient.state for patient in nonAssociatedPatients | filter:$viewValue" typeahead-on-select="selectPatient($item)" placeholder="{{'clinic.placeholder.patient-search' | translate}}" ng-show="isAssociatePatient">
+      <input class="form-control" type="text" ng-model="searchPatient" typeahead="patient as patient.lastName + ' ' + patient.firstName + '&nbsp;&nbsp; ' + patient.hillromId + ' &nbsp;&nbsp; '+ patient.city + '  &nbsp;&nbsp; '+ patient.state for patient in nonAssociatedPatients | filter:$viewValue" typeahead-on-select="showAssociatePatientModal($item)" placeholder="{{'clinic.placeholder.patient-search' | translate}}" ng-show="isAssociatePatient">
 
     </div>
 
@@ -146,3 +146,7 @@
     </div>
   </div>
 </div>
+
+
+<modal ng-if="associatePatientModal" modall="showModal" onyes="selectPatient()" onno="$parent.associatePatientModal = false; $parent.searchPatient= ''" header="{{'clinic.associatePatient.warning' | translate}}" message="{{'clinic.associatePatient.message' | translate}}">
+</modal>
