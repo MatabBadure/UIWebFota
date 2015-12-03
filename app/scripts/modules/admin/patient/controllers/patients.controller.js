@@ -328,8 +328,8 @@ angular.module('hillromvestApp')
       var data = [{"id": $scope.selectedClinic.id, "mrnId": null, "notes": null}];
       $scope.clinic.name = "";
       $scope.associatedClinicModal = false;
-      $scope.searchClinicText = false;
       patientService.associateClinicToPatient($stateParams.patientId, data).then(function(response) {
+        $scope.searchClinicText = false;
         $scope.getAvailableAndAssociatedClinics($stateParams.patientId);
         $scope.associatedClinics = response.data.clinics;
       }).catch(function(response) {
@@ -368,8 +368,8 @@ angular.module('hillromvestApp')
       $scope.associatedHCPModal = false;
       var data = [{'id': $scope.selectedHCP.id}];
       $scope.searchHcp = "";
-      $scope.searchHCPText = false;
       patientService.associateHCPToPatient(data, $stateParams.patientId).then(function(response){
+        $scope.searchHCPText = false;
         $scope.getAvailableAndAssociatedHCPs($stateParams.patientId);
         notyService.showMessage(response.data.message, 'success');
       });
