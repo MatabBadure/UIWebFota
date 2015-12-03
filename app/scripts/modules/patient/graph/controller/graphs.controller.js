@@ -9,14 +9,31 @@ angular.module('hillromvestApp')
     var hiddenFrame, htmlDocument;
     var g_str='<style>.nvd3 .nv-point-paths path {stroke: #aaa;stroke-opacity: 0;fill: #eee;fill-opacity: 0;border: 5px red solid;}.nv-point {    stroke-opacity: 1 !important;    stroke-width: 3px !important;}.missed_therapy_node {fill: #cf202f;stroke: #fff;stroke-width: 1.5;fill-opacity: 1;}.nv-lineChart g rect {fill: #e3ecf7;opacity: 1 !important;}.nvd3 .nv-groups path.nv-line {fill: none;}.svg_bg {fill: #e3ecf7;}.nvd3.nv-stackedarea path.nv-area {fill-opacity: .7;stroke-opacity: 0;transition: fill-opacity 250ms linear, stroke-opacity 250ms linear;    -moz-transition: fill-opacity 250ms linear, stroke-opacity 250ms linear;-webkit-transition: fill-opacity 250ms linear, stroke-opacity 250ms inear;}</style>';
     var g_pdfMetaData={};
-    $scope.addCanvasToDOM = function (){      
-      $('<div id=hmrLineCanContainer >HMR Line<br/><canvas id=hmrLineCanvas width=1300 height=350></canvas></div>').appendTo("body");
-      $('<div id=hmrLineDiv> </div>').appendTo("body");
-      $('<div id=hmrBarCanContainer >HMR<br/><canvas id=hmrBarCanvas width=1300 height=350></canvas></div>').appendTo("body");
-      $('<div id=hmrBarDiv> </div>').appendTo("body");
-      $('<div id=complianceCanContainer >HMR<br/><canvas id=complianceCanvas width=1300 height=350></canvas></div>').appendTo("body");
-      $('<div id=complianceDiv> </div>').appendTo("body");
-      //$(".footer").remove();
+    $scope.addCanvasToDOM = function (){ 
+      if($("#hmrLineCanContainer").length > 0){
+        $("#hmrLineCanContainer").remove();
+      }
+      if($("#hmrLineDiv").length > 0){
+        $("#hmrLineDiv").remove();
+      }
+      if($("#hmrBarCanContainer").length > 0){
+        $("#hmrBarCanContainer").remove();
+      }
+      if($("#hmrBarDiv").length > 0){
+        $("#hmrBarDiv").remove();
+      }
+      if($("#complianceCanContainer").length > 0){
+        $("#complianceCanContainer").remove();
+      }
+      if($("#complianceDiv").length > 0){
+        $("#complianceDiv").remove();
+      }
+      $('<div id=hmrLineCanContainer style="display:none" >HMR Line<br/><canvas id=hmrLineCanvas width=1300 height=350></canvas></div>').appendTo("body");
+      $('<div id=hmrLineDiv style="display:none"> </div>').appendTo("body");
+      $('<div id=hmrBarCanContainer style="display:none">HMR<br/><canvas id=hmrBarCanvas width=1300 height=350></canvas></div>').appendTo("body");
+      $('<div id=hmrBarDiv style="display:none"> </div>').appendTo("body");
+      $('<div id=complianceCanContainer style="display:none">HMR<br/><canvas id=complianceCanvas width=1300 height=350></canvas></div>').appendTo("body");
+      $('<div id=complianceDiv style="display:none"> </div>').appendTo("body");      
     };        
     $scope.isIE = function(){
       if(commonsUserService.getBrowser().indexOf("internet explorer") !== -1){
@@ -109,7 +126,7 @@ angular.module('hillromvestApp')
       $scope.perPageCount = 4;
       $scope.notePageCount = 0;
       $scope.totalNotes = 0;
-      $scope.addCanvasToDOM();
+      //$scope.addCanvasToDOM();
     };
 
 
@@ -1855,11 +1872,12 @@ angular.module('hillromvestApp')
     };
 
     $scope.initPdfMetaData = function (strHtml, graphType){
-      var graphRequests = [
+      $scope.addCanvasToDOM();
+      /*var graphRequests = [
         patientDashBoardService.getHMRGraphPoints($scope.patientId, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.groupBy),
         patientDashBoardService.getHMRBarGraphPoints($scope.patientId, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-')),
         patientDashBoardService.getcomplianceGraphData($scope.patientId, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.groupBy)
-      ];
+      ];*/
       var hmrLineIndex = 0, hmrBarIndex = 1, complianceIndex = 2;
       var d = $('#duration').is(':checked')?"Duration":"", f = $('#frequency').is(':checked')?"Frequency":"", p=$('#pressure').is(':checked')?"Pressure":"";
       var a = [];if(p)a.push(p);if(f)a.push(f);if(d)a.push(d);
@@ -1868,7 +1886,7 @@ angular.module('hillromvestApp')
       switch(graphType) {
           case 'hmrLine':
               hmrLineIndex = -1, hmrBarIndex = 0, complianceIndex = 1;
-              graphRequests.splice(0,1);
+              //graphRequests.splice(0,1);
               $scope.addHTMLToNode("hmrLineDiv", strHtml);
               if(!isIEBrowser){
                 $scope.drawCanvas('hmrLineCanvas',$("#hmrLineDiv").find("svg").parent().html());
@@ -1876,7 +1894,7 @@ angular.module('hillromvestApp')
               break;
           case 'hmrBar':
               hmrLineIndex = 0, hmrBarIndex = -1, complianceIndex = 1;
-              graphRequests.splice(1,1);
+              //graphRequests.splice(1,1);
               $scope.addHTMLToNode("hmrBarDiv", strHtml);
               if(!isIEBrowser){
                 $scope.drawCanvas('hmrBarCanvas',$("#hmrBarDiv").find("svg").parent().html().trim());
@@ -1884,7 +1902,7 @@ angular.module('hillromvestApp')
               break;
           case 'compliance':
               hmrLineIndex = 0, hmrBarIndex = 1, complianceIndex = -1;
-              graphRequests.splice(2,1);
+              //graphRequests.splice(2,1);
               $scope.addHTMLToNode("complianceDiv", strHtml);
               if(!isIEBrowser){
                 $scope.drawCanvas('complianceCanvas',$("#complianceDiv").find("svg").parent().html().trim());
@@ -1923,25 +1941,15 @@ angular.module('hillromvestApp')
       .attr('font-size', '12px')
       .attr('xmlns','http://www.w3.org/2000/svg')
       .append('<defs>'+g_str+'</defs>');
-    };
-
-    $scope.getSVGForHMRLineGraph = function(hmrLineData){
-
-    };
-
-    $scope.getSVGForHMRBarGraph = function(hmrBarData){
-
-    };
-
-    $scope.getSVGForComplianceGraph = function(complianceData){            
-      
-    };
+    };    
 
     $scope.downloadPDFFile = function (){        
       var pdf = new jsPDF('p', 'pt', 'a4', true), specialElementHandlers = {
        '#bypassme': function(element, renderer){
         return true;
       }};
+
+      var pageHeight = pdf.internal.pageSize.height;
                           
       var margins = {
           top: 70,
@@ -2034,7 +2042,8 @@ angular.module('hillromvestApp')
         }        
         var img = $("#hmrLineCanvas")[0].toDataURL('image/png', 1.0);
         pdf.addImage(img, 'png', 40, (imgY),margins.width+100, 170);
-        imgY = imgY + 20;
+        //TODO : pageHeight < imgY ? imgY=0 : imgY; new page needs to be added
+        imgY = imgY + 200;
       }
 
       if($("#hmrBarDiv").find("svg").length > 0){
@@ -2045,7 +2054,7 @@ angular.module('hillromvestApp')
         }
         var img = $("#hmrBarCanvas")[0].toDataURL('image/png', 1.0);
         pdf.addImage(img, 'png', 40, (imgY),margins.width+100, 170);
-        imgY = imgY + 20;
+        imgY = imgY + 200;
       }
 
       if($("#complianceDiv").find("svg").length > 0){
@@ -2056,17 +2065,17 @@ angular.module('hillromvestApp')
         }
         var img = $("#complianceCanvas")[0].toDataURL('image/png', 1.0);
         pdf.addImage(img, 'png', 40, (imgY),margins.width+100, 170);
-        imgY = imgY + 20;
+        imgY = imgY + 200;
       }
       
-      pdf.text(40,500, "HCP Name: ");
-      pdf.line(90, 505, 350,505); //left, top, right, top
+      pdf.text(40,imgY, "HCP Name: ");
+      pdf.line(90, imgY+5, 350,imgY+5); //left, top, right, top
 
-      pdf.text(375,500, "Date: ");
-      pdf.line(400, 505, 560, 505);// left, top, right, top
+      pdf.text(375,imgY, "Date: ");
+      pdf.line(400, imgY+5, 560, imgY+5);// left, top, right, top
 
-      pdf.text(40,530, "Signature: ");
-      pdf.line(90, 535, 350,535); //left, top, right, top
+      pdf.text(40,imgY+30, "Signature: ");
+      pdf.line(90, imgY+35, 350,imgY+35); //left, top, right, top
 
 
       pdf.save('VisiView™.pdf');                
@@ -2075,11 +2084,6 @@ angular.module('hillromvestApp')
     $scope.getTableDataForPDF = function(){
       var patientDetails = ($scope.slectedPatient) ? $scope.slectedPatient : null;
       var pdfClinic = ($scope.associatedClinics && $scope.associatedClinics.length > 0) ? $scope.associatedClinics[0] : null;
-      //var completeAddress = (pdfClinic !== null && pdfClinic.city) ? pdfClinic.city : stringConstants.emptyString;
-      //completeAddress += (pdfClinic !== null && pdfClinic.state) ? ((completeAddress.length > 1) ? (stringConstants.comma+pdfClinic.state) : pdfClinic.state) : completeAddress;
-      //completeAddress += (pdfClinic !== null && pdfClinic.address) ? ((completeAddress.length > 1) ? (stringConstants.comma+pdfClinic.address) : pdfClinic.address) : completeAddress;
-      //completeAddress += (pdfClinic !== null && pdfClinic.zipcode) ? ((completeAddress.length > 1) ? (stringConstants.comma+pdfClinic.zipcode) : pdfClinic.zipcode) : completeAddress;
-      //var pdfClinicName = (pdfClinic !== null && pdfClinic.name) ? pdfClinic.name : stringConstants.notAvailable;
       var pdfClinicAddress = (pdfClinic !== null && pdfClinic.address) ? pdfClinic.address : stringConstants.notAvailable;
       var pdfClinicPhone = (pdfClinic !== null && pdfClinic.phoneNumber) ? pdfClinic.phoneNumber : stringConstants.notAvailable;
       var reportGenerationDate = dateService.getDateFromTimeStamp(new Date().getTime(),patientDashboard.dateFormat,'/');
@@ -2109,7 +2113,7 @@ angular.module('hillromvestApp')
                 , tData:  [
                   stringConstants.mrn+stringConstants.colon, patientMrnId
                   ,stringConstants.name+stringConstants.colon, patientName
-                  ,stringConstants.address+stringConstants.colon, completePatientAddress// + '5th Main, 7th Cross,\n MalleshPalya, /n Bangalore pin - 560123'
+                  ,stringConstants.address+stringConstants.colon, completePatientAddress
                   ,stringConstants.phone+stringConstants.colon, patientPhone
                   ,stringConstants.DOB+stringConstants.colon, patientDOB
                   ,stringConstants.adherenceScore, patientAdherence
@@ -2134,8 +2138,7 @@ angular.module('hillromvestApp')
           }
     };
 
-    $scope.drawCanvas = function(id, html){
-      console.log("draw canvas....."+id);
+    $scope.drawCanvas = function(id, html){      
       var myCanvas = document.getElementById(id);   
       var ctx = myCanvas.getContext('2d');
       ctx.clearRect(0, 0,1300,350);
@@ -2145,16 +2148,12 @@ angular.module('hillromvestApp')
         img.crossOrigin = 'Anonymous';
         ctx.drawImage(img,0,0); // Or at whatever offset you like
       };
-      img.onerror = function() {console.log("error");
-      }
-      img.onabort = function() {console.log("stopped");
-      }
+      img.onerror = function() {}
+      img.onabort = function() {}
       var imgsrc = 'data:image/svg+xml;base64,'+ window.btoa(html);
       var data = {"Encoded String": imgsrc};
       patientDashBoardService.convertSVGToImg(data).then(function(response){        
         img.src = response.data['Encoded String'];
-      }).catch(function(response){
-        console.log("error : ",response);
       });
 
     }
