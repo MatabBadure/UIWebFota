@@ -539,10 +539,16 @@ angular.module('hillromvestApp')
       $scope.isAssociateHCP = true;
     };
 
-    $scope.selectPatient = function(patient, index){
+    $scope.showAssociatePatientModal = function(patient){
+      $scope.selectedPatient = patient;
+      $scope.associatePatientModal = true;
+    };
+
+    $scope.selectPatient = function(){
+      $scope.associatePatientModal = false;
       $scope.searchPatient = "";
       var data = [{'id': $stateParams.clinicId}];
-      clinicService.associatePatient(patient.id, data).then(function(response){
+      clinicService.associatePatient($scope.selectedPatient.id, data).then(function(response){
         $scope.initClinicAssoctPatients($stateParams.clinicId);
         notyService.showMessage(response.data.message, 'success');
         $scope.getNonAssociatedPatients($stateParams.clinicId);
@@ -562,9 +568,16 @@ angular.module('hillromvestApp')
       });
     };
 
-    $scope.selectHCP = function(hcp, index){
+    $scope.showAssociateHCPModal = function(hcp){
+      console.log('It is coming here...!');
+      $scope.associateHCPModal = true;
+      $scope.selectedHcp = hcp;
+    };
+
+    $scope.selectHCP = function(){
+      $scope.associateHCPModal = false;
       $scope.searchHcp = "";
-      var data = [{'id': hcp.id}];
+      var data = [{'id': $scope.selectedHcp.id}];
       clinicService.associateHcp($stateParams.clinicId, data).then(function(response){
         $scope.initClinicAssoctHCPs($stateParams.clinicId);
         notyService.showMessage(response.data.message, 'success');

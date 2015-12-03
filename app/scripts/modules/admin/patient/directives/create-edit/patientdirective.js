@@ -189,26 +189,4 @@ angular.module('hillromvestApp')
           autoclose: true});
       }]
     };
-  })
-
-.directive('modal', function (){
-  return{
-    templateUrl: 'scripts/modules/dummyPages/modal.html',
-    restrict: 'E',
-    scope: {
-      onyes : '&onyes',
-      onno: '&onno',
-      header: '@',
-      message: '@'
-    },
-    controller:['$scope', function($scope){
-      $scope.yes = function(){
-        $scope.onyes();
-      };
-
-      $scope.no = function(){
-        $scope.onno();
-      };
-    }]
-  };
-});
+  });

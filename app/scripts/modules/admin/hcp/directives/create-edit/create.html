@@ -316,4 +316,6 @@
     </div>
   </div>
 </div> -->
-<modal ng-if="showModal" onyes="createDoctor()" onno="closeModal()" header="{{'doctor.update.warning' | translate}}" message="{{'doctor.update.message' | translate}}"></modal>
+
+<modal ng-if="showModal" modall="showModal" onyes="createDoctor()" onno="$parent.showModal = false" header="{{'doctor.update.warning' | translate}}" message="{{'doctor.update.message' | translate}}">
+</modal>
