@@ -171,6 +171,7 @@ angular.module('hillromvestApp')
           }
           notyService.showMessage($scope.doctorStatus.message, 'warning');
         });
+      }
     };
 
     $scope.disassociateClinic = function(){
@@ -249,8 +250,8 @@ angular.module('hillromvestApp')
             angular.forEach($scope.clinicsOfHCP, function(clinic){
               $scope.clinicList.push({"clinicId": clinic.id, "name": clinic.name});
             });
-          }                    
-        });              
+          }
+        });
       });      
     };
 
@@ -323,8 +324,8 @@ angular.module('hillromvestApp')
           notyService.showMessage(response.data.message, 'success');
         }).catch(function(response){
           notyService.showError(response);
-        });
-      }
+        });  
+      }      
     };
 
     $scope.reActivateDoctor = function(){
