@@ -86,8 +86,9 @@ angular.module('hillromvestApp')
 	$scope.getStatistics = function(clinicId, userId){		
 		if($state.current.name === 'hcpdashboard'){
 			hcpDashBoardService.getStatistics(clinicId, userId).then(function(response){
-				  $scope.statistics = response.data.statitics;				  
-				  $scope.statistics.date = $scope.toDate = dateService.getDateFromTimeStamp(new Date($scope.statistics.date),hcpDashboardConstants.USdateFormat,'/');
+				  $scope.statistics = response.data.statitics;
+				  $scope.statistics.date = $scope.getYesterday();				  
+				  $scope.toDate = dateService.getDateFromTimeStamp(new Date($scope.statistics.date),hcpDashboardConstants.USdateFormat,'/');
 				  $scope.getPercentageStatistics($scope.statistics);
 				}).catch(function(response){
 				  notyService.showError(response);
@@ -96,7 +97,7 @@ angular.module('hillromvestApp')
 		  clinicadminService.getStatistics(clinicId, userId).then(function(response){
 		  $scope.statistics = response.data.statitics;
 		  $scope.statistics.date = $scope.getYesterday();
-		  $scope.toDate =  $scope.statistics.date = dateService.getDateFromTimeStamp(new Date($scope.statistics.date),hcpDashboardConstants.USdateFormat,'/');
+		  $scope.toDate = dateService.getDateFromTimeStamp(new Date($scope.statistics.date),hcpDashboardConstants.USdateFormat,'/');
 		  $scope.getPercentageStatistics($scope.statistics);
 		}).catch(function(response){
 		 $scope.toDate = $scope.statistics.date = $scope.getYesterday();
