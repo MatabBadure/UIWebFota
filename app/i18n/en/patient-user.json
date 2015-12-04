@@ -187,12 +187,12 @@
       "message": "If you delete the Device, you will no longer be able to view the information. Are you sure to delete?"
     },
     "delete-clinic-info": {
-      "warning": "Patient Dashboard - Dissociate the Clinic",
-      "message": "Do you want to dissociate Clinic from the Patient?"
+      "warning": "Patient Dashboard - Disassociate the Clinic",
+      "message": "Do you want to Disassociate Clinic from the Patient?"
     },
     "delete-hcp-info": {
-      "warning": "Patient Dashboard - Dissociate HCP",
-      "message": "Do you want to dissociate HCP from Patient?"
+      "warning": "Patient Dashboard - Disassociate HCP",
+      "message": "Do you want to Disassociate HCP from Patient?"
     },
     "associate-clinic-info":{
       "warning":"Patient Dashboard - Associate the Clinic",

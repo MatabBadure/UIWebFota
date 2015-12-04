@@ -88,12 +88,12 @@
             "message": "You have made changes/updates for Clinic details. Are you sure to make updates?"
         },
         "deletePatient":{
-            "warning": "Clinic Dashboard - Dissociate Patient",
-            "message": "Do you want to dissociate the Patient from the Clinic?"
+            "warning": "Clinic Dashboard - Disassociate Patient",
+            "message": "Do you want to Disassociate the Patient from the Clinic?"
         },
         "deleteHcp":{
-            "warning": " Clinic Dashboard - Dissociate HCP",
-            "message": "Do you want to dissociate HCP from the Clinic?"
+            "warning": " Clinic Dashboard - Disassociate HCP",
+            "message": "Do you want to Disassociate HCP from the Clinic?"
         },
         "associateHcp":{
             "warning": "Clinic Dashboard - Associate HCP",
@@ -149,8 +149,8 @@
             "email": "Email"
         },
         "deleteClinicAdmin":{
-            "warning": "Clinic Dashboard - Dissociate Clinic Admin",          			
-            "message": "Do you want to dissociate Clinic Admin from the Clinic?"
+            "warning": "Clinic Dashboard - Disassociate Clinic Admin",
+            "message": "Do you want to Disassociate Clinic Admin from the Clinic?"
         },
         "updateClinicAdmin":{
             "warning": "Clinic Admin - Details",
