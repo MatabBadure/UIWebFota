@@ -1,0 +1,92 @@
+@media only screen and (min-width : 320px) and (max-width : 800px) {
+	
+	.content-body {
+			.login{
+			position:relative;
+		}
+	}
+	.footer {
+		position:static;
+		text-align: center
+	}
+
+	.footer_container .footer_left_ul {
+		
+		&:li {
+		 	float:none;
+		 	display:inline-block;
+		 }
+	}
+
+	.none
+		{
+			display: none;
+		}
+	.footer_container .footer_right_txt {
+		@extend .none;
+	}
+
+	.footer_container .footer_right {
+		text-align: center;
+	}
+	.footer_container .footer_right .icon-hill-rom-logo, .navbar-toggle {
+		@extend .none;
+	}
+	.navbar-default .navbar-toggle {
+    	border-color: transparent;
+    	&.icon-bar {
+    		background-color: #7ca3dc;
+    	    	}
+	}
+	.login .login--position
+	{
+		width: 100%;
+	}
+	.footer_container, .footer_left{
+		padding:0;
+	}
+/*	.navbar-default .navbar-brand__desc--text-secondary, .navbar-default .navbar-brand__desc--text-primary{
+		font-size:12px;
+		}
+	.navbar-default .navbar-brand .logo{
+		font-size:70px;
+	}*/
+	.footer_container .footer_left_ul li {
+	    list-style-type: none;
+	    margin: 0 6px 0px 6px;
+	    display: inline-block;
+	    position: relative;
+	    float:none;
+	    font-size: 9px;
+ 	}
+
+ 	.footer_container .footer_left_ul li:before {
+ 		top:7px;
+ 		right: -8px;
+ 	}
+
+ 	.footer{
+ 		line-height:25px;
+ 	}
+ 	.login__container__right-section {
+ 		width: 100%;
+ 	}
+ 	.form__container__login{
+ 		padding: 10px 0px;
+ 	}
+ 	.visi_view_container {
+	    text-align: center;
+	    background-position: center;
+	    height: 70px;
+	    width: 240px;
+	    margin: 12% auto 7%;
+	    background-size: 150px;
+		}
+
+	.navbar{
+		border-bottom: 1px solid #cccccc;
+	}
+
+} 
+
+
