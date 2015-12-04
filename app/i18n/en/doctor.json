@@ -120,6 +120,10 @@
             "warning": "HCP Dashboard - Dissociate Clinic",
             "message": "Do you want to dissociate Clinic from HCP?"
         },
+        "clinic-associate":{
+            "warning": "HCP Dashboard - Associate Clinic",
+            "message": "Do you want to associate Clinic to HCP?"
+        },
         "tab": {
             "hcp-overview": "HCP Profile",
             "associated-clinic": "Associated Clinics"

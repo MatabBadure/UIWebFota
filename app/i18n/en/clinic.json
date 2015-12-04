@@ -81,7 +81,7 @@
         "date-of-birth": "Date of Birth",
         "delete": {
             "warning": "Deactivate Clinic",
-            "message": "You are deactivating Clinic from the system and . Are you sure to continue?"
+            "message": "Are you sure to deactivate Clinic from the Hill-Rom system?"
         },
         "update": {
             "warning": "Clinic - Details",
@@ -94,6 +94,14 @@
         "deleteHcp":{
             "warning": " Clinic Dashboard - Dissociate HCP",
             "message": "Do you want to dissociate HCP from the Clinic?"
+        },
+        "associateHcp":{
+            "warning": "Clinic Dashboard - Associate HCP",
+            "message": "Do you want to associate HCP to the Clinic?"
+        },
+        "associatePatient":{
+            "warning": "Clinic Dashboard - Associate Patient",
+            "message": "Do you want to associate the Patient to the Clinic?"
         },
         "hillRom-id": "Hill-Rom ID",
         "type": "Type",
