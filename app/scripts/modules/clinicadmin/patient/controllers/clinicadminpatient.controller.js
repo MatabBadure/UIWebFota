@@ -19,7 +19,7 @@ angular.module('hillromvestApp')
       $scope.getCaregiversAssociatedWithPatient($stateParams.patientId);
     }else if($state.current.name === 'clinicadminpatientdashboard'){
       $scope.searchItem = "";
-      $scope.searchFilter = searchFilterService.initSearchFiltersForPatient($stateParams.filter);
+      $scope.searchFilter = searchFilterService.initSearchFiltersForPatient($stateParams.filter, true);
       $scope.sortPatientList = sortOptionsService.getSortOptionsForPatientList();
       $scope.currentPageIndex = 1;
       $scope.perPageCount = 10;
