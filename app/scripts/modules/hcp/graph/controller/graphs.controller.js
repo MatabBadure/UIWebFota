@@ -25,7 +25,7 @@ angular.module('hillromvestApp')
 		$scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,hcpDashboardConstants.USdateFormat,'/');
 		$scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,hcpDashboardConstants.USdateFormat,'/');
 		$scope.statistics = {
-			"date":"2015-12-02",
+			"date":$scope.toDate,
 			"patientsWithSettingDeviation":0,
 			"patientsWithHmrNonCompliance":0,
 			"patientsWithMissedTherapy":0,
@@ -83,21 +83,23 @@ angular.module('hillromvestApp')
     return count;
   };
 
-	$scope.getStatistics = function(clinicId, userId){
+	$scope.getStatistics = function(clinicId, userId){		
 		if($state.current.name === 'hcpdashboard'){
 			hcpDashBoardService.getStatistics(clinicId, userId).then(function(response){
-				  $scope.statistics = response.data.statitics;
-				  $scope.toDate = $scope.statistics.date = dateService.getDateFromTimeStamp(new Date($scope.statistics.date),hcpDashboardConstants.USdateFormat,'/');
+				  $scope.statistics = response.data.statitics;				  
+				  $scope.statistics.date = $scope.toDate = dateService.getDateFromTimeStamp(new Date($scope.statistics.date),hcpDashboardConstants.USdateFormat,'/');
 				  $scope.getPercentageStatistics($scope.statistics);
 				}).catch(function(response){
 				  notyService.showError(response);
 				});
 		} else if($state.current.name === 'clinicadmindashboard'){
-			clinicadminService.getStatistics(clinicId, userId).then(function(response){
+		  clinicadminService.getStatistics(clinicId, userId).then(function(response){
 		  $scope.statistics = response.data.statitics;
-		  $scope.statistics.date = dateService.getDateFromTimeStamp(new Date($scope.statistics.date),hcpDashboardConstants.USdateFormat,'/');
+		  $scope.statistics.date = $scope.getYesterday();
+		  $scope.toDate =  $scope.statistics.date = dateService.getDateFromTimeStamp(new Date($scope.statistics.date),hcpDashboardConstants.USdateFormat,'/');
 		  $scope.getPercentageStatistics($scope.statistics);
 		}).catch(function(response){
+		 $scope.toDate = $scope.statistics.date = $scope.getYesterday();
 		  notyService.showError(response);
 		});
 
@@ -261,8 +263,7 @@ angular.module('hillromvestApp')
 		$scope.getCumulativeGraphData();
 	};
 
-		$scope.getCumulativeGraphData = function() {
-			$scope.toDate = $scope.statistics.date = $scope.getYesterday();
+		$scope.getCumulativeGraphData = function() {						
 			if($scope.selectedClinic){					
 				hcpDashBoardService.getCumulativeGraphPoints($scope.hcpId, $scope.selectedClinic.id, dateService.getDateFromTimeStamp($scope.fromTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), $scope.groupBy).then(function(response){
 					$scope.serverCumulativeGraphData = response.data.cumulativeStatitics;
@@ -274,7 +275,7 @@ angular.module('hillromvestApp')
 					} else {
 						$scope.plotNoDataAvailable();
 					}
-				}).catch(function(response) {
+				}).catch(function(response) {					
 					$scope.plotNoDataAvailable();
 				});
 			}else{
@@ -357,8 +358,7 @@ angular.module('hillromvestApp')
 	    }
 
   }
-	$scope.getTreatmentGraphData = function() {
-		$scope.toDate = $scope.statistics.date = $scope.getYesterday();
+	$scope.getTreatmentGraphData = function() {		
 		if($scope.selectedClinic){
 			hcpDashBoardService.getTreatmentGraphPoints($scope.hcpId, $scope.selectedClinic.id, dateService.getDateFromTimeStamp($scope.fromTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), $scope.groupBy).then(function(response){
 				if( response !== null && response.data !== null && response.data.treatmentStatitics !== undefined) {
@@ -649,8 +649,7 @@ angular.module('hillromvestApp')
 		$scope.weeklyChart();
 		if($scope.selectedClinic){
 			$scope.getStatistics($scope.selectedClinic.id, userId);
-		}else{		
-			var d = new Date();				
+		}else{					
 			$scope.toDate = $scope.statistics.date = $scope.getYesterday();
 			$scope.getPercentageStatistics($scope.statistics);
 		}
