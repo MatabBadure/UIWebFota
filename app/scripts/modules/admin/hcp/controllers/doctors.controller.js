@@ -3,7 +3,7 @@
 angular.module('hillromvestApp')
   .controller('DoctorsController',['$rootScope', '$scope', '$state', '$timeout', 'Auth', '$stateParams', 'UserService', 'DoctorService', 'notyService', 'clinicService', 'searchFilterService', 'dateService', 'StorageService', 'commonsUserService', 'loginConstants',
     function($rootScope, $scope, $state, $timeout, Auth,$stateParams, UserService, DoctorService, notyService, clinicService,searchFilterService, dateService, StorageService, commonsUserService, loginConstants) {
-    $scope.doctor = {};
+    $scope.doctor = null;
     $scope.doctorStatus = {
       'role': StorageService.get('logged').role,
       'editMode': false,
@@ -89,7 +89,7 @@ angular.module('hillromvestApp')
     };
 
     $scope.viewAssociatedPatients = function(){
-      if($scope.doctor.clinics.length === 1){
+      if($scope.doctor && $scope.doctor.clinics.length === 1){
         $state.go('associatedPatients');
       } else {
         return false;
@@ -154,22 +154,24 @@ angular.module('hillromvestApp')
 
     $scope.deleteDoctor = function(){
       $scope.close();
-      UserService.deleteUser($scope.doctor.id).then(function (response) {
-        $scope.doctorStatus.message = response.data.message;
-        notyService.showMessage($scope.doctorStatus.message, 'success');
-        if($scope.doctorStatus.role === loginConstants.role.acctservices){
-          $state.go('hcpUserRcadmin');
-        }else{
-          $state.go('hcpUser');
-        }
-      }).catch(function (response) {
-        if (response.data.message !== undefined) {
+      if($scope.doctor){
+        UserService.deleteUser($scope.doctor.id).then(function (response) {
           $scope.doctorStatus.message = response.data.message;
-        } else if (response.data.ERROR !== undefined) {
-          $scope.doctorStatus.message = response.data.ERROR;
-        }
-        notyService.showMessage($scope.doctorStatus.message, 'warning');
-      });
+          notyService.showMessage($scope.doctorStatus.message, 'success');
+          if($scope.doctorStatus.role === loginConstants.role.acctservices){
+            $state.go('hcpUserRcadmin');
+          }else{
+            $state.go('hcpUser');
+          }
+        }).catch(function (response) {
+          if (response.data.message !== undefined) {
+            $scope.doctorStatus.message = response.data.message;
+          } else if (response.data.ERROR !== undefined) {
+            $scope.doctorStatus.message = response.data.ERROR;
+          }
+          notyService.showMessage($scope.doctorStatus.message, 'warning');
+        });
+      }
     };
 
     $scope.disassociateClinic = function(){
@@ -248,8 +250,8 @@ angular.module('hillromvestApp')
             angular.forEach($scope.clinicsOfHCP, function(clinic){
               $scope.clinicList.push({"clinicId": clinic.id, "name": clinic.name});
             });
-          }                    
-        });              
+          }
+        });
       });      
     };
 
@@ -317,20 +319,24 @@ angular.module('hillromvestApp')
     };
 
     $scope.resendActivationLink = function(){
-      UserService.resendActivationLink($scope.doctor.id).then(function(response){
-        notyService.showMessage(response.data.message, 'success');
-      }).catch(function(response){
-        notyService.showError(response);
-      });
+      if($scope.doctor && $scope.doctor.id){
+        UserService.resendActivationLink($scope.doctor.id).then(function(response){
+          notyService.showMessage(response.data.message, 'success');
+        }).catch(function(response){
+          notyService.showError(response);
+        });  
+      }      
     };
 
     $scope.reActivateDoctor = function(){
-      UserService.reactivateUser($scope.doctor.id).then(function(response){
-        notyService.showMessage(response.data.message, 'success');
-        $state.go('hcpUser');
-      }).catch(function(response){
-        notyService.showError(response);
-      });
+      if($scope.doctor && $scope.doctor.id){
+        UserService.reactivateUser($scope.doctor.id).then(function(response){
+          notyService.showMessage(response.data.message, 'success');
+          $state.go('hcpUser');
+        }).catch(function(response){
+          notyService.showError(response);
+        });
+      }
     };
 
     $scope.init();
