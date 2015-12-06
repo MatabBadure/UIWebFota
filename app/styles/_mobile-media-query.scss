@@ -87,6 +87,72 @@
 		border-bottom: 1px solid #cccccc;
 	}
 
+
+
+/*Patient pie Charts CSS*/
+
+.padding_0{
+	padding: 0px 0px;
+}
+.mob_no_margin{
+	margin: 0px 0px;
+}
+.stats_chart_container{
+	.col-3{
+		width: 49%;
+		margin-bottom: 10px;
+		background-image: none;
+		.chart_inner_icon{
+			left: 50%;
+			margin-left: -22px;
+		}
+	}
+	.pie_chart{
+		text-align: center;
+		float: none;
+		background-image: url("../images/Color-HCP-Dashboard.png");
+		background-size: 100% 100%;
+		margin-bottom: 10px;
+	}
+	.stats_chart_content{
+		margin: 0px 0px;
+	    width: 100%;
+	    text-align: center;
+	    font-size: 12px;
+	}
+	.stats_chart_content{
+		.percent{
+			width: 100%;
+		}
+	} 
+}
+
+.patient-user__navbar{
+	.patient-dashboard{
+		width: auto;
+	    display: inline-block;
+	    margin: 0px 0px;
+	}
+
+	.patient_nav_link_right{
+		li{
+			margin: 0px 0px;
+			a{
+				span:first-child{
+					display: none;
+				}
+				.icons{
+					top: 5px;
+				}
+			}
+		}
+	}
+}
+.patient_wrapper{
+	margin-top: 0px;
+}
+
 } 
+
 
 
