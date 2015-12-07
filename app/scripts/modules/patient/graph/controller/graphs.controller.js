@@ -7,7 +7,20 @@ angular.module('hillromvestApp')
 
     var chart;
     var hiddenFrame, htmlDocument;
-    var g_str='<style>.nvd3 .nv-point-paths path {stroke: #aaa;stroke-opacity: 0;fill: #eee;fill-opacity: 0;border: 5px red solid;}.nv-point {    stroke-opacity: 1 !important;    stroke-width: 3px !important;}.missed_therapy_node {fill: #cf202f;stroke: #fff;stroke-width: 1.5;fill-opacity: 1;}.nv-lineChart g rect {fill: #e3ecf7;opacity: 1 !important;}.nvd3 .nv-groups path.nv-line {fill: none;}.svg_bg {fill: #e3ecf7;}.nvd3.nv-stackedarea path.nv-area {fill-opacity: .7;stroke-opacity: 0;transition: fill-opacity 250ms linear, stroke-opacity 250ms linear;    -moz-transition: fill-opacity 250ms linear, stroke-opacity 250ms linear;-webkit-transition: fill-opacity 250ms linear, stroke-opacity 250ms inear;}</style>';
+    var g_str='<style>.nvd3 .nv-point-paths path {stroke: #aaa;stroke-opacity: 0;fill: #eee;fill-opacity: 0;border: 5px red solid;} '+
+    '.nv-point {    stroke-opacity: 1 !important;    stroke-width: 3px !important;} '+
+    '.missed_therapy_node {fill: #cf202f;stroke: #fff;stroke-width: 1.5;fill-opacity: 1;} '+ 
+    ' g rect {fill: #e3ecf7;opacity: 1 !important;} '+
+    '.nvd3 .nv-groups path.nv-line {fill: none;} .svg_bg {fill: #e3ecf7;}  '+
+    '.nvd3.nv-stackedarea path.nv-area { '+
+     ' fill-opacity: .7;stroke-opacity: 0; '+
+     ' transition: fill-opacity 250ms linear,  '+
+     ' stroke-opacity 250ms linear;     '+
+     ' -moz-transition: fill-opacity 250ms linear,  '+
+     ' stroke-opacity 250ms linear;-webkit-transition:  '+
+     ' fill-opacity 250ms linear,  '+
+     ' stroke-opacity 250ms inear;}  '+
+     ' </style>';
     var g_pdfMetaData={};
     $scope.addCanvasToDOM = function (){ 
       if($("#hmrLineCanContainer").length > 0){
@@ -1888,19 +1901,19 @@ angular.module('hillromvestApp')
               hmrLineIndex = -1, hmrBarIndex = 0, complianceIndex = 1;
               //graphRequests.splice(0,1);
               $scope.addHTMLToNode("hmrLineDiv", strHtml);              
-              $scope.drawCanvas('hmrLineCanvas',$("#hmrLineDiv").find("svg").parent().html());             
+              //$scope.drawCanvas('hmrLineCanvas',$("#hmrLineDiv").find("svg").parent().html());             
               break;
           case 'hmrBar':
               hmrLineIndex = 0, hmrBarIndex = -1, complianceIndex = 1;
               //graphRequests.splice(1,1);
               $scope.addHTMLToNode("hmrBarDiv", strHtml);
-              $scope.drawCanvas('hmrBarCanvas',$("#hmrBarDiv").find("svg").parent().html().trim()); 
+              //$scope.drawCanvas('hmrBarCanvas',$("#hmrBarDiv").find("svg").parent().html().trim()); 
               break;
           case 'compliance':
               hmrLineIndex = 0, hmrBarIndex = 1, complianceIndex = -1;
               //graphRequests.splice(2,1);
               $scope.addHTMLToNode("complianceDiv", strHtml);
-              $scope.drawCanvas('complianceCanvas',$("#complianceDiv").find("svg").parent().html().trim());
+              //$scope.drawCanvas('complianceCanvas',$("#complianceDiv").find("svg").parent().html().trim());
               break;
           default:
               break;
@@ -2027,21 +2040,39 @@ angular.module('hillromvestApp')
 
       
       var imgY = 250;
-
-      if($("#hmrLineDiv").find("svg").length > 0){        
+      var backgroundColor = "#e3ecf7";
+      if($("#hmrLineDiv").find("svg").length > 0){
+       // if(isIEBrowser){
+          var canvas = document.getElementById('hmrLineCanvas');               
+          var ctx = canvas.getContext('2d');
+          ctx.fillStyle = backgroundColor;
+          canvg(canvas, $("#hmrLineDiv").find("svg").parent().html().trim());
+       // }       
         var img = $("#hmrLineCanvas")[0].toDataURL('image/png', 1.0);
         pdf.addImage(img, 'png', 40, (imgY),margins.width+100, 170);
         //TODO : pageHeight < imgY ? imgY=0 : imgY; new page needs to be added
         imgY = imgY + 200;
       }
 
-      if($("#hmrBarDiv").find("svg").length > 0){        
+      if($("#hmrBarDiv").find("svg").length > 0){
+       // if(isIEBrowser){
+          var canvas = document.getElementById('hmrBarCanvas');               
+          var ctx = canvas.getContext('2d');
+          ctx.fillStyle = backgroundColor;
+          canvg(canvas, $("#hmrBarDiv").find("svg").parent().html().trim());
+       // }
         var img = $("#hmrBarCanvas")[0].toDataURL('image/png', 1.0);
         pdf.addImage(img, 'png', 40, (imgY),margins.width+100, 170);
         imgY = imgY + 200;
       }
 
-      if($("#complianceDiv").find("svg").length > 0){        
+      if($("#complianceDiv").find("svg").length > 0){
+       // if(isIEBrowser){
+          var canvas = document.getElementById('complianceCanvas');               
+          var ctx = canvas.getContext('2d');
+          ctx.fillStyle = backgroundColor;
+          canvg(canvas, $("#complianceDiv").find("svg").parent().html().trim());
+       // }
         var img = $("#complianceCanvas")[0].toDataURL('image/png', 1.0);
         pdf.addImage(img, 'png', 40, (imgY),margins.width+100, 170);
         imgY = imgY + 200;
@@ -2056,8 +2087,8 @@ angular.module('hillromvestApp')
       pdf.text(40,imgY+30, "Signature: ");
       pdf.line(90, imgY+35, 350,imgY+35); //left, top, right, top
 
-
-      pdf.save('VisiView™.pdf');                
+      setTimeout(function(){pdf.save('VisiView™.pdf')},1000);   
+      //pdf.save('VisiView™.pdf');                
     };
 
     $scope.getTableDataForPDF = function(){
@@ -2120,10 +2151,11 @@ angular.module('hillromvestApp')
     $scope.drawCanvas = function(id, html){            
       var canvas = document.getElementById(id);               
       var ctx = canvas.getContext('2d');
-      console.log("isIEBrowser : "+isIEBrowser);
-      if(isIEBrowser){
+      //console.log("isIEBrowser : "+isIEBrowser);
+      /*if(isIEBrowser){
+        console.log("drawing canvas");
         canvg(canvas, html);
-      }else{
+      }else{*/
         ctx.clearRect(0, 0,1300,350);
         var img = new Image();
         img.setAttribute('img','img');
@@ -2138,7 +2170,7 @@ angular.module('hillromvestApp')
         patientDashBoardService.convertSVGToImg(data).then(function(response){        
           img.src = response.data['Encoded String'];
         });
-      }
+      //}
     }
 
     
