@@ -29,15 +29,16 @@
 	.footer_container .footer_right {
 		text-align: center;
 	}
-	.footer_container .footer_right .icon-hill-rom-logo, .navbar-toggle {
+	.footer_container .footer_right .icon-hill-rom-logo {
 		@extend .none;
 	}
 	.navbar-default .navbar-toggle {
     	border-color: transparent;
-    	&.icon-bar {
+   
+    &.icon-bar {
     		background-color: #7ca3dc;
-    	    	}
 	}
+}
 	.login .login--position
 	{
 		width: 100%;
@@ -83,10 +84,44 @@
 	    background-size: 150px;
 		}
 
-	.navbar{
+	.header-nav{
 		border-bottom: 1px solid #cccccc;
+		min-height:1px !important;
+		overflow: hidden;
+	}
+	.header-nav .header-nav-content li{
+		background-color: #276092 !important;
+		width:80%;
+		float:right;
+		}
+	.icons_display_inline{
+		display: inline-block !important;
+		margin-left:10px;
+	}
+	.logout-dropdown li{
+		width:100%;
 	}
 
+	.navbar-secondary {
+		.navbar-right {
+				.header-popover ul li:first-child:after{
+			border-right: none;
+			}
+		}
+	}
+	.icon-logged-in-user, .link-text, .icon-user-account, .logout-dropdown>li span, .user-name, .icon-dashboard, .icon-notification-bell {
+		@extend .icons_display_inline;
+	}
+	.navbar-default > .container > .navbar-secondary ul li a{
+		text-align:left;
+	}
+
+	.navbar-secondary .navbar-right .header-popover ul p
+	{
+		font-size:10px;
+		margin-left:10px;
+		display: inline-block !important;
+	}
 
 
 /*Patient pie Charts CSS*/
