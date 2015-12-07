@@ -13,8 +13,8 @@
         <span class="navbar-brand__desc--text-secondary" translate="global.logo-text.health-portal"></span>
       </div>
     </div>
-    <div class="collapse navbar-collapse navbar-secondary" id="navbar-collapse" ng-switch-when=true>
-      <ul class="nav navbar-nav navbar-right">
+    <div class="collapse navbar-collapse navbar-secondary header-nav" id="navbar-collapse" ng-switch-when=true>
+      <ul class="nav navbar-nav navbar-right header-nav-content">
         <li class="icon-border">
           <a ng-class="{ active: isActive('patient/patient-dashboard')}" href="" ng-click="goToPatientDashboard();" >
             <span class="icons hillrom-icon icon-dashboard"></span>
@@ -66,7 +66,7 @@
           <a ng-href="" data-target="#" class="dropdown-toggle" ng-class="{ active: isActive('/patient/p-reset') || isActive('/notification-settings')}" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
             <span class='icon-logged-in-user'></span>
             <span class='user-name'>{{username}}</span></a>
-          <ul class="dropdown-menu">
+          <ul class="dropdown-menu logout-dropdown">
             <li id='account' ng-click='profile()'>
               <span class='hillrom-icon icon-user-account'></span>
               <p translate="global.my-dashboard">My Profile</p>
