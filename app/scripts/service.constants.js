@@ -123,11 +123,3 @@ var stringConstants = {
     comma: ", "
 
 }
-
-angular.module('hillromvestApp').constant('hcpServiceConstants', {
-    graph : {
-		baseURL : 'api/users'
-	}
-});
-
-

@@ -107082,7 +107082,7 @@ angular.module('hillromvestApp')
       *
       */
       getCumulativeGraphPoints: function(hcpID, clinicID, fromTimeStamp, toTimeStamp, groupBy) {
-        var url = hcpServiceConstants.graph.baseURL;
+        var url = URL.baseUrl;
         url  = url + '/' + hcpID + '/clinics/' + clinicID + '/cumulativeStatistics';
         url = url + '?from=' + fromTimeStamp + '&to=' + toTimeStamp + '&groupBy=' + groupBy;
         return $http.get(url, {
@@ -107117,7 +107117,7 @@ angular.module('hillromvestApp')
       *
       */
       getTreatmentGraphPoints: function(hcpID, clinicID, fromTimeStamp, toTimeStamp, groupBy) {
-        var url = hcpServiceConstants.graph.baseURL;
+        var url = URL.baseUrl;
         url  = url + '/' + hcpID + '/clinics/' + clinicID + '/treatmentStatistics';
         url = url + '?from=' + fromTimeStamp + '&to=' + toTimeStamp + '&groupBy=' + groupBy;
         return $http.get(url, {
