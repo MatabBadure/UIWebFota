@@ -35,8 +35,8 @@ angular.module('hillromvestApp')
       $('<div id=complianceCanContainer style="display:none">HMR<br/><canvas id=complianceCanvas width=1300 height=350></canvas></div>').appendTo("body");
       $('<div id=complianceDiv style="display:none"> </div>').appendTo("body");      
     };        
-    $scope.isIE = function(){
-      if(commonsUserService.getBrowser().indexOf("internet explorer") !== -1){
+    $scope.isIE = function(){      
+      if(window.navigator.userAgent.indexOf("MSIE") !== -1){
         return true
       }else{
         return false;
