@@ -4,7 +4,8 @@ angular.module('hillromvestApp')
     function($http, headerService, URL) {
     return {
       createClinic: function(data) {
-        return $http.post('api/clinics', data, {
+        var url = URL.clinicBaseURL;
+        return $http.post(url, data, {
           headers: headerService.getHeader()
         }).success(function(response) {
           return response;
@@ -12,7 +13,8 @@ angular.module('hillromvestApp')
       },
 
       updateClinic: function(data) {
-        return $http.put('api/clinics/' + data.id, data, {
+        var url = URL.clinicBaseURL + '/' + data.id;
+        return $http.put(url, data, {
           headers: headerService.getHeader()
         }).success(function(response) {
           return response;
@@ -20,7 +22,8 @@ angular.module('hillromvestApp')
       },
 
       deleteClinic: function(id) {
-        return $http.delete('api/clinics/' + id, {
+        var url = URL.clinicBaseURL + '/' + id;
+        return $http.delete(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
           return response;
@@ -52,7 +55,8 @@ angular.module('hillromvestApp')
       },
 
       getClinic: function(id) {
-        return $http.get('/api/clinics/' + id, {
+        var url = URL.clinicBaseURL + '/' + id;
+        return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
           return response;
