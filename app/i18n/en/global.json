@@ -147,18 +147,6 @@
             "minlength": "First Name is required to be at least 1 character.",
             "maxlength": "First Name cannot be longer than 50 characters."
         },
-        "patient-firstName":{
-            "required": "First Name is required.",
-            "maxlength": "First Name cannot be longer than 50 characters."
-        },
-        "patient-lastName":{
-            "required": "Last Name is required.",
-            "maxlength": "Last Name cannot be longer than 50 characters."
-        },
-        "patient-middleName":{
-            "minlength": "Middle Name is required to be at least 1 character.",
-            "maxlength": "Middle Name cannot be longer than 50 characters."
-        },
         "lastName":{
             "required": "Last Name is required.",
             "pattern": "Last Name cannot have number and special characters.",
