@@ -32,5 +32,6 @@ angular.module('hillromvestApp')
 	'reactiavteUser': '/api/user/USERID/reactivate',
 	'getAdeherenceData':'/api/user/USERID/adherenceTrend?from=FROMDATE&to=TODATE',
 	'getAssociatedHCPtoClinic': '/api/user/hcp/search?searchString=SEARCHSTRING&clinicId=CLINICID&filter=FILTER&page=PAGENO&per_page=OFFSET',
-	'getClinicsByClinicadmin' : '/api/user/CLINICADMIN/clinics'
+	'getClinicsByClinicadmin' : '/api/user/CLINICADMIN/clinics',
+	'getAllUsersByRole': '/api/user/all?role=ROLE'
 });

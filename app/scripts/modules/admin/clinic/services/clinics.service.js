@@ -79,7 +79,8 @@ angular.module('hillromvestApp')
         });
       },
       getPatients: function(){
-        return $http.get('/api/user/all?role=PATIENT', {
+        var url = URL.getAllUsersByRole.replace('ROLE', 'PATIENT');
+        return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
           return response;
@@ -128,7 +129,8 @@ angular.module('hillromvestApp')
       },
 
       getHCPs: function(){
-        return $http.get('/api/user/all?role=HCP', {
+        var url = URL.getAllUsersByRole.replace('ROLE', 'HCP');
+        return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
           return response;
@@ -153,8 +155,8 @@ angular.module('hillromvestApp')
       },
 
       getAllClinicAdmins: function(){
-        
-        return $http.get('/api/user/all?role=CLINIC_ADMIN', {
+        var url = URL.getAllUsersByRole.replace('ROLE', 'CLINIC_ADMIN');
+        return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
           return response;
