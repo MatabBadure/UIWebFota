@@ -331,21 +331,7 @@ angular.module('hillromvestApp')
           var dateTime = date.split("-");          
           return dateTime[1] + dateSeperator + dateTime[2] + dateSeperator + dateTime[0];
         }        
-    },
-
-    //new Date(year, month, day, hours, minutes, seconds, milliseconds) 
-     getDayBeginTimeStamp: function(timestamp){
-        var d = this.getDateFromTimeStamp(timestamp, 'YYYY-MM-DD' , '-'); 
-        var splittedDate = d.split("-");        
-        console.log("date : ", new Date(splittedDate[0], splittedDate[1], splittedDate[2], 0, 0, 0).getTime(), new Date(splittedDate[0], splittedDate[1], splittedDate[2], 0, 0, 0));
-        return new Date(splittedDate[0], splittedDate[1], splittedDate[2], 0, 0, 0).getTime();            
-      },
-
-      getDayEndTimeStamp: function(timestamp){
-        var d = this.getDateFromTimeStamp(timestamp, 'YYYY-MM-DD' , '-'); 
-        var splittedDate = d.split("-");       
-        console.log("date : ", new Date(splittedDate[0], splittedDate[1], splittedDate[2], 23, 59, 59).getTime(), new Date(splittedDate[0], splittedDate[1], splittedDate[2], 23, 59, 59));
-        return new Date(splittedDate[0], splittedDate[1], splittedDate[2], 23, 59, 59).getTime();            
-      }
+    }
+    
     };
   }]);
