@@ -10,8 +10,8 @@ angular.module('hillromvestApp')
     return val;
   };
 })
-.controller('patientsController',['$scope', '$state', '$stateParams', 'patientService', 'dateService', 'notyService', 'UserService', 'DoctorService', 'clinicService', '$q', 'StorageService', 'loginConstants', 'commonsUserService',
-  function($scope, $state, $stateParams, patientService, dateService, notyService, UserService, DoctorService, clinicService, $q, StorageService, loginConstants, commonsUserService) {
+.controller('patientsController',['$scope', '$state', '$stateParams', 'patientService', 'dateService', 'notyService', 'UserService', 'DoctorService', 'clinicService', '$q', 'StorageService', 'loginConstants', 'commonsUserService', 'searchFilterService',
+  function($scope, $state, $stateParams, patientService, dateService, notyService, UserService, DoctorService, clinicService, $q, StorageService, loginConstants, commonsUserService, searchFilterService) {
     var isFormLoaded = false;
     $scope.patient = {};
     $scope.patientTab = "";
@@ -854,6 +854,10 @@ angular.module('hillromvestApp')
           }
         }
       });
+    };
+
+    $scope.getHCPsToLinkToPatient = function($viewValue){
+      return searchFilterService.getMatchingUser($viewValue, $scope.hcps, true);
     };
 
     $scope.openPatientDeactivateModal = function(patient){

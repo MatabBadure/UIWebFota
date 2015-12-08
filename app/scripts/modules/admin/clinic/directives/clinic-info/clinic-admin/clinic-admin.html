@@ -71,7 +71,7 @@
 <div class="container admin-user" ng-show="showAddclinicAdmin && addAdmin === 'existAdmin' && !clinicAdmin">
 	<div class="col-md-16 reset-padding">
 		<div class="col-md-8 exist-link">
-      <input class="form-control" type="text" ng-model="searchItem" typeahead="clinic as clinic.lastName + ' ' + clinic.firstName +'&nbsp;&nbsp;&nbsp;' + clinic.email for clinic in allClinicAdmins | filter:$viewValue" typeahead-on-select="addCliniAdminToClinic($item)" placeholder="{{'clinic.placeholder.existed-admin' | translate}}">
+      <input class="form-control" type="text" ng-model="searchItem" typeahead="clinic as clinic.lastName + ' ' + clinic.firstName +'&nbsp;&nbsp;&nbsp;' + clinic.email for clinic in getClinicAdminstoLink($viewValue)" typeahead-on-select="addCliniAdminToClinic($item)" placeholder="{{'clinic.placeholder.existed-admin' | translate}}">
 		</div>
 	</div>
 </div>
