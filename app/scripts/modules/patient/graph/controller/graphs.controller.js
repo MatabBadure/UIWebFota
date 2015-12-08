@@ -2029,7 +2029,7 @@ angular.module('hillromvestApp')
 
     $scope.downloadRawDataAsCsv = function(){
       //patientService.getDeviceDataAsCSV($scope.patientId, $scope.fromTimeStamp, $scope.toTimeStamp).then(function(response){
-      patientService.getDeviceDataAsCSV($scope.patientId, dateService.getDayBeginTimeStamp($scope.fromTimeStamp), dateService.getDayEndTimeStamp($scope.toTimeStamp)).then(function(response){
+      patientService.getDeviceDataAsCSV($scope.patientId, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-')).then(function(response){
          graphService.downloadAsCSVFile(response.data, 'VestDeviceReport.csv', 'vestDevice');
       });
     };
