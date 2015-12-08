@@ -20,11 +20,25 @@
 	.navbar-default .navbar-brand .logo{
 		font-size:80px;
 	}
+	.secondary-header>.show-mob{
+		margin:0.25px -2px!important;
+	}
+	.show-mob{
+		li{
+			
+			a{
+				padding:2px 0px 9px 30px !important;
+				span:first-child{
+					display: block !important;
+				}
+			}
+		}
+	}
 	.none
 		{
 			display: none;
 		}
-	.footer_container .footer_right_txt {
+	.footer_container .footer_right_txt, .admin-user .caregiver-list__detail--email {
 		@extend .none;
 	}
 
@@ -36,11 +50,11 @@
 	}
 	.navbar-default .navbar-toggle {
     	border-color: transparent;
-   
-    &.icon-bar {
-    		background-color: #7ca3dc;
+   }
+    .icon-bar {
+    	background-color: #7ca3dc !important;
 	}
-}
+
 	.login .login--position
 	{
 		width: 100%;
@@ -101,6 +115,7 @@
 	{
 		margin:0;
 		position: relative;
+		display:none;
 	}
 	.header-nav-content:before{
 		  content: '';
@@ -171,13 +186,15 @@
 	.patient-user__navbar ul > li > a:hover span, .patient-user__navbar .patient_nav_link_right li a .icons{
 		left: 9px;
 	}
-	.patient_nav_link_right li a{
-		padding:24px 0px 9px 30px !important;
+	.partient_dashboard_mob li a{
+		padding:24px 0px 9px 30px !important ;
 		&:hover{
 				padding:24px 0px 9px 30px !important;
 		}
 	}
-
+.patient-user__navbar ul > li{
+	padding:0;
+}
 	/*patient Dashboard  */
 	.admin-user .clinic-list, .vertical-align{
 		padding: 12px 0px 29px 0 !important;
@@ -226,6 +243,15 @@
 	.left{
 		float:left !important;
 	}
+	.note_header_left .note, .note_header_left .can_do, .note_header_right .cross_icon{
+		font-size:10px;
+		padding: 3px 2px;
+	}
+	.admin-user .caregiver-list__type span{
+		font-size:12px;
+		font-weight:normal;
+	}
+	
 /*Patient pie Charts CSS*/
 
 .padding_0{
@@ -270,8 +296,11 @@
 	    display: inline-block;
 	    margin: 0px 0px;
 	}
-
-	.patient_nav_link_right{
+	.patient_nav_link_right li
+	{
+		margin:0;
+	}
+	.partient_dashboard_mob{
 		li{
 			margin: 0px 0px;
 			a{
