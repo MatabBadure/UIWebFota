@@ -365,6 +365,10 @@ angular.module('hillromvestApp')
     }).catch(function(data){notyService.showError(response, 'warning');});
   };
 
+  $scope.getHCPstoLink = function($viewValue){
+    return searchFilterService.getMatchingUser($viewValue, $scope.hcps, true);
+  };
+
   $scope.showAssociateHCPModal = function(hcp){
     $scope.selectedHCP = hcp;
     $scope.associateHCPModal = true;

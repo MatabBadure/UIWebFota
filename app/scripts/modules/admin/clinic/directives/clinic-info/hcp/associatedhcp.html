@@ -107,7 +107,7 @@
 <div class="container admin-user">
   <div class="col-md-16 reset-padding">
     <div class="col-md-8 clinic-link">
-      <input class="form-control" type="text" ng-model="searchHcp" typeahead="hcp as hcp.lastName + ', &nbsp' + hcp.firstName +' ' + hcp.clinicName for hcp in hcps | filter:$viewValue" typeahead-on-select="showAssociateHCPModal($item)" placeholder="{{'clinic.placeholder.hcp-search' | translate}}" ng-show="isAssociateHCP">
+      <input class="form-control" type="text" ng-model="searchHcp" typeahead="hcp as hcp.lastName + ', &nbsp' + hcp.firstName +' ' + hcp.clinicName for hcp in getHCPsToLinkClinic($viewValue)" typeahead-on-select="showAssociateHCPModal($item)" placeholder="{{'clinic.placeholder.hcp-search' | translate}}" ng-show="isAssociateHCP">
     </div>
 
     <div class="col-md-8 clinic-link">
