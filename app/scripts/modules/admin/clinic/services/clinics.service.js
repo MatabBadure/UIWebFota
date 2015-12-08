@@ -37,8 +37,9 @@ angular.module('hillromvestApp')
         }
         if (sortOption === "" || sortOption === undefined || sortOption === null) {
           sortOption = sortConstant.name + searchFilters.amp +searchFilters.asc +searchFilters.equal + true;
-        } 
-        return $http.get('api/clinics/search?searchString=' + searchString + '&page=' + pageNo + '&per_page=' + offset + '&sort_by=' + sortOption + '&filter='+filterBy, {
+        }
+        var url = URL.searchClinics.replace('SEARCHSTRING', searchString).replace('PAGENO', pageNo).replace('OFFSET', offset).replace('SORTBY', sortOption).replace('FILTER', filterBy);
+        return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
           return response;
@@ -72,7 +73,8 @@ angular.module('hillromvestApp')
       },
 
       disassociatePatient: function(patientId, data){
-        return $http.put('/api/patient/'+patientId+'/dissociateclinics', data, {
+        var url = URL.disassociatePatientFromClinic.replace('PATIENTID', patientId);
+        return $http.put(url, data, {
           headers: headerService.getHeader()
         }).success(function(response) {
           return response;
@@ -88,7 +90,8 @@ angular.module('hillromvestApp')
       },
 
       associatePatient: function(patientId, data){
-        return $http.put('/api/patient/'+patientId+'/associateclinics', data, {
+        var url = URL.associatePatientToClinic.replace('PATIENTID',patientId);
+        return $http.put(url, data, {
           headers: headerService.getHeader()
         }).success(function(response) {
           return response;
@@ -96,7 +99,8 @@ angular.module('hillromvestApp')
       },
 
       getClinicAssoctHCPs: function(clinicId){
-        return $http.get('/api/clinics/hcp?filter=id:' + clinicId, {
+        var url = URL.clinicAssociatedHCPs.replace('CLINICID', clinicId);
+        return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
           return response;
@@ -121,7 +125,8 @@ angular.module('hillromvestApp')
       },
 
       associateHcp: function(clinicId, data){
-        return $http.put('/api/clinics/'+clinicId+'/associatehcp', data, {
+        var url = URL.associateHcpToClinic.replace('CLINICID', clinicId);
+        return $http.put(url, data, {
           headers: headerService.getHeader()
         }).success(function(response) {
           return response;
@@ -164,7 +169,8 @@ angular.module('hillromvestApp')
       },
 
       addClinicAdmin: function(clinicId, data){
-        return $http.put('/api/clinics/'+clinicId+'/associateclinicadmin', data,{
+        var url = URL.associateClinicAdmin.replace('CLINICID', clinicId);
+        return $http.put(url, data,{
           headers: headerService.getHeader()
         }).success(function(response){
           return response;
@@ -172,7 +178,8 @@ angular.module('hillromvestApp')
       },
 
       disassociateClinicAdmmin: function(clinicId, data){
-        return $http.put('/api/clinics/'+clinicId+'/dissociateclinicadmin', data,{
+        var url = URL.disassociateClinicAdmmin.replace('CLINICID', clinicId)
+        return $http.put(url, data,{
           headers: headerService.getHeader()
         }).success(function(response){
           return response;

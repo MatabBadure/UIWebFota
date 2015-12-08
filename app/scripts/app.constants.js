@@ -33,5 +33,12 @@ angular.module('hillromvestApp')
 	'getAdeherenceData':'/api/user/USERID/adherenceTrend?from=FROMDATE&to=TODATE',
 	'getAssociatedHCPtoClinic': '/api/user/hcp/search?searchString=SEARCHSTRING&clinicId=CLINICID&filter=FILTER&page=PAGENO&per_page=OFFSET',
 	'getClinicsByClinicadmin' : '/api/user/CLINICADMIN/clinics',
-	'getAllUsersByRole': '/api/user/all?role=ROLE'
+	'getAllUsersByRole': '/api/user/all?role=ROLE',
+	'associateHcpToClinic':'/api/clinics/CLINICID/associatehcp',
+	'clinicAssociatedHCPs': '/api/clinics/hcp?filter=id:CLINICID',
+	'associatePatientToClinic':'/api/patient/PATIENTID/associateclinics',
+	'disassociatePatientFromClinic': '/api/patient/PATIENTID/dissociateclinics',
+	'searchClinics': 'api/clinics/search?searchString=SEARCHSTRING&page=PAGENO&per_page=OFFSET&sort_by=SORTBY&filter=FILTER',
+	'associateClinicAdmin': '/api/clinics/CLINICID/associateclinicadmin',
+	'disassociateClinicAdmmin': '/api/clinics/CLINICID/dissociateclinicadmin'
 });
