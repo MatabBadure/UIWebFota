@@ -12,14 +12,6 @@ angular.module('hillromvestApp')
     '.missed_therapy_node {fill: #cf202f;stroke: #fff;stroke-width: 1.5;fill-opacity: 1;} '+ 
     ' g rect {fill: #e3ecf7;opacity: 1 !important;} '+
     '.nvd3 .nv-groups path.nv-line {fill: none;} .svg_bg {fill: #e3ecf7;}  '+
-    '.nvd3.nv-stackedarea path.nv-area { '+
-     ' fill-opacity: .7;stroke-opacity: 0; '+
-     ' transition: fill-opacity 250ms linear,  '+
-     ' stroke-opacity 250ms linear;     '+
-     ' -moz-transition: fill-opacity 250ms linear,  '+
-     ' stroke-opacity 250ms linear;-webkit-transition:  '+
-     ' fill-opacity 250ms linear,  '+
-     ' stroke-opacity 250ms inear;}  '+
      ' </style>';
     var g_pdfMetaData={};
     $scope.addCanvasToDOM = function (){ 
@@ -2040,12 +2032,17 @@ angular.module('hillromvestApp')
 
       
       var imgY = 250;
-      var backgroundColor = "#e3ecf7";
+      var backgroundColor = "red";
       if($("#hmrLineDiv").find("svg").length > 0){
        // if(isIEBrowser){
+          if($("#hmrLineDiv").find("svg").find(".nvd3 g rect").length > 0 ){
+            console.log("rect exists..");
+            $("#hmrLineDiv").find("svg").find(".nvd3 g rect").attr("style","opcity: 1 !important; fill: #e3ecf7;");
+          }
           var canvas = document.getElementById('hmrLineCanvas');               
           var ctx = canvas.getContext('2d');
           ctx.fillStyle = backgroundColor;
+          console.log("html : "+$("#hmrLineDiv").find("svg").parent().html().trim());
           canvg(canvas, $("#hmrLineDiv").find("svg").parent().html().trim());
        // }       
         var img = $("#hmrLineCanvas")[0].toDataURL('image/png', 1.0);
@@ -2069,7 +2066,7 @@ angular.module('hillromvestApp')
       if($("#complianceDiv").find("svg").length > 0){
        // if(isIEBrowser){
           var canvas = document.getElementById('complianceCanvas');               
-          var ctx = canvas.getContext('2d');
+          var ctx = canvas.getContext('2d');          
           ctx.fillStyle = backgroundColor;
           canvg(canvas, $("#complianceDiv").find("svg").parent().html().trim());
        // }
