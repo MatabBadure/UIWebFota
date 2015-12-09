@@ -9561,6 +9561,10 @@ ul.dropdown-menu {
     display: inline-block;
   }
 
+  .navbar-default .navbar-brand .logo {
+    font-size: 80px;
+  }
+
   .none, .footer_container .footer_right_txt, .footer_container .footer_right .icon-hill-rom-logo {
     display: none;
   }
@@ -9637,6 +9641,24 @@ ul.dropdown-menu {
     float: right;
   }
 
+  .header-nav-content {
+    margin: 0;
+    position: relative;
+  }
+
+  .header-nav-content:before {
+    content: '';
+    position: absolute;
+    right: 10px;
+    top: -10px;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid #276092;
+    clear: both;
+  }
+
   .icons_display_inline, .icon-logged-in-user, .link-text, .icon-user-account, .logout-dropdown > li span, .user-name, .icon-dashboard, .icon-notification-bell {
     display: inline-block !important;
     margin-left: 10px;
@@ -9646,18 +9668,79 @@ ul.dropdown-menu {
     width: 100%;
   }
 
+  .navbar-secondary .navbar-right li a.active {
+    border: transparent;
+  }
+
+  .navbar-secondary .navbar-right > li.icon-border:before {
+    border-right: none;
+  }
+
   .navbar-secondary .navbar-right .header-popover ul li:first-child:after {
     border-right: none;
   }
 
   .navbar-default > .container > .navbar-secondary ul li a {
     text-align: left;
+    min-height: 45px;
+  }
+  .navbar-default > .container > .navbar-secondary ul li a:hover {
+    background-color: transparent;
+    border-bottom: none;
+    color: #fff;
   }
 
   .navbar-secondary .navbar-right .header-popover ul p {
     font-size: 10px;
     margin-left: 10px;
     display: inline-block !important;
+  }
+
+  .navbar-default .navbar-nav > .open > a {
+    background-color: #276092;
+  }
+
+  .navbar-brand__desc span, .navbar-brand__desc .navbar-brand__desc--text-secondary {
+    font-size: 12px;
+  }
+
+  .patient-user__navbar ul > li > a:hover span {
+    left: 9px;
+  }
+
+  .patient_nav_link_right li a {
+    padding: 24px 0px 9px 30px !important;
+  }
+  .patient_nav_link_right li a:hover {
+    padding: 24px 0px 9px 30px !important;
+  }
+
+  /*patient Dashboard  */
+  .admin-user .clinic-list, .vertical-align {
+    padding: 12px 0px 29px 0 !important;
+    margin: 0 !important;
+  }
+
+  .pull-right-mob {
+    float: right;
+  }
+
+  .pull-left-mob {
+    float: left;
+  }
+
+  .hcp_ellipses {
+    text-overflow: ellipsis;
+    width: 77px;
+    overflow: hidden;
+  }
+
+  .text-center-mob {
+    text-align: center;
+  }
+
+  .width140 {
+    width: 140px;
   }
 
   /*Patient pie Charts CSS*/
