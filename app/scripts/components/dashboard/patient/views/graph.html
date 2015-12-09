@@ -1,4 +1,3 @@
-
 <div class="container admin-user">
 	<div class="col-md-16 margin-top reset-padding">
 		<div class="user-gen-details">
@@ -157,10 +156,16 @@
 			<div class="graph_nodata" ng-show="noDataAvailable">
 					<span class="noData_text"> No Data Available!</span>
 			</div>
-			<div ng-if="hmrGraph" class="dashboard_line_graph" id="lineGraphWrapper">
+			<div ng-if="hmrGraph" class="complianceGraphPrim_wrapper" id="lineGraphWrapper">
 				<div ng-if="hmrLineGraph">
-					<div id="hmrLineGraph" class="complianceGraph col-md-16">
-						<svg ng-show="!noDataAvailable"> </svg>
+					<div id="hmrLineGraphSVG" class="complianceGraph col-md-16" style="position:absolute;z-index:2;">
+						<svg id="hmrLineSVG" ng-show="!noDataAvailable"> </svg>						
+					</div>
+					<div id="hmrLineGraphCompliance" class="complianceGraph col-md-16" style="margin-top: -351px;position:absolute;z-index:-1;">
+						<svg id="hmrCompliance" style="opcity: 1;"> </svg>
+					</div>
+					<div id="hmrLineGraphCompliance1" class="complianceGraph col-md-16" style="margin-top: -351px;position:absolute;z-index:-1;" >		
+						<svg id="hmrCompliance1" style="opcity: 1;"> </svg>
 					</div>
 				</div>
 				<div ng-if="hmrBarGraph" id="complianceGraphWrapper">
@@ -203,9 +208,13 @@
 	<div class="col-md-16">
 		<div class="btn_group patient_dashdoard_btns" >
 			<div dropdown class="pull-right">
-				<button id="single-button" type="button" class="hillrom-btn btn-submit float-right" dropdown-toggle ng-disabled="disabled" translate="graph.download" >
+				<!-- <button id="single-button" type="button" class="hillrom-btn btn-submit float-right" dropdown-toggle ng-disabled="disabled" translate="graph.download" >
+					<span class="caret"></span>
+				</button> -->
+				<button id="single-button" type="button" ng-class="{ 'hillrom-btn btn-submit float-right': !noDataAvailable, '': noDataAvailable }"class="" dropdown-toggle ng-disabled="disabled" translate="graph.download" >
 					<span class="caret"></span>
 				</button>
+				
 				<ul class="dropdown-menu" role="menu" aria-labelledby="single-button" ng-if="!noDataAvailable">
 					<li role="menuitem">
 						<a href="javascript:void(0);" ng-click="downloadAsPdf();" translate="graph.export-as-pdf"></a>
