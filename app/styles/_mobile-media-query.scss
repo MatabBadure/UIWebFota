@@ -260,7 +260,7 @@
 .mob_no_margin{
 	margin: 0px 0px;
 }
-.stats_chart_container{
+.stats_chart_container, .hcp_wrapper .stats_chart_container{
 	.col-3{
 		width: 49%;
 		margin-bottom: 10px;
@@ -319,6 +319,29 @@
 }
 
 } 
+
+/*hcp dashboard*/
+.navbar-nav .open .dropdown-menu{
+	position:absolute ;
+}
+.patient-user__navbar{
+ul {
+	li {
+
+		}
+	}
+ 		a{
+		padding:3px 0px 9px 0px!important;
+		}
+	}
+	.hcp_dashbaord{
+		background-color:#7ca3dc !important;
+		min-width:140px!important;
+	}
+	.admin-user .device-list{
+		margin-top: 7px;
+		padding-bottom: 26px;
+	}
 
 
 
