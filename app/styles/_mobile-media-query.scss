@@ -1,0 +1,324 @@
+@media only screen and (min-width : 320px) and (max-width : 800px) {
+
+	.content-body {
+			.login{
+			position:relative;
+		}
+	}
+	.footer {
+		position:static;
+		text-align: center
+	}
+
+	.footer_container .footer_left_ul {
+		
+		&:li {
+		 	float:none;
+		 	display:inline-block;
+		 }
+	}
+	.navbar-default .navbar-brand .logo{
+		font-size:80px;
+	}
+	.secondary-header>.show-mob{
+		margin:0.25px -2px!important;
+	}
+	.show-mob{
+		li{
+			
+			a{
+				padding:2px 0px 9px 30px !important;
+				span:first-child{
+					display: block !important;
+				}
+			}
+		}
+	}
+	.none
+		{
+			display: none;
+		}
+	.footer_container .footer_right_txt, .admin-user .caregiver-list__detail--email {
+		@extend .none;
+	}
+
+	.footer_container .footer_right {
+		text-align: center;
+	}
+	.footer_container .footer_right .icon-hill-rom-logo {
+		@extend .none;
+	}
+	.navbar-default .navbar-toggle {
+    	border-color: transparent;
+   }
+    .icon-bar {
+    	background-color: #7ca3dc !important;
+	}
+
+	.login .login--position
+	{
+		width: 100%;
+	}
+	.footer_container, .footer_left{
+		padding:0;
+	}
+/*	.navbar-default .navbar-brand__desc--text-secondary, .navbar-default .navbar-brand__desc--text-primary{
+		font-size:12px;
+		}
+	.navbar-default .navbar-brand .logo{
+		font-size:70px;
+	}*/
+	.footer_container .footer_left_ul li {
+	    list-style-type: none;
+	    margin: 0 6px 0px 6px;
+	    display: inline-block;
+	    position: relative;
+	    float:none;
+	    font-size: 9px;
+ 	}
+
+ 	.footer_container .footer_left_ul li:before {
+ 		top:7px;
+ 		right: -8px;
+ 	}
+
+ 	.footer{
+ 		line-height:25px;
+ 	}
+ 	.login__container__right-section {
+ 		width: 100%;
+ 	}
+ 	.form__container__login, .form__container__reset{
+ 		padding: 10px 0px;
+ 	}
+ 	.visi_view_container {
+	    text-align: center;
+	    background-position: center;
+	    height: 70px;
+	    width: 240px;
+	    margin: 12% auto 7%;
+	    background-size: 150px;
+		}
+
+	.header-nav{
+		border-bottom: 1px solid #cccccc;
+		min-height:1px !important;
+		overflow: hidden;
+	}
+	.header-nav .header-nav-content li{
+		background-color: #276092 !important;
+		width:80%;
+		float:right;
+		}
+
+	.header-nav-content
+	{
+		margin:0;
+		position: relative;
+		display:none;
+	}
+	.header-nav-content:before{
+		  content: '';
+		  position: absolute;
+		  right: 10px;
+		  top: -10px;
+		  width: 0;
+		  height: 0;
+		  border-left: 10px solid transparent;
+		  border-right: 10px solid transparent;
+		  border-bottom: 10px solid #276092;
+		  clear: both;
+
+	}
+
+	.icons_display_inline{
+		display: inline-block !important;
+		margin-left:10px;
+	}
+	.logout-dropdown li{
+		width:100%;
+	}
+	.navbar-secondary .navbar-right li a.active{
+		border:transparent;
+	}
+	.navbar-secondary .navbar-right > li.icon-border:before{
+		border-right: none;
+	}
+	.navbar-secondary {
+		.navbar-right {
+				.header-popover ul li:first-child:after{
+			border-right: none;
+			}
+		}
+	}
+	.icon-logged-in-user, .link-text, .icon-user-account, .logout-dropdown>li span, .user-name, .icon-dashboard, .icon-notification-bell {
+		@extend .icons_display_inline;
+	}
+	.navbar-default > .container > .navbar-secondary ul li {
+		a{
+		text-align:left;
+		min-height:45px;
+		&:hover{
+			background-color: transparent; 
+	     	border-bottom:none; 
+	     	color:#fff;
+		}
+	}
+}
+	.navbar-secondary .navbar-right .header-popover ul p
+	{
+		font-size:10px;
+		margin-left:10px;
+		display: inline-block !important;
+	}
+
+	.navbar-default .navbar-nav > .open > a
+	{
+		background-color: #276092;
+	}
+
+	.navbar-brand__desc {
+		span, .navbar-brand__desc--text-secondary{
+			font-size: 12px;
+		}
+	}
+
+	.patient-user__navbar ul > li > a:hover span, .patient-user__navbar .patient_nav_link_right li a .icons{
+		left: 9px;
+	}
+	.partient_dashboard_mob li a{
+		padding:24px 0px 9px 30px !important ;
+		&:hover{
+				padding:24px 0px 9px 30px !important;
+		}
+	}
+.patient-user__navbar ul > li{
+	padding:0;
+}
+	/*patient Dashboard  */
+	.admin-user .clinic-list, .vertical-align{
+		padding: 12px 0px 29px 0 !important;
+		margin:0 !important;
+	}
+	.pull-right-mob{
+		float:right;
+	}
+	.pull-left-mob{
+		float:left;
+	}
+	.hcp_ellipses{
+		text-overflow: ellipsis;
+		width:77px;
+		overflow:hidden;
+	}
+	.text-center-mob{
+		text-align:center;
+	}
+	.text-right-mob{
+		text-align:right;
+	}
+	.width120{
+		width:120px;
+	}
+	.padding0{
+		padding:0;
+	}
+	.margin0{
+		margin:0;
+	}
+	.margin-bottom20{
+		margin-bottom:20px;
+	}
+	.right_header_barchart ul li a{
+		margin:20px 0px 0px 19px;
+	}
+	/*datepicker*/
+	.daterangepicker.dropdown-menu{
+		width:80%;
+	}
+	/*datepicker end*/
+	.patient_dashdoard_btns .dropdown-menu .btn-submit{
+		margin-left:0;
+	}
+	.left{
+		float:left !important;
+	}
+	.note_header_left .note, .note_header_left .can_do, .note_header_right .cross_icon{
+		font-size:10px;
+		padding: 3px 2px;
+	}
+	.admin-user .caregiver-list__type span{
+		font-size:12px;
+		font-weight:normal;
+	}
+	
+/*Patient pie Charts CSS*/
+
+.padding_0{
+	padding: 0px 0px;
+}
+.mob_no_margin{
+	margin: 0px 0px;
+}
+.stats_chart_container{
+	.col-3{
+		width: 49%;
+		margin-bottom: 10px;
+		background-image: none;
+		.chart_inner_icon{
+			left: 50%;
+			margin-left: -22px;
+		}
+	}
+	.pie_chart{
+		text-align: center;
+		float: none;
+		background-image: url("../images/Color-HCP-Dashboard.png");
+		background-size: 100% 100%;
+		margin-bottom: 10px;
+	}
+	.stats_chart_content{
+		margin: 0px 0px;
+	    width: 100%;
+	    text-align: center;
+	    font-size: 12px;
+	}
+	.stats_chart_content{
+		.percent{
+			width: 100%;
+		}
+	} 
+}
+
+.patient-user__navbar{
+	.patient-dashboard{
+		width: auto;
+	    display: inline-block;
+	    margin: 0px 0px;
+	}
+	.patient_nav_link_right li
+	{
+		margin:0;
+	}
+	.partient_dashboard_mob{
+		li{
+			margin: 0px 0px;
+			a{
+				span:first-child{
+					display: none;
+				}
+				.icons{
+					top: 5px;
+				}
+			}
+		}
+	}
+}
+.patient_wrapper{
+	margin-top: 0px;
+}
+
+} 
+
+
+

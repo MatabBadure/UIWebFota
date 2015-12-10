@@ -1,6 +1,6 @@
 
 <div class="container admin-user">
-	<div class="col-md-16 margin-top reset-padding">
+	<div class="col-md-16 margin-top reset-padding mob_no_margin">
 		<div class="user-gen-details">
 			<span class="user-gen-details--name">{{slectedPatient.firstName}} {{slectedPatient.lastName}}</span>
 			<span class="user-gen-details--hr-id">{{slectedPatient.hillromId}}</span>
@@ -8,9 +8,9 @@
 	</div>
 </div>
 		<div class="container patient_wrapper">
-			<div class="col-md-16">
+			<div class="col-md-16 padding_0">
 				<div class="row">
-					<div class="col-md-16 col-sm-16">
+					<div class="col-md-16 col-sm-16 padding_0">
 						<div class="stats_chart_section">
 							<div class="stats_header"><h4 translate="graph.statistics"></h4></div>
 							<div class="stats_chart_container">
@@ -124,9 +124,9 @@
 					</div> -->
 				</div>
 			</div>
-			<div class="col-md-16">
+			<div class="col-md-16 padding0">
 				<div class="bar_graph_header">
-					<div class="col-md-5 col-sm-7 left_header_barchart">
+					<div class="col-md-5 col-sm-7 left_header_barchart padding0">
 						<div class="row">
 							<ul class="nav nav-pills">
 							<li><a ng-class="{active: selectedGraph === 'HMR'}" href="" ng-click="showHmrGraph()" translate="graph.hmr-data"></a></li>
@@ -202,8 +202,8 @@
 	<!-- Note section HTML -->
 	<div class="col-md-16">
 		<div class="btn_group patient_dashdoard_btns" >
-			<div dropdown class="pull-right">
-				<button id="single-button" type="button" class="hillrom-btn btn-submit float-right" dropdown-toggle ng-disabled="disabled" translate="graph.download" >
+			<div dropdown class="pull-right left">
+				<button id="single-button" type="button" class="hillrom-btn btn-submit margin0 float-right" dropdown-toggle ng-disabled="disabled" translate="graph.download" >
 					<span class="caret"></span>
 				</button>
 				<ul class="dropdown-menu" role="menu" aria-labelledby="single-button" ng-if="!noDataAvailable">
@@ -219,7 +219,7 @@
 				</ul>
 
 			</div>
-			 <button class="hillrom-btn btn-submit float-right" ng-click="showAllNotes();" translate="graph.note"></button>
+			 <button class="hillrom-btn btn-submit margin0 float-right" ng-click="showAllNotes();" translate="graph.note"></button>
 
 
 		</div>
@@ -227,7 +227,7 @@
 	<div class="col-md-16 hide_content" id="add_note_container">
 		<div class="add_note_container">
 			<div class="note_header">
-				<div class="col-md-14 col-sm-12 note_header_left">
+				<div class="col-md-14 col-sm-12 note_header_left pull-left-mob">
 					<span class="note" translate="graph.note"></span>
 					<span class="can_do" translate="graph.can-do" ng-show="role === 'PATIENT'"></span>
 				</div>

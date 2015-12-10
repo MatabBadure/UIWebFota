@@ -85,7 +85,7 @@
 <div class="container admin-user">
   <div class="col-md-16 reset-padding">
     <div class="col-md-8 clinic-link">
-      <input class="form-control" type="text" ng-model="searchItem" typeahead="clinic.hillromId + '' +clinic.name +' &nbsp;'+ clinic.city + ' &nbsp;' + clinic.state for clinic in clinics | filter:$viewValue" typeahead-on-select="showAssociateClinicModal($item)" placeholder="{{'doctor.placeholder.link-clinic' | translate}}" ng-show="associateClinicSearch">
+      <input class="form-control" type="text" ng-model="searchItem" typeahead="clinic.hillromId + '' +clinic.name +' &nbsp;'+ clinic.city + ' &nbsp;' + clinic.state for clinic in clinics | filter:{name:$viewValue}" typeahead-on-select="showAssociateClinicModal($item)" placeholder="{{'doctor.placeholder.link-clinic' | translate}}" ng-show="associateClinicSearch">
     </div>
 
     <div class="col-md-8 clinic-link" ng-show="!associateClinicSearch">

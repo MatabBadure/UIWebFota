@@ -143,27 +143,18 @@
     "error":{
         "firstName":{
             "required": "First Name is required.",
-            "pattern": "First Name cannot have number and special characters.",
-            "minlength": "First Name is required to be at least 2 character.",
-            "maxlength": "First Name cannot be longer than 15 characters."
-        },
-        "patient-lastName":{
-            "required": "Last Name is required.",
-            "pattern": "Please renter your Last Name using only letters and other supported as hyphen (-), Apostrophe ('), Comma (,), Period (.) and Space.",
-            "minlength": "Last Name is required to be at least 1 character.",
-            "maxlength": "Last Name cannot be longer than 50 characters."
+            "minlength": "First Name is required to be at least 1 character.",
+            "maxlength": "First Name cannot be longer than 50 characters."
         },
         "lastName":{
             "required": "Last Name is required.",
-            "pattern": "Last Name cannot have number and special characters.",
-            "minlength": "Last Name is required to be at least 2 character.",
-            "maxlength": "Last Name cannot be longer than 15 characters."
+            "minlength": "Last Name is required to be at least 1 character.",
+            "maxlength": "Last Name cannot be longer than 50 characters."
         },
         "middleName":{
             "required": "Middle Name is required.",
-            "pattern": "Middle Name cannot have number and special characters.",
             "minlength": "Middle Name is required to be at least 1 character.",
-            "maxlength": "Middle Name cannot be longer than 15 characters."
+            "maxlength": "Middle Name cannot be longer than 50 characters."
         },
         "email":{
             "invalid": "E-mail is invalid.",
