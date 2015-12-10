@@ -40,5 +40,10 @@ angular.module('hillromvestApp')
 	'disassociatePatientFromClinic': '/api/patient/PATIENTID/dissociateclinics',
 	'searchClinics': 'api/clinics/search?searchString=SEARCHSTRING&page=PAGENO&per_page=OFFSET&sort_by=SORTBY&filter=FILTER',
 	'associateClinicAdmin': '/api/clinics/CLINICID/associateclinicadmin',
-	'disassociateClinicAdmmin': '/api/clinics/CLINICID/dissociateclinicadmin'
+	'disassociateClinicAdmmin': '/api/clinics/CLINICID/dissociateclinicadmin',
+	'clinicAssoctPatients': '/api/clinics/patients?filter=id:CLINICID&page=PAGENO&per_page=OFFSET',
+	'disassociateHcpFromClinic': '/api/user/HCPID/dissociateclinic',
+	'clinicAdminByClinicId': '/api/clinics/CLINICID/clinicadmin',
+	'allActiveParentClinics': '/api/clinics?page=1&per_page=&filter=deleted:false,parent:true&sort_by=name&asc=true',
+	'allActiveClinics': '/api/clinics?per_page=&filter=deleted:false'
 });

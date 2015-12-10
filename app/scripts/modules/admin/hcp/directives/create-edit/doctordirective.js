@@ -9,8 +9,8 @@ angular.module('hillromvestApp')
         onSuccess: '&',
         doctorStatus: '=doctorStatus'
       },
-      controller: ['$scope', '$timeout', 'notyService', '$state', '$stateParams', 'DoctorService', 'UserService', 'clinicService', 'StorageService', 'loginConstants', 'commonsUserService',
-      function ($scope, $timeout, notyService, $state, $stateParams, DoctorService, UserService, clinicService, StorageService, loginConstants, commonsUserService) {
+      controller: ['$scope', '$timeout', 'notyService', '$state', '$stateParams', 'DoctorService', 'UserService', 'clinicService', 'StorageService', 'loginConstants', 'commonsUserService', 'URL',
+      function ($scope, $timeout, notyService, $state, $stateParams, DoctorService, UserService, clinicService, StorageService, loginConstants, commonsUserService, URL) {
         $scope.role = StorageService.get('logged').role;
         $scope.open = function () {
           $scope.showModal = true;
@@ -82,7 +82,8 @@ angular.module('hillromvestApp')
         $scope.getParentClinics = function() {
           var timer = false;
           timer = $timeout(function() {
-            clinicService.getAllClinics('/api/clinics?per_page=100&filter=deleted:false').then(function(response) {
+            var url = URL.allActiveClinics;
+            clinicService.getAllClinics(url).then(function(response) {
               $scope.clinics = response.data;
               angular.forEach($scope.clinics, function(clinic) {
                 if(clinic.city) {
