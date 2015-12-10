@@ -9546,7 +9546,7 @@ ul.dropdown-menu {
   margin-bottom: 10%;
 }
 
-@media only screen and (min-width: 320px) and (max-width: 800px) {
+@media only screen and (min-width: 320px) and (max-width: 700px) {
   .content-body .login {
     position: relative;
   }
@@ -9565,7 +9565,18 @@ ul.dropdown-menu {
     font-size: 80px;
   }
 
-  .none, .footer_container .footer_right_txt, .footer_container .footer_right .icon-hill-rom-logo {
+  .secondary-header > .show-mob {
+    margin: 0.25px -2px !important;
+  }
+
+  .show-mob li a {
+    padding: 2px 0px 9px 30px !important;
+  }
+  .show-mob li a span:first-child {
+    display: block !important;
+  }
+
+  .none, .footer_container .footer_right_txt, .admin-user .caregiver-list__detail--email, .footer_container .footer_right .icon-hill-rom-logo {
     display: none;
   }
 
@@ -9576,8 +9587,9 @@ ul.dropdown-menu {
   .navbar-default .navbar-toggle {
     border-color: transparent;
   }
-  .navbar-default .navbar-toggle.icon-bar {
-    background-color: #7ca3dc;
+
+  .icon-bar {
+    background-color: #7ca3dc !important;
   }
 
   .login .login--position {
@@ -9643,7 +9655,9 @@ ul.dropdown-menu {
 
   .header-nav-content {
     margin: 0;
-    position: relative;
+    	/*	position: relative;
+    		display:none;
+    */
   }
 
   .header-nav-content:before {
@@ -9672,6 +9686,10 @@ ul.dropdown-menu {
     border: transparent;
   }
 
+  .navbar-secondary .navbar-right li a:hover {
+    border-bottom: 0;
+  }
+
   .navbar-secondary .navbar-right > li.icon-border:before {
     border-right: none;
   }
@@ -9690,6 +9708,9 @@ ul.dropdown-menu {
     color: #fff;
   }
 
+  .navbar-secondary .navbar-right .header-popover ul {
+    background-color: transparent;
+  }
   .navbar-secondary .navbar-right .header-popover ul p {
     font-size: 10px;
     margin-left: 10px;
@@ -9704,15 +9725,20 @@ ul.dropdown-menu {
     font-size: 12px;
   }
 
-  .patient-user__navbar ul > li > a:hover span {
+  .patient-user__navbar ul > li > a:hover span, .patient-user__navbar .patient_nav_link_right li a .icons {
     left: 9px;
   }
 
-  .patient_nav_link_right li a {
+  .partient_dashboard_mob li a {
+    padding: 24px 0px 9px 30px !important;
+    margin: 0 !important;
+  }
+  .partient_dashboard_mob li a:hover {
     padding: 24px 0px 9px 30px !important;
   }
-  .patient_nav_link_right li a:hover {
-    padding: 24px 0px 9px 30px !important;
+
+  .patient-user__navbar ul > li {
+    padding: 0;
   }
 
   /*patient Dashboard  */
@@ -9739,8 +9765,56 @@ ul.dropdown-menu {
     text-align: center;
   }
 
-  .width140 {
-    width: 140px;
+  .text-right-mob {
+    text-align: right;
+  }
+
+  .width120 {
+    width: 120px;
+  }
+
+  .padding0 {
+    padding: 0;
+  }
+
+  .margin0 {
+    margin: 0;
+  }
+
+  .margin-bottom20 {
+    margin-bottom: 20px;
+  }
+
+  .padding-bottom-20 {
+    padding-bottom: 20px;
+  }
+
+  .right_header_barchart ul li a {
+    margin: 20px 0px 0px 19px;
+  }
+
+  /*datepicker*/
+  .daterangepicker.dropdown-menu {
+    width: 80%;
+  }
+
+  /*datepicker end*/
+  .patient_dashdoard_btns .dropdown-menu .btn-submit {
+    margin-left: 0;
+  }
+
+  .left {
+    float: left !important;
+  }
+
+  .note_header_left .note, .note_header_left .can_do, .note_header_right .cross_icon {
+    font-size: 10px;
+    padding: 3px 2px;
+  }
+
+  .admin-user .caregiver-list__type span {
+    font-size: 12px;
+    font-weight: normal;
   }
 
   /*Patient pie Charts CSS*/
@@ -9752,29 +9826,29 @@ ul.dropdown-menu {
     margin: 0px 0px;
   }
 
-  .stats_chart_container .col-3 {
+  .stats_chart_container .col-3, .hcp_wrapper .stats_chart_container .col-3 {
     width: 49%;
     margin-bottom: 10px;
     background-image: none;
   }
-  .stats_chart_container .col-3 .chart_inner_icon {
+  .stats_chart_container .col-3 .chart_inner_icon, .hcp_wrapper .stats_chart_container .col-3 .chart_inner_icon {
     left: 50%;
     margin-left: -22px;
   }
-  .stats_chart_container .pie_chart {
+  .stats_chart_container .pie_chart, .hcp_wrapper .stats_chart_container .pie_chart {
     text-align: center;
     float: none;
     background-image: url("../images/Color-HCP-Dashboard.png");
     background-size: 100% 100%;
     margin-bottom: 10px;
   }
-  .stats_chart_container .stats_chart_content {
+  .stats_chart_container .stats_chart_content, .hcp_wrapper .stats_chart_container .stats_chart_content {
     margin: 0px 0px;
     width: 100%;
     text-align: center;
     font-size: 12px;
   }
-  .stats_chart_container .stats_chart_content .percent {
+  .stats_chart_container .stats_chart_content .percent, .hcp_wrapper .stats_chart_container .stats_chart_content .percent {
     width: 100%;
   }
 
@@ -9784,16 +9858,86 @@ ul.dropdown-menu {
     margin: 0px 0px;
   }
   .patient-user__navbar .patient_nav_link_right li {
+    margin: 0;
+  }
+  .patient-user__navbar .partient_dashboard_mob li {
     margin: 0px 0px;
   }
-  .patient-user__navbar .patient_nav_link_right li a span:first-child {
+  .patient-user__navbar .partient_dashboard_mob li a span:first-child {
     display: none;
   }
-  .patient-user__navbar .patient_nav_link_right li a .icons {
+  .patient-user__navbar .partient_dashboard_mob li a .icons {
     top: 5px;
   }
 
   .patient_wrapper {
     margin-top: 0px;
+  }
+
+  .patient_nav_link_right li a {
+    margin: -7px 6px;
+  }
+
+  /*notification*/
+  .navbar-secondary .navbar-right .header-popover .noti-list li {
+    width: 100%;
+    padding: 9px 0px 9px 49px;
+    font-size: 11px;
+  }
+
+  .dashboard_noti_section {
+    margin-bottom: 0;
+  }
+
+  .notification_container ul li .dsh_icon {
+    font-size: 16px;
+    height: 33px;
+    line-height: 30px;
+    position: absolute;
+    padding-left: 8px;
+    width: 33px;
+  }
+
+  .navbar-secondary .navbar-right .noti_bell .noti_count {
+    left: 16px;
+  }
+
+  /*hcp dashboard*/
+  .navbar-nav .open .dropdown-menu {
+    position: relative;
+  }
+
+  .patient-user__navbar a {
+    padding: 3px 0px 9px 0px !important;
+  }
+
+  .hcp_dashbaord {
+    background-color: #7ca3dc !important;
+    min-width: 140px !important;
+  }
+
+  .admin-user .device-list {
+    margin-top: 7px;
+    padding-bottom: 26px;
+  }
+
+  /* admin */
+  .admin_profile a {
+    margin: 0 0 0 20px;
+    float: left;
+    display: inline;
+  }
+
+  .navbar-fixed-top .rm_max_height {
+    max-height: 100%;
+  }
+  .navbar-fixed-top ul li span {
+    float: left;
+    padding: 0 3px;
+    margin: 0;
+  }
+
+  .left_header_barchart ul li a {
+    font-size: 14px;
   }
 }
