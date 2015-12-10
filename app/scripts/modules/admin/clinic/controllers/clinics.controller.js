@@ -65,6 +65,10 @@ angular.module('hillromvestApp')
       });
     };
 
+    $scope.getPatientsToAssociate = function($viewValue){
+      return searchFilterService.getMatchingUser($viewValue, $scope.nonAssociatedPatients);
+    };
+
     $scope.searchAssociatedHcps = function(track) {
       if (track !== undefined) {
         if (track === "PREV" && $scope.currentPageIndex > 1) {
@@ -133,6 +137,10 @@ angular.module('hillromvestApp')
         }
       });
       $scope.getClinicById(clinicId);
+    };
+
+    $scope.getHCPsToLinkClinic = function($viewValue){
+      return searchFilterService.getMatchingUser($viewValue, $scope.hcps, true);
     };
 
     $scope.initClinicList = function(){
@@ -232,7 +240,12 @@ angular.module('hillromvestApp')
       clinicService.getAllClinicAdmins().then(function(response){
         $scope.allClinicAdmins = response.data.users
       }).catch(function(response){});
-    }
+    };
+
+
+    $scope.getClinicAdminstoLink = function($viewValue){
+      return searchFilterService.getMatchingUser($viewValue, $scope.allClinicAdmins);
+    };
 
     /* init clinic list*/
 
@@ -789,8 +802,9 @@ angular.module('hillromvestApp')
         } else {
           $scope.hasNoPatient = false;
         } 
-        angular.forEach(response.data, function(patientList, index){
+        angular.forEach(response.data, function(patientList, index){          
           patientList.dob = dateService.getDateFromTimeStamp(patientList.dob, patientDashboard.dateFormat,'/');
+          patientList.lastTransmissionDate = (patientList.lastTransmissionDate) ? dateService.getDateFromYYYYMMDD(patientList.lastTransmissionDate, '/') : patientList.lastTransmissionDate;
           $scope.associatedPatients.push({"patient": patientList});         
           $scope.total = (response.headers()['x-total-count']) ? response.headers()['x-total-count'] :  response.data.length;
           $scope.pageCount = Math.ceil($scope.total / 10);

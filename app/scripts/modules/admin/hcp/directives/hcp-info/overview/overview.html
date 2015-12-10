@@ -1,7 +1,6 @@
 <ng-include src="'scripts/components/navbar/navbar.html'"></ng-include>
 <hcp-navbar></hcp-navbar>
-
-<div class="container admin-user">
+<div class="container admin-user" ng-show="doctor">
   <div class="col-md-16 admin-views">
     <span class="admin-views--title">
       {{::doctor.title}} {{::doctor.firstName}} {{::doctor.middleName}} {{::doctor.lastName}}
@@ -57,6 +56,7 @@
   <button class="hillrom-btn btn-primary float-right btn-margin-left" translate="doctor.edit-button-text" ng-click="editHCP()"></button>
   <button class="hillrom-btn btn-secondary float-right btn-margin-left" ng-if="!doctor.deleted && doctor.activated" translate="doctor.deactivate-button-text" ng-click="showDeactivateModal()"></button>
   <button class="hillrom-btn btn-secondary float-right btn-margin-left" ng-show="doctor.deleted"  ng-click="$parent.reActivateModal = true" translate="doctor.activate-button-text"></button>
+</div>
 </div>
 
 
