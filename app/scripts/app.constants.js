@@ -12,6 +12,7 @@ angular.module('hillromvestApp')
 	},
 	'clinicBaseURL': 'api/clinics',
 	'userBaseUrl' : '/api/user/',
+	'patientRelationships' : 'api/patient/relationships',
 	'searchUsers': 'api/user/search?searchString=',
 	'searchHcpUser': 'api/user/hcp/search?searchString=',
 	'getStatistics':'/api/users/USERID/clinics/CLINICID/statistics',
@@ -53,5 +54,19 @@ angular.module('hillromvestApp')
 	'getHcpUserById': '/api/user/HCPID/hcp',
 	'hcpsInClinic' : '/api/clinics/hcp?filter=',
 	'patientsAssociatedToHcp' : '/api/hcp/HCPID/patients?filterByClinic=',
-	'clinicsAssociatedToHcp': '/api/hcp/HCPID/clinics'
+	'clinicsAssociatedToHcp': '/api/hcp/HCPID/clinics',
+	'associateHcpToPatient' : 'api/patient/PATIENTID/associatehcp',
+	'associatedHcpsToPatient' : 'api/patient/PATIENTID/hcp',
+	'disassociateHCPFromPatient' : 'api/patient/PATIENTID/dissociatehcp',
+	'clinicsAssociatedToPatient' : 'api/patient/PATIENTID/clinics',
+	'disassociateClinicsFromPatient' : 'api/patient/PATIENTID/dissociateclinics',
+	'associateClinicToPatient' : 'api/patient/PATIENTID/associateclinics',
+	'deviceAssociatedToPatient' : 'api/patient/PATIENTID/vestdevice',
+	'caregiverAssociatedToPatient' : 'api/patient/PATIENTID/caregiver',
+	'disassociateCaregiversFromPatient' : 'api/patient/PATIENTID/caregiver/CAREGIVERID',
+	'protocolById' : 'api/patient/PATIENTID/protocol/PROTOCOLID',
+	'addEditProtocol' : 'api/patient/PATIENTID/protocol'
+	'caregiverById' : 'api/patient/PATIENTID/caregiver/CAREGIVERID',
+	'addDevice' : 'api/patient/PATIENTID/linkvestdevice',
+	'deactivateDevice' : 'api/patient/PATIENTID/deactivatevestdevice/SERIALNUMBER'
 });

@@ -104,7 +104,7 @@ angular.module('hillromvestApp')
         });
       },
       getRelationships: function() {
-        var url = admin.patient.baseURL + 'relationships';
+        var url = URL.patientRelationships;
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
