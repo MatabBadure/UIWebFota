@@ -17,7 +17,7 @@
         <div class="col-md-2 col-sm-2 header--type pull-left-mob width120">
           <span ng-class="{'sort-icon--default' : sortPatientList.lastName.isDefault, 'sort-icon-down': sortPatientList.lastName.isDown, 'sort-icon-up':sortPatientList.lastName.isUp}" ng-click="sortType('lastName')" translate="patient.patient-name">Patient Name</span>
         </div>
-        <div class="col-md-2 col-sm-2 header--type pull-left-mob">
+        <div class="col-md-2 col-sm-2 header--type pull-left-mob width120">
           <span ng-class="{'sort-icon--default' : sortPatientList.mrnId.isDefault, 'sort-icon-down': sortPatientList.mrnId.isDown, 'sort-icon-up':sortPatientList.mrnId.isUp}" ng-click="sortType('mrnId')" translate="patient.mrn-id">MRN ID</span>
         </div>
         <div class="col-md-2 col-sm-2 header--type none">
@@ -46,7 +46,7 @@
             <span class="main-prim-info">{{patient.lastName}}, {{patient.firstName}}</span>
             <span class="main-secon-info">{{patient.email}}</span>
           </div>
-          <div class="col-md-2 col-sm-2 reset-padding centered pull-left-mob">
+          <div class="col-md-2 col-sm-2 reset-padding centered pull-left-mob width120">
             <span class="impo-highlight">{{patient.mrnId}}</span>
           </div>
           <div class="col-md-2 col-sm-2 reset-padding centered none">

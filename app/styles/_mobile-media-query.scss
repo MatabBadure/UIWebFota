@@ -233,6 +233,9 @@
 	.margin0{
 		margin:0;
 	}
+	.padding-left-10{
+		padding-left:10px;
+	}
 	.margin-bottom20{
 		margin-bottom:20px;
 	}
@@ -395,7 +398,11 @@ ul {
 		float: left;
 		display:inline;
 	}
-
+	.hcp_profile_dashboard li a{
+		float:left;
+		margin:0 10px;
+		font-size:11px;
+	}
 	.navbar-fixed-top {
 		.rm_max_height{
 			max-height:100%;
