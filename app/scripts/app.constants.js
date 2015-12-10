@@ -46,5 +46,6 @@ angular.module('hillromvestApp')
 	'disassociateHcpFromClinic': '/api/user/HCPID/dissociateclinic',
 	'clinicAdminByClinicId': '/api/clinics/CLINICID/clinicadmin',
 	'allActiveParentClinics': '/api/clinics?page=1&per_page=&filter=deleted:false,parent:true&sort_by=name&asc=true',
-	'allActiveClinics': '/api/clinics?per_page=&filter=deleted:false'
+	'allActiveClinics': '/api/clinics?per_page=&filter=deleted:false',
+	'patientInClinic': '/api/clinics/patients?filter='
 });

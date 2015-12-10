@@ -102,15 +102,6 @@ angular.module('hillromvestApp')
         });
       },
 
-      getPatientsAssociatedToClinics: function(ids) {
-        var url = 'api/clinics/patients?filter=id:' + ids;
-        return $http.get(url, {
-          headers: headerService.getHeader()
-        }).success(function(response) {
-          return response;
-        });
-      },
-
       /**
        * @ngdoc method
        * @name getClinicsLinkedToPatient
@@ -142,8 +133,7 @@ angular.module('hillromvestApp')
       },
 
       getPatientsInClinic: function(filterArray) {
-        var url = '/api/clinics/patients';
-        url = url + '?filter=';
+        var url = URL.patientInClinic;
         var flag = false;
         angular.forEach(filterArray, function(filter, index) {
 
