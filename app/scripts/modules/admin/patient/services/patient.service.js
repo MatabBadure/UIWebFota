@@ -224,7 +224,6 @@ angular.module('hillromvestApp')
        *
        */
       disassociateCaregiversFromPatient: function(patientId, caregiverId) {
-        ///api/patient/:patientUserId/caregiver/:id
         var url = admin.patient.baseURL + patientId + '/caregiver/' + caregiverId;
         return $http.delete(url, {
           headers: headerService.getHeader()
@@ -239,7 +238,6 @@ angular.module('hillromvestApp')
        *
        */
       associateCaregiversFromPatient: function(patientId, data) {
-        ///api/patient/:id/caregiver
         var url = admin.patient.baseURL + patientId + '/caregiver';
         return $http.post(url, data, {
           headers: headerService.getHeader()

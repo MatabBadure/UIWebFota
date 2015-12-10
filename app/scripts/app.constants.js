@@ -11,6 +11,7 @@ angular.module('hillromvestApp')
 		'getPatients' : 'api/user/USERID/patients'
 	},
 	'clinicBaseURL': 'api/clinics',
+	'userBaseUrl' : '/api/user/',
 	'getStatistics':'/api/users/USERID/clinics/CLINICID/statistics',
 	'getAssociatedPatientsByFilter':'/api/users/USERID/clinics/CLINICID/patients?filterBy=FILTER&page=PAGENO&per_page=OFFSET',
 	'getAssociatedPatientsWithNoEvents':'/api/users/USERID/clinics/CLINICID/patients/FILTER?&page=PAGENO&per_page=OFFSET',
