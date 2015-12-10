@@ -22,8 +22,8 @@ angular.module('hillromvestApp')
           scope.searchUsers();
         })
       },
-      controller: ['$scope', '$timeout', '$state', 'UserService', 'searchFilterService', 'sortOptionsService',
-      function($scope, $timeout, $state, UserService, searchFilterService,sortOptionsService) {
+      controller: ['$scope', '$timeout', '$state', 'UserService', 'searchFilterService', 'sortOptionsService', 'URL',
+      function($scope, $timeout, $state, UserService, searchFilterService,sortOptionsService, URL) {
         var searchOnLoad = true;
         $scope.init = function() {
           $scope.sortUserList = sortOptionsService.getSortOptionsForUserList();
@@ -87,7 +87,7 @@ angular.module('hillromvestApp')
             $scope.currentPageIndex = 1;
           }
           var filter = searchFilterService.getFilterStringForHCP($scope.searchFilter);
-          var url = 'api/user/search?searchString=';
+          var url = URL.searchUsers;
           UserService.getUsers(url, $scope.searchItem, $scope.sortOption, $scope.currentPageIndex, $scope.perPageCount, filter).then(function(response) {
             $scope.users = response.data;
             $scope.total = response.headers()['x-total-count'];

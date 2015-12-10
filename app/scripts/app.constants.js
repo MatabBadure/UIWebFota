@@ -12,6 +12,8 @@ angular.module('hillromvestApp')
 	},
 	'clinicBaseURL': 'api/clinics',
 	'userBaseUrl' : '/api/user/',
+	'searchUsers': 'api/user/search?searchString=',
+	'searchHcpUser': 'api/user/hcp/search?searchString=',
 	'getStatistics':'/api/users/USERID/clinics/CLINICID/statistics',
 	'getAssociatedPatientsByFilter':'/api/users/USERID/clinics/CLINICID/patients?filterBy=FILTER&page=PAGENO&per_page=OFFSET',
 	'getAssociatedPatientsWithNoEvents':'/api/users/USERID/clinics/CLINICID/patients/FILTER?&page=PAGENO&per_page=OFFSET',
@@ -47,5 +49,9 @@ angular.module('hillromvestApp')
 	'clinicAdminByClinicId': '/api/clinics/CLINICID/clinicadmin',
 	'allActiveParentClinics': '/api/clinics?page=1&per_page=&filter=deleted:false,parent:true&sort_by=name&asc=true',
 	'allActiveClinics': '/api/clinics?per_page=&filter=deleted:false',
-	'patientInClinic': '/api/clinics/patients?filter='
+	'patientInClinic': '/api/clinics/patients?filter=',
+	'getHcpUserById': 'api/user/HCPID/hcp',
+	'hcpsInClinic' : 'api/clinics/hcp?filter=',
+	'patientsAssociatedToHcp' : '/api/hcp/HCPID/patients?filterByClinic=',
+	'clinicsAssociatedToHcp': '/api/hcp/HCPID/clinics'
 });
