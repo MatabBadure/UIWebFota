@@ -9057,7 +9057,9 @@ ul.dropdown-menu {
   color: #333333;
 }
 .nvtooltip .graph_ul .notes {
-  padding-right: 7px;
+  padding: 7px;
+  margin-right: 30px;
+  width: 150px;
 }
 
 .patient_dashdoard_btns {
