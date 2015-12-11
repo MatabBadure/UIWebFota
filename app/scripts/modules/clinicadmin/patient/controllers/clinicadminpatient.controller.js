@@ -19,7 +19,7 @@ angular.module('hillromvestApp')
       $scope.getCaregiversAssociatedWithPatient($stateParams.patientId);
     }else if($state.current.name === 'clinicadminpatientdashboard'){
       $scope.searchItem = "";
-      $scope.searchFilter = searchFilterService.initSearchFiltersForPatient($stateParams.filter);
+      $scope.searchFilter = searchFilterService.initSearchFiltersForPatient($stateParams.filter, true);
       $scope.sortPatientList = sortOptionsService.getSortOptionsForPatientList();
       $scope.currentPageIndex = 1;
       $scope.perPageCount = 10;
@@ -254,7 +254,7 @@ angular.module('hillromvestApp')
     DoctorService.searchPatientsForHCPOrCliniadmin($scope.searchItem, 'clinicadmin', StorageService.get('logged').userId, clinicId, $scope.currentPageIndex, $scope.perPageCount, filter, $scope.sortOption).then(function (response) {
       $scope.patients = response.data;      
       angular.forEach($scope.patients, function(patient){
-        patient.dob = dateService.getDateFromTimeStamp(patient.dob, patientDashboard.dateFormat, '/');
+        patient.dob = (patient.dob) ? dateService.getDateFromTimeStamp(patient.dob, patientDashboard.dateFormat, '/') : patient.dob;
         patient.lastTransmissionDate = (patient.lastTransmissionDate) ? dateService.getDateFromYYYYMMDD(patient.lastTransmissionDate, '/') : patient.lastTransmissionDate;
       });
       $scope.total = (response.headers()['x-total-count']) ? response.headers()['x-total-count'] :$scope.patients.length; 
@@ -363,6 +363,10 @@ angular.module('hillromvestApp')
         }
       }
     }).catch(function(data){notyService.showError(response, 'warning');});
+  };
+
+  $scope.getHCPstoLink = function($viewValue){
+    return searchFilterService.getMatchingUser($viewValue, $scope.hcps, true);
   };
 
   $scope.showAssociateHCPModal = function(hcp){

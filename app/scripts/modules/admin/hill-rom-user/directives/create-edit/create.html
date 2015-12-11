@@ -59,11 +59,9 @@
               <span class="">*</span>
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
-              <input class="" type="text" name="firstName" validate-on-blur ng-model="user.firstName" ng-minlength=2 ng-maxlength=15 ng-pattern="/^[a-z A-Z]+$/" ng-readonly="validateSuperAdmin()" required>
+              <input class="" type="text" name="firstName" validate-on-blur ng-model="user.firstName" ng-minlength=1 ng-maxlength=50 ng-readonly="validateSuperAdmin()" required>
               <div ng-show="(form.firstName.$dirty && form.firstName.$showValidationMessage && form.firstName.$invalid) || submitted">
                 <span class="has-error" ng-show="form.firstName.$error.required" translate="error.firstName.required"></span>
-                <span class="has-error" ng-show="form.firstName.$error.pattern" translate="error.firstName.pattern"></span>
-                <span class="has-error" ng-show="form.firstName.$error.minlength" translate="error.firstName.minlength"></span>
                 <span class="has-error" ng-show="form.firstName.$error.maxlength" translate="error.firstName.maxlength"></span>
               </div>
             </div>
@@ -73,9 +71,8 @@
               <span class="" translate="user.middle-name"></span>
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
-              <input class="" type="text" name="middleName" validate-on-blur ng-model="user.middleName" ng-pattern="/^[a-z A-Z]+$/" ng-minlength=1 ng-maxlength=15 ng-readonly="validateSuperAdmin()">
+              <input class="" type="text" name="middleName" validate-on-blur ng-model="user.middleName" ng-minlength=1 ng-maxlength=50 ng-readonly="validateSuperAdmin()">
               <div ng-show="(form.middleName.$dirty && form.middleName.$showValidationMessage && form.middleName.$invalid)">
-                <span class="has-error" ng-show="form.middleName.$error.pattern" translate="error.middleName.pattern"></span>
                 <span class="has-error" ng-show="form.middleName.$error.minlength" translate="error.middleName.minlength"></span>
                 <span class="has-error" ng-show="form.middleName.$error.maxlength" translate="error.middleName.maxlength"></span>
               </div>
@@ -90,11 +87,9 @@
               <span class="">*</span>
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
-              <input class="" type="text" name="lastName" validate-on-blur ng-pattern="/^[a-z A-Z]+$/" ng-model="user.lastName" ng-minlength=2 ng-maxlength=15 ng-readonly="validateSuperAdmin()" required>
+              <input class="" type="text" name="lastName" validate-on-blur ng-model="user.lastName" ng-minlength=1 ng-maxlength=50 ng-readonly="validateSuperAdmin()" required>
               <div ng-show="(form.lastName.$dirty && form.lastName.$showValidationMessage && form.lastName.$invalid) || submitted">
                 <span class="has-error" ng-show="form.lastName.$error.required" translate="error.lastName.required"></span>
-                <span class="has-error" ng-show="form.lastName.$error.pattern" translate="error.lastName.pattern"></span>
-                <span class="has-error" ng-show="form.lastName.$error.minlength" translate="error.lastName.minlength"></span>
                 <span class="has-error" ng-show="form.lastName.$error.maxlength" translate="error.lastName.maxlength"></span>
               </div>
             </div>

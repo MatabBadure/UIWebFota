@@ -187,12 +187,12 @@
       "message": "If you delete the Device, you will no longer be able to view the information. Are you sure to delete?"
     },
     "delete-clinic-info": {
-      "warning": "Patient Dashboard - Dissociate the Clinic",
-      "message": "Do you want to dissociate Clinic from the Patient?"
+      "warning": "Patient Dashboard - Disassociate the Clinic",
+      "message": "Do you want to Disassociate Clinic from the Patient?"
     },
     "delete-hcp-info": {
-      "warning": "Patient Dashboard - Dissociate HCP",
-      "message": "Do you want to dissociate HCP from Patient?"
+      "warning": "Patient Dashboard - Disassociate HCP",
+      "message": "Do you want to Disassociate HCP from Patient?"
     },
     "associate-clinic-info":{
       "warning":"Patient Dashboard - Associate the Clinic",
@@ -220,17 +220,6 @@
       }
     },
     "errMSG":{
-      "first-name-required": "First Name is required.",
-      "first-name-no-number": "First Name cannot have number or special characters.",
-      "first-name-min-length": "First Name is required to be at least 2 character.",
-      "first-name-max-length": "First Name cannot be longer than 15 characters.",
-      "middle-name-no-number": "Middle Name cannot have number or special characters.",
-      "middle-name-min-length": "Middle Name is required to be at least 2 character.",
-      "middle-name-max-length": "Middle Name cannot be longer than 15 characters.",
-      "last-name-required": "Last Name is required.",
-      "last-name-no-number": "Last Name cannot have number or special characters.",
-      "last-name-min-length": "Last Name is required to be at least 2 character.",
-      "last-name-max-length": "Last Name cannot be longer than 15 characters.",
       "address-max-length": "Address cannot be longer than 100 characters. ",
       "city-max-length": "City cannot be longer than 15 characters.",
       "zip-code-invalid": "Zip Code is invalid.",
@@ -395,38 +384,6 @@
       "miss-therapy-days-desc": "You will get Notification email if you missed therapy for three or more days.",
       "hmr-non-adher-desc": "You will get Notification email if your HMR Non-Adherence is below protocol for three or more days.",
       "setting-deviation-desc": "You will get Notification email if your frequency is 15% below protocol for three or more days."
-    },
-    "errorMSG": {
-      "password-required": "password is required.",
-      "password-min-length": "Password is required to be at least 8 character.",
-      "password-max-length": "Password cannot be longer than 50 characters.",
-      "password-criteria": "Password complexity criteria not met.",
-      "new-password-required": "New Password  is required.",
-      "new-password-min-length":"New Password is required to be at least 8 character.",
-      "new-password-max-length": "New Password cannot be longer than 50 characters.",
-      "new-password-criteria": "Password complexity criteria not met.",
-      "cnf-password-required": "Confirm Password Required.",
-      "cnf-password-min-length":"Password is required to be at least 8 character.",
-      "cnf-password-max-length": "Password cannot be longer than 50 characters.",
-      "cnf-password-criteria": "Password complexity criteria not met.",
-      "cnf-password-mismatch": "Password Mismatch.",
-      "first-name-required": "First Name is required.",
-      "first-name-number":"Last Name cannot have number.",
-      "first-name-min-length":"Last Name is required to be at least 2 character.",
-      "first-name-max-length":"Last Name cannot be longer than 15 characters.",
-      "middle-name-number": "Middle Name cannot have number.",
-      "middle-name-min-length":"Middle Name is required to be at least 2 character.",
-      "middle-name-max-length": "Middle Name cannot be longer than 15 characters.",
-      "last-name-required":"Last Name is required.",
-      "last-name-number":"Last Name cannot have number.",
-      "last-name-min-length":"Last Name is required to be at least 2 character.",
-      "last-name-max-length":"Last Name cannot be longer than 15 characters.",
-      "e-mail-requitred": "E-mail is required.",
-      "e-mail-invalid" : " E-mail is invalid.",
-      "email-max-length": " E-mail cannot be longer than 100 characters.",
-      "role-required": "Role is required.",
-      "ans-required": "Answer is required.",
-      "ans-max-required":"Answer cannot be longer than 100 characters."
     },
     "select-secutity-question": "-- select a security question --",
     "clinic":{

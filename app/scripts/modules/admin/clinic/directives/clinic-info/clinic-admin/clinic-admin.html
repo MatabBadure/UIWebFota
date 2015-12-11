@@ -71,7 +71,7 @@
 <div class="container admin-user" ng-show="showAddclinicAdmin && addAdmin === 'existAdmin' && !clinicAdmin">
 	<div class="col-md-16 reset-padding">
 		<div class="col-md-8 exist-link">
-      <input class="form-control" type="text" ng-model="searchItem" typeahead="clinic as clinic.lastName + ' ' + clinic.firstName +'&nbsp;&nbsp;&nbsp;' + clinic.email for clinic in allClinicAdmins | filter:$viewValue" typeahead-on-select="addCliniAdminToClinic($item)" placeholder="{{'clinic.placeholder.existed-admin' | translate}}">
+      <input class="form-control" type="text" ng-model="searchItem" typeahead="clinic as clinic.lastName + ' ' + clinic.firstName +'&nbsp;&nbsp;&nbsp;' + clinic.email for clinic in getClinicAdminstoLink($viewValue)" typeahead-on-select="addCliniAdminToClinic($item)" placeholder="{{'clinic.placeholder.existed-admin' | translate}}">
 		</div>
 	</div>
 </div>
@@ -87,12 +87,10 @@
               <span class="">*</span>
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
-              <input class="" type="text" name="firstName" ng-model="newAdmin.firstName" ng-minlength=2 ng-maxlength=15 ng-pattern="/^[a-z A-Z]+$/" required>
+              <input class="" type="text" name="firstName" ng-model="newAdmin.firstName" ng-minlength=1 ng-maxlength=50 required>
               <div ng-show="(createClinicAdminForm.firstName.$dirty && createClinicAdminForm.firstName.$invalid) || submitted">
                 <span class="has-error" ng-show="createClinicAdminForm.firstName.$error.required" translate="error.firstName.required">
                 </span>
-                <span class="has-error" ng-show="createClinicAdminForm.firstName.$error.pattern" translate="error.firstName.pattern"></span>
-                <span class="has-error" ng-show="createClinicAdminForm.firstName.$error.minlength" translate="error.firstName.minlength"></span>
                 <span class="has-error" ng-show="createClinicAdminForm.firstName.$error.maxlength" translate="error.firstName.maxlength"></span>
               </div>
             </div>
@@ -103,9 +101,8 @@
               <span class="" translate="clinic.admin.middle-name"></span>
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
-              <input class="" type="text" name="middleName" ng-model="newAdmin.middleName" ng-pattern="/^[a-z A-Z]+$/" ng-minlength=1 ng-maxlength=15>
+              <input class="" type="text" name="middleName" ng-model="newAdmin.middleName" ng-minlength=1 ng-maxlength=50>
               <div ng-show="(createClinicAdminForm.middleName.$dirty && createClinicAdminForm.middleName.$invalid) || submitted">
-                <span class="has-error" ng-show="createClinicAdminForm.middleName.$error.pattern" translate="error.middleName.pattern"></span>
                 <span class="has-error" ng-show="createClinicAdminForm.middleName.$error.minlength" translate="error.middleName.minlength"></span>
                 <span class="has-error" ng-show="createClinicAdminForm.middleName.$error.maxlength" translate="error.middleName.maxlength"></span>
               </div>
@@ -120,11 +117,9 @@
               <span class="">*</span>
             </div>
            <div class="col-md-10 dashboard__form--input reset-padding">
-              <input class="" type="text" name="lastName" ng-model="newAdmin.lastName" ng-minlength=2 ng-maxlength=15 ng-pattern="/^[a-z A-Z]+$/" required>
+              <input class="" type="text" name="lastName" ng-model="newAdmin.lastName" ng-minlength=1 ng-maxlength=50 required>
               <div ng-show="(createClinicAdminForm.lastName.$dirty && createClinicAdminForm.lastName.$invalid) || submitted">
                 <span class="has-error" ng-show="createClinicAdminForm.lastName.$error.required" translate="error.lastName.required"></span>
-                <span class="has-error" ng-show="createClinicAdminForm.lastName.$error.pattern" translate="error.lastName.pattern"></span>
-                <span class="has-error" ng-show="createClinicAdminForm.lastName.$error.minlength" translate="error.lastName.minlength"></span>
                 <span class="has-error" ng-show="createClinicAdminForm.lastName.$error.maxlength" translate="error.lastName.maxlength"></span>
               </div>
             </div>
