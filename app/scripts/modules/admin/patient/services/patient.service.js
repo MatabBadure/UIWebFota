@@ -17,7 +17,7 @@ angular.module('hillromvestApp')
       */
       getPatients: function(searchString, sortOption, pageNo, offset, filter) {
         var filterBy = (filter && filter != undefined) ? filter : stringConstants.emptyString;
-        var url = admin.patient.searchURL;
+        var url = URL.patientSearch;
         var sortOrder;
         if (searchString === undefined) {
           searchString = '';
@@ -25,7 +25,7 @@ angular.module('hillromvestApp')
         if (sortOption === "" || sortOption === undefined || sortOption === null) {
           sortOption = sortConstant.plastName + searchFilters.amp + searchFilters.asc + searchFilters.equal + true;
         }
-        url = url + '?searchString=' + searchString + '&page=' + pageNo + '&per_page=' + offset + '&sort_by=' + sortOption + '&filter=' + filterBy;
+        url = url + searchString + '&page=' + pageNo + '&per_page=' + offset + '&sort_by=' + sortOption + '&filter=' + filterBy;
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -40,7 +40,7 @@ angular.module('hillromvestApp')
        *
        */
       getPatientInfo: function(id) {
-        var url = admin.hillRomUser.baseURL + '/' + id + '/patient';
+        var url = URL.patientById.replace('PATIENTID', id);
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -158,7 +158,7 @@ angular.module('hillromvestApp')
        *
        */
       disassociatePatient: function(id) {
-        var url = admin.hillRomUser.baseURL + '/' + id;
+        var url = URL.userBaseUrl + id;
         return $http.delete(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -314,14 +314,14 @@ angular.module('hillromvestApp')
         });
       },
       getTherapyDataAsCSV: function(patientId, startDate, endDate) {
-        var url = admin.hillRomUser.users + "/" + patientId + "/exportTherapyDataCSV?from=" + startDate + "&to=" + endDate;
+         var url = URL.therapyDataAsCSV.replace('PATIENTID', patientId).replace('STARTDATE', startDate).replace('ENDDATE', endDate);
         return $http.get(url, {
           headers: headerService.getHeader()
         });
       },
 
       getDeviceDataAsCSV: function(patientId, startDateTimestamp, endDateTimestamp){
-        var url = admin.hillRomUser.users+ "/" +patientId +"/exportVestDeviceDataCSV?from="+ startDateTimestamp+"&to="+endDateTimestamp;
+        var url = URL.deviceDataAsCSV.replace('PATIENTID', patientId).replace('STARTDATE', startDate).replace('ENDDATE', endDate);
         return $http.get(url, {
           headers: headerService.getHeader()
         });

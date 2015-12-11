@@ -65,8 +65,12 @@ angular.module('hillromvestApp')
 	'caregiverAssociatedToPatient' : 'api/patient/PATIENTID/caregiver',
 	'disassociateCaregiversFromPatient' : 'api/patient/PATIENTID/caregiver/CAREGIVERID',
 	'protocolById' : 'api/patient/PATIENTID/protocol/PROTOCOLID',
-	'addEditProtocol' : 'api/patient/PATIENTID/protocol'
+	'addEditProtocol' : 'api/patient/PATIENTID/protocol',
 	'caregiverById' : 'api/patient/PATIENTID/caregiver/CAREGIVERID',
 	'addDevice' : 'api/patient/PATIENTID/linkvestdevice',
-	'deactivateDevice' : 'api/patient/PATIENTID/deactivatevestdevice/SERIALNUMBER'
+	'deactivateDevice' : 'api/patient/PATIENTID/deactivatevestdevice/SERIALNUMBER',
+	'patientSearch' : 'api/user/patient/search?searchString=',
+	'patientById' : '/api/user/PATIENTID/patient',
+	'therapyDataAsCSV' : 'api/user/PATIENTID/exportTherapyDataCSV?from=STARTDATE&to=ENDDATE',
+	'deviceDataAsCSV' : 'api/user/PATIENTID/exportVestDeviceDataCSV?from=STARTDATE&to=ENDDATE'
 });
