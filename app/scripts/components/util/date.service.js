@@ -332,6 +332,6 @@ angular.module('hillromvestApp')
           return dateTime[1] + dateSeperator + dateTime[2] + dateSeperator + dateTime[0];
         }        
     }
-
+    
     };
   }]);
