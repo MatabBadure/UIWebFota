@@ -72,5 +72,20 @@ angular.module('hillromvestApp')
 	'patientSearch' : 'api/user/patient/search?searchString=',
 	'patientById' : '/api/user/PATIENTID/patient',
 	'therapyDataAsCSV' : 'api/user/PATIENTID/exportTherapyDataCSV?from=STARTDATE&to=ENDDATE',
-	'deviceDataAsCSV' : 'api/user/PATIENTID/exportVestDeviceDataCSV?from=STARTDATE&to=ENDDATE'
+	'deviceDataAsCSV' : 'api/user/PATIENTID/exportVestDeviceDataCSV?from=STARTDATE&to=ENDDATE',
+	'account' : 'api/account',
+	'activate' : 'api/activate',
+	'resetPasswordInit' : 'api/account/reset_password/init',
+	'resetPasswordFinish' : 'api/account/reset_password/finish?key=KEY',
+	'changePassword' : 'api/account/change_password',
+	'updatePassword' : '/api/user/USERID/update_password',
+	'authenticate' : 'api/authenticate',
+	'logout' : '/api/logout',
+	'updateEmailPassword' : 'api/account/update_emailpassword',
+	'updatePasswordSecurityQuestion' : 'api/account/update_passwordsecurityquestion',
+	'changeSecurityQuestion' : '/api/user/USERID/changeSecurityQuestion',
+	'securityQuestions' : 'api/securityQuestions',
+	'recaptcha' : '/api/recaptcha',
+	'validateActivationKey' : 'api/validateActivationKey?key=KEYDATA',
+	'validateResetKey' : 'api/validateResetKey?key=KEYDATA'
 });
