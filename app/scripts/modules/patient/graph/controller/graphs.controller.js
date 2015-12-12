@@ -14,7 +14,8 @@ angular.module('hillromvestApp')
     '.nvd3 .nv-groups path.nv-line {fill: none;} .svg_bg {fill: #e3ecf7;}  '+
      ' </style>';
     var g_pdfMetaData={};    
-    $scope.addCanvasToDOM = function (){ 
+    $scope.addCanvasToDOM = function (){  
+      $scope.isGraphDownloadable = false;     
       console.log("Adding CANVAS to body");
       if($("#hmrCanvasContainer").length > 0){
         $("#hmrCanvasContainer").remove();
@@ -309,7 +310,7 @@ angular.module('hillromvestApp')
       maxDate: new Date(),
       format: patientDashboard.dateFormat,
       dateLimit: {"months":patientDashboard.maxDurationInMonths},
-      eventHandlers: {'apply.daterangepicker': function(ev, picker) {
+      eventHandlers: {'apply.daterangepicker': function(ev, picker) {        
         $scope.addCanvasToDOM();
         $scope.hideNotesCSS();
         $scope.calculateDateFromPicker(picker);
@@ -490,7 +491,7 @@ angular.module('hillromvestApp')
       };
     };
 
-    $scope.showHmrGraph = function() {
+    $scope.showHmrGraph = function() {     
       $scope.addCanvasToDOM();
       $scope.selectedGraph = 'HMR';
       $scope.complianceGraph = false;
@@ -782,20 +783,24 @@ angular.module('hillromvestApp')
 
     // Weekly chart
     $scope.weeklyChart = function(datePicker) {
+      $scope.addCanvasToDOM();
       $scope.drawChart(datePicker,'WEEK','weekly',6);
     };
 
     // Yearly chart
     $scope.yearlyChart = function(datePicker) {
+      $scope.addCanvasToDOM();
       $scope.drawChart(datePicker,'YEAR','yearly',365);
     };
 
     // Monthly chart
     $scope.monthlyChart = function(datePicker) {
+      $scope.addCanvasToDOM();
       $scope.drawChart(datePicker,'MONTH','monthly',30);
     };
     //hmrDayChart
     $scope.dayChart = function() {
+      $scope.addCanvasToDOM();
       $scope.selectedDateOption = 'DAY';
       $scope.dates = {startDate: $scope.fromDate, endDate: $scope.fromDate};
       $scope.removeGraph();
@@ -1682,9 +1687,7 @@ angular.module('hillromvestApp')
            chart = nv.models.lineChart()
           .margin({top: 30, right: 50, bottom: 50, left: 50})
           .showLegend(false)
-          //.interpolate('step-after')
           .color(d3.scale.category10().range());
-         // chart.noData("Nothing to see here.");
           chart.tooltipContent($scope.toolTipContentStepChart());
           chart.lines.dispatch.on('elementClick', function(event) {
             angular.forEach($scope.completeGraphData.actual, function(data){
@@ -1845,9 +1848,7 @@ angular.module('hillromvestApp')
     $scope.downloadAsPdf = function(){
       if(($("#hmrBarLineDiv").find("svg").length > 0) && ($("#complianceDiv").find("svg").length > 0) && ($("#compliance1Div").find("svg").length > 0)){
       $scope.downloadPDFFile();
-      }else{
-        $scope.drawGraph();
-      }      
+      }   
     };
 
     $scope.downloadRawDataAsCsv = function(){
@@ -1872,6 +1873,7 @@ angular.module('hillromvestApp')
 
     /*on click of the nodes on graph, the graph should change to a day graph*/
     $scope.dayGraphForNode = function(timestamp) {
+      $scope.addCanvasToDOM();
       $scope.selectedDateOption = 'DAY';
       $scope.toDate = $scope.fromDate =  dateService.getDateFromTimeStamp(timestamp,patientDashboard.dateFormat,'/');
       $scope.dates = {startDate: $scope.fromDate, endDate: $scope.fromDate};

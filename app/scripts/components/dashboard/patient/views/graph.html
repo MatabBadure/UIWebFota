@@ -99,28 +99,7 @@
 
 							</div>
 						</div>
-					</div>
-					<!-- <div class="col-md-4 col-sm-16 dashboard_noti_mobile" ng-if="role === 'PATIENT'">
-						<div class="dashboard_noti_section">
-							<div class="header_noti"><h4 translate="graph.notification"></h4></div>
-							<div class="notification_container" ng-show="patientNotifications.length <= 0">
-							<ul>
-								<li>
-									<span translate="graph.no-notifications"></span>
-								</li>
-							</ul>
-							</div>
-							<div class="notification_container" ng-show="patientNotifications.length > 0">
-								<ul>
-									<li ng-repeat="notification in patientNotifications | limitTo:2">
-          					<span class="dsh_icon {{notification.class}}"></span>
-          							{{notification.message}}
-          					<span ng-show="notification.message"><a href="" class="read_more"  translate="graph.more"></a></span>
-									</li>
-								</ul>
-							</div>
-						</div>
-					</div> -->
+					</div>					
 				</div>
 			</div>
 			<div class="col-md-16">
@@ -223,7 +202,7 @@
 				<!-- <button id="single-button" type="button" class="hillrom-btn btn-submit float-right" dropdown-toggle ng-disabled="disabled" translate="graph.download" >
 					<span class="caret"></span>
 				</button> -->
-				<button id="single-button" type="button" ng-class="{ 'hillrom-btn btn-submit float-right': !noDataAvailable && isGraphDownloadable , '': noDataAvailable || !isGraphDownloadable }"class="" dropdown-toggle ng-disabled="disabled" translate="graph.download" >
+				<button id="single-button" type="button" ng-class="{ 'hillrom-btn btn-submit float-right': (!noDataAvailable && isGraphDownloadable) , '': (!isGraphDownloadable || noDataAvailable) }"class="" dropdown-toggle ng-disabled="disabled" translate="graph.download" >
 					<span class="caret"></span>
 				</button>
 				
