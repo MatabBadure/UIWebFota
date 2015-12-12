@@ -333,6 +333,16 @@
 	    	z-index: 9999 !important;
 	    }
 	}
+	.patient_dashdoard_btns_compliance{
+		clear: left;
+	    display: inline-block;
+	    margin: 30px 0px 20px;
+	    width: 100%;
+	    .dropdown-menu{
+	    	margin-bottom: 80px;
+	    	z-index: 9999 !important;
+	    }
+	}
 	/* Grapg ToolTip style */
 /* Over write date picker style*/
 .daterangepicker{

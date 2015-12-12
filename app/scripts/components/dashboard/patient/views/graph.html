@@ -168,9 +168,15 @@
 						<svg id="hmrCompliance1" style="opcity: 1;"> </svg>
 					</div>
 				</div>
-				<div ng-if="hmrBarGraph" id="complianceGraphWrapper">
-					<div id="hmrBarGraph" class="complianceGraph col-md-16">
+				<div ng-if="hmrBarGraph" id="hmrBarGraphWrapper">
+					<div id="hmrBarGraph" class="complianceGraph col-md-16" style="position:absolute;z-index:2;">
 						<svg ng-show="!noDataAvailable"> </svg>
+					</div>
+					<div id="hmrBarGraphCompliance" class="complianceGraph col-md-16" style="margin-top: -351px;position:absolute;z-index:-1;">
+						<svg id="hmrCompliance" style="opcity: 1;"> </svg>
+					</div>
+					<div id="hmrBarGraphCompliance1" class="complianceGraph col-md-16" style="margin-top: -351px;position:absolute;z-index:-1;" >		
+						<svg id="hmrCompliance1" style="opcity: 1;"> </svg>
 					</div>
 				</div>
 			</div>
@@ -195,10 +201,16 @@
 		  		 		<span ng-show="minComplianceParamErrMsg" translate="graph.min-legend-required" class="has-error graph_check_error" id="min-compliance-err"></span> -->
 					</div>
 				</div>
-				<div id="complianceGraphPrim" class="complianceGraphPrim_wrapper">
-				<div id="complianceGraph" class="complianceGraph col-md-16">
-					<svg ng-show="!noDataAvailable"> </svg>
-				</div>
+				<div id="complianceGraphPrim" class="complianceGraphPrim_wrapper" >
+					<div id="complianceGraph" class="complianceGraph col-md-16">
+						<svg ng-show="!noDataAvailable"> </svg>
+					</div>
+					<div id="complianceGraph1" class="complianceGraph col-md-16" style="margin-top: -351px;position:absolute;z-index:-1;">
+						<svg id="compliance1" ng-show="!noDataAvailable"> </svg>
+					</div>
+					<div id="complianceGraphHMR" class="complianceGraph col-md-16" style="margin-top: -351px;position:absolute;z-index:-1;">
+						<svg id="complianceHMR" ng-show="!noDataAvailable"> </svg>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -206,12 +218,12 @@
 
 	<!-- Note section HTML -->
 	<div class="col-md-16">
-		<div class="btn_group patient_dashdoard_btns" >
+		<div class="btn_group patient_dashdoard_btns" ng-class="{ 'btn_group patient_dashdoard_btns_compliance': complianceGraph, 'btn_group patient_dashdoard_btns': !complianceGraph }">
 			<div dropdown class="pull-right">
 				<!-- <button id="single-button" type="button" class="hillrom-btn btn-submit float-right" dropdown-toggle ng-disabled="disabled" translate="graph.download" >
 					<span class="caret"></span>
 				</button> -->
-				<button id="single-button" type="button" ng-class="{ 'hillrom-btn btn-submit float-right': !noDataAvailable, '': noDataAvailable }"class="" dropdown-toggle ng-disabled="disabled" translate="graph.download" >
+				<button id="single-button" type="button" ng-class="{ 'hillrom-btn btn-submit float-right': !noDataAvailable && isGraphDownloadable , '': noDataAvailable || !isGraphDownloadable }"class="" dropdown-toggle ng-disabled="disabled" translate="graph.download" >
 					<span class="caret"></span>
 				</button>
 				
