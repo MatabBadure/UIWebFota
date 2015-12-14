@@ -31,7 +31,7 @@
 </div>
 
 <div class="container admin-user">
-	<div class="col-md-16 crud-list" ng-show="clinicAdmin && !clinicAdminEdit">
+	<div class="col-md-16 crud-list" ng-show="clinicAdmins && !clinicAdminEdit" ng-repeat="clinicAdmin in clinicAdmins">
     <div class="col-md-4">
       <span>{{clinicAdmin.lastName}}, {{clinicAdmin.firstName}}</span>
     </div>
@@ -39,14 +39,14 @@
       <span>{{clinicAdmin.email}}</span>
     </div>
     <div class="col-md-1 text-center">
-      <span class="icon-edit-icon" ng-click="setEditClinicAdmin()"></span>
+      <span class="icon-edit-icon" ng-click="setEditClinicAdmin(clinicAdmin)"></span>
     </div>
     <div class="col-md-1 text-center">
-      <span class="icon-delete-icon" ng-click="showDeleteModal()"></span>
+      <span class="icon-delete-icon" ng-click="showDeleteModal(clinicAdmin)"></span>
     </div>
   </div>
 
-  <div class="col-md-16 empty-list-message" ng-if="!clinicAdmin">
+  <div class="col-md-16 empty-list-message" ng-if="!clinicAdmins">
     <span translate="clinic.noClinicAdmins"></span>
   </div>
 
@@ -55,7 +55,7 @@
   </div>
 </div>
 
-<div class="container admin-user" ng-show="showAddclinicAdmin">
+<div class="container admin-user" ng-show="showAddclinicAdmin && !clinicAdminEdit">
 	<div class="col-md-16 reset-padding margin-top">
 		<fieldset>
 		  <div class="select-one">
@@ -68,10 +68,10 @@
 	</div>
 </div>
 
-<div class="container admin-user" ng-show="showAddclinicAdmin && addAdmin === 'existAdmin'">
+<div class="container admin-user" ng-show="showAddclinicAdmin && addAdmin === 'existAdmin' && !clinicAdminEdit">
 	<div class="col-md-16 reset-padding">
 		<div class="col-md-8 exist-link">
-      <input class="form-control" type="text" ng-model="searchItem" typeahead="clinic as clinic.lastName + ' ' + clinic.firstName +'&nbsp;&nbsp;&nbsp;' + clinic.email for clinic in getClinicAdminstoLink($viewValue)" typeahead-on-select="addCliniAdminToClinic($item)" placeholder="{{'clinic.placeholder.existed-admin' | translate}}">
+      <input class="form-control" type="text" ng-model="searchItem" typeahead="clinic as clinic.lastName + ' ' + clinic.firstName +'&nbsp;&nbsp;&nbsp;' + clinic.email for clinic in getClinicAdminstoLink($viewValue)" typeahead-on-select="showAssociateClinicAdminModal($item)" placeholder="{{'clinic.placeholder.existed-admin' | translate}}">
 		</div>
 	</div>
 </div>
@@ -192,3 +192,6 @@
     </div>
   </div>
 </div>
+
+<modal ng-if="associateClinicAdminModal" modall="showModal" onyes="addCliniAdminToClinic()" onno="$parent.associateClinicAdminModal = false; $parent.searchItem= ''" header="{{'clinic.associateClinicAdmin.warning' | translate}}" message="{{'clinic.associateClinicAdmin.message' | translate}}">
++</modal>
