@@ -19,8 +19,8 @@ angular.module('hillromvestApp')
         })
       }
       },
-      controller: ['$scope', '$timeout', '$state','$stateParams', 'DoctorService', 'notyService', 'StorageService', 'loginConstants',
-      function($scope, $timeout, $state,$stateParams, DoctorService, notyService, StorageService, loginConstants) {
+      controller: ['$scope', '$timeout', '$state','$stateParams', 'DoctorService', 'notyService', 'StorageService', 'loginConstants', 'URL',
+      function($scope, $timeout, $state,$stateParams, DoctorService, notyService, StorageService, loginConstants, URL) {
         var searchOnLoad = true;
         $scope.sortHcpList = sortOptionsService.getSortOptionsForHcpList();
         $scope.role = StorageService.get('logged').role;
@@ -84,7 +84,7 @@ angular.module('hillromvestApp')
           }
 
           var filter = searchFilterService.getFilterStringForHCP($scope.searchFilter);
-          var url = 'api/user/hcp/search?searchString=';
+          var url = URL.searchHcpUser;
           UserService.getUsers(url, $scope.searchItem, $scope.sortOption, $scope.currentPageIndex, $scope.perPageCount, filter).then(function(response) {
             $scope.doctors = response.data;
             $scope.total = response.headers()['x-total-count'];
