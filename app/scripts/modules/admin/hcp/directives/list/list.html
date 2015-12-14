@@ -33,16 +33,16 @@
         <ng-include src="'scripts/components/navbar/searchfilter.html'"></ng-include>
       </div>
       <div class="dashboard__manage-view--header">
-        <div class="col-md-2 col-sm-3 header--type">
+        <div class="col-md-2 col-sm-3 header--type pull-left-mob width120">
           <span ng-class="{'sort-icon--default' : sortHcpList.lastName.isDefault, 'sort-icon-down': sortHcpList.lastName.isDown, 'sort-icon-up':sortHcpList.lastName.isUp}" ng-click="sortType('lastName')" translate="doctor.hcp-name">HCP Name</span>
         </div>
-        <div class="col-md-2 header--type col-hide-iPad">
+        <div class="col-md-2 header--type col-hide-iPad none">
           <span ng-class="{'sort-icon--default' : sortHcpList.credentials.isDefault, 'sort-icon-down': sortHcpList.credentials.isDown, 'sort-icon-up':sortHcpList.credentials.isUp}" ng-click="sortType('credentials')" translate="doctor.credentials">Credentials</span>
         </div>
-        <div class="col-md-2 col-sm-3 header--type">
+        <div class="col-md-2 col-sm-3 header--type pull-left-mob width120">
           <span ng-class="{'sort-icon--default' : sortHcpList.npiNumber.isDefault, 'sort-icon-down': sortHcpList.npiNumber.isDown, 'sort-icon-up':sortHcpList.npiNumber.isUp}" ng-click="sortType('npiNumber')" translate="doctor.npiNumber">NPI Number</span>
         </div>
-        <div class="col-md-3 col-sm-3 header--type">
+        <div class="col-md-3 col-sm-3 header--type none">
           <span ng-class="{'sort-icon--default' : sortHcpList.clinicName.isDefault, 'sort-icon-down': sortHcpList.clinicName.isDown, 'sort-icon-up':sortHcpList.clinicName.isUp}" ng-click="sortType('clinicName')" translate="doctor.clinic-name">Clinic Name</span>
         </div>
 
@@ -51,48 +51,48 @@
           <!-- <span ng-class="{'sort-icon--default' : sortHcpList.state.isDefault, 'sort-icon-down': sortHcpList.state.isDown, 'sort-icon-up':sortHcpList.state.isUp}" ng-click="sortType('state')" translate="doctor.state">state</span> -->
         </div>
 
-        <div class="col-md-2 header--type col-hide-iPad">
+        <div class="col-md-2 header--type col-hide-iPad none">
           <span ng-class="{'sort-icon--default' : sortHcpList.city.isDefault, 'sort-icon-down': sortHcpList.city.isDown, 'sort-icon-up':sortHcpList.city.isUp}" ng-click="sortType('city')" translate="doctor.city">City</span>
         </div>
-        <div class="col-md-2 header--type col-hide-iPad">
+        <div class="col-md-2 header--type col-hide-iPad none">
           <span ng-class="{'sort-icon--default' : sortHcpList.state.isDefault, 'sort-icon-down': sortHcpList.state.isDown, 'sort-icon-up':sortHcpList.state.isUp}" ng-click="sortType('state')" translate="doctor.state">state</span>
         </div> 
 
-        <div class="col-md-1 col-sm-3 header--type">
+        <div class="col-md-1 col-sm-3 header--type pull-left-mob">
           <span ng-class="{'sort-icon--default' : sortHcpList.status.isDefault, 'sort-icon-down': sortHcpList.status.isDown, 'sort-icon-up':sortHcpList.status.isUp}" ng-click="sortType('status')" translate="doctor.status">Status</span>
         </div>
         <div class="clr"></div>
       </div>
 
       <div class="dashboard__manage-view--list" ng-repeat="doctor in doctors" ng-click="selectDoctor(doctor)">
-          <div class="col-md-2 col-sm-3 reset-padding centered">
+          <div class="col-md-2 col-sm-3 reset-padding centered pull-left-mob width120">
             <span class="main-prim-info">{{doctor.lastName}}, {{doctor.firstName}}</span>
           </div>
-          <div class="col-md-2 reset-padding centered col-hide-iPad">
+          <div class="col-md-2 reset-padding centered col-hide-iPad none">
             <span class="impo-highlight">{{doctor.credentials}}</span>
           </div>
-          <div class="col-md-2 col-sm-3 reset-padding centered">
+          <div class="col-md-2 col-sm-3 reset-padding centered pull-left-mob width120">
             <span class="short-info">{{doctor.npiNumber}}</span>
           </div>
 
-          <div class="col-md-3 col-sm-3 reset-padding centered">
+          <div class="col-md-3 col-sm-3 reset-padding centered none">
             <span class="short-info" ng-repeat ="clinic in doctor.clinics"> {{clinic.name}} <b>{{$last ? '' : ', '}}</b></span>
           </div>
 
-          <div class="col-md-2 col-sm-4 reset-padding centered col-hide-web">
+          <div class="col-md-2 col-sm-4 reset-padding centered col-hide-web none">
             <span class="short-info">{{doctor.city}}</span> /
             <span class="short-info">{{doctor.state}}</span>
           </div>
 
-          <div class="col-md-2 reset-padding centered col-hide-iPad">
+          <div class="col-md-2 reset-padding centered col-hide-iPad none">
             <span class="short-info">{{doctor.city}}</span>
           </div>
 
-          <div class="col-md-2 reset-padding centered col-hide-iPad">
+          <div class="col-md-2 reset-padding centered col-hide-iPad none">
             <span class="short-info">{{doctor.state}}</span>
           </div>
 
-          <div class="col-md-1 col-sm-3 reset-padding centered">
+          <div class="col-md-1 col-sm-3 reset-padding centered pull-left-mob">
             <span class="short-info active" ng-if="!doctor.deleted && doctor.activated" translate="doctor.status-type.active"></span>
             <span class="short-info inactive" ng-if="doctor.deleted" translate="doctor.status-type.inactive"></span>
             <span class="short-info inactive" ng-if="!doctor.deleted && !doctor.activated" translate="doctor.status-type.pending"></span>

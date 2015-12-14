@@ -15,16 +15,16 @@
 <div class="dashboard dashboard--content">
   <div class="dashboard__manage-view margin-top">
     <div class="dashboard__manage-view--header">
-        <div class="col-md-4 col-sm-4 header--type">
+        <div class="col-md-4 col-sm-4 header--type pull-left-mob width120">
           <span translate="patient.caregiver-caption.caregiver-name"></span>
         </div>
-        <div class="col-md-3 col-sm-3 header--type">
+        <div class="col-md-3 col-sm-3 header--type none">
           <span translate="patient.caregiver-caption.address"></span>
         </div>
-        <div class="col-md-3 col-sm-3 header--type">
+        <div class="col-md-3 col-sm-3 header--type none">
           <span translate="patient.caregiver-caption.phone-number"></span>
         </div>
-        <div class="col-md-3 col-sm-3 header--type">
+        <div class="col-md-3 col-sm-3 header--type none">
           <span translate="patient.caregiver-caption.mobile-number"></span>
         </div>
         <div class="col-md-2 col-sm-2 header--type">
@@ -36,20 +36,20 @@
 </div>
 
   <div class="col-md-16 col-sm-16 caregiver-list" ng-repeat="caregiver in caregivers track by $index" ng-if="!caregiver.user.deleted">
-    <div class="col-md-4 col-sm-4 caregiver-list__detail">
+    <div class="col-md-4 col-sm-4 caregiver-list__detail pull-left-mob width120">
       <span class="caregiver-list__detail--name">{{caregiver.user.lastName}}, {{caregiver.user.firstName}}</span>
-      <span class="caregiver-list__detail--email">{{caregiver.user.email}}</span>
+      <span class="caregiver-list__detail--email none">{{caregiver.user.email}}</span>
     </div>
-    <div class="col-md-3 col-sm-3 caregiver-list__address">
+    <div class="col-md-3 col-sm-3 caregiver-list__address none">
       <span class="caregiver-list__address--primary" ng-if="caregiver.user.address">{{caregiver.user.address}}</span>
       <span class="caregiver-list__address--secondary" ng-if="caregiver.user.city">{{caregiver.user.city}}
       <span ng-if="caregiver.user.city && caregiver.user.state">,</span>
       <span ng-if="caregiver.user.state">{{caregiver.user.state}} </span></span>
     </div>
-    <div class="col-md-3 col-sm-3 caregiver-list__phone">
+    <div class="col-md-3 col-sm-3 caregiver-list__phone none">
       <span class="caregiver-list__phone--number">{{caregiver.user.primaryPhone}}</span>
     </div>
-    <div class="col-md-3 col-sm-3 caregiver-list__fax">
+    <div class="col-md-3 col-sm-3 caregiver-list__fax none">
       <span class="caregiver-list__fax--number">{{caregiver.user.mobilePhone}}</span>
     </div>
     <div class="col-md-2 col-sm-2 caregiver-list__type">
