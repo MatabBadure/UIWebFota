@@ -154,7 +154,7 @@ angular.module('hillromvestApp')
       },
 
       getClinicAdmins: function(clinicId){
-        var url = URL.clinicAdminByClinicId.replace('clinicAdminByClinicId', clinicId)
+        var url = URL.clinicAdminByClinicId.replace('CLINICID', clinicId)
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
