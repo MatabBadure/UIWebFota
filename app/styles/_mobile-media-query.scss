@@ -1,4 +1,4 @@
-@media only screen and (min-width : 320px) and (max-width : 800px) {
+@media only screen and (min-width : 320px) and (max-width : 700px) {
 
 	.content-body {
 			.login{
@@ -114,9 +114,9 @@
 	.header-nav-content
 	{
 		margin:0;
-		position: relative;
+	/*	position: relative;
 		display:none;
-	}
+*/	}
 	.header-nav-content:before{
 		  content: '';
 		  position: absolute;
@@ -140,6 +140,9 @@
 	}
 	.navbar-secondary .navbar-right li a.active{
 		border:transparent;
+	}
+	.navbar-secondary .navbar-right li a:hover{
+		border-bottom:0;
 	}
 	.navbar-secondary .navbar-right > li.icon-border:before{
 		border-right: none;
@@ -165,12 +168,15 @@
 		}
 	}
 }
-	.navbar-secondary .navbar-right .header-popover ul p
+	.navbar-secondary .navbar-right .header-popover ul{
+		background-color: transparent;
+		p
 	{
 		font-size:10px;
 		margin-left:10px;
 		display: inline-block !important;
 	}
+}
 
 	.navbar-default .navbar-nav > .open > a
 	{
@@ -188,6 +194,7 @@
 	}
 	.partient_dashboard_mob li a{
 		padding:24px 0px 9px 30px !important ;
+		margin:0!important;
 		&:hover{
 				padding:24px 0px 9px 30px !important;
 		}
@@ -226,8 +233,14 @@
 	.margin0{
 		margin:0;
 	}
+	.padding-left-10{
+		padding-left:10px;
+	}
 	.margin-bottom20{
 		margin-bottom:20px;
+	}
+	.padding-bottom-20{
+		padding-bottom:20px;
 	}
 	.right_header_barchart ul li a{
 		margin:20px 0px 0px 19px;
@@ -260,7 +273,7 @@
 .mob_no_margin{
 	margin: 0px 0px;
 }
-.stats_chart_container{
+.stats_chart_container, .hcp_wrapper .stats_chart_container{
 	.col-3{
 		width: 49%;
 		margin-bottom: 10px;
@@ -318,7 +331,96 @@
 	margin-top: 0px;
 }
 
-} 
+.patient_nav_link_right li a{
+	margin: -7px 6px;
+}
 
+/*notification*/
+.navbar-secondary .navbar-right .header-popover .noti-list li{
+	width:100%;
+	padding: 9px 0px 9px 49px;
+    font-size: 11px;
+}
+.dashboard_noti_section{
+	margin-bottom:0;
+}
+.notification_container{
+	ul{
+		li{
+			.dsh_icon {
+			    font-size: 16px;
+			    height: 33px;
+			 	line-height: 30px;
+			    position: absolute;
+			  	padding-left: 8px;
+			    width: 33px;
+				}
+			} 
+		} 
+	} 
+.navbar-secondary{
+		.navbar-right{
+				.noti_bell{
+					.noti_count{
+						left:16px;
+							}
+						} 
+					} 
+				} 
+
+
+/*hcp dashboard*/
+.navbar-nav .open .dropdown-menu{
+	position:relative ;
+}
+.patient-user__navbar{
+ul {
+	li {
+
+		}
+	}
+ 		a{
+		padding:3px 0px 9px 0px!important;
+		}
+	}
+	.hcp_dashbaord{
+		background-color:#7ca3dc !important;
+		min-width:140px!important;
+	}
+	.admin-user .device-list{
+		margin-top: 7px;
+		padding-bottom: 26px;
+	}
+
+	/* admin */
+	.admin_profile a{
+		margin: 0 0 0 20px;
+		float: left;
+		display:inline;
+	}
+	.hcp_profile_dashboard li a{
+		float:left;
+		margin:0 10px;
+		font-size:11px;
+	}
+	.navbar-fixed-top {
+		.rm_max_height{
+			max-height:100%;
+			}
+			ul{
+				li{
+					span{
+						float:left;
+						padding: 0 3px;
+						margin:0;
+					}
+				}
+			}
+		}
+
+	.left_header_barchart ul li a{
+		font-size:14px;
+	}
+}
 
 
