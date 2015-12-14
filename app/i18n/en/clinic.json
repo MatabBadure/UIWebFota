@@ -103,6 +103,10 @@
             "warning": "Clinic Dashboard - Associate Patient",
             "message": "Do you want to associate the Patient to the Clinic?"
         },
+        "associateClinicAdmin":{
+            "warning": "Clinic Dashboard - Associate Clinic Admin",
+            "message": "Do you want to associate the Clinic Admin to the Clinic?"
+        },
         "hillRom-id": "Hill-Rom ID",
         "type": "Type",
         "status": "Status",

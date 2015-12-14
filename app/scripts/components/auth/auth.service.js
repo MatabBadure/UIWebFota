@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('hillromvestApp')
-    .factory('Auth',['$rootScope', '$state', '$q', '$translate', 'Principal', 'AuthServerProvider', 'Account', 'Register', 'Activate', 'Password', 'PasswordResetInit', 'PasswordResetFinish', 'StorageService', 
-        function Auth($rootScope, $state, $q, $translate, Principal, AuthServerProvider, Account, Register, Activate, Password, PasswordResetInit, PasswordResetFinish, StorageService) {
+    .factory('Auth',['$rootScope', '$state', '$q', '$translate', 'Principal', 'AuthServerProvider', 'Account', 'Activate', 'Password', 'PasswordResetInit', 'PasswordResetFinish', 'StorageService', 
+        function Auth($rootScope, $state, $q, $translate, Principal, AuthServerProvider, Account, Activate, Password, PasswordResetInit, PasswordResetFinish, StorageService) {
         var auth =  {
             goToUserDashboard: function(){
                 var logged = StorageService.get('logged');
@@ -96,18 +96,6 @@ angular.module('hillromvestApp')
                             auth.goToUserDashboard();
                         }
                     });
-            },
-            createAccount: function (account, callback) {
-                var cb = callback || angular.noop;
-
-                return Register.save(account,
-                    function () {
-                        return cb(account);
-                    },
-                    function (err) {
-                        this.logout();
-                        return cb(err);
-                    }.bind(this)).$promise;
             },
 
             updateAccount: function (account, callback) {

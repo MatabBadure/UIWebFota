@@ -240,7 +240,7 @@ angular.module('hillromvestApp')
         if(!clinic.hillromId){
           clinic.hillromId = "";
         }else{
-          clinic.hillromId = clinic.hillromId + '&nbsp; ';
+          clinic.hillromId = clinic.hillromId + ' &nbsp; ';
         }
 
         angular.forEach($scope.associatedClinics, function(associatedClinic, associatedClinicKey){
@@ -266,6 +266,7 @@ angular.module('hillromvestApp')
       patientService.disassociateClinicsFromPatient($stateParams.patientId, data).then(function(response) {
         $scope.associatedClinics = response.data.clinics;
         $scope.getAvailableAndAssociatedClinics($stateParams.patientId);
+        $scope.getAvailableAndAssociatedHCPs($stateParams.patientId);
         notyService.showMessage(response.data.message, 'success');
       }).catch(function(response) {
         notyService.showError(response);
@@ -330,8 +331,9 @@ angular.module('hillromvestApp')
       $scope.associatedClinicModal = false;
       patientService.associateClinicToPatient($stateParams.patientId, data).then(function(response) {
         $scope.searchClinicText = false;
-        $scope.getAvailableAndAssociatedClinics($stateParams.patientId);
         $scope.associatedClinics = response.data.clinics;
+        $scope.getAvailableAndAssociatedClinics($stateParams.patientId);
+        $scope.getAvailableAndAssociatedHCPs($stateParams.patientId);
       }).catch(function(response) {
         notyService.showError(response);
       });
