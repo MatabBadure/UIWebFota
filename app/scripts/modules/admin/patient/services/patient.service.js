@@ -321,7 +321,7 @@ angular.module('hillromvestApp')
       },
 
       getDeviceDataAsCSV: function(patientId, startDateTimestamp, endDateTimestamp){
-        var url = URL.deviceDataAsCSV.replace('PATIENTID', patientId).replace('STARTDATE', startDate).replace('ENDDATE', endDate);
+        var url = URL.deviceDataAsCSV.replace('PATIENTID', patientId).replace('STARTDATE', startDateTimestamp).replace('ENDDATE', endDateTimestamp);
         return $http.get(url, {
           headers: headerService.getHeader()
         });
