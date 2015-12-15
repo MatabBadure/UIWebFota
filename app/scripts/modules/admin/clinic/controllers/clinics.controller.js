@@ -780,7 +780,7 @@ angular.module('hillromvestApp')
       if($scope.createClinicAdminForm.$dirty){
         $scope.getclinicAdmin($stateParams.clinicId);
       }
-      $scope.createClinicAdminForm.$pristine = true;
+      $scope.createClinicAdminForm.$setPristine();
     };
 
     $scope.validateClinicName = function(){
