@@ -108,6 +108,7 @@
 		position: absolute;
 		display:none;
 		margin-left:0 !important;
+		width:100%;
 	}
 	.header-nav .header-nav-content li{
 		background-color: #276092 !important;
@@ -236,6 +237,7 @@
 	.width120{
 		width:120px;
 	}
+
 	.padding0{
 		padding:0;
 	}
@@ -274,6 +276,10 @@
 		font-weight:normal;
 	}
 	
+	.admin-user .padding_tb{
+		padding:4px 0 23px 0;
+		margin:0;
+	}
 /*Patient pie Charts CSS*/
 
 .padding_0{
@@ -379,6 +385,16 @@
 
 
 /*hcp dashboard*/
+.width42{
+	width:42%;
+}
+.dashboard_clinic_list{
+	margin-left: -2px;
+    background: #ffffff!important;
+    padding: 5px 8px !important;
+    box-shadow: 0px 2px 7px 2px #ccc!important;
+}
+
 .dashbord-nav__secondary{
 	float:right;
 }
@@ -396,7 +412,7 @@ ul {
 		}
 	}
 	.hcp_dashbaord{
-		background-color:#7ca3dc !important;
+		/*background-color:#7ca3dc !important;*/
 		min-width:140px!important;
 	}
 	.admin-user .device-list{
@@ -449,6 +465,12 @@ ul {
 		width:auto;
 	}
 
+	.patient_dropdown_dashboard{
+		background-color: #7ca3dc;
+		padding-left:15px;
+		margin: 0;
+		text-align: center;
+	}
 }
 
 

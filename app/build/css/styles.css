@@ -9715,13 +9715,15 @@ ul.dropdown-menu {
     background: transparent !important;
     position: absolute;
     display: none;
+    margin-left: 0 !important;
+    width: 100%;
   }
 
   .header-nav .header-nav-content li {
     background-color: #276092 !important;
     width: 70%;
     float: right;
-    padding-bottom: 4px;
+    padding-bottom: 5px;
   }
 
   .header-nav-content {
@@ -9896,6 +9898,11 @@ ul.dropdown-menu {
     font-weight: normal;
   }
 
+  .admin-user .padding_tb {
+    padding: 4px 0 23px 0;
+    margin: 0;
+  }
+
   /*Patient pie Charts CSS*/
   .padding_0 {
     padding: 0px 0px;
@@ -9982,6 +9989,17 @@ ul.dropdown-menu {
   }
 
   /*hcp dashboard*/
+  .width42 {
+    width: 42%;
+  }
+
+  .dashboard_clinic_list {
+    margin-left: -2px;
+    background: #ffffff !important;
+    padding: 5px 8px !important;
+    box-shadow: 0px 2px 7px 2px #ccc !important;
+  }
+
   .dashbord-nav__secondary {
     float: right;
   }
@@ -9995,7 +10013,7 @@ ul.dropdown-menu {
   }
 
   .hcp_dashbaord {
-    background-color: #7ca3dc !important;
+    /*background-color:#7ca3dc !important;*/
     min-width: 140px !important;
   }
 
@@ -10037,5 +10055,17 @@ ul.dropdown-menu {
 
   .admin-user .user-detail-info {
     padding: 0px 0px;
+  }
+
+  /*navigation  */
+  .navbar-default > .container > .navbar-primary {
+    width: auto;
+  }
+
+  .patient_dropdown_dashboard {
+    background-color: #7ca3dc;
+    padding-left: 15px;
+    margin: 0;
+    text-align: center;
   }
 }

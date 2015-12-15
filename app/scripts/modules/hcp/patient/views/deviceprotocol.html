@@ -67,7 +67,7 @@
         <div class="col-md-4 col-sm-4 header--type none">
           <span translate="patient.device-caption.blutooth-id"></span>
         </div>
-        <div class="col-md-4 col-sm-4 header--type pull-left-mob ">
+        <div class="col-md-4 col-sm-4 header--type pull-right-mob width120 ">
           <span translate="patient.device-caption.status"></span>
         </div>
         <div class="col-md-4 col-sm-4 header--type pull-left-mob width120 none">
@@ -85,7 +85,7 @@
     <div class="col-md-4 col-sm-4 device-list__bt-id none">
       <span>{{device.bluetoothId}}</span>
     </div>
-    <div class="col-md-4 col-sm-4 device-list__status pull-left-mob width120">
+    <div class="col-md-4 col-sm-4 device-list__status pull-right-mob width120">
       <span ng-if="device.active" class="device--list__status--text" translate="patient.device.active-status">Active</span>
       <span ng-if="!device.active" class="device--list__status--text" translate="patient.device.inactive-status"></span>
     </div>
