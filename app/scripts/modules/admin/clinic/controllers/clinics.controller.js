@@ -777,6 +777,10 @@ angular.module('hillromvestApp')
       $scope.clinicAdminEdit = false;
       $scope.showAddclinicAdmin = false;
       $scope.submitted = false;
+      if($scope.createClinicAdminForm.$dirty){
+        $scope.getclinicAdmin($stateParams.clinicId);
+      }
+      $scope.createClinicAdminForm.$pristine = true;
     };
 
     $scope.validateClinicName = function(){
@@ -893,6 +897,15 @@ angular.module('hillromvestApp')
         $state.go('clinicUser');
       }else if(StorageService.get('logged').role === 'ACCT_SERVICES'){
         $state.go('clinicUserRcadmin');
+      }
+    };
+
+    $scope.showUpdateClinicAdminModal = function(){
+      $scope.submitted = true;
+      if($scope.createClinicAdminForm.$invalid){
+        return false;
+      }else{
+        $scope.updateClinicModal = true;
       }
     };
 
