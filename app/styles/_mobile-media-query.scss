@@ -107,12 +107,13 @@
 		background:transparent !important;
 		position: absolute;
 		display:none;
+		margin-left:0 !important;
 	}
 	.header-nav .header-nav-content li{
 		background-color: #276092 !important;
 		width:70%;
 		float:right;
-		padding-bottom:4px
+		padding-bottom:5px
 		}
 
 	.header-nav-content
@@ -442,6 +443,12 @@ ul {
 			padding: 0px 0px;
 		}
 	}
+
+	/*navigation  */
+	.navbar-default > .container > .navbar-primary{
+		width:auto;
+	}
+
 }
 
 
