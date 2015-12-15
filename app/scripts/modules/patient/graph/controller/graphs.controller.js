@@ -585,7 +585,6 @@ angular.module('hillromvestApp')
            $scope.plotNoDataAvailable();
          } else {
           var allMissedTherapy = ($scope.completeGraphData.actual.length === 1 && $scope.completeGraphData.actual[0].missedTherapy) ? true: false;
-          console.log("allMissedTherapy : ",allMissedTherapy);
           if(!allMissedTherapy){
             $scope.noDataAvailable = false;
             $scope.completeGraphData = graphUtil.convertIntoServerTimeZone($scope.completeGraphData,patientDashboard.hmrDayGraph);
