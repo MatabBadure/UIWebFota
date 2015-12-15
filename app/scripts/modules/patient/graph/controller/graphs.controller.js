@@ -584,25 +584,34 @@ angular.module('hillromvestApp')
            $scope.yAxisRangeForHMRBar.max = 0;
            $scope.plotNoDataAvailable();
          } else {
-          $scope.noDataAvailable = false;
-          $scope.completeGraphData = graphUtil.convertIntoServerTimeZone($scope.completeGraphData,patientDashboard.hmrDayGraph);
-          $scope.completeGraphData = graphUtil.formatDayWiseDate($scope.completeGraphData.actual);
-          $scope.yAxisRangeForHMRBar = graphUtil.getYaxisRangeBarGraph($scope.completeGraphData);
-          $scope.hmrBarGraphData = graphUtil.convertToHMRBarGraph($scope.completeGraphData,patientDashboard.HMRBarGraphColor,$scope.yAxisRangeForHMRBar.unit);
-          $scope.drawHMRBarGraph();
-          var barCount= d3.select('#hmrBarGraph svg').selectAll('.nv-group .nv-bar')[0].length;
-          var count = 5;
-          $scope.waitFunction = function waitHandler() {
-             barCount = d3.select('#hmrBarGraph svg').selectAll('.nv-group .nv-bar')[0].length;
-            if(barCount > 0 || count === 0 ) {
-              $scope.customizationForBarGraph();
-              return false;
-            } else {
-              count --;
+          var allMissedTherapy = ($scope.completeGraphData.actual.length === 1 && $scope.completeGraphData.actual[0].missedTherapy) ? true: false;
+          if(!allMissedTherapy){
+            $scope.noDataAvailable = false;
+            $scope.completeGraphData = graphUtil.convertIntoServerTimeZone($scope.completeGraphData,patientDashboard.hmrDayGraph);
+            $scope.completeGraphData = graphUtil.formatDayWiseDate($scope.completeGraphData.actual);
+            $scope.yAxisRangeForHMRBar = graphUtil.getYaxisRangeBarGraph($scope.completeGraphData);
+            $scope.hmrBarGraphData = graphUtil.convertToHMRBarGraph($scope.completeGraphData,patientDashboard.HMRBarGraphColor,$scope.yAxisRangeForHMRBar.unit);
+            $scope.drawHMRBarGraph();
+            var barCount= d3.select('#hmrBarGraph svg').selectAll('.nv-group .nv-bar')[0].length;
+            var count = 5;
+            $scope.waitFunction = function waitHandler() {
+               barCount = d3.select('#hmrBarGraph svg').selectAll('.nv-group .nv-bar')[0].length;
+              if(barCount > 0 || count === 0 ) {
+                $scope.customizationForBarGraph();
+                return false;
+              } else {
+                count --;
+              }
+              $timeout(waitHandler, 1000);
             }
-            $timeout(waitHandler, 1000);
+            $scope.waitFunction();
+          }else{
+            $scope.hmrBarGraphData = [];
+            $scope.yAxisRangeForHMRBar = {};
+            $scope.yAxisRangeForHMRBar.min = 0;
+            $scope.yAxisRangeForHMRBar.max = 0;
+            $scope.plotNoDataAvailable();
           }
-          $scope.waitFunction();
           //
          }
       }).catch(function(response) {

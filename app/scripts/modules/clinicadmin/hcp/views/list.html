@@ -116,9 +116,9 @@
           <span class="record-found" ng-if="hcps.length > 0">{{total}} HCPs</span>
           <span class="record-found" ng-if="hcps.length > 0">Found</span>
           <span ng-show="hcps.length > 0">
-            <span class="navigaion-link cursor-pointer" ng-class="{ 'inactive': !(currentPageIndex > 1) }" ng-click="searchPatients('PREV')">Previous</span>
+            <span class="navigaion-link cursor-pointer" ng-class="{ 'inactive': !(currentPageIndex > 1) }" ng-click="searchHcps('PREV')">Previous</span>
             <span class="navigaion-no">{{currentPageIndex}}</span>
-            <span class="navigaion-link cursor-pointer" ng-class="{ 'inactive': !(pageCount > currentPageIndex) }" ng-click="searchPatients('NEXT')">Next</span>
+            <span class="navigaion-link cursor-pointer" ng-class="{ 'inactive': !(pageCount > currentPageIndex) }" ng-click="searchHcps('NEXT')">Next</span>
           </span>
         </div>
         <div class="clr"></div>
