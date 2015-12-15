@@ -93,6 +93,8 @@ angular.module('hillromvestApp')
       }
       ];
       clinicService.disassociateHCP($scope.selectedHcp.id, data).then(function (response) {
+        notyService.showMessage(response.data.message ,'success');
+        $state.go('clinicadminhcpdashboard',$stateParams.clinicId);
       }).catch(function (response) {
         notyService.showError(response);
       });
