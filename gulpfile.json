@@ -138,7 +138,8 @@
             "app/scripts/modules/patient/profile/controllers/patientprofile.controller.js",
             "app/scripts/modules/hcp/graph/controller/graphs.controller.js",
             "app/scripts/modules/patient/graph/controller/graphs.controller.js",
-            "app/scripts/components/modal/modal.js"
+            "app/scripts/components/modal/modal.js",
+            "app/scripts/modules/clinicadmin/graph/services/clinicadmin.service.js"
 
         ],
         "scripts_min_path":[
@@ -264,7 +265,8 @@
             "app/scripts/modules/patient/profile/controllers/patientprofile.controller.min.js",
             "app/scripts/modules/hcp/graph/controller/graphs.controller.min.js",
             "app/scripts/modules/patient/graph/controller/graphs.controller.min.js",
-            "app/scripts/components/modal/modal.min.js"
+            "app/scripts/components/modal/modal.min.js",
+            "app/scripts/modules/clinicadmin/graph/services/clinicadmin.service.min.js"
         ],
         "clean": [
             "app/build/",
