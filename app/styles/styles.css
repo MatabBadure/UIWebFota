@@ -9576,7 +9576,7 @@ ul.dropdown-menu {
     display: block !important;
   }
 
-  .none, .footer_container .footer_right_txt, .admin-user .caregiver-list__detail--email, .footer_container .footer_right .icon-hill-rom-logo {
+  .none, .footer_container .footer_right_txt, .admin-user .caregiver-list__detail--email, #top-shadow, .footer_container .footer_right .icon-hill-rom-logo {
     display: none;
   }
 
@@ -9645,12 +9645,16 @@ ul.dropdown-menu {
     border-bottom: 1px solid #cccccc;
     min-height: 1px !important;
     overflow: hidden;
+    background: transparent !important;
+    position: absolute;
+    display: none;
   }
 
   .header-nav .header-nav-content li {
     background-color: #276092 !important;
-    width: 80%;
+    width: 70%;
     float: right;
+    padding-bottom: 4px;
   }
 
   .header-nav-content {
@@ -9692,6 +9696,7 @@ ul.dropdown-menu {
 
   .navbar-secondary .navbar-right > li.icon-border:before {
     border-right: none;
+    color: #fff;
   }
 
   .navbar-secondary .navbar-right .header-popover ul li:first-child:after {
@@ -9710,6 +9715,9 @@ ul.dropdown-menu {
 
   .navbar-secondary .navbar-right .header-popover ul {
     background-color: transparent;
+  }
+  .navbar-secondary .navbar-right .header-popover ul li {
+    text-align: left;
   }
   .navbar-secondary .navbar-right .header-popover ul p {
     font-size: 10px;
@@ -9859,7 +9867,7 @@ ul.dropdown-menu {
   .patient-user__navbar .patient-dashboard {
     width: auto;
     display: inline-block;
-    margin: 0px 0px;
+    margin: 6px 0px;
   }
   .patient-user__navbar .patient_nav_link_right li {
     margin: 0;
@@ -9903,10 +9911,14 @@ ul.dropdown-menu {
   }
 
   .navbar-secondary .navbar-right .noti_bell .noti_count {
-    left: 16px;
+    left: 6px;
   }
 
   /*hcp dashboard*/
+  .dashbord-nav__secondary {
+    float: right;
+  }
+
   .navbar-nav .open .dropdown-menu {
     position: relative;
   }
@@ -9949,5 +9961,14 @@ ul.dropdown-menu {
 
   .left_header_barchart ul li a {
     font-size: 14px;
+  }
+
+  /*modal popup*/
+  .modal__content {
+    width: 315px;
+  }
+
+  .admin-user .user-detail-info {
+    padding: 0px 0px;
   }
 }
