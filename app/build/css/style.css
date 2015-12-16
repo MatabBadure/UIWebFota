@@ -8205,6 +8205,7 @@ ul.dropdown-menu {
 }
 .footer_container .footer_right {
   position: relative;
+  padding: 0;
 }
 .footer_container .footer_right .icon-hill-rom-logo {
   font-size: 70px;
@@ -8217,7 +8218,7 @@ ul.dropdown-menu {
   width: 150px;
   line-height: 15px;
   text-align: right;
-  margin: 4.5% 16% 0% 0%;
+  margin: 4.5% 0% 0% 0%;
 }
 
 .form__container__authenticate {
@@ -9623,13 +9624,15 @@ ul.dropdown-menu {
     background: transparent !important;
     position: absolute;
     display: none;
+    margin-left: 0 !important;
+    width: 100%;
   }
 
   .header-nav .header-nav-content li {
     background-color: #276092 !important;
     width: 70%;
     float: right;
-    padding-bottom: 4px;
+    padding-bottom: 5px;
   }
 
   .header-nav-content {
@@ -9764,6 +9767,10 @@ ul.dropdown-menu {
     margin: 0;
   }
 
+  .margin_lr {
+    margin: 0 15px;
+  }
+
   .padding-left-10 {
     padding-left: 10px;
   }
@@ -9802,6 +9809,11 @@ ul.dropdown-menu {
   .admin-user .caregiver-list__type span {
     font-size: 12px;
     font-weight: normal;
+  }
+
+  .admin-user .padding_tb {
+    padding: 4px 0 23px 0;
+    margin: 0;
   }
 
   /*Patient pie Charts CSS*/
@@ -9890,6 +9902,17 @@ ul.dropdown-menu {
   }
 
   /*hcp dashboard*/
+  .width42 {
+    width: 42%;
+  }
+
+  .dashboard_clinic_list {
+    margin-left: -2px;
+    background: #ffffff !important;
+    padding: 5px 8px !important;
+    box-shadow: 0px 2px 7px 2px #ccc !important;
+  }
+
   .dashbord-nav__secondary {
     float: right;
   }
@@ -9903,7 +9926,7 @@ ul.dropdown-menu {
   }
 
   .hcp_dashbaord {
-    background-color: #7ca3dc !important;
+    /*background-color:#7ca3dc !important;*/
     min-width: 140px !important;
   }
 
@@ -9945,5 +9968,30 @@ ul.dropdown-menu {
 
   .admin-user .user-detail-info {
     padding: 0px 0px;
+  }
+
+  /*navigation  */
+  .navbar-default > .container > .navbar-primary {
+    width: auto;
+  }
+
+  .patient-device {
+    clear: left;
+  }
+
+  .admin-user .protocol-list {
+    margin: 0;
+    padding: 0;
+  }
+
+  .patient_secondary_nav ul {
+    margin-left: 10px;
+  }
+  .patient_secondary_nav ul li {
+    /*	float:left;*/
+    display: inline-block;
+  }
+  .patient_secondary_nav ul li a .icons {
+    position: static;
   }
 }
