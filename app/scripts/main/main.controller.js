@@ -62,7 +62,7 @@ angular.module('hillromvestApp')
 	        });
 	      };
 
-	      $scope.profile = function(){ 
+	      $scope.profile = function(){
 	        if($rootScope.userRole === "ADMIN"){
 	          $state.go('adminProfile');
 	        }else if($rootScope.userRole === "PATIENT"){
@@ -77,6 +77,8 @@ angular.module('hillromvestApp')
 	        }else if($rootScope.userRole === "HCP"){
 	        	var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : $stateParams.clinicId;
         		$state.go("hcpUserProfile",{'clinicId': clinicId});
+	        }else if($rootScope.userRole === loginConstants.role.associates){
+	        	$state.go('associateProfile');
 	        }
 	      };
 

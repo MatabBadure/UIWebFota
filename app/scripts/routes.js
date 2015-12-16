@@ -3317,14 +3317,14 @@ angular.module('hillromvestApp')
             })
             .state('associatePatientUser', {
                 parent: 'associate',
-                url: '/patients?clinicIds',
+                url: '/patients',
                 data: {
                     roles: ['ASSOCIATES'],
                     pageTitle: 'patient.page-title.patients'
                 },
                 views: {
                     'content@': {
-                        templateUrl: 'scripts/modules/admin/patient/views/list/view.html',
+                        templateUrl: 'scripts/modules/associate/patient/views/list/view.html',
                         controller: 'patientsController'
                     }
                 },
@@ -3338,6 +3338,137 @@ angular.module('hillromvestApp')
                             return Auth.authorize(false);
                         }
                     ]
+                }
+            })
+            .state('associateHcpUser', {
+                parent: 'associate',
+                url: '/hcpUsers',
+                data: {
+                    roles: ['ASSOCIATES'],
+                    pageTitle: 'doctor.page-title.hcps'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/associate/hcp/views/list/view.html',
+                        controller: 'DoctorsController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('doctor');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+            
+            .state('associateClinicUser', {
+              parent: 'associate',
+              url: '/clinics',
+              data: {
+                roles: ['ASSOCIATES'],
+                pageTitle: 'clinic.page-title.clinics'
+              },
+              views: {
+                  'content@': {
+                      templateUrl: 'scripts/modules/associate/clinic/views/list/view.html',
+                      controller: 'clinicsController'
+                  }
+              },
+              resolve: {
+                  translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                      $translatePartialLoader.addPart('clinic');
+                      return $translate.refresh();
+                  }],
+                  authorize: ['Auth',
+                      function(Auth) {
+                          return Auth.authorize(false);
+                      }
+                  ]
+              }
+            })
+            .state('associateHillRomUser', {
+                parent: 'associate',
+                url: '/hillRomUsers',
+                data: {
+                    roles: ['ASSOCIATES'],
+                    pageTitle: 'user.page-title.users'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/associate/hill-rom-user/views/list/view.html',
+                        controller: 'UsersController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('hillRomUser');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+            .state('associateProfile', {
+                parent: 'associate',
+                url: '/profile',
+                data: {
+                    roles: ['ASSOCIATES'],
+                    pageTitle: 'profile.page-title.my-profile'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/admin/profile/profile-tabs/my-profile.html',
+                        controller: 'adminProfileController'
+                    }
+                },
+                resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('AdminProfileModule');
+                    }],
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('profile');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+            .state('associateUpdatePassword', {
+                parent: 'associate',
+                url: '/updatepassword',
+                data: {
+                    roles: ['ASSOCIATES'],
+                    pageTitle: 'profile.page-title.update-password'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/admin/profile/profile-tabs/update-password.html',
+                        controller: 'adminProfileController'
+                    }
+                },
+                resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('AdminProfileModule');
+                    }],
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('profile');
+                        return $translate.refresh();
+                    }]
                 }
             });
 }]);
