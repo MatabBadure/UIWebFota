@@ -12,10 +12,10 @@
     <span class="patient-protocol--title" translate="patient.protocol-title"></span>
   </div>
 
-  <div class="dashboard dashboard--content">
-    <div class="dashboard__manage-view margin-top">
+  <div class="dashboard dashboard--content dashboard_mob ">
+    <div class="dashboard__manage-view margin-top pull-left-mob">
       <div class="dashboard__manage-view--header">
-          <div class="col-md-3 col-sm-3 header--type">
+          <div class="col-md-3 col-sm-3 header--type none">
             <span translate="patient.protocol-caption.type"></span>
           </div>
           <div class="col-md-3 col-sm-3 header--type">
@@ -35,7 +35,7 @@
     </div>
   </div>
 
-  <div class="col-md-16 col-sm-16 protocol-list" ng-repeat="protocol in protocols" ng-class="{'list-inactive':protocol.deleted}">
+  <div class="col-md-16 col-sm-16 protocol-list col-xs-4" ng-repeat="protocol in protocols" ng-class="{'list-inactive':protocol.deleted}">
     <div class="col-md-3 col-sm-3 protocol-list__type">
       <span> {{protocol.type}} {{protocol.treatmentLabel}}</span>
     </div>
