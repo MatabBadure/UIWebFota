@@ -59,6 +59,10 @@ angular.module('hillromvestApp')
             $state.go('patientOverviewRcadmin', {
               'patientId': patient.id
             });
+          }else if($scope.userRole === loginConstants.role.associates){
+            $state.go('associatePatientOverview', {
+              'patientId': patient.id
+            });
           }
         };
 

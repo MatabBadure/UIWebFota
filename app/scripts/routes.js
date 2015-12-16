@@ -3470,5 +3470,36 @@ angular.module('hillromvestApp')
                         return $translate.refresh();
                     }]
                 }
+            })
+
+            .state('associatePatientOverview', {
+                parent: 'associatePatientUser',
+                url: '/{patientId}/overview',
+                data: {
+                    roles: ['ASSOCIATES'],
+                    pageTitle: 'patient.page-title.overview'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/admin/patient/directives/patient-info/overview/patient-details.html',
+                        controller: 'graphController'
+                    }
+                },
+                resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('PatientGraphModule');
+                    }],
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient');$translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
             });
 }]);
