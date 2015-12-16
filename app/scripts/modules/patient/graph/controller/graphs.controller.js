@@ -1146,8 +1146,10 @@ angular.module('hillromvestApp')
         d3.selectAll(graphId).selectAll('.multiChart circle.nv-point').attr("r", "1.3");
         d3.selectAll(graphId).style("visibility", "visible");
       }
-      d3.selectAll(graphId).selectAll(".nvd3 .nv-axis path.domain").attr("stroke", "#ccc");      
-      //d3.selectAll(graphId).selectAll(".complianceGraph .nv-stackedarea path.nv-area").attr("style", "stroke-opacity: 1;stroke: #fff !important;stroke-width: 1.5;"); 
+      if(!$scope.hiddencompliance.secondaryYaxis || $scope.hiddencompliance.secondaryYaxis.length <= 0){
+        d3.selectAll(graphId).selectAll(".nvd3 .y2.axis").attr("visibility", "hidden");
+      }
+      d3.selectAll(graphId).selectAll(".nvd3 .nv-axis path.domain").attr("stroke", "#ccc !important");            
       d3.selectAll(graphId).selectAll(".nv-groups .nv-point").attr("style", "stroke-opacity: 1 !important;stroke-width: 3px !important;");
       //d3.selectAll(graphId).selectAll(".nv-stackedarea path.nv-area").attr("style", "stroke-opacity: 1;stroke: #fff !important;stroke-width: 1.5;");
       if(callback){
@@ -2409,7 +2411,11 @@ angular.module('hillromvestApp')
         d3.selectAll('#complianceGraph svg').selectAll('.multiChart circle.nv-point').attr("r", "1.3");
         d3.selectAll('#complianceGraph svg').style("visibility", "visible");
       }
-      d3.selectAll(graphId).selectAll(".nvd3 .nv-axis path.domain").attr("stroke", "#ccc");
+      if(!$scope.compliance.secondaryYaxis || $scope.compliance.secondaryYaxis.length <= 0){
+        d3.selectAll('#complianceGraph svg').selectAll(".nvd3 .y2.axis").attr("visibility", "hidden");
+      }
+
+      d3.selectAll('#complianceGraph svg').selectAll(".nvd3 .nv-axis path.domain").attr("stroke", "#ccc !important");
       //d3.selectAll('#complianceGraph svg').selectAll(".complianceGraph .nv-stackedarea path.nv-area").attr("style", "stroke-opacity: 1;stroke: #fff !important;stroke-width: 1.5;"); 
       d3.selectAll('#complianceGraph svg').selectAll(".nv-groups .nv-point").attr("style", "stroke-opacity: 1 !important;stroke-width: 3px !important;");
       d3.selectAll('#complianceGraph svg').selectAll(".nv-point-paths path").attr("style", "stroke: #aaa; stroke-opacity: 0; fill: #eee; fill-opacity: 0;");
