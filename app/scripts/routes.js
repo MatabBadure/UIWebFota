@@ -12,6 +12,11 @@ angular.module('hillromvestApp')
                 url: '/admin',
                 abstract: true,
             })
+            .state('associate', {
+                parent: 'entity',
+                url: '/associate',
+                abstract: true,
+            })
             // creating this base route and view to setup nested views for Patients
             .state('patient-dashboard', {
                // parent: 'entity',
@@ -3308,6 +3313,31 @@ angular.module('hillromvestApp')
                         $translatePartialLoader.addPart('login');
                         return $translate.refresh();
                     }]
+                }
+            })
+            .state('associatePatientUser', {
+                parent: 'associate',
+                url: '/patients?clinicIds',
+                data: {
+                    roles: ['ASSOCIATES'],
+                    pageTitle: 'patient.page-title.patients'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/admin/patient/views/list/view.html',
+                        controller: 'patientsController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
                 }
             });
 }]);
