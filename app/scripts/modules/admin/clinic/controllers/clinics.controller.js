@@ -743,7 +743,6 @@ angular.module('hillromvestApp')
         $scope.getclinicAdmin($stateParams.clinicId);
         $scope.cancelClinicAdmin();
         notyService.showMessage(response.data.message, 'success');
-        $scope.createClinicAdminForm.$setPristine();
       }).catch(function(response){
         if(response.data.message){
           notyService.showMessage(response.data.message, 'warning');
@@ -776,11 +775,15 @@ angular.module('hillromvestApp')
       $scope.newAdmin = '';
       $scope.clinicAdminEdit = false;
       $scope.showAddclinicAdmin = false;
-      $scope.submitted = false;
       if($scope.createClinicAdminForm.$dirty){
         $scope.getclinicAdmin($stateParams.clinicId);
       }
-      $scope.createClinicAdminForm.$pristine = true;
+      $scope.resetClinicAdminForm();
+    };
+
+    $scope.resetClinicAdminForm =function(){
+      $scope.submitted = false;
+      $scope.createClinicAdminForm.$setPristine();
     };
 
     $scope.validateClinicName = function(){
