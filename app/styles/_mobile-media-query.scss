@@ -244,6 +244,9 @@
 	.margin0{
 		margin:0;
 	}
+	.margin_lr{
+		margin:0 15px;
+	}
 	.padding-left-10{
 		padding-left:10px;
 	}
@@ -464,12 +467,26 @@ ul {
 	.navbar-default > .container > .navbar-primary{
 		width:auto;
 	}
-
-	.patient_dropdown_dashboard{
-		background-color: #7ca3dc;
-		padding-left:15px;
-		margin: 0;
-		text-align: center;
+	.patient-device{
+		clear:left;
+	}
+	.admin-user .protocol-list{
+		margin:0;
+		padding:0;
+	}
+	
+	.patient_secondary_nav{
+		ul{
+			margin-left:10px;
+			li{
+			/*	float:left;*/
+				display:inline-block;
+				a .icons{
+					position:static;
+					
+				}
+			}
+		}
 	}
 }
 

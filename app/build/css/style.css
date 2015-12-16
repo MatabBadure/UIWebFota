@@ -8217,7 +8217,7 @@ ul.dropdown-menu {
   width: 150px;
   line-height: 15px;
   text-align: right;
-  margin: 4.5% 16% 0% 0%;
+  margin: 4.5% 0% 0% 0%;
 }
 
 .form__container__authenticate {
@@ -9766,6 +9766,10 @@ ul.dropdown-menu {
     margin: 0;
   }
 
+  .margin_lr {
+    margin: 0 15px;
+  }
+
   .padding-left-10 {
     padding-left: 10px;
   }
@@ -9808,6 +9812,7 @@ ul.dropdown-menu {
 
   .admin-user .padding_tb {
     padding: 4px 0 23px 0;
+    margin: 0;
   }
 
   /*Patient pie Charts CSS*/
@@ -9969,10 +9974,23 @@ ul.dropdown-menu {
     width: auto;
   }
 
-  .patient_dropdown_dashboard {
-    background-color: #7ca3dc;
-    padding-left: 15px;
+  .patient-device {
+    clear: left;
+  }
+
+  .admin-user .protocol-list {
     margin: 0;
-    text-align: center;
+    padding: 0;
+  }
+
+  .patient_secondary_nav ul {
+    margin-left: 10px;
+  }
+  .patient_secondary_nav ul li {
+    /*	float:left;*/
+    display: inline-block;
+  }
+  .patient_secondary_nav ul li a .icons {
+    position: static;
   }
 }
