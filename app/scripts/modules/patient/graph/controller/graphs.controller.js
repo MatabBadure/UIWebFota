@@ -7,12 +7,17 @@ angular.module('hillromvestApp')
 
     var chart;
     var hiddenFrame, htmlDocument;
-    var g_str='<style>.nv-bar.positive {fill-opacity: 1; fill:red;} .nvd3 .nv-point-paths path {stroke: #aaa;stroke-opacity: 0;fill: #eee;fill-opacity: 0;border: 5px red solid;} '+
-    '.nv-point {    stroke-opacity: 1 !important;    stroke-width: 3px !important;} '+
-    '.missed_therapy_node {fill: #cf202f;stroke: #fff;stroke-width: 1.5;fill-opacity: 1;} '+ 
-    ' g rect {fill: #e3ecf7;opacity: 1 !important;} '+
-    '.nvd3 .nv-groups path.nv-line {fill: none;} .svg_bg {fill: #e3ecf7;}  '+
-     ' </style>';
+    var g_str1 = '<style type="text/css" >\n<![CDATA[\n'+
+      ' .complianceGraph g rect.svg_bg { fill: #e3ecf7 !important;  }' +
+      '\n]]>\n</style>';
+     var g_str2 = '<![CDATA[\n'+
+    ' .complianceGraph g rect.svg_bg { fill: #e3ecf7 !important;  opacity: 1 !important;}' +
+    '\n]]>';
+     var g_str = '<defs>\n<![CDATA[\n'+
+    ' .complianceGraph g rect { fill: #e3ecf7 !important;  opacity: 1 !important; }' +  
+    ' .complianceGraph g rect.svg_bg { fill: #e3ecf7 !important;  opacity: 1 !important;}' +
+    ' .complianceGraph .nv-lineChart g rect, .nvd3 g rect { fill: #e3ecf7 !important; opacity: 1 !important; }' +
+    '\n]]>\n</def>';
     var g_pdfMetaData={};    
     $scope.addCanvasToDOM = function (){  
       $scope.isGraphDownloadable = false;     
@@ -35,12 +40,12 @@ angular.module('hillromvestApp')
       if($("#compliance1Div").length > 0){
         $("#compliance1Div").remove();
       }
-      $('<div id=hmrCanvasContainer style="display:none" >HMR Line<br/><canvas id=hmrBarLineCanvas width=1300 height=350></canvas></div>').appendTo("body");
-      $('<div id=hmrBarLineDiv class="complianceGraph" style="display:none;"> </div>').appendTo("body");
-      $('<div id=complianceCanvasContainer style="display:none">HMR<br/><canvas id=complianceCanvas width=1300 height=350></canvas></div>').appendTo("body");
-      $('<div id=complianceDiv class="complianceGraph" style="display:none"> </div>').appendTo("body");
-      $('<div id=compliance1CanvasContainer style="display:none">HMR<br/><canvas id=compliance1Canvas width=1300 height=350></canvas></div>').appendTo("body");
-      $('<div id=compliance1Div class="complianceGraph" style="display:none;"> </div>').appendTo("body");      
+      $('<div id=hmrCanvasContainer style="display:none" ><br/><canvas id=hmrBarLineCanvas width=1300 height=350></canvas></div>').appendTo("body");
+      $('<div id=hmrBarLineDiv class="complianceGraph" style="display:none;"> hmr bar/line</div>').appendTo("body");
+      $('<div id=complianceCanvasContainer style="display:none">compliance canvas<br/><canvas id=complianceCanvas width=1300 height=350></canvas></div>').appendTo("body");
+      $('<div id=complianceDiv class="complianceGraph" style="display:none">  compliance graph </div>').appendTo("body");
+      $('<div id=compliance1CanvasContainer style="display:none">compliance 1 canvas<br/><canvas id=compliance1Canvas width=1300 height=350></canvas></div>').appendTo("body");
+      $('<div id=compliance1Div class="complianceGraph" style="display:none;"> compliance 1 graph </div>').appendTo("body");      
     };        
     $scope.isIE = function(){      
       if(window.navigator.userAgent.indexOf("MSIE") !== -1){
@@ -310,7 +315,9 @@ angular.module('hillromvestApp')
       maxDate: new Date(),
       format: patientDashboard.dateFormat,
       dateLimit: {"months":patientDashboard.maxDurationInMonths},
-      eventHandlers: {'apply.daterangepicker': function(ev, picker) {        
+      eventHandlers: {'apply.daterangepicker': function(ev, picker) {    
+      console.log("on clicking of apply button");    
+        $scope.removeGraph();
         $scope.addCanvasToDOM();
         $scope.hideNotesCSS();
         $scope.calculateDateFromPicker(picker);
@@ -677,14 +684,21 @@ angular.module('hillromvestApp')
         .attr("width", rect_width)
         .attr("height" , rect_height)
         .attr("x" , 0)
-        .attr("y" , 0 )
-        .attr("class" , 'svg_bg');
+        .attr("y" , 0 ).attr("style", "fill: #CCDBEA;opacity: 0.5;");
+        //.attr("class" , 'svg_bg');
 
         d3.selectAll(graphId).selectAll(".nv-axis .tick").append('circle').
         attr("cx" , 0).
         attr("cy", 0).
         attr("r" , 2.3).
         attr("fill" , '#aeb5be');
+
+        //d3.selectAll(graphId).selectAll(".nvd3 .nv-x line").attr("style", "opacity: 0 !important;"); 
+        d3.selectAll(graphId).selectAll(".nv-axis .tick text ").attr("style", "fill: #5d6a7d; font-size: 10px;text-anchor: end;");
+        d3.selectAll(graphId).selectAll(".nv-axisMaxMin text ").attr("style", "fill: #5d6a7d;font-size: 10px;font-weight: normal;text-anchor: end;");
+        d3.selectAll(graphId).selectAll(".nv-axis .nv-axislabel").attr("style", "font: 12px Arial; fill: #5d6a7d;text-anchor: middle;");
+        //d3.selectAll (graphId).selectAll(".nvd3 .nv-groups path.nv-line").attr("style", "fill: none; stroke-width: 1.5px;");
+
 
         angular.forEach(d3.select(graphId).selectAll('rect.nv-bar')[0], function(bar){
           d3.select(bar).attr("width", d3.select(bar).attr("width")/4);
@@ -1020,10 +1034,10 @@ angular.module('hillromvestApp')
 
          var missedTherapy = {};
          if($scope.complianceGraphData[0] && $scope.complianceGraphData[0].values.length > 20){
-          missedTherapy.cssClass = 'missed_therapy_year_node';
+          missedTherapy.cssClass = "fill: #cf202f;stroke: #cf202f;stroke-width: 1.5;fill-opacity: 0;";//'missed_therapy_year_node';
           missedTherapy.radius = 0.7;
          } else {
-          missedTherapy.cssClass = 'missed_therapy_node';
+          missedTherapy.cssClass = 'fill: #cf202f;stroke: #fff;stroke-width: 1.5;fill-opacity: 1;';//'missed_therapy_node';
           missedTherapy.radius = 3;
          }
 
@@ -1032,13 +1046,13 @@ angular.module('hillromvestApp')
           .attr('cx',circle.attributes.cx.value)
           .attr('cy',circle.attributes.cy.value)
           .attr('r',missedTherapy.radius)
-          .attr('class', missedTherapy.cssClass);
+          .attr('style', missedTherapy.cssClass);
          })
 
          /* Mark red color for missed therapy  -- end --*/
          setTimeout(function(){
 
-         var bgHeight = d3.select(graphId).select('.y1 .tick line').attr("y2");
+         var bgHeight = d3.select(graphId).select('.y1 .tick line').attr("y2") > 0 ? d3.select(graphId).select('.y1 .tick line').attr("y2") : 0.5;
          var bgWidth = d3.select(graphId).select('.y1 .tick line').attr("x2");
          d3.select(graphId+' .nv-axis g').append('rect')
                   .attr("height", Math.abs(bgHeight))
@@ -1126,12 +1140,16 @@ angular.module('hillromvestApp')
         if($scope.complianceGraphData[0] && $scope.complianceGraphData[0].values.length > 20) {
           setTimeout(function() {
             d3.selectAll(graphId).selectAll('.multiChart circle.nv-point').attr("r", "0");
-            d3.selectAll(graphId).style("visibility", graphVisibility);
+            d3.selectAll(graphId).style("visibility", "visible");
         }, 500);
       } else {
         d3.selectAll(graphId).selectAll('.multiChart circle.nv-point').attr("r", "1.3");
-        d3.selectAll(graphId).style("visibility", graphVisibility);
+        d3.selectAll(graphId).style("visibility", "visible");
       }
+      d3.selectAll(graphId).selectAll(".nvd3 .nv-axis path.domain").attr("stroke", "#ccc");      
+      //d3.selectAll(graphId).selectAll(".complianceGraph .nv-stackedarea path.nv-area").attr("style", "stroke-opacity: 1;stroke: #fff !important;stroke-width: 1.5;"); 
+      d3.selectAll(graphId).selectAll(".nv-groups .nv-point").attr("style", "stroke-opacity: 1 !important;stroke-width: 3px !important;");
+      //d3.selectAll(graphId).selectAll(".nv-stackedarea path.nv-area").attr("style", "stroke-opacity: 1;stroke: #fff !important;stroke-width: 1.5;");
       if(callback){
         $scope.getHiddenComplianceForPDF(!$scope.hiddencompliance.pressure, !$scope.hiddencompliance.frequency, !$scope.hiddencompliance.duration, callbackDivId, callbackSvgId, callbackGraphType); 
       }      
@@ -1142,7 +1160,8 @@ angular.module('hillromvestApp')
           var printId1 = "#"+divId;//"#hmrLineGraphCompliance1";          
           var element1 = document.querySelectorAll(printId1)[0],
           html1 = (element1) ? element1.innerHTML: "",
-          doc;          
+          doc;
+          console.log("graphType : "+graphType +" html1 : "+html1);          
           $scope.initPdfMetaData(html1, graphType);
         },1500);
       });
@@ -1735,6 +1754,7 @@ angular.module('hillromvestApp')
           .transition().duration(500).call(chart);
 
          d3.selectAll(graphId).style("visibility", "hidden");
+         d3.selectAll(graphId).select('.nv-lineChart g rect').attr("style", "fill: #e3ecf7;opacity: 1 !important;");
          var circlesInHMR = d3.select(graphId).select('.nv-scatterWrap').select('.nv-group.nv-series-0').selectAll('circle')[0];
          var count = 0;
          var missedTherapyCircles = [];
@@ -1746,10 +1766,10 @@ angular.module('hillromvestApp')
          })
          var missedTherapy = {};
          if($scope.graphData[0] && $scope.graphData[0].values.length > 20){
-          missedTherapy.cssClass = 'missed_therapy_year_node';
+          missedTherapy.cssClass = 'fill: #cf202f;stroke: #cf202f;stroke-width: 1.5;fill-opacity: 0;';//'missed_therapy_year_node';
           missedTherapy.radius = 0.7;
          } else {
-          missedTherapy.cssClass = 'missed_therapy_node';
+          missedTherapy.cssClass = 'fill: #cf202f;stroke: #fff;stroke-width: 1.5;fill-opacity: 1;'; //'missed_therapy_node';
           missedTherapy.radius = 3;
          }
 
@@ -1758,7 +1778,7 @@ angular.module('hillromvestApp')
           .attr('cx',circle.attributes.cx.value)
           .attr('cy',circle.attributes.cy.value)
           .attr('r',missedTherapy.radius)
-          .attr('class',missedTherapy.cssClass);
+          .attr('style',missedTherapy.cssClass);
          })
 
          d3.selectAll(graphId).selectAll(".nv-axis .tick").append('circle').
@@ -1769,9 +1789,12 @@ angular.module('hillromvestApp')
 
 
 
-
+        d3.selectAll(graphId).selectAll(".nv-axis .tick text ").attr("style", "fill: #5d6a7d; font-size: 10px;text-anchor: middle;");
+        d3.selectAll(graphId).selectAll(".nv-axisMaxMin text ").attr("style", "fill: #5d6a7d;font-size: 10px;font-weight: normal;text-anchor: middle;");
         d3.selectAll(graphId).selectAll(".nv-axis .nv-axislabel").
-        attr("y" , -40);
+        attr("y" , -40).attr("style", "font: 12px Arial; fill: #5d6a7d;");
+        d3.selectAll (graphId).selectAll(".nvd3 .nv-groups path.nv-line").attr("style", "fill: none; stroke-width: 1.5px;");
+
 
         if($scope.graphData[0] && $scope.graphData[0].values.length > 20){
           setTimeout(function() {
@@ -1937,15 +1960,16 @@ angular.module('hillromvestApp')
     };
 
     $scope.addHTMLToNode = function(divId, strHtml){
-      $('#'+divId).html(strHtml);
-      //$('#'+divId).find('svg').append('<defs>'+g_str+'</defs>');
+      console.log(" is "+divId+ " presernt : "+ $('#'+divId).length );
+      $('#'+divId).html(strHtml);      
       $('#'+divId).find('svg')
       .attr('version',1.1)
       .attr('width','1300px')
       .attr('height','350px')
       .attr('font-family', 'helvetica')
-      .attr('font-size', '12px')
-      .attr('xmlns','http://www.w3.org/2000/svg');
+      .attr('font-size', '12px').attr('class', 'complianceGraph col-md-16')
+      .attr('xmlns','http://www.w3.org/2000/svg').attr('xmlns:xlink','http://www.w3.org/1999/xlink');
+     // $('#'+divId).find('svg').append(g_str);
       
     };    
 
@@ -2039,14 +2063,12 @@ angular.module('hillromvestApp')
 
       
       var imgY = 250;      
-      if($("#hmrBarLineDiv").find("svg").length > 0){        
-          /*if($("#hmrBarLineDiv").find("svg").find(".nvd3 g rect").length > 0 ){            
-            $("#hmrBarLineDiv").find("svg").find(".nvd3 g rect").attr("style","opcity: 1 !important; fill: #e3ecf7;");
-          }*///nv-x nv-axis
-          if($("#hmrBarLineDiv").find("svg").find(".nvd3 g rect").length > 0 ){ 
+      if($("#hmrBarLineDiv").find("svg").length > 0){                 
+          /*if($("#hmrBarLineDiv").find("svg").find(".nvd3 g rect").length > 0 ){ 
             //$("#hmrBarLineDiv").find("svg").find(".nvd3 g rect").attr("style","opcity: 1 !important; fill: #e3ecf7;");           
             $("#hmrBarLineDiv").find("svg").find(".nvd3 g rect.svg_bg").attr("style","opcity: 1 !important; fill: #e3ecf7;");             
-          }
+          }*/
+          console.log("html : " + $("#hmrBarLineDiv").find("svg").parent().html().trim());
           var canvas = document.getElementById('hmrBarLineCanvas');               
           var ctx = canvas.getContext('2d');                  
           canvg(canvas, $("#hmrBarLineDiv").find("svg").parent().html().trim());       
@@ -2056,9 +2078,9 @@ angular.module('hillromvestApp')
       }
 
       if($("#complianceDiv").find("svg").length > 0){
-          if($("#complianceDiv").find("svg").find(".nvd3 g rect").length > 0 ){            
+          /*if($("#complianceDiv").find("svg").find(".nvd3 g rect").length > 0 ){            
               $("#complianceDiv").find("svg").find(".nvd3 g rect.svg_bg").attr("style","opcity: 1 !important; fill: #e3ecf7;");
-          }
+          }*/
           var canvas = document.getElementById('complianceCanvas');               
           var ctx = canvas.getContext('2d');          
           canvg(canvas, $("#complianceDiv").find("svg").parent().html().trim());
@@ -2068,10 +2090,10 @@ angular.module('hillromvestApp')
       }
 
       if($("#compliance1Div").find("svg").length > 0){       
-          if($("#compliance1Div").find("svg").find(".nvd3 g rect").length > 0 ){            
+          /*if($("#compliance1Div").find("svg").find(".nvd3 g rect").length > 0 ){            
               $("#compliance1Div").find("svg").find(".nvd3 g rect.svg_bg").attr("style","opcity: 1 !important; fill: #e3ecf7;");
           }
-          console.log("html : " + $("#compliance1Div").find("svg").parent().html().trim());
+          */
           var canvas = document.getElementById('compliance1Canvas');               
           var ctx = canvas.getContext('2d');                   
           canvg(canvas, $("#compliance1Div").find("svg").parent().html().trim());
@@ -2274,10 +2296,10 @@ angular.module('hillromvestApp')
 
          var missedTherapy = {};
          if($scope.complianceGraphData[0] && $scope.complianceGraphData[0].values.length > 20){
-          missedTherapy.cssClass = 'missed_therapy_year_node';
+          missedTherapy.cssClass = "fill: #cf202f;stroke: #cf202f;stroke-width: 1.5;fill-opacity: 0;";//'missed_therapy_year_node';
           missedTherapy.radius = 0.7;
          } else {
-          missedTherapy.cssClass = 'missed_therapy_node';
+          missedTherapy.cssClass = 'fill: #cf202f;stroke: #fff;stroke-width: 1.5;fill-opacity: 1;';//'missed_therapy_node';
           missedTherapy.radius = 3;
          }
 
@@ -2286,20 +2308,21 @@ angular.module('hillromvestApp')
           .attr('cx',circle.attributes.cx.value)
           .attr('cy',circle.attributes.cy.value)
           .attr('r',missedTherapy.radius)
-          .attr('class', missedTherapy.cssClass);
+          .attr('style', missedTherapy.cssClass);
          })
 
          /* Mark red color for missed therapy  -- end --*/
          setTimeout(function(){
 
-         var bgHeight = d3.select('#complianceGraph svg').select('.y1 .tick line').attr("y2");
+         var bgHeight = d3.select('#complianceGraph svg').select('.y1 .tick line').attr("y2") > 0 ? d3.select('#complianceGraph svg').select('.y1 .tick line').attr("y2") : 0.5;
          var bgWidth = d3.select('#complianceGraph svg ').select('.y1 .tick line').attr("x2");
          d3.select('#complianceGraph svg .nv-axis g').append('rect')
                   .attr("height", Math.abs(bgHeight))
                   .attr("width", bgWidth)
                   .attr("x" , 0)
                   .attr("y" , bgHeight)
-                  .attr("class" , "svg_bg");
+                  .attr("style", "fill: #e3ecf7;");
+                  //.attr("class" , "svg_bg");
          },500);
 
           /*UI Changes for Line Graph*/
@@ -2386,8 +2409,14 @@ angular.module('hillromvestApp')
         d3.selectAll('#complianceGraph svg').selectAll('.multiChart circle.nv-point').attr("r", "1.3");
         d3.selectAll('#complianceGraph svg').style("visibility", "visible");
       }
-      $scope.drawHMRGraphForPDF();      
-      $scope.getHiddenComplianceForPDF(!$scope.compliance.pressure, !$scope.compliance.frequency, !$scope.compliance.duration, "complianceGraph1", "compliance1", "compliance1"); 
+      d3.selectAll(graphId).selectAll(".nvd3 .nv-axis path.domain").attr("stroke", "#ccc");
+      //d3.selectAll('#complianceGraph svg').selectAll(".complianceGraph .nv-stackedarea path.nv-area").attr("style", "stroke-opacity: 1;stroke: #fff !important;stroke-width: 1.5;"); 
+      d3.selectAll('#complianceGraph svg').selectAll(".nv-groups .nv-point").attr("style", "stroke-opacity: 1 !important;stroke-width: 3px !important;");
+      d3.selectAll('#complianceGraph svg').selectAll(".nv-point-paths path").attr("style", "stroke: #aaa; stroke-opacity: 0; fill: #eee; fill-opacity: 0;");
+      $timeout(function() { 
+        $scope.drawHMRGraphForPDF();      
+        $scope.getHiddenComplianceForPDF(!$scope.compliance.pressure, !$scope.compliance.frequency, !$scope.compliance.duration, "complianceGraph1", "compCompliance1", "compliance1"); 
+      },500);
       return chart;
     },function(){
         $timeout(function() { 
