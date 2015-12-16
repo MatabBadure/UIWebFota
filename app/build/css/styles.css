@@ -8235,6 +8235,7 @@ ul.dropdown-menu {
 }
 .footer_container .footer_right {
   position: relative;
+  padding: 0;
 }
 .footer_container .footer_right .icon-hill-rom-logo {
   font-size: 70px;
