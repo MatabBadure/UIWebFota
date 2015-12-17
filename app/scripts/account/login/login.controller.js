@@ -59,6 +59,8 @@ angular.module('hillromvestApp')
           $state.go("hcpdashboard");
         }else if($rootScope.userRole === loginConstants.role.acctservices){
           $state.go("rcadminPatients");
+        }else if($rootScope.userRole === loginConstants.role.associates){
+          $state.go("associatePatientUser");
         }
       }else{        
           $scope.clearLastLogin();
@@ -135,6 +137,9 @@ angular.module('hillromvestApp')
           } else if(response.data.user.authorities[0].name === loginConstants.role.acctservices){
             logged.userId = response.data.user.id;
             $state.go('rcadminPatients');
+          } else if(response.data.user.authorities[0].name === loginConstants.role.associates){
+            logged.userId = response.data.user.id;
+            $state.go('associatePatientUser');
           } else{
             logged.userId = response.data.user.id;
             $state.go('patientUser');

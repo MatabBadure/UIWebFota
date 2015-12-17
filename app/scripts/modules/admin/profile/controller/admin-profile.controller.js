@@ -40,6 +40,8 @@ angular.module('hillromvestApp')
     $scope.switchProfileTab = function(status){
       if($scope.role === loginConstants.role.acctservices){
         $state.go(status+loginConstants.role.Rc);
+      }else if($scope.role === loginConstants.role.associates){
+        $state.go('associateUpdatePassword');
       }else{
         $state.go(status);
       }
