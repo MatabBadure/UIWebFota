@@ -7,6 +7,8 @@ angular.module('hillromvestApp')
       var currentState = $state.current.name;
       if(currentState === 'clinicadminhcpdashboard'){
         $scope.searchItem = "";
+        $scope.pageCount = 0;
+        $scope.total = 0;
         $scope.searchFilter = searchFilterService.initSearchFiltersForHCP($stateParams.filter);
         $scope.perPageCount = 10;
         $scope.getClinicsAssociatedToClinicadmin();
@@ -62,6 +64,7 @@ angular.module('hillromvestApp')
       clinicadminHcpService.searchAssociatedHcpsToClinic($scope.searchItem, filter, $scope.currentPageIndex, $scope.perPageCount, StorageService.get('logged').userId, clinicId).then(function(response){
         $scope.hcps = response.data;
         $scope.total = response.headers()['x-total-count'];
+        $scope.pageCount = Math.ceil($scope.total / 10);
         searchOnLoad = false;
       }).catch(function(response){
         notyService.showError(response);
@@ -93,6 +96,8 @@ angular.module('hillromvestApp')
       }
       ];
       clinicService.disassociateHCP($scope.selectedHcp.id, data).then(function (response) {
+        notyService.showMessage(response.data.message ,'success');
+        $state.go('clinicadminhcpdashboard',$stateParams.clinicId);
       }).catch(function (response) {
         notyService.showError(response);
       });

@@ -230,16 +230,33 @@ angular.module('hillromvestApp')
 
     $scope.getclinicAdmin = function(clinicId){
       clinicService.getClinicAdmins(clinicId).then(function(response){
-        $scope.clinicAdmin = response.data.clinicAdmin
+        $scope.clinicAdmins = response.data.clinicAdmin
       }).catch(function(response){});
     };
 
     $scope.initClinicAdmin = function(clinicId) {
+      $scope.allClinicAdmins = [];
       $scope.getClinicById(clinicId);
-      $scope.getclinicAdmin(clinicId);
-      clinicService.getAllClinicAdmins().then(function(response){
-        $scope.allClinicAdmins = response.data.users
-      }).catch(function(response){});
+      $q.all([
+        clinicService.getClinicAdmins(clinicId),
+        clinicService.getAllClinicAdmins()
+      ]).then(function(response) {
+        if(response){
+          if(response[0]){
+            $scope.clinicAdmins = response[0].data.clinicAdmin;
+          }
+          if(response[1] && response[1].data.users){
+            $scope.allClinicAdmins = response[1].data.users;
+            for(var i = 0; i < $scope.allClinicAdmins.length; i++){
+              for(var j = 0; j < $scope.clinicAdmins.length; j++){
+                if($scope.allClinicAdmins[i] && $scope.allClinicAdmins[i].id === $scope.clinicAdmins[j].id){
+                  $scope.allClinicAdmins.splice(i ,1);
+                }
+              }
+            }
+          }
+        }
+      }).catch(function(response){notyService.showError(response, 'warning');});
     };
 
 
@@ -583,7 +600,6 @@ angular.module('hillromvestApp')
     };
 
     $scope.showAssociateHCPModal = function(hcp){
-      console.log('It is coming here...!');
       $scope.associateHCPModal = true;
       $scope.selectedHcp = hcp;
     };
@@ -659,18 +675,26 @@ angular.module('hillromvestApp')
       $scope.showAddclinicAdmin = true;
     };
 
-    $scope.addCliniAdminToClinic = function(clinicAdmin){
+    $scope.showAssociateClinicAdminModal = function(clinicAdmin){
+      $scope.clinicAdmin = clinicAdmin;
+      $scope.associateClinicAdminModal = true;
+
+    };
+
+    $scope.addCliniAdminToClinic = function(){
       var data = {
-        "id": clinicAdmin.id
+        "id": $scope.clinicAdmin.id
       };
       $scope.searchItem = '';
       clinicService.addClinicAdmin($stateParams.clinicId, data).then(function(response){
-        $scope.getclinicAdmin($stateParams.clinicId);
+        $scope.initClinicAdmin($stateParams.clinicId);
+        $scope.associateClinicAdminModal = false;
         notyService.showMessage(response.data.message, 'success');
       }).catch(function(response){});
     };
 
-    $scope.showDeleteModal = function(){
+    $scope.showDeleteModal = function(clinicAdmin){
+      $scope.clinicAdmin = clinicAdmin;
       $scope.showModalClincAdmin = true;
     };
 
@@ -683,7 +707,7 @@ angular.module('hillromvestApp')
       var data = {
         "id": $scope.clinicAdmin.id
       };
-      clinicService.disassociateClinicAdmmin($stateParams.clinicId, data).then(function(response){        
+      clinicService.disassociateClinicAdmmin($stateParams.clinicId, data).then(function(response){
         $scope.initClinicAdmin($stateParams.clinicId);
         $scope.showAddclinicAdmin = false;
         $scope.addAdmin = '';
@@ -742,16 +766,24 @@ angular.module('hillromvestApp')
       });
     };
 
-    $scope.setEditClinicAdmin = function(){
+    $scope.setEditClinicAdmin = function(clinicAdmin){
       $scope.clinicAdminEdit = true;
-      $scope.newAdmin = $scope.clinicAdmin;
+      $scope.newAdmin = clinicAdmin;
     };
 
     $scope.cancelClinicAdmin = function(){
       $scope.newAdmin = '';
       $scope.clinicAdminEdit = false;
       $scope.showAddclinicAdmin = false;
+      if($scope.createClinicAdminForm.$dirty){
+        $scope.getclinicAdmin($stateParams.clinicId);
+      }
+      $scope.resetClinicAdminForm();
+    };
+
+    $scope.resetClinicAdminForm =function(){
       $scope.submitted = false;
+      $scope.createClinicAdminForm.$setPristine();
     };
 
     $scope.validateClinicName = function(){
@@ -868,6 +900,15 @@ angular.module('hillromvestApp')
         $state.go('clinicUser');
       }else if(StorageService.get('logged').role === 'ACCT_SERVICES'){
         $state.go('clinicUserRcadmin');
+      }
+    };
+
+    $scope.showUpdateClinicAdminModal = function(){
+      $scope.submitted = true;
+      if($scope.createClinicAdminForm.$invalid){
+        return false;
+      }else{
+        $scope.updateClinicModal = true;
       }
     };
 

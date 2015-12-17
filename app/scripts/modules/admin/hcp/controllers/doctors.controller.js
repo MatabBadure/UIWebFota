@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('hillromvestApp')
-  .controller('DoctorsController',['$rootScope', '$scope', '$state', '$timeout', 'Auth', '$stateParams', 'UserService', 'DoctorService', 'notyService', 'clinicService', 'searchFilterService', 'dateService', 'StorageService', 'commonsUserService', 'loginConstants',
-    function($rootScope, $scope, $state, $timeout, Auth,$stateParams, UserService, DoctorService, notyService, clinicService,searchFilterService, dateService, StorageService, commonsUserService, loginConstants) {
+  .controller('DoctorsController',['$rootScope', '$scope', '$state', '$timeout', 'Auth', '$stateParams', 'UserService', 'DoctorService', 'notyService', 'clinicService', 'searchFilterService', 'dateService', 'StorageService', 'commonsUserService', 'loginConstants', 'URL',
+    function($rootScope, $scope, $state, $timeout, Auth,$stateParams, UserService, DoctorService, notyService, clinicService,searchFilterService, dateService, StorageService, commonsUserService, loginConstants, URL) {
     $scope.doctor = null;
     $scope.doctorStatus = {
       'role': StorageService.get('logged').role,
@@ -34,7 +34,7 @@ angular.module('hillromvestApp')
     };
 
     $scope.getDoctorById = function(doctorId){
-      var url = '/api/user/' + doctorId + '/hcp';
+      var url = URL.getHcpUserById.replace('HCPID', doctorId);
       UserService.getUser(doctorId, url).then(function(response) {
         $scope.doctor = response.data.user;
       }).catch(function(response) {
@@ -61,7 +61,7 @@ angular.module('hillromvestApp')
 
     $scope.getDoctorDetails = function(doctorId,callback){
       $scope.getClinicsOfHCP(doctorId);
-      var url = '/api/user/' + doctorId + '/hcp';
+      var url = URL.getHcpUserById.replace('HCPID', doctorId);
       UserService.getUser(doctorId, url).then(function(response) {
         $scope.doctor = response.data.user;
         if (typeof callback === 'function') {
