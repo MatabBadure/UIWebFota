@@ -20,6 +20,7 @@ angular.module('hillromvestApp')
     '\n]]>\n</def>';
     var g_pdfMetaData={};    
     $scope.addCanvasToDOM = function (){  
+      $scope.removeGraph();
       $scope.isGraphDownloadable = false;     
       console.log("Adding CANVAS to body");
       if($("#hmrCanvasContainer").length > 0){
@@ -657,7 +658,7 @@ angular.module('hillromvestApp')
           $scope.waitFunction = function waitHandler() {
              barCount = d3.select(graphId).selectAll('.nv-group .nv-bar')[0].length;
             if(barCount > 0 || count === 0 ) {
-              $scope.customizationForBarGraph(graphId, isDrawCompliance, wrapperDiv);
+              $scope.customizationForBarGraph(graphId, isDrawCompliance, wrapperDiv, graphVisibility);
               return false;
             } else {
               count --;
@@ -673,7 +674,7 @@ angular.module('hillromvestApp')
       });
     };
 
-    $scope.customizationForBarGraph = function(graphId, isDrawCompliance, wrapperDiv) {
+    $scope.customizationForBarGraph = function(graphId, isDrawCompliance, wrapperDiv, graphVisibility) {
       var rect_width,  rect_height;
       setTimeout(function(){
         rect_height = d3.select(graphId).select('.nv-barsWrap .nv-wrap rect').attr('height');
@@ -706,7 +707,7 @@ angular.module('hillromvestApp')
           d3.select(bar).style({'fill-opacity': '1'});
         });
 
-        d3.select(graphId).style("visibility", "visible");
+        d3.select(graphId).style("visibility", graphVisibility);
         $(hiddenFrame).remove();
         var printId1 = "#"+wrapperDiv;          
         var element1 = document.querySelectorAll(printId1)[0],
@@ -719,22 +720,6 @@ angular.module('hillromvestApp')
           }, 500);  
         }
       },1500);
-
-/*
-,function(){
-        $timeout(function() {
-          $(hiddenFrame).remove();
-          var printId1 = "#hmrBarGraphWrapper";          
-          var element1 = document.querySelectorAll(printId1)[0],
-          html1 = (element1) ? element1.innerHTML: "",
-          doc;
-          $scope.initPdfMetaData(html1, "hmr");
-          $timeout(function() {
-            $scope.getHiddenComplianceForPDF(true, true, false, "hmrBarGraphCompliance", "hmrCompliance", "compliance", $scope.getHiddenComplianceForPDF, "hmrBarGraphCompliance1", "hmrCompliance1", "compliance1");           
-          }, 500);  
-        },1500);
-      });*/
-
     };
 
     $scope.getComplianceGraphData = function(format) {
@@ -1052,14 +1037,14 @@ angular.module('hillromvestApp')
          /* Mark red color for missed therapy  -- end --*/
          setTimeout(function(){
 
-         var bgHeight = d3.select(graphId).select('.y1 .tick line').attr("y2") > 0 ? d3.select(graphId).select('.y1 .tick line').attr("y2") : 0.5;
+         var bgHeight = d3.select(graphId).select('.y1 .tick line').attr("y2") > 0 ? d3.select(graphId).select('.y1 .tick line').attr("y2") : 0.1;
          var bgWidth = d3.select(graphId).select('.y1 .tick line').attr("x2");
          d3.select(graphId+' .nv-axis g').append('rect')
                   .attr("height", Math.abs(bgHeight))
                   .attr("width", bgWidth)
                   .attr("x" , 0)
                   .attr("y" , bgHeight)
-                  .attr("class" , "svg_bg");
+                  .attr("style", "fill: #aeb5be; stroke:  #aeb5be; stroke-width: 1;");
          },500);
 
           /*UI Changes for Line Graph*/
@@ -1067,7 +1052,7 @@ angular.module('hillromvestApp')
         attr("cx" , 0).
         attr("cy", 0).
         attr("r" , 2.3).
-        attr("fill" , '#aeb5be');
+        attr("fill" , '#aeb5be').attr("stroke" , '#aeb5be').attr("stroke-width", "1");
 
 
 
@@ -1140,24 +1125,33 @@ angular.module('hillromvestApp')
         if($scope.complianceGraphData[0] && $scope.complianceGraphData[0].values.length > 20) {
           setTimeout(function() {
             d3.selectAll(graphId).selectAll('.multiChart circle.nv-point').attr("r", "0");
-            d3.selectAll(graphId).style("visibility", "visible");
+            d3.selectAll(graphId).style("visibility", graphVisibility);
         }, 500);
       } else {
         d3.selectAll(graphId).selectAll('.multiChart circle.nv-point').attr("r", "1.3");
-        d3.selectAll(graphId).style("visibility", "visible");
+        d3.selectAll(graphId).style("visibility", graphVisibility);
       }
       if(!$scope.hiddencompliance.secondaryYaxis || $scope.hiddencompliance.secondaryYaxis.length <= 0){
         d3.selectAll(graphId).selectAll(".nvd3 .y2.axis").attr("visibility", "hidden");
       }
-      d3.selectAll(graphId).selectAll(".nvd3 .nv-axis path.domain").attr("stroke", "#ccc !important");            
-      d3.selectAll(graphId).selectAll(".nv-groups .nv-point").attr("style", "stroke-opacity: 1 !important;stroke-width: 3px !important;");
-      //d3.selectAll(graphId).selectAll(".nv-stackedarea path.nv-area").attr("style", "stroke-opacity: 1;stroke: #fff !important;stroke-width: 1.5;");
+      d3.selectAll(graphId).selectAll(".nvd3 .nv-axis path.domain").attr('fill', '#ccc');
+      d3.selectAll(graphId).selectAll(".nvd3 .nv-axis path.domain").attr('stroke-width', '1');
+      d3.selectAll(graphId).selectAll(".nvd3 .nv-axis path.domain").attr('stroke', '#ccc');      
+      d3.selectAll(graphId).selectAll(".nv-groups .nv-point").attr("style", "stroke-opacity: 1 !important;stroke-width: 3px !important;");      
       if(callback){
         $scope.getHiddenComplianceForPDF(!$scope.hiddencompliance.pressure, !$scope.hiddencompliance.frequency, !$scope.hiddencompliance.duration, callbackDivId, callbackSvgId, callbackGraphType); 
       }      
       return chart;
     },function(){
         $timeout(function() {
+          d3.selectAll(graphId).selectAll('.nv-single-point g.nv-point-paths path').attr('stroke', '#aaa');
+          d3.selectAll(graphId).selectAll('.nv-single-point g.nv-point-paths path').attr('stroke-opacity', '0');
+          d3.selectAll(graphId).selectAll('.nv-single-point g.nv-point-paths path').attr('fill', '#eee');
+          d3.selectAll(graphId).selectAll('.nv-single-point g.nv-point-paths path').attr('fill-opacity', '0');           
+          if($(graphId).find('.nv-single-point').length > 0){
+            d3.selectAll(graphId).selectAll('g.nv-areaWrap path.nv-area.nv-area-0').attr("style", "stroke: #aaa; stroke-opacity: 0; fill: #eee; fill-opacity: 0;");
+          }          
+          
           $(hiddenFrame).remove();
           var printId1 = "#"+divId;//"#hmrLineGraphCompliance1";          
           var element1 = document.querySelectorAll(printId1)[0],
@@ -2323,7 +2317,7 @@ angular.module('hillromvestApp')
                   .attr("width", bgWidth)
                   .attr("x" , 0)
                   .attr("y" , bgHeight)
-                  .attr("style", "fill: #e3ecf7;");
+                  .attr("style", "fill: #aeb5be; stroke:  #aeb5be; stroke-width: 1; ");
                   //.attr("class" , "svg_bg");
          },500);
 
@@ -2415,17 +2409,27 @@ angular.module('hillromvestApp')
         d3.selectAll('#complianceGraph svg').selectAll(".nvd3 .y2.axis").attr("visibility", "hidden");
       }
 
-      d3.selectAll('#complianceGraph svg').selectAll(".nvd3 .nv-axis path.domain").attr("stroke", "#ccc !important");
-      //d3.selectAll('#complianceGraph svg').selectAll(".complianceGraph .nv-stackedarea path.nv-area").attr("style", "stroke-opacity: 1;stroke: #fff !important;stroke-width: 1.5;"); 
-      d3.selectAll('#complianceGraph svg').selectAll(".nv-groups .nv-point").attr("style", "stroke-opacity: 1 !important;stroke-width: 3px !important;");
-      d3.selectAll('#complianceGraph svg').selectAll(".nv-point-paths path").attr("style", "stroke: #aaa; stroke-opacity: 0; fill: #eee; fill-opacity: 0;");
+      d3.selectAll('#complianceGraph svg').selectAll(".nvd3 .nv-axis path.domain").attr('fill', '#ccc');
+      d3.selectAll('#complianceGraph svg').selectAll(".nvd3 .nv-axis path.domain").attr('stroke-width', '1');
+      d3.selectAll('#complianceGraph svg').selectAll(".nvd3 .nv-axis path.domain").attr('stroke', '#ccc');
+      d3.selectAll('#complianceGraph svg').selectAll(".nvd3 .nv-axis path.domain").attr('stroke-opacity', '.75');
+      d3.selectAll('#complianceGraph svg').selectAll(".nv-groups .nv-point").attr("style", "stroke-opacity: 1 !important;stroke-width: 3px !important;");      
       $timeout(function() { 
         $scope.drawHMRGraphForPDF();      
         $scope.getHiddenComplianceForPDF(!$scope.compliance.pressure, !$scope.compliance.frequency, !$scope.compliance.duration, "complianceGraph1", "compCompliance1", "compliance1"); 
       },500);
+      console.log('chart', chart);
       return chart;
     },function(){
         $timeout(function() { 
+          d3.selectAll('#complianceGraph svg').selectAll('.nv-single-point g.nv-point-paths path').attr('stroke', '#aaa');
+          d3.selectAll('#complianceGraph svg').selectAll('.nv-single-point g.nv-point-paths path').attr('stroke-opacity', '0');
+          d3.selectAll('#complianceGraph svg').selectAll('.nv-single-point g.nv-point-paths path').attr('fill', '#eee');
+          d3.selectAll('#complianceGraph svg').selectAll('.nv-single-point g.nv-point-paths path').attr('fill-opacity', '0');
+          console.log("SINGLE POINT : ", d3.selectAll('#complianceGraph g.nv-single-point'));                   
+          if($('#complianceGraph').find('.nv-single-point').length > 0){
+            d3.selectAll('#complianceGraph svg').selectAll('g.nv-areaWrap path.nv-area.nv-area-0').attr("style", "stroke: #aaa; stroke-opacity: 0; fill: #eee; fill-opacity: 0;");
+          }
           $(hiddenFrame).remove();
           var printId1 = "#complianceGraphPrim";          
           var element1 = document.querySelectorAll(printId1)[0],
