@@ -493,3 +493,10 @@
 		width: 70px;
 	}
 	}
+/*for no event*/
+.pointer-no-event{
+	pointer-events : none !important;
+}
+.pointer-fill-event{
+	pointer-events : fill !important;
+}

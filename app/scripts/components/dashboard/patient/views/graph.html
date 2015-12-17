@@ -102,7 +102,7 @@
 					</div>					
 				</div>
 			</div>
-			<div class="col-md-16">
+			<div class="col-md-16"> <!-- div for hmr/compliance/year/month/day -->
 				<div class="bar_graph_header">
 					<div class="col-md-5 col-sm-7 left_header_barchart">
 						<div class="row">
@@ -160,7 +160,7 @@
 				</div>
 			</div>
 			<div ng-if="complianceGraph" id="complianceGraphWrapper">
-				<div class="col-md-16">
+				<div class="col-md-16"> <!-- div for custom labels ng-class="{'pointer-no-event': , 'pointer-fill-event': }"-->
 					<div class="pull-right wrapper_custom_check">
 						<form action="#" ng-if="isComplianceExist">
 							<div class="custom_check_container" ng-click="pressureIsDisabled && isLegendEnabled('pressureIsDisabled');">
@@ -182,7 +182,7 @@
 				</div>
 				<div id="complianceGraphPrim" class="complianceGraphPrim_wrapper" >
 					<div id="complianceGraph" class="complianceGraph col-md-16">
-						<svg ng-show="!noDataAvailable"> </svg>
+						<svg id="compCompliance" ng-show="!noDataAvailable"> </svg>
 					</div>
 					<div id="complianceGraph1" class="complianceGraph col-md-16" style="margin-top: -351px;position:absolute;z-index:-1;"> 
 						<svg id="compCompliance1" ng-show="!noDataAvailable"> </svg>
@@ -343,6 +343,23 @@
           <buton class="hillrom-btn btn-submit float-right" ng-click="deleteNote(noteToDelete.id)">Yes</buton>
           <buton class="cancel hillrom-btn btn-submit float-right" data-dismiss="modal" ng-click="closeNoteDeleteModal()">No</buton>
          </div>
+      </div>
+      <footer class="modal__footer">
+      </footer>
+    </div>
+  </div>
+</div>
+
+<!-- modal to show graph is loading -->
+<div class="modal" id="graph-loading-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal__dialog">
+    <div class="modal__content">
+      <header class="modal__header">
+        <button type="button" class="modal__close" data-dismiss="modal" ng-click="cloaseGraphLoadingModal()">&times;</button>
+        <p >{{header}}</p>
+      </header>
+      <div class="modal__body">
+        <div class="modal--message">Please wait while the PDF is laoding..</div>        
       </div>
       <footer class="modal__footer">
       </footer>
