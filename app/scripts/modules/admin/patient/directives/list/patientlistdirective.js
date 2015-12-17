@@ -45,7 +45,7 @@ angular.module('hillromvestApp')
         };
 
         $scope.searchPatientsOnQueryChange = function(){
-          if(($state.current.name === "patientUser" || $state.current.name === "rcadminPatients") && !$stateParams.clinicIds && !searchOnLoad){
+          if(($state.current.name === "patientUser" || $state.current.name === "rcadminPatients" || $state.current.name === "associatePatientUser") && !$stateParams.clinicIds && !searchOnLoad){
             $scope.searchPatients();
           }
         };
