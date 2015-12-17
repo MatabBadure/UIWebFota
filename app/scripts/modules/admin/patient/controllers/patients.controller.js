@@ -39,6 +39,8 @@ angular.module('hillromvestApp')
         $state.go(status, {'patientId': $stateParams.patientId});
       }else if($scope.patientStatus.role === loginConstants.role.acctservices){
         $state.go(status+loginConstants.role.Rcadmin, {'patientId': $stateParams.patientId});
+      }else if($scope.patientStatus.role === loginConstants.role.associates){
+        $state.go('associate'+ status, {'patientId': $stateParams.patientId});
       }
     };
 
@@ -149,7 +151,7 @@ angular.module('hillromvestApp')
       $scope.patientTab = currentRoute;
       if(currentRoute === 'patientOverview' || currentRoute === 'patientOverviewRcadmin'){
         $scope.initPatientOverview();
-      }else if(currentRoute === 'patientDemographic' || currentRoute === 'patientDemographicRcadmin' ){
+      }else if(currentRoute === 'patientDemographic' || currentRoute === 'patientDemographicRcadmin' || currentRoute === 'associatepatientDemographic'){
         $scope.initpatientDemographic();
       }else if (currentRoute === 'patientEdit') {
         $scope.getPatiendDetails($stateParams.patientId, $scope.setEditMode);
@@ -157,11 +159,11 @@ angular.module('hillromvestApp')
         $scope.createPatient();
       }else if($state.current.name === 'patientEditClinics'){
         $scope.initPatientClinics($stateParams.patientId);
-      }else if(currentRoute === 'patientClinics' || currentRoute === 'patientClinicsRcadmin'){
+      }else if(currentRoute === 'patientClinics' || currentRoute === 'patientClinicsRcadmin' || currentRoute === 'associatepatientClinics'){
         $scope.initPatientClinicsInfo($stateParams.patientId);
-      }else if(currentRoute === 'patientCraegiver' || currentRoute === 'patientCraegiverRcadmin' ){
+      }else if(currentRoute === 'patientCraegiver' || currentRoute === 'patientCraegiverRcadmin' || currentRoute === 'associatepatientCraegiver' ){
         $scope.initpatientCraegiver($stateParams.patientId);
-      } else if($state.current.name === 'patientProtocol' || $state.current.name === 'patientProtocolRcadmin'){
+      } else if($state.current.name === 'patientProtocol' || $state.current.name === 'patientProtocolRcadmin' || $state.current.name === 'associatepatientProtocol'){
         $scope.initProtocolDevice($stateParams.patientId);
       }else if(currentRoute === 'patientCraegiverAdd' || currentRoute === 'patientCraegiverAddRcadmin'){
         $scope.initpatientCraegiverAdd($stateParams.patientId);
