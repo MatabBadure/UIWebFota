@@ -3472,7 +3472,7 @@ angular.module('hillromvestApp')
                 }
             })
 
-            .state('associatePatientOverview', {
+            .state('associatepatientOverview', {
                 parent: 'associatePatientUser',
                 url: '/{patientId}/overview',
                 data: {
@@ -3493,6 +3493,109 @@ angular.module('hillromvestApp')
                     }],
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('patient');$translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+            
+            .state('associatepatientDemographic', {
+                parent: 'associatePatientUser',
+                url: '/{patientId}/demographic',
+                data: {
+                    roles: ['ASSOCIATES'],
+                    pageTitle: 'patient.page-title.patient-info'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/associate/patient/views/patient-info/patient-demographics/detail.html',
+                        controller: 'patientsController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient');$translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+            .state('associatepatientClinics', {
+                parent: 'associatePatientUser',
+                url: '/{patientId}/clinicInfo',
+                data: {
+                    roles: ['ASSOCIATES'],
+                    pageTitle: 'patient.page-title.clinic-info'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/associate/patient/views/patient-info/clinic/list.html',
+                        controller: 'patientsController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+
+            .state('associatepatientProtocol', {
+                parent: 'associatePatientUser',
+                url: '/{patientId}/protocol-device',
+                data: {
+                    roles: ['ASSOCIATES'],
+                    pageTitle: 'patient.page-title.careplan-device'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/associate/patient/views/patient-info/device-protocol/list.html',
+                        controller: 'patientsController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+            
+            .state('associatepatientCraegiver', {
+                parent: 'associatePatientUser',
+                url: '/{patientId}/caregiver',
+                data: {
+                    roles: ['ASSOCIATES'],
+                    pageTitle: 'patient.page-title.caregiver-info'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/associate/patient/views/patient-info/caregiver/list.html',
+                        controller: 'patientsController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient-user');
                         return $translate.refresh();
                     }],
                     authorize: ['Auth',

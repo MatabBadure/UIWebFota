@@ -60,7 +60,7 @@ angular.module('hillromvestApp')
               'patientId': patient.id
             });
           }else if($scope.userRole === loginConstants.role.associates){
-            $state.go('associatePatientOverview', {
+            $state.go('associatepatientOverview', {
               'patientId': patient.id
             });
           }
