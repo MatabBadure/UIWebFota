@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('hillromvestApp')
-    .controller('MainController',['$scope', 'Principal', 'Auth', '$state', 'Account', '$location', '$stateParams', '$rootScope', 'loginConstants', 'StorageService', 'UserService', '$window', '$activityIndicator', '$timeout',
-    	function ($scope, Principal,Auth, $state, Account, $location,$stateParams, $rootScope,loginConstants,StorageService, UserService, $window, $activityIndicator, $timeout) {
+    .controller('MainController',['$scope', 'Principal', 'Auth', '$state', 'Account', '$location', '$stateParams', '$rootScope', 'loginConstants', 'StorageService', 'UserService', '$window', 
+    	function ($scope, Principal,Auth, $state, Account, $location,$stateParams, $rootScope,loginConstants,StorageService, UserService, $window) {
         Principal.identity().then(function(account) {
             $scope.account = account;
             $scope.isAuthenticated = Principal.isAuthenticated;
@@ -186,12 +186,4 @@ angular.module('hillromvestApp')
 				$scope.isUserChanged();
 			}
 		};
-
-
-		
-        $activityIndicator.startAnimating();
-        $timeout(function () {
-            $activityIndicator.stopAnimating();
-        }, 3000);
-    
     }]);
