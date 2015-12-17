@@ -1,11 +1,10 @@
 'use strict';
 
 angular.module('hillromvestApp')
-    .factory('Password', ['$http', 'headerService', function ($http, headerService) {
+    .factory('Password', ['$http', 'headerService', 'URL', function ($http, headerService, URL) {
     return {
             changePassword: function(data) {
-
-                return $http.post('api/account/change_password', data, {
+                return $http.post(URL.changePassword, data, {
                     headers: headerService.getHeader()
                 }).success(function (data, status, headers, config) {
                     return {'response': data, 'status': status, 'headers' : headers, 'config' : config};
@@ -13,7 +12,8 @@ angular.module('hillromvestApp')
             },
 
             updatePassword: function(id, data){
-                return $http.put('/api/user/'+id+'/update_password', data, {
+                var url = URL.updatePassword.replace('USERID', id);
+                return $http.put(url, data, {
                     headers: headerService.getHeader()
                 }).success(function (data, status, headers, config) {
                     return {'response': data, 'status': status, 'headers' : headers, 'config' : config};
@@ -24,16 +24,17 @@ angular.module('hillromvestApp')
 
 
 angular.module('hillromvestApp')
-    .factory('PasswordResetInit', ['$resource', function ($resource) {
-    	return $resource('api/account/reset_password/init', {}, {
+    .factory('PasswordResetInit', ['$resource', 'URL', function ($resource, URL) {
+    	return $resource(URL.resetPasswordInit, {}, {
     	 })
     }]);
 
 angular.module('hillromvestApp')
-    .factory('PasswordResetFinish', ['$resource', function ($resource) {
+    .factory('PasswordResetFinish', ['$resource', 'URL', function ($resource, URL) {
         return{
         	resetPassFinish : function(key){
-        		return  $resource('api/account/reset_password/finish?key='+key, {}, {
+                var url = URL.resetPasswordFinish.replace('KEY', key);
+        		return  $resource(url, {}, {
                 });
         	}
 

@@ -81,19 +81,31 @@
         "date-of-birth": "Date of Birth",
         "delete": {
             "warning": "Deactivate Clinic",
-            "message": "You are deactivating Clinic from the system and . Are you sure to continue?"
+            "message": "Are you sure to deactivate Clinic from the Hill-Rom system?"
         },
         "update": {
             "warning": "Clinic - Details",
             "message": "You have made changes/updates for Clinic details. Are you sure to make updates?"
         },
         "deletePatient":{
-            "warning": "Clinic Dashboard - Dissociate Patient",
-            "message": "Do you want to dissociate the Patient from the Clinic?"
+            "warning": "Clinic Dashboard - Disassociate Patient",
+            "message": "Do you want to Disassociate the Patient from the Clinic?"
         },
         "deleteHcp":{
-            "warning": " Clinic Dashboard - Dissociate HCP",
-            "message": "Do you want to dissociate HCP from the Clinic?"
+            "warning": " Clinic Dashboard - Disassociate HCP",
+            "message": "Do you want to Disassociate HCP from the Clinic?"
+        },
+        "associateHcp":{
+            "warning": "Clinic Dashboard - Associate HCP",
+            "message": "Do you want to associate HCP to the Clinic?"
+        },
+        "associatePatient":{
+            "warning": "Clinic Dashboard - Associate Patient",
+            "message": "Do you want to associate the Patient to the Clinic?"
+        },
+        "associateClinicAdmin":{
+            "warning": "Clinic Dashboard - Associate Clinic Admin",
+            "message": "Do you want to associate the Clinic Admin to the Clinic?"
         },
         "hillRom-id": "Hill-Rom ID",
         "type": "Type",
@@ -141,8 +153,8 @@
             "email": "Email"
         },
         "deleteClinicAdmin":{
-            "warning": "Clinic Dashboard - Dissociate Clinic Admin",          			
-            "message": "Do you want to dissociate Clinic Admin from the Clinic?"
+            "warning": "Clinic Dashboard - Disassociate Clinic Admin",
+            "message": "Do you want to Disassociate Clinic Admin from the Clinic?"
         },
         "updateClinicAdmin":{
             "warning": "Clinic Admin - Details",

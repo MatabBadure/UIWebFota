@@ -16,7 +16,7 @@ angular.module('hillromvestApp')
        *
        */
       createUser: function(data) {
-        var url = admin.hillRomUser.baseURL;
+        var url = URL.userBaseUrl;
         return $http.post(url, data, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -31,7 +31,7 @@ angular.module('hillromvestApp')
        *
        */
       deleteUser: function(id) {
-        var url = admin.hillRomUser.baseURL;
+        var url = URL.userBaseUrl;
         return $http.delete(url + '/' + id, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -46,8 +46,7 @@ angular.module('hillromvestApp')
        *
        */
       editUser: function(data) {
-        var url = admin.hillRomUser.baseURL;
-        return $http.put('api/user/' + data.id, data, {
+        return $http.put(URL.userBaseUrl + data.id, data, {
           headers: headerService.getHeader()
         }).success(function(response) {
           return response;
@@ -97,7 +96,7 @@ angular.module('hillromvestApp')
        *
        */
       getUser: function(id, url) {
-        var url = url || ('api/user/' + id);
+        var url = url || (URL.userBaseUrl + id);
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -105,7 +104,7 @@ angular.module('hillromvestApp')
         });
       },
       getRelationships: function() {
-        var url = admin.patient.baseURL + 'relationships';
+        var url = URL.patientRelationships;
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -122,7 +121,6 @@ angular.module('hillromvestApp')
       }, 
 
       getNotesOfUser: function(id, date) {
-        ///api/users/{id}/notes?date=:date
         var url = admin.hillRomUser.users + '/' + id +'/notes?date='+date; 
         return $http.get(url, {
           headers: headerService.getHeader()
@@ -159,7 +157,6 @@ angular.module('hillromvestApp')
       },
 
       getPatientNotification : function(userId, timestamp){
-        //api/users/:id/notifications?date=:timestamp
         var url = admin.hillRomUser.users+'/'+userId+'/notifications?date='+timestamp;        
         return $http.get(url, {
           headers: headerService.getHeader()
@@ -179,7 +176,7 @@ angular.module('hillromvestApp')
 
       },
       getPatientUserNotification : function(userId){
-        var url = '/api/user/'+userId;        
+        var url = URL.userBaseUrl+userId;
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {

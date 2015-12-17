@@ -31,7 +31,7 @@
 </div>
 
 <div class="container admin-user">
-	<div class="col-md-16 crud-list" ng-show="clinicAdmin && !clinicAdminEdit">
+	<div class="col-md-16 crud-list" ng-show="clinicAdmins && !clinicAdminEdit" ng-repeat="clinicAdmin in clinicAdmins">
     <div class="col-md-4">
       <span>{{clinicAdmin.lastName}}, {{clinicAdmin.firstName}}</span>
     </div>
@@ -39,44 +39,44 @@
       <span>{{clinicAdmin.email}}</span>
     </div>
     <div class="col-md-1 text-center">
-      <span class="icon-edit-icon" ng-click="setEditClinicAdmin()"></span>
+      <span class="icon-edit-icon" ng-click="setEditClinicAdmin(clinicAdmin)"></span>
     </div>
     <div class="col-md-1 text-center">
-      <span class="icon-delete-icon" ng-click="showDeleteModal()"></span>
+      <span class="icon-delete-icon" ng-click="showDeleteModal(clinicAdmin)"></span>
     </div>
   </div>
 
-  <div class="col-md-16 empty-list-message" ng-if="!clinicAdmin">
+  <div class="col-md-16 empty-list-message" ng-if="!clinicAdmins || clinicAdmins.length === 0">
     <span translate="clinic.noClinicAdmins"></span>
   </div>
 
   <div class="col-md-16 reset-padding margin-top">
-    <buton class="hillrom-btn btn-primary float-right btn-margin-left" ng-click="addClinicAdminShow()" translate="clinic.add-clinic-admin" ng-show="!showAddclinicAdmin && !clinicAdmin"></buton>
+    <buton class="hillrom-btn btn-primary float-right btn-margin-left" ng-click="addClinicAdminShow()" translate="clinic.add-clinic-admin" ng-show="!clinicAdminEdit && !showAddclinicAdmin"></buton>
   </div>
 </div>
 
-<div class="container admin-user" ng-show="showAddclinicAdmin && !clinicAdmin">
+<div class="container admin-user" ng-show="showAddclinicAdmin && !clinicAdminEdit">
 	<div class="col-md-16 reset-padding margin-top">
 		<fieldset>
 		  <div class="select-one">
 		    <input class="cursor-pointer" type="radio" id="existAdminText" name="addAdmin" ng-model="addAdmin" value="existAdmin"/>
 		    <label class="cursor-pointer" for="existAdminText" translate="clinic.option.add-exist-admin"></label>
-		    <input class="cursor-pointer" type="radio" id="newAdminText" name="addAdmin" ng-model="addAdmin" value="newAdmin"/>
+		    <input class="cursor-pointer" type="radio" id="newAdminText" name="addAdmin" ng-model="addAdmin" value="newAdmin" ng-change="resetClinicAdminForm()"/>
 		    <label class="cursor-pointer" for="newAdminText" translate="clinic.option.add-new-admin"></label>
 		  </div>
 		</fieldset>
 	</div>
 </div>
 
-<div class="container admin-user" ng-show="showAddclinicAdmin && addAdmin === 'existAdmin' && !clinicAdmin">
+<div class="container admin-user" ng-show="showAddclinicAdmin && addAdmin === 'existAdmin' && !clinicAdminEdit">
 	<div class="col-md-16 reset-padding">
 		<div class="col-md-8 exist-link">
-      <input class="form-control" type="text" ng-model="searchItem" typeahead="clinic as clinic.lastName + ' ' + clinic.firstName +'&nbsp;&nbsp;&nbsp;' + clinic.email for clinic in allClinicAdmins | filter:$viewValue" typeahead-on-select="addCliniAdminToClinic($item)" placeholder="{{'clinic.placeholder.existed-admin' | translate}}">
+      <input class="form-control" type="text" ng-model="searchItem" typeahead="clinic as clinic.lastName + ' ' + clinic.firstName +'&nbsp;&nbsp;&nbsp;' + clinic.email for clinic in getClinicAdminstoLink($viewValue)" typeahead-on-select="showAssociateClinicAdminModal($item)" placeholder="{{'clinic.placeholder.existed-admin' | translate}}">
 		</div>
 	</div>
 </div>
 
-<div class="dashboard dashboard--content padding-bottom-ls" ng-show="showAddclinicAdmin && addAdmin === 'newAdmin' && !clinicAdmin || clinicAdminEdit">
+<div class="dashboard dashboard--content padding-bottom-ls" ng-show="showAddclinicAdmin && addAdmin === 'newAdmin' || clinicAdminEdit">
   <form name="createClinicAdminForm" ng-submit="submitClinicAdmin()" novalidate autocomplete="off">
     <div class="container dashboard__form">
       <div class="margin-top-xl">
@@ -87,12 +87,10 @@
               <span class="">*</span>
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
-              <input class="" type="text" name="firstName" ng-model="newAdmin.firstName" ng-minlength=2 ng-maxlength=15 ng-pattern="/^[a-z A-Z]+$/" required>
+              <input class="" type="text" name="firstName" ng-model="newAdmin.firstName" ng-minlength=1 ng-maxlength=50 required>
               <div ng-show="(createClinicAdminForm.firstName.$dirty && createClinicAdminForm.firstName.$invalid) || submitted">
                 <span class="has-error" ng-show="createClinicAdminForm.firstName.$error.required" translate="error.firstName.required">
                 </span>
-                <span class="has-error" ng-show="createClinicAdminForm.firstName.$error.pattern" translate="error.firstName.pattern"></span>
-                <span class="has-error" ng-show="createClinicAdminForm.firstName.$error.minlength" translate="error.firstName.minlength"></span>
                 <span class="has-error" ng-show="createClinicAdminForm.firstName.$error.maxlength" translate="error.firstName.maxlength"></span>
               </div>
             </div>
@@ -103,9 +101,8 @@
               <span class="" translate="clinic.admin.middle-name"></span>
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
-              <input class="" type="text" name="middleName" ng-model="newAdmin.middleName" ng-pattern="/^[a-z A-Z]+$/" ng-minlength=2 ng-maxlength=15>
+              <input class="" type="text" name="middleName" ng-model="newAdmin.middleName" ng-minlength=1 ng-maxlength=50>
               <div ng-show="(createClinicAdminForm.middleName.$dirty && createClinicAdminForm.middleName.$invalid) || submitted">
-                <span class="has-error" ng-show="createClinicAdminForm.middleName.$error.pattern" translate="error.middleName.pattern"></span>
                 <span class="has-error" ng-show="createClinicAdminForm.middleName.$error.minlength" translate="error.middleName.minlength"></span>
                 <span class="has-error" ng-show="createClinicAdminForm.middleName.$error.maxlength" translate="error.middleName.maxlength"></span>
               </div>
@@ -120,11 +117,9 @@
               <span class="">*</span>
             </div>
            <div class="col-md-10 dashboard__form--input reset-padding">
-              <input class="" type="text" name="lastName" ng-model="newAdmin.lastName" ng-minlength=2 ng-maxlength=15 ng-pattern="/^[a-z A-Z]+$/" required>
+              <input class="" type="text" name="lastName" ng-model="newAdmin.lastName" ng-minlength=1 ng-maxlength=50 required>
               <div ng-show="(createClinicAdminForm.lastName.$dirty && createClinicAdminForm.lastName.$invalid) || submitted">
                 <span class="has-error" ng-show="createClinicAdminForm.lastName.$error.required" translate="error.lastName.required"></span>
-                <span class="has-error" ng-show="createClinicAdminForm.lastName.$error.pattern" translate="error.lastName.pattern"></span>
-                <span class="has-error" ng-show="createClinicAdminForm.lastName.$error.minlength" translate="error.lastName.minlength"></span>
                 <span class="has-error" ng-show="createClinicAdminForm.lastName.$error.maxlength" translate="error.lastName.maxlength"></span>
               </div>
             </div>
@@ -148,7 +143,7 @@
       </div>
       <div class="col-md-16 reset-padding margin-top">
         <div class="">
-          <button  type="button" ng-click="$parent.showUpdateClinicModal=true" ng-show="clinicAdminEdit" class="hillrom-btn btn-primary float-right btn-margin-left" translate="clinic.update-button-text"></button>
+          <button  type="button" ng-click="showUpdateClinicAdminModal()" ng-show="clinicAdminEdit" class="hillrom-btn btn-primary float-right btn-margin-left" translate="clinic.update-button-text"></button>
           <button type="submit" ng-if="!clinicAdminEdit" class="hillrom-btn btn-primary float-right btn-margin-left" translate="clinic.create-button-text">Create</button>
           <button type="button" class="hillrom-btn btn-secondary float-right" translate="clinic.cancel-button-text" ng-click="cancelClinicAdmin()">Cancel</button>
           <div class="clr"></div>
@@ -178,18 +173,18 @@
   </div>
 </div>
 
-<div ng-if="showUpdateClinicModal" class="modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true">
+<div ng-if="updateClinicModal" class="modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true">
   <div class="modal__dialog">
     <div class="modal__content">
       <header class="modal__header">
-        <button type="button" class="modal__close" data-dismiss="modal" ng-click="$parent.showUpdateClinicModal=false">&times;</button>
+        <button type="button" class="modal__close" data-dismiss="modal" ng-click="$parent.updateClinicModal=false">&times;</button>
          <p translate="clinic.updateClinicAdmin.warning"></p>
       </header>
       <div class="modal__body">
          <div class="modal--message" translate="clinic.updateClinicAdmin.message"></div>
          <div class="row modal--custom-btn">
-          <buton class="hillrom-btn btn-submit float-right" ng-click="$parent.showUpdateClinicModal=false;submitClinicAdmin()">Yes</buton>
-          <buton class="hillrom-btn btn-submit float-right" data-dismiss="modal" ng-click="$parent.showUpdateClinicModal=false">No</buton>
+          <buton class="hillrom-btn btn-submit float-right" ng-click="$parent.updateClinicModal=false;submitClinicAdmin()">Yes</buton>
+          <buton class="hillrom-btn btn-submit float-right" data-dismiss="modal" ng-click="$parent.updateClinicModal=false">No</buton>
          </div>
       </div>
       <footer class="modal__footer">
@@ -197,3 +192,6 @@
     </div>
   </div>
 </div>
+
+<modal ng-if="associateClinicAdminModal" modall="showModal" onyes="addCliniAdminToClinic()" onno="$parent.associateClinicAdminModal = false; $parent.searchItem= ''" header="{{'clinic.associateClinicAdmin.warning' | translate}}" message="{{'clinic.associateClinicAdmin.message' | translate}}">
++</modal>

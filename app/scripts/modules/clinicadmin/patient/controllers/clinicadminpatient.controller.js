@@ -19,7 +19,7 @@ angular.module('hillromvestApp')
       $scope.getCaregiversAssociatedWithPatient($stateParams.patientId);
     }else if($state.current.name === 'clinicadminpatientdashboard'){
       $scope.searchItem = "";
-      $scope.searchFilter = searchFilterService.initSearchFiltersForPatient($stateParams.filter);
+      $scope.searchFilter = searchFilterService.initSearchFiltersForPatient($stateParams.filter, true);
       $scope.sortPatientList = sortOptionsService.getSortOptionsForPatientList();
       $scope.currentPageIndex = 1;
       $scope.perPageCount = 10;
@@ -254,7 +254,8 @@ angular.module('hillromvestApp')
     DoctorService.searchPatientsForHCPOrCliniadmin($scope.searchItem, 'clinicadmin', StorageService.get('logged').userId, clinicId, $scope.currentPageIndex, $scope.perPageCount, filter, $scope.sortOption).then(function (response) {
       $scope.patients = response.data;      
       angular.forEach($scope.patients, function(patient){
-        patient.dob = dateService.getDateFromTimeStamp(patient.dob, patientDashboard.dateFormat, '/');
+        patient.dob = (patient.dob) ? dateService.getDateFromTimeStamp(patient.dob, patientDashboard.dateFormat, '/') : patient.dob;
+        patient.lastTransmissionDate = (patient.lastTransmissionDate) ? dateService.getDateFromYYYYMMDD(patient.lastTransmissionDate, '/') : patient.lastTransmissionDate;
       });
       $scope.total = (response.headers()['x-total-count']) ? response.headers()['x-total-count'] :$scope.patients.length; 
       $scope.pageCount = Math.ceil($scope.total / 10);
@@ -364,12 +365,22 @@ angular.module('hillromvestApp')
     }).catch(function(data){notyService.showError(response, 'warning');});
   };
 
-  $scope.selectHcpForPatient = function(hcp){
-    var data = [{'id': hcp.id}];
+  $scope.getHCPstoLink = function($viewValue){
+    return searchFilterService.getMatchingUser($viewValue, $scope.hcps, true);
+  };
+
+  $scope.showAssociateHCPModal = function(hcp){
+    $scope.selectedHCP = hcp;
+    $scope.associateHCPModal = true;
+  };
+
+  $scope.selectHcpForPatient = function(){
+    $scope.associateHCPModal = false;
+    var data = [{'id': $scope.selectedHCP.id}];
     $scope.searchHcp = "";
-    $scope.searchHCPText = false;
     patientService.associateHCPToPatient(data, $stateParams.patientId).then(function(response){
       $scope.getAvailableAndAssociatedHCPs($stateParams.patientId);
+      $scope.searchHCPText = false;
       notyService.showMessage(response.data.message, 'success');
     });
   };

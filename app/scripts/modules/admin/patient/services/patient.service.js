@@ -17,7 +17,7 @@ angular.module('hillromvestApp')
       */
       getPatients: function(searchString, sortOption, pageNo, offset, filter) {
         var filterBy = (filter && filter != undefined) ? filter : stringConstants.emptyString;
-        var url = admin.patient.searchURL;
+        var url = URL.patientSearch;
         var sortOrder;
         if (searchString === undefined) {
           searchString = '';
@@ -25,7 +25,7 @@ angular.module('hillromvestApp')
         if (sortOption === "" || sortOption === undefined || sortOption === null) {
           sortOption = sortConstant.plastName + searchFilters.amp + searchFilters.asc + searchFilters.equal + true;
         }
-        url = url + '?searchString=' + searchString + '&page=' + pageNo + '&per_page=' + offset + '&sort_by=' + sortOption + '&filter=' + filterBy;
+        url = url + searchString + '&page=' + pageNo + '&per_page=' + offset + '&sort_by=' + sortOption + '&filter=' + filterBy;
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -40,7 +40,7 @@ angular.module('hillromvestApp')
        *
        */
       getPatientInfo: function(id) {
-        var url = admin.hillRomUser.baseURL + '/' + id + '/patient';
+        var url = URL.patientById.replace('PATIENTID', id);
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -55,7 +55,7 @@ angular.module('hillromvestApp')
        *
        */
       associateHCPToPatient: function(data, id) {
-        var url = admin.patient.baseURL + '/' + id + '/associatehcp';
+        var url = URL.associateHcpToPatient.replace('PATIENTID', id);
         return $http.put(url, data, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -64,7 +64,7 @@ angular.module('hillromvestApp')
       },
 
       getAssociateHCPToPatient: function(id) {
-        var url = admin.patient.baseURL + id + '/hcp';
+        var url = URL.associatedHcpsToPatient.replace('PATIENTID', id);
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -79,7 +79,7 @@ angular.module('hillromvestApp')
        *
        */
       getHCPsLinkedToPatient: function(id) {
-        var url = admin.patient.baseURL + id + '/hcp';
+        var url = URL.associatedHcpsToPatient.replace('PATIENTID', id);
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -94,17 +94,8 @@ angular.module('hillromvestApp')
        *
        */
       disassociateHCPFromPatient: function(id, data) {
-        var url = admin.patient.baseURL + id + '/dissociatehcp';
+        var url = URL.disassociateHCPFromPatient.replace('PATIENTID', id);
         return $http.put(url, data, {
-          headers: headerService.getHeader()
-        }).success(function(response) {
-          return response;
-        });
-      },
-
-      getPatientsAssociatedToClinics: function(ids) {
-        var url = 'api/clinics/patients?filter=id:' + ids;
-        return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
           return response;
@@ -118,7 +109,7 @@ angular.module('hillromvestApp')
        *
        */
       getClinicsLinkedToPatient: function(id) {
-        var url = admin.patient.baseURL + id + '/clinics';
+        var url = URL.clinicsAssociatedToPatient.replace('PATIENTID', id);
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -133,7 +124,7 @@ angular.module('hillromvestApp')
        *
        */
       disassociateClinicsFromPatient: function(id, data) {
-        var url = admin.patient.baseURL + id + '/dissociateclinics';
+        var url = URL.disassociateClinicsFromPatient.replace('PATIENTID', id);
         return $http.put(url, data, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -142,8 +133,7 @@ angular.module('hillromvestApp')
       },
 
       getPatientsInClinic: function(filterArray) {
-        var url = '/api/clinics/patients';
-        url = url + '?filter=';
+        var url = URL.patientInClinic;
         var flag = false;
         angular.forEach(filterArray, function(filter, index) {
 
@@ -168,7 +158,7 @@ angular.module('hillromvestApp')
        *
        */
       disassociatePatient: function(id) {
-        var url = admin.hillRomUser.baseURL + '/' + id;
+        var url = URL.userBaseUrl + id;
         return $http.delete(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -182,7 +172,7 @@ angular.module('hillromvestApp')
        *
        */
       associateClinicToPatient: function(id, data) {
-        var url = admin.patient.baseURL + id + '/associateclinics';
+        var url = URL.associateClinicToPatient.replace('PATIENTID', id);
         return $http.put(url, data, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -196,7 +186,7 @@ angular.module('hillromvestApp')
        *
        */
       getDevices: function(id) {
-        var url = admin.patient.baseURL + id + '/vestdevice';
+        var url = URL.deviceAssociatedToPatient.replace('PATIENTID', id);
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -210,7 +200,7 @@ angular.module('hillromvestApp')
        *
        */
       getCaregiversLinkedToPatient: function(id) {
-        var url = admin.patient.baseURL + id + '/caregiver';
+        var url = URL.caregiverAssociatedToPatient.replace('PATIENTID', id)
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -224,8 +214,7 @@ angular.module('hillromvestApp')
        *
        */
       disassociateCaregiversFromPatient: function(patientId, caregiverId) {
-        ///api/patient/:patientUserId/caregiver/:id
-        var url = admin.patient.baseURL + patientId + '/caregiver/' + caregiverId;
+        var url = URL.disassociateCaregiversFromPatient.replace('PATIENTID', patientId).replace('CAREGIVERID', caregiverId);
         return $http.delete(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -239,8 +228,7 @@ angular.module('hillromvestApp')
        *
        */
       associateCaregiversFromPatient: function(patientId, data) {
-        ///api/patient/:id/caregiver
-        var url = admin.patient.baseURL + patientId + '/caregiver';
+        var url = URL.caregiverAssociatedToPatient.replace('PATIENTID', patientId);
         return $http.post(url, data, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -249,7 +237,7 @@ angular.module('hillromvestApp')
       },
 
       addDevice: function(id, data) {
-        var url = admin.patient.baseURL + id + '/linkvestdevice';
+        var url = URL.addDevice.replace('PATIENTID', id);
         return $http.put(url, data, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -258,7 +246,7 @@ angular.module('hillromvestApp')
       },
 
       deleteDevice: function(id, device) {
-        var url = admin.patient.baseURL + id + '/deactivatevestdevice/' + device.serialNumber;
+        var url = URL.deactivateDevice.replace('PATIENTID', id).replace('SERIALNUMBER', device.serialNumber);
         return $http.delete(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -267,7 +255,7 @@ angular.module('hillromvestApp')
       },
 
       getProtocol: function(id) {
-        var url = admin.patient.baseURL + id + '/protocol';
+        var url = URL.addEditProtocol.replace('PATIENTID', id);
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -276,7 +264,7 @@ angular.module('hillromvestApp')
       },
 
       addProtocol: function(id, data) {
-        var url = admin.patient.baseURL + id + '/protocol';
+        var url = URL.addEditProtocol.replace('PATIENTID', id);
         return $http.post(url, data, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -285,7 +273,7 @@ angular.module('hillromvestApp')
       },
 
       editProtocol: function(id, data) {
-        var url = admin.patient.baseURL + id + '/protocol';
+        var url = URL.addEditProtocol.replace('PATIENTID', id);
         return $http.put(url, data, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -294,7 +282,7 @@ angular.module('hillromvestApp')
       },
 
       deleteProtocol: function(id, protocolId) {
-        var url = admin.patient.baseURL + id + '/protocol/' + protocolId;
+        var url = URL.protocolById.replace('PATIENTID', id).replace('PROTOCOLID', protocolId);
         return $http.delete(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -302,7 +290,7 @@ angular.module('hillromvestApp')
         });
       },
       updateCaregiver: function(patientId, caregiverId, data) {
-        var url = admin.patient.baseURL + patientId + '/caregiver/' + caregiverId;
+        var url = URL.caregiverById.replace('PATIENTID', patientId).replace('CAREGIVERID', caregiverId);
         return $http.put(url, data, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -310,7 +298,7 @@ angular.module('hillromvestApp')
         });
       },
       getCaregiverById: function(patientId, caregiverId) {
-        var url = admin.patient.baseURL + patientId + '/caregiver/' + caregiverId;
+        var url = URL.caregiverById.replace('PATIENTID', patientId).replace('CAREGIVERID', caregiverId);
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -318,7 +306,7 @@ angular.module('hillromvestApp')
         });
       },
       getProtocolById: function(patientId, protocolId) {
-        var url = admin.patient.baseURL + patientId + '/protocol/' + protocolId;
+        var url = URL.protocolById.replace('', patientId).replace('PROTOCOLID', protocolId);
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -326,14 +314,14 @@ angular.module('hillromvestApp')
         });
       },
       getTherapyDataAsCSV: function(patientId, startDate, endDate) {
-        var url = admin.hillRomUser.users + "/" + patientId + "/exportTherapyDataCSV?from=" + startDate + "&to=" + endDate;
+         var url = URL.therapyDataAsCSV.replace('PATIENTID', patientId).replace('STARTDATE', startDate).replace('ENDDATE', endDate);
         return $http.get(url, {
           headers: headerService.getHeader()
         });
       },
 
       getDeviceDataAsCSV: function(patientId, startDateTimestamp, endDateTimestamp){
-        var url = admin.hillRomUser.users+ "/" +patientId +"/exportVestDeviceDataCSV?from="+ startDateTimestamp+"&to="+endDateTimestamp;
+        var url = URL.deviceDataAsCSV.replace('PATIENTID', patientId).replace('STARTDATE', startDateTimestamp).replace('ENDDATE', endDateTimestamp);
         return $http.get(url, {
           headers: headerService.getHeader()
         });

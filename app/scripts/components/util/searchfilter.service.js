@@ -93,4 +93,23 @@ angular.module('hillromvestApp')
           return filterString;
         }
 
+        /*Method to Link (associate) */
+        this.getMatchingUser = function($viewValue, list, active){
+          var userList = [];
+          if(active){
+            for (var i=0; i< list.length; i++) {
+              if ((list[i].firstName.toLowerCase().indexOf($viewValue.toLowerCase()) != -1 || list[i].lastName.toLowerCase().indexOf($viewValue.toLowerCase()) != -1 ||(list[i].lastName.toLowerCase()+' '+list[i].firstName.toLowerCase()).indexOf($viewValue.toLowerCase()) != -1 ) && !list[i].deleted) {
+                userList.push(list[i]);
+              }
+            }
+          }else{
+            for (var i=0; i< list.length; i++) {
+              if (list[i].firstName.toLowerCase().indexOf($viewValue.toLowerCase()) != -1 || list[i].lastName.toLowerCase().indexOf($viewValue.toLowerCase()) != -1 ||(list[i].lastName.toLowerCase()+' '+list[i].firstName.toLowerCase()).indexOf($viewValue.toLowerCase()) != -1 ) {
+                userList.push(list[i]);
+              }
+            }
+          }
+          return userList;
+        }
+
     }]);

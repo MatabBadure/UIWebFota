@@ -56,11 +56,11 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-md-16">
+	<div class="col-md-16 padding0">
 		<div class="bar_graph_header">
-			<div class="col-md-5 col-sm-9 left_header_barchart">
+			<div class="col-md-5 col-sm-9 left_header_barchart padding0">
 				<div class="row">
-					<ul class="nav nav-pills">
+					<ul class="nav nav-pills cumulative_mob_chart">
 						<li><a ng-class="{active: selectedGraph === 'CUMULATIVE'}" href="" ng-click="showCumulativeGraph()" translate="doctor.dashboard.cumulativeStatistics"></a></li>
 						<li><a href="" ng-class="{active: selectedGraph === 'TREATMENT'}" ng-click="showTreatmentGraph()" translate="doctor.dashboard.treatmentStatistics"></a></li>
 					</ul>
@@ -84,7 +84,7 @@
 	</div> 
 	<div class="col-md-16" class="all_graph_wrapper" ng-class="{treatmentGraphTL: treatmentGraph}">
 		<div class="row hcp_graph_container">
-			<div ng-if="cumulativeGraph" id="cumulativeGraph" class="complianceGraph col-md-16">
+			<div ng-show="cumulativeGraph" id="cumulativeGraph" class="complianceGraph col-md-16">
 				<div class="col-md-16">
 					<div class="pull-right wrapper_custom_check custom-check-hcp-clinicadmin">
 						<form action="#" >
@@ -109,7 +109,7 @@
 				</div>
 				<svg> </svg>
 			</div>
-			<div ng-if="treatmentGraph" id="treatmentGraph" class="complianceGraph col-md-16">
+			<div ng-show="treatmentGraph" id="treatmentGraph" class="complianceGraph col-md-16">
 				<div class="pull-right wrapper_custom_check">
 					<form action="#" ng-if="showTreatmentLegends">
 						<div class="custom_check_container">
@@ -122,7 +122,7 @@
 						</div>
 					</form>
 					</div>
-					<svg> </svg>
+				<svg> </svg>
 			</div>
 		</div>
 	</div>

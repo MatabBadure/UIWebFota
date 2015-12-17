@@ -7,7 +7,8 @@ angular.module('hillromvestApp')
 
     var chart;
     var hiddenFrame, htmlDocument;    
-    var g_pdfMetaData={};       
+    var g_pdfMetaData={};   
+    $scope.isGraphLoaded = false;    
     $scope.addCanvasToDOM = function (){ 
       $scope.removeGraph();
       $scope.isGraphDownloadable = false;               
@@ -79,7 +80,7 @@ angular.module('hillromvestApp')
         $scope.initPatientDeviceProtocol();
       }else if(currentRoute === 'patientdashboardClinicHCP'){
         $scope.initPatientClinicHCPs();
-      } else if(currentRoute === 'patientOverview' || currentRoute === 'hcppatientOverview' || currentRoute === 'clinicadminpatientOverview' || currentRoute === 'patientOverviewRcadmin') {
+      } else if(currentRoute === 'patientOverview' || currentRoute === 'hcppatientOverview' || currentRoute === 'clinicadminpatientOverview' || currentRoute === 'patientOverviewRcadmin' || currentRoute === 'associatepatientOverview') {
         $scope.getAssociatedClinics($stateParams.patientId);
         $scope.getPatientDevices($stateParams.patientId);
         $scope.patientId = parseInt($stateParams.patientId);
@@ -402,7 +403,9 @@ angular.module('hillromvestApp')
         $state.go('hcp'+status, {'patientId': $stateParams.patientId});
       }else if($scope.role === loginConstants.role.acctservices){
         $state.go(status+loginConstants.role.Rcadmin, {'patientId': $stateParams.patientId});
-      }else{
+      }else if($scope.role === loginConstants.role.associates){
+        $state.go('associate' + status, {'patientId': $stateParams.patientId});
+      }else {
         $state.go(status, {'patientId': $stateParams.patientId});
       }
     };
@@ -945,25 +948,34 @@ angular.module('hillromvestApp')
            $scope.yAxisRangeForHMRBar.max = 0;
            $scope.plotNoDataAvailable();
          } else {
-          $scope.noDataAvailable = false;
-          $scope.completeGraphData = graphUtil.convertIntoServerTimeZone($scope.completeGraphData,patientDashboard.hmrDayGraph);
-          $scope.completeGraphData = graphUtil.formatDayWiseDate($scope.completeGraphData.actual);
-          $scope.yAxisRangeForHMRBar = graphUtil.getYaxisRangeBarGraph($scope.completeGraphData);
-          $scope.hmrBarGraphData = graphUtil.convertToHMRBarGraph($scope.completeGraphData,patientDashboard.HMRBarGraphColor,$scope.yAxisRangeForHMRBar.unit);
-          $scope.drawHMRBarGraph(graphId);
-          var barCount= d3.select(graphId).selectAll('.nv-group .nv-bar')[0].length;
-          var count = 5;
-          $scope.waitFunction = function waitHandler() {
-             barCount = d3.select(graphId).selectAll('.nv-group .nv-bar')[0].length;
-            if(barCount > 0 || count === 0 ) {
-              $scope.customizationForBarGraph(graphId, isDrawCompliance, wrapperDiv, graphVisibility);
-              return false;
-            } else {
-              count --;
+          var allMissedTherapy = ($scope.completeGraphData.actual.length === 1 && $scope.completeGraphData.actual[0].missedTherapy) ? true: false;
+          if(!allMissedTherapy){
+            $scope.noDataAvailable = false;
+            $scope.completeGraphData = graphUtil.convertIntoServerTimeZone($scope.completeGraphData,patientDashboard.hmrDayGraph);
+            $scope.completeGraphData = graphUtil.formatDayWiseDate($scope.completeGraphData.actual);
+            $scope.yAxisRangeForHMRBar = graphUtil.getYaxisRangeBarGraph($scope.completeGraphData);
+            $scope.hmrBarGraphData = graphUtil.convertToHMRBarGraph($scope.completeGraphData,patientDashboard.HMRBarGraphColor,$scope.yAxisRangeForHMRBar.unit);
+            $scope.drawHMRBarGraph();
+            var barCount= d3.select('#hmrBarGraph svg').selectAll('.nv-group .nv-bar')[0].length;
+            var count = 5;
+            $scope.waitFunction = function waitHandler() {
+               barCount = d3.select('#hmrBarGraph svg').selectAll('.nv-group .nv-bar')[0].length;
+              if(barCount > 0 || count === 0 ) {
+                $scope.customizationForBarGraph();
+                return false;
+              } else {
+                count --;
+              }
+              $timeout(waitHandler, 1000);              
             }
-            $timeout(waitHandler, 1000);
+            $scope.waitFunction();
+          }else{
+            $scope.hmrBarGraphData = [];
+            $scope.yAxisRangeForHMRBar = {};
+            $scope.yAxisRangeForHMRBar.min = 0;
+            $scope.yAxisRangeForHMRBar.max = 0;
+            $scope.plotNoDataAvailable();
           }
-          $scope.waitFunction();
           //
          }
       }).catch(function(response) {
@@ -2191,8 +2203,8 @@ angular.module('hillromvestApp')
       $("#graph-loading-modal").hide();
     }
 
-    $scope.downloadRawDataAsCsv = function(){
-      patientService.getDeviceDataAsCSV($scope.patientId, $scope.fromTimeStamp, $scope.toTimeStamp).then(function(response){
+    $scope.downloadRawDataAsCsv = function(){      
+      patientService.getDeviceDataAsCSV($scope.patientId, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-')).then(function(response){
          graphService.downloadAsCSVFile(response.data, 'VestDeviceReport.csv', 'vestDevice');
       });
     };

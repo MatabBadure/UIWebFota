@@ -325,7 +325,13 @@ angular.module('hillromvestApp')
           }
           
         }
+    },
+    getDateFromYYYYMMDD: function(date, dateSeperator){
+        if(date && date.indexOf("-") > -1){
+          var dateTime = date.split("-");          
+          return dateTime[1] + dateSeperator + dateTime[2] + dateSeperator + dateTime[0];
+        }        
     }
-
+    
     };
   }]);

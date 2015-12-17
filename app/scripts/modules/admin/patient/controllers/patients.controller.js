@@ -10,8 +10,8 @@ angular.module('hillromvestApp')
     return val;
   };
 })
-.controller('patientsController',['$scope', '$state', '$stateParams', 'patientService', 'dateService', 'notyService', 'UserService', 'DoctorService', 'clinicService', '$q', 'StorageService', 'loginConstants', 'commonsUserService',
-  function($scope, $state, $stateParams, patientService, dateService, notyService, UserService, DoctorService, clinicService, $q, StorageService, loginConstants, commonsUserService) {
+.controller('patientsController',['$scope', '$state', '$stateParams', 'patientService', 'dateService', 'notyService', 'UserService', 'DoctorService', 'clinicService', '$q', 'StorageService', 'loginConstants', 'commonsUserService', 'searchFilterService',
+  function($scope, $state, $stateParams, patientService, dateService, notyService, UserService, DoctorService, clinicService, $q, StorageService, loginConstants, commonsUserService, searchFilterService) {
     var isFormLoaded = false;
     $scope.patient = {};
     $scope.patientTab = "";
@@ -39,6 +39,8 @@ angular.module('hillromvestApp')
         $state.go(status, {'patientId': $stateParams.patientId});
       }else if($scope.patientStatus.role === loginConstants.role.acctservices){
         $state.go(status+loginConstants.role.Rcadmin, {'patientId': $stateParams.patientId});
+      }else if($scope.patientStatus.role === loginConstants.role.associates){
+        $state.go('associate'+ status, {'patientId': $stateParams.patientId});
       }
     };
 
@@ -149,7 +151,7 @@ angular.module('hillromvestApp')
       $scope.patientTab = currentRoute;
       if(currentRoute === 'patientOverview' || currentRoute === 'patientOverviewRcadmin'){
         $scope.initPatientOverview();
-      }else if(currentRoute === 'patientDemographic' || currentRoute === 'patientDemographicRcadmin' ){
+      }else if(currentRoute === 'patientDemographic' || currentRoute === 'patientDemographicRcadmin' || currentRoute === 'associatepatientDemographic'){
         $scope.initpatientDemographic();
       }else if (currentRoute === 'patientEdit') {
         $scope.getPatiendDetails($stateParams.patientId, $scope.setEditMode);
@@ -157,11 +159,11 @@ angular.module('hillromvestApp')
         $scope.createPatient();
       }else if($state.current.name === 'patientEditClinics'){
         $scope.initPatientClinics($stateParams.patientId);
-      }else if(currentRoute === 'patientClinics' || currentRoute === 'patientClinicsRcadmin'){
+      }else if(currentRoute === 'patientClinics' || currentRoute === 'patientClinicsRcadmin' || currentRoute === 'associatepatientClinics'){
         $scope.initPatientClinicsInfo($stateParams.patientId);
-      }else if(currentRoute === 'patientCraegiver' || currentRoute === 'patientCraegiverRcadmin' ){
+      }else if(currentRoute === 'patientCraegiver' || currentRoute === 'patientCraegiverRcadmin' || currentRoute === 'associatepatientCraegiver' ){
         $scope.initpatientCraegiver($stateParams.patientId);
-      } else if($state.current.name === 'patientProtocol' || $state.current.name === 'patientProtocolRcadmin'){
+      } else if($state.current.name === 'patientProtocol' || $state.current.name === 'patientProtocolRcadmin' || $state.current.name === 'associatepatientProtocol'){
         $scope.initProtocolDevice($stateParams.patientId);
       }else if(currentRoute === 'patientCraegiverAdd' || currentRoute === 'patientCraegiverAddRcadmin'){
         $scope.initpatientCraegiverAdd($stateParams.patientId);
@@ -240,7 +242,7 @@ angular.module('hillromvestApp')
         if(!clinic.hillromId){
           clinic.hillromId = "";
         }else{
-          clinic.hillromId = clinic.hillromId + "&nbsp;&nbsp;";
+          clinic.hillromId = clinic.hillromId + ' &nbsp; ';
         }
 
         angular.forEach($scope.associatedClinics, function(associatedClinic, associatedClinicKey){
@@ -266,6 +268,7 @@ angular.module('hillromvestApp')
       patientService.disassociateClinicsFromPatient($stateParams.patientId, data).then(function(response) {
         $scope.associatedClinics = response.data.clinics;
         $scope.getAvailableAndAssociatedClinics($stateParams.patientId);
+        $scope.getAvailableAndAssociatedHCPs($stateParams.patientId);
         notyService.showMessage(response.data.message, 'success');
       }).catch(function(response) {
         notyService.showError(response);
@@ -319,14 +322,23 @@ angular.module('hillromvestApp')
       }
     };
 
-    $scope.selectClinicForPatient = function(clinic, index){
-      var data = [{"id": clinic.id, "mrnId": null, "notes": null}]
-      $scope.searchItem = "";
-      $scope.searchClinicText = false;
+    $scope.showAssociateClinicModal = function(clinic){
+      $scope.selectedClinic = clinic;
+      $scope.associatedClinicModal = true;
+    };
+
+    $scope.selectClinicForPatient = function(){
+      var data = [{"id": $scope.selectedClinic.id, "mrnId": null, "notes": null}];
+      $scope.clinic.name = "";
+      $scope.associatedClinicModal = false;
       patientService.associateClinicToPatient($stateParams.patientId, data).then(function(response) {
-        $scope.getAvailableAndAssociatedClinics($stateParams.patientId);
+        $scope.searchClinicText = false;
         $scope.associatedClinics = response.data.clinics;
-      }).catch(function(response) {});
+        $scope.getAvailableAndAssociatedClinics($stateParams.patientId);
+        $scope.getAvailableAndAssociatedHCPs($stateParams.patientId);
+      }).catch(function(response) {
+        notyService.showError(response);
+      });
     };
 
     $scope.initPatientClinicsInfo = function(patientId){
@@ -351,11 +363,17 @@ angular.module('hillromvestApp')
       });
     };
 
-    $scope.selectHcpForPatient = function(hcp){
-      var data = [{'id': hcp.id}];
+    $scope.showAssociateHcpModal = function(hcp){
+      $scope.selectedHCP = hcp;
+      $scope.associatedHCPModal = true;
+    };
+
+    $scope.selectHcpForPatient = function(){
+      $scope.associatedHCPModal = false;
+      var data = [{'id': $scope.selectedHCP.id}];
       $scope.searchHcp = "";
-      $scope.searchHCPText = false;
       patientService.associateHCPToPatient(data, $stateParams.patientId).then(function(response){
+        $scope.searchHCPText = false;
         $scope.getAvailableAndAssociatedHCPs($stateParams.patientId);
         notyService.showMessage(response.data.message, 'success');
       });
@@ -840,6 +858,10 @@ angular.module('hillromvestApp')
           }
         }
       });
+    };
+
+    $scope.getHCPsToLinkToPatient = function($viewValue){
+      return searchFilterService.getMatchingUser($viewValue, $scope.hcps, true);
     };
 
     $scope.openPatientDeactivateModal = function(patient){

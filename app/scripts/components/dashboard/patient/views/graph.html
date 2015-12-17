@@ -1,5 +1,5 @@
 <div class="container admin-user">
-	<div class="col-md-16 margin-top reset-padding">
+	<div class="col-md-16 margin-top reset-padding mob_no_margin">
 		<div class="user-gen-details">
 			<span class="user-gen-details--name">{{slectedPatient.firstName}} {{slectedPatient.lastName}}</span>
 			<span class="user-gen-details--hr-id">{{slectedPatient.hillromId}}</span>
@@ -7,9 +7,9 @@
 	</div>
 </div>
 		<div class="container patient_wrapper">
-			<div class="col-md-16">
+			<div class="col-md-16 padding_0">
 				<div class="row">
-					<div class="col-md-16 col-sm-16">
+					<div class="col-md-16 col-sm-16 padding_0">
 						<div class="stats_chart_section">
 							<div class="stats_header"><h4 translate="graph.statistics"></h4></div>
 							<div class="stats_chart_container">
@@ -102,9 +102,9 @@
 					</div>					
 				</div>
 			</div>
-			<div class="col-md-16"> <!-- div for hmr/compliance/year/month/day -->
+			<div class="col-md-16 padding0" ng-class="{'pointer-no-event': !isGraphLoaded, 'pointer-fill-event': isGraphLoaded}">
 				<div class="bar_graph_header">
-					<div class="col-md-5 col-sm-7 left_header_barchart">
+					<div class="col-md-5 col-sm-7 left_header_barchart padding0">
 						<div class="row">
 							<ul class="nav nav-pills">
 							<li><a ng-class="{active: selectedGraph === 'HMR'}" href="" ng-click="showHmrGraph()" translate="graph.hmr-data"></a></li>
@@ -130,8 +130,8 @@
 				</div>
 			</div>
 
-	
-		<div class="col-md-16" class="all_graph_wrapper">
+		<loading loaded="isGraphLoaded"></loading>
+		<div class="col-md-16" class="all_graph_wrapper" >		
 			<div class="graph_nodata" ng-show="noDataAvailable">
 					<span class="noData_text"> No Data Available!</span>
 			</div>
@@ -160,18 +160,18 @@
 				</div>
 			</div>
 			<div ng-if="complianceGraph" id="complianceGraphWrapper">
-				<div class="col-md-16"> <!-- div for custom labels ng-class="{'pointer-no-event': , 'pointer-fill-event': }"-->
+				<div class="col-md-16"> 
 					<div class="pull-right wrapper_custom_check">
 						<form action="#" ng-if="isComplianceExist">
-							<div class="custom_check_container" ng-click="pressureIsDisabled && isLegendEnabled('pressureIsDisabled');">
+							<div class="custom_check_container" ng-class="{'pointer-no-event': !isGraphLoaded, 'pointer-fill-event': isGraphLoaded}" ng-click="pressureIsDisabled && isLegendEnabled('pressureIsDisabled');">
 								<input id="pressure" class="check" type="checkbox" name="pressure" ng-disabled="pressureIsDisabled" ng-model="compliance.pressure" ng-change="reCreateComplianceGraph();$event.stopPropagation();">
 			  		 			<label class="check_label pressure_legend" for="pressure" translate="graph.pressure" ></label>
 							</div>
-				  		 	<div class="custom_check_container" ng-click="frequencyIsDisabled && isLegendEnabled('frequencyIsDisabled');">
+				  		 	<div class="custom_check_container" ng-class="{'pointer-no-event': !isGraphLoaded, 'pointer-fill-event': isGraphLoaded}" ng-click="frequencyIsDisabled && isLegendEnabled('frequencyIsDisabled');">
 				  		 		<input id="frequency" class="check" type="checkbox" name="frequency" ng-disabled="frequencyIsDisabled" ng-model="compliance.frequency" ng-change="reCreateComplianceGraph();$event.stopPropagation();">
 				  		 		<label class="check_label frequency_legend" for="frequency" translate="graph.frequency" ></label>
 				  		 	</div>
-				  		 	<div class="custom_check_container" ng-click="durationIsDisabled && isLegendEnabled('durationIsDisabled');">
+				  		 	<div class="custom_check_container" ng-class="{'pointer-no-event': !isGraphLoaded, 'pointer-fill-event': isGraphLoaded}" ng-click="durationIsDisabled && isLegendEnabled('durationIsDisabled');">
 				  		 		<input id="duration" class="check" type="checkbox" name="duration" ng-disabled="durationIsDisabled" ng-model="compliance.duration" ng-change="reCreateComplianceGraph();$event.stopPropagation();">
 				  		 		<label class="check_label duration_legend" for="duration" translate="graph.duration" ></label>
 				  		 	</div>
@@ -198,11 +198,8 @@
 	<!-- Note section HTML -->
 	<div class="col-md-16">
 		<div class="btn_group patient_dashdoard_btns" ng-class="{ 'btn_group patient_dashdoard_btns_compliance': complianceGraph, 'btn_group patient_dashdoard_btns': !complianceGraph }">
-			<div dropdown class="pull-right">
-				<!-- <button id="single-button" type="button" class="hillrom-btn btn-submit float-right" dropdown-toggle ng-disabled="disabled" translate="graph.download" >
-					<span class="caret"></span>
-				</button> -->
-				<button id="single-button" type="button" ng-class="{ 'hillrom-btn btn-submit float-right': (!noDataAvailable && isGraphDownloadable) , '': (!isGraphDownloadable || noDataAvailable) }"class="" dropdown-toggle ng-disabled="disabled" translate="graph.download" >
+			<div dropdown class="pull-right left">
+				<button id="single-button" type="button" ng-class="{ 'hillrom-btn btn-submit margin0 float-right': (!noDataAvailable && isGraphLoaded) , '': (!isGraphLoaded || noDataAvailable) }" dropdown-toggle ng-disabled="disabled" translate="graph.download" >
 					<span class="caret"></span>
 				</button>
 				
@@ -219,7 +216,7 @@
 				</ul>
 
 			</div>
-			 <button class="hillrom-btn btn-submit float-right" ng-click="showAllNotes();" translate="graph.note"></button>
+			 <button class="hillrom-btn btn-submit margin0 float-right" ng-click="showAllNotes();" translate="graph.note"></button>
 
 
 		</div>
@@ -227,7 +224,7 @@
 	<div class="col-md-16 hide_content" id="add_note_container">
 		<div class="add_note_container">
 			<div class="note_header">
-				<div class="col-md-14 col-sm-12 note_header_left">
+				<div class="col-md-14 col-sm-12 note_header_left pull-left-mob">
 					<span class="note" translate="graph.note"></span>
 					<span class="can_do" translate="graph.can-do" ng-show="role === 'PATIENT'"></span>
 				</div>
