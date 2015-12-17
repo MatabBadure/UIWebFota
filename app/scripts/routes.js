@@ -3481,7 +3481,7 @@ angular.module('hillromvestApp')
                 },
                 views: {
                     'content@': {
-                        templateUrl: 'scripts/modules/admin/patient/directives/patient-info/overview/patient-details.html',
+                        templateUrl: 'scripts/modules/associate/patient/views/patient-info/overview/patient-overview.html',
                         controller: 'graphController'
                     }
                 },
