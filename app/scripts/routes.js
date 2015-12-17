@@ -3425,7 +3425,7 @@ angular.module('hillromvestApp')
                 },
                 views: {
                     'content@': {
-                        templateUrl: 'scripts/modules/admin/profile/profile-tabs/my-profile.html',
+                        templateUrl: 'scripts/modules/associate/profile/profile-tabs/my-profile.html',
                         controller: 'adminProfileController'
                     }
                 },
