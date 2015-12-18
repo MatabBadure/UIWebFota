@@ -3455,7 +3455,7 @@ angular.module('hillromvestApp')
                 },
                 views: {
                     'content@': {
-                        templateUrl: 'scripts/modules/admin/profile/profile-tabs/update-password.html',
+                        templateUrl: 'scripts/modules/associate/profile/profile-tabs/update-password.html',
                         controller: 'adminProfileController'
                     }
                 },
@@ -3603,6 +3603,31 @@ angular.module('hillromvestApp')
                             return Auth.authorize(false);
                         }
                     ]
+                }
+            })
+            .state('editAssociateProfile', {
+                parent: 'associateProfile',
+                url: '/update',
+                data: {
+                    roles: ['ASSOCIATES'],
+                    pageTitle: 'patient.title'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/associate/profile/profile-tabs/edit-my-profile.html',
+                        controller: 'adminProfileController'
+                    }
+                },
+                resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('AdminProfileModule');
+                    }],
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('profile');
+                        return $translate.refresh();
+                    }]
                 }
             });
 }]);
