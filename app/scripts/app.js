@@ -15,7 +15,6 @@ angular.module('hillromvestApp',
    'ui.mask',
    'validation.match',
    'ui.bootstrap',
-   'ngActivityIndicator',
    'oc.lazyLoad'
 
    ])
@@ -80,9 +79,7 @@ angular.module('hillromvestApp',
       }
     };
   }])
-  .config(['$activityIndicatorProvider', function ($activityIndicatorProvider) {
-        $activityIndicatorProvider.setActivityIndicatorStyle('SpinnerDark');
-    }])
+
   .config(['$stateProvider', '$urlRouterProvider', '$httpProvider', '$locationProvider', '$translateProvider', 'tmhDynamicLocaleProvider', 'httpRequestInterceptorCacheBusterProvider','$ocLazyLoadProvider', function($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider, $translateProvider, tmhDynamicLocaleProvider, httpRequestInterceptorCacheBusterProvider, $ocLazyLoadProvider) {
 
     //Cache everything except rest api requests
