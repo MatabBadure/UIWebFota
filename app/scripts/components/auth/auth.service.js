@@ -19,6 +19,8 @@ angular.module('hillromvestApp')
                         $state.go("caregiverDashboard");
                     }else if(Principal.isInRole('ACCT_SERVICES')){
                         $state.go("rcadminPatients");
+                    }else if(Principal.isInRole('ASSOCIATES')){
+                        $state.go("associatePatientUser");
                     }
                 }else{
                     $state.go("postActivateLogin");
