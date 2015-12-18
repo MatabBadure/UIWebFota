@@ -9892,6 +9892,10 @@ ul.dropdown-menu {
     width: 100%;
   }
 
+  .border-tp {
+    border-top: 1px solid #cccccc;
+  }
+
   .patient-user__navbar .patient-dashboard {
     width: auto;
     display: inline-block;
