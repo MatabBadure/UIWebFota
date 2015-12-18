@@ -9766,6 +9766,18 @@ ul.dropdown-menu {
     float: left;
   }
 
+  .protocol_heading_color span {
+    color: #7ca3dc !important;
+  }
+
+  .dashboard__manage-view--header {
+    border: none;
+    padding: 0;
+  }
+  .dashboard__manage-view--header .header--type {
+    font-size: 14px;
+  }
+
   .hcp_ellipses {
     text-overflow: ellipsis;
     width: 77px;
