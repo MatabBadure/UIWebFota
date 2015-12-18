@@ -40,8 +40,11 @@
     </div>
   </div>
 
-  <div class="col-md-16 clinic-list " ng-repeat="aClinic in associatedClinics track by $index" ng-if="associatedClinics.length > 0" readonly="true" ng-class="{'default_active': !aClinic.deleted, 'inactive': aClinic.deleted}">
-    <span  ng-click="aClinic.deleted || selectClinic(aClinic)">
+  <!-- <div class="col-md-16 clinic-list " ng-repeat="aClinic in associatedClinics track by $index" ng-if="associatedClinics.length > 0" readonly="true" ng-class="{'default_active': !aClinic.deleted, 'inactive': aClinic.deleted}"> -->
+  <div class="col-md-16 clinic-list " ng-repeat="aClinic in associatedClinics track by $index" ng-if="associatedClinics.length > 0" readonly="true" >
+    <!-- Non clickable since Clinic model is yet to implement
+    <span  ng-click="aClinic.deleted || selectClinic(aClinic)"> -->
+    <span>
     <div class="col-md-2 clinic-list__detail">
       <span class="clinic-list__detail--name" ng-bind="aClinic.name"></span>
     </div>
@@ -106,8 +109,11 @@
     </div>
   </div>
 
-  <div class="col-md-16 clinic-list" ng-repeat="hcp in associatedHCPs track by $index" ng-if="associatedHCPs.length > 0" readonly="true" ng-class="{'default_active': !hcp.deleted, 'inactive': hcp.deleted}">
-   <span ng-click="hcp.deleted || selectDoctor(hcp)">
+  <!-- <div class="col-md-16 clinic-list" ng-repeat="hcp in associatedHCPs track by $index" ng-if="associatedHCPs.length > 0" readonly="true" ng-class="{'default_active': !hcp.deleted, 'inactive': hcp.deleted}"> -->
+  <div class="col-md-16 clinic-list" ng-repeat="hcp in associatedHCPs track by $index" ng-if="associatedHCPs.length > 0" readonly="true">
+   <!-- Not clickable since the HCP model is yet to impelment 
+    <span ng-click="hcp.deleted || selectDoctor(hcp)"> -->
+   <span>
     <div class="col-md-2 clinic-list__detail">
       <span class="clinic-list__detail--name">{{hcp.lastName}}, {{hcp.firstName}}</span>
     </div>
