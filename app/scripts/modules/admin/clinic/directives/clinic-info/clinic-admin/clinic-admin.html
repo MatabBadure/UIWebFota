@@ -61,7 +61,7 @@
 		  <div class="select-one">
 		    <input class="cursor-pointer" type="radio" id="existAdminText" name="addAdmin" ng-model="addAdmin" value="existAdmin"/>
 		    <label class="cursor-pointer" for="existAdminText" translate="clinic.option.add-exist-admin"></label>
-		    <input class="cursor-pointer" type="radio" id="newAdminText" name="addAdmin" ng-model="addAdmin" value="newAdmin"/>
+		    <input class="cursor-pointer" type="radio" id="newAdminText" name="addAdmin" ng-model="addAdmin" value="newAdmin" ng-change="resetClinicAdminForm()"/>
 		    <label class="cursor-pointer" for="newAdminText" translate="clinic.option.add-new-admin"></label>
 		  </div>
 		</fieldset>

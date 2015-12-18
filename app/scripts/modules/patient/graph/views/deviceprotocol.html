@@ -3,8 +3,8 @@
     <span class="patient-protocol--title" translate="patient.protocol-title"></span>
   </div>
 
-  <div class="dashboard dashboard--content">
-    <div class="dashboard__manage-view margin-top">
+  <div class="dashboard dashboard--content pull-left-mob">
+    <div class="dashboard__manage-view margin-top-18">
       <div class="dashboard__manage-view--header">
           <div class="col-md-3 col-sm-3 header--type">
             <span translate="patient.protocol-caption.type"></span>
@@ -26,8 +26,8 @@
     </div>
   </div>
 
-  <div class="col-md-16 col-sm-16 protocol-list" ng-repeat="protocol in protocols">
-    <div class="col-md-3 col-sm-3 protocol-list__type">
+  <div class="col-md-16 col-sm-16 protocol-list margin-top-18" ng-repeat="protocol in protocols">
+    <div class="col-md-3 col-sm-3 protocol-list__type protocol_heading_color">
       <span> {{::protocol.type}} {{::protocol.treatmentLabel}}</span>
     </div>
     <div class="col-md-3 col-sm-3 protocol-list__type">
