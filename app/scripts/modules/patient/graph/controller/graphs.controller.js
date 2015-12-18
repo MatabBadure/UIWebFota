@@ -736,11 +736,11 @@ angular.module('hillromvestApp')
         return chart;
       },function(){
           $timeout(function() { 
-            d3.selectAll('#complianceGraph svg').selectAll('.nv-single-point g.nv-point-paths path').attr('stroke', '#aaa');
-            d3.selectAll('#complianceGraph svg').selectAll('.nv-single-point g.nv-point-paths path').attr('stroke-opacity', '0');
-            d3.selectAll('#complianceGraph svg').selectAll('.nv-single-point g.nv-point-paths path').attr('fill', '#eee');
-            d3.selectAll('#complianceGraph svg').selectAll('.nv-single-point g.nv-point-paths path').attr('fill-opacity', '0');                          
-            if($('#complianceGraph').find('.nv-single-point').length > 0){
+            d3.selectAll('#complianceGraph svg').selectAll('g.nv-single-point g.nv-point-paths path').attr('stroke', '#aaa');
+            d3.selectAll('#complianceGraph svg').selectAll('g.nv-single-point g.nv-point-paths path').attr('stroke-opacity', '0');
+            d3.selectAll('#complianceGraph svg').selectAll('g.nv-single-point g.nv-point-paths path').attr('fill', '#eee');
+            d3.selectAll('#complianceGraph svg').selectAll('g.nv-single-point g.nv-point-paths path').attr('fill-opacity', '0');                          
+            if($('#complianceGraph').find('g.nv-single-point').length > 0){
               d3.selectAll('#complianceGraph svg').selectAll('g.nv-areaWrap path.nv-area.nv-area-0').attr("style", "stroke: #aaa; stroke-opacity: 0; fill: #eee; fill-opacity: 0;");
             }
             d3.selectAll('#complianceGraph svg').selectAll('.nvd3.nv-stackedarea path.nv-area').attr("fill-opacity", ".7");
@@ -1491,11 +1491,11 @@ angular.module('hillromvestApp')
       return chart;
     },function(){
         $timeout(function() {
-          d3.selectAll(graphId).selectAll('.nv-single-point g.nv-point-paths path').attr('stroke', '#aaa');
-          d3.selectAll(graphId).selectAll('.nv-single-point g.nv-point-paths path').attr('stroke-opacity', '0');
-          d3.selectAll(graphId).selectAll('.nv-single-point g.nv-point-paths path').attr('fill', '#eee');
-          d3.selectAll(graphId).selectAll('.nv-single-point g.nv-point-paths path').attr('fill-opacity', '0');           
-          if($(graphId).find('.nv-single-point').length > 0){
+          d3.selectAll(graphId).selectAll('g.nv-single-point g.nv-point-paths path').attr('stroke', '#aaa');
+          d3.selectAll(graphId).selectAll('g.nv-single-point g.nv-point-paths path').attr('stroke-opacity', '0');
+          d3.selectAll(graphId).selectAll('g.nv-single-point g.nv-point-paths path').attr('fill', '#eee');
+          d3.selectAll(graphId).selectAll('g.nv-single-point g.nv-point-paths path').attr('fill-opacity', '0');           
+          if($(graphId).find('g.nv-single-point').length > 0){
             d3.selectAll(graphId).selectAll('g.nv-areaWrap path.nv-area.nv-area-0').attr("style", "stroke: #aaa; stroke-opacity: 0; fill: #eee; fill-opacity: 0;");
           } 
           d3.selectAll(graphId).selectAll('.nvd3.nv-stackedarea path.nv-area').attr("fill-opacity", ".7");         
@@ -2192,7 +2192,7 @@ angular.module('hillromvestApp')
     }
 
     $scope.downloadAsPdf = function(){
-      if($scope.isGraphDownloadable && ($("#loading-bar .bar").length <= 0)){
+      if($scope.isGraphDownloadable){
         $scope.downloadPDFFile();
       } else {        
         $("#graph-loading-modal").show();
@@ -2404,8 +2404,7 @@ angular.module('hillromvestApp')
 
       //Patient Treatment Duration:; Frequency / Pressure: Hour Meter: 
       pdf.text(40,250, stringConstants.graphTitle);      
-      var imgY = 250;      
-      //if($("#hmrBarLineDiv").find("svg").length > 0){    
+      var imgY = 250;              
       if(hmrGraphId && $(hmrGraphId).find("svg").length > 0){  
         $(hmrGraphId).find('svg')
         .attr('version',1.1)
@@ -2413,16 +2412,16 @@ angular.module('hillromvestApp')
         .attr('height','350px')
         .attr('font-family', 'helvetica')
         .attr('font-size', '12px').attr('class', 'complianceGraph col-md-16')
-        .attr('xmlns','http://www.w3.org/2000/svg').attr('xmlns:xlink','http://www.w3.org/1999/xlink');                        
+        .attr('xmlns','http://www.w3.org/2000/svg');                       
         var canvas = document.getElementById('hmrBarLineCanvas');               
-        var ctx = canvas.getContext('2d');                  
-        canvg(canvas, $(hmrGraphId).find("svg").parent().html().trim());       
+        var ctx = canvas.getContext('2d');
+        var htmlString =  $(hmrGraphId).find("svg").parent().html().trim().replace(/xmlns=\"http:\/\/www\.w3\.org\/2000\/svg\"/, '');          
+        canvg(canvas, htmlString);       
         var img = $("#hmrBarLineCanvas")[0].toDataURL('image/png', 1.0);
         pdf.addImage(img, 'png', 10, (imgY),margins.width+100, 170);        
         imgY = imgY + 200;
       }
 
-      //if($("#complianceDiv").find("svg").length > 0){
       if(complianceGraphId && $(complianceGraphId).find("svg").length > 0){ 
         $(complianceGraphId).find('svg')
         .attr('version',1.1)
@@ -2430,17 +2429,16 @@ angular.module('hillromvestApp')
         .attr('height','350px')
         .attr('font-family', 'helvetica')
         .attr('font-size', '12px').attr('class', 'complianceGraph col-md-16')
-        .attr('xmlns','http://www.w3.org/2000/svg').attr('xmlns:xlink','http://www.w3.org/1999/xlink');                        
-        var canvas = document.getElementById('hmrBarLineCanvas');          
+        .attr('xmlns','http://www.w3.org/2000/svg');                                 
         var canvas = document.getElementById('complianceCanvas');               
-        var ctx = canvas.getContext('2d');          
-        canvg(canvas, $(complianceGraphId).find("svg").parent().html().trim());
+        var ctx = canvas.getContext('2d');  
+        var htmlString =  $(complianceGraphId).find("svg").parent().html().trim().replace(/xmlns=\"http:\/\/www\.w3\.org\/2000\/svg\"/, '');          
+        canvg(canvas, htmlString);
         var img = $("#complianceCanvas")[0].toDataURL('image/png', 1.0);
         pdf.addImage(img, 'png', 10, (imgY),margins.width+100, 170);
         imgY = imgY + 200;
       }
-
-      //if($("#compliance1Div").find("svg").length > 0){
+      
       if(compliance1GraphId && $(compliance1GraphId).find("svg").length > 0){  
         $(compliance1GraphId).find('svg')
         .attr('version',1.1)
@@ -2448,10 +2446,11 @@ angular.module('hillromvestApp')
         .attr('height','350px')
         .attr('font-family', 'helvetica')
         .attr('font-size', '12px').attr('class', 'complianceGraph col-md-16')
-        .attr('xmlns','http://www.w3.org/2000/svg').attr('xmlns:xlink','http://www.w3.org/1999/xlink');                 
+        .attr('xmlns','http://www.w3.org/2000/svg');                
         var canvas = document.getElementById('compliance1Canvas');               
-        var ctx = canvas.getContext('2d');                   
-        canvg(canvas, $(compliance1GraphId).find("svg").parent().html().trim());
+        var ctx = canvas.getContext('2d');
+        var htmlString =  $(compliance1GraphId).find("svg").parent().html().trim().replace(/xmlns=\"http:\/\/www\.w3\.org\/2000\/svg\"/, '');                   
+        canvg(canvas, htmlString);
         var img = $("#compliance1Canvas")[0].toDataURL('image/png', 1.0);
         pdf.addImage(img, 'png', 10, (imgY),margins.width+100, 170);
         imgY = imgY + 200;
@@ -2471,7 +2470,7 @@ angular.module('hillromvestApp')
       pdf.line(90, imgY+35, 350,imgY+35); //left, top, right, top
       //show loader till this gets executed.
       pdf.save('VisiView™.pdf');      
-      },1000);   
+      },500);   
       //pdf.save('VisiView™.pdf');                
     };
 
