@@ -58,10 +58,10 @@
   <div class="dashboard dashboard--content">
     <div class="dashboard__manage-view margin-top">
       <div class="dashboard__manage-view--header">
-          <div class="col-md-3 col-sm-3 header--type pull-left-mob width120">
+          <div class="col-md-3 col-sm-3 header--type col-xs-8">
             <span translate="patient.hcp-caption.hcp-name"></span>
           </div>
-          <div class="col-md-3 col-sm-3 header--type pull-right-mob">
+          <div class="col-md-3 col-sm-3 header--type col-xs-8">
             <span translate="patient.hcp-caption.credentials"></span>
           </div>
           <div class="col-md-3 col-sm-3 header--type none">
@@ -79,19 +79,19 @@
   </div>
 
   <div class="col-md-16 col-sm-16 clinic-list" ng-repeat="hcp in associatedHCPs track by $index" ng-if="associatedHCPs.length > 0">
-    <div class="col-md-3 col-sm-3 clinic-list__detail">
+    <div class="col-md-3 col-sm-3 clinic-list__detail col-xs-8">
       <span class="clinic-list__detail--name">{{hcp.lastName}}, {{hcp.firstName}}</span>
     </div>
-    <div class="col-md-3 col-sm-3 clinic-list__address">
+    <div class="col-md-3 col-sm-3 clinic-list__address col-xs-8">
       <span class="clinic-list__credentials">{{hcp.credentials}}</span>
     </div>
-    <div class="col-md-3 col-sm-3 clinic-list__phone">
+    <div class="col-md-3 col-sm-3 clinic-list__phone none">
       <span class="clinic-list__phone--number" ng-bind="hcp.primaryPhone"></span>
     </div>
-    <div class="col-md-3 col-sm-3 clinic-list__fax">
+    <div class="col-md-3 col-sm-3 clinic-list__fax none">
       <span class="clinic-list__fax--number" ng-bind="hcp.faxNumber"></span>
     </div>
-    <div class="col-md-3 col-sm-3 clinic-list__hr-id">
+    <div class="col-md-3 col-sm-3 clinic-list__hr-id none">
       <span class="clinic-list__fax--number" ng-bind="hcp.npiNumber"></span>
     </div>    
   </div>
