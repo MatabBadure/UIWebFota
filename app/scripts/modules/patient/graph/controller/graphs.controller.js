@@ -949,19 +949,19 @@ angular.module('hillromvestApp')
            $scope.plotNoDataAvailable();
          } else {
           var allMissedTherapy = ($scope.completeGraphData.actual.length === 1 && $scope.completeGraphData.actual[0].missedTherapy) ? true: false;
-          if(!allMissedTherapy){
+          if(!allMissedTherapy){            
             $scope.noDataAvailable = false;
             $scope.completeGraphData = graphUtil.convertIntoServerTimeZone($scope.completeGraphData,patientDashboard.hmrDayGraph);
             $scope.completeGraphData = graphUtil.formatDayWiseDate($scope.completeGraphData.actual);
             $scope.yAxisRangeForHMRBar = graphUtil.getYaxisRangeBarGraph($scope.completeGraphData);
             $scope.hmrBarGraphData = graphUtil.convertToHMRBarGraph($scope.completeGraphData,patientDashboard.HMRBarGraphColor,$scope.yAxisRangeForHMRBar.unit);
-            $scope.drawHMRBarGraph();
-            var barCount= d3.select('#hmrBarGraph svg').selectAll('.nv-group .nv-bar')[0].length;
+            $scope.drawHMRBarGraph(graphId);
+            var barCount= d3.select(graphId).selectAll('.nv-group .nv-bar')[0].length;
             var count = 5;
             $scope.waitFunction = function waitHandler() {
-               barCount = d3.select('#hmrBarGraph svg').selectAll('.nv-group .nv-bar')[0].length;
+               barCount = d3.select(graphId).selectAll('.nv-group .nv-bar')[0].length;
               if(barCount > 0 || count === 0 ) {
-                $scope.customizationForBarGraph();
+                $scope.customizationForBarGraph(graphId, isDrawCompliance, wrapperDiv, graphVisibility);
                 return false;
               } else {
                 count --;
@@ -986,7 +986,6 @@ angular.module('hillromvestApp')
 
     $scope.customizationForBarGraph = function(graphId, isDrawCompliance, wrapperDiv, graphVisibility) {
       var rect_width,  rect_height;
-      setTimeout(function(){
         rect_height = d3.select(graphId).select('.nv-barsWrap .nv-wrap rect').attr('height');
         rect_width = d3.select(graphId).select('.nv-barsWrap .nv-wrap rect').attr('width');
 
@@ -1022,10 +1021,10 @@ angular.module('hillromvestApp')
         $scope.isGraphReady();
         if(isDrawCompliance){
           $timeout(function() {
-            $scope.getHiddenComplianceForPDF(true, true, false, "hmrBarGraphCompliance", "hmrCompliance", "compliance", $scope.getHiddenComplianceForPDF, "hmrBarGraphCompliance1", "hmrCompliance1", "compliance1");           
+            $scope.getHiddenComplianceForPDF(true, false, true, "hmrBarGraphCompliance", "hmrCompliance", "compliance", $scope.getHiddenComplianceForPDF, "hmrBarGraphCompliance1", "hmrCompliance1", "compliance1");           
           }, 500);  
         }
-      },1500);
+      //},1500);
     };
 
     $scope.getComplianceGraphData = function(format) {
@@ -2195,7 +2194,7 @@ angular.module('hillromvestApp')
       if($scope.isGraphDownloadable){
         $scope.downloadPDFFile();
       } else {        
-        $("#graph-loading-modal").show();
+        //$("#graph-loading-modal").show();
       }  
     };
 
@@ -2301,10 +2300,16 @@ angular.module('hillromvestApp')
     $scope.downloadPDFFile = function (){ 
       setTimeout(function(){
       var hmrGraphId = null; var complianceGraphId = null; var compliance1GraphId = null;
+      var pdfPressure = ($scope.hiddencompliance.pressure) ? $scope.hiddencompliance.pressure : false; 
+      var pdfFrequency = ($scope.hiddencompliance.frequency) ? $scope.hiddencompliance.frequency : false;
+      var pdfDuration = ($scope.hiddencompliance.duration) ? $scope.hiddencompliance.duration : false;
+      console.log("hidden pressure : "+$scope.hiddencompliance.pressure+" hidden frequency : "+$scope.hiddencompliance.frequency+" hidden duration : "+$scope.hiddencompliance.duration);
+      console.log("pressure : "+$scope.compliance.pressure+" frequency : "+$scope.compliance.frequency+" duration : "+$scope.compliance.duration);
       if($scope.complianceGraph){
         hmrGraphId = "#complianceGraphHMR";
         complianceGraphId = "#complianceGraph";
         compliance1GraphId = "#complianceGraph1";
+        pdfPressure = $scope.compliance.pressure; pdfFrequency = $scope.compliance.frequency; pdfDuration = $scope.compliance.duration;
       }else if ($scope.hmrBarGraph){
         hmrGraphId = "#hmrBarGraph";
         complianceGraphId = "#hmrBarGraphCompliance";
@@ -2314,6 +2319,7 @@ angular.module('hillromvestApp')
         complianceGraphId = "#hmrLineGraphCompliance";
         compliance1GraphId = "#hmrLineGraphCompliance1";
       }
+      console.log("AFTER CALCULATION : pressure : "+$scope.compliance.pressure+" frequency : "+$scope.compliance.frequency+" duration : "+$scope.compliance.duration);
       var d = $('#duration').is(':checked')?"Duration":"", f = $('#frequency').is(':checked')?"Frequency":"", p=$('#pressure').is(':checked')?"Pressure":"";
       var a = [];if(p)a.push(p);if(f)a.push(f);if(d)a.push(d);
       stringConstants.graphTitle = ($scope.selectedGraph=='HMR')?"Hour Meeter:":'Patient Treatment '+a.join(' / ')+':';
@@ -2403,7 +2409,7 @@ angular.module('hillromvestApp')
       }
 
       //Patient Treatment Duration:; Frequency / Pressure: Hour Meter: 
-      pdf.text(40,250, stringConstants.graphTitle);      
+      pdf.text(40,250, "HMR");      
       var imgY = 250;              
       if(hmrGraphId && $(hmrGraphId).find("svg").length > 0){  
         $(hmrGraphId).find('svg')
@@ -2422,6 +2428,28 @@ angular.module('hillromvestApp')
         imgY = imgY + 200;
       }
 
+     /* if(pdfPressure){
+        pdf.setDrawColor(0);
+        pdf.setFillColor(255, 152, 41);
+        pdf.circle(50, imgY, 3, "F");
+        pdf.text(60,imgY, "Presure");  
+      }
+      if(pdfFrequency){
+        pdf.setDrawColor(0);
+        pdf.setFillColor(52, 151, 143);
+        pdf.circle(50, imgY, 3, "F");
+        pdf.text(60,imgY, "Frequency");  
+      }
+
+      if(pdfFrequency){
+        pdf.setDrawColor(0);
+        pdf.setFillColor(52, 151, 143);
+        pdf.circle(50, imgY, 3, "F");
+        pdf.text(60,imgY, "Duration");  
+      }*/
+            
+      //color for pressure // 52, 151, 143 : for frequency // 78, 149, 196 : for duration
+
       if(complianceGraphId && $(complianceGraphId).find("svg").length > 0){ 
         $(complianceGraphId).find('svg')
         .attr('version',1.1)
@@ -2438,6 +2466,10 @@ angular.module('hillromvestApp')
         pdf.addImage(img, 'png', 10, (imgY),margins.width+100, 170);
         imgY = imgY + 200;
       }
+
+      /*pdf.setDrawColor(0);
+      pdf.setFillColor(78, 149, 196);
+      pdf.circle(70, imgY, 3, "F");*/
       
       if(compliance1GraphId && $(compliance1GraphId).find("svg").length > 0){  
         $(compliance1GraphId).find('svg')
