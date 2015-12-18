@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('hillromvestApp')
-  .controller('adminProfileController',['$scope', '$state', '$location', 'notyService', 'UserService', 'Password', 'Auth', 'AuthServerProvider', 'StorageService', 'loginConstants',
-    function ($scope, $state, $location, notyService, UserService, Password, Auth, AuthServerProvider, StorageService, loginConstants) {
+  .controller('adminProfileController',['$scope', '$state', '$location', 'notyService', 'UserService', 'Password', 'Auth', 'AuthServerProvider', 'StorageService', 'loginConstants', '$rootScope',
+    function ($scope, $state, $location, notyService, UserService, Password, Auth, AuthServerProvider, StorageService, loginConstants, $rootScope) {
 
 
     $scope.isActive = function(tab) {
@@ -24,7 +24,7 @@ angular.module('hillromvestApp')
     };
 
     $scope.init = function(){
-      if($state.current.name === 'adminProfile' || $state.current.name === 'editAdminProfile' || $state.current.name === 'adminProfileRc' || $state.current.name === 'editAdminProfileRc'){
+      if($state.current.name === 'adminProfile' || $state.current.name === 'editAdminProfile' || $state.current.name === 'adminProfileRc' || $state.current.name === 'editAdminProfileRc' || $state.current.name === 'associateProfile' || $state.current.name === 'editAssociateProfile'){
         $scope.initProfile(StorageService.get('logged').userId);
       }
     };
@@ -32,7 +32,9 @@ angular.module('hillromvestApp')
     $scope.editMode = function(){
       if($scope.role === loginConstants.role.acctservices){
         $state.go('editAdminProfileRc');
-      }else{
+      }else if($scope.role === loginConstants.role.associates){
+        $state.go('editAssociateProfile');
+      }else {
         $state.go('editAdminProfile');
       }
     };
@@ -41,7 +43,7 @@ angular.module('hillromvestApp')
       if($scope.role === loginConstants.role.acctservices){
         $state.go(status+loginConstants.role.Rc);
       }else if($scope.role === loginConstants.role.associates){
-        $state.go('associateUpdatePassword');
+        $state.go(status);
       }else{
         $state.go(status);
       }
@@ -73,6 +75,8 @@ angular.module('hillromvestApp')
           notyService.showMessage(response.data.message, 'success');
           if($scope.role === loginConstants.role.acctservices){
             $state.go('adminProfileRc');
+          }else if($scope.role === loginConstants.role.associates){
+            $state.go('associateProfile');
           }else{
             $state.go('adminProfile');
           }
@@ -102,6 +106,7 @@ angular.module('hillromvestApp')
       };
       Password.updatePassword(StorageService.get('logged').userId, data).then(function(response){
         Auth.logout();
+        $rootScope.userRole = null;
         notyService.showMessage(response.data.message, 'success');
         $state.go('login');
       }).catch(function(response){
@@ -116,7 +121,9 @@ angular.module('hillromvestApp')
     $scope.cancel = function(){
       if($scope.role === loginConstants.role.acctservices){
         $state.go('adminProfileRc');
-      }else{
+      }else if($scope.role === loginConstants.role.associates){
+        $state.go('associateProfile');
+      }else {
         $state.go('adminProfile');
       }
     };
