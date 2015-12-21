@@ -51,7 +51,7 @@ angular.module('hillromvestApp')
 
     $scope.updateProfile = function(){
       $scope.submitted = true;
-      $scope.showUpdateModal = false;
+      $scope.updateModal = false;
       if($scope.form.$invalid){
         return false;
       }
@@ -134,6 +134,14 @@ angular.module('hillromvestApp')
         return false;
       }else {
         $scope.paasordUpdateModal = true;
+      }
+    };
+
+    $scope.showUpdateModal = function(){
+      if($scope.form.$invalid){
+        return false;
+      }else{
+        $scope.updateModal = true;
       }
     };
 
