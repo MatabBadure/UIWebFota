@@ -2070,7 +2070,7 @@ angular.module('hillromvestApp')
                 xTicksData.push($scope.graphData[0].values[totalDataPoints-1]);
               }
             } 
-
+           
             if($scope.graphData[0].values.length === 1){              
               chart.xAxis.showMaxMin(false).tickValues($scope.graphData[0].values.map( function(d){return d.x;} ) ).tickFormat(function(d) {
               return d3.time.format('%d-%b-%y')(new Date(d));});
@@ -2124,10 +2124,10 @@ angular.module('hillromvestApp')
           attr("r" , 2).
           attr("fill" , '#aeb5be');
 
-
-
-        d3.selectAll(graphId).selectAll(".nv-axis .tick text ").attr("style", "fill: #5d6a7d; font-size: 10px;text-anchor: middle;");
-        d3.selectAll(graphId).selectAll(".nv-axisMaxMin text ").attr("style", "fill: #5d6a7d;font-size: 10px;font-weight: normal;text-anchor: middle;");
+        d3.selectAll(graphId).selectAll(".nv-y.nv-axis .tick text ").attr("style", "fill: #5d6a7d; font-size: 10px;text-anchor: end;");
+        d3.selectAll(graphId).selectAll(".nv-y .nvd3 .nv-axisMaxMin text ").attr("style", "fill: #5d6a7d;font-size: 10px;font-weight: normal;text-anchor: end;");
+        d3.selectAll(graphId).selectAll(".nv-x.nv-axis .tick text ").attr("style", "fill: #5d6a7d; font-size: 10px;text-anchor: middle;");
+        d3.selectAll(graphId).selectAll(".nv-x .nvd3 .nv-axisMaxMin text ").attr("style", "fill: #5d6a7d;font-size: 10px;font-weight: normal;text-anchor: middle;");
         d3.selectAll(graphId).selectAll(".nv-axis .nv-axislabel").
         attr("y" , -40).attr("style", "font: 12px Arial; fill: #5d6a7d;");
         d3.selectAll (graphId).selectAll(".nvd3 .nv-groups path.nv-line").attr("style", "fill: none; stroke-width: 1.5px;");
@@ -2331,6 +2331,7 @@ angular.module('hillromvestApp')
       }};
 
       var pageHeight = pdf.internal.pageSize.height;
+      var pageWidth = pdf.internal.pageSize.width;
                           
       var margins = {
           top: 70,
@@ -2344,17 +2345,59 @@ angular.module('hillromvestApp')
       };
      
       var rDate = g_pdfMetaData.rGenDt, rTitle = g_pdfMetaData.rTitle, rTitle1=g_pdfMetaData.rTitle1;       
-      pdf.setFont("helvetica");        
-      pdf.setFontSize(16);
-      pdf.setTextColor(124,163,220);
-      pdf.text(margins.width-45, margins.titleTop,rTitle);
-      
-      pdf.setFontSize(8);
+      pdf.setFont("helvetica");
+      pdf.setFontType("bold");   
+      pdf.setFontSize(6);
       pdf.setTextColor(0,0,0);
-      pdf.text(margins.width-79,   margins.titleTop+10, rTitle1);
-      pdf.line(margins.left, margins.titleTop+13, margins.width+10, margins.titleTop+13);
-      pdf.text(margins.left,margins.top, g_pdfMetaData.rGenDtLbl + ': ' + g_pdfMetaData.rGenDt);      
-      pdf.text(margins.t2TabLeft, margins.top, g_pdfMetaData.rRngLble + g_pdfMetaData.rRngDt);
+      pdf.text(40,   margins.titleTop-15, dateService.getDateFromTimeStamp(new Date().getTime(), patientDashboard.dateFormat, "/"));
+
+      pdf.setFont("helvetica");   
+      pdf.setFontType("bold");
+      pdf.setFontSize(6);
+      pdf.setTextColor(0,0,0);
+      pdf.text(margins.width-280,   margins.titleTop-15, "Hillrom | Overview");
+
+      pdf.setFont("helvetica");  
+      pdf.setFontType("bold"); 
+      pdf.setFontSize(11);
+      pdf.setTextColor(124,163,220);
+      pdf.text(margins.width-30, margins.titleTop,rTitle);
+      
+      pdf.setFont("helvetica");   
+      pdf.setFontType("bold");      
+      pdf.setFontSize(7);
+      pdf.setTextColor(114, 111, 111);
+      pdf.text(margins.width-70,   margins.titleTop+10, rTitle1);
+      
+      pdf.setDrawColor(0);
+      pdf.setFillColor(114, 111, 111);
+      pdf.rect(margins.left, margins.titleTop+13, margins.width-30, .5, 'F');  //F is for Fill
+      /*pdf.rect(margins.left, margins.titleTop+13, margins.width, 2, 'D');  //D is for Draw
+      pdf.rect(margins.left, margins.titleTop+13, margins.width, 2, 'FD');*/
+
+      pdf.setFont("helvetica"); 
+      pdf.setFontType("normal");        
+      pdf.setFontSize(6);
+      pdf.setTextColor(0, 0, 0);
+      pdf.text(margins.left,   margins.titleTop+30, "Report Generation Date ");
+
+      pdf.setFont("helvetica"); 
+      pdf.setFontType("normal");        
+      pdf.setFontSize(6);
+      pdf.setTextColor(128, 179, 227);
+      pdf.text(margins.left+65,   margins.titleTop+30, dateService.getDateFromTimeStamp(new Date().getTime(),patientDashboard.dateFormat,'/'));
+
+      pdf.setFont("helvetica"); 
+      pdf.setFontType("normal");        
+      pdf.setFontSize(6);
+      pdf.setTextColor(0, 0, 0);
+      pdf.text(margins.left+265,  margins.titleTop+30, "Date Range Of Report ");
+
+      pdf.setFont("helvetica"); 
+      pdf.setFontType("normal");        
+      pdf.setFontSize(6);
+      pdf.setTextColor(128, 179, 227);
+      pdf.text(margins.left+330,  margins.titleTop+30, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/') + " - "+dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/'));
 
       pdf.cellInitialize();
 
@@ -2365,16 +2408,24 @@ angular.module('hillromvestApp')
            
       var tabInfo = g_pdfMetaData.rTablePatInfo.tData;
       var rCount =0;
+
       for(var i=0;i<tabInfo.length;i=i+2){
            rCount++;
-          if(i==0){
-            pdf.setFontType("bold");
+          if(i==0){  
+            pdf.setDrawColor(0);
+            pdf.setFillColor(124,163,220);
+            pdf.rect(margins.left, margins.top+10, margins.tCapWidth, 20, 'F');           
+            
+            //pdf.setFont("helvetica"); 
+            pdf.setFontType("bold");        
+            pdf.setFontSize(6);
+            pdf.setTextColor(234, 238, 242);
             pdf.cell(margins.left, margins.top+10, margins.tCapWidth, 20, g_pdfMetaData.rTablePatInfo.title); 
           }
           pdf.setFontType("normal");
           pdf.setTextColor(0,0,0)
-          pdf.cell(margins.left, margins.top+30, 70, 20, tabInfo[i], rCount+1);                     
-          pdf.cell(margins.left, margins.top+30, 186, 20, tabInfo[i+1], rCount+1);  
+          pdf.cell(margins.left, margins.top+30, 70, 21, tabInfo[i], rCount+1);                     
+          pdf.cell(margins.left, margins.top+30, 186, 21, tabInfo[i+1], rCount+1);  
       }
 
       pdf.cellInitialize();
@@ -2383,7 +2434,14 @@ angular.module('hillromvestApp')
       for(var i=0;i<tabInfo.length;i=i+2){
            rCount++;
           if(i==0){
+            pdf.setDrawColor(0);
+            pdf.setFillColor(124,163,220);
+            pdf.rect(margins.t2TabLeft, margins.top+10, margins.tCapWidth, 20, 'F');           
+
+            //pdf.setFont("helvetica"); 
             pdf.setFontType("bold");
+            pdf.setFontSize(6);
+            pdf.setTextColor(234, 238, 242);
             pdf.cell(margins.t2TabLeft, margins.top+10, margins.tCapWidth, 20, g_pdfMetaData.rDeviceInfo.title); 
           }
          pdf.setTextColor(0,0,0)
@@ -2528,7 +2586,7 @@ angular.module('hillromvestApp')
       var pdfSettingDeviation = ($scope.settingsDeviatedDaysCount !== null && $scope.settingsDeviatedDaysCount >= 0) ? $scope.settingsDeviatedDaysCount : stringConstants.notAvailable;
         g_pdfMetaData = {
             rTitle: 'HillRom'
-            ,rTitle1: 'VisiView™ Health Portall'
+            ,rTitle1: 'VisiView™ Health Portal'
             ,rGenDtLbl : stringConstants.reportGenerationDateLabel
             , rGenDt : reportGenerationDate
             , rRngLble : stringConstants.dateRangeOfReportLabel+stringConstants.colon
