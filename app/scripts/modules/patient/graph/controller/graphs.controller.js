@@ -2304,13 +2304,11 @@ angular.module('hillromvestApp')
       var pdfPressure = ($scope.hiddencompliance.pressure) ? $scope.hiddencompliance.pressure : false; 
       var pdfFrequency = ($scope.hiddencompliance.frequency) ? $scope.hiddencompliance.frequency : false;
       var pdfDuration = ($scope.hiddencompliance.duration) ? $scope.hiddencompliance.duration : false;
-      console.log("hidden pressure : "+$scope.hiddencompliance.pressure+" hidden frequency : "+$scope.hiddencompliance.frequency+" hidden duration : "+$scope.hiddencompliance.duration);
-      console.log("pressure : "+$scope.compliance.pressure+" frequency : "+$scope.compliance.frequency+" duration : "+$scope.compliance.duration);
       if($scope.complianceGraph){
         hmrGraphId = "#complianceGraphHMR";
         complianceGraphId = "#complianceGraph";
         compliance1GraphId = "#complianceGraph1";
-        pdfPressure = $scope.compliance.pressure; pdfFrequency = $scope.compliance.frequency; pdfDuration = $scope.compliance.duration;
+        //pdfPressure = $scope.compliance.pressure; pdfFrequency = $scope.compliance.frequency; pdfDuration = $scope.compliance.duration;
       }else if ($scope.hmrBarGraph){
         hmrGraphId = "#hmrBarGraph";
         complianceGraphId = "#hmrBarGraphCompliance";
@@ -2319,8 +2317,7 @@ angular.module('hillromvestApp')
         hmrGraphId = "#hmrLineGraphSVG";
         complianceGraphId = "#hmrLineGraphCompliance";
         compliance1GraphId = "#hmrLineGraphCompliance1";
-      }
-      console.log("AFTER CALCULATION : pressure : "+$scope.compliance.pressure+" frequency : "+$scope.compliance.frequency+" duration : "+$scope.compliance.duration);
+      }      
       var d = $('#duration').is(':checked')?"Duration":"", f = $('#frequency').is(':checked')?"Frequency":"", p=$('#pressure').is(':checked')?"Pressure":"";
       var a = [];if(p)a.push(p);if(f)a.push(f);if(d)a.push(d);
       stringConstants.graphTitle = ($scope.selectedGraph=='HMR')?"Hour Meeter:":'Patient Treatment '+a.join(' / ')+':';
@@ -2423,8 +2420,8 @@ angular.module('hillromvestApp')
           }
           pdf.setFontType("normal");
           pdf.setTextColor(0,0,0)
-          pdf.cell(margins.left, margins.top+30, 80, 21, tabInfo[i], rCount+1);                     
-          pdf.cell(margins.left, margins.top+30, 200, 21, tabInfo[i+1], rCount+1);  
+          pdf.cell(margins.left, margins.top+30, 80, 21, tabInfo[i].toString(), rCount+1);                     
+          pdf.cell(margins.left, margins.top+30, 200, 21, tabInfo[i+1].toString(), rCount+1);  
       }
 
       pdf.cellInitialize();
@@ -2443,10 +2440,18 @@ angular.module('hillromvestApp')
             pdf.setTextColor(234, 238, 242);
             pdf.cell(margins.t2TabLeft, margins.top+10, margins.tCapWidth, 20, g_pdfMetaData.rDeviceInfo.title); 
           }
-         pdf.setTextColor(0,0,0)
+          pdf.setTextColor(0,0,0)
           pdf.setFontType("normal");
-          pdf.cell(margins.t2TabLeft, margins.top+30, margins.tCellWidth, 20, tabInfo[i], rCount+1);   
-          pdf.cell(margins.t2TabLeft, margins.top, margins.tCellWidth, 20, tabInfo[i+1], rCount+1);  
+          pdf.cell(margins.t2TabLeft, margins.top+30, margins.tCellWidth, 20, tabInfo[i], rCount+1);  
+          if(tabInfo[i].toString() === "Type:"){   
+            pdf.setTextColor(128, 179, 227);
+            pdf.setFontType("normal");           
+            pdf.cell(margins.t2TabLeft, margins.top, margins.tCellWidth, 20, tabInfo[i+1].toString(), rCount+1);
+          }else{
+            pdf.setTextColor(0,0,0);
+            pdf.setFontType("normal");              
+            pdf.cell(margins.t2TabLeft, margins.top, margins.tCellWidth, 20, tabInfo[i+1].toString(), rCount+1);  
+          }                     
       }
            
 
@@ -2471,48 +2476,49 @@ angular.module('hillromvestApp')
           pdf.cell(margins.t2TabLeft, margins.top, margins.tCellWidth, 20, tabInfo[i+1].toString(), rCount+1);  
       }
 
-      //Patient Treatment Duration:; Frequency / Pressure: Hour Meter: 
-      pdf.text(40,250, "HMR");      
-      var imgY = 250;              
-      if(hmrGraphId && $(hmrGraphId).find("svg").length > 0){  
-        $(hmrGraphId).find('svg')
-        .attr('version',1.1)
-        .attr('width','1300px')
-        .attr('height','350px')
-        .attr('font-family', 'helvetica')
-        .attr('font-size', '12px').attr('class', 'complianceGraph col-md-16')
-        .attr('xmlns','http://www.w3.org/2000/svg');                       
-        var canvas = document.getElementById('hmrBarLineCanvas');               
-        var ctx = canvas.getContext('2d');
-        var htmlString =  $(hmrGraphId).find("svg").parent().html().trim().replace(/xmlns=\"http:\/\/www\.w3\.org\/2000\/svg\"/, '');          
-        canvg(canvas, htmlString);       
-        var img = $("#hmrBarLineCanvas")[0].toDataURL('image/png', 1.0);
-        pdf.addImage(img, 'png', 10, (imgY),margins.width+100, 170);        
-        imgY = imgY + 200;
-      }
+     
+      // the first compliance graph :
+      // in UI the sequnce for Y-axis is duration, pressure, frequency.. so comparision will be accordingly
+      var imgY = 250;  
+      var firstComplianceGraphText = (!pdfDuration) ? "Duration" : null;
+      firstComplianceGraphText = (!pdfPressure) ? (firstComplianceGraphText ? firstComplianceGraphText+" / Pressure" : "Pressure") : firstComplianceGraphText;
+      firstComplianceGraphText = (!pdfFrequency) ? (firstComplianceGraphText ? firstComplianceGraphText+" / Frequency" : "Frequency") : firstComplianceGraphText;
+      
+      pdf.setFontType("bold");
+      pdf.setFontSize(8);
+      pdf.setTextColor(124,163,220);
+      pdf.text(margins.left,imgY, firstComplianceGraphText);    
+      var graphHeading1x = (firstComplianceGraphText && firstComplianceGraphText.indexOf("/") !== -1) ? 475 : 550 ;
+      if(!pdfDuration){
+        pdf.setDrawColor(0);
+        pdf.setFillColor(52, 151, 143);
+        pdf.circle(graphHeading1x, imgY-3, 3, "F");
+        pdf.setFontType("normal");
+        pdf.setFontSize(7);
+        pdf.text(graphHeading1x+10,imgY, "Duration");  
+        graphHeading1x = graphHeading1x+60;
+      } 
 
-     /* if(pdfPressure){
+      if(!pdfPressure){
         pdf.setDrawColor(0);
         pdf.setFillColor(255, 152, 41);
-        pdf.circle(50, imgY, 3, "F");
-        pdf.text(60,imgY, "Presure");  
-      }
-      if(pdfFrequency){
+        pdf.circle(graphHeading1x, imgY-3, 3, "F");
+        pdf.setFontType("normal");
+        pdf.setFontSize(7);
+        pdf.text(graphHeading1x+10,imgY, "Pressure"); 
+        graphHeading1x = graphHeading1x+60;
+      } 
+
+      if(!pdfFrequency){
         pdf.setDrawColor(0);
         pdf.setFillColor(52, 151, 143);
-        pdf.circle(50, imgY, 3, "F");
-        pdf.text(60,imgY, "Frequency");  
+        pdf.circle(graphHeading1x, imgY-3, 3, "F");
+        pdf.setFontType("normal");
+        pdf.setFontSize(7);
+        pdf.text(graphHeading1x+10,imgY, "Frequency");  
       }
 
-      if(pdfFrequency){
-        pdf.setDrawColor(0);
-        pdf.setFillColor(52, 151, 143);
-        pdf.circle(50, imgY, 3, "F");
-        pdf.text(60,imgY, "Duration");  
-      }*/
-            
-      //color for pressure // 52, 151, 143 : for frequency // 78, 149, 196 : for duration
-
+       
       if(complianceGraphId && $(complianceGraphId).find("svg").length > 0){ 
         $(complianceGraphId).find('svg')
         .attr('version',1.1)
@@ -2527,13 +2533,48 @@ angular.module('hillromvestApp')
         canvg(canvas, htmlString);
         var img = $("#complianceCanvas")[0].toDataURL('image/png', 1.0);
         pdf.addImage(img, 'png', 10, (imgY),margins.width+100, 170);
-        imgY = imgY + 200;
+        imgY = imgY + 180;
       }
 
-      /*pdf.setDrawColor(0);
-      pdf.setFillColor(78, 149, 196);
-      pdf.circle(70, imgY, 3, "F");*/
+      var secondComplianceGraphText = (pdfDuration) ? "Duration" : null;
+      secondComplianceGraphText = (pdfPressure) ? (secondComplianceGraphText ? secondComplianceGraphText+" / Pressure" : "Pressure") : secondComplianceGraphText;
+      secondComplianceGraphText = (pdfFrequency) ? (secondComplianceGraphText ? secondComplianceGraphText+" / Frequency" : "Frequency") : secondComplianceGraphText;
       
+      pdf.setFontType("bold");
+      pdf.setFontSize(8);
+      pdf.setTextColor(124,163,220);
+      pdf.text(margins.left,imgY, secondComplianceGraphText); 
+
+      var graphHeading2x = (secondComplianceGraphText && secondComplianceGraphText.indexOf("/") !== -1) ? 475 : 550 ;
+      if(pdfDuration){
+        pdf.setDrawColor(0);
+        pdf.setFillColor(52, 151, 143);
+        pdf.circle(graphHeading2x, imgY-3, 3, "F");
+        pdf.setFontType("normal");
+        pdf.setFontSize(7);
+        pdf.text(graphHeading2x+10,imgY, "Duration");  
+        graphHeading2x = graphHeading2x + 60;
+      } 
+      
+      if(pdfPressure){
+        pdf.setDrawColor(0);
+        pdf.setFillColor(255, 152, 41);
+        pdf.circle(graphHeading2x, imgY-3, 3, "F");
+        pdf.setFontType("normal");
+        pdf.setFontSize(7);
+        pdf.text(graphHeading2x + 10,imgY, "Presure"); 
+        graphHeading2x = graphHeading2x + 60;
+      } 
+
+      if(pdfFrequency){
+        pdf.setDrawColor(0);
+        pdf.setFillColor(52, 151, 143);
+        pdf.circle(graphHeading2x, imgY-3, 3, "F");
+        pdf.setFontType("normal");
+        pdf.setFontSize(7);
+        pdf.text(graphHeading2x + 10,imgY, "Frequency");          
+      }
+ 
       if(compliance1GraphId && $(compliance1GraphId).find("svg").length > 0){  
         $(compliance1GraphId).find('svg')
         .attr('version',1.1)
@@ -2548,8 +2589,55 @@ angular.module('hillromvestApp')
         canvg(canvas, htmlString);
         var img = $("#compliance1Canvas")[0].toDataURL('image/png', 1.0);
         pdf.addImage(img, 'png', 10, (imgY),margins.width+100, 170);
-        imgY = imgY + 200;
+        imgY = imgY + 180;
       }
+
+      pdf.setFontType("bold");
+      pdf.setFontSize(8);
+      pdf.setTextColor(124,163,220);
+      pdf.text(margins.left,imgY, "HMR Reading");   
+
+      if(hmrGraphId && $(hmrGraphId).find("svg").length > 0){  
+        $(hmrGraphId).find('svg')
+        .attr('version',1.1)
+        .attr('width','1300px')
+        .attr('height','350px')
+        .attr('font-family', 'helvetica')
+        .attr('font-size', '12px').attr('class', 'complianceGraph col-md-16')
+        .attr('xmlns','http://www.w3.org/2000/svg');                       
+        var canvas = document.getElementById('hmrBarLineCanvas');               
+        var ctx = canvas.getContext('2d');
+        var htmlString =  $(hmrGraphId).find("svg").parent().html().trim().replace(/xmlns=\"http:\/\/www\.w3\.org\/2000\/svg\"/, '');          
+        canvg(canvas, htmlString);       
+        var img = $("#hmrBarLineCanvas")[0].toDataURL('image/png', 1.0);
+        pdf.addImage(img, 'png', 10, (imgY),margins.width+100, 170);                
+      }
+
+      pdf.setDrawColor(0);
+      pdf.setFillColor(114, 111, 111);
+      pdf.rect(margins.left, pageHeight-30, margins.width-5, .5, 'F');
+
+      pdf.setFontType("normal");
+      pdf.setFontSize(6);
+      pdf.setTextColor(0,0,0);
+      pdf.text(margins.width-295,pageHeight-13, "Page");
+
+      pdf.setFontType("bold");
+      pdf.setFontSize(6);
+      pdf.setTextColor(0,0,0);
+      pdf.text(margins.width-280,pageHeight-13, "1");   //15
+
+      pdf.setFontType("normal");
+      pdf.setFontSize(6);
+      pdf.setTextColor(0,0,0);
+      pdf.text(margins.width-275,pageHeight-13, "of "); //5
+
+      pdf.setFontType("bold");
+      pdf.setFontSize(6);
+      pdf.setTextColor(0,0,0);
+      pdf.text(margins.width-268,pageHeight-13, "2 "); //7  
+
+      imgY = pageHeight+10;
             
       if(pageHeight < imgY ){
         pdf.addPage();
@@ -2592,6 +2680,30 @@ angular.module('hillromvestApp')
       pdf.text(40,imgY+30, "Signature: ");
       pdf.line(90, imgY+35, 350,imgY+35); //left, top, right, top
       //show loader till this gets executed.
+
+      pdf.setDrawColor(0);
+      pdf.setFillColor(114, 111, 111);
+      pdf.rect(margins.left, pageHeight-30, margins.width-5, .5, 'F');
+
+      pdf.setFontType("normal");
+      pdf.setFontSize(6);
+      pdf.setTextColor(0,0,0);
+      pdf.text(margins.width-295,pageHeight-13, "Page");
+
+      pdf.setFontType("bold");
+      pdf.setFontSize(6);
+      pdf.setTextColor(0,0,0);
+      pdf.text(margins.width-280,pageHeight-13, "2");   //15
+
+      pdf.setFontType("normal");
+      pdf.setFontSize(6);
+      pdf.setTextColor(0,0,0);
+      pdf.text(margins.width-275,pageHeight-13, "of "); //5
+
+      pdf.setFontType("bold");
+      pdf.setFontSize(6);
+      pdf.setTextColor(0,0,0);
+      pdf.text(margins.width-268,pageHeight-13, "2 "); //7 
       pdf.save('VisiView™.pdf');      
       },500);   
       //pdf.save('VisiView™.pdf');                
@@ -2606,17 +2718,18 @@ angular.module('hillromvestApp')
       var patientMrnId = (patientDetails !== null && patientDetails.mrnId)? $scope.slectedPatient.mrnId : stringConstants.notAvailable;
       var patientName = (patientDetails !== null && patientDetails.firstName)? $scope.slectedPatient.firstName+stringConstants.space+$scope.slectedPatient.lastName : stringConstants.notAvailable;
       var completePatientAddress = (patientDetails !== null && patientDetails.city) ? patientDetails.city : stringConstants.emptyString;
-      completePatientAddress += (patientDetails !== null && patientDetails.state) ? ((completePatientAddress.length > 1) ? (stringConstants.comma+patientDetails.state) : patientDetails.state) : completePatientAddress;
-      completePatientAddress += (patientDetails !== null && patientDetails.address) ? ((completePatientAddress.length > 1) ? (stringConstants.comma+patientDetails.address) : patientDetails.address) : completePatientAddress;
-      completePatientAddress += (patientDetails !== null && patientDetails.zipcode) ? ((completePatientAddress.length > 1) ? (stringConstants.comma+patientDetails.zipcode) : patientDetails.zipcode) : completePatientAddress;
+      completePatientAddress = (patientDetails !== null && patientDetails.state) ? ((completePatientAddress.length > 1) ? (completePatientAddress+stringConstants.comma+patientDetails.state) : patientDetails.state) : completePatientAddress;      
+      completePatientAddress = (patientDetails !== null && patientDetails.address) ? ((completePatientAddress.length > 1) ? (completePatientAddress+stringConstants.comma+patientDetails.address) : patientDetails.address) : completePatientAddress;
+      completePatientAddress = (patientDetails !== null && patientDetails.zipcode) ? ((completePatientAddress.length > 1) ? (completePatientAddress+stringConstants.comma+patientDetails.zipcode) : patientDetails.zipcode) : completePatientAddress;      
       var patientPhone = (patientDetails !== null && patientDetails.mobilePhone)? $scope.slectedPatient.mobilePhone : stringConstants.notAvailable;
       var patientDOB = (patientDetails !== null && patientDetails.dob)? dateService.getDateFromTimeStamp(patientDetails.dob,patientDashboard.dateFormat,'/') : stringConstants.notAvailable;
-      var patientAdherence = (patientDetails !== null && patientDetails.adherence)? $scope.slectedPatient.adherence : stringConstants.notAvailable;
+      var patientAdherence = (patientDetails !== null && patientDetails.adherence)? $scope.slectedPatient.adherence : 0;
       var patientDeviceType = stringConstants.deviceType;
       var patientDeviceSlNo = ($scope.patientDevices && $scope.patientDevices[0] && $scope.patientDevices[0].serialNumber) ? $scope.patientDevices[0].serialNumber: stringConstants.notAvailable;
       var pdfMissedTherapyDays = ($scope.missedtherapyDays !== null && $scope.missedtherapyDays >= 0) ? $scope.missedtherapyDays : stringConstants.notAvailable;
-      var pdfHMRNonAdherenceScore = ($scope.adherenceScore !== null && $scope.adherenceScore >= 0) ? $scope.adherenceScore : stringConstants.notAvailable;
+      var pdfHMRNonAdherenceScore = ($scope.adherenceScore !== null && $scope.adherenceScore >= 0) ? $scope.adherenceScore : 0;
       var pdfSettingDeviation = ($scope.settingsDeviatedDaysCount !== null && $scope.settingsDeviatedDaysCount >= 0) ? $scope.settingsDeviatedDaysCount : stringConstants.notAvailable;
+      completePatientAddress = (completePatientAddress === stringConstants.emptyString) ? stringConstants.notAvailable : completePatientAddress;
         g_pdfMetaData = {
             rTitle: 'HillRom'
             ,rTitle1: 'VisiView™ Health Portal'
