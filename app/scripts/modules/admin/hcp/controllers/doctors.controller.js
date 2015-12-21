@@ -262,7 +262,11 @@ angular.module('hillromvestApp')
         $state.go('patientOverviewRcadmin', {
           'patientId': patient.id
         });
-      }else{
+      }else if($scope.doctorStatus.role === loginConstants.role.associates){
+        $state.go('associatepatientOverview', {
+          'patientId': patient.id
+        });
+      }else {
         $state.go('patientOverview', {
           'patientId': patient.id
         });
