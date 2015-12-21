@@ -16,6 +16,7 @@ angular.module('hillromvestApp',
    'validation.match',
    'ui.bootstrap',
    'oc.lazyLoad'
+
    ])
 .run(['$rootScope', '$location', '$window', '$http', '$state', '$translate', 'Language', 'Auth', 'Principal', 'ENV', 'VERSION', function($rootScope, $location, $window, $http, $state, $translate, Language, Auth, Principal, ENV, VERSION) {
     $rootScope.ENV = ENV;
@@ -78,6 +79,7 @@ angular.module('hillromvestApp',
       }
     };
   }])
+
   .config(['$stateProvider', '$urlRouterProvider', '$httpProvider', '$locationProvider', '$translateProvider', 'tmhDynamicLocaleProvider', 'httpRequestInterceptorCacheBusterProvider','$ocLazyLoadProvider', function($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider, $translateProvider, tmhDynamicLocaleProvider, httpRequestInterceptorCacheBusterProvider, $ocLazyLoadProvider) {
 
     //Cache everything except rest api requests

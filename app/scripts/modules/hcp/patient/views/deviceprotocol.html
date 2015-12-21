@@ -13,9 +13,9 @@
   </div>
 
   <div class="dashboard dashboard--content dashboard_mob ">
-    <div class="dashboard__manage-view margin-top pull-left-mob">
+    <div class="dashboard__manage-view  pull-left-mob">
       <div class="dashboard__manage-view--header">
-          <div class="col-md-3 col-sm-3 header--type none">
+          <div class="col-md-3 col-sm-3 header--type ">
             <span translate="patient.protocol-caption.type"></span>
           </div>
           <div class="col-md-3 col-sm-3 header--type">
@@ -36,7 +36,7 @@
   </div>
 
   <div class="col-md-16 col-sm-16 protocol-list col-xs-4" ng-repeat="protocol in protocols" ng-class="{'list-inactive':protocol.deleted}">
-    <div class="col-md-3 col-sm-3 protocol-list__type">
+    <div class="col-md-3 col-sm-3 protocol-list__type protocol_heading_color">
       <span> {{protocol.type}} {{protocol.treatmentLabel}}</span>
     </div>
     <div class="col-md-3 col-sm-3 protocol-list__type">
@@ -54,7 +54,7 @@
   </div>
   <div class="col-md-16 col-sm-16 empty-list-message" ng-if="!protocols"><span translate="patient.empty-protocol-list-message"></span></div>
 
-  <div class="col-md-16 col-sm-16 patient-device">
+  <div class="col-md-16 col-sm-16 patient-device border-tp">
     <span class="patient-device--title" translate="patient.device-title"></span>
   </div>
 

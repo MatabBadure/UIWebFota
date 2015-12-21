@@ -2260,6 +2260,7 @@ angular.module('hillromvestApp')
       });
     };
 
+
     $scope.initPdfMetaData = function (strHtml, graphType){            
       var d = $('#duration').is(':checked')?"Duration":"", f = $('#frequency').is(':checked')?"Frequency":"", p=$('#pressure').is(':checked')?"Pressure":"";
       var a = [];if(p)a.push(p);if(f)a.push(f);if(d)a.push(d);
@@ -2355,7 +2356,7 @@ angular.module('hillromvestApp')
       pdf.setFontType("bold");
       pdf.setFontSize(6);
       pdf.setTextColor(0,0,0);
-      pdf.text(margins.width-280,   margins.titleTop-15, "Hillrom | Overview");
+      pdf.text(margins.width-305,   margins.titleTop-15, "Hillrom | Overview");
 
       pdf.setFont("helvetica");  
       pdf.setFontType("bold"); 
@@ -2371,9 +2372,7 @@ angular.module('hillromvestApp')
       
       pdf.setDrawColor(0);
       pdf.setFillColor(114, 111, 111);
-      pdf.rect(margins.left, margins.titleTop+13, margins.width-5, .5, 'F');  //F is for Fill
-      /*pdf.rect(margins.left, margins.titleTop+13, margins.width, 2, 'D');  //D is for Draw
-      pdf.rect(margins.left, margins.titleTop+13, margins.width, 2, 'FD');*/
+      pdf.rect(margins.left, margins.titleTop+13, margins.width-5, .5, 'F'); 
 
       pdf.setFont("helvetica"); 
       pdf.setFontType("normal");        
@@ -2554,7 +2553,35 @@ angular.module('hillromvestApp')
             
       if(pageHeight < imgY ){
         pdf.addPage();
-        imgY=20;
+
+        pdf.setFont("helvetica");
+        pdf.setFontType("bold");   
+        pdf.setFontSize(6);
+        pdf.setTextColor(0,0,0);
+        pdf.text(margins.left,   margins.titleTop-15, dateService.getDateFromTimeStamp(new Date().getTime(), patientDashboard.dateFormat, "/"));
+
+        pdf.setFont("helvetica");   
+        pdf.setFontType("bold");
+        pdf.setFontSize(6);
+        pdf.setTextColor(0,0,0);
+        pdf.text(margins.width-305,   margins.titleTop-15, "Hillrom | Overview");
+
+        pdf.setFont("helvetica");  
+        pdf.setFontType("bold"); 
+        pdf.setFontSize(11);
+        pdf.setTextColor(124,163,220);
+        pdf.text(margins.width-30, margins.titleTop,rTitle);
+        
+        pdf.setFont("helvetica");   
+        pdf.setFontType("bold");      
+        pdf.setFontSize(7);
+        pdf.setTextColor(114, 111, 111);
+        pdf.text(margins.width-70,   margins.titleTop+10, rTitle1);
+        
+        pdf.setDrawColor(0);
+        pdf.setFillColor(114, 111, 111);
+        pdf.rect(margins.left, margins.titleTop+13, margins.width-5, .5, 'F'); 
+        imgY=margins.titleTop + 100;
       }
       pdf.text(40,imgY, "HCP Name: ");
       pdf.line(90, imgY+5, 350,imgY+5); //left, top, right, top

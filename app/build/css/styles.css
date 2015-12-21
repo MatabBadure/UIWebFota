@@ -9451,6 +9451,7 @@ ul.dropdown-menu {
 
   .patient-user__navbar ul > li > a .icons {
     top: 13px;
+    display: none;
   }
 
   .patient-user__navbar {
@@ -9468,11 +9469,12 @@ ul.dropdown-menu {
   }
 
   .dashboard__manage-view--header .header--type {
-    width: 20%;
+    /*width: 20%;*/
   }
 
   .dashboard__manage-view--list > div {
-    width: 20%;
+    /*		width: 20%;
+    */
   }
 
   .manage_view_list_iPad .centered {
@@ -9591,7 +9593,7 @@ ul.dropdown-menu {
   }
 
   /*Admin Responsive column style*/
-  .col-hide-iPad {
+  .col-hide-iPad, .patient-user__navbar ul > li > a .icons {
     display: none;
   }
 
@@ -9833,6 +9835,18 @@ ul.dropdown-menu {
     float: left;
   }
 
+  .protocol_heading_color span {
+    color: #7ca3dc !important;
+  }
+
+  .dashboard__manage-view--header {
+    border: none;
+    padding: 0;
+  }
+  .dashboard__manage-view--header .header--type {
+    font-size: 14px;
+  }
+
   .hcp_ellipses {
     text-overflow: ellipsis;
     width: 77px;
@@ -9945,6 +9959,10 @@ ul.dropdown-menu {
   }
   .stats_chart_container .stats_chart_content .percent, .hcp_wrapper .stats_chart_container .stats_chart_content .percent {
     width: 100%;
+  }
+
+  .border-tp {
+    border-top: 1px solid #cccccc;
   }
 
   .patient-user__navbar .patient-dashboard {
