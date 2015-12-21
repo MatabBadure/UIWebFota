@@ -2336,12 +2336,12 @@ angular.module('hillromvestApp')
       var margins = {
           top: 70,
           bottom: 60,
-          left: 40,
-          width: 550,
+          left: 15,
+          width: 575,
           titleTop:40,
-          tCellWidth:128,
-          tCapWidth:256,
-          t2TabLeft:305
+          tCellWidth:140,
+          tCapWidth:280,
+          t2TabLeft:(pageWidth/2)+5
       };
      
       var rDate = g_pdfMetaData.rGenDt, rTitle = g_pdfMetaData.rTitle, rTitle1=g_pdfMetaData.rTitle1;       
@@ -2349,7 +2349,7 @@ angular.module('hillromvestApp')
       pdf.setFontType("bold");   
       pdf.setFontSize(6);
       pdf.setTextColor(0,0,0);
-      pdf.text(40,   margins.titleTop-15, dateService.getDateFromTimeStamp(new Date().getTime(), patientDashboard.dateFormat, "/"));
+      pdf.text(margins.left,   margins.titleTop-15, dateService.getDateFromTimeStamp(new Date().getTime(), patientDashboard.dateFormat, "/"));
 
       pdf.setFont("helvetica");   
       pdf.setFontType("bold");
@@ -2371,7 +2371,7 @@ angular.module('hillromvestApp')
       
       pdf.setDrawColor(0);
       pdf.setFillColor(114, 111, 111);
-      pdf.rect(margins.left, margins.titleTop+13, margins.width-30, .5, 'F');  //F is for Fill
+      pdf.rect(margins.left, margins.titleTop+13, margins.width-5, .5, 'F');  //F is for Fill
       /*pdf.rect(margins.left, margins.titleTop+13, margins.width, 2, 'D');  //D is for Draw
       pdf.rect(margins.left, margins.titleTop+13, margins.width, 2, 'FD');*/
 
@@ -2385,19 +2385,19 @@ angular.module('hillromvestApp')
       pdf.setFontType("normal");        
       pdf.setFontSize(6);
       pdf.setTextColor(128, 179, 227);
-      pdf.text(margins.left+65,   margins.titleTop+30, dateService.getDateFromTimeStamp(new Date().getTime(),patientDashboard.dateFormat,'/'));
+      pdf.text(margins.left+69,   margins.titleTop+30, dateService.getDateFromTimeStamp(new Date().getTime(),patientDashboard.dateFormat,'/'));
 
       pdf.setFont("helvetica"); 
       pdf.setFontType("normal");        
       pdf.setFontSize(6);
       pdf.setTextColor(0, 0, 0);
-      pdf.text(margins.left+265,  margins.titleTop+30, "Date Range Of Report ");
+      pdf.text(margins.t2TabLeft,  margins.titleTop+30, "Date Range Of Report ");
 
       pdf.setFont("helvetica"); 
       pdf.setFontType("normal");        
       pdf.setFontSize(6);
       pdf.setTextColor(128, 179, 227);
-      pdf.text(margins.left+330,  margins.titleTop+30, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/') + " - "+dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/'));
+      pdf.text(margins.t2TabLeft+65,  margins.titleTop+30, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/') + " - "+dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/'));
 
       pdf.cellInitialize();
 
@@ -2424,8 +2424,8 @@ angular.module('hillromvestApp')
           }
           pdf.setFontType("normal");
           pdf.setTextColor(0,0,0)
-          pdf.cell(margins.left, margins.top+30, 70, 21, tabInfo[i], rCount+1);                     
-          pdf.cell(margins.left, margins.top+30, 186, 21, tabInfo[i+1], rCount+1);  
+          pdf.cell(margins.left, margins.top+30, 80, 21, tabInfo[i], rCount+1);                     
+          pdf.cell(margins.left, margins.top+30, 200, 21, tabInfo[i+1], rCount+1);  
       }
 
       pdf.cellInitialize();
@@ -2457,7 +2457,13 @@ angular.module('hillromvestApp')
       for(var i=0;i<tabInfo.length;i=i+2){
           rCount++;
           if(i==0){
+            pdf.setDrawColor(0);
+            pdf.setFillColor(124,163,220);
+            pdf.rect(margins.t2TabLeft, margins.top+75, margins.tCapWidth, 20, 'F');
+
             pdf.setFontType("bold");
+            pdf.setFontSize(6);
+            pdf.setTextColor(234, 238, 242);
             pdf.cell(margins.t2TabLeft, margins.top+75, margins.tCapWidth, 20, g_pdfMetaData.rNoteInfo.title); 
           }
           pdf.setTextColor(0,0,0)
