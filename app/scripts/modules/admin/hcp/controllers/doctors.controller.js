@@ -15,7 +15,7 @@ angular.module('hillromvestApp')
 
     $scope.init = function(){
       var currentRoute = $state.current.name;
-      if (currentRoute === 'hcpProfile' || currentRoute === 'hcpProfileRcadmin') {
+      if (currentRoute === 'hcpProfile' || currentRoute === 'hcpProfileRcadmin' || currentRoute === 'hcpProfileAssociates') {
         $scope.currentPageIndex = 1;
         $scope.perPageCount = 10;
         $scope.pageCount = 0;
