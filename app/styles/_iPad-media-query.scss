@@ -104,6 +104,7 @@
 	}
 	.patient-user__navbar ul > li > a .icons{
 		top: 13px;
+		display:none;
 
 	}
 	.patient-user__navbar{
@@ -246,7 +247,7 @@
 		margin-right: 5px;
 	}
 	/*Admin Responsive column style*/
-	.col-hide-iPad{
+	.col-hide-iPad, .patient-user__navbar ul > li > a .icons{
 		display: none;
 	}
 	.col-hide-web{
