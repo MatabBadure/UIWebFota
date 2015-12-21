@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('hillromvestApp')
-  .controller('hcpProfileController',['$scope', '$state', '$stateParams', '$location', 'notyService', 'UserService', 'Password', 'Auth', 'AuthServerProvider', 'DoctorService', 'StorageService',
-    function ($scope, $state, $stateParams, $location, notyService, UserService, Password, Auth, AuthServerProvider, DoctorService, StorageService) {
+  .controller('hcpProfileController',['$scope', '$state', '$stateParams', '$location', 'notyService', 'UserService', 'Password', 'Auth', 'AuthServerProvider', 'DoctorService', 'StorageService', 'commonsUserService',
+    function ($scope, $state, $stateParams, $location, notyService, UserService, Password, Auth, AuthServerProvider, DoctorService, StorageService, commonsUserService) {
 
 
     $scope.isActive = function(tab) {
@@ -24,6 +24,7 @@ angular.module('hillromvestApp')
       UserService.getUser(adminId).then(function(response){
         $scope.user = response.data.user;
         $scope.user.role = StorageService.get('logged').role;
+        $scope.user.zipcode = commonsUserService.formatZipcode($scope.user.zipcode);
       }).catch(function(response){
         notyService.showError(response);
       });
