@@ -3681,5 +3681,30 @@ angular.module('hillromvestApp')
                         }
                     ]
                 }
+            })
+            .state('associateHillRomUserView', {
+                parent: 'associateHillRomUser',
+                url: '/{userId}',
+                data: {
+                    roles: ['ASSOCIATES'],
+                    pageTitle: 'user.page-title.user'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/associate/hill-rom-user/views/user-info/view.html',
+                        controller: 'UsersController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('hillRomUser');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
             });
 }]);

@@ -124,8 +124,8 @@ angular.module('hillromvestApp')
       var hmrGraphId = null; var complianceGraphId = null; var compliance1GraphId = null;
       if($scope.complianceGraph){
         hmrGraphId = "#complianceGraphHMR";
-        complianceGraphId = "#complianceGraph";
-        compliance1GraphId = "#complianceGraph1";
+        complianceGraphId = "#complianceGraph1";
+        compliance1GraphId = "#complianceGraph2";
       }else if ($scope.hmrBarGraph){
         hmrGraphId = "#hmrBarGraph";
         complianceGraphId = "#hmrBarGraphCompliance";
@@ -540,8 +540,8 @@ angular.module('hillromvestApp')
 
      $scope.drawComplianceGraph = function() {
         $scope.drawHMRGraphForPDF();      
-        $scope.getHiddenComplianceForPDF(!$scope.compliance.pressure, !$scope.compliance.frequency, !$scope.compliance.duration, "complianceGraph1", "compCompliance1", "compliance1"); 
-        
+        //$scope.getHiddenComplianceForPDF(!$scope.compliance.pressure, !$scope.compliance.frequency, !$scope.compliance.duration, "complianceGraph1", "compCompliance1", "compliance1"); 
+        $scope.getHiddenComplianceForPDF(true, true, false, "complianceGraph1", "compCompliance1", "compliance", true, "complianceGraph2", "compCompliance2", "compliance1");
         nv.addGraph(function() {
         var chart = nv.models.multiChart()
         .margin({top: 30, right: 70, bottom: 50, left: 70})
@@ -808,9 +808,9 @@ angular.module('hillromvestApp')
       }
     };
     $scope.getNonDayHMRGraphData = function(divId, svgId, wrapperDiv, isDrawCompliance, graphVisibility) {
-      if(isDrawCompliance){            
-        $scope.getHiddenComplianceForPDF(true, true, false, "hmrLineGraphCompliance", "hmrCompliance", "compliance", $scope.getHiddenComplianceForPDF, "hmrLineGraphCompliance1", "hmrCompliance1", "compliance1");
-      }
+      /*if(isDrawCompliance){            
+        $scope.getHiddenComplianceForPDF(true, true, false, "hmrLineGraphCompliance", "hmrCompliance", "compliance", true, "hmrLineGraphCompliance1", "hmrCompliance1", "compliance1");
+      }*/
       graphVisibility = graphVisibility ? graphVisibility : "visible";
       var graphId = '#hmrLineGraphSVG svg#hmrLineSVG';
       wrapperDiv = (wrapperDiv) ? wrapperDiv : "hmrLineGraphSVG";
@@ -835,6 +835,9 @@ angular.module('hillromvestApp')
              var svgCount = document.getElementsByTagName('svg').length;
             if(svgCount > 0 || count === 0 ) {
               $scope.drawHMRLineGraph(graphId, wrapperDiv, isDrawCompliance, graphVisibility);
+              if(isDrawCompliance){            
+                $scope.getHiddenComplianceForPDF(true, true, false, "hmrLineGraphCompliance", "hmrCompliance", "compliance", true, "hmrLineGraphCompliance1", "hmrCompliance1", "compliance1");
+              }
               $timeout.cancel(waitHandler);
               return false;
             } else {
@@ -1004,8 +1007,10 @@ angular.module('hillromvestApp')
         attr("fill" , '#aeb5be');
 
         //d3.selectAll(graphId).selectAll(".nvd3 .nv-x line").attr("style", "opacity: 0 !important;"); 
-        d3.selectAll(graphId).selectAll(".nv-axis .tick text ").attr("style", "fill: #5d6a7d; font-size: 10px;text-anchor: end;");
-        d3.selectAll(graphId).selectAll(".nv-axisMaxMin text ").attr("style", "fill: #5d6a7d;font-size: 10px;font-weight: normal;text-anchor: end;");
+        d3.selectAll(graphId).selectAll(".nv-x .nv-axis .tick text ").attr("style", "fill: #5d6a7d; font-size: 10px;text-anchor: middle;");
+        d3.selectAll(graphId).selectAll(".nv-x .nv-axisMaxMin text ").attr("style", "fill: #5d6a7d;font-size: 10px;font-weight: normal;text-anchor: middle;");
+        d3.selectAll(graphId).selectAll(".nv-y .nv-axis .tick text ").attr("style", "fill: #5d6a7d; font-size: 10px;text-anchor: end;");
+        d3.selectAll(graphId).selectAll(".nv-y .nv-axisMaxMin text ").attr("style", "fill: #5d6a7d;font-size: 10px;font-weight: normal;text-anchor: end;");
         d3.selectAll(graphId).selectAll(".nv-axis .nv-axislabel").attr("style", "font: 12px Arial; fill: #5d6a7d;text-anchor: middle;");
         //d3.selectAll (graphId).selectAll(".nvd3 .nv-groups path.nv-line").attr("style", "fill: none; stroke-width: 1.5px;");
 
@@ -1021,7 +1026,7 @@ angular.module('hillromvestApp')
         $scope.isGraphReady();
         if(isDrawCompliance){
           $timeout(function() {
-            $scope.getHiddenComplianceForPDF(true, false, true, "hmrBarGraphCompliance", "hmrCompliance", "compliance", $scope.getHiddenComplianceForPDF, "hmrBarGraphCompliance1", "hmrCompliance1", "compliance1");           
+            $scope.getHiddenComplianceForPDF(true, true, false, "hmrBarGraphCompliance", "hmrCompliance", "compliance", true, "hmrBarGraphCompliance1", "hmrCompliance1", "compliance1");           
           }, 500);  
         }
       //},1500);
@@ -2306,8 +2311,8 @@ angular.module('hillromvestApp')
       var pdfDuration = ($scope.hiddencompliance.duration) ? $scope.hiddencompliance.duration : false;
       if($scope.complianceGraph){
         hmrGraphId = "#complianceGraphHMR";
-        complianceGraphId = "#complianceGraph";
-        compliance1GraphId = "#complianceGraph1";
+        complianceGraphId = "#complianceGraph1";
+        compliance1GraphId = "#complianceGraph2";
         //pdfPressure = $scope.compliance.pressure; pdfFrequency = $scope.compliance.frequency; pdfDuration = $scope.compliance.duration;
       }else if ($scope.hmrBarGraph){
         hmrGraphId = "#hmrBarGraph";
@@ -2480,6 +2485,66 @@ angular.module('hillromvestApp')
       // the first compliance graph :
       // in UI the sequnce for Y-axis is duration, pressure, frequency.. so comparision will be accordingly
       var imgY = 250;  
+
+      var secondComplianceGraphText = (pdfDuration) ? "Duration" : null;
+      secondComplianceGraphText = (pdfPressure) ? (secondComplianceGraphText ? secondComplianceGraphText+" / Pressure" : "Pressure") : secondComplianceGraphText;
+      secondComplianceGraphText = (pdfFrequency) ? (secondComplianceGraphText ? secondComplianceGraphText+" / Frequency" : "Frequency") : secondComplianceGraphText;
+      if(secondComplianceGraphText === "Duration"){
+        secondComplianceGraphText = "Patient Treatment Duration";
+      }
+      pdf.setFontType("bold");
+      pdf.setFontSize(8);
+      pdf.setTextColor(124,163,220);
+      pdf.text(margins.left,imgY, secondComplianceGraphText); 
+
+      var graphHeading2x = (secondComplianceGraphText && secondComplianceGraphText.indexOf("/") !== -1) ? 475 : 540 ;
+      if(pdfDuration){
+        pdf.setDrawColor(0);
+        pdf.setFillColor(52, 151, 143);
+        pdf.circle(graphHeading2x, imgY-3, 3, "F");
+        pdf.setFontType("normal");
+        pdf.setFontSize(7);
+        pdf.text(graphHeading2x+10,imgY, "Duration");  
+        graphHeading2x = graphHeading2x + 60;
+      } 
+      
+      if(pdfPressure){
+        pdf.setDrawColor(0);
+        pdf.setFillColor(255, 152, 41);
+        pdf.circle(graphHeading2x, imgY-3, 3, "F");
+        pdf.setFontType("normal");
+        pdf.setFontSize(7);
+        pdf.text(graphHeading2x + 10,imgY, "Presure"); 
+        graphHeading2x = graphHeading2x + 60;
+      } 
+
+      if(pdfFrequency){
+        pdf.setDrawColor(0);
+        pdf.setFillColor(52, 151, 143);
+        pdf.circle(graphHeading2x, imgY-3, 3, "F");
+        pdf.setFontType("normal");
+        pdf.setFontSize(7);
+        pdf.text(graphHeading2x + 10,imgY, "Frequency");          
+      }
+ 
+      if(compliance1GraphId && $(compliance1GraphId).find("svg").length > 0){  
+        $(compliance1GraphId).find('svg')
+        .attr('version',1.1)
+        .attr('width','1300px')
+        .attr('height','350px')
+        .attr('font-family', 'helvetica')
+        .attr('font-size', '12px').attr('class', 'complianceGraph col-md-16')
+        .attr('xmlns','http://www.w3.org/2000/svg');                
+        var canvas = document.getElementById('compliance1Canvas');               
+        var ctx = canvas.getContext('2d');
+        var htmlString =  $(compliance1GraphId).find("svg").parent().html().trim().replace(/xmlns=\"http:\/\/www\.w3\.org\/2000\/svg\"/, '');                   
+        canvg(canvas, htmlString);
+        var img = $("#compliance1Canvas")[0].toDataURL('image/png', 1.0);
+        pdf.addImage(img, 'png', 10, (imgY),margins.width+100, 170);
+        imgY = imgY + 180;
+      }
+
+
       var firstComplianceGraphText = (!pdfDuration) ? "Duration" : null;
       firstComplianceGraphText = (!pdfPressure) ? (firstComplianceGraphText ? firstComplianceGraphText+" / Pressure" : "Pressure") : firstComplianceGraphText;
       firstComplianceGraphText = (!pdfFrequency) ? (firstComplianceGraphText ? firstComplianceGraphText+" / Frequency" : "Frequency") : firstComplianceGraphText;
@@ -2488,7 +2553,7 @@ angular.module('hillromvestApp')
       pdf.setFontSize(8);
       pdf.setTextColor(124,163,220);
       pdf.text(margins.left,imgY, firstComplianceGraphText);    
-      var graphHeading1x = (firstComplianceGraphText && firstComplianceGraphText.indexOf("/") !== -1) ? 475 : 550 ;
+      var graphHeading1x = (firstComplianceGraphText && firstComplianceGraphText.indexOf("/") !== -1) ? 475 : 540 ;
       if(!pdfDuration){
         pdf.setDrawColor(0);
         pdf.setFillColor(52, 151, 143);
@@ -2536,62 +2601,7 @@ angular.module('hillromvestApp')
         imgY = imgY + 180;
       }
 
-      var secondComplianceGraphText = (pdfDuration) ? "Duration" : null;
-      secondComplianceGraphText = (pdfPressure) ? (secondComplianceGraphText ? secondComplianceGraphText+" / Pressure" : "Pressure") : secondComplianceGraphText;
-      secondComplianceGraphText = (pdfFrequency) ? (secondComplianceGraphText ? secondComplianceGraphText+" / Frequency" : "Frequency") : secondComplianceGraphText;
       
-      pdf.setFontType("bold");
-      pdf.setFontSize(8);
-      pdf.setTextColor(124,163,220);
-      pdf.text(margins.left,imgY, secondComplianceGraphText); 
-
-      var graphHeading2x = (secondComplianceGraphText && secondComplianceGraphText.indexOf("/") !== -1) ? 475 : 550 ;
-      if(pdfDuration){
-        pdf.setDrawColor(0);
-        pdf.setFillColor(52, 151, 143);
-        pdf.circle(graphHeading2x, imgY-3, 3, "F");
-        pdf.setFontType("normal");
-        pdf.setFontSize(7);
-        pdf.text(graphHeading2x+10,imgY, "Duration");  
-        graphHeading2x = graphHeading2x + 60;
-      } 
-      
-      if(pdfPressure){
-        pdf.setDrawColor(0);
-        pdf.setFillColor(255, 152, 41);
-        pdf.circle(graphHeading2x, imgY-3, 3, "F");
-        pdf.setFontType("normal");
-        pdf.setFontSize(7);
-        pdf.text(graphHeading2x + 10,imgY, "Presure"); 
-        graphHeading2x = graphHeading2x + 60;
-      } 
-
-      if(pdfFrequency){
-        pdf.setDrawColor(0);
-        pdf.setFillColor(52, 151, 143);
-        pdf.circle(graphHeading2x, imgY-3, 3, "F");
-        pdf.setFontType("normal");
-        pdf.setFontSize(7);
-        pdf.text(graphHeading2x + 10,imgY, "Frequency");          
-      }
- 
-      if(compliance1GraphId && $(compliance1GraphId).find("svg").length > 0){  
-        $(compliance1GraphId).find('svg')
-        .attr('version',1.1)
-        .attr('width','1300px')
-        .attr('height','350px')
-        .attr('font-family', 'helvetica')
-        .attr('font-size', '12px').attr('class', 'complianceGraph col-md-16')
-        .attr('xmlns','http://www.w3.org/2000/svg');                
-        var canvas = document.getElementById('compliance1Canvas');               
-        var ctx = canvas.getContext('2d');
-        var htmlString =  $(compliance1GraphId).find("svg").parent().html().trim().replace(/xmlns=\"http:\/\/www\.w3\.org\/2000\/svg\"/, '');                   
-        canvg(canvas, htmlString);
-        var img = $("#compliance1Canvas")[0].toDataURL('image/png', 1.0);
-        pdf.addImage(img, 'png', 10, (imgY),margins.width+100, 170);
-        imgY = imgY + 180;
-      }
-
       pdf.setFontType("bold");
       pdf.setFontSize(8);
       pdf.setTextColor(124,163,220);

@@ -22,8 +22,8 @@ angular.module('hillromvestApp')
           scope.searchUsers();
         })
       },
-      controller: ['$scope', '$timeout', '$state', 'UserService', 'searchFilterService', 'sortOptionsService', 'URL',
-      function($scope, $timeout, $state, UserService, searchFilterService,sortOptionsService, URL) {
+      controller: ['$scope', '$timeout', '$state', 'UserService', 'searchFilterService', 'sortOptionsService', 'URL', 'StorageService', 'loginConstants',
+      function($scope, $timeout, $state, UserService, searchFilterService,sortOptionsService, URL, StorageService, loginConstants) {
         var searchOnLoad = true;
         $scope.init = function() {
           $scope.sortUserList = sortOptionsService.getSortOptionsForUserList();
@@ -61,7 +61,12 @@ angular.module('hillromvestApp')
          * Function to select the User from the List suggested on search
          */
         $scope.selectUser = function(user) {
-          $state.go('hillRomUserEdit', { userId: user.id });
+          var role = StorageService.get('logged').role;
+          if(role === loginConstants.role.associates){
+            $state.go('associateHillRomUserView', { userId: user.id });
+          }else{
+            $state.go('hillRomUserEdit', { userId: user.id });
+          }
         };
 
         $scope.createUser = function() {
