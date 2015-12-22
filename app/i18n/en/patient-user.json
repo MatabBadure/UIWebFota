@@ -310,7 +310,7 @@
     "no-notifications": "Doing great. Have a good day !",
     "export-as-pdf": "PDF",
     "export-as-csv": "CSV",
-    "export-raw-data": "Raw Data (CSV)",
+    "export-raw-data": "Therapy Data (XLS)",
     "export-processed-data": "Processed Data (CSV)",
     "download": "Download",
     "adherence-score-table":{
