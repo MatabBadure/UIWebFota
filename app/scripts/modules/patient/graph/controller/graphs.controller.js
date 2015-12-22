@@ -808,9 +808,9 @@ angular.module('hillromvestApp')
       }
     };
     $scope.getNonDayHMRGraphData = function(divId, svgId, wrapperDiv, isDrawCompliance, graphVisibility) {
-      if(isDrawCompliance){            
+      /*if(isDrawCompliance){            
         $scope.getHiddenComplianceForPDF(true, true, false, "hmrLineGraphCompliance", "hmrCompliance", "compliance", true, "hmrLineGraphCompliance1", "hmrCompliance1", "compliance1");
-      }
+      }*/
       graphVisibility = graphVisibility ? graphVisibility : "visible";
       var graphId = '#hmrLineGraphSVG svg#hmrLineSVG';
       wrapperDiv = (wrapperDiv) ? wrapperDiv : "hmrLineGraphSVG";
@@ -835,6 +835,9 @@ angular.module('hillromvestApp')
              var svgCount = document.getElementsByTagName('svg').length;
             if(svgCount > 0 || count === 0 ) {
               $scope.drawHMRLineGraph(graphId, wrapperDiv, isDrawCompliance, graphVisibility);
+              if(isDrawCompliance){            
+                $scope.getHiddenComplianceForPDF(true, true, false, "hmrLineGraphCompliance", "hmrCompliance", "compliance", true, "hmrLineGraphCompliance1", "hmrCompliance1", "compliance1");
+              }
               $timeout.cancel(waitHandler);
               return false;
             } else {
