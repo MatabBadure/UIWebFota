@@ -1004,8 +1004,10 @@ angular.module('hillromvestApp')
         attr("fill" , '#aeb5be');
 
         //d3.selectAll(graphId).selectAll(".nvd3 .nv-x line").attr("style", "opacity: 0 !important;"); 
-        d3.selectAll(graphId).selectAll(".nv-axis .tick text ").attr("style", "fill: #5d6a7d; font-size: 10px;text-anchor: end;");
-        d3.selectAll(graphId).selectAll(".nv-axisMaxMin text ").attr("style", "fill: #5d6a7d;font-size: 10px;font-weight: normal;text-anchor: end;");
+        d3.selectAll(graphId).selectAll(".nv-x .nv-axis .tick text ").attr("style", "fill: #5d6a7d; font-size: 10px;text-anchor: middle;");
+        d3.selectAll(graphId).selectAll(".nv-x .nv-axisMaxMin text ").attr("style", "fill: #5d6a7d;font-size: 10px;font-weight: normal;text-anchor: middle;");
+        d3.selectAll(graphId).selectAll(".nv-y .nv-axis .tick text ").attr("style", "fill: #5d6a7d; font-size: 10px;text-anchor: end;");
+        d3.selectAll(graphId).selectAll(".nv-y .nv-axisMaxMin text ").attr("style", "fill: #5d6a7d;font-size: 10px;font-weight: normal;text-anchor: end;");
         d3.selectAll(graphId).selectAll(".nv-axis .nv-axislabel").attr("style", "font: 12px Arial; fill: #5d6a7d;text-anchor: middle;");
         //d3.selectAll (graphId).selectAll(".nvd3 .nv-groups path.nv-line").attr("style", "fill: none; stroke-width: 1.5px;");
 
