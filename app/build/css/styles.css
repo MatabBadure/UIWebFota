@@ -9451,6 +9451,7 @@ ul.dropdown-menu {
 
   .patient-user__navbar ul > li > a .icons {
     top: 13px;
+    display: none;
   }
 
   .patient-user__navbar {
@@ -9592,7 +9593,7 @@ ul.dropdown-menu {
   }
 
   /*Admin Responsive column style*/
-  .col-hide-iPad {
+  .col-hide-iPad, .patient-user__navbar ul > li > a .icons {
     display: none;
   }
 

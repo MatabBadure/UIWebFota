@@ -9392,6 +9392,7 @@ ul.dropdown-menu {
 
   .patient-user__navbar ul > li > a .icons {
     top: 13px;
+    display: none;
   }
 
   .patient-user__navbar {
@@ -9409,11 +9410,12 @@ ul.dropdown-menu {
   }
 
   .dashboard__manage-view--header .header--type {
-    width: 20%;
+    /*width: 20%;*/
   }
 
   .dashboard__manage-view--list > div {
-    width: 20%;
+    /*		width: 20%;
+    */
   }
 
   .manage_view_list_iPad .centered {

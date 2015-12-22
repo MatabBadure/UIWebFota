@@ -55,7 +55,11 @@ angular.module('hillromvestApp')
             $state.go('hcpProfileRcadmin',{
               'doctorId': doctor.id
             });
-          }else{
+          }else if($scope.role === loginConstants.role.associates){
+            $state.go('hcpProfileAssociates',{
+              'doctorId': doctor.id
+            });
+          }else {
             $state.go('hcpProfile',{
               'doctorId': doctor.id
             });
