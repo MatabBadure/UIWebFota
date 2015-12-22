@@ -15,7 +15,7 @@ angular.module('hillromvestApp')
 
     $scope.init = function(){
       var currentRoute = $state.current.name;
-      if (currentRoute === 'hcpProfile' || currentRoute === 'hcpProfileRcadmin') {
+      if (currentRoute === 'hcpProfile' || currentRoute === 'hcpProfileRcadmin' || currentRoute === 'hcpProfileAssociates') {
         $scope.currentPageIndex = 1;
         $scope.perPageCount = 10;
         $scope.pageCount = 0;
@@ -27,7 +27,7 @@ angular.module('hillromvestApp')
         $scope.getDoctorDetails($stateParams.doctorId, $scope.setEditMode);        
       } else if (currentRoute === 'hcpNew' || currentRoute === 'hcpNewRcadmin') {
         $scope.createDoctor();
-      } else if(currentRoute === 'associatedClinic' || currentRoute === 'associatedClinicRcadmin'){
+      } else if(currentRoute === 'associatedClinic' || currentRoute === 'associatedClinicRcadmin' || currentRoute === 'associatedClinicAssociates'){
         $scope.getAvailableclinics($stateParams.doctorId);       
         $scope.getDoctorById($stateParams.doctorId);
       }
@@ -126,7 +126,9 @@ angular.module('hillromvestApp')
     $scope.switchHCPTab = function(status){
       if($scope.doctorStatus.role === loginConstants.role.acctservices){
         $state.go(status+loginConstants.role.Rcadmin, {'doctorId': $stateParams.doctorId});
-      }else{
+      }else if($scope.doctorStatus.role === loginConstants.role.associates){
+        $state.go(status+'Associates', {'doctorId': $stateParams.doctorId});
+      }else {
         $state.go(status, {'doctorId': $stateParams.doctorId});
       }
     };
@@ -260,7 +262,11 @@ angular.module('hillromvestApp')
         $state.go('patientOverviewRcadmin', {
           'patientId': patient.id
         });
-      }else{
+      }else if($scope.doctorStatus.role === loginConstants.role.associates){
+        $state.go('associatepatientOverview', {
+          'patientId': patient.id
+        });
+      }else {
         $state.go('patientOverview', {
           'patientId': patient.id
         });
