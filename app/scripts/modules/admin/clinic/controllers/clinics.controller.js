@@ -20,7 +20,7 @@ angular.module('hillromvestApp')
         //$scope.getClinicDetails($stateParams.clinicId, $scope.setEditMode);
       } else if (currentRoute === 'clinicNew' || currentRoute === 'clinicNewRcadmin') {
         $scope.initCreateClinic();
-      } else if (currentRoute === 'clinicUser' || currentRoute === 'clinicUserRcadmin'){
+      } else if (currentRoute === 'clinicUser' || currentRoute === 'clinicUserRcadmin' || currentRoute === 'associateClinicUser'){
         $scope.sortClinicList = sortOptionsService.getSortOptionsForClinicList();
         $scope.initPaginationVars();
         $scope.searchFilter = searchFilterService.initSearchFiltersForClinic();
@@ -267,7 +267,7 @@ angular.module('hillromvestApp')
     /* init clinic list*/
 
       $scope.searchClinicsOnQueryChange = function(){
-        if(($state.current.name === 'clinicUser' || $state.current.name === 'clinicUserRcadmin') && !searchOnLoad){
+        if(($state.current.name === 'clinicUser' || $state.current.name === 'clinicUserRcadmin' || $state.current.name === 'associateClinicUser') && !searchOnLoad){
           $scope.searchClinics();
         }
       };
