@@ -7,7 +7,9 @@ angular.module('hillromvestApp')
           header = {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
-            'x-auth-token': token
+            'x-auth-token': token,
+            'X-Frame-Options': 'SAMEORIGIN',
+            'X-Content-Type-Options': 'nosniff'
           };
         return header;
       }
