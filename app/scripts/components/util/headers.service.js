@@ -10,6 +10,15 @@ angular.module('hillromvestApp')
             'x-auth-token': token
           };
         return header;
+      },
+      getHeaderForXls: function() {
+        var token = StorageService.get('logged').token,
+          header = {
+            'Content-Type': 'application/vnd.ms-excel',
+            'Accept': 'application/vnd.ms-excel',
+            'x-auth-token': token
+          };
+        return header;
       }
     };
   }]);
