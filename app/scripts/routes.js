@@ -3716,7 +3716,7 @@ angular.module('hillromvestApp')
               },
               views: {
                   'content@': {
-                      templateUrl: 'scripts/modules/admin/clinic/directives/clinic-profile/profile.html',
+                      templateUrl: 'scripts/modules/associate/clinic/views/clinic-info/clinic-profile/profile.html',
                       controller: 'clinicsController'
                   }
               },
