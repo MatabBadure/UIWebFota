@@ -484,7 +484,8 @@
 
 .dashboard__manage-view--pagination .inactive {
 	font-size: $font-size-small;
-	color: $celeste;
+/*	color: $celeste;*/
+  color: $bombay;
 	font-weight: $font-weight-medium;
 	cursor: default;
 }
@@ -803,7 +804,8 @@ tags-input .autocomplete .suggestion-item.selected, tags-input .autocomplete .su
 
 .dashboard__manage-view--header .header--type {
   padding: 0 10px;
-  color: $cyan-blue-light;
+  /*color: $cyan-blue-light;*/
+  color: $lapis-lazuli;
   font-size: $font-size-small;
   font-weight: 300;
 }
