@@ -2203,13 +2203,18 @@ angular.module('hillromvestApp')
       }  
     };
 
-    $scope.cloaseGraphLoadingModal = function(){
-      $("#graph-loading-modal").hide();
+    $scope.cloaseXLSModal = function(){
+      $("#no-xls-modal").css("display", "none");
     }
 
     $scope.downloadRawDataAsCsv = function(){      
       patientService.getDeviceDataAsCSV($scope.patientId, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-')).then(function(response){
-         graphService.downloadAsCSVFile(response.data, 'VestDeviceReport.csv', 'vestDevice');
+        if(response && response.status === 204){
+          //showpopup
+          $("#no-xls-modal").css("display", "block");
+        }else{
+          saveAs(new Blob([response.data],{type:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"}), "TherapyData.xlsx");          
+        }
       });
     };
 

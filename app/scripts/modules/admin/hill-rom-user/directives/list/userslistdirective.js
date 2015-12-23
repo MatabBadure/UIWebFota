@@ -26,6 +26,7 @@ angular.module('hillromvestApp')
       function($scope, $timeout, $state, UserService, searchFilterService,sortOptionsService, URL, StorageService, loginConstants) {
         var searchOnLoad = true;
         $scope.init = function() {
+          $scope.userRole = StorageService.get('logged').role;
           $scope.sortUserList = sortOptionsService.getSortOptionsForUserList();
           $scope.users = [];
           $scope.currentPageIndex = 1;

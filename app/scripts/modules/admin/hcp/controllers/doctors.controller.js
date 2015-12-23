@@ -287,7 +287,7 @@ angular.module('hillromvestApp')
     };
     
     $scope.searchPatientsOnQueryChange = function(){
-      if(($state.current.name === 'hcpProfile' || $state.current.name === 'hcpProfileRcadmin') && !searchOnLoad){
+      if(($state.current.name === 'hcpProfile' || $state.current.name === 'hcpProfileRcadmin' || $state.current.name === 'hcpProfileAssociates') && !searchOnLoad){
         $scope.searchPatientsForHCP();
       }
     };
