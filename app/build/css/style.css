@@ -6962,7 +6962,8 @@ a::-moz-focus-inner {
 
 .dashboard__manage-view--pagination .inactive {
   font-size: 12px;
-  color: #cccccc;
+  /*	color: $celeste;*/
+  color: #aeb5be;
   font-weight: 400;
   cursor: default;
 }
@@ -7272,7 +7273,8 @@ tags-input .autocomplete .suggestion-item.selected, tags-input .autocomplete .su
 
 .dashboard__manage-view--header .header--type {
   padding: 0 10px;
-  color: #7ca3dc;
+  /*color: $cyan-blue-light;*/
+  color: #276092;
   font-size: 12px;
   font-weight: 300;
 }
@@ -9083,15 +9085,28 @@ ul.dropdown-menu {
 }
 .nvtooltip .graph_ul .notes {
   padding-right: 7px;
+  margin-right: 30px;
+  width: 150px;
 }
 
 .patient_dashdoard_btns {
   clear: left;
   display: inline-block;
-  margin: 30px 0px 20px;
+  margin: 380px 0px 20px;
   width: 100%;
 }
 .patient_dashdoard_btns .dropdown-menu {
+  margin-bottom: 80px;
+  z-index: 9999 !important;
+}
+
+.patient_dashdoard_btns_compliance {
+  clear: left;
+  display: inline-block;
+  margin: 30px 0px 20px;
+  width: 100%;
+}
+.patient_dashdoard_btns_compliance .dropdown-menu {
   margin-bottom: 80px;
   z-index: 9999 !important;
 }
@@ -9229,6 +9244,15 @@ ul.dropdown-menu {
 .treatmentGraphTL .value {
   text-align: left;
   width: 70px;
+}
+
+/*for no event*/
+.pointer-no-event {
+  pointer-events: none !important;
+}
+
+.pointer-fill-event {
+  pointer-events: fill !important;
 }
 
 /*Navbar Style*/
