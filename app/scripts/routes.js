@@ -3706,5 +3706,30 @@ angular.module('hillromvestApp')
                         }
                     ]
                 }
+            })
+            .state('clinicProfileAssociates', {
+              parent: 'associateClinicUser',
+              url: '/{clinicId}/clinic-info',
+              data: {
+                  roles: ['ASSOCIATES'],
+                  pageTitle: 'clinic.page-title.clinic-profile'
+              },
+              views: {
+                  'content@': {
+                      templateUrl: 'scripts/modules/admin/clinic/directives/clinic-profile/profile.html',
+                      controller: 'clinicsController'
+                  }
+              },
+              resolve: {
+                  translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                      $translatePartialLoader.addPart('clinic');
+                      return $translate.refresh();
+                  }],
+                  authorize: ['Auth',
+                      function(Auth) {
+                          return Auth.authorize(false);
+                      }
+                  ]
+              }
             });
 }]);

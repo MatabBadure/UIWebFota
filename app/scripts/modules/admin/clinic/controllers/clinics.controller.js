@@ -301,12 +301,16 @@ angular.module('hillromvestApp')
         if($scope.clinicStatus.role === loginConstants.role.acctservices){
           $state.go('clinicProfileRcadmin', {
             'clinicId': clinic.id
-          });          
-        }else{
+          });
+        }else if($scope.clinicStatus.role === loginConstants.role.associates){
+          $state.go('clinicProfileAssociates', {
+            'clinicId': clinic.id
+          });
+        }else {
           $state.go('clinicProfile', {
             'clinicId': clinic.id
           });
-         }
+        }
       };
 
       $scope.createClinic = function(){
