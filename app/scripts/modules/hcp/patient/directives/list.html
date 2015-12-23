@@ -14,16 +14,16 @@
       </div>
 
       <div class="dashboard__manage-view--header margin-top">
-        <div class="col-md-2 col-sm-2 header--type pull-left-mob width120">
+        <div class="col-md-2 col-sm-4 header--type pull-left-mob width120">
           <span ng-class="{'sort-icon--default' : sortPatientList.lastName.isDefault, 'sort-icon-down': sortPatientList.lastName.isDown, 'sort-icon-up':sortPatientList.lastName.isUp}" ng-click="sortType('lastName')" translate="patient.patient-name">Patient Name</span>
         </div>
-        <div class="col-md-2 col-sm-2 header--type pull-left-mob width120">
+        <div class="col-md-2 col-sm-3 header--type pull-left-mob width120">
           <span ng-class="{'sort-icon--default' : sortPatientList.mrnId.isDefault, 'sort-icon-down': sortPatientList.mrnId.isDown, 'sort-icon-up':sortPatientList.mrnId.isUp}" ng-click="sortType('mrnId')" translate="patient.mrn-id">MRN ID</span>
         </div>
-        <div class="col-md-2 col-sm-2 header--type none">
+        <div class="col-md-2 col-sm-3 header--type none hidden-sm">
           <span ng-class="{'sort-icon--default' : sortPatientList.dob.isDefault, 'sort-icon-down': sortPatientList.dob.isDown, 'sort-icon-up':sortPatientList.dob.isUp}" ng-click="sortType('dob')" translate="patient.date-of-birth">DOB</span>
         </div>
-        <div class="col-md-2 col-sm-2 header--type none">
+        <div class="col-md-2 col-sm-3 header--type none">
           <span ng-class="{'sort-icon--default' : sortPatientList.city.isDefault, 'sort-icon-down': sortPatientList.city.isDown, 'sort-icon-up':sortPatientList.city.isUp}" ng-click="sortType('city')" translate="patient.city-state">City/State</span>
         </div>
         <div class="col-md-2 hidden-sm header--type none">
@@ -32,28 +32,28 @@
         <div class="col-md-2 col-sm-3 header--type none">
           <span ng-class="{'sort-icon--default' : sortPatientList.hcp.isDefault, 'sort-icon-down': sortPatientList.hcp.isDown, 'sort-icon-up':sortPatientList.hcp.isUp}" ng-click="sortType('hcp')" translate="patient.hcp-name">HCP Name</span>
         </div>
-        <div class="col-md-2 col-sm-2 header--type pull-left-mob">
+        <div class="col-md-2 col-sm-3 header--type pull-left-mob">
           <span ng-class="{'sort-icon--default' : sortPatientList.status.isDefault, 'sort-icon-down': sortPatientList.status.isDown, 'sort-icon-up':sortPatientList.status.isUp}" ng-click="sortType('status')" translate="patient.status">Status</span>
         </div>
-        <div class="col-md-2 col-sm-2 header--type none">
+        <div class="col-md-2 col-sm-3 header--type none hidden-sm">
           <span ng-class="{'sort-icon--default' : sortPatientList.adherence.isDefault, 'sort-icon-down': sortPatientList.adherence.isDown, 'sort-icon-up':sortPatientList.adherence.isUp}" ng-click="sortType('adherence')" translate="patient.adherence">Adherence</span>
         </div>
         <div class="clr"></div>
       </div>
 
       <div class="dashboard__manage-view--list" ng-repeat="patient in patients" ng-click="selectPatient(patient)" ng-readonly="true">
-          <div class="col-md-2 col-sm-2 reset-padding pull-left-mob width120">
+          <div class="col-md-2 col-sm-4 reset-padding pull-left-mob width120">
             <span class="main-prim-info">{{patient.lastName}}, {{patient.firstName}}</span>
             <span class="main-secon-info">{{patient.email}}</span>
           </div>
-          <div class="col-md-2 col-sm-2 reset-padding centered pull-left-mob width120">
+          <div class="col-md-2 col-sm-3 reset-padding centered pull-left-mob width120">
             <span class="impo-highlight">{{patient.mrnId}}</span>
           </div>
-          <div class="col-md-2 col-sm-2 reset-padding centered none">
+          <div class="col-md-2 col-sm-3 reset-padding centered none hidden-sm">
             <span class="short-info">{{patient.dob}}</span>
           </div>
 
-          <div class="col-md-2 col-sm-2 reset-padding centered none">
+          <div class="col-md-2 col-sm-3 reset-padding centered none">
             <span class="short-info">{{patient.city}} </span>
             <span class="short-info" ng-if="patient.state && patient.city">,</span>
             <span class="short-info">{{patient.state}} </span>
@@ -68,13 +68,13 @@
             <span ng-if="!patient.hcpNamesCSV" class="short-info" translate="global.not-applicable"></span>
           </div>
 
-          <div class="col-md-2 col-sm-2 reset-padding pull-left-mob">
+          <div class="col-md-2 col-sm-3 reset-padding pull-left-mob">
             <span class="short-info active centered" ng-if="patient.expired" translate="patient.status-type.expired"></span>
             <span class="short-info active centered" ng-if="!patient.expired && !patient.isDeleted" translate="patient.status-type.active"></span>
             <span class="short-info inactive centered" ng-if="!patient.expired &&  patient.isDeleted" translate="patient.status-type.inactive"></span>
           </div>
 
-          <div class="col-md-2 col-sm-2 reset-padding-left text-centered none">
+          <div class="col-md-2 col-sm-3 reset-padding-left text-centered none hidden-sm">
             <span class="short-info">{{patient.adherence}}</span>
           </div>
 
