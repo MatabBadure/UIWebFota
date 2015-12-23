@@ -2213,8 +2213,7 @@ angular.module('hillromvestApp')
           //showpopup
           $("#no-xls-modal").css("display", "block");
         }else{
-          console.log("response : ", response);
-          graphService.downloadAsCSVFile(response.data, 'VestDeviceReport.csv', 'vestDevice');
+          saveAs(new Blob([response.data],{type:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"}), "TherapyData.xlsx");          
         }
       });
     };
