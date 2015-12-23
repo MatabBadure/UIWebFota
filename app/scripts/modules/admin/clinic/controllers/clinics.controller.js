@@ -25,7 +25,7 @@ angular.module('hillromvestApp')
         $scope.initPaginationVars();
         $scope.searchFilter = searchFilterService.initSearchFiltersForClinic();
         $scope.initClinicList();
-      } else if (currentRoute === 'clinicProfile' || currentRoute === 'clinicProfileRcadmin'){
+      } else if (currentRoute === 'clinicProfile' || currentRoute === 'clinicProfileRcadmin' || currentRoute === 'clinicProfileAssociates'){
         $scope.initClinicProfile($stateParams.clinicId);
       } else if(currentRoute === 'clinicAssociatedPatients' || currentRoute === 'clinicAssociatedPatientsRcadmin'){
         $scope.searchFilter = {};    
