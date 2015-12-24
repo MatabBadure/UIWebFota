@@ -13,7 +13,7 @@ angular.module('hillromvestApp')
 
     $scope.init = function() {
       var currentRoute = $state.current.name;
-      if ($state.current.name === 'hillRomUserEdit') {
+      if ($state.current.name === 'hillRomUserEdit' || $state.current.name === 'associateHillRomUserView') {
         $scope.getUserDetails($stateParams.userId, $scope.setEditMode);
       } else if ($state.current.name === 'hillRomUserNew') {
         $scope.createUser();
@@ -58,6 +58,10 @@ angular.module('hillromvestApp')
 
     $scope.onSuccess = function() {
       $scope.$broadcast('resetList', {});
+    };
+
+    $scope.back = function(){
+      $state.go('associateHillRomUser');
     };
 
     $scope.init();

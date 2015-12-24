@@ -3629,5 +3629,82 @@ angular.module('hillromvestApp')
                         return $translate.refresh();
                     }]
                 }
+            })
+
+            .state('hcpProfileAssociates', {
+                parent: 'associateHcpUser',
+                url: '/{doctorId}/hcpProfile',
+                data: {
+                    roles: ['ASSOCIATES'],
+                    pageTitle: 'doctor.page-title.hcp-profile'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/associate/hcp/views/hcp-info/overview/overview.html',
+                        controller: 'DoctorsController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('doctor');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+
+            .state('associatedClinicAssociates', {
+                parent: 'associateHcpUser',
+                url: '/{doctorId}/associatedClinic',
+                data: {
+                    roles: ['ASSOCIATES'],
+                    pageTitle: 'doctor.page-title.associated-clinics'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/associate/hcp/views/hcp-info/associated-clinic/clinic-list.html',
+                        controller: 'DoctorsController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('doctor');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+            .state('associateHillRomUserView', {
+                parent: 'associateHillRomUser',
+                url: '/{userId}',
+                data: {
+                    roles: ['ASSOCIATES'],
+                    pageTitle: 'user.page-title.user'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/associate/hill-rom-user/views/user-info/view.html',
+                        controller: 'UsersController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('hillRomUser');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
             });
 }]);
