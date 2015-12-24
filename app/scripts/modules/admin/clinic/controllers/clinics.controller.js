@@ -690,6 +690,7 @@ angular.module('hillromvestApp')
         $scope.initClinicAdmin($stateParams.clinicId);
         $scope.associateClinicAdminModal = false;
         notyService.showMessage(response.data.message, 'success');
+        $scope.cancelClinicAdmin();
       }).catch(function(response){});
     };
 
@@ -778,6 +779,7 @@ angular.module('hillromvestApp')
       if($scope.createClinicAdminForm.$dirty){
         $scope.getclinicAdmin($stateParams.clinicId);
       }
+      $scope.addAdmin = '';
       $scope.resetClinicAdminForm();
     };
 

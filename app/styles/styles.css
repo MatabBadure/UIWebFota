@@ -6942,7 +6942,8 @@ a::-moz-focus-inner {
 
 .dashboard__manage-view--pagination .inactive {
   font-size: 12px;
-  color: #cccccc;
+  /*	color: $celeste;*/
+  color: #aeb5be;
   font-weight: 400;
   cursor: default;
 }
@@ -7250,7 +7251,8 @@ tags-input .autocomplete .suggestion-item.selected, tags-input .autocomplete .su
 
 .dashboard__manage-view--header .header--type {
   padding: 0 10px;
-  color: #7ca3dc;
+  /*color: $cyan-blue-light;*/
+  color: #276092;
   font-size: 12px;
   font-weight: 300;
 }
@@ -9058,7 +9060,11 @@ ul.dropdown-menu {
   color: #333333;
 }
 .nvtooltip .graph_ul .notes {
+<<<<<<< HEAD
   padding: 7px;
+=======
+  padding-right: 7px;
+>>>>>>> fea77496113fe1130fe787e1408314957310f596
   margin-right: 30px;
   width: 150px;
 }
@@ -9066,10 +9072,21 @@ ul.dropdown-menu {
 .patient_dashdoard_btns {
   clear: left;
   display: inline-block;
-  margin: 30px 0px 20px;
+  margin: 380px 0px 20px;
   width: 100%;
 }
 .patient_dashdoard_btns .dropdown-menu {
+  margin-bottom: 80px;
+  z-index: 9999 !important;
+}
+
+.patient_dashdoard_btns_compliance {
+  clear: left;
+  display: inline-block;
+  margin: 30px 0px 20px;
+  width: 100%;
+}
+.patient_dashdoard_btns_compliance .dropdown-menu {
   margin-bottom: 80px;
   z-index: 9999 !important;
 }
@@ -9207,6 +9224,15 @@ ul.dropdown-menu {
 .treatmentGraphTL .value {
   text-align: left;
   width: 70px;
+}
+
+/*for no event*/
+.pointer-no-event {
+  pointer-events: none !important;
+}
+
+.pointer-fill-event {
+  pointer-events: fill !important;
 }
 
 /*Navbar Style*/
@@ -9394,6 +9420,7 @@ ul.dropdown-menu {
 
   .patient-user__navbar ul > li > a .icons {
     top: 13px;
+    display: none;
   }
 
   .patient-user__navbar {
@@ -9411,11 +9438,12 @@ ul.dropdown-menu {
   }
 
   .dashboard__manage-view--header .header--type {
-    width: 20%;
+    /*width: 20%;*/
   }
 
   .dashboard__manage-view--list > div {
-    width: 20%;
+    /*		width: 20%;
+    */
   }
 
   .manage_view_list_iPad .centered {
@@ -9768,6 +9796,18 @@ ul.dropdown-menu {
     float: left;
   }
 
+  .protocol_heading_color span {
+    color: #7ca3dc !important;
+  }
+
+  .dashboard__manage-view--header {
+    border: none;
+    padding: 0;
+  }
+  .dashboard__manage-view--header .header--type {
+    font-size: 14px;
+  }
+
   .hcp_ellipses {
     text-overflow: ellipsis;
     width: 77px;
@@ -9880,6 +9920,10 @@ ul.dropdown-menu {
   }
   .stats_chart_container .stats_chart_content .percent, .hcp_wrapper .stats_chart_container .stats_chart_content .percent {
     width: 100%;
+  }
+
+  .border-tp {
+    border-top: 1px solid #cccccc;
   }
 
   .patient-user__navbar .patient-dashboard {

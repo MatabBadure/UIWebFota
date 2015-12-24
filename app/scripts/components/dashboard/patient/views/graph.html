@@ -1,4 +1,3 @@
-
 <div class="container admin-user">
 	<div class="col-md-16 margin-top reset-padding mob_no_margin">
 		<div class="user-gen-details">
@@ -100,31 +99,10 @@
 
 							</div>
 						</div>
-					</div>
-					<!-- <div class="col-md-4 col-sm-16 dashboard_noti_mobile" ng-if="role === 'PATIENT'">
-						<div class="dashboard_noti_section">
-							<div class="header_noti"><h4 translate="graph.notification"></h4></div>
-							<div class="notification_container" ng-show="patientNotifications.length <= 0">
-							<ul>
-								<li>
-									<span translate="graph.no-notifications"></span>
-								</li>
-							</ul>
-							</div>
-							<div class="notification_container" ng-show="patientNotifications.length > 0">
-								<ul>
-									<li ng-repeat="notification in patientNotifications | limitTo:2">
-          					<span class="dsh_icon {{notification.class}}"></span>
-          							{{notification.message}}
-          					<span ng-show="notification.message"><a href="" class="read_more"  translate="graph.more"></a></span>
-									</li>
-								</ul>
-							</div>
-						</div>
-					</div> -->
+					</div>					
 				</div>
 			</div>
-			<div class="col-md-16 padding0">
+			<div class="col-md-16 padding0" ng-class="{'pointer-no-event': !isGraphLoaded, 'pointer-fill-event': isGraphLoaded}">
 				<div class="bar_graph_header">
 					<div class="col-md-5 col-sm-7 left_header_barchart padding0">
 						<div class="row">
@@ -152,36 +130,48 @@
 				</div>
 			</div>
 
-
-		<div class="col-md-16" class="all_graph_wrapper">
+		<loading loaded="isGraphLoaded"></loading>
+		<div class="col-md-16" class="all_graph_wrapper" >		
 			<div class="graph_nodata" ng-show="noDataAvailable">
 					<span class="noData_text"> No Data Available!</span>
 			</div>
-			<div ng-if="hmrGraph" class="dashboard_line_graph" id="lineGraphWrapper">
+			<div ng-if="hmrGraph" class="complianceGraphPrim_wrapper" id="lineGraphWrapper">
 				<div ng-if="hmrLineGraph">
-					<div id="hmrLineGraph" class="complianceGraph col-md-16">
-						<svg ng-show="!noDataAvailable"> </svg>
+					<div id="hmrLineGraphSVG" class="complianceGraph col-md-16" style="position:absolute;z-index:2;">
+						<svg id="hmrLineSVG" ng-show="!noDataAvailable"> </svg>						
+					</div>
+					<div id="hmrLineGraphCompliance" class="complianceGraph col-md-16" style="margin-top: -351px;position:absolute;z-index:-1;">
+						<svg id="hmrCompliance" style="opcity: 1;"> </svg>
+					</div>
+					<div id="hmrLineGraphCompliance1" class="complianceGraph col-md-16" style="margin-top: -351px;position:absolute;z-index:-1;" >		
+						<svg id="hmrCompliance1" style="opcity: 1;"> </svg>
 					</div>
 				</div>
-				<div ng-if="hmrBarGraph" id="complianceGraphWrapper">
-					<div id="hmrBarGraph" class="complianceGraph col-md-16">
+				<div ng-if="hmrBarGraph" id="hmrBarGraphWrapper">
+					<div id="hmrBarGraph" class="complianceGraph col-md-16" style="position:absolute;z-index:2;">
 						<svg ng-show="!noDataAvailable"> </svg>
+					</div>
+					<div id="hmrBarGraphCompliance" class="complianceGraph col-md-16" style="margin-top: -351px;position:absolute;z-index:-1;">
+						<svg id="hmrCompliance" style="opcity: 1;"> </svg>
+					</div>
+					<div id="hmrBarGraphCompliance1" class="complianceGraph col-md-16" style="margin-top: -351px;position:absolute;z-index:-1;" >		
+						<svg id="hmrCompliance1" style="opcity: 1;"> </svg>
 					</div>
 				</div>
 			</div>
 			<div ng-if="complianceGraph" id="complianceGraphWrapper">
-				<div class="col-md-16">
+				<div class="col-md-16"> 
 					<div class="pull-right wrapper_custom_check">
 						<form action="#" ng-if="isComplianceExist">
-							<div class="custom_check_container" ng-click="pressureIsDisabled && isLegendEnabled('pressureIsDisabled');">
+							<div class="custom_check_container" ng-class="{'pointer-no-event': !isGraphLoaded, 'pointer-fill-event': isGraphLoaded}" ng-click="pressureIsDisabled && isLegendEnabled('pressureIsDisabled');">
 								<input id="pressure" class="check" type="checkbox" name="pressure" ng-disabled="pressureIsDisabled" ng-model="compliance.pressure" ng-change="reCreateComplianceGraph();$event.stopPropagation();">
 			  		 			<label class="check_label pressure_legend" for="pressure" translate="graph.pressure" ></label>
 							</div>
-				  		 	<div class="custom_check_container" ng-click="frequencyIsDisabled && isLegendEnabled('frequencyIsDisabled');">
+				  		 	<div class="custom_check_container" ng-class="{'pointer-no-event': !isGraphLoaded, 'pointer-fill-event': isGraphLoaded}" ng-click="frequencyIsDisabled && isLegendEnabled('frequencyIsDisabled');">
 				  		 		<input id="frequency" class="check" type="checkbox" name="frequency" ng-disabled="frequencyIsDisabled" ng-model="compliance.frequency" ng-change="reCreateComplianceGraph();$event.stopPropagation();">
 				  		 		<label class="check_label frequency_legend" for="frequency" translate="graph.frequency" ></label>
 				  		 	</div>
-				  		 	<div class="custom_check_container" ng-click="durationIsDisabled && isLegendEnabled('durationIsDisabled');">
+				  		 	<div class="custom_check_container" ng-class="{'pointer-no-event': !isGraphLoaded, 'pointer-fill-event': isGraphLoaded}" ng-click="durationIsDisabled && isLegendEnabled('durationIsDisabled');">
 				  		 		<input id="duration" class="check" type="checkbox" name="duration" ng-disabled="durationIsDisabled" ng-model="compliance.duration" ng-change="reCreateComplianceGraph();$event.stopPropagation();">
 				  		 		<label class="check_label duration_legend" for="duration" translate="graph.duration" ></label>
 				  		 	</div>
@@ -190,10 +180,19 @@
 		  		 		<span ng-show="minComplianceParamErrMsg" translate="graph.min-legend-required" class="has-error graph_check_error" id="min-compliance-err"></span> -->
 					</div>
 				</div>
-				<div id="complianceGraphPrim" class="complianceGraphPrim_wrapper">
-				<div id="complianceGraph" class="complianceGraph col-md-16">
-					<svg ng-show="!noDataAvailable"> </svg>
-				</div>
+				<div id="complianceGraphPrim" class="complianceGraphPrim_wrapper" >
+					<div id="complianceGraph" class="complianceGraph col-md-16">
+						<svg id="compCompliance" ng-show="!noDataAvailable"> </svg>
+					</div>
+					<div id="complianceGraph1" class="complianceGraph col-md-16" style="margin-top: -351px;position:absolute;z-index:-1;"> 
+						<svg id="compCompliance1" ng-show="!noDataAvailable"> </svg>
+					</div>
+					<div id="complianceGraph2" class="complianceGraph col-md-16" style="margin-top: -351px;position:absolute;z-index:-1;"> 
+						<svg id="compCompliance2" ng-show="!noDataAvailable"> </svg>
+					</div>
+					<div id="complianceGraphHMR" class="complianceGraph col-md-16" style="margin-top: -351px;position:absolute;z-index:-1;">
+						<svg id="complianceHMR" ng-show="!noDataAvailable"> </svg>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -201,18 +200,16 @@
 
 	<!-- Note section HTML -->
 	<div class="col-md-16">
-		<div class="btn_group patient_dashdoard_btns" >
+		<div class="btn_group patient_dashdoard_btns" ng-class="{ 'btn_group patient_dashdoard_btns_compliance': complianceGraph, 'btn_group patient_dashdoard_btns': !complianceGraph }">
 			<div dropdown class="pull-right left">
-				<button id="single-button" type="button" class="hillrom-btn btn-submit margin0 float-right" dropdown-toggle ng-disabled="disabled" translate="graph.download" >
+				<button id="single-button" type="button" class="hillrom-btn btn-submit margin0 float-right" ng-class="{ 'pointer-fill-event': (!noDataAvailable && isGraphLoaded) , 'pointer-no-event': (!isGraphLoaded || noDataAvailable) }" dropdown-toggle ng-disabled="disabled" translate="graph.download" >
 					<span class="caret"></span>
 				</button>
+				
 				<ul class="dropdown-menu" role="menu" aria-labelledby="single-button" ng-if="!noDataAvailable">
 					<li role="menuitem">
 						<a href="javascript:void(0);" ng-click="downloadAsPdf();" translate="graph.export-as-pdf"></a>
-					</li>
-					<li role="menuitem">
-						<a href="javascript:void(0);" ng-click="downloadProcessedDataAsCsv();" translate="graph.export-processed-data"></a>
-					</li>
+					</li>					
 					<li role="menuitem">
 						<a href="javascript:void(0);" ng-click="downloadRawDataAsCsv();" translate="graph.export-raw-data"></a>
 					</li>
@@ -343,6 +340,23 @@
           <buton class="hillrom-btn btn-submit float-right" ng-click="deleteNote(noteToDelete.id)">Yes</buton>
           <buton class="cancel hillrom-btn btn-submit float-right" data-dismiss="modal" ng-click="closeNoteDeleteModal()">No</buton>
          </div>
+      </div>
+      <footer class="modal__footer">
+      </footer>
+    </div>
+  </div>
+</div>
+
+<!-- modal to show graph is loading -->
+<div class="modal" id="no-xls-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal__dialog">
+    <div class="modal__content">
+      <header class="modal__header">
+        <button type="button" class="modal__close graph_close_btn" data-dismiss="modal" ng-click="cloaseXLSModal()">&times;</button>
+        <p >{{header}}</p>
+      </header>
+      <div class="modal__body">
+        <div class="modal--message">No therapy done within the selected duration</div>        
       </div>
       <footer class="modal__footer">
       </footer>

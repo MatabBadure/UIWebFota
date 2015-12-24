@@ -45,7 +45,7 @@ angular.module('hillromvestApp')
         };
 
         $scope.searchDoctorsOnQueryChange = function(){
-          if(($state.current.name === "hcpUser" || $state.current.name === "hcpUserRcadmin") && !$stateParams.clinicIds && !searchOnLoad){
+          if(($state.current.name === "hcpUser" || $state.current.name === "hcpUserRcadmin" || $state.current.name === "associateHcpUser") && !$stateParams.clinicIds && !searchOnLoad){
             $scope.searchDoctors();
           }
         };
@@ -55,7 +55,11 @@ angular.module('hillromvestApp')
             $state.go('hcpProfileRcadmin',{
               'doctorId': doctor.id
             });
-          }else{
+          }else if($scope.role === loginConstants.role.associates){
+            $state.go('hcpProfileAssociates',{
+              'doctorId': doctor.id
+            });
+          }else {
             $state.go('hcpProfile',{
               'doctorId': doctor.id
             });

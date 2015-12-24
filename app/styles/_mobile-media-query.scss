@@ -1,3 +1,4 @@
+
 @media only screen and (min-width : 320px) and (max-width : 700px) {
 
 	.content-body {
@@ -223,6 +224,19 @@
 	.pull-left-mob{
 		float:left;
 	}
+	.protocol_heading_color{
+		span{
+		color:#7ca3dc !important;
+		}
+	}
+	.dashboard__manage-view--header{
+		border:none;
+		padding:0;
+		.header--type{
+			font-size:14px;
+		}
+	
+	}
 	.hcp_ellipses{
 		text-overflow: ellipsis;
 		width:77px;
@@ -323,7 +337,9 @@
 		}
 	} 
 }
-
+.border-tp{
+	border-top:1px solid #cccccc;
+}
 .patient-user__navbar{
 	.patient-dashboard{
 		width: auto;
