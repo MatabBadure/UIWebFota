@@ -104,6 +104,8 @@
 	}
 	.patient-user__navbar ul > li > a .icons{
 		top: 13px;
+		display:none;
+
 	}
 	.patient-user__navbar{
 		width: 100%;
@@ -119,12 +121,12 @@
   	}
 	.dashboard__manage-view--header{
 		.header--type{
-			width: 20%;
+			/*width: 20%;*/
 		}
 	}
 	.dashboard__manage-view--list > div{
-		width: 20%;
-	}
+/*		width: 20%;
+*/	}
 	.manage_view_list_iPad{
 		.centered{
 			width: 16.666%;

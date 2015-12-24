@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hillromvestApp')
-  .controller('caregiverProfileController',['$scope', '$state', '$location', 'notyService', 'UserService', 'Password', 'Auth', 'AuthServerProvider', 'StorageService', function ($scope, $state, $location, notyService, UserService, Password, Auth, AuthServerProvider, StorageService) {
+  .controller('caregiverProfileController',['$scope', '$state', '$location', 'notyService', 'UserService', 'Password', 'Auth', 'AuthServerProvider', 'StorageService', 'commonsUserService', function ($scope, $state, $location, notyService, UserService, Password, Auth, AuthServerProvider, StorageService, commonsUserService) {
 
 
     $scope.isActive = function(tab) {
@@ -23,6 +23,7 @@ angular.module('hillromvestApp')
       });
       UserService.getUser(userId).then(function(response){
           $scope.associateCareGiver = response.data.user;
+          $scope.associateCareGiver.zipcode = commonsUserService.formatZipcode($scope.associateCareGiver.zipcode);
       });
     };
 
