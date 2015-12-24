@@ -3707,7 +3707,7 @@ angular.module('hillromvestApp')
                     ]
                 }
             })
-            .state('clinicProfileAssociates', {
+            .state('clinicProfileAssociate', {
               parent: 'associateClinicUser',
               url: '/{clinicId}/clinic-info',
               data: {
@@ -3717,6 +3717,83 @@ angular.module('hillromvestApp')
               views: {
                   'content@': {
                       templateUrl: 'scripts/modules/associate/clinic/views/clinic-info/clinic-profile/profile.html',
+                      controller: 'clinicsController'
+                  }
+              },
+              resolve: {
+                  translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                      $translatePartialLoader.addPart('clinic');
+                      return $translate.refresh();
+                  }],
+                  authorize: ['Auth',
+                      function(Auth) {
+                          return Auth.authorize(false);
+                      }
+                  ]
+              }
+            })
+            
+            .state('clinicAssociatedHCPAssociate', {
+              parent: 'associateClinicUser',
+              url: '/{clinicId}/associatedHCP',
+              data: {
+                  roles: ['ASSOCIATES'],
+                  pageTitle: 'clinic.page-title.associated-HCPs'
+              },
+              views: {
+                  'content@': {
+                      templateUrl: 'scripts/modules/associate/clinic/views/clinic-info/hcp/associatedhcp.html',
+                      controller: 'clinicsController'
+                  }
+              },
+              resolve: {
+                  translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                      $translatePartialLoader.addPart('clinic');
+                      return $translate.refresh();
+                  }],
+                  authorize: ['Auth',
+                      function(Auth) {
+                          return Auth.authorize(false);
+                      }
+                  ]
+              }
+            })
+
+            .state('clinicAssociatedPatientsAssociate', {
+              parent: 'associateClinicUser',
+              url: '/{clinicId}/associatedPatients',
+              data: {
+                  roles: ['ASSOCIATES'],
+                  pageTitle: 'clinic.page-title.associated-patients'
+              },
+              views: {
+                  'content@': {
+                      templateUrl: 'scripts/modules/associate/clinic/views/clinic-info/patients/associatedpatients.html',
+                      controller: 'clinicsController'
+                  }
+              },
+              resolve: {
+                  translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                      $translatePartialLoader.addPart('clinic');
+                      return $translate.refresh();
+                  }],
+                  authorize: ['Auth',
+                      function(Auth) {
+                          return Auth.authorize(false);
+                      }
+                  ]
+              }
+            })
+            .state('clinicAdminAssociate', {
+              parent: 'associateClinicUser',
+              url: '/{clinicId}/clinicadmin-clinic-edit',
+              data: {
+                  roles: ['ASSOCIATES'],
+                  pageTitle: 'clinic.page-title.clinic-admin'
+              },
+              views: {
+                  'content@': {
+                      templateUrl: 'scripts/modules/associate/clinic/views/clinic-info/clinic-admin/clinic-admin.html',
                       controller: 'clinicsController'
                   }
               },

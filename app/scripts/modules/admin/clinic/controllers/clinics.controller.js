@@ -25,17 +25,17 @@ angular.module('hillromvestApp')
         $scope.initPaginationVars();
         $scope.searchFilter = searchFilterService.initSearchFiltersForClinic();
         $scope.initClinicList();
-      } else if (currentRoute === 'clinicProfile' || currentRoute === 'clinicProfileRcadmin' || currentRoute === 'clinicProfileAssociates'){
+      } else if (currentRoute === 'clinicProfile' || currentRoute === 'clinicProfileRcadmin' || currentRoute === 'clinicProfileAssociate'){
         $scope.initClinicProfile($stateParams.clinicId);
-      } else if(currentRoute === 'clinicAssociatedPatients' || currentRoute === 'clinicAssociatedPatientsRcadmin'){
+      } else if(currentRoute === 'clinicAssociatedPatients' || currentRoute === 'clinicAssociatedPatientsRcadmin' || currentRoute === 'clinicAssociatedPatientsAssociate'){
         $scope.searchFilter = {};    
         $scope.searchFilter = searchFilterService.initSearchFiltersForPatient();
         $scope.initPaginationVars();
         $scope.initClinicAssoctPatients($stateParams.clinicId);
-      } else if(currentRoute === 'clinicAssociatedHCP' || currentRoute === 'clinicAssociatedHCPRcadmin'){
+      } else if(currentRoute === 'clinicAssociatedHCP' || currentRoute === 'clinicAssociatedHCPRcadmin' || currentRoute === 'clinicAssociatedHCPAssociate'){
         $scope.initClinicAssoctHCPs($stateParams.clinicId);
       }
-      else if(currentRoute === 'clinicAdmin' || currentRoute === 'clinicAdminRcadmin'){
+      else if(currentRoute === 'clinicAdmin' || currentRoute === 'clinicAdminRcadmin' || currentRoute === 'clinicAdminAssociate'){
         $scope.initClinicAdmin($stateParams.clinicId);
       }
     };
@@ -303,7 +303,7 @@ angular.module('hillromvestApp')
             'clinicId': clinic.id
           });
         }else if($scope.clinicStatus.role === loginConstants.role.associates){
-          $state.go('clinicProfileAssociates', {
+          $state.go('clinicProfileAssociate', {
             'clinicId': clinic.id
           });
         }else {
@@ -525,6 +525,10 @@ angular.module('hillromvestApp')
     $scope.switchTab = function(state){
       if($scope.clinicStatus.role === loginConstants.role.acctservices){
         $state.go(state+loginConstants.role.Rcadmin, {
+          'clinicId': $stateParams.clinicId
+        });
+      }else if($scope.clinicStatus.role === loginConstants.role.associates){
+        $state.go(state+'Associate', {
           'clinicId': $stateParams.clinicId
         });
       }else{
