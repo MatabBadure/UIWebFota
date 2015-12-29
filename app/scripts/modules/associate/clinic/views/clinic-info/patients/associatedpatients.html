@@ -1,4 +1,4 @@
-<ng-include src="'scripts/components/navbar/navbar.html'"></ng-include>
+<ng-include src="'scripts/components/navbar/navbarassociate.html'"></ng-include>
 <clinic-navbar></clinic-navbar>
 <div class="container admin-user">
   <div class="col-md-16 margin-top reset-padding">
@@ -88,9 +88,9 @@
         <span class="short-info">{{associatedPatient.patient.adherence}}</span>
       </div>
       </span>
-      <div class="col-md-1 reset-padding-left centered text-right" >
+      <!-- <div class="col-md-1 reset-padding-left centered text-right" >
         <span class="icon-delete-icon" ng-click="associatedPatient.patient.isDeleted || openPatientDeactivateModal(associatedPatient.patient.id);"></span>
-      </div>
+      </div> -->
       <div class="clr"></div>
     </div>
 
@@ -115,7 +115,7 @@
       <div class="clr"></div>
     </div>
   </div>
-  <div class="col-md-16 reset-padding">
+<!--   <div class="col-md-16 reset-padding">
     <div class="col-md-8 clinic-link">
       <input class="form-control" type="text" ng-model="searchPatient" typeahead="patient as patient.lastName + ' ' + patient.firstName + '&nbsp;&nbsp; ' + patient.hillromId + ' &nbsp;&nbsp; '+ patient.city + '  &nbsp;&nbsp; '+ patient.state for patient in getPatientsToAssociate($viewValue)" typeahead-on-select="showAssociatePatientModal($item)" placeholder="{{'clinic.placeholder.patient-search' | translate}}" ng-show="isAssociatePatient">
     </div>
@@ -123,29 +123,5 @@
     <div class="col-md-8 clinic-link">
       <buton class="hillrom-btn btn-primary float-right" ng-click="linkPatient()" translate="clinic.link-patient" ng-show="!isAssociatePatient"></buton>
     </div>
-  </div>
+  </div> -->
 </div>
-
-<div ng-if="patientDeactivateModal" class="modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true">
-  <div class="modal__dialog">
-    <div class="modal__content">
-      <header class="modal__header">
-        <button type="button" class="modal__close" data-dismiss="modal" ng-click="closePatientDeactivateModal()">&times;</button>
-         <p translate="clinic.deletePatient.warning"></p>
-      </header>
-      <div class="modal__body">
-         <div class="modal--message" translate="clinic.deletePatient.message"></div>
-         <div class="fropile_update_btn_group row modal--custom-btn">
-          <buton class="hillrom-btn btn-submit float-right" ng-click="disassociatePatient(deletePatientId)">Yes</buton>
-          <buton class="cancel hillrom-btn btn-submit float-right" data-dismiss="modal" ng-click="closePatientDeactivateModal()">No</buton>
-         </div>
-      </div>
-      <footer class="modal__footer">
-      </footer>
-    </div>
-  </div>
-</div>
-
-
-<modal ng-if="associatePatientModal" modall="showModal" onyes="selectPatient()" onno="$parent.associatePatientModal = false; $parent.searchPatient= ''" header="{{'clinic.associatePatient.warning' | translate}}" message="{{'clinic.associatePatient.message' | translate}}">
-</modal>
