@@ -805,9 +805,19 @@ angular.module('hillromvestApp')
     };
 
     $scope.selectAssociatedPatient = function(patient){
-      $state.go('patientOverview', {
-        'patientId': patient.id
-      });
+      if($state.current.name === 'clinicAssociatedPatients'){
+        $state.go('patientOverview', {
+          'patientId': patient.id
+        });
+      }else if($state.current.name ===  'clinicAssociatedPatientsAssociate'){
+        $state.go('associatepatientOverview', {
+          'patientId': patient.id
+        });
+      }else if($state.current.name ===  'clinicAssociatedPatientsRcadmin'){
+        $state.go('patientOverviewRcadmin', {
+          'patientId': patient.id
+        });
+      }
     };
     
     $scope.selectDoctor = function(doctor) {
