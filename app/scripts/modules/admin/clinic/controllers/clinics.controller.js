@@ -838,7 +838,7 @@ angular.module('hillromvestApp')
     };
 
     $scope.searchPatientsOnQueryChange = function(){
-      if(($state.current.name === 'clinicAssociatedPatients' || $state.current.name === 'clinicAssociatedPatientsRcadmin') && !searchOnLoad){
+      if(($state.current.name === 'clinicAssociatedPatients' || $state.current.name === 'clinicAssociatedPatientsRcadmin' || $state.current.name === 'clinicAssociatedPatientsAssociate') && !searchOnLoad){
         $scope.searchAssociatedPatients();
       }
     };
