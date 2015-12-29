@@ -9,7 +9,9 @@ angular.module('hillromvestApp')
             'Accept': 'application/json',
             'x-auth-token': token,
             'X-Frame-Options': 'SAMEORIGIN',
+            'X-XSS-Protection': '0',
             'X-Content-Type-Options': 'nosniff'
+
           };
         return header;
       }
