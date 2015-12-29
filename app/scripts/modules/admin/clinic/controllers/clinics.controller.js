@@ -868,12 +868,12 @@ angular.module('hillromvestApp')
       $scope.clinicSortOption = "";     
     };
 
-    $scope.searchOnFilters = function(){    
-      if($state.current.name === 'clinicUser' || $state.current.name ==='clinicUserRcadmin'){
+    $scope.searchOnFilters = function(){
+      if($state.current.name === 'clinicUser' || $state.current.name ==='clinicUserRcadmin' || $state.current.name === 'associateClinicUser'){
         $scope.searchClinics();
-      }else if( $state.current.name === 'clinicAssociatedPatients' || $state.current.name === 'clinicAssociatedPatientsRcadmin'){
+      }else if( $state.current.name === 'clinicAssociatedPatients' || $state.current.name === 'clinicAssociatedPatientsRcadmin' || $state.current.name === 'clinicAssociatedPatientsAssociate'){
         $scope.searchAssociatedPatients();
-      }else if($state.current.name === 'clinicAssociatedHCP'){
+      }else if($state.current.name === 'clinicAssociatedHCP' || $state.current.name === 'clinicAssociatedHCPRcadmin' || $state.current.name ===  'clinicAssociatedHCPAssociate'){
         $scope.searchAssociatedHcps();
       }
     };
