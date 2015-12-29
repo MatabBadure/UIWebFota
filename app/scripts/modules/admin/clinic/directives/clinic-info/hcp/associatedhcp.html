@@ -49,6 +49,7 @@
       </div>
 
       <div class="dashboard__manage-view--list assoc" ng-repeat="hcp in associatedHcps" readonly="true" ng-class="{'inactive': hcp.deleted}">
+        <span ng-click="selectDoctor(hcp)">
           <div class="col-md-2 centered">
             <span class="main-prim-info">{{hcp.lastName}}, {{hcp.firstName}}</span>
           </div>
@@ -75,6 +76,7 @@
             <span class="short-info active" ng-if="!hcp.deleted" translate="clinic.status-type.active"></span>
             <span class="short-info inactive" ng-if="hcp.deleted" translate="clinic.status-type.inactive"></span>
           </div>
+        </span>
           <div class="col-md-2 centered text-center" >
             <span class="icon-delete-icon" ng-click="hcp.deleted || openHcpDeactivateModal(hcp.id);"></span>
           </div>
