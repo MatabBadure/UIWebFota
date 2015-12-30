@@ -38,6 +38,7 @@ angular.module('hillromvestApp')
 			$scope.getClinicsForClinicAdmin($scope.hcpId);
 		}
 
+
 	};
 
 	$scope.isLegendEnabled = function(legendFlag){
@@ -355,10 +356,11 @@ angular.module('hillromvestApp')
 	      setTimeout(function() {
 	          d3.selectAll('#cumulativeGraph svg').selectAll('.nv-lineChart circle.nv-point').attr("r", "1.3");
 	          d3.selectAll('#cumulativeGraph svg').style("visibility", "visible");
+	          d3.selectAll('#cumulativeGraph svg .nv-axis .trans_value').attr("style", "transform: translateY(260px);");
 	      }, 500);
-	    }
-
-  }
+	    }								
+      		
+ }
 	$scope.getTreatmentGraphData = function() {		
 		if($scope.selectedClinic){
 			hcpDashBoardService.getTreatmentGraphPoints($scope.hcpId, $scope.selectedClinic.id, dateService.getDateFromTimeStamp($scope.fromTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), $scope.groupBy).then(function(response){
