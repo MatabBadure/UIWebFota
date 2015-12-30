@@ -77,9 +77,6 @@
             <span class="short-info inactive" ng-if="hcp.deleted" translate="clinic.status-type.inactive"></span>
           </div>
         </span>
-          <div class="col-md-2 centered text-center" >
-            <span class="icon-delete-icon" ng-click="hcp.deleted || openHcpDeactivateModal(hcp.id);"></span>
-          </div>
 
           <div class="clr"></div>
        </div>
@@ -105,38 +102,3 @@
     </div>
   </div>
 </div>
-
-<div class="container admin-user">
-  <div class="col-md-16 reset-padding">
-    <div class="col-md-8 clinic-link">
-      <input class="form-control" type="text" ng-model="searchHcp" typeahead="hcp as hcp.lastName + ', &nbsp' + hcp.firstName +' ' + hcp.clinicName for hcp in getHCPsToLinkClinic($viewValue)" typeahead-on-select="showAssociateHCPModal($item)" placeholder="{{'clinic.placeholder.hcp-search' | translate}}" ng-show="isAssociateHCP">
-    </div>
-
-    <div class="col-md-8 clinic-link">
-      <buton class="hillrom-btn btn-primary float-right" ng-click="linkHCP()" translate="clinic.link-hcp" ng-show="!isAssociateHCP"></buton>
-    </div>
-  </div>
-</div>
-
-<div ng-if="hcpDeactivateModal" class="modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true">
-  <div class="modal__dialog">
-    <div class="modal__content">
-      <header class="modal__header">
-        <button type="button" class="modal__close" data-dismiss="modal" ng-click="closeHcpDeactivateModal()">&times;</button>
-         <p translate="clinic.deleteHcp.warning"></p>
-      </header>
-      <div class="modal__body">
-         <div class="modal--message" translate="clinic.deleteHcp.message"></div>
-         <div class="fropile_update_btn_group row modal--custom-btn">
-          <buton class="hillrom-btn btn-submit float-right" ng-click="disassociateHCP(deleteHcpId)" translate="clinic.yes" ></buton>
-          <buton class="cancel hillrom-btn btn-submit float-right" data-dismiss="modal" ng-click="closeHcpDeactivateModal()">No</buton>
-         </div>
-      </div>
-      <footer class="modal__footer">
-      </footer>
-    </div>
-  </div>
-</div>
-
-<modal ng-if="associateHCPModal" modall="showModal" onyes="selectHCP()" onno="$parent.associateHCPModal = false" header="{{'clinic.associateHcp.warning' | translate}}" message="{{'clinic.associateHcp.message' | translate}}">
-</modal>
