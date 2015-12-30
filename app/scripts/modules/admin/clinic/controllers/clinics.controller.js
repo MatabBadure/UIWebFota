@@ -66,7 +66,7 @@ angular.module('hillromvestApp')
     };
 
     $scope.getPatientsToAssociate = function($viewValue){
-      return searchFilterService.getMatchingUser($viewValue, $scope.nonAssociatedPatients);
+      return searchFilterService.getMatchingUserByNameEmailId($viewValue, $scope.nonAssociatedPatients);
     };
 
     $scope.searchAssociatedHcps = function(track) {
