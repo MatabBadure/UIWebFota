@@ -112,4 +112,15 @@ angular.module('hillromvestApp')
           return userList;
         }
 
+        /*Method to Link (associate) Patient to clinic (Match to Name, Email and HillromId)*/
+        this.getMatchingUserByNameEmailId = function($viewValue, list){
+          var userList = [];
+          for (var i=0; i< list.length; i++) {
+            if (list[i].firstName.toLowerCase().indexOf($viewValue.toLowerCase()) != -1 || list[i].lastName.toLowerCase().indexOf($viewValue.toLowerCase()) != -1 ||(list[i].lastName.toLowerCase()+' '+list[i].firstName.toLowerCase()).indexOf($viewValue.toLowerCase()) != -1 || list[i].email.toLowerCase().indexOf($viewValue.toLowerCase()) != -1 || list[i].hillromId.toLowerCase().indexOf($viewValue.toLowerCase()) != -1) {
+              userList.push(list[i]);
+            }
+          }
+          return userList;
+        }
+
     }]);
