@@ -49,11 +49,6 @@
       <span class="user-detail-info__data--value">{{clinic.state}}</span>
     </div>
   </div>
-
-  <div class="col-md-16 reset-padding margin-top" ng-if="clinic.id">
-    <buton class="hillrom-btn btn-primary float-right btn-margin-left" ng-click="switchTab('clinicEdit')" translate="clinic.clinic-edit"></buton>
-    <buton class="hillrom-btn  float-right btn-margin-left btn-secondary" ng-click="deactivateClinicModal(clinic)" translate="clinic.clinic-deactivate"></buton>
-  </div>
 </div>
 
 <div class="container admin-user margin-top-xl" ng-if="clinic.parent">
