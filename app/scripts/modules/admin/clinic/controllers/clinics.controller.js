@@ -20,22 +20,22 @@ angular.module('hillromvestApp')
         //$scope.getClinicDetails($stateParams.clinicId, $scope.setEditMode);
       } else if (currentRoute === 'clinicNew' || currentRoute === 'clinicNewRcadmin') {
         $scope.initCreateClinic();
-      } else if (currentRoute === 'clinicUser' || currentRoute === 'clinicUserRcadmin'){
+      } else if (currentRoute === 'clinicUser' || currentRoute === 'clinicUserRcadmin' || currentRoute === 'associateClinicUser'){
         $scope.sortClinicList = sortOptionsService.getSortOptionsForClinicList();
         $scope.initPaginationVars();
         $scope.searchFilter = searchFilterService.initSearchFiltersForClinic();
         $scope.initClinicList();
-      } else if (currentRoute === 'clinicProfile' || currentRoute === 'clinicProfileRcadmin'){
+      } else if (currentRoute === 'clinicProfile' || currentRoute === 'clinicProfileRcadmin' || currentRoute === 'clinicProfileAssociate'){
         $scope.initClinicProfile($stateParams.clinicId);
-      } else if(currentRoute === 'clinicAssociatedPatients' || currentRoute === 'clinicAssociatedPatientsRcadmin'){
+      } else if(currentRoute === 'clinicAssociatedPatients' || currentRoute === 'clinicAssociatedPatientsRcadmin' || currentRoute === 'clinicAssociatedPatientsAssociate'){
         $scope.searchFilter = {};    
         $scope.searchFilter = searchFilterService.initSearchFiltersForPatient();
         $scope.initPaginationVars();
         $scope.initClinicAssoctPatients($stateParams.clinicId);
-      } else if(currentRoute === 'clinicAssociatedHCP' || currentRoute === 'clinicAssociatedHCPRcadmin'){
+      } else if(currentRoute === 'clinicAssociatedHCP' || currentRoute === 'clinicAssociatedHCPRcadmin' || currentRoute === 'clinicAssociatedHCPAssociate'){
         $scope.initClinicAssoctHCPs($stateParams.clinicId);
       }
-      else if(currentRoute === 'clinicAdmin' || currentRoute === 'clinicAdminRcadmin'){
+      else if(currentRoute === 'clinicAdmin' || currentRoute === 'clinicAdminRcadmin' || currentRoute === 'clinicAdminAssociate'){
         $scope.initClinicAdmin($stateParams.clinicId);
       }
     };
@@ -267,7 +267,7 @@ angular.module('hillromvestApp')
     /* init clinic list*/
 
       $scope.searchClinicsOnQueryChange = function(){
-        if(($state.current.name === 'clinicUser' || $state.current.name === 'clinicUserRcadmin') && !searchOnLoad){
+        if(($state.current.name === 'clinicUser' || $state.current.name === 'clinicUserRcadmin' || $state.current.name === 'associateClinicUser') && !searchOnLoad){
           $scope.searchClinics();
         }
       };
@@ -301,12 +301,16 @@ angular.module('hillromvestApp')
         if($scope.clinicStatus.role === loginConstants.role.acctservices){
           $state.go('clinicProfileRcadmin', {
             'clinicId': clinic.id
-          });          
-        }else{
+          });
+        }else if($scope.clinicStatus.role === loginConstants.role.associates){
+          $state.go('clinicProfileAssociate', {
+            'clinicId': clinic.id
+          });
+        }else {
           $state.go('clinicProfile', {
             'clinicId': clinic.id
           });
-         }
+        }
       };
 
       $scope.createClinic = function(){
@@ -521,6 +525,10 @@ angular.module('hillromvestApp')
     $scope.switchTab = function(state){
       if($scope.clinicStatus.role === loginConstants.role.acctservices){
         $state.go(state+loginConstants.role.Rcadmin, {
+          'clinicId': $stateParams.clinicId
+        });
+      }else if($scope.clinicStatus.role === loginConstants.role.associates){
+        $state.go(state+'Associate', {
           'clinicId': $stateParams.clinicId
         });
       }else{
@@ -797,19 +805,40 @@ angular.module('hillromvestApp')
     };
 
     $scope.selectAssociatedPatient = function(patient){
-      $state.go('patientOverview', {
-        'patientId': patient.id
-      });
+      if($state.current.name === 'clinicAssociatedPatients'){
+        $state.go('patientOverview', {
+          'patientId': patient.id
+        });
+      }else if($state.current.name ===  'clinicAssociatedPatientsAssociate'){
+        $state.go('associatepatientOverview', {
+          'patientId': patient.id
+        });
+      }else if($state.current.name ===  'clinicAssociatedPatientsRcadmin'){
+        $state.go('patientOverviewRcadmin', {
+          'patientId': patient.id
+        });
+      }
     };
     
     $scope.selectDoctor = function(doctor) {
-      $state.go('hcpProfile',{
-        'doctorId': doctor.id
-      });
+      if($state.current.name === 'clinicAssociatedHCP'){
+        $state.go('hcpProfile',{
+          'doctorId': doctor.id
+        });
+      }
+      else if($state.current.name === 'clinicAssociatedHCPAssociate'){
+        $state.go('hcpProfileAssociates',{
+          'doctorId': doctor.id
+        });
+      }else if($state.current.name === 'clinicAssociatedHCPRcadmin'){
+        $state.go('hcpProfileRcadmin',{
+          'doctorId': doctor.id
+        });
+      }
     };
 
     $scope.searchPatientsOnQueryChange = function(){
-      if(($state.current.name === 'clinicAssociatedPatients' || $state.current.name === 'clinicAssociatedPatientsRcadmin') && !searchOnLoad){
+      if(($state.current.name === 'clinicAssociatedPatients' || $state.current.name === 'clinicAssociatedPatientsRcadmin' || $state.current.name === 'clinicAssociatedPatientsAssociate') && !searchOnLoad){
         $scope.searchAssociatedPatients();
       }
     };
@@ -860,12 +889,12 @@ angular.module('hillromvestApp')
       $scope.clinicSortOption = "";     
     };
 
-    $scope.searchOnFilters = function(){    
-      if($state.current.name === 'clinicUser' || $state.current.name ==='clinicUserRcadmin'){
+    $scope.searchOnFilters = function(){
+      if($state.current.name === 'clinicUser' || $state.current.name ==='clinicUserRcadmin' || $state.current.name === 'associateClinicUser'){
         $scope.searchClinics();
-      }else if( $state.current.name === 'clinicAssociatedPatients' || $state.current.name === 'clinicAssociatedPatientsRcadmin'){
+      }else if( $state.current.name === 'clinicAssociatedPatients' || $state.current.name === 'clinicAssociatedPatientsRcadmin' || $state.current.name === 'clinicAssociatedPatientsAssociate'){
         $scope.searchAssociatedPatients();
-      }else if($state.current.name === 'clinicAssociatedHCP'){
+      }else if($state.current.name === 'clinicAssociatedHCP' || $state.current.name === 'clinicAssociatedHCPRcadmin' || $state.current.name ===  'clinicAssociatedHCPAssociate'){
         $scope.searchAssociatedHcps();
       }
     };
