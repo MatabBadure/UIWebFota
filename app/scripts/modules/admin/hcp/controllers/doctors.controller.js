@@ -279,6 +279,10 @@ angular.module('hillromvestApp')
           'doctorId': $stateParams.doctorId,
           'clinicId': clinic.id
         });
+      }else if($scope.doctorStatus.role === loginConstants.role.associates){
+        $state.go('clinicProfileAssociate', {
+          'clinicId': clinic.id
+        });
       }else{
         $state.go('clinicProfile', {
           'clinicId': clinic.id

@@ -9060,7 +9060,11 @@ ul.dropdown-menu {
   color: #333333;
 }
 .nvtooltip .graph_ul .notes {
+<<<<<<< HEAD
+  padding: 7px;
+=======
   padding-right: 7px;
+>>>>>>> fea77496113fe1130fe787e1408314957310f596
   margin-right: 30px;
   width: 150px;
 }
