@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hillromvestApp')
-  .controller('caregiverProfileController',['$scope', '$state', '$location', 'notyService', 'UserService', 'Password', 'Auth', 'AuthServerProvider', 'StorageService', 'commonsUserService', function ($scope, $state, $location, notyService, UserService, Password, Auth, AuthServerProvider, StorageService, commonsUserService) {
+  .controller('caregiverProfileController',['$scope', '$state', '$location', 'notyService', 'UserService', 'Password', 'Auth', 'AuthServerProvider', 'StorageService', 'commonsUserService', '$rootScope', function ($scope, $state, $location, notyService, UserService, Password, Auth, AuthServerProvider, StorageService, commonsUserService, $rootScope) {
 
 
     $scope.isActive = function(tab) {
