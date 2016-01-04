@@ -101,8 +101,8 @@ angular.module('hillromvestApp')
         return false;
       }
       var data = {
-        'password': $scope.profile.password,
-        'newPassword': $scope.profile.newPassword
+        'password': $scope.password,
+        'newPassword': $scope.newPassword
       };
       Password.updatePassword(StorageService.get('logged').userId, data).then(function(response){
         Auth.logout();
