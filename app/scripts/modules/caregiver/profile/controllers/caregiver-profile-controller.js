@@ -69,6 +69,7 @@ angular.module('hillromvestApp')
 
       Password.updatePassword(StorageService.get('logged').userId, data).then(function(response){
         Auth.logout();
+        $rootScope.userRole = null;
         notyService.showMessage(response.data.message, 'success');
         $state.go('login');
       }).catch(function(response){
