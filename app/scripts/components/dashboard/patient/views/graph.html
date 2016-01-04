@@ -137,7 +137,7 @@
 			</div>
 			<div ng-if="hmrGraph" class="complianceGraphPrim_wrapper" id="lineGraphWrapper">
 				<div ng-if="hmrLineGraph">
-					<div id="hmrLineGraphSVG" class="complianceGraph col-md-16" style="position:absolute;z-index:2;">
+					<div id="hmrLineGraphSVG" class="complianceGraph col-md-16" style="position:relative;z-index:2;">
 						<svg id="hmrLineSVG" ng-show="!noDataAvailable"> </svg>						
 					</div>
 					<div id="hmrLineGraphCompliance" class="complianceGraph col-md-16" style="margin-top: -351px;position:absolute;z-index:-1;">
@@ -200,7 +200,7 @@
 
 	<!-- Note section HTML -->
 	<div class="col-md-16">
-		<div class="btn_group patient_dashdoard_btns" ng-class="{ 'btn_group patient_dashdoard_btns_compliance': complianceGraph, 'btn_group patient_dashdoard_btns': !complianceGraph }">
+		<div class="btn_group patient_dashdoard_btns" ng-class="{ 'btn_group patient_dashdoard_btns_compliance': complianceGraph, 'btn_group patient_dashdoard_btns': !complianceGraph}">
 			<div dropdown class="pull-right left">
 				<button id="single-button" type="button" class="hillrom-btn btn-submit margin0 float-right" ng-class="{ 'pointer-fill-event': (!noDataAvailable && isGraphLoaded) , 'pointer-no-event': (!isGraphLoaded || noDataAvailable) }" dropdown-toggle ng-disabled="disabled" translate="graph.download" >
 					<span class="caret"></span>
