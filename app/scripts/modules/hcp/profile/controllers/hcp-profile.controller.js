@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('hillromvestApp')
-  .controller('hcpProfileController',['$scope', '$state', '$stateParams', '$location', 'notyService', 'UserService', 'Password', 'Auth', 'AuthServerProvider', 'DoctorService', 'StorageService', 'commonsUserService',
-    function ($scope, $state, $stateParams, $location, notyService, UserService, Password, Auth, AuthServerProvider, DoctorService, StorageService, commonsUserService) {
+  .controller('hcpProfileController',['$scope', '$state', '$stateParams', '$location', 'notyService', 'UserService', 'Password', 'Auth', 'AuthServerProvider', 'DoctorService', 'StorageService', 'commonsUserService', '$rootScope',
+    function ($scope, $state, $stateParams, $location, notyService, UserService, Password, Auth, AuthServerProvider, DoctorService, StorageService, commonsUserService, $rootScope) {
 
 
     $scope.isActive = function(tab) {
@@ -101,11 +101,12 @@ angular.module('hillromvestApp')
         return false;
       }
       var data = {
-        'password': $scope.profile.password,
-        'newPassword': $scope.profile.newPassword
+        'password': $scope.password,
+        'newPassword': $scope.newPassword
       };
       Password.updatePassword(StorageService.get('logged').userId, data).then(function(response){
         Auth.logout();
+        $rootScope.userRole = null;
         notyService.showMessage(response.data.message, 'success');
         $state.go('login');
       }).catch(function(response){
