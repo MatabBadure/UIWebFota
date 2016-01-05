@@ -61,7 +61,7 @@ angular.module('hillromvestApp')
       }
       var filter = searchFilterService.getFilterStringForPatient($scope.searchFilter);
       var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : $stateParams.clinicId;
-      clinicadminHcpService.searchAssociatedHcpsToClinic($scope.searchItem, filter, $scope.currentPageIndex, $scope.perPageCount, StorageService.get('logged').userId, clinicId).then(function(response){
+      clinicadminHcpService.searchAssociatedHcpsToClinic($scope.searchItem, filter, sortConstant.lastName, $scope.currentPageIndex, $scope.perPageCount, StorageService.get('logged').userId, clinicId).then(function(response){
         $scope.hcps = response.data;
         $scope.total = response.headers()['x-total-count'];
         $scope.pageCount = Math.ceil($scope.total / 10);
