@@ -86,7 +86,7 @@ angular.module('hillromvestApp')
       if(!$scope.searchItem){
         $scope.searchItem = '';
       }
-      clinicService.getAssociatedHCPstoClinic($stateParams.clinicId, $scope.searchItem, filter, $scope.currentPageIndex, $scope.perPageCount).then(function(response) {
+      clinicService.getAssociatedHCPstoClinic($stateParams.clinicId, $scope.searchItem, filter, sortConstant.lastName, $scope.currentPageIndex, $scope.perPageCount).then(function(response) {
         $scope.associatedHcps = response.data;
         $scope.total = response.headers()['x-total-count'];
         $scope.pageCount = Math.ceil($scope.total / 10);
@@ -108,7 +108,7 @@ angular.module('hillromvestApp')
       var searchString = '';
       $scope.currentPageIndex = 1;
       $q.all([
-        clinicService.getAssociatedHCPstoClinic(clinicId, searchString, filter, $scope.currentPageIndex, 10),
+        clinicService.getAssociatedHCPstoClinic(clinicId, searchString, filter, sortConstant.lastName, $scope.currentPageIndex, 10),
         clinicService.getClinicAssoctHCPs(clinicId),
         clinicService.getHCPsWithClinicName()
       ]).then(function(response) {
