@@ -857,8 +857,8 @@ angular.module('hillromvestApp')
       }else {
           $scope.currentPageIndex = 1;
       }
-      var filter = searchFilterService.getFilterStringForPatient($scope.searchFilter) + $scope.sortOption; 
-      clinicService.searchAssociatedPatientsToClinic($scope.searAssociatedPatient, filter, $scope.currentPageIndex, $scope.perPageCount, $stateParams.clinicId).then(function (response) {        
+      var filter = searchFilterService.getFilterStringForPatient($scope.searchFilter);
+      clinicService.searchAssociatedPatientsToClinic($scope.searAssociatedPatient, filter, sortConstant.lastName, $scope.currentPageIndex, $scope.perPageCount, $stateParams.clinicId).then(function (response) {        
         $scope.associatedPatients = [];     
         if(response.data.length < 1){
           $scope.hasNoPatient = true;
