@@ -118,6 +118,9 @@ angular.module('hillromvestApp')
       $scope.notePageCount = 0;
       $scope.totalNotes = 0;
       $scope.addCanvasToDOM();
+          setTimeout(function(){ 
+          $('#hmrLineGraphSVG').css('width','1200px');
+       }, 3000);
     };
 
     $scope.isGraphReady = function(){
@@ -269,6 +272,7 @@ angular.module('hillromvestApp')
     }
 
     $scope.drawGraph = function() {
+
       var days = dateService.getDateDiffIndays($scope.fromTimeStamp,$scope.toTimeStamp);
       if(days === 0 && $scope.selectedGraph === 'HMR'){
         $scope.format = 'dayWise';
@@ -808,6 +812,7 @@ angular.module('hillromvestApp')
       }
     };
     $scope.getNonDayHMRGraphData = function(divId, svgId, wrapperDiv, isDrawCompliance, graphVisibility) {
+
       /*if(isDrawCompliance){            
         $scope.getHiddenComplianceForPDF(true, true, false, "hmrLineGraphCompliance", "hmrCompliance", "compliance", true, "hmrLineGraphCompliance1", "hmrCompliance1", "compliance1");
       }*/
@@ -1013,6 +1018,8 @@ angular.module('hillromvestApp')
         d3.selectAll(graphId).selectAll(".nv-y .nv-axisMaxMin text ").attr("style", "fill: #5d6a7d;font-size: 10px;font-weight: normal;text-anchor: end;");
         d3.selectAll(graphId).selectAll(".nv-axis .nv-axislabel").attr("style", "font: 12px Arial; fill: #5d6a7d;text-anchor: middle;");
         //d3.selectAll (graphId).selectAll(".nvd3 .nv-groups path.nv-line").attr("style", "fill: none; stroke-width: 1.5px;");
+ 
+
 
 
         angular.forEach(d3.select(graphId).selectAll('rect.nv-bar')[0], function(bar){
