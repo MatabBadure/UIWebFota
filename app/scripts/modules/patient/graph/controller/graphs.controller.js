@@ -2,8 +2,8 @@
 
 angular.module('hillromvestApp')
 .controller('graphController',
-  ['$scope', '$state', 'patientDashBoardService', 'StorageService', 'dateService', 'graphUtil', 'patientService', 'UserService', '$stateParams', 'notyService', '$timeout', 'graphService', 'caregiverDashBoardService', 'loginConstants', '$location','$filter', 'commonsUserService',
-  function($scope, $state, patientDashBoardService, StorageService, dateService, graphUtil, patientService, UserService, $stateParams, notyService, $timeout, graphService, caregiverDashBoardService, loginConstants, $location, $filter, commonsUserService) {
+  ['$scope', '$state', 'patientDashBoardService', 'StorageService', 'dateService', 'graphUtil', 'patientService', 'UserService', '$stateParams', 'notyService', '$timeout', 'graphService', 'caregiverDashBoardService', 'loginConstants', '$location','$filter', 'commonsUserService', 'clinicadminPatientService',
+  function($scope, $state, patientDashBoardService, StorageService, dateService, graphUtil, patientService, UserService, $stateParams, notyService, $timeout, graphService, caregiverDashBoardService, loginConstants, $location, $filter, commonsUserService, clinicadminPatientService) {
 
     var chart;
     var hiddenFrame, htmlDocument;    
@@ -84,7 +84,11 @@ angular.module('hillromvestApp')
         $scope.getAssociatedClinics($stateParams.patientId);
         $scope.getPatientDevices($stateParams.patientId);
         $scope.patientId = parseInt($stateParams.patientId);
-        $scope.getPatientById($scope.patientId);
+        if(currentRoute === 'clinicadminpatientOverview'){
+          $scope.getMRNByPatientIdAndClinicId($stateParams.patientId, $stateParams.clinicId);
+        }else{
+          $scope.getPatientById($scope.patientId);
+        }
         $scope.initGraph();
         //$scope.weeklyChart();
       }
@@ -1513,7 +1517,19 @@ angular.module('hillromvestApp')
     $scope.initPatientCaregiver = function(){
       $scope.getCaregiversForPatient(StorageService.get('logged').patientID);
     };
-
+    
+    $scope.getMRNByPatientIdAndClinicId = function(patientId, clinicId){
+      clinicadminPatientService.getPatientInfo(patientId, clinicId).then(function(response){
+        $scope.slectedPatient = response.data.patientUser;
+        $scope.slectedPatient.mrnId = response.data.patientUser.clinicMRNId.mrnId;
+      }).catch(function(response){
+        notyService.showError(response);
+        if(response.status === 404){
+          $scope.redirectToPatientDashboard();
+        }
+      });
+    };
+    
     $scope.getPatientById = function(patientId){
       patientService.getPatientInfo(patientId).then(function(response){
         $scope.slectedPatient = response.data;
