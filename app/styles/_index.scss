@@ -133,6 +133,10 @@ a::-moz-focus-inner {
   text-align: center;
   padding-right: 20px;
 }
+select>option
+{
+	border-right:1px solid #000;
+}
 @media screen\0 {
   .custom-dropdown{
 
