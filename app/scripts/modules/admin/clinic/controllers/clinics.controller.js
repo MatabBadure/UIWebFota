@@ -86,7 +86,7 @@ angular.module('hillromvestApp')
       if(!$scope.searchItem){
         $scope.searchItem = '';
       }
-      clinicService.getAssociatedHCPstoClinic($stateParams.clinicId, $scope.searchItem, filter, $scope.currentPageIndex, $scope.perPageCount).then(function(response) {
+      clinicService.getAssociatedHCPstoClinic($stateParams.clinicId, $scope.searchItem, filter, sortConstant.lastName, $scope.currentPageIndex, $scope.perPageCount).then(function(response) {
         $scope.associatedHcps = response.data;
         $scope.total = response.headers()['x-total-count'];
         $scope.pageCount = Math.ceil($scope.total / 10);
@@ -108,7 +108,7 @@ angular.module('hillromvestApp')
       var searchString = '';
       $scope.currentPageIndex = 1;
       $q.all([
-        clinicService.getAssociatedHCPstoClinic(clinicId, searchString, filter, $scope.currentPageIndex, 10),
+        clinicService.getAssociatedHCPstoClinic(clinicId, searchString, filter, sortConstant.lastName, $scope.currentPageIndex, 10),
         clinicService.getClinicAssoctHCPs(clinicId),
         clinicService.getHCPsWithClinicName()
       ]).then(function(response) {
@@ -857,8 +857,8 @@ angular.module('hillromvestApp')
       }else {
           $scope.currentPageIndex = 1;
       }
-      var filter = searchFilterService.getFilterStringForPatient($scope.searchFilter) + $scope.sortOption; 
-      clinicService.searchAssociatedPatientsToClinic($scope.searAssociatedPatient, filter, $scope.currentPageIndex, $scope.perPageCount, $stateParams.clinicId).then(function (response) {        
+      var filter = searchFilterService.getFilterStringForPatient($scope.searchFilter);
+      clinicService.searchAssociatedPatientsToClinic($scope.searAssociatedPatient, filter, sortConstant.lastName, $scope.currentPageIndex, $scope.perPageCount, $stateParams.clinicId).then(function (response) {        
         $scope.associatedPatients = [];     
         if(response.data.length < 1){
           $scope.hasNoPatient = true;
