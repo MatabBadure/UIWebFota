@@ -124,7 +124,7 @@ angular.module('hillromvestApp')
       $scope.addCanvasToDOM();
           setTimeout(function(){ 
           $('#hmrLineGraphSVG').css('width','1200px');
-       }, 4000);
+       }, 7000);
     };
 
     $scope.isGraphReady = function(){
