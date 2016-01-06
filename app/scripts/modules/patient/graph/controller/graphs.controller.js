@@ -27,7 +27,7 @@ angular.module('hillromvestApp')
     }; 
 
     $scope.isIE = function(){    
-    $('#hmrLineGraphSVG').css('width','980px');  
+    $('#hmrLineGraphSVG').css('width','100%');  
       if(window.navigator.userAgent.indexOf("MSIE") !== -1){
         return true
       }else{
@@ -125,7 +125,7 @@ angular.module('hillromvestApp')
       $scope.addCanvasToDOM();
       setTimeout(function(){ 
         $('#hmrLineGraphSVG').css('width','1200px');
-      }, 4000);
+      }, 3000);
           
     };
 
@@ -337,7 +337,7 @@ angular.module('hillromvestApp')
         $scope.selectedDateOption = '';
         setTimeout(function(){ 
           $('#hmrLineGraphSVG').css('width','1200px');
-        }, 4000);
+        }, 3000);
         }
       },
       opens: 'left'
