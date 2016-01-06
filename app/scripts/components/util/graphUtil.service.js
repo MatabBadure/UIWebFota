@@ -543,6 +543,7 @@ angular.module('hillromvestApp')
         var toolTip, headerTime = '';
         if(!value.missedTherapy){
           headerTime =  '  ('+ d3.time.format('%I:%M %p')(new Date(value.timestamp)) + ')';
+          value.duration = (value.duration === 0 ? '< 1 min': value.duration);
         }
         if(value.note && value.note.note && value.note.note.length > 0){
           toolTip =
@@ -582,6 +583,7 @@ angular.module('hillromvestApp')
 
         if(!value.missedTherapy){
           headerTime =  '  ('+ d3.time.format('%I:%M %p')(new Date(value.start)) + ')';
+          value.duration = (value.duration === 0 ? '< 1 min': value.duration);
         }
         if(value.note && value.note.note && value.note.note.length > 0){
             toolTip =
@@ -616,6 +618,9 @@ angular.module('hillromvestApp')
 
       this.getToolTipForCompliance = function(value) {
         var toolTip = '';
+        if(!value.missedTherapy){
+          value.duration = (value.duration === 0 ? '< 1 min': value.duration);
+        }
          if(value.note && value.note.note && value.note.note.length > 0){
           toolTip =
                 '<div class="tooltip_sub_content">'+
