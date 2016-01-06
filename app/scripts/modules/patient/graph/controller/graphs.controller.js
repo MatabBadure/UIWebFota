@@ -26,7 +26,8 @@ angular.module('hillromvestApp')
       $('<div id=compliance1CanvasContainer style="display:none">compliance 1 canvas<br/><canvas id=compliance1Canvas width=1300 height=350></canvas></div>').appendTo("body");
     }; 
 
-    $scope.isIE = function(){      
+    $scope.isIE = function(){    
+    $('#hmrLineGraphSVG').css('width','980px');  
       if(window.navigator.userAgent.indexOf("MSIE") !== -1){
         return true
       }else{
@@ -122,9 +123,10 @@ angular.module('hillromvestApp')
       $scope.notePageCount = 0;
       $scope.totalNotes = 0;
       $scope.addCanvasToDOM();
-          setTimeout(function(){ 
-          $('#hmrLineGraphSVG').css('width','1200px');
-       }, 4000);
+      setTimeout(function(){ 
+        $('#hmrLineGraphSVG').css('width','1200px');
+      }, 4000);
+          
     };
 
     $scope.isGraphReady = function(){
@@ -324,13 +326,18 @@ angular.module('hillromvestApp')
       maxDate: new Date(),
       format: patientDashboard.dateFormat,
       dateLimit: {"months":patientDashboard.maxDurationInMonths},
-      eventHandlers: {'apply.daterangepicker': function(ev, picker) {           
+      eventHandlers: {'apply.daterangepicker': function(ev, picker) {
+
+        $('#hmrLineGraphSVG').css('width','100%');         
         $scope.removeGraph();
         $scope.addCanvasToDOM();
         $scope.hideNotesCSS();
         $scope.calculateDateFromPicker(picker);
         $scope.drawGraph();
         $scope.selectedDateOption = '';
+        setTimeout(function(){ 
+          $('#hmrLineGraphSVG').css('width','1200px');
+        }, 4000);
         }
       },
       opens: 'left'
