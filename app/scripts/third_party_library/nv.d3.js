@@ -1237,7 +1237,7 @@ nv.utils.optionsFunc = function(args) {
             var axisMaxMin = wrap.selectAll('g.nv-axisMaxMin')
                            .data(scale.domain());
             setTimeout(function(){
-              axisMaxMin[0].parentNode.firstChild.nextSibling.setAttribute("class", "trans_value nv-axisMaxMin");
+              axisMaxMin[0].parentNode.firstElementChild.nextElementSibling.setAttribute("class", "trans_value nv-axisMaxMin");
             }, 500);
        
 
