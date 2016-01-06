@@ -618,7 +618,9 @@ angular.module('hillromvestApp')
 
       this.getToolTipForCompliance = function(value) {
         var toolTip = '';
-        value.duration = (value.duration === 0 ? '< 1 min': value.duration);
+        if(!value.missedTherapy){
+          value.duration = (value.duration === 0 ? '< 1 min': value.duration);
+        }
          if(value.note && value.note.note && value.note.note.length > 0){
           toolTip =
                 '<div class="tooltip_sub_content">'+
