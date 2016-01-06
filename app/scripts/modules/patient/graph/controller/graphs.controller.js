@@ -123,7 +123,7 @@ angular.module('hillromvestApp')
       $scope.totalNotes = 0;
       $scope.addCanvasToDOM();
           setTimeout(function(){ 
-          $('#hmrLineGraphSVG').css('width','1200px');
+          $('#hmrLineGraphSVG').css('width','1300px');
        }, 3000);
     };
 
