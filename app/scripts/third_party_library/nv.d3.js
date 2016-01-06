@@ -1233,8 +1233,15 @@ nv.utils.optionsFunc = function(args) {
               .attr('y', rotateYLabel ? (-Math.max(margin.left,width) + axisLabelDistance) : -10) //TODO: consider calculating this based on largest tick width... OR at least expose this on chart
               .attr('x', rotateYLabel ? (-scale.range()[0] / 2) : -axis.tickPadding());
           if (showMaxMin) {
+            
             var axisMaxMin = wrap.selectAll('g.nv-axisMaxMin')
                            .data(scale.domain());
+            setTimeout(function(){
+              axisMaxMin[0].parentNode.firstElementChild.nextElementSibling.setAttribute("class", "trans_value nv-axisMaxMin");
+            }, 500);
+       
+
+
             axisMaxMin.enter().append('g').attr('class', 'nv-axisMaxMin').append('text')
                 .style('opacity', 0);
             axisMaxMin.exit().remove();

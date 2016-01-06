@@ -108,8 +108,8 @@ angular.module('hillromvestApp')
         });
       },
 
-      getAssociatedHCPstoClinic: function(clinicId, searchString, filter, pageNo, offset){
-        var url = URL.getAssociatedHCPtoClinic.replace('CLINICID',clinicId).replace('SEARCHSTRING',searchString).replace('PAGENO',pageNo).replace('OFFSET',offset).replace('FILTER', filter);
+      getAssociatedHCPstoClinic: function(clinicId, searchString, filter, sortOption, pageNo, offset){
+        var url = URL.getAssociatedHCPtoClinic.replace('CLINICID',clinicId).replace('SEARCHSTRING',searchString).replace('PAGENO',pageNo).replace('OFFSET',offset).replace('FILTER', filter).replace('SORTBY', sortOption);
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -198,8 +198,8 @@ angular.module('hillromvestApp')
         });
       },
 
-      searchAssociatedPatientsToClinic : function(searchString, filter, pageNo, offset, clinicId){      
-        var url = URL.searchAssociatedPatientsToClinic.replace('SEARCHSTRING', searchString).replace('PAGENO', pageNo).replace('OFFSET', offset).replace('FILTER', filter).replace('CLINICID', clinicId);
+      searchAssociatedPatientsToClinic : function(searchString, filter, sortOption, pageNo, offset, clinicId){
+        var url = URL.searchAssociatedPatientsToClinic.replace('SEARCHSTRING', searchString).replace('PAGENO', pageNo).replace('OFFSET', offset).replace('FILTER', filter).replace('CLINICID', clinicId).replace('SORTBY', sortOption);
         return $http.get(url, {
           headers: headerService.getHeader()        
         });

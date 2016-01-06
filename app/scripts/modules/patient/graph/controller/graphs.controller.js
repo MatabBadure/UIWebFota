@@ -2,8 +2,8 @@
 
 angular.module('hillromvestApp')
 .controller('graphController',
-  ['$scope', '$state', 'patientDashBoardService', 'StorageService', 'dateService', 'graphUtil', 'patientService', 'UserService', '$stateParams', 'notyService', '$timeout', 'graphService', 'caregiverDashBoardService', 'loginConstants', '$location','$filter', 'commonsUserService',
-  function($scope, $state, patientDashBoardService, StorageService, dateService, graphUtil, patientService, UserService, $stateParams, notyService, $timeout, graphService, caregiverDashBoardService, loginConstants, $location, $filter, commonsUserService) {
+  ['$scope', '$state', 'patientDashBoardService', 'StorageService', 'dateService', 'graphUtil', 'patientService', 'UserService', '$stateParams', 'notyService', '$timeout', 'graphService', 'caregiverDashBoardService', 'loginConstants', '$location','$filter', 'commonsUserService', 'clinicadminPatientService',
+  function($scope, $state, patientDashBoardService, StorageService, dateService, graphUtil, patientService, UserService, $stateParams, notyService, $timeout, graphService, caregiverDashBoardService, loginConstants, $location, $filter, commonsUserService, clinicadminPatientService) {
 
     var chart;
     var hiddenFrame, htmlDocument;    
@@ -26,7 +26,8 @@ angular.module('hillromvestApp')
       $('<div id=compliance1CanvasContainer style="display:none">compliance 1 canvas<br/><canvas id=compliance1Canvas width=1300 height=350></canvas></div>').appendTo("body");
     }; 
 
-    $scope.isIE = function(){      
+    $scope.isIE = function(){    
+    $('#hmrLineGraphSVG').css('width','100%');  
       if(window.navigator.userAgent.indexOf("MSIE") !== -1){
         return true
       }else{
@@ -84,7 +85,11 @@ angular.module('hillromvestApp')
         $scope.getAssociatedClinics($stateParams.patientId);
         $scope.getPatientDevices($stateParams.patientId);
         $scope.patientId = parseInt($stateParams.patientId);
-        $scope.getPatientById($scope.patientId);
+        if(currentRoute === 'clinicadminpatientOverview'){
+          $scope.getMRNByPatientIdAndClinicId($stateParams.patientId, $stateParams.clinicId);
+        }else{
+          $scope.getPatientById($scope.patientId);
+        }
         $scope.initGraph();
         //$scope.weeklyChart();
       }
@@ -118,6 +123,10 @@ angular.module('hillromvestApp')
       $scope.notePageCount = 0;
       $scope.totalNotes = 0;
       $scope.addCanvasToDOM();
+      setTimeout(function(){ 
+        $('#hmrLineGraphSVG').css('width','1200px');
+      }, 3000);
+          
     };
 
     $scope.isGraphReady = function(){
@@ -269,6 +278,7 @@ angular.module('hillromvestApp')
     }
 
     $scope.drawGraph = function() {
+
       var days = dateService.getDateDiffIndays($scope.fromTimeStamp,$scope.toTimeStamp);
       if(days === 0 && $scope.selectedGraph === 'HMR'){
         $scope.format = 'dayWise';
@@ -316,13 +326,18 @@ angular.module('hillromvestApp')
       maxDate: new Date(),
       format: patientDashboard.dateFormat,
       dateLimit: {"months":patientDashboard.maxDurationInMonths},
-      eventHandlers: {'apply.daterangepicker': function(ev, picker) {           
+      eventHandlers: {'apply.daterangepicker': function(ev, picker) {
+
+        $('#hmrLineGraphSVG').css('width','100%');         
         $scope.removeGraph();
         $scope.addCanvasToDOM();
         $scope.hideNotesCSS();
         $scope.calculateDateFromPicker(picker);
         $scope.drawGraph();
         $scope.selectedDateOption = '';
+        setTimeout(function(){ 
+          $('#hmrLineGraphSVG').css('width','1200px');
+        }, 3000);
         }
       },
       opens: 'left'
@@ -808,6 +823,7 @@ angular.module('hillromvestApp')
       }
     };
     $scope.getNonDayHMRGraphData = function(divId, svgId, wrapperDiv, isDrawCompliance, graphVisibility) {
+
       /*if(isDrawCompliance){            
         $scope.getHiddenComplianceForPDF(true, true, false, "hmrLineGraphCompliance", "hmrCompliance", "compliance", true, "hmrLineGraphCompliance1", "hmrCompliance1", "compliance1");
       }*/
@@ -1013,6 +1029,8 @@ angular.module('hillromvestApp')
         d3.selectAll(graphId).selectAll(".nv-y .nv-axisMaxMin text ").attr("style", "fill: #5d6a7d;font-size: 10px;font-weight: normal;text-anchor: end;");
         d3.selectAll(graphId).selectAll(".nv-axis .nv-axislabel").attr("style", "font: 12px Arial; fill: #5d6a7d;text-anchor: middle;");
         //d3.selectAll (graphId).selectAll(".nvd3 .nv-groups path.nv-line").attr("style", "fill: none; stroke-width: 1.5px;");
+ 
+
 
 
         angular.forEach(d3.select(graphId).selectAll('rect.nv-bar')[0], function(bar){
@@ -1513,7 +1531,19 @@ angular.module('hillromvestApp')
     $scope.initPatientCaregiver = function(){
       $scope.getCaregiversForPatient(StorageService.get('logged').patientID);
     };
-
+    
+    $scope.getMRNByPatientIdAndClinicId = function(patientId, clinicId){
+      clinicadminPatientService.getPatientInfo(patientId, clinicId).then(function(response){
+        $scope.slectedPatient = response.data.patientUser;
+        $scope.slectedPatient.mrnId = response.data.patientUser.clinicMRNId.mrnId;
+      }).catch(function(response){
+        notyService.showError(response);
+        if(response.status === 404){
+          $scope.redirectToPatientDashboard();
+        }
+      });
+    };
+    
     $scope.getPatientById = function(patientId){
       patientService.getPatientInfo(patientId).then(function(response){
         $scope.slectedPatient = response.data;

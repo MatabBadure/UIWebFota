@@ -48,7 +48,7 @@
         <div class="clr"></div>
       </div>
 
-      <div class="dashboard__manage-view--list assoc" ng-repeat="hcp in associatedHcps" readonly="true" ng-class="{'inactive': hcp.deleted}">
+      <div class="dashboard__manage-view--list assoc" ng-repeat="hcp in associatedHcps" readonly="true">
         <span ng-click="selectDoctor(hcp)">
           <div class="col-md-2 centered">
             <span class="main-prim-info">{{hcp.lastName}}, {{hcp.firstName}}</span>
