@@ -345,10 +345,8 @@ angular.module('hillromvestApp')
         attr("dy" , 12);
 
         setTimeout(function() {
-        	   	   d3.selectAll('#cumulativeGraph svg').selectAll('.nv-axis .trans_value').selectAll('text').attr("dy", 0);
-        	
-        	   	 
-	    	      }, 900);
+          d3.selectAll('#cumulativeGraph svg').selectAll('.nv-axis .trans_value').selectAll('text').attr("dy", 0);
+          }, 500);
 
 		if($scope.formatedCumulativeGraphData[0].values.length  === 1){
           d3.selectAll('#cumulativeGraph svg').selectAll(".x.axis .tick").selectAll('text').attr("dx" , 533);
@@ -362,9 +360,7 @@ angular.module('hillromvestApp')
 	      setTimeout(function() {
 	          d3.selectAll('#cumulativeGraph svg').selectAll('.nv-lineChart circle.nv-point').attr("r", "1.3");
 	          d3.selectAll('#cumulativeGraph svg').style("visibility", "visible");
-	          // d3.selectAll('#cumulativeGraph svg').selectAll('.nv-wrap .nv-axis .trans_value').selectAll('text').attr("dy", 0);
-	     	// d3.selectAll('#cumulativeGraph svg .nv-axis .trans_value').attr("style", "transform: translateY(260px);");
-	      }, 500);
+	        }, 500);
 	    }								
       		
  }
