@@ -356,7 +356,8 @@ angular.module('hillromvestApp')
 	      setTimeout(function() {
 	          d3.selectAll('#cumulativeGraph svg').selectAll('.nv-lineChart circle.nv-point').attr("r", "1.3");
 	          d3.selectAll('#cumulativeGraph svg').style("visibility", "visible");
-	          d3.selectAll('#cumulativeGraph svg .nv-axis .trans_value').attr("style", "transform: translateY(260px);");
+	          d3.selectAll('#cumulativeGraph svg').selectAll('.nv-axis .trans_value').selectAll('text').attr("dy", 0);
+	          // d3.selectAll('#cumulativeGraph svg .nv-axis .trans_value').attr("style", "transform: translateY(260px);");
 	      }, 500);
 	    }								
       		
