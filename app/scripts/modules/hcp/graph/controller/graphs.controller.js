@@ -344,6 +344,10 @@ angular.module('hillromvestApp')
         d3.selectAll('#cumulativeGraph svg').selectAll(".nv-axis .nv-axisMaxMin").selectAll('text').
         attr("dy" , 12);
 
+        setTimeout(function() {
+          d3.selectAll('#cumulativeGraph svg').selectAll('.nv-axis .trans_value').selectAll('text').attr("dy", 0);
+          }, 500);
+
 		if($scope.formatedCumulativeGraphData[0].values.length  === 1){
           d3.selectAll('#cumulativeGraph svg').selectAll(".x.axis .tick").selectAll('text').attr("dx" , 533);
         }
@@ -356,9 +360,7 @@ angular.module('hillromvestApp')
 	      setTimeout(function() {
 	          d3.selectAll('#cumulativeGraph svg').selectAll('.nv-lineChart circle.nv-point').attr("r", "1.3");
 	          d3.selectAll('#cumulativeGraph svg').style("visibility", "visible");
-	          d3.selectAll('#cumulativeGraph svg').selectAll('.nv-axis .trans_value').selectAll('text').attr("dy", 0);
-	          // d3.selectAll('#cumulativeGraph svg .nv-axis .trans_value').attr("style", "transform: translateY(260px);");
-	      }, 500);
+	        }, 500);
 	    }								
       		
  }
@@ -607,7 +609,12 @@ angular.module('hillromvestApp')
 			d3.selectAll('#treatmentGraph svg').selectAll(".x.axis .tick").selectAll('text').
 	        attr("dy" , 12);
 
-	        d3.selectAll('#treatmentGraph svg').selectAll(".nv-axis .nv-axisMaxMin").selectAll('text').
+			 setTimeout(function() {
+	     			d3.selectAll('#treatmentGraph svg').selectAll('.nv-axis .trans_value').selectAll('text').attr("dy", 0);
+   				  d3.selectAll('#treatmentGraph svg').selectAll('.y2 .nv-axis .nv-axisMaxMin').selectAll('text').attr("dy", 0);
+	      			}, 500);
+
+	       	d3.selectAll('#treatmentGraph svg').selectAll(".nv-axis .nv-axisMaxMin").selectAll('text').
 	        attr("dy" , 12);
 			if($scope.treatmentGraphData[0].values.length  === 1){
 	          d3.selectAll('#treatmentGraph svg').selectAll(".x.axis .tick").selectAll('text').attr("dx" , 533);
