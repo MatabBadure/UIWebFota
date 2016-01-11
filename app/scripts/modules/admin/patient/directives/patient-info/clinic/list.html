@@ -73,7 +73,7 @@
   </div>
   <div class="col-md-16 reset-padding">
     <div class="col-md-8 clinic-link">
-      <input type="text" ng-show="searchClinicText" ng-model="clinic.name" typeahead="clinic for clinic in getClinicToLinkToPatient($viewValue) | filter:{name: $viewValue} | filter:{deleted: false}" typeahead-on-select="showAssociateClinicModal($item)" class="form-control" placeholder="{{'patient.placeholder.clinic-link' | translate}}" typeahead-template-url="customclinicTypeaheadTemplate.html">
+      <input type="text" ng-show="searchClinicText" ng-model="clinic.name" typeahead="clinic.hillromId + '' + clinic.name + '&nbsp;&nbsp;' + clinic.city + '&nbsp;&nbsp;'+ clinic.state for clinic in clinics | filter:{name: $viewValue} | filter:{deleted: false}" typeahead-on-select="showAssociateClinicModal($item)" class="form-control" placeholder="{{'patient.placeholder.clinic-link' | translate}}">
     </div>
 
     <div class="col-md-8 clinic-link">
@@ -200,14 +200,3 @@
 <modal ng-if="associatedClinicModal" onyes="selectClinicForPatient()" onno="$parent.associatedClinicModal = false; clinic.name= ''" header="{{'patient.associate-clinic-info.warning' | translate}}" message="{{'patient.associate-clinic-info.message' | translate}}"></modal>
 
 <modal ng-if="associatedHCPModal" onyes="selectHcpForPatient()" onno="$parent.associatedHCPModal = false; $parent.searchHcp= ''" header="{{'patient.associate-hcp-info.warning' | translate}}" message="{{'patient.associate-hcp-info.message' | translate}}"></modal>
-
-
-
-<script type="text/ng-template" id="customclinicTypeaheadTemplate.html">
-  <a>
-    <span bind-html-unsafe="match.model.hillromId"></span>
-    <span bind-html-unsafe="match.model.name | typeaheadHighlight:query"></span>
-    <span bind-html-unsafe="match.model.city"></span>
-    <span bind-html-unsafe="match.model.state"></span>
-  </a>
-</script>
