@@ -112,16 +112,6 @@ angular.module('hillromvestApp')
           return userList;
         }
 
-        this.getMatchingClinic = function($viewValue, list){
-          var clinics = [];
-          for (var i=0; i< list.length; i++) {
-            if (list[i].name.toLowerCase().indexOf($viewValue.toLowerCase()) != -1) {
-              clinics.push(list[i]);
-            }
-          }
-          return clinics;
-        }
-
         /*Method to Link (associate) Patient to clinic (Match to Name, Email and HillromId)*/
         this.getMatchingUserByNameEmailId = function($viewValue, list){
           var userList = [];
