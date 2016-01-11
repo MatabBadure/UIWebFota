@@ -864,6 +864,10 @@ angular.module('hillromvestApp')
       return searchFilterService.getMatchingUser($viewValue, $scope.hcps, true);
     };
 
+    $scope.getClinicToLinkToPatient = function($viewValue){
+      return searchFilterService.getMatchingClinic($viewValue, $scope.clinics);
+    };
+
     $scope.openPatientDeactivateModal = function(patient){
       $scope.deletePatient = patient;
       $scope.patientDeactivateModal = true;
