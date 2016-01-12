@@ -1022,5 +1022,9 @@ angular.module('hillromvestApp')
       }
     };
 
+    $scope.getClinicToLinkToPatient = function($viewValue){
+      return searchFilterService.getMatchingClinic($viewValue, $scope.clinics);
+    };
+
     $scope.init();
   }]);
