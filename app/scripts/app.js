@@ -15,7 +15,8 @@ angular.module('hillromvestApp',
    'ui.mask',
    'validation.match',
    'ui.bootstrap',
-   'oc.lazyLoad'
+   'oc.lazyLoad',
+   'ngSanitize'
 
    ])
 .run(['$rootScope', '$location', '$window', '$http', '$state', '$translate', 'Language', 'Auth', 'Principal', 'ENV', 'VERSION', function($rootScope, $location, $window, $http, $state, $translate, Language, Auth, Principal, ENV, VERSION) {
