@@ -45,6 +45,7 @@
             "app/bower_components/requirejs/require.js",
             "app/bower_components/d3/d3.js",
             "app/scripts/third_party_library/nv.d3.js",
+            "app/bower_components/angular-sanitize/angular-sanitize.js",
             "app/bower_components/oclazyload/dist/ocLazyLoad.js",
             "app/bower_components/angular-ui-mask/dist/mask.js",
             "app/scripts/app.js",
