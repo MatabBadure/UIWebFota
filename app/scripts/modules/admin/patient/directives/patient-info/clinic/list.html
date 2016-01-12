@@ -203,9 +203,9 @@
 
 <script type="text/ng-template" id="customclinicTypeaheadTemplate.html">
   <a>
-    <span bind-html-unsafe="match.model.hillromId"></span>
-    <span bind-html-unsafe="match.model.name | typeaheadHighlight:query"></span>
-    <span bind-html-unsafe="match.model.city"></span>
-    <span bind-html-unsafe="match.model.state"></span>
+    <span ng-bind-html="match.model.hillromId"></span>
+    <span ng-bind-html="match.model.name | typeaheadHighlight:query"></span>
+    <span ng-bind-html="match.model.city"></span>
+    <span ng-bind-html="match.model.state"></span>
   </a>
 </script>
