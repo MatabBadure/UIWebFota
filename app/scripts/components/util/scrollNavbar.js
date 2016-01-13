@@ -1,5 +1,5 @@
 window.onscroll = function(){
-  var y = window.pageYOffset || docElem.scrollTop || body.scrollTop;
+  var y = window.pageYOffset || document.documentElement.scrollTop || document.body.scroll;
   if( y > 40 ){
     var opacity = y/20;
     document.querySelector("#top-shadow").style.display = 'block';
