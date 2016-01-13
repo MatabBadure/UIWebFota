@@ -321,6 +321,7 @@ angular.module('hillromvestApp')
     $scope.plotNoDataAvailable = function() {
       $scope.noDataAvailable = true;
       $scope.removeGraph();
+      $scope.isGraphLoaded = true;
     };
     $scope.opts = {
       maxDate: new Date(),
