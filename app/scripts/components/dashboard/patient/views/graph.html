@@ -138,24 +138,24 @@
 			<div ng-if="hmrGraph" class="complianceGraphPrim_wrapper" id="lineGraphWrapper">
 				<div ng-if="hmrLineGraph">
 					<div id="hmrLineGraphSVG" class="complianceGraph col-md-16" style="position:relative;z-index:2;">
-						<svg id="hmrLineSVG" ng-show="!noDataAvailable"> </svg>						
+						<svg id="hmrLineSVG" ng-if="!noDataAvailable"> </svg>						
 					</div>
 					<div id="hmrLineGraphCompliance" class="complianceGraph col-md-16" style="margin-top: -351px;position:absolute;z-index:-1;">
-						<svg id="hmrCompliance" style="opcity: 1;"> </svg>
+						<svg id="hmrCompliance" style="opacity: 1;"  ng-if="hmrLineGraph && !noDataAvailable"> </svg>
 					</div>
 					<div id="hmrLineGraphCompliance1" class="complianceGraph col-md-16" style="margin-top: -351px;position:absolute;z-index:-1;" >		
-						<svg id="hmrCompliance1" style="opcity: 1;"> </svg>
+						<svg id="hmrCompliance1" style="opacity: 1;"  ng-if="hmrLineGraph && !noDataAvailable"> </svg>
 					</div>
 				</div>
 				<div ng-if="hmrBarGraph" id="hmrBarGraphWrapper">
 					<div id="hmrBarGraph" class="complianceGraph col-md-16" style="position:relative;z-index:2;">
-						<svg ng-show="!noDataAvailable"> </svg>
+						<svg ng-if="!noDataAvailable"> </svg>
 					</div>
 					<div id="hmrBarGraphCompliance" class="complianceGraph col-md-16" style="margin-top: -351px;position:absolute;z-index:-1;">
-						<svg id="hmrCompliance" style="opcity: 1;"> </svg>
+						<svg id="hmrCompliance" style="opacity: 1;"  ng-if="hmrBarGraph && !noDataAvailable"> </svg>
 					</div>
 					<div id="hmrBarGraphCompliance1" class="complianceGraph col-md-16" style="margin-top: -351px;position:absolute;z-index:-1;" >		
-						<svg id="hmrCompliance1" style="opcity: 1;"> </svg>
+						<svg id="hmrCompliance1" style="opacity: 1;"  ng-if="hmrBarGraph && !noDataAvailable"> </svg>
 					</div>
 				</div>
 			</div>
@@ -357,6 +357,21 @@
       </header>
       <div class="modal__body">
         <div class="modal--message">No therapy done within the selected duration</div>        
+      </div>
+      <footer class="modal__footer">
+      </footer>
+    </div>
+  </div>
+</div>
+<div class="modal" id="graph-loading-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal__dialog">
+    <div class="modal__content">
+      <header class="modal__header">
+        <button type="button" class="modal__close graph_close_btn" data-dismiss="modal" ng-click="cloasePDFModal()">&times;</button>
+        <p >{{header}}</p>
+      </header>
+      <div class="modal__body">
+        <div class="modal--message">PDF is loading. Please wait for sometime.</div>        
       </div>
       <footer class="modal__footer">
       </footer>

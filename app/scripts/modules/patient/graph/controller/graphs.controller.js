@@ -2247,6 +2247,10 @@ angular.module('hillromvestApp')
       $("#no-xls-modal").css("display", "none");
     }
 
+    $scope.cloasePDFModal = function(){
+      $("#graph-loading-modal").css("display", "none");
+    }
+
     $scope.downloadRawDataAsCsv = function(){      
       patientService.getDeviceDataAsCSV($scope.patientId, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-')).then(function(response){
         if(response && response.status === 204){
@@ -2349,7 +2353,7 @@ angular.module('hillromvestApp')
     };    
 
     $scope.downloadPDFFile = function (){ 
-      setTimeout(function(){
+      //setTimeout(function(){
       var hmrGraphId = null; var complianceGraphId = null; var compliance1GraphId = null;
       var pdfPressure = ($scope.hiddencompliance.pressure) ? $scope.hiddencompliance.pressure : false; 
       var pdfFrequency = ($scope.hiddencompliance.frequency) ? $scope.hiddencompliance.frequency : false;
@@ -2759,9 +2763,11 @@ angular.module('hillromvestApp')
       pdf.setFontSize(6);
       pdf.setTextColor(0,0,0);
       pdf.text(margins.width-268,pageHeight-13, "2 "); //7 
-      pdf.save('VisiView™.pdf');      
-      },500);   
-      //pdf.save('VisiView™.pdf');                
+      setTimeout(function(){     
+        pdf.save('VisiView™.pdf'); 
+      },1000);                  
+      //},500);   
+                    
     };
 
     $scope.getTableDataForPDF = function(){
