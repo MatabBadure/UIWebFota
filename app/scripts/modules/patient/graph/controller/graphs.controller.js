@@ -317,17 +317,17 @@ angular.module('hillromvestApp')
         $timeout(waitHandler, 1000);
       }
       $scope.waitFunction();
-    }
+    };
     $scope.plotNoDataAvailable = function() {
       $scope.noDataAvailable = true;
-      $scope.removeGraph();
+      $scope.removeGraph();      
     };
     $scope.opts = {
       maxDate: new Date(),
       format: patientDashboard.dateFormat,
       dateLimit: {"months":patientDashboard.maxDurationInMonths},
       eventHandlers: {'apply.daterangepicker': function(ev, picker) {
-
+        if($scope.isGraphLoaded){
         $('#hmrLineGraphSVG').css('width','100%');         
         $scope.removeGraph();
         $scope.addCanvasToDOM();
@@ -338,6 +338,7 @@ angular.module('hillromvestApp')
         setTimeout(function(){ 
           $('#hmrLineGraphSVG').css('width','1200px');
         }, 3000);
+        }
         }
       },
       opens: 'left'
@@ -527,6 +528,8 @@ angular.module('hillromvestApp')
     $scope.getHiddenComplianceForPDF = function(pressure, frequency, duration, hiddenDivName, hiddenSVGId, graphType, callback, callbackDivId, callbackSvgId, callbackGraphType) {     
       patientDashBoardService.getcomplianceGraphData($scope.patientId, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.groupBy).then(function(complianceResponse){            
           if(complianceResponse.data && complianceResponse.data.actual){
+          var allMissedTherapy = (complianceResponse.data.actual.length === 1 && complianceResponse.data.actual[0].missedTherapy) ? true: false;
+          if(!allMissedTherapy){
             $scope.hiddencompliance = {};
             $scope.completeComplianceData = complianceResponse.data;          
             $scope.hiddencompliance.pressure = pressure;
@@ -548,7 +551,7 @@ angular.module('hillromvestApp')
             }else{
               $scope.drawHiddenComplianceGraph(hiddenDivName, hiddenSVGId, "hidden", graphType);
             }
-                         
+            }             
           }
         }); 
     };
@@ -1060,20 +1063,27 @@ angular.module('hillromvestApp')
         }
          else {
           //recommended values
-          $scope.toDate = ($scope.completeComplianceData.actual) ? dateService.getDateFromTimeStamp(dateService.convertMMDDYYYYHHMMSSstamp($scope.completeComplianceData.actual[$scope.completeComplianceData.actual.length-1].timestamp),patientDashboard.dateFormat, '/' ) : dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');
-          $scope.noDataAvailable = false;
-          $scope.completeComplianceData = graphUtil.convertIntoServerTimeZone($scope.completeComplianceData,patientDashboard.complianceGraph);
-          $scope.minFrequency = $scope.completeComplianceData.recommended.minFrequency;
-          $scope.maxFrequency = $scope.completeComplianceData.recommended.maxFrequency;
-          $scope.minPressure = $scope.completeComplianceData.recommended.minPressure;
-          $scope.maxPressure = $scope.completeComplianceData.recommended.maxPressure;
-          $scope.minDuration = $scope.completeComplianceData.recommended.minMinutesPerTreatment * $scope.completeComplianceData.recommended.treatmentsPerDay;          
-          $scope.yAxisRangeForCompliance = graphUtil.getYaxisRangeComplianceGraph($scope.completeComplianceData);
-          $scope.completecomplianceGraphData = graphUtil.convertIntoComplianceGraph($scope.completeComplianceData.actual);
-          $scope.yAxis1Max = $scope.yAxisRangeForCompliance.maxDuration;
-          $scope.createComplianceGraphData();
-          $scope.isComplianceExist = true;
-          $scope.drawComplianceGraph();          
+          var allMissedTherapy = ($scope.completeComplianceData.actual.length === 1 && $scope.completeComplianceData.actual[0].missedTherapy) ? true: false;
+          if(!allMissedTherapy){
+            $scope.toDate = ($scope.completeComplianceData.actual) ? dateService.getDateFromTimeStamp(dateService.convertMMDDYYYYHHMMSSstamp($scope.completeComplianceData.actual[$scope.completeComplianceData.actual.length-1].timestamp),patientDashboard.dateFormat, '/' ) : dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');
+            $scope.noDataAvailable = false;
+            $scope.completeComplianceData = graphUtil.convertIntoServerTimeZone($scope.completeComplianceData,patientDashboard.complianceGraph);
+            $scope.minFrequency = $scope.completeComplianceData.recommended.minFrequency;
+            $scope.maxFrequency = $scope.completeComplianceData.recommended.maxFrequency;
+            $scope.minPressure = $scope.completeComplianceData.recommended.minPressure;
+            $scope.maxPressure = $scope.completeComplianceData.recommended.maxPressure;
+            $scope.minDuration = $scope.completeComplianceData.recommended.minMinutesPerTreatment * $scope.completeComplianceData.recommended.treatmentsPerDay;          
+            $scope.yAxisRangeForCompliance = graphUtil.getYaxisRangeComplianceGraph($scope.completeComplianceData);
+            $scope.completecomplianceGraphData = graphUtil.convertIntoComplianceGraph($scope.completeComplianceData.actual);
+            $scope.yAxis1Max = $scope.yAxisRangeForCompliance.maxDuration;
+            $scope.createComplianceGraphData();
+            $scope.isComplianceExist = true;
+            $scope.drawComplianceGraph(); 
+          }else{
+            $scope.complianceGraphData = [];
+            $scope.plotNoDataAvailable();
+            $scope.isComplianceExist = false;
+          }         
         }
       }).catch(function(response) {
         $scope.complianceGraphData = [];
@@ -2237,13 +2247,17 @@ angular.module('hillromvestApp')
       $("#no-xls-modal").css("display", "none");
     }
 
+    $scope.cloasePDFModal = function(){
+      $("#graph-loading-modal").css("display", "none");
+    }
+
     $scope.downloadRawDataAsCsv = function(){      
       patientService.getDeviceDataAsCSV($scope.patientId, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-')).then(function(response){
         if(response && response.status === 204){
           //showpopup
           $("#no-xls-modal").css("display", "block");
         }else{
-          saveAs(new Blob([response.data],{type:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"}), "TherapyData.xlsx");          
+          saveAs(new Blob([response.data],{type:"application/vnd.ms-excel"}), "TherapyData.xls");          
         }
       });
     };
@@ -2339,7 +2353,7 @@ angular.module('hillromvestApp')
     };    
 
     $scope.downloadPDFFile = function (){ 
-      setTimeout(function(){
+      //setTimeout(function(){
       var hmrGraphId = null; var complianceGraphId = null; var compliance1GraphId = null;
       var pdfPressure = ($scope.hiddencompliance.pressure) ? $scope.hiddencompliance.pressure : false; 
       var pdfFrequency = ($scope.hiddencompliance.frequency) ? $scope.hiddencompliance.frequency : false;
@@ -2655,7 +2669,7 @@ angular.module('hillromvestApp')
         var htmlString =  $(hmrGraphId).find("svg").parent().html().trim().replace(/xmlns=\"http:\/\/www\.w3\.org\/2000\/svg\"/, '');          
         canvg(canvas, htmlString);       
         var img = $("#hmrBarLineCanvas")[0].toDataURL('image/png', 1.0);
-        pdf.addImage(img, 'png', 10, (imgY),margins.width+100, 170);                
+        pdf.addImage(img, 'png', 12, (imgY),margins.width+80, 170);                
       }
 
       pdf.setDrawColor(0);
@@ -2749,9 +2763,11 @@ angular.module('hillromvestApp')
       pdf.setFontSize(6);
       pdf.setTextColor(0,0,0);
       pdf.text(margins.width-268,pageHeight-13, "2 "); //7 
-      pdf.save('VisiView™.pdf');      
-      },500);   
-      //pdf.save('VisiView™.pdf');                
+      setTimeout(function(){     
+        pdf.save('VisiView™.pdf'); 
+      },1000);                  
+      //},500);   
+                    
     };
 
     $scope.getTableDataForPDF = function(){
@@ -2790,7 +2806,7 @@ angular.module('hillromvestApp')
                   ,stringConstants.address+stringConstants.colon, completePatientAddress
                   ,stringConstants.phone+stringConstants.colon, patientPhone
                   ,stringConstants.DOB+stringConstants.colon, patientDOB
-                  ,stringConstants.adherenceScore, patientAdherence
+                  ,stringConstants.adherenceScore, pdfHMRNonAdherenceScore
                 ]
             }
             , rDeviceInfo :{
@@ -2804,7 +2820,7 @@ angular.module('hillromvestApp')
                title: stringConstants.NotificationLabel
                 , tData: [
                   stringConstants.missedTherapyDays+stringConstants.colon, pdfMissedTherapyDays
-                  ,stringConstants.hmrNonAdherence+stringConstants.colon, pdfHMRNonAdherenceScore
+                  ,stringConstants.runrate+stringConstants.colon, $scope.hmrRunRate
                   ,stringConstants.settingDeviation+stringConstants.colon, pdfSettingDeviation
                 ]
             }

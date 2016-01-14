@@ -120,7 +120,8 @@ var stringConstants = {
     notAvailable: "N/A",
     deviceType : "The Vest System",
     emptyString: "",
-    comma: ", "
+    comma: ", ",
+    runrate: "HMR Runrate"
 
 }
 

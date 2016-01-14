@@ -15,6 +15,7 @@ angular.module('hillromvestApp',
    'ui.mask',
    'validation.match',
    'ui.bootstrap',
+   'ngSanitize',
    'oc.lazyLoad'
 
    ])
