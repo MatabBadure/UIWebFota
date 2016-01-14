@@ -528,7 +528,7 @@ angular.module('hillromvestApp')
     $scope.getHiddenComplianceForPDF = function(pressure, frequency, duration, hiddenDivName, hiddenSVGId, graphType, callback, callbackDivId, callbackSvgId, callbackGraphType) {     
       patientDashBoardService.getcomplianceGraphData($scope.patientId, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.groupBy).then(function(complianceResponse){            
           if(complianceResponse.data && complianceResponse.data.actual){
-          var allMissedTherapy = (complianceResponse.data.actual.length === 1 && complianceResponse.data.actual.actual[0].missedTherapy) ? true: false;
+          var allMissedTherapy = (complianceResponse.data.actual.length === 1 && complianceResponse.data.actual[0].missedTherapy) ? true: false;
           if(!allMissedTherapy){
             $scope.hiddencompliance = {};
             $scope.completeComplianceData = complianceResponse.data;          
