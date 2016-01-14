@@ -2814,7 +2814,7 @@ angular.module('hillromvestApp')
                title: stringConstants.NotificationLabel
                 , tData: [
                   stringConstants.missedTherapyDays+stringConstants.colon, pdfMissedTherapyDays
-                  ,stringConstants.hmrNonAdherence+stringConstants.colon, $scope.hmrRunRate
+                  ,stringConstants.runrate+stringConstants.colon, $scope.hmrRunRate
                   ,stringConstants.settingDeviation+stringConstants.colon, pdfSettingDeviation
                 ]
             }
