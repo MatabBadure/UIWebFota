@@ -320,15 +320,14 @@ angular.module('hillromvestApp')
     };
     $scope.plotNoDataAvailable = function() {
       $scope.noDataAvailable = true;
-      $scope.removeGraph();
-      $scope.isGraphLoaded = true;
+      $scope.removeGraph();      
     };
     $scope.opts = {
       maxDate: new Date(),
       format: patientDashboard.dateFormat,
       dateLimit: {"months":patientDashboard.maxDurationInMonths},
       eventHandlers: {'apply.daterangepicker': function(ev, picker) {
-
+        if($scope.isGraphLoaded){
         $('#hmrLineGraphSVG').css('width','100%');         
         $scope.removeGraph();
         $scope.addCanvasToDOM();
@@ -339,6 +338,7 @@ angular.module('hillromvestApp')
         setTimeout(function(){ 
           $('#hmrLineGraphSVG').css('width','1200px');
         }, 3000);
+        }
         }
       },
       opens: 'left'
@@ -2665,7 +2665,7 @@ angular.module('hillromvestApp')
         var htmlString =  $(hmrGraphId).find("svg").parent().html().trim().replace(/xmlns=\"http:\/\/www\.w3\.org\/2000\/svg\"/, '');          
         canvg(canvas, htmlString);       
         var img = $("#hmrBarLineCanvas")[0].toDataURL('image/png', 1.0);
-        pdf.addImage(img, 'png', 10, (imgY),margins.width+100, 170);                
+        pdf.addImage(img, 'png', 12, (imgY),margins.width+80, 170);                
       }
 
       pdf.setDrawColor(0);
@@ -2800,7 +2800,7 @@ angular.module('hillromvestApp')
                   ,stringConstants.address+stringConstants.colon, completePatientAddress
                   ,stringConstants.phone+stringConstants.colon, patientPhone
                   ,stringConstants.DOB+stringConstants.colon, patientDOB
-                  ,stringConstants.adherenceScore, patientAdherence
+                  ,stringConstants.adherenceScore, pdfHMRNonAdherenceScore
                 ]
             }
             , rDeviceInfo :{
@@ -2814,7 +2814,7 @@ angular.module('hillromvestApp')
                title: stringConstants.NotificationLabel
                 , tData: [
                   stringConstants.missedTherapyDays+stringConstants.colon, pdfMissedTherapyDays
-                  ,stringConstants.hmrNonAdherence+stringConstants.colon, pdfHMRNonAdherenceScore
+                  ,stringConstants.hmrNonAdherence+stringConstants.colon, $scope.hmrRunRate
                   ,stringConstants.settingDeviation+stringConstants.colon, pdfSettingDeviation
                 ]
             }
