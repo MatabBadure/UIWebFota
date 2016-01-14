@@ -503,7 +503,7 @@
 /*for no event*/
 .pointer-no-event{
 	pointer-events : none !important;
-	cursor: none;
+	cursor: default;
 }
 .pointer-fill-event{
 	pointer-events : fill !important;
