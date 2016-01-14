@@ -132,7 +132,7 @@
 
 		<loading loaded="isGraphLoaded"></loading>
 		<div class="col-md-16" class="all_graph_wrapper" >		
-			<div class="graph_nodata" ng-show="noDataAvailable">
+			<div class="graph_nodata" ng-if="noDataAvailable">
 					<span class="noData_text"> No Data Available!</span>
 			</div>
 			<div ng-if="hmrGraph" class="complianceGraphPrim_wrapper" id="lineGraphWrapper">
@@ -182,16 +182,16 @@
 				</div>
 				<div id="complianceGraphPrim" class="complianceGraphPrim_wrapper" >
 					<div id="complianceGraph" class="complianceGraph col-md-16">
-						<svg id="compCompliance" ng-show="!noDataAvailable"> </svg>
+						<svg id="compCompliance" ng-if="!noDataAvailable"> </svg>
 					</div>
 					<div id="complianceGraph1" class="complianceGraph col-md-16" style="margin-top: -351px;position:absolute;z-index:-1;"> 
-						<svg id="compCompliance1" ng-show="!noDataAvailable"> </svg>
+						<svg id="compCompliance1" ng-if="!noDataAvailable"> </svg>
 					</div>
 					<div id="complianceGraph2" class="complianceGraph col-md-16" style="margin-top: -351px;position:absolute;z-index:-1;"> 
-						<svg id="compCompliance2" ng-show="!noDataAvailable"> </svg>
+						<svg id="compCompliance2" ng-if="!noDataAvailable"> </svg>
 					</div>
 					<div id="complianceGraphHMR" class="complianceGraph col-md-16" style="margin-top: -351px;position:absolute;z-index:-1;">
-						<svg id="complianceHMR" ng-show="!noDataAvailable"> </svg>
+						<svg id="complianceHMR" ng-if="!noDataAvailable"> </svg>
 					</div>
 				</div>
 			</div>

@@ -317,7 +317,7 @@ angular.module('hillromvestApp')
         $timeout(waitHandler, 1000);
       }
       $scope.waitFunction();
-    }
+    };
     $scope.plotNoDataAvailable = function() {
       $scope.noDataAvailable = true;
       $scope.removeGraph();
@@ -528,6 +528,8 @@ angular.module('hillromvestApp')
     $scope.getHiddenComplianceForPDF = function(pressure, frequency, duration, hiddenDivName, hiddenSVGId, graphType, callback, callbackDivId, callbackSvgId, callbackGraphType) {     
       patientDashBoardService.getcomplianceGraphData($scope.patientId, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.groupBy).then(function(complianceResponse){            
           if(complianceResponse.data && complianceResponse.data.actual){
+          var allMissedTherapy = (complianceResponse.data.actual.length === 1 && complianceResponse.data.actual[0].missedTherapy) ? true: false;
+          if(!allMissedTherapy){
             $scope.hiddencompliance = {};
             $scope.completeComplianceData = complianceResponse.data;          
             $scope.hiddencompliance.pressure = pressure;
@@ -549,7 +551,7 @@ angular.module('hillromvestApp')
             }else{
               $scope.drawHiddenComplianceGraph(hiddenDivName, hiddenSVGId, "hidden", graphType);
             }
-                         
+            }             
           }
         }); 
     };
@@ -1061,20 +1063,27 @@ angular.module('hillromvestApp')
         }
          else {
           //recommended values
-          $scope.toDate = ($scope.completeComplianceData.actual) ? dateService.getDateFromTimeStamp(dateService.convertMMDDYYYYHHMMSSstamp($scope.completeComplianceData.actual[$scope.completeComplianceData.actual.length-1].timestamp),patientDashboard.dateFormat, '/' ) : dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');
-          $scope.noDataAvailable = false;
-          $scope.completeComplianceData = graphUtil.convertIntoServerTimeZone($scope.completeComplianceData,patientDashboard.complianceGraph);
-          $scope.minFrequency = $scope.completeComplianceData.recommended.minFrequency;
-          $scope.maxFrequency = $scope.completeComplianceData.recommended.maxFrequency;
-          $scope.minPressure = $scope.completeComplianceData.recommended.minPressure;
-          $scope.maxPressure = $scope.completeComplianceData.recommended.maxPressure;
-          $scope.minDuration = $scope.completeComplianceData.recommended.minMinutesPerTreatment * $scope.completeComplianceData.recommended.treatmentsPerDay;          
-          $scope.yAxisRangeForCompliance = graphUtil.getYaxisRangeComplianceGraph($scope.completeComplianceData);
-          $scope.completecomplianceGraphData = graphUtil.convertIntoComplianceGraph($scope.completeComplianceData.actual);
-          $scope.yAxis1Max = $scope.yAxisRangeForCompliance.maxDuration;
-          $scope.createComplianceGraphData();
-          $scope.isComplianceExist = true;
-          $scope.drawComplianceGraph();          
+          var allMissedTherapy = ($scope.completeComplianceData.actual.length === 1 && $scope.completeComplianceData.actual[0].missedTherapy) ? true: false;
+          if(!allMissedTherapy){
+            $scope.toDate = ($scope.completeComplianceData.actual) ? dateService.getDateFromTimeStamp(dateService.convertMMDDYYYYHHMMSSstamp($scope.completeComplianceData.actual[$scope.completeComplianceData.actual.length-1].timestamp),patientDashboard.dateFormat, '/' ) : dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');
+            $scope.noDataAvailable = false;
+            $scope.completeComplianceData = graphUtil.convertIntoServerTimeZone($scope.completeComplianceData,patientDashboard.complianceGraph);
+            $scope.minFrequency = $scope.completeComplianceData.recommended.minFrequency;
+            $scope.maxFrequency = $scope.completeComplianceData.recommended.maxFrequency;
+            $scope.minPressure = $scope.completeComplianceData.recommended.minPressure;
+            $scope.maxPressure = $scope.completeComplianceData.recommended.maxPressure;
+            $scope.minDuration = $scope.completeComplianceData.recommended.minMinutesPerTreatment * $scope.completeComplianceData.recommended.treatmentsPerDay;          
+            $scope.yAxisRangeForCompliance = graphUtil.getYaxisRangeComplianceGraph($scope.completeComplianceData);
+            $scope.completecomplianceGraphData = graphUtil.convertIntoComplianceGraph($scope.completeComplianceData.actual);
+            $scope.yAxis1Max = $scope.yAxisRangeForCompliance.maxDuration;
+            $scope.createComplianceGraphData();
+            $scope.isComplianceExist = true;
+            $scope.drawComplianceGraph(); 
+          }else{
+            $scope.complianceGraphData = [];
+            $scope.plotNoDataAvailable();
+            $scope.isComplianceExist = false;
+          }         
         }
       }).catch(function(response) {
         $scope.complianceGraphData = [];
