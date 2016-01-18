@@ -326,8 +326,7 @@ angular.module('hillromvestApp')
       maxDate: new Date(),
       format: patientDashboard.dateFormat,
       dateLimit: {"months":patientDashboard.maxDurationInMonths},
-      eventHandlers: {'apply.daterangepicker': function(ev, picker) {
-        if($scope.isGraphLoaded){
+      eventHandlers: {'apply.daterangepicker': function(ev, picker) {       
         $('#hmrLineGraphSVG').css('width','100%');         
         $scope.removeGraph();
         $scope.addCanvasToDOM();
@@ -338,7 +337,6 @@ angular.module('hillromvestApp')
         setTimeout(function(){ 
           $('#hmrLineGraphSVG').css('width','1200px');
         }, 3000);
-        }
         }
       },
       opens: 'left'
@@ -2777,7 +2775,8 @@ angular.module('hillromvestApp')
       var pdfClinicPhone = (pdfClinic !== null && pdfClinic.phoneNumber) ? pdfClinic.phoneNumber : stringConstants.notAvailable;
       var reportGenerationDate = dateService.getDateFromTimeStamp(new Date().getTime(),patientDashboard.dateFormat,'/');
       var patientMrnId = (patientDetails !== null && patientDetails.mrnId)? $scope.slectedPatient.mrnId : stringConstants.notAvailable;
-      var patientName = (patientDetails !== null && patientDetails.firstName)? $scope.slectedPatient.firstName+stringConstants.space+$scope.slectedPatient.lastName : stringConstants.notAvailable;
+      var patientName = (patientDetails !== null && patientDetails.firstName)? $scope.slectedPatient.firstName+stringConstants.space : stringConstants.notAvailable;
+      var patientName = (patientName !== stringConstants.notAvailable && $scope.slectedPatient.lastName  && $scope.slectedPatient.lastName  !== null) ? patientName+$scope.slectedPatient.lastName : stringConstants.notAvailable;
       var completePatientAddress = (patientDetails !== null && patientDetails.city) ? patientDetails.city : stringConstants.emptyString;
       completePatientAddress = (patientDetails !== null && patientDetails.state) ? ((completePatientAddress.length > 1) ? (completePatientAddress+stringConstants.comma+patientDetails.state) : patientDetails.state) : completePatientAddress;      
       completePatientAddress = (patientDetails !== null && patientDetails.address) ? ((completePatientAddress.length > 1) ? (completePatientAddress+stringConstants.comma+patientDetails.address) : patientDetails.address) : completePatientAddress;
