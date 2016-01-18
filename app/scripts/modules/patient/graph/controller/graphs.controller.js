@@ -2775,8 +2775,9 @@ angular.module('hillromvestApp')
       var pdfClinicPhone = (pdfClinic !== null && pdfClinic.phoneNumber) ? pdfClinic.phoneNumber : stringConstants.notAvailable;
       var reportGenerationDate = dateService.getDateFromTimeStamp(new Date().getTime(),patientDashboard.dateFormat,'/');
       var patientMrnId = (patientDetails !== null && patientDetails.mrnId)? $scope.slectedPatient.mrnId : stringConstants.notAvailable;
-      var patientName = (patientDetails !== null && patientDetails.firstName)? $scope.slectedPatient.firstName+stringConstants.space : stringConstants.notAvailable;
-      var patientName = (patientName !== stringConstants.notAvailable && $scope.slectedPatient.lastName  && $scope.slectedPatient.lastName  !== null) ? patientName+$scope.slectedPatient.lastName : stringConstants.notAvailable;
+      var patientName = (patientDetails !== null && patientDetails.firstName && patientDetails.firstName !== null)? $scope.slectedPatient.firstName+stringConstants.space : "";
+      patientName = ($scope.slectedPatient.lastName  && $scope.slectedPatient.lastName  !== null) ? patientName+$scope.slectedPatient.lastName : patientName;
+      patientName = (patientName && patientName.length > 0) ? patientName : stringConstants.notAvailable;
       var completePatientAddress = (patientDetails !== null && patientDetails.city) ? patientDetails.city : stringConstants.emptyString;
       completePatientAddress = (patientDetails !== null && patientDetails.state) ? ((completePatientAddress.length > 1) ? (completePatientAddress+stringConstants.comma+patientDetails.state) : patientDetails.state) : completePatientAddress;      
       completePatientAddress = (patientDetails !== null && patientDetails.address) ? ((completePatientAddress.length > 1) ? (completePatientAddress+stringConstants.comma+patientDetails.address) : patientDetails.address) : completePatientAddress;
@@ -2789,7 +2790,8 @@ angular.module('hillromvestApp')
       var pdfMissedTherapyDays = ($scope.missedtherapyDays !== null && $scope.missedtherapyDays >= 0) ? $scope.missedtherapyDays : stringConstants.notAvailable;
       var pdfHMRNonAdherenceScore = ($scope.adherenceScore !== null && $scope.adherenceScore >= 0) ? $scope.adherenceScore : 0;
       var pdfSettingDeviation = ($scope.settingsDeviatedDaysCount !== null && $scope.settingsDeviatedDaysCount >= 0) ? $scope.settingsDeviatedDaysCount : stringConstants.notAvailable;
-      completePatientAddress = (completePatientAddress === stringConstants.emptyString) ? stringConstants.notAvailable : completePatientAddress;
+      completePatientAddress = (completePatientAddress === stringConstants.emptyString) ? stringConstants.notAvailable : completePatientAddress;      
+      
         g_pdfMetaData = {
             rTitle: 'HillRom'
             ,rTitle1: 'VisiView™ Health Portal'
