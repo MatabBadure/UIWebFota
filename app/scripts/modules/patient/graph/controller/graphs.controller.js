@@ -2778,9 +2778,9 @@ angular.module('hillromvestApp')
       var patientName = (patientDetails !== null && patientDetails.firstName && patientDetails.firstName !== null)? $scope.slectedPatient.firstName+stringConstants.space : "";
       patientName = ($scope.slectedPatient.lastName  && $scope.slectedPatient.lastName  !== null) ? patientName+$scope.slectedPatient.lastName : patientName;
       patientName = (patientName && patientName.length > 0) ? patientName : stringConstants.notAvailable;
-      var completePatientAddress = (patientDetails !== null && patientDetails.city) ? patientDetails.city : stringConstants.emptyString;
-      completePatientAddress = (patientDetails !== null && patientDetails.state) ? ((completePatientAddress.length > 1) ? (completePatientAddress+stringConstants.comma+patientDetails.state) : patientDetails.state) : completePatientAddress;      
-      completePatientAddress = (patientDetails !== null && patientDetails.address) ? ((completePatientAddress.length > 1) ? (completePatientAddress+stringConstants.comma+patientDetails.address) : patientDetails.address) : completePatientAddress;
+      var completePatientAddress = (patientDetails !== null && patientDetails.address) ? patientDetails.address : stringConstants.emptyString;
+      completePatientAddress = (patientDetails !== null && patientDetails.city) ? ((completePatientAddress.length > 1) ? (completePatientAddress+stringConstants.comma+patientDetails.city) : patientDetails.city) : completePatientAddress;
+      completePatientAddress = (patientDetails !== null && patientDetails.state) ? ((completePatientAddress.length > 1) ? (completePatientAddress+stringConstants.comma+patientDetails.state) : patientDetails.state) : completePatientAddress;            
       completePatientAddress = (patientDetails !== null && patientDetails.zipcode) ? ((completePatientAddress.length > 1) ? (completePatientAddress+stringConstants.comma+patientDetails.zipcode) : patientDetails.zipcode) : completePatientAddress;      
       var patientPhone = (patientDetails !== null && patientDetails.mobilePhone)? $scope.slectedPatient.mobilePhone : stringConstants.notAvailable;
       var patientDOB = (patientDetails !== null && patientDetails.dob)? dateService.getDateFromTimeStamp(patientDetails.dob,patientDashboard.dateFormat,'/') : stringConstants.notAvailable;
