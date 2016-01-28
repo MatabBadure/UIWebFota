@@ -214,7 +214,7 @@
       "tabs": {
         "mydashboard": "Dashboard",
         "caregiver": "Caregiver",
-        "device-protocol": "Device and Protocol",
+        "device-protocol": "Care Plan and Device",
         "clinic-hcp": "Clinic and HCP",
         "patient-demographics": "Patient Demographics"
       }
