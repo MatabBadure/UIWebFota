@@ -57,6 +57,7 @@
         },
         "placeholder": {
             "search": "Search with HCP Name or Email",
+            "searchPatient":"Search with Patient Name or Email",
             "link-clinic": "Search Clinic here"
         },
         "npi-number": "NPI Number",
