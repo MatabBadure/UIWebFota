@@ -27,8 +27,8 @@
      </div>
 
      <div class="form-group">
-      <input type="password" class="form-control" validate-on-key-press name="password" id="passwordBox"
-      ng-model="user.password" ng-minlength=8 ng-maxlength=50 ng-keyup="passwordStrength()" ng-pattern="/^(?=^.{8,}$)(?=.*\d)(?=.*[!@#$%^-\{\}|`~<>\[\]\?\\_=+&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/" placeholder="New Password" required>
+      <input type="password" class="form-control" validate-on-blur name="password" id="passwordBox"
+      ng-model="user.password" ng-minlength=8 ng-maxlength=50 ng-pattern="/^(?=^.{8,}$)(?=.*\d)(?=.*[!@#$%^-\{\}|`~<>\[\]\?\\_=+&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/" placeholder="New Password" required>
       <div ng-show="(confirmForm.password.$showValidationMessage && confirmForm.password.$invalid) || submitted">
         <span class="login-has-error" ng-show="confirmForm.password.$error.required">
          {{'login.password.required' | translate }}
@@ -36,17 +36,13 @@
        <span class="login-has-error" ng-show="confirmForm.password.$error.maxlength">
          {{'login.password.maxlength' | translate }}
        </span>
-    </div>
-    <div ng-hide="true" class="CommonWidth" id="passwordStrengthContainer">
-    </div>
-
-    <div class="CommonWidth">
-      <span id="status"></span>
+       <span class="login-has-error" ng-show="confirmForm.password.$error.pattern">
+         {{'login.password.customError' | translate }}
+       </span>
     </div>
   </div>
   <div class="form-group">
-    <input type="password" class="form-control" validate-on-blur name="confirmPassword"
-    ng-model="user.confirmPassword" ng-minlength=8 ng-maxlength=50 ng-pattern="/^(?=^.{8,}$)(?=.*\d)(?=.*[!@#$%^-\{\}|`~<>\[\]\?\\_=+&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/" required  pw-check="passwordBox" placeholder="Enter New Password">
+    <input type="password" class="form-control" validate-on-blur name="confirmPassword" ng-model="user.confirmPassword" ng-minlength=8 ng-maxlength=50 ng-pattern="/^(?=^.{8,}$)(?=.*\d)(?=.*[!@#$%^-\{\}|`~<>\[\]\?\\_=+&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/" required  pw-check="passwordBox" placeholder="Enter New Password">
     <div ng-show="(confirmForm.confirmPassword.$dirty && confirmForm.confirmPassword.$invalid) || submitted">
       <span class="login-has-error" ng-show="confirmForm.confirmPassword.$error.required && !confirmForm.confirmPassword.$error.pwmatch">
         {{'login.password.required' | translate }}

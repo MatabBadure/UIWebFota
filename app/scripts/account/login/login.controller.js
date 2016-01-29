@@ -183,7 +183,7 @@ angular.module('hillromvestApp')
       });
     };
 
-    $scope.submitPassword = function(event) {      
+    $scope.submitPassword = function(event) {   
       if ($scope.confirmForm.$invalid) {
         $scope.showSubmit = true;
         return false;
@@ -243,10 +243,6 @@ angular.module('hillromvestApp')
       }
     };
 
-    $scope.passwordStrength = function() {
-      $scope.display_strength('passwordBox', 'passwordStrengthContainer', 'status');
-    };
-
     $scope.div = function(x) {
       return document.getElementById(x);
     };
@@ -273,73 +269,7 @@ angular.module('hillromvestApp')
 
       x = Math.floor(x);
       return (x * $scope.factorial(x - 1));
-
     };
 
-    $scope.display_strength = function(x, y, z) {
-      if (!x || $scope.div(x) === "") {
-        $scope.div(y).style.width = 0 + "%";
-        $scope.div(z).innerHTML = "&nbsp:";
-        return false;
-      }
-      var paswd = $scope.div(x);
-      var stren = $scope.div(y);
-      var stats = $scope.div(z);
-      var years = 0;
-
-      var regex = [
-        /^[a-zA-Z]+$/g,
-        /^[a-zA-Z0-9]+$/g,
-        /^[a-zA-Z0-9\ \~\!\@\#\$\%\^\&\*\(\)]+$/g,
-      ];
-
-      var count = [42, 52, 63, 74];
-      var color = ["red", "gold", "lime", "darkgreen"];
-      var value = ["weak", "Good", "Strong", "Very Strong"];
-      var index = 0;
-
-      for (index = 0; index < regex.length; index++) {
-        if (index > regex.length) {
-          break;
-        }
-        if (regex[index].test(paswd.value)) {
-          break;
-        } else {
-          continue;
-        }
-
-      }
-
-      years = $scope.compute_strength(count[index], (paswd.value).length);
-
-      if (years >= 1000 && !$scope.confirmForm.password.$error.pattern) {
-        //stren.style.width = "100%";
-        //stren.style.background = color[3];
-        stats.innerHTML = value[3];
-        stats.style.color = color[3];
-      } else if (years >= 100 && years < 1000 && !$scope.confirmForm.password.$error.pattern) {
-        //stren.style.width = "75%";
-        //stren.style.background = color[2];
-        stats.innerHTML = value[2];
-        stats.style.color = color[2];
-      } else if (years >= 10 && years < 100 && !$scope.confirmForm.password.$error.pattern) {
-        //stren.style.width = "50%";
-        //stren.style.background = color[1];
-        stats.innerHTML = value[1];
-        stats.style.color = color[1];
-      } else {
-        if($scope.confirmForm.password && $scope.confirmForm.password.$error.required){
-          //stren.style.width = "0%";
-          stats.innerHTML = '';
-          stats.style.color = color[0];
-        }else{
-          //stren.style.width = "25%";
-          //stren.style.background = color[0];
-          stats.innerHTML = value[0];
-          stats.style.color = color[0];
-        } 
-      }
-      return false;
-    };
     $scope.init();
   }]);
