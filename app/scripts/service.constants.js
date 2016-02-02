@@ -96,7 +96,9 @@ var sortConstant = {
     hcp: "hcp",
     hcpname: "hcpname",
     pHillromId: "phillrom_id",
-    patientDoB: "patientDoB"
+    patientDoB: "patientDoB",
+    comma: ",",
+    isActivated: "isActivated"
 }
 
 var stringConstants = {
