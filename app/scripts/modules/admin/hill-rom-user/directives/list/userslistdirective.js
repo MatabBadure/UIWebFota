@@ -156,7 +156,7 @@ angular.module('hillromvestApp')
           var x = {};
           x.text = "All"; x.value = "All";
           $scope.userRoleList.push(x);
-          var roles = ['ADMIN', 'PATIENT', 'HCP', 'CLINIC_ADMIN', 'CARE_GIVER', 'ACCT_SERVICES', 'ASSOCIATES'];
+          var roles = ['ADMIN', 'ACCT_SERVICES', 'ASSOCIATES', 'PATIENT', 'HCP', 'CARE_GIVER', 'CLINIC_ADMIN'];
           angular.forEach(roles, function(role){
               x = {};
               x.value = role;              
