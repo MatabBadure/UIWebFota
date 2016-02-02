@@ -37,7 +37,11 @@ var searchFilters = {
     patientList : "patientList",
     clinicList: "clinicList",
     hcpList: "hcpList",
-    asc:"asc"
+    asc:"asc",
+    isPending: "isPending",
+    isActivated: "isActivated",
+    authority: "authority",
+    all: "All"
 }
 
 var sortConstant = {
