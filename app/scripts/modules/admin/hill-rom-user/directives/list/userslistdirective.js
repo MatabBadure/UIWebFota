@@ -162,10 +162,10 @@ angular.module('hillromvestApp')
               x.value = role;              
               switch(role){
                 case 'ADMIN': 
-                  x.text = "Admin"; 
+                  x.text = "Super Admin"; 
                   break;
                 case 'PATIENT': 
-                  x.text = "Patient";
+                  x.text = "Patient User";
                   break;
                 case 'HCP':
                   x.text = "HCP"; 
@@ -174,7 +174,7 @@ angular.module('hillromvestApp')
                   x.text = "Clinic Admin";
                   break;
                 case 'CARE_GIVER': 
-                  x.text = "Care Giver";
+                  x.text = "Caregiver";
                   break;
                 case 'ACCT_SERVICES':
                   x.text = "RC Admin";
