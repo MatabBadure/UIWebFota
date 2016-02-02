@@ -11,15 +11,15 @@
     <link rel="stylesheet" href="bower_components/ng-tags-input/ng-tags-input.min.css" />
     <link rel="stylesheet" href="bower_components/angular-notys/angular-notys.css" />
     <link rel="stylesheet" href="bower_components/bootstrap-daterangepicker/daterangepicker-bs3.css" />
-    <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.css" />
     <link rel="stylesheet" href="bower_components/nvd3/src/nv.d3.css" />
     <link rel="stylesheet" href="styles/styles.css">
     <!-- endbuild -->
 
 </head>
-
+ 
 <body ng-app="hillromvestApp">
-
+<!--  <span us-spinner></span> -->
+  <span us-spinner="{radius:15, width:6, length:10}"></span>
     <div noty-container></div>
     <div id="wrap" ng-controller="MainController">
         <ng-include src="'scripts/components/navbar/navbarmain.html'"></ng-include>
@@ -73,8 +73,10 @@
 <script src="bower_components/bootstrap-sass-datepicker/js/bootstrap-sass-datepicker.min.js"></script>
 <script src="bower_components/ng-tags-input/ng-tags-input.min.js"></script>
 <script src="bower_components/angular-notys/angular-notys.min.js"></script>
-<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>           
-<script src="bower_components/angular-loading-bar/build/loading-bar.min.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script> 
+<script src="bower_components/angular-spinner/angular-spinner.min.js"></script>
+<script src="bower_components/angular-loading-spinner/angular-loading-spinner.js"></script>   
+<script src="bower_components/spin.js/spin.js"></script>          
 <script src="bower_components/angular-validation-match/dist/angular-validation-match.min.js"></script>
 <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
 <script src="bower_components/requirejs/require.min.js"></script>
