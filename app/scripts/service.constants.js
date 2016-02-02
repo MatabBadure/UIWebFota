@@ -41,7 +41,8 @@ var searchFilters = {
     isPending: "isPending",
     isActivated: "isActivated",
     authority: "authority",
-    all: "All"
+    all: "All",
+    activeInactive: "all"
 }
 
 var sortConstant = {

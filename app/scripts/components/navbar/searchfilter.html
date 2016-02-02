@@ -1,5 +1,5 @@
 
-	<div class="row lebel-indent col-md-16">
+	<div class="row lebel-indent col-md-16 margin-bottom15">
 		<label>
 			<input type="checkbox" ng-model="searchFilter.isActive" ng-click="searchOnFilters()"> 
 			<span translate="search-filter.active"></span> 
@@ -31,7 +31,7 @@
 		<div class="col-md-3 pull-right dashboard__form__input reset-padding selected-box-container" ng-if="isUsersTab">
 		<label> Select Role</label>
           <div class="custom-dropdown">
-          <select name="selectRole" id="selectRole" ng-options="option.text for option in roleData.userRoles track by option.value" ng-model="roleData.roleSelected" ng-click="searchUsers()"  style="padding:6px"></select>            
+          <select name="selectRole" id="selectRole" class="selectrole" ng-options="option.text for option in roleData.userRoles track by option.value" ng-model="roleData.roleSelected" ng-click="searchUsers()"  style="padding:6px"></select>            
           </div>
         </div>		
 	</div>

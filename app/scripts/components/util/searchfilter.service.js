@@ -143,6 +143,8 @@ angular.module('hillromvestApp')
             filterString += searchFilters.isDeleted + searchFilters.colon + 0 + searchFilters.semicolon;
           }else if(!filter.isActive && filter.isInActive){
             filterString += searchFilters.isDeleted + searchFilters.colon + 1 + searchFilters.semicolon;
+          }else if(filter.isActive && filter.isInActive){
+            filterString += searchFilters.isDeleted + searchFilters.colon + searchFilters.activeInactive + searchFilters.semicolon;
           }
           if(filter.isPending){
             filterString += searchFilters.isActivated + searchFilters.colon + 0 + searchFilters.semicolon;
