@@ -20,6 +20,7 @@ angular.module('hillromvestApp')
       controller: ['$scope', 'notyService', '$state', 'UserService', 'StorageService', 'Auth', '$rootScope', function ($scope, notyService, $state, UserService, StorageService, Auth, $rootScope) {
 
         $scope.init = function(){
+          $scope.nonHillRomUsers = ['PATIENT', 'HCP', 'CLINIC_ADMIN', 'CARE_GIVER'];
           if($state.current.name === 'hillRomUserEdit'){
             $scope.loggedUserId = StorageService.get('logged').userId;
           }
