@@ -141,7 +141,7 @@ angular.module('hillromvestApp')
             toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortUserList.status);
             $scope.sortUserList = sortOptionsService.getSortOptionsForUserList();
             $scope.sortUserList.status = toggledSortOptions;
-            $scope.sortOption = sortConstant.isDeleted + sortConstant.comma + sortConstant.isActivated + sortOptionsService.getSortByASCString(toggledSortOptions);
+            $scope.sortOption = sortConstant.isDeleted + sortOptionsService.getSortByASCString(toggledSortOptions);
             $scope.searchUsers();
           }          
               
