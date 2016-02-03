@@ -188,7 +188,6 @@ angular.module('hillromvestApp')
           $scope.roleData.roleSelected = $scope.userRoleList[0];
           $scope.roleData.userRoles = $scope.userRoleList;
         };
-
         $scope.init();
       }]
     };
