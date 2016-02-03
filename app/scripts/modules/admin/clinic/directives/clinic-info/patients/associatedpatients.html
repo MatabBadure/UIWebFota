@@ -120,7 +120,7 @@
       <input class="form-control" type="text" ng-model="searchPatient" typeahead="patient as patient.lastName + ' ' + patient.firstName + '&nbsp;&nbsp; ' + patient.hillromId + ' &nbsp;&nbsp; '+ patient.city + '  &nbsp;&nbsp; '+ patient.state for patient in getPatientsToAssociate($viewValue)" typeahead-on-select="showAssociatePatientModal($item)" placeholder="{{'clinic.placeholder.patient-search' | translate}}" ng-show="isAssociatePatient">
     </div>
 
-    <div class="col-md-8 clinic-link">
+    <div class="col-md-8 clinic-link" ng-if="!clinic.deleted">
       <buton class="hillrom-btn btn-primary float-right" ng-click="linkPatient()" translate="clinic.link-patient" ng-show="!isAssociatePatient"></buton>
     </div>
   </div>
