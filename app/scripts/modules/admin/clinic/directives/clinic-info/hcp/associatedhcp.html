@@ -112,7 +112,7 @@
       <input class="form-control" type="text" ng-model="searchHcp" typeahead="hcp as hcp.lastName + ', &nbsp' + hcp.firstName +' ' + hcp.clinicName for hcp in getHCPsToLinkClinic($viewValue)" typeahead-on-select="showAssociateHCPModal($item)" placeholder="{{'clinic.placeholder.hcp-search' | translate}}" ng-show="isAssociateHCP">
     </div>
 
-    <div class="col-md-8 clinic-link">
+    <div class="col-md-8 clinic-link" ng-if="!clinic.deleted">
       <buton class="hillrom-btn btn-primary float-right" ng-click="linkHCP()" translate="clinic.link-hcp" ng-show="!isAssociateHCP"></buton>
     </div>
   </div>
