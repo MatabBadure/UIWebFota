@@ -37,7 +37,12 @@ var searchFilters = {
     patientList : "patientList",
     clinicList: "clinicList",
     hcpList: "hcpList",
-    asc:"asc"
+    asc:"asc",
+    isPending: "isPending",
+    isActivated: "isActivated",
+    authority: "authority",
+    all: "All",
+    activeInactive: "all"
 }
 
 var sortConstant = {
@@ -91,7 +96,9 @@ var sortConstant = {
     hcp: "hcp",
     hcpname: "hcpname",
     pHillromId: "phillrom_id",
-    patientDoB: "patientDoB"
+    patientDoB: "patientDoB",
+    comma: ",",
+    isActivated: "isActivated"
 }
 
 var stringConstants = {
