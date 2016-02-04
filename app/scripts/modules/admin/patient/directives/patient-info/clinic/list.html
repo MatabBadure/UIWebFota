@@ -77,10 +77,9 @@
     </div>
 
     <div class="col-md-8 clinic-link">
-      <buton class="hillrom-btn btn-primary float-right" ng-show=" associatedClinics && !searchClinicText" ng-click="linkClinic()" translate="patient.link-clinic"></buton>
+      <buton class="hillrom-btn btn-primary float-right" ng-show=" associatedClinics &&  !searchClinicText && !slectedPatient.isDeleted" ng-click="linkClinic()" translate="patient.link-clinic"></buton>
     </div>
   </div>
-
 
   <div class="col-md-16 admin-views">
     <span class="admin-views--title" translate="patient.hcp-title"></span>
@@ -152,7 +151,7 @@
     </div>
 
     <div class="col-md-8 clinic-link">
-      <buton class="hillrom-btn btn-primary float-right" ng-show="associatedHCPs && !searchHCPText" ng-click="linkHCP()" translate="patient.link-hcp"></buton>
+      <buton class="hillrom-btn btn-primary float-right" ng-show="associatedHCPs && !searchHCPText && !slectedPatient.isDeleted" ng-click="linkHCP()" translate="patient.link-hcp"></buton>
     </div>
   </div>
 </div>
