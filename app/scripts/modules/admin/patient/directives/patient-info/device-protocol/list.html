@@ -2,7 +2,7 @@
 <admin-patient-navbar></admin-patient-navbar>
 <div class="container admin-user">
   <div class="col-md-16 margin-top">
-   <div class="user-gen-details">
+   <div class="user-gen-details">{{slectedPatient.isDeleted}}
      <span class="user-gen-details--name">{{::slectedPatient.firstName}} {{::slectedPatient.lastName}}</span>
      <span class="user-gen-details--hr-id">{{::slectedPatient.hillromId}}</span>
    </div>
@@ -75,7 +75,7 @@
   
   <div class="col-md-16 empty-list-message" ng-if="!protocols"><span translate="patient.empty-protocol-list-message"></span></div>
 
-  <div class="col-md-16 reset-padding">
+  <div class="col-md-16 reset-padding" ng-if="!slectedPatient.isDeleted">
     <div class="col-md-8 clinic-link">
     </div>
     <div class="col-md-8 clinic-link">
@@ -129,7 +129,7 @@
   </div>
   <div class="col-md-16 empty-list-message" ng-if="!devices"><span translate="patient.empty-device-list-message"></span></div>
 
-  <div class="col-md-16 reset-padding">
+  <div class="col-md-16 reset-padding" ng-if="devices && !slectedPatient.isDeleted">
     <div class="col-md-8 clinic-link">
     </div>
     <div class="col-md-8 clinic-link">
