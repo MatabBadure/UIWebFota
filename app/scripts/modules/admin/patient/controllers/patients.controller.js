@@ -481,6 +481,7 @@ angular.module('hillromvestApp')
     $scope.getCaregiversForPatient = function(patientId){
       patientService.getCaregiversLinkedToPatient(patientId).then(function(response){
         $scope.caregivers =  response.data.caregivers;
+        $scope.isCargiverLoaded = true;
       }).catch(function(response){
         notyService.showError(response);
       });
@@ -490,6 +491,7 @@ angular.module('hillromvestApp')
         patientService.associateCaregiversFromPatient(patientId, careGiver).then(function(response){
         notyService.showMessage(response.data.message, 'success');
         $scope.caregivers =  response.data.user;
+        $scope.isCargiverLoaded = true;
         $scope.associateCareGiver = [];$scope.associateCareGiver.length = 0;
         $scope.switchPatientTab('patientCraegiver');
       }).catch(function(response){
