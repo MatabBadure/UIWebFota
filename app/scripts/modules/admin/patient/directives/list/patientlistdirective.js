@@ -25,7 +25,6 @@ angular.module('hillromvestApp')
         $scope.init = function() {
           $scope.userRole = StorageService.get('logged').role;
           $scope.searchFilter = searchFilterService.initSearchFiltersForPatient();
-          $scope.patients = [];
           $scope.patientInfo = {};
           $scope.currentPageIndex = 1;
           $scope.perPageCount = 10;
