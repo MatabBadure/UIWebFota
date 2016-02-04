@@ -148,7 +148,6 @@ angular.module('hillromvestApp')
       $scope.perPageCount = 10;
       $scope.pageCount = 0;
       $scope.total = 0;
-      // $scope.clinics = [];
       $scope.sortOption ="";
       $scope.showModal = false;
       $scope.clinicSortOption = "";
@@ -485,7 +484,6 @@ angular.module('hillromvestApp')
     $scope.selectClinicEdit = function(clinic) {
       $scope.clinic.parentClinic.name = clinic.name;
       $scope.clinic.parentClinic.id = clinic.id;
-      // $scope.clinics = [];
     };
 
     $scope.removeParent = function() {
