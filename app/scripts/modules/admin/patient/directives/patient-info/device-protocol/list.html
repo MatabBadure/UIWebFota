@@ -73,7 +73,7 @@
 
 </div>
   
-  <div class="col-md-16 empty-list-message" ng-if="!protocols"><span translate="patient.empty-protocol-list-message"></span></div>
+  <div class="col-md-16 empty-list-message" ng-if="protocols && protocols.length === 0"><span translate="patient.empty-protocol-list-message"></span></div>
 
   <div class="col-md-16 reset-padding" ng-if="!slectedPatient.isDeleted">
     <div class="col-md-8 clinic-link">
@@ -127,7 +127,7 @@
       <span ng-if="device.active" class="icon-delete-icon cursor-pointer" ng-click="deleteDeviceModel(device)"></span>
     </div>
   </div>
-  <div class="col-md-16 empty-list-message" ng-if="!devices"><span translate="patient.empty-device-list-message"></span></div>
+  <div class="col-md-16 empty-list-message" ng-if="devices && devices.length === 0"><span translate="patient.empty-device-list-message"></span></div>
 
   <div class="col-md-16 reset-padding" ng-if="devices && !slectedPatient.isDeleted">
     <div class="col-md-8 clinic-link">
