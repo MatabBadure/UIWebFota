@@ -30,7 +30,6 @@ angular.module('hillromvestApp')
           $scope.isUsersTab = true;          
           $scope.userRole = StorageService.get('logged').role;
           $scope.sortUserList = sortOptionsService.getSortOptionsForUserList();
-          $scope.users = [];
           $scope.currentPageIndex = 1;
           $scope.perPageCount = 10;
           $scope.pageCount = 0;
