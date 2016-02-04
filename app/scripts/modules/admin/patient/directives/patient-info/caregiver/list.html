@@ -61,7 +61,7 @@
     </div>
   </div>
 
-  <div class="col-md-16 empty-list-message" ng-if="!caregivers.length">
+  <div class="col-md-16 empty-list-message" ng-if="caregivers && caregivers.length === 0">
     <span translate="patient.empty-caregiver-list-message"></span>
   </div>
 
