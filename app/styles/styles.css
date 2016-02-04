@@ -5674,6 +5674,10 @@ a::-moz-focus-inner {
   margin-bottom: 10px;
 }
 
+.margin-bottom15 {
+  margin-bottom: 15px;
+}
+
 .margin-bottom-xl {
   margin-bottom: 40px;
 }
@@ -5734,6 +5738,10 @@ a::-moz-focus-inner {
   width: 15px;
   text-align: center;
   padding-right: 20px;
+}
+
+select > option {
+  border-right: 1px solid #000;
 }
 
 @media screen\0 {
@@ -9066,13 +9074,13 @@ ul.dropdown-menu {
   color: #333333;
 }
 .nvtooltip .graph_ul .notes {
-  padding-right: 7px;
+  padding-right: 10px;
 }
 
 .patient_dashdoard_btns {
   clear: left;
   display: inline-block;
-  /*  margin: 380px 0px 20px;*/
+  /*   margin: 380px 0px 20px;*/
   margin: 0px 0px 20px;
   width: 100%;
 }
@@ -9230,10 +9238,12 @@ ul.dropdown-menu {
 /*for no event*/
 .pointer-no-event {
   pointer-events: none !important;
+  cursor: default;
 }
 
 .pointer-fill-event {
   pointer-events: fill !important;
+  cursor: pointer;
 }
 
 /*Navbar Style*/
