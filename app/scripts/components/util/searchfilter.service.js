@@ -21,6 +21,8 @@ angular.module('hillromvestApp')
                 break;
                 case 'missed_therapy':searchFilter.isMissedTherapy = true;
                 break;
+                case 'isPending':searchFilter.isPending = true;
+                break;
               }
             }else{
               searchFilter.isActive = true;
@@ -29,6 +31,7 @@ angular.module('hillromvestApp')
               searchFilter.isSettingsDeviated = false;
               searchFilter.isHMRNonCompliant = false;
               searchFilter.isMissedTherapy = false;
+              searchFilter.isPending = false;
             }
             searchFilter.userList = searchFilters.patientList;
             return searchFilter;
@@ -84,12 +87,12 @@ angular.module('hillromvestApp')
         }
 
         this.getFilterStringForHCP = function(filter) {
-          var filterString = searchFilters.emptyString;
-            if(filter.isActive && !filter.isInActive){
-              filterString = searchFilters.isDeleted + searchFilters.colon + 0 + searchFilters.semicolon;
-            }else if(!filter.isActive && filter.isInActive){
-              filterString = searchFilters.isDeleted + searchFilters.colon + 1 + searchFilters.semicolon;
-            }
+          var filterString = searchFilters.emptyString;                   
+          if(filter.isActive && !filter.isInActive){
+            filterString = searchFilters.isDeleted + searchFilters.colon + 0 + searchFilters.semicolon;
+          }else if(!filter.isActive && filter.isInActive){
+            filterString = searchFilters.isDeleted + searchFilters.colon + 1 + searchFilters.semicolon;
+          }
           return filterString;
         }
 
@@ -112,6 +115,16 @@ angular.module('hillromvestApp')
           return userList;
         }
 
+        this.getMatchingClinic = function($viewValue, list){
+          var clinics = [];
+          for (var i=0; i< list.length; i++) {
+            if (list[i].name.toLowerCase().indexOf($viewValue.toLowerCase()) != -1) {
+              clinics.push(list[i]);
+            }
+          }
+          return clinics;
+        }
+
         /*Method to Link (associate) Patient to clinic (Match to Name, Email and HillromId)*/
         this.getMatchingUserByNameEmailId = function($viewValue, list){
           var userList = [];
@@ -122,5 +135,24 @@ angular.module('hillromvestApp')
           }
           return userList;
         }
+
+        this.getFilterStringForHillromUser = function(filter, userRole) {
+          var filterString = searchFilters.emptyString;
+          var filterString = (userRole === searchFilters.all) ? filterString : searchFilters.authority + searchFilters.colon + userRole + searchFilters.semicolon;                    
+          if(filter.isActive && !filter.isInActive){
+            filterString += searchFilters.isDeleted + searchFilters.colon + 0 + searchFilters.semicolon;
+          }else if(!filter.isActive && filter.isInActive){
+            filterString += searchFilters.isDeleted + searchFilters.colon + 1 + searchFilters.semicolon;
+          }else if(filter.isActive && filter.isInActive){
+            filterString += searchFilters.isDeleted + searchFilters.colon + searchFilters.activeInactive + searchFilters.semicolon;
+          }
+          if(filter.isPending){
+            filterString += searchFilters.isActivated + searchFilters.colon + 0 + searchFilters.semicolon;
+          }else if(!filter.isPending){
+            filterString += searchFilters.isActivated + searchFilters.colon + 1 + searchFilters.semicolon;
+          }                    
+          return filterString;                                
+        }
+
 
     }]);

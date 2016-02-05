@@ -11,10 +11,12 @@ angular.module('hillromvestApp',
    'vcRecaptcha',
    'ngTagsInput',
    'angular-noty',
-   'angular-loading-bar',
+   'angularSpinner',
+   'ngLoadingSpinner',
    'ui.mask',
    'validation.match',
    'ui.bootstrap',
+   'ngSanitize',
    'oc.lazyLoad'
 
    ])

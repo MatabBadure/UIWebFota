@@ -45,24 +45,22 @@
             </div>
         <form class="login-auth-form" ng-show="!success" name="form" role="form" novalidate ng-submit="finishReset()" show-validation>
           <div class="form-group">
-            <input type="password" class="form-control" id="passwordBox" name="password" placeholder="{{'global.form.newpassword.placeholder' | translate}}" validate-on-key-press ng-model="resetAccount.password" ng-minlength=8 maxlength=50 ng-keyup="passwordStrength()" ng-pattern="/^(?=^.{8,}$)(?=.*\d)(?=.*[!@#$%^-\{\}|`~<>\[\]\?\\_=+&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/" required>
+            <input type="password" class="form-control" id="passwordBox" name="password" placeholder="{{'global.form.newpassword.placeholder' | translate}}" validate-on-blur ng-model="resetAccount.password" ng-minlength=8 maxlength=50 ng-pattern="/^(?=^.{8,}$)(?=.*\d)(?=.*[!@#$%^-\{\}|`~<>\[\]\?\\_=+&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/" required>
             <div ng-show="(form.password.$dirty && form.password.$showValidationMessage && form.password.$invalid) || submitted">
               <span class="login-has-error"
                 ng-show="form.password.$error.required">
                {{'reset.password.required' | translate }}
               </span>
               <span class="login-has-error"
+                ng-show="form.password.$error.pattern">
+                {{'reset.password.customError' | translate }}
+              </span>
+              <span class="login-has-error"
                 ng-show="form.password.$error.maxlength">
                 {{'error.password.maxlength' | translate }}
               </span>
             </div>
-
-            <div ng-show="confirmForm.password.$dirty" class="CommonWidth" id="passwordStrengthContainer">
-            </div>
-            <div class="CommonWidth">
-              <span id="status"></span>
-            </div>
-        </div>
+          </div>
 
           <div class="form-group">
             <input type="password" class="form-control" name="confirmPassword" placeholder="{{'global.form.confirmpassword.placeholder' | translate}}" ng-model="resetAccount.confirmPassword" ng-minlength=8 ng-maxlength=50 ng-pattern="/^(?=^.{8,}$)(?=.*\d)(?=.*[!@#$%^-\{\}|`~<>\[\]\?\\_=+&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/" pw-check="passwordBox" required>

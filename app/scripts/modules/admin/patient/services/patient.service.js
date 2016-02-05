@@ -306,7 +306,7 @@ angular.module('hillromvestApp')
         });
       },
       getProtocolById: function(patientId, protocolId) {
-        var url = URL.protocolById.replace('', patientId).replace('PROTOCOLID', protocolId);
+        var url = URL.protocolById.replace('PATIENTID', patientId).replace('PROTOCOLID', protocolId);
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {

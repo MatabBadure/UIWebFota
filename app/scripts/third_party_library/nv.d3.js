@@ -1237,7 +1237,7 @@ nv.utils.optionsFunc = function(args) {
             var axisMaxMin = wrap.selectAll('g.nv-axisMaxMin')
                            .data(scale.domain());
             setTimeout(function(){
-              axisMaxMin[0].parentNode.firstElementChild.nextElementSibling.setAttribute("class", "trans_value nv-axisMaxMin");
+              axisMaxMin[0].parentNode.firstChild.nextSibling.setAttribute("class", "trans_value nv-axisMaxMin");
             }, 500);
        
 
@@ -11195,7 +11195,7 @@ nv.models.scatter = function() {
           pointPaths.exit().remove();
           pointPaths
               .attr('d', function(d) {
-                if (d.data.length === 0)
+                if (!d || d.data.length === 0)
                     return 'M 0 0'
                 else
                     return 'M' + d.data.join('L') + 'Z';
