@@ -326,7 +326,8 @@
         "inactive" : "InActive", "no-event" : "No Transmission",
         "setting-deviation" : "Setting Deviation", 
         "hmr-non-compliant" : "HMR Non-Adherence", 
-        "missed-therapy" :"Missed Therapy"
+        "missed-therapy" :"Missed Therapy",
+        "pending": "Pending"
     },
 
     "user-not-found" : "No user associated.",
@@ -344,7 +345,7 @@
         "set-password": "Set Password"
     },
     "validationkey" : {
-        "invalidactivationlink" : "This activation link is no longer valid.",
+        "invalidactivationlink" : "This activation link is no longer valid. Our records say that you have been sent a new Activation Link. Kindly check your latest email for the details.",
         "contactmessage" : " Please contact Hill-Rom Respiratory Care Customer Support at 800-426-4224 or email HCCSWEB@Hill-Rom to resend a valid activation link."
     }
 }

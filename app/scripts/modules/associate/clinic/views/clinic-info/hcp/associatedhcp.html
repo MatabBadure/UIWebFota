@@ -81,7 +81,7 @@
           <div class="clr"></div>
        </div>
 
-       <div class="col-md-16 empty-list-message" ng-if="!associatedHcps.length">
+       <div class="col-md-16 empty-list-message" ng-if="associatedHcps && associatedHcps.length === 0">
         <span translate="clinic.noHCPs"></span>
       </div>
 

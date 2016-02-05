@@ -60,12 +60,11 @@
       <span class="icon-delete-icon" ng-click="openModalCaregiver(caregiver.user.id, $index)"></span>
     </div>
   </div>
-
-  <div class="col-md-16 empty-list-message" ng-if="!caregivers.length">
+  <div class="col-md-16 empty-list-message" ng-if="isCargiverLoaded && !caregivers">
     <span translate="patient.empty-caregiver-list-message"></span>
   </div>
 
-  <div class="col-md-16 reset-padding caregiver-link">
+  <div class="col-md-16 reset-padding caregiver-link" ng-if="isCargiverLoaded && !slectedPatient.isDeleted">
       <buton class="hillrom-btn btn-primary float-right" ng-click="linkCaregiver()" translate="patient.link-caregiver"></buton>
   </div>
 </div>

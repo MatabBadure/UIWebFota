@@ -97,12 +97,13 @@ angular.module('hillromvestApp')
     $scope.getProtocols = function(patientId){
       patientService.getProtocol(patientId).then(function(response){
         $scope.protocols = response.data.protocol;
-        $scope.addProtocol = true;
+        $scope.isAddProtocol = true;
+        $scope.isProtocolLoaded = true;
         angular.forEach($scope.protocols, function(protocol){
           protocol.createdDate = dateService.getDateByTimestamp(protocol.createdDate);
           protocol.lastModifiedDate = dateService.getDateByTimestamp(protocol.lastModifiedDate);
           if(!protocol.deleted){
-            $scope.addProtocol = false;
+            $scope.isAddProtocol = false;
           }
         });
       }).catch(function(){});
@@ -115,6 +116,7 @@ angular.module('hillromvestApp')
           device.lastModifiedDate = dateService.getDateByTimestamp(device.lastModifiedDate);
         });
         $scope.devices = response.data.deviceList;
+        $scope.isDevicesLoaded = true;
       }).catch(function(response){
         notyService.showError(response);
       });
@@ -481,6 +483,7 @@ angular.module('hillromvestApp')
     $scope.getCaregiversForPatient = function(patientId){
       patientService.getCaregiversLinkedToPatient(patientId).then(function(response){
         $scope.caregivers =  response.data.caregivers;
+        $scope.isCargiverLoaded = true;
       }).catch(function(response){
         notyService.showError(response);
       });
@@ -490,6 +493,7 @@ angular.module('hillromvestApp')
         patientService.associateCaregiversFromPatient(patientId, careGiver).then(function(response){
         notyService.showMessage(response.data.message, 'success');
         $scope.caregivers =  response.data.user;
+        $scope.isCargiverLoaded = true;
         $scope.associateCareGiver = [];$scope.associateCareGiver.length = 0;
         $scope.switchPatientTab('patientCraegiver');
       }).catch(function(response){
