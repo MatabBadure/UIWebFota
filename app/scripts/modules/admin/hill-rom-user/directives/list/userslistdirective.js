@@ -30,7 +30,6 @@ angular.module('hillromvestApp')
           $scope.isUsersTab = true;          
           $scope.userRole = StorageService.get('logged').role;
           $scope.sortUserList = sortOptionsService.getSortOptionsForUserList();
-          $scope.users = [];
           $scope.currentPageIndex = 1;
           $scope.perPageCount = 10;
           $scope.pageCount = 0;
@@ -144,7 +143,7 @@ angular.module('hillromvestApp')
             toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortUserList.status);
             $scope.sortUserList = sortOptionsService.getSortOptionsForUserList();
             $scope.sortUserList.status = toggledSortOptions;
-            $scope.sortOption = sortConstant.isDeleted + sortConstant.comma + sortConstant.isActivated + sortOptionsService.getSortByASCString(toggledSortOptions);
+            $scope.sortOption = sortConstant.isDeleted + sortOptionsService.getSortByASCString(toggledSortOptions);
             $scope.searchUsers();
           }          
               
@@ -191,7 +190,6 @@ angular.module('hillromvestApp')
           $scope.roleData.roleSelected = $scope.userRoleList[0];
           $scope.roleData.userRoles = $scope.userRoleList;
         };
-
         $scope.init();
       }]
     };

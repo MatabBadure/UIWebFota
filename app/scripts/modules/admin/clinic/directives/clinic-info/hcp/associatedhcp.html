@@ -84,7 +84,7 @@
           <div class="clr"></div>
        </div>
 
-       <div class="col-md-16 empty-list-message" ng-if="!associatedHcps.length">
+       <div class="col-md-16 empty-list-message" ng-if="associatedHcps && associatedHcps.length === 0">
         <span translate="clinic.noHCPs"></span>
       </div>
 
@@ -113,7 +113,7 @@
     </div>
 
     <div class="col-md-8 clinic-link" ng-if="!clinic.deleted">
-      <buton class="hillrom-btn btn-primary float-right" ng-click="linkHCP()" translate="clinic.link-hcp" ng-show="!isAssociateHCP"></buton>
+      <buton class="hillrom-btn btn-primary float-right" ng-click="linkHCP()" translate="clinic.link-hcp" ng-show="!isAssociateHCP && associatedHcps"></buton>
     </div>
   </div>
 </div>

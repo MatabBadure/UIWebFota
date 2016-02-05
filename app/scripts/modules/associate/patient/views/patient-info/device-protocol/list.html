@@ -70,7 +70,7 @@
 
 </div>
   
-  <div class="col-md-16 empty-list-message" ng-if="!protocols"><span translate="patient.empty-protocol-list-message"></span></div>
+  <div class="col-md-16 empty-list-message" ng-if="protocols && protocols.length === 0"><span translate="patient.empty-protocol-list-message"></span></div>
 
  <!--  <div class="col-md-16 reset-padding">
     <div class="col-md-8 clinic-link">
