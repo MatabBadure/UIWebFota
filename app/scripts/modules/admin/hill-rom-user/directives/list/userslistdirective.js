@@ -94,6 +94,9 @@ angular.module('hillromvestApp')
           } else {
             $scope.currentPageIndex = 1;
           }
+          if($scope.roleData.roleSelected.value !== "All"){
+            $scope.sortUserList.role = sortOptionsService.setSortOptionToDefault();            
+          }
           var filter = searchFilterService.getFilterStringForHillromUser($scope.searchFilter, $scope.roleData.roleSelected.value);
           var url = URL.searchUsers;
           UserService.getUsers(url, $scope.searchItem, $scope.sortOption, $scope.currentPageIndex, $scope.perPageCount, filter).then(function(response) {
@@ -113,16 +116,12 @@ angular.module('hillromvestApp')
             $scope.sortUserList.lastName = toggledSortOptions;
             $scope.sortOption = sortConstant.lastName + sortOptionsService.getSortByASCString(toggledSortOptions);
             $scope.searchUsers();
-          }else if(sortParam === sortConstant.role){
-            if($scope.roleData.roleSelected.value === "All"){
-              toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortUserList.role);
-              $scope.sortUserList = sortOptionsService.getSortOptionsForUserList();
-              $scope.sortUserList.role = toggledSortOptions;
-              $scope.sortOption = sortConstant.name + sortOptionsService.getSortByASCString(toggledSortOptions);
-              $scope.searchUsers();
-            }else{
-              toggledSortOptions = sortOptionsService.toggleSortParam(sortOption.isDefault);
-            }            
+          }else if(sortParam === sortConstant.role && $scope.roleData.roleSelected.value === "All"){
+            toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortUserList.role);
+            $scope.sortUserList = sortOptionsService.getSortOptionsForUserList();
+            $scope.sortUserList.role = toggledSortOptions;
+            $scope.sortOption = sortConstant.name + sortOptionsService.getSortByASCString(toggledSortOptions);
+            $scope.searchUsers();          
           }else if(sortParam === sortConstant.hillromId){
             toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortUserList.hillromId);
             $scope.sortUserList = sortOptionsService.getSortOptionsForUserList();
