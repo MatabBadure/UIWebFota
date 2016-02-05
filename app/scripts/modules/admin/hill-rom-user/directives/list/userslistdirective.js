@@ -114,11 +114,15 @@ angular.module('hillromvestApp')
             $scope.sortOption = sortConstant.lastName + sortOptionsService.getSortByASCString(toggledSortOptions);
             $scope.searchUsers();
           }else if(sortParam === sortConstant.role){
-            toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortUserList.role);
-            $scope.sortUserList = sortOptionsService.getSortOptionsForUserList();
-            $scope.sortUserList.role = toggledSortOptions;
-            $scope.sortOption = sortConstant.name + sortOptionsService.getSortByASCString(toggledSortOptions);
-            $scope.searchUsers();
+            if($scope.roleData.roleSelected.value === "All"){
+              toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortUserList.role);
+              $scope.sortUserList = sortOptionsService.getSortOptionsForUserList();
+              $scope.sortUserList.role = toggledSortOptions;
+              $scope.sortOption = sortConstant.name + sortOptionsService.getSortByASCString(toggledSortOptions);
+              $scope.searchUsers();
+            }else{
+              toggledSortOptions = sortOptionsService.toggleSortParam(sortOption.isDefault);
+            }            
           }else if(sortParam === sortConstant.hillromId){
             toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortUserList.hillromId);
             $scope.sortUserList = sortOptionsService.getSortOptionsForUserList();
