@@ -10,13 +10,14 @@ angular.module('hillromvestApp',
    'ngCacheBuster',
    'vcRecaptcha',
    'ngTagsInput',
-   'angular-noty',
    'angularSpinner',
    'ngLoadingSpinner',
    'ui.mask',
    'validation.match',
    'ui.bootstrap',
    'ngSanitize',
+   'ngAnimate',
+   'toastr',
    'oc.lazyLoad'
 
    ])
@@ -156,4 +157,19 @@ angular.module('hillromvestApp',
                 'scripts/modules/clinicadmin/patient/controllers/clinicadminpatient.controller.js']
       }]
     });
-  }]);
+  }])
+
+  .config(['toastrConfig', function(toastrConfig) {
+  angular.extend(toastrConfig, {
+    autoDismiss: false,
+    containerId: 'toast-container',
+    maxOpened: 0,
+    newestOnTop: true,
+    positionClass: 'toast-top-right',
+    preventDuplicates: false,
+    preventOpenDuplicates: true,
+    target: 'body',
+    closeButton: true,
+    progressBar:true
+  });
+}]);
