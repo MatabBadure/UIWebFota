@@ -36,7 +36,7 @@
       <span>{{clinicAdmin.lastName}}, {{clinicAdmin.firstName}}</span>
     </div>
     <div class="col-md-10">
-      <span>{{clinicAdmin.email}}</span>
+      <span class="show_content">{{clinicAdmin.email}}</span>
     </div>
     <div class="col-md-1 text-center">
       <span class="icon-edit-icon" ng-click="setEditClinicAdmin(clinicAdmin)"></span>
@@ -46,12 +46,12 @@
     </div>
   </div>
 
-  <div class="col-md-16 empty-list-message" ng-if="!clinicAdmins || clinicAdmins.length === 0">
+  <div class="col-md-16 empty-list-message" ng-if="clinicAdmins && clinicAdmins.length === 0">
     <span translate="clinic.noClinicAdmins"></span>
   </div>
 
   <div class="col-md-16 reset-padding margin-top">
-    <buton class="hillrom-btn btn-primary float-right btn-margin-left" ng-click="addClinicAdminShow()" translate="clinic.add-clinic-admin" ng-show="!clinicAdminEdit && !showAddclinicAdmin"></buton>
+    <buton class="hillrom-btn btn-primary float-right btn-margin-left" ng-click="addClinicAdminShow()" translate="clinic.add-clinic-admin" ng-show="!clinicAdminEdit && !showAddclinicAdmin && !clinic.deleted && clinicAdmins"></buton>
   </div>
 </div>
 

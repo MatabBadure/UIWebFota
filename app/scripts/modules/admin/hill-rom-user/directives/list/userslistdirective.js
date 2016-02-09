@@ -26,9 +26,10 @@ angular.module('hillromvestApp')
       function($scope, $timeout, $state, UserService, searchFilterService,sortOptionsService, URL, StorageService, loginConstants) {
         var searchOnLoad = true;
         $scope.init = function() {
+          $scope.getUserRoles();
+          $scope.isUsersTab = true;          
           $scope.userRole = StorageService.get('logged').role;
           $scope.sortUserList = sortOptionsService.getSortOptionsForUserList();
-          $scope.users = [];
           $scope.currentPageIndex = 1;
           $scope.perPageCount = 10;
           $scope.pageCount = 0;
@@ -80,7 +81,7 @@ angular.module('hillromvestApp')
          * @description
          * Function to Search User on entering text on the textfield.
          */
-        $scope.searchUsers = function(track) {
+        $scope.searchUsers = function(track) {          
           if (track !== undefined) {
             if (track === "PREV" && $scope.currentPageIndex > 1) {
               $scope.currentPageIndex--;
@@ -92,7 +93,10 @@ angular.module('hillromvestApp')
           } else {
             $scope.currentPageIndex = 1;
           }
-          var filter = searchFilterService.getFilterStringForHCP($scope.searchFilter);
+          if($scope.roleData.roleSelected.value !== "All"){
+            $scope.sortUserList.role = sortOptionsService.setSortOptionToDefault();            
+          }
+          var filter = searchFilterService.getFilterStringForHillromUser($scope.searchFilter, $scope.roleData.roleSelected.value);
           var url = URL.searchUsers;
           UserService.getUsers(url, $scope.searchItem, $scope.sortOption, $scope.currentPageIndex, $scope.perPageCount, filter).then(function(response) {
             $scope.users = response.data;
@@ -111,12 +115,12 @@ angular.module('hillromvestApp')
             $scope.sortUserList.lastName = toggledSortOptions;
             $scope.sortOption = sortConstant.lastName + sortOptionsService.getSortByASCString(toggledSortOptions);
             $scope.searchUsers();
-          }else if(sortParam === sortConstant.role){
+          }else if(sortParam === sortConstant.role && $scope.roleData.roleSelected.value === "All"){
             toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortUserList.role);
             $scope.sortUserList = sortOptionsService.getSortOptionsForUserList();
             $scope.sortUserList.role = toggledSortOptions;
             $scope.sortOption = sortConstant.name + sortOptionsService.getSortByASCString(toggledSortOptions);
-            $scope.searchUsers();
+            $scope.searchUsers();          
           }else if(sortParam === sortConstant.hillromId){
             toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortUserList.hillromId);
             $scope.sortUserList = sortOptionsService.getSortOptionsForUserList();
@@ -148,6 +152,44 @@ angular.module('hillromvestApp')
           $scope.searchUsers();
         };
 
+        $scope.getUserRoles = function(){
+          $scope.roleData = {};
+          $scope.userRoleList = [];          
+          var x = {};
+          x.text = "All"; x.value = "All";
+          $scope.userRoleList.push(x);
+          var roles = ['ADMIN', 'ACCT_SERVICES', 'ASSOCIATES', 'PATIENT', 'HCP', 'CARE_GIVER', 'CLINIC_ADMIN'];
+          angular.forEach(roles, function(role){
+              x = {};
+              x.value = role;              
+              switch(role){
+                case 'ADMIN': 
+                  x.text = "Super Admin"; 
+                  break;
+                case 'PATIENT': 
+                  x.text = "Patient User";
+                  break;
+                case 'HCP':
+                  x.text = "HCP"; 
+                  break;
+                case 'CLINIC_ADMIN': 
+                  x.text = "Clinic Admin";
+                  break;
+                case 'CARE_GIVER': 
+                  x.text = "Caregiver";
+                  break;
+                case 'ACCT_SERVICES':
+                  x.text = "RC Admin";
+                  break;
+                case 'ASSOCIATES':
+                  x.text = "Associates";                
+                  break;
+              } 
+              $scope.userRoleList.push(x);                         
+          });          
+          $scope.roleData.roleSelected = $scope.userRoleList[0];
+          $scope.roleData.userRoles = $scope.userRoleList;
+        };
         $scope.init();
       }]
     };

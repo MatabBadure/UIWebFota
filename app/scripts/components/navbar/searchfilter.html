@@ -1,5 +1,5 @@
 
-	<div class="row lebel-indent">
+	<div class="row lebel-indent col-md-16 margin-bottom15">
 		<label>
 			<input type="checkbox" ng-model="searchFilter.isActive" ng-click="searchOnFilters()"> 
 			<span translate="search-filter.active"></span> 
@@ -7,6 +7,10 @@
 		<label>
 			<input type="checkbox" ng-model="searchFilter.isInActive" ng-click="searchOnFilters()"> 
 			<span translate="search-filter.inactive"></span>
+		</label>		
+		<label ng-if="isUsersTab">
+			<input type="checkbox" ng-model="searchFilter.isPending" ng-click="searchOnFilters()"> 
+			<span translate="search-filter.pending"></span>
 		</label>
 		<label class ="none" ng-if="searchFilter.userList === 'patientList'">
 			<input type="checkbox" ng-model="searchFilter.isNoEvent" ng-click="searchOnFilters()"> 
@@ -23,5 +27,12 @@
 		<label class ="none" ng-if="searchFilter.userList === 'patientList'">
 			<input type="checkbox" ng-model="searchFilter.isMissedTherapy" ng-click="searchOnFilters()"> 
 			<span translate="search-filter.missed-therapy"></span>
-		</label>		
+		</label>
+		<div class="col-md-3 pull-right dashboard__form__input reset-padding selected-box-container" ng-if="isUsersTab">
+		<label> Select Role</label>
+          <div class="custom-dropdown">
+          <select name="selectRole" id="selectRole" class="selectrole" ng-options="option.text for option in roleData.userRoles track by option.value" ng-model="roleData.roleSelected" ng-click="searchUsers()"  style="padding:6px"></select>            
+          </div>
+        </div>		
 	</div>
+	

@@ -84,7 +84,7 @@
           <div class="clr"></div>
        </div>
 
-       <div class="col-md-16 empty-list-message" ng-if="!associatedHcps.length">
+       <div class="col-md-16 empty-list-message" ng-if="associatedHcps && associatedHcps.length === 0">
         <span translate="clinic.noHCPs"></span>
       </div>
 
@@ -112,8 +112,8 @@
       <input class="form-control" type="text" ng-model="searchHcp" typeahead="hcp as hcp.lastName + ', &nbsp' + hcp.firstName +' ' + hcp.clinicName for hcp in getHCPsToLinkClinic($viewValue)" typeahead-on-select="showAssociateHCPModal($item)" placeholder="{{'clinic.placeholder.hcp-search' | translate}}" ng-show="isAssociateHCP">
     </div>
 
-    <div class="col-md-8 clinic-link">
-      <buton class="hillrom-btn btn-primary float-right" ng-click="linkHCP()" translate="clinic.link-hcp" ng-show="!isAssociateHCP"></buton>
+    <div class="col-md-8 clinic-link" ng-if="!clinic.deleted">
+      <buton class="hillrom-btn btn-primary float-right" ng-click="linkHCP()" translate="clinic.link-hcp" ng-show="!isAssociateHCP && associatedHcps"></buton>
     </div>
   </div>
 </div>

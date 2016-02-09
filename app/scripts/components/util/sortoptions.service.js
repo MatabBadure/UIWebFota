@@ -97,4 +97,12 @@ angular.module('hillromvestApp')
             sortUserList.status = sortIcons;
             return sortUserList;
         };
+
+        this.setSortOptionToDefault = function(){            
+            var defaultSortOption = {};  
+            defaultSortOption.isDefault = true;
+            defaultSortOption.isDown = false;
+            defaultSortOption.isUp = false;
+            return defaultSortOption;
+        };
     }]);
