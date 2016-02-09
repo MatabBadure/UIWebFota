@@ -17,7 +17,6 @@
     "angular-loading-spinner": "v0.0.3",
     "angular-local-storage": "0.2.0",
     "angular-mask": "~3.0.12",
-    "angular-notys": "~0.2.1",
     "angular-recaptcha": "2.2.4",
     "angular-resource": "1.4.0",
     "angular-sanitize": "1.4.0",
@@ -37,6 +36,7 @@
     "swagger-ui": "2.0.24",
     "nvd3": "1.1.15-beta",
     "angular-ui-mask": "~1.4.7",
+    "angular-toastr":"1.7.0",
     "jspdf": "1.0.272",
     "canvg": "~1.3.0"
   },
