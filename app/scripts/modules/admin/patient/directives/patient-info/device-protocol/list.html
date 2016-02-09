@@ -15,7 +15,7 @@
   <div class="dashboard dashboard--content col-md-14">
     <div class="dashboard__manage-view margin-top">
       <div class="dashboard__manage-view--header no_border care_plan_and_device">
-          <div class="col-md-3 header--type">
+          <div class="col-md-3 header--type text-align-left">
             <span translate="patient.protocol-caption.type"></span>
           </div>
           <div class="col-md-3 header--type">
@@ -36,7 +36,7 @@
   </div>
 <div class="col-md-16 border-top protocol_list_container" ng-class="{'no_border' : !protocols}">
   <div class="col-md-3 ">
-    <div class="col-md-16 protocol-list__treatment-day protocol-list no_border" ng-repeat="protocol in protocols" ng-class="{'list-inactive':protocol.deleted, 'last' : $last}">
+    <div class="col-md-16 protocol-list__treatment-day protocol-list no_border text-align-left" ng-repeat="protocol in protocols" ng-class="{'list-inactive':protocol.deleted, 'last' : $last}">
       <span class="protocol-list--value"> {{protocol.type}} {{protocol.treatmentLabel}}</span>
     </div>
   </div>
