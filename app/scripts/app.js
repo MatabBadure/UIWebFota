@@ -158,7 +158,6 @@ angular.module('hillromvestApp',
       }]
     });
   }])
-
   .config(['toastrConfig', function(toastrConfig) {
   angular.extend(toastrConfig, {
     autoDismiss: false,
