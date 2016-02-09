@@ -109,7 +109,11 @@
   .header--type{
     text-align: center;
   }
+  .text-align-left{
+    text-align: left !important;
+  }
 }
+
 .admin-user .protocol-list .protocol-list__edit {
   padding-left: 10px;
   span {
@@ -176,4 +180,7 @@
  }
 .admin-user .protocol-list{
   text-align: center;
+}
+.admin-user .text-align-left{
+  text-align: left !important;
 }
