@@ -830,23 +830,165 @@ var caregiver = {
 }
 
 var adherenceScores = [{
-        'date':'10/12/2015',
-        'notificationPoints':{'HMR_NON_COMPLIANCE': -2},
-        'updatedScore':'67'
-    },
-    {
-        'date':'10/12/2015',
-        'notificationPoints':{'HMR_NON_COMPLIANCE': -2},
-        'updatedScore':'67'
-    },
-    {
-        'date':'10/12/2015',
-        'notificationPoints':{'No Notification': 0, 'MISSED_THERAPY': 2},
-        'updatedScore':'67'
-    },
-    {
-        'date':'10/12/2015',
-        'notificationPoints':{'No Notification': 0, 'MISSED_THERAPY': 2},
-        'updatedScore':'67'
-    }
-];
+        "from": "12/07/2015 00:33:11",
+        "to": null,
+        "protcols": [{
+            "id": "HR2015000033",
+            "type": "Custom",
+            "treatmentsPerDay": 2,
+            "minMinutesPerTreatment": 5,
+            "treatmentLabel": "point1",
+            "minFrequency": 19,
+            "maxFrequency": null,
+            "minPressure": 6,
+            "maxPressure": null
+        }, {
+            "id": "HR2015000033",
+            "type": "Custom",
+            "treatmentsPerDay": 2,
+            "minMinutesPerTreatment": 5,
+            "treatmentLabel": "point2",
+            "minFrequency": 19,
+            "maxFrequency": null,
+            "minPressure": 6,
+            "maxPressure": null
+        }, {
+            "id": "HR2015000033",
+            "type": "Custom",
+            "treatmentsPerDay": 2,
+            "minMinutesPerTreatment": 5,
+            "treatmentLabel": "point3",
+            "minFrequency": 19,
+            "maxFrequency": null,
+            "minPressure": 6,
+            "maxPressure": null
+        }, {
+            "id": "HR2015000033",
+            "type": "Custom",
+            "treatmentsPerDay": 2,
+            "minMinutesPerTreatment": 5,
+            "treatmentLabel": "point4",
+            "minFrequency": 19,
+            "maxFrequency": null,
+            "minPressure": 6,
+            "maxPressure": null
+        }],
+        "adherenceTrends": [{
+            "updatedScore": 0,
+            "date": "01/29/2016",
+            "notificationPoints": {
+                "HMR Non-Adherence": 0
+            }
+        }, {
+            "updatedScore": 0,
+            "date": "01/30/2016",
+            "notificationPoints": {
+                "HMR Non-Adherence": 0
+            }
+        }, {
+            "updatedScore": 0,
+            "date": "01/31/2016",
+            "notificationPoints": {
+                "HMR Non-Adherence": 0
+            }
+        }, {
+            "updatedScore": 0,
+            "date": "02/01/2016",
+            "notificationPoints": {
+                "HMR Non-Adherence": 0
+            }
+        }, {
+            "updatedScore": 0,
+            "date": "02/02/2016",
+            "notificationPoints": {
+                "HMR Non-Adherence": 0
+            }
+        }, {
+            "updatedScore": 0,
+            "date": "02/03/2016",
+            "notificationPoints": {
+                "HMR Non-Adherence": 0
+            }
+        }]
+    }, {
+        "from": "12/07/2015 00:33:11",
+        "to": null,
+        "protcols": [{
+            "id": "HR2015000033",
+            "type": "Custom",
+            "treatmentsPerDay": 2,
+            "minMinutesPerTreatment": 5,
+            "treatmentLabel": "point1",
+            "minFrequency": 19,
+            "maxFrequency": null,
+            "minPressure": 6,
+            "maxPressure": null
+        }, {
+            "id": "HR2015000033",
+            "type": "Custom",
+            "treatmentsPerDay": 2,
+            "minMinutesPerTreatment": 5,
+            "treatmentLabel": "point2",
+            "minFrequency": 19,
+            "maxFrequency": null,
+            "minPressure": 6,
+            "maxPressure": null
+        }, {
+            "id": "HR2015000033",
+            "type": "Custom",
+            "treatmentsPerDay": 2,
+            "minMinutesPerTreatment": 5,
+            "treatmentLabel": "point3",
+            "minFrequency": 19,
+            "maxFrequency": null,
+            "minPressure": 6,
+            "maxPressure": null
+        }, {
+            "id": "HR2015000033",
+            "type": "Custom",
+            "treatmentsPerDay": 2,
+            "minMinutesPerTreatment": 5,
+            "treatmentLabel": "point4",
+            "minFrequency": 19,
+            "maxFrequency": null,
+            "minPressure": 6,
+            "maxPressure": null
+        }],
+        "adherenceTrends": [{
+            "updatedScore": 0,
+            "date": "01/29/2016",
+            "notificationPoints": {
+                "HMR Non-Adherence": 0
+            }
+        }, {
+            "updatedScore": 0,
+            "date": "01/30/2016",
+            "notificationPoints": {
+                "HMR Non-Adherence": 0
+            }
+        }, {
+            "updatedScore": 0,
+            "date": "01/31/2016",
+            "notificationPoints": {
+                "HMR Non-Adherence": 0
+            }
+        }, {
+            "updatedScore": 0,
+            "date": "02/01/2016",
+            "notificationPoints": {
+                "HMR Non-Adherence": 0
+            }
+        }, {
+            "updatedScore": 0,
+            "date": "02/02/2016",
+            "notificationPoints": {
+                "HMR Non-Adherence": 0
+            }
+        }, {
+            "updatedScore": 0,
+            "date": "02/03/2016",
+            "notificationPoints": {
+                "HMR Non-Adherence": 0
+            }
+        }]
+    }];
