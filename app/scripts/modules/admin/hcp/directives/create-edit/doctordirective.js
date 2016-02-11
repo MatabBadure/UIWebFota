@@ -237,6 +237,10 @@ angular.module('hillromvestApp')
               $state.go('hcpProfile', {'doctorId': $stateParams.doctorId});
             } 
         };
+
+        $scope.stateChange = function(state){
+          console.log('change State :: ', state);
+        };
       }]
     };
   });

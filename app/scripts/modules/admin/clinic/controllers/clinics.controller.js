@@ -941,5 +941,8 @@ angular.module('hillromvestApp')
       }
     };
 
+    $scope.stateChange = function(state){
+      console.log('change State: ', state);
+    };
     $scope.init();
   }]);

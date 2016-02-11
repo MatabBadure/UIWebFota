@@ -169,6 +169,10 @@ angular.module('hillromvestApp')
           }
         };
 
+        $scope.stateChange = function(state){
+          console.log('state :: ', state);
+        };
+
         $scope.$watch("patient.formatedDOB", function(value) {
           if(value && (commonsUserService.isValidDOBDate(value))){
             $scope.patient.dob = value;
