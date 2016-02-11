@@ -58,25 +58,27 @@
 										</div>
 									</div>
 								</div>
-								<table class="table">
+								 <table class="table margin0">
 									<thead>
 										<tr>
-											<th class="col-md-4" translate="graph.adherence-score-table.date">Date</th>
-											<th class="col-md-8">
+											<th class="col-md-3" translate="graph.adherence-score-table.date">Date</th>
+											<th class="col-md-7">
 											<table class="col-md-16 row">
 												<thead>
 													<tr class="col-md-16 row">
-														<th  class="col-md-8 inner_th" translate="graph.adherence-score-table.notification"></th>
-														<th class="col-md-8 inner_th text-center" translate="graph.adherence-score-table.change"></th>
+														<th  class="col-md-8 inner_th padding-left44" translate="graph.adherence-score-table.notification"></th>
+														<th class="col-md-8 inner_th padding-left44" translate="graph.adherence-score-table.change"></th>
 													</tr>
 												</thead>
 											</table>
 											</th>
 											<!-- <th class="col-md-4 text-center" >Change</th> -->
-											<th class="col-md-4 text-center" translate="graph.adherence-score-table.updated-score">Updated Score</th>
+											<th class="col-md-3" translate="graph.adherence-score-table.updated-score">Updated Score</th>
+											<th class="col-md-3 text-center" translate="graph.adherence-score-table.protocol">Protocol</th>
 										</tr>
 									</thead>
-									<tbody>
+									</table>
+								<!-- 	<tbody>
 										<tr ng-repeat="adherenceScore in adherenceScores">
 											<td class="col-md-4">{{adherenceScore.date}}</td>
 											<td class="col-md-8">
@@ -91,47 +93,47 @@
 												</table>	 
 											</td>
 											<!-- <td class="col-md-4 text-center">{{adherenceScore.change}}</td> -->
-											<td class="col-md-4 text-center">{{adherenceScore.updatedScore}}</td>
+											<!--td class="col-md-4 text-center">{{adherenceScore.updatedScore}}</td>
 										</tr>
 									</tbody>
-								</table>
-									<div class="col-md-16">
-			<p class="col-md-3">Date</p>
-			<p class="col-md-3">notification</p>
-			<p class="col-md-3">Change </p>
-			<p class="col-md-3">Updated score</p>
-			<p class="col-md-4">protocol</p>
-		</div>
+								</table>  -->
+	<!-- 	<div class="col-md-16">
+			<p class="col-md-4 border-bottom">Date</p>
+			<p class="col-md-4 border-bottom">notification</p>
+			<p class="col-md-3 border-bottom">Change </p>
+			<p class="col-md-3 border-bottom">Updated score</p>
+			<p class="col-md-2 border-bottom">protocol</p>
+		</div> -->
 	
-		<div class="col-md-16">
+		<div class="col-md-16 padding0 border-lt border-rt">
 
-			<div class="col-md-12">
-				<div class="border-bottom">
-					<div class="col-md-4">02/10/2015</div>
-					<div class="col-md-4">No Notification</div>
-					<div class="col-md-4">0</div>
-					<div class="col-md-4">5</div>
+			<div class="col-md-14 padding0">
+				<div class="">
+					<div class="col-md-4 first-row">02/10/2015</div>
+					<div class="col-md-4 first-row">No Notification</div>
+					<div class="col-md-4 first-row">0</div>
+					<div class="col-md-4 first-row">5</div>
 				</div>
-				<div class="border-top">
-					<div class="col-md-4">02/10/2015</div>
-					<div class="col-md-4">No Notification</div>
-					<div class="col-md-4">0</div>
-					<div class="col-md-4">5</div>
+				<div class="">
+					<div class="col-md-4 table-column">02/10/2015</div>
+					<div class="col-md-4 table-column">No Notification</div>
+					<div class="col-md-4 table-column">0</div>
+					<div class="col-md-4 table-column">5</div>
 				</div>
 			</div>
 
-			<div class="col-md-4 pull-right child">View</div>
+			<div class="col-md-2 pull-right child first-row-view1">View</div>
 		
-			<div class="col-md-12">
-				<div class="border-bottom">
-					<div class="col-md-4">02/10/2015</div>
-					<div class="col-md-4">No Notification</div>
-					<div class="col-md-4">0</div>
-					<div class="col-md-4">5</div>
+			<div class="col-md-14 padding0 border-bottom">
+				<div class="">
+					<div class="col-md-4 table-column">02/10/2015</div>
+					<div class="col-md-4 table-column">No Notification</div>
+					<div class="col-md-4 table-column">0</div>
+					<div class="col-md-4 table-column">5</div>
 				</div>
 			</div>
 
-			<div class="col-md-4 pull-right">View</div>
+			<div class="col-md-2 pull-right table-column first-row-view">View</div>
 		</div>
 								</div>
 
@@ -416,3 +418,4 @@
     </div>
   </div>
 </div>
+
