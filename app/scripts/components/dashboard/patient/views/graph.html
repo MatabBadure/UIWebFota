@@ -74,7 +74,7 @@
 											</th>
 											<!-- <th class="col-md-4 text-center" >Change</th> -->
 											<th class="col-md-3" translate="graph.adherence-score-table.updated-score">Updated Score</th>
-											<th class="col-md-3 text-center" translate="graph.adherence-score-table.protocol">Protocol</th>
+											<th class="col-md-3 text-center padding-left44" translate="graph.adherence-score-table.protocol">Protocol</th>
 										</tr>
 									</thead>
 									</table>
@@ -105,22 +105,23 @@
 			<p class="col-md-2 border-bottom">protocol</p>
 		</div> -->
 	
-		<div class="col-md-16 padding0 border-lt border-rt" ng-repeat="adherenceScore in adherenceScores">
-
-			<div class="col-md-14 padding0" ng-repeat ="adherenceTrend in adherenceScore.adherenceTrends">
-				<div class="">
-					<div class="col-md-4 first-row">{{adherenceTrend.date}}</div>
-					<div class="col-md-8">
-						<div class="col-md-16 row" ng-repeat="(key, value) in adherenceTrend.notificationPoints">
-							<div class="col-md-8 first-row">{{key}}</div>
-							<div class="col-md-8 first-row">{{value}}</div>
+		<div class="col-md-16 col-sm-16 col-xs-16 padding0 border-lt border-rt border-bottom" ng-repeat="adherenceScore in adherenceScores">
+<div class="col-md-14 padding0">
+			<div class="col-md-16 col-sm-16 col-xs-16 padding0 border-bottom adherencescore" ng-repeat ="adherenceTrend in adherenceScore.adherenceTrends">
+				
+					<div class="col-md-4 col-sm-4 col-xs-4 first-row">{{adherenceTrend.date}}</div>
+					<div class="col-md-8 col-sm-8">
+						<div class="col-md-16 col-sm-16 col-xs-16 row" ng-repeat="(key, value) in adherenceTrend.notificationPoints">
+							<div class="col-md-8 col-sm-8 col-xs-8 first-row">{{key}}</div>
+							<div class="col-md-8 col-sm-8 col-xs-8 first-row">{{value}}</div>
 						</div>
 					</div>
-					<div class="col-md-4 first-row">5</div>
+					<div class="col-md-4 col-sm-4 col-xs-4 first-row">5</div>
 				</div>
 			</div>
 
-			<div class="col-md-2 pull-right child first-row-view1">View</div>
+			<div class="col-md-2 col-sm-2 col-xs-2 pull-right child first-row-view1 view-column">
+			View</div>
 		
 <!-- 			<div class="col-md-14 padding0 border-bottom">
 				<div class="">
