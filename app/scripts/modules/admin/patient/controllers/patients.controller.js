@@ -994,6 +994,7 @@ angular.module('hillromvestApp')
     $scope.resendActivationLink = function(){
       UserService.resendActivationLink($scope.patient.id).then(function(response){
         notyService.showMessage(response.data.message, 'success');
+        $scope.isDisableResendButton = true;
       }).catch(function(response){
         notyService.showError(response);
       });
