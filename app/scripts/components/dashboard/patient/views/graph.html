@@ -110,8 +110,12 @@
 			<div class="col-md-14 padding0" ng-repeat ="adherenceTrend in adherenceScore.adherenceTrends">
 				<div class="">
 					<div class="col-md-4 first-row">{{adherenceTrend.date}}</div>
-					<div class="col-md-4 first-row">No Notification</div>
-					<div class="col-md-4 first-row">0</div>
+					<div class="col-md-8">
+						<div class="col-md-16 row" ng-repeat="(key, value) in adherenceTrend.notificationPoints">
+							<div class="col-md-8 first-row">{{key}}</div>
+							<div class="col-md-8 first-row">{{value}}</div>
+						</div>
+					</div>
 					<div class="col-md-4 first-row">5</div>
 				</div>
 			</div>
