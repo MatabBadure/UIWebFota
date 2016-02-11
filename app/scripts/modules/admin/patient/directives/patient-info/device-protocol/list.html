@@ -15,7 +15,7 @@
   <div class="dashboard dashboard--content col-md-14">
     <div class="dashboard__manage-view margin-top">
       <div class="dashboard__manage-view--header no_border care_plan_and_device">
-          <div class="col-md-3 header--type">
+          <div class="col-md-3 header--type text-align-left">
             <span translate="patient.protocol-caption.type"></span>
           </div>
           <div class="col-md-3 header--type">
@@ -36,7 +36,7 @@
   </div>
 <div class="col-md-16 border-top protocol_list_container" ng-class="{'no_border' : !protocols}">
   <div class="col-md-3 ">
-    <div class="col-md-16 protocol-list__treatment-day protocol-list no_border" ng-repeat="protocol in protocols" ng-class="{'list-inactive':protocol.deleted, 'last' : $last}">
+    <div class="col-md-16 protocol-list__treatment-day protocol-list no_border text-align-left" ng-repeat="protocol in protocols" ng-class="{'list-inactive':protocol.deleted, 'last' : $last}">
       <span class="protocol-list--value"> {{protocol.type}} {{protocol.treatmentLabel}}</span>
     </div>
   </div>
@@ -73,14 +73,14 @@
 
 </div>
   
-  <div class="col-md-16 empty-list-message" ng-if="protocols && protocols.length === 0"><span translate="patient.empty-protocol-list-message"></span></div>
+  <div class="col-md-16 empty-list-message" ng-if="isProtocolLoaded && !protocols"><span translate="patient.empty-protocol-list-message"></span></div>
 
-  <div class="col-md-16 reset-padding" ng-if="protocols && !slectedPatient.isDeleted">
+  <div class="col-md-16 reset-padding" ng-if="isProtocolLoaded && !slectedPatient.isDeleted">
     <div class="col-md-8 clinic-link">
     </div>
     <div class="col-md-8 clinic-link">
-      <buton ng-show="addProtocol" class="hillrom-btn btn-primary float-right" ng-click="linkProtocol()" translate="patient.link-protocol"></buton>
-      <buton ng-show="!addProtocol" class="hillrom-btn btn-inactive float-right" translate="patient.link-protocol"></buton>
+      <buton ng-show="isAddProtocol" class="hillrom-btn btn-primary float-right" ng-click="linkProtocol()" translate="patient.link-protocol"></buton>
+      <buton ng-show="!isAddProtocol" class="hillrom-btn btn-inactive float-right" translate="patient.link-protocol"></buton>
     </div>
   </div>
 
@@ -127,9 +127,9 @@
       <span ng-if="device.active" class="icon-delete-icon cursor-pointer" ng-click="deleteDeviceModel(device)"></span>
     </div>
   </div>
-  <div class="col-md-16 empty-list-message" ng-if="devices && devices.length === 0"><span translate="patient.empty-device-list-message"></span></div>
+  <div class="col-md-16 empty-list-message" ng-if="isDevicesLoaded && !devices"><span translate="patient.empty-device-list-message"></span></div>
 
-  <div class="col-md-16 reset-padding" ng-if="devices && !slectedPatient.isDeleted">
+  <div class="col-md-16 reset-padding" ng-if="isDevicesLoaded && !slectedPatient.isDeleted">
     <div class="col-md-8 clinic-link">
     </div>
     <div class="col-md-8 clinic-link">
