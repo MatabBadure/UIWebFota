@@ -105,26 +105,20 @@
 			<p class="col-md-2 border-bottom">protocol</p>
 		</div> -->
 	
-		<div class="col-md-16 padding0 border-lt border-rt">
+		<div class="col-md-16 padding0 border-lt border-rt" ng-repeat="adherenceScore in adherenceScores">
 
-			<div class="col-md-14 padding0">
+			<div class="col-md-14 padding0" ng-repeat ="adherenceTrend in adherenceScore.adherenceTrends">
 				<div class="">
-					<div class="col-md-4 first-row">02/10/2015</div>
+					<div class="col-md-4 first-row">{{adherenceTrend.date}}</div>
 					<div class="col-md-4 first-row">No Notification</div>
 					<div class="col-md-4 first-row">0</div>
 					<div class="col-md-4 first-row">5</div>
-				</div>
-				<div class="">
-					<div class="col-md-4 table-column">02/10/2015</div>
-					<div class="col-md-4 table-column">No Notification</div>
-					<div class="col-md-4 table-column">0</div>
-					<div class="col-md-4 table-column">5</div>
 				</div>
 			</div>
 
 			<div class="col-md-2 pull-right child first-row-view1">View</div>
 		
-			<div class="col-md-14 padding0 border-bottom">
+<!-- 			<div class="col-md-14 padding0 border-bottom">
 				<div class="">
 					<div class="col-md-4 table-column">02/10/2015</div>
 					<div class="col-md-4 table-column">No Notification</div>
@@ -133,7 +127,7 @@
 				</div>
 			</div>
 
-			<div class="col-md-2 pull-right table-column first-row-view">View</div>
+			<div class="col-md-2 pull-right table-column first-row-view">View</div> -->
 		</div>
 								</div>
 
