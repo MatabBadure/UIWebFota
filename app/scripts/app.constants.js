@@ -87,5 +87,8 @@ angular.module('hillromvestApp')
 	'securityQuestions' : 'api/securityQuestions',
 	'recaptcha' : '/api/recaptcha',
 	'validateActivationKey' : 'api/validateActivationKey?key=KEYDATA',
-	'validateResetKey' : 'api/validateResetKey?key=KEYDATA'
+	'validateResetKey' : 'api/validateResetKey?key=KEYDATA',
+	'getCityStateZipByState' : '/api/cityStateZipValuesByState?state=STATE',
+	'getCityStateZipByCity' : '/api/cityStateZipValuesByCity?city=CITY',
+	'getCityStateZipByZip' : '/api/cityStateZipValuesByZipCode?zipcode=ZIPCODE'
 });
