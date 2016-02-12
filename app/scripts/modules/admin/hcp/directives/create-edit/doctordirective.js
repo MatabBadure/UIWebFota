@@ -147,6 +147,7 @@ angular.module('hillromvestApp')
         };
 
         $scope.editDoctor = function(data) {
+          $scope.showModal = false;
           UserService.editUser(data).then(function(response) {
             $scope.doctorStatus.isMessage = true;
             $scope.doctorStatus.message = response.data.message;
