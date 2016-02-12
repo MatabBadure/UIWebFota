@@ -171,10 +171,16 @@ angular.module('hillromvestApp')
 
         $scope.stateChange = function(state){
           addressService.getCityStateZipByState(state).then(function(response){
-            $scope.cities = response.data;
+            $scope.cities = response.data.cities;
           }).catch(function(response){
 
           });
+        };
+
+        $scope.cityChange = function(city){
+          if(city){
+            $scope.zipcodes = city.zipcodes;
+          }
         };
 
         $scope.$watch("patient.formatedDOB", function(value) {
