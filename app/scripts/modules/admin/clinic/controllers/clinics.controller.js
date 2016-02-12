@@ -370,6 +370,7 @@ angular.module('hillromvestApp')
     };
 
     $scope.editClinic = function(clinic){
+      $scope.showUpdateModal = false;
       clinicService.updateClinic(clinic).then(function(data) {
         $scope.clinicStatus.isMessage = true;
         $scope.clinicStatus.message = "Clinic updated successfully";

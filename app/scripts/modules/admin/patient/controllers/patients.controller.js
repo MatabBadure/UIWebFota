@@ -406,6 +406,7 @@ angular.module('hillromvestApp')
       }
       var data = $scope.patient;
       data.role = 'PATIENT';
+      $scope.showModal = false;
       UserService.editUser(data).then(function (response) {
         if(response.status === 200) {
           $scope.patientStatus.isMessage = true;
