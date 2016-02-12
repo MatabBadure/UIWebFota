@@ -172,6 +172,7 @@
               <span class="" translate="patient.city"></span>
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
+              <select name="city" ng-model="patient.city" ng-options="city.city as city.city for city in cities"></select>
               <input class="" type="text" validate-on-blur ng-model="patient.city" name="city" ng-readonly="validateADMINorASP()" ng-maxlength=15>
               <div ng-show="(form.city.$showValidationMessage && form.city.$invalid) || submitted">
                 <span class="has-error" ng-show="form.city.$error.maxlength" translate="error.city.maxlength">

@@ -11,8 +11,8 @@ angular.module('hillromvestApp')
         patientStatus: '=patientStatus'
       },
 
-      controller: ['$scope', '$state', 'notyService', 'dateService', 'UserService', 'StorageService', 'loginConstants', 'commonsUserService',
-      function ($scope, $state, notyService, dateService, UserService, StorageService, loginConstants, commonsUserService) {
+      controller: ['$scope', '$state', 'notyService', 'dateService', 'UserService', 'StorageService', 'loginConstants', 'commonsUserService', 'addressService',
+      function ($scope, $state, notyService, dateService, UserService, StorageService, loginConstants, commonsUserService, addressService) {
 
         $scope.open = function () {
           $scope.showModal = true;
@@ -170,7 +170,11 @@ angular.module('hillromvestApp')
         };
 
         $scope.stateChange = function(state){
-          console.log('state :: ', state);
+          addressService.getCityStateZipByState(state).then(function(response){
+            $scope.cities = response.data;
+          }).catch(function(response){
+
+          });
         };
 
         $scope.$watch("patient.formatedDOB", function(value) {
