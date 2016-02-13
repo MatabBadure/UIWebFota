@@ -46,6 +46,8 @@ angular.module('hillromvestApp')
         $scope.init();
 
         $scope.createPatient = function () {
+          console.log('IT IS COMING HERE...!', $scope.patient);
+          return false;
           if($scope.form.$invalid || $scope.form.dob.$invalid){
             return false;
           }
