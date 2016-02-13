@@ -36,8 +36,10 @@ angular.module('hillromvestApp')
             "name": "French"
           }];
           $scope.patient.gender = "Male";
-          UserService.getState().then(function (response) {
-            $scope.states = response.data.states;
+          addressService.getStates().then(function(response){
+            $scope.states = response.data;
+          }).catch(function(response){
+            notyService.showError(response);
           });
         };
 

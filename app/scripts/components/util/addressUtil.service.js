@@ -27,6 +27,15 @@ angular.module('hillromvestApp')
         }).success(function (response) {
             return response;
         });
+      },
+
+      getStates: function(){
+        var url = URL.getStates;
+        return $http.get(url,{
+          headers: headerService.getHeader()
+        }).success(function (response) {
+            return response;
+        });
       }
     };
   }]);
