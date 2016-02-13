@@ -174,6 +174,9 @@ angular.module('hillromvestApp')
         };
 
         $scope.stateChange = function(state){
+          delete $scope.patient.city;
+          delete $scope.patient.zipcode;
+          delete $scope.zipcodes;
           addressService.getCityStateZipByState(state).then(function(response){
             $scope.cities = response.data.cities;
           }).catch(function(response){
@@ -182,6 +185,7 @@ angular.module('hillromvestApp')
         };
 
         $scope.cityChange = function(city){
+          delete $scope.patient.zipcode;
           if(city){
             $scope.zipcodes = city.zipcodes;
           }
