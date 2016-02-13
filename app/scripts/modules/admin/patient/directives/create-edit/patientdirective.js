@@ -46,8 +46,7 @@ angular.module('hillromvestApp')
         $scope.init();
 
         $scope.createPatient = function () {
-          console.log('IT IS COMING HERE...!', $scope.patient);
-          return false;
+          
           if($scope.form.$invalid || $scope.form.dob.$invalid){
             return false;
           }
@@ -62,6 +61,9 @@ angular.module('hillromvestApp')
             $scope.editUSer(data);
           } else {
             var data = $scope.patient;
+            if(data.city){
+              data.city = data.city.name;
+            }
             data.role = 'PATIENT';
             $scope.newUser(data);
           }
@@ -187,7 +189,10 @@ angular.module('hillromvestApp')
         $scope.cityChange = function(city){
           delete $scope.patient.zipcode;
           if(city){
-            $scope.zipcodes = city.zipcodes;
+            $scope.zipcodes = [];
+            angular.forEach(city.zipcodes, function(zipcode){
+              $scope.zipcodes.push(commonsUserService.formatZipcode(zipcode));
+            });
           }
         };
 
