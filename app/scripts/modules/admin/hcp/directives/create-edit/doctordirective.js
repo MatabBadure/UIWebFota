@@ -9,8 +9,8 @@ angular.module('hillromvestApp')
         onSuccess: '&',
         doctorStatus: '=doctorStatus'
       },
-      controller: ['$scope', '$timeout', 'notyService', '$state', '$stateParams', 'DoctorService', 'UserService', 'clinicService', 'StorageService', 'loginConstants', 'commonsUserService', 'URL',
-      function ($scope, $timeout, notyService, $state, $stateParams, DoctorService, UserService, clinicService, StorageService, loginConstants, commonsUserService, URL) {
+      controller: ['$scope', '$timeout', 'notyService', '$state', '$stateParams', 'DoctorService', 'UserService', 'clinicService', 'StorageService', 'loginConstants', 'commonsUserService', 'URL', 'addressService',
+      function ($scope, $timeout, notyService, $state, $stateParams, DoctorService, UserService, clinicService, StorageService, loginConstants, commonsUserService, URL, addressService) {
         $scope.role = StorageService.get('logged').role;
         $scope.open = function () {
           $scope.showModal = true;
@@ -55,10 +55,16 @@ angular.module('hillromvestApp')
           $scope.credentialsList = admin_cont.hcp.credentialsList;
           $scope.submitted = false;
           $scope.isOtherCredential = false;
-          UserService.getState().then(function(response) {
-            $scope.states = response.data.states;
-          }).catch(function(response) {
+          // UserService.getState().then(function(response) {
+          //   $scope.states = response.data.states;
+          // }).catch(function(response) {
+          // });
+          addressService.getStates().then(function(response){
+            $scope.states = response.data;
+          }).catch(function(response){
+            notyService.showError(response);
           });
+
           if($state.current.name === 'clinicadminnewhcp'){
             $scope.getClinicsByClinicAdmin(StorageService.get('logged').userId);
           }else{
@@ -142,6 +148,9 @@ angular.module('hillromvestApp')
           } else {
             var data = $scope.doctor;
             data.role = 'HCP';
+            if(data.city){
+              data.city = data.city.name;
+            }
             $scope.newDoctor(data);
           }
         };
@@ -239,8 +248,27 @@ angular.module('hillromvestApp')
         };
 
         $scope.stateChange = function(state){
-          console.log('change State :: ', state);
+          delete $scope.doctor.city;
+          delete $scope.doctor.zipcode;
+          delete $scope.zipcodes;
+          addressService.getCityStateZipByState(state).then(function(response){
+            $scope.cities = response.data.cities;
+          }).catch(function(response){
+
+          });
         };
+
+        $scope.cityChange = function(city){
+          delete $scope.doctor.zipcode;
+          if(city){
+            $scope.zipcodes = [];
+            angular.forEach(city.zipcodes, function(zipcode){
+              $scope.zipcodes.push(commonsUserService.formatZipcode(zipcode));
+            });
+          }
+        };
+
+
       }]
     };
   });
