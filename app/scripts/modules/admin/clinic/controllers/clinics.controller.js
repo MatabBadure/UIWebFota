@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('hillromvestApp')
-  .controller('clinicsController', [ '$rootScope', '$scope', '$state', '$stateParams', '$timeout', 'Auth', 'clinicService', 'UserService', 'notyService', 'searchFilterService', 'dateService', 'sortOptionsService', 'StorageService', 'loginConstants', 'commonsUserService', '$q',
-    function ($rootScope, $scope, $state, $stateParams, $timeout, Auth, clinicService, UserService, notyService, searchFilterService, dateService,sortOptionsService, StorageService, loginConstants, commonsUserService, $q) {
+  .controller('clinicsController', [ '$rootScope', '$scope', '$state', '$stateParams', '$timeout', 'Auth', 'clinicService', 'UserService', 'notyService', 'searchFilterService', 'dateService', 'sortOptionsService', 'StorageService', 'loginConstants', 'commonsUserService', '$q', 'addressService',
+    function ($rootScope, $scope, $state, $stateParams, $timeout, Auth, clinicService, UserService, notyService, searchFilterService, dateService,sortOptionsService, StorageService, loginConstants, commonsUserService, $q, addressService) {
     var searchOnLoad = true;
     $scope.clinic = {};
     $scope.clinicStatus = {
@@ -163,9 +163,11 @@ angular.module('hillromvestApp')
       $scope.clinic.type = 'parent';
       $scope.clinicStatus.editMode = false;
       $scope.clinicStatus.isCreate = true;
-      UserService.getState().then(function(response) {
-        $scope.states = response.data.states;
-      }).catch(function(response) {});
+      addressService.getStates().then(function(response){
+        $scope.states = response.data;
+      }).catch(function(response){
+        notyService.showError(response);
+      });
       if($stateParams.parentId){
         $scope.clinicStatus.createSatellite = true;
         $scope.clinic.type = "child";
@@ -181,9 +183,11 @@ angular.module('hillromvestApp')
       $scope.states = [];
       $scope.clinicStatus.editMode = true;
       $scope.clinicStatus.isCreate = false;
-      UserService.getState().then(function(response) {
-        $scope.states = response.data.states;
-      }).catch(function(response) {});
+      addressService.getStates().then(function(response){
+        $scope.states = response.data;
+      }).catch(function(response){
+        notyService.showError(response);
+      });
       $scope.getParentClinic();
       clinicService.getClinic(clinicId).then(function(response) {
         $scope.clinic = response.data.clinic;
@@ -364,6 +368,9 @@ angular.module('hillromvestApp')
       } else {
         if ($scope.clinic.type === 'parent' && $scope.clinic.parentClinic) {
           delete $scope.clinic.parentClinic;
+        }
+        if($scope.clinic.city){
+          $scope.clinic.city = $scope.clinic.city.name;
         }
         $scope.newClinic($scope.clinic);
       }
@@ -942,7 +949,25 @@ angular.module('hillromvestApp')
     };
 
     $scope.stateChange = function(state){
-      console.log('change State: ', state);
+      delete $scope.clinic.city;
+      delete $scope.clinic.zipcode;
+      delete $scope.zipcodes;
+      addressService.getCityStateZipByState(state).then(function(response){
+        $scope.cities = response.data.cities;
+      }).catch(function(response){
+
+      });
     };
+
+    $scope.cityChange = function(city){
+      delete $scope.clinic.zipcode;
+      if(city){
+        $scope.zipcodes = [];
+        angular.forEach(city.zipcodes, function(zipcode){
+          $scope.zipcodes.push(commonsUserService.formatZipcode(zipcode));
+        });
+      }
+    };
+
     $scope.init();
   }]);

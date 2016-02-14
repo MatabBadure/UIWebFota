@@ -267,8 +267,6 @@ angular.module('hillromvestApp')
             });
           }
         };
-
-
       }]
     };
   });

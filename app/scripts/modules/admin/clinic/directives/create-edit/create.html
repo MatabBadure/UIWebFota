@@ -130,10 +130,12 @@
               <span class="" translate="clinic.city"></span>
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
-              <input class="" type="text" ng-model="clinic.city" validate-on-blur name="city" ng-maxlength=15>
+              <input type="text" ng-model="clinic.city" typeahead="city as city.name for city in cities | filter: $viewValue" typeahead-on-select="cityChange($item)" class="form-control" placeholder="Typahead" ng-disabled="!cities || cities.length === 0">
+
+              <!-- <input class="" type="text" ng-model="clinic.city" validate-on-blur name="city" ng-maxlength=15>
               <div ng-show="(form.city.$showValidationMessage && form.city.$invalid)">
                 <span class="has-error" ng-show="form.city.$error.maxlength" translate="error.city.maxlength"></span>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>
@@ -144,8 +146,8 @@
             </div>
             <div class="col-md-6 dashboard__form__input--option reset-padding selected-box-container">
               <div class="custom-dropdown">
-                <select name="state" ng-model="clinic.state" ng-options="state.name as state.name for state in states" ng-change="stateChange(clinic.state)">
-                  <option selected="selected">Select a state</option>
+                <select name="state" ng-model="clinic.state" ng-options="state as state for state in states" ng-change="stateChange(clinic.state)">
+                  <option value="" selected="selected">Select a state</option>
                 </select>
               </div>
             </div>
@@ -155,10 +157,12 @@
               <span class="" translate="clinic.zipcode"></span>
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
-              <input class="" type="text" validate-on-blur name="zip" maxlength="5" ng-pattern="/^(?=.*[1-9].*)[0-9]{5}$/" ng-model="clinic.zipcode">
+              <input type="text" ng-model="clinic.zipcode" typeahead="zipcode for zipcode in zipcodes | filter: $viewValue" class="form-control" placeholder="Typahead" ng-disabled="!zipcodes">
+
+              <!-- <input class="" type="text" validate-on-blur name="zip" maxlength="5" ng-pattern="/^(?=.*[1-9].*)[0-9]{5}$/" ng-model="clinic.zipcode">
               <div ng-show="(form.zip.$showValidationMessage && form.zip.$invalid) || submitted">
                 <span class="has-error" ng-show="form.zip.$error.pattern" translate="error.zipcode.pattern"></span>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>
