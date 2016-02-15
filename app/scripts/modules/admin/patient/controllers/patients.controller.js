@@ -1041,13 +1041,15 @@ angular.module('hillromvestApp')
             $scope.patient.state = response.data[0].state;
             $scope.patient.city = response.data[0].city;
           }          
-        }).catch(function(response){          
-          $scope.form.zip.$setValidity("zipnotfound", false);          
+        }).catch(function(response){            
+          $scope.patient.state = null;
+          $scope.patient.city = null;         
         });
       }else{
         $scope.form.zip.$setValidity("pattern", false);   
       }     
     };
+
 
     $scope.init();
   }]);
