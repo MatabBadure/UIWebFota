@@ -44,7 +44,7 @@ angular.module('hillromvestApp')
         $scope.init();
 
         $scope.createPatient = function () {
-          if($scope.form.$invalid || $scope.form.dob.$invalid){
+          if((typeof myVar != 'undefined' || !$scope.patient.city) || $scope.form.$invalid || $scope.form.dob.$invalid){
             return false;
           }
           angular.forEach($scope.patient, function(value, key){
@@ -169,9 +169,9 @@ angular.module('hillromvestApp')
           }
         };
 
-        $scope.getCityState = function(zipcode){
-          $scope.form.zip.$setValidity("zipnotfound", true);
-          $scope.form.zip.$setValidity("pattern", true);    
+        $scope.getCityState = function(zipcode){   
+          delete $scope.serviceError;
+          $scope.isServiceError = false;
           if(zipcode){
             addressService.getCityStateByZip(zipcode).then(function(response){
               $scope.patient.city = response.data[0].city;
@@ -179,12 +179,20 @@ angular.module('hillromvestApp')
             }).catch(function(response){
               $scope.form.zip.$setValidity("zipnotfound", false);           
               $scope.patient.state = null;
-              $scope.patient.city = null;      
+              $scope.patient.city = null;
+              $scope.serviceError = response.data.ERROR;
+              $scope.isServiceError = true;
             });  
           }else{
-            $scope.form.zip.$setValidity("pattern", false);   
+            delete $scope.patient.city;
+            delete $scope.patient.state;
+            if($scope.form.zip.$dirty && $scope.form.zip.$showValidationMessage && $scope.form.zip.$invalid){
+            }else{
+              $scope.serviceError = 'Invalid Zipcode';  
+              $scope.isServiceError = true;
+            }
           }
-        }
+        };
 
         $scope.$watch("patient.formatedDOB", function(value) {
           if(value && (commonsUserService.isValidDOBDate(value))){
