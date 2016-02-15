@@ -1002,7 +1002,7 @@ angular.module('hillromvestApp')
     };
 
     $scope.showPatientUpdateModal = function(){
-      if($scope.form.$invalid){        
+      if($scope.form.$invalid){
         $scope.submitted = true;
         return false;
       }else{
@@ -1042,7 +1042,6 @@ angular.module('hillromvestApp')
             $scope.patient.city = response.data[0].city;
           }
         }).catch(function(response){
-         $scope.form.zip.$setValidity("zipnotfound", false);
           $scope.patient.state = null;
           $scope.patient.city = null;
           $scope.isServiceError = false;
@@ -1056,6 +1055,12 @@ angular.module('hillromvestApp')
           $scope.serviceError = 'Invalid Zipcode';
           $scope.isServiceError = true;
         }
+      }
+    };
+
+    $scope.clearMessages = function(){
+      if($scope.patient.zipcode){
+        delete $scope.serviceError;
       }
     };
 

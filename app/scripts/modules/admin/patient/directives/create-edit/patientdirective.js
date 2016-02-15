@@ -194,6 +194,12 @@ angular.module('hillromvestApp')
           }
         };
 
+        $scope.clearMessages = function(){
+          if($scope.patient.zipcode){
+            delete $scope.serviceError;
+          }
+        };
+
         $scope.$watch("patient.formatedDOB", function(value) {
           if(value && (commonsUserService.isValidDOBDate(value))){
             $scope.patient.dob = value;
