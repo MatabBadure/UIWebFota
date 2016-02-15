@@ -170,15 +170,19 @@ angular.module('hillromvestApp')
         };
 
         $scope.getCityState = function(zipcode){
+          $scope.form.zip.$setValidity("zipnotfound", true);
+          $scope.form.zip.$setValidity("pattern", true);    
           if(zipcode){
             addressService.getCityStateByZip(zipcode).then(function(response){
               $scope.patient.city = response.data[0].city;
               $scope.patient.state = response.data[0].state;
             }).catch(function(response){
-              console.log('ERROR: ', response);
+              $scope.form.zip.$setValidity("zipnotfound", false);           
+              $scope.patient.state = null;
+              $scope.patient.city = null;      
             });  
           }else{
-            console.log('Length is in valid');
+            $scope.form.zip.$setValidity("pattern", false);   
           }
         }
 
