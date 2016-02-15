@@ -171,48 +171,45 @@
             </div>
           </div>
         </div>
-
         <div class="col-md-16 reset-padding margin-top">
-          <div class="col-md-7 reset-padding">
-            <div class="col-md-6 dashboard__form--label reset-padding">
-              <span class="" translate="patient.city"></span>
-            </div>
-            <div class="col-md-10 dashboard__form--input reset-padding">
-              <input class="" type="text" validate-on-blur ng-model="patient.city" name="city" ng-readonly="validateADMINorASP()" ng-maxlength=15>
-              <div ng-show="(form.city.$showValidationMessage && form.city.$invalid) || submitted">
-                <span class="has-error" ng-show="form.city.$error.maxlength" translate="error.city.maxlength"></span>
-              </div>
-            </div>
-        </div>
-        <div class="col-md-7 reset-padding col-md-offset-2">
-          <div class="col-md-6 dashboard__form--label reset-padding">
-            <span class="" translate="patient.state"></span>
-          </div>
-          <div class="col-md-10 dashboard__form__input--option reset-padding selected-box-container">
-            <div class="custom-dropdown">
-              <select name="state" ng-readonly="validateADMINorASP()" ng-model="patient.state" ng-options="state.name as state.name for state in states">
-                <option  value="" selected="selected">Select a state</option>
-              </select>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-      <div class="col-md-16 reset-padding margin-top">
           <div class="col-md-7 reset-padding">
             <div class="col-md-6 dashboard__form--label reset-padding">
               <span class="" translate="patient.zipcode"></span>
               <span class="">*</span>
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
-              <input type="text" validate-on-blur class="form-control" name="zip" ng-readonly="validateADMINorASP()" maxlength="5" ng-pattern="/^(?=.*[1-9].*)[0-9]{5}$/" ng-model="patient.zipcode" required>
+              <input type="text" validate-on-blur class="form-control" name="zip" ng-readonly="validateADMINorASP()" maxlength="5" ng-pattern="/^(?=.*[1-9].*)[0-9]{5}$/" ng-model="patient.zipcode" ng-enter="getCityStateByZip();" ng-blur="getCityStateByZip();"  required >
                <div ng-show="(form.zip.$dirty && form.zip.$showValidationMessage && form.zip.$invalid) || submitted">
-                <span class="has-error" ng-show="form.zip.$error.pattern" translate="error.zipcode.pattern"></span>
-                <span class="has-error" ng-show="form.zip.$error.required" translate="error.zipcode.required"></span>
+                <span class="has-error" ng-show="form.zip.$error.pattern && !form.zip.$error.required" translate="error.zipcode.pattern"></span>
+                <span class="has-error" ng-show="form.zip.$error.required && !form.zip.$error.pattern" translate="error.zipcode.required"></span>
+              </div>
+              <span class="has-error" ng-show="form.zip.$error.zipnotfound">{{serviceError}}</span>
+            </div>
+          </div>
+          <div class="col-md-7 reset-padding col-md-offset-2">
+            <div class="col-md-6 dashboard__form--label reset-padding">
+              <span class="" translate="patient.state"></span>
+            </div>
+            <div class="col-md-10 dashboard__form--input reset-padding">                             
+                <input type="text" name="state"  ng-model="patient.state" readonly="true" ng-disabled=true >
+            </div>
+          </div>
+      </div>
+
+
+      <div class="col-md-16 reset-padding margin-top">
+        <div class="col-md-7 reset-padding">
+            <div class="col-md-6 dashboard__form--label reset-padding">
+              <span class="" translate="patient.city"></span>
+            </div>
+            <div class="col-md-10 dashboard__form--input reset-padding">
+              <input  type="text" ng-model="patient.city" name="city" readonly="true" ng-disabled=true >
+              <div ng-show="(form.city.$showValidationMessage && form.city.$invalid) || submitted">
+                <span class="has-error" ng-show="form.city.$error.maxlength" translate="error.city.maxlength"></span>
               </div>
             </div>
         </div>
+
         <div class="col-md-7 reset-padding col-md-offset-2">
           <div class="col-md-6 dashboard__form--label reset-padding">
             <span class="" translate="patient.email"></span>
@@ -269,7 +266,7 @@
   </form>
 </div>
 
-<div ng-if="showModal" class="modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true">
+<div ng-if="showModal && form.$valid && patient.city" class="modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true">
   <div class="modal__dialog">
     <div class="modal__content">
       <header class="modal__header">
