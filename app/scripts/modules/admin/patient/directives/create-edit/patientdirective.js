@@ -11,8 +11,8 @@ angular.module('hillromvestApp')
         patientStatus: '=patientStatus'
       },
 
-      controller: ['$scope', '$state', 'notyService', 'dateService', 'UserService', 'StorageService', 'loginConstants', 'commonsUserService',
-      function ($scope, $state, notyService, dateService, UserService, StorageService, loginConstants, commonsUserService) {
+      controller: ['$scope', '$state', 'notyService', 'dateService', 'UserService', 'StorageService', 'loginConstants', 'commonsUserService', 'addressService',
+      function ($scope, $state, notyService, dateService, UserService, StorageService, loginConstants, commonsUserService, addressService) {
 
         $scope.open = function () {
           $scope.showModal = true;
@@ -168,6 +168,19 @@ angular.module('hillromvestApp')
             $state.go('rcadminPatients');
           }
         };
+
+        $scope.getCityState = function(zipcode){
+          if(zipcode){
+            addressService.getCityStateByZip(zipcode).then(function(response){
+              $scope.patient.city = response.data[0].city;
+              $scope.patient.state = response.data[0].state;
+            }).catch(function(response){
+              console.log('ERROR: ', response);
+            });  
+          }else{
+            console.log('Length is in valid');
+          }
+        }
 
         $scope.$watch("patient.formatedDOB", function(value) {
           if(value && (commonsUserService.isValidDOBDate(value))){
