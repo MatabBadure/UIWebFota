@@ -1041,7 +1041,8 @@ angular.module('hillromvestApp')
             $scope.patient.state = response.data[0].state;
             $scope.patient.city = response.data[0].city;
           }          
-        }).catch(function(response){            
+        }).catch(function(response){ 
+         $scope.form.zip.$setValidity("zipnotfound", false);           
           $scope.patient.state = null;
           $scope.patient.city = null;         
         });
