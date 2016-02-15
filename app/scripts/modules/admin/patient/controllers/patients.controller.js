@@ -10,8 +10,8 @@ angular.module('hillromvestApp')
     return val;
   };
 })
-.controller('patientsController',['$scope', '$state', '$stateParams', 'patientService', 'dateService', 'notyService', 'UserService', 'DoctorService', 'clinicService', '$q', 'StorageService', 'loginConstants', 'commonsUserService', 'searchFilterService',
-  function($scope, $state, $stateParams, patientService, dateService, notyService, UserService, DoctorService, clinicService, $q, StorageService, loginConstants, commonsUserService, searchFilterService) {
+.controller('patientsController',['$scope', '$state', '$stateParams', 'patientService', 'dateService', 'notyService', 'UserService', 'DoctorService', 'clinicService', '$q', 'StorageService', 'loginConstants', 'commonsUserService', 'searchFilterService', 'addressService',
+  function($scope, $state, $stateParams, patientService, dateService, notyService, UserService, DoctorService, clinicService, $q, StorageService, loginConstants, commonsUserService, searchFilterService, addressService) {
     var isFormLoaded = false;
     $scope.patient = {};
     $scope.patientTab = "";
@@ -1030,6 +1030,12 @@ angular.module('hillromvestApp')
 
     $scope.getClinicToLinkToPatient = function($viewValue){
       return searchFilterService.getMatchingClinic($viewValue, $scope.clinics);
+    };
+
+    $scope.getCityStateByZip = function(){
+      addressService.getCityStateByZip($scope.patient.zipcode).then(function(response){
+        console.log("zipcode response : "+ response);
+      });
     };
 
     $scope.init();
