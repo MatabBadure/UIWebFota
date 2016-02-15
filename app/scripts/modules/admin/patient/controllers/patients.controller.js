@@ -1033,25 +1033,30 @@ angular.module('hillromvestApp')
     };
 
     $scope.getCityStateByZip = function(){
-
-      $scope.form.zip.$setValidity("zipnotfound", true);
-      $scope.form.zip.$setValidity("pattern", true);       
-      if($scope.form && $scope.patient.zipcode){        
+      delete $scope.serviceError;
+      $scope.isServiceError = false;
+      if($scope.form && $scope.patient.zipcode){
         addressService.getCityStateByZip($scope.patient.zipcode).then(function(response){
           if(response && response.data && response.data.length > 0){
             $scope.patient.state = response.data[0].state;
             $scope.patient.city = response.data[0].city;
-          }          
-        }).catch(function(response){ 
-         $scope.form.zip.$setValidity("zipnotfound", false);           
+          }
+        }).catch(function(response){
+         $scope.form.zip.$setValidity("zipnotfound", false);
           $scope.patient.state = null;
-          $scope.patient.city = null;         
+          $scope.patient.city = null;
+          $scope.isServiceError = false;
+          $scope.serviceError = response.data.ERROR;
         });
       }else{
         delete $scope.patient.city;
         delete $scope.patient.state;
-        $scope.form.zip.$setValidity("pattern", false);   
-      }     
+        if($scope.form.zip.$dirty && $scope.form.zip.$showValidationMessage && $scope.form.zip.$invalid){
+        }else{
+          $scope.serviceError = 'Invalid Zipcode';
+          $scope.isServiceError = true;
+        }
+      }
     };
 
 
