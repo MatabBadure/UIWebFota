@@ -1033,8 +1033,9 @@ angular.module('hillromvestApp')
     };
 
     $scope.getCityStateByZip = function(){
-      if($scope.patient.zipcode){
-        $scope.form.zip.$setValidity("zipnotfound", true);
+      $scope.form.zip.$setValidity("zipnotfound", true);
+      $scope.form.zip.$setValidity("pattern", true);       
+      if($scope.form && $scope.patient.zipcode){        
         addressService.getCityStateByZip($scope.patient.zipcode).then(function(response){
           if(response && response.data && response.data.length > 0){
             $scope.patient.state = response.data[0].state;
@@ -1043,7 +1044,7 @@ angular.module('hillromvestApp')
         }).catch(function(response){          
           $scope.form.zip.$setValidity("zipnotfound", false);          
         });
-      } else{
+      }else{
         $scope.form.zip.$setValidity("pattern", false);   
       }     
     };
