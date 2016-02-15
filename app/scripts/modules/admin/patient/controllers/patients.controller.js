@@ -1043,7 +1043,9 @@ angular.module('hillromvestApp')
         }).catch(function(response){          
           $scope.form.zip.$setValidity("zipnotfound", false);          
         });
-      }      
+      } else{
+        $scope.form.zip.$setValidity("pattern", false);   
+      }     
     };
 
     $scope.init();
