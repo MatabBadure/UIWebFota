@@ -1033,9 +1033,17 @@ angular.module('hillromvestApp')
     };
 
     $scope.getCityStateByZip = function(){
-      addressService.getCityStateByZip($scope.patient.zipcode).then(function(response){
-        console.log("zipcode response : "+ response);
-      });
+      if($scope.patient.zipcode){
+        $scope.form.zip.$setValidity("zipnotfound", true);
+        addressService.getCityStateByZip($scope.patient.zipcode).then(function(response){
+          if(response && response.data && response.data.length > 0){
+            $scope.patient.state = response.data[0].state;
+            $scope.patient.city = response.data[0].city;
+          }          
+        }).catch(function(response){          
+          $scope.form.zip.$setValidity("zipnotfound", false);          
+        });
+      }      
     };
 
     $scope.init();

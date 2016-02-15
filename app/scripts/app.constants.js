@@ -90,5 +90,5 @@ angular.module('hillromvestApp')
 	'validateResetKey' : 'api/validateResetKey?key=KEYDATA',
 	'getCityStateZipByState' : '/api/cityStateZipMapByState?state=STATE',	
 	'getAllStates' : '/api/allstates',
-	'getCityStateByZip': '/api/cityStateZipMapByZip?zipcode='
+	'getCityStateByZip': '/api/cityStateZipMapByZip?zipcode=ZIPCODE'
 });
