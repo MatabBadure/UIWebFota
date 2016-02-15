@@ -10,8 +10,8 @@ angular.module('hillromvestApp')
     return val;
   };
 })
-.controller('patientsController',['$scope', '$state', '$stateParams', 'patientService', 'dateService', 'notyService', 'UserService', 'DoctorService', 'clinicService', '$q', 'StorageService', 'loginConstants', 'commonsUserService', 'searchFilterService',
-  function($scope, $state, $stateParams, patientService, dateService, notyService, UserService, DoctorService, clinicService, $q, StorageService, loginConstants, commonsUserService, searchFilterService) {
+.controller('patientsController',['$scope', '$state', '$stateParams', 'patientService', 'dateService', 'notyService', 'UserService', 'DoctorService', 'clinicService', '$q', 'StorageService', 'loginConstants', 'commonsUserService', 'searchFilterService', 'addressService',
+  function($scope, $state, $stateParams, patientService, dateService, notyService, UserService, DoctorService, clinicService, $q, StorageService, loginConstants, commonsUserService, searchFilterService, addressService) {
     var isFormLoaded = false;
     $scope.patient = {};
     $scope.patientTab = "";
@@ -406,6 +406,7 @@ angular.module('hillromvestApp')
       }
       var data = $scope.patient;
       data.role = 'PATIENT';
+      $scope.showModal = false;
       UserService.editUser(data).then(function (response) {
         if(response.status === 200) {
           $scope.patientStatus.isMessage = true;
@@ -1030,6 +1031,29 @@ angular.module('hillromvestApp')
     $scope.getClinicToLinkToPatient = function($viewValue){
       return searchFilterService.getMatchingClinic($viewValue, $scope.clinics);
     };
+
+    $scope.getCityStateByZip = function(){
+
+      $scope.form.zip.$setValidity("zipnotfound", true);
+      $scope.form.zip.$setValidity("pattern", true);       
+      if($scope.form && $scope.patient.zipcode){        
+        addressService.getCityStateByZip($scope.patient.zipcode).then(function(response){
+          if(response && response.data && response.data.length > 0){
+            $scope.patient.state = response.data[0].state;
+            $scope.patient.city = response.data[0].city;
+          }          
+        }).catch(function(response){ 
+         $scope.form.zip.$setValidity("zipnotfound", false);           
+          $scope.patient.state = null;
+          $scope.patient.city = null;         
+        });
+      }else{
+        delete $scope.patient.city;
+        delete $scope.patient.state;
+        $scope.form.zip.$setValidity("pattern", false);   
+      }     
+    };
+
 
     $scope.init();
   }]);

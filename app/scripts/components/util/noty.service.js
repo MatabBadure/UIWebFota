@@ -3,7 +3,11 @@ angular.module('hillromvestApp')
   .factory('notyService', ['toastr', function(toastr) {
     return {
       showMessage: function(message, type) {
-        toastr.success(message);
+        if(type === 'warning'){
+          toastr.error(message);
+        }else{
+          toastr.success(message);
+        }
       },
 
       showError: function(response) {
