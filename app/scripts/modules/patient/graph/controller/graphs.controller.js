@@ -2139,7 +2139,7 @@ angular.module('hillromvestApp')
          var count = 0;
          var missedTherapyCircles = [];
          angular.forEach($scope.completeGraphData.actual,function(value){
-          if(value.missedTherapy === true){
+          if(value.missedTherapy === true && circlesInHMR && circlesInHMR.length > 0){
             missedTherapyCircles.push(circlesInHMR[count]);
           }
           count++;
