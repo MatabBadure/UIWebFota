@@ -191,7 +191,7 @@
               <span class="" translate="patient.state"></span>
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">                             
-                <input type="text" name="state"  ng-model="patient.state" readonly="true" class="disabled-text-field" >
+                <input type="text" name="state"  ng-model="patient.state" readonly="true" ng-disabled=true >
             </div>
           </div>
       </div>
@@ -203,7 +203,7 @@
               <span class="" translate="patient.city"></span>
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
-              <input  type="text" ng-model="patient.city" name="city" readonly="true" class="disabled-text-field" >
+              <input  type="text" ng-model="patient.city" name="city" readonly="true" ng-disabled=true >
               <div ng-show="(form.city.$showValidationMessage && form.city.$invalid) || submitted">
                 <span class="has-error" ng-show="form.city.$error.maxlength" translate="error.city.maxlength"></span>
               </div>
