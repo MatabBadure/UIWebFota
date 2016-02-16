@@ -174,8 +174,9 @@
         },
         "zipcode": {
             "required": "Zipcode is required.",
-            "invalid": "Zipcode is invalid.",
-            "pattern": "Zipcode is invalid"
+            "invalid": "Zipcode is invalid",
+            "pattern": "Zipcode is invalid",
+            "zipcode-not-found": "Zipcode is not found"
         },
         "primaryPhone": {
             "required":"Home phone number is required.",
@@ -313,7 +314,7 @@
         }
     },
     "footer": {
-        "copyright":"Copyright @ Hill-Rom 2015. All Rights Reserved",
+        "copyright":"Copyright @ Hill-Rom 2016. All Rights Reserved",
         "enhancingoutcomes":"Enhancing outcomes for patients and their caregivers",
         "contactus":"Contact Us",
         "privacypolicy":"Privacy Policy",

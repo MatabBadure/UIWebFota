@@ -10,8 +10,8 @@ angular.module('hillromvestApp')
     return val;
   };
 })
-.controller('patientsController',['$scope', '$state', '$stateParams', 'patientService', 'dateService', 'notyService', 'UserService', 'DoctorService', 'clinicService', '$q', 'StorageService', 'loginConstants', 'commonsUserService', 'searchFilterService',
-  function($scope, $state, $stateParams, patientService, dateService, notyService, UserService, DoctorService, clinicService, $q, StorageService, loginConstants, commonsUserService, searchFilterService) {
+.controller('patientsController',['$scope', '$state', '$stateParams', 'patientService', 'dateService', 'notyService', 'UserService', 'DoctorService', 'clinicService', '$q', 'StorageService', 'loginConstants', 'commonsUserService', 'searchFilterService', 'addressService',
+  function($scope, $state, $stateParams, patientService, dateService, notyService, UserService, DoctorService, clinicService, $q, StorageService, loginConstants, commonsUserService, searchFilterService, addressService) {
     var isFormLoaded = false;
     $scope.patient = {};
     $scope.patientTab = "";
@@ -406,6 +406,7 @@ angular.module('hillromvestApp')
       }
       var data = $scope.patient;
       data.role = 'PATIENT';
+      $scope.showModal = false;
       UserService.editUser(data).then(function (response) {
         if(response.status === 200) {
           $scope.patientStatus.isMessage = true;
@@ -994,13 +995,14 @@ angular.module('hillromvestApp')
     $scope.resendActivationLink = function(){
       UserService.resendActivationLink($scope.patient.id).then(function(response){
         notyService.showMessage(response.data.message, 'success');
+        $scope.isDisableResendButton = true;
       }).catch(function(response){
         notyService.showError(response);
       });
     };
 
     $scope.showPatientUpdateModal = function(){
-      if($scope.form.$invalid){        
+      if($scope.form.$invalid){
         $scope.submitted = true;
         return false;
       }else{
@@ -1029,6 +1031,39 @@ angular.module('hillromvestApp')
     $scope.getClinicToLinkToPatient = function($viewValue){
       return searchFilterService.getMatchingClinic($viewValue, $scope.clinics);
     };
+
+    $scope.getCityStateByZip = function(){
+      delete $scope.serviceError;
+      $scope.isServiceError = false;
+      if($scope.form && $scope.patient.zipcode){
+        addressService.getCityStateByZip($scope.patient.zipcode).then(function(response){
+          if(response && response.data && response.data.length > 0){
+            $scope.patient.state = response.data[0].state;
+            $scope.patient.city = response.data[0].city;
+          }
+        }).catch(function(response){
+          $scope.patient.state = null;
+          $scope.patient.city = null;
+          $scope.isServiceError = false;
+          $scope.serviceError = response.data.ERROR;
+        });
+      }else{
+        delete $scope.patient.city;
+        delete $scope.patient.state;
+        if($scope.form.zip.$dirty && $scope.form.zip.$showValidationMessage && $scope.form.zip.$invalid){
+        }else{
+          $scope.serviceError = 'Invalid Zipcode';
+          $scope.isServiceError = true;
+        }
+      }
+    };
+
+    $scope.clearMessages = function(){
+      if($scope.patient.zipcode){
+        delete $scope.serviceError;
+      }
+    };
+
 
     $scope.init();
   }]);
