@@ -1012,11 +1012,12 @@ angular.module('hillromvestApp')
 
     $scope.showPrtocolUpdateModal = function(){
       $scope.submitted = true;
-      if($scope.addProtocolForm.$invalid){
-        return false;
-      }else{
-        $scope.protocolUpdateModal =true;  
-      }
+      $scope.isAuthorizeProtocolModal = true;
+      // if($scope.addProtocolForm.$invalid){
+      //   return false;
+      // }else{
+      //   $scope.protocolUpdateModal =true;  
+      // }
     };
 
     $scope.showDeviceUpdateModal = function(){

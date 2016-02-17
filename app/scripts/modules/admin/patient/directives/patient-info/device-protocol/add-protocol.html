@@ -240,3 +240,7 @@
     </div>
   </div>
 </div>
+
+
+<alert-modal ng-if="isAuthorizeProtocolModal" modall="showModal" onyes="OnYes()" onno="$parent.isAuthorizeProtocolModal = false; $parent.searchItem= ''" header="{{'patient.authorizeProtocol.warning' | translate}}" message="{{'patient.authorizeProtocol.message' | translate}}" buttonlabel="{{'patient.authorizeProtocol.buttonLabel' | translate}}">
+</alert-modal>
