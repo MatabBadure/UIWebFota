@@ -24,15 +24,15 @@
             <span class="ng-scope">Patient Name</span>
           </div>
           <div class="col-md-10 dashboard__form--input reset-padding">
-            <input type="text" required="" ng-maxlength="50" ng-minlength="1"   name="patientName" class="ng-pristine ng-untouched ng-isolate-scope ng-valid-minlength ng-valid-maxlength ng-valid ng-valid-required" style="">
+            <input type="text" required="" ng-maxlength="50" ng-minlength="1"   name="patientName" class="light_grey ng-pristine ng-untouched ng-isolate-scope ng-valid-minlength ng-valid-maxlength ng-valid ng-valid-required" style="">
           </div>
         </div>
         <div class="col-md-7 reset-padding col-md-offset-2">
           <div class="col-md-6 dashboard__form--label reset-padding">
-            <span translate="patient.caregiver.middle-name" class="ng-scope">Patient DOB</span>
+            <span class="ng-scope">Patient DOB</span>
           </div>
           <div class="col-md-10 dashboard__form--input reset-padding">
-            <input type="text" ng-maxlength="50" ng-minlength="1" name="patiendDob"  class="ng-pristine ng-untouched ng-valid ng-isolate-scope ng-valid-minlength ng-valid-maxlength">
+            <input type="text" ng-maxlength="50" ng-minlength="1" name="patiendDob"  class="light_grey ng-pristine ng-untouched ng-valid ng-isolate-scope ng-valid-minlength ng-valid-maxlength">
               
           </div>
         </div>
@@ -45,16 +45,16 @@
             <span class="ng-scope">Prescriber Name</span>
           </div>
           <div class="col-md-10 dashboard__form--input reset-padding">
-            <input type="text" required="" ng-maxlength="50" ng-minlength="1"   name="prescriberName" class="ng-pristine ng-untouched ng-isolate-scope ng-valid-minlength ng-valid-maxlength ng-valid ng-valid-required" style="">
+            <input type="text" required="" ng-maxlength="50" ng-minlength="1"   name="prescriberName" class="light_grey ng-pristine ng-untouched ng-isolate-scope ng-valid-minlength ng-valid-maxlength ng-valid ng-valid-required" style="">
               
           </div>
         </div>
         <div class="col-md-7 reset-padding col-md-offset-2">
           <div class="col-md-6 dashboard__form--label reset-padding">
-            <span translate="patient.caregiver.middle-name" class="ng-scope">Date</span>
+            <span class="ng-scope">Date</span>
           </div>
           <div class="col-md-10 dashboard__form--input reset-padding">
-            <input type="text" ng-maxlength="50" ng-minlength="1" name="date" class="ng-pristine ng-untouched ng-valid ng-isolate-scope ng-valid-minlength ng-valid-maxlength">
+            <input type="text" ng-maxlength="50" ng-minlength="1" name="date" class="light_grey ng-pristine ng-untouched ng-valid ng-isolate-scope ng-valid-minlength ng-valid-maxlength">
           </div>
         </div>
       </div> 
@@ -163,5 +163,51 @@
 </div>
 
 <div ng-if="isVerificationModal" class="modal">
-  fhdskjflhdsf
+
+  <div class="modal__dialog">
+    <div class="modal__content">
+      <header class="modal__header">
+        <button type="button" class="modal__close" data-dismiss="modal" ng-click="$parent.protocolUpdateModal= false">×</button>
+         <p class="ng-scope">Login Verification</p>
+      </header>
+      <div class="modal__body">
+         <div class="modal--message dark_grey_text_color14 ng-scope">We need to verify that you are not a robot, but a human being!</div>
+         <div class="col-md-16 margin-top reset-padding">
+            <div class="col-md-5 dark_grey_text_color14 reset-padding">Email Address</div>
+             <div class="col-md-11">
+                 <input type="text" required="" ng-maxlength="50" ng-minlength="1" name="patientName" class="light_grey ng-pristine ng-untouched ng-isolate-scope ng-valid-minlength ng-valid-maxlength ng-valid ng-valid-required col-md-16">
+             </div>
+         </div>
+          <div class="col-md-16 margin-top reset-padding">
+            <div class="col-md-5 dark_grey_text_color14 reset-padding">Password</div>
+             <div class="col-md-11">
+                 <input type="text" required="" ng-maxlength="150" ng-minlength="1" name="patientName" class="ng-pristine ng-untouched ng-isolate-scope ng-valid-minlength ng-valid-maxlength ng-valid ng-valid-required col-md-16">
+             </div>
+         </div>
+          <div class="col-md-16 margin-top reset-padding">
+            <div class="col-md-5 dark_grey_text_color14 reset-padding">Captcha</div>
+             <div class="col-md-11">
+                 <input type="text" required="" ng-maxlength="50" ng-minlength="1" name="patientName" class="ng-pristine ng-untouched ng-isolate-scope ng-valid-minlength ng-valid-maxlength ng-valid ng-valid-required col-md-16">
+             </div>
+         </div>
+
+            <div class="col-md-16 margin-top reset-padding">
+            <div class="col-md-5 dark_grey_text_color14"></div>
+             <div class="col-md-11">
+                  <div class="col-md-16 dark_grey_text_color14 reset-padding">Type the characters you see in the picture above.</div>
+                 <div class="col-md-16 reset-padding">
+                    <input type="text" required="" ng-maxlength="50" ng-minlength="1" name="patientName" class="ng-pristine ng-untouched ng-isolate-scope ng-valid-minlength ng-valid-maxlength ng-valid ng-valid-required col-md-16">
+                 </div>
+             </div>
+         </div>
+
+         <div class="row modal--custom-btn">
+          <buton class="hillrom-btn btn-submit float-right" ng-click="updateProtocol()">Confirm and Generate</buton>
+         </div>
+      </div>
+      <footer class="modal__footer">
+      </footer>
+    </div>
+  </div>
+
 </div>
