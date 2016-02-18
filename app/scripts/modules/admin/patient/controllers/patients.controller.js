@@ -1065,9 +1065,13 @@ angular.module('hillromvestApp')
       }
     };
 
-
     $scope.openProtocolDetailPage = function(){
       $state.go('updatedProtocolDetail',{'protocolId': $stateParams.protocolId});
     };
+
+    $scope.openVerificationModal = function(){
+      $scope.isVerificationModal = true;
+    };
+
     $scope.init();
   }]);

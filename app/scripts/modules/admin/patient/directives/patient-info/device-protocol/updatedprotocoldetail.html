@@ -86,7 +86,7 @@
   		</div>
 		<div class="clr"></div>
     <div class="admin-user">
-		  <div ng-class="" class="col-md-16 border-top protocol_list_container">
+		  <div class="col-md-16 border-top protocol_list_container">
   			<div class="col-md-4">
     			<div class="col-md-16 protocol-list__treatment-day protocol-list no_border text-align-left ng-scope">
       			<span class="protocol-list--value ng-binding"> Custom point1</span>
@@ -153,11 +153,15 @@
 
   		<div class="col-md-16 margin-top reset-padding">
     		<div class="">
-      		<buton type="submit" class="hillrom-btn btn-secondary float-right ng-scope">Authorize</buton>
+      		<buton class="hillrom-btn btn-secondary float-right ng-scope" ng-click="openVerificationModal()">Authorize</buton>
       		<div class="clr"></div>
     		</div>
   		</div>
   		<div claass="clr"></div>
  		</div>
   </div>
+</div>
+
+<div ng-if="isVerificationModal" class="modal">
+  fhdskjflhdsf
 </div>
