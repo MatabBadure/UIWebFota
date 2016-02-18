@@ -1,2 +1,174 @@
 <ng-include src="'scripts/components/navbar/navbar.html'"></ng-include>
 <admin-patient-navbar></admin-patient-navbar>
+
+<div class="container admin-user ng-scope">
+  <div class="col-md-16 margin-top reset-padding">
+   <div class="user-gen-details">
+     <span class="user-gen-details--name ng-binding">Adlera Adley&nbsp;&nbsp;</span>
+     <span class="user-gen-details--hr-id ng-binding">HR_0817_001</span>
+   </div>
+  </div>
+</div>
+
+<div class="dashboard dashboard--content padding-bottom-ls ng-scope">
+  
+    <div class="container dashboard__form">
+      <div>
+        <div class="col-md-16 reset-padding">
+          <span  class="dashboard__form--type ng-scope">Updated Protocol Details</span>
+        </div>
+
+        <div class="col-md-16 reset-padding margin-top">
+          <div class="col-md-7 reset-padding">
+            <div class="col-md-6 dashboard__form--label reset-padding">
+              <span class="ng-scope">Patient Name</span>
+            <!--   <span class="">*</span> -->
+            </div>
+            <div class="col-md-10 dashboard__form--input reset-padding">
+              <input type="text" required="" ng-maxlength="50" ng-minlength="1"   name="patientName" validate-on-blur="" class="ng-pristine ng-untouched ng-isolate-scope ng-valid-minlength ng-valid-maxlength ng-valid ng-valid-required" style="">
+              
+            </div>
+          </div>
+          <div class="col-md-7 reset-padding col-md-offset-2">
+            <div class="col-md-6 dashboard__form--label reset-padding">
+              <span translate="patient.caregiver.middle-name" class="ng-scope">Patient DOB</span>
+            </div>
+            <div class="col-md-10 dashboard__form--input reset-padding">
+              <input type="text" ng-maxlength="50" ng-minlength="1" name="patiendDob"  validate-on-blur="" class="ng-pristine ng-untouched ng-valid ng-isolate-scope ng-valid-minlength ng-valid-maxlength">
+              
+            </div>
+          </div>
+        </div>       
+      <div class="clr"></div>
+
+      <div class="col-md-16 reset-padding margin-top">
+          <div class="col-md-7 reset-padding">
+            <div class="col-md-6 dashboard__form--label reset-padding">
+              <span class="ng-scope">Prescriber Name</span>
+            </div>
+            <div class="col-md-10 dashboard__form--input reset-padding">
+              <input type="text" required="" ng-maxlength="50" ng-minlength="1"   name="prescriberName" validate-on-blur="" class="ng-pristine ng-untouched ng-isolate-scope ng-valid-minlength ng-valid-maxlength ng-valid ng-valid-required" style="">
+              
+            </div>
+          </div>
+          <div class="col-md-7 reset-padding col-md-offset-2">
+            <div class="col-md-6 dashboard__form--label reset-padding">
+              <span translate="patient.caregiver.middle-name" class="ng-scope">Date</span>
+            </div>
+            <div class="col-md-10 dashboard__form--input reset-padding">
+              <input type="text" ng-maxlength="50" ng-minlength="1" name="date"  validate-on-blur="" class="ng-pristine ng-untouched ng-valid ng-isolate-scope ng-valid-minlength ng-valid-maxlength">
+            </div>
+          </div>
+        </div> 
+         <div class="clr"></div>
+		<div class="col-md-16 patient-protocol margin-top">
+			<span translate="" class="patient-protocol--title ng-scope">New Protocol</span>
+		</div>
+         <div class="dashboard dashboard--content col-md-14">
+   			 <div class="dashboard__manage-view margin-top">
+      			<div class="dashboard__manage-view--header no_border care_plan_and_device">
+		          <div class="col-md-3 header--type text-align-left">
+		            <span translate="" class="ng-scope">Type</span>
+		          </div>
+		          <div class="col-md-3 header--type">
+		            <span translate="" class="ng-scope">Treatments Per Day</span>
+		          </div>
+		          <div class="col-md-3 header--type">
+		            <span translate="" class="ng-scope">Minutes Per Treatment</span>
+		          </div>
+		          <div class="col-md-3 header--type">
+		            <span translate="" class="ng-scope">Frequency Per Treatment</span>
+		          </div>
+		          <div class="col-md-3 header--type">
+		            <span translate="" class="ng-scope">Pressure Per Treatment</span>
+		          </div>
+          <div class="clr"></div>
+        </div>
+    </div>
+  </div>
+
+  <div ng-class="" class="col-md-16 border-top protocol_list_container">
+  <div class="col-md-3 ">
+    <div ng-class="" ng-repeat="" class="col-md-16 protocol-list__treatment-day protocol-list no_border text-align-left ng-scope" style="">
+      <span class="protocol-list--value ng-binding"> Custom point1</span>
+    </div>
+    <div ng-class="" ng-repeat="" class="col-md-16 protocol-list__treatment-day protocol-list no_border text-align-left ng-scope">
+      <span class="protocol-list--value ng-binding"> Custom point2</span>
+    </div>
+    <div ng-class="" ng-repeat="" class="col-md-16 protocol-list__treatment-day protocol-list no_border text-align-left ng-scope last" style="">
+      <span class="protocol-list--value ng-binding"> Custom point3</span>
+    </div>
+  </div>
+  <div class="col-md-2 treatments_per_day_count col-md-offset-3">
+      <span class="v_middle ng-binding">2</span>
+  </div>
+  <div class="col-md-9 col-md-offset-2">
+    <div ng-class="" ng-repeat="" class="col-md-16 protocol-list no_border ng-scope" style="">
+     
+      <div class="col-md-5 protocol-list__strt-date">
+        <span class="protocol-list--value ng-binding"> 2</span>      
+      </div>
+      <div class="col-md-5 protocol-list__end-date">
+        <span class="protocol-list--value ng-binding ng-scope" ng-if=""> 6</span>
+      </div>
+      <div class="col-md-5 protocol-list__end-date">
+        <span class="protocol-list--value ng-binding ng-scope" ng-if=""> 2</span>
+      </div>
+    </div><div ng-class="" ng-repeat="" class="col-md-16 protocol-list no_border ng-scope">
+     
+      <div class="col-md-5 protocol-list__strt-date">
+        <span class="protocol-list--value ng-binding"> 2</span>      
+      </div>
+      <div class="col-md-5 protocol-list__end-date">
+       <span class="protocol-list--value ng-binding ng-scope" ng-if=""> 7</span>
+      </div>
+      <div class="col-md-5 protocol-list__end-date">
+       <span class="protocol-list--value ng-binding ng-scope" ng-if=""> 2</span>
+      </div>
+    </div><div ng-class="" ng-repeat="" class="col-md-16 protocol-list no_border ng-scope last" style="">
+      
+      <div class="col-md-5 protocol-list__strt-date">
+        <span class="protocol-list--value ng-binding"> 2</span>      
+      </div>
+      <div class="col-md-5 protocol-list__end-date">
+       <span class="protocol-list--value ng-binding ng-scope" ng-if=""> 6</span>
+      </div>
+      <div class="col-md-5 protocol-list__end-date">
+        <span class="protocol-list--value ng-binding ng-scope" ng-if=""> 2</span>
+      </div>
+    </div>
+  </div>
+
+  <div ng-if="" class="col-md-2 comon_action_div ng-scope" style="">
+    <div class="col-md-8 protocol-list__edit icons text-center">
+     <span ng-click="" class="icon-edit-icon ng-scope" ng-if=""></span>
+    </div>
+    <div class="col-md-8 protocol-list__edit icons text-center">
+      <span ng-click="" class="icon-delete-icon ng-scope"></span>
+    </div>
+  </div>
+
+</div>
+
+         <div class="row lebel-indent margin-top col-md-16 margin-bottom15 ng-scope">
+         <label>
+			<input type="checkbox" ng-click="" ng-model="" class="ng-pristine ng-untouched ng-valid"> 
+			<span translate="" class="ng-scope link-text">Accept Terms and Conditions</span> 
+		</label>
+		</div>
+		<div class="row lebel-indent col-md-16 margin-bottom15 ng-scope">
+		<span>1. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim </span>
+		<span>2. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim </span>
+		<span>3. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim </span>
+        </div>
+
+         <div class="col-md-16 margin-top reset-padding">
+     		 <div class="">
+        		<buton type="submit" class="hillrom-btn btn-secondary float-right ng-scope" ng-click="" ng-show="" translate="">Authorize</buton>
+        		<div class="clr"></div>
+      		</div>
+    	</div>
+    	<div claass="clr"></div>
+    </div>
+   </div>
+</div>
