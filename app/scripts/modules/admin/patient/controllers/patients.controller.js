@@ -106,7 +106,6 @@ angular.module('hillromvestApp')
             $scope.isAddProtocol = false;
           }
         });
-        $rootScope.protocols = $scope.protocols;
       }).catch(function(){});
     };
 
@@ -1068,6 +1067,7 @@ angular.module('hillromvestApp')
     };
 
     $scope.openProtocolDetailPage = function(){
+      $rootScope.protocols = $scope.protocol.protocolEntries;
       $state.go('updatedProtocolDetail',{'protocolId': $stateParams.protocolId});
     };
 
