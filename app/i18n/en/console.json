@@ -1,0 +1,19 @@
+{
+	"console":{
+		"page-title":{
+			"survey": "Hillrom | Survey",
+			"login-analytics": "Hillrom | Analytics",
+			"bottom-banner": "Hillrom | Banner"
+			},
+		"console-tabs":{
+			"survey": "Survey",
+			"banner": "Bottom Banner",
+			"login-analytics": "Login Analytics" ,
+			"publish-banner": "Publish Banner",
+			"already-published": "Already Published",
+			"expired-banner": "Expired Banner",
+			"banner-setting": "Banner Setting",
+			"patient-survey": "Survey"
+			}
+	}
+}
