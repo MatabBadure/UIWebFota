@@ -289,6 +289,11 @@ angular.module('hillromvestApp')
 	        	$state.go('associatesLoginAnalytics');
 	        }
       	};
+      	$scope.userSurvey = function(){
+	        if($rootScope.userRole === "PATIENT"){
+	          $state.go('patientSurvey');
+	        }
+      	};
 
 
     }]);

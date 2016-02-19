@@ -3809,8 +3809,13 @@ angular.module('hillromvestApp')
                   ]
               }
             })
+            .state('survey', {               
+                url:'/patient',
+                parent: 'entity',
+                abstract: true,                
+            })                    
             .state('patientSurvey', {
-              parent: 'patient-dashboard',
+              parent: 'survey',
               url: '/{patientId}/survey',
               data: {
                   roles: ['PATIENT'],
@@ -3818,8 +3823,8 @@ angular.module('hillromvestApp')
               },
               views: {
                   'content@': {
-                      templateUrl: 'scripts/modules/associate/clinic/views/clinic-info/clinic-admin/clinic-admin.html',
-                      controller: 'clinicsController'
+                      templateUrl: 'scripts/modules/patient/survey/views/survey.html',
+                      controller: 'patientSurveyController'
                   }
               },
               resolve: {
