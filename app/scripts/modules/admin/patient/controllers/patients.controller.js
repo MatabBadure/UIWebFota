@@ -10,8 +10,8 @@ angular.module('hillromvestApp')
     return val;
   };
 })
-.controller('patientsController',['$scope', '$state', '$stateParams', 'patientService', 'dateService', 'notyService', 'UserService', 'DoctorService', 'clinicService', '$q', 'StorageService', 'loginConstants', 'commonsUserService', 'searchFilterService', 'addressService',
-  function($scope, $state, $stateParams, patientService, dateService, notyService, UserService, DoctorService, clinicService, $q, StorageService, loginConstants, commonsUserService, searchFilterService, addressService) {
+.controller('patientsController',['$scope','$rootScope', '$state', '$stateParams', 'patientService', 'dateService', 'notyService', 'UserService', 'DoctorService', 'clinicService', '$q', 'StorageService', 'loginConstants', 'commonsUserService', 'searchFilterService', 'addressService',
+  function($scope, $rootScope, $state, $stateParams, patientService, dateService, notyService, UserService, DoctorService, clinicService, $q, StorageService, loginConstants, commonsUserService, searchFilterService, addressService) {
     var isFormLoaded = false;
     $scope.patient = {};
     $scope.patientTab = "";
@@ -106,6 +106,7 @@ angular.module('hillromvestApp')
             $scope.isAddProtocol = false;
           }
         });
+        $rootScope.protocols = $scope.protocols;
       }).catch(function(){});
     };
 
@@ -179,8 +180,9 @@ angular.module('hillromvestApp')
         $scope.initpatientDemographic();
       }else if(currentRoute === 'patientEditProtocol' || currentRoute === 'patientEditProtocolRcadmin'){
         $scope.initpatientEditProtocol();
+      }else if(currentRoute === 'updatedProtocolDetail'){
+        $scope.initUpdatedProtocolDetail();
       }
-
     };
 
     $scope.setEditMode = function(patient) {
@@ -1012,11 +1014,12 @@ angular.module('hillromvestApp')
 
     $scope.showPrtocolUpdateModal = function(){
       $scope.submitted = true;
-      if($scope.addProtocolForm.$invalid){
-        return false;
-      }else{
-        $scope.protocolUpdateModal =true;  
-      }
+      $scope.isAuthorizeProtocolModal = true;
+      // if($scope.addProtocolForm.$invalid){
+      //   return false;
+      // }else{
+      //   $scope.protocolUpdateModal =true;  
+      // }
     };
 
     $scope.showDeviceUpdateModal = function(){
@@ -1064,6 +1067,20 @@ angular.module('hillromvestApp')
       }
     };
 
+    $scope.openProtocolDetailPage = function(){
+      $state.go('updatedProtocolDetail',{'protocolId': $stateParams.protocolId});
+    };
+
+    $scope.openVerificationModal = function(){
+      $scope.isVerificationModal = true;
+    };
+
+
+    $scope.initUpdatedProtocolDetail = function(){
+      $scope.getPatientById($stateParams.patientId);
+      var date = new Date();
+      $scope.currentDate = (date.getMonth() + 1) + '/' + date.getDate() + '/' +  date.getFullYear();
+    };
 
     $scope.init();
   }]);
