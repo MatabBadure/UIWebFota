@@ -1,1 +1,77 @@
-loginanalytics
+<div class="container admin-user">
+  <div class="container margin-top">
+    <div class="col-md-16 reset-padding">
+      <span class="dashboard__form--type" >Select Survey</span>
+    </div>
+  </div><!-- ng-class="{'pointer-no-event': !isGraphLoaded, 'pointer-fill-event': isGraphLoaded}"-->
+  <div class="col-md-16 padding0">
+        <div class="bar_graph_header">
+          <div class="col-md-11 col-sm-7 left_header_barchart padding0">
+            <div class="row">
+              <ul class="nav nav-pills">
+              	<li>
+	          		<span>
+				        <label>
+				          <input type="checkbox" ng-model="legends.isAll"  ng-value="legends.isAll" ng-disabled="disableLegends.all" ng-click="!disableLegends.all && changeLegends('all')">
+				          <span class="radio-box-text" translate="console.analytics.legends.all"></span>
+				        </label>
+			      	</span>
+      			</li>
+             	<li>
+             		<span>
+				        <label>
+				          <input type="checkbox" ng-model="legends.isPatient" ng-value="legends.isPatient" value="Normal" ng-disabled="disableLegends.patient" ng-click="changeLegends('patient')">
+				          <span class="radio-box-text" translate="console.analytics.legends.patient"></span>
+				        </label>
+			      	</span>
+		      	</li>
+		      	<li>
+             		<span>
+				        <label>
+				          <input type="checkbox" ng-model="legends.isHCP" ng-value="legends.isHCP" value="Normal" ng-disabled="disableLegends.hcp" ng-click="changeLegends('hcp')">
+				          <span class="radio-box-text" translate="console.analytics.legends.hcp"></span>
+				        </label>
+			      	</span>
+		      	</li>
+		      	<li>
+             		<span>
+				        <label>
+				          <input type="checkbox" ng-model="legends.isClinicAdmin" ng-value="legends.isClinicAdmin" value="Normal" ng-disabled="disableLegends.clinicadmin" ng-click="changeLegends('clinicadmin')">
+				          <span class="radio-box-text" translate="console.analytics.legends.clinicadmin"></span>
+				        </label>
+			      	</span>
+		      	</li>
+		      	<li>
+             		<span>
+				        <label>
+				          <input type="checkbox" ng-model="legends.isCaregiver" ng-value="legends.isCaregiver" value="Normal" ng-disabled="disableLegends.caregiver" ng-click="changeLegends('caregiver')">
+				          <span class="radio-box-text" translate="console.analytics.legends.caregiver"></span>
+				        </label>
+			      	</span>
+		      	</li>
+            	</ul>
+            </div>
+          </div>
+          <div class="col-md-5 col-sm-9 right_header_barchart">
+            <ul class="nav nav-pills pull-right ">
+				<li role="presentation" class="" ng-click="dayView()"><a href="">Day</a></li>
+				<li role="presentation" class="" ng-click="weekView()"><a href="">Week</a></li>
+				<li role="presentation" class="" ng-click="monthView()"><a href="">Month</a></li>
+				<li role="presentation" class="" ng-click="yearView()"><a href="">Year</a></li>
+				<li role="presentation" class="" id="dp3" ng-click="customDateRangeView()"><a href="" date-range-picker class="date-picker" ng-model="dates" parentEl="#dp3" options="opts" ><span class="icon-calendar"></span></a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="pull-right week_date_container">
+          <span ng-if="fromDate !== toDate">
+              <span class="date">{{fromDate}}</span> - <span class="date">{{toDate}}</span>
+          </span>
+          <span ng-if="fromDate === toDate" class="date">{{fromDate}}<span>
+        </div>
+      </div>
+      <!-- <highchart id="chart1" config="chartConfig" class="span9" ></highchart> -->
+      <div id="container" ng-init="dayView()">Placeholder for chart</div>
+      <button ng-click="downloadGraphAsPdf()">Download As PDF</button>
+      <canvas id="loginAnalyticsCanvas" width=1300 height=350 style="display:none;"></canvas>
+      
+</div>

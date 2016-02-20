@@ -14,6 +14,21 @@
 			"expired-banner": "Expired Banner",
 			"banner-setting": "Banner Setting",
 			"patient-survey": "Survey"
+			},
+		"analytics":{
+			"legends":{
+				"all": "All",
+				"patient": "Patient",
+				"hcp": "HCP",
+				"clinicadmin": "Clinic Admin",
+				"caregiver": "Caregiver"
+			},
+			"views":{
+				"day": "Day",
+				"week": "Week",
+				"month": "Month",
+				"year": "Year"
 			}
+		}
 	}
 }

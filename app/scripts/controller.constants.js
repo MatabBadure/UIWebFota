@@ -143,4 +143,14 @@ angular.module('hillromvestApp').constant('hcpDashboardConstants', {
 	}
 })
 
+.constant('loginAnalyticsConstants',{
+	legends : {
+		"ALL" : "all",
+		"PATIENT" : "patient",
+		"HCP" : "hcp",
+		"CLINICADMIN": "clinicadmin",
+		"CAREGIVER": "caregiver"
+	}
+})
+
 
