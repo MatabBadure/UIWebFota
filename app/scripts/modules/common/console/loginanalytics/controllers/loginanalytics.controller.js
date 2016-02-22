@@ -6,8 +6,8 @@
 
 'use strict';
 angular.module('hillromvestApp')
-.controller('loginAnalyticsController',['$scope', '$state', 'loginAnalyticsConstants',
-	function($scope, $state, loginAnalyticsConstants) {	
+.controller('loginAnalyticsController',['$scope', '$state', 'loginAnalyticsConstants', 'dateService',
+	function($scope, $state, loginAnalyticsConstants, dateService) {	
 		/*
 		* default legends and their accessibility
 		*/
@@ -57,11 +57,12 @@ angular.module('hillromvestApp')
 		* or else make all the lengends accessible
 		*/
 		$scope.validateLegends = function(legend, count){
-			if(count === 1){
-				$scope.disableLegends.patient = ($scope.legends.isPatient) ? false : true;
-				$scope.disableLegends.hcp = ($scope.legends.isHCP) ? false : true;
-				$scope.disableLegends.clinicadmin = ($scope.legends.isClinicAdmin) ? false : true;
-				$scope.disableLegends.caregiver = ($scope.legends.isCaregiver) ? false : true;
+			if(count === 1){				
+				$scope.disableLegends.patient = ($scope.legends.isPatient) ? true : false;
+				$scope.disableLegends.hcp = ($scope.legends.isHCP) ? true : false;
+				$scope.disableLegends.clinicadmin = ($scope.legends.isClinicAdmin) ? true : false;
+				$scope.disableLegends.caregiver = ($scope.legends.isCaregiver) ? true : false;
+				// show the meesage saying at least on elegend should be enabled.
 			} else{
 				$scope.disableLegends.patient = false;
 				$scope.disableLegends.hcp = false;
@@ -72,8 +73,9 @@ angular.module('hillromvestApp')
 
 		/*
 		* Legend 'All' will always be selected, unless any other legend is made unselected*/
-		$scope.changeLegends = function(legend){			
-			var count = getSelectedLegendsCount();			
+		$scope.changeLegends = function(legend){				
+			var count = getSelectedLegendsCount();	
+			$scope.validateLegends(legend, count);			
 			if(legend === loginAnalyticsConstants.legends.ALL){
 				$scope.defaultLegends();				
 			}else{
@@ -81,8 +83,7 @@ angular.module('hillromvestApp')
 					$scope.defaultLegends();
 				}else{					
 					$scope.legends.isAll = false;
-					$scope.disableLegends.all = false;
-					$scope.validateLegends(legend, count);
+					$scope.disableLegends.all = false;					
 				}
 
 			}		
@@ -109,7 +110,11 @@ angular.module('hillromvestApp')
 		            }
 		        },
         	 	legend: {
-		            enabled: false
+		            layout: 'horizontal',
+		            align: 'left',
+		            verticalAlign: 'top',
+		            borderWidth: 0
+		           // enabled: false
 		        },
 				tooltip: {
 					headerFormat: '<span style="font-size:14px">{point.key}</span><table>',				
@@ -158,7 +163,11 @@ angular.module('hillromvestApp')
 		            }
 		        },
         	 	legend: {
-		            enabled: false
+		            layout: 'horizontal',
+		            align: 'left',
+		            verticalAlign: 'top',
+		            borderWidth: 0
+		            //enabled: false
 		        },
 				tooltip: {
 					headerFormat: '<span style="font-size:14px">{point.key}</span><table>',				
@@ -210,12 +219,84 @@ angular.module('hillromvestApp')
 		       '#bypassme': function(element, renderer){
 		        return true;
       		}};
+			var pageHeight = pdf.internal.pageSize.height;
+			var pageWidth = pdf.internal.pageSize.width;
+			                  
+			var margins = {
+				top: 70,
+				bottom: 60,
+				left: 15,
+				width: 575,
+				titleTop:40,
+				tCellWidth:140,
+				tCapWidth:280,
+				t2TabLeft:(pageWidth/2)+5
+			};
+			var g_pdfMetaData = {
+		            rTitle: 'HillRom'
+		            ,rTitle1: 'VisiView™ Health Portal'		            
+	          }
+		     
+			pdf.setFont("helvetica");
+			pdf.setFontType("bold");   
+			pdf.setFontSize(6);
+			pdf.setTextColor(0,0,0);
+			pdf.text(margins.left,   margins.titleTop-15, dateService.getDateFromTimeStamp(new Date().getTime(), patientDashboard.dateFormat, "/"));
+
+			pdf.setFont("helvetica");   
+			pdf.setFontType("bold");
+			pdf.setFontSize(6);
+			pdf.setTextColor(0,0,0);
+			pdf.text(margins.width-305,   margins.titleTop-15, "Hillrom | Overview");
+
+			pdf.setFont("helvetica");  
+			pdf.setFontType("bold"); 
+			pdf.setFontSize(11);
+			pdf.setTextColor(124,163,220);
+			pdf.text(margins.width-30, margins.titleTop,g_pdfMetaData.rTitle);
+
+			pdf.setFont("helvetica");   
+			pdf.setFontType("bold");      
+			pdf.setFontSize(7);
+			pdf.setTextColor(114, 111, 111);
+			pdf.text(margins.width-70,   margins.titleTop+10, g_pdfMetaData.rTitle1);
+
+			pdf.setDrawColor(0);
+			pdf.setFillColor(114, 111, 111);
+			pdf.rect(margins.left, margins.titleTop+13, margins.width-5, .5, 'F'); 
+
+			pdf.setFont("helvetica"); 
+			pdf.setFontType("normal");        
+			pdf.setFontSize(6);
+			pdf.setTextColor(0, 0, 0);
+			pdf.text(margins.left,   margins.titleTop+30, "Report Generation Date ");
+
+			pdf.setFont("helvetica"); 
+			pdf.setFontType("normal");        
+			pdf.setFontSize(6);
+			pdf.setTextColor(128, 179, 227);
+			pdf.text(margins.left+69,   margins.titleTop+30, dateService.getDateFromTimeStamp(new Date().getTime(),patientDashboard.dateFormat,'/'));
+
+			pdf.setFont("helvetica"); 
+			pdf.setFontType("normal");        
+			pdf.setFontSize(6);
+			pdf.setTextColor(0, 0, 0);
+			pdf.text(margins.t2TabLeft,  margins.titleTop+30, "Date Range Of Report ");
+
+			pdf.setFont("helvetica"); 
+			pdf.setFontType("normal");        
+			pdf.setFontSize(6);
+			pdf.setTextColor(128, 179, 227);
+			pdf.text(margins.t2TabLeft+65,  margins.titleTop+30, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/') + " - "+dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/'));
+
+			pdf.cellInitialize();
+
       		var canvas = document.getElementById('loginAnalyticsCanvas');               
 	        var ctx = canvas.getContext('2d');  
 	        var htmlString =  $("#container").find("svg").parent().html().trim().replace(/xmlns=\"http:\/\/www\.w3\.org\/2000\/svg\"/, '');          
 	        canvg(canvas, htmlString);
 	        var img = $("#loginAnalyticsCanvas")[0].toDataURL('image/png', 1.0);
-	        pdf.addImage(img, 'png', 10, 60, 540, 170);
+	        pdf.addImage(img, 'png', 10, 100, 540, 170);
 	        setTimeout(function(){     
 		        pdf.save('VisiView™.pdf'); 
 		      },1000);  
