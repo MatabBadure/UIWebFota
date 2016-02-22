@@ -17,6 +17,7 @@ angular.module('hillromvestApp')
     $scope.patientTab = "";
     $scope.newProtocolPoint = 1;
     $scope.patientActivateModal = false;
+    $scope.captchaValid = false;
     $scope.patientStatus = {
       'role': StorageService.get('logged').role,
       'editMode': false,
@@ -745,26 +746,33 @@ angular.module('hillromvestApp')
 
     $scope.updateProtocol = function(){
       console.log('captchaValid :: ', $scope.captchaValid);
-      if($scope.protocolVerificationForm.$invalid && !captchaValid){
-        return false;
-      }
-      $scope.isVerificationModal =false;
-      var data = {
-        'password': $scope.password
-      };
-      UserService.validateCredentials(data).then(function(response){
-        patientService.editProtocol($stateParams.patientId, $rootScope.protocols).then(function(response){
-          if($scope.patientStatus.role === loginConstants.role.acctservices){
-            $state.go('patientProtocolRcadmin', {'patientId': $stateParams.patientId});
-          }else{
-            $state.go('patientProtocol');
-          }
+      $rootScope.$broadcast('validateCaptcha');
+      console.log('captchaValid :: ', $scope.captchaValid);
+      
+      setTimeout(function(){
+        console.log('captchaValid :: ', $scope.captchaValid);
+        if($scope.protocolVerificationForm.$invalid || !$scope.captchaValid){
+          return false;
+        }
+        $scope.isVerificationModal =false;
+        var data = {
+          'password': $scope.password
+        };
+        UserService.validateCredentials(data).then(function(response){
+          patientService.editProtocol($stateParams.patientId, $rootScope.protocols).then(function(response){
+            if($scope.patientStatus.role === loginConstants.role.acctservices){
+              $state.go('patientProtocolRcadmin', {'patientId': $stateParams.patientId});
+            }else{
+              $state.go('patientProtocol');
+            }
+          }).catch(function(response){
+            notyService.showError(response);
+          });
         }).catch(function(response){
           notyService.showError(response);
         });
-      }).catch(function(response){
-        notyService.showError(response);
-      });
+      }, 250);
+      
       
 
 

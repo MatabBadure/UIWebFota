@@ -8,7 +8,7 @@ angular.module('hillromvestApp').directive('captcha', function (){
       valid: '='
     },
     controller:['$scope', function($scope){
-      $scope.$on('captchaBroadcast', function() {
+      $scope.$on('validateCaptcha', function() {
         console.log('BroadCasted...!');
         $scope.validate();
       });
@@ -30,10 +30,14 @@ angular.module('hillromvestApp').directive('captcha', function (){
       };
 
       $scope.validate = function(){
-        var captchaString1 = $scope.removeSpaces($scope.captchaInput);
-        var captchaString2 = $scope.removeSpaces($scope.captchaValue);
-        if(captchaString1 === captchaString2){
-          $scope.valid = true;
+        if($scope.captchaInput){
+          var captchaString1 = $scope.removeSpaces($scope.captchaInput);
+          var captchaString2 = $scope.removeSpaces($scope.captchaValue);
+          if(captchaString1 === captchaString2){
+            $scope.valid = true;
+          }else{
+            $scope.valid = false;
+          }
         }else{
           $scope.valid = false;
         }
