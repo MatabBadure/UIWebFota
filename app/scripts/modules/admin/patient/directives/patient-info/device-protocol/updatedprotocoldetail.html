@@ -112,24 +112,27 @@
         </div>
       </div>
     </div>
-    <div class="row lebel-indent margin-top col-md-16 margin-bottom15 ng-scope">
-      <label>
-		    <input type="checkbox" class="ng-pristine ng-untouched ng-valid" required> 
-		    <span class="ng-scope link-text">Accept Terms and Conditions</span> 
-		  </label>
-    </div>
-    <div class="row lebel-indent col-md-16 margin-bottom15 ng-scope dark_grey_text_color">
-		  <p>1. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim </p>
-		  <p>2. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim </p>
-		  <p>3. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim </p>
-    </div>
 
-    <div class="col-md-16 margin-top reset-padding">
-      <div class="">
-        <buton class="hillrom-btn btn-secondary float-right ng-scope" ng-click="openVerificationModal()">Authorize</buton>
-        <div class="clr"></div>
+    <form ng-submit="openVerificationModal()">
+      <div class="row lebel-indent margin-top col-md-16 margin-bottom15 ng-scope">
+        <label>
+  		    <input type="checkbox" class="ng-pristine ng-untouched ng-valid" required> 
+  		    <span class="ng-scope link-text">Accept Terms and Conditions</span> 
+  		  </label>
       </div>
-    </div>
+      <div class="row lebel-indent col-md-16 margin-bottom15 ng-scope dark_grey_text_color">
+  		  <p>1. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim </p>
+  		  <p>2. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim </p>
+  		  <p>3. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim </p>
+      </div>
+
+      <div class="col-md-16 margin-top reset-padding">
+        <div class="">
+          <input type="submit" class="hillrom-btn btn-secondary float-right ng-scope"  value="Authorize">
+          <div class="clr"></div>
+        </div>
+      </div>
+    </form>
     <div claass="clr"></div>
     </div>
   </div>
@@ -160,10 +163,12 @@
           <div class="col-md-16 margin-top reset-padding">
             <div class="col-md-5 dark_grey_text_color14 reset-padding">Captcha</div>
             <div class="col-md-11">
-              <input type="text" name="patientName" class="ng-pristine ng-untouched ng-isolate-scope ng-valid-minlength ng-valid-maxlength ng-valid ng-valid-required col-md-16">
+             <captcha valid="captchaValid"></captcha> RESULT: {{captchaValid}}
+            <!--  <br>
+              <input type="text" name="patientName" class="ng-pristine ng-untouched ng-isolate-scope ng-valid-minlength ng-valid-maxlength ng-valid ng-valid-required col-md-16"> -->
             </div>
           </div>
-          <div class="col-md-16 margin-top reset-padding">
+          <!-- <div class="col-md-16 margin-top reset-padding">
             <div class="col-md-5 dark_grey_text_color14"></div>
             <div class="col-md-11">
               <div class="col-md-16 dark_grey_text_color14 reset-padding">Type the characters you see in the picture above.</div>
@@ -171,7 +176,7 @@
                 <input type="text" name="captcha" class="ng-pristine ng-untouched ng-isolate-scope ng-valid-minlength ng-valid-maxlength ng-valid ng-valid-required col-md-16" ng-model="captcha">
               </div>
             </div>
-          </div>
+          </div> -->
           <div class="row modal--custom-btn">
             <input type="submit"class="hillrom-btn btn-submit float-right" value="Confirm and Generate">
           </div>

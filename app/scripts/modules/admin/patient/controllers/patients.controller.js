@@ -744,8 +744,8 @@ angular.module('hillromvestApp')
     };
 
     $scope.updateProtocol = function(){
-      
-      if($scope.protocolVerificationForm.$invalid){
+      console.log('captchaValid :: ', $scope.captchaValid);
+      if($scope.protocolVerificationForm.$invalid && !captchaValid){
         return false;
       }
       $scope.isVerificationModal =false;
@@ -765,6 +765,9 @@ angular.module('hillromvestApp')
       }).catch(function(response){
         notyService.showError(response);
       });
+      
+
+
       // if($scope.protocol.id){
       //   delete $scope.protocol.id;
       // }
