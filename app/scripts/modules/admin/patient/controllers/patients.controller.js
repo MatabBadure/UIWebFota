@@ -744,37 +744,53 @@ angular.module('hillromvestApp')
     };
 
     $scope.updateProtocol = function(){
-      $scope.submitted = true;
-      $scope.protocolUpdateModal =false;
-      if($scope.addProtocolForm.$invalid){
+      
+      if($scope.protocolVerificationForm.$invalid){
         return false;
       }
-      if($scope.protocol.id){
-        delete $scope.protocol.id;
-      }
-      if($scope.protocol.patient){
-        delete $scope.protocol.patient;
-      }
-      var data = $scope.protocol.protocol;
-      if($scope.protocol.type === 'Custom'){
-        angular.forEach(data, function(value, key){
-          value.treatmentsPerDay = $scope.protocol.treatmentsPerDay;
-          if(!value.treatmentLabel){
-            value.treatmentLabel = 'point'+(key+1);
+      $scope.isVerificationModal =false;
+      var data = {
+        'password': $scope.password
+      };
+      UserService.validateCredentials(data).then(function(response){
+        patientService.editProtocol($stateParams.patientId, $rootScope.protocols).then(function(response){
+          if($scope.patientStatus.role === loginConstants.role.acctservices){
+            $state.go('patientProtocolRcadmin', {'patientId': $stateParams.patientId});
+          }else{
+            $state.go('patientProtocol');
           }
+        }).catch(function(response){
+          notyService.showError(response);
         });
-      }else{
-        data[0].treatmentsPerDay = $scope.protocol.treatmentsPerDay;
-      }
-      patientService.editProtocol($stateParams.patientId, data).then(function(response){
-        if($scope.patientStatus.role === loginConstants.role.acctservices){
-          $state.go('patientProtocolRcadmin', {'patientId': $stateParams.patientId});
-        }else{
-          $state.go('patientProtocol');
-        }
       }).catch(function(response){
         notyService.showError(response);
       });
+      // if($scope.protocol.id){
+      //   delete $scope.protocol.id;
+      // }
+      // if($scope.protocol.patient){
+      //   delete $scope.protocol.patient;
+      // }
+      // var data = $scope.protocol.protocol;
+      // if($scope.protocol.type === 'Custom'){
+      //   angular.forEach(data, function(value, key){
+      //     value.treatmentsPerDay = $scope.protocol.treatmentsPerDay;
+      //     if(!value.treatmentLabel){
+      //       value.treatmentLabel = 'point'+(key+1);
+      //     }
+      //   });
+      // }else{
+      //   data[0].treatmentsPerDay = $scope.protocol.treatmentsPerDay;
+      // }
+      // patientService.editProtocol($stateParams.patientId, data).then(function(response){
+      //   if($scope.patientStatus.role === loginConstants.role.acctservices){
+      //     $state.go('patientProtocolRcadmin', {'patientId': $stateParams.patientId});
+      //   }else{
+      //     $state.go('patientProtocol');
+      //   }
+      // }).catch(function(response){
+      //   notyService.showError(response);
+      // });
     };
 
     $scope.getPatientById = function(patientid){
@@ -1012,6 +1028,9 @@ angular.module('hillromvestApp')
     };
 
     $scope.showPrtocolUpdateModal = function(){
+      if($scope.addProtocolForm.$invalid){
+        return false;
+      }
       $scope.submitted = true;
       $scope.isAuthorizeProtocolModal = true;
       // if($scope.addProtocolForm.$invalid){

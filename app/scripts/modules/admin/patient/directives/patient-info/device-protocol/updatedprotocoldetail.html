@@ -11,7 +11,6 @@
 </div>
 
 <div class="dashboard dashboard--content padding-bottom-ls ng-scope">
-  
   <div class="container dashboard__form">
     <div>
       <div class="col-md-16 reset-padding">
@@ -45,7 +44,6 @@
           </div>
           <div class="col-md-10 dashboard__form--input reset-padding">
             <input type="text" name="prescriberName" class="light_grey ng-pristine ng-untouched ng-isolate-scope ng-valid-minlength ng-valid-maxlength ng-valid ng-valid-required" ng-disabled="true" value="{{username}}">
-              
           </div>
         </div>
         <div class="col-md-7 reset-padding col-md-offset-2">
@@ -83,107 +81,104 @@
       		</div>
     		</div>
   		</div>
-		<div class="clr"></div>
-    <div class="admin-user">
-		  <div class="col-md-16 border-top protocol_list_container" ng-class="{'no_border' : !protocols}">
-  <div class="col-md-3">
-    <div class="col-md-16 protocol-list__treatment-day protocol-list no_border text-align-l" ng-repeat="protocol in protocols" ng-class="{'list-inactive':protocol.deleted, 'last' : $last}">
-      <span class="protocol-list--value"> {{protocol.type}} {{protocol.treatmentLabel}}</span>
+		  <div class="clr"></div>
+      <div class="admin-user">
+		    <div class="col-md-16 border-top protocol_list_container" ng-class="{'no_border' : !protocols}">
+          <div class="col-md-3">
+            <div class="col-md-16 protocol-list__treatment-day protocol-list no_border text-align-l" ng-repeat="protocol in protocols" ng-class="{'list-inactive':protocol.deleted, 'last' : $last}">
+              <span class="protocol-list--value"> {{protocol.type}} {{protocol.treatmentLabel}}</span>
+            </div>
+          </div>
+          <div class="col-md-2 treatments_per_day_count col-md-offset-3">
+            <span class="v_middle">{{protocols[0].treatmentsPerDay}}</span>
+          </div>
+          <div class="col-md-11 col-md-offset-2">
+            <div class="col-md-16 protocol-list no_border" ng-repeat="protocol in protocols" ng-class="{'list-inactive':protocol.deleted, 'last' : $last}">
+            <!-- <div class="col-md-3 protocol-list__treatment-day">
+              <span class="protocol-list--value"> {{protocol.treatmentsPerDay}}</span>
+            </div> -->
+            <div class="col-md-5 protocol-list__strt-date">
+              <span class="protocol-list--value"> {{protocol.minMinutesPerTreatment}}</span>      
+            </div>
+            <div class="col-md-5 protocol-list__end-date">
+              <span ng-if="protocol.type === 'Custom'" class="protocol-list--value"> {{protocol.minFrequency}}</span>
+              <span ng-if="protocol.type === 'Normal'" class="protocol-list--value"> {{protocol.minFrequency}}-{{protocol.maxFrequency}}</span>
+            </div>
+            <div class="col-md-5 protocol-list__end-date">
+              <span ng-if="protocol.type === 'Custom'" class="protocol-list--value"> {{protocol.minPressure}}</span>
+              <span ng-if="protocol.type === 'Normal'" class="protocol-list--value"> {{protocol.minPressure}}-{{protocol.maxPressure}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-  <div class="col-md-2 treatments_per_day_count col-md-offset-3">
-      <span class="v_middle">{{protocols[0].treatmentsPerDay}}</span>
-  </div>
-  <div class="col-md-11 col-md-offset-2">
-    <div class="col-md-16 protocol-list no_border" ng-repeat="protocol in protocols" ng-class="{'list-inactive':protocol.deleted, 'last' : $last}">
-      <!-- <div class="col-md-3 protocol-list__treatment-day">
-        <span class="protocol-list--value"> {{protocol.treatmentsPerDay}}</span>
-      </div> -->
-      <div class="col-md-5 protocol-list__strt-date">
-        <span class="protocol-list--value"> {{protocol.minMinutesPerTreatment}}</span>      
-      </div>
-      <div class="col-md-5 protocol-list__end-date">
-        <span ng-if="protocol.type === 'Custom'" class="protocol-list--value"> {{protocol.minFrequency}}</span>
-        <span ng-if="protocol.type === 'Normal'" class="protocol-list--value"> {{protocol.minFrequency}}-{{protocol.maxFrequency}}</span>
-      </div>
-      <div class="col-md-5 protocol-list__end-date">
-        <span ng-if="protocol.type === 'Custom'" class="protocol-list--value"> {{protocol.minPressure}}</span>
-        <span ng-if="protocol.type === 'Normal'" class="protocol-list--value"> {{protocol.minPressure}}-{{protocol.maxPressure}}</span>
-      </div>
+    <div class="row lebel-indent margin-top col-md-16 margin-bottom15 ng-scope">
+      <label>
+		    <input type="checkbox" class="ng-pristine ng-untouched ng-valid" required> 
+		    <span class="ng-scope link-text">Accept Terms and Conditions</span> 
+		  </label>
     </div>
-  </div>
+    <div class="row lebel-indent col-md-16 margin-bottom15 ng-scope dark_grey_text_color">
+		  <p>1. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim </p>
+		  <p>2. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim </p>
+		  <p>3. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim </p>
+    </div>
 
+    <div class="col-md-16 margin-top reset-padding">
+      <div class="">
+        <buton class="hillrom-btn btn-secondary float-right ng-scope" ng-click="openVerificationModal()">Authorize</buton>
+        <div class="clr"></div>
+      </div>
+    </div>
+    <div claass="clr"></div>
+    </div>
+  </div>
 </div>
-    </div>
-  		<div class="row lebel-indent margin-top col-md-16 margin-bottom15 ng-scope">
-    		<label>
-					<input type="checkbox" class="ng-pristine ng-untouched ng-valid"> 
-					<span class="ng-scope link-text">Accept Terms and Conditions</span> 
-				</label>
-			</div>
-			<div class="row lebel-indent col-md-16 margin-bottom15 ng-scope dark_grey_text_color">
-				<p>1. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim </p>
-				<p>2. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim </p>
-				<p>3. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim </p>
-  		</div>
 
-  		<div class="col-md-16 margin-top reset-padding">
-    		<div class="">
-      		<buton class="hillrom-btn btn-secondary float-right ng-scope" ng-click="openVerificationModal()">Authorize</buton>
-      		<div class="clr"></div>
-    		</div>
-  		</div>
-  		<div claass="clr"></div>
- 		</div>
-  </div>
-</div>
-
-<div ng-if="isVerificationModal" class="modal">
-
+<div ng-show="isVerificationModal" class="modal">
   <div class="modal__dialog">
     <div class="modal__content">
       <header class="modal__header">
-        <button type="button" class="modal__close" data-dismiss="modal" ng-click="$parent.protocolUpdateModal= false">×</button>
+        <button type="button" class="modal__close" data-dismiss="modal" ng-click="isVerificationModal= false">×</button>
          <p class="ng-scope">Login Verification</p>
       </header>
       <div class="modal__body">
-         <div class="modal--message dark_grey_text_color14 ng-scope">We need to verify that you are not a robot, but a human being!</div>
-         <div class="col-md-16 margin-top reset-padding">
+        <div class="modal--message dark_grey_text_color14 ng-scope">We need to verify that you are not a robot, but a human being!</div>
+        <form ng-submit="updateProtocol()" name="protocolVerificationForm">
+          <div class="col-md-16 margin-top reset-padding">
             <div class="col-md-5 dark_grey_text_color14 reset-padding">Email Address</div>
-             <div class="col-md-11">
-                 <input type="text" required="" ng-maxlength="50" ng-minlength="1" name="patientName" class="light_grey ng-pristine ng-untouched ng-isolate-scope ng-valid-minlength ng-valid-maxlength ng-valid ng-valid-required col-md-16">
-             </div>
-         </div>
+            <div class="col-md-11">
+              <input type="text" name="patientName" class="light_grey ng-pristine ng-untouched ng-isolate-scope ng-valid-minlength ng-valid-maxlength ng-valid ng-valid-required col-md-16" ng-model="userEmail" ng-disabled="true">
+            </div>
+          </div>
           <div class="col-md-16 margin-top reset-padding">
             <div class="col-md-5 dark_grey_text_color14 reset-padding">Password</div>
-             <div class="col-md-11">
-                 <input type="text" required="" ng-maxlength="150" ng-minlength="1" name="patientName" class="ng-pristine ng-untouched ng-isolate-scope ng-valid-minlength ng-valid-maxlength ng-valid ng-valid-required col-md-16">
-             </div>
-         </div>
+            <div class="col-md-11">
+              <input type="password" name="password" class="ng-pristine ng-untouched ng-isolate-scope ng-valid-minlength ng-valid-maxlength ng-valid ng-valid-required col-md-16" ng-model="password" required>
+            </div>
+          </div>
           <div class="col-md-16 margin-top reset-padding">
             <div class="col-md-5 dark_grey_text_color14 reset-padding">Captcha</div>
-             <div class="col-md-11">
-                 <input type="text" required="" ng-maxlength="50" ng-minlength="1" name="patientName" class="ng-pristine ng-untouched ng-isolate-scope ng-valid-minlength ng-valid-maxlength ng-valid ng-valid-required col-md-16">
-             </div>
-         </div>
-
-            <div class="col-md-16 margin-top reset-padding">
+            <div class="col-md-11">
+              <input type="text" name="patientName" class="ng-pristine ng-untouched ng-isolate-scope ng-valid-minlength ng-valid-maxlength ng-valid ng-valid-required col-md-16">
+            </div>
+          </div>
+          <div class="col-md-16 margin-top reset-padding">
             <div class="col-md-5 dark_grey_text_color14"></div>
-             <div class="col-md-11">
-                  <div class="col-md-16 dark_grey_text_color14 reset-padding">Type the characters you see in the picture above.</div>
-                 <div class="col-md-16 reset-padding">
-                    <input type="text" required="" ng-maxlength="50" ng-minlength="1" name="patientName" class="ng-pristine ng-untouched ng-isolate-scope ng-valid-minlength ng-valid-maxlength ng-valid ng-valid-required col-md-16">
-                 </div>
-             </div>
-         </div>
-
-         <div class="row modal--custom-btn">
-          <buton class="hillrom-btn btn-submit float-right" ng-click="updateProtocol()">Confirm and Generate</buton>
-         </div>
+            <div class="col-md-11">
+              <div class="col-md-16 dark_grey_text_color14 reset-padding">Type the characters you see in the picture above.</div>
+              <div class="col-md-16 reset-padding">
+                <input type="text" name="captcha" class="ng-pristine ng-untouched ng-isolate-scope ng-valid-minlength ng-valid-maxlength ng-valid ng-valid-required col-md-16" ng-model="captcha">
+              </div>
+            </div>
+          </div>
+          <div class="row modal--custom-btn">
+            <input type="submit"class="hillrom-btn btn-submit float-right" value="Confirm and Generate">
+          </div>
+        </form>
       </div>
       <footer class="modal__footer">
       </footer>
     </div>
   </div>
-
 </div>
