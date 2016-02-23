@@ -6,8 +6,8 @@
 
 'use strict';
 angular.module('hillromvestApp')
-.controller('loginAnalyticsController',['$scope', '$state', 'loginAnalyticsConstants', 'dateService',
-	function($scope, $state, loginAnalyticsConstants, dateService) {	
+.controller('loginAnalyticsController',['$scope', '$state', 'loginAnalyticsConstants', 'dateService', 'exportutilService',
+	function($scope, $state, loginAnalyticsConstants, dateService, exportutilService) {	
 		/*
 		* default legends and their accessibility
 		*/
@@ -93,32 +93,64 @@ angular.module('hillromvestApp')
 			Highcharts.chart('container', {				
 				chart:{
 					type: 'column',
-					zoomType: 'xy'
+					zoomType: 'xy',					
+                    backgroundColor:'#e3ecf7'
 				},
 		        title: {
-		            text: 'No of users logged in today'
+		            text: ''
 		        },		      	
-		      	xAxis:{
+		      	xAxis:{					
 					type: 'category',					
-					categories: $scope.categoryChartData.xAxis.categories,
-					crosshair: true
+					categories: $scope.categoryChartData.xAxis.categories//,
+					//crosshair: true
 					},
 				yAxis: {
+					gridLineColor: '#FF0000',
+		            gridLineWidth: 0,
+		            lineWidth:1,
 		            min: 0,
 		            title: {
 		                text: 'No. Of Logins'
 		            }
 		        },
-        	 	legend: {
-		            layout: 'horizontal',
-		            align: 'left',
-		            verticalAlign: 'top',
-		            borderWidth: 0
-		           // enabled: false
+        	 	legend: {		            
+		            align: 'center',
+			        verticalAlign: 'bottom',
+			        x: 0,
+			        y: 0
+		        },
+		        plotOptions: {
+		            series: {
+		                events: {
+		                    legendItemClick: function () {
+		                    		var self = this,
+		                        		allow = false;
+		                        
+		                        if(self.visible) {
+		                          $.each(self.chart.series, function(i, series) {
+		                            if(series !== self && series.visible) {
+		                            	allow = true;
+		                            }
+		                          });
+		                          return allow;
+		                        }
+		                    }
+		                }
+		            }
 		        },
 				tooltip: {
-					headerFormat: '<span style="font-size:14px">{point.key}</span><table>',				
-					pointFormat: '<tr><td style="color:{point.color};padding:0">{series.name}: </td>' +
+					crosshairs: [{		                
+		                dashStyle: 'solid',
+		                color: '#b4e6f6'
+		            },
+		            false],
+		            hideDelay: 5, //tooltip will get hidden in 5 mili seconds on mouse event
+		            borderWidth: 1,
+		            borderColor: '#4E95C4',
+		            backgroundColor: "#ffffff",//rgba(255,255,255,0)
+		            //shadow: false,
+					headerFormat: '<span style="font-size:15px; font-weight: bold; padding-bottom: 5px;">{point.key}</span><table>',				
+					pointFormat: '<tr style="font-size:10px; font-weight: bold;"><td style="color:{point.color};padding:0">{series.name}: </td>' +
 					'<td style="padding:0"><b>{point.y}</b></td></tr>',
 					footerFormat: '</table>',
 					shared: true,
@@ -134,12 +166,13 @@ angular.module('hillromvestApp')
 			Highcharts.chart('container', {				
 				chart:{
 					type: 'spline',
-					zoomType: 'xy'
+					zoomType: 'xy',					
+                    backgroundColor:'#e3ecf7'
 				},
 		        title: {
-		            text: 'No of users logged in today'
+		            text: ''
 		        },		      	
-		      	xAxis:{
+		      	xAxis:{		      		
 					type: 'datetime',
 					crosshair: true,					
 		            title: {
@@ -157,17 +190,38 @@ angular.module('hillromvestApp')
 				},
 
 				yAxis: {
+					gridLineColor: '#FF0000',
+		            gridLineWidth: 0,
+		            lineWidth:1,
 		            min: 0,
 		            title: {
 		                text: 'No. Of Logins'
 		            }
 		        },
-        	 	legend: {
-		            layout: 'horizontal',
-		            align: 'left',
-		            verticalAlign: 'top',
-		            borderWidth: 0
-		            //enabled: false
+        	 	legend: {		            
+					align: 'center',
+					verticalAlign: 'bottom',
+					x: 0,
+					y: 0
+		        },
+		        plotOptions: {
+		            series: {
+		                events: {
+		                    legendItemClick: function () {
+		                    		var self = this,
+		                        		allow = false;
+		                        
+		                        if(self.visible) {
+		                          $.each(self.chart.series, function(i, series) {
+		                            if(series !== self && series.visible) {
+		                            	allow = true;
+		                            }
+		                          });
+		                          return allow;
+		                        }
+		                    }
+		                }
+		            }
 		        },
 				tooltip: {
 					headerFormat: '<span style="font-size:14px">{point.key}</span><table>',				
@@ -215,92 +269,7 @@ angular.module('hillromvestApp')
 		};
 
 		$scope.downloadGraphAsPdf = function(){
-			var pdf = new jsPDF('p', 'pt', 'a4', true), specialElementHandlers = {
-		       '#bypassme': function(element, renderer){
-		        return true;
-      		}};
-			var pageHeight = pdf.internal.pageSize.height;
-			var pageWidth = pdf.internal.pageSize.width;
-			                  
-			var margins = {
-				top: 70,
-				bottom: 60,
-				left: 15,
-				width: 575,
-				titleTop:40,
-				tCellWidth:140,
-				tCapWidth:280,
-				t2TabLeft:(pageWidth/2)+5
-			};
-			var g_pdfMetaData = {
-		            rTitle: 'HillRom'
-		            ,rTitle1: 'VisiView™ Health Portal'		            
-	          }
-		     
-			pdf.setFont("helvetica");
-			pdf.setFontType("bold");   
-			pdf.setFontSize(6);
-			pdf.setTextColor(0,0,0);
-			pdf.text(margins.left,   margins.titleTop-15, dateService.getDateFromTimeStamp(new Date().getTime(), patientDashboard.dateFormat, "/"));
-
-			pdf.setFont("helvetica");   
-			pdf.setFontType("bold");
-			pdf.setFontSize(6);
-			pdf.setTextColor(0,0,0);
-			pdf.text(margins.width-305,   margins.titleTop-15, "Hillrom | Overview");
-
-			pdf.setFont("helvetica");  
-			pdf.setFontType("bold"); 
-			pdf.setFontSize(11);
-			pdf.setTextColor(124,163,220);
-			pdf.text(margins.width-30, margins.titleTop,g_pdfMetaData.rTitle);
-
-			pdf.setFont("helvetica");   
-			pdf.setFontType("bold");      
-			pdf.setFontSize(7);
-			pdf.setTextColor(114, 111, 111);
-			pdf.text(margins.width-70,   margins.titleTop+10, g_pdfMetaData.rTitle1);
-
-			pdf.setDrawColor(0);
-			pdf.setFillColor(114, 111, 111);
-			pdf.rect(margins.left, margins.titleTop+13, margins.width-5, .5, 'F'); 
-
-			pdf.setFont("helvetica"); 
-			pdf.setFontType("normal");        
-			pdf.setFontSize(6);
-			pdf.setTextColor(0, 0, 0);
-			pdf.text(margins.left,   margins.titleTop+30, "Report Generation Date ");
-
-			pdf.setFont("helvetica"); 
-			pdf.setFontType("normal");        
-			pdf.setFontSize(6);
-			pdf.setTextColor(128, 179, 227);
-			pdf.text(margins.left+69,   margins.titleTop+30, dateService.getDateFromTimeStamp(new Date().getTime(),patientDashboard.dateFormat,'/'));
-
-			pdf.setFont("helvetica"); 
-			pdf.setFontType("normal");        
-			pdf.setFontSize(6);
-			pdf.setTextColor(0, 0, 0);
-			pdf.text(margins.t2TabLeft,  margins.titleTop+30, "Date Range Of Report ");
-
-			pdf.setFont("helvetica"); 
-			pdf.setFontType("normal");        
-			pdf.setFontSize(6);
-			pdf.setTextColor(128, 179, 227);
-			pdf.text(margins.t2TabLeft+65,  margins.titleTop+30, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/') + " - "+dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/'));
-
-			pdf.cellInitialize();
-
-      		var canvas = document.getElementById('loginAnalyticsCanvas');               
-	        var ctx = canvas.getContext('2d');  
-	        var htmlString =  $("#container").find("svg").parent().html().trim().replace(/xmlns=\"http:\/\/www\.w3\.org\/2000\/svg\"/, '');          
-	        canvg(canvas, htmlString);
-	        var img = $("#loginAnalyticsCanvas")[0].toDataURL('image/png', 1.0);
-	        pdf.addImage(img, 'png', 10, 100, 540, 170);
-	        setTimeout(function(){     
-		        pdf.save('VisiView™.pdf'); 
-		      },1000);  
-      		
+			exportutilService.exportLoginAnalyticsAsPDF();			      		
 		};
 
 		function isChrome(){

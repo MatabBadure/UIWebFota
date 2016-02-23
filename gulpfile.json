@@ -150,7 +150,8 @@
             "app/scripts/components/util/addressUtil.service.js",
             "app/scripts/modules/common/console/loginanalytics/controllers/loginanalytics.controller.js",
             "app/scripts/modules/common/console/surveyreport/controllers/surveyreport.controller.js",
-            "app/scripts/modules/patient/survey/controllers/patientsurvey.controller.js"
+            "app/scripts/modules/patient/survey/controllers/patientsurvey.controller.js",
+            "app/scripts/components/util/exportutil.service.js"
 
         ],
         "scripts_min_path":[
@@ -288,7 +289,8 @@
             "app/scripts/components/util/addressUtil.service.min.js",
             "app/scripts/modules/common/console/loginanalytics/controllers/loginanalytics.controller.min.js",
             "app/scripts/modules/common/console/surveyreport/controllers/surveyreport.controller.min.js",
-            "app/scripts/modules/patient/survey/controllers/patientsurvey.controller.min.js"
+            "app/scripts/modules/patient/survey/controllers/patientsurvey.controller.min.js",
+            "app/scripts/components/util/exportutil.service.min.js"
         ],
         "clean": [
             "app/build/",

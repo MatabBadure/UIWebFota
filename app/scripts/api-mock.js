@@ -861,10 +861,10 @@ var loginAnalyticsData= {
         "series": [{
             "name": "No. of logins",
             "data":[
-                {"y": 10, "color": "#ffa500"},
-                {"y": 20, "color": "#00ff9f"},
-                {"y": 15, "color": "#0038ff"},
-                {"y": 22, "color": "#b000ff"}
+                {"y": 10, "color": "#ff9829"},
+                {"y": 20, "color": "#35978f"},
+                {"y": 15, "color": "#4d95c4"},
+                {"y": 22, "color": "#8b6baf"}
             ]
         }] 
     },
@@ -877,7 +877,7 @@ var loginAnalyticsData= {
         "series": [
             {
             "name": "Patient",
-            "color": "#ffa500",
+            "color": "#ff9829",
             "data":[
                 {"y": 10},{"y": 10},{"y": 10},{"y": 10},
                 {"y": 20},{"y": 10},{"y": 10}
@@ -885,7 +885,7 @@ var loginAnalyticsData= {
             },
             {
             "name": "HCP",
-            "color": "#00ff9f",
+            "color": "#35978f",
             "data":[
                 {"y": 30},{"y": 20},{"y": 10},{"y": 15},
                 {"y": 20},{"y": 10},{"y": 10}
@@ -893,7 +893,7 @@ var loginAnalyticsData= {
             },
             {
             "name": "Clinic Admin",
-            "color": "#0038ff",
+            "color": "#4d95c4",
             "data":[
                 {"y": 10},{"y": 10},{"y": 10},{"y": 10},
                 {"y": 20},{"y": 10},{"y": 10}
@@ -901,7 +901,7 @@ var loginAnalyticsData= {
             },
             {
             "name": "Caregiver",
-            "color": "#b000ff",
+            "color": "#8b6baf",
             "data":[
                 {"y": 10},{"y": 10},{"y": 10},{"y": 10},
                 {"y": 20},{"y": 10},{"y": 10}
@@ -918,28 +918,28 @@ var loginAnalyticsData= {
         "series": [
             {
             "name": "Patient",
-            "color": "#ffa500",
+            "color": "#ff9829",
             "data":[
                 {"y": 10},{"y": 10},{"y": 10},{"y": 10}
                 ]
             },
             {
             "name": "HCP",
-            "color": "#00ff9f",
+            "color": "#35978f",
             "data":[
                 {"y": 30},{"y": 20},{"y": 10},{"y": 15}
                 ]
             },
             {
             "name": "Clinic Admin",
-            "color": "#0038ff",
+            "color": "#4d95c4",
             "data":[
                 {"y": 10},{"y": 10},{"y": 10},{"y": 10}
                 ]
             },
             {
             "name": "Caregiver",
-            "color": "#b000ff",
+            "color": "#8b6baf",
             "data":[
                 {"y": 10},{"y": 10},{"y": 10},{"y": 10}
                 ]
@@ -956,7 +956,7 @@ var loginAnalyticsData= {
         "series": [
             {
             "name": "Patient",
-            "color": "#ffa500",
+            "color": "#ff9829",
             "data":[
                 {"y": 10},{"y": 10},{"y": 10},{"y": 10},
                 {"y": 20},{"y": 10},{"y": 10},{"y": 10},
@@ -965,7 +965,7 @@ var loginAnalyticsData= {
             },
             {
             "name": "HCP",
-            "color": "#00ff9f",
+            "color": "#35978f",
             "data":[
                 {"y": 30},{"y": 20},{"y": 10},{"y": 15},
                 {"y": 20},{"y": 10},{"y": 10},{"y": 10},
@@ -974,7 +974,7 @@ var loginAnalyticsData= {
             },
             {
             "name": "Clinic Admin",
-            "color": "#0038ff",
+            "color": "#4d95c4",
             "data":[
                 {"y": 10},{"y": 10},{"y": 10},{"y": 10},
                 {"y": 20},{"y": 10},{"y": 10},{"y": 10},
@@ -983,7 +983,7 @@ var loginAnalyticsData= {
             },
             {
             "name": "Caregiver",
-            "color": "#b000ff",
+            "color": "#8b6baf",
             "data":[
                 {"y": 10},{"y": 10},{"y": 10},{"y": 10},
                 {"y": 20},{"y": 10},{"y": 10},{"y": 10},
@@ -1000,7 +1000,7 @@ var loginAnalyticsData= {
         "series": [
             {
             "name": "Patient",
-            "color": "#ffa500",
+            "color": "#ff9829",
             "data":[
                 {"x": "11/13/2015 10:57:35","y": 13},
                 {"x": "11/14/2015 10:57:35","y": 17},
@@ -1036,7 +1036,7 @@ var loginAnalyticsData= {
             },
             {
             "name": "HCP",
-            "color": "#00ff9f",
+            "color": "#35978f",
             "data":[
                 {"x": "11/13/2015 10:57:35","y": 10},
                 {"x": "11/14/2015 10:57:35","y": 20},
@@ -1072,7 +1072,7 @@ var loginAnalyticsData= {
             },
             {
             "name": "Clinic Admin",
-            "color": "#0038ff",
+            "color": "#4d95c4",
             "data":[
                 {"x": "11/13/2015 10:57:35","y": 10},
                 {"x": "11/14/2015 10:57:35","y": 10},
@@ -1108,7 +1108,7 @@ var loginAnalyticsData= {
             },
             {
             "name": "Caregiver",
-            "color": "#b000ff",
+            "color": "#8b6baf",
             "data":[
                 {"x": "11/13/2015 10:57:35","y": 10},
                 {"x": "11/14/2015 10:57:35","y": 10},
