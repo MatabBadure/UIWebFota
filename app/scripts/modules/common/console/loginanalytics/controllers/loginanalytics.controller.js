@@ -93,8 +93,8 @@ angular.module('hillromvestApp')
 			Highcharts.chart('container', {				
 				chart:{
 					type: 'column',
-					zoomType: 'xy',					
-                    backgroundColor:'#e3ecf7'
+					zoomType: 'xy',
+					backgroundColor: "#e6f1f4"
 				},
 		        title: {
 		            text: ''
@@ -248,7 +248,7 @@ angular.module('hillromvestApp')
 			$scope.drawCategoryChart();
 		};
 
-		$scope.monthView = function(){
+		$scope.monthView = function(){			
 			$scope.categoryChartData = loginAnalyticsData.monthData;
 			$scope.drawCategoryChart();				
 		};
