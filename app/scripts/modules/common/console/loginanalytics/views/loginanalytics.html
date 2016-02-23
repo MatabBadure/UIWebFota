@@ -30,7 +30,7 @@
       <div id="container" ng-init="dayView()">Placeholder for chart</div>
        <div class="col-md-16 col-sm-7 left_header_barchart padding0">
             <div class="row">
-              <ul class="nav nav-pills">
+              <ul class="nav nav-pills graph_color">
             <!--   	<li>
 	          		<span>
 				        <label class="rounded_all">
@@ -39,39 +39,39 @@
 				        </label>
 			      	</span>
       			</li> -->
-             	<li class="col-md-2 col-md-push-3">
+             	<li class="col-md-1 col-md-push-5 margin-right13 col-md-offset-1">
              		<span class="patient_line" ng-class="{grey_color: !legends.isPatient}">
 				        <label class="rounded_patient">
-				          <input type="checkbox" ng-model="legends.isPatient" ng-value="legends.isPatient" value="Normal" ng-disabled="disableLegends.patient" ng-click="changeLegends('patient')">
+				          <input type="checkbox" ng-model="legends.isPatient" ng-value="legends.isPatient" value="Normal" ng-disabled="disableLegends.patient" ng-click="changeLegends('patient')" class="hidden">
 				         
 				        </label>
 				         <span class="radio-box-text legend_text" translate="console.analytics.legends.patient"></span>
 			      	</span>
 		      	</li>
-		      	<li class="col-md-2 col-md-push-3">
+		      	<li class="col-md-1 col-md-push-5 col-md-offset-1">
              		<span class="hcp_line" ng-class="{grey_color: !legends.isHCP}">
 				        <label class="rounded_hcp">
-				          <input type="checkbox" ng-model="legends.isHCP" ng-value="legends.isHCP" value="Normal" ng-disabled="disableLegends.hcp" ng-click="changeLegends('hcp')">
+				          <input type="checkbox" ng-model="legends.isHCP" ng-value="legends.isHCP" value="Normal" ng-disabled="disableLegends.hcp" ng-click="changeLegends('hcp')" class="hidden">
 				  
 				        </label>
 				                <span class="radio-box-text legend_text" translate="console.analytics.legends.hcp"></span>
 			      	</span>
 		      	</li>
-		      	<li class="col-md-2 col-md-push-3">
+		      	<li class="col-md-2 col-md-push-5 col-md-offset-1">
              		
-             		<span ng-class="{grey_color: !legends.isClinicAdmin}">
+             		<span ng-class="{grey_color: !legends.isClinicAdmin}" style="background: transparent !important">
              		<span class="clinic_line"></span>
 				        <label class="rounded_clinic">
-				          <input type="checkbox" ng-model="legends.isClinicAdmin" ng-value="legends.isClinicAdmin" value="Normal" ng-disabled="disableLegends.clinicadmin" ng-click="changeLegends('clinicadmin')">
+				          <input type="checkbox" ng-model="legends.isClinicAdmin" ng-value="legends.isClinicAdmin" value="Normal" ng-disabled="disableLegends.clinicadmin" ng-click="changeLegends('clinicadmin')" class="hidden">
 				          
 				        </label>
 				        <span class="radio-box-text clinic_text" translate="console.analytics.legends.clinicadmin"></span>
 			      	</span>
 		      	</li>
-		      	<li class="col-md-3 col-md-push-3" ng-click="changeLegends('caregiver')">
+		      	<li class="col-md-3 margin-left30 col-md-push-5" ng-click="changeLegends('caregiver')">
              		<span class="caregiver_line" ng-class="{grey_color: !legends.isCaregiver}">
 				        <label class="rounded_caregiver" >
-				          <input type="checkbox" ng-model="legends.isCaregiver" ng-value="legends.isCaregiver" value="Normal" ng-disabled="disableLegends.caregiver">
+				          <input type="checkbox" ng-model="legends.isCaregiver" ng-value="legends.isCaregiver" value="Normal" ng-disabled="disableLegends.caregiver" class="hidden">
 				          
 				        </label>
 				        <span class="radio-box-text legend_text" translate="console.analytics.legends.caregiver"></span>

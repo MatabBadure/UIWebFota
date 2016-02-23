@@ -93,7 +93,8 @@ angular.module('hillromvestApp')
 			Highcharts.chart('container', {				
 				chart:{
 					type: 'column',
-					zoomType: 'xy'
+					zoomType: 'xy',
+					backgroundColor: "#e6f1f4"
 				},
 		        title: {
 		            text: 'No of users logged in today'
