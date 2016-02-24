@@ -762,6 +762,7 @@ angular.module('hillromvestApp')
             }
           });
           patientService.editProtocol($stateParams.patientId, $rootScope.protocols).then(function(response){
+            notyService.showMessage(response.data.message, 'success');
             if($scope.patientStatus.role === loginConstants.role.acctservices){
               $state.go('patientProtocolRcadmin', {'patientId': $stateParams.patientId});
             }else{
@@ -1011,10 +1012,10 @@ angular.module('hillromvestApp')
     };
 
     $scope.showPrtocolUpdateModal = function(){
+      $scope.submitted = true;
       if($scope.addProtocolForm.$invalid){
         return false;
       }
-      $scope.submitted = true;
       if($scope.protocol.id){
         delete $scope.protocol.id;
       }
@@ -1093,10 +1094,12 @@ angular.module('hillromvestApp')
     };
 
     $scope.openVerificationModal = function(){
+
       $scope.isAuthorizeFormSubmited = true;
       if($scope.authorizeForm.$invalid){
         return false;
       }
+      $rootScope.$broadcast('initializeCaptcha');
       $scope.isVerificationModal = true;
     };
 
