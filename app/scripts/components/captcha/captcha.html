@@ -1,13 +1,13 @@
-<table>
-  <tr>
+<table class="col-md-16">
+  <tr height="40">
     <td>
-      {{captchaValue}}
-      <input type="button" value="Refresh" ng-click="init()" /> 
+      <span class="captcha">{{captchaValue}}</span>
+      <span class="reload-icon" ng-click="init()">&#10226;</span>
     </td>
   </tr>
   <tr>
     <td>
-      <input type="text" ng-model="captchaInput"/>
+      <input type="text" class="col-md-16" ng-model="captchaInput"/>
       <span ng-if="!valid && submited">Please enter captcha</span>
     </td>
   </tr>
