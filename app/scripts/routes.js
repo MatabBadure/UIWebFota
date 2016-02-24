@@ -2463,6 +2463,33 @@ angular.module('hillromvestApp')
                     ]
                 }
             })
+
+            .state('updatedProtocolDetailRcadmin', {
+                parent: 'patientProtocolRcadmin',
+                url: '/{protocolId}/protocoldetail',
+                data: {
+                    roles: ['ACCT_SERVICES'],
+                    pageTitle: 'patient.title'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/rcadmin/patient/view/rcadminProtocolUpdate.html',
+                        controller: 'patientsController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+
             .state('contactus', {
                 parent: 'account',
                 url: '/contactus',
