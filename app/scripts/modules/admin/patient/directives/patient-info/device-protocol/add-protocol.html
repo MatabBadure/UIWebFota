@@ -221,22 +221,5 @@
   </form>
 </div>
 
-<div ng-if="protocolUpdateModal" class="modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true">
-  <div class="modal__dialog">
-    <div class="modal__content">
-      <header class="modal__header">
-        <button type="button" class="modal__close" data-dismiss="modal" ng-click="$parent.protocolUpdateModal= false">&times;</button>
-         <p translate="patient.update-protocol.warning"></p>
-      </header>
-      <div class="modal__body">
-         <div class="modal--message" translate="patient.update-protocol.message"></div>
-         <div class="row modal--custom-btn">
-          <buton class="hillrom-btn btn-submit float-right" ng-click="updateProtocol()">Yes</buton>
-          <buton class="hillrom-btn btn-secondary btn-submit float-right" data-dismiss="modal" ng-click="$parent.protocolUpdateModal= false">No</buton>
-         </div>
-      </div>
-      <footer class="modal__footer">
-      </footer>
-    </div>
-  </div>
-</div>
+<alert-modal ng-if="isAuthorizeProtocolModal" modall="showModal" onyes="openProtocolDetailPage()" onno="$parent.isAuthorizeProtocolModal = false; $parent.searchItem= ''" header="{{'patient.authorizeProtocol.warning' | translate}}" message="{{'patient.authorizeProtocol.message' | translate}}" buttonlabel="{{'patient.authorizeProtocol.buttonLabel' | translate}}">
+</alert-modal>

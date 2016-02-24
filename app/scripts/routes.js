@@ -2437,6 +2437,59 @@ angular.module('hillromvestApp')
                     ]
                 }
             })
+
+            .state('updatedProtocolDetail', {
+                parent: 'patientProtocol',
+                url: '/{protocolId}/protocoldetail',
+                data: {
+                    roles: ['ADMIN'],
+                    pageTitle: 'patient.title'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/admin/patient/directives/patient-info/device-protocol/updatedprotocoldetail.html',
+                        controller: 'patientsController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+
+            .state('updatedProtocolDetailRcadmin', {
+                parent: 'patientProtocolRcadmin',
+                url: '/{protocolId}/protocoldetail',
+                data: {
+                    roles: ['ACCT_SERVICES'],
+                    pageTitle: 'patient.title'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/rcadmin/patient/view/rcadminProtocolUpdate.html',
+                        controller: 'patientsController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+
             .state('contactus', {
                 parent: 'account',
                 url: '/contactus',
