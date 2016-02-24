@@ -213,7 +213,7 @@
     "authorizeProtocol":{
       "buttonLabel":"Authorize Protocol",
       "warning":"Authorize Protocol",
-      "message":"You have made changes to thhe protocol. Please follow the steps to authorize the changes."
+      "message":"You have made changes to the protocol. Please follow the steps to authorize the changes."
     },
     "profile": {
       "tabs": {
