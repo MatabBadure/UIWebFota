@@ -2,12 +2,13 @@
   <tr>
     <td>
       {{captchaValue}}
-      <input type="button" id="refresh" value="Refresh" ng-click="init()" /> 
+      <input type="button" value="Refresh" ng-click="init()" /> 
     </td>
   </tr>
   <tr>
     <td>
       <input type="text" ng-model="captchaInput"/>
+      <span ng-if="!valid && submited">Please enter captcha</span>
     </td>
   </tr>
 </table>
