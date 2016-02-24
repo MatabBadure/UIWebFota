@@ -1666,6 +1666,7 @@ angular.module('hillromvestApp')
         patientService.getCaregiverById(StorageService.get('logged').patientID, caregiverId).then(function(response){
           $scope.associateCareGiver = response.data.caregiver.userPatientAssocPK.user;
           $scope.associateCareGiver.relationship = response.data.caregiver.relationshipLabel;
+          $scope.associateCareGiver.zipcode = commonsUserService.formatZipcode($scope.associateCareGiver.zipcode);
         });
     };
 
