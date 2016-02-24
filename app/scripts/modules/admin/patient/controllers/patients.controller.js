@@ -751,7 +751,6 @@ angular.module('hillromvestApp')
         if($scope.protocolVerificationForm.$invalid || !$scope.captchaValid){
           return false;
         }
-        $scope.isVerificationModal = false;
         var data = {
           'password': $scope.password
         };
@@ -762,6 +761,7 @@ angular.module('hillromvestApp')
             }
           });
           patientService.editProtocol($stateParams.patientId, $rootScope.protocols).then(function(response){
+            $scope.isVerificationModal = false;
             notyService.showMessage(response.data.message, 'success');
             if($scope.patientStatus.role === loginConstants.role.acctservices){
               $state.go('patientProtocolRcadmin', {'patientId': $stateParams.patientId});
@@ -1100,6 +1100,7 @@ angular.module('hillromvestApp')
         return false;
       }
       $rootScope.$broadcast('initializeCaptcha');
+      $scope.password = '';
       $scope.isVerificationModal = true;
     };
 
