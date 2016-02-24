@@ -11,6 +11,7 @@ angular.module('hillromvestApp')
 		/*
 		* default legends and their accessibility
 		*/
+		$scope.dayChart = true;
 		$scope.defaultLegends = function(){
 			$scope.legends = {};			
 			$scope.legends.isAll = true;
@@ -238,27 +239,32 @@ angular.module('hillromvestApp')
 		};
 
 		$scope.dayView = function(){ 
+			$scope.dayChart = true;
 			$scope.categoryChartData = loginAnalyticsData.dayData;	
 			$scope.drawCategoryChart();	
 			
 		};
 
 		$scope.weekView = function(){
+			$scope.dayChart = false;
 			$scope.categoryChartData = loginAnalyticsData.weekData;
 			$scope.drawCategoryChart();
 		};
 
-		$scope.monthView = function(){			
+		$scope.monthView = function(){	
+			$scope.dayChart = false;		
 			$scope.categoryChartData = loginAnalyticsData.monthData;
 			$scope.drawCategoryChart();				
 		};
 
 		$scope.yearView = function(){
+			$scope.dayChart = false;
 			$scope.categoryChartData = loginAnalyticsData.yearData;
 			$scope.drawCategoryChart();
 		};
 
 		$scope.customDateRangeView = function(){
+			$scope.dayChart = false;
 			$scope.categoryChartData = loginAnalyticsData.customDateRangeData;
 			angular.forEach($scope.categoryChartData.series, function(series, key) {
 			  angular.forEach(series.data, function(data, index) {
