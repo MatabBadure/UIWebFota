@@ -159,7 +159,7 @@
             <div class="col-md-11">
               <input type="password" name="password" class="ng-pristine ng-untouched ng-isolate-scope ng-valid-minlength ng-valid-maxlength ng-valid ng-valid-required col-md-16" ng-model="password" required>
               <div ng-if="protocolVerificationForm.$invalid">
-                <span ng-if="protocolVerificationForm.password.$error.required && isProtocolSubmited"> Please enter the password for your Visi-View account.</span>
+                <span class="has-error" ng-if="protocolVerificationForm.password.$error.required && isProtocolSubmited"> Please enter the password for your Visi-View account.</span>
               </div>
             </div>
           </div>
