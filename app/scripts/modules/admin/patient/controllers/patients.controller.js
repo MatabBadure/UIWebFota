@@ -180,7 +180,7 @@ angular.module('hillromvestApp')
         $scope.initpatientDemographic();
       }else if(currentRoute === 'patientEditProtocol' || currentRoute === 'patientEditProtocolRcadmin'){
         $scope.initpatientEditProtocol();
-      }else if(currentRoute === 'updatedProtocolDetail'){
+      }else if(currentRoute === 'updatedProtocolDetail' || currentRoute === 'updatedProtocolDetailRcadmin'){
         $scope.initUpdatedProtocolDetail();
       }
     };
