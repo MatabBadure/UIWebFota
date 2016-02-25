@@ -514,16 +514,16 @@
 .note_delete_edit{
 	margin-right: 5px;
 }
-.patient_line, .rounded_patient {
+.patient_line, .rounded_patient, .rect_patient {
 	background-color: #ff9829;
 }
-.hcp_line, .rounded_hcp{
+.hcp_line, .rounded_hcp, .rect_hcp{
 	background-color: #35978f;
 }
-.rounded_clinic, .clinic_line{
+.rounded_clinic, .clinic_line, .rect_clinic{
 	background-color: #4d95c4;
 }
-.caregiver_line{
+.caregiver_line, .rect_caregiver{
 	background-color: #8b6baf;
 }
 .patient_line, .hcp_line, .clinic_line, .caregiver_line{
@@ -562,13 +562,13 @@
 	top: -1px !important;
 	left: 17px !important;
 }
-.rounded_clinic, .rounded_hcp, .rounded_caregiver{
+.rounded_clinic, .rounded_hcp, .rounded_caregiver, .rect_patient, .rect_caregiver, .rect_clinic, .rect_hcp{
 	border-radius:0 !important;
 }
 .rounded_hcp{
     transform: rotate(45deg);
 }
-.rounded_patient, .rounded_hcp, .rounded_clinic, .rounded_caregiver {
+.rounded_patient, .rounded_hcp, .rounded_clinic, .rounded_caregiver, .rect_patient, .rect_caregiver, .rect_clinic, .rect_hcp {
     display: block;
     width: 9px;
     height: 11px;
@@ -600,6 +600,7 @@
 .margin-left30{
 	margin-left: -30px!important;
 }
+
 .dashboard__manage-view--pagination{
 	&.pagination_notes{
 		margin: 0px 5px 15px !important;
