@@ -11,8 +11,10 @@ angular.module('hillromvestApp')
 		/*
 		* default legends and their accessibility
 		*/
-		$scope.dayChart = true;
+		
 		$scope.defaultLegends = function(){
+			$scope.dayChart = true;
+			$scope.customDateRange = false;
 			$scope.legends = {};			
 			$scope.legends.isAll = true;
 			$scope.legends.isPatient = true;
@@ -31,6 +33,12 @@ angular.module('hillromvestApp')
 			$scope.timerange.month = false;
 			$scope.timerange.year = false;
 			$scope.timerange.customTime = false;
+			$scope.durationview = {};
+			$scope.durationview.day = true;
+			$scope.durationview.week = false;
+			$scope.durationview.month = false;
+			$scope.durationview.year = false;
+			$scope.durationview.custom = false;
 		};
 		/* Innitiates the required variables and calls the required APIs for login analytics page*
 		* By default 'All' is selected and so the all other legends as well.
@@ -89,9 +97,9 @@ angular.module('hillromvestApp')
 
 			}		
 		};
-
-		$scope.drawCategoryChart = function(){
-			Highcharts.chart('container', {				
+		
+		$scope.drawCategoryChartForDay = function(){
+			Highcharts.chart('containerDay', {				
 				chart:{
 					type: 'column',
 					zoomType: 'xy',
@@ -102,8 +110,76 @@ angular.module('hillromvestApp')
 		        },		      	
 		      	xAxis:{					
 					type: 'category',					
-					categories: $scope.categoryChartData.xAxis.categories//,
-					//crosshair: true
+					categories: $scope.categoryChartData.xAxis.categories
+					},
+				yAxis: {
+					gridLineColor: '#FF0000',
+		            gridLineWidth: 0,
+		            lineWidth:1,
+		            min: 0,
+		            title: {
+		                text: 'No. Of Logins'
+		            }
+		        },
+        	 	legend: {		            		           
+			        enabled: false
+		        },
+		        plotOptions: {
+		            series: {
+		                events: {
+		                    legendItemClick: function () {
+		                    		var self = this,
+		                        		allow = false;
+		                        
+		                        if(self.visible) {
+		                          $.each(self.chart.series, function(i, series) {
+		                            if(series !== self && series.visible) {
+		                            	allow = true;
+		                            }
+		                          });
+		                          return allow;
+		                        }
+		                    }
+		                }
+		            }
+		        },
+				tooltip: {
+					crosshairs: [{		                
+		                dashStyle: 'solid',
+		                color: '#b4e6f6'
+		            },
+		            false],
+		            hideDelay: 5, //tooltip will get hidden in 5 mili seconds on mouse event
+		            borderWidth: 1,
+		            borderColor: '#4E95C4',
+		            backgroundColor: "#ffffff",//rgba(255,255,255,0)
+		            //shadow: false,
+					headerFormat: '<span style="font-size:15px; font-weight: bold; padding-bottom: 5px;">{point.key}</span><table>',				
+					pointFormat: '<tr style="font-size:10px; font-weight: bold;"><td style="color:{point.color};padding:0">{series.name}: </td>' +
+					'<td style="padding:0"><b>{point.y}</b></td></tr>',
+					footerFormat: '</table>',
+					shared: true,
+					useHTML: true
+				},
+				series: $scope.categoryChartData.series,
+				loading: true,
+				size: {}
+		    });//.setSize(1140, 400);
+		};
+
+		$scope.drawCategoryChartForNonDay = function(){
+			var chart = Highcharts.chart('containerNonDay', {				
+				chart:{
+					type: 'column',
+					zoomType: 'xy',
+					backgroundColor: "#e6f1f4"
+				},
+		        title: {
+		            text: ''
+		        },		      	
+		      	xAxis:{					
+					type: 'category',					
+					categories: $scope.categoryChartData.xAxis.categories
 					},
 				yAxis: {
 					gridLineColor: '#FF0000',
@@ -158,13 +234,13 @@ angular.module('hillromvestApp')
 					useHTML: true
 				},
 				series: $scope.categoryChartData.series,
-				loading: false,
+				loading: true,
 				size: {}
-		    });
-		};
+		    });//.setSize(1140, 400);
+		};		
 
-		$scope.drawDateRangeChart = function(){
-			Highcharts.chart('container', {				
+		$scope.drawDateRangeChartForNonDay = function(){
+			Highcharts.chart('containerCustom', {				
 				chart:{
 					type: 'spline',
 					zoomType: 'xy',					
@@ -177,7 +253,7 @@ angular.module('hillromvestApp')
 					type: 'datetime',
 					crosshair: true,					
 		            title: {
-		                text: 'Date'
+		                text: ''
 		            },
 		            minPadding: 0,
 		            maxPadding: 0,
@@ -233,49 +309,119 @@ angular.module('hillromvestApp')
 					useHTML: true
 				},
 				series: $scope.categoryChartData.series,
-				loading: false,
+				loading: true,
 				size: {}
-		    });
+		    });//.setSize(1140, 400);
+		};
+
+		$scope.updateChart = function(){
+			var chartDay = $("#containerDay").highcharts();
+			var chartNonDay = $("#containerNonDay").highcharts();
+			var chartCustom = $("#containerCustom").highcharts();
+			if($scope.dayChart){				
+				if(chartDay){
+					chartDay.xAxis[0].setCategories($scope.categoryChartData.xAxis.categories, false);
+					for(var i = chartDay.series.length - 1; i >= 0; i--) {
+						chartDay.series[i].update({
+						data: $scope.categoryChartData.series[i].data,
+						visible: true
+						}, false);
+					}
+					chartDay.redraw();
+				}else{
+					$scope.drawCategoryChartForDay();
+				}
+			}else if($scope.customDateRange){// nonday and custom i.e. date range	
+				if(chartCustom){//already a custom chart is present then redraw
+					//chartCustom.xAxis[0].setCategories($scope.categoryChartData.xAxis.categories, false);				
+					for(var i = chartCustom.series.length - 1; i >= 0; i--) {
+						chartCustom.series[i].update({
+							data: $scope.categoryChartData.series[i].data,
+							visible: true
+						}, true);
+					}
+					chartCustom.redraw();
+				}else{// draw a new one
+					$scope.drawDateRangeChartForNonDay();
+				}							
+			}else{// non day and non custom range
+				if(chartNonDay){					
+					chartNonDay.xAxis[0].setCategories($scope.categoryChartData.xAxis.categories, false);				
+					for(var i = chartNonDay.series.length - 1; i >= 0; i--) {
+						chartNonDay.series[i].update({
+							data: $scope.categoryChartData.series[i].data,
+							visible: true
+						}, false);
+					}
+					chartNonDay.redraw();
+				}else{					
+					$scope.drawCategoryChartForNonDay();				
+				}
+			}
 		};
 
 		$scope.dayView = function(){ 
 			$scope.dayChart = true;
+			$scope.customDateRange = false;
+			$scope.toggleDuration(true, false, false, false, false);
 			$scope.categoryChartData = loginAnalyticsData.dayData;	
-			$scope.drawCategoryChart();	
+			$scope.updateChart();
 			
 		};
 
 		$scope.weekView = function(){
 			$scope.dayChart = false;
-			$scope.categoryChartData = loginAnalyticsData.weekData;
-			$scope.drawCategoryChart();
+			$scope.customDateRange = false;
+			$scope.toggleDuration(false, true, false, false, false);
+			setTimeout(function(){ 
+				$scope.categoryChartData = loginAnalyticsData.weekData;
+				$scope.updateChart();
+			},10);
 		};
 
 		$scope.monthView = function(){	
-			$scope.dayChart = false;		
-			$scope.categoryChartData = loginAnalyticsData.monthData;
-			$scope.drawCategoryChart();				
+			$scope.dayChart = false;
+			$scope.customDateRange = false;	
+			$scope.toggleDuration(false, false, true, false, false);
+			setTimeout(function(){ 	
+				$scope.categoryChartData = loginAnalyticsData.monthData;			
+				$scope.updateChart();	
+			},10);			
 		};
 
 		$scope.yearView = function(){
 			$scope.dayChart = false;
-			$scope.categoryChartData = loginAnalyticsData.yearData;
-			$scope.drawCategoryChart();
+			$scope.customDateRange = false;
+			$scope.toggleDuration(false, false, false, true, false);
+			setTimeout(function(){ 
+				$scope.categoryChartData = loginAnalyticsData.yearData;			
+				$scope.updateChart();
+			},10);
 		};
 
 		$scope.customDateRangeView = function(){
 			$scope.dayChart = false;
-			$scope.categoryChartData = loginAnalyticsData.customDateRangeData;
-			angular.forEach($scope.categoryChartData.series, function(series, key) {
-			  angular.forEach(series.data, function(data, index) {
-			  	$scope.categoryChartData.series[key].data[index].x = convertToTimestamp(data.x);
-			  });
-			});			
-			$scope.drawDateRangeChart();
+			$scope.customDateRange = true;
+			$scope.toggleDuration(false, false, false, false, true);
+			setTimeout(function(){ 
+			$scope.categoryChartData = loginAnalyticsData.customDateRangeData;			
+				angular.forEach($scope.categoryChartData.series, function(series, key) {
+				  angular.forEach(series.data, function(data, index) {			  	
+				  	$scope.categoryChartData.series[key].data[index].x = convertToTimestamp(data.x);
+				  });
+				});						
+				$scope.updateChart();
+			},10);
 		};
 
 		$scope.downloadGraphAsPdf = function(){
-			exportutilService.exportLoginAnalyticsAsPDF();			      		
+			if($scope.dayChart){
+				exportutilService.exportLoginAnalyticsAsPDF("containerDay");
+			}else if($scope.customDateRange){
+				exportutilService.exportLoginAnalyticsAsPDF("containerCustom");
+			}else{
+				exportutilService.exportLoginAnalyticsAsPDF("containerNonDay");
+			}						      	
 		};
 
 		function isChrome(){
@@ -289,21 +435,28 @@ angular.module('hillromvestApp')
 		   return 'unknown';
 		  }
 		  
-			function convertToTimestamp(date){
-		      if(date && date.indexOf("/") > -1 && date.indexOf(" ") > -1 ){
-		        var dateTime = date.split(" ");
-		        var startDate = dateTime[0].split("/"); // turning it from MM/DD/YYYY HH:MM:SS to timestamp
-		        var formattedDate = startDate[2] + "-" + startDate[0] + "-" + startDate[1] + " " + dateTime[1];
-		        if(isChrome().indexOf("chrome") !== -1){
-		          return new Date(formattedDate).getTime();
-		        }else{
-		          return new Date(formattedDate.replace(/\s/, 'T')).getTime();
-		        }
-		        
-		      }
+			function convertToTimestamp(date){				
+				if(date && (date.toString()).indexOf("/") > -1 && date.indexOf(" ") > -1 ){
+					var dateTime = date.split(" ");
+					var startDate = dateTime[0].split("/"); // turning it from MM/DD/YYYY HH:MM:SS to timestamp
+					var formattedDate = startDate[2] + "-" + startDate[0] + "-" + startDate[1] + " " + dateTime[1];
+					if(isChrome().indexOf("chrome") !== -1){
+						return new Date(formattedDate).getTime();
+					}else{
+						return new Date(formattedDate.replace(/\s/, 'T')).getTime();
+					}
+				}else{
+					return date;
+				}
 		  }
 	
-
+		 $scope.toggleDuration = function(day, week, month, year, custom){
+		 	$scope.durationview.day = day;
+		 	$scope.durationview.week = week;
+		 	$scope.durationview.month = month;
+		 	$scope.durationview.year = year;
+		 	$scope.durationview.custom = custom;
+		 };
 		/* This method initiates the required methods required for a specific route*/
 		$scope.init = function(){
 			if($state.current.name === 'adminLoginAnalytics' || $state.current.name === 'rcadminLoginAnalytics' || $state.current.name === 'associatesLoginAnalytics'){
