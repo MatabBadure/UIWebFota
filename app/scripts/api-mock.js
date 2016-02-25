@@ -913,35 +913,35 @@ var loginAnalyticsData= {
     {
         "xAxis": {
             "type": "categories",
-            "categories": ['Week1', 'Week2', 'Week3', 'Week4'] 
+            "categories": [ 'Week1 (23-Jan-16 to 29-Jan-16)','Week2 (30-Jan-16 to 05-Feb-16)', 'Week3 (06-Feb-16 to 12-Feb-16)', 'Week4 (13-Feb-16 to 19-Feb-16)', 'Week5 (20-Feb-16 to 26-Feb-16)'] 
         },
         "series": [
             {
             "name": "Patient",
             "color": "#ff9829",
             "data":[
-                {"y": 10},{"y": 10},{"y": 10},{"y": 10}
+                {"y": 10},{"y": 10},{"y": 10},{"y": 10},{"y": 10}
                 ]
             },
             {
             "name": "HCP",
             "color": "#35978f",
             "data":[
-                {"y": 30},{"y": 20},{"y": 10},{"y": 15}
+                {"y": 30},{"y": 20},{"y": 10},{"y": 15},{"y": 10}
                 ]
             },
             {
             "name": "Clinic Admin",
             "color": "#4d95c4",
             "data":[
-                {"y": 10},{"y": 10},{"y": 10},{"y": 10}
+                {"y": 10},{"y": 10},{"y": 10},{"y": 10},{"y": 10}
                 ]
             },
             {
             "name": "Caregiver",
             "color": "#8b6baf",
             "data":[
-                {"y": 10},{"y": 10},{"y": 10},{"y": 10}
+                {"y": 10},{"y": 10},{"y": 10},{"y": 10},{"y": 10}
                 ]
             }
         ] 
