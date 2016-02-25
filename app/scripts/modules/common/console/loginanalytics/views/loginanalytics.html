@@ -13,7 +13,7 @@
 				<li role="presentation" class="" ng-click="weekView()"><a href="" ng-class="{'active': durationview.week}">Week</a></li>
 				<li role="presentation" class="" ng-click="monthView()"><a href="" ng-class="{'active': durationview.month}">Month</a></li>
 				<li role="presentation" class="" ng-click="yearView()"><a href=""  ng-class="{'active': durationview.year}">Year</a></li>
-				<li role="presentation" class="" id="dp3" ng-click="customDateRangeView()"><a href="" date-range-picker class="date-picker" ng-model="dates" parentEl="#dp3" options="opts" ><span class="icon-calendar"></span></a></li>				
+				<li role="presentation" class="" id="dp1"><a href="" date-range-picker class="date-picker" ng-model="dates" parentEl="#dp1" options="opts" ><span class="icon-calendar"></span></a></li> <!-- ng-click="customDateRangeView()" -->				
             </ul>           
           </div>
         </div>
@@ -34,15 +34,7 @@
       </div>
        <div class="col-md-16 col-sm-7 left_header_barchart padding0">
             <div class="">
-              <ul class="nav nav-pills graph_color" ng-show="dayChart">
-            <!--   	<li>
-	          		<span>
-				        <label class="rounded_all">
-				          <input type="checkbox" ng-model="legends.isAll"  ng-value="legends.isAll" ng-disabled="disableLegends.all" ng-click="!disableLegends.all && changeLegends('all')">
-				          <span class="radio-box-text" translate="console.analytics.legends.all"></span>
-				        </label>
-			      	</span>
-      			</li> -->
+              <!-- <ul class="nav nav-pills graph_color" ng-show="dayChart">           
              	<li class="col-md-1 col-md-push-5 margin-right13 margin-left25">
              		<span class="patient_line" ng-class="{grey_color: !legends.isPatient}">
 				        <label class="rounded_patient">
@@ -82,9 +74,9 @@
 			      	</span>
 		      	</li>
 
-			</ul>
+			</ul> -->
 		      	<!-- rectangle option -->
-				<!-- <ul class="nav nav-pills graph_color" ng-show="dayChart">
+				<ul class="nav nav-pills graph_color" ng-show="dayChart">
 		      	<li class="col-md-1 col-md-push-5 margin-right13 margin-left25">
              		<span ng-class="{grey_color: !legends.isPatient}">
 				        <label class="rect_patient">
@@ -121,9 +113,8 @@
 				        <span class="radio-box-text legend_text" translate="console.analytics.legends.caregiver"></span>
 			      	</span>
 		      	</li>
-
-		      	<!-- rectangle option ends -->
-            	</ul> -->
+		      	
+            	</ul>
             </div>
           </div>
      	<button class="float-right hillrom-btn btn-submit margin-top" ng-click="downloadGraphAsPdf()">Download As PDF</button>
