@@ -102,18 +102,18 @@ angular.module('hillromvestApp')
   this.addSvgToPDF = function(pdf, canvasId, svgId, imageX, imageY, imageWidth, imageHeight){
     var canvas = document.getElementById('loginAnalyticsCanvas');               
     var ctx = canvas.getContext('2d');  
-    var htmlString =  $("#container").find("svg").parent().html().trim().replace(/xmlns=\"http:\/\/www\.w3\.org\/2000\/svg\"/, '');          
+    var htmlString =  $("#"+svgId).find("svg").parent().html().trim().replace(/xmlns=\"http:\/\/www\.w3\.org\/2000\/svg\"/, '');          
     canvg(canvas, htmlString);
     var img = $("#loginAnalyticsCanvas")[0].toDataURL('image/png', 1.0);
     pdf.addImage(img, 'png', imageX, imageY, imageWidth, imageHeight);
     return pdf;
   }
 
-  this.exportLoginAnalyticsAsPDF = function() {
+  this.exportLoginAnalyticsAsPDF = function(svgId) {
     var pdf = this.getPdf();
     var pageHeight = pdf.internal.pageSize.height;
     var pageWidth = pdf.internal.pageSize.width;
-    pdf = this.addSvgToPDF(pdf, 'loginAnalyticsCanvas', 'container', 20, 150, 540, 200);
+    pdf = this.addSvgToPDF(pdf, 'loginAnalyticsCanvas', svgId, 20, 150, 540, 200);
     pdf = this.setHeader(pdf);
     pdf = this.setFooter(pdf, pdf.internal.pageSize.height-80, pdfServiceConstants.text.name);
     setTimeout(function(){     
