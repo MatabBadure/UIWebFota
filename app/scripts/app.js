@@ -155,6 +155,11 @@ angular.module('hillromvestApp',
         name: 'ClinicAdminPatientModule',
         files: ['scripts/modules/clinicadmin/graph/services/clinicadmin.service.js', 
                 'scripts/modules/clinicadmin/patient/controllers/clinicadminpatient.controller.js']
+      },
+      {
+        name: 'LoginAnalyticsModule',
+        files: ['scripts/modules/common/console/loginanalytics/controllers/loginanalytics.controller.js',                
+                'bower_components/angular-daterangepicker/js/angular-daterangepicker.js']
       }]
     });
   }])
