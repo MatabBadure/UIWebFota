@@ -6,15 +6,76 @@
 
 'use strict';
 angular.module('hillromvestApp')
-.controller('loginAnalyticsController',['$scope', '$state', 'loginAnalyticsConstants', 'dateService', 'exportutilService',
-	function($scope, $state, loginAnalyticsConstants, dateService, exportutilService) {	
+.controller('loginAnalyticsController',['$scope', '$state', 'loginAnalyticsConstants', 'dateService', 'exportutilService', '$timeout', 'loginanalyticsService',
+	function($scope, $state, loginAnalyticsConstants, dateService, exportutilService, $timeout, loginanalyticsService) {	
 		/*
 		* default legends and their accessibility
 		*/
+		$scope.calculateDateFromPicker = function(picker) {
+	      $scope.fromTimeStamp = new Date(picker.startDate._d).getTime();
+	      $scope.toTimeStamp = new Date(picker.endDate._d).getTime();
+	      $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
+	      $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');
+	      if ($scope.fromDate === $scope.toDate ) {
+	        $scope.fromTimeStamp = $scope.toTimeStamp;
+	      }
+	    };
+
+    	$scope.disableDatesInDatePicker = function() {
+	      var datePickerCount = document.getElementsByClassName('input-mini').length;
+	      var count = 5;
+	      $scope.waitFunction = function waitHandler() {
+	         datePickerCount = document.getElementsByClassName('input-mini').length;
+	        if(datePickerCount > 0 || count === 0 ) {
+	          //$scope.customizationForBarGraph();
+	          while(datePickerCount >0){
+	            document.getElementsByClassName('input-mini')[datePickerCount-1].setAttribute("disabled", "true");
+	            datePickerCount --;
+	          }
+	          return false;
+	        } else {
+	          count --;
+	        }
+	        $timeout(waitHandler, 1000);
+	      }
+	      $scope.waitFunction();
+	    };
+
+	    $scope.disableDatesInDatePicker();
+		$scope.opts = {
+			maxDate: new Date(),
+			format: patientDashboard.dateFormat,
+			dateLimit: {"months":patientDashboard.maxDurationInMonths},
+			eventHandlers: {'apply.daterangepicker': function(ev, picker) {       	       
+				$scope.calculateDateFromPicker(picker);	        
+				$scope.selectedDateOption = '';	 
+				$scope.customDateRangeView();  
+			},
+				opens: 'left'
+			}
+		}
 		
-		$scope.defaultLegends = function(){
-			$scope.dayChart = true;
-			$scope.customDateRange = false;
+    	$scope.dates = {startDate: $scope.fromDate, endDate: $scope.fromDate};
+    	$scope.dayChart = true;
+		$scope.customDateRange = false;
+		$scope.timerange = {};
+		$scope.timerange.day = true;
+		$scope.timerange.week = false;
+		$scope.timerange.month = false;
+		$scope.timerange.year = false;
+		$scope.timerange.customTime = false;
+		$scope.durationview = {};
+		$scope.durationview.day = true;
+		$scope.durationview.week = false;
+		$scope.durationview.month = false;
+		$scope.durationview.year = false;
+		$scope.durationview.custom = false;
+		$scope.fromTimeStamp = new Date().getTime();
+		$scope.toTimeStamp = new Date().getTime();
+		$scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
+		$scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');
+
+		$scope.defaultLegends = function(){			
 			$scope.legends = {};			
 			$scope.legends.isAll = true;
 			$scope.legends.isPatient = true;
@@ -26,19 +87,7 @@ angular.module('hillromvestApp')
 			$scope.disableLegends.patient = false;
 			$scope.disableLegends.hcp = false;
 			$scope.disableLegends.clinicadmin = false;
-			$scope.disableLegends.caregiver = false;
-			$scope.timerange = {};
-			$scope.timerange.day = true;
-			$scope.timerange.week = false;
-			$scope.timerange.month = false;
-			$scope.timerange.year = false;
-			$scope.timerange.customTime = false;
-			$scope.durationview = {};
-			$scope.durationview.day = true;
-			$scope.durationview.week = false;
-			$scope.durationview.month = false;
-			$scope.durationview.year = false;
-			$scope.durationview.custom = false;
+			$scope.disableLegends.caregiver = false;					
 		};
 		/* Innitiates the required variables and calls the required APIs for login analytics page*
 		* By default 'All' is selected and so the all other legends as well.
@@ -66,37 +115,69 @@ angular.module('hillromvestApp')
 		* or else make all the lengends accessible
 		*/
 		$scope.validateLegends = function(legend, count){
-			if(count === 1){				
-				$scope.disableLegends.patient = ($scope.legends.isPatient) ? true : false;
-				$scope.disableLegends.hcp = ($scope.legends.isHCP) ? true : false;
-				$scope.disableLegends.clinicadmin = ($scope.legends.isClinicAdmin) ? true : false;
-				$scope.disableLegends.caregiver = ($scope.legends.isCaregiver) ? true : false;
-				// show the meesage saying at least on elegend should be enabled.
+			if(count === 1){
+				if(legend === loginAnalyticsConstants.legends.PATIENT){
+					if(!$scope.legends.isPatient){
+						$scope.legends.isPatient = true;
+						$scope.dayView();	
+					}
+					$scope.legends.isPatient = true;
+					$scope.disableLegends.patient = false;
+				}else if(legend === loginAnalyticsConstants.legends.HCP){
+					if(!$scope.legends.isHCP){
+						$scope.legends.isHCP = true;
+						$scope.dayView();	
+					}
+					$scope.legends.isHCP = true;
+					$scope.disableLegends.hcp = false;
+				}else if(legend === loginAnalyticsConstants.legends.CLINICADMIN){
+					if(!$scope.legends.isClinicAdmin){
+						$scope.legends.isClinicAdmin = true;
+						$scope.dayView();	
+					}
+					$scope.legends.isClinicAdmin = true;
+					$scope.disableLegends.clinicadmin = false;
+				}else if(legend === loginAnalyticsConstants.legends.CAREGIVER){
+					if(!$scope.legends.isCaregiver){
+						$scope.legends.isCaregiver = true;
+						$scope.dayView();	
+					}
+					$scope.legends.isCaregiver = true;
+					$scope.disableLegends.caregiver = false;
+				}				
 			} else{
 				$scope.disableLegends.patient = false;
 				$scope.disableLegends.hcp = false;
 				$scope.disableLegends.clinicadmin = false;
 				$scope.disableLegends.caregiver = false;
-			}			 
+				if(legend === loginAnalyticsConstants.legends.PATIENT){
+					$scope.legends.isPatient = !$scope.legends.isPatient;							
+				}else if(legend === loginAnalyticsConstants.legends.HCP){
+					$scope.legends.isHCP = !$scope.legends.isHCP;					
+				}else if(legend === loginAnalyticsConstants.legends.CLINICADMIN){
+					$scope.legends.isClinicAdmin = !$scope.legends.isClinicAdmin;					
+				}else if(legend === loginAnalyticsConstants.legends.CAREGIVER){
+					$scope.legends.isCaregiver = !$scope.legends.isCaregiver;					
+				}
+				$scope.dayView();					
+			}
+					 
 		};
 
 		/*
 		* Legend 'All' will always be selected, unless any other legend is made unselected*/
-		$scope.changeLegends = function(legend){				
+		$scope.changeLegends = function(legend){	
 			var count = getSelectedLegendsCount();	
-			$scope.validateLegends(legend, count);			
-			if(legend === loginAnalyticsConstants.legends.ALL){
-				$scope.defaultLegends();				
-			}else{
-				if(count === 4){					
-					$scope.defaultLegends();
-				}else{					
-					$scope.legends.isAll = false;
-					$scope.disableLegends.all = false;					
-				}
+			$scope.validateLegends(legend, count);
 
-			}		
 		};
+
+		$scope.calculateTimeDuration = function(durationInDays) {
+	      $scope.toTimeStamp = new Date().getTime();
+	      $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');
+	      $scope.fromTimeStamp = dateService.getnDaysBackTimeStamp(durationInDays);;
+	      $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
+	    };
 		
 		$scope.drawCategoryChartForDay = function(){
 			Highcharts.chart('containerDay', {				
@@ -161,7 +242,7 @@ angular.module('hillromvestApp')
 					shared: true,
 					useHTML: true
 				},
-				series: $scope.categoryChartData.series,
+				series: $.extend(true, [], $scope.categoryChartData.series),
 				loading: true,
 				size: {}
 		    });//.setSize(1140, 400);
@@ -233,7 +314,7 @@ angular.module('hillromvestApp')
 					shared: true,
 					useHTML: true
 				},
-				series: $scope.categoryChartData.series,
+				series: $.extend(true, [], $scope.categoryChartData.series),
 				loading: true,
 				size: {}
 		    });//.setSize(1140, 400);
@@ -308,7 +389,7 @@ angular.module('hillromvestApp')
 					shared: true,
 					useHTML: true
 				},
-				series: $scope.categoryChartData.series,
+				series: $.extend(true, [], $scope.categoryChartData.series),				
 				loading: true,
 				size: {}
 		    });//.setSize(1140, 400);
@@ -338,7 +419,7 @@ angular.module('hillromvestApp')
 						chartCustom.series[i].update({
 							data: $scope.categoryChartData.series[i].data,
 							visible: true
-						}, true);
+						}, false);
 					}
 					chartCustom.redraw();
 				}else{// draw a new one
@@ -364,15 +445,19 @@ angular.module('hillromvestApp')
 			$scope.dayChart = true;
 			$scope.customDateRange = false;
 			$scope.toggleDuration(true, false, false, false, false);
+			$scope.getCategoryChartData(loginAnalyticsConstants.duration.DAY);
 			$scope.categoryChartData = loginAnalyticsData.dayData;	
 			$scope.updateChart();
 			
 		};
 
 		$scope.weekView = function(){
+			$scope.defaultLegends(); //if the legends selected eariler has to be retained then remove this line
 			$scope.dayChart = false;
 			$scope.customDateRange = false;
 			$scope.toggleDuration(false, true, false, false, false);
+			$scope.calculateTimeDuration(6);
+			$scope.getCategoryChartData(loginAnalyticsConstants.duration.WEEK);
 			setTimeout(function(){ 
 				$scope.categoryChartData = loginAnalyticsData.weekData;
 				$scope.updateChart();
@@ -380,9 +465,12 @@ angular.module('hillromvestApp')
 		};
 
 		$scope.monthView = function(){	
+			$scope.defaultLegends(); //if the legends selected eariler has to be retained then remove this line
 			$scope.dayChart = false;
 			$scope.customDateRange = false;	
 			$scope.toggleDuration(false, false, true, false, false);
+			$scope.calculateTimeDuration(30);
+			$scope.getCategoryChartData(loginAnalyticsConstants.duration.MONTH);
 			setTimeout(function(){ 	
 				$scope.categoryChartData = loginAnalyticsData.monthData;			
 				$scope.updateChart();	
@@ -390,9 +478,12 @@ angular.module('hillromvestApp')
 		};
 
 		$scope.yearView = function(){
+			$scope.defaultLegends(); //if the legends selected eariler has to be retained then remove this line
 			$scope.dayChart = false;
 			$scope.customDateRange = false;
 			$scope.toggleDuration(false, false, false, true, false);
+			$scope.calculateTimeDuration(365);
+			$scope.getCategoryChartData(loginAnalyticsConstants.duration.YEAR);
 			setTimeout(function(){ 
 				$scope.categoryChartData = loginAnalyticsData.yearData;			
 				$scope.updateChart();
@@ -400,9 +491,11 @@ angular.module('hillromvestApp')
 		};
 
 		$scope.customDateRangeView = function(){
+			$scope.defaultLegends(); //if the legends selected eariler has to be retained then remove this line
 			$scope.dayChart = false;
 			$scope.customDateRange = true;
 			$scope.toggleDuration(false, false, false, false, true);
+			$scope.getCategoryChartData(loginAnalyticsConstants.duration.CUSTOM);
 			setTimeout(function(){ 
 			$scope.categoryChartData = loginAnalyticsData.customDateRangeData;			
 				angular.forEach($scope.categoryChartData.series, function(series, key) {
@@ -457,6 +550,77 @@ angular.module('hillromvestApp')
 		 	$scope.durationview.year = year;
 		 	$scope.durationview.custom = custom;
 		 };
+
+		 $scope.getCategoryChartData = function(duration){
+		 	var filters = $scope.getSelectedUserRoles();
+			loginanalyticsService.getLoginAnalytics( dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), filters, duration).then(function(response) {
+				// set the categorychartdata
+				if(duration === loginAnalyticsConstants.duration.CUSTOM){
+					setTimeout(function(){ 
+					$scope.categoryChartData = loginAnalyticsData.customDateRangeData;			
+						angular.forEach($scope.categoryChartData.series, function(series, key) {
+						  angular.forEach(series.data, function(data, index) {			  	
+						  	$scope.categoryChartData.series[key].data[index].x = convertToTimestamp(data.x);
+						  });
+						});						
+						$scope.updateChart();
+					},10);
+				}else{
+					setTimeout(function(){ 
+						$scope.categoryChartData = loginAnalyticsData.yearData;			
+						$scope.updateChart();
+					},10);					
+				}
+			});		 	
+		 };
+		 
+		 $scope.getSelectedUserRoles = function(){
+		 	var userRoles = "";
+		 	if($scope.legends.isPatient){
+		 		userRoles = userRoles+loginAnalyticsConstants.legends.PATIENT;
+		 	}
+		 	if($scope.legends.isHCP){
+		 		userRoles = userRoles+loginAnalyticsConstants.legends.HCP;
+		 	}
+		 	if($scope.legends.isClinicAdmin){
+		 		userRoles = userRoles+loginAnalyticsConstants.legends.CLINICADMIN;
+		 	}
+		 	if($scope.legends.isCaregiver){
+		 		userRoles = userRoles+loginAnalyticsConstants.legends.CAREGIVER;
+		 	}
+		 	return userRoles;
+		 };
+
+		 $scope.getSelectedUserRoles = function(){
+		 	var userRoles = "";
+		 	var count = 0;
+		 	if($scope.legends.isPatient){
+		 		userRoles = userRoles + loginAnalyticsConstants.legends.PATIENT;
+		 		count++;
+		 	}
+		 	if($scope.legends.isHCP){
+		 		if(count > 0){
+		 			userRoles = userRoles + loginAnalyticsConstants.string.COMMA;
+		 		}
+		 		userRoles = userRoles + loginAnalyticsConstants.legends.HCP;
+		 		count++;
+		 	}
+		 	if($scope.legends.isClinicAdmin){
+		 		if(count > 0){
+		 			userRoles = userRoles + loginAnalyticsConstants.string.COMMA;
+		 		}
+		 		userRoles = userRoles + loginAnalyticsConstants.legends.CLINICADMIN;
+		 		count++;
+		 	}
+		 	if($scope.legends.isCaregiver){
+		 		if(count > 0){
+		 			userRoles = userRoles + loginAnalyticsConstants.string.COMMA;
+		 		}
+		 		userRoles = userRoles + loginAnalyticsConstants.legends.CAREGIVER;
+		 	}
+		 	return userRoles;
+		 };		 
+
 		/* This method initiates the required methods required for a specific route*/
 		$scope.init = function(){
 			if($state.current.name === 'adminLoginAnalytics' || $state.current.name === 'rcadminLoginAnalytics' || $state.current.name === 'associatesLoginAnalytics'){

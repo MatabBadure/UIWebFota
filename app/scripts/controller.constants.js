@@ -150,6 +150,16 @@ angular.module('hillromvestApp').constant('hcpDashboardConstants', {
 		"HCP" : "hcp",
 		"CLINICADMIN": "clinicadmin",
 		"CAREGIVER": "caregiver"
+	},
+	duration:{
+		"DAY": "Day",
+		"WEEK": "Week",
+		"MONTH": "Month",
+		"YEAR": "Year",
+		"CUSTOM": "Custom"
+	},
+	string:{
+		"COMMA": ","
 	}
 })
 
