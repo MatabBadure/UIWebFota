@@ -6,12 +6,61 @@
 
 'use strict';
 angular.module('hillromvestApp')
-.controller('loginAnalyticsController',['$scope', '$state', 'loginAnalyticsConstants', 'dateService', 'exportutilService',
-	function($scope, $state, loginAnalyticsConstants, dateService, exportutilService) {	
+.controller('loginAnalyticsController',['$scope', '$state', 'loginAnalyticsConstants', 'dateService', 'exportutilService', '$timeout',
+	function($scope, $state, loginAnalyticsConstants, dateService, exportutilService, $timeout) {	
 		/*
 		* default legends and their accessibility
 		*/
-		
+		$scope.calculateDateFromPicker = function(picker) {
+	      $scope.fromTimeStamp = new Date(picker.startDate._d).getTime();
+	      $scope.toTimeStamp = new Date(picker.endDate._d).getTime();
+	      $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
+	      $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');
+	      if ($scope.fromDate === $scope.toDate ) {
+	        $scope.fromTimeStamp = $scope.toTimeStamp;
+	      }
+	    };
+
+    	$scope.disableDatesInDatePicker = function() {
+	      var datePickerCount = document.getElementsByClassName('input-mini').length;
+	      var count = 5;
+	      $scope.waitFunction = function waitHandler() {
+	         datePickerCount = document.getElementsByClassName('input-mini').length;
+	        if(datePickerCount > 0 || count === 0 ) {
+	          //$scope.customizationForBarGraph();
+	          while(datePickerCount >0){
+	            document.getElementsByClassName('input-mini')[datePickerCount-1].setAttribute("disabled", "true");
+	            datePickerCount --;
+	          }
+	          return false;
+	        } else {
+	          count --;
+	        }
+	        $timeout(waitHandler, 1000);
+	      }
+	      $scope.waitFunction();
+	    };
+
+	    $scope.disableDatesInDatePicker();
+		$scope.opts = {
+			maxDate: new Date(),
+			format: patientDashboard.dateFormat,
+			dateLimit: {"months":patientDashboard.maxDurationInMonths},
+			eventHandlers: {'apply.daterangepicker': function(ev, picker) {       	       
+				$scope.calculateDateFromPicker(picker);	        
+				$scope.selectedDateOption = '';	 
+				$scope.customDateRangeView();       
+			},
+				opens: 'left'
+			}
+		}
+		$scope.fromTimeStamp = new Date().getTime();
+		$scope.toTimeStamp = new Date().getTime();
+		$scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
+		$scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');
+
+    	$scope.dates = {startDate: $scope.fromDate, endDate: $scope.fromDate};
+
 		$scope.defaultLegends = function(){
 			$scope.dayChart = true;
 			$scope.customDateRange = false;
@@ -39,6 +88,10 @@ angular.module('hillromvestApp')
 			$scope.durationview.month = false;
 			$scope.durationview.year = false;
 			$scope.durationview.custom = false;
+			$scope.fromTimeStamp = new Date().getTime();
+			$scope.toTimeStamp = new Date().getTime();
+			$scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
+			$scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');
 		};
 		/* Innitiates the required variables and calls the required APIs for login analytics page*
 		* By default 'All' is selected and so the all other legends as well.
