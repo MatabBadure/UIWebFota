@@ -27,7 +27,7 @@
     </div>
   </div>
   <div class="col-md-16 padding0" ng-class="{'pointer-no-event': !isGraphLoaded, 'pointer-fill-event': isGraphLoaded}">
-        <div class="bar_graph_header">
+      <!--   <div class="bar_graph_header">
           <div class="col-md-5 col-sm-7 left_header_barchart padding0">
             <div class="row">
               <ul class="nav nav-pills">
@@ -43,7 +43,75 @@
               <li role="presentation" class="" id="dp3"><a href="" date-range-picker class="date-picker" ng-model="dates" parentEl="#dp3" options="opts" ><span class="icon-calendar"></span></a></li>
             </ul>
           </div>
+        </div> -->
+     <div class="container patient_wrapper ng-scope reset-padding">
+    
+      <div class="col-md-16 reset-padding pointer-fill-event" ng-class="">
+        <div class="bar_graph_header">
+          <div class="col-md-5 col-sm-7 left_header_barchart padding0">
+            <div class="row">
+              <ul class="nav nav-pills">
+              <li><a ng-class="" href="" ng-click="isGraphLoaded &amp;&amp; showHmrGraph()" translate="" class="">Graph View</a></li>
+              <li><a href="" ng-class="" ng-click="" translate="" class="">Grid View</a></li>
+            </ul>
+            </div>
+          </div>
+          <div class="col-md-11 col-sm-9 right_header_barchart">
+            <ul class="nav nav-pills pull-right ">
+              <li role="" class=""><a href="" ng-class="" ng-hide="" ng-click="" translate="" class="">Day</a></li>
+              <li role="" class=""><a ng-class="" href="" ng-click="" class="active">Week</a></li>
+              <li role="" class=""><a href="" ng-class="" ng-click="" translate="" class="ng-scope">Month</a></li>
+              <li role="" class=""><a href="" ng-class="" ng-click="" translate="" class="">Year</a></li>
+              <li role="" class="" id="dp3"><a href="" date-range-picker="" class="" ng-model="dates" parentel="#dp3" options="opts"><span class="icon-calendar"></span></a></li>
+            </ul>
+          </div>
         </div>
+        <div class="pull-right week_date_container">
+          <span class="ng-scope">
+              <span class="date ng-binding">02/19/2016</span> - <span class="date ng-binding">02/25/2016</span>
+          </span>
+       </div>
+      </div>
+
+     <div class="col-md-16 dashboard__manage-view--list">
+       <div class="col-md-1"><span>Q1</span></div>
+       <div class="col-md-15"><span>Did the trainer demonstrate and perform a complete therapy session?</span></div>
+     </div>
+
+     <div class="col-md-16 dashboard__manage-view--list">
+       <div class="col-md-1"><span>Q2</span></div>
+       <div class="col-md-15"><span>Did the trainer make sure your garmet fit you properly?</span></div>
+     </div>
+
+      <div class="col-md-16 dashboard__manage-view--list">
+       <div class="col-md-1"><span>Q3</span></div>
+       <div class="col-md-15"><span>Did the trainer explain the Outcomes Monitoring Program and how to obtain the hour  meter reading The Vest &copy; System Device?</span></div>
+     </div>
+
+      <div class="col-md-16 dashboard__manage-view--list">
+       <div class="col-md-1"><span>Q4</span></div>
+       <div class="col-md-15"><span>Did the trainer review the trouble shooting and safety instructions regarding The Vest &copy; usage System?</span></div>
+     </div>
+
+      <div class="col-md-16 dashboard__manage-view--list">
+       <div class="col-md-1"><span>Q5</span></div>
+       <div class="col-md-15"><span>Did the trainer provide you with our toll free 800 number in case you need to call us?</span></div>
+     </div>
+
+      <div class="col-md-16 dashboard__manage-view--list">
+       <div class="col-md-1"><span>Q6</span></div>
+       <div class="col-md-15"><span>Would you recommend this trainer to others?</span></div>
+     </div>
+
+  <!-- Note section HTML -->
+    <div class="col-md-16">
+      <div class="btn_group patient_dashdoard_btns" ng-class="{ 'btn_group patient_dashdoard_btns_compliance': complianceGraph, 'btn_group patient_dashdoard_btns': !complianceGraph}">
+        <div dropdown="" class="pull-right left dropdown">
+          <button id="single-button" type="button" class="hillrom-btn btn-submit margin0 float-right ng-scope dropdown-toggle pointer-no-event" ng-class="{ 'pointer-fill-event': (!noDataAvailable &amp;&amp; isGraphLoaded) , 'pointer-no-event': (!isGraphLoaded || noDataAvailable) }" dropdown-toggle="" ng-disabled="disabled" translate="" aria-haspopup="true" aria-expanded="false">Download</button>
+        </div>
+      </div>
+    </div>
+ </div>
         <div class="pull-right week_date_container">
           <span ng-if="fromDate !== toDate">
               <span class="date">{{fromDate}}</span> - <span class="date">{{toDate}}</span>
