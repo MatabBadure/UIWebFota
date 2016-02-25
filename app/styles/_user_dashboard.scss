@@ -533,7 +533,7 @@
     display: block;
     position: relative;
 }
-.legend_text{
+.legend_text, .rect_legend_text{
 	position: relative;
 	top: -8px;
 	left: 27px;
@@ -561,6 +561,12 @@
 .rounded_clinic{
 	top: -1px !important;
 	left: 17px !important;
+}
+.rect_patient, .rect_hcp, .rect_clinic, .rect_caregiver{
+	left:0!important;
+}
+.rect_legend_text{
+	left:10px !important;
 }
 .rounded_clinic, .rounded_hcp, .rounded_caregiver, .rect_patient, .rect_caregiver, .rect_clinic, .rect_hcp{
 	border-radius:0 !important;
