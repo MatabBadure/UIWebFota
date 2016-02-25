@@ -514,6 +514,101 @@
 .note_delete_edit{
 	margin-right: 5px;
 }
+.patient_line, .rounded_patient, .rect_patient {
+	background-color: #ff9829;
+}
+.hcp_line, .rounded_hcp, .rect_hcp{
+	background-color: #35978f;
+}
+.rounded_clinic, .clinic_line, .rect_clinic{
+	background-color: #4d95c4;
+}
+.caregiver_line, .rect_caregiver{
+	background-color: #8b6baf;
+}
+.patient_line, .hcp_line, .clinic_line, .caregiver_line{
+	width: 18px;
+    height: 3px;
+    margin: 3px;
+    display: block;
+    position: relative;
+}
+.legend_text, .rect_legend_text{
+	position: relative;
+	top: -8px;
+	left: 27px;
+	cursor: pointer;
+	color: #333333;
+    font-size: 12px;
+    font-weight: bold;
+}
+.grey_color, .grey_color > .rounded_patient, .grey_color > .rounded_hcp, .grey_color > .rounded_clinic, .grey_color > .clinic_line{
+	background: #cccccc !important;
+}
+
+.grey_color > .rounded_caregiver{
+	border-color: transparent transparent #ccc transparent !important;
+}
+.clinic_text{ 
+	position: relative;
+    top: -14px !important;
+    left: 29px !important; 
+    cursor: pointer;
+    color: #333333;
+    font-size: 12px;
+    font-weight: bold;
+    }
+.rounded_clinic{
+	top: -1px !important;
+	left: 17px !important;
+}
+.rect_patient, .rect_hcp, .rect_clinic, .rect_caregiver{
+	left:0!important;
+}
+.rect_legend_text{
+	left:10px !important;
+}
+.rounded_clinic, .rounded_hcp, .rounded_caregiver, .rect_patient, .rect_caregiver, .rect_clinic, .rect_hcp{
+	border-radius:0 !important;
+}
+.rounded_hcp{
+    transform: rotate(45deg);
+}
+.rounded_patient, .rounded_hcp, .rounded_clinic, .rounded_caregiver, .rect_patient, .rect_caregiver, .rect_clinic, .rect_hcp {
+    display: block;
+    width: 9px;
+    height: 11px;
+    padding: 0 0 0 0px;
+    border-radius: 50%;
+    transition: all .5s ease;
+    cursor: pointer;
+    position: absolute;
+    top: -4px;
+    left: 4px;
+}
+.rounded_caregiver{
+	padding: 0;
+	width: 0;
+	height: 0;
+	border-style: solid;
+	border-width: 0 5px 10px 5px;
+	border-color: transparent transparent #8b6baf transparent;
+}
+.graph_color{
+	background: #e6f1f4;
+}
+.margin-right13{
+	margin-right: 13px;
+}
+.margin-left25{
+	margin-left:25px;
+}
+.margin-left30{
+	margin-left: -30px!important;
+}
+.graphview_text_color{
+	color: $blue-btn;
+}
 .dashboard__manage-view--pagination{
 	&.pagination_notes{
 		margin: 0px 5px 15px !important;

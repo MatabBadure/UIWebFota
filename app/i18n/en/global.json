@@ -47,6 +47,7 @@
         },
         "my-dashboard": "My Profile",
         "logout": "Logout",
+        "console": "Console",
         "tabs": {
             "manage-patients": "Patients",
             "manage-hcps": "HCPs",

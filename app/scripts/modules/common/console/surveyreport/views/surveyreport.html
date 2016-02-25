@@ -1,0 +1,54 @@
+<div class="container admin-user">
+  <div class="container margin-top">
+    <div class="col-md-16 reset-padding">
+      <span class="dashboard__form--type" >Select Survey</span>
+    </div>
+  </div>
+  <div class="col-md-16 protocol-radio reset-padding">
+    <div class="form-group">
+      <span>
+        <label>
+          <input type="radio" name="protocolType" ng-model="protocol.type" value="Normal" ng-disabled="protocol.edit" ng-change="switchtoNormal()">
+          <span class="radio-box-text">5 Days</span>
+        </label>
+      </span>
+      <span>
+        <label>
+          <input type="radio" name="protocolType" ng-model="protocol.type" value="Custom" ng-disabled="protocol.edit" ng-change="switchtoCustom()">
+          <span class="radio-box-text">30 Days</span>
+        </label>
+      </span>
+       <span>
+        <label>
+          <input type="radio" name="protocolType" ng-model="protocol.type" value="Custom" ng-disabled="protocol.edit" ng-change="switchtoCustom()">
+          <span class="radio-box-text">90 Days</span>
+        </label>
+      </span>
+    </div>
+  </div>
+  <div class="col-md-16 padding0" ng-class="{'pointer-no-event': !isGraphLoaded, 'pointer-fill-event': isGraphLoaded}">
+        <div class="bar_graph_header">
+          <div class="col-md-5 col-sm-7 left_header_barchart padding0">
+            <div class="row">
+              <ul class="nav nav-pills">
+              <li><a ng-class="" href="">Grid View</a></li>
+              <li><a href=""  >Graph View</a></li>
+            </ul>
+            </div>
+          </div>
+          <div class="col-md-11 col-sm-9 right_header_barchart">
+            <ul class="nav nav-pills pull-right ">
+              <li role="presentation" class=""><a href="">No. of Survey taken : 20</a></li>
+              
+              <li role="presentation" class="" id="dp3"><a href="" date-range-picker class="date-picker" ng-model="dates" parentEl="#dp3" options="opts" ><span class="icon-calendar"></span></a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="pull-right week_date_container">
+          <span ng-if="fromDate !== toDate">
+              <span class="date">{{fromDate}}</span> - <span class="date">{{toDate}}</span>
+          </span>
+          <span ng-if="fromDate === toDate" class="date">{{fromDate}}<span>
+        </div>
+      </div>
+</div>
