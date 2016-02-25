@@ -49,7 +49,7 @@ angular.module('hillromvestApp')
 			eventHandlers: {'apply.daterangepicker': function(ev, picker) {       	       
 				$scope.calculateDateFromPicker(picker);	        
 				$scope.selectedDateOption = '';	 
-				$scope.customDateRangeView();       
+				$scope.customDateRangeView();  
 			},
 				opens: 'left'
 			}
@@ -361,7 +361,8 @@ angular.module('hillromvestApp')
 					shared: true,
 					useHTML: true
 				},
-				series: $scope.categoryChartData.series,
+				series: $.extend(true, [], $scope.categoryChartData.series),
+				//series: $scope.categoryChartData.series,
 				loading: true,
 				size: {}
 		    });//.setSize(1140, 400);
@@ -391,7 +392,7 @@ angular.module('hillromvestApp')
 						chartCustom.series[i].update({
 							data: $scope.categoryChartData.series[i].data,
 							visible: true
-						}, true);
+						}, false);
 					}
 					chartCustom.redraw();
 				}else{// draw a new one
