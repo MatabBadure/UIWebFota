@@ -9,25 +9,29 @@
          
           <div class="right_header_barchart">
             <ul class="nav nav-pills pull-right ">
-				<li role="presentation" class="" ng-click="dayView()"><a href="">Day</a></li>
-				<li role="presentation" class="" ng-click="weekView()"><a href="">Week</a></li>
-				<li role="presentation" class="" ng-click="monthView()"><a href="">Month</a></li>
-				<li role="presentation" class="" ng-click="yearView()"><a href="">Year</a></li>
-				<li role="presentation" class="" id="dp3" ng-click="customDateRangeView()"><a href="" date-range-picker class="date-picker" ng-model="dates" parentEl="#dp3" options="opts" ><span class="icon-calendar"></span></a></li>
-            </ul>
+				<li role="presentation" class="" ng-click="dayView()"><a href="" ng-class="{'active': durationview.day}">Day</a></li>
+				<li role="presentation" class="" ng-click="weekView()"><a href="" ng-class="{'active': durationview.week}">Week</a></li>
+				<li role="presentation" class="" ng-click="monthView()"><a href="" ng-class="{'active': durationview.month}">Month</a></li>
+				<li role="presentation" class="" ng-click="yearView()"><a href=""  ng-class="{'active': durationview.year}">Year</a></li>
+				<li role="presentation" class="" id="dp3" ng-click="customDateRangeView()"><a href="" date-range-picker class="date-picker" ng-model="dates" parentEl="#dp3" options="opts" ><span class="icon-calendar"></span></a></li>				
+            </ul>           
           </div>
         </div>
         <div class="pull-right week_date_container">
-          <span ng-if="fromDate !== toDate">
-              <span class="date">{{fromDate}}</span> - <span class="date">{{toDate}}</span>
-          </span>
-          <span ng-if="fromDate === toDate" class="date">{{fromDate}}<span>
-        </div>
+			<span ng-if="fromDate !== toDate">
+					<span class="date">{{fromDate}}</span> - <span class="date">{{toDate}}</span>
+			</span>
+			<span ng-if="fromDate === toDate" class="date">{{fromDate}}<span>
+		</div>
    </div>
 
 
       <!-- <highchart id="chart1" config="chartConfig" class="span9" ></highchart> -->
-      <div id="container" ng-init="dayView()">Placeholder for chart</div>
+      <div class="col-md-16" class="all_graph_wrapper" >	
+      <div id="containerDay" ng-init="dayView()" ng-show="dayChart">Placeholder for chart</div>
+      <div id="containerNonDay" ng-if="!dayChart && !customDateRange">Placeholder for chart</div>
+      <div id="containerCustom" ng-if="!dayChart && customDateRange">Placeholder for chart</div>
+      </div>
        <div class="col-md-16 col-sm-7 left_header_barchart padding0">
             <div class="row">
               <ul class="nav nav-pills graph_color" ng-show="dayChart">
