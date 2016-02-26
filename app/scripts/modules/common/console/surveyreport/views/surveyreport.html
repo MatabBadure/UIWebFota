@@ -9,19 +9,20 @@
       <span>
         <label>
           <input type="radio" name="protocolType" ng-model="protocol.type" value="Normal" ng-disabled="protocol.edit" ng-change="switchtoNormal()">
-          <span class="radio-box-text">5 Days</span>
+          <span class="cyan-blue-light">5 Days</span>
         </label>
       </span>
       <span>
         <label>
           <input type="radio" name="protocolType" ng-model="protocol.type" value="Custom" ng-disabled="protocol.edit" ng-change="switchtoCustom()">
-          <span class="radio-box-text">30 Days</span>
+          <span class="cyan-blue-light">30 Days</span>
         </label>
       </span>
        <span>
         <label>
           <input type="radio" name="protocolType" ng-model="protocol.type" value="Custom" ng-disabled="protocol.edit" ng-change="switchtoCustom()">
-          <span class="radio-box-text">90 Days</span>
+          <span class="cyan-blue-light">90 Days</span>
+         <!--  <span class="radio-box-text">90 Days</span> -->
         </label>
       </span>
     </div>
@@ -53,18 +54,17 @@
               <ul class="nav nav-pills">
               <li><a ng-class="" href="" ng-click="isGraphLoaded &amp;&amp; showHmrGraph()" translate="" class="active">Graph View</a></li>
               <li><a href="" ng-class="" ng-click="" translate="" class="">Grid View</a></li>
+
             </ul>
             </div>
           </div>
-          <div class="col-md-11 col-sm-9 right_header_barchart">
-            <ul class="nav nav-pills pull-right ">
-              <li role="" class=""><a href="" ng-class="" ng-hide="" ng-click="" translate="" class="">Day</a></li>
-              <li role="" class=""><a ng-class="" href="" ng-click="" class="active">Week</a></li>
-              <li role="" class=""><a href="" ng-class="" ng-click="" translate="" class="ng-scope">Month</a></li>
-              <li role="" class=""><a href="" ng-class="" ng-click="" translate="" class="">Year</a></li>
-              <li role="" class="" id="dp3"><a href="" date-range-picker="" class="" ng-model="dates" parentel="#dp3" options="opts"><span class="icon-calendar"></span></a></li>
+           <div class="col-md-7 pull-left text-center margin_tp15 grey_color"><span>No. of survey taken :</span> <span class="cyan-blue-light">7</span></div>
+          <div class="col-md-4 col-sm-9 right_header_barchart">
+            <ul class="nav nav-pills pull-right">
+               <li role="" class="" id="dp3"><a href="" date-range-picker="" class="" ng-model="dates" parentel="#dp3" options="opts"> <span class="date ng-binding cyan-blue-light">02/19/2016</span> <span class="icon-calendar"></span></a></li>
             </ul>
-          </div>
+            </div>
+       
         </div>
      <!--    <div class="pull-right week_date_container">
           <span class="ng-scope">
@@ -277,7 +277,7 @@
              <div class="col-md-1 cyan-blue-light text-center border-right">
               <span>Strongly agree</span>
             </div>
-             <div class="col-md-1 cyan-blue-light text-center padding10">
+             <div class="col-md-1 cyan-blue-light text-center">
               <span>Unable to assess</span>
             </div>
         </div>
