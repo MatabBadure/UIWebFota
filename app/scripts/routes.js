@@ -3861,5 +3861,199 @@ angular.module('hillromvestApp')
                       }
                   ]
               }
+            })
+            .state('survey', {               
+                url:'/patient',
+                parent: 'entity',
+                abstract: true,                
+            })                    
+            .state('patientSurvey', {
+              parent: 'survey',
+              url: '/{patientId}/survey',
+              data: {
+                  roles: ['PATIENT'],
+                  pageTitle: 'console.console-tabs.patient-survey'
+              },
+              views: {
+                  'content@': {
+                      templateUrl: 'scripts/modules/patient/survey/views/survey.html',
+                      controller: 'patientSurveyController'
+                  }
+              },
+              resolve: {
+                  translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                      $translatePartialLoader.addPart('console');
+                      return $translate.refresh();
+                  }],
+                  authorize: ['Auth',
+                      function(Auth) {
+                          return Auth.authorize(false);
+                      }
+                  ]
+              }
+            })
+            .state('console', {               
+                url:'/console',
+                parent: 'entity',
+                abstract: true,                
+            })
+            .state('adminSurveyReport', {
+              parent: 'console',
+              url: '/admin/survey-report',
+              data: {
+                  roles: ['ADMIN'],
+                  pageTitle: 'console.page-title.survey'
+              },
+              views: {
+                  'content@': {
+                      templateUrl: 'scripts/modules/common/console/surveyreport/views/admin/view.html',
+                      controller: 'surveyReportController'
+                  }
+              },
+              resolve: {
+                  translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                      $translatePartialLoader.addPart('console');
+                      return $translate.refresh();
+                  }],
+                  authorize: ['Auth',
+                      function(Auth) {
+                          return Auth.authorize(false);
+                      }
+                  ]
+              }
+            })
+            .state('rcddminSurveyReport', {
+              parent: 'console',
+              url: '/rcadmin/survey-report',
+              data: {
+                  roles: ['ACCT_SERVICES'],
+                  pageTitle: 'console.page-title.survey'
+              },
+              views: {
+                  'content@': {
+                      templateUrl: 'scripts/modules/common/console/surveyreport/views/rcadmin/view.html',
+                      controller: 'surveyReportController'
+                  }
+              },
+              resolve: {
+                  translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                      $translatePartialLoader.addPart('console');
+                      return $translate.refresh();
+                  }],
+                  authorize: ['Auth',
+                      function(Auth) {
+                          return Auth.authorize(false);
+                      }
+                  ]
+              }
+            })
+            .state('associateSurveyReport', {
+              parent: 'console',
+              url: '/associates/survey-report',
+              data: {
+                  roles: ['ASSOCIATES'],
+                  pageTitle: 'console.page-title.survey'
+              },
+              views: {
+                  'content@': {
+                      templateUrl: 'scripts/modules/common/console/surveyreport/views/associates/view.html',
+                      controller: 'surveyReportController'
+                  }
+              },
+              resolve: {
+                  translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                      $translatePartialLoader.addPart('console');
+                      return $translate.refresh();
+                  }],
+                  authorize: ['Auth',
+                      function(Auth) {
+                          return Auth.authorize(false);
+                      }
+                  ]
+              }
+            })
+            .state('adminLoginAnalytics', {
+              parent: 'console',
+              url: '/admin/useranalytics',
+              data: {
+                  roles: ['ADMIN'],
+                  pageTitle: 'console.page-title.login-analytics'
+              },
+              views: {
+                  'content@': {
+                      templateUrl: 'scripts/modules/common/console/loginanalytics/views/admin/view.html',
+                      controller: 'loginAnalyticsController'
+                  }
+              },
+              resolve: {
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('LoginAnalyticsModule');
+                    }],
+                  translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                      $translatePartialLoader.addPart('console');
+                      return $translate.refresh();
+                  }],
+                  authorize: ['Auth',
+                      function(Auth) {
+                          return Auth.authorize(false);
+                      }
+                  ]
+              }
+            })
+            .state('rcadminLoginAnalytics', {
+              parent: 'console',
+              url: '/rcadmin/useranalytics',
+              data: {
+                  roles: ['ACCT_SERVICES'],
+                  pageTitle: 'console.page-title.login-analytics'
+              },
+              views: {
+                  'content@': {
+                      templateUrl: 'scripts/modules/common/console/loginanalytics/views/rcadmin/view.html',
+                      controller: 'loginAnalyticsController'
+                  }
+              },
+              resolve: {
+                loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('LoginAnalyticsModule');
+                    }],
+                  translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                      $translatePartialLoader.addPart('console');
+                      return $translate.refresh();
+                  }],
+                  authorize: ['Auth',
+                      function(Auth) {
+                          return Auth.authorize(false);
+                      }
+                  ]
+              }
+            })
+            .state('associatesLoginAnalytics', {
+              parent: 'console',
+              url: '/associates/useranalytics',
+              data: {
+                  roles: ['ASSOCIATES'],
+                  pageTitle: 'console.page-title.login-analytics'
+              },
+              views: {
+                  'content@': {
+                      templateUrl: 'scripts/modules/common/console/loginanalytics/views/associates/view.html',
+                      controller: 'loginAnalyticsController'
+                  }
+              },
+              resolve: {
+                loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('LoginAnalyticsModule');
+                    }],
+                  translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                      $translatePartialLoader.addPart('console');
+                      return $translate.refresh();
+                  }],
+                  authorize: ['Auth',
+                      function(Auth) {
+                          return Auth.authorize(false);
+                      }
+                  ]
+              }
             });
 }]);

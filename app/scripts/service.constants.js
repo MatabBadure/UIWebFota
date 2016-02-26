@@ -138,4 +138,33 @@ angular.module('hillromvestApp').constant('hcpServiceConstants', {
 	}
 });
 
+angular.module('hillromvestApp').constant('pdfServiceConstants', {
+    text : {
+        hillrom : 'HillRom',
+        visiviewHealthPortal: 'VisiView™ Health Portal',
+        hillromOverview: "Hillrom | Overview",
+        reportGenerationDate: "Report Generation Date ",
+        hcpName: "HCP Name: ",
+        date: "Date: ",
+        signature: "Signature: ",
+        name: "Name: "
+    },
+    style:{
+        font:{
+            helvetica: "helvetica",
+            bold: "bold",
+            normal: "normal"
+        }
+    },
+    pdfDraw:{
+        p: "p",
+        pt: "pt",
+        a4: "a4",
+        line:{
+            f: "F"
+        }
+    }
+});
+
+
 
