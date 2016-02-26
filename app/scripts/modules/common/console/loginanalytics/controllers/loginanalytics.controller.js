@@ -575,10 +575,10 @@ angular.module('hillromvestApp')
 				  	if(series.name.toLowerCase() === loginAnalyticsConstants.legends.HCP){
 				  		$scope.categoryChartData.series[key].color = loginAnalyticsConstants.colors.HCP;
 				  	}
-				  	if(series.name.toLowerCase() === loginAnalyticsConstants.legends.CLINICADMIN){
+				  	if(series.name.toLowerCase().replace(' ', '') === loginAnalyticsConstants.legends.CLINICADMIN){
 				  		$scope.categoryChartData.series[key].color = loginAnalyticsConstants.colors.CLINICADMIN;
 				  	}
-				  	if(series.name.toLowerCase() === loginAnalyticsConstants.legends.CAREGIVER){
+				  	if(series.name.toLowerCase().replace(' ', '') === loginAnalyticsConstants.legends.CAREGIVER){
 				  		$scope.categoryChartData.series[key].color = loginAnalyticsConstants.colors.CAREGIVER;
 				  	}
 				  }
@@ -591,10 +591,10 @@ angular.module('hillromvestApp')
 				  	if($scope.categoryChartData.series.length === 1 && $scope.categoryChartData.xAxis.categories[0].toLowerCase() === loginAnalyticsConstants.legends.HCP){
 				  		$scope.categoryChartData.series[0].data[index].color = loginAnalyticsConstants.colors.HCP;
 				  	}
-				  	if($scope.categoryChartData.series.length === 1 && $scope.categoryChartData.xAxis.categories[0].toLowerCase() === loginAnalyticsConstants.legends.CLINICADMIN){
+				  	if($scope.categoryChartData.series.length === 1 && $scope.categoryChartData.xAxis.categories[0].toLowerCase().replace(' ', '') === loginAnalyticsConstants.legends.CLINICADMIN){
 				  		$scope.categoryChartData.series[0].data[index].color = loginAnalyticsConstants.colors.CLINICADMIN;
 				  	}
-				  	if($scope.categoryChartData.series.length === 1 && $scope.categoryChartData.xAxis.categories[0].toLowerCase() === loginAnalyticsConstants.legends.CAREGIVER){
+				  	if($scope.categoryChartData.series.length === 1 && $scope.categoryChartData.xAxis.categories[0].toLowerCase().replace(' ', '') === loginAnalyticsConstants.legends.CAREGIVER){
 				  		$scope.categoryChartData.series[0].data[index].color = loginAnalyticsConstants.colors.CAREGIVER;
 				  	}
 				  }
