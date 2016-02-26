@@ -17,7 +17,7 @@ angular.module('hillromvestApp')
       */
       getLoginAnalytics: function(fromDate, toDate, filters, duration) {
         var url = URL.getLoginAnalytics.replace('FROM', fromDate).replace('TO', toDate).replace('FILTERS', filters).replace('DURATION', duration);
-        return $http.put(url, null,{
+        return $http.get(url,{
           headers: headerService.getHeader()
         }).success(function(response) {
           return response;
