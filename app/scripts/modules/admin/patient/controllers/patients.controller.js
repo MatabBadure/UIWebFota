@@ -180,7 +180,7 @@ angular.module('hillromvestApp')
         $scope.initpatientDemographic();
       }else if(currentRoute === 'patientEditProtocol' || currentRoute === 'patientEditProtocolRcadmin'){
         $scope.initpatientEditProtocol();
-      }else if(currentRoute === 'updatedProtocolDetail'){
+      }else if(currentRoute === 'updatedProtocolDetail' || currentRoute === 'updatedProtocolDetailRcadmin'){
         $scope.initUpdatedProtocolDetail();
       }
     };
@@ -751,7 +751,6 @@ angular.module('hillromvestApp')
         if($scope.protocolVerificationForm.$invalid || !$scope.captchaValid){
           return false;
         }
-        $scope.isVerificationModal = false;
         var data = {
           'password': $scope.password
         };
@@ -762,6 +761,8 @@ angular.module('hillromvestApp')
             }
           });
           patientService.editProtocol($stateParams.patientId, $rootScope.protocols).then(function(response){
+            $scope.isVerificationModal = false;
+            notyService.showMessage(response.data.message, 'success');
             if($scope.patientStatus.role === loginConstants.role.acctservices){
               $state.go('patientProtocolRcadmin', {'patientId': $stateParams.patientId});
             }else{
@@ -1011,10 +1012,10 @@ angular.module('hillromvestApp')
     };
 
     $scope.showPrtocolUpdateModal = function(){
+      $scope.submitted = true;
       if($scope.addProtocolForm.$invalid){
         return false;
       }
-      $scope.submitted = true;
       if($scope.protocol.id){
         delete $scope.protocol.id;
       }
@@ -1093,10 +1094,13 @@ angular.module('hillromvestApp')
     };
 
     $scope.openVerificationModal = function(){
+
       $scope.isAuthorizeFormSubmited = true;
       if($scope.authorizeForm.$invalid){
         return false;
       }
+      $rootScope.$broadcast('initializeCaptcha');
+      $scope.password = '';
       $scope.isVerificationModal = true;
     };
 
