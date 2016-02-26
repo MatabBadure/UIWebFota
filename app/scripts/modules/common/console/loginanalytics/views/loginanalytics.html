@@ -9,10 +9,10 @@
          <div class="col-md-5 col-sm-7 left_header_barchart reset-padding margin-top-sm graphview_text_color"><span>Graph View</span></div>
           <div class="right_header_barchart">
             <ul class="nav nav-pills pull-right ">
-				<li role="presentation" class="" ng-click="dayView()"><a href="" ng-class="{'active': durationview.day}">Day</a></li>
-				<li role="presentation" class="" ng-click="weekView()"><a href="" ng-class="{'active': durationview.week}">Week</a></li>
-				<li role="presentation" class="" ng-click="monthView()"><a href="" ng-class="{'active': durationview.month}">Month</a></li>
-				<li role="presentation" class="" ng-click="yearView()"><a href=""  ng-class="{'active': durationview.year}">Year</a></li>
+				<li role="presentation" class="" ng-click="dayView()"><a href="" ng-class="{'active': durationview.day, '': !durationview.day}">Day</a></li>
+				<li role="presentation" class="" ng-click="weekView()"><a href="" ng-class="{'active': durationview.week, '': !durationview.week}">Week</a></li>
+				<li role="presentation" class="" ng-click="monthView()"><a href="" ng-class="{'active': durationview.month, '': !durationview.month}">Month</a></li>
+				<li role="presentation" class="" ng-click="yearView()"><a href=""  ng-class="{'active': durationview.year, '': !durationview.year}">Year</a></li>
 				<li role="presentation" class="" id="dp1"><a href="" date-range-picker class="date-picker" ng-model="dates" parentEl="#dp1" options="opts" ><span class="icon-calendar"></span></a></li> <!-- ng-click="customDateRangeView()" -->				
             </ul>           
           </div>
@@ -28,7 +28,7 @@
 
       <!-- <highchart id="chart1" config="chartConfig" class="span9" ></highchart> -->
       <div class="col-md-16" class="all_graph_wrapper" style="height:400px;">	
-      <div id="containerDay" ng-init="dayView()" ng-show="dayChart"></div>
+      <div id="containerDay"  ng-show="dayChart"></div>
       <div id="containerNonDay" ng-if="!dayChart && !customDateRange"></div>
       <div id="containerCustom" ng-if="!dayChart && customDateRange"></div>
       </div>
@@ -77,7 +77,8 @@
 			</ul> -->
 		      	<!-- rectangle option -->
 				<ul class="nav nav-pills graph_color" ng-show="dayChart">
-		      	<li class="col-md-1 col-md-push-5 margin-right13 margin-left25" ng-click="changeLegends('patient')">
+		      	<li class="col-md-1 col-md-push-5 margin-right13 margin-left25">
+		      		<a href=""  ng-click="changeLegends('patient')">
              		<span>
 				        <label class="rect_patient" ng-class="{grey_color: !legends.isPatient}">
 				          <input type="checkbox" value="Normal" ng-disabled="disableLegends.patient" class="hidden">
@@ -85,8 +86,10 @@
 				        </label>
 				         <span class="radio-box-text rect_legend_text" translate="console.analytics.legends.patient"></span>
 			      	</span>
+			      	</a>
 		      	</li>
-		      	<li class="col-md-1 col-md-push-5 col-md-offset-1" ng-click="changeLegends('hcp')">
+		      	<li class="col-md-1 col-md-push-5 col-md-offset-1">
+		      		<a href="" ng-click="changeLegends('hcp')">
              		<span>
 				        <label class="rect_hcp"  ng-class="{grey_color: !legends.isHCP}">
 				          <input type="checkbox"  value="Normal" ng-disabled="disableLegends.hcp" class="hidden">
@@ -94,8 +97,10 @@
 				        </label>
 				          <span class="radio-box-text rect_legend_text" translate="console.analytics.legends.hcp"></span>
 			      	</span>
+			      	</a>
 		      	</li>
-		      	<li class="col-md-2 col-md-push-5 col-md-offset-1" ng-click="changeLegends('clinicadmin')">
+		      	<li class="col-md-2 col-md-push-5 col-md-offset-1">
+		      		<a href=""  ng-click="changeLegends('clinicadmin')">
              		<span>
              		   <label class="rect_clinic"  ng-class="{grey_color: !legends.isClinicAdmin}"  >
 				          <input type="checkbox" value="Normal" ng-disabled="disableLegends.clinicadmin" class="hidden">
@@ -103,8 +108,10 @@
 				        </label>
 				        <span class="radio-box-text rect_legend_text" translate="console.analytics.legends.clinicadmin"></span>
 			      	</span>
+			      	</a>
 		      	</li>
-		      	<li class="col-md-3 margin-left30 col-md-push-5" ng-click="changeLegends('caregiver')">
+		      	<li class="col-md-3 margin-left30 col-md-push-5">
+		      		<a href="" ng-click="changeLegends('caregiver')">
              		<span>
 				        <label class="rect_caregiver" ng-class="{grey_color: !legends.isCaregiver}">
 				          <input type="checkbox"  value="Normal" ng-disabled="disableLegends.caregiver" class="hidden">
@@ -112,6 +119,7 @@
 				        </label>
 				        <span class="radio-box-text rect_legend_text" translate="console.analytics.legends.caregiver"></span>
 			      	</span>
+			      	</a>
 		      	</li>
 		      	
             	</ul>

@@ -45,7 +45,7 @@ angular.module('hillromvestApp')
 		$scope.opts = {
 			maxDate: new Date(),
 			format: patientDashboard.dateFormat,
-			dateLimit: {"months":patientDashboard.maxDurationInMonths},
+			//dateLimit: {"months":patientDashboard.maxDurationInMonths},
 			eventHandlers: {'apply.daterangepicker': function(ev, picker) {       	       
 				$scope.calculateDateFromPicker(picker);	        
 				$scope.selectedDateOption = '';	 
@@ -60,14 +60,15 @@ angular.module('hillromvestApp')
 			$scope.toTimeStamp = new Date().getTime();
 			$scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
 			$scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');
+			$scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
 		};
 		
     	$scope.dates = {startDate: $scope.fromDate, endDate: $scope.fromDate};
-    	$scope.dayChart = true;
+    	$scope.dayChart = false;
 		$scope.customDateRange = false;
 		$scope.timerange = {};
-		$scope.timerange.day = true;
-		$scope.timerange.week = false;
+		$scope.timerange.day = false;
+		$scope.timerange.week = true;
 		$scope.timerange.month = false;
 		$scope.timerange.year = false;
 		$scope.timerange.customTime = false;
@@ -99,6 +100,7 @@ angular.module('hillromvestApp')
 		*/	
 		$scope.analyticsInit = function(){
 			$scope.defaultLegends();
+			$scope.weekView();
 			//$scope.dayView();
 			// call the API or get the mock data
 		};
@@ -204,13 +206,15 @@ angular.module('hillromvestApp')
 		            min: 0,
 		            title: {
 		                text: 'No. Of Logins'
-		            }
+		            },
+		             allowDecimals:false
 		        },
         	 	legend: {		            		           
 			        enabled: false
 		        },
 		        plotOptions: {
 		            series: {
+		            	pointWidth: 50,
 		                events: {
 		                    legendItemClick: function () {
 		                    		var self = this,
@@ -228,23 +232,25 @@ angular.module('hillromvestApp')
 		                }
 		            }
 		        },
-				tooltip: {
+				tooltip: {					
 					crosshairs: [{		                
 		                dashStyle: 'solid',
 		                color: '#b4e6f6'
 		            },
 		            false],
-		            hideDelay: 5, //tooltip will get hidden in 5 mili seconds on mouse event
-		            borderWidth: 1,
-		            borderColor: '#4E95C4',
-		            backgroundColor: "#ffffff",//rgba(255,255,255,0)
-		            //shadow: false,
-					headerFormat: '<span style="font-size:15px; font-weight: bold; padding-bottom: 5px;">{point.key}</span><table>',				
-					pointFormat: '<tr style="font-size:10px; font-weight: bold;"><td style="color:{point.color};padding:0">{series.name}: </td>' +
-					'<td style="padding:0"><b>{point.y}</b></td></tr>',
-					footerFormat: '</table>',
-					shared: true,
-					useHTML: true
+					formatter: function() {
+				        var s = '<span style="font-size:15px; font-weight: bold; padding-bottom: 5px;">'+   this.x  +'</span><table>';
+
+				        $.each(this.points, function(i, point) {
+				            s += '<tr style="font-size:10px; font-weight: bold;"><td style="color:'+ point.series.color +';padding:0"> ' + point.series.name + '</td> ' 
+				            + '<td style="padding:0"><b>' + point.y + '</b></td></tr>';
+				        });
+				        s += '</table>';
+
+				        return s;
+				    },
+					useHTML: true,				
+    				shared: true
 				},
 				series: $.extend(true, [], $scope.categoryChartData.series),
 				loading: true,
@@ -273,7 +279,8 @@ angular.module('hillromvestApp')
 		            min: 0,
 		            title: {
 		                text: 'No. Of Logins'
-		            }
+		            },
+		            allowDecimals:false
 		        },
         	 	legend: {		            
 		            align: 'center',
@@ -300,23 +307,25 @@ angular.module('hillromvestApp')
 		                }
 		            }
 		        },
-				tooltip: {
+				tooltip: {					
 					crosshairs: [{		                
 		                dashStyle: 'solid',
 		                color: '#b4e6f6'
 		            },
 		            false],
-		            hideDelay: 5, //tooltip will get hidden in 5 mili seconds on mouse event
-		            borderWidth: 1,
-		            borderColor: '#4E95C4',
-		            backgroundColor: "#ffffff",//rgba(255,255,255,0)
-		            //shadow: false,
-					headerFormat: '<span style="font-size:15px; font-weight: bold; padding-bottom: 5px;">{point.key}</span><table>',				
-					pointFormat: '<tr style="font-size:10px; font-weight: bold;"><td style="color:{point.color};padding:0">{series.name}: </td>' +
-					'<td style="padding:0"><b>{point.y}</b></td></tr>',
-					footerFormat: '</table>',
-					shared: true,
-					useHTML: true
+					formatter: function() {
+				        var s = '<span style="font-size:15px; font-weight: bold; padding-bottom: 5px;">'+   this.x  +'</span><table>';
+
+				        $.each(this.points, function(i, point) {
+				            s += '<tr style="font-size:10px; font-weight: bold;"><td style="color:'+ point.series.color +';padding:0"> ' + point.series.name + '</td> ' 
+				            + '<td style="padding:0"><b>' + point.y + '</b></td></tr>';
+				        });
+				        s += '</table>';
+
+				        return s;
+				    },
+					useHTML: true,				
+    				shared: true					
 				},
 				series: $.extend(true, [], $scope.categoryChartData.series),
 				loading: true,
@@ -335,8 +344,7 @@ angular.module('hillromvestApp')
 		            text: ''
 		        },		      	
 		      	xAxis:{		      		
-					type: 'datetime',
-					//crosshair: true,					
+					type: 'datetime',					
 		            title: {
 		                text: ''
 		            },
@@ -346,9 +354,12 @@ angular.module('hillromvestApp')
 		            endOnTick: false,
 		            labels:{
 		            	formatter:function(){
-		              	return Highcharts.dateFormat('%e. %b',this.value);
-		              }
+		              	return  Highcharts.dateFormat("%e/%m/%Y",this.value);//Highcharts.dateFormat('%e. %b',this.value);
+		              }		              
 		            }	
+		           /* dateTimeLabelFormats:{
+			            month: '%b %e, %Y'
+			          }*/
 				},
 
 				yAxis: {
@@ -358,7 +369,8 @@ angular.module('hillromvestApp')
 		            min: 0,
 		            title: {
 		                text: 'No. Of Logins'
-		            }
+		            },
+		             allowDecimals:false
 		        },
         	 	legend: {		            
 					align: 'center',
@@ -385,22 +397,25 @@ angular.module('hillromvestApp')
 		                }
 		            }
 		        },
-				tooltip: {
+				tooltip: {					
 					crosshairs: [{		                
 		                dashStyle: 'solid',
 		                color: '#b4e6f6'
 		            },
 		            false],
-		            hideDelay: 5, //tooltip will get hidden in 5 mili seconds on mouse event
-		            borderWidth: 1,
-		            borderColor: '#4E95C4',
-		            backgroundColor: "#ffffff",//rgba(255,255,255,0)
-					headerFormat: '<span style="font-size:14px">{point.key}</span><table>',				
-					pointFormat: '<tr><td style="color:{point.color};padding:0">{series.name}: </td>' +
-					'<td style="padding:0"><b>{point.y}</b></td></tr>',
-					footerFormat: '</table>',
-					shared: true,
-					useHTML: true
+					formatter: function() {
+				        var s = '<span style="font-size:15px; font-weight: bold; padding-bottom: 5px;">'+  Highcharts.dateFormat('%e/%m/%Y', this.x) +'</span><table>';
+
+				        $.each(this.points, function(i, point) {
+				            s += '<tr style="font-size:10px; font-weight: bold;"><td style="color:'+ point.series.color +';padding:0"> ' + point.series.name + '</td> ' 
+				            + '<td style="padding:0"><b>' + point.y + '</b></td></tr>';
+				        });
+				        s += '</table>';
+
+				        return s;
+				    },
+					useHTML: true,				
+    				shared: true
 				},
 				series: $.extend(true, [], $scope.categoryChartData.series),				
 				loading: true,
@@ -491,11 +506,15 @@ angular.module('hillromvestApp')
 		};
 
 		$scope.customDateRangeView = function(){
-			$scope.defaultLegends(); //if the legends selected eariler has to be retained then remove this line
-			$scope.dayChart = false;
-			$scope.customDateRange = true;
-			$scope.toggleDuration(false, false, false, false, true);
-			$scope.getCategoryChartData(loginAnalyticsConstants.duration.CUSTOM);			
+			if ($scope.fromDate === $scope.toDate ) {
+				$scope.dayView();
+			}else{
+				$scope.defaultLegends(); //if the legends selected eariler has to be retained then remove this line
+				$scope.dayChart = false;
+				$scope.customDateRange = true;
+				$scope.toggleDuration(false, false, false, false, true);
+				$scope.getCategoryChartData(loginAnalyticsConstants.duration.CUSTOM);	
+			}				
 		};
 
 		$scope.downloadGraphAsPdf = function(){
@@ -564,30 +583,31 @@ angular.module('hillromvestApp')
 				  }
 				  angular.forEach(series.data, function(data, index) {
 				  if($scope.durationview.day){
-				  	if($scope.categoryChartData.series.length === 1 && $scope.categoryChartData.xAxis.categories[0] === loginAnalyticsConstants.legends.PATIENT){
+				  	console.log($scope.categoryChartData.series.length, $scope.categoryChartData.xAxis.categories[0]);
+				  	if($scope.categoryChartData.series.length === 1 && $scope.categoryChartData.xAxis.categories[0].toLowerCase() === loginAnalyticsConstants.legends.PATIENT){
 				  		$scope.categoryChartData.series[0].data[index].color = loginAnalyticsConstants.colors.PATIENT;
 				  	}
-				  	if($scope.categoryChartData.series.length === 1 && $scope.categoryChartData.xAxis.categories[0] === loginAnalyticsConstants.legends.HCP){
+				  	if($scope.categoryChartData.series.length === 1 && $scope.categoryChartData.xAxis.categories[0].toLowerCase() === loginAnalyticsConstants.legends.HCP){
 				  		$scope.categoryChartData.series[0].data[index].color = loginAnalyticsConstants.colors.HCP;
 				  	}
-				  	if($scope.categoryChartData.series.length === 1 && $scope.categoryChartData.xAxis.categories[0] === loginAnalyticsConstants.legends.CLINICADMIN){
+				  	if($scope.categoryChartData.series.length === 1 && $scope.categoryChartData.xAxis.categories[0].toLowerCase() === loginAnalyticsConstants.legends.CLINICADMIN){
 				  		$scope.categoryChartData.series[0].data[index].color = loginAnalyticsConstants.colors.CLINICADMIN;
 				  	}
-				  	if($scope.categoryChartData.series.length === 1 && $scope.categoryChartData.xAxis.categories[0] === loginAnalyticsConstants.legends.CAREGIVER){
+				  	if($scope.categoryChartData.series.length === 1 && $scope.categoryChartData.xAxis.categories[0].toLowerCase() === loginAnalyticsConstants.legends.CAREGIVER){
 				  		$scope.categoryChartData.series[0].data[index].color = loginAnalyticsConstants.colors.CAREGIVER;
 				  	}
 				  }
-				  if($scope.categoryChartData.series[key].data[index].x )	{
-				  	$scope.categoryChartData.series[key].data[index].x = convertToTimestamp(data.x);				  	
+				  if($scope.categoryChartData.series[key].data[index].x )	{				  	
+				  	$scope.categoryChartData.series[key].data[index].x = convertToTimestamp(data.x);				  					  	
 				  }	  					  	
 				  if($scope.categoryChartData.series[key].data[index].y ){
 				  	$scope.categoryChartData.series[key].data[index].y = parseInt($scope.categoryChartData.series[key].data[index].y);
 				  }
 
-				  	
+				  	console.log("process data : ",$scope.categoryChartData);
 				  });
 				});	
-				console.log("processed data : ", $scope.categoryChartData);				
+				
 				if(duration === loginAnalyticsConstants.duration.CUSTOM){
 					setTimeout(function(){ 														
 						$scope.updateChart();
