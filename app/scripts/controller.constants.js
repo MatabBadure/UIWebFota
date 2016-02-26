@@ -172,7 +172,8 @@ angular.module('hillromvestApp').constant('hcpDashboardConstants', {
 		"HCP": "#35978f",
 		"CLINICADMIN": "#4d95c4",
 		"CAREGIVER": "#8b6baf"
-	}
+	},
+
 })
 
 
