@@ -34,13 +34,13 @@ angular.module('hillromvestApp')
     
     pdf.setFont(pdfServiceConstants.style.font.helvetica);
     pdf.setFontType(pdfServiceConstants.style.font.bold);   
-    pdf.setFontSize(6);
+    pdf.setFontSize(8);
     pdf.setTextColor(0,0,0);
     pdf.text(margins.left,   margins.titleTop-15, dateService.getDateFromTimeStamp(new Date().getTime(), patientDashboard.dateFormat, "/"));
 
     pdf.setFont(pdfServiceConstants.style.font.helvetica);   
     pdf.setFontType(pdfServiceConstants.style.font.bold);
-    pdf.setFontSize(6);
+    pdf.setFontSize(8);
     pdf.setTextColor(0,0,0);
     pdf.text(margins.width-305,   margins.titleTop-15, pdfServiceConstants.text.hillromOverview);
 
@@ -62,15 +62,15 @@ angular.module('hillromvestApp')
 
     pdf.setFont(pdfServiceConstants.style.font.helvetica); 
     pdf.setFontType(pdfServiceConstants.style.font.normal);        
-    pdf.setFontSize(6);
+    pdf.setFontSize(8);
     pdf.setTextColor(0, 0, 0);
     pdf.text(margins.left,   margins.titleTop+30, pdfServiceConstants.text.reportGenerationDate);
 
     pdf.setFont(pdfServiceConstants.style.font.helvetica); 
     pdf.setFontType(pdfServiceConstants.style.font.normal);        
-    pdf.setFontSize(6);
+    pdf.setFontSize(8);
     pdf.setTextColor(128, 179, 227);
-    pdf.text(margins.left+69,   margins.titleTop+30, dateService.getDateFromTimeStamp(new Date().getTime(),patientDashboard.dateFormat,'/'));
+    pdf.text(margins.left+90,   margins.titleTop+30, dateService.getDateFromTimeStamp(new Date().getTime(),patientDashboard.dateFormat,'/'));
 
     return pdf;
   }
@@ -80,7 +80,7 @@ angular.module('hillromvestApp')
     // the complete set i.e. name, date and signature is of height 50 px. 
     pdf.setFont(pdfServiceConstants.style.font.helvetica); 
     pdf.setFontType(pdfServiceConstants.style.font.bold);        
-    pdf.setFontSize(10);
+    pdf.setFontSize(8);
     pdf.setTextColor(0, 0, 0);  
     pdf.text(40,imgY, name);
     pdf.line(90, imgY+4, 350,imgY+4); //left, top, right, top
@@ -100,9 +100,9 @@ angular.module('hillromvestApp')
   }
 
   this.addSvgToPDF = function(pdf, canvasId, svgId, imageX, imageY, imageWidth, imageHeight){
-    var canvas = document.getElementById('loginAnalyticsCanvas');               
-    var ctx = canvas.getContext('2d');  
-    var htmlString =  $("#"+svgId).find("svg").parent().html().trim().replace(/xmlns=\"http:\/\/www\.w3\.org\/2000\/svg\"/, '');          
+    var canvas = document.getElementById('loginAnalyticsCanvas');              
+    var ctx = canvas.getContext('2d');      
+    var htmlString =  $("#"+svgId).find("svg").parent().html().trim().replace(/xmlns=\"http:\/\/www\.w3\.org\/2000\/svg\"/, '').replace(/&quot;/g, "'");
     canvg(canvas, htmlString);
     var img = $("#loginAnalyticsCanvas")[0].toDataURL('image/png', 1.0);
     pdf.addImage(img, 'png', imageX, imageY, imageWidth, imageHeight);
@@ -113,8 +113,8 @@ angular.module('hillromvestApp')
     var pdf = this.getPdf();
     var pageHeight = pdf.internal.pageSize.height;
     var pageWidth = pdf.internal.pageSize.width;
-    pdf = this.addSvgToPDF(pdf, 'loginAnalyticsCanvas', svgId, 20, 150, 540, 200);
     pdf = this.setHeader(pdf);
+    pdf = this.addSvgToPDF(pdf, 'loginAnalyticsCanvas', svgId, 20, 150, 540, 200);    
     pdf = this.setFooter(pdf, pdf.internal.pageSize.height-80, pdfServiceConstants.text.name);
     setTimeout(function(){     
       pdf.save('VisiView™.pdf'); 

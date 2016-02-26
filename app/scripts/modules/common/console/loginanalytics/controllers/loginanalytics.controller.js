@@ -54,6 +54,13 @@ angular.module('hillromvestApp')
 				opens: 'left'
 			}
 		}
+
+		$scope.resetTimeDurationForToday =function(){
+			$scope.fromTimeStamp = new Date().getTime();
+			$scope.toTimeStamp = new Date().getTime();
+			$scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
+			$scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');
+		};
 		
     	$scope.dates = {startDate: $scope.fromDate, endDate: $scope.fromDate};
     	$scope.dayChart = true;
@@ -70,10 +77,7 @@ angular.module('hillromvestApp')
 		$scope.durationview.month = false;
 		$scope.durationview.year = false;
 		$scope.durationview.custom = false;
-		$scope.fromTimeStamp = new Date().getTime();
-		$scope.toTimeStamp = new Date().getTime();
-		$scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
-		$scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');
+		$scope.resetTimeDurationForToday();
 
 		$scope.defaultLegends = function(){			
 			$scope.legends = {};			
@@ -332,7 +336,7 @@ angular.module('hillromvestApp')
 		        },		      	
 		      	xAxis:{		      		
 					type: 'datetime',
-					crosshair: true,					
+					//crosshair: true,					
 		            title: {
 		                text: ''
 		            },
@@ -382,6 +386,15 @@ angular.module('hillromvestApp')
 		            }
 		        },
 				tooltip: {
+					crosshairs: [{		                
+		                dashStyle: 'solid',
+		                color: '#b4e6f6'
+		            },
+		            false],
+		            hideDelay: 5, //tooltip will get hidden in 5 mili seconds on mouse event
+		            borderWidth: 1,
+		            borderColor: '#4E95C4',
+		            backgroundColor: "#ffffff",//rgba(255,255,255,0)
 					headerFormat: '<span style="font-size:14px">{point.key}</span><table>',				
 					pointFormat: '<tr><td style="color:{point.color};padding:0">{series.name}: </td>' +
 					'<td style="padding:0"><b>{point.y}</b></td></tr>',
@@ -445,9 +458,8 @@ angular.module('hillromvestApp')
 			$scope.dayChart = true;
 			$scope.customDateRange = false;
 			$scope.toggleDuration(true, false, false, false, false);
-			$scope.getCategoryChartData(loginAnalyticsConstants.duration.DAY);
-			$scope.categoryChartData = loginAnalyticsData.dayData;	
-			$scope.updateChart();
+			$scope.resetTimeDurationForToday();
+			$scope.getCategoryChartData(loginAnalyticsConstants.duration.DAY);			
 			
 		};
 
@@ -457,11 +469,7 @@ angular.module('hillromvestApp')
 			$scope.customDateRange = false;
 			$scope.toggleDuration(false, true, false, false, false);
 			$scope.calculateTimeDuration(6);
-			$scope.getCategoryChartData(loginAnalyticsConstants.duration.WEEK);
-			setTimeout(function(){ 
-				$scope.categoryChartData = loginAnalyticsData.weekData;
-				$scope.updateChart();
-			},10);
+			$scope.getCategoryChartData(loginAnalyticsConstants.duration.WEEK);			
 		};
 
 		$scope.monthView = function(){	
@@ -470,11 +478,7 @@ angular.module('hillromvestApp')
 			$scope.customDateRange = false;	
 			$scope.toggleDuration(false, false, true, false, false);
 			$scope.calculateTimeDuration(30);
-			$scope.getCategoryChartData(loginAnalyticsConstants.duration.MONTH);
-			setTimeout(function(){ 	
-				$scope.categoryChartData = loginAnalyticsData.monthData;			
-				$scope.updateChart();	
-			},10);			
+			$scope.getCategoryChartData(loginAnalyticsConstants.duration.MONTH);				
 		};
 
 		$scope.yearView = function(){
@@ -483,11 +487,7 @@ angular.module('hillromvestApp')
 			$scope.customDateRange = false;
 			$scope.toggleDuration(false, false, false, true, false);
 			$scope.calculateTimeDuration(365);
-			$scope.getCategoryChartData(loginAnalyticsConstants.duration.YEAR);
-			setTimeout(function(){ 
-				$scope.categoryChartData = loginAnalyticsData.yearData;			
-				$scope.updateChart();
-			},10);
+			$scope.getCategoryChartData(loginAnalyticsConstants.duration.YEAR);			
 		};
 
 		$scope.customDateRangeView = function(){
@@ -495,16 +495,7 @@ angular.module('hillromvestApp')
 			$scope.dayChart = false;
 			$scope.customDateRange = true;
 			$scope.toggleDuration(false, false, false, false, true);
-			$scope.getCategoryChartData(loginAnalyticsConstants.duration.CUSTOM);
-			setTimeout(function(){ 
-			$scope.categoryChartData = loginAnalyticsData.customDateRangeData;			
-				angular.forEach($scope.categoryChartData.series, function(series, key) {
-				  angular.forEach(series.data, function(data, index) {			  	
-				  	$scope.categoryChartData.series[key].data[index].x = convertToTimestamp(data.x);
-				  });
-				});						
-				$scope.updateChart();
-			},10);
+			$scope.getCategoryChartData(loginAnalyticsConstants.duration.CUSTOM);			
 		};
 
 		$scope.downloadGraphAsPdf = function(){
@@ -528,20 +519,19 @@ angular.module('hillromvestApp')
 		   return 'unknown';
 		  }
 		  
-			function convertToTimestamp(date){				
-				if(date && (date.toString()).indexOf("/") > -1 && date.indexOf(" ") > -1 ){
-					var dateTime = date.split(" ");
-					var startDate = dateTime[0].split("/"); // turning it from MM/DD/YYYY HH:MM:SS to timestamp
-					var formattedDate = startDate[2] + "-" + startDate[0] + "-" + startDate[1] + " " + dateTime[1];
-					if(isChrome().indexOf("chrome") !== -1){
+		function convertToTimestamp(date){		
+				if(date && (date.toString()).indexOf("/") > -1){					
+					var startDate = date.split("/"); // turning it from MM/DD/YYYY HH:MM:SS to timestamp
+					var formattedDate = startDate[2] + "-" + startDate[0] + "-" + startDate[1];
+					if(isChrome().indexOf("chrome") !== -1){						
 						return new Date(formattedDate).getTime();
-					}else{
+					}else{						
 						return new Date(formattedDate.replace(/\s/, 'T')).getTime();
 					}
 				}else{
 					return date;
 				}
-		  }
+		 }
 	
 		 $scope.toggleDuration = function(day, week, month, year, custom){
 		 	$scope.durationview.day = day;
@@ -555,19 +545,55 @@ angular.module('hillromvestApp')
 		 	var filters = $scope.getSelectedUserRoles();
 			loginanalyticsService.getLoginAnalytics( dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), filters, duration).then(function(response) {
 				// set the categorychartdata
+				
+				$scope.categoryChartData = response.data;				
+				angular.forEach($scope.categoryChartData.series, function(series, key) {
+				  if(!$scope.durationview.day){
+				  	if(series.name.toLowerCase() === loginAnalyticsConstants.legends.PATIENT){
+				  		$scope.categoryChartData.series[key].color = loginAnalyticsConstants.colors.PATIENT;
+				  	}
+				  	if(series.name.toLowerCase() === loginAnalyticsConstants.legends.HCP){
+				  		$scope.categoryChartData.series[key].color = loginAnalyticsConstants.colors.HCP;
+				  	}
+				  	if(series.name.toLowerCase() === loginAnalyticsConstants.legends.CLINICADMIN){
+				  		$scope.categoryChartData.series[key].color = loginAnalyticsConstants.colors.CLINICADMIN;
+				  	}
+				  	if(series.name.toLowerCase() === loginAnalyticsConstants.legends.CAREGIVER){
+				  		$scope.categoryChartData.series[key].color = loginAnalyticsConstants.colors.CAREGIVER;
+				  	}
+				  }
+				  angular.forEach(series.data, function(data, index) {
+				  if($scope.durationview.day){
+				  	if($scope.categoryChartData.series.length === 1 && $scope.categoryChartData.xAxis.categories[0] === loginAnalyticsConstants.legends.PATIENT){
+				  		$scope.categoryChartData.series[0].data[index].color = loginAnalyticsConstants.colors.PATIENT;
+				  	}
+				  	if($scope.categoryChartData.series.length === 1 && $scope.categoryChartData.xAxis.categories[0] === loginAnalyticsConstants.legends.HCP){
+				  		$scope.categoryChartData.series[0].data[index].color = loginAnalyticsConstants.colors.HCP;
+				  	}
+				  	if($scope.categoryChartData.series.length === 1 && $scope.categoryChartData.xAxis.categories[0] === loginAnalyticsConstants.legends.CLINICADMIN){
+				  		$scope.categoryChartData.series[0].data[index].color = loginAnalyticsConstants.colors.CLINICADMIN;
+				  	}
+				  	if($scope.categoryChartData.series.length === 1 && $scope.categoryChartData.xAxis.categories[0] === loginAnalyticsConstants.legends.CAREGIVER){
+				  		$scope.categoryChartData.series[0].data[index].color = loginAnalyticsConstants.colors.CAREGIVER;
+				  	}
+				  }
+				  if($scope.categoryChartData.series[key].data[index].x )	{
+				  	$scope.categoryChartData.series[key].data[index].x = convertToTimestamp(data.x);				  	
+				  }	  					  	
+				  if($scope.categoryChartData.series[key].data[index].y ){
+				  	$scope.categoryChartData.series[key].data[index].y = parseInt($scope.categoryChartData.series[key].data[index].y);
+				  }
+
+				  	
+				  });
+				});	
+				console.log("processed data : ", $scope.categoryChartData);				
 				if(duration === loginAnalyticsConstants.duration.CUSTOM){
-					setTimeout(function(){ 
-					$scope.categoryChartData = loginAnalyticsData.customDateRangeData;			
-						angular.forEach($scope.categoryChartData.series, function(series, key) {
-						  angular.forEach(series.data, function(data, index) {			  	
-						  	$scope.categoryChartData.series[key].data[index].x = convertToTimestamp(data.x);
-						  });
-						});						
+					setTimeout(function(){ 														
 						$scope.updateChart();
 					},10);
 				}else{
-					setTimeout(function(){ 
-						$scope.categoryChartData = loginAnalyticsData.yearData;			
+					setTimeout(function(){ 								
 						$scope.updateChart();
 					},10);					
 				}
@@ -595,28 +621,28 @@ angular.module('hillromvestApp')
 		 	var userRoles = "";
 		 	var count = 0;
 		 	if($scope.legends.isPatient){
-		 		userRoles = userRoles + loginAnalyticsConstants.legends.PATIENT;
+		 		userRoles = userRoles + loginAnalyticsConstants.filters.PATIENT;
 		 		count++;
 		 	}
 		 	if($scope.legends.isHCP){
 		 		if(count > 0){
 		 			userRoles = userRoles + loginAnalyticsConstants.string.COMMA;
 		 		}
-		 		userRoles = userRoles + loginAnalyticsConstants.legends.HCP;
+		 		userRoles = userRoles + loginAnalyticsConstants.filters.HCP;
 		 		count++;
 		 	}
 		 	if($scope.legends.isClinicAdmin){
 		 		if(count > 0){
 		 			userRoles = userRoles + loginAnalyticsConstants.string.COMMA;
 		 		}
-		 		userRoles = userRoles + loginAnalyticsConstants.legends.CLINICADMIN;
+		 		userRoles = userRoles + loginAnalyticsConstants.filters.CLINICADMIN;
 		 		count++;
 		 	}
 		 	if($scope.legends.isCaregiver){
 		 		if(count > 0){
 		 			userRoles = userRoles + loginAnalyticsConstants.string.COMMA;
 		 		}
-		 		userRoles = userRoles + loginAnalyticsConstants.legends.CAREGIVER;
+		 		userRoles = userRoles + loginAnalyticsConstants.filters.CAREGIVER;
 		 	}
 		 	return userRoles;
 		 };		 

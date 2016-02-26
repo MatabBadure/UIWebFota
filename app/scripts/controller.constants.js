@@ -160,6 +160,18 @@ angular.module('hillromvestApp').constant('hcpDashboardConstants', {
 	},
 	string:{
 		"COMMA": ","
+	},
+	filters:{
+		"PATIENT": "PATIENT",
+		"HCP": "HCP",
+		"CLINICADMIN": "CLINIC_ADMIN",
+		"CAREGIVER": "CARE_GIVER"
+	},
+	colors:{
+		"PATIENT": "#ff9829",
+		"HCP": "#35978f",
+		"CLINICADMIN": "#4d95c4",
+		"CAREGIVER": "#8b6baf"
 	}
 })
 
