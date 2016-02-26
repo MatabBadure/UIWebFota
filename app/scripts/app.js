@@ -159,7 +159,8 @@ angular.module('hillromvestApp',
       {
         name: 'LoginAnalyticsModule',
         files: ['scripts/modules/common/console/loginanalytics/controllers/loginanalytics.controller.js',                
-                'bower_components/angular-daterangepicker/js/angular-daterangepicker.js']
+                'bower_components/angular-daterangepicker/js/angular-daterangepicker.js',
+                'https://code.highcharts.com/highcharts.js']
       }]
     });
   }])
