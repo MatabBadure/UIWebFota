@@ -566,13 +566,16 @@
 	left:0!important;
 }
 .rect_legend_text{
-	left:10px !important;
+	left:14px !important;
 }
 .rounded_clinic, .rounded_hcp, .rounded_caregiver, .rect_patient, .rect_caregiver, .rect_clinic, .rect_hcp{
 	border-radius:0 !important;
 }
 .rounded_hcp{
     transform: rotate(45deg);
+}
+.height30{
+	height:30px;
 }
 .rounded_patient, .rounded_hcp, .rounded_clinic, .rounded_caregiver, .rect_patient, .rect_caregiver, .rect_clinic, .rect_hcp {
     display: block;
@@ -583,7 +586,7 @@
     transition: all .5s ease;
     cursor: pointer;
     position: absolute;
-    top: -4px;
+    top: 0px;
     left: 4px;
 }
 .rounded_caregiver{
