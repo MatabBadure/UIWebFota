@@ -6,16 +6,21 @@
 
 'use strict';
 angular.module('hillromvestApp')
-.controller('loginAnalyticsController',['$scope', '$state', 'loginAnalyticsConstants', 'dateService', 'exportutilService', '$timeout', 'loginanalyticsService',
-	function($scope, $state, loginAnalyticsConstants, dateService, exportutilService, $timeout, loginanalyticsService) {	
+.controller('loginAnalyticsController',['$scope', '$state', 'loginAnalyticsConstants', 'dateService', 'exportutilService', '$timeout', 'loginanalyticsService', 'notyService',
+	function($scope, $state, loginAnalyticsConstants, dateService, exportutilService, $timeout, loginanalyticsService, notyService) {	
 		/*
 		* default legends and their accessibility
 		*/
 		$scope.calculateDateFromPicker = function(picker) {
 	      $scope.fromTimeStamp = new Date(picker.startDate._d).getTime();
-	      $scope.toTimeStamp = new Date(picker.endDate._d).getTime();
+	      var isPickerEndDate = (picker.oldEndDate._i).toString().indexOf("/") > -1 ? false : true;	     
+		  var endDate = new Date(new Date().getTime());
+		  endDate.setDate(new Date(picker.endDate._d).getDate() - 1);		  
+	      var enddateTimestamp = (isPickerEndDate) ?  new Date(picker.endDate._d).getTime() : endDate.getTime() ;  
+	      $scope.toTimeStamp = (new Date().getTime() < enddateTimestamp) ? new Date().getTime() : enddateTimestamp;   
+	      //$scope.toTimeStamp = (new Date().getTime() < new Date(picker.endDate._d).getTime()) ? new Date().getTime() : new Date(picker.endDate._d).getTime();
 	      $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
-	      $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');
+	      $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');	      
 	      if ($scope.fromDate === $scope.toDate ) {
 	        $scope.fromTimeStamp = $scope.toTimeStamp;
 	      }
@@ -46,10 +51,13 @@ angular.module('hillromvestApp')
 			maxDate: new Date(),
 			format: patientDashboard.dateFormat,
 			//dateLimit: {"months":patientDashboard.maxDurationInMonths},
-			eventHandlers: {'apply.daterangepicker': function(ev, picker) {       	       
-				$scope.calculateDateFromPicker(picker);	        
-				$scope.selectedDateOption = '';	 
+			eventHandlers: {'apply.daterangepicker': function(ev, picker) {  
+				$scope.calculateDateFromPicker(picker);	        				
 				$scope.customDateRangeView();  
+			},
+			'click.daterangepicker': function(ev, picker) {
+				$("#dp1cal").data('daterangepicker').setStartDate($scope.fromDate); 
+				$("#dp1cal").data('daterangepicker').setEndDate($scope.toDate); 				
 			},
 				opens: 'left'
 			}
@@ -78,6 +86,7 @@ angular.module('hillromvestApp')
 		$scope.durationview.month = false;
 		$scope.durationview.year = false;
 		$scope.durationview.custom = false;
+		$scope.isGraphLoaded = false;
 		$scope.resetTimeDurationForToday();
 
 		$scope.defaultLegends = function(){			
@@ -126,6 +135,8 @@ angular.module('hillromvestApp')
 					if(!$scope.legends.isPatient){
 						$scope.legends.isPatient = true;
 						$scope.dayView();	
+					}else{
+						notyService.showMessage(notyMessages.minComplianceError, notyMessages.typeWarning );
 					}
 					$scope.legends.isPatient = true;
 					$scope.disableLegends.patient = false;
@@ -133,6 +144,8 @@ angular.module('hillromvestApp')
 					if(!$scope.legends.isHCP){
 						$scope.legends.isHCP = true;
 						$scope.dayView();	
+					}else{
+						notyService.showMessage(notyMessages.minComplianceError, notyMessages.typeWarning );
 					}
 					$scope.legends.isHCP = true;
 					$scope.disableLegends.hcp = false;
@@ -140,6 +153,8 @@ angular.module('hillromvestApp')
 					if(!$scope.legends.isClinicAdmin){
 						$scope.legends.isClinicAdmin = true;
 						$scope.dayView();	
+					}else{
+						notyService.showMessage(notyMessages.minComplianceError, notyMessages.typeWarning );
 					}
 					$scope.legends.isClinicAdmin = true;
 					$scope.disableLegends.clinicadmin = false;
@@ -147,6 +162,8 @@ angular.module('hillromvestApp')
 					if(!$scope.legends.isCaregiver){
 						$scope.legends.isCaregiver = true;
 						$scope.dayView();	
+					}else{
+						notyService.showMessage(notyMessages.minComplianceError, notyMessages.typeWarning );
 					}
 					$scope.legends.isCaregiver = true;
 					$scope.disableLegends.caregiver = false;
@@ -183,6 +200,8 @@ angular.module('hillromvestApp')
 	      $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');
 	      $scope.fromTimeStamp = dateService.getnDaysBackTimeStamp(durationInDays);;
 	      $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
+	      $scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};	
+
 	    };
 		
 		$scope.drawCategoryChartForDay = function(){
@@ -197,17 +216,36 @@ angular.module('hillromvestApp')
 		        },		      	
 		      	xAxis:{					
 					type: 'category',					
-					categories: $scope.categoryChartData.xAxis.categories
-					},
+					categories: $scope.categoryChartData.xAxis.categories,
+					labels:{
+		            	style: {
+			                color: '#525151',
+			                font: '10px Helvetica',
+			                fontWeight: 'bold'
+			            }	              
+		            }	
+				},
 				yAxis: {
 					gridLineColor: '#FF0000',
 		            gridLineWidth: 0,
 		            lineWidth:1,
 		            min: 0,
 		            title: {
-		                text: 'No. Of Logins'
+		                text: 'No. Of Logins',
+		                style: {
+			                color: '#525151',
+			                font: '10px Helvetica',
+			                fontWeight: 'bold'
+			            }
 		            },
-		             allowDecimals:false
+					allowDecimals:false,
+					labels:{
+						style: {
+						    color: '#525151',
+						    font: '10px Helvetica',
+						    fontWeight: 'bold'
+						}		              
+					}	
 		        },
         	 	legend: {		            		           
 			        enabled: false
@@ -226,6 +264,9 @@ angular.module('hillromvestApp')
 		                            	allow = true;
 		                            }
 		                          });
+		                          if(!allow){
+		                          	notyService.showMessage(notyMessages.minComplianceError, notyMessages.typeWarning );
+		                          }
 		                          return allow;
 		                        }
 		                    }
@@ -249,6 +290,7 @@ angular.module('hillromvestApp')
 
 				        return s;
 				    },
+				    hideDelay: 0,
 					useHTML: true,				
     				shared: true
 				},
@@ -270,7 +312,14 @@ angular.module('hillromvestApp')
 		        },		      	
 		      	xAxis:{					
 					type: 'category',					
-					categories: $scope.categoryChartData.xAxis.categories
+					categories: $scope.categoryChartData.xAxis.categories,
+					labels:{
+			            	style: {
+				                color: '#525151',
+				                font: '10px Helvetica',
+				                fontWeight: 'bold'
+				            }		            		             
+			            }	
 					},
 				yAxis: {
 					gridLineColor: '#FF0000',
@@ -278,9 +327,21 @@ angular.module('hillromvestApp')
 		            lineWidth:1,
 		            min: 0,
 		            title: {
-		                text: 'No. Of Logins'
+		                text: 'No. Of Logins',
+		                style: {
+			                color: '#525151',
+			                font: '10px Helvetica',
+			                fontWeight: 'bold'
+			            }
 		            },
-		            allowDecimals:false
+		            allowDecimals:false,
+		            labels:{
+		            	style: {
+			                color: '#525151',
+			                font: '10px Helvetica',
+			                fontWeight: 'bold'
+			            }	            		              
+		            }	
 		        },
         	 	legend: {		            
 		            align: 'center',
@@ -301,6 +362,9 @@ angular.module('hillromvestApp')
 		                            	allow = true;
 		                            }
 		                          });
+		                          if(!allow){
+		                          	notyService.showMessage(notyMessages.minComplianceError, notyMessages.typeWarning );
+		                          }
 		                          return allow;
 		                        }
 		                    }
@@ -325,6 +389,7 @@ angular.module('hillromvestApp')
 
 				        return s;
 				    },
+				    hideDelay: 0,
 					useHTML: true,				
     				shared: true					
 				},
@@ -354,24 +419,38 @@ angular.module('hillromvestApp')
 		            startOnTick: false,
 		            endOnTick: false,
 		            labels:{
+		            	style: {
+			                color: '#525151',
+			                font: '10px Helvetica',
+			                fontWeight: 'bold'
+			            },
 		            	formatter:function(){
 		              	return  Highcharts.dateFormat("%e/%m/%Y",this.value);//Highcharts.dateFormat('%e. %b',this.value);
 		              }		              
-		            }	
-		           /* dateTimeLabelFormats:{
-			            month: '%b %e, %Y'
-			          }*/
-				},
-
+		            }			           
+				},				
 				yAxis: {
 					gridLineColor: '#FF0000',
 		            gridLineWidth: 0,
 		            lineWidth:1,
 		            min: 0,
+		            //max: $scope.yMax,
 		            title: {
-		                text: 'No. Of Logins'
+		                text: 'No. Of Logins',
+		                style:{
+			                color: '#525151',
+			                font: '10px Helvetica',
+			                fontWeight: 'bold'
+			            }	    
 		            },
-		             allowDecimals:false
+		             allowDecimals:false,
+		             labels:{
+		            	style: {
+			                color: '#525151',
+			                font: '10px Helvetica',
+			                fontWeight: 'bold'
+			            }	              
+		            }
 		        },
         	 	legend: {		            
 					align: 'center',
@@ -392,6 +471,9 @@ angular.module('hillromvestApp')
 		                            	allow = true;
 		                            }
 		                          });
+		                          if(!allow){
+		                          	notyService.showMessage(notyMessages.minComplianceError, notyMessages.typeWarning );
+		                          }
 		                          return allow;
 		                        }
 		                    }
@@ -415,9 +497,11 @@ angular.module('hillromvestApp')
 
 				        return s;
 				    },
+				    hideDelay: 0,
 					useHTML: true,				
     				shared: true
 				},
+				
 				series: $.extend(true, [], $scope.categoryChartData.series),				
 				loading: true,
 				size: {}
@@ -442,8 +526,10 @@ angular.module('hillromvestApp')
 					$scope.drawCategoryChartForDay();
 				}
 			}else if($scope.customDateRange){// nonday and custom i.e. date range	
-				if(chartCustom){//already a custom chart is present then redraw
-					//chartCustom.xAxis[0].setCategories($scope.categoryChartData.xAxis.categories, false);				
+				if(chartCustom){//already a custom chart is present then redraw					
+					/*chartCustom.yAxis[0].update({
+					    max: $scope.yMax
+					}); 	*/
 					for(var i = chartCustom.series.length - 1; i >= 0; i--) {
 						chartCustom.series[i].update({
 							data: $scope.categoryChartData.series[i].data,
@@ -520,7 +606,7 @@ angular.module('hillromvestApp')
 
 		$scope.downloadGraphAsPdf = function(){
 			if($scope.dayChart){
-				exportutilService.exportLoginAnalyticsAsPDF("containerDay");
+				exportutilService.exportLoginAnalyticsAsPDF("containerDay", loginAnalyticsConstants.duration.DAY, $scope.legends);
 			}else if($scope.customDateRange){
 				exportutilService.exportLoginAnalyticsAsPDF("containerCustom");
 			}else{
@@ -554,6 +640,7 @@ angular.module('hillromvestApp')
 		 }
 	
 		 $scope.toggleDuration = function(day, week, month, year, custom){
+		 	$scope.durationview = {};
 		 	$scope.durationview.day = day;
 		 	$scope.durationview.week = week;
 		 	$scope.durationview.month = month;
@@ -565,7 +652,7 @@ angular.module('hillromvestApp')
 		 	var filters = $scope.getSelectedUserRoles();
 			loginanalyticsService.getLoginAnalytics( dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), filters, duration).then(function(response) {
 				// set the categorychartdata
-				
+				$scope.yMax = 1;
 				$scope.categoryChartData = response.data;				
 				angular.forEach($scope.categoryChartData.series, function(series, key) {
 				  if(!$scope.durationview.day){
@@ -583,8 +670,7 @@ angular.module('hillromvestApp')
 				  	}
 				  }
 				  angular.forEach(series.data, function(data, index) {
-				  if($scope.durationview.day){
-				  	console.log($scope.categoryChartData.series.length, $scope.categoryChartData.xAxis.categories[0]);
+				  if($scope.durationview.day){				  	
 				  	if($scope.categoryChartData.series.length === 1 && $scope.categoryChartData.xAxis.categories[0].toLowerCase() === loginAnalyticsConstants.legends.PATIENT){
 				  		$scope.categoryChartData.series[0].data[index].color = loginAnalyticsConstants.colors.PATIENT;
 				  	}
@@ -601,11 +687,10 @@ angular.module('hillromvestApp')
 				  if($scope.categoryChartData.series[key].data[index].x )	{				  	
 				  	$scope.categoryChartData.series[key].data[index].x = convertToTimestamp(data.x);				  					  	
 				  }	  					  	
-				  if($scope.categoryChartData.series[key].data[index].y ){
-				  	$scope.categoryChartData.series[key].data[index].y = parseInt($scope.categoryChartData.series[key].data[index].y);
-				  }
-
-				  	console.log("process data : ",$scope.categoryChartData);
+				  if($scope.categoryChartData.series[key].data[index].y ){				  	
+				  	$scope.categoryChartData.series[key].data[index].y = parseInt($scope.categoryChartData.series[key].data[index].y);				  				  
+				  }				  	
+				  $scope.yMax = ($scope.yMax === 1 && $scope.categoryChartData.series[key].data[index].y === 0) ? 1 : null;
 				  });
 				});	
 				
@@ -666,7 +751,21 @@ angular.module('hillromvestApp')
 		 		userRoles = userRoles + loginAnalyticsConstants.filters.CAREGIVER;
 		 	}
 		 	return userRoles;
-		 };		 
+		 };	
+
+		 $scope.initGraph = function(){
+		 	if($scope.durationview.day){
+		 		$scope.dayView();
+		 	}else if($scope.durationview.week){
+		 		$scope.weekView();
+		 	}else if($scope.durationview.month){
+		 		$scope.monthView();
+		 	}else if($scope.durationview.year){
+		 		$scope.yearView();
+		 	}else if($scope.durationview.custom){
+		 		$scope.customDateRangeView();
+		 	}
+		 };	 
 
 		/* This method initiates the required methods required for a specific route*/
 		$scope.init = function(){

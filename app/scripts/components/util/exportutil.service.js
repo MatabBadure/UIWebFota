@@ -64,7 +64,7 @@ angular.module('hillromvestApp')
     pdf.setFontType(pdfServiceConstants.style.font.normal);        
     pdf.setFontSize(8);
     pdf.setTextColor(0, 0, 0);
-    pdf.text(margins.left,   margins.titleTop+30, pdfServiceConstants.text.reportGenerationDate);
+    pdf.text(margins.left,   margins.titleTop+30, pdfServiceConstants.text.reportGenerationDate+pdfServiceConstants.text.colon);
 
     pdf.setFont(pdfServiceConstants.style.font.helvetica); 
     pdf.setFontType(pdfServiceConstants.style.font.normal);        
@@ -99,22 +99,114 @@ angular.module('hillromvestApp')
     return pdf;
   }
 
-  this.addSvgToPDF = function(pdf, canvasId, svgId, imageX, imageY, imageWidth, imageHeight){
+  this.addSvgToPDF = function(pdf, canvasId, svgId, imageX, imageY, imageWidth, imageHeight, durationType, legends){
     var canvas = document.getElementById('loginAnalyticsCanvas');              
-    var ctx = canvas.getContext('2d');      
-    var htmlString =  $("#"+svgId).find("svg").parent().html().trim().replace(/xmlns=\"http:\/\/www\.w3\.org\/2000\/svg\"/, '').replace(/&quot;/g, "'");
-    canvg(canvas, htmlString);
+    var ctx = canvas.getContext('2d');
+    var serializer = new XMLSerializer();
+    var svgString = serializer.serializeToString(document.getElementById(svgId).querySelector('svg'));          
+    canvg(canvas, svgString);
     var img = $("#loginAnalyticsCanvas")[0].toDataURL('image/png', 1.0);
     pdf.addImage(img, 'png', imageX, imageY, imageWidth, imageHeight);
+    if(durationType && durationType === pdfServiceConstants.loginanalytics.day){
+      //chart footer
+      pdf.setDrawColor(0);
+      pdf.setFillColor(230, 241, 244);
+      pdf.rect(imageX, imageY+imageHeight-1, imageWidth, 40, pdfServiceConstants.pdfDraw.line.f); 
+
+      //square 1  
+
+      pdf.setDrawColor(0);
+      if(legends.isPatient){
+        pdf.setFillColor(255, 152, 41);
+      }else{
+        pdf.setFillColor(204, 204, 204);
+      }       
+      pdf.rect(imageX+(imageWidth/3), imageY+imageHeight+14, 6, 6, pdfServiceConstants.pdfDraw.line.f); 
+      
+      //text 1
+      pdf.setFont(pdfServiceConstants.style.font.helvetica); 
+      pdf.setFontType(pdfServiceConstants.style.font.bold);        
+      pdf.setFontSize(6);
+      if(legends.isPatient){
+        pdf.setTextColor(0, 0, 0);  
+      }else{
+        pdf.setTextColor(204, 204, 204);
+      }  
+      
+      pdf.text(imageX+(imageWidth/3)+10,imageY+imageHeight+20, pdfServiceConstants.loginanalytics.patient);
+
+      //square 2
+      pdf.setDrawColor(0);
+      if(legends.isHCP){
+        pdf.setFillColor(53, 151, 143);
+      }else{
+        pdf.setFillColor(204, 204, 204);
+      }       
+      pdf.rect(imageX+(imageWidth/3)+40, imageY+imageHeight+14, 6, 6, pdfServiceConstants.pdfDraw.line.f); 
+
+      //text 2
+      pdf.setFont(pdfServiceConstants.style.font.helvetica); 
+      pdf.setFontType(pdfServiceConstants.style.font.bold);        
+      pdf.setFontSize(6);
+      if(legends.isHCP){
+        pdf.setTextColor(0, 0, 0);
+      }else{
+        pdf.setTextColor(204, 204, 204);
+      }
+      
+      pdf.text(imageX+(imageWidth/3)+50,imageY+imageHeight+20, pdfServiceConstants.loginanalytics.hcp);
+
+      ////square 3
+      pdf.setDrawColor(0);
+      if(legends.isClinicAdmin){
+        pdf.setFillColor(77, 149, 196);
+      }else{
+        pdf.setFillColor(204, 204, 204);
+      }        
+      pdf.rect(imageX+(imageWidth/3)+75, imageY+imageHeight+14, 6, 6, pdfServiceConstants.pdfDraw.line.f); 
+
+      //text 3
+      pdf.setFont(pdfServiceConstants.style.font.helvetica); 
+      pdf.setFontType(pdfServiceConstants.style.font.bold);        
+      pdf.setFontSize(6);
+      if(legends.isClinicAdmin){
+        pdf.setTextColor(0, 0, 0);  
+      }else{
+        pdf.setTextColor(204, 204, 204);
+      }       
+      pdf.text(imageX+(imageWidth/3)+85,imageY+imageHeight+20, pdfServiceConstants.loginanalytics.clinicadmin);
+
+
+      ////square 4
+      pdf.setDrawColor(0);
+      if(legends.isCaregiver){
+        pdf.setFillColor(139, 107, 175);
+      }else{
+        pdf.setFillColor(204, 204, 204);
+      }        
+      pdf.rect(imageX+(imageWidth/3)+135, imageY+imageHeight+14, 6, 6, pdfServiceConstants.pdfDraw.line.f); 
+
+      //text 4
+      pdf.setFont(pdfServiceConstants.style.font.helvetica); 
+      pdf.setFontType(pdfServiceConstants.style.font.bold);        
+      pdf.setFontSize(6);
+      if(legends.isCaregiver){
+        pdf.setTextColor(0, 0, 0);  
+      }else{
+        pdf.setTextColor(204, 204, 204);
+      }      
+      pdf.text(imageX+(imageWidth/3)+145,imageY+imageHeight+20, pdfServiceConstants.loginanalytics.caregiver);
+
+    }
     return pdf;
   }
 
-  this.exportLoginAnalyticsAsPDF = function(svgId) {
+  this.exportLoginAnalyticsAsPDF = function(svgId, durationType, legends) {
     var pdf = this.getPdf();
     var pageHeight = pdf.internal.pageSize.height;
     var pageWidth = pdf.internal.pageSize.width;
     pdf = this.setHeader(pdf);
-    pdf = this.addSvgToPDF(pdf, 'loginAnalyticsCanvas', svgId, 20, 150, 540, 200);    
+    pdf = this.addSvgToPDF(pdf, 'loginAnalyticsCanvas', svgId, 20, 150, 540, 200, durationType, legends);    
     pdf = this.setFooter(pdf, pdf.internal.pageSize.height-80, pdfServiceConstants.text.name);
     setTimeout(function(){     
       pdf.save('VisiView™.pdf'); 
