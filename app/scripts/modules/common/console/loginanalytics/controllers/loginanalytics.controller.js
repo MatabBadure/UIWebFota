@@ -81,6 +81,7 @@ angular.module('hillromvestApp')
 		$scope.durationview.month = false;
 		$scope.durationview.year = false;
 		$scope.durationview.custom = false;
+		$scope.isGraphLoaded = false;
 		$scope.resetTimeDurationForToday();
 
 		$scope.defaultLegends = function(){			
@@ -549,7 +550,7 @@ angular.module('hillromvestApp')
 
 		$scope.downloadGraphAsPdf = function(){
 			if($scope.dayChart){
-				exportutilService.exportLoginAnalyticsAsPDF("containerDay");
+				exportutilService.exportLoginAnalyticsAsPDF("containerDay", loginAnalyticsConstants.duration.DAY, $scope.legends);
 			}else if($scope.customDateRange){
 				exportutilService.exportLoginAnalyticsAsPDF("containerCustom");
 			}else{
