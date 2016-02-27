@@ -51,7 +51,8 @@ angular.module('hillromvestApp')
 				$scope.customDateRangeView();  
 			},
 			'click.daterangepicker': function(ev, picker) { 
-				$("#dp1cal").data('daterangepicker').setStartDate($scope.fromDate); 				
+				$("#dp1cal").data('daterangepicker').setStartDate($scope.fromDate); 
+				$("#dp1cal").data('daterangepicker').setEndDate($scope.toDate); 				
 			},
 				opens: 'left'
 			}
