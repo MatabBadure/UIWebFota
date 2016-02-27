@@ -13,9 +13,14 @@ angular.module('hillromvestApp')
 		*/
 		$scope.calculateDateFromPicker = function(picker) {
 	      $scope.fromTimeStamp = new Date(picker.startDate._d).getTime();
-	      $scope.toTimeStamp = new Date(picker.endDate._d).getTime();
+	      var isPickerEndDate = (picker.oldEndDate._i).toString().indexOf("/") > -1 ? false : true;	     
+		  var endDate = new Date(new Date().getTime());
+		  endDate.setDate(new Date(picker.endDate._d).getDate() - 1);		  
+	      var enddateTimestamp = (isPickerEndDate) ?  new Date(picker.endDate._d).getTime() : endDate.getTime() ;  
+	      $scope.toTimeStamp = (new Date().getTime() < enddateTimestamp) ? new Date().getTime() : enddateTimestamp;   
+	      //$scope.toTimeStamp = (new Date().getTime() < new Date(picker.endDate._d).getTime()) ? new Date().getTime() : new Date(picker.endDate._d).getTime();
 	      $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
-	      $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');
+	      $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');	      
 	      if ($scope.fromDate === $scope.toDate ) {
 	        $scope.fromTimeStamp = $scope.toTimeStamp;
 	      }
@@ -46,11 +51,11 @@ angular.module('hillromvestApp')
 			maxDate: new Date(),
 			format: patientDashboard.dateFormat,
 			//dateLimit: {"months":patientDashboard.maxDurationInMonths},
-			eventHandlers: {'apply.daterangepicker': function(ev, picker) {       	       
+			eventHandlers: {'apply.daterangepicker': function(ev, picker) {  
 				$scope.calculateDateFromPicker(picker);	        				
 				$scope.customDateRangeView();  
 			},
-			'click.daterangepicker': function(ev, picker) { 
+			'click.daterangepicker': function(ev, picker) {
 				$("#dp1cal").data('daterangepicker').setStartDate($scope.fromDate); 
 				$("#dp1cal").data('daterangepicker').setEndDate($scope.toDate); 				
 			},
@@ -584,6 +589,7 @@ angular.module('hillromvestApp')
 		 }
 	
 		 $scope.toggleDuration = function(day, week, month, year, custom){
+		 	$scope.durationview = {};
 		 	$scope.durationview.day = day;
 		 	$scope.durationview.week = week;
 		 	$scope.durationview.month = month;
@@ -694,7 +700,21 @@ angular.module('hillromvestApp')
 		 		userRoles = userRoles + loginAnalyticsConstants.filters.CAREGIVER;
 		 	}
 		 	return userRoles;
-		 };		 
+		 };	
+
+		 $scope.initGraph = function(){
+		 	if($scope.durationview.day){
+		 		$scope.dayView();
+		 	}else if($scope.durationview.week){
+		 		$scope.weekView();
+		 	}else if($scope.durationview.month){
+		 		$scope.monthView();
+		 	}else if($scope.durationview.year){
+		 		$scope.yearView();
+		 	}else if($scope.durationview.custom){
+		 		$scope.customDateRangeView();
+		 	}
+		 };	 
 
 		/* This method initiates the required methods required for a specific route*/
 		$scope.init = function(){
