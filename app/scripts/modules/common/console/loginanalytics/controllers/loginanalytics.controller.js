@@ -47,9 +47,11 @@ angular.module('hillromvestApp')
 			format: patientDashboard.dateFormat,
 			//dateLimit: {"months":patientDashboard.maxDurationInMonths},
 			eventHandlers: {'apply.daterangepicker': function(ev, picker) {       	       
-				$scope.calculateDateFromPicker(picker);	        
-				$scope.selectedDateOption = '';	 
+				$scope.calculateDateFromPicker(picker);	        				
 				$scope.customDateRangeView();  
+			},
+			'click.daterangepicker': function(ev, picker) { 
+				$("#dp1cal").data('daterangepicker').setStartDate($scope.fromDate); 				
 			},
 				opens: 'left'
 			}
@@ -183,6 +185,8 @@ angular.module('hillromvestApp')
 	      $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');
 	      $scope.fromTimeStamp = dateService.getnDaysBackTimeStamp(durationInDays);;
 	      $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
+	      $scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};	
+
 	    };
 		
 		$scope.drawCategoryChartForDay = function(){
@@ -583,8 +587,7 @@ angular.module('hillromvestApp')
 				  	}
 				  }
 				  angular.forEach(series.data, function(data, index) {
-				  if($scope.durationview.day){
-				  	console.log($scope.categoryChartData.series.length, $scope.categoryChartData.xAxis.categories[0]);
+				  if($scope.durationview.day){				  	
 				  	if($scope.categoryChartData.series.length === 1 && $scope.categoryChartData.xAxis.categories[0].toLowerCase() === loginAnalyticsConstants.legends.PATIENT){
 				  		$scope.categoryChartData.series[0].data[index].color = loginAnalyticsConstants.colors.PATIENT;
 				  	}
@@ -603,9 +606,7 @@ angular.module('hillromvestApp')
 				  }	  					  	
 				  if($scope.categoryChartData.series[key].data[index].y ){
 				  	$scope.categoryChartData.series[key].data[index].y = parseInt($scope.categoryChartData.series[key].data[index].y);
-				  }
-
-				  	console.log("process data : ",$scope.categoryChartData);
+				  }				  	
 				  });
 				});	
 				
