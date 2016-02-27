@@ -216,17 +216,36 @@ angular.module('hillromvestApp')
 		        },		      	
 		      	xAxis:{					
 					type: 'category',					
-					categories: $scope.categoryChartData.xAxis.categories
-					},
+					categories: $scope.categoryChartData.xAxis.categories,
+					labels:{
+		            	style: {
+			                color: '#525151',
+			                font: '10px Helvetica',
+			                fontWeight: 'bold'
+			            }	              
+		            }	
+				},
 				yAxis: {
 					gridLineColor: '#FF0000',
 		            gridLineWidth: 0,
 		            lineWidth:1,
 		            min: 0,
 		            title: {
-		                text: 'No. Of Logins'
+		                text: 'No. Of Logins',
+		                style: {
+			                color: '#525151',
+			                font: '10px Helvetica',
+			                fontWeight: 'bold'
+			            }
 		            },
-		             allowDecimals:false
+					allowDecimals:false,
+					labels:{
+						style: {
+						    color: '#525151',
+						    font: '10px Helvetica',
+						    fontWeight: 'bold'
+						}		              
+					}	
 		        },
         	 	legend: {		            		           
 			        enabled: false
@@ -293,7 +312,14 @@ angular.module('hillromvestApp')
 		        },		      	
 		      	xAxis:{					
 					type: 'category',					
-					categories: $scope.categoryChartData.xAxis.categories
+					categories: $scope.categoryChartData.xAxis.categories,
+					labels:{
+			            	style: {
+				                color: '#525151',
+				                font: '10px Helvetica',
+				                fontWeight: 'bold'
+				            }		            		             
+			            }	
 					},
 				yAxis: {
 					gridLineColor: '#FF0000',
@@ -301,9 +327,21 @@ angular.module('hillromvestApp')
 		            lineWidth:1,
 		            min: 0,
 		            title: {
-		                text: 'No. Of Logins'
+		                text: 'No. Of Logins',
+		                style: {
+			                color: '#525151',
+			                font: '10px Helvetica',
+			                fontWeight: 'bold'
+			            }
 		            },
-		            allowDecimals:false
+		            allowDecimals:false,
+		            labels:{
+		            	style: {
+			                color: '#525151',
+			                font: '10px Helvetica',
+			                fontWeight: 'bold'
+			            }	            		              
+		            }	
 		        },
         	 	legend: {		            
 		            align: 'center',
@@ -381,15 +419,16 @@ angular.module('hillromvestApp')
 		            startOnTick: false,
 		            endOnTick: false,
 		            labels:{
+		            	style: {
+			                color: '#525151',
+			                font: '10px Helvetica',
+			                fontWeight: 'bold'
+			            },
 		            	formatter:function(){
 		              	return  Highcharts.dateFormat("%e/%m/%Y",this.value);//Highcharts.dateFormat('%e. %b',this.value);
 		              }		              
-		            }	
-		           /* dateTimeLabelFormats:{
-			            month: '%b %e, %Y'
-			          }*/
-				},
-
+		            }			           
+				},				
 				yAxis: {
 					gridLineColor: '#FF0000',
 		            gridLineWidth: 0,
@@ -397,9 +436,21 @@ angular.module('hillromvestApp')
 		            min: 0,
 		            //max: $scope.yMax,
 		            title: {
-		                text: 'No. Of Logins'
+		                text: 'No. Of Logins',
+		                style:{
+			                color: '#525151',
+			                font: '10px Helvetica',
+			                fontWeight: 'bold'
+			            }	    
 		            },
-		             allowDecimals:false
+		             allowDecimals:false,
+		             labels:{
+		            	style: {
+			                color: '#525151',
+			                font: '10px Helvetica',
+			                fontWeight: 'bold'
+			            }	              
+		            }
 		        },
         	 	legend: {		            
 					align: 'center',
