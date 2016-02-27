@@ -6,8 +6,8 @@
 
 'use strict';
 angular.module('hillromvestApp')
-.controller('loginAnalyticsController',['$scope', '$state', 'loginAnalyticsConstants', 'dateService', 'exportutilService', '$timeout', 'loginanalyticsService',
-	function($scope, $state, loginAnalyticsConstants, dateService, exportutilService, $timeout, loginanalyticsService) {	
+.controller('loginAnalyticsController',['$scope', '$state', 'loginAnalyticsConstants', 'dateService', 'exportutilService', '$timeout', 'loginanalyticsService', 'notyService',
+	function($scope, $state, loginAnalyticsConstants, dateService, exportutilService, $timeout, loginanalyticsService, notyService) {	
 		/*
 		* default legends and their accessibility
 		*/
@@ -129,6 +129,8 @@ angular.module('hillromvestApp')
 					if(!$scope.legends.isPatient){
 						$scope.legends.isPatient = true;
 						$scope.dayView();	
+					}else{
+						notyService.showMessage(notyMessages.minComplianceError, notyMessages.typeWarning );
 					}
 					$scope.legends.isPatient = true;
 					$scope.disableLegends.patient = false;
@@ -136,6 +138,8 @@ angular.module('hillromvestApp')
 					if(!$scope.legends.isHCP){
 						$scope.legends.isHCP = true;
 						$scope.dayView();	
+					}else{
+						notyService.showMessage(notyMessages.minComplianceError, notyMessages.typeWarning );
 					}
 					$scope.legends.isHCP = true;
 					$scope.disableLegends.hcp = false;
@@ -143,6 +147,8 @@ angular.module('hillromvestApp')
 					if(!$scope.legends.isClinicAdmin){
 						$scope.legends.isClinicAdmin = true;
 						$scope.dayView();	
+					}else{
+						notyService.showMessage(notyMessages.minComplianceError, notyMessages.typeWarning );
 					}
 					$scope.legends.isClinicAdmin = true;
 					$scope.disableLegends.clinicadmin = false;
@@ -150,6 +156,8 @@ angular.module('hillromvestApp')
 					if(!$scope.legends.isCaregiver){
 						$scope.legends.isCaregiver = true;
 						$scope.dayView();	
+					}else{
+						notyService.showMessage(notyMessages.minComplianceError, notyMessages.typeWarning );
 					}
 					$scope.legends.isCaregiver = true;
 					$scope.disableLegends.caregiver = false;
@@ -231,6 +239,9 @@ angular.module('hillromvestApp')
 		                            	allow = true;
 		                            }
 		                          });
+		                          if(!allow){
+		                          	notyService.showMessage(notyMessages.minComplianceError, notyMessages.typeWarning );
+		                          }
 		                          return allow;
 		                        }
 		                    }
@@ -306,6 +317,9 @@ angular.module('hillromvestApp')
 		                            	allow = true;
 		                            }
 		                          });
+		                          if(!allow){
+		                          	notyService.showMessage(notyMessages.minComplianceError, notyMessages.typeWarning );
+		                          }
 		                          return allow;
 		                        }
 		                    }
@@ -373,6 +387,7 @@ angular.module('hillromvestApp')
 		            gridLineWidth: 0,
 		            lineWidth:1,
 		            min: 0,
+		            //max: $scope.yMax,
 		            title: {
 		                text: 'No. Of Logins'
 		            },
@@ -397,6 +412,9 @@ angular.module('hillromvestApp')
 		                            	allow = true;
 		                            }
 		                          });
+		                          if(!allow){
+		                          	notyService.showMessage(notyMessages.minComplianceError, notyMessages.typeWarning );
+		                          }
 		                          return allow;
 		                        }
 		                    }
@@ -447,8 +465,10 @@ angular.module('hillromvestApp')
 					$scope.drawCategoryChartForDay();
 				}
 			}else if($scope.customDateRange){// nonday and custom i.e. date range	
-				if(chartCustom){//already a custom chart is present then redraw
-					//chartCustom.xAxis[0].setCategories($scope.categoryChartData.xAxis.categories, false);				
+				if(chartCustom){//already a custom chart is present then redraw					
+					/*chartCustom.yAxis[0].update({
+					    max: $scope.yMax
+					}); 	*/
 					for(var i = chartCustom.series.length - 1; i >= 0; i--) {
 						chartCustom.series[i].update({
 							data: $scope.categoryChartData.series[i].data,
@@ -570,7 +590,7 @@ angular.module('hillromvestApp')
 		 	var filters = $scope.getSelectedUserRoles();
 			loginanalyticsService.getLoginAnalytics( dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), filters, duration).then(function(response) {
 				// set the categorychartdata
-				
+				$scope.yMax = 1;
 				$scope.categoryChartData = response.data;				
 				angular.forEach($scope.categoryChartData.series, function(series, key) {
 				  if(!$scope.durationview.day){
@@ -605,9 +625,10 @@ angular.module('hillromvestApp')
 				  if($scope.categoryChartData.series[key].data[index].x )	{				  	
 				  	$scope.categoryChartData.series[key].data[index].x = convertToTimestamp(data.x);				  					  	
 				  }	  					  	
-				  if($scope.categoryChartData.series[key].data[index].y ){
-				  	$scope.categoryChartData.series[key].data[index].y = parseInt($scope.categoryChartData.series[key].data[index].y);
+				  if($scope.categoryChartData.series[key].data[index].y ){				  	
+				  	$scope.categoryChartData.series[key].data[index].y = parseInt($scope.categoryChartData.series[key].data[index].y);				  				  
 				  }				  	
+				  $scope.yMax = ($scope.yMax === 1 && $scope.categoryChartData.series[key].data[index].y === 0) ? 1 : null;
 				  });
 				});	
 				
