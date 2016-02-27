@@ -265,6 +265,7 @@ angular.module('hillromvestApp')
 
 				        return s;
 				    },
+				    hideDelay: 0,
 					useHTML: true,				
     				shared: true
 				},
@@ -344,6 +345,7 @@ angular.module('hillromvestApp')
 
 				        return s;
 				    },
+				    hideDelay: 0,
 					useHTML: true,				
     				shared: true					
 				},
@@ -438,9 +440,11 @@ angular.module('hillromvestApp')
 
 				        return s;
 				    },
+				    hideDelay: 0,
 					useHTML: true,				
     				shared: true
 				},
+				
 				series: $.extend(true, [], $scope.categoryChartData.series),				
 				loading: true,
 				size: {}
