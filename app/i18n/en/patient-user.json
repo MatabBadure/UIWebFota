@@ -211,9 +211,9 @@
       "message":"If you delete the Note, you will no longer be able to view the Note."
     },
     "authorizeProtocol":{
-      "buttonLabel":"Authorize Protocol",
-      "warning":"Authorize Protocol",
-      "message":"You have made changes to the protocol. Please follow the steps to authorize the changes."
+      "buttonLabel":"Authorize Updated Prescription",
+      "warning":"Update Prescription",
+      "message":"You must authorize an update to the prescription before the protocol can be updated in VisiView. You will need the prescriber to electronically sign the updated prescription."
     },
     "profile": {
       "tabs": {
