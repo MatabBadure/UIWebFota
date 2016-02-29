@@ -231,7 +231,7 @@ angular.module('hillromvestApp')
 		            lineWidth:1,
 		            min: 0,
 		            title: {
-		                text: 'No. Of Logins',
+		                text: 'No. of Logins',
 		                style: {
 			                color: '#525151',
 			                font: '10px Helvetica',
@@ -404,7 +404,8 @@ angular.module('hillromvestApp')
 				chart:{
 					type: 'spline',
 					zoomType: 'xy',					
-                    backgroundColor:'#e3ecf7'
+                    backgroundColor:'#e3ecf7',
+                    turboThreshold: 2000,
 				},
 		        title: {
 		            text: ''
@@ -436,7 +437,7 @@ angular.module('hillromvestApp')
 		            min: 0,
 		            //max: $scope.yMax,
 		            title: {
-		                text: 'No. Of Logins',
+		                text: 'No. of Logins',
 		                style:{
 			                color: '#525151',
 			                font: '10px Helvetica',
@@ -516,7 +517,7 @@ angular.module('hillromvestApp')
 				if(chartDay){
 					chartDay.xAxis[0].setCategories($scope.categoryChartData.xAxis.categories, false);
 					for(var i = chartDay.series.length - 1; i >= 0; i--) {
-						chartDay.series[i].update({
+						chartDay.series[i].update({						
 						data: $scope.categoryChartData.series[i].data,
 						visible: true
 						}, false);
@@ -593,15 +594,15 @@ angular.module('hillromvestApp')
 		};
 
 		$scope.customDateRangeView = function(){
-			if ($scope.fromDate === $scope.toDate ) {
+			/*if ($scope.fromDate === $scope.toDate ) {
 				$scope.dayView();
-			}else{
+			}else{*/
 				$scope.defaultLegends(); //if the legends selected eariler has to be retained then remove this line
 				$scope.dayChart = false;
 				$scope.customDateRange = true;
 				$scope.toggleDuration(false, false, false, false, true);
 				$scope.getCategoryChartData(loginAnalyticsConstants.duration.CUSTOM);	
-			}				
+			//}				
 		};
 
 		$scope.downloadGraphAsPdf = function(){
@@ -667,22 +668,23 @@ angular.module('hillromvestApp')
 				  	}
 				  	if(series.name.toLowerCase().replace(' ', '') === loginAnalyticsConstants.legends.CAREGIVER){
 				  		$scope.categoryChartData.series[key].color = loginAnalyticsConstants.colors.CAREGIVER;
-				  	}
+				  	}				  	
 				  }
+
 				  angular.forEach(series.data, function(data, index) {
-				  if($scope.durationview.day){				  	
-				  	if($scope.categoryChartData.series.length === 1 && $scope.categoryChartData.xAxis.categories[0].toLowerCase() === loginAnalyticsConstants.legends.PATIENT){
-				  		$scope.categoryChartData.series[0].data[index].color = loginAnalyticsConstants.colors.PATIENT;
+				  if($scope.durationview.day){					 		  
+				  	if($scope.categoryChartData.series.length === 1 && $scope.categoryChartData.xAxis.categories[index].toLowerCase() === loginAnalyticsConstants.legends.PATIENT){
+				  		$scope.categoryChartData.series[0].data[index].color = loginAnalyticsConstants.colors.PATIENT;				  		
 				  	}
-				  	if($scope.categoryChartData.series.length === 1 && $scope.categoryChartData.xAxis.categories[0].toLowerCase() === loginAnalyticsConstants.legends.HCP){
-				  		$scope.categoryChartData.series[0].data[index].color = loginAnalyticsConstants.colors.HCP;
+				  	if($scope.categoryChartData.series.length === 1 && $scope.categoryChartData.xAxis.categories[index].toLowerCase() === loginAnalyticsConstants.legends.HCP){
+				  		$scope.categoryChartData.series[0].data[index].color = loginAnalyticsConstants.colors.HCP;				  		
 				  	}
-				  	if($scope.categoryChartData.series.length === 1 && $scope.categoryChartData.xAxis.categories[0].toLowerCase().replace(' ', '') === loginAnalyticsConstants.legends.CLINICADMIN){
-				  		$scope.categoryChartData.series[0].data[index].color = loginAnalyticsConstants.colors.CLINICADMIN;
+				  	if($scope.categoryChartData.series.length === 1 && $scope.categoryChartData.xAxis.categories[index].toLowerCase().replace(' ', '') === loginAnalyticsConstants.legends.CLINICADMIN){
+				  		$scope.categoryChartData.series[0].data[index].color = loginAnalyticsConstants.colors.CLINICADMIN;				  		
 				  	}
-				  	if($scope.categoryChartData.series.length === 1 && $scope.categoryChartData.xAxis.categories[0].toLowerCase().replace(' ', '') === loginAnalyticsConstants.legends.CAREGIVER){
-				  		$scope.categoryChartData.series[0].data[index].color = loginAnalyticsConstants.colors.CAREGIVER;
-				  	}
+				  	if($scope.categoryChartData.series.length === 1 && $scope.categoryChartData.xAxis.categories[index].toLowerCase().replace(' ', '') === loginAnalyticsConstants.legends.CAREGIVER){
+				  		$scope.categoryChartData.series[0].data[index].color = loginAnalyticsConstants.colors.CAREGIVER;				  		
+				  	}				  	
 				  }
 				  if($scope.categoryChartData.series[key].data[index].x )	{				  	
 				  	$scope.categoryChartData.series[key].data[index].x = convertToTimestamp(data.x);				  					  	

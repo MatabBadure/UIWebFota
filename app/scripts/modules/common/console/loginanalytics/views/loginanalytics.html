@@ -26,11 +26,13 @@
    </div>
 
 	  <loading loaded="isGraphLoaded"></loading>
-      <!-- <highchart id="chart1" config="chartConfig" class="span9" ></highchart> -->
-      <div class="col-md-16" class="all_graph_wrapper" style="height:400px;">	
-      <div id="containerDay"  ng-show="dayChart"></div>
-      <div id="containerNonDay" ng-init="initGraph()" ng-if="!dayChart && !customDateRange"></div>
-      <div id="containerCustom" ng-if="!dayChart && customDateRange"></div>
+      <div class="col-md-16" class="all_graph_wrapper" style="height:400px;">      
+		<div class="graph_nodata" ng-if="yMax === 1">
+		<span class="noData_text"> No Data Available!</span>
+		</div>	
+      <div id="containerDay"  ng-show="dayChart && yMax !== 1"></div>
+      <div id="containerNonDay" ng-init="initGraph()" ng-if="yMax !== 1 && !dayChart && !customDateRange"></div>
+      <div id="containerCustom" ng-if="yMax !== 1 && !dayChart && customDateRange"></div>
       </div>
        <div class="col-md-16 col-sm-7 left_header_barchart padding0">
             <div class="">
@@ -73,10 +75,10 @@
 				        <span class="radio-box-text legend_text" translate="console.analytics.legends.caregiver"></span>
 			      	</span>
 		      	</li>
-
+ng-if="yMax === 1"
 			</ul> -->
 		      	<!-- rectangle option -->
-				<ul class="nav nav-pills graph_color" ng-show="dayChart">
+				<ul class="nav nav-pills graph_color" ng-show="dayChart && yMax !== 1">
 		      	<li class="col-md-1 col-md-push-5 margin-right13 margin-left25">
 		      		<a href=""  ng-click="isGraphLoaded && changeLegends('patient')">
              		<span>
@@ -125,7 +127,8 @@
             	</ul>
             </div>
           </div>
-     	<button class="float-right hillrom-btn btn-submit margin-top" ng-click="downloadGraphAsPdf()">Download As PDF</button>
+     	<button ng-if="yMax !== 1" class="float-right hillrom-btn btn-submit margin-top" ng-click="downloadGraphAsPdf()">Download As PDF</button>
+     	<button ng-if="yMax === 1" class="float-right hillrom-btn btn-submit margin-top" style="color: #cccccc;">Download As PDF</button>
        <canvas id="loginAnalyticsCanvas" width=1300 height=350 style="display:none;"></canvas>
       
 </div>
