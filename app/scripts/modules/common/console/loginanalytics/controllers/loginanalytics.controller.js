@@ -217,7 +217,7 @@ angular.module('hillromvestApp')
 					labels:{
 		            	style: {
 			                color: '#525151',
-			                font: '10px Helvetica',
+			                //font: '10px Helvetica',
 			                fontWeight: 'bold'
 			            }	              
 		            }	
@@ -228,7 +228,7 @@ angular.module('hillromvestApp')
 		            lineWidth:1,
 		            min: 0,
 		            title: {
-		                text: 'No. of Logins',
+		                text: 'No. of Users',
 		                style: {
 			                color: '#525151',
 			                font: '10px Helvetica',
@@ -239,7 +239,7 @@ angular.module('hillromvestApp')
 					labels:{
 						style: {
 						    color: '#525151',
-						    font: '10px Helvetica',
+						    //font: '10px Helvetica',
 						    fontWeight: 'bold'
 						}		              
 					}	
@@ -313,7 +313,7 @@ angular.module('hillromvestApp')
 					labels:{
 			            	style: {
 				                color: '#525151',
-				                font: '10px Helvetica',
+				                //font: '10px Helvetica',
 				                fontWeight: 'bold'
 				            }		            		             
 			            }	
@@ -324,7 +324,7 @@ angular.module('hillromvestApp')
 		            lineWidth:1,
 		            min: 0,
 		            title: {
-		                text: 'No. Of Logins',
+		                text: 'No. Of Users',
 		                style: {
 			                color: '#525151',
 			                font: '10px Helvetica',
@@ -335,7 +335,7 @@ angular.module('hillromvestApp')
 		            labels:{
 		            	style: {
 			                color: '#525151',
-			                font: '10px Helvetica',
+			                //font: '10px Helvetica',
 			                fontWeight: 'bold'
 			            }	            		              
 		            }	
@@ -399,7 +399,7 @@ angular.module('hillromvestApp')
 		$scope.drawDateRangeChartForNonDay = function(){
 			Highcharts.chart('containerCustom', {				
 				chart:{
-					type: 'spline',
+					type: 'line',
 					zoomType: 'xy',					
                     backgroundColor:'#e3ecf7',
                     turboThreshold: 2000,
@@ -417,15 +417,15 @@ angular.module('hillromvestApp')
 		            startOnTick: false,
 		            endOnTick: false,
 		            labels:{
-		            	style: {
-			                color: '#525151',
-			                font: '10px Helvetica',
-			                fontWeight: 'bold'
-			            },
-		            	formatter:function(){
-		              	return  Highcharts.dateFormat("%m/%e/%Y",this.value);//Highcharts.dateFormat('%e. %b',this.value);
-		              }		              
-		            }			           
+						style: {
+							color: '#525151',
+							//font: '10px Helvetica',
+							fontWeight: 'bold'
+						},
+						formatter:function(){
+							return  Highcharts.dateFormat("%m/%e/%Y",this.value);//Highcharts.dateFormat('%e. %b',this.value);
+						}	              
+					}			           
 				},				
 				yAxis: {
 					gridLineColor: '#FF0000',
@@ -434,7 +434,7 @@ angular.module('hillromvestApp')
 		            min: 0,
 		            //max: $scope.yMax,
 		            title: {
-		                text: 'No. of Logins',
+		                text: 'No. of Users',
 		                style:{
 			                color: '#525151',
 			                font: '10px Helvetica',
@@ -445,7 +445,7 @@ angular.module('hillromvestApp')
 		             labels:{
 		            	style: {
 			                color: '#525151',
-			                font: '10px Helvetica',
+			                //font: '10px Helvetica',
 			                fontWeight: 'bold'
 			            }	              
 		            }
