@@ -147,7 +147,8 @@ angular.module('hillromvestApp').constant('pdfServiceConstants', {
         hcpName: "HCP Name: ",
         date: "Date: ",
         signature: "Signature: ",
-        name: "Name: "
+        name: "Name: ",
+        colon: ":"
     },
     style:{
         font:{
@@ -163,6 +164,13 @@ angular.module('hillromvestApp').constant('pdfServiceConstants', {
         line:{
             f: "F"
         }
+    },
+    loginanalytics:{
+        day: "Day",
+        patient: "Patient",
+        hcp: "HCP",
+        clinicadmin: "Clinic Admin",
+        caregiver: "Caregiver"
     }
 });
 

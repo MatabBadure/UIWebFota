@@ -773,6 +773,8 @@ angular.module('hillromvestApp')
           });
         }).catch(function(response){
           notyService.showError(response);
+          $scope.password = '';
+          $rootScope.$broadcast('initializeCaptcha');
         });
       }, 250);
     };
@@ -1094,7 +1096,7 @@ angular.module('hillromvestApp')
     };
 
     $scope.openVerificationModal = function(){
-
+      $scope.isProtocolSubmited = false;
       $scope.isAuthorizeFormSubmited = true;
       if($scope.authorizeForm.$invalid){
         return false;
