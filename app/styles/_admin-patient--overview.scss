@@ -15,7 +15,9 @@
   font-weight: $font-weight-bold;
   color: $pickled-bluewood;
 }
-
+#containerNonDay > .highcharts-container > .highcharts-tooltip > span{
+  left:4px !important;
+}
 .patient-details {
     padding: 10px 0;
     border-bottom: 1px solid $alto-solid;
