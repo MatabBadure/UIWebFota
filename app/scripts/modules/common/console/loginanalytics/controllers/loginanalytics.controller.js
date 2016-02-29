@@ -53,9 +53,9 @@ angular.module('hillromvestApp')
 			'click.daterangepicker': function(ev, picker) {
 				$("#dp1cal").data('daterangepicker').setStartDate($scope.fromDate); 
 				$("#dp1cal").data('daterangepicker').setEndDate($scope.toDate); 				
+			}				
 			},
-				opens: 'left'
-			}
+			opens: 'left'
 		}
 
 		$scope.resetTimeDurationForToday =function(today){
