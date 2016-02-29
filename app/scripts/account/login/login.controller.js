@@ -38,6 +38,7 @@ angular.module('hillromvestApp')
       StorageService.clearAll();
       $scope.isAuthenticated = false;
       $rootScope.username = null;
+      $rootScope.userFullName = null;
       $scope.password = null;
       $scope.isLoaded = true;
       $scope.submitted = false;
@@ -70,6 +71,7 @@ angular.module('hillromvestApp')
     $scope.resetForActivateUser = function(){
       $scope.isAuthenticated = false;
       $rootScope.username = null;
+      $rootScope.userFullName = null;
       $scope.password = null;
       $scope.isLoaded = true;
       $scope.message = '';
@@ -120,6 +122,7 @@ angular.module('hillromvestApp')
           $rootScope.isFooter = false;
           $rootScope.userRole = response.data.user.authorities[0].name;
           $rootScope.username = response.data.user.firstName;
+          $rootScope.userFullName = response.data.user.lastName + ' ' +response.data.user.firstName;
           $rootScope.userEmail = response.data.user.email;
           
           if(response.data.user.authorities[0].name === loginConstants.role.patient){
