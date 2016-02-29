@@ -303,7 +303,12 @@ $header--background: $body-bg;
 		}
 	}
 }
-
+.dropdown-menu{
+	 min-width: 240px;
+}
+.navbar-secondary .navbar-right .header-popover ul li:first-child:after{
+	border-right:none;
+}
 #top-shadow {
   position: fixed;
   top: 0;

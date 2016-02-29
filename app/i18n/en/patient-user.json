@@ -210,6 +210,11 @@
       "warning":"Are you sure you want to delete the Note?",
       "message":"If you delete the Note, you will no longer be able to view the Note."
     },
+    "authorizeProtocol":{
+      "buttonLabel":"Authorize Protocol",
+      "warning":"Authorize Protocol",
+      "message":"You have made changes to the protocol. Please follow the steps to authorize the changes."
+    },
     "profile": {
       "tabs": {
         "mydashboard": "Dashboard",

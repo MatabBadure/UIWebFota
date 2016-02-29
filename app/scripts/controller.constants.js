@@ -143,4 +143,37 @@ angular.module('hillromvestApp').constant('hcpDashboardConstants', {
 	}
 })
 
+.constant('loginAnalyticsConstants',{
+	legends : {
+		"ALL" : "all",
+		"PATIENT" : "patient",
+		"HCP" : "hcp",
+		"CLINICADMIN": "clinicadmin",
+		"CAREGIVER": "caregiver"
+	},
+	duration:{
+		"DAY": "Day",
+		"WEEK": "Week",
+		"MONTH": "Month",
+		"YEAR": "Year",
+		"CUSTOM": "Custom"
+	},
+	string:{
+		"COMMA": ","
+	},
+	filters:{
+		"PATIENT": "PATIENT",
+		"HCP": "HCP",
+		"CLINICADMIN": "CLINIC_ADMIN",
+		"CAREGIVER": "CARE_GIVER"
+	},
+	colors:{
+		"PATIENT": "#ff9829",
+		"HCP": "#35978f",
+		"CLINICADMIN": "#4d95c4",
+		"CAREGIVER": "#8b6baf"
+	},
+
+})
+
 
