@@ -13,17 +13,12 @@ angular.module('hillromvestApp')
 		*/
 		$scope.calculateDateFromPicker = function(picker) {
 	      $scope.fromTimeStamp = new Date(picker.startDate._d).getTime();
-	      var isPickerEndDate = (picker.oldEndDate._i).toString().indexOf("/") > -1 ? false : true;	     
-		  var endDate = new Date(new Date().getTime());
-		  endDate.setDate(new Date(picker.endDate._d).getDate() - 1);		  
-	      var enddateTimestamp = (isPickerEndDate) ?  new Date(picker.endDate._d).getTime() : endDate.getTime() ;  
-	      $scope.toTimeStamp = (new Date().getTime() < enddateTimestamp) ? new Date().getTime() : enddateTimestamp;   
-	      //$scope.toTimeStamp = (new Date().getTime() < new Date(picker.endDate._d).getTime()) ? new Date().getTime() : new Date(picker.endDate._d).getTime();
+		  $scope.toTimeStamp = new Date(picker.endDate._d).getTime();
 	      $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
 	      $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');	      
 	      if ($scope.fromDate === $scope.toDate ) {
 	        $scope.fromTimeStamp = $scope.toTimeStamp;
-	      }
+	      }	      
 	    };
 
     	$scope.disableDatesInDatePicker = function() {
@@ -63,11 +58,13 @@ angular.module('hillromvestApp')
 			}
 		}
 
-		$scope.resetTimeDurationForToday =function(){
-			$scope.fromTimeStamp = new Date().getTime();
-			$scope.toTimeStamp = new Date().getTime();
-			$scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
-			$scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');
+		$scope.resetTimeDurationForToday =function(today){
+			if(!today){
+				$scope.fromTimeStamp = new Date().getTime();
+				$scope.toTimeStamp = new Date().getTime();
+				$scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
+				$scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');	
+			}						
 			$scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
 		};
 		
@@ -557,11 +554,11 @@ angular.module('hillromvestApp')
 			}
 		};
 
-		$scope.dayView = function(){ 
+		$scope.dayView = function(today){ 			
 			$scope.dayChart = true;
 			$scope.customDateRange = false;
 			$scope.toggleDuration(true, false, false, false, false);
-			$scope.resetTimeDurationForToday();
+			$scope.resetTimeDurationForToday(today);
 			$scope.getCategoryChartData(loginAnalyticsConstants.duration.DAY);			
 			
 		};
@@ -594,15 +591,15 @@ angular.module('hillromvestApp')
 		};
 
 		$scope.customDateRangeView = function(){
-			/*if ($scope.fromDate === $scope.toDate ) {
-				$scope.dayView();
-			}else{*/
+			if ($scope.fromDate === $scope.toDate ) {
+				$scope.dayView($scope.fromDate);
+			}else{
 				$scope.defaultLegends(); //if the legends selected eariler has to be retained then remove this line
 				$scope.dayChart = false;
 				$scope.customDateRange = true;
 				$scope.toggleDuration(false, false, false, false, true);
 				$scope.getCategoryChartData(loginAnalyticsConstants.duration.CUSTOM);	
-			//}				
+			}				
 		};
 
 		$scope.downloadGraphAsPdf = function(){
