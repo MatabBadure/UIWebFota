@@ -13,7 +13,7 @@ angular.module('hillromvestApp')
 		*/
 		$scope.calculateDateFromPicker = function(picker) {
 	      $scope.fromTimeStamp = new Date(picker.startDate._d).getTime();
-		  $scope.toTimeStamp = new Date(picker.endDate._d).getTime();
+		  $scope.toTimeStamp = new Date().getTime() > new Date(picker.startDate._d).getTime()? new Date().getTime() : new Date(picker.endDate._d).getTime();
 	      $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
 	      $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');	      
 	      if ($scope.fromDate === $scope.toDate ) {
@@ -423,7 +423,7 @@ angular.module('hillromvestApp')
 			                fontWeight: 'bold'
 			            },
 		            	formatter:function(){
-		              	return  Highcharts.dateFormat("%e/%m/%Y",this.value);//Highcharts.dateFormat('%e. %b',this.value);
+		              	return  Highcharts.dateFormat("%m/%e/%Y",this.value);//Highcharts.dateFormat('%e. %b',this.value);
 		              }		              
 		            }			           
 				},				
@@ -485,7 +485,7 @@ angular.module('hillromvestApp')
 		            },
 		            false],
 					formatter: function() {
-				        var s = '<div style="font-size:12x; border-bottom:1px solid #ccc; font-weight: bold; padding-bottom: 3px;">'+  Highcharts.dateFormat('%e/%m/%Y', this.x) +'</div><div>';
+				        var s = '<div style="font-size:12x; border-bottom:1px solid #ccc; font-weight: bold; padding-bottom: 3px;">'+  Highcharts.dateFormat('%m/%e/%Y', this.x) +'</div><div>';
 
 				        $.each(this.points, function(i, point) {
 				            s += '<div style="font-size:10px; font-weight: bold; border-bottom:1px solid #ccc; width="100%"><div style="color:'+ point.series.color +';padding:5px;width:94%;float:left"> ' + point.series.name + '</div> ' 
