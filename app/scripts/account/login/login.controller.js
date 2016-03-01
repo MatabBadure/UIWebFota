@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('hillromvestApp')
-  .controller('LoginController',['$scope', '$state', '$timeout', 'Auth', 'vcRecaptchaService', 'globalConfig', '$rootScope', 'loginConstants', 'Principal', 'StorageService',
-    function($scope, $state, $timeout, Auth, vcRecaptchaService, globalConfig, $rootScope, loginConstants, Principal, StorageService) {
+  .controller('LoginController',['$scope', '$state', '$timeout', 'Auth', 'vcRecaptchaService', 'globalConfig', '$rootScope', 'loginConstants', 'Principal', 'StorageService', 'patientsurveyService',
+    function($scope, $state, $timeout, Auth, vcRecaptchaService, globalConfig, $rootScope, loginConstants, Principal, StorageService, patientsurveyService) {
     $scope.showLogin = true;
     $scope.isEmailExist = true;
     $scope.isFirstLogin = false;
@@ -128,6 +128,11 @@ angular.module('hillromvestApp')
           
           if(response.data.user.authorities[0].name === loginConstants.role.patient){
             logged.patientID = response.data.user.id;
+            $rootScope.surveyId = 1;
+            patientsurveyService.isSurvey(response.data.user.id).then(function(response) {
+              console.log("response", response);
+              $rootScope.surveyId = 1;
+            });
             $state.go('patientdashboard');
           } else if(response.data.user.authorities[0].name === loginConstants.role.hcp){
             logged.userId = response.data.user.id;

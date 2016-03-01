@@ -92,5 +92,9 @@ angular.module('hillromvestApp')
 	'getAllStates' : '/api/allstates',
 	'getCityStateByZip': '/api/cityStateZipMapByZip?zipcode=ZIPCODE',
 	'validateCredentials': '/api/validateCredentials',
-	'getLoginAnalytics': '/api/loginAnalytics?from=FROM&to=TO&filters=FILTERS&duration=DURATION'	
+	'getLoginAnalytics': '/api/loginAnalytics?from=FROM&to=TO&filters=FILTERS&duration=DURATION',
+	'isSurvey': '/api/survey/user/USER_ID',
+	'getSurvey': '/api/survey/SURVEY_ID',
+	'saveSuvey': '/api/survey',
+	'getSurveyGridReport': '/api/survey/gridview/SURVEY_ID?fromDate=FROM_DATE&toDate=TO_DATE'	
 });

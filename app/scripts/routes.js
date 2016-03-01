@@ -3869,7 +3869,7 @@ angular.module('hillromvestApp')
             })                    
             .state('patientSurvey', {
               parent: 'survey',
-              url: '/{patientId}/survey',
+              url: '/{surveyId}/survey',
               data: {
                   roles: ['PATIENT'],
                   pageTitle: 'console.console-tabs.patient-survey'

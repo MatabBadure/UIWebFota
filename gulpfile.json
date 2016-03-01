@@ -154,7 +154,8 @@
             "app/scripts/modules/patient/survey/controllers/patientsurvey.controller.js",
             "app/scripts/components/util/exportutil.service.js",
             "app/scripts/components/captcha/captcha.js",
-            "app/scripts/modules/common/console/loginanalytics/services/loginanalytics.service.js"
+            "app/scripts/modules/common/console/loginanalytics/services/loginanalytics.service.js",
+            "app/scripts/modules/patient/survey/services/patientSurvey.service.js"
         ],
         "scripts_min_path":[
             "app/bower_components/canvg/dist/canvg.bundle.min.js",
@@ -295,7 +296,8 @@
             "app/scripts/modules/patient/survey/controllers/patientsurvey.controller.min.js",
             "app/scripts/components/util/exportutil.service.min.js",
             "app/scripts/components/captcha/captcha.min.js",
-            "app/scripts/modules/common/console/loginanalytics/services/loginanalytics.service.min.js"
+            "app/scripts/modules/common/console/loginanalytics/services/loginanalytics.service.min.js",
+            "app/scripts/modules/patient/survey/services/patientSurvey.service.min.js"
         ],
         "clean": [
             "app/build/",
