@@ -3,7 +3,7 @@
 <div ng-show="survey">
 	<form ng-submit="saveSurvey()" novalidate autocomplete="off">
 		<div class="container admin-user">
-			<ng-include ng-if="survey.surveyId === 1" src="'scripts/modules/patient/survey/views/ninetyDaysSurvey.html'"></ng-include>
+			<ng-include ng-if="survey.surveyId === 1" src="'scripts/modules/patient/survey/views/fiveDaysSurvey.html'"></ng-include>
 			<ng-include ng-if="survey.surveyId === 2" src="'scripts/modules/patient/survey/views/thirtyDaysSurvey.html'"></ng-include> 
 			<div class="col-md-16 reset-padding margin-top">
 				<div class="col-md-2 reset-padding">			
