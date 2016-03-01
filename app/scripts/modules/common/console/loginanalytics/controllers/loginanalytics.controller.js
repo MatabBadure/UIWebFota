@@ -485,7 +485,7 @@ angular.module('hillromvestApp')
 		            },
 		            false],
 					formatter: function() {
-				        var s = '<div style="font-size:12x; border-bottom:1px solid #ccc; font-weight: bold; padding-bottom: 3px;">'+  Highcharts.dateFormat('%m/%e/%Y', this.x) +'</div><div>';
+				        var s = '<div style="font-size:12x;font-weight: bold; padding-bottom: 3px;">'+  Highcharts.dateFormat('%m/%e/%Y', this.x) +'</div><div>';
 
 
 				        $.each(this.points, function(i, point) {
