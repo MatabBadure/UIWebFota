@@ -613,6 +613,9 @@
 .graphview_text_color{
 	color: $blue-btn;
 }
+#containerDay > .highcharts-container > .highcharts-tooltip > span{
+	left: -4px !important;
+}
 .dashboard__manage-view--pagination{
 	&.pagination_notes{
 		margin: 0px 5px 15px !important;
