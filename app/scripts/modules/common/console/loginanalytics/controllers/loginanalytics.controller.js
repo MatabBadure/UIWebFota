@@ -12,8 +12,8 @@ angular.module('hillromvestApp')
 		* default legends and their accessibility
 		*/
 		$scope.calculateDateFromPicker = function(picker) {
-	      $scope.fromTimeStamp = new Date(picker.startDate._d).getTime();	      
-		  $scope.toTimeStamp = (new Date().getTime() < new Date(picker.endDate._d).getTime())? new Date().getTime() : new Date(picker.endDate._d).getTime();
+	      $scope.fromTimeStamp = new Date(picker.startDate._d).getTime();
+		  $scope.toTimeStamp = new Date().getTime() > new Date(picker.startDate._d).getTime()? new Date().getTime() : new Date(picker.endDate._d).getTime();
 	      $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
 	      $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');	      
 	      if ($scope.fromDate === $scope.toDate ) {
@@ -45,7 +45,7 @@ angular.module('hillromvestApp')
 		$scope.opts = {
 			maxDate: new Date(),
 			format: patientDashboard.dateFormat,
-			//dateLimit: {"months":24},
+			//dateLimit: {"months":patientDashboard.maxDurationInMonths},
 			eventHandlers: {'apply.daterangepicker': function(ev, picker) {  
 				$scope.calculateDateFromPicker(picker);	        				
 				$scope.customDateRangeView();  
@@ -324,7 +324,7 @@ angular.module('hillromvestApp')
 		            lineWidth:1,
 		            min: 0,
 		            title: {
-		                text: 'No. of Users',
+		                text: 'No. Of Users',
 		                style: {
 			                color: '#525151',
 			                font: '10px Helvetica',
@@ -401,8 +401,8 @@ angular.module('hillromvestApp')
 				chart:{
 					type: 'line',
 					zoomType: 'xy',					
-                    backgroundColor:'#e3ecf7'/*,
-                    turboThreshold: 2000,*/
+                    backgroundColor:'#e3ecf7',
+                    turboThreshold: 2000,
 				},
 		        title: {
 		            text: ''
@@ -423,7 +423,7 @@ angular.module('hillromvestApp')
 							fontWeight: 'bold'
 						},
 						formatter:function(){
-							return  Highcharts.dateFormat("%m/%e/%Y",this.value);
+							return  Highcharts.dateFormat("%m/%e/%Y",this.value);//Highcharts.dateFormat('%e. %b',this.value);
 						}	              
 					}			           
 				},				
@@ -457,9 +457,6 @@ angular.module('hillromvestApp')
 					y: 0
 		        },
 		        plotOptions: {
-		        	/*spline:{
-		        		turboThreshold: 50000
-		        	},*/
 		            series: {
 		                events: {
 		                    legendItemClick: function () {
@@ -488,7 +485,8 @@ angular.module('hillromvestApp')
 		            },
 		            false],
 					formatter: function() {
-				        var s = '<div style="font-size:12x;font-weight: bold; padding-bottom: 3px;">'+  Highcharts.dateFormat('%m/%e/%Y', this.x) +'</div><div>';
+
+				        var s = '<div style="font-size:12x; font-weight: bold; padding-bottom: 3px;">'+  Highcharts.dateFormat('%m/%e/%Y', this.x) +'</div><div>';
 
 
 				        $.each(this.points, function(i, point) {
@@ -608,11 +606,11 @@ angular.module('hillromvestApp')
 
 		$scope.downloadGraphAsPdf = function(){
 			if($scope.dayChart){
-				exportutilService.exportLoginAnalyticsAsPDF("containerDay", loginAnalyticsConstants.duration.DAY, $scope.legends, $scope.fromDate, $scope.toDate);
+				exportutilService.exportLoginAnalyticsAsPDF("containerDay", loginAnalyticsConstants.duration.DAY, $scope.legends);
 			}else if($scope.customDateRange){
-				exportutilService.exportLoginAnalyticsAsPDF("containerCustom", null, null,$scope.fromDate, $scope.toDate);
+				exportutilService.exportLoginAnalyticsAsPDF("containerCustom");
 			}else{
-				exportutilService.exportLoginAnalyticsAsPDF("containerNonDay", null, null,$scope.fromDate, $scope.toDate);
+				exportutilService.exportLoginAnalyticsAsPDF("containerNonDay");
 			}						      	
 		};
 
@@ -768,12 +766,7 @@ angular.module('hillromvestApp')
 		 	}else if($scope.durationview.custom){
 		 		$scope.customDateRangeView();
 		 	}
-		 };	
-
-		 $scope.defaultDayView = function(){
-		 	$scope.defaultLegends();
-		 	$scope.dayView();
-		 }; 
+		 };	 
 
 		/* This method initiates the required methods required for a specific route*/
 		$scope.init = function(){
