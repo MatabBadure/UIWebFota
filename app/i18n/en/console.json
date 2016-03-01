@@ -29,6 +29,13 @@
 				"month": "Month",
 				"year": "Year"
 			}
-		}
+		},
+		"survey":{
+			"general-info": "General Info",
+			"required-field": "Required Field",
+			"usage-info": "Usage Info",
+			"not-available": "Not Available"
+		
+		}	
 	}
 }

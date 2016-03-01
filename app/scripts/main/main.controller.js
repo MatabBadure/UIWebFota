@@ -13,7 +13,8 @@ angular.module('hillromvestApp')
 			$rootScope.username = null;
 			if(StorageService.get('logged')){
 				$rootScope.userRole = StorageService.get('logged').role;
-				$rootScope.username = StorageService.get('logged').userFirstName;  
+				$rootScope.username = StorageService.get('logged').userFirstName;
+				$rootScope.userFullName = StorageService.get('logged').userFullName;
 				$rootScope.userEmail = StorageService.get('logged').userEmail;  
 			}
 			if($rootScope.userRole === 'PATIENT'){

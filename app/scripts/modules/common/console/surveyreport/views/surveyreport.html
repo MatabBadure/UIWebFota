@@ -9,25 +9,26 @@
       <span>
         <label>
           <input type="radio" name="protocolType" ng-model="protocol.type" value="Normal" ng-disabled="protocol.edit" ng-change="switchtoNormal()">
-          <span class="radio-box-text">5 Days</span>
+          <span class="cyan-blue-light">5 Days</span>
         </label>
       </span>
       <span>
         <label>
           <input type="radio" name="protocolType" ng-model="protocol.type" value="Custom" ng-disabled="protocol.edit" ng-change="switchtoCustom()">
-          <span class="radio-box-text">30 Days</span>
+          <span class="cyan-blue-light">30 Days</span>
         </label>
       </span>
        <span>
         <label>
           <input type="radio" name="protocolType" ng-model="protocol.type" value="Custom" ng-disabled="protocol.edit" ng-change="switchtoCustom()">
-          <span class="radio-box-text">90 Days</span>
+          <span class="cyan-blue-light">90 Days</span>
+         <!--  <span class="radio-box-text">90 Days</span> -->
         </label>
       </span>
     </div>
   </div>
   <div class="col-md-16 padding0" ng-class="{'pointer-no-event': !isGraphLoaded, 'pointer-fill-event': isGraphLoaded}">
-        <div class="bar_graph_header">
+      <!--   <div class="bar_graph_header">
           <div class="col-md-5 col-sm-7 left_header_barchart padding0">
             <div class="row">
               <ul class="nav nav-pills">
@@ -43,7 +44,627 @@
               <li role="presentation" class="" id="dp3"><a href="" date-range-picker class="date-picker" ng-model="dates" parentEl="#dp3" options="opts" ><span class="icon-calendar"></span></a></li>
             </ul>
           </div>
+        </div> -->
+     <div class="container patient_wrapper reset-padding">
+    
+      <div class="col-md-16 reset-padding pointer-fill-event" ng-class="">
+        <div class="bar_graph_header">
+          <div class="col-md-5 col-sm-7 left_header_barchart padding0">
+            <div class="row">
+              <ul class="nav nav-pills">
+              <li><a ng-class="" href="" ng-click="isGraphLoaded &amp;&amp; showHmrGraph()" translate="" class="active">Graph View</a></li>
+              <li><a href="" ng-class="" ng-click="" translate="" class="">Grid View</a></li>
+
+            </ul>
+            </div>
+          </div>
+           <div class="col-md-7 pull-left text-center margin_tp15 grey_color"><span>No. of survey taken :</span> <span class="cyan-blue-light">7</span></div>
+          <div class="col-md-4 col-sm-9 right_header_barchart">
+            <ul class="nav nav-pills pull-right">
+               <li role="" class="" id="dp3"><a href="" date-range-picker="" class="" ng-model="dates" parentel="#dp3" options="opts"> <span class="date ng-binding cyan-blue-light">02/19/2016</span> <span class="icon-calendar"></span></a></li>
+            </ul>
+            </div>
+       
         </div>
+     <!--    <div class="pull-right week_date_container">
+          <span class="ng-scope">
+              <span class="date ng-binding">02/19/2016</span> - <span class="date ng-binding">02/25/2016</span>
+          </span>
+       </div> -->
+      </div>
+
+     <div class="col-md-16 dashboard__manage-view--list">
+       <div class="col-md-1"><span>Q-1</span></div>
+       <div class="col-md-15 cyan-blue-light"><span>Did the trainer demonstrate and perform a complete therapy session?</span></div>
+     </div>
+
+     <div class="col-md-16 dashboard__manage-view--list">
+       <div class="col-md-1"><span>Q-2</span></div>
+       <div class="col-md-15 cyan-blue-light"><span>Did the trainer make sure your garmet fit you properly?</span></div>
+     </div>
+
+      <div class="col-md-16 dashboard__manage-view--list">
+       <div class="col-md-1"><span>Q-3</span></div>
+       <div class="col-md-15 cyan-blue-light"><span>Did the trainer explain the Outcomes Monitoring Program and how to obtain the hour  meter reading The Vest&copy; System Device?</span></div>
+     </div>
+
+      <div class="col-md-16 dashboard__manage-view--list">
+       <div class="col-md-1"><span>Q-4</span></div>
+       <div class="col-md-15 cyan-blue-light"><span>Did the trainer review the trouble shooting and safety instructions regarding The Vest&copy; usage System?</span></div>
+     </div>
+
+      <div class="col-md-16 dashboard__manage-view--list">
+       <div class="col-md-1"><span>Q-5</span></div>
+       <div class="col-md-15 cyan-blue-light"><span>Did the trainer provide you with our toll free 800 number in case you need to call us?</span></div>
+     </div>
+
+      <div class="col-md-16 dashboard__manage-view--list">
+       <div class="col-md-1"><span>Q-6</span></div>
+       <div class="col-md-15 cyan-blue-light"><span>Would you recommend this trainer to others?</span></div>
+     </div>
+
+  <!-- Note section HTML -->
+    <div class="col-md-16 margin-top">
+      <div class="btn_group patient_dashdoard_btns" ng-class="{ 'btn_group patient_dashdoard_btns_compliance': complianceGraph, 'btn_group patient_dashdoard_btns': !complianceGraph}">
+        <div dropdown="" class="pull-right left dropdown">
+          <button id="single-button" type="button" class="hillrom-btn btn-submit margin0 float-right ng-scope dropdown-toggle pointer-no-event" ng-class="{ 'pointer-fill-event': (!noDataAvailable &amp;&amp; isGraphLoaded) , 'pointer-no-event': (!isGraphLoaded || noDataAvailable) }" dropdown-toggle="" ng-disabled="disabled" translate="" aria-haspopup="true" aria-expanded="false">Export in PDF</button>
+        </div>
+      </div>
+    </div>
+
+     <div class="grid-view">
+        <div class="col-md-16 reset-padding">
+           <div class="col-md-1 text-center">
+              <span></span>
+            </div>
+            <div class="col-md-11 text-center border-right">
+              <span>Questions</span>
+            </div>
+            <div class="col-md-1 cyan-blue-light text-center border-right">
+              <span>Yes</span>
+            </div>
+            <div class="col-md-1 cyan-blue-light text-center border-right">
+              <span>No</span>
+            </div>
+            <div class="col-md-2 cyan-blue-light text-center padding10">
+              <span>Comments</span>
+            </div>
+        </div>
+
+       <div class="col-md-16 reset-padding">
+            <div class="col-md-1 border-right">
+              <span>Q-1</span>
+            </div>
+            <div class="col-md-11 cyan-blue-light border-right">
+              <span>Did the trainer demonstrate and perform a complete therapy session?</span>
+            </div>
+            <div class="col-md-1 text-center border-right">
+              <span>15</span>
+            </div>
+            <div class="col-md-1 text-center border-right">
+              <span>05</span>
+            </div>
+            <div class="col-md-2 text-center padding10">
+              <span>View</span>
+            </div>
+        </div>
+
+         <div class="col-md-16 reset-padding">
+            <div class="col-md-1 border-right">
+              <span>Q-2</span>
+            </div>
+            <div class="col-md-11 cyan-blue-light border-right">
+              <span>Did the trainer make sure your garmet fit you properly?</span>
+            </div>
+            <div class="col-md-1 text-center border-right">
+              <span>10</span>
+            </div>
+            <div class="col-md-1 text-center border-right">
+              <span>10</span>
+            </div>
+            <div class="col-md-2 text-center padding10">
+              <span>View</span>
+            </div>
+        </div>
+         <div class="col-md-16 reset-padding">
+            <div class="col-md-1 border-right">
+              <span>Q-3</span>
+            </div>
+            <div class="col-md-11 cyan-blue-light border-right">
+              <span>Did the trainer explain the Outcomes Monitoring Program and how to obtain the hour  meter reading The Vest&copy; System Device?</span>
+            </div>
+            <div class="col-md-1 text-center border-right">
+              <span>12</span>
+            </div>
+            <div class="col-md-1 text-center border-right">
+              <span>08</span>
+            </div>
+            <div class="col-md-2 text-center padding10">
+              <span>View</span>
+            </div>
+        </div>
+         <div class="col-md-16 reset-padding">
+            <div class="col-md-1 border-right">
+              <span>Q-4</span>
+            </div>
+            <div class="col-md-11 cyan-blue-light border-right">
+              <span>Did the trainer review the trouble shooting and safety instructions regarding The Vest&copy; usage System?</span>
+            </div>
+            <div class="col-md-1 text-center border-right">
+              <span>06</span>
+            </div>
+            <div class="col-md-1 text-center border-right">
+              <span>14</span>
+            </div>
+            <div class="col-md-2 text-center padding10">
+              <span>View</span>
+            </div>
+        </div>
+         <div class="col-md-16 reset-padding">
+            <div class="col-md-1 border-right">
+              <span>Q-5</span>
+            </div>
+            <div class="col-md-11 cyan-blue-light border-right">
+              <span>Did the trainer provide you with our toll free 800 number in case you need to call us?</span>
+            </div>
+            <div class="col-md-1 text-center border-right">
+              <span>08</span>
+            </div>
+            <div class="col-md-1 text-center border-right">
+              <span>12</span>
+            </div>
+            <div class="col-md-2 text-center padding10">
+              <span>View</span>
+            </div>
+        </div>
+        <div class="col-md-16 reset-padding">
+            <div class="col-md-1 border-right border-right">
+              <span>Q-6</span>
+            </div>
+            <div class="col-md-11 cyan-blue-light border-right">
+              <span>Would you recommend this trainer to others?</span>
+            </div>
+            <div class="col-md-1 text-center border-right">
+              <span>14</span>
+            </div>
+            <div class="col-md-1 text-center border-right">
+              <span>06</span>
+            </div>
+            <div class="col-md-2 text-center padding10">
+              <span>View</span>
+            </div>
+        </div>
+         <div class="col-md-16 reset-padding">
+            <div class="col-md-1 border-right">
+              <span>Q-7</span>
+            </div>
+            <div class="col-md-11 cyan-blue-light border-right">
+              <span>Any other comments?</span>
+            </div>
+            <div class="col-md-1 text-center border-right">
+              <span>14</span>
+            </div>
+            <div class="col-md-1 text-center border-right">
+              <span>06</span>
+            </div>
+            <div class="col-md-2 text-center padding10">
+              <span>View</span>
+            </div>
+        </div>
+     </div>
+
+     <!--grid view 30 days therapy -->
+<div class="grid-view">
+        <div class="col-md-16 reset-padding">
+            <div class="col-md-1 text-center padding10">
+              <span></span>
+            </div>
+             <div class="col-md-9 text-center border-right padding_tb">
+              <span>Questions</span>
+            </div>
+            <div class="col-md-1 cyan-blue-light text-center border-right">
+              <span>Strongly disagree</span>
+            </div>
+            <div class="col-md-1 cyan-blue-light text-center border-right">
+              <span>Somewhat disagree</span>
+            </div>
+            <div class="col-md-1 cyan-blue-light padding_tb text-center border-right">
+              <span>Neutral</span>
+            </div>
+             <div class="col-md-1 cyan-blue-light text-center border-right">
+              <span>Somewhat agree</span>
+            </div>
+             <div class="col-md-1 cyan-blue-light text-center border-right">
+              <span>Strongly agree</span>
+            </div>
+             <div class="col-md-1 cyan-blue-light text-center">
+              <span>Unable to assess</span>
+            </div>
+        </div>
+
+         <div class="col-md-16 reset-padding">
+            <div class="col-md-1 border-right">
+              <span>Q-1</span>
+            </div>
+             <div class="col-md-9 padding10 cyan-blue-light border-right">
+              <span>The therapy helps me clear health at home</span>
+            </div>
+            <div class="col-md-1 text-center border-right">
+              <span>5</span>
+            </div>
+            <div class="col-md-1 text-center border-right">
+              <span>6</span>
+            </div>
+            <div class="col-md-1 text-center border-right">
+              <span>4</span>
+            </div>
+             <div class="col-md-1 text-center border-right">
+              <span>2</span>
+            </div>
+             <div class="col-md-1 text-center border-right">
+              <span>1</span>
+            </div>
+             <div class="col-md-1 text-center">
+              <span>2</span>
+            </div>
+        </div>
+
+          <div class="col-md-16 reset-padding">
+            <div class="col-md-1 border-right">
+              <span>Q-3</span>
+            </div>
+             <div class="col-md-9 padding10 cyan-blue-light border-right">
+              <span>Using this therapy helps me have more energy to do my regular activities of daily living </span>
+            </div>
+            <div class="col-md-1 text-center border-right">
+              <span>8</span>
+            </div>
+            <div class="col-md-1 text-center border-right">
+              <span>2</span>
+            </div>
+            <div class="col-md-1 text-center border-right">
+              <span>5</span>
+            </div>
+             <div class="col-md-1 text-center border-right">
+              <span>1</span>
+            </div>
+             <div class="col-md-1 text-center border-right">
+              <span>2</span>
+            </div>
+             <div class="col-md-1 text-center">
+              <span>2</span>
+            </div>
+        </div>
+         <div class="col-md-16 reset-padding">
+            <div class="col-md-1 border-right">
+              <span>Q-4</span>
+            </div>
+             <div class="col-md-9 padding10 cyan-blue-light border-right">
+              <span>The therapy helps to minimize my shortness of breath</span>
+            </div>
+            <div class="col-md-1 text-center border-right">
+              <span>4</span>
+            </div>
+            <div class="col-md-1 text-center border-right">
+              <span>1</span>
+            </div>
+            <div class="col-md-1 text-center border-right">
+              <span>8</span>
+            </div>
+             <div class="col-md-1 text-center border-right">
+              <span>3</span>
+            </div>
+             <div class="col-md-1 text-center border-right">
+              <span>1</span>
+            </div>
+             <div class="col-md-1 text-center">
+              <span>2</span>
+            </div>
+        </div>
+          <div class="col-md-16 reset-padding">
+            <div class="col-md-1 border-right">
+              <span>Q-5</span>
+            </div>
+             <div class="col-md-9 padding10 cyan-blue-light border-right">
+              <span>Using this therapy helps my quality of sleep</span>
+            </div>
+            <div class="col-md-1 text-center border-right">
+              <span>2</span>
+            </div>
+            <div class="col-md-1 text-center border-right">
+              <span>5</span>
+            </div>
+            <div class="col-md-1 text-center border-right">
+              <span>8</span>
+            </div>
+             <div class="col-md-1 text-center border-right">
+              <span>3</span>
+            </div>
+             <div class="col-md-1 text-center border-right">
+              <span>1</span>
+            </div>
+             <div class="col-md-1 text-center">
+              <span>1</span>
+            </div>
+        </div>
+          <div class="col-md-16 reset-padding">
+            <div class="col-md-1 border-right">
+              <span>Q-6</span>
+            </div>
+             <div class="col-md-9 padding10 cyan-blue-light border-right">
+              <span>The therapy helps me feel better</span>
+            </div>
+            <div class="col-md-1 text-center border-right">
+              <span>2</span>
+            </div>
+            <div class="col-md-1 text-center border-right">
+              <span>5</span>
+            </div>
+            <div class="col-md-1 text-center border-right">
+              <span>8</span>
+            </div>
+             <div class="col-md-1 text-center border-right">
+              <span>3</span>
+            </div>
+             <div class="col-md-1 text-center border-right">
+              <span>1</span>
+            </div>
+             <div class="col-md-1 text-center">
+              <span>1</span>
+            </div>
+        </div>
+        <div class="col-md-16 reset-padding">
+            <div class="col-md-1 border-right">
+              <span>Q-7</span>
+            </div>
+             <div class="col-md-9 padding10 cyan-blue-light border-right">
+              <span>I would like to continue with this therapy</span>
+            </div>
+            <div class="col-md-1 text-center border-right">
+              <span>2</span>
+            </div>
+            <div class="col-md-1 text-center border-right">
+              <span>5</span>
+            </div>
+            <div class="col-md-1 text-center border-right">
+              <span>8</span>
+            </div>
+             <div class="col-md-1 text-center border-right">
+              <span>3</span>
+            </div>
+             <div class="col-md-1 text-center border-right">
+              <span>1</span>
+            </div>
+             <div class="col-md-1 text-center">
+              <span>1</span>
+            </div>
+        </div>
+          <div class="col-md-16 reset-padding">
+            <div class="col-md-1 border-right">
+              <span>Q-7</span>
+            </div>
+             <div class="col-md-9 padding10 cyan-blue-light border-right">
+              <span>The therapy helps me cleat secretions from my lungs</span>
+            </div>
+            <div class="col-md-1 text-center border-right">
+              <span>2</span>
+            </div>
+            <div class="col-md-1 text-center border-right">
+              <span>5</span>
+            </div>
+            <div class="col-md-1 text-center border-right">
+              <span>8</span>
+            </div>
+             <div class="col-md-1 text-center border-right">
+              <span>3</span>
+            </div>
+             <div class="col-md-1 text-center border-right">
+              <span>1</span>
+            </div>
+             <div class="col-md-1 text-center">
+              <span>1</span>
+            </div>
+        </div>
+     </div>
+     <!--gird view 30 days therapy ends --> 
+
+
+
+      <!--grid view 90 days therapy -->
+<div class="grid-view">
+        <div class="col-md-16 text-center reset-padding">
+            <div class="col-md-1 cyan-blue-light text-center border-right">
+              <span>&nbsp;</span>
+            </div>
+            <div class="col-md-3 cyan-blue-light text-center border-right">
+              <span>Patient Name</span>
+            </div>
+            <div class="col-md-2 cyan-blue-light text-center  border-right">
+              <span>Patient DOB</span>
+            </div>
+            <div class="col-md-2 cyan-blue-light text-center  border-right">
+              <span>Phone Number</span>
+            </div>
+            <div class="col-md-4 cyan-blue-light text-center  border-right">
+              <span>Email Address</span>
+            </div>
+             <div class="col-md-2 cyan-blue-light text-center  border-right">
+              <span>Hours of Use</span>
+            </div>
+             <div class="col-md-2 cyan-blue-light text-center padding10">
+              <span>Serial Number</span>
+            </div>
+        </div>
+
+         <div class="col-md-16 reset-padding">
+            <div class="col-md-1 border-right">
+              <span>1</span>
+            </div>
+             <div class="col-md-3 text-center border-right">
+              <span>Dustin F. Rue</span>
+            </div>
+            <div class="col-md-2 text-center border-right">
+              <span>12/31/1971</span>
+            </div>
+            <div class="col-md-2 text-center border-right">
+              <span>941-456-7890</span>
+            </div>
+            <div class="col-md-4 text-center border-right">
+              <span>rue.dustin@gmail.com</span>
+            </div>
+             <div class="col-md-2 text-center border-right">
+              <span>80.20</span>
+            </div>
+             <div class="col-md-2 text-center padding10">
+              <span>4567123</span>
+            </div>
+          </div>
+
+           <div class="col-md-16 reset-padding">
+            <div class="col-md-1 border-right">
+              <span>2</span>
+            </div>
+             <div class="col-md-3 text-center border-right">
+              <span>Jennifer H. Russell</span>
+            </div>
+            <div class="col-md-2 text-center border-right">
+              <span>06/08/1963</span>
+            </div>
+            <div class="col-md-2 text-center border-right">
+              <span>456-123-7890</span>
+            </div>
+            <div class="col-md-4 text-center border-right">
+              <span>russell.jen@gmail.com</span>
+            </div>
+             <div class="col-md-2 text-center border-right">
+              <span>20.06</span>
+            </div>
+             <div class="col-md-2 text-center padding10">
+              <span>9874561</span>
+            </div>
+          </div>
+         <div class="col-md-16 reset-padding">
+            <div class="col-md-1 border-right">
+              <span>3</span>
+            </div>
+             <div class="col-md-3 text-center border-right">
+              <span>George J. Hooper</span>
+            </div>
+            <div class="col-md-2 text-center border-right">
+              <span>01/03/1969</span>
+            </div>
+            <div class="col-md-2 text-center border-right">
+              <span>789-456-7890</span>
+            </div>
+            <div class="col-md-4 text-center border-right">
+              <span>hooper.george@gmail.com</span>
+            </div>
+             <div class="col-md-2 text-center border-right">
+              <span>100.02</span>
+            </div>
+             <div class="col-md-2 text-center padding10">
+              <span>456122</span>
+            </div>
+          </div>
+         <div class="col-md-16 reset-padding">
+            <div class="col-md-1 border-right">
+              <span>4</span>
+            </div>
+             <div class="col-md-3 text-center border-right">
+              <span>Rosa D. hunter</span>
+            </div>
+            <div class="col-md-2 text-center border-right">
+              <span>12/09/1999</span>
+            </div>
+            <div class="col-md-2 text-center border-right">
+              <span>123-456-7890</span>
+            </div>
+            <div class="col-md-4 text-center border-right">
+              <span>hunter.rosa@gmail.com</span>
+            </div>
+             <div class="col-md-2 text-center border-right">
+              <span>90.05</span>
+            </div>
+             <div class="col-md-2 text-center padding10">
+              <span>1234567</span>
+            </div>
+          </div>
+          <div class="col-md-16 reset-padding">
+            <div class="col-md-1 border-right">
+              <span>5</span>
+            </div>
+             <div class="col-md-3 text-center border-right">
+              <span>Elizabeth J. Jones</span>
+            </div>
+            <div class="col-md-2 text-center border-right">
+              <span>11/05/1977</span>
+            </div>
+            <div class="col-md-2 text-center border-right">
+              <span>123-456-7890</span>
+            </div>
+            <div class="col-md-4 text-center border-right">
+              <span>jones.elizabeth@gmail.com</span>
+            </div>
+             <div class="col-md-2 text-center border-right">
+              <span>90.05</span>
+            </div>
+             <div class="col-md-2 text-center padding10">
+              <span>1234567</span>
+            </div>
+          </div>
+         <div class="col-md-16 reset-padding">
+            <div class="col-md-1 border-right">
+              <span>6</span>
+            </div>
+             <div class="col-md-3 text-center border-right">
+              <span>Ashley R. Vasquez</span>
+            </div>
+            <div class="col-md-2 text-center border-right">
+              <span>11/05/1985</span>
+            </div>
+            <div class="col-md-2 text-center border-right">
+              <span>123-456-7890</span>
+            </div>
+            <div class="col-md-4 text-center border-right">
+              <span>vas.ashley@gmail.com</span>
+            </div>
+             <div class="col-md-2 text-center border-right">
+              <span>90.05</span>
+            </div>
+             <div class="col-md-2 text-center padding10">
+              <span>1234567</span>
+            </div>
+          </div>
+          <div class="col-md-16 reset-padding">
+            <div class="col-md-1 border-right">
+              <span>6</span>
+            </div>
+             <div class="col-md-3 text-center border-right">
+              <span>Ashley R. Vasquez</span>
+            </div>
+            <div class="col-md-2 text-center border-right">
+              <span>11/05/1985</span>
+            </div>
+            <div class="col-md-2 text-center border-right">
+              <span>123-456-7890</span>
+            </div>
+            <div class="col-md-4 text-center border-right">
+              <span>vas.ashley@gmail.com</span>
+            </div>
+             <div class="col-md-2 text-center border-right">
+              <span>90.05</span>
+            </div>
+             <div class="col-md-2 text-center padding10">
+              <span>1234567</span>
+            </div>
+          </div>
+       
+     </div>
+     <!--gird view 90 days therapy ends --> 
+ </div>
+
+
+  
         <div class="pull-right week_date_container">
           <span ng-if="fromDate !== toDate">
               <span class="date">{{fromDate}}</span> - <span class="date">{{toDate}}</span>

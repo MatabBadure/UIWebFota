@@ -1,0 +1,169 @@
+<!-- 5 days therapy-->
+	  <div class="container margin-top reset-padding">
+	    <div class="col-md-16 reset-padding">
+	      <span class="dashboard__form--type" ng-bind="survey.surveyName"></span>
+	    </div>
+	  </div>
+
+	  <div class="col-md-16 reset-padding margin-top">
+          <div class="col-md-12 reset-padding">
+            <span class="dashboard__form--type ng-scope" translate="console.survey.general-info"></span>
+          </div>
+          <div class="col-md-4 user-required reset-padding">
+            <span class="ng-scope" translate="console.survey.required-field">*</span>
+          </div>
+	   </div>
+
+	   <div class="col-md-16 reset-padding margin-top">
+          <div class="col-md-8 reset-padding">
+	          	<div class="col-md-16 reset-padding">
+	           		 <span class="dashboard__form--type ng-scope graphview_text_color" ng-bind="survey.questions[0].questionText"></span>
+	           		 <span ng-show="survey.questions[0].mandatory"></span>
+	            </div>
+	            <div class="col-md-16 reset-padding">
+	           		 <input class="col-md-14" type="textbox" ng-model="survey.questions[0].answers[0]">
+	           	</div>
+          </div>
+          <div class="col-md-8 reset-padding">
+            <div class="col-md-16">
+	           		 <span class="dashboard__form--type ng-scope graphview_text_color" ng-bind="survey.questions[1].questionText"></span>
+	           		 <span ng-show="survey.questions[1].mandatory"></span> 
+	            </div>
+	            <div class="col-md-16">
+	           		 <input class="col-md-14" type="textbox" ng-model="survey.questions[1].answers[0]">
+	           	</div>
+          </div>
+	   </div>
+
+
+	    <div class="col-md-16 reset-padding margin-top">
+          <div class="col-md-8 reset-padding">
+	          	<div class="col-md-16 reset-padding">
+	           		 <span class="dashboard__form--type ng-scope graphview_text_color" ng-bind="survey.questions[2].questionText"></span>
+	           		 <span ng-show="survey.questions[2].mandatory"> </span> 
+	            </div>
+	            <div class="col-md-16 reset-padding">
+	           		 <input class="col-md-14" type="textbox" ng-model="survey.questions[2].answers[0]">
+	           	</div>
+          </div>
+            <div class="col-md-8 reset-padding">
+            <div class="col-md-16">
+	           		 <span class="dashboard__form--type ng-scope graphview_text_color" ng-bind="survey.questions[4].questionText"></span>
+	           		 <span ng-show="survey.questions[4].mandatory"> </span> 
+	            </div>
+	            <div class="col-md-16">
+	           		 <input class="col-md-14" type="textbox" ng-model="survey.questions[4].answers[0]">
+	           	</div>
+          </div>
+    
+	   </div>
+
+	     <div class="col-md-16 reset-padding margin-top">
+          <div class="col-md-8 reset-padding">
+	          	<div class="col-md-16 reset-padding">
+	           		 <span class="dashboard__form--type ng-scope graphview_text_color" ng-bind="survey.questions[3].questionText"></span>
+	           		 <span ng-show="survey.questions[3].mandatory"> </span> 
+	            </div>
+	            <div class="col-md-16 reset-padding">
+	           		 <input class="col-md-14" type="textbox" ng-model="survey.questions[3].answers[0]">
+	           	</div>
+          </div>
+          <div class="col-md-8 reset-padding">
+            <div class="col-md-16">
+	           		 <span class="dashboard__form--type ng-scope graphview_text_color" ng-bind="survey.questions[4].questionText"></span>
+	           		 <span ng-show="survey.questions[4].mandatory"> </span> 
+	            </div>
+	            <div class="col-md-16">
+	           		 <input class="col-md-14" type="textbox" ng-model="survey.questions[4].answers[0]">
+	           	</div>
+          </div>
+	   </div>
+
+	    <div class="col-md-16 reset-padding margin-top">
+          <div class="col-md-8 reset-padding">
+	          	<div class="col-md-16 reset-padding">
+	           		 <span class="dashboard__form--type ng-scope graphview_text_color" ng-bind="survey.questions[3].questionText"></span>
+	           		 <span ng-show="survey.questions[3].mandatory"> </span> 
+	            </div>
+	            <div class="col-md-16 reset-padding">
+	           		 <input class="col-md-14" type="textbox" ng-model="survey.questions[3].answers[0]">
+	           	</div>
+          </div>
+          <div class="col-md-8 reset-padding">
+            <div class="col-md-16">
+	           		 <span class="dashboard__form--type ng-scope graphview_text_color" ng-bind="survey.questions[4].questionText"></span>
+	           		 <span ng-show="survey.questions[4].mandatory"> </span> 
+	            </div>
+	            <div class="col-md-16">
+	           		 <input class="col-md-14" type="textbox" ng-model="survey.questions[4].answers[0]">
+	           	</div>
+          </div>
+	   </div>
+	     <div class="col-md-16 reset-padding margin-top">
+          <div class="col-md-8 reset-padding">
+	          	<div class="col-md-16 reset-padding graphview_text_color">
+	           		 <span class="dashboard__form--type ng-scope" ng-bind="survey.questions[3].questionText"></span>
+	           		 <span ng-show="survey.questions[3].mandatory"> </span> 
+	            </div>
+	            <div class="col-md-16 reset-padding">
+	           		 <input class="col-md-14" type="textbox" ng-model="survey.questions[3].answers[0]">
+	           	</div>
+          </div>
+          </div>
+
+	   <div class="col-md-16 reset-padding margin-top dark_grey_text_color14 ">
+	   <span class="dashboard__form--type ng-scope" translate="console.survey.usage-info">Usage Info</span>
+			<p>Please type the reading from the total use display in the field bewlo. The display reads to tenth of the hour. Confirm your device is turned on, at the Normal/Custom screen press the OFF button to obtain the hour meter reading.</p>
+	   </div>
+
+		  <div class="col-md-16 reset-padding margin-top">
+          <div class="col-md-8 reset-padding">
+	          	<div class="col-md-16 reset-padding graphview_text_color">
+	           		 <span class="dashboard__form--type ng-scope graphview_text_color" ng-bind="survey.questions[3].questionText"></span>
+	           		 <span ng-show="survey.questions[3].mandatory"> </span> 
+	            </div>
+	            <div class="col-md-16 reset-padding">
+	           		 <input class="col-md-14" type="textbox" ng-model="survey.questions[3].answers[0]">
+	           	</div>
+          </div>
+          <div class="col-md-8 reset-padding">
+            <div class="col-md-16">
+	           		 <span class="dashboard__form--type ng-scope graphview_text_color" ng-bind="survey.questions[4].questionText"></span>
+	           		 <span ng-show="survey.questions[4].mandatory"> </span> 
+	            </div>
+	            <div class="col-md-16">
+	           		 <input class="col-md-14" type="textbox" ng-model="survey.questions[4].answers[0]">
+	           	</div>
+          </div>
+	   </div>
+	  
+	    <div class="col-md-16 reset-padding margin-top">
+          <div class="col-md-8 reset-padding">
+	          	<div class="col-md-16 reset-padding ">
+	           		 <span class="dashboard__form--type ng-scope graphview_text_color" ng-bind="survey.questions[3].questionText"></span>
+	           		 <span ng-show="survey.questions[3].mandatory"> </span> 
+	            </div>
+	            <div class="col-md-16 reset-padding">
+	           		 <input class="col-md-14" type="textbox" ng-model="survey.questions[3].answers[0]">
+	           	</div>
+          </div>
+          </div>
+
+	   <div class="col-md-16 reset-padding margin-top graphview_text_color">
+			<span>Clinical follow-up</span>
+	   </div>
+	   <div class="col-md-16 reset-padding margin-top">
+			<div class=" reset-padding">
+				<label>
+				<input type="checkbox"  class="ng-pristine ng-untouched ng-valid" ng-model="survey.questions[12].answers[0]">
+				
+				</label>
+			</div>
+			<div class="col-md-15 reset-padding">
+				<label>
+					
+					<span class="radio-box-text" ng-bind="survey.questions[12].questionText"></span>
+				</label>
+			</div>
+	   </div>	    
+<!-- 5 days therapy ends-->
