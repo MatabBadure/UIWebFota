@@ -148,7 +148,12 @@ angular.module('hillromvestApp').constant('pdfServiceConstants', {
         date: "Date: ",
         signature: "Signature: ",
         name: "Name: ",
-        colon: ":"
+        colon: ":",
+        fromDate: "From",
+        toDate: "To",
+        loginanalytic: "Login Analytic",
+        hyphen: " - ",
+        dateRangeOfReportLabel: "Date Range Of Report",
     },
     style:{
         font:{
