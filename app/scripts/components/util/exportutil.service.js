@@ -78,7 +78,7 @@ angular.module('hillromvestApp')
   this.setFooter = function(pdf, imgY, name) { 
     //imgY, is the Y position from where the signature will start.
     // the complete set i.e. name, date and signature is of height 50 px. 
-    pdf.setFont(pdfServiceConstants.style.font.helvetica); 
+    /*pdf.setFont(pdfServiceConstants.style.font.helvetica); 
     pdf.setFontType(pdfServiceConstants.style.font.bold);        
     pdf.setFontSize(8);
     pdf.setTextColor(0, 0, 0);  
@@ -90,7 +90,7 @@ angular.module('hillromvestApp')
 
     pdf.text(40,imgY+30, pdfServiceConstants.text.signature);
     pdf.line(90, imgY+34, 350,imgY+34); //left, top, right, top
-    
+    */
     //the line at the end of each page in pdf.
     // this line will always start at 30pts above the bottom of the page
     pdf.setDrawColor(0);
