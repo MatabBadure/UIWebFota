@@ -762,7 +762,7 @@ angular.module('hillromvestApp')
           });
           patientService.editProtocol($stateParams.patientId, $rootScope.protocols).then(function(response){
             $scope.isVerificationModal = false;
-            exportutilService.exportChangePrescPDF($scope.slectedPatient, $rootScope.protocols);
+            exportutilService.exportChangePrescPDF($scope.slectedPatient, $rootScope.userFullName, $scope.currentDate, $rootScope.protocols);
             notyService.showMessage(response.data.message, 'success');
             if($scope.patientStatus.role === loginConstants.role.acctservices){
               $state.go('patientProtocolRcadmin', {'patientId': $stateParams.patientId});

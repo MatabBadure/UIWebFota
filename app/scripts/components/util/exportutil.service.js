@@ -213,7 +213,7 @@ angular.module('hillromvestApp')
     },1000); 
   }
 
-  this.addBody = function(pdf, slectedPatient, protocols){
+  this.addBody = function(pdf, slectedPatient, userFullName, currentDate, protocols){
     pdf.setFont(pdfServiceConstants.style.font.helvetica);
     pdf.setFontSize(8);
     pdf.setTextColor(100, 101, 104);
@@ -221,26 +221,26 @@ angular.module('hillromvestApp')
     
     pdf.setDrawColor(241,241,241);
     pdf.setFillColor(241,241,241);
-    pdf.rect(85, 85, 65, 20, 'FD');
+    pdf.rect(85, 85, 110, 20, 'FD');
     pdf.text(90, 100, slectedPatient.lastName+' '+slectedPatient.firstName);
 
     pdf.text(300, 100, 'Patient DOB');
     pdf.setDrawColor(241,241,241);
     pdf.setFillColor(241,241,241);
-    pdf.rect(365, 85, 65, 20, 'FD');
+    pdf.rect(365, 85, 110, 20, 'FD');
     pdf.text(370, 100, slectedPatient.dob);
 
     pdf.text(15, 130, 'Prescriber Name');
     pdf.setDrawColor(241,241,241);
     pdf.setFillColor(241,241,241);
-    pdf.rect(85, 118, 65, 20, 'FD');
-    pdf.text(90, 130, 'PrescriberName');
+    pdf.rect(85, 118, 110, 20, 'FD');
+    pdf.text(90, 130, userFullName);
 
     pdf.text(300, 130, 'Date');
     pdf.setDrawColor(241,241,241);
     pdf.setFillColor(241,241,241);
-    pdf.rect(365, 118, 65, 20, 'FD');
-    pdf.text(370, 130, '22/22/2222');
+    pdf.rect(365, 118, 110, 20, 'FD');
+    pdf.text(370, 130, currentDate);
 
     pdf.setFontSize(12);
     pdf.setTextColor(124,163,218);
@@ -296,12 +296,12 @@ angular.module('hillromvestApp')
     return pdf;
   }
 
-  this.exportChangePrescPDF = function(slectedPatient, protocols) {
+  this.exportChangePrescPDF = function(slectedPatient, userFullName, currentDate, protocols) {
     var pdf = this.getPdf();
     var pageHeight = pdf.internal.pageSize.height;
     var pageWidth = pdf.internal.pageSize.width;
     pdf = this.setHeader(pdf);
-    pdf = this.addBody(pdf, slectedPatient, protocols);
+    pdf = this.addBody(pdf, slectedPatient, userFullName, currentDate, protocols);
     pdf = this.setFooter(pdf, pdf.internal.pageSize.height-80, pdfServiceConstants.text.name);
     setTimeout(function(){
       pdf.save('VisiView™.pdf');
