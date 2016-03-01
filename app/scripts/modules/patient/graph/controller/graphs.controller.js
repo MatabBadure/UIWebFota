@@ -2,8 +2,8 @@
 
 angular.module('hillromvestApp')
 .controller('graphController',
-  ['$scope', '$state', 'patientDashBoardService', 'StorageService', 'dateService', 'graphUtil', 'patientService', 'UserService', '$stateParams', 'notyService', '$timeout', 'graphService', 'caregiverDashBoardService', 'loginConstants', '$location','$filter', 'commonsUserService', 'clinicadminPatientService',
-  function($scope, $state, patientDashBoardService, StorageService, dateService, graphUtil, patientService, UserService, $stateParams, notyService, $timeout, graphService, caregiverDashBoardService, loginConstants, $location, $filter, commonsUserService, clinicadminPatientService) {
+  ['$scope', '$state', 'patientDashBoardService', 'StorageService', 'dateService', 'graphUtil', 'patientService', 'UserService', '$stateParams', 'notyService', '$timeout', 'graphService', 'caregiverDashBoardService', 'loginConstants', '$location','$filter', 'commonsUserService', 'clinicadminPatientService', '$rootScope',
+  function($scope, $state, patientDashBoardService, StorageService, dateService, graphUtil, patientService, UserService, $stateParams, notyService, $timeout, graphService, caregiverDashBoardService, loginConstants, $location, $filter, commonsUserService, clinicadminPatientService, $rootScope) {
 
     var chart;
     var hiddenFrame, htmlDocument;    
@@ -69,8 +69,9 @@ angular.module('hillromvestApp')
       $scope.perPageCount = 4;
       $scope.patientTab = currentRoute;
       if ($state.current.name === 'patientdashboard') {
+        $rootScope.surveyTaken = false;
         $scope.hasTransmissionDate = false;
-        $scope.initPatientDashboard();
+        $scope.initPatientDashboard();        
       }else if(currentRoute === 'patientdashboardCaregiver'){
         $scope.initPatientCaregiver();
       }else if(currentRoute === 'patientdashboardCaregiverAdd'){
@@ -1856,7 +1857,10 @@ angular.module('hillromvestApp')
       $scope.textNote = "";
       $scope.initGraph();
       $scope.getPatientById($scope.patientId);
-      $scope.getPatientNotification();
+      $scope.getPatientNotification();      
+      if(!$rootScope.surveyTaken && $rootScope.surveyId){
+        $scope.surveyConfirmModal = true;                
+      }
     };
 
     $scope.openEditNote = function(noteId, noteText){
@@ -2849,6 +2853,9 @@ angular.module('hillromvestApp')
         });
     };
 
+    $scope.takeSurveyNow = function(){          
+        $state.go("patientSurvey", {'surveyId': $rootScope.surveyId});
+    };
     
 
 }]);

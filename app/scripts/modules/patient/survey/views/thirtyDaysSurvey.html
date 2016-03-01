@@ -1,0 +1,568 @@
+<!-- <div class="container admin-user"> -->
+ <div class="container margin-top reset-padding">
+	    <div class="col-md-16 reset-padding">
+	      <span class="dashboard__form--type" ng-bind="survey.surveyName"></span>
+	    </div>
+	  </div>
+
+	  <div class="col-md-16 reset-padding margin-top">
+          <div class="col-md-12 reset-padding">
+            <span class="dashboard__form--type ng-scope">General Info</span>
+          </div>
+          <div class="col-md-4 user-required reset-padding">
+            <span class="ng-scope">* Required Field</span>
+          </div>
+	   </div>
+
+	   <div class="col-md-16 reset-padding margin-top">
+          <div class="col-md-8 reset-padding">
+	          	<div class="col-md-16 reset-padding">
+	           		 <span class="dashboard__form--type ng-scope" ng-bind="survey.questions[0].questionText"></span>
+                 <span ng-show="survey.questions[0].mandatory"> *</span>
+	            </div>
+	            <div class="col-md-16 reset-padding">
+	           		 <input class="col-md-14" type="textbox" ng-model="survey.questions[0].answers[0]">
+	           	</div>
+          </div>
+          <div class="col-md-8 reset-padding">
+            <div class="col-md-16">
+	           		 <span class="dashboard__form--type ng-scope" ng-bind="survey.questions[1].questionText"></span>
+                 <span ng-show="survey.questions[1].mandatory"> *</span>
+	            </div>
+	            <div class="col-md-16">
+	           		 <input class="col-md-14" type="textbox" ng-model="survey.questions[1].answers[0]">
+	           	</div>
+          </div>
+	   </div>
+     <div class="col-md-16 reset-padding margin-top">
+          <div class="col-md-8 reset-padding">
+              <div class="col-md-16 reset-padding">
+                 <span class="dashboard__form--type ng-scope" ng-bind="survey.questions[2].questionText"></span>
+                 <span ng-show="survey.questions[2].mandatory"> *</span>
+              </div>
+              <div class="col-md-16 reset-padding">
+                 <input class="col-md-14" type="textbox" ng-model="survey.questions[2].answers[0]">
+              </div>
+          </div>          
+     </div>
+
+	    <div class="col-md-16 reset-padding margin-top">
+    		<div class="reset-padding">
+        		<span class="dashboard__form--type ng-scope">Usage Info</span>
+     		 </div>
+     		 <div class="col-md-12 dark_grey_text_color14 reset-padding">
+	     		 <p>Please type the reading  from the total use display in field below. The display reads to the the tength of the hour. <br />Confirm your device is turned on, at the Noraml/Custom screen press the OFF button to obtain the hour meter reading.</p>
+	     		 <p>If you are away from your device, type the number 0 in the hours of use field and check "Not Available" box.</p>
+     		 </div>
+	    </div>
+
+	    <div class="col-md-16 reset-padding margin-top">
+          <div class="col-md-8 reset-padding">
+	          	<div class="col-md-16 reset-padding">
+	           		 <span class="dashboard__form--type ng-scope" ng-bind="survey.questions[3].questionText"></span>
+                 <span ng-show="survey.questions[3].mandatory"> *</span>
+	            </div>
+	            <div class="col-md-16 reset-padding">
+	           		 <input class="col-md-14" type="textbox" ng-model="survey.questions[3].answers[0]">
+	           	</div>
+          </div>
+          <div class="col-md-8 reset-padding margin-top">
+            <div class="col-md-16">
+	           	<label>
+		          <input type="checkbox"  class="ng-pristine ng-untouched ng-valid">
+		          <span class="radio-box-text">Not Available</span>
+        		</label>
+	           
+          </div>
+	   </div>
+	   </div>
+
+	     <div class="col-md-16 reset-padding margin-top">
+          <div class="col-md-8 reset-padding">
+	          	<div class="col-md-16 reset-padding">
+	           		 <span class="dashboard__form--type ng-scope" ng-bind="survey.questions[4].questionText"></span>
+	            </div>
+	            <div class="col-md-16 reset-padding">
+	           		 <input class="col-md-14" type="textbox" ng-model="survey.questions[4].answers[0]">
+	           	</div>
+          </div>
+          <div class="col-md-8 reset-padding">
+            <div class="col-md-16">
+	           		 <span class="dashboard__form--type ng-scope" ng-bind="survey.questions[5].questionText"></span>
+	            </div>
+	            <div class="col-md-16">
+	           		 <input class="col-md-14" type="date" ng-model="survey.questions[5].answers[0]">
+	           	</div>
+          </div>
+	   </div>
+
+	   <div class="col-md-16 reset-padding margin-top dark_grey_text_color14 ">
+			<p>The following questions ask about the Vest Airway Clearance System training session. Please answer the following questions by choosing Yes or No. <br />If your response is No, Please feel free to explain or comment on the experience.</p>
+	   </div>
+
+	   <div class="col-md-16">
+        <h3>Please answer the following questions by choosing any one option.</h3>
+     </div>
+<!--first question -->
+     <div class="col-md-16">
+        <h5 ng-bind="survey.questions[6].questionText"></h5>
+        <span ng-show="survey.questions[6].mandatory"> *</span>
+     </div>
+
+     <div class="col-md-16">
+        <div class="col-md-3">
+            <div class="col-md-1">
+              <input type="radio" name="q1" ng-model="survey.questions[6].answers[0]" value="Strongly disagree">
+            </div> 
+            <div class="col-md-14">
+               <span>Strongly Disagree</span>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="col-md-1">
+               <input type="radio" name="q1" ng-model="survey.questions[6].answers[0]" value="Somewhat disagree">
+            </div>
+            <div class="col-md-14"> 
+                <span>Somewhat Disagree</span>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="col-md-1">
+               <input type="radio" name="q1" ng-model="survey.questions[6].answers[0]" value="Neutral">
+            </div>
+            <div class="col-md-14"> 
+                <span>Neutral</span>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="col-md-1">
+               <input type="radio" name="q1" ng-model="survey.questions[6].answers[0]" value="Somewhat agree">
+            </div>
+            <div class="col-md-14"> 
+                <span>Somewhat agree</span>
+            </div>
+        </div>
+
+        <div class="col-md-2 reset-padding">
+            <div class="col-md-1">
+               <input type="radio" name="q1" ng-model="survey.questions[6].answers[0]" value="Strongly agree">
+            </div>
+            <div class="col-md-14"> 
+                <span>Strongly agree</span>
+            </div>
+        </div>
+
+        <div class="col-md-2 reset-padding">
+            <div class="col-md-1">
+               <input type="radio" name="q1" ng-model="survey.questions[6].answers[0]" value="Unable to access">
+            </div>
+            <div class="col-md-14"> 
+                <span>Unable to assess</span>
+            </div>
+        </div>
+        </div>
+
+        <!--second question -->
+     <div class="col-md-16">
+        <h5 ng-bind="survey.questions[7].questionText"></h5>
+        <span ng-show="survey.questions[7].mandatory"> *</span>
+     </div>
+
+     <div class="col-md-16">
+        <div class="col-md-3">
+            <div class="col-md-1">
+              <input type="radio" name="q2" ng-model="survey.questions[7].answers[0]" value="Strongly disagree">
+            </div> 
+            <div class="col-md-14">
+               <span>Strongly disagree</span>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="col-md-1">
+               <input type="radio" name="q2" ng-model="survey.questions[7].answers[0]" value="Somewhat disagree">
+            </div>
+            <div class="col-md-14"> 
+                <span>Somewhat disagree</span>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="col-md-1">
+               <input type="radio" name="q2" ng-model="survey.questions[7].answers[0]" value="Neutral">
+            </div>
+            <div class="col-md-14"> 
+                <span>Neutral</span>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="col-md-1">
+               <input type="radio" name="q2" ng-model="survey.questions[7].answers[0]" value="Somewhat agree">
+            </div>
+            <div class="col-md-14"> 
+                <span>Somewhat agree</span>
+            </div>
+        </div>
+
+        <div class="col-md-2 reset-padding">
+            <div class="col-md-1">
+               <input type="radio" name="q2" ng-model="survey.questions[7].answers[0]" value="Strongly agree">
+            </div>
+            <div class="col-md-14"> 
+                <span>Strongly agree</span>
+            </div>
+        </div>
+
+        <div class="col-md-2 reset-padding">
+            <div class="col-md-1">
+               <input type="radio" name="q2" ng-model="survey.questions[7].answers[0]" value="Unable to access">
+            </div>
+            <div class="col-md-14"> 
+                <span>Unable to assess</span>
+            </div>
+        </div>
+      </div>
+
+        <!--third question -->
+     <div class="col-md-16">
+        <h5 ng-bind="survey.questions[8].questionText"></h5>
+        <span ng-show="survey.questions[8].mandatory"> *</span>
+     </div>
+
+     <div class="col-md-16">
+        <div class="col-md-3">
+            <div class="col-md-1">
+              <input type="radio" name="q3" ng-model="survey.questions[8].answers[0]" value="Strongly disagree">
+            </div> 
+            <div class="col-md-14">
+               <span>Strongly disagree</span>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="col-md-1">
+               <input type="radio" name="q3" ng-model="survey.questions[8].answers[0]" value="Somewhat disagree">
+            </div>
+            <div class="col-md-14"> 
+                <span>Somewhat disagree</span>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="col-md-1">
+               <input type="radio" name="q3" ng-model="survey.questions[8].answers[0]" value="Neutral">
+            </div>
+            <div class="col-md-14"> 
+                <span>Neutral</span>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="col-md-1">
+               <input type="radio" name="q3" ng-model="survey.questions[8].answers[0]" value="Somewhat agree">
+            </div>
+            <div class="col-md-14"> 
+                <span>Somewhat agree</span>
+            </div>
+        </div>
+
+        <div class="col-md-2 reset-padding">
+            <div class="col-md-1">
+               <input type="radio" name="q3" ng-model="survey.questions[8].answers[0]" value="Strongly agree">
+            </div>
+            <div class="col-md-14"> 
+                <span>Strongly agree</span>
+            </div>
+        </div>
+
+        <div class="col-md-2 reset-padding">
+            <div class="col-md-1">
+               <input type="radio" name="q3" ng-model="survey.questions[8].answers[0]" value="Unable to access">
+            </div>
+            <div class="col-md-14"> 
+                <span>Unable to assess</span>
+            </div>
+        </div>
+      </div>
+
+         <!--fourth question -->
+     <div class="col-md-16">
+        <h5 ng-bind="survey.questions[9].questionText"></h5>
+        <span ng-show="survey.questions[9].mandatory"> *</span>
+     </div>
+
+     <div class="col-md-16">
+        <div class="col-md-3">
+            <div class="col-md-1">
+              <input type="radio" name="q4" ng-model="survey.questions[9].answers[0]" value="Strongly disagree">
+            </div> 
+            <div class="col-md-14">
+               <span>Strongly disagree</span>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="col-md-1">
+               <input type="radio" name="q4" ng-model="survey.questions[9].answers[0]" value="Somewhat disagree">
+            </div>
+            <div class="col-md-14"> 
+                <span>Somewhat disagree</span>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="col-md-1">
+               <input type="radio" name="q4" ng-model="survey.questions[9].answers[0]" value="Neutral">
+            </div>
+            <div class="col-md-14"> 
+                <span>Neutral</span>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="col-md-1">
+               <input type="radio" name="q4" ng-model="survey.questions[9].answers[0]" value="Somewhat agree">
+            </div>
+            <div class="col-md-14"> 
+                <span>Somewhat agree</span>
+            </div>
+        </div>
+
+        <div class="col-md-2 reset-padding">
+            <div class="col-md-1">
+               <input type="radio" name="q4" ng-model="survey.questions[9].answers[0]" value="Strongly agree">
+            </div>
+            <div class="col-md-14"> 
+                <span>Strongly agree</span>
+            </div>
+        </div>
+
+        <div class="col-md-2 reset-padding">
+            <div class="col-md-1">
+               <input type="radio" name="q4" ng-model="survey.questions[9].answers[0]" value="Unable to access">
+            </div>
+            <div class="col-md-14"> 
+                <span>Unable to assess</span>
+            </div>
+        </div>
+    </div>
+
+          <!--fifth question -->
+     <div class="col-md-16">
+        <h5 ng-bind="survey.questions[10].questionText"></h5>
+        <span ng-show="survey.questions[10].mandatory"> *</span>
+     </div>
+
+     <div class="col-md-16">
+        <div class="col-md-3">
+            <div class="col-md-1">
+              <input type="radio" name="q5" ng-model="survey.questions[10].answers[0]" value="Strongly disagree">
+            </div> 
+            <div class="col-md-14">
+               <span>Strongly disagree</span>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="col-md-1">
+               <input type="radio" name="q5" ng-model="survey.questions[10].answers[0]" value="Somewhat disagree">
+            </div>
+            <div class="col-md-14"> 
+                <span>Somewhat disagree</span>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="col-md-1">
+              <input type="radio" name="q5" ng-model="survey.questions[10].answers[0]" value="Neutral">
+            </div>
+            <div class="col-md-14"> 
+                <span>Neutral</span>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="col-md-1">
+               <input type="radio" name="q5" ng-model="survey.questions[10].answers[0]" value="Somewhat agree">
+            </div>
+            <div class="col-md-14"> 
+                <span>Somewhat agree</span>
+            </div>
+        </div>
+
+        <div class="col-md-2 reset-padding">
+            <div class="col-md-1">
+               <input type="radio" name="q5" ng-model="survey.questions[10].answers[0]" value="Strongly agree">
+            </div>
+            <div class="col-md-14"> 
+                <span>Strongly agree</span>
+            </div>
+        </div>
+
+        <div class="col-md-2 reset-padding">
+            <div class="col-md-1">
+               <input type="radio" name="q5" ng-model="survey.questions[10].answers[0]" value="Unable to access">
+            </div>
+            <div class="col-md-14"> 
+                <span>Unable to assess</span>
+            </div>
+        </div>
+      </div>
+
+           <!--sixth question -->
+     <div class="col-md-16">
+        <h5 ng-bind="survey.questions[11].questionText"></h5>
+        <span ng-show="survey.questions[11].mandatory"> *</span>
+     </div>
+
+     <div class="col-md-16">
+        <div class="col-md-3">
+            <div class="col-md-1">
+              <input type="radio" name="q6" ng-model="survey.questions[11].answers[0]" value="Strongly disagree">
+            </div> 
+            <div class="col-md-14">
+               <span>Strongly disagree</span>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="col-md-1">
+               <input type="radio" name="q6" ng-model="survey.questions[11].answers[0]" value="Somewhat disagree">
+            </div>
+            <div class="col-md-14"> 
+                <span>Somewhat Disagree</span>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="col-md-1">
+               <input type="radio" name="q6" ng-model="survey.questions[11].answers[0]" value="Neutral">
+            </div>
+            <div class="col-md-14"> 
+                <span>Neutral</span>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="col-md-1">
+               <input type="radio" name="q6" ng-model="survey.questions[11].answers[0]" value="Somewhat agree">
+            </div>
+            <div class="col-md-14"> 
+                <span>Somewhat agree</span>
+            </div>
+        </div>
+
+        <div class="col-md-2 reset-padding">
+            <div class="col-md-1">
+               <input type="radio" name="q6" ng-model="survey.questions[11].answers[0]" value="Strongly agree">
+            </div>
+            <div class="col-md-14"> 
+                <span>Strongly agree</span>
+            </div>
+        </div>
+
+        <div class="col-md-2 reset-padding">
+            <div class="col-md-1">
+               <input type="radio" name="q6" ng-model="survey.questions[11].answers[0]" value="Unable to access">
+            </div>
+            <div class="col-md-14"> 
+                <span>Unable to assess</span>
+            </div>
+        </div>
+      </div>
+
+         <!--seventh question -->
+     <div class="col-md-16">
+        <h5 ng-bind="survey.questions[12].questionText"></h5>
+        <span ng-show="survey.questions[12].mandatory"> *</span>
+     </div>
+
+     <div class="col-md-16">
+        <div class="col-md-3">
+            <div class="col-md-1">
+              <input type="radio" name="q7" ng-model="survey.questions[12].answers[0]" value="Strongly disagree">
+            </div> 
+            <div class="col-md-14">
+               <span>Strongly disagree</span>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="col-md-1">
+              <input type="radio" name="q7" ng-model="survey.questions[12].answers[0]" value="Somewhat disagree">
+            </div>
+            <div class="col-md-14"> 
+                <span>Somewhat disagree</span>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="col-md-1">
+               <input type="radio" name="q7" ng-model="survey.questions[12].answers[0]" value="Neutral">
+            </div>
+            <div class="col-md-14"> 
+                <span>Neutral</span>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="col-md-1">
+               <input type="radio" name="q7" ng-model="survey.questions[12].answers[0]" value="Somewhat agree">
+            </div>
+            <div class="col-md-14"> 
+                <span>Somewhat agree</span>
+            </div>
+        </div>
+
+        <div class="col-md-2 reset-padding">
+            <div class="col-md-1">
+               <input type="radio" name="q7" ng-model="survey.questions[12].answers[0]" value="Strongly agree">
+            </div>
+            <div class="col-md-14"> 
+                <span>Strongly agree</span>
+            </div>
+        </div>
+
+        <div class="col-md-2 reset-padding">
+            <div class="col-md-1">
+               <input type="radio" name="q7" ng-model="survey.questions[12].answers[0]" value="Unable to access">
+            </div>
+            <div class="col-md-14"> 
+                <span>Unable to assess</span>
+            </div>
+        </div>
+
+        <div class="col-md-16">
+           <h5>Clinical Follow-up</h5>
+        </div>
+   
+         <div class="col-md-16 reset-padding">
+              <div class="col-md-1">
+                 <input type="checkbox" ng-model="survey.questions[13].answers[0]"> 
+              </div>
+              <div class="col-md-14"> 
+                  <span ng-bind="survey.questions[13].questionText"></span>
+              </div>
+          </div>
+
+         </div>
+
+	  
+
+	    <!-- <div class="col-md-16 reset-padding margin-top">
+			<div class="col-md-2 reset-padding">
+			
+				<input type="button"  value="Submit" class="col-md-14">
+				
+			</div>
+			<div class="col-md-2 reset-padding">
+				<input type="button"  value="Cancel" class="col-md-14">
+			</div>
+	   </div>
+</div>
+
+ -->
