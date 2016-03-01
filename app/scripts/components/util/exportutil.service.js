@@ -214,7 +214,9 @@ angular.module('hillromvestApp')
   }
 
   this.addBody = function(pdf, slectedPatient, protocols){
-
+    pdf.setFont(pdfServiceConstants.style.font.helvetica);
+    pdf.setFontSize(8);
+    pdf.setTextColor(100, 101, 104);
     pdf.text(15, 100,'Patient Name');
     
     pdf.setDrawColor(241,241,241);
@@ -240,7 +242,10 @@ angular.module('hillromvestApp')
     pdf.rect(365, 118, 65, 20, 'FD');
     pdf.text(370, 130, '22/22/2222');
 
+    pdf.setFontSize(12);
+    pdf.setTextColor(124,163,218);
     pdf.text(15, 160, 'New Protocol');
+    pdf.setFontSize(8);
 
     pdf.text(50, 180,'Type');
     pdf.text(100, 180,'Treatment Per Day');
@@ -250,6 +255,7 @@ angular.module('hillromvestApp')
 
     pdf.setDrawColor(0);
     pdf.setFillColor(114, 111, 111);
+    pdf.setTextColor(100, 101, 104);
     pdf.rect(margins.left, 190, margins.width-5, .5, pdfServiceConstants.pdfDraw.line.f);
     var x =30 , y = 200;
     angular.forEach(protocols, function(protocol, key){
