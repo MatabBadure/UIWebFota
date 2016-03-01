@@ -13,7 +13,7 @@ angular.module('hillromvestApp')
 		*/
 		$scope.calculateDateFromPicker = function(picker) {
 	      $scope.fromTimeStamp = new Date(picker.startDate._d).getTime();
-		  $scope.toTimeStamp = new Date(picker.endDate._d).getTime();
+		  $scope.toTimeStamp = new Date().getTime() > new Date(picker.startDate._d).getTime()? new Date().getTime() : new Date(picker.endDate._d).getTime();
 	      $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
 	      $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');	      
 	      if ($scope.fromDate === $scope.toDate ) {
@@ -53,9 +53,9 @@ angular.module('hillromvestApp')
 			'click.daterangepicker': function(ev, picker) {
 				$("#dp1cal").data('daterangepicker').setStartDate($scope.fromDate); 
 				$("#dp1cal").data('daterangepicker').setEndDate($scope.toDate); 				
+			}				
 			},
-				opens: 'left'
-			}
+			opens: 'left'
 		}
 
 		$scope.resetTimeDurationForToday =function(today){
@@ -217,7 +217,7 @@ angular.module('hillromvestApp')
 					labels:{
 		            	style: {
 			                color: '#525151',
-			                font: '10px Helvetica',
+			                //font: '10px Helvetica',
 			                fontWeight: 'bold'
 			            }	              
 		            }	
@@ -228,7 +228,7 @@ angular.module('hillromvestApp')
 		            lineWidth:1,
 		            min: 0,
 		            title: {
-		                text: 'No. of Logins',
+		                text: 'No. of Users',
 		                style: {
 			                color: '#525151',
 			                font: '10px Helvetica',
@@ -239,7 +239,7 @@ angular.module('hillromvestApp')
 					labels:{
 						style: {
 						    color: '#525151',
-						    font: '10px Helvetica',
+						    //font: '10px Helvetica',
 						    fontWeight: 'bold'
 						}		              
 					}	
@@ -313,7 +313,7 @@ angular.module('hillromvestApp')
 					labels:{
 			            	style: {
 				                color: '#525151',
-				                font: '10px Helvetica',
+				                //font: '10px Helvetica',
 				                fontWeight: 'bold'
 				            }		            		             
 			            }	
@@ -324,7 +324,7 @@ angular.module('hillromvestApp')
 		            lineWidth:1,
 		            min: 0,
 		            title: {
-		                text: 'No. Of Logins',
+		                text: 'No. Of Users',
 		                style: {
 			                color: '#525151',
 			                font: '10px Helvetica',
@@ -335,7 +335,7 @@ angular.module('hillromvestApp')
 		            labels:{
 		            	style: {
 			                color: '#525151',
-			                font: '10px Helvetica',
+			                //font: '10px Helvetica',
 			                fontWeight: 'bold'
 			            }	            		              
 		            }	
@@ -399,7 +399,7 @@ angular.module('hillromvestApp')
 		$scope.drawDateRangeChartForNonDay = function(){
 			Highcharts.chart('containerCustom', {				
 				chart:{
-					type: 'spline',
+					type: 'line',
 					zoomType: 'xy',					
                     backgroundColor:'#e3ecf7',
                     turboThreshold: 2000,
@@ -417,15 +417,15 @@ angular.module('hillromvestApp')
 		            startOnTick: false,
 		            endOnTick: false,
 		            labels:{
-		            	style: {
-			                color: '#525151',
-			                font: '10px Helvetica',
-			                fontWeight: 'bold'
-			            },
-		            	formatter:function(){
-		              	return  Highcharts.dateFormat("%e/%m/%Y",this.value);//Highcharts.dateFormat('%e. %b',this.value);
-		              }		              
-		            }			           
+						style: {
+							color: '#525151',
+							//font: '10px Helvetica',
+							fontWeight: 'bold'
+						},
+						formatter:function(){
+							return  Highcharts.dateFormat("%m/%e/%Y",this.value);//Highcharts.dateFormat('%e. %b',this.value);
+						}	              
+					}			           
 				},				
 				yAxis: {
 					gridLineColor: '#FF0000',
@@ -434,7 +434,7 @@ angular.module('hillromvestApp')
 		            min: 0,
 		            //max: $scope.yMax,
 		            title: {
-		                text: 'No. of Logins',
+		                text: 'No. of Users',
 		                style:{
 			                color: '#525151',
 			                font: '10px Helvetica',
@@ -445,7 +445,7 @@ angular.module('hillromvestApp')
 		             labels:{
 		            	style: {
 			                color: '#525151',
-			                font: '10px Helvetica',
+			                //font: '10px Helvetica',
 			                fontWeight: 'bold'
 			            }	              
 		            }
@@ -485,7 +485,8 @@ angular.module('hillromvestApp')
 		            },
 		            false],
 					formatter: function() {
-				        var s = '<div style="font-size:12x; font-weight: bold; padding-bottom: 3px;">'+  Highcharts.dateFormat('%e/%m/%Y', this.x) +'</div><div>';
+				        var s = '<div style="font-size:12x; border-bottom:1px solid #ccc; font-weight: bold; padding-bottom: 3px;">'+  Highcharts.dateFormat('%m/%e/%Y', this.x) +'</div><div>';
+
 
 				        $.each(this.points, function(i, point) {
 				            s += '<div style="font-size:10px; font-weight: bold; width="100%"><div style="color:'+ point.series.color +';padding:5px;width:94%;float:left"> ' + point.series.name + '</div> ' 

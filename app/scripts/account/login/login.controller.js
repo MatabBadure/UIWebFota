@@ -117,6 +117,7 @@ angular.module('hillromvestApp')
           var logged = StorageService.get('logged') || {};
           StorageService.remove('loginCount');
           logged.userFirstName = response.data.user.firstName;
+          logged.userFullName = response.data.user.lastName+' '+response.data.user.firstName;
           logged.role = response.data.user.authorities[0].name;
           logged.userEmail = response.data.user.email;
           $rootScope.isFooter = false;
