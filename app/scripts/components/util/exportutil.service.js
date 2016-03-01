@@ -73,52 +73,40 @@ angular.module('hillromvestApp')
     pdf.text(margins.left+94,   margins.titleTop+30, dateService.getDateFromTimeStamp(new Date().getTime(),patientDashboard.dateFormat,'/'));
     
     var daterange = fromDate;
-    
-    if(fromDate === toDate){ 
-      pdf.setFont(pdfServiceConstants.style.font.helvetica); 
-      pdf.setFontType(pdfServiceConstants.style.font.normal);        
-      pdf.setFontSize(8);
-      pdf.setTextColor(0, 0, 0);  
-      pdf.text(pdf.internal.pageSize.width-135,   margins.titleTop+30, pdfServiceConstants.text.dateRangeOfReportLabel+pdfServiceConstants.text.colon);     
-      pdf.setFont(pdfServiceConstants.style.font.helvetica); 
-      pdf.setFontType(pdfServiceConstants.style.font.normal);        
-      pdf.setFontSize(8);
-      pdf.setTextColor(128, 179, 227);
-      pdf.text(pdf.internal.pageSize.width-49,   margins.titleTop+30, daterange);
-    }else{
-      pdf.setFont(pdfServiceConstants.style.font.helvetica); 
-      pdf.setFontType(pdfServiceConstants.style.font.normal);        
-      pdf.setFontSize(8);
-      pdf.setTextColor(0, 0, 0);  
-      pdf.text(pdf.internal.pageSize.width-185,   margins.titleTop+30, pdfServiceConstants.text.dateRangeOfReportLabel+pdfServiceConstants.text.colon);
-      pdf.setFont(pdfServiceConstants.style.font.helvetica); 
-      pdf.setFontType(pdfServiceConstants.style.font.normal);        
-      pdf.setFontSize(8);
-      pdf.setTextColor(128, 179, 227);
-      var daterange = fromDate +pdfServiceConstants.text.hyphen+ toDate;      
-      pdf.text(pdf.internal.pageSize.width-98,   margins.titleTop+30, daterange);
+    if(fromDate && toDate){
+      if(fromDate === toDate){ 
+        pdf.setFont(pdfServiceConstants.style.font.helvetica); 
+        pdf.setFontType(pdfServiceConstants.style.font.normal);        
+        pdf.setFontSize(8);
+        pdf.setTextColor(0, 0, 0);  
+        pdf.text(pdf.internal.pageSize.width-135,   margins.titleTop+30, pdfServiceConstants.text.dateRangeOfReportLabel+pdfServiceConstants.text.colon);     
+        pdf.setFont(pdfServiceConstants.style.font.helvetica); 
+        pdf.setFontType(pdfServiceConstants.style.font.normal);        
+        pdf.setFontSize(8);
+        pdf.setTextColor(128, 179, 227);
+        pdf.text(pdf.internal.pageSize.width-49,   margins.titleTop+30, daterange);
+      }else{
+        pdf.setFont(pdfServiceConstants.style.font.helvetica); 
+        pdf.setFontType(pdfServiceConstants.style.font.normal);        
+        pdf.setFontSize(8);
+        pdf.setTextColor(0, 0, 0);  
+        pdf.text(pdf.internal.pageSize.width-185,   margins.titleTop+30, pdfServiceConstants.text.dateRangeOfReportLabel+pdfServiceConstants.text.colon);
+        pdf.setFont(pdfServiceConstants.style.font.helvetica); 
+        pdf.setFontType(pdfServiceConstants.style.font.normal);        
+        pdf.setFontSize(8);
+        pdf.setTextColor(128, 179, 227);
+        var daterange = fromDate +pdfServiceConstants.text.hyphen+ toDate;      
+        pdf.text(pdf.internal.pageSize.width-98,   margins.titleTop+30, daterange);
+      }
     }
-    
-
-    /*pdf.setFont(pdfServiceConstants.style.font.helvetica); 
-    pdf.setFontType(pdfServiceConstants.style.font.normal);        
-    pdf.setFontSize(8);
-    pdf.setTextColor(0, 0, 0);    
-    pdf.text(pdf.internal.pageSize.width-65,   margins.titleTop+30, pdfServiceConstants.text.toDate+pdfServiceConstants.text.colon);
-
-    pdf.setFont(pdfServiceConstants.style.font.helvetica); 
-    pdf.setFontType(pdfServiceConstants.style.font.normal);        
-    pdf.setFontSize(8);
-    pdf.setTextColor(128, 179, 227);
-    pdf.text(pdf.internal.pageSize.width-50,   margins.titleTop+30, toDate);*/
-
     return pdf;
   }
 
   this.setFooter = function(pdf, imgY, name) { 
     //imgY, is the Y position from where the signature will start.
     // the complete set i.e. name, date and signature is of height 50 px. 
-    /*pdf.setFont(pdfServiceConstants.style.font.helvetica); 
+    if(name){
+    pdf.setFont(pdfServiceConstants.style.font.helvetica); 
     pdf.setFontType(pdfServiceConstants.style.font.bold);        
     pdf.setFontSize(8);
     pdf.setTextColor(0, 0, 0);  
@@ -129,8 +117,9 @@ angular.module('hillromvestApp')
     pdf.line(400, imgY+4, 560, imgY+4);// left, top, right, top
 
     pdf.text(40,imgY+30, pdfServiceConstants.text.signature);
-    pdf.line(90, imgY+34, 350,imgY+34); //left, top, right, top
-    */
+    pdf.line(90, imgY+34, 350,imgY+34); //left, top, right, top    
+    }
+    
     //the line at the end of each page in pdf.
     // this line will always start at 30pts above the bottom of the page
     pdf.setDrawColor(0);
@@ -254,7 +243,7 @@ angular.module('hillromvestApp')
     var pageWidth = pdf.internal.pageSize.width;
     pdf = this.setHeader(pdf, fromDate, toDate);
     pdf = this.addSvgToPDF(pdf, 'loginAnalyticsCanvas', svgId, 20, 150, 540, 200, durationType, legends);    
-    pdf = this.setFooter(pdf, pdf.internal.pageSize.height-80, pdfServiceConstants.text.name);
+    pdf = this.setFooter(pdf, pdf.internal.pageSize.height-80);
     setTimeout(function(){     
       pdf.save('VisiView™.pdf'); 
     },1000); 
