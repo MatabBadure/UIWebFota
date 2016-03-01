@@ -26,7 +26,7 @@ angular.module('hillromvestApp')
       return pdf;
   }
 
-  this.setHeader = function(pdf) {
+  this.setHeader = function(pdf, fromDate, toDate) {
     var pageHeight = pdf.internal.pageSize.height;
     var pageWidth = pdf.internal.pageSize.width;
     margins.t2TabLeft=(pageWidth/2)+5;
@@ -70,7 +70,47 @@ angular.module('hillromvestApp')
     pdf.setFontType(pdfServiceConstants.style.font.normal);        
     pdf.setFontSize(8);
     pdf.setTextColor(128, 179, 227);
-    pdf.text(margins.left+90,   margins.titleTop+30, dateService.getDateFromTimeStamp(new Date().getTime(),patientDashboard.dateFormat,'/'));
+    pdf.text(margins.left+94,   margins.titleTop+30, dateService.getDateFromTimeStamp(new Date().getTime(),patientDashboard.dateFormat,'/'));
+    
+    var daterange = fromDate;
+    
+    if(fromDate === toDate){ 
+      pdf.setFont(pdfServiceConstants.style.font.helvetica); 
+      pdf.setFontType(pdfServiceConstants.style.font.normal);        
+      pdf.setFontSize(8);
+      pdf.setTextColor(0, 0, 0);  
+      pdf.text(pdf.internal.pageSize.width-135,   margins.titleTop+30, pdfServiceConstants.text.dateRangeOfReportLabel+pdfServiceConstants.text.colon);     
+      pdf.setFont(pdfServiceConstants.style.font.helvetica); 
+      pdf.setFontType(pdfServiceConstants.style.font.normal);        
+      pdf.setFontSize(8);
+      pdf.setTextColor(128, 179, 227);
+      pdf.text(pdf.internal.pageSize.width-49,   margins.titleTop+30, daterange);
+    }else{
+      pdf.setFont(pdfServiceConstants.style.font.helvetica); 
+      pdf.setFontType(pdfServiceConstants.style.font.normal);        
+      pdf.setFontSize(8);
+      pdf.setTextColor(0, 0, 0);  
+      pdf.text(pdf.internal.pageSize.width-185,   margins.titleTop+30, pdfServiceConstants.text.dateRangeOfReportLabel+pdfServiceConstants.text.colon);
+      pdf.setFont(pdfServiceConstants.style.font.helvetica); 
+      pdf.setFontType(pdfServiceConstants.style.font.normal);        
+      pdf.setFontSize(8);
+      pdf.setTextColor(128, 179, 227);
+      var daterange = fromDate +pdfServiceConstants.text.hyphen+ toDate;      
+      pdf.text(pdf.internal.pageSize.width-98,   margins.titleTop+30, daterange);
+    }
+    
+
+    /*pdf.setFont(pdfServiceConstants.style.font.helvetica); 
+    pdf.setFontType(pdfServiceConstants.style.font.normal);        
+    pdf.setFontSize(8);
+    pdf.setTextColor(0, 0, 0);    
+    pdf.text(pdf.internal.pageSize.width-65,   margins.titleTop+30, pdfServiceConstants.text.toDate+pdfServiceConstants.text.colon);
+
+    pdf.setFont(pdfServiceConstants.style.font.helvetica); 
+    pdf.setFontType(pdfServiceConstants.style.font.normal);        
+    pdf.setFontSize(8);
+    pdf.setTextColor(128, 179, 227);
+    pdf.text(pdf.internal.pageSize.width-50,   margins.titleTop+30, toDate);*/
 
     return pdf;
   }
@@ -78,7 +118,7 @@ angular.module('hillromvestApp')
   this.setFooter = function(pdf, imgY, name) { 
     //imgY, is the Y position from where the signature will start.
     // the complete set i.e. name, date and signature is of height 50 px. 
-    pdf.setFont(pdfServiceConstants.style.font.helvetica); 
+    /*pdf.setFont(pdfServiceConstants.style.font.helvetica); 
     pdf.setFontType(pdfServiceConstants.style.font.bold);        
     pdf.setFontSize(8);
     pdf.setTextColor(0, 0, 0);  
@@ -90,7 +130,7 @@ angular.module('hillromvestApp')
 
     pdf.text(40,imgY+30, pdfServiceConstants.text.signature);
     pdf.line(90, imgY+34, 350,imgY+34); //left, top, right, top
-    
+    */
     //the line at the end of each page in pdf.
     // this line will always start at 30pts above the bottom of the page
     pdf.setDrawColor(0);
@@ -100,6 +140,13 @@ angular.module('hillromvestApp')
   }
 
   this.addSvgToPDF = function(pdf, canvasId, svgId, imageX, imageY, imageWidth, imageHeight, durationType, legends){
+
+    pdf.setFont(pdfServiceConstants.style.font.helvetica); 
+    pdf.setFontType(pdfServiceConstants.style.font.bold);        
+    pdf.setFontSize(10);
+    pdf.setTextColor(0, 0, 0);
+    pdf.text((pdf.internal.pageSize.width/2)-25,   imageY-30, pdfServiceConstants.text.loginanalytic);
+
     var canvas = document.getElementById('loginAnalyticsCanvas');              
     var ctx = canvas.getContext('2d');
     var serializer = new XMLSerializer();
@@ -201,11 +248,11 @@ angular.module('hillromvestApp')
     return pdf;
   }
 
-  this.exportLoginAnalyticsAsPDF = function(svgId, durationType, legends) {
+  this.exportLoginAnalyticsAsPDF = function(svgId, durationType, legends, fromDate, toDate) {
     var pdf = this.getPdf();
     var pageHeight = pdf.internal.pageSize.height;
     var pageWidth = pdf.internal.pageSize.width;
-    pdf = this.setHeader(pdf);
+    pdf = this.setHeader(pdf, fromDate, toDate);
     pdf = this.addSvgToPDF(pdf, 'loginAnalyticsCanvas', svgId, 20, 150, 540, 200, durationType, legends);    
     pdf = this.setFooter(pdf, pdf.internal.pageSize.height-80, pdfServiceConstants.text.name);
     setTimeout(function(){     
