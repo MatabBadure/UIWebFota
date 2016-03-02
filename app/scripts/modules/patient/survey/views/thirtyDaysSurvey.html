@@ -10,15 +10,15 @@
             <span class="dashboard__form--type ng-scope" translate="console.survey.general-info"></span>
           </div>
           <div class="col-md-4 user-required reset-padding">
-            <span class="ng-scope" translate="console.survey.required-field"></span>
+            <span class="ng-scope" translate="console.survey.required-field" class="has-error">*</span>
           </div>
 	   </div>
 
 	   <div class="col-md-16 reset-padding margin-top">
           <div class="col-md-8 reset-padding">
 	          	<div class="col-md-16 reset-padding ">
-	           		 <span class="dashboard__form--type ng-scope graphview_text_color" ng-bind="survey.questions[0].questionText"></span>
-                 <span ng-show="survey.questions[0].mandatory"> *</span>
+	           		 <span class=" ng-scope graphview_text_color" ng-bind="survey.questions[0].questionText"></span>
+                 <span ng-show="survey.questions[0].mandatory" class="has-error"> *</span>
 	            </div>
 	            <div class="col-md-16 reset-padding">
 	           		 <input class="col-md-14" type="text" ng-model="survey.questions[0].answerValue1" ng-disabled="true">
@@ -26,8 +26,8 @@
           </div>
           <div class="col-md-8 reset-padding">
             <div class="col-md-16">
-	           		 <span class="dashboard__form--type ng-scope graphview_text_color"  ng-bind="survey.questions[1].questionText"></span>
-                 <span ng-show="survey.questions[1].mandatory"> *</span>
+	           		 <span class=" ng-scope graphview_text_color"  ng-bind="survey.questions[1].questionText"></span>
+                 <span ng-show="survey.questions[1].mandatory" class="has-error"> *</span>
 	            </div>
 	            
               <div class="col-md-16" ng-if="!isPhoneNumber">
@@ -46,8 +46,8 @@
      <div class="col-md-16 reset-padding margin-top">
           <div class="col-md-8 reset-padding ">
               <div class="col-md-16 reset-padding ">
-                 <span class="dashboard__form--type ng-scope graphview_text_color" ng-bind="survey.questions[2].questionText"></span>
-                 <span ng-show="survey.questions[2].mandatory"> *</span>
+                 <span class="ng-scope graphview_text_color" ng-bind="survey.questions[2].questionText"></span>
+                 <span ng-show="survey.questions[2].mandatory" class="has-error"> *</span>
               </div>
               <div class="col-md-16 reset-padding">
                  <input class="col-md-14" type="text" ng-model="survey.questions[2].answerValue1" ng-disabled="true">
@@ -56,8 +56,8 @@
      </div>
 
 	    <div class="col-md-16 reset-padding margin-top">
-    		<div class="reset-padding">
-        		<span class="dashboard__form--type ng-scope" translate="console.survey.usage-info"></span>
+    		<div class="reset-padding dashboard__form--type">
+        		<span class="ng-scope" translate="console.survey.usage-info"></span>
      		 </div>
      		 <div class="col-md-12 dark_grey_text_color14 reset-padding">
 	     		 <p translate="console.survey.usage-info-message"></p>
@@ -67,12 +67,11 @@
 	    <div class="col-md-16 reset-padding margin-top">
           <div class="col-md-8 reset-padding">
 	          	<div class="col-md-16 reset-padding ">
-	           		 <span class="dashboard__form--type ng-scope graphview_text_color" ng-bind="survey.questions[3].questionText"></span>
-                 <span ng-show="survey.questions[3].mandatory"> *</span>
+	           		 <span class="ng-scope graphview_text_color" ng-bind="survey.questions[3].questionText"></span>
+                 <span ng-show="survey.questions[3].mandatory" class="has-error"> *</span>
 	            </div>
 	            <div class="col-md-16 reset-padding">
 	           		 <input class="col-md-14" type="text" ng-model="survey.questions[3].answerValue1" ng-disabled="true">
-                 <span ng-show="survey.questions[3].mandatory"> *</span>
 	           	</div>
           </div>
           <div class="col-md-8 reset-padding margin-top">
@@ -89,17 +88,17 @@
 	     <div class="col-md-16 reset-padding margin-top">
           <div class="col-md-8 reset-padding">
 	          	<div class="col-md-16 reset-padding ">
-	           		 <span class="dashboard__form--type ng-scope graphview_text_color" ng-bind="survey.questions[4].questionText"></span>
+	           		 <span class="ng-scope graphview_text_color" ng-bind="survey.questions[4].questionText"></span>
 	            </div>
 	            <div class="col-md-16 reset-padding">
 	           		 <input class="col-md-14" type="text" ng-model="survey.questions[4].answerValue1" ng-disabled="true">
-                 <span ng-show="survey.questions[4].mandatory"> *</span>
+                 <span ng-show="survey.questions[4].mandatory" class="has-error"> *</span>
 	           	</div>
           </div>
           <div class="col-md-8 reset-padding">
             <div class="col-md-16 ">
-	           		 <span class="dashboard__form--type ng-scope graphview_text_color" ng-bind="survey.questions[5].questionText"></span>
-                 <span ng-show="survey.questions[5].mandatory"> *</span>
+	           		 <span class="ng-scope graphview_text_color" ng-bind="survey.questions[5].questionText"></span>
+                 <span ng-show="survey.questions[5].mandatory" class="has-error"> *</span>
 	            </div>
 	            <div class="col-md-16">
 	           		 <input class="col-md-14" type="text" ng-model="survey.questions[5].answerValue1" ng-disabled="true">
@@ -546,7 +545,7 @@
             </div>
         </div>
 
-        <div class="col-md-16 graphview_text_color reset-padding">
+        <div class="col-md-16 graphview_text_color reset-padding margin-top">
            <h5 translate="console.survey.clinical-follow-up"></h5>
         </div>
    
@@ -554,7 +553,7 @@
               <div class="pull-left reset-padding">
                  <input type="checkbox" ng-model="survey.questions[13].answerValue1"> 
             </div>
-              <div class="col-md-15 reset-padding"> 
+              <div class="col-md-15 reset-padding margin-left5"> 
                   <span ng-bind="survey.questions[13].questionText"></span>
               </div>  
           </div>

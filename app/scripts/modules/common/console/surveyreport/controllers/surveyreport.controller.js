@@ -16,6 +16,16 @@ angular.module('hillromvestApp')
 	    }	      
 	  };
 
+	  $scope.calculateTimeDuration = function(durationInDays) {
+      $scope.toTimeStamp = new Date().getTime();
+      $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');
+      $scope.fromTimeStamp = dateService.getnDaysBackTimeStamp(durationInDays);;
+      $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
+      $scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
+      $scope.serverFromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-');
+	    $scope.serverToDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-');
+    };
+
 		$scope.opts = {
 			maxDate: new Date(),
 			format: patientDashboard.dateFormat,
@@ -39,6 +49,7 @@ angular.module('hillromvestApp')
 		
 		$scope.init = function(){
 			if($state.current.name === 'adminSurveyReport' || $state.current.name === 'rcddminSurveyReport' || $state.current.name === 'associateSurveyReport'){
+				$scope.calculateTimeDuration(5);
 				$scope.switchSurvey(1);
 			}
 		};
@@ -54,24 +65,7 @@ angular.module('hillromvestApp')
 
 		$scope.switchSurvey = function(type){
 			$scope.surveyType = type;
-			switch(type){
-				case 1: 
-					var fromDate = dateService.getDateFromTimeStamp(new Date(),patientDashboard.serverDateFormat,'-');
-					$scope.getSurveyReport(type, fromDate, fromDate);
-				break;
-
-				case 2:
-					var fromDate = dateService.getDateFromTimeStamp(new Date(),patientDashboard.serverDateFormat,'-');
-					$scope.getSurveyReport(type, fromDate, fromDate);
-				break;
-
-				case 3:
-					var fromDate = dateService.getDateFromTimeStamp(new Date(),patientDashboard.serverDateFormat,'-');
-					$scope.getSurveyReport(type, fromDate, fromDate);
-				break;
-				default:
-				break;
-			}
+			$scope.getSurveyReport(type, $scope.serverFromDate, $scope.serverToDate);
 		};
 
 		$scope.showComments = function(survey){
