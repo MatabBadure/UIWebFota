@@ -188,12 +188,14 @@
         "mobilePhone":{
             "pattern": "Mobile number is invalid.",
             "maxlength": "Mobile number is invalid.",
-            "mask": "Mobile number is invalid."
+            "mask": "Mobile number is invalid.",
+            "required": "Mobile number is required"
         },
         "phoneNumber":{
             "pattern": "Phone number is invalid.",
             "maxlength": "Phone number is invalid.",
-            "mask": "Phone number is invalid."
+            "mask": "Phone number is invalid.",
+            "required": "Phone number is required"
         },
         "faxNumber":{
             "mask": "Fax Number is invalid."
