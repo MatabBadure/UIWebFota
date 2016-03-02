@@ -1,4 +1,4 @@
-<!-- 5 days therapy-->
+
 	  <div class="container margin-top reset-padding">
 	    <div class="col-md-16 reset-padding ">
 	      <span class="dashboard__form--type graphview_text_color" ng-bind="survey.surveyName"></span>
@@ -40,8 +40,7 @@
         		<span class="dashboard__form--type ng-scope" translate="console.survey.usage-info"></span>
      		 </div>
      		 <div class="col-md-12 dark_grey_text_color14 reset-padding">
-	     		 <p>Please type the reading  from the total use display in field below. The display reads to the the tength of the hour. <br />Confirm your device is turned on, at the Noraml/Custom screen press the OFF button to obtain the hour meter reading.</p>
-	     		 <p>If you are away from your device, type the number 0 in the hours of use field and check "Not Available" box.</p>
+	     		 <p translate="console.survey.usage-info-message"></p>
      		 </div>
 	    </div>
 
@@ -88,7 +87,7 @@
 	   </div>
 
 	   <div class="col-md-16 reset-padding margin-top dark_grey_text_color14 ">
-			<p>The following questions ask about the Vest Airway Clearance System training session. Please answer the following questions by choosing Yes or No. <br />If your response is No, Please feel free to explain or comment on the experience.</p>
+			<p translate="console.survey.question-info"></p>
 	   </div>
 
 
@@ -101,13 +100,13 @@
 			<div class="col-md-3 reset-padding">
 				<label>
 				<input type="radio" class="ng-pristine ng-untouched ng-valid" name="q1" ng-model="survey.questions[5].answers[0]" ng-value="Yes">
-				<span class="radio-box-text btn-margin-left">Yes</span>
+				<span class="radio-box-text btn-margin-left" translate="console.survey.yes"></span>
 				</label>
 			</div>
 			<div class="col-md-3 reset-padding">
 				<label>
 					<input type="radio" class="ng-pristine ng-untouched ng-valid" name="q1" ng-model="survey.questions[5].answers[0]" ng-value="No">
-					<span class="radio-box-text btn-margin-left">No</span>
+					<span class="radio-box-text btn-margin-left" translate="console.survey.no"></span>
 				</label>
 			</div>
 	   </div>
@@ -125,13 +124,13 @@
 			<div class="col-md-3 reset-padding">
 				<label>
 				<input type="radio"  class="ng-pristine ng-untouched ng-valid" name="q2" ng-model="survey.questions[6].answers[0]" ng-value="Yes">
-				<span class="radio-box-text btn-margin-left">Yes</span>
+				<span class="radio-box-text btn-margin-left" translate="console.survey.yes"></span>
 				</label>
 			</div>
 			<div class="col-md-3 reset-padding">
 				<label>
 					<input type="radio" class="ng-pristine ng-untouched ng-valid" name="q2" ng-model="survey.questions[6].answers[0]" ng-value="No">
-					<span class="radio-box-text btn-margin-left">No</span>
+					<span class="radio-box-text btn-margin-left" translate="console.survey.no"></span>
 				</label>
 			</div>
 	   </div>
@@ -152,7 +151,7 @@
 			<div class="col-md-3 reset-padding">
 				<label>
 					<input type="radio" class="ng-pristine ng-untouched ng-valid" name="q3" ng-model="survey.questions[7].answers[0]" ng-value="No">
-					<span class="radio-box-text btn-margin-left">No</span>
+					<span class="radio-box-text btn-margin-left" translate="console.survey.no"></span>
 				</label>
 			</div>
 	   </div>
@@ -167,13 +166,13 @@
 			<div class="col-md-3 reset-padding">
 				<label>
 				<input type="radio"  class="ng-pristine ng-untouched ng-valid" name="q4" ng-model="survey.questions[8].answers[0]" ng-value="Yes">
-				<span class="radio-box-text btn-margin-left">Yes</span>
+				<span class="radio-box-text btn-margin-left" translate="console.survey.yes"></span>
 				</label>
 			</div>
 			<div class="col-md-3 reset-padding">
 				<label>
 					<input type="radio"  class="ng-pristine ng-untouched ng-valid" name="q4" ng-model="survey.questions[8].answers[0]" ng-value="No">
-					<span class="radio-box-text btn-margin-left">No</span>
+					<span class="radio-box-text btn-margin-left" translate="console.survey.no"></span>
 				</label>
 			</div>
 	   </div>
@@ -188,13 +187,13 @@
 			<div class="col-md-3 reset-padding">
 				<label>
 				<input type="radio"  class="ng-pristine ng-untouched ng-valid" name="q5" ng-model="survey.questions[9].answers[0]" ng-value="Yes">
-				<span class="radio-box-text btn-margin-left">Yes</span>
+				<span class="radio-box-text btn-margin-left" translate="console.survey.yes"></span>
 				</label>
 			</div>
 			<div class="col-md-3 reset-padding">
 				<label>
 					<input type="radio"  class="ng-pristine ng-untouched ng-valid" name="q5" ng-model="survey.questions[9].answers[0]" ng-value="No">
-					<span class="radio-box-text btn-margin-left">No</span>
+					<span class="radio-box-text btn-margin-left" translate="console.survey.no"></span>
 				</label>
 			</div>
 	   </div>
@@ -209,13 +208,13 @@
 			<div class="col-md-3 reset-padding">
 				<label>
 				<input type="radio"  class="ng-pristine ng-untouched ng-valid" name="q6" ng-model="survey.questions[10].answers[0]" ng-value="Yes">
-				<span class="radio-box-text btn-margin-left">Yes</span>
+				<span class="radio-box-text btn-margin-left" translate="console.survey.yes"></span>
 				</label>
 			</div>
 			<div class="col-md-3 reset-padding">
 				<label>
 					<input type="radio"  class="ng-pristine ng-untouched ng-valid" name="q6" ng-model="survey.questions[10].answers[0]" ng-value="Yes">
-					<span class="radio-box-text btn-margin-left">No</span>
+					<span class="radio-box-text btn-margin-left" translate="console.survey.yes"></span>
 				</label>
 			</div>
 	   </div>
@@ -223,7 +222,7 @@
 
 	    <div class="col-md-16 reset-padding margin-top graphview_text_color">
 			<span ng-bind="survey.questions[11].questionText"></span>
-			<span ng-show="survey.questions[11].mandatory"> *</span> 
+			<span ng-show="survey.questions[11].mandatory"></span> 
 	   </div>
 
 	   <div class="col-md-16 reset-padding">
@@ -231,7 +230,7 @@
 			
 	   </div>
 	   <div class="col-md-16 reset-padding margin-top graphview_text_color">
-			<span>Clinical follow-up</span>
+			<span translate="console.survey.clinical-follow-up">Clinical follow-up</span>
 	   </div>
 	   <div class="col-md-16 reset-padding">
 			<div class="reset-padding">
