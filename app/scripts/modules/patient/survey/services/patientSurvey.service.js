@@ -46,6 +46,15 @@ angular.module('hillromvestApp')
         }).success(function(response) {
           return response;
         });
+      },
+
+      getSurveyComments: function(questionId){
+        var url = URL.getSurveycomments.replace('QUESTIONID', questionId);
+        return $http.get(url,{
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });
       }
     };
   }]);

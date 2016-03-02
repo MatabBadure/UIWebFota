@@ -96,5 +96,6 @@ angular.module('hillromvestApp')
 	'isSurvey': '/api/survey/user/USER_ID',
 	'getSurvey': '/api/survey/SURVEY_ID',
 	'saveSuvey': '/api/survey',
-	'getSurveyGridReport': '/api/survey/gridview/SURVEY_ID?fromDate=FROM_DATE&toDate=TO_DATE'	
+	'getSurveyGridReport': '/api/survey/gridview/SURVEY_ID?fromDate=FROM_DATE&toDate=TO_DATE',
+	'getSurveycomments': '/api/survey/answerbyquestion/QUESTIONID'
 });
