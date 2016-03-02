@@ -1,7 +1,7 @@
 'use strict';
 angular.module('hillromvestApp')
-.controller('surveyReportController',['$scope', '$state', 'patientsurveyService', 'dateService', '$timeout',
-	function($scope, $state, patientsurveyService, dateService, $timeout) {
+.controller('surveyReportController',['$scope', '$state', 'patientsurveyService', 'dateService', '$timeout', 'notyService',
+	function($scope, $state, patientsurveyService, dateService, $timeout, notyService) {
 		
 		$scope.calculateDateFromPicker = function(picker) {
 	    $scope.fromTimeStamp = new Date(picker.startDate._d).getTime();	      
@@ -12,7 +12,7 @@ angular.module('hillromvestApp')
 	    $scope.serverFromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-');
 	    $scope.serverToDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-');
 	    if ($scope.fromDate === $scope.toDate ) {
-	        $scope.fromTimeStamp = $scope.toTimeStamp;
+	      $scope.fromTimeStamp = $scope.toTimeStamp;
 	    }	      
 	  };
 
@@ -45,11 +45,10 @@ angular.module('hillromvestApp')
 
 		$scope.getSurveyReport = function(type, fromDate, toDate){
 			patientsurveyService.getSurveyGridReport(type, fromDate, toDate).then(function(response){
-				console.log(response.data.surveyGridView);
 				$scope.count = response.data.count;
 				$scope.surveyGridView = response.data.surveyGridView;
 			}).catch(function(response){
-				console.log(response);
+				notyService.showError(response);
 			});
 		};
 
@@ -75,9 +74,18 @@ angular.module('hillromvestApp')
 			}
 		};
 
-		$scope.showComments = function(id){
-			console.log('ID: ', id);
+		$scope.showComments = function(survey){
+			$scope.selectedSurvey = survey;
+			patientsurveyService.getSurveyComments(survey.id).then(function(response){
+				$scope.showCommentModal = true;
+			}).catch(function(response){
+				notyService.showError(response);
+			});
 			$scope.showCommentModal = true;
+		};
+
+		$scope.hideComments = function(){
+			$scope.showCommentModal = false;
 		};
 
 		$scope.init();
