@@ -617,7 +617,13 @@
 #containerDay > .highcharts-container > .highcharts-tooltip > span{
 	left: -4px !important;
 }
-
+.survey_dialog{
+	width:800px!important;
+}
+.survey_content{
+	width:100%!important;
+	max-width:800px!important;
+}
 .dark_grey{
 	color:#646568;
 }
