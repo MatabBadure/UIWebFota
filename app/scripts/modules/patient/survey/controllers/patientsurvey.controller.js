@@ -11,14 +11,18 @@ angular.module('hillromvestApp')
 
 					patientsurveyService.getSurvey($stateParams.surveyId).then(function(response){						
 						if(response.status === 200){
-							$scope.survey = response.data;							
+							$scope.survey = response.data;	
+							$scope.isPhoneNumber = true;						
 							angular.forEach($scope.survey.questions, function(question, key){
-								var questionText = $scope.survey.questions[key].questionText;//alert(questionText);
+								var questionText = $scope.survey.questions[key].questionText;
 								if(questionText.toLowerCase().indexOf(surveyConstants.questions.patient_name.toLowerCase()) !== -1){
 									$scope.survey.questions[key].answerValue1 = $scope.patient.firstName + surveyConstants.questions.space + $scope.patient.lastName;
 								}
 								else if(questionText.toLowerCase().indexOf(surveyConstants.questions.patient_phone_number.toLowerCase()) !== -1){
 									$scope.survey.questions[key].answerValue1 = ($scope.patient.mobilePhone)?  ($scope.patient.mobilePhone) : ($scope.patient.primaryPhone? $scope.patient.primaryPhone: null);
+									if(!$scope.survey.questions[key].answerValue1){
+										$scope.isPhoneNumber = false;
+									}
 								}
 								else if(questionText.toLowerCase().indexOf(surveyConstants.questions.hours_of_use.toLowerCase()) !== -1){
 									$scope.survey.questions[key].answerValue1 = $scope.patient.hoursOfUsage;
@@ -56,6 +60,7 @@ angular.module('hillromvestApp')
 		};
 
 		$scope.saveSurvey = function(){
+			$scope.submitted = true;
 			if(logged.patientID){
 				var surveyEdited = {};
 				surveyEdited.surveyId = $scope.survey.surveyId;
@@ -75,19 +80,29 @@ angular.module('hillromvestApp')
               		}
               		if($scope.survey.questions[key].answerValue3 && $scope.survey.questions[key].answerValue3.length > 0){
 						surveyEdited.userSurveyAnswer[key].answerValue1 = $scope.survey.questions[key].answerValue3;
-              		}              		
-              		if(!$scope.survey.questions[key].answerValue1 && $scope.survey.questions[key].typeCodeFormat.type_code === "Checkbox"){//Checkbox
-              			surveyEdited.userSurveyAnswer[key].answerValue1 =  false;
+              		}  
+
+              		if($scope.survey.questions[key].typeCodeFormat.type_code === "Checkbox"){
+              			if(!$scope.survey.questions[key].answerValue1){
+              				surveyEdited.userSurveyAnswer[key].answerValue1 =  "No";
+              			}else{
+              				surveyEdited.userSurveyAnswer[key].answerValue1 =  "Yes";
+              			}              		
               		}
               		
 				});
-				patientsurveyService.saveSuvey(surveyEdited).then(function(){
-					notyService.showMessage("Survey taken successfully.",'success' );
-					$state.go("patientdashboard");
-				}).catch(function(response){
-					 notyService.showError(response);
-					$state.go("patientdashboard");
-				});				
+				if($scope.surveyForm.$invalid){
+					return false;
+				}else{
+					patientsurveyService.saveSuvey(surveyEdited).then(function(){
+						notyService.showMessage("Survey taken successfully.",'success' );
+						$state.go("patientdashboard");
+					}).catch(function(response){
+						 notyService.showError(response);
+						$state.go("patientdashboard");
+					});		
+				}
+						
 			}else{
 				$state.go("login");
 			}

@@ -166,6 +166,10 @@ angular.module('hillromvestApp',
                 'bower_components/canvg-gabelerner/StackBlur.js',
                 'bower_components/canvg-gabelerner/canvg.js',            
                 'https://code.highcharts.com/highcharts.js']
+      },
+      {
+        name: 'surveyModule',
+        files:['bower_components/angular-daterangepicker/js/angular-daterangepicker.js']
       }]
     });
   }])

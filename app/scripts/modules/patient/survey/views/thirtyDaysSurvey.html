@@ -29,9 +29,20 @@
 	           		 <span class="dashboard__form--type ng-scope graphview_text_color"  ng-bind="survey.questions[1].questionText"></span>
                  <span ng-show="survey.questions[1].mandatory"> *</span>
 	            </div>
-	            <div class="col-md-16">
+	            <!-- <div class="col-md-16">
 	           		 <input class="col-md-14" type="text" ng-model="survey.questions[1].answerValue1" ng-disabled="true">
-	           	</div>
+	           	</div> -->
+              <div class="col-md-16" ng-if="!isPhoneNumber">
+                 <input class="col-md-14" type="text" name="phoneNumber" class="form-control" validate-on-blur ng-model="survey.questions[1].answerValue1" ng-readonly="validateADMINorASP()" ui-mask="(999)-999-9999" model-view-value="true" ui-options="{clearOnBlur: false}" required>   
+                               
+              </div>
+              <div ng-show="(surveyForm.phoneNumber.$showValidationMessage && surveyForm.phoneNumber.$invalid) || submitted">
+                <span class="has-error" ng-show="surveyForm.phoneNumber.$error.required" translate="error.phoneNumber.required"></span>
+                <span class="has-error" ng-show="!surveyForm.phoneNumber.$error.required && surveyForm.phoneNumber.$invalid" translate="error.phoneNumber.mask"></span>
+              </div>
+              <div class="col-md-16" ng-if="isPhoneNumber">
+                 <input class="col-md-14" type="text" value="{{survey.questions[1].answerValue1}}" ng-readonly="validateADMINorASP()" ng-disabled="true">                
+              </div>
           </div>
 	   </div>
      <div class="col-md-16 reset-padding margin-top">
@@ -48,11 +59,10 @@
 
 	    <div class="col-md-16 reset-padding margin-top">
     		<div class="reset-padding">
-        		<span class="dashboard__form--type ng-scope">Usage Info</span>
+        		<span class="dashboard__form--type ng-scope" translate="console.survey.usage-info"></span>
      		 </div>
      		 <div class="col-md-12 dark_grey_text_color14 reset-padding">
-	     		 <p>Please type the reading  from the total use display in field below. The display reads to the the tength of the hour. <br />Confirm your device is turned on, at the Noraml/Custom screen press the OFF button to obtain the hour meter reading.</p>
-	     		 <p>If you are away from your device, type the number 0 in the hours of use field and check "Not Available" box.</p>
+	     		 <p translate="console.survey.usage-info-message"></p>
      		 </div>
 	    </div>
 
@@ -71,7 +81,7 @@
             <div class="col-md-16">
 	           	<label>
 		          <input type="checkbox"  class="ng-pristine ng-untouched ng-valid">
-		          <span class="radio-box-text">Not Available</span>
+		          <span class="radio-box-text" translate="console.survey.not-available"></span>
         		</label>
 	           
           </div>
@@ -100,11 +110,11 @@
 	   </div>
 
 	   <div class="col-md-16 reset-padding margin-top dark_grey_text_color14 ">
-			<p>The following questions ask about the Vest Airway Clearance System training session. Please answer the following questions by choosing Yes or No. <br />If your response is No, Please feel free to explain or comment on the experience.</p>
+			<p translate="console.survey.question-info"></p>
 	   </div>
 
 	   <div class="col-md-16 dark_grey_text_color14">
-        <h3>Please answer the following questions by choosing any one option.</h3>
+        <h3 translate="console.survey.question-answer"></h3>
      </div>
 
      <div class="col-md-16 graphview_text_color">
@@ -117,7 +127,7 @@
               <input type="radio" name="q1" ng-model="survey.questions[6].answerValue1" value="{{survey.questions[6].answers[0]}}">
             </div> 
             <div class="col-md-14">
-               <span>Strongly Disagree</span>
+                <span translate="console.survey.strongly-disagree"></span>
             </div>
         </div>
 
@@ -126,7 +136,7 @@
                <input type="radio" name="q1" ng-model="survey.questions[6].answerValue1" value="{{survey.questions[6].answers[1]}}">
             </div>
             <div class="col-md-14"> 
-                <span>Somewhat Disagree</span>
+                <span translate="console.survey.somewhat-disagree"></span>
             </div>
         </div>
 
@@ -135,7 +145,7 @@
                <input type="radio" name="q1" ng-model="survey.questions[6].answerValue1"  value="{{survey.questions[6].answers[2]}}">
             </div>
             <div class="col-md-14"> 
-                <span>Neutral</span>
+                <span translate="console.survey.neutral"></span>
             </div>
         </div>
 
@@ -144,7 +154,7 @@
                <input type="radio" name="q1" ng-model="survey.questions[6].answerValue1" value="{{survey.questions[6].answers[3]}}">
             </div>
             <div class="col-md-14"> 
-                <span>Somewhat agree</span>
+                <span translate="console.survey.somewhat-agree"></span>
             </div>
         </div>
 
@@ -153,7 +163,7 @@
                <input type="radio" name="q1" ng-model="survey.questions[6].answerValue1" value="{{survey.questions[6].answers[4]}}">
             </div>
             <div class="col-md-14"> 
-                <span>Strongly agree</span>
+                <span translate="console.survey.strongly-agree"></span>
             </div>
         </div>
 
@@ -162,7 +172,7 @@
                <input type="radio" name="q1" ng-model="survey.questions[6].answerValue1" value="{{survey.questions[6].answers[5]}}">
             </div>
             <div class="col-md-14"> 
-                <span>Unable to assess</span>
+                <span translate="console.survey.unable-to-assess"></span>
             </div>
         </div>
         </div>
@@ -179,7 +189,7 @@
               <input type="radio" name="q2" ng-model="survey.questions[7].answerValue1" value="{{survey.questions[7].answers[0]}}">
             </div> 
             <div class="col-md-14">
-               <span>Strongly disagree</span>
+              <span translate="console.survey.strongly-disagree"></span>
             </div>
         </div>
 
@@ -188,7 +198,7 @@
                <input type="radio" name="q2" ng-model="survey.questions[7].answerValue1" value="{{survey.questions[7].answers[1]}}">
             </div>
             <div class="col-md-14"> 
-                <span>Somewhat disagree</span>
+                <span translate="console.survey.somewhat-disagree"></span>
             </div>
         </div>
 
@@ -197,7 +207,7 @@
                <input type="radio" name="q2" ng-model="survey.questions[7].answerValue1" value="{{survey.questions[7].answers[2]}}">
             </div>
             <div class="col-md-14"> 
-                <span>Neutral</span>
+                <span translate="console.survey.neutral"></span>
             </div>
         </div>
 
@@ -206,7 +216,7 @@
                <input type="radio" name="q2" ng-model="survey.questions[7].answerValue1" value="{{survey.questions[7].answers[3]}}">
             </div>
             <div class="col-md-14"> 
-                <span>Somewhat agree</span>
+                 <span translate="console.survey.somewhat-agree"></span>
             </div>
         </div>
 
@@ -215,7 +225,7 @@
                <input type="radio" name="q2" ng-model="survey.questions[7].answerValue1" value="{{survey.questions[7].answers[4]}}">
             </div>
             <div class="col-md-14"> 
-                <span>Strongly agree</span>
+                <span translate="console.survey.strongly-agree"></span>
             </div>
         </div>
 
@@ -224,7 +234,7 @@
                <input type="radio" name="q2" ng-model="survey.questions[7].answerValue1" value="{{survey.questions[7].answers[5]}}">
             </div>
             <div class="col-md-14"> 
-                <span>Unable to assess</span>
+                 <span translate="console.survey.unable-to-assess"></span>
             </div>
         </div>
       </div>
@@ -241,7 +251,7 @@
               <input type="radio" name="q3" ng-model="survey.questions[8].answerValue1" value="{{survey.questions[8].answers[0]}}">
             </div> 
             <div class="col-md-14">
-               <span>Strongly disagree</span>
+                <span translate="console.survey.strongly-disagree"></span>
             </div>
         </div>
 
@@ -250,7 +260,7 @@
                <input type="radio" name="q3" ng-model="survey.questions[8].answerValue1" value="{{survey.questions[8].answers[1]}}">
             </div>
             <div class="col-md-14"> 
-                <span>Somewhat disagree</span>
+               <span translate="console.survey.somewhat-disagree"></span>
             </div>
         </div>
 
@@ -259,7 +269,7 @@
                <input type="radio" name="q3" ng-model="survey.questions[8].answerValue1" value="{{survey.questions[8].answers[2]}}">
             </div>
             <div class="col-md-14"> 
-                <span>Neutral</span>
+                <span translate="console.survey.neutral"></span>
             </div>
         </div>
 
@@ -268,7 +278,7 @@
                <input type="radio" name="q3" ng-model="survey.questions[8].answerValue1" value="{{survey.questions[8].answers[3]}}">
             </div>
             <div class="col-md-14"> 
-                <span>Somewhat agree</span>
+                  <span translate="console.survey.somewhat-agree"></span>
             </div>
         </div>
 
@@ -277,7 +287,7 @@
                <input type="radio" name="q3" ng-model="survey.questions[8].answerValue1" value="{{survey.questions[8].answers[4]}}">
             </div>
             <div class="col-md-14"> 
-                <span>Strongly agree</span>
+                <span translate="console.survey.strongly-agree"></span>
             </div>
         </div>
 
@@ -286,7 +296,7 @@
                <input type="radio" name="q3" ng-model="survey.questions[8].answerValue1" value="{{survey.questions[8].answers[5]}}">
             </div>
             <div class="col-md-14"> 
-                <span>Unable to assess</span>
+                 <span translate="console.survey.unable-to-assess"></span>
             </div>
         </div>
       </div>
@@ -303,7 +313,7 @@
               <input type="radio" name="q4" ng-model="survey.questions[9].answerValue1" value="{{survey.questions[9].answers[0]}}">
             </div> 
             <div class="col-md-14">
-               <span>Strongly disagree</span>
+                     <span translate="console.survey.strongly-disagree"></span>
             </div>
         </div>
 
@@ -312,7 +322,7 @@
                <input type="radio" name="q4" ng-model="survey.questions[9].answerValue1" value="{{survey.questions[9].answers[1]}}">
             </div>
             <div class="col-md-14"> 
-                <span>Somewhat disagree</span>
+                 <span translate="console.survey.somewhat-disagree"></span>
             </div>
         </div>
 
@@ -321,7 +331,7 @@
                <input type="radio" name="q4" ng-model="survey.questions[9].answerValue1" value="{{survey.questions[9].answers[2]}}">
             </div>
             <div class="col-md-14"> 
-                <span>Neutral</span>
+                  <span translate="console.survey.neutral"></span>
             </div>
         </div>
 
@@ -330,7 +340,7 @@
                <input type="radio" name="q4" ng-model="survey.questions[9].answerValue1" value="{{survey.questions[9].answers[3]}}">
             </div>
             <div class="col-md-14"> 
-                <span>Somewhat agree</span>
+                <span translate="console.survey.somewhat-agree"></span>
             </div>
         </div>
 
@@ -339,7 +349,7 @@
                <input type="radio" name="q4" ng-model="survey.questions[9].answerValue1" value="{{survey.questions[9].answers[4]}}">
             </div>
             <div class="col-md-14"> 
-                <span>Strongly agree</span>
+                <span translate="console.survey.strongly-agree"></span>
             </div>
         </div>
 
@@ -348,7 +358,7 @@
                <input type="radio" name="q4" ng-model="survey.questions[9].answerValue1" value="{{survey.questions[9].answers[5]}}">
             </div>
             <div class="col-md-14"> 
-                <span>Unable to assess</span>
+                 <span translate="console.survey.unable-to-assess"></span>
             </div>
         </div>
     </div>
@@ -365,7 +375,7 @@
               <input type="radio" name="q5" ng-model="survey.questions[10].answerValue1" value="{{survey.questions[10].answers[0]}}">
             </div> 
             <div class="col-md-14">
-               <span>Strongly disagree</span>
+              <span translate="console.survey.strongly-disagree"></span>
             </div>
         </div>
 
@@ -374,7 +384,7 @@
                <input type="radio" name="q5" ng-model="survey.questions[10].answerValue1" value="{{survey.questions[10].answers[1]}}">
             </div>
             <div class="col-md-14"> 
-                <span>Somewhat disagree</span>
+                <span translate="console.survey.somewhat-disagree"></span> 
             </div>
         </div>
 
@@ -383,7 +393,7 @@
               <input type="radio" name="q5" ng-model="survey.questions[10].answerValue1" value="{{survey.questions[10].answers[2]}}">
             </div>
             <div class="col-md-14"> 
-                <span>Neutral</span>
+               <span translate="console.survey.neutral"></span> 
             </div>
         </div>
 
@@ -392,7 +402,7 @@
                <input type="radio" name="q5" ng-model="survey.questions[10].answerValue1" value="{{survey.questions[10].answers[3]}}">
             </div>
             <div class="col-md-14"> 
-                <span>Somewhat agree</span>
+               <span translate="console.survey.somewhat-agree"></span> 
             </div>
         </div>
 
@@ -401,7 +411,7 @@
                <input type="radio" name="q5" ng-model="survey.questions[10].answerValue1" value="{{survey.questions[10].answers[4]}}">
             </div>
             <div class="col-md-14"> 
-                <span>Strongly agree</span>
+                <span translate="console.survey.strongly-agree"></span> 
             </div>
         </div>
 
@@ -410,7 +420,7 @@
                <input type="radio" name="q5" ng-model="survey.questions[10].answerValue1" value="{{survey.questions[10].answers[5]}}">
             </div>
             <div class="col-md-14"> 
-                <span>Unable to assess</span>
+                <span translate="console.survey.unable-to-assess"></span> 
             </div>
         </div>
       </div>
@@ -427,7 +437,7 @@
               <input type="radio" name="q6" ng-model="survey.questions[11].answerValue1" value="{{survey.questions[11].answers[0]}}">
             </div> 
             <div class="col-md-14">
-               <span>Strongly disagree</span>
+              <span translate="console.survey.strongly-disagree"></span> 
             </div>
         </div>
 
@@ -436,7 +446,7 @@
                <input type="radio" name="q6" ng-model="survey.questions[11].answerValue1" value="{{survey.questions[11].answers[1]}}">
             </div>
             <div class="col-md-14"> 
-                <span>Somewhat Disagree</span>
+                <span translate="console.survey.somewhat-disagree"></span> 
             </div>
         </div>
 
@@ -445,7 +455,7 @@
                <input type="radio" name="q6" ng-model="survey.questions[11].answerValue1" value="{{survey.questions[11].answers[2]}}">
             </div>
             <div class="col-md-14"> 
-                <span>Neutral</span>
+               <span translate="console.survey.neutral"></span> 
             </div>
         </div>
 
@@ -454,7 +464,7 @@
                <input type="radio" name="q6" ng-model="survey.questions[11].answerValue1" value="{{survey.questions[11].answers[3]}}">
             </div>
             <div class="col-md-14"> 
-                <span>Somewhat agree</span>
+                <span translate="console.survey.somewhat-agree"></span> 
             </div>
         </div>
 
@@ -463,7 +473,7 @@
                <input type="radio" name="q6" ng-model="survey.questions[11].answerValue1" value="{{survey.questions[11].answers[4]}}">
             </div>
             <div class="col-md-14"> 
-                <span>Strongly agree</span>
+                <span translate="console.survey.strongly-agree"></span> 
             </div>
         </div>
 
@@ -472,7 +482,7 @@
                <input type="radio" name="q6" ng-model="survey.questions[11].answerValue1" value="{{survey.questions[11].answers[5]}}">
             </div>
             <div class="col-md-14"> 
-                <span>Unable to assess</span>
+                <span translate="console.survey.unable-to-assess"></span> 
             </div>
         </div>
       </div>
@@ -489,7 +499,7 @@
               <input type="radio" name="q7" ng-model="survey.questions[12].answerValue1" value="{{survey.questions[12].answers[0]}}">
             </div> 
             <div class="col-md-14">
-               <span>Strongly disagree</span>
+               <span translate="console.survey.strongly-disagree"></span> 
             </div>
         </div>
 
@@ -498,7 +508,7 @@
               <input type="radio" name="q7" ng-model="survey.questions[12].answerValue1" value="{{survey.questions[12].answers[1]}}">
             </div>
             <div class="col-md-14"> 
-                <span>Somewhat disagree</span>
+                <span translate="console.survey.somewhat-disagree"></span> 
             </div>
         </div>
 
@@ -507,7 +517,7 @@
                <input type="radio" name="q7" ng-model="survey.questions[12].answerValue1" value="{{survey.questions[12].answers[2]}}">
             </div>
             <div class="col-md-14"> 
-                <span>Neutral</span>
+                <span translate="console.survey.neutral"></span> 
             </div>
         </div>
 
@@ -516,7 +526,7 @@
                <input type="radio" name="q7" ng-model="survey.questions[12].answerValue1" value="{{survey.questions[12].answers[3]}}">
             </div>
             <div class="col-md-14"> 
-                <span>Somewhat agree</span>
+                <span translate="console.survey.somewhat-agree"></span> 
             </div>
         </div>
 
@@ -525,7 +535,7 @@
                <input type="radio" name="q7" ng-model="survey.questions[12].answerValue1" value="{{survey.questions[12].answers[4]}}">
             </div>
             <div class="col-md-14"> 
-                <span>Strongly agree</span>
+                <span translate="console.survey.strongly-agree"></span> 
             </div>
         </div>
 
@@ -534,17 +544,17 @@
                <input type="radio" name="q7" ng-model="survey.questions[12].answerValue1" value="{{survey.questions[12].answers[5]}}">
             </div>
             <div class="col-md-14"> 
-                <span>Unable to assess</span>
+                <span translate="console.survey.unable-to-assess"></span> 
             </div>
         </div>
 
-        <div class="col-md-16 graphview_text_color  reset-padding">
-           <h5>Clinical Follow-up</h5>
+        <div class="col-md-16 graphview_text_color reset-padding">
+           <h5 translate="console.survey.clinical-follow-up"></h5>
         </div>
    
          <div class="col-md-16 reset-padding">
               <div class="pull-left reset-padding">
-                 <input type="checkbox" ng-model="survey.questions[13].answers[0]"> 
+                 <input type="checkbox" ng-model="survey.questions[13].answerValue1"> 
             </div>
               <div class="col-md-15 reset-padding"> 
                   <span ng-bind="survey.questions[13].questionText"></span>

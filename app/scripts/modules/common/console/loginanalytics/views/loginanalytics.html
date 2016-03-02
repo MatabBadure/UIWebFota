@@ -78,7 +78,7 @@
 ng-if="yMax === 1"
 			</ul> -->
 		      	<!-- rectangle option -->
-				<ul class="nav nav-pills graph_color" ng-show="dayChart && yMax !== 1">
+				<ul class="nav nav-pills graph_color height34" ng-show="dayChart && yMax !== 1">
 		      	<li class="col-md-1 col-md-push-5 margin-right13 margin-left25">
 		      		<a href=""  ng-click="isGraphLoaded && changeLegends('patient')">
              		<span>
@@ -127,8 +127,8 @@ ng-if="yMax === 1"
             	</ul>
             </div>
           </div>
-     	<button ng-if="yMax !== 1" class="float-right hillrom-btn btn-submit margin-top" ng-click="downloadGraphAsPdf()">Download As PDF</button>
-     	<button ng-if="yMax === 1" class="float-right hillrom-btn btn-submit margin-top" style="color: #cccccc;">Download As PDF</button>
+     	<button ng-if="yMax !== 1" class="float-right hillrom-btn btn-submit margin-top margin-right13" ng-click="downloadGraphAsPdf()">Download As PDF</button>
+     	<button ng-if="yMax === 1" class="float-right hillrom-btn btn-submit margin-top margin-right13" style="color: #cccccc;">Download As PDF</button>
        <canvas id="loginAnalyticsCanvas" width=1300 height=350 style="display:none;"></canvas>
       
 </div>
