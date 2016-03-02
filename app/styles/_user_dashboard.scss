@@ -566,7 +566,8 @@
 	left:0!important;
 }
 .rect_legend_text{
-	left:14px !important;
+	left:20px !important;
+	font-family: arial;
 }
 .rounded_clinic, .rounded_hcp, .rounded_caregiver, .rect_patient, .rect_caregiver, .rect_clinic, .rect_hcp{
 	border-radius:0 !important;
@@ -574,13 +575,13 @@
 .rounded_hcp{
     transform: rotate(45deg);
 }
-.height30{
-	height:30px;
+.height34{
+	height:34px;
 }
 .rounded_patient, .rounded_hcp, .rounded_clinic, .rounded_caregiver, .rect_patient, .rect_caregiver, .rect_clinic, .rect_hcp {
     display: block;
-    width: 9px;
-    height: 11px;
+    width: 16px;
+    height: 12px;
     padding: 0 0 0 0px;
     border-radius: 50%;
     transition: all .5s ease;
@@ -612,10 +613,14 @@
 .graphview_text_color{
 	color: $blue-btn;
 }
+
+#containerDay > .highcharts-container > .highcharts-tooltip > span{
+	left: -4px !important;
+}
+
 .dark_grey{
 	color:#646568;
 }
-
 
 .dashboard__manage-view--pagination{
 	&.pagination_notes{
