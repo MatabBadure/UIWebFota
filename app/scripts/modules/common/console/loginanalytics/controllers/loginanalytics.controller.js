@@ -277,11 +277,11 @@ angular.module('hillromvestApp')
 		            },
 		            false],
 					formatter: function() {
-				        var s = '<div style="font-size:12px; font-weight: bold; padding-bottom: 10px;">'+   this.x  +'</div><div>';
+				        var s = '<div style="font-size:12px; font-weight: bold; padding-bottom: 10px;float:left">&nbsp;&nbsp;&nbsp;&nbsp;'+   this.x  +'&nbsp;&nbsp;&nbsp;&nbsp;</div><div>';
 
 				        $.each(this.points, function(i, point) {
-				            s += '<div style="font-size:10px; font-weight: bold; width:100%"><div style="color:'+ point.series.color +';padding:5px;width:94%;float:left> ' + point.series.name + '</div> ' 
-				            + '<div style="padding:5px;width:5%"><b>' + point.y + '</b></div></div>';
+				            s += '<div style="font-size:10px; font-weight: bold; width:100%"><div style="color:'+ point.series.color +';padding:2px;width:94%;float:left> ' + point.series.name + '</div> ' 
+				            + '<div style="padding:5px;width:5%"><b style="margin:0 2px">' + point.y + '</b></div></div>';
 				        });
 				        s += '</div>';
 
