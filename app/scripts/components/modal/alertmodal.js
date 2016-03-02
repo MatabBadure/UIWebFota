@@ -10,6 +10,7 @@ angular.module('hillromvestApp').directive('alertModal', function (){
       onno: '&onno',
       header: '@',
       message: '@',
+      message1: '@',
       buttonlabel: '@',
       modall: '=modall'
     },
