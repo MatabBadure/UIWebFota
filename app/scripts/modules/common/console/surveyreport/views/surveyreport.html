@@ -46,10 +46,10 @@
            
 
             <ul class="nav nav-pills pull-right">
-             <span class="pull-left margin_tp15" ng-if="fromDate !== toDate">
+             <li><span class="pull-left margin_tp15" ng-if="fromDate !== toDate">
               <span class="date">{{fromDate}}</span> - <span class="date">{{toDate}}</span>
-            </span>
-            <span ng-if="fromDate === toDate" class="date">{{fromDate}}</span>
+            </span></li>
+            <span ng-if="fromDate === toDate" class="date pull-left margin_tp15">{{fromDate}}</span>
               <li role="" class="" id="dp1">
                 <a href="" id="dp1cal" date-range-picker class="date-picker" ng-model="dates" parentEl="#dp1" options="opts" ><span class="icon-calendar"></span></a>
               </li>
