@@ -45,7 +45,7 @@ angular.module('hillromvestApp')
 		$scope.opts = {
 			maxDate: new Date(),
 			format: patientDashboard.dateFormat,
-			//dateLimit: {"months":24},
+			dateLimit: {"months":24},
 			eventHandlers: {'apply.daterangepicker': function(ev, picker) {  
 				$scope.calculateDateFromPicker(picker);	        				
 				$scope.customDateRangeView();  
@@ -593,15 +593,11 @@ angular.module('hillromvestApp')
 		};
 
 		$scope.customDateRangeView = function(){
-			if ($scope.fromDate === $scope.toDate ) {
-				$scope.dayView($scope.fromDate);
-			}else{
 				$scope.defaultLegends(); //if the legends selected eariler has to be retained then remove this line
 				$scope.dayChart = false;
 				$scope.customDateRange = true;
 				$scope.toggleDuration(false, false, false, false, true);
-				$scope.getCategoryChartData(loginAnalyticsConstants.duration.CUSTOM);	
-			}				
+				$scope.getCategoryChartData(loginAnalyticsConstants.duration.CUSTOM);					
 		};
 
 		$scope.downloadGraphAsPdf = function(){
