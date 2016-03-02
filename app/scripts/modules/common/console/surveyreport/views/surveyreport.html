@@ -27,7 +27,7 @@
     </div>
   </div>
   
-  <div class="col-md-16 padding0" ng-class="{'pointer-no-event': !isGraphLoaded, 'pointer-fill-event': isGraphLoaded}">
+  <div class="col-md-16 padding0">
     <div class="container patient_wrapper reset-padding">
     
       <div class="col-md-16 reset-padding pointer-fill-event" ng-class="">
@@ -42,9 +42,16 @@
             </div>
           </div>
           <div class="col-md-7 pull-left text-center margin_tp15"><span>No. of survey taken :</span> <span class="cyan-blue-light">{{count}}</span></div>
-          <div class="col-md-4 col-sm-9 right_header_barchart">
+          <div class="col-md-4 col-sm-9 right_header_barchart cyan-blue-light">
+            <span ng-if="fromDate !== toDate">
+              <span class="date margin-top">{{fromDate}}</span> - <span class="date">{{toDate}}</span>
+            </span>
+            <span ng-if="fromDate === toDate" class="date">{{fromDate}}</span>
+
             <ul class="nav nav-pills pull-right">
-              <li role="" class="" id="dp3"><a href="" date-range-picker="" class="" ng-model="dates" parentel="#dp3" options="opts"> <span class="date ng-binding cyan-blue-light">02/19/2016</span> <span class="icon-calendar"></span></a></li>
+              <li role="" class="" id="dp1">
+                <a href="" id="dp1cal" date-range-picker class="date-picker" ng-model="dates" parentEl="#dp1" options="opts" ><span class="icon-calendar"></span></a>
+              </li>
             </ul>
           </div>
         </div>
@@ -90,153 +97,10 @@
     </div>
  -->
 
-
+      
+      
       <ng-include src="'scripts/modules/common/console/surveyreport/views/fivedayssurvey.html'" ng-if="surveyType === 1"></ng-include>
-      <!-- Below commented code is moved to external file -->
-      <!-- <div class="grid-view">
-        <div class="col-md-16 reset-padding">
-          <div class="col-md-1 text-center">
-            <span></span>
-          </div>
-          <div class="col-md-11 text-center border-right">
-            <span>Questions</span>
-          </div>
-          <div class="col-md-1 cyan-blue-light text-center border-right">
-            <span>Yes</span>
-          </div>
-          <div class="col-md-1 cyan-blue-light text-center border-right">
-            <span>No</span>
-          </div>
-          <div class="col-md-2 cyan-blue-light text-center padding10">
-            <span>Comments</span>
-          </div>
-        </div>
-
-        <div class="col-md-16 reset-padding">
-          <div class="col-md-1 border-right">
-            <span>Q-1</span>
-          </div>
-          <div class="col-md-11 cyan-blue-light border-right">
-            <span>Did the trainer demonstrate and perform a complete therapy session?</span>
-          </div>
-          <div class="col-md-1 text-center border-right">
-            <span>15</span>
-          </div>
-          <div class="col-md-1 text-center border-right">
-            <span>05</span>
-          </div>
-          <div class="col-md-2 text-center padding10">
-            <span>View</span>
-          </div>
-        </div>
-
-        <div class="col-md-16 reset-padding">
-          <div class="col-md-1 border-right">
-            <span>Q-2</span>
-          </div>
-          <div class="col-md-11 cyan-blue-light border-right">
-            <span>Did the trainer make sure your garmet fit you properly?</span>
-          </div>
-          <div class="col-md-1 text-center border-right">
-            <span>10</span>
-          </div>
-          <div class="col-md-1 text-center border-right">
-            <span>10</span>
-          </div>
-          <div class="col-md-2 text-center padding10">
-            <span>View</span>
-          </div>
-        </div>
-        
-        <div class="col-md-16 reset-padding">
-          <div class="col-md-1 border-right">
-            <span>Q-3</span>
-          </div>
-          <div class="col-md-11 cyan-blue-light border-right">
-            <span>Did the trainer explain the Outcomes Monitoring Program and how to obtain the hour  meter reading The Vest&copy; System Device?</span>
-          </div>
-          <div class="col-md-1 text-center border-right">
-            <span>12</span>
-          </div>
-          <div class="col-md-1 text-center border-right">
-            <span>08</span>
-          </div>
-          <div class="col-md-2 text-center padding10">
-            <span>View</span>
-          </div>
-        </div>
-
-
-        <div class="col-md-16 reset-padding">
-          <div class="col-md-1 border-right">
-            <span>Q-4</span>
-          </div>
-          <div class="col-md-11 cyan-blue-light border-right">
-            <span>Did the trainer review the trouble shooting and safety instructions regarding The Vest&copy; usage System?</span>
-          </div>
-          <div class="col-md-1 text-center border-right">
-            <span>06</span>
-          </div>
-          <div class="col-md-1 text-center border-right">
-            <span>14</span>
-          </div>
-          <div class="col-md-2 text-center padding10">
-            <span>View</span>
-          </div>
-        </div>
-        <div class="col-md-16 reset-padding">
-          <div class="col-md-1 border-right">
-            <span>Q-5</span>
-          </div>
-          <div class="col-md-11 cyan-blue-light border-right">
-            <span>Did the trainer provide you with our toll free 800 number in case you need to call us?</span>
-          </div>
-          <div class="col-md-1 text-center border-right">
-            <span>08</span>
-          </div>
-          <div class="col-md-1 text-center border-right">
-            <span>12</span>
-          </div>
-          <div class="col-md-2 text-center padding10">
-            <span>View</span>
-          </div>
-        </div>
-        
-        <div class="col-md-16 reset-padding">
-          <div class="col-md-1 border-right border-right">
-            <span>Q-6</span>
-          </div>
-          <div class="col-md-11 cyan-blue-light border-right">
-            <span>Would you recommend this trainer to others?</span>
-          </div>
-          <div class="col-md-1 text-center border-right">
-            <span>14</span>
-          </div>
-          <div class="col-md-1 text-center border-right">
-            <span>06</span>
-          </div>
-          <div class="col-md-2 text-center padding10">
-            <span>View</span>
-          </div>
-        </div>
-        <div class="col-md-16 reset-padding">
-          <div class="col-md-1 border-right">
-            <span>Q-7</span>
-          </div>
-          <div class="col-md-11 cyan-blue-light border-right">
-            <span>Any other comments?</span>
-          </div>
-          <div class="col-md-1 text-center border-right">
-            <span>14</span>
-          </div>
-          <div class="col-md-1 text-center border-right">
-            <span>06</span>
-          </div>
-          <div class="col-md-2 text-center padding10">
-            <span>View</span>
-          </div>
-        </div>
-      </div> -->
+      
 
       <!--grid view 30 days therapy -->
       <ng-include src="'scripts/modules/common/console/surveyreport/views/thirtydayssurvey.html'" ng-if="surveyType === 2"></ng-include>
@@ -247,15 +111,6 @@
       <!--grid view 90 days therapy -->
       <ng-include src="'scripts/modules/common/console/surveyreport/views/nintydayssurvey.html'" ng-if="surveyType === 3"></ng-include>
       <!--gird view 90 days therapy ends --> 
-    </div>
-
-
-  
-    <div class="pull-right week_date_container">
-      <span ng-if="fromDate !== toDate">
-          <span class="date">{{fromDate}}</span> - <span class="date">{{toDate}}</span>
-      </span>
-      <span ng-if="fromDate === toDate" class="date">{{fromDate}}<span>
     </div>
   </div>
 </div>

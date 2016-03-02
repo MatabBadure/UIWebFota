@@ -23,172 +23,28 @@
     </div>
   </div>
 
-  <div class="col-md-16 reset-padding">
+  <div class="col-md-16 reset-padding" ng-repeat="survey in surveyGridView track by $index">
     <div class="col-md-1 border-right">
-      <span>1</span>
+      <span>{{$index + 1}}</span>
     </div>
      <div class="col-md-3 text-center border-right">
-      <span>Dustin F. Rue</span>
+      <span>{{survey.pName}}</span>
     </div>
     <div class="col-md-2 text-center border-right">
-      <span>12/31/1971</span>
+      <span>{{survey.dob}}</span>
     </div>
     <div class="col-md-2 text-center border-right">
-      <span>941-456-7890</span>
+      <span>{{survey.pPhoneNumber}}</span>
     </div>
     <div class="col-md-4 text-center border-right">
-      <span>rue.dustin@gmail.com</span>
+      <span>{{survey.pEmail}}</span>
     </div>
      <div class="col-md-2 text-center border-right">
-      <span>80.20</span>
+      <span>{{survey.hoursOfUse}}</span>
     </div>
      <div class="col-md-2 text-center padding10">
-      <span>4567123</span>
+      <span>{{survey.serNumver}}</span>
     </div>
   </div>
 
-  <div class="col-md-16 reset-padding">
-    <div class="col-md-1 border-right">
-      <span>2</span>
-    </div>
-     <div class="col-md-3 text-center border-right">
-      <span>Jennifer H. Russell</span>
-    </div>
-    <div class="col-md-2 text-center border-right">
-      <span>06/08/1963</span>
-    </div>
-    <div class="col-md-2 text-center border-right">
-      <span>456-123-7890</span>
-    </div>
-    <div class="col-md-4 text-center border-right">
-      <span>russell.jen@gmail.com</span>
-    </div>
-     <div class="col-md-2 text-center border-right">
-      <span>20.06</span>
-    </div>
-     <div class="col-md-2 text-center padding10">
-      <span>9874561</span>
-    </div>
-  </div>
-
-  <div class="col-md-16 reset-padding">
-    <div class="col-md-1 border-right">
-      <span>3</span>
-    </div>
-     <div class="col-md-3 text-center border-right">
-      <span>George J. Hooper</span>
-    </div>
-    <div class="col-md-2 text-center border-right">
-      <span>01/03/1969</span>
-    </div>
-    <div class="col-md-2 text-center border-right">
-      <span>789-456-7890</span>
-    </div>
-    <div class="col-md-4 text-center border-right">
-      <span>hooper.george@gmail.com</span>
-    </div>
-     <div class="col-md-2 text-center border-right">
-      <span>100.02</span>
-    </div>
-     <div class="col-md-2 text-center padding10">
-      <span>456122</span>
-    </div>
-  </div>
-
-  <div class="col-md-16 reset-padding">
-    <div class="col-md-1 border-right">
-      <span>4</span>
-    </div>
-     <div class="col-md-3 text-center border-right">
-      <span>Rosa D. hunter</span>
-    </div>
-    <div class="col-md-2 text-center border-right">
-      <span>12/09/1999</span>
-    </div>
-    <div class="col-md-2 text-center border-right">
-      <span>123-456-7890</span>
-    </div>
-    <div class="col-md-4 text-center border-right">
-      <span>hunter.rosa@gmail.com</span>
-    </div>
-     <div class="col-md-2 text-center border-right">
-      <span>90.05</span>
-    </div>
-     <div class="col-md-2 text-center padding10">
-      <span>1234567</span>
-    </div>
-  </div>
-
-  <div class="col-md-16 reset-padding">
-    <div class="col-md-1 border-right">
-      <span>5</span>
-    </div>
-     <div class="col-md-3 text-center border-right">
-      <span>Elizabeth J. Jones</span>
-    </div>
-    <div class="col-md-2 text-center border-right">
-      <span>11/05/1977</span>
-    </div>
-    <div class="col-md-2 text-center border-right">
-      <span>123-456-7890</span>
-    </div>
-    <div class="col-md-4 text-center border-right">
-      <span>jones.elizabeth@gmail.com</span>
-    </div>
-     <div class="col-md-2 text-center border-right">
-      <span>90.05</span>
-    </div>
-     <div class="col-md-2 text-center padding10">
-      <span>1234567</span>
-    </div>
-  </div>
-
-  <div class="col-md-16 reset-padding">
-    <div class="col-md-1 border-right">
-      <span>6</span>
-    </div>
-     <div class="col-md-3 text-center border-right">
-      <span>Ashley R. Vasquez</span>
-    </div>
-    <div class="col-md-2 text-center border-right">
-      <span>11/05/1985</span>
-    </div>
-    <div class="col-md-2 text-center border-right">
-      <span>123-456-7890</span>
-    </div>
-    <div class="col-md-4 text-center border-right">
-      <span>vas.ashley@gmail.com</span>
-    </div>
-     <div class="col-md-2 text-center border-right">
-      <span>90.05</span>
-    </div>
-     <div class="col-md-2 text-center padding10">
-      <span>1234567</span>
-    </div>
-  </div>
-          
-  <div class="col-md-16 reset-padding">
-    <div class="col-md-1 border-right">
-      <span>6</span>
-    </div>
-     <div class="col-md-3 text-center border-right">
-      <span>Ashley R. Vasquez</span>
-    </div>
-    <div class="col-md-2 text-center border-right">
-      <span>11/05/1985</span>
-    </div>
-    <div class="col-md-2 text-center border-right">
-      <span>123-456-7890</span>
-    </div>
-    <div class="col-md-4 text-center border-right">
-      <span>vas.ashley@gmail.com</span>
-    </div>
-     <div class="col-md-2 text-center border-right">
-      <span>90.05</span>
-    </div>
-     <div class="col-md-2 text-center padding10">
-      <span>1234567</span>
-    </div>
-  </div>
-       
 </div>
