@@ -197,8 +197,7 @@ angular.module('hillromvestApp')
 	      $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');
 	      $scope.fromTimeStamp = dateService.getnDaysBackTimeStamp(durationInDays);;
 	      $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
-	      $scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};	
-
+	      $scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
 	    };
 		
 		$scope.drawCategoryChartForDay = function(){

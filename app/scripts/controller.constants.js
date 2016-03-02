@@ -175,5 +175,21 @@ angular.module('hillromvestApp').constant('hcpDashboardConstants', {
 	},
 
 })
-
-
+.constant('surveyConstants',{
+	questions : {
+		"patient_name": "Patient name",
+		"patient_phone_number": "Patient phone number",
+		"hours_of_use": "Hours of use",
+		"serial_number": "Serial number",
+		"patient_dob": "Patient date of birth",
+		"survey_date": "Date",
+		"space": " ",
+		"main_phone_number": "Main phone number",
+		"secondary_phone_number": "Secondary phone number",
+		"address": "Address",
+		"city": "City",
+		"zipcode":"Zip code",
+		"state": "State",
+		"email_address": "Email"
+	}
+})
