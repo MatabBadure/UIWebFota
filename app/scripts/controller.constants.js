@@ -175,5 +175,14 @@ angular.module('hillromvestApp').constant('hcpDashboardConstants', {
 	},
 
 })
-
-
+.constant('surveyConstants',{
+	questions : {
+		"patient_name": "Patient name",
+		"patient_phone_number": "Patient phone number",
+		"hours_of_use": "Hours of use",
+		"serial_number": "Serial number",
+		"patient_dob": "Patient date of birth",
+		"survey_date": "Date",
+		"space": " "
+	}
+})
