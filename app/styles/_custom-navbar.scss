@@ -303,8 +303,12 @@ $header--background: $body-bg;
 		}
 	}
 }
-.dropdown-menu{
-	 min-width: 240px;
+ul.dropdown-menu{
+ white-space: nowrap;
+}
+ul.dropdown-menu>li{
+	display:inline-block;
+	float:none !important;
 }
 .navbar-secondary .navbar-right .header-popover ul li:first-child:after{
 	border-right:none;
