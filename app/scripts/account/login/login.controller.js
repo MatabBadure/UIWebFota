@@ -128,12 +128,10 @@ angular.module('hillromvestApp')
           
           if(response.data.user.authorities[0].name === loginConstants.role.patient){
             logged.patientID = response.data.user.id;
-            $rootScope.surveyId = 1;
             patientsurveyService.isSurvey(response.data.user.id).then(function(response) {
-              console.log("response", response);
-              $rootScope.surveyId = 1;
+              $rootScope.surveyId = response.data.id;
+              $state.go('patientdashboard');
             });
-            $state.go('patientdashboard');
           } else if(response.data.user.authorities[0].name === loginConstants.role.hcp){
             logged.userId = response.data.user.id;
             $state.go('hcpdashboard');
