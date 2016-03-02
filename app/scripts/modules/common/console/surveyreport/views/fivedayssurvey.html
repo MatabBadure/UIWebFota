@@ -1,0 +1,80 @@
+<div class="grid-view">
+  <div class="col-md-16 reset-padding">
+    <div class="col-md-1 text-center">
+      <span></span>
+    </div>
+    <div class="col-md-11 text-center border-right">
+      <span>Questions</span>
+    </div>
+    <div class="col-md-1 cyan-blue-light text-center border-right">
+      <span>Yes</span>
+    </div>
+    <div class="col-md-1 cyan-blue-light text-center border-right">
+      <span>No</span>
+    </div>
+    <div class="col-md-2 cyan-blue-light text-center padding10">
+      <span>Comments</span>
+    </div>
+  </div>
+
+  <div class="col-md-16 reset-padding" ng-repeat="survey in surveyGridView track by $index">
+    <div class="col-md-1 border-right">
+      <span>Q-{{$index + 1}}</span>
+    </div>
+    <div class="col-md-11 cyan-blue-light border-right">
+      <span>{{survey.question}}</span>
+    </div>
+    <div class="col-md-1 text-center border-right">
+      <span>{{survey.yesCount}}</span>
+    </div>
+    <div class="col-md-1 text-center border-right">
+      <span>{{survey.noCount}}</span>
+    </div>
+    <div class="col-md-2 text-center padding10">
+      <div ng-click="showComments(survey)">View</div>
+    </div>
+  </div>
+</div>
+
+<div ng-if="showCommentModal" class="modal survey_modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true">
+  <div class="modal__dialog survey_dialog">
+    <div class="modal__content survey_content">
+      <header class="modal__header">
+        <button type="button" class="modal__close" data-dismiss="modal" ng-click="hideComments()">&times;</button>
+         <p>Q : {{selectedSurvey.question}}</p>
+        </header>
+        <div class="modal__body">
+          <div class="grid-view">  
+            <div class="col-md-16 text-center reset-padding">
+              <div class="col-md-3 cyan-blue-light text-center  border-right">
+                <span>Patient Name</span>
+              </div>
+              <div class="col-md-3 cyan-blue-light text-center  border-right">
+                <span>Serial Number</span>
+              </div>
+               <div class="col-md-3 cyan-blue-light text-center  border-right">
+                <span>Date</span>
+              </div>
+               <div class="col-md-7 cyan-blue-light text-center padding10">
+                <span>Comments</span>
+              </div>
+            </div>
+            <div class="col-md-16 reset-padding" ng-repeat="survey in surveyGridView track by $index">
+            <div class="col-md-3 text-center border-right">
+              <span>{{survey.pPhoneNumber}}</span>
+            </div>
+            <div class="col-md-3 text-center border-right">
+              <span>{{survey.pEmail}}</span>
+            </div>
+            <div class="col-md-3 text-center border-right">
+              <span>{{survey.hoursOfUse}}</span>
+            </div>
+            <div class="col-md-7 text-center padding10">
+              <span>{{survey.serNumver}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
