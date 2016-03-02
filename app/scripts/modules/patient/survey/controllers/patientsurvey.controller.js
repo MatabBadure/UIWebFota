@@ -1,7 +1,7 @@
 'use strict';
 angular.module('hillromvestApp')
-.controller('patientSurveyController',['$scope', '$state', 'patientsurveyService', '$stateParams', 'StorageService', '$rootScope', 'notyService', 'patientService', 'dateService', 'surveyConstants',
-	function($scope, $state, patientsurveyService, $stateParams, StorageService, $rootScope, notyService, patientService, dateService, surveyConstants) {
+.controller('patientSurveyController',['$scope', '$state', 'patientsurveyService', '$stateParams', 'StorageService', '$rootScope', 'notyService', 'patientService', 'dateService', 'surveyConstants', 'addressService',
+	function($scope, $state, patientsurveyService, $stateParams, StorageService, $rootScope, notyService, patientService, dateService, surveyConstants, addressService) {
 		var logged = StorageService.get('logged') || {};
 		$scope.initPatientSurvey = function(){
 			$rootScope.surveyId = null;	
@@ -12,10 +12,24 @@ angular.module('hillromvestApp')
 					patientsurveyService.getSurvey($stateParams.surveyId).then(function(response){						
 						if(response.status === 200){
 							$scope.survey = response.data;	
-							$scope.isPhoneNumber = true;						
-							angular.forEach($scope.survey.questions, function(question, key){
-								var questionText = $scope.survey.questions[key].questionText;
-								if(questionText.toLowerCase().indexOf(surveyConstants.questions.patient_name.toLowerCase()) !== -1){
+							$scope.isPhoneNumber = true;
+							$scope.isMainPhoneNumber = true;
+							$scope.isSecondaryNumber =true;	
+							$scope.isAddress = true;
+							$scope.isCity = true;
+							$scope.isZipcode = true;
+							$scope.isState = true;
+							$scope.isEmail = true;
+
+							angular.forEach($scope.survey.questions, function(question, key){ 
+								var questionText = $scope.survey.questions[key].questionText;								
+								if((questionText.toLowerCase().indexOf(surveyConstants.questions.email_address.toLowerCase())) !== -1){									
+									$scope.survey.questions[key].answerValue1 = $scope.patient.email? $scope.patient.email : null;
+									if(!$scope.survey.questions[key].answerValue1){
+										$scope.isEmail = false;
+									}
+								}
+								else if(questionText.toLowerCase().indexOf(surveyConstants.questions.patient_name.toLowerCase()) !== -1){
 									$scope.survey.questions[key].answerValue1 = $scope.patient.firstName + surveyConstants.questions.space + $scope.patient.lastName;
 								}
 								else if(questionText.toLowerCase().indexOf(surveyConstants.questions.patient_phone_number.toLowerCase()) !== -1){
@@ -38,7 +52,43 @@ angular.module('hillromvestApp')
 								}
 								else if($scope.survey.questions[key].answers && $scope.survey.questions[key].answers.length > 0){
 									$scope.survey.questions[key].answerValue1 = $scope.survey.questions[key].answers[0];
-								}							
+								}
+								else if(questionText.toLowerCase().indexOf(surveyConstants.questions.main_phone_number.toLowerCase()) !== -1){
+									$scope.survey.questions[key].answerValue1 = $scope.patient.mobilePhone? $scope.patient.mobilePhone : null;
+									if(!$scope.survey.questions[key].answerValue1){
+										$scope.isMainPhoneNumber = false;
+									}
+								}
+								else if(questionText.toLowerCase().indexOf(surveyConstants.questions.secondary_phone_number.toLowerCase()) !== -1){
+									$scope.survey.questions[key].answerValue1 = $scope.patient.primaryPhone? $scope.patient.primaryPhone : null;
+									if(!$scope.survey.questions[key].answerValue1){
+										$scope.isSecondaryNumber = false;
+									}
+								}
+								else if(questionText.toLowerCase().indexOf(surveyConstants.questions.address.toLowerCase()) !== -1){
+									$scope.survey.questions[key].answerValue1 = $scope.patient.address? $scope.patient.address : null;
+									if(!$scope.survey.questions[key].answerValue1){
+										$scope.isAddress = false;
+									}
+								}
+								else if(questionText.toLowerCase().indexOf(surveyConstants.questions.city.toLowerCase()) !== -1){
+									$scope.survey.questions[key].answerValue1 = $scope.patient.city? $scope.patient.city : null;
+									if(!$scope.survey.questions[key].answerValue1){
+										$scope.isCity = false;
+									}
+								}
+								else if(questionText.toLowerCase().indexOf(surveyConstants.questions.zipcode.toLowerCase()) !== -1){
+									$scope.survey.questions[key].answerValue1 = $scope.patient.zipcode? $scope.patient.zipcode : null;
+									if(!$scope.survey.questions[key].answerValue1){
+										$scope.isZipcode = false;
+									}
+								}
+								else if(questionText.toLowerCase().indexOf(surveyConstants.questions.state.toLowerCase()) !== -1){
+									$scope.survey.questions[key].answerValue1 = $scope.patient.state? $scope.patient.state : null;
+									if(!$scope.survey.questions[key].answerValue1){
+										$scope.isState = false;
+									}
+								}																
 							});
 						}else{
 							$scope.survey = null;
@@ -108,6 +158,29 @@ angular.module('hillromvestApp')
 			}
 			
 		};
+		$scope.getCityState = function(zipcode){
+		  delete $scope.serviceError;
+          $scope.isServiceError = false;             
+          if(zipcode){
+            addressService.getCityStateByZip(zipcode).then(function(response){
+              $scope.survey.questions[5].answerValue1= response.data[0].city;
+              $scope.survey.questions[6].answerValue1 = response.data[0].state;
+            }).catch(function(response){
+              $scope.patient.state = null;
+              $scope.patient.city = null;
+              $scope.serviceError = response.data.ERROR;
+              $scope.isServiceError = true;
+            });  
+          }else{
+            delete $scope.survey.questions[5].answerValue1;
+            delete $scope.survey.questions[6].answerValue1;
+            	if($scope.surveyForm.zipcode.$dirty && $scope.surveyForm.zipcode.$showValidationMessage && $scope.surveyForm.zipcode.$invalid){
+            }else{
+              $scope.serviceError = 'Invalid Zipcode';  
+              $scope.isServiceError = true;
+            }
+          }
+        };
 		$scope.init = function(){
 			if($state.current.name === 'patientSurvey'){				
 				$scope.initPatientSurvey();
