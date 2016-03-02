@@ -277,10 +277,10 @@ angular.module('hillromvestApp')
 		            },
 		            false],
 					formatter: function() {
-				        var s = '<div style="font-size:12px; font-weight: bold; padding-bottom: 10px;float:left">&nbsp;&nbsp;&nbsp;&nbsp;'+   this.x  +'&nbsp;&nbsp;&nbsp;&nbsp;</div><div>';
+				        var s = '<div style="font-size:12px; font-weight: bold; padding-bottom: 10px;float:left">&nbsp;&nbsp;&nbsp;&nbsp;'+   this.x  +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div>';
 
 				        $.each(this.points, function(i, point) {
-				            s += '<div style="font-size:10px; font-weight: bold; width:100%"><div style="color:'+ point.series.color +';padding:2px;width:94%;float:left> ' + point.series.name + '</div> ' 
+				            s += '<div style="font-size:10px; font-weight: bold; width:100%"><div style="color:'+ point.series.color +';padding:2px;width:85%;float:left> ' + point.series.name + '</div> ' 
 				            + '<div style="padding:5px;width:5%"><b style="margin:0 2px">' + point.y + '</b></div></div>';
 				        });
 				        s += '</div>';
@@ -375,10 +375,10 @@ angular.module('hillromvestApp')
 		            },
 		            false],
 					formatter: function() {
-				        var s = '<div style="font-size:12x;font-weight: bold; padding-bottom: 3px;">'+  this.x +'</div><div>';
+				        var s = '<div style="font-size:12x;font-weight: bold; padding-bottom: 3px;">&nbsp;'+  this.x +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div>';
 				       
 				        $.each(this.points, function(i, point) {
-				            s += '<div style="font-size:10px; font-weight: bold; width:100%"><div style="color:'+ point.series.color +';padding:5px;width:94%;float:left"> ' + point.series.name + '</div> ' 
+				            s += '<div style="font-size:10px; font-weight: bold; width:100%"><div style="color:'+ point.series.color +';padding:5px;width:85%;float:left"> ' + point.series.name + '</div> ' 
 				            + '<div style="padding:5px;width:5%"><b>' + point.y + '</b></div></div>';
 				        });
 				        s += '</div>';
@@ -487,10 +487,10 @@ angular.module('hillromvestApp')
 		            },
 		            false],
 					formatter: function() {
-				        var s = '<div style="font-size:12x; font-weight: bold; padding-bottom: 3px;">'+  Highcharts.dateFormat('%m/%e/%Y', this.x) +'</div><div>';
+				        var s = '<div style="font-size:12x; font-weight: bold; padding-bottom: 3px;">&nbsp;'+  Highcharts.dateFormat('%m/%e/%Y', this.x) +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div>';
 
 				        $.each(this.points, function(i, point) {
-				            s += '<div style="font-size:10px; font-weight: bold; width="100%"><div style="color:'+ point.series.color +';padding:5px;width:94%;float:left"> ' + point.series.name + '</div> ' 
+				            s += '<div style="font-size:10px; font-weight: bold; width="100%"><div style="color:'+ point.series.color +';padding:5px;width:85%;float:left"> ' + point.series.name + '</div> ' 
 				            + '<div style="padding:5px;width:5%"><b>' + point.y + '</b></div></div>';
 				        });
 				        s += '</div>';
