@@ -183,6 +183,13 @@ angular.module('hillromvestApp').constant('hcpDashboardConstants', {
 		"serial_number": "Serial number",
 		"patient_dob": "Patient date of birth",
 		"survey_date": "Date",
-		"space": " "
+		"space": " ",
+		"main_phone_number": "Main phone number",
+		"secondary_phone_number": "Secondary phone number",
+		"address": "Address",
+		"city": "City",
+		"zipcode":"Zip code",
+		"state": "State",
+		"email_address": "Email"
 	}
 })
