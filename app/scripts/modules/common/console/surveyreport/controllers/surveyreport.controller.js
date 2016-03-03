@@ -69,13 +69,15 @@ angular.module('hillromvestApp')
 		};
 
 		$scope.showComments = function(survey){
-			$scope.selectedSurvey = survey;
-			patientsurveyService.getSurveyComments(survey.id).then(function(response){
+			if(survey.noCount !== 0){
+				$scope.selectedSurvey = survey;
+				patientsurveyService.getSurveyComments(survey.id).then(function(response){
+					$scope.showCommentModal = true;
+				}).catch(function(response){
+					notyService.showError(response);
+				});
 				$scope.showCommentModal = true;
-			}).catch(function(response){
-				notyService.showError(response);
-			});
-			$scope.showCommentModal = true;
+			}
 		};
 
 		$scope.hideComments = function(){
