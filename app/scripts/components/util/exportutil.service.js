@@ -259,8 +259,8 @@ angular.module('hillromvestApp')
     pdf.setFillColor(241,241,241);
     pdf.rect(85, 85, 110, 20, 'FD');
     var patientName = slectedPatient.lastName+' '+slectedPatient.firstName;
-    if(patientName.length > 27) {
-      patientName = patientName.slice(0, 27) + '...'; 
+    if(patientName.length > 17) {
+      patientName = patientName.slice(0, 17) + '...'; 
     }
     pdf.text(90, 100, patientName);
 
@@ -274,8 +274,8 @@ angular.module('hillromvestApp')
     pdf.setDrawColor(241,241,241);
     pdf.setFillColor(241,241,241);
     pdf.rect(85, 118, 110, 20, 'FD');
-    if(userFullName.length > 27){
-      userFullName = userFullName.slice(0, 27) + '...'; 
+    if(userFullName.length > 17){
+      userFullName = userFullName.slice(0, 17) + '...'; 
     }
     pdf.text(90, 130, userFullName);
 
