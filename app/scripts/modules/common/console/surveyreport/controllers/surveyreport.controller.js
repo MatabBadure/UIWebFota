@@ -68,8 +68,8 @@ angular.module('hillromvestApp')
 			$scope.getSurveyReport(type, $scope.serverFromDate, $scope.serverToDate);
 		};
 
-		$scope.showComments = function(survey){
-			if(survey.noCount !== 0){
+		$scope.showComments = function(survey, index){
+			if(survey.noCount !== 0 || index === ){
 				$scope.selectedSurvey = survey;
 				$scope.surveyComments = [];
 				patientsurveyService.getSurveyComments(survey.id).then(function(response){
