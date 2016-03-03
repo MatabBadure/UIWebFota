@@ -25,18 +25,26 @@ angular.module('hillromvestApp',
     $rootScope.ENV = ENV;
     $rootScope.VERSION = VERSION;
     $rootScope.$on('$stateChangeStart', function(event, toState, toStateParams) {
-      $rootScope.toState = toState;
-      $rootScope.toStateParams = toStateParams;
+      if($state.current.name === "patientSurvey"){ 
+        $rootScope.showSurveyCancelModal = true;       
+        if(!$rootScope.isSurveyCancelled){          
+          event.preventDefault();
+        } else{
+          $rootScope.showSurveyCancelModal = false;
+        }       
+      }else{
+        $rootScope.toState = toState;
+        $rootScope.toStateParams = toStateParams;
 
-      if (Principal.isIdentityResolved()) {
-        Auth.authorize();
+        if (Principal.isIdentityResolved()) {
+          Auth.authorize();
+        }
+
+        // Update the language
+        Language.getCurrent().then(function(language) {
+          $translate.use(language);
+        });
       }
-
-      // Update the language
-      Language.getCurrent().then(function(language) {
-        $translate.use(language);
-      });
-
     });
 
     $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
