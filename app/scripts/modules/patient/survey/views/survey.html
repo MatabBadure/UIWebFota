@@ -17,18 +17,18 @@
 		</div>
    	</form>
 </div>
-<div ng-if="showSurveyCancelModal" class="modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true">
+<div ng-show="showSurveyCancelModal" class="modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true">
   <div class="modal__dialog">
     <div class="modal__content">
       <header class="modal__header">
-        <button type="button" class="modal__close" data-dismiss="modal" ng-click="$parent.showSurveyCancelModal = false">&times;</button>
+        <button type="button" class="modal__close" data-dismiss="modal" ng-click="cancelConfirm();">&times;</button>
         <p>Not Completed!</p>
       </header>
       <div class="modal__body">
         <div class="modal--message">You are not yet done with the Survey. Would you like to Cancel or Proceed</div>
         <div class="row modal--custom-btn">
-          <buton class="hillrom-btn btn-submit float-right" ng-click="cancelSurvey(); $parent.showSurveyCancelModal = false">Cancel</buton>
-          <buton class="hillrom-btn btn-submit float-right" data-dismiss="modal" ng-click="$parent.showSurveyCancelModal = false">Proceed</buton>
+          <buton class="hillrom-btn btn-submit float-right" ng-click="cancelSurvey();">Cancel</buton>
+          <buton class="hillrom-btn btn-submit float-right" data-dismiss="modal" ng-click="cancelConfirm();">Proceed</buton>
         </div>
       </div>
       <footer class="modal__footer">

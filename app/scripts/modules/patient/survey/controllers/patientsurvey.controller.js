@@ -101,13 +101,21 @@ angular.module('hillromvestApp')
 			}										
 		};
 
-		$scope.showCancelSurveyPopup = function(){
-			$scope.showSurveyCancelModal = true;
+		$rootScope.showCancelSurveyPopup = function(){
+			$rootScope.showSurveyCancelModal = true;
+			$rootScope.isSurveyCancelled = false;
 		};
 	
-		$scope.cancelSurvey = function(){
+		$rootScope.cancelSurvey = function(){
+		    $rootScope.isSurveyCancelled = true;
+		    $rootScope.showSurveyCancelModal = false;
 			$state.go("patientdashboard");
 		};
+
+		$rootScope.cancelConfirm = function(){
+			$rootScope.showSurveyCancelModal = false;			
+		};
+	
 
 		$scope.saveSurvey = function(){
 			$scope.submitted = true;
@@ -181,7 +189,10 @@ angular.module('hillromvestApp')
             }
           }
         };
+
 		$scope.init = function(){
+			$rootScope.isSurveyCancelled = false;
+		    $rootScope.showSurveyCancelModal = false;
 			if($state.current.name === 'patientSurvey'){				
 				$scope.initPatientSurvey();
 			}
