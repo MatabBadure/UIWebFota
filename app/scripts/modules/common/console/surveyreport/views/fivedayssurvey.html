@@ -3,7 +3,7 @@
     <div class="col-md-1 text-center">
       <span></span>
     </div>
-    <div class="col-md-11 text-center border-right">
+    <div class="col-md-11 text-center border-right survey_grey_color">
       <span>Questions</span>
     </div>
     <div class="col-md-1 cyan-blue-light text-center border-right">
@@ -17,7 +17,7 @@
     </div>
   </div>
 
-  <div class="col-md-16 reset-padding" ng-repeat="survey in surveyGridView track by $index">
+  <div class="col-md-16 reset-padding survey_grey_color" ng-repeat="survey in surveyGridView track by $index">
     <div class="col-md-1 border-right">
       <span>Q-{{$index + 1}}</span>
     </div>
@@ -31,7 +31,7 @@
       <span>{{survey.noCount}}</span>
     </div>
     <div class="col-md-2 text-center padding10">
-      <div ng-click="showComments(survey)" ng-class= "{'pointer-fill-event' : survey.noCount !== 0}">View</div>
+      <div ng-click="showComments(survey)" ng-class= "{'pointer-fill-event' : survey.noCount !== 0}"><span class="border_bt">View</span></div>
     </div>
   </div>
 </div>
@@ -59,7 +59,7 @@
                 <span>Comments</span>
               </div>
             </div>
-            <div class="col-md-16 reset-padding flex" ng-repeat="surveyComment in surveyComments">
+            <div class="col-md-16 reset-padding flex survey_grey_color" ng-repeat="surveyComment in surveyComments">
               <div class="col-md-3 text-center border-right">
                 <span>{{surveyComment.patientName}}</span>
               </div>
