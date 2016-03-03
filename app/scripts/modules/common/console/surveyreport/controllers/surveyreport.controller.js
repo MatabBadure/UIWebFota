@@ -70,8 +70,10 @@ angular.module('hillromvestApp')
 
 		$scope.showComments = function(survey){
 			$scope.selectedSurvey = survey;
+			$scope.surveyComments = [];
 			patientsurveyService.getSurveyComments(survey.id).then(function(response){
 				$scope.showCommentModal = true;
+				$scope.surveyComments = response.data;
 			}).catch(function(response){
 				notyService.showError(response);
 			});
