@@ -59,18 +59,18 @@
                 <span>Comments</span>
               </div>
             </div>
-            <div class="col-md-16 reset-padding" ng-repeat="survey in surveyGridView track by $index">
+            <div class="col-md-16 reset-padding" ng-repeat="surveyComment in surveyComments">
             <div class="col-md-3 text-center border-right">
-              <span>{{survey.pPhoneNumber}}</span>
+              <span>{{surveyComment.patientName}}</span>
             </div>
             <div class="col-md-3 text-center border-right">
-              <span>{{survey.pEmail}}</span>
+              <span>{{surveyComment.serialNumber}}</span>
             </div>
             <div class="col-md-3 text-center border-right">
-              <span>{{survey.hoursOfUse}}</span>
+              <span>{{surveyComment.date}}</span>
             </div>
             <div class="col-md-7 text-center padding10">
-              <span>{{survey.serNumver}}</span>
+              <span>{{surveyComment.comment}}</span>
             </div>
           </div>
         </div>
