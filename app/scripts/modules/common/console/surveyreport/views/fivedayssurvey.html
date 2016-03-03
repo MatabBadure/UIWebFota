@@ -59,21 +59,22 @@
                 <span>Comments</span>
               </div>
             </div>
-            <div class="col-md-16 reset-padding" ng-repeat="surveyComment in surveyComments">
-            <div class="col-md-3 text-center border-right">
-              <span>{{surveyComment.patientName}}</span>
-            </div>
-            <div class="col-md-3 text-center border-right">
-              <span>{{surveyComment.serialNumber}}</span>
-            </div>
-            <div class="col-md-3 text-center border-right">
-              <span>{{surveyComment.date}}</span>
-            </div>
-            <div class="col-md-7 text-center padding10">
-              <span>{{surveyComment.comment}}</span>
-            </div>
+            <div class="col-md-16 reset-padding flex" ng-repeat="surveyComment in surveyComments">
+              <div class="col-md-3 text-center border-right">
+                <span>{{surveyComment.patientName}}</span>
+              </div>
+              <div class="col-md-3 text-center border-right">
+                <span>{{surveyComment.serialNumber}}</span>
+              </div>
+              <div class="col-md-3 text-center border-right">
+                <span>{{surveyComment.date}}</span>
+              </div>
+              <div class="col-md-7 text-center padding10 text-center">
+                <span>{{surveyComment.comment}}</span>
+              </div>
           </div>
         </div>
+      
       </div>
     </div>
   </div>
