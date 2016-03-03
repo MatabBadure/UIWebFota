@@ -118,6 +118,8 @@ angular.module('hillromvestApp')
 	
 
 		$scope.saveSurvey = function(){
+			$rootScope.isSurveyCancelled = true;
+		    $rootScope.showSurveyCancelModal = false;
 			$scope.submitted = true;
 			if(logged.patientID){
 				var surveyEdited = {};
@@ -134,10 +136,10 @@ angular.module('hillromvestApp')
 						surveyEdited.userSurveyAnswer[key].answerValue1 = $scope.survey.questions[key].answerValue1;
               		}
               		if($scope.survey.questions[key].answerValue2 && $scope.survey.questions[key].answerValue2.length > 0){
-						surveyEdited.userSurveyAnswer[key].answerValue1 = $scope.survey.questions[key].answerValue2;
+						surveyEdited.userSurveyAnswer[key].answerValue2 = $scope.survey.questions[key].answerValue2;
               		}
               		if($scope.survey.questions[key].answerValue3 && $scope.survey.questions[key].answerValue3.length > 0){
-						surveyEdited.userSurveyAnswer[key].answerValue1 = $scope.survey.questions[key].answerValue3;
+						surveyEdited.userSurveyAnswer[key].answerValue3 = $scope.survey.questions[key].answerValue3;
               		}  
 
               		if($scope.survey.questions[key].typeCodeFormat.type_code === "Checkbox"){
@@ -150,8 +152,10 @@ angular.module('hillromvestApp')
               		
 				});
 				if($scope.surveyForm.$invalid){
+					$rootScope.isSurveyCancelled = false;
+		    		$rootScope.showSurveyCancelModal = false;
 					return false;
-				}else{
+				}else{					
 					patientsurveyService.saveSuvey(surveyEdited).then(function(){
 						notyService.showMessage("Survey taken successfully.",'success' );
 						$state.go("patientdashboard");
