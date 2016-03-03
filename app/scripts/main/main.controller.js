@@ -54,13 +54,23 @@ angular.module('hillromvestApp')
 	      };
 
 	      $scope.logout = function(){
-	        Auth.signOut().then(function(data) {
-	          Auth.logout();
-	          StorageService.clearAll();
-	          $rootScope.userRole = null;
-	          $scope.signOut();
-	        }).catch(function(err) {
-	        });
+	      	if($state.current.name === "patientSurvey"){ 
+		        $rootScope.showSurveyCancelModal = true;       
+		        if(!$rootScope.isSurveyCancelled){          
+		          event.preventDefault();
+		        } else{
+		          $rootScope.showSurveyCancelModal = false;
+		        }       
+		     }else{
+		     	Auth.signOut().then(function(data) {
+		          Auth.logout();
+		          StorageService.clearAll();
+		          $rootScope.userRole = null;
+		          $scope.signOut();
+		        }).catch(function(err) {
+		        });
+		     }
+	        
 	      };
 
 	      $scope.profile = function(){
