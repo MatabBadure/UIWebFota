@@ -45,7 +45,7 @@
 	            <div class="col-md-16 reset-padding" ng-if="isMainPhoneNumber">
 	           		 <input class="col-md-14" type="text" ng-model="survey.questions[2].answerValue1" ng-disabled="true">
 	           	</div>
-				<div class="col-md-16" ng-if="!isMainPhoneNumber">
+				<div class="col-md-16 reset-padding" ng-if="!isMainPhoneNumber">
 					<input class="col-md-14" type="text" name="mainPhoneNumber" class="form-control" validate-on-blur ng-model="survey.questions[2].answerValue1" ng-readonly="validateADMINorASP()" ui-mask="(999)-999-9999" model-view-value="true" ui-options="{clearOnBlur: false}" required>   
 
 				</div>
@@ -83,7 +83,7 @@
 	            <div class="col-md-16 reset-padding" ng-if="isAddress">
 	           		 <input class="col-md-14" type="text" ng-model="survey.questions[4].answerValue1" ng-disabled="true">
 	           	</div>
-	           	<div class="col-md-16" ng-if="!isAddress">
+	           	<div class="col-md-16 reset-padding" ng-if="!isAddress">
 					<input class="col-md-14" type="text" name="address" class="form-control" validate-on-blur ng-model="survey.questions[4].answerValue1" ng-readonly="validateADMINorASP()" model-view-value="true" ui-options="{clearOnBlur: false}">   
 				</div>				
           </div>
