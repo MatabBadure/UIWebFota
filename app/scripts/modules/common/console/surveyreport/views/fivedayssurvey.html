@@ -31,7 +31,7 @@
       <span>{{survey.noCount}}</span>
     </div>
     <div class="col-md-2 text-center padding10">
-      <div ng-click="showComments(survey)">View</div>
+      <div ng-click="showComments(survey)" ng-class= "{'pointer-fill-event' : survey.noCount !== 0}">View</div>
     </div>
   </div>
 </div>
