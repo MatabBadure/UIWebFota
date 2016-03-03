@@ -69,7 +69,7 @@ angular.module('hillromvestApp')
 		};
 
 		$scope.showComments = function(survey, index){
-			if(survey.noCount !== 0 || index === ){
+			if(survey.noCount !== 0 || index === 6){
 				$scope.selectedSurvey = survey;
 				$scope.surveyComments = [];
 				patientsurveyService.getSurveyComments(survey.id).then(function(response){
