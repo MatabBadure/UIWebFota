@@ -512,6 +512,7 @@ angular.module('hillromvestApp')
 			var chartCustom = $("#containerCustom").highcharts();
 			if($scope.dayChart){				
 				if(chartDay){
+					chartDay.zoomOut();		
 					chartDay.xAxis[0].setCategories($scope.categoryChartData.xAxis.categories, false);
 					for(var i = chartDay.series.length - 1; i >= 0; i--) {
 						chartDay.series[i].update({						
@@ -527,7 +528,8 @@ angular.module('hillromvestApp')
 				if(chartCustom){//already a custom chart is present then redraw					
 					/*chartCustom.yAxis[0].update({
 					    max: $scope.yMax
-					}); 	*/					
+					}); 	*/	
+					chartCustom.zoomOut();					
 					for(var i = chartCustom.series.length - 1; i >= 0; i--) {
 						chartCustom.series[i].update({
 							data: $scope.categoryChartData.series[i].data,
