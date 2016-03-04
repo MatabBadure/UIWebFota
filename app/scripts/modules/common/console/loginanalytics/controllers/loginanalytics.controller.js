@@ -26,8 +26,7 @@ angular.module('hillromvestApp')
 	      var count = 5;
 	      $scope.waitFunction = function waitHandler() {
 	         datePickerCount = document.getElementsByClassName('input-mini').length;
-	        if(datePickerCount > 0 || count === 0 ) {
-	          //$scope.customizationForBarGraph();
+	        if(datePickerCount > 0 || count === 0 ) {	          
 	          while(datePickerCount >0){
 	            document.getElementsByClassName('input-mini')[datePickerCount-1].setAttribute("disabled", "true");
 	            datePickerCount --;
@@ -528,7 +527,7 @@ angular.module('hillromvestApp')
 				if(chartCustom){//already a custom chart is present then redraw					
 					/*chartCustom.yAxis[0].update({
 					    max: $scope.yMax
-					}); 	*/
+					}); 	*/					
 					for(var i = chartCustom.series.length - 1; i >= 0; i--) {
 						chartCustom.series[i].update({
 							data: $scope.categoryChartData.series[i].data,
@@ -541,6 +540,7 @@ angular.module('hillromvestApp')
 				}							
 			}else{// non day and non custom range
 				if(chartNonDay){					
+					chartNonDay.zoomOut();							
 					chartNonDay.xAxis[0].setCategories($scope.categoryChartData.xAxis.categories, false);				
 					for(var i = chartNonDay.series.length - 1; i >= 0; i--) {
 						chartNonDay.series[i].update({
@@ -646,7 +646,7 @@ angular.module('hillromvestApp')
 		 $scope.getCategoryChartData = function(duration){
 		 	var filters = $scope.getSelectedUserRoles();
 			loginanalyticsService.getLoginAnalytics( dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), filters, duration).then(function(response) {
-				// set the categorychartdata
+				var daysDiff = dateService.getDateDiffIndays($scope.fromTimeStamp,$scope.toTimeStamp);
 				$scope.yMax = 1;
 				$scope.categoryChartData = response.data;				
 				angular.forEach($scope.categoryChartData.series, function(series, key) {
@@ -685,7 +685,10 @@ angular.module('hillromvestApp')
 				  }	  					  	
 				  if($scope.categoryChartData.series[key].data[index].y ){				  	
 				  	$scope.categoryChartData.series[key].data[index].y = parseInt($scope.categoryChartData.series[key].data[index].y);				  				  
-				  }				  	
+				  }		
+				  var marker = {};		
+				  marker.radius = ($scope.durationview.custom && daysDiff > 50)? 0 : 4;				  		
+				  $scope.categoryChartData.series[key].data[index].marker = marker;				  	
 				  $scope.yMax = ($scope.yMax === 1 && $scope.categoryChartData.series[key].data[index].y === 0) ? 1 : null;
 				  });
 				});	
