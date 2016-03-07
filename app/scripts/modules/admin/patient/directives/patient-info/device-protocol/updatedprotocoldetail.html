@@ -149,24 +149,24 @@
       <div class="modal__body">
         <div class="modal--message dark_grey_text_color14 ng-scope">We need to verify that you are not a robot, but a human being!</div>
         <form ng-submit="updateProtocol()" name="protocolVerificationForm" novalidate>
-          <div class="col-md-16 margin-top reset-padding">
+          <div class="col-md-16 margin-top reset-padding margin-top-18">
             <div class="col-md-5 dark_grey_text_color14 reset-padding">Email Address</div>
-            <div class="col-md-11">
-              <input type="text" name="patientName" class="light_grey ng-pristine ng-untouched ng-isolate-scope ng-valid-minlength ng-valid-maxlength ng-valid ng-valid-required col-md-16" ng-model="userEmail" ng-disabled="true">
+            <div class="col-md-11 col-xs-16 col-sm-16 reset-padding">
+              <input type="text" name="patientName" class="light_grey ng-pristine ng-untouched ng-isolate-scope ng-valid-minlength ng-valid-maxlength ng-valid ng-valid-required col-md-16 col-xs-16 col-sm-16" ng-model="userEmail" ng-disabled="true">
             </div>
           </div>
-          <div class="col-md-16 margin-top reset-padding">
+          <div class="col-md-16 margin-top reset-padding margin-top-18">
             <div class="col-md-5 dark_grey_text_color14 reset-padding">Password</div>
-            <div class="col-md-11">
-              <input type="password" name="password" class="ng-pristine ng-untouched ng-isolate-scope ng-valid-minlength ng-valid-maxlength ng-valid ng-valid-required col-md-16" ng-model="password" required value="">
+            <div class="col-md-11 col-xs-16 col-sm-16 reset-padding">
+              <input type="password" name="password" class="ng-pristine ng-untouched ng-isolate-scope ng-valid-minlength ng-valid-maxlength ng-valid ng-valid-required col-md-16 col-xs-16 col-sm-16" ng-model="password" required value="">
               <div ng-if="protocolVerificationForm.$invalid">
                 <span class="has-error" ng-if="protocolVerificationForm.password.$error.required && isProtocolSubmited"> Please enter the password for your Visi-View account.</span>
               </div>
             </div>
           </div>
-          <div class="col-md-16 margin-top reset-padding">
+          <div class="col-md-16 margin-top reset-padding margin-top-18">
             <div class="col-md-5 dark_grey_text_color14 reset-padding">Captcha</div>
-            <div class="col-md-11">
+            <div class="col-md-11 col-xs-16 col-sm-16 reset-padding">
              <captcha valid="captchaValid"></captcha>
             </div>
           </div>

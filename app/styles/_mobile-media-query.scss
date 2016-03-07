@@ -42,7 +42,9 @@
 	.footer_container .footer_right_txt, .admin-user .caregiver-list__detail--email, #top-shadow {
 		@extend .none;
 	}
-
+	ul.logout-dropdown > li{
+	float:left!important;
+	}
 	.footer_container .footer_right {
 		text-align: center;
 	}
@@ -455,7 +457,7 @@ ul {
 	}
 	.navbar-fixed-top {
 		.rm_max_height{
-			max-height:100%;
+			max-height:340px;
 			}
 			ul{
 				li{
