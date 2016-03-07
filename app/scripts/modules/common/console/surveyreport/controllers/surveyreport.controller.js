@@ -55,6 +55,7 @@ angular.module('hillromvestApp')
 		};
 
 		$scope.getSurveyReport = function(type, fromDate, toDate){
+			$scope.surveyGridView = [];
 			patientsurveyService.getSurveyGridReport(type, fromDate, toDate).then(function(response){
 				$scope.count = response.data.count;
 				$scope.surveyGridView = response.data.surveyGridView;
