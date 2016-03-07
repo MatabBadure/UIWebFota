@@ -49,6 +49,7 @@ angular.module('hillromvestApp')
 		
 		$scope.init = function(){
 			if($state.current.name === 'adminSurveyReport' || $state.current.name === 'rcddminSurveyReport' || $state.current.name === 'associateSurveyReport'){
+				$scope.viewType = 'graph';
 				$scope.calculateTimeDuration(5);
 				$scope.switchSurvey(1);
 			}
@@ -64,9 +65,18 @@ angular.module('hillromvestApp')
 			});
 		};
 
+		$scope.switchView = function(view){
+			$scope.viewType = view;
+			$scope.switchSurvey($scope.surveyType);
+		};
+
 		$scope.switchSurvey = function(type){
 			$scope.surveyType = type;
-			$scope.getSurveyReport(type, $scope.serverFromDate, $scope.serverToDate);
+			if($scope.viewType === 'graph'){
+				$scope.getGraphSurveyReport(type, $scope.serverFromDate, $scope.serverToDate);
+			}else if($scope.viewType === 'grid'){
+				$scope.getSurveyReport(type, $scope.serverFromDate, $scope.serverToDate);
+			}
 		};
 
 		$scope.showComments = function(survey, index){
@@ -85,6 +95,112 @@ angular.module('hillromvestApp')
 
 		$scope.hideComments = function(){
 			$scope.showCommentModal = false;
+		};
+
+		$scope.getGraphSurveyReport = function(type, fromDate, toDate){
+			patientsurveyService.getGraphSurveyGridReport(type, fromDate, toDate).then(function(response){
+				$scope.graphSurvey = response.data; 
+				$scope.drawCategoryChartForNonDay();
+			}).catch(function(response){
+				notyService.showError(response);
+			});
+		};
+
+		$scope.drawCategoryChartForNonDay = function(){
+			var chart = Highcharts.chart('fiveDaysSurvey', {
+				chart:{
+					type: 'column',
+					zoomType: 'xy',
+					backgroundColor: "#e6f1f4"
+				},
+        title: {
+          text: ''
+        },  	
+		    xAxis:{
+					type: 'category',
+					categories: $scope.graphSurvey.xAxis.categories,
+					labels:{
+			      style: {
+				      color: '#525151',
+				      //font: '10px Helvetica',
+				      fontWeight: 'bold'
+				    }
+			    }
+				},
+				yAxis: {
+					gridLineColor: '#FF0000',
+		      gridLineWidth: 0,
+		      lineWidth:1,
+		      min: 0,
+		      title: {
+		        text: 'No. of Users',
+		        style: {
+			        color: '#525151',
+			        font: '10px Helvetica',
+			        fontWeight: 'bold'
+			      }
+		      },
+		      allowDecimals:false,
+		      labels:{
+		       	style: {
+			        color: '#525151',
+			        //font: '10px Helvetica',
+			        fontWeight: 'bold'
+			      }
+		      }
+		    },
+        legend: {
+		      align: 'center',
+			    verticalAlign: 'bottom',
+			    x: 0,
+			    y: 0
+		    },
+		    plotOptions: {
+		      series: {
+		        events: {
+		          legendItemClick: function () {
+		         		var self = this,
+		         		allow = false;
+		                        
+		            if(self.visible) {
+		              $.each(self.chart.series, function(i, series) {
+		                if(series !== self && series.visible) {
+		                 	allow = true;
+		                }
+		              });
+		              if(!allow){
+		               	notyService.showMessage(notyMessages.minComplianceError, notyMessages.typeWarning );
+		              }
+		              return allow;
+		            }
+		          }
+		        }
+		      }
+		    },
+				tooltip: {
+					crosshairs: [{
+		        dashStyle: 'solid',
+		        color: '#b4e6f6'
+		        },
+		      false],
+					formatter: function() {
+				    var s = '<div style="font-size:12x;font-weight: bold; padding-bottom: 3px;">'+  this.x +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div>';
+				    
+				    $.each(this.points, function(i, point) {
+				      s += '<div style="font-size:10px; font-weight: bold; width:100%"><div style="color:'+ point.series.color +';padding:5px 0;width:80%;float:left"> ' + point.series.name + '</div> ' 
+				        + '<div style="padding:5px;width:10%"><b>' + point.y + '</b></div></div>';
+				    });
+				    s += '</div>';
+		        return s;
+			    },
+			    hideDelay: 0,
+					useHTML: true,
+   				shared: true
+				},
+				series: $.extend(true, [], $scope.graphSurvey.series),
+				loading: true,
+				size: {}
+		    });//.setSize(1140, 400);
 		};
 
 		$scope.init();

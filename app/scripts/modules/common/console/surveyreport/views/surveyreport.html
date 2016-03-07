@@ -36,8 +36,8 @@
             <div class="row">
               <ul class="nav nav-pills">
               <!-- Required for Graph view -->
-              <!-- <li><a ng-class="" href="" ng-click="isGraphLoaded &amp;&amp; showHmrGraph()" translate="" class="active">Graph View</a></li> -->
-                <li><a href="" ng-class="" ng-click="" translate="" class="active">Grid View</a></li>
+                <li><a href="" ng-click="switchView('graph')" translate="" ng-class="{'active': viewType === 'graph'}">Graph View</a></li>
+                <li><a href="" ng-click="switchView('grid')" translate="" ng-class="{'active': viewType === 'grid'}">Grid View</a></li>
               </ul>
             </div>
           </div>
@@ -58,59 +58,19 @@
         </div>
       </div>
       <!-- Required for Graph View -->
-<!--      <div class="col-md-16 dashboard__manage-view--list">
-       <div class="col-md-1"><span>Q-1</span></div>
-       <div class="col-md-15 cyan-blue-light"><span>Did the trainer demonstrate and perform a complete therapy session?</span></div>
-     </div>
-
-     <div class="col-md-16 dashboard__manage-view--list">
-       <div class="col-md-1"><span>Q-2</span></div>
-       <div class="col-md-15 cyan-blue-light"><span>Did the trainer make sure your garmet fit you properly?</span></div>
-     </div>
-
-      <div class="col-md-16 dashboard__manage-view--list">
-       <div class="col-md-1"><span>Q-3</span></div>
-       <div class="col-md-15 cyan-blue-light"><span>Did the trainer explain the Outcomes Monitoring Program and how to obtain the hour  meter reading The Vest&copy; System Device?</span></div>
-     </div>
-
-      <div class="col-md-16 dashboard__manage-view--list">
-       <div class="col-md-1"><span>Q-4</span></div>
-       <div class="col-md-15 cyan-blue-light"><span>Did the trainer review the trouble shooting and safety instructions regarding The Vest&copy; usage System?</span></div>
-     </div>
-
-      <div class="col-md-16 dashboard__manage-view--list">
-       <div class="col-md-1"><span>Q-5</span></div>
-       <div class="col-md-15 cyan-blue-light"><span>Did the trainer provide you with our toll free 800 number in case you need to call us?</span></div>
-     </div>
-
-      <div class="col-md-16 dashboard__manage-view--list">
-       <div class="col-md-1"><span>Q-6</span></div>
-       <div class="col-md-15 cyan-blue-light"><span>Would you recommend this trainer to others?</span></div>
-     </div>
-
-  
-    <div class="col-md-16 margin-top">
-      <div class="btn_group patient_dashdoard_btns" ng-class="{ 'btn_group patient_dashdoard_btns_compliance': complianceGraph, 'btn_group patient_dashdoard_btns': !complianceGraph}">
-        <div dropdown="" class="pull-right left dropdown">
-          <button id="single-button" type="button" class="hillrom-btn btn-submit margin0 float-right ng-scope dropdown-toggle pointer-no-event" ng-class="{ 'pointer-fill-event': (!noDataAvailable &amp;&amp; isGraphLoaded) , 'pointer-no-event': (!isGraphLoaded || noDataAvailable) }" dropdown-toggle="" ng-disabled="disabled" translate="" aria-haspopup="true" aria-expanded="false">Export in PDF</button>
-        </div>
-      </div>
-    </div>
- -->
-
+      <ng-include src="'scripts/modules/common/console/surveyreport/views/fivedaysgraphsurvey.html'" ng-if="viewType === 'graph'"></ng-include>
+     
       
-      
-      <ng-include src="'scripts/modules/common/console/surveyreport/views/fivedayssurvey.html'" ng-if="surveyType === 1"></ng-include>
+      <ng-include src="'scripts/modules/common/console/surveyreport/views/fivedayssurvey.html'" ng-if="viewType === 'grid' &&surveyType === 1"></ng-include>
       
 
       <!--grid view 30 days therapy -->
-      <ng-include src="'scripts/modules/common/console/surveyreport/views/thirtydayssurvey.html'" ng-if="surveyType === 2"></ng-include>
+      <ng-include src="'scripts/modules/common/console/surveyreport/views/thirtydayssurvey.html'" ng-if="viewType === 'grid' && surveyType === 2"></ng-include>
       <!--gird view 30 days therapy ends --> 
 
 
-
       <!--grid view 90 days therapy -->
-      <ng-include src="'scripts/modules/common/console/surveyreport/views/nintydayssurvey.html'" ng-if="surveyType === 3"></ng-include>
+      <ng-include src="'scripts/modules/common/console/surveyreport/views/nintydayssurvey.html'" ng-if="viewType === 'grid' && surveyType === 3"></ng-include>
       <!--gird view 90 days therapy ends --> 
     </div>
   </div>
