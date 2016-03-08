@@ -10,7 +10,9 @@
 		position:static;
 		text-align: center
 	}
-
+	ul.logout-dropdown > li{
+		float:left!important;
+	}
 	.footer_container .footer_left_ul {
 		
 		&:li {
@@ -241,6 +243,9 @@
 		text-overflow: ellipsis;
 		width:77px;
 		overflow:hidden;
+	}
+	.mob_label > div > label{
+	float:none !important;
 	}
 	.text-center-mob{
 		text-align:center;
