@@ -72,6 +72,9 @@ angular.module('hillromvestApp')
 
 		$scope.switchSurvey = function(type){
 			$scope.surveyType = type;
+			if(type === 3){
+				$scope.viewType = 'grid';
+			}
 			if($scope.viewType === 'graph'){
 				$scope.getGraphSurveyReport(type, $scope.serverFromDate, $scope.serverToDate);
 			}else if($scope.viewType === 'grid'){

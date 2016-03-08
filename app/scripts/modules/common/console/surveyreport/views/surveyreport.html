@@ -36,7 +36,7 @@
             <div class="row">
               <ul class="nav nav-pills">
               <!-- Required for Graph view -->
-                <li><a href="" ng-click="switchView('graph')" translate="" ng-class="{'active': viewType === 'graph'}">Graph View</a></li>
+                <li ng-if="surveyType !== 3"><a href="" ng-click="switchView('graph')" translate="" ng-class="{'active': viewType === 'graph'}">Graph View</a></li>
                 <li><a href="" ng-click="switchView('grid')" translate="" ng-class="{'active': viewType === 'grid'}">Grid View</a></li>
               </ul>
             </div>
