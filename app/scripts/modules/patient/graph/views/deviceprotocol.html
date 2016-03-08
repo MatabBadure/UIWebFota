@@ -6,7 +6,7 @@
   <div class="dashboard dashboard--content pull-left-mob">
     <div class="dashboard__manage-view margin-top-18">
       <div class="dashboard__manage-view--header">
-          <div class="col-md-3 col-sm-3 header--type">
+          <div class="col-md-3 col-sm-3 header-- text-align-left">
             <span translate="patient.protocol-caption.type"></span>
           </div>
           <div class="col-md-3 col-sm-3 header--type text-align-center">
@@ -30,16 +30,16 @@
     <div class="col-md-3 col-sm-3 protocol-list__type protocol_heading_color text-align-left">
       <span> {{::protocol.type}} {{::protocol.treatmentLabel}}</span>
     </div>
-    <div class="col-md-3 col-sm-3 protocol-list__type text-center">
+    <div class="col-md-3 col-sm-3 protocol-list__type">
       <span> {{::protocol.treatmentsPerDay}}</span>
     </div>
-    <div class="col-md-3 col-sm-3 protocol-list__treatment-day text-center">
+    <div class="col-md-3 col-sm-3 protocol-list__treatment-day">
       <span class="protocol-list--value"> {{::protocol.minMinutesPerTreatment}}<span ng-if="protocol.type === 'Normal'">-{{::protocol.maxMinutesPerTreatment}}</span></span>
     </div>
-    <div class="col-md-3 col-sm-3 protocol-list__strt-date text-center">
+    <div class="col-md-3 col-sm-3 protocol-list__strt-date">
       <span class="protocol-list--value"> {{::protocol.minFrequency}}<span ng-if="protocol.type === 'Normal'">-{{::protocol.maxFrequency}}</span></span>
     </div>
-    <div class="col-md-4 col-sm-4 protocol-list__end-date text-center">
+    <div class="col-md-4 col-sm-4 protocol-list__end-date">
       <span class="protocol-list--value"> {{::protocol.minPressure}}<span ng-if="protocol.type === 'Normal'">-{{::protocol.maxPressure}}</span></span>
     </div>
   </div>
