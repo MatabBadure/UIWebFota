@@ -3869,7 +3869,7 @@ angular.module('hillromvestApp')
             })                    
             .state('patientSurvey', {
               parent: 'survey',
-              url: '/{patientId}/survey',
+              url: '/{surveyId}/survey',
               data: {
                   roles: ['PATIENT'],
                   pageTitle: 'console.console-tabs.patient-survey'
@@ -3911,6 +3911,9 @@ angular.module('hillromvestApp')
                   }
               },
               resolve: {
+                loadMyCtrl:['$ocLazyLoad', function($ocLazyLoad){
+                    return $ocLazyLoad.load('surveyModule');
+                }],
                   translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                       $translatePartialLoader.addPart('console');
                       return $translate.refresh();
@@ -3936,6 +3939,9 @@ angular.module('hillromvestApp')
                   }
               },
               resolve: {
+                loadMyCtrl:['$ocLazyLoad', function($ocLazyLoad){
+                    return $ocLazyLoad.load('surveyModule');
+                }],
                   translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                       $translatePartialLoader.addPart('console');
                       return $translate.refresh();
@@ -3961,6 +3967,9 @@ angular.module('hillromvestApp')
                   }
               },
               resolve: {
+                loadMyCtrl:['$ocLazyLoad', function($ocLazyLoad){
+                    return $ocLazyLoad.load('surveyModule');
+                }],
                   translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                       $translatePartialLoader.addPart('console');
                       return $translate.refresh();

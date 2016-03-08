@@ -13,7 +13,8 @@ angular.module('hillromvestApp')
 			$rootScope.username = null;
 			if(StorageService.get('logged')){
 				$rootScope.userRole = StorageService.get('logged').role;
-				$rootScope.username = StorageService.get('logged').userFirstName;  
+				$rootScope.username = StorageService.get('logged').userFirstName;
+				$rootScope.userFullName = StorageService.get('logged').userFullName;
 				$rootScope.userEmail = StorageService.get('logged').userEmail;  
 			}
 			if($rootScope.userRole === 'PATIENT'){
@@ -53,13 +54,23 @@ angular.module('hillromvestApp')
 	      };
 
 	      $scope.logout = function(){
-	        Auth.signOut().then(function(data) {
-	          Auth.logout();
-	          StorageService.clearAll();
-	          $rootScope.userRole = null;
-	          $scope.signOut();
-	        }).catch(function(err) {
-	        });
+	      	if($state.current.name === "patientSurvey"){ 
+		        $rootScope.showSurveyCancelModal = true;       
+		        if(!$rootScope.isSurveyCancelled){          
+		          event.preventDefault();
+		        } else{
+		          $rootScope.showSurveyCancelModal = false;
+		        }       
+		     }else{
+		     	Auth.signOut().then(function(data) {
+		          Auth.logout();
+		          StorageService.clearAll();
+		          $rootScope.userRole = null;
+		          $scope.signOut();
+		        }).catch(function(err) {
+		        });
+		     }
+	        
 	      };
 
 	      $scope.profile = function(){

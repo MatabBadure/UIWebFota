@@ -12,8 +12,8 @@ angular.module('hillromvestApp')
 		* default legends and their accessibility
 		*/
 		$scope.calculateDateFromPicker = function(picker) {
-	      $scope.fromTimeStamp = new Date(picker.startDate._d).getTime();
-		  $scope.toTimeStamp = new Date().getTime() > new Date(picker.startDate._d).getTime()? new Date().getTime() : new Date(picker.endDate._d).getTime();
+	      $scope.fromTimeStamp = new Date(picker.startDate._d).getTime();	      
+		  $scope.toTimeStamp = (new Date().getTime() < new Date(picker.endDate._d).getTime())? new Date().getTime() : new Date(picker.endDate._d).getTime();
 	      $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
 	      $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');	      
 	      if ($scope.fromDate === $scope.toDate ) {
@@ -26,8 +26,7 @@ angular.module('hillromvestApp')
 	      var count = 5;
 	      $scope.waitFunction = function waitHandler() {
 	         datePickerCount = document.getElementsByClassName('input-mini').length;
-	        if(datePickerCount > 0 || count === 0 ) {
-	          //$scope.customizationForBarGraph();
+	        if(datePickerCount > 0 || count === 0 ) {	          
 	          while(datePickerCount >0){
 	            document.getElementsByClassName('input-mini')[datePickerCount-1].setAttribute("disabled", "true");
 	            datePickerCount --;
@@ -45,7 +44,7 @@ angular.module('hillromvestApp')
 		$scope.opts = {
 			maxDate: new Date(),
 			format: patientDashboard.dateFormat,
-			//dateLimit: {"months":patientDashboard.maxDurationInMonths},
+			dateLimit: {"months":24},
 			eventHandlers: {'apply.daterangepicker': function(ev, picker) {  
 				$scope.calculateDateFromPicker(picker);	        				
 				$scope.customDateRangeView();  
@@ -197,8 +196,7 @@ angular.module('hillromvestApp')
 	      $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');
 	      $scope.fromTimeStamp = dateService.getnDaysBackTimeStamp(durationInDays);;
 	      $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
-	      $scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};	
-
+	      $scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
 	    };
 		
 		$scope.drawCategoryChartForDay = function(){
@@ -277,13 +275,13 @@ angular.module('hillromvestApp')
 		            },
 		            false],
 					formatter: function() {
-				        var s = '<span style="font-size:12px; font-weight: bold; padding-bottom: 10px;">'+   this.x  +'</span><table>';
+				        var s = '<div style="font-size:12px; font-weight: bold; padding-bottom: 10px;float:left">&nbsp;&nbsp;&nbsp;&nbsp;'+   this.x  +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div>';
 
 				        $.each(this.points, function(i, point) {
-				            s += '<tr style="font-size:10px; font-weight: bold;"><td style="color:'+ point.series.color +';padding:0"> ' + point.series.name + '</td> ' 
-				            + '<td style="padding:0 5px"><b>' + point.y + '</b></td></tr>';
+				            s += '<div style="font-size:10px; font-weight: bold; width:100%"><div style="color:'+ point.series.color +';padding:2px;width:85%;float:left> ' + point.series.name + '</div> ' 
+				            + '<div style="padding:5px;width:5%"><b style="margin:0 -10px">' + point.y + '</b></div></div>';
 				        });
-				        s += '</table>';
+				        s += '</div>';
 
 				        return s;
 				    },
@@ -324,7 +322,7 @@ angular.module('hillromvestApp')
 		            lineWidth:1,
 		            min: 0,
 		            title: {
-		                text: 'No. Of Users',
+		                text: 'No. of Users',
 		                style: {
 			                color: '#525151',
 			                font: '10px Helvetica',
@@ -375,12 +373,11 @@ angular.module('hillromvestApp')
 		            },
 		            false],
 					formatter: function() {
-				        var s = '<div style="font-size:12x; border-bottom:1px solid #ccc; font-weight: bold; padding-bottom: 3px;">'+   this.x  +'</div><div>';
-				        // +'<tr><th colspan="2" style="font-size:12x; border-bottom:1px solid #ccc; font-weight: bold; padding-bottom: 3px;">'+ this.x +'</th><th></th></tr>';
-
+				        var s = '<div style="font-size:12x;font-weight: bold; padding-bottom: 3px;">'+  this.x +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div>';
+				       
 				        $.each(this.points, function(i, point) {
-				            s += '<div style="font-size:10px; font-weight: bold; border-bottom:1px solid #ccc; width="100%"><div style="color:'+ point.series.color +';padding:5px;width:94%;float:left"> ' + point.series.name + '</div> ' 
-				            + '<div style="padding:5px;width:5%"><b>' + point.y + '</b></div></div>';
+				            s += '<div style="font-size:10px; font-weight: bold; width:100%"><div style="color:'+ point.series.color +';padding:5px 0;width:80%;float:left"> ' + point.series.name + '</div> ' 
+				            + '<div style="padding:5px;width:10%"><b>' + point.y + '</b></div></div>';
 				        });
 				        s += '</div>';
 
@@ -401,8 +398,8 @@ angular.module('hillromvestApp')
 				chart:{
 					type: 'line',
 					zoomType: 'xy',					
-                    backgroundColor:'#e3ecf7',
-                    turboThreshold: 2000,
+                    backgroundColor:'#e3ecf7'/*,
+                    turboThreshold: 2000,*/
 				},
 		        title: {
 		            text: ''
@@ -423,7 +420,7 @@ angular.module('hillromvestApp')
 							fontWeight: 'bold'
 						},
 						formatter:function(){
-							return  Highcharts.dateFormat("%m/%e/%Y",this.value);//Highcharts.dateFormat('%e. %b',this.value);
+							return  Highcharts.dateFormat("%m/%e/%Y",this.value);
 						}	              
 					}			           
 				},				
@@ -457,6 +454,9 @@ angular.module('hillromvestApp')
 					y: 0
 		        },
 		        plotOptions: {
+		        	/*spline:{
+		        		turboThreshold: 50000
+		        	},*/
 		            series: {
 		                events: {
 		                    legendItemClick: function () {
@@ -485,10 +485,10 @@ angular.module('hillromvestApp')
 		            },
 		            false],
 					formatter: function() {
-				        var s = '<div style="font-size:12x; border-bottom:1px solid #ccc; font-weight: bold; padding-bottom: 3px;">'+  Highcharts.dateFormat('%m/%e/%Y', this.x) +'</div><div>';
+				        var s = '<div style="font-size:12x; font-weight: bold; padding-bottom: 3px;">&nbsp;'+  Highcharts.dateFormat('%m/%e/%Y', this.x) +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div>';
 
 				        $.each(this.points, function(i, point) {
-				            s += '<div style="font-size:10px; font-weight: bold; border-bottom:1px solid #ccc; width="100%"><div style="color:'+ point.series.color +';padding:5px;width:94%;float:left"> ' + point.series.name + '</div> ' 
+				            s += '<div style="font-size:10px; font-weight: bold; width="100%"><div style="color:'+ point.series.color +';padding:5px;width:85%;float:left"> ' + point.series.name + '</div> ' 
 				            + '<div style="padding:5px;width:5%"><b>' + point.y + '</b></div></div>';
 				        });
 				        s += '</div>';
@@ -512,6 +512,7 @@ angular.module('hillromvestApp')
 			var chartCustom = $("#containerCustom").highcharts();
 			if($scope.dayChart){				
 				if(chartDay){
+					chartDay.zoomOut();		
 					chartDay.xAxis[0].setCategories($scope.categoryChartData.xAxis.categories, false);
 					for(var i = chartDay.series.length - 1; i >= 0; i--) {
 						chartDay.series[i].update({						
@@ -527,7 +528,8 @@ angular.module('hillromvestApp')
 				if(chartCustom){//already a custom chart is present then redraw					
 					/*chartCustom.yAxis[0].update({
 					    max: $scope.yMax
-					}); 	*/
+					}); 	*/	
+					chartCustom.zoomOut();					
 					for(var i = chartCustom.series.length - 1; i >= 0; i--) {
 						chartCustom.series[i].update({
 							data: $scope.categoryChartData.series[i].data,
@@ -540,6 +542,7 @@ angular.module('hillromvestApp')
 				}							
 			}else{// non day and non custom range
 				if(chartNonDay){					
+					chartNonDay.zoomOut();							
 					chartNonDay.xAxis[0].setCategories($scope.categoryChartData.xAxis.categories, false);				
 					for(var i = chartNonDay.series.length - 1; i >= 0; i--) {
 						chartNonDay.series[i].update({
@@ -591,24 +594,20 @@ angular.module('hillromvestApp')
 		};
 
 		$scope.customDateRangeView = function(){
-			if ($scope.fromDate === $scope.toDate ) {
-				$scope.dayView($scope.fromDate);
-			}else{
 				$scope.defaultLegends(); //if the legends selected eariler has to be retained then remove this line
 				$scope.dayChart = false;
 				$scope.customDateRange = true;
 				$scope.toggleDuration(false, false, false, false, true);
-				$scope.getCategoryChartData(loginAnalyticsConstants.duration.CUSTOM);	
-			}				
+				$scope.getCategoryChartData(loginAnalyticsConstants.duration.CUSTOM);					
 		};
 
 		$scope.downloadGraphAsPdf = function(){
 			if($scope.dayChart){
-				exportutilService.exportLoginAnalyticsAsPDF("containerDay", loginAnalyticsConstants.duration.DAY, $scope.legends);
+				exportutilService.exportLoginAnalyticsAsPDF("containerDay", loginAnalyticsConstants.duration.DAY, $scope.legends, $scope.fromDate, $scope.toDate);
 			}else if($scope.customDateRange){
-				exportutilService.exportLoginAnalyticsAsPDF("containerCustom");
+				exportutilService.exportLoginAnalyticsAsPDF("containerCustom", null, null,$scope.fromDate, $scope.toDate);
 			}else{
-				exportutilService.exportLoginAnalyticsAsPDF("containerNonDay");
+				exportutilService.exportLoginAnalyticsAsPDF("containerNonDay", null, null,$scope.fromDate, $scope.toDate);
 			}						      	
 		};
 
@@ -649,7 +648,7 @@ angular.module('hillromvestApp')
 		 $scope.getCategoryChartData = function(duration){
 		 	var filters = $scope.getSelectedUserRoles();
 			loginanalyticsService.getLoginAnalytics( dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), filters, duration).then(function(response) {
-				// set the categorychartdata
+				var daysDiff = dateService.getDateDiffIndays($scope.fromTimeStamp,$scope.toTimeStamp);
 				$scope.yMax = 1;
 				$scope.categoryChartData = response.data;				
 				angular.forEach($scope.categoryChartData.series, function(series, key) {
@@ -688,7 +687,10 @@ angular.module('hillromvestApp')
 				  }	  					  	
 				  if($scope.categoryChartData.series[key].data[index].y ){				  	
 				  	$scope.categoryChartData.series[key].data[index].y = parseInt($scope.categoryChartData.series[key].data[index].y);				  				  
-				  }				  	
+				  }		
+				  var marker = {};		
+				  marker.radius = ($scope.durationview.custom && daysDiff > 50)? 0 : 4;				  		
+				  $scope.categoryChartData.series[key].data[index].marker = marker;				  	
 				  $scope.yMax = ($scope.yMax === 1 && $scope.categoryChartData.series[key].data[index].y === 0) ? 1 : null;
 				  });
 				});	
@@ -764,7 +766,12 @@ angular.module('hillromvestApp')
 		 	}else if($scope.durationview.custom){
 		 		$scope.customDateRangeView();
 		 	}
-		 };	 
+		 };	
+
+		 $scope.defaultDayView = function(){
+		 	$scope.defaultLegends();
+		 	$scope.dayView();
+		 }; 
 
 		/* This method initiates the required methods required for a specific route*/
 		$scope.init = function(){
@@ -772,6 +779,8 @@ angular.module('hillromvestApp')
 				$scope.analyticsInit();
 			}
 		};
+
+		
 
 		$scope.init();
 	}]);

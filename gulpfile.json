@@ -15,7 +15,10 @@
             "app/images/"
         ],
 
-        "scriptsProject": [
+        "scriptsProject": [            
+            "app/bower_components/canvg-gabelerner/rgbcolor.js",
+            "app/bower_components/canvg-gabelerner/StackBlur.js",
+            "app/bower_components/canvg-gabelerner/canvg.js",
             "app/bower_components/canvg/dist/canvg.bundle.js",
             "app/bower_components/jspdf/dist/jspdf.debug.js",
             "app/bower_components/modernizr/modernizr.js",
@@ -154,9 +157,13 @@
             "app/scripts/modules/patient/survey/controllers/patientsurvey.controller.js",
             "app/scripts/components/util/exportutil.service.js",
             "app/scripts/components/captcha/captcha.js",
-            "app/scripts/modules/common/console/loginanalytics/services/loginanalytics.service.js"
+            "app/scripts/modules/common/console/loginanalytics/services/loginanalytics.service.js",
+            "app/scripts/modules/patient/survey/services/patientSurvey.service.js"
         ],
         "scripts_min_path":[
+            "app/bower_components/canvg-gabelerner/rgbcolor.min.js",
+            "app/bower_components/canvg-gabelerner/StackBlur.min.js",
+            "app/bower_components/canvg-gabelerner/canvg.js",
             "app/bower_components/canvg/dist/canvg.bundle.min.js",
             "app/bower_components/jspdf/dist/jspdf.debug.min.js",
             "app/bower_components/modernizr/modernizr.min.js",
@@ -295,7 +302,8 @@
             "app/scripts/modules/patient/survey/controllers/patientsurvey.controller.min.js",
             "app/scripts/components/util/exportutil.service.min.js",
             "app/scripts/components/captcha/captcha.min.js",
-            "app/scripts/modules/common/console/loginanalytics/services/loginanalytics.service.min.js"
+            "app/scripts/modules/common/console/loginanalytics/services/loginanalytics.service.min.js",
+            "app/scripts/modules/patient/survey/services/patientSurvey.service.min.js"
         ],
         "clean": [
             "app/build/",

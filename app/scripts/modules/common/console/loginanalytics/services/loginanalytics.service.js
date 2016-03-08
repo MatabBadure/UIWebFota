@@ -1,7 +1,7 @@
 'use strict';
 /**
  * @ngdoc service
- * @name patientService
+ * @name loginanalyticsService
  * @description
  *
  */
@@ -11,8 +11,9 @@ angular.module('hillromvestApp')
 
       /**
       * @ngdoc method
-      * @name getPatients
-      * @description To get array of patients for a caregiver.
+      * @name getLoginAnalytics
+      * @description To get login analytics of the users (Patient, HCP, Clinic Admin, Caregiver)
+      * only Admin/RC Admin/Associate can view it.
       *
       */
       getLoginAnalytics: function(fromDate, toDate, filters, duration) {

@@ -9,16 +9,16 @@
           <div class="col-md-3 col-sm-3 header--type">
             <span translate="patient.protocol-caption.type"></span>
           </div>
-          <div class="col-md-3 col-sm-3 header--type">
+          <div class="col-md-3 col-sm-3 header--type text-align-center">
             <span translate="patient.protocol-caption.treatments-per-day"></span>
           </div>
-          <div class="col-md-3 col-sm-3 header--type">
+          <div class="col-md-3 col-sm-3 header--type text-align-center">
             <span translate="patient.protocol-caption.minutes-per-treatment"></span>
           </div>
-          <div class="col-md-3 col-sm-3 header--type">
+          <div class="col-md-3 col-sm-3 header--type text-align-center">
             <span translate="patient.protocol-caption.frequency-per-treatment"></span>
           </div>
-          <div class="col-md-4 col-sm-4 header--type">
+          <div class="col-md-4 col-sm-4 header--type text-align-center">
             <span translate="patient.protocol-caption.pressure-per-treatment"></span>
           </div>
           <div class="clr"></div>
@@ -27,19 +27,19 @@
   </div>
 
   <div class="col-md-16 col-sm-16 protocol-list margin-top-18" ng-repeat="protocol in protocols">
-    <div class="col-md-3 col-sm-3 protocol-list__type protocol_heading_color">
+    <div class="col-md-3 col-sm-3 protocol-list__type protocol_heading_color text-align-left">
       <span> {{::protocol.type}} {{::protocol.treatmentLabel}}</span>
     </div>
-    <div class="col-md-3 col-sm-3 protocol-list__type">
+    <div class="col-md-3 col-sm-3 protocol-list__type text-center">
       <span> {{::protocol.treatmentsPerDay}}</span>
     </div>
-    <div class="col-md-3 col-sm-3 protocol-list__treatment-day">
+    <div class="col-md-3 col-sm-3 protocol-list__treatment-day text-center">
       <span class="protocol-list--value"> {{::protocol.minMinutesPerTreatment}}<span ng-if="protocol.type === 'Normal'">-{{::protocol.maxMinutesPerTreatment}}</span></span>
     </div>
-    <div class="col-md-3 col-sm-3 protocol-list__strt-date">
+    <div class="col-md-3 col-sm-3 protocol-list__strt-date text-center">
       <span class="protocol-list--value"> {{::protocol.minFrequency}}<span ng-if="protocol.type === 'Normal'">-{{::protocol.maxFrequency}}</span></span>
     </div>
-    <div class="col-md-4 col-sm-4 protocol-list__end-date">
+    <div class="col-md-4 col-sm-4 protocol-list__end-date text-center">
       <span class="protocol-list--value"> {{::protocol.minPressure}}<span ng-if="protocol.type === 'Normal'">-{{::protocol.maxPressure}}</span></span>
     </div>
   </div>
