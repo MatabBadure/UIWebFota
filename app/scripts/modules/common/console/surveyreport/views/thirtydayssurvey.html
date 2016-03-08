@@ -26,26 +26,26 @@
     </div>
   </div>
 
-  <div class="col-md-16 reset-padding survey_grey_color" ng-repeat="survey in surveyGridView track by $index">
-    <div class="col-md-1 border-right ellipes">
+  <div class="col-md-16 reset-padding survey_grey_color flex" ng-repeat="survey in surveyGridView track by $index">
+    <div class="col-md-1 border-right text-center">
       <span>Q-{{$index + 1}}</span>
     </div>
-    <div class="col-md-9 padding10 cyan-blue-light border-right ellipes">
+    <div class="col-md-9 padding10 cyan-blue-light border-right">
       <span>{{survey.questionText}}</span>
     </div>
-    <div class="col-md-1 text-center border-right ellipes">
+    <div class="col-md-1 text-center border-right">
       <span>{{survey.stronglyDisagreeCount}}</span>
     </div>
-    <div class="col-md-1 text-center border-right ellipes">
+    <div class="col-md-1 text-center border-right">
       <span>{{survey.somewhatDisagreeCount}}</span>
     </div>
-    <div class="col-md-1 text-center border-right ellipes">
+    <div class="col-md-1 text-center border-right">
       <span>{{survey.neutralCount}}</span>
     </div>
-    <div class="col-md-1 text-center border-right ellipes">
+    <div class="col-md-1 text-center border-right">
       <span>{{survey.somewhatAgreeCount}}</span>
     </div>
-    <div class="col-md-1 text-center border-right ellipes">
+    <div class="col-md-1 text-center border-right">
       <span>{{survey.stronglyAgreeCount}}</span>
     </div>
     <div class="col-md-1 text-center ellipes padding10">
