@@ -187,13 +187,21 @@ angular.module('hillromvestApp')
 		        },
 		      false],
 					formatter: function() {
-				    var s = '<div style="font-size:12x;font-weight: bold; padding-bottom: 3px;">'+  this.x +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div>';
-				    
-				    $.each(this.points, function(i, point) {
-				      s += '<div style="font-size:10px; font-weight: bold; width:100%"><div style="color:'+ point.series.color +';padding:5px 0;width:80%;float:left"> ' + point.series.name + '</div> ' 
+						if($scope.surveyType === 1){
+							var s = '<div style="font-size:12x;font-weight: bold; padding-bottom: 3px;">'+  this.x +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div>';
+				    	$.each(this.points, function(i, point) {
+				      	s += '<div style="font-size:10px; font-weight: bold; width:100%"><div style="color:'+ point.series.color +';padding:5px 0;width:80%;float:left"> ' + point.series.name + '</div> ' 
 				        + '<div style="padding:5px;width:10%"><b>' + point.y + '</b></div></div>';
-				    });
-				    s += '</div>';
+				    	});
+				    	s += '</div>';
+						}else if($scope.surveyType === 2){
+							var s = '<div style="font-size:12x;font-weight: bold; padding-bottom: 3px;">'+  this.x +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div>';
+				    	$.each(this.points, function(i, point) {
+				      	s += '<div style="font-size:10px; font-weight: bold; width:100%"><div style="color:'+ point.series.color +';padding:5px 0;width:80%;float:left"> ' + point.series.name + '</div> ' 
+				        + '<div style="padding:5px;width:10%"><b>' + point.y + '</b></div></div>';
+				    	});
+				    	s += '</div>';
+						}
 		        return s;
 			    },
 			    hideDelay: 0,
