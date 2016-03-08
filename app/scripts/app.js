@@ -177,7 +177,8 @@ angular.module('hillromvestApp',
       },
       {
         name: 'surveyModule',
-        files:['bower_components/angular-daterangepicker/js/angular-daterangepicker.js']
+        files:['bower_components/angular-daterangepicker/js/angular-daterangepicker.js',
+          'https://code.highcharts.com/highcharts.js']
       }]
     });
   }])
