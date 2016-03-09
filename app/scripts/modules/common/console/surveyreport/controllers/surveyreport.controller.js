@@ -54,6 +54,7 @@ angular.module('hillromvestApp')
 		$scope.init = function(){
 			if($state.current.name === 'adminSurveyReport' || $state.current.name === 'rcddminSurveyReport' || $state.current.name === 'associateSurveyReport'){
 				$scope.viewType = 'graph';
+				$scope.surveyType = 1;
 				$scope.calculateTimeDuration(5);
 			}
 		};
@@ -70,18 +71,20 @@ angular.module('hillromvestApp')
 
 		$scope.switchView = function(view){
 			$scope.viewType = view;
-			$scope.switchSurvey($scope.surveyType);
+			$scope.switchSurvey();
 		};
 
 		$scope.switchSurvey = function(type){
-			$scope.surveyType = type;
-			if(type === 3){
+			if(type){
+				$scope.surveyType = type;
+			}
+			if($scope.surveyType === 3){
 				$scope.viewType = 'grid';
 			}
 			if($scope.viewType === 'graph'){
-				$scope.getGraphSurveyReport(type, $scope.serverFromDate, $scope.serverToDate);
+				$scope.getGraphSurveyReport($scope.surveyType, $scope.serverFromDate, $scope.serverToDate);
 			}else if($scope.viewType === 'grid'){
-				$scope.getSurveyReport(type, $scope.serverFromDate, $scope.serverToDate);
+				$scope.getSurveyReport($scope.surveyType, $scope.serverFromDate, $scope.serverToDate);
 			}
 		};
 
