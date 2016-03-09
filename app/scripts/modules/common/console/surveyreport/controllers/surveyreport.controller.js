@@ -106,6 +106,12 @@ angular.module('hillromvestApp')
 		$scope.getGraphSurveyReport = function(type, fromDate, toDate){
 			patientsurveyService.getGraphSurveyGridReport(type, fromDate, toDate).then(function(response){
 				$scope.graphSurvey = response.data;
+				$scope.yMax = 1;
+				angular.forEach($scope.graphSurvey.series, function(series, key) {
+					angular.forEach(series.data, function(data, index) {
+						$scope.yMax = ($scope.yMax === 1 && $scope.graphSurvey.series[key].data[index].y === 0) ? 1 : null;
+					});
+				});
 				$scope.count = response.data.count;
 				$scope.drawCategoryChartForNonDay();
 			}).catch(function(response){
