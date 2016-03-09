@@ -44,7 +44,11 @@ angular.module('hillromvestApp')
 		$scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
 
 		$scope.customDateRangeView = function(){
-			$scope.getSurveyReport($scope.surveyType, $scope.serverFromDate, $scope.serverToDate);
+			if($scope.viewType === 'graph'){
+				$scope.getGraphSurveyReport($scope.surveyType, $scope.serverFromDate, $scope.serverToDate);
+			}else{
+				$scope.getSurveyReport($scope.surveyType, $scope.serverFromDate, $scope.serverToDate);
+			}
 		};
 		
 		$scope.init = function(){
@@ -101,7 +105,8 @@ angular.module('hillromvestApp')
 
 		$scope.getGraphSurveyReport = function(type, fromDate, toDate){
 			patientsurveyService.getGraphSurveyGridReport(type, fromDate, toDate).then(function(response){
-				$scope.graphSurvey = response.data; 
+				$scope.graphSurvey = response.data;
+				$scope.count = response.data.count;
 				$scope.drawCategoryChartForNonDay();
 			}).catch(function(response){
 				notyService.showError(response);
