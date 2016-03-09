@@ -1,7 +1,7 @@
 'use strict';
 angular.module('hillromvestApp')
-.controller('surveyReportController',['$scope', '$state', 'patientsurveyService', 'dateService', '$timeout', 'notyService', 'exportutilService',
-	function($scope, $state, patientsurveyService, dateService, $timeout, notyService, exportutilService) {
+.controller('surveyReportController',['$scope', '$state', 'patientsurveyService', 'dateService', '$timeout', 'notyService', 'exportutilService', 'pdfServiceConstants',
+	function($scope, $state, patientsurveyService, dateService, $timeout, notyService, exportutilService, pdfServiceConstants) {
 		
 		$scope.calculateDateFromPicker = function(picker) {
 	    $scope.fromTimeStamp = new Date(picker.startDate._d).getTime();	      
@@ -219,7 +219,7 @@ angular.module('hillromvestApp')
 		};
 
 		$scope.exportPDF = function(){
-			exportutilService.exportSurveyAsPDF('surveyGraph', 'surveyCanvas', $scope.fromDate, $scope.toDate, $scope.graphSurvey.surveyQuestions);
+			exportutilService.exportSurveyAsPDF('surveyGraph', 'surveyCanvas', $scope.fromDate, $scope.toDate, $scope.graphSurvey.surveyQuestions, pdfServiceConstants.text.survey);
 		};
 
 		$scope.init();
