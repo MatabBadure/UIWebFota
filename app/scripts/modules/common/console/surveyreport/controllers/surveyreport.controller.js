@@ -1,7 +1,7 @@
 'use strict';
 angular.module('hillromvestApp')
-.controller('surveyReportController',['$scope', '$state', 'patientsurveyService', 'dateService', '$timeout', 'notyService',
-	function($scope, $state, patientsurveyService, dateService, $timeout, notyService) {
+.controller('surveyReportController',['$scope', '$state', 'patientsurveyService', 'dateService', '$timeout', 'notyService', 'exportutilService', 'pdfServiceConstants',
+	function($scope, $state, patientsurveyService, dateService, $timeout, notyService, exportutilService, pdfServiceConstants) {
 		
 		$scope.calculateDateFromPicker = function(picker) {
 	    $scope.fromTimeStamp = new Date(picker.startDate._d).getTime();	      
@@ -55,7 +55,6 @@ angular.module('hillromvestApp')
 			if($state.current.name === 'adminSurveyReport' || $state.current.name === 'rcddminSurveyReport' || $state.current.name === 'associateSurveyReport'){
 				$scope.viewType = 'graph';
 				$scope.calculateTimeDuration(5);
-				$scope.switchSurvey(1);
 			}
 		};
 
@@ -115,7 +114,7 @@ angular.module('hillromvestApp')
 		};
 
 		$scope.drawCategoryChartForNonDay = function(){
-			var chart = Highcharts.chart('fiveDaysSurvey', {
+			var chart = Highcharts.chart('surveyGraph', {
 				chart:{
 					type: 'column',
 					zoomType: 'xy',
@@ -217,6 +216,10 @@ angular.module('hillromvestApp')
 				loading: true,
 				size: {}
 		    });//.setSize(1140, 400);
+		};
+
+		$scope.exportPDF = function(){
+			exportutilService.exportSurveyAsPDF('surveyGraph', 'surveyCanvas', $scope.fromDate, $scope.toDate, $scope.graphSurvey.surveyQuestions, pdfServiceConstants.text.survey);
 		};
 
 		$scope.init();
