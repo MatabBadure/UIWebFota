@@ -128,20 +128,20 @@ angular.module('hillromvestApp')
     return pdf;
   }
 
-  this.addSvgToPDF = function(pdf, canvasId, svgId, imageX, imageY, imageWidth, imageHeight, durationType, legends){
+  this.addSvgToPDF = function(pdf, canvasId, svgId, imageX, imageY, imageWidth, imageHeight, graphTitle, durationType, legends){
 
     pdf.setFont(pdfServiceConstants.style.font.helvetica); 
     pdf.setFontType(pdfServiceConstants.style.font.bold);        
     pdf.setFontSize(10);
     pdf.setTextColor(0, 0, 0);
-    pdf.text((pdf.internal.pageSize.width/2)-25,   imageY-30, pdfServiceConstants.text.loginanalytic);
+    pdf.text((pdf.internal.pageSize.width/2)-25,   imageY-30, graphTitle);
 
-    var canvas = document.getElementById('loginAnalyticsCanvas');              
+    var canvas = document.getElementById(canvasId);
     var ctx = canvas.getContext('2d');
     var serializer = new XMLSerializer();
     var svgString = serializer.serializeToString(document.getElementById(svgId).querySelector('svg'));          
     canvg(canvas, svgString);
-    var img = $("#loginAnalyticsCanvas")[0].toDataURL('image/png', 1.0);
+    var img = $("#"+canvasId)[0].toDataURL('image/png', 1.0);
     pdf.addImage(img, 'png', imageX, imageY, imageWidth, imageHeight);
     if(durationType && durationType === pdfServiceConstants.loginanalytics.day){
       //chart footer
@@ -242,11 +242,37 @@ angular.module('hillromvestApp')
     var pageHeight = pdf.internal.pageSize.height;
     var pageWidth = pdf.internal.pageSize.width;
     pdf = this.setHeader(pdf, fromDate, toDate);
-    pdf = this.addSvgToPDF(pdf, 'loginAnalyticsCanvas', svgId, 20, 150, 540, 200, durationType, legends);    
+    pdf = this.addSvgToPDF(pdf, 'loginAnalyticsCanvas', svgId, 20, 150, 540, 200, pdfServiceConstants.text.loginanalytic, durationType, legends);    
+    pdf = this.setFooter(pdf, pdf.internal.pageSize.height-80);
+    setTimeout(function(){
+      pdf.save('VisiView™.pdf');
+    },1000);
+  }
+
+  this.exportSurveyAsPDF = function(svgId, canvasId, fromDate, toDate, questions, graphTitle){
+    var pdf = this.getPdf();
+    var pageHeight = pdf.internal.pageSize.height;
+    var pageWidth = pdf.internal.pageSize.width;
+    pdf = this.setHeader(pdf, fromDate, toDate);
+    pdf = this.addSvgToPDF(pdf, canvasId, svgId, 20, 150, 540, 200, graphTitle);
+    pdf = this.addQuestions(pdf, questions);
     pdf = this.setFooter(pdf, pdf.internal.pageSize.height-80);
     setTimeout(function(){     
       pdf.save('VisiView™.pdf'); 
     },1000); 
+  }
+
+  this.addQuestions = function(pdf, questions){
+    var height = 400;
+    pdf.setFont(pdfServiceConstants.style.font.helvetica);
+    pdf.setFontSize(8);
+    pdf.setTextColor(100, 101, 104);
+    angular.forEach(questions, function(question, $index){
+      var index = $index+1;
+      pdf.text(20, height, 'Q-'+ index +' '+ question);
+      height = height + 20;
+    });
+    return pdf;
   }
 
   this.addBody = function(pdf, slectedPatient, userFullName, currentDate, protocols){
@@ -308,7 +334,7 @@ angular.module('hillromvestApp')
         x = x + 200;
         pdf.text(x, y, protocol.minMinutesPerTreatment.toString());
         x = x + 140;
-        pdf.text(x, y, protocol.minPressure+'-'+protocol.maxPressure);
+        pdf.text(x, y, protocol.minFrequency+'-'+protocol.maxFrequency);
         x = x + 140;
         pdf.text(x, y, protocol.minPressure+'-'+protocol.maxPressure);
       }else{
@@ -320,7 +346,7 @@ angular.module('hillromvestApp')
         }
         pdf.text(x, y, protocol.minMinutesPerTreatment.toString());
         x = x + 140;
-        pdf.text(x, y, protocol.minPressure.toString());
+        pdf.text(x, y, protocol.minFrequency.toString());
         x = x + 140;
         pdf.text(x, y, protocol.minPressure.toString());
       }

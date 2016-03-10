@@ -1,7 +1,7 @@
 'use strict';
 angular.module('hillromvestApp')
-.controller('surveyReportController',['$scope', '$state', 'patientsurveyService', 'dateService', '$timeout', 'notyService',
-	function($scope, $state, patientsurveyService, dateService, $timeout, notyService) {
+.controller('surveyReportController',['$scope', '$state', 'patientsurveyService', 'dateService', '$timeout', 'notyService', 'exportutilService', 'pdfServiceConstants',
+	function($scope, $state, patientsurveyService, dateService, $timeout, notyService, exportutilService, pdfServiceConstants) {
 		
 		$scope.calculateDateFromPicker = function(picker) {
 	    $scope.fromTimeStamp = new Date(picker.startDate._d).getTime();	      
@@ -44,14 +44,18 @@ angular.module('hillromvestApp')
 		$scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
 
 		$scope.customDateRangeView = function(){
-			$scope.getSurveyReport($scope.surveyType, $scope.serverFromDate, $scope.serverToDate);
+			if($scope.viewType === 'graph'){
+				$scope.getGraphSurveyReport($scope.surveyType, $scope.serverFromDate, $scope.serverToDate);
+			}else{
+				$scope.getSurveyReport($scope.surveyType, $scope.serverFromDate, $scope.serverToDate);
+			}
 		};
 		
 		$scope.init = function(){
 			if($state.current.name === 'adminSurveyReport' || $state.current.name === 'rcddminSurveyReport' || $state.current.name === 'associateSurveyReport'){
 				$scope.viewType = 'graph';
+				$scope.surveyType = 1;
 				$scope.calculateTimeDuration(5);
-				$scope.switchSurvey(1);
 			}
 		};
 
@@ -67,18 +71,20 @@ angular.module('hillromvestApp')
 
 		$scope.switchView = function(view){
 			$scope.viewType = view;
-			$scope.switchSurvey($scope.surveyType);
+			$scope.switchSurvey();
 		};
 
 		$scope.switchSurvey = function(type){
-			$scope.surveyType = type;
-			if(type === 3){
+			if(type){
+				$scope.surveyType = type;
+			}
+			if($scope.surveyType === 3){
 				$scope.viewType = 'grid';
 			}
 			if($scope.viewType === 'graph'){
-				$scope.getGraphSurveyReport(type, $scope.serverFromDate, $scope.serverToDate);
+				$scope.getGraphSurveyReport($scope.surveyType, $scope.serverFromDate, $scope.serverToDate);
 			}else if($scope.viewType === 'grid'){
-				$scope.getSurveyReport(type, $scope.serverFromDate, $scope.serverToDate);
+				$scope.getSurveyReport($scope.surveyType, $scope.serverFromDate, $scope.serverToDate);
 			}
 		};
 
@@ -102,7 +108,14 @@ angular.module('hillromvestApp')
 
 		$scope.getGraphSurveyReport = function(type, fromDate, toDate){
 			patientsurveyService.getGraphSurveyGridReport(type, fromDate, toDate).then(function(response){
-				$scope.graphSurvey = response.data; 
+				$scope.graphSurvey = response.data;
+				$scope.yMax = 1;
+				angular.forEach($scope.graphSurvey.series, function(series, key) {
+					angular.forEach(series.data, function(data, index) {
+						$scope.yMax = ($scope.yMax === 1 && $scope.graphSurvey.series[key].data[index].y === 0) ? 1 : null;
+					});
+				});
+				$scope.count = response.data.count;
 				$scope.drawCategoryChartForNonDay();
 			}).catch(function(response){
 				notyService.showError(response);
@@ -110,7 +123,7 @@ angular.module('hillromvestApp')
 		};
 
 		$scope.drawCategoryChartForNonDay = function(){
-			var chart = Highcharts.chart('fiveDaysSurvey', {
+			var chart = Highcharts.chart('surveyGraph', {
 				chart:{
 					type: 'column',
 					zoomType: 'xy',
@@ -212,6 +225,10 @@ angular.module('hillromvestApp')
 				loading: true,
 				size: {}
 		    });//.setSize(1140, 400);
+		};
+
+		$scope.exportPDF = function(){
+			exportutilService.exportSurveyAsPDF('surveyGraph', 'surveyCanvas', $scope.fromDate, $scope.toDate, $scope.graphSurvey.surveyQuestions, pdfServiceConstants.text.survey);
 		};
 
 		$scope.init();
