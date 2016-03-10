@@ -347,3 +347,16 @@ ul.logout-dropdown>li{
 .patient-user__navbar ul > li.create-tab {
 	margin-right: 20px;
 }
+
+.benchmarking__form__input select, .custom-textbox{
+	height: 30px;
+  width: 210px;
+  font-weight: normal;
+  color: #34455C;
+  border: 1px solid #aeb5be;
+  background-color: inherit;
+  -webkit-appearance: none;
+  text-indent: 7px;
+  border-radius:0;
+  color:#276092;
+}
