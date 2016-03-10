@@ -1,14 +1,14 @@
 'use strict';
 
 angular.module('hillromvestApp')
-    .controller('MainController',['$scope', 'Principal', 'Auth', '$state', 'Account', '$location', '$stateParams', '$rootScope', 'loginConstants', 'StorageService', 'UserService', '$window', 
-    	function ($scope, Principal,Auth, $state, Account, $location,$stateParams, $rootScope,loginConstants,StorageService, UserService, $window) {
-        Principal.identity().then(function(account) {
-            $scope.account = account;
-            $scope.isAuthenticated = Principal.isAuthenticated;
-        });
+  .controller('MainController',['$scope', 'Principal', 'Auth', '$state', 'Account', '$location', '$stateParams', '$rootScope', 'loginConstants', 'StorageService', 'UserService', '$window', 
+  function ($scope, Principal,Auth, $state, Account, $location,$stateParams, $rootScope,loginConstants,StorageService, UserService, $window) {
+    Principal.identity().then(function(account) {
+      $scope.account = account;
+      $scope.isAuthenticated = Principal.isAuthenticated;
+    });
 
-        $scope.mainInit = function(){
+    $scope.mainInit = function(){
 			$rootScope.userRole = null;
 			$rootScope.username = null;
 			if(StorageService.get('logged')){
@@ -20,162 +20,162 @@ angular.module('hillromvestApp')
 			if($rootScope.userRole === 'PATIENT'){
 				$scope.getNotifications();
 			}
-        }
+    };
 	      
-	      $scope.isActive = function(tab) {
-	        var path = $location.path();
-	        if (path.indexOf(tab) !== -1) {
-	          return true;
-	        } else {
-	          return false;
-	        }
-	      };
+    $scope.isActive = function(tab) {
+      var path = $location.path();
+      if (path.indexOf(tab) !== -1) {
+        return true;
+      } else {
+        return false;
+      }
+    };
 
-	      $scope.isActiveMainBar = function(tab) {
-	        var path = $location.path();
-	        if (path.indexOf(tab) !== -1) {
-	          return true;
-	        } else {
-	          return false;
-	        }
-	      };
+    $scope.isActiveMainBar = function(tab) {
+      var path = $location.path();
+      if (path.indexOf(tab) !== -1) {
+        return true;
+      } else {
+        return false;
+      }
+    };
 
-	      $scope.signOut = function(){
-	        Account.get().$promise
-	        .then(function (account) {
-	          $scope.isAuthenticated = true;
+    $scope.signOut = function(){
+      Account.get().$promise
+      .then(function (account) {
+        $scope.isAuthenticated = true;
+      })
+      .catch(function() {
+        $scope.isAuthenticated = false;
+        $rootScope.username = null;
+        $state.go('login');
+      });
+    };
 
-	        })
-	        .catch(function() {
-	          $scope.isAuthenticated = false;
-	          $rootScope.username = null;
-	          $state.go('login');
-	        });
-	      };
+    $scope.logout = function(){
+    	if($state.current.name === "patientSurvey"){ 
+        $rootScope.showSurveyCancelModal = true;       
+        if(!$rootScope.isSurveyCancelled){          
+          event.preventDefault();
+        } else{
+          $rootScope.showSurveyCancelModal = false;
+        }       
+     }else{
+     	Auth.signOut().then(function(data) {
+          Auth.logout();
+          StorageService.clearAll();
+          $rootScope.userRole = null;
+          $scope.signOut();
+        }).catch(function(err) {
+        });
+      }
+    };
 
-	      $scope.logout = function(){
-	      	if($state.current.name === "patientSurvey"){ 
-		        $rootScope.showSurveyCancelModal = true;       
-		        if(!$rootScope.isSurveyCancelled){          
-		          event.preventDefault();
-		        } else{
-		          $rootScope.showSurveyCancelModal = false;
-		        }       
-		     }else{
-		     	Auth.signOut().then(function(data) {
-		          Auth.logout();
-		          StorageService.clearAll();
-		          $rootScope.userRole = null;
-		          $scope.signOut();
-		        }).catch(function(err) {
-		        });
-		     }
-	        
-	      };
+    $scope.profile = function(){
+      if($rootScope.userRole === "ADMIN"){
+        $state.go('adminProfile');
+      }else if($rootScope.userRole === "PATIENT"){
+        $state.go("patientResetPassword");
+      } else if($rootScope.userRole === 'HCP'){
+        $state.go('hcpUserProfile');
+      }else if($rootScope.userRole === loginConstants.role.acctservices){
+        $state.go('adminProfileRc');
+      } else if($rootScope.userRole === "CLINIC_ADMIN" || $rootScope.userRole === "CLINIC ADMIN"){
+      	var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : $stateParams.clinicId;
+    		$state.go("clinicadminUserProfile",{'clinicId': clinicId});
+      }else if($rootScope.userRole === "HCP"){
+      	var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : $stateParams.clinicId;
+    		$state.go("hcpUserProfile",{'clinicId': clinicId});
+      }else if($rootScope.userRole === loginConstants.role.associates){
+      	$state.go('associateProfile');
+      }
+    };
 
-	      $scope.profile = function(){
-	        if($rootScope.userRole === "ADMIN"){
-	          $state.go('adminProfile');
-	        }else if($rootScope.userRole === "PATIENT"){
-	          $state.go("patientResetPassword");
-	        } else if($rootScope.userRole === 'HCP'){
-	          $state.go('hcpUserProfile');
-	        }else if($rootScope.userRole === loginConstants.role.acctservices){
-	          $state.go('adminProfileRc');
-	        } else if($rootScope.userRole === "CLINIC_ADMIN" || $rootScope.userRole === "CLINIC ADMIN"){
-	        	var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : $stateParams.clinicId;
-        		$state.go("clinicadminUserProfile",{'clinicId': clinicId});
-	        }else if($rootScope.userRole === "HCP"){
-	        	var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : $stateParams.clinicId;
-        		$state.go("hcpUserProfile",{'clinicId': clinicId});
-	        }else if($rootScope.userRole === loginConstants.role.associates){
-	        	$state.go('associateProfile');
-	        }
-	      };
+    $scope.goToHomePage = function(){
+      if(!$rootScope.userRole){
+        $state.go("home");
+      }else if($rootScope.userRole === "ADMIN"){
+        $state.go("patientUser");
+      }else if($rootScope.userRole === "PATIENT"){
+        $state.go("patientdashboard");
+      }else if($rootScope.userRole === "CLINIC_ADMIN" || $rootScope.userRole === "CLINIC ADMIN"){
+        $state.go("clinicadmindashboard");
+      }else if($rootScope.userRole === "HCP"){
+        $state.go("hcpdashboard");
+      }else if($rootScope.userRole === "CARE_GIVER"){
+        $state.go("caregiverDashboard");
+      }else if($rootScope.userRole === loginConstants.role.acctservices){
+        $state.go("rcadminPatients");
+      }
+    };
 
-	      $scope.goToHomePage = function(){
-	        if(!$rootScope.userRole){
-	          $state.go("home");
-	        }else if($rootScope.userRole === "ADMIN"){
-	          $state.go("patientUser");
-	        }else if($rootScope.userRole === "PATIENT"){
-	          $state.go("patientdashboard");
-	        }else if($rootScope.userRole === "CLINIC_ADMIN" || $rootScope.userRole === "CLINIC ADMIN"){
-	          $state.go("clinicadmindashboard");
-	        }else if($rootScope.userRole === "HCP"){
-	          $state.go("hcpdashboard");
-	        }else if($rootScope.userRole === "CARE_GIVER"){
-	          $state.go("caregiverDashboard");
-	        }else if($rootScope.userRole === loginConstants.role.acctservices){
-	          $state.go("rcadminPatients");
-	        }
-	      };
+    $scope.gotoPage = function(page){
+      $state.go(page);
+    };
 
-	      $scope.gotoPage = function(page){
-	        $state.go(page);
-	      };
+	  $scope.goToCaregiverDashboard = function(){
+	    $state.go("caregiverDashboard");
+	  };
+	  
+	  $scope.goToPatientDashboard = function(value){
+	    if(value){
+	      $state.go(value, {"clinicId": $stateParams.clinicId});
+	    }else{
+	      $state.go("patientdashboard");
+      }
+	  };
 
-	      $scope.goToCaregiverDashboard = function(){
-	        $state.go("caregiverDashboard");
-	      };
-	      $scope.goToPatientDashboard = function(value){
-	        if(value){
-	          $state.go(value, {"clinicId": $stateParams.clinicId});
-	        }else{
-	          $state.go("patientdashboard");
-	        }
-	      };
-	      $scope.isFooter = function(){
-	        var url = $location.path();
-	        $rootScope.isFooter = false;
-	        $rootScope.isFooter = (!$rootScope.isFooter && url.indexOf(footerConstants.contactus) !== -1) ? true: false;        
-	        $rootScope.isFooter = (!$rootScope.isFooter) ? ((url.indexOf(footerConstants.privacyPolicy) !== -1) ? true: false) : $rootScope.isFooter;        
-	        $rootScope.isFooter = (!$rootScope.isFooter) ? ((url.indexOf(footerConstants.termsOfUse) !== -1) ? true: false) : $rootScope.isFooter;        
-	        $rootScope.isFooter = (!$rootScope.isFooter ) ? ((url.indexOf(footerConstants.privacyPractices) !== -1) ? true: false) : $rootScope.isFooter;        
-	        $rootScope.isFooter = (!$rootScope.isFooter) ? (( url.indexOf(footerConstants.careSite) !== -1) ? true: false ) : $rootScope.isFooter;
-	      };
+	  $scope.isFooter = function(){
+      var url = $location.path();
+      $rootScope.isFooter = false;
+      $rootScope.isFooter = (!$rootScope.isFooter && url.indexOf(footerConstants.contactus) !== -1) ? true: false;        
+      $rootScope.isFooter = (!$rootScope.isFooter) ? ((url.indexOf(footerConstants.privacyPolicy) !== -1) ? true: false) : $rootScope.isFooter;        
+      $rootScope.isFooter = (!$rootScope.isFooter) ? ((url.indexOf(footerConstants.termsOfUse) !== -1) ? true: false) : $rootScope.isFooter;        
+      $rootScope.isFooter = (!$rootScope.isFooter ) ? ((url.indexOf(footerConstants.privacyPractices) !== -1) ? true: false) : $rootScope.isFooter;        
+      $rootScope.isFooter = (!$rootScope.isFooter) ? (( url.indexOf(footerConstants.careSite) !== -1) ? true: false ) : $rootScope.isFooter;
+	  };
 
-	      $scope.isFooter();
+	  $scope.isFooter();
 
-	      $scope.goToPatientDashboard = function(value){
-	        if(value){
-	          $state.go(value, {"clinicId": $stateParams.clinicId});
-	        }else{
-	          $state.go("patientdashboard");
-	        }
-	      };
-	      $scope.getNotifications = function(){
-	        UserService.getPatientNotification(StorageService.get("logged").patientID, new Date().getTime()).then(function(response){
+	  $scope.goToPatientDashboard = function(value){
+	    if(value){
+	      $state.go(value, {"clinicId": $stateParams.clinicId});
+	    }else{
+	      $state.go("patientdashboard");
+	    }
+	  };
+
+	  $scope.getNotifications = function(){
+	    UserService.getPatientNotification(StorageService.get("logged").patientID, new Date().getTime()).then(function(response){
 				$scope.notifications = response.data;
 				$scope.no_of_notifications = response.data.length;
 				switch($rootScope.userRole) {
-				    case "PATIENT":
-				        $scope.getPatientNotifications($scope.notifications);
-				        break;
-				    case "HCP":
-				        $scope.getHCPNotifications($scope.notifications);
-				        break;
-				}				
-				 
+				  case "PATIENT":
+				    $scope.getPatientNotifications($scope.notifications);
+				  break;
+				  case "HCP":
+				    $scope.getHCPNotifications($scope.notifications);
+				  break;
+				}		 
 			});
-	      };
+	  };
 
-	      $scope.getHCPNotifications = function(notifications){
-	      	if(notifications.length < 2){
+	  $scope.getHCPNotifications = function(notifications){
+	   	if(notifications.length < 2){
 				$scope.no_of_notifications = notifications.length;
 			}else{
 				$scope.no_of_notifications = 2;
 			}  
-	      };
+	  };
 
-	      $scope.getPatientNotifications = function(notifications){
-	      	if(notifications.length === 0){            
-			  	var noNotification = {
-			      'notificationType' : 'NO_NOTIFICATION'
-			    }
-			    $scope.notifications.push(noNotification);
+	  $scope.getPatientNotifications = function(notifications){
+	   	if(notifications.length === 0){            
+		  	var noNotification = {
+		      'notificationType' : 'NO_NOTIFICATION'
+		    }
+		    $scope.notifications.push(noNotification);
 			}
-	      };
+	  };
 
 		$scope.mainInit();
 		$scope.isUserChanged = function(){
@@ -198,88 +198,85 @@ angular.module('hillromvestApp')
 			}
 		};
 		$scope.passwordStrength = function(){
-		    $scope.display_strength('passwordBox','passwordStrengthContainer','status');
+		  $scope.display_strength('passwordBox','passwordStrengthContainer','status');
 		};
+		
 		$scope.display_strength = function(x, y, z) {
-		    if (!x || $scope.div(x) === "") {
-		      $scope.div(y).style.width = 0 + "%";
-		      $scope.div(z).innerHTML = "&nbsp:";
-		      return false;
-		    }
-		    var paswd = $scope.div(x);
-		    var stren = $scope.div(y);
-		    var stats = $scope.div(z);
-		    var years = 0;
+	    if (!x || $scope.div(x) === "") {
+	      $scope.div(y).style.width = 0 + "%";
+	      $scope.div(z).innerHTML = "&nbsp:";
+	      return false;
+	    }
+	    var paswd = $scope.div(x);
+	    var stren = $scope.div(y);
+	    var stats = $scope.div(z);
+	    var years = 0;
 
-		    var regex = [
-		      /^[a-zA-Z]+$/g,
-		      /^[a-zA-Z0-9]+$/g,
-		      /^[a-zA-Z0-9\ \~\!\@\#\$\%\^\&\*\(\)]+$/g,
-		    ];
+	    var regex = [
+	      /^[a-zA-Z]+$/g,
+	      /^[a-zA-Z0-9]+$/g,
+	      /^[a-zA-Z0-9\ \~\!\@\#\$\%\^\&\*\(\)]+$/g,
+	    ];
 
-		    var count = [42, 52, 63, 74];
-		    var color = ["red", "gold", "lime", "darkgreen"];
-		    var value = ["weak", "Good", "Strong", "Very Strong"];
-		    var index = 0;
+	    var count = [42, 52, 63, 74];
+	    var color = ["red", "gold", "lime", "darkgreen"];
+	    var value = ["weak", "Good", "Strong", "Very Strong"];
+	    var index = 0;
 
-		    for (index = 0; index < regex.length; index++) {
-		      if (index > regex.length) {
-		        break;
-		      }
-		      if (regex[index].test(paswd.value)) {
-		        break;
-		      } else {
-		        continue;
-		      }
+	    for (index = 0; index < regex.length; index++) {
+	      if (index > regex.length) {
+	        break;
+	      }
+	      if (regex[index].test(paswd.value)) {
+	        break;
+	      } else {
+	        continue;
+	      }
+	    }
 
-		    }
+	    years = $scope.compute_strength(count[index], (paswd.value).length);
 
-		    years = $scope.compute_strength(count[index], (paswd.value).length);
-
-		    if (years >= 1000 && !$scope.form.password.$error.pattern) {
-		      stats.innerHTML = value[3];
-		      stats.style.color = color[3];
-		    } else if (years >= 100 && years < 1000 && !$scope.form.password.$error.pattern) {
-		      stats.innerHTML = value[2];
-		      stats.style.color = color[2];
-		    } else if (years >= 10 && years < 100 && !$scope.form.password.$error.pattern) {
-		      stats.innerHTML = value[1];
-		      stats.style.color = color[1];
-		    } else {
-		      if($scope.form.password && $scope.form.password.$error.required){
-		        stats.innerHTML = '';
-		        stats.style.color = color[0];
-		      }else{
-		        stats.innerHTML = value[0];
-		        stats.style.color = color[0];
-		      } 
-		    }
-		    return false;
-		  };
+	    if (years >= 1000 && !$scope.form.password.$error.pattern) {
+	      stats.innerHTML = value[3];
+	      stats.style.color = color[3];
+	    } else if (years >= 100 && years < 1000 && !$scope.form.password.$error.pattern) {
+	      stats.innerHTML = value[2];
+	      stats.style.color = color[2];
+	    } else if (years >= 10 && years < 100 && !$scope.form.password.$error.pattern) {
+	      stats.innerHTML = value[1];
+	      stats.style.color = color[1];
+	    } else {
+	      if($scope.form.password && $scope.form.password.$error.required){
+	        stats.innerHTML = '';
+	        stats.style.color = color[0];
+	      }else{
+	        stats.innerHTML = value[0];
+	        stats.style.color = color[0];
+	      } 
+	    }
+	    return false;
+	  };
 
 		$scope.compute_strength = function (x, y){
-		    if(!x){
-		        return -1;
-		    }
-		    var secondsInAYear = 31557600;
-		    var permutateRepeat = (Math.pow(x,y) - (x*$scope.factorial(y) - 1));
-		    var countManyYears = Math.floor(permutateRepeat/(1000000*secondsInAYear));
-
-		    return countManyYears;
+	    if(!x){
+	      return -1;
+	    }
+	    var secondsInAYear = 31557600;
+	    var permutateRepeat = (Math.pow(x,y) - (x*$scope.factorial(y) - 1));
+	    var countManyYears = Math.floor(permutateRepeat/(1000000*secondsInAYear));
+	    return countManyYears;
 		};
 
 		$scope.factorial = function (x) {
-		    if(x<0){
-		        return false;
-		    }
+	    if(x<0){
+	      return false;
+	    }
 
-		    if(x == 0 ){
-		        return 1;
-		    }
-
-		    x = Math.floor(x);
-		    return (x*$scope.factorial(x-1));
-
+	    if(x == 0 ){
+	      return 1;
+	    }
+	    x = Math.floor(x);
+	    return (x*$scope.factorial(x-1));
 		};
 
 		$scope.console = function(){
@@ -303,13 +300,12 @@ angular.module('hillromvestApp')
     };
 
     $scope.benchMarking = function(){
-      console.log('Its coming here,....!');
       if($rootScope.userRole === "ADMIN"){
       	$state.go('adminBenchmarking');
       }else  if($rootScope.userRole === loginConstants.role.acctservices){
-
+      	$state.go('rcadminBenchmarking');
       }else if($rootScope.userRole === loginConstants.role.associates){
-
+      	$state.go('associatesBenchmarking');
       }
     };
 
@@ -319,5 +315,4 @@ angular.module('hillromvestApp')
 	    }
     };
 
-
-    }]);
+  }]);

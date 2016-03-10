@@ -3981,6 +3981,7 @@ angular.module('hillromvestApp')
                   ]
               }
             })
+
             .state('adminLoginAnalytics', {
               parent: 'console',
               url: '/admin/useranalytics',
@@ -4076,6 +4077,56 @@ angular.module('hillromvestApp')
               views: {
                   'content@': {
                       templateUrl: 'scripts/modules/common/console/benchmarking/views/admin/view.html',
+                      controller: 'benchmarkingController'
+                  }
+              },
+              resolve: {
+                  translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                      $translatePartialLoader.addPart('console');
+                      return $translate.refresh();
+                  }],
+                  authorize: ['Auth',
+                      function(Auth) {
+                          return Auth.authorize(false);
+                      }
+                  ]
+              }
+            })
+            .state('rcadminBenchmarking', {
+              parent: 'console',
+              url: '/rcadmin/benchmarking',
+              data: {
+                  roles: ['ACCT_SERVICES'],
+                  pageTitle: 'console.page-title.benchmarking'
+              },
+              views: {
+                  'content@': {
+                      templateUrl: 'scripts/modules/common/console/benchmarking/views/rcadmin/view.html',
+                      controller: 'benchmarkingController'
+                  }
+              },
+              resolve: {
+                  translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                      $translatePartialLoader.addPart('console');
+                      return $translate.refresh();
+                  }],
+                  authorize: ['Auth',
+                      function(Auth) {
+                          return Auth.authorize(false);
+                      }
+                  ]
+              }
+            })
+            .state('associatesBenchmarking', {
+              parent: 'console',
+              url: '/associates/benchmarking',
+              data: {
+                  roles: ['ASSOCIATES'],
+                  pageTitle: 'console.page-title.benchmarking'
+              },
+              views: {
+                  'content@': {
+                      templateUrl: 'scripts/modules/common/console/benchmarking/views/associates/view.html',
                       controller: 'benchmarkingController'
                   }
               },
