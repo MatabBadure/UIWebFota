@@ -4064,5 +4064,31 @@ angular.module('hillromvestApp')
                       }
                   ]
               }
+            })
+
+            .state('adminBenchmarking', {
+              parent: 'console',
+              url: '/admin/benchmarking',
+              data: {
+                  roles: ['ADMIN'],
+                  pageTitle: 'console.page-title.benchmarking'
+              },
+              views: {
+                  'content@': {
+                      templateUrl: 'scripts/modules/common/console/benchmarking/views/admin/view.html',
+                      controller: 'benchmarkingController'
+                  }
+              },
+              resolve: {
+                  translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                      $translatePartialLoader.addPart('console');
+                      return $translate.refresh();
+                  }],
+                  authorize: ['Auth',
+                      function(Auth) {
+                          return Auth.authorize(false);
+                      }
+                  ]
+              }
             });
 }]);

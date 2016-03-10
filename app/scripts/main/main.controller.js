@@ -283,28 +283,41 @@ angular.module('hillromvestApp')
 		};
 
 		$scope.console = function(){
-	        if($rootScope.userRole === "ADMIN"){
-	          $state.go('adminSurveyReport');
-	        }else if($rootScope.userRole === loginConstants.role.acctservices){
-	          $state.go('rcddminSurveyReport');
-	        } else if($rootScope.userRole === loginConstants.role.associates){
-	        	$state.go('associateSurveyReport');
-	        }
-      	};
-      	$scope.loginAnalyitcs = function(){
-	        if($rootScope.userRole === "ADMIN"){
-	          $state.go('adminLoginAnalytics');
-	        }else if($rootScope.userRole === loginConstants.role.acctservices){
-	          $state.go('rcadminLoginAnalytics');
-	        } else if($rootScope.userRole === loginConstants.role.associates){
-	        	$state.go('associatesLoginAnalytics');
-	        }
-      	};
-      	$scope.userSurvey = function(){
-	        if($rootScope.userRole === "PATIENT"){
-	          $state.go('patientSurvey');
-	        }
-      	};
+	    if($rootScope.userRole === "ADMIN"){
+	      $state.go('adminSurveyReport');
+	    }else if($rootScope.userRole === loginConstants.role.acctservices){
+	      $state.go('rcddminSurveyReport');
+	    } else if($rootScope.userRole === loginConstants.role.associates){
+	      $state.go('associateSurveyReport');
+	    }
+    };
+      	
+    $scope.loginAnalyitcs = function(){
+	    if($rootScope.userRole === "ADMIN"){
+	      $state.go('adminLoginAnalytics');
+	    }else if($rootScope.userRole === loginConstants.role.acctservices){
+	      $state.go('rcadminLoginAnalytics');
+	    } else if($rootScope.userRole === loginConstants.role.associates){
+	      $state.go('associatesLoginAnalytics');
+	    }
+    };
+
+    $scope.benchMarking = function(){
+      console.log('Its coming here,....!');
+      if($rootScope.userRole === "ADMIN"){
+      	$state.go('adminBenchmarking');
+      }else  if($rootScope.userRole === loginConstants.role.acctservices){
+
+      }else if($rootScope.userRole === loginConstants.role.associates){
+
+      }
+    };
+
+    $scope.userSurvey = function(){
+	    if($rootScope.userRole === "PATIENT"){
+	      $state.go('patientSurvey');
+	    }
+    };
 
 
     }]);
