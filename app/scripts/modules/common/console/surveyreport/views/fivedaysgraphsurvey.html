@@ -1,5 +1,8 @@
 <div class="col-md-16 ">
-  <div id="surveyGraph" ng-init="switchSurvey(1)"></div>
+	<div class="graph_nodata" ng-if="yMax === 1">
+		<span class="noData_text"> No Data Available!</span>
+	</div>
+  <div id="surveyGraph" ng-init="switchSurvey()" ng-if="yMax !== 1"></div>
 </div>
 
 <div class="col-md-16 dashboard__manage-view--list" ng-repeat="surveyQuestion in graphSurvey.surveyQuestions track by $index">

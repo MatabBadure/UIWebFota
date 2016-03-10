@@ -334,7 +334,7 @@ angular.module('hillromvestApp')
         x = x + 200;
         pdf.text(x, y, protocol.minMinutesPerTreatment.toString());
         x = x + 140;
-        pdf.text(x, y, protocol.minPressure+'-'+protocol.maxPressure);
+        pdf.text(x, y, protocol.minFrequency+'-'+protocol.maxFrequency);
         x = x + 140;
         pdf.text(x, y, protocol.minPressure+'-'+protocol.maxPressure);
       }else{
@@ -346,7 +346,7 @@ angular.module('hillromvestApp')
         }
         pdf.text(x, y, protocol.minMinutesPerTreatment.toString());
         x = x + 140;
-        pdf.text(x, y, protocol.minPressure.toString());
+        pdf.text(x, y, protocol.minFrequency.toString());
         x = x + 140;
         pdf.text(x, y, protocol.minPressure.toString());
       }
