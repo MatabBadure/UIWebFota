@@ -18,16 +18,16 @@
           <div class="col-md-3 header--type text-align-left">
             <span translate="patient.protocol-caption.type"></span>
           </div>
-          <div class="col-md-3 header--type text-align-left">
+          <div class="col-md-3 header--type text-align-center">
             <span translate="patient.protocol-caption.treatments-per-day"></span>
           </div>
-          <div class="col-md-3 header--type text-align-left">
+          <div class="col-md-3 header--type text-align-center">
             <span translate="patient.protocol-caption.minutes-per-treatment"></span>
           </div>
-          <div class="col-md-3 header--type text-align-left">
+          <div class="col-md-3 header--type text-align-center">
             <span translate="patient.protocol-caption.frequency-per-treatment"></span>
           </div>
-          <div class="col-md-3 header--type text-align-left">
+          <div class="col-md-3 header--type text-align-center">
             <span translate="patient.protocol-caption.pressure-per-treatment"></span>
           </div>
           <div class="clr"></div>
@@ -55,7 +55,7 @@
         <span ng-if="protocol.type === 'Custom'" class="protocol-list--value"> {{protocol.minFrequency}}</span>
         <span ng-if="protocol.type === 'Normal'" class="protocol-list--value"> {{protocol.minFrequency}}-{{protocol.maxFrequency}}</span>
       </div>
-      <div class="col-md-5 protocol-list__end-date">
+      <div class="col-md-4 protocol-list__end-date">
         <span ng-if="protocol.type === 'Custom'" class="protocol-list--value"> {{protocol.minPressure}}</span>
         <span ng-if="protocol.type === 'Normal'" class="protocol-list--value"> {{protocol.minPressure}}-{{protocol.maxPressure}}</span>
       </div>
