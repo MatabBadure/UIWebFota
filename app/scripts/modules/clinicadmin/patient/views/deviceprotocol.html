@@ -62,39 +62,7 @@
       </div>
     </div>
   </div>
-
- <!--  <div class="col-md-2 comon_action_div" ng-if="protocols">
-    <div class="col-md-8 protocol-list__edit icons text-center">
-      <span ng-if="!protocol.deleted" class="icon-edit-icon" ng-click="openEditProtocol(protocols[0])"></span>
-    </div>
-    <div class="col-md-8 protocol-list__edit icons text-center">
-      <span ng-if="!protocol.deleted" class="icon-delete-icon" ng-click="deleteProtocolModel(protocols[0].id)"></span>
-    </div>
-  </div> -->
-
 </div>
-
-
-
-  
-
- <!--  <div class="col-md-16 col-sm-16 protocol-list" ng-repeat="protocol in protocols" ng-class="{'list-inactive':protocol.deleted}">
-    <div class="col-md-3 col-sm-3 protocol-list__type text-align-left">
-      <span> {{protocol.type}} {{protocol.treatmentLabel}}</span>
-    </div>
-    <div class="col-md-3 col-sm-3 protocol-list__type">
-      <span> {{protocol.treatmentsPerDay}}</span>
-    </div>
-    <div class="col-md-3 col-sm-3 protocol-list__treatment-day">
-      <span class="protocol-list--value"> {{protocol.minMinutesPerTreatment}}</span>
-    </div>
-    <div class="col-md-3 col-sm-3 protocol-list__strt-date">
-      <span class="protocol-list--value"> {{protocol.minFrequency}}<span ng-if="protocol.type === 'Normal'">-{{protocol.maxFrequency}}</span></span>
-    </div>
-    <div class="col-md-4 col-sm-4 protocol-list__end-date">
-      <span class="protocol-list--value"> {{protocol.minPressure}}<span ng-if="protocol.type === 'Normal'">-{{protocol.maxPressure}}</span></span>
-    </div>
-  </div> -->
   <div class="col-md-16 col-sm-16 empty-list-message" ng-if="!protocols"><span translate="patient.empty-protocol-list-message"></span></div>
 
   <div class="col-md-16 col-sm-16 patient-device margin-top-xl">
