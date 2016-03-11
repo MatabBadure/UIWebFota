@@ -58,25 +58,27 @@
 										</div>
 									</div>
 								</div>
-								<table class="table">
+								<table class="table margin0">
 									<thead>
 										<tr>
-											<th class="col-md-4" translate="graph.adherence-score-table.date">Date</th>
-											<th class="col-md-8">
+											<th class="col-md-3" translate="graph.adherence-score-table.date">Date</th>
+											<th class="col-md-7">
 											<table class="col-md-16 row">
 												<thead>
 													<tr class="col-md-16 row">
-														<th  class="col-md-8 inner_th" translate="graph.adherence-score-table.notification"></th>
-														<th class="col-md-8 inner_th text-center" translate="graph.adherence-score-table.change"></th>
+														<th class="col-md-8 inner_th padding-left44" translate="graph.adherence-score-table.notification"></th>
+														<th class="col-md-8 inner_th padding-left44" translate="graph.adherence-score-table.change"></th>
 													</tr>
 												</thead>
 											</table>
 											</th>
 											<!-- <th class="col-md-4 text-center" >Change</th> -->
-											<th class="col-md-4 text-center" translate="graph.adherence-score-table.updated-score">Updated Score</th>
+											<th class="col-md-3" translate="graph.adherence-score-table.updated-score">Updated Score</th>
+											<th class="col-md-3 text-center padding-left44" translate="graph.adherence-score-table.protocol">Protocol</th>
 										</tr>
 									</thead>
-									<tbody>
+								</table>
+								<!-- 	<tbody>
 										<tr ng-repeat="adherenceScore in adherenceScores">
 											<td class="col-md-4">{{adherenceScore.date}}</td>
 											<td class="col-md-8">
@@ -90,11 +92,31 @@
 
 												</table>	 
 											</td>
-											<!-- <td class="col-md-4 text-center">{{adherenceScore.change}}</td> -->
+											<td class="col-md-4 text-center">{{adherenceScore.change}}</td>
 											<td class="col-md-4 text-center">{{adherenceScore.updatedScore}}</td>
 										</tr>
 									</tbody>
-								</table>
+								</table> -->
+
+								<div class="col-md-16 col-sm-16 col-xs-16 padding0 border-lt border-rt border-bottom" ng-repeat="adherenceScore in adherenceScores">
+	<div class="col-md-14 padding0">
+		<div class="col-md-16 col-sm-16 col-xs-16 padding0 border-bottom adherencescore" ng-repeat ="adherenceTrend in adherenceScore.adherenceTrends">
+
+			<div class="col-md-4 col-sm-4 col-xs-4 first-row">{{adherenceTrend.date}}</div>
+				<div class="col-md-8 col-sm-8">
+					<div class="col-md-16 col-sm-16 col-xs-16 row" ng-repeat="(key, value) in adherenceTrend.notificationPoints">
+						<div class="col-md-8 col-sm-8 col-xs-8 first-row">{{key}}</div>
+						<div class="col-md-8 col-sm-8 col-xs-8 first-row">{{value}}</div>
+					</div>
+				</div>
+				<div class="col-md-4 col-sm-4 col-xs-4 first-row">5</div>
+		</div>
+	</div>
+
+	<div class="col-md-2 col-sm-2 col-xs-2 pull-right child first-row-view1 view-column">
+View</div>
+
+									</div>
 								</div>
 
 							</div>
