@@ -144,6 +144,7 @@ angular.module('hillromvestApp')
 			    }
 				},
 				yAxis: {
+					minRange: 1,
 					gridLineColor: '#FF0000',
 		      gridLineWidth: 0,
 		      lineWidth:1,
