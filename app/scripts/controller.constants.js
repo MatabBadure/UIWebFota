@@ -143,4 +143,53 @@ angular.module('hillromvestApp').constant('hcpDashboardConstants', {
 	}
 })
 
+.constant('loginAnalyticsConstants',{
+	legends : {
+		"ALL" : "all",
+		"PATIENT" : "patient",
+		"HCP" : "hcp",
+		"CLINICADMIN": "clinicadmin",
+		"CAREGIVER": "caregiver"
+	},
+	duration:{
+		"DAY": "Day",
+		"WEEK": "Week",
+		"MONTH": "Month",
+		"YEAR": "Year",
+		"CUSTOM": "Custom"
+	},
+	string:{
+		"COMMA": ","
+	},
+	filters:{
+		"PATIENT": "PATIENT",
+		"HCP": "HCP",
+		"CLINICADMIN": "CLINIC_ADMIN",
+		"CAREGIVER": "CARE_GIVER"
+	},
+	colors:{
+		"PATIENT": "#ff9829",
+		"HCP": "#35978f",
+		"CLINICADMIN": "#4d95c4",
+		"CAREGIVER": "#8b6baf"
+	},
 
+})
+.constant('surveyConstants',{
+	questions : {
+		"patient_name": "Patient name",
+		"patient_phone_number": "Patient phone number",
+		"hours_of_use": "Hours of use",
+		"serial_number": "Serial number",
+		"patient_dob": "Patient date of birth",
+		"survey_date": "Date",
+		"space": " ",
+		"main_phone_number": "Main phone number",
+		"secondary_phone_number": "Secondary phone number",
+		"address": "Address",
+		"city": "City",
+		"zipcode":"Zip code",
+		"state": "State",
+		"email_address": "Email"
+	}
+})

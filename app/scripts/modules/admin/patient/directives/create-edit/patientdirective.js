@@ -11,8 +11,8 @@ angular.module('hillromvestApp')
         patientStatus: '=patientStatus'
       },
 
-      controller: ['$scope', '$state', 'notyService', 'dateService', 'UserService', 'StorageService', 'loginConstants', 'commonsUserService',
-      function ($scope, $state, notyService, dateService, UserService, StorageService, loginConstants, commonsUserService) {
+      controller: ['$scope', '$state', 'notyService', 'dateService', 'UserService', 'StorageService', 'loginConstants', 'commonsUserService', 'addressService',
+      function ($scope, $state, notyService, dateService, UserService, StorageService, loginConstants, commonsUserService, addressService) {
 
         $scope.open = function () {
           $scope.showModal = true;
@@ -44,7 +44,8 @@ angular.module('hillromvestApp')
         $scope.init();
 
         $scope.createPatient = function () {
-          if($scope.form.$invalid || $scope.form.dob.$invalid){
+          $scope.submitted = true;
+          if(!$scope.patient.city || $scope.form.$invalid || $scope.form.dob.$invalid){
             return false;
           }
           angular.forEach($scope.patient, function(value, key){
@@ -52,15 +53,24 @@ angular.module('hillromvestApp')
               $scope.patient[key] = null;
             }
           });
-          if($scope.patientStatus.editMode){
-            var data = $scope.patient;
-            data.role = 'PATIENT';
-            $scope.editUSer(data);
-          } else {
-            var data = $scope.patient;
-            data.role = 'PATIENT';
-            $scope.newUser(data);
-          }
+          addressService.getCityStateByZip($scope.patient.zipcode).then(function(response){
+            $scope.patient.city = response.data[0].city;
+            $scope.patient.state = response.data[0].state;
+            if($scope.patientStatus.editMode){
+              var data = $scope.patient;
+              data.role = 'PATIENT';
+              $scope.editUSer(data);
+            } else {
+              var data = $scope.patient;
+              data.role = 'PATIENT';
+              $scope.newUser(data);
+            }
+          }).catch(function(response){ 
+            $scope.patient.state = null;
+            $scope.patient.city = null;
+            $scope.serviceError = response.data.ERROR;
+            $scope.isServiceError = true;
+          });
         };
 
         $scope.newUser = function(data) {
@@ -166,6 +176,36 @@ angular.module('hillromvestApp')
             $state.go('patientUser');
           }else if($scope.userRole === loginConstants.role.acctservices){
             $state.go('rcadminPatients');
+          }
+        };
+
+        $scope.getCityState = function(zipcode){   
+          delete $scope.serviceError;
+          $scope.isServiceError = false;
+          if(zipcode){
+            addressService.getCityStateByZip(zipcode).then(function(response){
+              $scope.patient.city = response.data[0].city;
+              $scope.patient.state = response.data[0].state;
+            }).catch(function(response){
+              $scope.patient.state = null;
+              $scope.patient.city = null;
+              $scope.serviceError = response.data.ERROR;
+              $scope.isServiceError = true;
+            });  
+          }else{
+            delete $scope.patient.city;
+            delete $scope.patient.state;
+            if($scope.form.zip.$dirty && $scope.form.zip.$showValidationMessage && $scope.form.zip.$invalid){
+            }else{
+              $scope.serviceError = 'Invalid Zipcode';  
+              $scope.isServiceError = true;
+            }
+          }
+        };
+
+        $scope.clearMessages = function(){
+          if($scope.patient.zipcode){
+            delete $scope.serviceError;
           }
         };
 

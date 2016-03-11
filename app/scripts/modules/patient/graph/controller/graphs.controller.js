@@ -2,8 +2,8 @@
 
 angular.module('hillromvestApp')
 .controller('graphController',
-  ['$scope', '$state', 'patientDashBoardService', 'StorageService', 'dateService', 'graphUtil', 'patientService', 'UserService', '$stateParams', 'notyService', '$timeout', 'graphService', 'caregiverDashBoardService', 'loginConstants', '$location','$filter', 'commonsUserService', 'clinicadminPatientService',
-  function($scope, $state, patientDashBoardService, StorageService, dateService, graphUtil, patientService, UserService, $stateParams, notyService, $timeout, graphService, caregiverDashBoardService, loginConstants, $location, $filter, commonsUserService, clinicadminPatientService) {
+  ['$scope', '$state', 'patientDashBoardService', 'StorageService', 'dateService', 'graphUtil', 'patientService', 'UserService', '$stateParams', 'notyService', '$timeout', 'graphService', 'caregiverDashBoardService', 'loginConstants', '$location','$filter', 'commonsUserService', 'clinicadminPatientService', '$rootScope',
+  function($scope, $state, patientDashBoardService, StorageService, dateService, graphUtil, patientService, UserService, $stateParams, notyService, $timeout, graphService, caregiverDashBoardService, loginConstants, $location, $filter, commonsUserService, clinicadminPatientService, $rootScope) {
 
     var chart;
     var hiddenFrame, htmlDocument;    
@@ -69,8 +69,9 @@ angular.module('hillromvestApp')
       $scope.perPageCount = 4;
       $scope.patientTab = currentRoute;
       if ($state.current.name === 'patientdashboard') {
+        $rootScope.surveyTaken = false;
         $scope.hasTransmissionDate = false;
-        $scope.initPatientDashboard();
+        $scope.initPatientDashboard();        
       }else if(currentRoute === 'patientdashboardCaregiver'){
         $scope.initPatientCaregiver();
       }else if(currentRoute === 'patientdashboardCaregiverAdd'){
@@ -1666,6 +1667,7 @@ angular.module('hillromvestApp')
         patientService.getCaregiverById(StorageService.get('logged').patientID, caregiverId).then(function(response){
           $scope.associateCareGiver = response.data.caregiver.userPatientAssocPK.user;
           $scope.associateCareGiver.relationship = response.data.caregiver.relationshipLabel;
+          $scope.associateCareGiver.zipcode = commonsUserService.formatZipcode($scope.associateCareGiver.zipcode);
         });
     };
 
@@ -1855,7 +1857,10 @@ angular.module('hillromvestApp')
       $scope.textNote = "";
       $scope.initGraph();
       $scope.getPatientById($scope.patientId);
-      $scope.getPatientNotification();
+      $scope.getPatientNotification();      
+      if(!$rootScope.surveyTaken && $rootScope.surveyId){
+        $scope.surveyConfirmModal = true;                
+      }
     };
 
     $scope.openEditNote = function(noteId, noteText){
@@ -2139,7 +2144,7 @@ angular.module('hillromvestApp')
          var count = 0;
          var missedTherapyCircles = [];
          angular.forEach($scope.completeGraphData.actual,function(value){
-          if(value.missedTherapy === true){
+          if(value.missedTherapy === true && circlesInHMR && circlesInHMR.length > 0){
             missedTherapyCircles.push(circlesInHMR[count]);
           }
           count++;
@@ -2848,6 +2853,9 @@ angular.module('hillromvestApp')
         });
     };
 
+    $scope.takeSurveyNow = function(){          
+        $state.go("patientSurvey", {'surveyId': $rootScope.surveyId});
+    };
     
 
 }]);

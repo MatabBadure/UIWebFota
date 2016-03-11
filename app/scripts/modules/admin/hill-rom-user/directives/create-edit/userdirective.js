@@ -150,6 +150,7 @@ angular.module('hillromvestApp')
 
         $scope.resendActivationLink = function(){
           UserService.resendActivationLink($scope.user.id).then(function(response){
+            $scope.isDisableResendButton = true;
             notyService.showMessage(response.data.message, 'success'); 
           }).catch(function(response){
             notyService.showError(response);

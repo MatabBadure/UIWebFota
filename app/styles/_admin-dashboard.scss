@@ -798,7 +798,7 @@ tags-input .autocomplete .suggestion-item.selected, tags-input .autocomplete .su
 }
 
 .dashboard__manage-view--header {
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid #c1c1c1;
   padding: 5px 0;
 }
 
@@ -808,6 +808,7 @@ tags-input .autocomplete .suggestion-item.selected, tags-input .autocomplete .su
   color: $lapis-lazuli;
   font-size: $font-size-small;
   font-weight: 300;
+  text-align:left;
 }
 
 .dashboard__manage-view--header .text-centered {
@@ -1082,6 +1083,43 @@ input[type=radio], input.radio {
 
 ul.dropdown-menu {
   margin-bottom: 20%;
+}
+.margin-left-10{
+  margin-left:-20px;
+}
+.margin-tp10{
+  margin-top:10px;
+}
+.margin-top40{
+  margin-top:40px;
+}
+.ellipes{
+  height:40px;
+  overflow:hidden;
+   white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.height65{
+  height:65px;
+}
+.flex{
+    height:auto;
+    display: flex;
+    flex-flow: row column;
+    word-break: break-all;
+}
+.survey_grey_color{
+  color: #646568;
+}
+.view:hover{
+  border-bottom:1px solid #646568;
+}
+
+.padding_t2{
+  padding-top:2px;
+}
+.margin-lt8{
+  margin-left:8px;
 }
 .col-hide-web{
     display: none;
