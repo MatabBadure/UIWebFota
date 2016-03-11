@@ -122,21 +122,9 @@
   tick-property="true"
   max-labels="1"
   translation="localLang"
+  helper-elements="all filter none"
+  min-search-length="1"
+  search-property="name"
 >
 </div>
 {{outputBrowsers}}
-
-<div style="position: relative;" ng-dropdown-multiselect="" options="example8data" selected-model="example8model" checkboxes="true"></div>
-{{example8model}}
-
-<div ng-init='init1()' style="position: relative;">
-	<select id="example-getting-started" multiple="multiple">
-	  <!-- <option value="{{val}}" ng-repeat="val in values">{{val}}</option> -->
-	  <option value="cheese">Cheese</option>
-	  <option value="tomatoes">Tomatoes</option>
-	  <option value="mozarella">Mozzarella</option>
-	  <option value="mushrooms">Mushrooms</option>
-	  <option value="pepperoni">Pepperoni</option>
-	  <option value="onions">Onions</option>
-	</select>
-</div>

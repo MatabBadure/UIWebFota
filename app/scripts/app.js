@@ -188,10 +188,7 @@ angular.module('hillromvestApp',
       {
         name: 'BenchmarkingModule',
         files:[
-          'bower_components/isteven-angular-multiselect/isteven-multi-select.js',
-          'bower_components/angularjs-dropdown-multiselect/src/angularjs-dropdown-multiselect.js',
-          'bower_components/lodash/dist/lodash.js',
-          'bower_components/bootstrap-multiselect/dist/js/bootstrap-multiselect.js'
+          'bower_components/isteven-angular-multiselect/isteven-multi-select.js'
         ]
       }]
     });
