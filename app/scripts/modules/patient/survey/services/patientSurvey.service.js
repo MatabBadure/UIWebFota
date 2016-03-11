@@ -48,8 +48,8 @@ angular.module('hillromvestApp')
         });
       },
 
-      getSurveyComments: function(questionId){
-        var url = URL.getSurveycomments.replace('QUESTIONID', questionId);
+      getSurveyComments: function(questionId, fromDate, toDate){
+        var url = URL.getSurveycomments.replace('QUESTIONID', questionId).replace('FROM_DATE', fromDate).replace('TO_DATE', toDate);
         return $http.get(url,{
           headers: headerService.getHeader()
         }).success(function(response) {
