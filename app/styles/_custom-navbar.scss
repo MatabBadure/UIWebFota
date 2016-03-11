@@ -356,7 +356,12 @@ ul.logout-dropdown>li{
   border: 1px solid #aeb5be;
   background-color: inherit;
   -webkit-appearance: none;
+  -moz-appearance: none;
   text-indent: 7px;
   border-radius:0;
   color:#276092;
+}
+
+.custom-textbox{
+	color:#c1c1c1;
 }
