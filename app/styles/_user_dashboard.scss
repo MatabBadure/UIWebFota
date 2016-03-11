@@ -619,6 +619,7 @@
 }
 .survey_dialog{
 	width:800px!important;
+	overflow-y: initial !important
 }
 .survey_content{
 	width:100%!important;
@@ -634,7 +635,11 @@
 {
 	padding:10px 0px;
 }
-
+.survey__body{
+	max-height:400px;
+	height:auto;
+	overflow-y: auto!important;
+}
 .dashboard__manage-view--pagination{
 	&.pagination_notes{
 		margin: 0px 5px 15px !important;
