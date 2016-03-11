@@ -92,13 +92,13 @@ angular.module('hillromvestApp')
 			if(survey.noCount !== 0 || index === 6){
 				$scope.selectedSurvey = survey;
 				$scope.surveyComments = [];
-				patientsurveyService.getSurveyComments(survey.id).then(function(response){
+				patientsurveyService.getSurveyComments(survey.id,  $scope.serverFromDate, $scope.serverToDate).then(function(response){
 					$scope.showCommentModal = true;
 					$scope.surveyComments = response.data;
+					$scope.showCommentModal = true;
 				}).catch(function(response){
 					notyService.showError(response);
 				});
-				$scope.showCommentModal = true;
 			}
 		};
 
