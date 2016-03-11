@@ -96,6 +96,7 @@ angular.module('hillromvestApp')
 					$scope.showCommentModal = true;
 					$scope.surveyComments = response.data;
 					$scope.showCommentModal = true;
+					$('body').css("overflow","hidden");
 				}).catch(function(response){
 					notyService.showError(response);
 				});
@@ -104,6 +105,7 @@ angular.module('hillromvestApp')
 
 		$scope.hideComments = function(){
 			$scope.showCommentModal = false;
+			$('body').css("overflow","auto");
 		};
 
 		$scope.getGraphSurveyReport = function(type, fromDate, toDate){
