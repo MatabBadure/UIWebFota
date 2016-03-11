@@ -2857,6 +2857,12 @@ angular.module('hillromvestApp')
     $scope.takeSurveyNow = function(){          
         $state.go("patientSurvey", {'surveyId': $rootScope.surveyId});
     };
+
+    $scope.viewProtocol = function(protcols){
+      console.log(protcols);
+      $scope.protocols = protcols;
+      $scope.showProtocolModal = true;
+    };
     
 
 }]);

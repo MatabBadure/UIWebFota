@@ -649,6 +649,15 @@
 .border-bottom{
 	border-bottom:1px solid #ccc;
 }
+.vertical_align{
+	display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+}
+.adherence_protocol{
+	max-width:1000px;
+	width:1000px;
+}
 .dashboard__manage-view--pagination{
 	&.pagination_notes{
 		margin: 0px 5px 15px !important;
