@@ -619,6 +619,7 @@
 }
 .survey_dialog{
 	width:800px!important;
+	overflow-y: initial !important
 }
 .survey_content{
 	width:100%!important;
@@ -630,10 +631,10 @@
 .margin-left5{
 	margin-left:5px;
 }
-.padding_tl10
-{
+.padding_tl10{
 	padding:10px 0px;
 }
+
 .padding0{
 	padding:0;
 }
@@ -657,6 +658,11 @@
 .adherence_protocol{
 	max-width:1000px;
 	width:1000px;
+}
+.survey__body{
+	max-height:400px;
+	height:auto;
+	overflow-y: auto!important;
 }
 .dashboard__manage-view--pagination{
 	&.pagination_notes{

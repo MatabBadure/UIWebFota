@@ -92,18 +92,20 @@ angular.module('hillromvestApp')
 			if(survey.noCount !== 0 || index === 6){
 				$scope.selectedSurvey = survey;
 				$scope.surveyComments = [];
-				patientsurveyService.getSurveyComments(survey.id).then(function(response){
+				patientsurveyService.getSurveyComments(survey.id,  $scope.serverFromDate, $scope.serverToDate).then(function(response){
 					$scope.showCommentModal = true;
 					$scope.surveyComments = response.data;
+					$scope.showCommentModal = true;
+					$('body').css("overflow","hidden");
 				}).catch(function(response){
 					notyService.showError(response);
 				});
-				$scope.showCommentModal = true;
 			}
 		};
 
 		$scope.hideComments = function(){
 			$scope.showCommentModal = false;
+			$('body').css("overflow","auto");
 		};
 
 		$scope.getGraphSurveyReport = function(type, fromDate, toDate){
@@ -144,6 +146,7 @@ angular.module('hillromvestApp')
 			    }
 				},
 				yAxis: {
+					minRange: 1,
 					gridLineColor: '#FF0000',
 		      gridLineWidth: 0,
 		      lineWidth:1,
