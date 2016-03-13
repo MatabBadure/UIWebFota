@@ -193,3 +193,11 @@ angular.module('hillromvestApp').constant('hcpDashboardConstants', {
 		"email_address": "Email"
 	}
 })
+
+.constant('patientGraphsConstants',{
+	colors: {
+		"pressure": "#ff9829",
+		"frequency": "#34978f",
+		"duration": "#4e95c4"
+	}
+})

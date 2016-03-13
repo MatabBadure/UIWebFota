@@ -140,8 +140,11 @@ angular.module('hillromvestApp',
         name: 'PatientGraphModule',
         files: ['scripts/modules/patient/graph/controller/graphs.controller.js',
                 'scripts/third_party_library/angular.easypiechart.js',
-                'bower_components/canvg/dist/canvg.bundle.js',
-                'bower_components/angular-daterangepicker/js/angular-daterangepicker.js'
+                'bower_components/angular-daterangepicker/js/angular-daterangepicker.js',
+                'bower_components/canvg-gabelerner/rgbcolor.js',
+                'bower_components/canvg-gabelerner/StackBlur.js',
+                'bower_components/canvg-gabelerner/canvg.js',  
+                'https://code.highcharts.com/highcharts.js'
                 ]
       },{
         name: 'HCPGraphModule',

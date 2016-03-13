@@ -15,11 +15,11 @@ angular.module('hillromvestApp')
       * @description To get array of data points for HMR data graph.
       *
       */
-      getHMRGraphPoints: function(id, fromTimeStamp, toTimeStamp, groupBy, date) {
+      getHMRGraphPoints: function(id, fromTimeStamp, toTimeStamp, duration, date) {
         var url = patient.graph.baseURL;
         url  = url + '/' + id + '/therapyData';
-        if ( fromTimeStamp !== undefined && toTimeStamp !== undefined && groupBy !== undefined) {
-          url = url + '?from=' + fromTimeStamp + '&to=' + toTimeStamp + '&groupBy=' + groupBy;
+        if ( fromTimeStamp !== undefined && toTimeStamp !== undefined && duration !== undefined) {
+          url = url + '?from=' + fromTimeStamp + '&to=' + toTimeStamp + '&duration=' + duration;
         } else if(date !== undefined){
           url = url + '?date=' + date;
         }
@@ -157,14 +157,14 @@ angular.module('hillromvestApp')
       }, 
 
 
-      getcomplianceGraphData: function(id, fromTimeStamp, toTimeStamp, groupBy, date){
+      getcomplianceGraphData: function(id, fromTimeStamp, toTimeStamp, duration, date){
         var url = patient.graph.baseURL;
         url  = url + '/' + id + '/complianceGraphData';
-        if ( fromTimeStamp !== undefined && toTimeStamp !== undefined && groupBy !== undefined) {
-          url = url + '?from=' + fromTimeStamp + '&to=' + toTimeStamp + '&groupBy=' + groupBy;
+        if ( fromTimeStamp !== undefined && toTimeStamp !== undefined && duration !== undefined) {
+          url = url + '?from=' + fromTimeStamp + '&to=' + toTimeStamp + '&duration=' + duration;
         } else if(date !== undefined){
           url = url + '?date=' + date;
-        }
+        }        
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {

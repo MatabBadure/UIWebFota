@@ -1,3 +1,23 @@
+<style>
+#synchronizedChart .chart {
+	width: 1100px;
+  height: 250px;
+  margin: 0 auto;
+}
+.hide-chart{
+	visibility: hidden;
+	width: 1100px;
+	opacity: 0;
+	height: 0;
+	overflow: hidden;
+}
+.show-chart{
+	visibility: visible;
+	width: 1100px;
+}
+
+
+</style>
 <div class="container admin-user">
 	<div class="col-md-16 margin-top reset-padding mob_no_margin">
 		<div class="user-gen-details">
@@ -102,104 +122,57 @@
 					</div>					
 				</div>
 			</div>
-			<div class="col-md-16 padding0" ng-class="{'pointer-no-event': !isGraphLoaded, 'pointer-fill-event': isGraphLoaded}">
-				<div class="bar_graph_header">
-					<div class="col-md-5 col-sm-7 left_header_barchart padding0">
-						<div class="row">
-							<ul class="nav nav-pills">
-							<li><a ng-class="{active: selectedGraph === 'HMR'}" href="" ng-click="isGraphLoaded && showHmrGraph()" translate="graph.hmr-data"></a></li>
-							<li><a href="" ng-class="{active: selectedGraph === 'COMPLIANCE'}" ng-click="isGraphLoaded && showComplianceGraph()" translate="graph.compliance"></a></li>
-						</ul>
-						</div>
-					</div>
-					<div class="col-md-11 col-sm-9 right_header_barchart">
-						<ul class="nav nav-pills pull-right ">
-							<li role="presentation" class=""><a href="" ng-class="{active: selectedDateOption === 'DAY'}" ng-hide="complianceGraph" ng-click="isGraphLoaded && dayChart()" translate="graph.day"></a></li>
-							<li role="presentation" class=""><a ng-class="{active: selectedDateOption === 'WEEK'}" href="" ng-click="isGraphLoaded && weeklyChart()">Week</a></li>
-							<li role="presentation" class=""><a href="" ng-class="{active: selectedDateOption === 'MONTH'}" ng-click="isGraphLoaded && monthlyChart()" translate="graph.month"></a></li>
-							<li role="presentation" class=""><a href="" ng-class="{active: selectedDateOption === 'YEAR'}" ng-click="isGraphLoaded && yearlyChart()" translate="graph.year"></a></li>
-							<li role="presentation" class="" id="dp3"><a href="" date-range-picker class="date-picker" ng-model="dates" parentEl="#dp3" options="opts" ><span class="icon-calendar"></span></a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="pull-right week_date_container">
-					<span ng-if="fromDate !== toDate">
-							<span class="date">{{fromDate}}</span> - <span class="date">{{toDate}}</span>
-					</span>
-					<span ng-if="fromDate === toDate" class="date">{{fromDate}}<span>
+			
+		<loading loaded="isGraphLoaded"></loading>		
+	<!-- adding new section for graphs -->
+	<div class="col-md-16 padding0" ng-class="{'pointer-no-event': !isGraphLoaded, 'pointer-fill-event': isGraphLoaded}">
+		<div class="bar_graph_header">
+			<div class="col-md-5 col-sm-7 left_header_barchart padding0">
+				<div class="row">
+					<ul class="nav nav-pills">
+					<li><a ng-class="{active: isHMR}" href="" ng-click="isGraphLoaded && getHMR()" translate="graph.hmr-data"></a></li>
+					<li><a href="" ng-class="{active: !isHMR}" ng-click="isGraphLoaded && getCompliance()" translate="graph.compliance"></a></li>
+				</ul>
 				</div>
 			</div>
-
-		<loading loaded="isGraphLoaded"></loading>
-		<div class="col-md-16" class="all_graph_wrapper" >		
-			<div class="graph_nodata" ng-if="noDataAvailable">
-					<span class="noData_text"> No Data Available!</span>
-			</div>
-			<div ng-if="hmrGraph" class="complianceGraphPrim_wrapper" id="lineGraphWrapper">
-				<div ng-if="hmrLineGraph">
-					<div id="hmrLineGraphSVG" class="complianceGraph col-md-16" style="position:relative;z-index:2;">
-						<svg id="hmrLineSVG" ng-if="!noDataAvailable"> </svg>						
-					</div>
-					<div id="hmrLineGraphCompliance" class="complianceGraph col-md-16" style="margin-top: -351px;position:absolute;z-index:-1;">
-						<svg id="hmrCompliance" style="opacity: 1;"  ng-if="hmrLineGraph && !noDataAvailable"> </svg>
-					</div>
-					<div id="hmrLineGraphCompliance1" class="complianceGraph col-md-16" style="margin-top: -351px;position:absolute;z-index:-1;" >		
-						<svg id="hmrCompliance1" style="opacity: 1;"  ng-if="hmrLineGraph && !noDataAvailable"> </svg>
-					</div>
-				</div>
-				<div ng-if="hmrBarGraph" id="hmrBarGraphWrapper">
-					<div id="hmrBarGraph" class="complianceGraph col-md-16" style="position:relative;z-index:2;">
-						<svg ng-if="!noDataAvailable"> </svg>
-					</div>
-					<div id="hmrBarGraphCompliance" class="complianceGraph col-md-16" style="margin-top: -351px;position:absolute;z-index:-1;">
-						<svg id="hmrCompliance" style="opacity: 1;"  ng-if="hmrBarGraph && !noDataAvailable"> </svg>
-					</div>
-					<div id="hmrBarGraphCompliance1" class="complianceGraph col-md-16" style="margin-top: -351px;position:absolute;z-index:-1;" >		
-						<svg id="hmrCompliance1" style="opacity: 1;"  ng-if="hmrBarGraph && !noDataAvailable"> </svg>
-					</div>
-				</div>
-			</div>
-			<div ng-if="complianceGraph" id="complianceGraphWrapper">
-				<div class="col-md-16"> 
-					<div class="pull-right wrapper_custom_check">
-						<form action="#" ng-if="isComplianceExist">
-							<div class="custom_check_container" ng-class="{'pointer-no-event': !isGraphLoaded, 'pointer-fill-event': isGraphLoaded}" ng-click="isGraphLoaded && pressureIsDisabled && isLegendEnabled('pressureIsDisabled');">
-								<input id="pressure" class="check" type="checkbox" name="pressure" ng-disabled="pressureIsDisabled" ng-model="compliance.pressure" ng-change="isGraphLoaded && reCreateComplianceGraph();$event.stopPropagation();">
-			  		 			<label class="check_label pressure_legend" for="pressure" translate="graph.pressure" ></label>
-							</div>
-				  		 	<div class="custom_check_container" ng-class="{'pointer-no-event': !isGraphLoaded, 'pointer-fill-event': isGraphLoaded}" ng-click="isGraphLoaded && frequencyIsDisabled && isLegendEnabled('frequencyIsDisabled');">
-				  		 		<input id="frequency" class="check" type="checkbox" name="frequency" ng-disabled="frequencyIsDisabled" ng-model="compliance.frequency" ng-change="isGraphLoaded && reCreateComplianceGraph();$event.stopPropagation();">
-				  		 		<label class="check_label frequency_legend" for="frequency" translate="graph.frequency" ></label>
-				  		 	</div>
-				  		 	<div class="custom_check_container" ng-class="{'pointer-no-event': !isGraphLoaded, 'pointer-fill-event': isGraphLoaded}" ng-click="isGraphLoaded && durationIsDisabled && isLegendEnabled('durationIsDisabled');">
-				  		 		<input id="duration" class="check" type="checkbox" name="duration" ng-disabled="durationIsDisabled" ng-model="compliance.duration" ng-change="isGraphLoaded && reCreateComplianceGraph();$event.stopPropagation();">
-				  		 		<label class="check_label duration_legend" for="duration" translate="graph.duration" ></label>
-				  		 	</div>
-			  		 	</form>
-			  		 	<!-- <span ng-show="complianceParamErrMsg" translate="graph.please-deselect-one-item" class="has-error graph_check_error" id="max-compliance-err"></span>
-		  		 		<span ng-show="minComplianceParamErrMsg" translate="graph.min-legend-required" class="has-error graph_check_error" id="min-compliance-err"></span> -->
-					</div>
-				</div>
-				<div id="complianceGraphPrim" class="complianceGraphPrim_wrapper" >
-					<div id="complianceGraph" class="complianceGraph col-md-16">
-						<svg id="compCompliance" ng-if="!noDataAvailable"> </svg>
-					</div>
-					<div id="complianceGraph1" class="complianceGraph col-md-16" style="margin-top: -351px;position:absolute;z-index:-1;"> 
-						<svg id="compCompliance1" ng-if="!noDataAvailable"> </svg>
-					</div>
-					<div id="complianceGraph2" class="complianceGraph col-md-16" style="margin-top: -351px;position:absolute;z-index:-1;"> 
-						<svg id="compCompliance2" ng-if="!noDataAvailable"> </svg>
-					</div>
-					<div id="complianceGraphHMR" class="complianceGraph col-md-16" style="margin-top: -351px;position:absolute;z-index:-1;">
-						<svg id="complianceHMR" ng-if="!noDataAvailable"> </svg>
-					</div>
-				</div>
+			<div class="col-md-11 col-sm-9 right_header_barchart">
+				<ul class="nav nav-pills pull-right ">
+					<li role="presentation" class=""><a href="" ng-class="{active: durationRange === 'Day'}" ng-hide="complianceGraph" ng-click="isGraphLoaded && getDayChart()" translate="graph.day"></a></li>
+					<li role="presentation" class=""><a ng-class="{active: durationRange === 'Week'}" href="" ng-click="isGraphLoaded && getWeekChart()">Week</a></li>
+					<li role="presentation" class=""><a href="" ng-class="{active: durationRange === 'Month'}" ng-click="isGraphLoaded && getMonthChart()" translate="graph.month"></a></li>
+					<li role="presentation" class=""><a href="" ng-class="{active: durationRange === 'Year'}" ng-click="isGraphLoaded && getYearChart()" translate="graph.year"></a></li>
+					<li role="presentation" class="" id="dp1"><a href="" date-range-picker class="date-picker" ng-model="dates" parentEl="#dp1" options="opts" ><span class="icon-calendar"></span></a></li>
+				</ul>
 			</div>
 		</div>
+		<div class="pull-right week_date_container">
+			<span ng-if="fromDate !== toDate">
+					<span class="date">{{fromDate}}</span> - <span class="date">{{toDate}}</span>
+			</span>
+			<span ng-if="fromDate === toDate" class="date">{{fromDate}}<span>
+		</div>
+	</div>
+	<div class="col-md-16" class="all_graph_wrapper" >	
+	<div class="graph_nodata" ng-if="noDataAvailable">
+		<span class="noData_text"> No Data Available!</span>
+	</div><!--  ng-show="isHMR && !noDataAvailable"-->
+	<div class="complianceGraphPrim_wrapper" id="lineGraphWrapper" ng-class="{ 'hide-chart': !isHMR, 'show-chart': isHMR}">
+		<div id="HMRGraph" ng-if="!noDataAvailable">
+			
+		</div>
+	</div><!-- ng-show="!noDataAvailable && !isHMR"-->
+	<div id="complianceGraphWrapper" >
+		<div id="complianceGraphPrim" class="complianceGraphPrim_wrapper" ng-class="{ 'hide-chart': isHMR, 'show-chart': !isHMR}">
+			<div id="synchronizedChart" class="complianceGraph col-md-16" ng-if="!noDataAvailable">
+			</div>
+		</div>
+	</div>
+	</div>
 
+	<!-- ending new section of graphs -->
 
 	<!-- Note section HTML -->
-	<div class="col-md-16">
+	<div class="col-md-16" style="margin-top: 10px;">
 		<div class="btn_group patient_dashdoard_btns" ng-class="{ 'btn_group patient_dashdoard_btns_compliance': complianceGraph, 'btn_group patient_dashdoard_btns': !complianceGraph}">
 			<div dropdown class="pull-right left">
 				<button id="single-button" type="button" class="hillrom-btn btn-submit margin0 float-right" ng-class="{ 'pointer-fill-event': (!noDataAvailable && isGraphLoaded) , 'pointer-no-event': (!isGraphLoaded || noDataAvailable) }" dropdown-toggle ng-disabled="disabled" translate="graph.download" >
@@ -325,6 +298,7 @@
 		</div>
 		<div id= "png-container" ></div>
 		<canvas id="canvas" width="1800px" height="1800px" class="graph-canvas-hide"></canvas>
+		<canvas id="HMRCCanvas" width=1300 height=350 style="display:none;"></canvas>
 
 
 <div ng-if="deleteNoteModal" class="modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true">
