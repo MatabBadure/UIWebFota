@@ -1,8 +1,9 @@
 'use strict';
 angular.module('hillromvestApp')
-.controller('hcpGraphController',[ '$scope', '$state', 'hcpDashBoardService', 'dateService', 'graphUtil', '$stateParams', 'hcpDashboardConstants', 'DoctorService', 'clinicadminService', 'notyService', 'StorageService','$filter', 'commonsUserService',
-	function($scope, $state, hcpDashBoardService, dateService, graphUtil, $stateParams, hcpDashboardConstants, DoctorService, clinicadminService, notyService, StorageService,$filter,commonsUserService) {
+.controller('hcpGraphController',[ '$scope', '$state', 'hcpDashBoardService', 'dateService', 'graphUtil', '$stateParams', 'hcpDashboardConstants', 'DoctorService', 'clinicadminService', 'notyService', 'StorageService','$filter', 'commonsUserService', 'exportutilService',
+	function($scope, $state, hcpDashBoardService, dateService, graphUtil, $stateParams, hcpDashboardConstants, DoctorService, clinicadminService, notyService, StorageService,$filter,commonsUserService, exportutilService) {
 	var chart;
+	$scope.noDataAvailable = false;
 	$scope.init = function() {
 		$scope.cumulativeStatitics = {};
 		$scope.cumulativeStatitics.isMissedTherapyDays = true;
@@ -249,13 +250,8 @@ angular.module('hillromvestApp')
 
 	$scope.dates = {startDate: null, endDate: null};
 
-	$scope.plotNoDataAvailable = function() {
-		$scope.removeGraph();
-		d3.selectAll('svg').append('text').
-			text(hcpDashboardConstants.message.noData).
-			attr('class','nvd3 nv-noData').
-			attr('x','560').
-			attr('y','175');
+	$scope.plotNoDataAvailable = function() {		
+		$scope.noDataAvailable = true;
 	};
 
 	$scope.showCumulativeGraph = function() {
@@ -265,133 +261,101 @@ angular.module('hillromvestApp')
 		$scope.getCumulativeGraphData();
 	};
 
-		$scope.getCumulativeGraphData = function() {						
-			if($scope.selectedClinic){					
-				hcpDashBoardService.getCumulativeGraphPoints($scope.hcpId, $scope.selectedClinic.id, dateService.getDateFromTimeStamp($scope.fromTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), $scope.groupBy).then(function(response){
-					$scope.serverCumulativeGraphData = response.data.cumulativeStatitics;
-					if($scope.serverCumulativeGraphData.length !== 0) {
-						$scope.serverCumulativeGraphData = graphUtil.convertIntoServerTimeZone($scope.serverCumulativeGraphData,hcpDashboardConstants.cumulativeGraph.name);
-						$scope.formatedCumulativeGraphData = graphUtil.convertIntoCumulativeGraph($scope.serverCumulativeGraphData, $scope.cumulativeStatitics);
-						$scope.cumulativeGraphRange = graphUtil.getYaxisRangeCumulativeGraph($scope.serverCumulativeGraphData);
-						$scope.drawCumulativeGraph();
-					} else {
-						$scope.plotNoDataAvailable();
-					}
-				}).catch(function(response) {					
+	$scope.getCumulativeGraphData = function() {
+		$scope.noDataAvailable = false;						
+		if($scope.selectedClinic){					
+			hcpDashBoardService.getCumulativeGraphPoints($scope.hcpId, $scope.selectedClinic.id, dateService.getDateFromTimeStamp($scope.fromTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), $scope.groupBy).then(function(response){
+				console.log("cumulative graph points : ", response);
+				$scope.cumulativeChartData = response.data;	
+				if($scope.cumulativeChartData && typeof($scope.cumulativeChartData) === "object"){ 
+					angular.forEach($scope.cumulativeChartData.xAxis.categories, function(x, key){
+		              $scope.cumulativeChartData.xAxis.categories[key] = dateService.convertToTimestamp(x);
+		            });
+		            angular.forEach($scope.cumulativeChartData.series, function(s, key1){
+		            	if($scope.cumulativeChartData.series[key1].name.toLowerCase() === "missed therapy days"){
+		            		$scope.cumulativeChartData.series[key1].color = "#ef6548";
+		            	}
+		            	if($scope.cumulativeChartData.series[key1].name.toLowerCase() === "no transmission recorded"){
+		            		$scope.cumulativeChartData.series[key1].color = "#4eb3d3";
+		            	}
+		            	if($scope.cumulativeChartData.series[key1].name.toLowerCase() === "setting deviation"){
+		            		$scope.cumulativeChartData.series[key1].color = "#41ae76";
+		            	}
+		            	if($scope.cumulativeChartData.series[key1].name.toLowerCase() === "hmr non-adherence"){
+		            		$scope.cumulativeChartData.series[key1].color = "#8c6bb1";
+		            	}
+			            var marker = {};
+			            marker.radius = (s.data && s.data.length < 50)? 3 : 2; 
+			            angular.forEach(s.data, function(d, key2){
+			              var tooltipDateText = $scope.cumulativeChartData.series[key1].data[key2].x ;
+			              $scope.cumulativeChartData.series[key1].data[key2].marker = marker;
+			              $scope.cumulativeChartData.series[key1].data[key2].x = $scope.cumulativeChartData.xAxis.categories[key2];
+			              $scope.cumulativeChartData.series[key1].data[key2].toolText = {};
+			              $scope.cumulativeChartData.series[key1].data[key2].toolText.dateText = tooltipDateText;
+			              if($scope.cumulativeChartData.series[key1].data[key2].toolText.missedTherapy){
+			                $scope.cumulativeChartData.series[key1].data[key2].color = "red";
+			              }
+			            });            
+						setTimeout(function(){								
+							$scope.cumulativeChart("cumulativeGraph", $scope.cumulativeChartData);          
+						}, 10); 
+			          });
+				}else{
 					$scope.plotNoDataAvailable();
-				});
-			}else{
+				}
+			}).catch(function(response) {					
 				$scope.plotNoDataAvailable();
-			}
-		};
-
-	$scope.drawCumulativeGraph = function() {
-		nv.addGraph(function() {
-		  var chart = nv.models.lineChart()
-			.x(function(d) { return d[0] })
-			.y(function(d) { return d[1] })
-			.color(d3.scale.category10().range())
-			.showLegend(false)
-			.useInteractiveGuideline(true);
-			chart.xAxis.staggerLabels = true,
-			chart.yAxis.axisLabel(hcpDashboardConstants.cumulativeGraph.yAxis.label);
-			chart.yDomain([0,$scope.cumulativeGraphRange.maxNoOfPatients]);
-			var days = dateService.getDateDiffIndays($scope.fromTimeStamp,$scope.toTimeStamp),
-				totalDataPoints = $scope.formatedCumulativeGraphData[0].values.length,
-				tickCount = parseInt(totalDataPoints/12);
-				if(totalDataPoints === 1){					
-					chart.xAxis.showMaxMin(false).tickValues($scope.formatedCumulativeGraphData[0].values.map(function(d){return d.x;})).tickFormat(function(d) {
-			            return d3.time.format('%d %b %y %H:%M')(new Date(d));		            
-			        });
-				}else{				
-					chart.xAxis.showMaxMin(true).tickFormat(function(d) {
-						if(window.event !== undefined && (window.event.type === 'mousemove')){
-							return dateService.getDateFromTimeStamp(d,patientDashboard.dateFormat,'/') + '  ('+ d3.time.format('%I:%M %p')(new Date(d)) + ')'
-						}else{
-							return d3.time.format('%d-%b-%y')(new Date(d));
-						}
-					});
-				}
-
-				chart.yAxis
-					.tickFormat(function(d) {
-							return d;
-				});
-				chart.yAxis.tickFormat(d3.format('d'));
-				d3.select('#cumulativeGraph svg')
-					.datum($scope.formatedCumulativeGraphData)
-					.call(chart);
-				nv.utils.windowResize(chart.update);
-        d3.selectAll('#cumulativeGraph svg').style("visibility", "hidden");
-		$scope.CustomizationInCumulativeGraph();
-
-		d3.selectAll('#cumulativeGraph svg').selectAll(".nv-x .tick").selectAll('text').
-        attr("dy" , 12);
-
-			return chart;
-		});
-		}
-
-  $scope.CustomizationInCumulativeGraph = function() {
-		d3.selectAll('#cumulativeGraph svg').selectAll('.nv-axislabel').
-		attr("y" , "-40");
-		d3.selectAll('#cumulativeGraph svg').selectAll('.nv-axis .tick').append('circle').
-		attr("cx" , "0").
-		attr("cy" , "0").
-		attr("r" , "2").
-		attr("fill" , "#aeb5be");
-
-        d3.selectAll('#cumulativeGraph svg').selectAll(".nv-axis .nv-axisMaxMin").selectAll('text').
-        attr("dy" , 12);
-
-        setTimeout(function() {
-          d3.selectAll('#cumulativeGraph svg').selectAll('.nv-axis .trans_value').selectAll('text').attr("dy", 0);
-          }, 500);
-
-		if($scope.formatedCumulativeGraphData[0].values.length  === 1){
-          d3.selectAll('#cumulativeGraph svg').selectAll(".x.axis .tick").selectAll('text').attr("dx" , 533);
-        }
-		if($scope.formatedCumulativeGraphData[0] && $scope.formatedCumulativeGraphData[0].values.length > 20){
-	      setTimeout(function() {
-	          d3.selectAll('#cumulativeGraph svg').selectAll('.nv-lineChart circle.nv-point').attr("r", "0");
-	          d3.selectAll('#cumulativeGraph svg').style("visibility", "visible");
-	      }, 500);
-    	} else {
-	      setTimeout(function() {
-	          d3.selectAll('#cumulativeGraph svg').selectAll('.nv-lineChart circle.nv-point').attr("r", "1.3");
-	          d3.selectAll('#cumulativeGraph svg').style("visibility", "visible");
-	        }, 500);
-	    }								
-      		
- }
-	$scope.getTreatmentGraphData = function() {		
-		if($scope.selectedClinic){
-			hcpDashBoardService.getTreatmentGraphPoints($scope.hcpId, $scope.selectedClinic.id, dateService.getDateFromTimeStamp($scope.fromTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), $scope.groupBy).then(function(response){
-				if( response !== null && response.data !== null && response.data.treatmentStatitics !== undefined) {
-					$scope.showTreatmentLegends = true;
-					$scope.serverTreatmentGraphData = response.data.treatmentStatitics;
-					$scope.serverTreatmentGraphData = graphUtil.convertIntoServerTimeZone($scope.serverTreatmentGraphData,hcpDashboardConstants.treatmentGraph.name);
-					$scope.formatedTreatmentGraphData = graphUtil.convertIntoTreatmentGraph($scope.serverTreatmentGraphData);
-					$scope.handlelegends();
-					$scope.treatmentGraphRange = graphUtil.getYaxisRangeTreatmentGraph($scope.serverTreatmentGraphData);
-					$scope.createTreatmentGraphData();
-					$scope.serverTreatmentGraphDataForTooltip = graphUtil.convertIntoTreatmentGraphTooltipData($scope.serverTreatmentGraphData);
-					$scope.drawTreatmentGraph();
-				} else {
-					$scope.showTreatmentLegends = false;
-					$scope.treatmentGraph = true;
-					$scope.plotNoDataAvailable();
-				}
-			}).catch(function(response) {
-				 $scope.showTreatmentLegends = false;
-				 $scope.treatmentGraph = true;
-			   $scope.plotNoDataAvailable();
-			});
+			});							
 		}else{
-			$scope.showTreatmentLegends = false;
-			$scope.treatmentGraph = true;
 			$scope.plotNoDataAvailable();
 		}
+	};
+
+	
+	$scope.getTreatmentGraphData = function() {
+		if($scope.selectedClinic){
+			hcpDashBoardService.getTreatmentGraphPoints($scope.hcpId, $scope.selectedClinic.id, dateService.getDateFromTimeStamp($scope.fromTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), $scope.groupBy).then(function(response){
+				console.log("treatment response : ", response);				
+				$scope.treatmentChartData = response.data;
+				if($scope.treatmentChartData && typeof($scope.treatmentChartData) === "object"){ 
+					$scope.noDataAvailable = false;
+					angular.forEach($scope.treatmentChartData.xAxis.categories, function(x, key){
+		              $scope.treatmentChartData.xAxis.categories[key] = dateService.convertToTimestamp(x);
+		            });
+		            angular.forEach($scope.treatmentChartData.series, function(s, key1){
+		            	if($scope.treatmentChartData.series[key1].name.toLowerCase() === "average length of treatment"){
+							$scope.treatmentChartData.series[key1].yAxis = 1;
+							$scope.secondaryAxisIndex = key1;
+							$scope.treatmentChartData.series[key1].color = "#ff9829";
+		            	}else{
+		            		$scope.primaryAxisIndex = key1;
+		            		$scope.treatmentChartData.series[key1].color = "#4e95c4";
+		            	}
+			            var marker = {};
+			            marker.radius = (s.data && s.data.length < 50)? 3 : 2; 
+			            angular.forEach(s.data, function(d, key2){
+			              var tooltipDateText = $scope.treatmentChartData.series[key1].data[key2].x ;
+			              $scope.treatmentChartData.series[key1].data[key2].marker = marker;
+			              $scope.treatmentChartData.series[key1].data[key2].x = $scope.treatmentChartData.xAxis.categories[key2];
+			              $scope.treatmentChartData.series[key1].data[key2].toolText = {};
+			              $scope.treatmentChartData.series[key1].data[key2].toolText.dateText = tooltipDateText;
+			              if($scope.treatmentChartData.series[key1].data[key2].toolText.missedTherapy){
+			                $scope.treatmentChartData.series[key1].data[key2].color = "red";
+			              }
+			            });            
+						setTimeout(function(){								
+							$scope.treatmentChart("treatmentGraph", $scope.treatmentChartData);          
+						}, 10); 
+		          });
+				}else{					
+					$scope.plotNoDataAvailable();
+				}
+			}).catch(function(response) {				
+				$scope.plotNoDataAvailable();
+			});
+		}else{			
+			$scope.plotNoDataAvailable();
+		}				
 	};
 
 	$scope.calculateTimeDuration = function(durationInDays) {
@@ -409,9 +373,8 @@ angular.module('hillromvestApp')
 		}
 	};
 
-	$scope.drawChart = function(datePicker,dateOption,groupByOption,durationInDays) {
-		$scope.selectedDateOption = dateOption;
-		$scope.removeGraph();
+	$scope.drawChart = function(datePicker,dateOption,groupByOption,durationInDays) {	
+		$scope.selectedDateOption = dateOption;	
 		if(datePicker === undefined){
 			$scope.calculateTimeDuration(parseInt(durationInDays));
 			$scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
@@ -670,6 +633,277 @@ angular.module('hillromvestApp')
 	$scope.getYesterday = function(){
 		var d = new Date();	
 		return dateService.getDateFromTimeStamp((d.setDate(d.getDate() - 1)),hcpDashboardConstants.USdateFormat,'/');	
-	}
+	};
+
+	$scope.treatmentChart = function(divId, chartData){
+		$scope.drawDualAxisChart(divId, chartData);
+	};
+
+	$scope.cumulativeChart = function(divId, chartData){
+		$scope.drawLineChart(divId, chartData);
+	};
+
+    $scope.drawLineChart = function(divId, chartData){ 
+    	divId = (divId)? divId : "cumulativeGraph";
+	    var chart = Highcharts.charts[document.getElementById(divId).getAttribute("data-highcharts-chart")]; // get old chart
+
+		// set visibility to be the same as previous chart:
+	  	if(chart) {
+		    Highcharts.each(chartData.series, function(series, index) {
+		      series.visible = Highcharts.pick(chart.series[index].visible, true);
+		    });
+	 	}          
+      $('#'+divId).highcharts({
+          chart: {
+              type: 'line',
+              zoomType: 'xy',
+              backgroundColor:  "#e6f1f4"
+          },
+          title: {
+              text: ''
+          },
+          xAxis: {
+              allowDecimals: false,
+              type: 'datetime',         
+              title: {
+                    text: ''
+                },
+              minPadding: 0,
+              maxPadding: 0,
+              startOnTick: false,
+              endOnTick: false,
+              labels:{
+                style: {
+                  color: '#525151',                  
+                  fontWeight: 'bold'
+                },
+                formatter:function(){
+                  return  Highcharts.dateFormat("%m/%e/%Y",this.value);
+                }               
+              }   
+          },
+          yAxis: {
+              	gridLineColor: '#FF0000',
+                gridLineWidth: 0,
+                lineWidth:1,
+                "minRange": 1,
+                "min": 0,               
+                title: {
+                    text: "No. of Patients",
+                    style:{
+                      color: '#525151',
+                      font: '10px Helvetica',
+                      fontWeight: 'bold'
+                  }     
+                },
+                 allowDecimals:false,
+                 labels:{
+                  style: {
+                      color: '#525151',                      
+                      fontWeight: 'bold'
+                  }               
+                }
+		},
+		tooltip: {	
+			backgroundColor: "rgba(255,255,255,1)",  				
+			crosshairs: [{		                
+                dashStyle: 'solid',
+                color: '#b4e6f6'
+            },
+            false],
+			formatter: function() {
+		        var s = '<div style="font-size:12x; font-weight: bold; padding-bottom: 3px;">&nbsp;'+  Highcharts.dateFormat('%m/%e/%Y', this.x) +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div>';
+
+		        $.each(this.points, function(i, point) {
+		            s += '<div style="font-size:10px; font-weight: bold; width="100%"><div style="color:'+ point.series.color +';padding:5px;width:85%;float:left"> ' + point.series.name + '</div> ' 
+		            + '<div style="padding:5px;width:5%"><b>' + point.y + '</b></div></div>';
+		        });
+		        s += '</div>';
+
+		        return s;
+		    },
+		    hideDelay: 0,
+			useHTML: true,				
+			shared: true
+		},
+		plotOptions: {	
+	        line: {
+                lineWidth: 1,
+                softThreshold: false
+            },	        	
+            series: {
+                events: {
+                    legendItemClick: function () {
+                    		var self = this,
+                        		allow = false;
+                        
+                        if(self.visible) {
+                          $.each(self.chart.series, function(i, series) {
+                            if(series !== self && series.visible) {
+                            	allow = true;
+                            }
+                          });
+                          if(!allow){
+                          	notyService.showMessage(notyMessages.minComplianceError, notyMessages.typeWarning );
+                          }
+                          return allow;
+                        }
+                    }
+                }
+            }
+        },				              	       
+		legend:{
+			enabled: true
+		},          
+		series: chartData.series
+      });
+    };
+
+    $scope.drawDualAxisChart = function(divId, chartData){
+    	divId = (divId)? divId : "treatmentGraph";
+		    var chart = Highcharts.charts[document.getElementById(divId).getAttribute("data-highcharts-chart")]; // get old chart
+
+			// set visibility to be the same as previous chart:
+		  	if(chart) {
+			    Highcharts.each(chartData.series, function(series, index) {
+			      series.visible = Highcharts.pick(chart.series[index].visible, true);
+			    });
+		 	}          
+	      $('#'+divId).highcharts({
+	          chart: {
+	              type: 'line',
+	              zoomType: 'xy',
+	              backgroundColor:  "#e6f1f4"
+	          },
+	          title: {
+	              text: ''
+	          },
+	          xAxis: {
+	              allowDecimals: false,
+	              type: 'datetime',         
+	              title: {
+	                    text: ''
+	                },
+	              minPadding: 0,
+	              maxPadding: 0,
+	              startOnTick: false,
+	              endOnTick: false,
+	              labels:{
+	                style: {
+	                  color: '#525151',                  
+	                  fontWeight: 'bold'
+	                },
+	                formatter:function(){
+	                  return  Highcharts.dateFormat("%m/%e/%Y",this.value);
+	                }               
+	              }   
+	          },	         
+			 yAxis: [{ // Primary yAxis
+	            labels: {	                
+	                style: {
+	                      color: chartData.series[$scope.primaryAxisIndex].color,                     
+	                      fontWeight: 'bold'
+	                  } 
+	            },
+	            title: {
+	                text: "Treatments",
+	                style: {
+	                  color: '#525151',
+                      font: '10px Helvetica',
+                      fontWeight: 'bold'
+	                }
+	            },
+	            "minRange": 1,
+	            "min": 0,
+	            gridLineColor: '#FF0000',
+                gridLineWidth: 0,
+                lineWidth:1,
+                allowDecimals:false
+	        }, { // Secondary yAxis
+	            title: {
+	                text: "Minutes",
+	                style: {
+	                  color: '#525151',
+                      font: '10px Helvetica',
+                      fontWeight: 'bold'
+	                }
+	            },
+	            labels: {
+	                style: {
+                      color: chartData.series[$scope.secondaryAxisIndex].color,                  
+                      fontWeight: 'bold'
+                  } 
+	            },
+	            "minRange": 1,
+	            "min": 0,
+	            gridLineColor: '#FF0000',
+                gridLineWidth: 0,
+                lineWidth:1,
+                allowDecimals:false,
+	            opposite: true
+	        }],
+			tooltip: {	
+				backgroundColor: "rgba(255,255,255,1)",  				
+				crosshairs: [{		                
+	                dashStyle: 'solid',
+	                color: '#b4e6f6'
+	            },
+	            false],
+				formatter: function() {
+			        var s = '<div style="font-size:12x; font-weight: bold; padding-bottom: 3px;">&nbsp;'+  Highcharts.dateFormat('%m/%e/%Y', this.x) +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div>';
+
+			        $.each(this.points, function(i, point) {
+			            s += '<div style="font-size:10px; font-weight: bold; width="100%"><div style="color:'+ point.series.color +';padding:5px;width:85%;float:left"> ' + point.series.name + '</div> ' 
+			            + '<div style="padding:5px;width:5%"><b>' + point.y + '</b></div></div>';
+			        });
+			        s += '</div>';
+
+			        return s;
+			    },
+			    hideDelay: 0,
+				useHTML: true,				
+				shared: true
+			},
+			plotOptions: {	
+		        line: {
+	                lineWidth: 1,
+	                softThreshold: false
+	            },	        	
+	            series: {
+	                events: {
+	                    legendItemClick: function () {
+	                    		var self = this,
+	                        		allow = false;
+	                        
+	                        if(self.visible) {
+	                          $.each(self.chart.series, function(i, series) {
+	                            if(series !== self && series.visible) {
+	                            	allow = true;
+	                            }
+	                          });
+	                          if(!allow){
+	                          	notyService.showMessage(notyMessages.minComplianceError, notyMessages.typeWarning );
+	                          }
+	                          return allow;
+	                        }
+	                    }
+	                }
+	            }
+	        },				              	       
+			legend:{
+				enabled: true
+			},          
+			series: chartData.series
+	      });
+    };
+
+    $scope.downloadChartsAsPdf = function(){
+    	if($scope.cumulativeGraph){
+    		exportutilService.exportHCPCharts("cumulativeGraph", null, "hcpCharts", $scope.fromDate, $scope.toDate);
+    	}else if($scope.treatmentGraph){
+    		exportutilService.exportHCPCharts(null, "treatmentGraph", "hcpCharts", $scope.fromDate, $scope.toDate);
+    	}
+    	
+    };
 }]);
 

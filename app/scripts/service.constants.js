@@ -156,7 +156,9 @@ angular.module('hillromvestApp').constant('pdfServiceConstants', {
         dateRangeOfReportLabel: "Date Range Of Report",
         complianceStatistics: "Compliance Statistics",
         hmrStatistics: "HRM Statistics",
-        survey: "Survey"
+        survey: "Survey",
+        cumulativeStatistics: "Cumulative Statistics",
+        treatmentsStatistics: "Treatments Statistics"
     },
     style:{
         font:{

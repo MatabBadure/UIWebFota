@@ -947,7 +947,8 @@ angular.module('hillromvestApp')
       $('#'+divId).highcharts({
           chart: {
               type: 'area',
-              zoomType: 'xy'
+              zoomType: 'xy',
+              backgroundColor:  "#e6f1f4"
           },
           title: {
               text: ''
@@ -1053,7 +1054,8 @@ angular.module('hillromvestApp')
       $('#'+divId).highcharts({
           chart: {
               type: 'column',
-              zoomType: 'xy'
+              zoomType: 'xy',
+              backgroundColor:  "#e6f1f4"
           },
           title: {
               text: ''

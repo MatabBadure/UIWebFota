@@ -598,4 +598,22 @@ angular.module('hillromvestApp')
       pdf.save('VisiView™.pdf'); 
     },1000); 
   }
+
+  this.exportHCPCharts = function(cdivId, tdivId, canvasId, fromDate, toDate){
+    var pdf = this.getPdf();
+    var imgY = 150;
+    pdf = this.setHeader(pdf, fromDate, toDate);
+    if(cdivId){
+      pdf = this.addSvgToPDF(pdf, canvasId, cdivId, 20, imgY, 540, 200, pdfServiceConstants.text.cumulativeStatistics); 
+      imgY = imgY + 250;
+    }
+    if(tdivId){
+      pdf = this.addSvgToPDF(pdf, canvasId, tdivId, 20, imgY, 540, 200, pdfServiceConstants.text.treatmentsStatistics); 
+    }    
+    pdf = this.setFooter(pdf, pdf.internal.pageSize.height-80);
+    pdf = this.setPageNumber(pdf, "1", "1");
+    setTimeout(function(){     
+      pdf.save('VisiView™.pdf'); 
+    },1000); 
+  }
 }]);
