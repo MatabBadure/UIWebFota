@@ -1107,6 +1107,10 @@ angular.module('hillromvestApp')
       $scope.isVerificationModal = true;
     };
 
+    $scope.cancelProtocolUpdate = function(){
+      $state.go('patientEditProtocol', {'protocolId': $stateParams.protocolId});
+    };
+
     $scope.initUpdatedProtocolDetail = function(){
       $scope.getPatientById($stateParams.patientId);
       var date = new Date();

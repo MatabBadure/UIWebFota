@@ -180,7 +180,13 @@ angular.module('hillromvestApp',
       },
       {
         name: 'surveyModule',
-        files:['bower_components/angular-daterangepicker/js/angular-daterangepicker.js']
+        files:[
+          'bower_components/canvg-gabelerner/rgbcolor.js',
+          'bower_components/canvg-gabelerner/StackBlur.js',
+          'bower_components/canvg-gabelerner/canvg.js',
+          'https://code.highcharts.com/highcharts.js',
+          'bower_components/angular-daterangepicker/js/angular-daterangepicker.js'
+          ]
       }]
     });
   }])

@@ -17,12 +17,12 @@
     </div>
   </div>
 
-  <div class="col-md-16 reset-padding survey_grey_color" ng-repeat="survey in surveyGridView track by $index">
-    <div class="col-md-1 border-right">
+  <div class="col-md-16 reset-padding survey_grey_color flex" ng-repeat="survey in surveyGridView track by $index">
+    <div class="col-md-1 border-right text-center">
       <span>Q-{{$index + 1}}</span>
     </div>
     <div class="col-md-11 cyan-blue-light border-right">
-      <span>{{survey.question}}</span>
+      <span>{{survey.questionText}}</span>
     </div>
     <div class="col-md-1 text-center border-right">
       <span ng-if="$index !== 6">{{survey.yesCount}}</span>
@@ -33,7 +33,7 @@
       <span ng-if="$index === 6">-</span>
     </div>
     <div class="col-md-2 text-center padding10">
-      <div ng-click="showComments(survey, $index)" ng-class= "{'pointer-fill-event' : survey.noCount !== 0 || $index === 6}"><span class="border_bt">View</span></div>
+      <div ng-click="showComments(survey, $index)" ng-class= "{'pointer-fill-event' : survey.noCount !== 0 || $index === 6}"><span class="view">View</span></div>
     </div>
   </div>
 </div>
@@ -43,9 +43,9 @@
     <div class="modal__content survey_content">
       <header class="modal__header">
         <button type="button" class="modal__close" data-dismiss="modal" ng-click="hideComments()">&times;</button>
-         <p>Q : {{selectedSurvey.question}}</p>
+         <p>Q : {{selectedSurvey.questionText}}</p>
         </header>
-        <div class="modal__body">
+        <div class="modal__body survey__body">
           <div class="grid-view">  
             <div class="col-md-16 text-center reset-padding">
               <div class="col-md-3 cyan-blue-light text-center  border-right">

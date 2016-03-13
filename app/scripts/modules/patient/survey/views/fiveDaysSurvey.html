@@ -7,10 +7,10 @@
 
 	  <div class="col-md-16 reset-padding margin-top">
           <div class="col-md-12 reset-padding">
-            <span class="ng-scope dashboard__form--type " translate="console.survey.general-info"></span>
+            <span class="ng-scope dashboard__form--type survey_grey_color" translate="console.survey.general-info"></span>
           </div>
           <div class="col-md-4 user-required reset-padding">
-            <span class="ng-scope" translate="console.survey.required-field"></span>
+            <span class="has-error">*</span> <span class="ng-scope" translate="console.survey.required-field"></span>
           </div>
 	   </div>
 
@@ -44,11 +44,12 @@
 	   </div>
 
 	    <div class="col-md-16 reset-padding margin-top">
-    		<div class="reset-padding">
+    		<div class="reset-padding survey_grey_color dashboard__form--type">
         		<span class="ng-scope" translate="console.survey.usage-info"></span>
      		 </div>
      		 <div class="col-md-12 dark_grey_text_color14 reset-padding">
 	     		 <p translate="console.survey.usage-info-message"></p>
+	     		  <p translate="console.survey.usage-info-message1"></p>
      		 </div>
 	    </div>
 
@@ -61,7 +62,7 @@
 	            <div class="col-md-16 reset-padding">
 	           		 <input class="col-md-14" type="text" ng-model="survey.questions[2].answerValue1" ng-disabled="true">
 	           	</div>
-          </div>      
+          </div> 
 	   </div>
 
 	     <div class="col-md-16 reset-padding margin-top">
@@ -111,7 +112,7 @@
 	   </div>
 	   
 	   <div class="col-md-16 reset-padding" >
-	   		<input type="textbox" placeholder="If no, please explain" class="ng-pristine col-md-15 ng-untouched ng-valid" ng-model="survey.questions[5].answerValue2" ng-disabled="survey.questions[5].answerValue1 === survey.questions[5].answers[0]" maxlength="250">
+	   		<input type="textbox" placeholder="If no, please explain" class="ng-pristine col-md-15 ng-untouched ng-valid" ng-model="survey.questions[5].answerValue2" ng-hide="survey.questions[5].answerValue1 === survey.questions[5].answers[0]" maxlength="250">
 	   </div>
 
 
@@ -136,7 +137,7 @@
 	   </div>
 
 	   <div class="col-md-16 reset-padding" >
-	   		<input type="textbox" placeholder="If no, please explain" class="ng-pristine col-md-15 ng-untouched ng-valid" ng-model="survey.questions[6].answerValue2" ng-disabled="survey.questions[6].answerValue1 === survey.questions[6].answers[0]" maxlength="250">
+	   		<input type="textbox" placeholder="If no, please explain" class="ng-pristine col-md-15 ng-untouched ng-valid" ng-model="survey.questions[6].answerValue2" ng-hide="survey.questions[6].answerValue1 === survey.questions[6].answers[0]" maxlength="250">
 	   </div>
 	
 
@@ -160,7 +161,7 @@
 			</div>
 	   </div>
 	   <div class="col-md-16 reset-padding" >
-	   		<input type="textbox" placeholder="If no, please explain" class="ng-pristine col-md-15 ng-untouched ng-valid" ng-model="survey.questions[7].answerValue2" ng-disabled="survey.questions[7].answerValue1 === survey.questions[7].answers[0]" maxlength="250">
+	   		<input type="textbox" placeholder="If no, please explain" class="ng-pristine col-md-15 ng-untouched ng-valid" ng-model="survey.questions[7].answerValue2" ng-hide="survey.questions[7].answerValue1 === survey.questions[7].answers[0]" maxlength="250">
 	   </div>
 	  
 
@@ -184,7 +185,7 @@
 			</div>
 	   </div>
 	   <div class="col-md-16 reset-padding" >
-	   		<input type="textbox" placeholder="If no, please explain" class="ng-pristine col-md-15 ng-untouched ng-valid" ng-model="survey.questions[8].answerValue2" ng-disabled="survey.questions[8].answerValue1 === survey.questions[8].answers[0]" maxlength="250">
+	   		<input type="textbox" placeholder="If no, please explain" class="ng-pristine col-md-15 ng-untouched ng-valid" ng-model="survey.questions[8].answerValue2" ng-hide="survey.questions[8].answerValue1 === survey.questions[8].answers[0]" maxlength="250">
 	   </div>
 
 	   <div class="col-md-16 reset-padding margin-top graphview_text_color">
@@ -207,7 +208,7 @@
 			</div>
 	   </div>
 	   <div class="col-md-16 reset-padding" >
-	   		<input type="textbox" placeholder="If no, please explain" class="ng-pristine col-md-15 ng-untouched ng-valid" ng-model="survey.questions[9].answerValue2" ng-disabled="survey.questions[9].answerValue1 === survey.questions[9].answers[0]" maxlength="250">
+	   		<input type="textbox" placeholder="If no, please explain" class="ng-pristine col-md-15 ng-untouched ng-valid" ng-model="survey.questions[9].answerValue2" ng-hide="survey.questions[9].answerValue1 === survey.questions[9].answers[0]" maxlength="250">
 	   </div>
 	
 
@@ -231,7 +232,7 @@
 			</div>
 	   </div>
 	   <div class="col-md-16 reset-padding" >
-	   		<input type="textbox" placeholder="If no, please explain" class="ng-pristine col-md-15 ng-untouched ng-valid" ng-model="survey.questions[10].answerValue2" ng-disabled="survey.questions[10].answerValue1 === survey.questions[10].answers[0]" maxlength="250">
+	   		<input type="textbox" placeholder="If no, please explain" class="ng-pristine col-md-15 ng-untouched ng-valid" ng-model="survey.questions[10].answerValue2" ng-hide="survey.questions[10].answerValue1 === survey.questions[10].answers[0]" maxlength="250">
 	   </div>
 
 	    <div class="col-md-16 reset-padding margin-top graphview_text_color">
@@ -240,7 +241,7 @@
 	   </div>
 
 	   <div class="col-md-16 reset-padding">
-			<input class="col-md-15" type="textarea" ng-model="survey.questions[11].answerValue2" maxlength="250">
+			<input class="col-md-15 height65" type="textarea" ng-model="survey.questions[11].answerValue2" maxlength="250">
 			
 	   </div>
 	   <div class="col-md-16 reset-padding margin-top graphview_text_color">

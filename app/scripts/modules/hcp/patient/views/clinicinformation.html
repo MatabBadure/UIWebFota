@@ -23,13 +23,13 @@
       <span class="user-detail-info__data--key" translate="clinic.type"></span>
       <span class="user-detail-info__data--key">:</span>
       <span class="user-detail-info__data--value" ng-if="clinic.parent" translate="clinic.parent"></span>
-      <span class="user-detail-info__data--value" ng-if="!clinic.parent" translate="clinic.satellite"></span>
+      <span class="user-detail-info__data--value" ng-if="clinic.parent === false" translate="clinic.satellite"></span>
     </div>
     <div class="col-md-4 col-sm-4 user-detail-info__data">
       <span class="user-detail-info__data--key" translate="clinic.status"></span>
       <span class="user-detail-info__data--key">:</span>
       <span class="user-detail-info__data--value" ng-if="clinic.deleted" translate="clinic.inactive"></span>
-      <span class="user-detail-info__data--value" ng-if="!clinic.deleted" translate="clinic.active"></span>
+      <span class="user-detail-info__data--value" ng-if="clinic.deleted === false" translate="clinic.active"></span>
     </div>
 
     <div class="col-md-4 col-sm-4 user-detail-info__data">
