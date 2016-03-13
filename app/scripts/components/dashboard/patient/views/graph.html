@@ -156,14 +156,14 @@
 	<div class="graph_nodata" ng-if="noDataAvailable">
 		<span class="noData_text"> No Data Available!</span>
 	</div><!--  ng-show="isHMR && !noDataAvailable"-->
-	<div class="complianceGraphPrim_wrapper" id="lineGraphWrapper" ng-class="{ 'hide-chart': !isHMR, 'show-chart': isHMR}">
-		<div id="HMRGraph" ng-if="!noDataAvailable">
+	<div class="complianceGraphPrim_wrapper" ng-show="!noDataAvailable" id="lineGraphWrapper" >
+		<div id="HMRGraph" ng-class="{ 'hide-chart': !isHMR, 'show-chart': isHMR}">
 			
 		</div>
 	</div><!-- ng-show="!noDataAvailable && !isHMR"-->
 	<div id="complianceGraphWrapper" >
-		<div id="complianceGraphPrim" class="complianceGraphPrim_wrapper" ng-class="{ 'hide-chart': isHMR, 'show-chart': !isHMR}">
-			<div id="synchronizedChart" class="complianceGraph col-md-16" ng-if="!noDataAvailable">
+		<div id="complianceGraphPrim" ng-show="!noDataAvailable" class="complianceGraphPrim_wrapper" >
+			<div id="synchronizedChart" class="complianceGraph col-md-16" ng-class="{ 'hide-chart': isHMR, 'show-chart': !isHMR}">
 			</div>
 		</div>
 	</div>
