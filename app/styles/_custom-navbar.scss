@@ -365,3 +365,25 @@ ul.logout-dropdown>li{
 .custom-textbox{
 	color:#c1c1c1;
 }
+.multiSelect > button{
+	border-radius:0;
+	min-height: 0!important;
+	background-image: linear-gradient(#fff, #fff);
+	color: #34455C;
+	height: 30px;
+    width: 210px;
+    padding: 0 5px;
+}
+.multiSelect > button:hover{
+	background-image: linear-gradient(#fff, #fff);
+}
+.multiSelect .buttonLabel{
+	display:block;
+	text-align: left;
+}
+.multiSelect .caret{
+	display:none;
+}
+.benchmarking__form__input > .custom-dropdown:before{
+	z-index: 999;
+}
