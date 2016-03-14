@@ -642,6 +642,11 @@ angular.module('hillromvestApp')
 	};
 
     $scope.drawLineChart = function(divId, chartData){ 
+		Highcharts.setOptions({
+			global: {
+				useUTC: false
+			}
+		}); 
     	divId = (divId)? divId : "cumulativeGraph";
 	    var chart = Highcharts.charts[document.getElementById(divId).getAttribute("data-highcharts-chart")]; // get old chart
 
@@ -678,12 +683,13 @@ angular.module('hillromvestApp')
                 formatter:function(){
                   return  Highcharts.dateFormat("%m/%e/%Y",this.value);
                 }               
-              }   
+              },
+              lineWidth:2   
           },
           yAxis: {
               	gridLineColor: '#FF0000',
                 gridLineWidth: 0,
-                lineWidth:1,
+                lineWidth:2,
                 "minRange": 1,
                 "min": 0,               
                 title: {
@@ -713,7 +719,7 @@ angular.module('hillromvestApp')
 		        var s = '<div style="font-size:12x; font-weight: bold; padding-bottom: 3px;">&nbsp;'+  Highcharts.dateFormat('%m/%e/%Y', this.x) +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div>';
 
 		        $.each(this.points, function(i, point) {
-		            s += '<div style="font-size:10px; font-weight: bold; width="100%"><div style="color:'+ point.series.color +';padding:5px;width:85%;float:left"> ' + point.series.name + '</div> ' 
+		            s += '<div style="font-size:10px; font-weight: bold; width:100%"><div style="color:'+ point.series.color +';padding:5px;width:90%;float:left"> ' + point.series.name + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div> ' 
 		            + '<div style="padding:5px;width:5%"><b>' + point.y + '</b></div></div>';
 		        });
 		        s += '</div>';
@@ -726,7 +732,7 @@ angular.module('hillromvestApp')
 		},
 		plotOptions: {	
 	        line: {
-                lineWidth: 1,
+                lineWidth: 2,
                 softThreshold: false
             },	        	
             series: {
@@ -794,12 +800,13 @@ angular.module('hillromvestApp')
 	                formatter:function(){
 	                  return  Highcharts.dateFormat("%m/%e/%Y",this.value);
 	                }               
-	              }   
+	              },
+	              lineWidth: 2   
 	          },	         
 			 yAxis: [{ // Primary yAxis
 	            labels: {	                
 	                style: {
-	                      color: chartData.series[$scope.primaryAxisIndex].color,                     
+	                      color: '#525151',//chartData.series[$scope.primaryAxisIndex].color,                     
 	                      fontWeight: 'bold'
 	                  } 
 	            },
@@ -815,7 +822,7 @@ angular.module('hillromvestApp')
 	            "min": 0,
 	            gridLineColor: '#FF0000',
                 gridLineWidth: 0,
-                lineWidth:1,
+                lineWidth:2,
                 allowDecimals:false
 	        }, { // Secondary yAxis
 	            title: {
@@ -828,7 +835,7 @@ angular.module('hillromvestApp')
 	            },
 	            labels: {
 	                style: {
-                      color: chartData.series[$scope.secondaryAxisIndex].color,                  
+                      color: '#525151',//chartData.series[$scope.secondaryAxisIndex].color,                  
                       fontWeight: 'bold'
                   } 
 	            },
@@ -836,7 +843,7 @@ angular.module('hillromvestApp')
 	            "min": 0,
 	            gridLineColor: '#FF0000',
                 gridLineWidth: 0,
-                lineWidth:1,
+                lineWidth:2,
                 allowDecimals:false,
 	            opposite: true
 	        }],
