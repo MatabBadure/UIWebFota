@@ -795,7 +795,7 @@ angular.module('hillromvestApp')
                     return Highcharts.dateFormat("%m/%e/%Y", this.value);
                   }
                 },
-                lineWidth: 2,
+                lineWidth: 2
               },
               yAxis: {
                 gridLineColor: '#FF0000',
