@@ -204,9 +204,14 @@ angular.module('hillromvestApp')
       format: patientDashboard.dateFormat,
       dateLimit: {"months":24},
       eventHandlers: {'apply.daterangepicker': function(ev, picker) {
-      $scope.durationRange = "Custom";     
-      $scope.calculateDateFromPicker(picker);  
-      $scope.selectChart();        
+          $scope.durationRange = "Custom";     
+          $scope.calculateDateFromPicker(picker);  
+          var dayDiff = dateService.getDateDiffIndays($scope.fromTimeStamp,$scope.toTimeStamp);
+          console.log("dayDiff : ", dayDiff);
+          if( dayDiff === 0){
+            $scope.durationRange = "Day";
+          }
+          $scope.selectChart($scope.fromDate);        
         }
       },
       opens: 'left'
@@ -654,6 +659,11 @@ angular.module('hillromvestApp')
     };
 
     $scope.synchronizedChart = function(divId){
+        Highcharts.setOptions({
+            global: {
+                useUTC: false
+            }
+        });
         divId = (divId) ? divId : "synchronizedChart";
         $("#"+divId).empty();
          /**
@@ -688,58 +698,30 @@ angular.module('hillromvestApp')
 
         //$("#"+divId).bind('mouseleave', function(e) { 
         //  $(".button").unbind('click').click(
-        $("#"+divId).unbind('mouseleave').mouseleave(function(e) {          
-          var chart;
-          for (var i = 0; i < Highcharts.charts.length; i = i + 1) {
+        $("#"+divId).unbind('mouseleave').mouseleave(function(e) {                    
+          e.stopPropagation();         
+          var chart,
+          point,
+          i,
+          event;
+
+          var charts = Highcharts.charts;   
+          for (i = 0; i < Highcharts.charts.length; i = i + 1) {
             chart = Highcharts.charts[i];
-            if(chart &&  chart.renderTo.offsetParent && chart.renderTo.offsetParent.id === divId){ 
-            $('.highcharts-button').hide();              
-              fullReset(chart.pointer);
+            if(chart &&  chart.renderTo.offsetParent && chart.renderTo.offsetParent.id === divId){               
+              event = chart.pointer.normalize(e.originalEvent);
+              point = chart.series[0].searchPoint(event, true);
+
+              point.onMouseOut(); 
+              chart.tooltip.hide(point);
+              chart.xAxis[0].hideCrosshair(); 
+              if( $('.highcharts-button').length > 0 ){
+                $('.highcharts-button').hide();
+              }
             }
-          }
+          } 
         });
 
-        function fullReset(pointer) {
-          var each = Highcharts.each,
-              removeEvent = Highcharts.removeEvent,
-              doc = document,
-              chart = pointer.chart,
-              hoverSeries = chart.hoverSeries,
-              hoverPoint = chart.hoverPoint,
-              hoverPoints = chart.hoverPoints,
-              tooltip = chart.tooltip,
-              delay = 200;
-        
-                    if (hoverPoint) {
-                        hoverPoint.onMouseOut();
-                    }
-
-                    if (hoverPoints) {
-                        each(hoverPoints, function (point) {
-                            point.setState();
-                        });
-                    }
-
-                    if (hoverSeries) {
-                        hoverSeries.onMouseOut();
-                    }
-
-                    if (tooltip) {
-                        tooltip.hide(delay);
-                    }
-
-                    if (pointer._onDocumentMouseMove) {
-                        removeEvent(doc, 'mousemove', pointer._onDocumentMouseMove);
-                        pointer._onDocumentMouseMove = null;
-                    }
-
-                    // Remove crosshairs
-                    each(chart.axes, function (axis) {
-                        axis.hideCrosshair();
-                    });
-
-                    pointer.hoverX = chart.hoverPoints = chart.hoverPoint = null;
-        }
         
         /**
          * Synchronize zooming through the setExtremes event handler.
@@ -835,7 +817,7 @@ angular.module('hillromvestApp')
                         y: -5,
                         x: -10,
                         style: {
-                            color: 'blue',
+                            color: '#c1c1c1',
                             fontWeight: 'bold'
                         }/*,
                         textAlign: "left"*/
@@ -851,7 +833,7 @@ angular.module('hillromvestApp')
                       y: -5,
                       x: -10,
                       style: {
-                          color: 'blue',
+                          color: '#c1c1c1',
                           fontWeight: 'bold'
                       }/*,
                         textAlign: "left"*/
@@ -906,7 +888,7 @@ angular.module('hillromvestApp')
     $scope.getHMRGraph = function(){
       patientDashBoardService.getHMRGraphPoints($scope.patientId, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.durationRange).then(function(response){
         $scope.hmrChartData = response.data;        
-        $scope.noDataAvailable = false;                 
+        $scope.noDataAvailable = false;           
         if($scope.hmrChartData && typeof($scope.hmrChartData) === "object"){ 
           if($scope.durationRange !== "Day"){
             angular.forEach($scope.hmrChartData.xAxis.categories, function(x, key){
@@ -941,7 +923,12 @@ angular.module('hillromvestApp')
       });
     };
 
-    $scope.HMRAreaChart = function(divId){      
+    $scope.HMRAreaChart = function(divId){ 
+      Highcharts.setOptions({
+          global: {
+              useUTC: false
+          }
+      });      
       divId = (divId)? divId : "HMRGraph";
       $('#'+divId).empty();
       $('#'+divId).highcharts({
@@ -1004,7 +991,14 @@ angular.module('hillromvestApp')
                   var s = '';
                   var headerStr = '';
                   var footerStr = '';
-                  var noteStr = '';
+                  var noteStr = '';                  
+                  var dateTextLabel = Highcharts.dateFormat("%m/%e/%Y",this.x);
+                  if(this.point.toolText.sessionNo && this.point.toolText.sessionNo.indexOf("/" > 0)){
+                    var splitSession = this.point.toolText.sessionNo.split("/");
+                    if(parseInt(splitSession[1]) > 0){
+                      dateTextLabel += ' ( ' + Highcharts.dateFormat("%I:%M %p",this.x) + ' )';
+                    }
+                  }
                   var pointDetails = '<div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left"> Session No </div> ' 
                     + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.sessionNo  + '</b></div>';                 
                     pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left"> ' + this.point.series.name + '</div> ' 
@@ -1017,7 +1011,7 @@ angular.module('hillromvestApp')
                     + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.duration + '</b></div>';
                   if(this.point.toolText.noteText){
                     s = '<div style="font-size:10px; font-weight: bold; width:100%;display-inline:block;">' 
-                    s = '<div style="font-size:12x;font-weight: bold; padding-bottom: 3px;float: left; width: 48%">'+  this.point.toolText.dateText +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>';
+                    s = '<div style="font-size:12x;font-weight: bold; padding-bottom: 3px;float: left; width: 48%">'+  dateTextLabel +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>';
                     s += '<div style="font-size:12x;font-weight: bold;padding-left: 3px; padding-bottom: 3px;float: right;width: 50%">Note </div>'
                     s += '</div><div style="font-size:10px; font-weight: bold; width:100%">';
                     headerStr = '<div style="font-size:10px; font-weight: bold; width:50%; float: left; border-right: 1px solid #cccccc">';                                     
@@ -1025,7 +1019,7 @@ angular.module('hillromvestApp')
                     noteStr = '<div style="font-size:10px; font-weight: bold; width:50%; float: right;"><div style="padding:5px 0;width:98%;"> <span style="padding: 5px;">'+ this.point.toolText.noteText+' </span></div></div>';
                     s += headerStr+pointDetails+footerStr+noteStr+'</div>';
                   }else{
-                     s = '<div style="font-size:12x;font-weight: bold; padding-bottom: 3px;">'+  this.point.toolText.dateText +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div style="font-size:10px; font-weight: bold; width:100%">';
+                     s = '<div style="font-size:12x;font-weight: bold; padding-bottom: 3px;">'+  dateTextLabel +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div style="font-size:10px; font-weight: bold; width:100%">';
                      headerStr = '<div style="font-size:10px; font-weight: bold; width:100%">';
                      footerStr = '</div>';
                      noteStr = '';
@@ -1067,7 +1061,12 @@ angular.module('hillromvestApp')
       });
     };
 
-    $scope.HMRDayChart = function(divId){      
+    $scope.HMRDayChart = function(divId){
+      Highcharts.setOptions({
+          global: {
+              useUTC: false
+          }
+      });      
       divId = (divId)? divId : "HMRGraph";
       $('#'+divId).empty();
       $('#'+divId).highcharts({
@@ -1118,7 +1117,15 @@ angular.module('hillromvestApp')
           tooltip: { 
               backgroundColor: "rgba(255,255,255,1)",            
               formatter: function() {
-                  var s = '<div style="font-size:12x;font-weight: bold; padding-bottom: 3px;">'+  this.point.toolText.dateText +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div>';
+                  var dateX = dateService.convertToTimestamp(this.point.category);
+                  var dateTextLabel = Highcharts.dateFormat("%m/%e/%Y",dateX);                  
+                  if(this.point.toolText.sessionNo && this.point.toolText.sessionNo.indexOf("/" > 0)){
+                    var splitSession = this.point.toolText.sessionNo.split("/");                    
+                    if(parseInt(splitSession[1]) > 0){                      
+                      dateTextLabel += ' ( ' + Highcharts.dateFormat("%I:%M %p",dateX) + ' )';                      
+                    }
+                  }
+                  var s = '<div style="font-size:12x;font-weight: bold; padding-bottom: 3px;">'+  dateTextLabel +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div>';
                   s += '<div style="font-size:10px; font-weight: bold; width:100%"><div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left"> Session No </div> ' 
                   + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.sessionNo  + '</b></div></div>';                 
                   s += '<div style="font-size:10px; font-weight: bold; width:100%"><div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left"> ' + this.point.series.name + '</div> ' 
