@@ -1011,8 +1011,8 @@ angular.module('hillromvestApp')
                     + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.duration + '</b></div>';
                   if(this.point.toolText.noteText){
                     s = '<div style="font-size:10px; font-weight: bold; width:100%;display-inline:block;">' 
-                    s = '<div style="font-size:12x;font-weight: bold; padding-bottom: 3px;float: left; width: 48%">'+  dateTextLabel +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>';
-                    s += '<div style="font-size:12x;font-weight: bold;padding-left: 3px; padding-bottom: 3px;float: right;width: 50%">Note </div>'
+                    s = '<div style="font-size:12x;font-weight: bold; padding-bottom: 3px; padding-right: 50px; float: left; width: 58%">'+  dateTextLabel +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>';
+                    s += '<div style="font-size:12x;font-weight: bold;padding-left: 4px; padding-bottom: 3px;float: right;width: 40%;padding-right:10px;">Note </div>'
                     s += '</div><div style="font-size:10px; font-weight: bold; width:100%">';
                     headerStr = '<div style="font-size:10px; font-weight: bold; width:50%; float: left; border-right: 1px solid #cccccc">';                                     
                     footerStr = '</div>';
