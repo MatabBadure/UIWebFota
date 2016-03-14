@@ -642,6 +642,11 @@ angular.module('hillromvestApp')
 	};
 
     $scope.drawLineChart = function(divId, chartData){ 
+		Highcharts.setOptions({
+			global: {
+				useUTC: false
+			}
+		}); 
     	divId = (divId)? divId : "cumulativeGraph";
 	    var chart = Highcharts.charts[document.getElementById(divId).getAttribute("data-highcharts-chart")]; // get old chart
 
@@ -678,12 +683,13 @@ angular.module('hillromvestApp')
                 formatter:function(){
                   return  Highcharts.dateFormat("%m/%e/%Y",this.value);
                 }               
-              }   
+              },
+              lineWidth:2   
           },
           yAxis: {
               	gridLineColor: '#FF0000',
                 gridLineWidth: 0,
-                lineWidth:1,
+                lineWidth:2,
                 "minRange": 1,
                 "min": 0,               
                 title: {
@@ -726,7 +732,7 @@ angular.module('hillromvestApp')
 		},
 		plotOptions: {	
 	        line: {
-                lineWidth: 1,
+                lineWidth: 2,
                 softThreshold: false
             },	        	
             series: {
@@ -794,7 +800,8 @@ angular.module('hillromvestApp')
 	                formatter:function(){
 	                  return  Highcharts.dateFormat("%m/%e/%Y",this.value);
 	                }               
-	              }   
+	              },
+	              lineWidth: 2   
 	          },	         
 			 yAxis: [{ // Primary yAxis
 	            labels: {	                
@@ -815,7 +822,7 @@ angular.module('hillromvestApp')
 	            "min": 0,
 	            gridLineColor: '#FF0000',
                 gridLineWidth: 0,
-                lineWidth:1,
+                lineWidth:2,
                 allowDecimals:false
 	        }, { // Secondary yAxis
 	            title: {
@@ -836,7 +843,7 @@ angular.module('hillromvestApp')
 	            "min": 0,
 	            gridLineColor: '#FF0000',
                 gridLineWidth: 0,
-                lineWidth:1,
+                lineWidth:2,
                 allowDecimals:false,
 	            opposite: true
 	        }],
