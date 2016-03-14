@@ -143,7 +143,7 @@ angular.module('hillromvestApp')
       pdf.setFontType(pdfServiceConstants.style.font.bold);        
       pdf.setFontSize(10);
       pdf.setTextColor(0, 0, 0);
-      pdf.text((pdf.internal.pageSize.width/2)-25,   imageY-30, graphTitle);
+      pdf.text((pdf.internal.pageSize.width/2)-(20+graphTitle.length),   imageY-30, graphTitle);
     }    
 
     var canvas = document.getElementById(canvasId);
@@ -420,7 +420,7 @@ angular.module('hillromvestApp')
       pdf.setFontType(pdfServiceConstants.style.font.bold);        
       pdf.setFontSize(10);
       pdf.setTextColor(0, 0, 0);
-      pdf.text((pdf.internal.pageSize.width/2)-25,   imageY-30, chartName);
+      pdf.text((pdf.internal.pageSize.width/2)-60,   imageY-30, chartName);
     }
     var canvas = document.getElementById(canvasId);              
     var ctx = canvas.getContext('2d');
@@ -441,7 +441,7 @@ angular.module('hillromvestApp')
 
   this.addPatientInfoToHMRCReport = function(pdf, patientInfo, fromDate , toDate){
     var patientDetails = (patientInfo && patientInfo.patient) ? patientInfo.patient : null;
-    var pdfClinic = (patientInfo && patientInfo.clinics.length > 0) ? patientInfo.clinics[0] : null;
+    var pdfClinic = (patientInfo && patientInfo.clinics && patientInfo.clinics.length > 0) ? patientInfo.clinics[0] : null;
     var pdfClinicAddress = (pdfClinic !== null && pdfClinic.address) ? pdfClinic.address : stringConstants.notAvailable;
     var pdfClinicPhone = (pdfClinic !== null && pdfClinic.phoneNumber) ? pdfClinic.phoneNumber : stringConstants.notAvailable;
     var reportGenerationDate = dateService.getDateFromTimeStamp(new Date().getTime(),patientDashboard.dateFormat,'/');

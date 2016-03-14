@@ -122,7 +122,7 @@ angular.module('hillromvestApp')
         } else if($state.current.name === 'caregiverDashboardDeviceProtocol'){
           $scope.initPatientDeviceProtocol();
         } else if($state.current.name === 'caregiverDashboard'){
-          $scope.initGraph();
+          $scope.initCaregiverDashboard();          
         }
       }).catch(function(response){
         notyService.showError(response);
@@ -159,7 +159,7 @@ angular.module('hillromvestApp')
         } else if($state.current.name === 'caregiverDashboardDeviceProtocol'){
           $scope.initPatientDeviceProtocol();
         } else if($state.current.name === 'caregiverDashboard'){
-          $scope.initGraph();
+          $scope.initCaregiverDashboard();
         }
       }
     };
@@ -708,7 +708,7 @@ angular.module('hillromvestApp')
           var charts = Highcharts.charts;   
           for (i = 0; i < Highcharts.charts.length; i = i + 1) {
             chart = Highcharts.charts[i];
-            if(chart &&  chart.renderTo.offsetParent && chart.renderTo.offsetParent.id === divId){               
+            if(chart &&  chart.renderTo.offsetParent && chart.renderTo.offsetParent.id === "synchronizedChart"){               
               event = chart.pointer.normalize(e.originalEvent);
               point = chart.series[0].searchPoint(event, true);
 
@@ -794,12 +794,13 @@ angular.module('hillromvestApp')
                   formatter: function() {
                     return Highcharts.dateFormat("%m/%e/%Y", this.value);
                   }
-                }
+                },
+                lineWidth: 2
               },
               yAxis: {
                 gridLineColor: '#FF0000',
                 gridLineWidth: 0,
-                lineWidth:1,
+                lineWidth:2,
                 minRange: minRange,
                 min: 0,
                 allowDecimals:false,
@@ -818,7 +819,8 @@ angular.module('hillromvestApp')
                         x: -10,
                         style: {
                             color: '#c1c1c1',
-                            fontWeight: 'bold'
+                            font: '10px Helvetica',
+                            fontWeight: 'normal'
                         }/*,
                         textAlign: "left"*/
                     }
@@ -834,7 +836,8 @@ angular.module('hillromvestApp')
                       x: -10,
                       style: {
                           color: '#c1c1c1',
-                          fontWeight: 'bold'
+                          font: '10px Helvetica',
+                          fontWeight: 'normal'
                       }/*,
                         textAlign: "left"*/
                     }
@@ -842,7 +845,7 @@ angular.module('hillromvestApp')
               },
               plotOptions: {  
                 line: {
-                    lineWidth: 1,
+                    lineWidth: 3,
                     softThreshold: false,
                     marker: {
                           enabled: true
@@ -958,12 +961,13 @@ angular.module('hillromvestApp')
                 formatter:function(){
                   return  Highcharts.dateFormat("%m/%e/%Y",this.value);
                 }               
-              }   
+              }, 
+              lineWidth: 2  
           },
           yAxis: {
               gridLineColor: '#FF0000',
                 gridLineWidth: 0,
-                lineWidth:1,
+                lineWidth:2,
                 "minRange": 1,
                 "min": 0,               
                 title: {
@@ -1011,8 +1015,8 @@ angular.module('hillromvestApp')
                     + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.duration + '</b></div>';
                   if(this.point.toolText.noteText){
                     s = '<div style="font-size:10px; font-weight: bold; width:100%;display-inline:block;">' 
-                    s = '<div style="font-size:12x;font-weight: bold; padding-bottom: 3px;float: left; width: 48%">'+  dateTextLabel +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>';
-                    s += '<div style="font-size:12x;font-weight: bold;padding-left: 3px; padding-bottom: 3px;float: right;width: 50%">Note </div>'
+                    s = '<div style="font-size:12x;font-weight: bold; padding-bottom: 3px; padding-right: 50px; float: left; width: 58%">'+  dateTextLabel +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>';
+                    s += '<div style="font-size:12x;font-weight: bold;padding-left: 4px; padding-bottom: 3px;float: right;width: 40%;padding-right:10px;">Note </div>'
                     s += '</div><div style="font-size:10px; font-weight: bold; width:100%">';
                     headerStr = '<div style="font-size:10px; font-weight: bold; width:50%; float: left; border-right: 1px solid #cccccc">';                                     
                     footerStr = '</div>';
@@ -1090,12 +1094,13 @@ angular.module('hillromvestApp')
               }, 
               formatter:function(){
                 return  Highcharts.dateFormat("%m/%e/%Y",this.value);
-              }                 
+              },
+              lineWidth: 2                
           },
           yAxis: {
               gridLineColor: '#FF0000',
                 gridLineWidth: 0,
-                lineWidth:1,
+                lineWidth:2,
                 "minRange": 1,
                 "min": 0,               
                 title: {
@@ -1561,6 +1566,13 @@ angular.module('hillromvestApp')
       $scope.selectChart($scope.fromDate);
     };
 
+    $scope.initCaregiverDashboard = function(){
+      $scope.getTransmissionDateForPatient($scope.patientId);
+      $scope.getAssociatedClinics($scope.patientId);
+      $scope.getPatientDevices($scope.patientId);      
+      $scope.initGraph();
+      $scope.getPatientById($scope.patientId);     
+    };
     
 }]);
 
