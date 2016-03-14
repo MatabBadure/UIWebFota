@@ -122,7 +122,7 @@ angular.module('hillromvestApp')
         } else if($state.current.name === 'caregiverDashboardDeviceProtocol'){
           $scope.initPatientDeviceProtocol();
         } else if($state.current.name === 'caregiverDashboard'){
-          $scope.initGraph();
+          $scope.initCaregiverDashboard();          
         }
       }).catch(function(response){
         notyService.showError(response);
@@ -159,7 +159,7 @@ angular.module('hillromvestApp')
         } else if($state.current.name === 'caregiverDashboardDeviceProtocol'){
           $scope.initPatientDeviceProtocol();
         } else if($state.current.name === 'caregiverDashboard'){
-          $scope.initGraph();
+          $scope.initCaregiverDashboard();
         }
       }
     };
@@ -1561,6 +1561,13 @@ angular.module('hillromvestApp')
       $scope.selectChart($scope.fromDate);
     };
 
+    $scope.initCaregiverDashboard = function(){
+      $scope.getTransmissionDateForPatient($scope.patientId);
+      $scope.getAssociatedClinics($scope.patientId);
+      $scope.getPatientDevices($scope.patientId);      
+      $scope.initGraph();
+      $scope.getPatientById($scope.patientId);     
+    };
     
 }]);
 

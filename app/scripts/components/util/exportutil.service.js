@@ -441,7 +441,7 @@ angular.module('hillromvestApp')
 
   this.addPatientInfoToHMRCReport = function(pdf, patientInfo, fromDate , toDate){
     var patientDetails = (patientInfo && patientInfo.patient) ? patientInfo.patient : null;
-    var pdfClinic = (patientInfo && patientInfo.clinics.length > 0) ? patientInfo.clinics[0] : null;
+    var pdfClinic = (patientInfo && patientInfo.clinics && patientInfo.clinics.length > 0) ? patientInfo.clinics[0] : null;
     var pdfClinicAddress = (pdfClinic !== null && pdfClinic.address) ? pdfClinic.address : stringConstants.notAvailable;
     var pdfClinicPhone = (pdfClinic !== null && pdfClinic.phoneNumber) ? pdfClinic.phoneNumber : stringConstants.notAvailable;
     var reportGenerationDate = dateService.getDateFromTimeStamp(new Date().getTime(),patientDashboard.dateFormat,'/');
