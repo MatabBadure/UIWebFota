@@ -1001,18 +1001,37 @@ angular.module('hillromvestApp')
               hideDelay: 0,  
               enabled: true,        
               formatter: function() {
-                  var s = '<div style="font-size:12x;font-weight: bold; padding-bottom: 3px;">'+  this.point.toolText.dateText +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div>';
-                  s += '<div style="font-size:10px; font-weight: bold; width:100%"><div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left"> Session No </div> ' 
-                  + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.sessionNo  + '</b></div></div>';                 
-                  s += '<div style="font-size:10px; font-weight: bold; width:100%"><div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left"> ' + this.point.series.name + '</div> ' 
-                  + '<div style="padding:5px;width:10%"><b>' + this.point.y + '</b></div></div>';
-                  s += '<div style="font-size:10px; font-weight: bold; width:100%"><div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left">Pressure</div> ' 
-                  + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.pressure + '</b></div></div>';
-                  s += '<div style="font-size:10px; font-weight: bold; width:100%"><div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left">Frequency</div> ' 
-                  + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.frequency + '</b></div></div>';
-                  s += '<div style="font-size:10px; font-weight: bold; width:100%"><div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left">Duration</div> ' 
-                  + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.duration + '</b></div></div>';
-                  s += '</div>';
+                  var s = '';
+                  var headerStr = '';
+                  var footerStr = '';
+                  var noteStr = '';
+                  var pointDetails = '<div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left"> Session No </div> ' 
+                    + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.sessionNo  + '</b></div>';                 
+                    pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left"> ' + this.point.series.name + '</div> ' 
+                    + '<div style="padding:5px;width:10%"><b>' + this.point.y + '</b></div>';
+                    pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left">Pressure</div> ' 
+                    + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.pressure + '</b></div>';
+                    pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left">Frequency</div> ' 
+                    + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.frequency + '</b></div>';
+                    pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left">Duration</div> ' 
+                    + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.duration + '</b></div>';
+                  if(this.point.toolText.noteText){
+                    s = '<div style="font-size:10px; font-weight: bold; width:100%;display-inline:block;">' 
+                    s = '<div style="font-size:12x;font-weight: bold; padding-bottom: 3px;float: left; width: 48%">'+  this.point.toolText.dateText +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>';
+                    s += '<div style="font-size:12x;font-weight: bold;padding-left: 3px; padding-bottom: 3px;float: right;width: 50%">Note </div>'
+                    s += '</div><div style="font-size:10px; font-weight: bold; width:100%">';
+                    headerStr = '<div style="font-size:10px; font-weight: bold; width:50%; float: left; border-right: 1px solid #cccccc">';                                     
+                    footerStr = '</div>';
+                    noteStr = '<div style="font-size:10px; font-weight: bold; width:50%; float: right;"><div style="padding:5px 0;width:98%;"> <span style="padding: 5px;">'+ this.point.toolText.noteText+' </span></div></div>';
+                    s += headerStr+pointDetails+footerStr+noteStr+'</div>';
+                  }else{
+                     s = '<div style="font-size:12x;font-weight: bold; padding-bottom: 3px;">'+  this.point.toolText.dateText +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div style="font-size:10px; font-weight: bold; width:100%">';
+                     headerStr = '<div style="font-size:10px; font-weight: bold; width:100%">';
+                     footerStr = '</div>';
+                     noteStr = '';
+                     s += headerStr+pointDetails+footerStr+noteStr+'</div>';
+                  }
+                   
                   return s;
                 }
                

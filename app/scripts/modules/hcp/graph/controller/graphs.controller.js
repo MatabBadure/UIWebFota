@@ -265,7 +265,6 @@ angular.module('hillromvestApp')
 		$scope.noDataAvailable = false;						
 		if($scope.selectedClinic){					
 			hcpDashBoardService.getCumulativeGraphPoints($scope.hcpId, $scope.selectedClinic.id, dateService.getDateFromTimeStamp($scope.fromTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), $scope.groupBy).then(function(response){
-				console.log("cumulative graph points : ", response);
 				$scope.cumulativeChartData = response.data;	
 				if($scope.cumulativeChartData && typeof($scope.cumulativeChartData) === "object"){ 
 					angular.forEach($scope.cumulativeChartData.xAxis.categories, function(x, key){
@@ -314,8 +313,7 @@ angular.module('hillromvestApp')
 	
 	$scope.getTreatmentGraphData = function() {
 		if($scope.selectedClinic){
-			hcpDashBoardService.getTreatmentGraphPoints($scope.hcpId, $scope.selectedClinic.id, dateService.getDateFromTimeStamp($scope.fromTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), $scope.groupBy).then(function(response){
-				console.log("treatment response : ", response);				
+			hcpDashBoardService.getTreatmentGraphPoints($scope.hcpId, $scope.selectedClinic.id, dateService.getDateFromTimeStamp($scope.fromTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), $scope.groupBy).then(function(response){			
 				$scope.treatmentChartData = response.data;
 				if($scope.treatmentChartData && typeof($scope.treatmentChartData) === "object"){ 
 					$scope.noDataAvailable = false;
