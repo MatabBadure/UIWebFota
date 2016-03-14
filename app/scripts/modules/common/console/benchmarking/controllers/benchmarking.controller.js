@@ -118,6 +118,19 @@ angular.module('hillromvestApp')
 		$scope.onClose = function(){
 			if($scope.selectedStates.length > 0 && $scope.selectedStates.length !== $scope.states.length){
 				var selectedStates = [];
+				addressService.getCitiesByState($scope.selectedStates[0].name).then(function(response){
+					console.log('SUCCESS :: ', response.data);
+					$scope.cities = [];
+					angular.forEach(response.data, function(city){
+						var obj = {
+							'name':city,
+							'ticked':true 
+						};
+						$scope.cities.push(obj);
+					});
+				}).catch(function(response){
+					console.log('ERROR :: ', response);
+				});
 				angular.forEach($scope.selectedStates, function(selectedState){
 					selectedStates.push(selectedState.name);
 				});

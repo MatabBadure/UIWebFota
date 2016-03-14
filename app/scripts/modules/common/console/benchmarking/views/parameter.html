@@ -62,10 +62,25 @@
 		</div>
 		<div class="col-md-3 pull-right benchmarking__form__input reset-padding selected-box-container" >
 			<div class="custom-dropdown">
-		    <select class="">
-			    <option value="Geography" label="Geography" selected="selected">Geography</option>
-			    <option value="USA" label="USA">USA</option>
-			  </select>            
+		    <select class="" ng-if="selectedStates.length > 1 || selectedStates.length === 0">
+			    <option value="all" label="All" selected="selected">All</option>
+			  </select>
+			  <div ng-if="selectedStates.length === 1"
+				  isteven-multi-select
+				  input-model="cities"
+				  output-model="$parent.$parent.selectedCities"
+				  button-label="name"
+				  item-label="name"
+				  tick-property="ticked"
+				  max-labels="1"
+				  translation="localLang"
+				  helper-elements="all filter none"
+				  min-search-length="1"
+				  search-property="name"
+				  max-height="250px"
+				  on-close="onCitiesClose()"
+				>
+				</div>          
 		  </div> 
 		</div>
 	</div>

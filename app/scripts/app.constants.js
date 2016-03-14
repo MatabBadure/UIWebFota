@@ -91,6 +91,7 @@ angular.module('hillromvestApp')
 	'getCityStateZipByState' : '/api/cityStateZipMapByState?state=STATE',	
 	'getAllStates' : '/api/allstates',
 	'getCityStateByZip': '/api/cityStateZipMapByZip?zipcode=ZIPCODE',
+	'getCitiesByState': '/api/availableCities?state=STATE',
 	'validateCredentials': '/api/validateCredentials',
 	'getLoginAnalytics': '/api/loginAnalytics?from=FROM&to=TO&filters=FILTERS&duration=DURATION',
 	'isSurvey': '/api/survey/user/USER_ID',
