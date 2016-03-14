@@ -708,7 +708,7 @@ angular.module('hillromvestApp')
           var charts = Highcharts.charts;   
           for (i = 0; i < Highcharts.charts.length; i = i + 1) {
             chart = Highcharts.charts[i];
-            if(chart &&  chart.renderTo.offsetParent && chart.renderTo.offsetParent.id === divId){               
+            if(chart &&  chart.renderTo.offsetParent && chart.renderTo.offsetParent.id === "synchronizedChart"){               
               event = chart.pointer.normalize(e.originalEvent);
               point = chart.series[0].searchPoint(event, true);
 
@@ -794,12 +794,13 @@ angular.module('hillromvestApp')
                   formatter: function() {
                     return Highcharts.dateFormat("%m/%e/%Y", this.value);
                   }
-                }
+                },
+                lineWidth: 2,
               },
               yAxis: {
                 gridLineColor: '#FF0000',
                 gridLineWidth: 0,
-                lineWidth:1,
+                lineWidth:2,
                 minRange: minRange,
                 min: 0,
                 allowDecimals:false,
@@ -818,7 +819,8 @@ angular.module('hillromvestApp')
                         x: -10,
                         style: {
                             color: '#c1c1c1',
-                            fontWeight: 'bold'
+                            font: '10px Helvetica',
+                            fontWeight: 'normal'
                         }/*,
                         textAlign: "left"*/
                     }
@@ -834,7 +836,8 @@ angular.module('hillromvestApp')
                       x: -10,
                       style: {
                           color: '#c1c1c1',
-                          fontWeight: 'bold'
+                          font: '10px Helvetica',
+                          fontWeight: 'normal'
                       }/*,
                         textAlign: "left"*/
                     }
@@ -842,7 +845,7 @@ angular.module('hillromvestApp')
               },
               plotOptions: {  
                 line: {
-                    lineWidth: 1,
+                    lineWidth: 3,
                     softThreshold: false,
                     marker: {
                           enabled: true
