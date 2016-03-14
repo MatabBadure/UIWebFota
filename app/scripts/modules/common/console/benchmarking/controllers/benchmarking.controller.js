@@ -44,14 +44,15 @@ angular.module('hillromvestApp')
 		$scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
 
 		$scope.customDateRangeView = function(){
-			console.log('It comes here....!', $scope.serverFromDate, $scope.serverToDate);
+			$scope.getBenchmarkingReport($scope.serverFromDate, $scope.serverToDate, $scope.xaxis, $scope.type, $scope.benchmarkType, $scope.range, $scope.state, $scope.city);
 		};
 		
 		$scope.init = function(){
 			$scope.calculateTimeDuration(5);
-
+			$scope.benchmarkType = "Average";
 			$scope.xaxis = 'ageGroup';
-			$scope.yaxis = 'adherenceScore';
+			$scope.range = 'all';
+			$scope.type = 'adherenceScore';
 			addressService.getAllStates().then(function(response){
 				$scope.processStates(response.data);
 			}).catch(function(response){
@@ -114,47 +115,64 @@ angular.module('hillromvestApp')
 			});
 		};
 
-		$scope.init();
-
-		$scope.onOpen = function(){
-			console.log('On open called...!');
-		};
-
 		$scope.onClose = function(){
-			console.log('On close called...!', $scope.selectedStates, $scope.selectedStates.length);
-			if($scope.selectedStates.length === 1){
-				$scope.state = $scope.selectedStates[0].name
-				console.log($scope.state);
+			if($scope.selectedStates.length > 0 && $scope.selectedStates.length !== $scope.states.length){
+				var selectedStates = [];
+				angular.forEach($scope.selectedStates, function(selectedState){
+					selectedStates.push(selectedState.name);
+				});
+				$scope.state = selectedStates.join();
+			}else{
+				$scope.state = 'all';
 			}
+			$scope.getBenchmarkingReport($scope.serverFromDate, $scope.serverToDate, $scope.xaxis, $scope.type, $scope.benchmarkType, $scope.range, $scope.state, $scope.city);
 		};
 
 		$scope.onXaxisChange = function(){
-			console.log('onXaxisChange...!', $scope.xaxis);
 			$scope.isAgeGroup = $scope.isAgeGroup ? false: true;
-			console.log($scope.isAgeGroup);
+			$scope.getBenchmarkingReport($scope.serverFromDate, $scope.serverToDate, $scope.xaxis, $scope.type, $scope.benchmarkType, $scope.range, $scope.state, $scope.city);
 		};
 
 		$scope.onYaxisChange = function(){
-			console.log($scope.yaxis);
+			$scope.getBenchmarkingReport($scope.serverFromDate, $scope.serverToDate, $scope.xaxis, $scope.type, $scope.benchmarkType, $scope.range, $scope.state, $scope.city);
 		};
 
 		$scope.onAgeGroupClose =function(){
-			console.log($scope.selectedAges);
-			$scope.age = $scope.selectedAges[0].ageRange
-			$scope.getBenchmarkingReport($scope.serverFromDate, $scope.serverToDate, $scope.xaxis, $scope.yaxis);
+			if($scope.selectedAges.length > 0 && $scope.selectedAges.length !== $scope.ageGroups.length){
+				var ranges = [];
+				angular.forEach($scope.selectedAges, function(selectedAge){
+					ranges.push(selectedAge.ageRange);
+				});
+				$scope.range = ranges.join();
+			}else{
+				$scope.range = 'all';
+			}
+			$scope.getBenchmarkingReport($scope.serverFromDate, $scope.serverToDate, $scope.xaxis, $scope.type, $scope.benchmarkType, $scope.range, $scope.state, $scope.city);
 		};
 
 		$scope.onClinicRangeClose = function(){
-			console.log($scope.selectedClinicSizes);
+			if($scope.selectedClinicSizes.length > 0 && $scope.selectedClinicSizes.length !== $scope.clinicSizes.length){
+				var ranges = [];
+				angular.forEach($scope.selectedClinicSizes, function(selectedClinic){
+					ranges.push(selectedClinic.size);
+				});
+				$scope.range = ranges.join();
+			}else{
+				$scope.range = 'all';	
+			}
+			$scope.getBenchmarkingReport($scope.serverFromDate, $scope.serverToDate, $scope.xaxis, $scope.type, $scope.benchmarkType, $scope.range, $scope.state, $scope.city);
 		};
 
-		$scope.getBenchmarkingReport = function(fromDate, toDate, XAxis, YAxis, type, benchmarkType, country, state, city,  range){
-			console.log(fromDate, toDate, XAxis, YAxis);
-			// benchmarkingService.getBenchmarkingReport(fromDate, toDate, type, benchmarkType, country, state, city, YAxis, XAxis, range).then(function(response){
+		$scope.getBenchmarkingReport = function(fromDate, toDate, XAxis, type, benchmarkType,range, state, city){
+			console.log(fromDate, toDate, XAxis, type, benchmarkType,range, state, city);
+			console.log('REST API Integration in Progess...!');
+			// benchmarkingService.getBenchmarkingReport(fromDate, toDate, XAxis, type, benchmarkType, range, state, city).then(function(response){
 
 			// }).catch(function(response){
 
 			// });
 		};
+
+		$scope.init();
 
 	}]);

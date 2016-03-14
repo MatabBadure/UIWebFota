@@ -89,7 +89,7 @@
     <div class="bar_graph_header">
       <div class="col-md-3 benchmarking__form__input reset-padding selected-box-container" >
 				<div class="custom-dropdown">
-		      <select ng-change="onYaxisChange()" ng-model="$parent.$parent.yaxis">
+		      <select ng-change="onYaxisChange()" ng-model="$parent.$parent.type">
 			      <option value="adherenceScore" label="Adherence Score" ng-selected="true">Adherence Score</option>
 			      <option value="missedTherapy" label="Missed Therapy Days">Missed Therapy Days</option>
 			      <option value="HMRDeviation" label="HMR Deviation">HMR Deviation</option>
@@ -159,6 +159,12 @@
 					</ul>
 	 	    </div>
    	</div>
+   	<div class="pull-right week_date_container">
+			<span ng-if="fromDate !== toDate">
+				<span class="date">{{fromDate}}</span> - <span class="date">{{toDate}}</span>
+			</span>
+			<span ng-if="fromDate === toDate" class="date">{{fromDate}}<span>
+		</div>
   </div>
 </div>
 
