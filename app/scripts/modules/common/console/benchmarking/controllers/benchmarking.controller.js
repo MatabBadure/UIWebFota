@@ -179,11 +179,11 @@ angular.module('hillromvestApp')
 		$scope.getBenchmarkingReport = function(fromDate, toDate, XAxis, type, benchmarkType,range, state, city){
 			console.log(fromDate, toDate, XAxis, type, benchmarkType,range, state, city);
 			console.log('REST API Integration in Progess...!');
-			// benchmarkingService.getBenchmarkingReport(fromDate, toDate, XAxis, type, benchmarkType, range, state, city).then(function(response){
-
-			// }).catch(function(response){
-
-			// });
+			benchmarkingService.getBenchmarkingReport(fromDate, toDate, XAxis, type, benchmarkType, range, state, city).then(function(response){
+				console.log('SUCCESS :: ', response);
+			}).catch(function(response){
+				console.log('ERROR :: ', response);
+			});
 		};
 
 		$scope.init();

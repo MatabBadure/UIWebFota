@@ -16,7 +16,7 @@ angular.module('hillromvestApp')
       * only Admin/RC Admin/Associate can view it.
       */
       getBenchmarkingReport: function(fromDate, toDate, XAxis, type, benchmarkType, range, state, city) {
-        var url = URL.getBenchmarking.replace('FROM', fromDate).replace('TO', toDate);
+        var url = URL.getBenchmarking.replace('FROM', fromDate).replace('TO', toDate).replace('XAXIS',XAxis).replace('TYPE',type).replace('BENCHMARKTYPE',benchmarkType).replace('RANGE',range);
         return $http.get(url,{
           headers: headerService.getHeader()
         }).success(function(response) {
