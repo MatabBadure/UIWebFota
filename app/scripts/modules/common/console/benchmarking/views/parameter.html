@@ -35,10 +35,29 @@
 		</div>
 		<div class="col-md-3 pull-left benchmarking__form__input reset-padding selected-box-container" >
 			<div class="custom-dropdown">
-		    <select class="">
-			    <option value="Geography" label="Geography1" selected="selected">Geography1</option>
-			    <option value="USA" label="USA">USA</option>
-			  </select>            
+			  <div 
+				  isteven-multi-select
+				  input-model="states"
+				  output-model="$parent.$parent.selectedStates"
+				  button-label="name"
+				  item-label="name"
+				  tick-property="ticked"
+				  max-labels="1"
+				  translation="localLang"
+				  helper-elements="all filter none"
+				  min-search-length="1"
+				  search-property="name"
+				  max-height="250px"
+				  on-open="onOpen()"
+				  on-close="onClose()"
+				  on-item-click= "onItemclick()"
+				  on-select-all="onSelectAll()"
+				  on-select-none="onSelectNone()"
+				  on-reset="onReset()"
+				  on-clear="onClear()"
+				  on-search-change="onSearchChange()"
+				>
+				</div>
 		  </div> 
 		</div>
 		<div class="col-md-3 pull-right benchmarking__form__input reset-padding selected-box-container" >
@@ -84,18 +103,47 @@
 		  </div>
 			<div class="col-md-3 benchmarking__form__input reset-padding selected-box-container" >
 				<div class="custom-dropdown">
-		      <select class="">
-			      <option value="Age Group" label="Age Group" selected="selected">Age Group</option>
+		      <select class="" ng-change="onXaxisChange()" ng-model="xaxis">
+			      <option value="Age Group" label="Age Group" ng-selected="true">Age Group</option>
 			      <option value="Clinic Size" label="Clinic Size">Clinic Size</option>
 			    </select>            
 			  </div> 
 			</div>
 			<div class="col-md-3 benchmarking__form__input reset-padding selected-box-container" >
 				<div class="custom-dropdown">
-			    <select class="">
-				    <option value="Range" label="Range" selected="selected">Range</option>
-				    <option value="Range" label="Range">Range</option>
-				  </select>            
+				  <div ng-show="isAgeGroup"
+					  isteven-multi-select
+					  input-model="ageGroups"
+					  output-model="$parent.$parent.selectedAges"
+					  button-label="ageRange"
+					  item-label="ageRange"
+					  tick-property="true"
+					  max-labels="1"
+					  translation="localLang"
+					  helper-elements="all filter none"
+					  min-search-length="1"
+					  search-property="ageRange"
+					  max-height="250px"
+					  on-close="onAgeGroupClose()"
+					>
+					</div>
+
+					<div ng-show="!isAgeGroup"
+					  isteven-multi-select
+					  input-model="clinicSizes"
+					  output-model="$parent.$parent.selectedClinicSizes"
+					  button-label="size"
+					  item-label="size"
+					  tick-property="true"
+					  max-labels="1"
+					  translation="localLang"
+					  helper-elements="all filter none"
+					  min-search-length="1"
+					  search-property="size"
+					  max-height="250px"
+					  on-close="onClinicRangeClose()"
+					>
+					</div>        
 			  </div> 
 			</div>
 	    <div class="col-md-4 col-sm-9 pull-right right_header_barchart cyan-blue-light">
@@ -104,28 +152,12 @@
 					<li class="" role="presentation"><a ng-click="" href="" ng-class="" class="active">Week</a></li>
 					<li class="" role="presentation"><a translate="" ng-click="" ng-class="" href="" class="ng-scope">Month</a></li>
 					<li class="" role="presentation"><a translate="" ng-click="" ng-class="" href="" class="ng-scope">Year</a></li>
-					<li id="dp3" class="" role="presentation"><a options="opts" parentel="#dp3" ng-model="dates" class="date-picker ng-pristine ng-untouched ng-valid ng-isolate-scope" date-range-picker="" href=""><span class="icon-calendar"></span></a>
+					<li id="dp3" class="" role="presentation">
+						<!-- <a options="opts" id="dp1cal" parentel="#dp3" ng-model="dates" class="date-picker ng-pristine ng-untouched ng-valid ng-isolate-scope" date-range-picker="" href=""><span class="icon-calendar"></span></a> -->
+						<a href="" id="dp2cal" date-range-picker class="date-picker margin_tp13" ng-model="dates" parentEl="#dp1" options="opts" ><span class="icon-calendar"></span></a>
 					</li>
 					</ul>
 	 	    </div>
    	</div>
   </div>
 </div>
-
-
-<div
-  isteven-multi-select
-  input-model="states"
-  output-model="outputBrowsers"
-  button-label="name"
-  item-label="name"
-  tick-property="true"
-  max-labels="1"
-  translation="localLang"
-  helper-elements="all filter none"
-  min-search-length="1"
-  search-property="name"
-  max-height="250px"
->
-</div>
-{{outputBrowsers}}
