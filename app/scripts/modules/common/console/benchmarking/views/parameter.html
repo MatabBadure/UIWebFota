@@ -28,7 +28,7 @@
 	  </div>
 		<div class="col-md-3 pull-left col-md-offset-1 benchmarking__form__input reset-padding selected-box-container" >
 			<div class="custom-dropdown">
-		    <select class="">
+		    <select class="" ng-disabled="true">
 			  	<option value="USA" label="USA" selected="selected">USA</option>
 			  </select>            
 		  </div> 
@@ -89,12 +89,12 @@
     <div class="bar_graph_header">
       <div class="col-md-3 benchmarking__form__input reset-padding selected-box-container" >
 				<div class="custom-dropdown">
-		      <select class="">
-			      <option value="Adherence Score" label="Adherence Score" selected="selected">Adherence Score</option>
-			      <option value="Missed Therapy Days" label="Missed Therapy Days">Missed Therapy Days</option>
-			      <option value="HMR Deviation" label="HMR Deviation">HMR Deviation</option>
-			      <option value="Setting Deviation" label="Setting Deviation">Setting Deviation</option>
-			      <option value="HMR Runrate" label="HMR Runrate">HMR Runrate</option>
+		      <select ng-change="onYaxisChange()" ng-model="$parent.$parent.yaxis">
+			      <option value="adherenceScore" label="Adherence Score" ng-selected="true">Adherence Score</option>
+			      <option value="missedTherapy" label="Missed Therapy Days">Missed Therapy Days</option>
+			      <option value="HMRDeviation" label="HMR Deviation">HMR Deviation</option>
+			      <option value="settingDeviation" label="Setting Deviation">Setting Deviation</option>
+			      <option value="HMRRunrate" label="HMR Runrate">HMR Runrate</option>
 			    </select>            
 		    </div> 
 		  </div>
@@ -103,9 +103,9 @@
 		  </div>
 			<div class="col-md-3 benchmarking__form__input reset-padding selected-box-container" >
 				<div class="custom-dropdown">
-		      <select class="" ng-change="onXaxisChange()" ng-model="xaxis">
-			      <option value="Age Group" label="Age Group" ng-selected="true">Age Group</option>
-			      <option value="Clinic Size" label="Clinic Size">Clinic Size</option>
+		      <select ng-change="onXaxisChange()" ng-model="$parent.$parent.xaxis">
+			      <option value="ageGroup" label="Age Group" ng-selected="true">Age Group</option>
+			      <option value="clinicSize" label="Clinic Size">Clinic Size</option>
 			    </select>            
 			  </div> 
 			</div>
@@ -160,4 +160,8 @@
 	 	    </div>
    	</div>
   </div>
+</div>
+
+<div class="col-md-16 ">
+  <div id="benchmarkingGraph"></div>
 </div>

@@ -49,6 +49,9 @@ angular.module('hillromvestApp')
 		
 		$scope.init = function(){
 			$scope.calculateTimeDuration(5);
+
+			$scope.xaxis = 'ageGroup';
+			$scope.yaxis = 'adherenceScore';
 			addressService.getAllStates().then(function(response){
 				$scope.processStates(response.data);
 			}).catch(function(response){
@@ -118,7 +121,6 @@ angular.module('hillromvestApp')
 		};
 
 		$scope.onClose = function(){
-			$scope.$apply();
 			console.log('On close called...!', $scope.selectedStates, $scope.selectedStates.length);
 			if($scope.selectedStates.length === 1){
 				$scope.state = $scope.selectedStates[0].name
@@ -127,24 +129,32 @@ angular.module('hillromvestApp')
 		};
 
 		$scope.onXaxisChange = function(){
-			console.log('onXaxisChange...!');
+			console.log('onXaxisChange...!', $scope.xaxis);
 			$scope.isAgeGroup = $scope.isAgeGroup ? false: true;
 			console.log($scope.isAgeGroup);
+		};
+
+		$scope.onYaxisChange = function(){
+			console.log($scope.yaxis);
 		};
 
 		$scope.onAgeGroupClose =function(){
 			console.log($scope.selectedAges);
 			$scope.age = $scope.selectedAges[0].ageRange
-			console.log($scope);
-			// benchmarkingService.getBenchmarking().then(function(response){
-
-			// }).catch(function(response){
-
-			// });
+			$scope.getBenchmarkingReport($scope.serverFromDate, $scope.serverToDate, $scope.xaxis, $scope.yaxis);
 		};
 
 		$scope.onClinicRangeClose = function(){
 			console.log($scope.selectedClinicSizes);
+		};
+
+		$scope.getBenchmarkingReport = function(fromDate, toDate, XAxis, YAxis, type, benchmarkType, country, state, city,  range){
+			console.log(fromDate, toDate, XAxis, YAxis);
+			// benchmarkingService.getBenchmarkingReport(fromDate, toDate, type, benchmarkType, country, state, city, YAxis, XAxis, range).then(function(response){
+
+			// }).catch(function(response){
+
+			// });
 		};
 
 	}]);
