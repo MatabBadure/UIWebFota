@@ -799,7 +799,7 @@ angular.module('hillromvestApp')
 			 yAxis: [{ // Primary yAxis
 	            labels: {	                
 	                style: {
-	                      color: chartData.series[$scope.primaryAxisIndex].color,                     
+	                      color: '#525151',//chartData.series[$scope.primaryAxisIndex].color,                     
 	                      fontWeight: 'bold'
 	                  } 
 	            },
@@ -828,7 +828,7 @@ angular.module('hillromvestApp')
 	            },
 	            labels: {
 	                style: {
-                      color: chartData.series[$scope.secondaryAxisIndex].color,                  
+                      color: '#525151',//chartData.series[$scope.secondaryAxisIndex].color,                  
                       fontWeight: 'bold'
                   } 
 	            },
