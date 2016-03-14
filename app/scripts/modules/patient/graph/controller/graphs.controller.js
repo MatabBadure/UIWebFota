@@ -961,12 +961,13 @@ angular.module('hillromvestApp')
                 formatter:function(){
                   return  Highcharts.dateFormat("%m/%e/%Y",this.value);
                 }               
-              }   
+              }, 
+              lineWidth: 2  
           },
           yAxis: {
               gridLineColor: '#FF0000',
                 gridLineWidth: 0,
-                lineWidth:1,
+                lineWidth:2,
                 "minRange": 1,
                 "min": 0,               
                 title: {
@@ -1093,12 +1094,13 @@ angular.module('hillromvestApp')
               }, 
               formatter:function(){
                 return  Highcharts.dateFormat("%m/%e/%Y",this.value);
-              }                 
+              },
+              lineWidth: 2                
           },
           yAxis: {
               gridLineColor: '#FF0000',
                 gridLineWidth: 0,
-                lineWidth:1,
+                lineWidth:2,
                 "minRange": 1,
                 "min": 0,               
                 title: {
