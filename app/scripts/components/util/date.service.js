@@ -331,7 +331,34 @@ angular.module('hillromvestApp')
           var dateTime = date.split("-");          
           return dateTime[1] + dateSeperator + dateTime[2] + dateSeperator + dateTime[0];
         }        
-    }
+    },
+
+    // this method is only to test whether the current browser is chrome or not
+    isChrome: function(){
+        var userAgent =navigator.userAgent;
+        var browsers = {chrome: /chrome/i, safari: /safari/i, firefox: /firefox/i, ie: /internet explorer/i};
+        for(var key in browsers) {
+            if (browsers[key].test(userAgent)) {
+                return key;
+            }
+       };
+       return 'unknown';
+      },
+    // this method converts the date string mm/dd/yyyy hh:mm:ss to timestamp 
+    convertToTimestamp: function(date){    
+        if(date && date.indexOf("/") > -1 && date.indexOf(" ") > -1 ){
+        var dateTime = date.split(" ");
+        var startDate = dateTime[0].split("/"); // turning it from MM/DD/YYYY HH:MM:SS to timestamp
+        var formattedDate = startDate[2] + "-" + startDate[0] + "-" + startDate[1] + " " + dateTime[1];
+        if(this.isChrome().indexOf("chrome") !== -1){
+          return new Date(formattedDate).getTime();
+        }else{
+          return new Date(formattedDate.replace(/\s/, 'T')).getTime();
+        }
+        
+      }
+     }
+
     
     };
   }]);
