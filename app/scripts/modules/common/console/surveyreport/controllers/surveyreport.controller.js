@@ -91,6 +91,7 @@ angular.module('hillromvestApp')
 		$scope.showComments = function(survey, index){
 			if(survey.noCount !== 0 || index === 6){
 				$scope.selectedSurvey = survey;
+				$scope.selectedSurvey.quesIndex = index;
 				$scope.surveyComments = [];
 				patientsurveyService.getSurveyComments(survey.id,  $scope.serverFromDate, $scope.serverToDate).then(function(response){
 					$scope.showCommentModal = true;
