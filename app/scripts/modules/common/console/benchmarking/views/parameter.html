@@ -165,10 +165,10 @@
 			</div>
 	    <div class="col-md-4 col-sm-9 pull-right right_header_barchart cyan-blue-light">
 	 			<ul class="nav nav-pills pull-right ">
-					<li class="" role="presentation"><a ng-click="isGraphLoaded && dayView()" ng-class="" href="" class="ng-scope">Day</a></li>
-					<li class="" role="presentation"><a ng-click="isGraphLoaded && weekView()" href="" ng-class="" class="active">Week</a></li>
-					<li class="" role="presentation"><a ng-click="isGraphLoaded && monthView()" ng-class="" href="" class="ng-scope">Month</a></li>
-					<li class="" role="presentation"><a ng-click="isGraphLoaded && yearView()" ng-class="" href="" class="ng-scope">Year</a></li>
+					<li class="" role="presentation"><a ng-click="isGraphLoaded && dayView()" href="" ng-class="{'active': durationview.day, '': !durationview.day}">Day</a></li>
+					<li class="" role="presentation"><a ng-click="isGraphLoaded && weekView()" href="" ng-class="{'active': durationview.week, '': !durationview.week}">Week</a></li>
+					<li class="" role="presentation"><a ng-click="isGraphLoaded && monthView()" href="" ng-class="{'active': durationview.month, '': !durationview.month}">Month</a></li>
+					<li class="" role="presentation"><a ng-click="isGraphLoaded && yearView()" href="" ng-class="{'active': durationview.year, '': !durationview.year}">Year</a></li>
 					<li id="dp3" class="" role="presentation">
 						<a href="" id="dp2cal" date-range-picker class="date-picker margin_tp13" ng-model="dates" parentEl="#dp1" options="opts" ><span class="icon-calendar"></span></a>
 					</li>

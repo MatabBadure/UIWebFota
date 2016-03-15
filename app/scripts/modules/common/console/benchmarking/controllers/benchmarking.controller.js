@@ -44,8 +44,19 @@ angular.module('hillromvestApp')
 		$scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
 
 		$scope.customDateRangeView = function(){
+			$scope.toggleDuration(false, false, false, false, true);
 			$scope.getBenchmarkingReport($scope.serverFromDate, $scope.serverToDate, $scope.xaxis, $scope.type, $scope.benchmarkType, $scope.range, $scope.state, $scope.city);
 		};
+
+
+		$scope.toggleDuration = function(day, week, month, year, custom){
+		 	$scope.durationview = {};
+		 	$scope.durationview.day = day;
+		 	$scope.durationview.week = week;
+		 	$scope.durationview.month = month;
+		 	$scope.durationview.year = year;
+		 	$scope.durationview.custom = custom;
+		 };
 		
 		$scope.init = function(){
 			$scope.calculateTimeDuration(5);
@@ -104,7 +115,7 @@ angular.module('hillromvestApp')
 		    allSelected : "All Selected"
 			}
 
-
+			$scope.toggleDuration(false, true, false, false, false);
 			$scope.getBenchmarkingReport($scope.serverFromDate, $scope.serverToDate, $scope.xaxis, $scope.type, $scope.benchmarkType, $scope.range, $scope.state, $scope.city);
 
 		};
@@ -195,19 +206,27 @@ angular.module('hillromvestApp')
 		};
 
 		$scope.dayView = function(){
-			console.log('Day View...!');
+			$scope.toggleDuration(true, false, false, false, false);
+			$scope.calculateTimeDuration(0);
+			$scope.getBenchmarkingReport($scope.serverFromDate, $scope.serverToDate, $scope.xaxis, $scope.type, $scope.benchmarkType, $scope.range, $scope.state, $scope.city);
 		};
 
 		$scope.weekView = function(){
-			console.log('Week View...!');
+			$scope.toggleDuration(false, true, false, false, false);
+			$scope.calculateTimeDuration(5);
+			$scope.getBenchmarkingReport($scope.serverFromDate, $scope.serverToDate, $scope.xaxis, $scope.type, $scope.benchmarkType, $scope.range, $scope.state, $scope.city);
 		};
 
 		$scope.monthView = function(){
-			console.log('Month View...!');
+			$scope.toggleDuration(false, false, true, false, false);
+			$scope.calculateTimeDuration(30);
+			$scope.getBenchmarkingReport($scope.serverFromDate, $scope.serverToDate, $scope.xaxis, $scope.type, $scope.benchmarkType, $scope.range, $scope.state, $scope.city);
 		};
 
 		$scope.yearView = function(){
-			console.log('Year View...!');
+			$scope.toggleDuration(false, false, false, true, false);
+			$scope.calculateTimeDuration(365);
+			$scope.getBenchmarkingReport($scope.serverFromDate, $scope.serverToDate, $scope.xaxis, $scope.type, $scope.benchmarkType, $scope.range, $scope.state, $scope.city);
 		};
 
 		$scope.init();
