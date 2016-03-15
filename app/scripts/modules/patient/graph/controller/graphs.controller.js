@@ -206,8 +206,7 @@ angular.module('hillromvestApp')
       eventHandlers: {'apply.daterangepicker': function(ev, picker) {
           $scope.durationRange = "Custom";     
           $scope.calculateDateFromPicker(picker);  
-          var dayDiff = dateService.getDateDiffIndays($scope.fromTimeStamp,$scope.toTimeStamp);
-          console.log("dayDiff : ", dayDiff);
+          var dayDiff = dateService.getDateDiffIndays($scope.fromTimeStamp,$scope.toTimeStamp);          
           if( dayDiff === 0){
             $scope.durationRange = "Day";
           }
@@ -620,12 +619,26 @@ angular.module('hillromvestApp')
         var xData = [];
         $scope.chartData = {};
         $scope.chartData.datasets = [];
-        if(responseData){  
+        if(responseData){ 
           $scope.noDataAvailable = false;        
-          xData = responseData.xAxis.categories;          
-          angular.forEach(xData, function(x, key){
-            xData[key] = dateService.convertToTimestamp(x);
-          });
+          xData = responseData.xAxis.categories; 
+          responseData.xAxis.xLabels = []; 
+
+          angular.forEach(responseData.xAxis.categories, function(x, key){              
+            // this is for year view or custom view having datapoints more than 7
+            // x-axis will be plotted accordingly, chart type will be datetime
+            var dateTextLabel = Highcharts.dateFormat("%m/%e/%Y",dateService.convertToTimestamp(x));
+            dateTextLabel += (Highcharts.dateFormat("%I:%M %p",dateService.convertToTimestamp(x)))? ' ( ' + Highcharts.dateFormat("%I:%M %p",dateService.convertToTimestamp(x)) + ' )' : '';
+            
+            responseData.xAxis.xLabels.push(dateTextLabel);
+            if($scope.durationRange !== "Day" && $scope.durationRange !== "Week" && responseData.xAxis.categories.length > 6){              
+              xData[key] = dateService.convertToTimestamp(x);               
+            }else{
+              // this is for week view  (only date should get displayed on X-axis and not time )             
+              var splittedX = x.split(" ");                
+              responseData.xAxis.categories[key] = splittedX[0];
+            }
+          });       
 
           angular.forEach(responseData.series, function(s, key1){
             var marker = {};
@@ -634,7 +647,7 @@ angular.module('hillromvestApp')
               var tooltipDateText = responseData.series[key1].data[key2].x ;
               responseData.series[key1].data[key2].x = xData[key2];
               responseData.series[key1].data[key2].marker = marker;
-              responseData.series[key1].data[key2].toolText.dateText = tooltipDateText;
+              responseData.series[key1].data[key2].toolText.dateText = responseData.xAxis.xLabels[key2] ;
               if(responseData.series[key1].data[key2].toolText.missedTherapy){
                 responseData.series[key1].data[key2].color = "red";
               }
@@ -650,7 +663,11 @@ angular.module('hillromvestApp')
           });
           $scope.chartData.xData = xData;
           setTimeout(function(){
-            $scope.synchronizedChart();
+            if($scope.durationRange === "Day" || $scope.durationRange === "Week" || responseData.xAxis.categories.length <= 6){
+              $scope.synchronizedcategoryChart();
+            }else{
+              $scope.synchronizedChart();
+            }            
           }, 10);          
         } else{
           $scope.noDataAvailable = true;
@@ -658,14 +675,12 @@ angular.module('hillromvestApp')
       });
     };
 
-    $scope.synchronizedChart = function(divId){
-        Highcharts.setOptions({
+    $scope.setSynchronizedChart = function(divId){
+       Highcharts.setOptions({
             global: {
                 useUTC: false
             }
-        });
-        divId = (divId) ? divId : "synchronizedChart";
-        $("#"+divId).empty();
+        });        
          /**
          * In order to synchronize tooltips and crosshairs, override the
          * built-in events with handlers defined on the parent element.
@@ -721,11 +736,15 @@ angular.module('hillromvestApp')
             }
           } 
         });
+               
+    };
 
-        
-        /**
-         * Synchronize zooming through the setExtremes event handler.
-         */
+    $scope.synchronizedChart = function(divId){
+       
+        // Get the data. The contents of the data file can be viewed at
+        divId = (divId) ? divId : "synchronizedChart";
+        $("#"+divId).empty();
+        $scope.setSynchronizedChart(divId);
         function syncExtremes(e) {
               var thisChart = this.chart;
 
@@ -743,8 +762,6 @@ angular.module('hillromvestApp')
             });
           }
         }
-
-        // Get the data. The contents of the data file can be viewed at
         
         $.each($scope.chartData.datasets, function(i, dataset) {         
           var  minRange = (dataset.plotLines.max) ? dataset.plotLines.max : dataset.plotLines.min;
@@ -801,7 +818,162 @@ angular.module('hillromvestApp')
                 gridLineColor: '#FF0000',
                 gridLineWidth: 0,
                 lineWidth:2,
-                minRange: minRange,
+                minRange: 1,
+                min: 0,
+                allowDecimals:false,
+                title: {
+                  text: null
+                },
+                plotLines: [{
+                    value: yMinPlotLine,
+                    color: '#99cf99',
+                    dashStyle: 'Dash',
+                    width: 1,                    
+                    label: {
+                        align: "right",
+                        text: 'Min Threshold',
+                        y: -5,
+                        x: -10,
+                        style: {
+                            color: '#c1c1c1',
+                            font: '10px Helvetica',
+                            fontWeight: 'normal'
+                        }/*,
+                        textAlign: "left"*/
+                    }
+                }, {
+                    value: yMaxPlotLine,
+                    color: '#f19999',
+                    dashStyle: 'Dash',
+                    width: 1,                    
+                    label: {
+                      align: "right",
+                      text: 'Max Threshold',
+                      y: -5,
+                      x: -10,
+                      style: {
+                          color: '#c1c1c1',
+                          font: '10px Helvetica',
+                          fontWeight: 'normal'
+                      }/*,
+                        textAlign: "left"*/
+                    }
+                }],
+              },
+              plotOptions: {  
+                line: {
+                    lineWidth: 3,
+                    softThreshold: false,
+                    marker: {
+                          enabled: true
+                    },
+                    states: {
+                        hover: {
+                            enabled: false
+                        }                    
+                    } //putting down x-axis, when we have zero for all y-axis values
+                }
+              },
+              tooltip: {              
+                formatter: function() {
+                  var s = '<div style="font-size:12x;font-weight: bold; padding-bottom: 3px;">'+  this.point.toolText.dateText +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div>';                         
+                  s += '<div style="font-size:10px; font-weight: bold; width:100%"><div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left"> ' + this.point.series.name + '</div> ' 
+                  + '<div style="padding:5px;width:10%"><b>' + this.point.y + '</b></div></div>';
+                  s += '</div>';
+                  return s;
+                }, 
+                hideDelay: 0,
+                useHTML: true                
+              },
+              series: [{
+                data: dataset.data,
+                name: dataset.name,
+                type: dataset.type,
+                color: dataset.color,
+                fillOpacity: 0.3,
+                tooltip: {
+                  valueSuffix: ' ' + dataset.unit
+                }
+              }]
+            });
+        });
+    };
+
+    $scope.synchronizedcategoryChart = function(divId){       
+
+        // Get the data. The contents of the data file can be viewed at
+        divId = (divId) ? divId : "synchronizedChart";
+        $("#"+divId).empty();
+        $scope.setSynchronizedChart(divId);
+        function syncExtremes(e) {
+              var thisChart = this.chart;
+
+        if (e.trigger !== 'syncExtremes') { // Prevent feedback loop
+            Highcharts.each(Highcharts.charts, function(chart) {
+              if(chart && chart.renderTo.offsetParent && chart.renderTo.offsetParent.id === "synchronizedChart"){ 
+                if (chart !== thisChart) {
+                  if (chart.xAxis[0].setExtremes) { // It is null while updating
+                    chart.xAxis[0].setExtremes(e.min, e.max, undefined, false, {
+                      trigger: 'syncExtremes'
+                    });
+                  }
+                }
+              }
+            });
+          }
+        }
+
+        
+        $.each($scope.chartData.datasets, function(i, dataset) {        
+          var  minRange = (dataset.plotLines.max) ? dataset.plotLines.max : dataset.plotLines.min;
+          var yMaxPlotLine = dataset.plotLines.max;
+          var yMinPlotLine = dataset.plotLines.min;
+
+          $('<div class="chart">')
+            .appendTo('#'+divId)
+            .highcharts({
+              chart: {
+                marginLeft: 40, 
+                //spacingTop: 30,
+                spacingBottom: 30,
+                zoomType: 'xy',
+                backgroundColor:  "#e6f1f4"
+              },
+              title: {
+                text: dataset.name,
+                align: 'left',
+                margin: 25,
+                x: 30,
+                style:{
+                  color: dataset.color
+                }                
+              },
+              credits: {
+                enabled: false
+              },
+              legend: {
+                enabled: false
+              },
+              xAxis: {
+                allowDecimals: false,
+                type: 'category',         
+                categories: $scope.chartData.xData,
+                labels:{
+                  style: {
+                      color: '#525151',                    
+                      fontWeight: 'bold'
+                  }               
+                }, 
+                formatter:function(){
+                  return  Highcharts.dateFormat("%m/%e/%Y",this.value);
+                },
+                lineWidth: 2   
+              },
+              yAxis: {
+                gridLineColor: '#FF0000',
+                gridLineWidth: 0,
+                lineWidth:2,
+                minRange: 1,
                 min: 0,
                 allowDecimals:false,
                 title: {
@@ -891,14 +1063,25 @@ angular.module('hillromvestApp')
     $scope.getHMRGraph = function(){
       patientDashBoardService.getHMRGraphPoints($scope.patientId, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.durationRange).then(function(response){
         $scope.hmrChartData = response.data;        
-        $scope.noDataAvailable = false;           
+        $scope.noDataAvailable = false;       
         if($scope.hmrChartData && typeof($scope.hmrChartData) === "object"){ 
-          if($scope.durationRange !== "Day"){
-            angular.forEach($scope.hmrChartData.xAxis.categories, function(x, key){
-              $scope.hmrChartData.xAxis.categories[key] = dateService.convertToTimestamp(x);
-            });
-          }
-          
+          $scope.noDataAvailable = false;      
+          $scope.hmrChartData.xAxis.xLabels=[];          
+            angular.forEach($scope.hmrChartData.xAxis.categories, function(x, key){              
+              // this is for year view or custom view having datapoints more than 7
+              // x-axis will be plotted accordingly, chart type will be datetime
+              if($scope.durationRange !== "Day" && $scope.durationRange !== "Week" && $scope.hmrChartData.xAxis.categories.length > 6){
+                 $scope.hmrChartData.xAxis.xLabels.push(dateService.convertToTimestamp(x));
+                $scope.hmrChartData.xAxis.categories[key] = dateService.convertToTimestamp(x);               
+              }else if($scope.durationRange === "Week" || ( $scope.durationRange === "Custom" && $scope.hmrChartData.xAxis.categories.length <= 6) ){
+                // this is for week view  (only date should get displayed on X-axis and not time )
+                $scope.hmrChartData.xAxis.xLabels.push(x);
+                var splittedX = x.split(" ");                
+                $scope.hmrChartData.xAxis.categories[key] = splittedX[0];
+              }else{
+                $scope.hmrChartData.xAxis.xLabels.push(x);
+              }
+            });         
           angular.forEach($scope.hmrChartData.series, function(s, key1){
             var marker = {};
             marker.radius = (s.data && s.data.length < 50)? 3 : 2; 
@@ -906,7 +1089,7 @@ angular.module('hillromvestApp')
               var tooltipDateText = $scope.hmrChartData.series[key1].data[key2].x ;
               $scope.hmrChartData.series[key1].data[key2].marker = marker;
               $scope.hmrChartData.series[key1].data[key2].x = $scope.hmrChartData.xAxis.categories[key2];
-              $scope.hmrChartData.series[key1].data[key2].toolText.dateText = tooltipDateText;
+              $scope.hmrChartData.series[key1].data[key2].toolText.dateText = $scope.hmrChartData.xAxis.xLabels[key2];
               if($scope.hmrChartData.series[key1].data[key2].toolText.missedTherapy){
                 $scope.hmrChartData.series[key1].data[key2].color = "red";
               }
@@ -914,8 +1097,8 @@ angular.module('hillromvestApp')
             
           }); 
           setTimeout(function(){
-            if($scope.durationRange === "Day"){
-              $scope.HMRDayChart();
+            if($scope.durationRange === "Day" || $scope.durationRange === "Week" || ($scope.durationRange === "Custom" && $scope.hmrChartData.xAxis.categories.length <= 6)){              
+              $scope.HMRCategoryChart();
             }else{
               $scope.HMRAreaChart();
             }            
@@ -996,7 +1179,7 @@ angular.module('hillromvestApp')
                   var headerStr = '';
                   var footerStr = '';
                   var noteStr = '';                  
-                  var dateTextLabel = Highcharts.dateFormat("%m/%e/%Y",this.x);
+                  var dateTextLabel = Highcharts.dateFormat("%m/%e/%Y",this.point.toolText.dateText);
                   if(this.point.toolText.sessionNo && this.point.toolText.sessionNo.indexOf("/" > 0)){
                     var splitSession = this.point.toolText.sessionNo.split("/");
                     if(parseInt(splitSession[1]) > 0){
@@ -1065,7 +1248,8 @@ angular.module('hillromvestApp')
       });
     };
 
-    $scope.HMRDayChart = function(divId){
+    $scope.HMRCategoryChart = function(divId){
+      var chartType = ($scope.durationRange !== "Day")? "area" : "column";
       Highcharts.setOptions({
           global: {
               useUTC: false
@@ -1075,7 +1259,7 @@ angular.module('hillromvestApp')
       $('#'+divId).empty();
       $('#'+divId).highcharts({
           chart: {
-              type: 'column',
+              type: chartType,
               zoomType: 'xy',
               backgroundColor:  "#e6f1f4"
           },
@@ -1122,14 +1306,14 @@ angular.module('hillromvestApp')
           tooltip: { 
               backgroundColor: "rgba(255,255,255,1)",            
               formatter: function() {
-                  var dateX = dateService.convertToTimestamp(this.point.category);
+                  var dateX = dateService.convertToTimestamp(this.point.toolText.dateText);
                   var dateTextLabel = Highcharts.dateFormat("%m/%e/%Y",dateX);                  
                   if(this.point.toolText.sessionNo && this.point.toolText.sessionNo.indexOf("/" > 0)){
                     var splitSession = this.point.toolText.sessionNo.split("/");                    
                     if(parseInt(splitSession[1]) > 0){                      
                       dateTextLabel += ' ( ' + Highcharts.dateFormat("%I:%M %p",dateX) + ' )';                      
                     }
-                  }
+                  }                 
                   var s = '<div style="font-size:12x;font-weight: bold; padding-bottom: 3px;">'+  dateTextLabel +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div>';
                   s += '<div style="font-size:10px; font-weight: bold; width:100%"><div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left"> Session No </div> ' 
                   + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.sessionNo  + '</b></div></div>';                 
@@ -1162,7 +1346,9 @@ angular.module('hillromvestApp')
                 point: {
                     events: {
                         click: function () {
-                            $scope.getDayChart(this.x);
+                            if($scope.durationRange !== "Day" && this.toolText && !this.toolText.missedTherapy){                              
+                              $scope.getDayChart(this.category);
+                            } 
                         }
                     }
                   }
