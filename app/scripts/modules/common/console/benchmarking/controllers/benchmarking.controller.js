@@ -1,7 +1,7 @@
 'use strict';
 angular.module('hillromvestApp')
-.controller('benchmarkingController', ['$scope', 'addressService', 'notyService', '$rootScope', 'benchmarkingService', 'dateService',
-	function($scope, addressService, notyService, $rootScope, benchmarkingService, dateService) {
+.controller('benchmarkingController', ['$scope', 'addressService', 'notyService', '$rootScope', 'benchmarkingService', 'dateService', 'exportutilService', 'pdfServiceConstants',
+	function($scope, addressService, notyService, $rootScope, benchmarkingService, dateService, exportutilService, pdfServiceConstants) {
 
 		$scope.calculateDateFromPicker = function(picker) {
 	    $scope.fromTimeStamp = new Date(picker.startDate._d).getTime();	      
@@ -102,6 +102,10 @@ angular.module('hillromvestApp')
 		    nothingSelected : "Nothing is selected",
 		    allSelected : "All Selected"
 			}
+
+
+			$scope.getBenchmarkingReport($scope.serverFromDate, $scope.serverToDate, $scope.xaxis, $scope.type, $scope.benchmarkType, $scope.range, $scope.state, $scope.city);
+
 		};
 
 		$scope.processStates = function(states){
@@ -177,15 +181,121 @@ angular.module('hillromvestApp')
 		};
 
 		$scope.getBenchmarkingReport = function(fromDate, toDate, XAxis, type, benchmarkType,range, state, city){
-			console.log(fromDate, toDate, XAxis, type, benchmarkType,range, state, city);
-			console.log('REST API Integration in Progess...!');
 			benchmarkingService.getBenchmarkingReport(fromDate, toDate, XAxis, type, benchmarkType, range, state, city).then(function(response){
 				console.log('SUCCESS :: ', response);
+				$scope.benchmarkingGraph = response.data;
+				console.log($scope.benchmarkingGraph.xAxis.categories);
+				console.log('$scope.benchmarkingGraph.series ::: ', $scope.benchmarkingGraph.series);
+				$scope.drawBenchmarkingchart();
 			}).catch(function(response){
 				console.log('ERROR :: ', response);
 			});
 		};
 
 		$scope.init();
+
+
+
+
+
+		$scope.drawBenchmarkingchart = function(){
+			var chart = Highcharts.chart('benchmarkingGraph', {
+				chart:{
+					type: 'column',
+					zoomType: 'xy',
+					backgroundColor: "#e6f1f4"
+				},
+        title: {
+          text: ''
+        },
+		    xAxis:{
+					type: 'category',
+					categories: $scope.benchmarkingGraph.xAxis.categories,
+					labels:{
+			      style: {
+				      color: '#525151',
+				      //font: '10px Helvetica',
+				      fontWeight: 'bold'
+				    }
+			    }
+				},
+				yAxis: {
+					gridLineColor: '#FF0000',
+		      gridLineWidth: 0,
+		      lineWidth:1,
+		      min: 0,
+		      title: {
+		        text: 'Adherence Score',
+		        style: {
+			        color: '#525151',
+			        font: '10px Helvetica',
+			        fontWeight: 'bold'
+			      }
+		      },
+		      allowDecimals:false,
+		      labels:{
+		       	style: {
+			        color: '#525151',
+			        //font: '10px Helvetica',
+			        fontWeight: 'bold'
+			      }
+		      }
+		    },
+        legend: {
+		      align: 'center',
+			    verticalAlign: 'bottom',
+			    x: 0,
+			    y: 0
+		    },
+		    plotOptions: {
+		      series: {
+		        events: {
+		          legendItemClick: function () {
+		         		var self = this,
+		         		allow = false;
+		                        
+		            if(self.visible) {
+		              $.each(self.chart.series, function(i, series) {
+		                if(series !== self && series.visible) {
+		                 	allow = true;
+		                }
+		              });
+		              if(!allow){
+		               	notyService.showMessage(notyMessages.minComplianceError, notyMessages.typeWarning );
+		              }
+		              return allow;
+		            }
+		          }
+		        }
+		      }
+		    },
+				tooltip: {
+					crosshairs: [{
+		        dashStyle: 'solid',
+		        color: '#b4e6f6'
+		        },
+		      false],
+					formatter: function() {
+						var s = '<div style="font-size:12x;font-weight: bold; padding-bottom: 3px;">'+  this.x +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div>';
+			    	$.each(this.points, function(i, point) {
+			      	s += '<div style="font-size:10px; font-weight: bold; width:100%"><div style="color:'+ point.series.color +';padding:5px 0;width:80%;float:left"> ' + point.series.name + '</div> ' 
+			        + '<div style="padding:5px;width:10%"><b>' + point.y + '</b></div></div>';
+			    	});
+			    	s += '</div>';
+		        return s;
+			    },
+			    hideDelay: 0,
+					useHTML: true,
+   				shared: true
+				},
+				series: $.extend(true, [], $scope.benchmarkingGraph.series),
+				loading: true,
+				size: {}
+		  });//.setSize(1140, 400);
+		};
+
+		$scope.exportPDF = function(){
+			exportutilService.exportBenchmarkPDF('benchmarkingGraph', 'benchmarkCanvas', $scope.fromDate, $scope.toDate, pdfServiceConstants.text.benchmarking);
+		};
 
 	}]);

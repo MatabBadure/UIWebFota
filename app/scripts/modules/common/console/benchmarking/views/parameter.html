@@ -171,8 +171,8 @@
 						<!-- <a options="opts" id="dp1cal" parentel="#dp3" ng-model="dates" class="date-picker ng-pristine ng-untouched ng-valid ng-isolate-scope" date-range-picker="" href=""><span class="icon-calendar"></span></a> -->
 						<a href="" id="dp2cal" date-range-picker class="date-picker margin_tp13" ng-model="dates" parentEl="#dp1" options="opts" ><span class="icon-calendar"></span></a>
 					</li>
-					</ul>
-	 	    </div>
+				</ul>
+	 	  </div>
    	</div>
    	<div class="pull-right week_date_container">
 			<span ng-if="fromDate !== toDate">
@@ -181,8 +181,17 @@
 			<span ng-if="fromDate === toDate" class="date">{{fromDate}}<span>
 		</div>
   </div>
+  <div class="col-md-16 ">
+  	<div id="benchmarkingGraph"></div>
+	</div>
+	<div style="clear:both"></div>
+	<div class="col-md-16 dashboard__manage-view--pagination">
+  <div class="btn_group patient_dashdoard_btns">
+    <div dropdown="" class="pull-right left dropdown">
+      <button id="single-button" type="button" class="hillrom-btn btn-submit margin0 float-right ng-scope dropdown-toggle"  ng-click="exportPDF()">Export in PDF</button>
+    </div>
+  </div>
 </div>
-
-<div class="col-md-16 ">
-  <div id="benchmarkingGraph"></div>
+<div style="clear:both"></div>
+<canvas id="benchmarkCanvas" width=1300 height=350 style="display:none;"></canvas>
 </div>

@@ -262,6 +262,18 @@ angular.module('hillromvestApp')
     },1000); 
   }
 
+  this.exportBenchmarkPDF = function(svgId, canvasId, fromDate, toDate, graphTitle){
+    var pdf = this.getPdf();
+    var pageHeight = pdf.internal.pageSize.height;
+    var pageWidth = pdf.internal.pageSize.width;
+    pdf = this.setHeader(pdf, fromDate, toDate);
+    pdf = this.addSvgToPDF(pdf, canvasId, svgId, 20, 150, 540, 200, graphTitle);
+    pdf = this.setFooter(pdf, pdf.internal.pageSize.height-80);
+    setTimeout(function(){
+      pdf.save('VisiView™.pdf');
+    },1000);
+  }
+
   this.addQuestions = function(pdf, questions){
     var height = 400;
     pdf.setFont(pdfServiceConstants.style.font.helvetica);

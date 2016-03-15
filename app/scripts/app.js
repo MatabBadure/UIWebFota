@@ -189,8 +189,12 @@ angular.module('hillromvestApp',
       {
         name: 'BenchmarkingModule',
         files:[
+          'bower_components/canvg-gabelerner/rgbcolor.js',
+          'bower_components/canvg-gabelerner/StackBlur.js',
+          'bower_components/canvg-gabelerner/canvg.js',
           'bower_components/isteven-angular-multiselect/isteven-multi-select.js',
-          'bower_components/angular-daterangepicker/js/angular-daterangepicker.js'
+          'bower_components/angular-daterangepicker/js/angular-daterangepicker.js',
+          'https://code.highcharts.com/highcharts.js'
         ]
       }]
     });
