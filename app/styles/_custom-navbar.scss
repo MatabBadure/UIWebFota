@@ -361,6 +361,24 @@ ul.logout-dropdown>li{
 	margin-right: 20px;
 }
 
+#synchronizedChart .chart {
+	width: 100%;
+  height: 250px;
+  margin: 0 auto;
+}
+.hide-chart{
+	visibility: hidden;
+	width: 100%;
+	opacity: 0;
+	height: 0;
+	overflow: hidden;
+}
+.show-chart{
+	visibility: visible;
+	width: 100%;
+}
+
+
 .benchmarking__form__input select, .custom-textbox{
 	height: 30px;
   width: 210px;
@@ -398,3 +416,4 @@ ul.logout-dropdown>li{
 .benchmarking__form__input > .custom-dropdown:before{
 	z-index: 999;
 }
+
