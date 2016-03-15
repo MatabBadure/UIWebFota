@@ -157,7 +157,7 @@
 		<span class="noData_text"> No Data Available!</span>
 	</div><!--  ng-show="isHMR && !noDataAvailable"-->	
 	<div class="complianceGraphPrim_wrapper" ng-show="!noDataAvailable" id="lineGraphWrapper" >
-		<div id="HMRGraph" ng-class="{ 'hide-chart': !isHMR, 'show-chart': isHMR}" ng-init="getWeekChart()">
+		<div id="HMRGraph" ng-class="{ 'hide-chart': !isHMR, 'show-chart': isHMR}" ng-init="initHMR()">
 			
 		</div>
 	</div><!-- ng-show="!noDataAvailable && !isHMR"-->

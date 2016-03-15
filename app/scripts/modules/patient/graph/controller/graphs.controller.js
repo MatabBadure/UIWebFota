@@ -818,7 +818,7 @@ angular.module('hillromvestApp')
                 gridLineColor: '#FF0000',
                 gridLineWidth: 0,
                 lineWidth:2,
-                minRange: 1,
+                minRange: minRange,
                 min: 0,
                 allowDecimals:false,
                 title: {
@@ -973,7 +973,7 @@ angular.module('hillromvestApp')
                 gridLineColor: '#FF0000',
                 gridLineWidth: 0,
                 lineWidth:2,
-                minRange: 1,
+                minRange: minRange,
                 min: 0,
                 allowDecimals:false,
                 title: {
@@ -1758,6 +1758,11 @@ angular.module('hillromvestApp')
       $scope.getPatientDevices($scope.patientId);      
       $scope.initGraph();
       $scope.getPatientById($scope.patientId);     
+    };
+
+    $scope.initHMR = function(){
+      $scope.isHMR = true;
+      $scope.noDataAvailable = false;
     };
     
 }]);
