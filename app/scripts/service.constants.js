@@ -154,6 +154,8 @@ angular.module('hillromvestApp').constant('pdfServiceConstants', {
         loginanalytic: "Login Analytic",
         hyphen: " - ",
         dateRangeOfReportLabel: "Date Range Of Report",
+        survey: "Survey",
+        benchmarking:"Benchmarking",
         complianceStatistics: "Compliance Statistics",
         hmrStatistics: "HRM Statistics",
         survey: "Survey",
