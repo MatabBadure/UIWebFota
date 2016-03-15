@@ -1195,7 +1195,9 @@ angular.module('hillromvestApp')
                     pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left">Frequency</div> ' 
                     + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.frequency + '</b></div>';
                     pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left">Duration</div> ' 
-                    + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.duration + '</b></div>';
+                    + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.duration + '</b></div>'; 
+                    pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left">Cough Pauses</div> ' 
+                    + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.coughPauses + '</b></div>';
                   if(this.point.toolText.noteText){
                     s = '<div style="font-size:10px; font-weight: bold; width:100%;display-inline:block;">' 
                     s = '<div style="font-size:12x;font-weight: bold; padding-bottom: 3px; padding-right: 50px; float: left; width: 58%">'+  dateTextLabel +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>';
@@ -1325,6 +1327,8 @@ angular.module('hillromvestApp')
                   + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.frequency + '</b></div></div>';
                   s += '<div style="font-size:10px; font-weight: bold; width:100%"><div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left">Duration</div> ' 
                   + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.duration + '</b></div></div>';
+                  s += '<div style="font-size:10px; font-weight: bold; width:100%"><div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left">Cough Pauses</div> ' 
+                  + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.coughPauses + '</b></div></div>';
                   s += '</div>';
                   return s;
                 }, 
