@@ -67,7 +67,7 @@
 		    <select class="" ng-if="selectedStates.length > 1 || selectedStates.length === 0" ng-disabled="true">
 			    <option value="all" label="All" selected="selected">All</option>
 			  </select>
-			  <div ng-if="selectedStates.length === 1"
+			  <div ng-show="selectedStates.length === 1"
 				  isteven-multi-select
 				  input-model="cities"
 				  output-model="$parent.$parent.selectedCities"

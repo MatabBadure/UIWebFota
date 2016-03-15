@@ -132,6 +132,7 @@ angular.module('hillromvestApp')
 		};
 
 		$scope.onClose = function(){
+			delete $scope.city;
 			if($scope.selectedStates.length > 0 && $scope.selectedStates.length !== $scope.states.length){
 				var selectedStates = [];
 				addressService.getCitiesByState($scope.selectedStates[0].name).then(function(response){
@@ -156,9 +157,17 @@ angular.module('hillromvestApp')
 			$scope.getBenchmarkingReport($scope.serverFromDate, $scope.serverToDate, $scope.xaxis, $scope.type, $scope.benchmarkType, $scope.range, $scope.state, $scope.city);
 		};
 
-
 		$scope.onCitiesClose = function(){
-			console.log('OnCities close...!');
+			if($scope.selectedCities.length > 0 && $scope.selectedCities.length !== $scope.cities.length){
+				var cities = [];
+				angular.forEach($scope.selectedCities, function(city){
+					cities.push(city.name);
+				});
+				$scope.city = cities.join();
+			}else{
+				$scope.city = 'all';
+			}
+			$scope.getBenchmarkingReport($scope.serverFromDate, $scope.serverToDate, $scope.xaxis, $scope.type, $scope.benchmarkType, $scope.range, $scope.state, $scope.city);
 		};
 
 		$scope.onXaxisChange = function(){
