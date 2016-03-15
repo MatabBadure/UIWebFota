@@ -43,9 +43,9 @@
     <div class="modal__content survey_content">
       <header class="modal__header">
         <button type="button" class="modal__close" data-dismiss="modal" ng-click="hideComments()">&times;</button>
-         <p>Q : {{selectedSurvey.questionText}}</p>
+         <p>Q-{{selectedSurvey.quesIndex + 1}} : {{selectedSurvey.questionText}}</p>
         </header>
-        <div class="modal__body">
+        <div class="modal__body survey__body">
           <div class="grid-view">  
             <div class="col-md-16 text-center reset-padding">
               <div class="col-md-3 cyan-blue-light text-center  border-right">

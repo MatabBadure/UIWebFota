@@ -311,8 +311,18 @@ ul.logout-dropdown>li{
 	float:none !important;
 }
 .navbar-secondary .navbar-right .header-popover ul li:first-child:after{
-	border-right:none;
+	border-right:1px solid #c1c1c1;
 }
+.navbar-secondary .navbar-right .header-popover ul li:nth-child(2):after{
+	height: 35px;
+    border-right: 1px solid #C1C1C1;
+    content: '';
+    position: absolute;
+    top: 11px;
+    right: 0px;
+}
+
+
 #top-shadow {
   position: fixed;
   top: 0;

@@ -26,40 +26,7 @@ angular.module('hillromvestApp')
       return pdf;
   }
 
-  this.setHeader = function(pdf, fromDate, toDate) {
-    var pageHeight = pdf.internal.pageSize.height;
-    var pageWidth = pdf.internal.pageSize.width;
-    margins.t2TabLeft=(pageWidth/2)+5;
-
-    
-    pdf.setFont(pdfServiceConstants.style.font.helvetica);
-    pdf.setFontType(pdfServiceConstants.style.font.bold);   
-    pdf.setFontSize(8);
-    pdf.setTextColor(0,0,0);
-    pdf.text(margins.left,   margins.titleTop-15, dateService.getDateFromTimeStamp(new Date().getTime(), patientDashboard.dateFormat, "/"));
-
-    pdf.setFont(pdfServiceConstants.style.font.helvetica);   
-    pdf.setFontType(pdfServiceConstants.style.font.bold);
-    pdf.setFontSize(8);
-    pdf.setTextColor(0,0,0);
-    pdf.text(margins.width-305,   margins.titleTop-15, pdfServiceConstants.text.hillromOverview);
-
-    pdf.setFont(pdfServiceConstants.style.font.helvetica);  
-    pdf.setFontType(pdfServiceConstants.style.font.bold); 
-    pdf.setFontSize(11);
-    pdf.setTextColor(124,163,220);
-    pdf.text(margins.width-30, margins.titleTop,g_pdfMetaData.rTitle);
-
-    pdf.setFont(pdfServiceConstants.style.font.helvetica);   
-    pdf.setFontType(pdfServiceConstants.style.font.bold);      
-    pdf.setFontSize(7);
-    pdf.setTextColor(114, 111, 111);
-    pdf.text(margins.width-70,   margins.titleTop+10, g_pdfMetaData.rTitle1);
-
-    pdf.setDrawColor(0);
-    pdf.setFillColor(114, 111, 111);
-    pdf.rect(margins.left, margins.titleTop+13, margins.width-5, .5, pdfServiceConstants.pdfDraw.line.f); 
-
+  this.setDateRange = function(pdf, fromDate, toDate){
     pdf.setFont(pdfServiceConstants.style.font.helvetica); 
     pdf.setFontType(pdfServiceConstants.style.font.normal);        
     pdf.setFontSize(8);
@@ -102,6 +69,48 @@ angular.module('hillromvestApp')
     return pdf;
   }
 
+  this.setTopHeader = function(pdf, fromDate, toDate){
+    pdf.setFont(pdfServiceConstants.style.font.helvetica);
+    pdf.setFontType(pdfServiceConstants.style.font.bold);   
+    pdf.setFontSize(8);
+    pdf.setTextColor(0,0,0);
+    pdf.text(margins.left,   margins.titleTop-15, dateService.getDateFromTimeStamp(new Date().getTime(), patientDashboard.dateFormat, "/"));
+
+    pdf.setFont(pdfServiceConstants.style.font.helvetica);   
+    pdf.setFontType(pdfServiceConstants.style.font.bold);
+    pdf.setFontSize(8);
+    pdf.setTextColor(0,0,0);
+    pdf.text(margins.width-305,   margins.titleTop-15, pdfServiceConstants.text.hillromOverview);
+
+    pdf.setFont(pdfServiceConstants.style.font.helvetica);  
+    pdf.setFontType(pdfServiceConstants.style.font.bold); 
+    pdf.setFontSize(11);
+    pdf.setTextColor(124,163,220);
+    pdf.text(margins.width-30, margins.titleTop,g_pdfMetaData.rTitle);
+
+    pdf.setFont(pdfServiceConstants.style.font.helvetica);   
+    pdf.setFontType(pdfServiceConstants.style.font.bold);      
+    pdf.setFontSize(7);
+    pdf.setTextColor(114, 111, 111);
+    pdf.text(margins.width-70,   margins.titleTop+10, g_pdfMetaData.rTitle1);
+
+    pdf.setDrawColor(0);
+    pdf.setFillColor(114, 111, 111);
+    pdf.rect(margins.left, margins.titleTop+13, margins.width-5, .5, pdfServiceConstants.pdfDraw.line.f); 
+    
+    return pdf;
+  }
+
+  this.setHeader = function(pdf, fromDate, toDate) {
+    var pageHeight = pdf.internal.pageSize.height;
+    var pageWidth = pdf.internal.pageSize.width;
+    margins.t2TabLeft=(pageWidth/2)+5;
+    
+    pdf = this.setTopHeader(pdf, fromDate, toDate);
+    pdf = this.setDateRange(pdf, fromDate, toDate);
+    return pdf;
+  }
+
   this.setFooter = function(pdf, imgY, name) { 
     //imgY, is the Y position from where the signature will start.
     // the complete set i.e. name, date and signature is of height 50 px. 
@@ -129,14 +138,16 @@ angular.module('hillromvestApp')
   }
 
   this.addSvgToPDF = function(pdf, canvasId, svgId, imageX, imageY, imageWidth, imageHeight, graphTitle, durationType, legends){
-
-    pdf.setFont(pdfServiceConstants.style.font.helvetica); 
-    pdf.setFontType(pdfServiceConstants.style.font.bold);        
-    pdf.setFontSize(10);
-    pdf.setTextColor(0, 0, 0);
-    pdf.text((pdf.internal.pageSize.width/2)-25,   imageY-30, graphTitle);
+    if(graphTitle){
+      pdf.setFont(pdfServiceConstants.style.font.helvetica); 
+      pdf.setFontType(pdfServiceConstants.style.font.bold);        
+      pdf.setFontSize(10);
+      pdf.setTextColor(0, 0, 0);
+      pdf.text((pdf.internal.pageSize.width/2)-(20+graphTitle.length),   imageY-30, graphTitle);
+    }    
 
     var canvas = document.getElementById(canvasId);
+
     var ctx = canvas.getContext('2d');
     var serializer = new XMLSerializer();
     var svgString = serializer.serializeToString(document.getElementById(svgId).querySelector('svg'));          
@@ -244,6 +255,7 @@ angular.module('hillromvestApp')
     pdf = this.setHeader(pdf, fromDate, toDate);
     pdf = this.addSvgToPDF(pdf, 'loginAnalyticsCanvas', svgId, 20, 150, 540, 200, pdfServiceConstants.text.loginanalytic, durationType, legends);    
     pdf = this.setFooter(pdf, pdf.internal.pageSize.height-80);
+    pdf = this.setPageNumber(pdf, "1", "1");  
     setTimeout(function(){
       pdf.save('VisiView™.pdf');
     },1000);
@@ -257,6 +269,7 @@ angular.module('hillromvestApp')
     pdf = this.addSvgToPDF(pdf, canvasId, svgId, 20, 150, 540, 200, graphTitle);
     pdf = this.addQuestions(pdf, questions);
     pdf = this.setFooter(pdf, pdf.internal.pageSize.height-80);
+    pdf = this.setPageNumber(pdf, "1", "1");  
     setTimeout(function(){     
       pdf.save('VisiView™.pdf'); 
     },1000); 
@@ -387,5 +400,232 @@ angular.module('hillromvestApp')
     setTimeout(function(){
       pdf.save('VisiView™.pdf');
     },1000);
+  }
+
+  this.setPageNumber = function(pdf, currentPageNo, totalPageNo){
+    var pageHeight = pdf.internal.pageSize.height;
+    pdf.setFontType("normal");
+    pdf.setFontSize(6);
+    pdf.setTextColor(0,0,0);
+    pdf.text(margins.width-295,pageHeight-13, "Page");
+
+    pdf.setFontType("bold");
+    pdf.setFontSize(6);
+    pdf.setTextColor(0,0,0);
+    pdf.text(margins.width-280,pageHeight-13, currentPageNo);   //15
+
+    pdf.setFontType("normal");
+    pdf.setFontSize(6);
+    pdf.setTextColor(0,0,0);
+    pdf.text(margins.width-275,pageHeight-13, "of "); //5
+
+    pdf.setFontType("bold");
+    pdf.setFontSize(6);
+    pdf.setTextColor(0,0,0);
+    pdf.text(margins.width-268,pageHeight-13, totalPageNo + " ");
+    return pdf;
+  }
+
+  this.addAllSvgsToPDF = function(pdf, canvasId, svgId, imageX, imageY, imageWidth, imageHeight, chartName){    
+    if(chartName){
+      pdf.setFont(pdfServiceConstants.style.font.helvetica); 
+      pdf.setFontType(pdfServiceConstants.style.font.bold);        
+      pdf.setFontSize(10);
+      pdf.setTextColor(0, 0, 0);
+      pdf.text((pdf.internal.pageSize.width/2)-60,   imageY-30, chartName);
+    }
+    var canvas = document.getElementById(canvasId);              
+    var ctx = canvas.getContext('2d');
+    var serializer = new XMLSerializer();
+    var allSvgs = document.getElementById(svgId).querySelectorAll('svg');
+    var count = 0;
+    for (count = 0; count < allSvgs.length; count++) {
+      $("#"+canvasId).empty();
+      var svgString = serializer.serializeToString(allSvgs[count]);          
+      canvg(canvas, svgString);
+      var img = $("#"+canvasId)[0].toDataURL('image/png', 1.0);
+      pdf.addImage(img, 'png', imageX, imageY, imageWidth, 100);
+      imageY += 100;
+    }
+
+    return pdf;
+  }
+
+  this.addPatientInfoToHMRCReport = function(pdf, patientInfo, fromDate , toDate){
+    var patientDetails = (patientInfo && patientInfo.patient) ? patientInfo.patient : null;
+    var pdfClinic = (patientInfo && patientInfo.clinics && patientInfo.clinics.length > 0) ? patientInfo.clinics[0] : null;
+    var pdfClinicAddress = (pdfClinic !== null && pdfClinic.address) ? pdfClinic.address : stringConstants.notAvailable;
+    var pdfClinicPhone = (pdfClinic !== null && pdfClinic.phoneNumber) ? pdfClinic.phoneNumber : stringConstants.notAvailable;
+    var reportGenerationDate = dateService.getDateFromTimeStamp(new Date().getTime(),patientDashboard.dateFormat,'/');
+    var patientMrnId = (patientDetails !== null && patientDetails.mrnId)? patientDetails.mrnId : stringConstants.notAvailable;
+    var patientName = (patientDetails !== null && patientDetails.firstName && patientDetails.firstName !== null)? patientDetails.firstName+stringConstants.space : "";
+    patientName = (patientDetails.lastName  && patientDetails.lastName  !== null) ? patientName+patientDetails.lastName : patientName;
+    patientName = (patientName && patientName.length > 0) ? patientName : stringConstants.notAvailable;
+    var completePatientAddress = (patientDetails !== null && patientDetails.address) ? patientDetails.address : stringConstants.emptyString;
+    completePatientAddress = (patientDetails !== null && patientDetails.city) ? ((completePatientAddress.length > 1) ? (completePatientAddress+stringConstants.comma+patientDetails.city) : patientDetails.city) : completePatientAddress;
+    completePatientAddress = (patientDetails !== null && patientDetails.state) ? ((completePatientAddress.length > 1) ? (completePatientAddress+stringConstants.comma+patientDetails.state) : patientDetails.state) : completePatientAddress;            
+    completePatientAddress = (patientDetails !== null && patientDetails.zipcode) ? ((completePatientAddress.length > 1) ? (completePatientAddress+stringConstants.comma+patientDetails.zipcode) : patientDetails.zipcode) : completePatientAddress;      
+    var patientPhone = (patientDetails !== null && patientDetails.mobilePhone)? patientDetails.mobilePhone : stringConstants.notAvailable;
+    var patientDOB = (patientDetails !== null && patientDetails.dob)? dateService.getDateFromTimeStamp(patientDetails.dob,patientDashboard.dateFormat,'/') : stringConstants.notAvailable;    
+    var patientDeviceType = stringConstants.deviceType;
+    var patientDeviceSlNo = (patientInfo.patientDevices && patientInfo.patientDevices[0] && patientInfo.patientDevices[0].serialNumber) ? patientInfo.patientDevices[0].serialNumber: stringConstants.notAvailable;
+    var pdfMissedTherapyDays = (patientInfo.missedtherapyDays !== null && patientInfo.missedtherapyDays >= 0) ? patientInfo.missedtherapyDays : stringConstants.notAvailable;
+    var pdfHMRNonAdherenceScore = (patientInfo.adherenceScore !== null && patientInfo.adherenceScore >= 0) ? patientInfo.adherenceScore : 0;
+    var pdfSettingDeviation = (patientInfo.settingsDeviatedDaysCount !== null && patientInfo.settingsDeviatedDaysCount >= 0) ? patientInfo.settingsDeviatedDaysCount : stringConstants.notAvailable;
+    completePatientAddress = (completePatientAddress === stringConstants.emptyString) ? stringConstants.notAvailable : completePatientAddress;      
+      
+    g_pdfMetaData = {
+      rTitle: 'HillRom'
+      ,rTitle1: 'VisiView™ Health Portal'
+      ,rGenDtLbl : stringConstants.reportGenerationDateLabel
+      , rGenDt : reportGenerationDate
+      , rRngLble : stringConstants.dateRangeOfReportLabel+stringConstants.colon
+      , rRngDt : fromDate+stringConstants.minus+toDate
+      , rTablePatInfo : {
+          title: stringConstants.patientInformationLabel
+          , tData:  [
+            stringConstants.mrn+stringConstants.colon, patientMrnId
+            ,stringConstants.name+stringConstants.colon, patientName
+            ,stringConstants.address+stringConstants.colon, completePatientAddress
+            ,stringConstants.phone+stringConstants.colon, patientPhone
+            ,stringConstants.DOB+stringConstants.colon, patientDOB
+            ,stringConstants.adherenceScore, pdfHMRNonAdherenceScore
+          ]
+      }
+      , rDeviceInfo :{
+         title: stringConstants.deviceInformationLabel
+          , tData:[
+            stringConstants.type+stringConstants.colon, patientDeviceType
+            , stringConstants.serialNumber+stringConstants.colon, patientDeviceSlNo
+           ]
+      }
+      , rNoteInfo :{
+         title: stringConstants.NotificationLabel
+          , tData: [
+            stringConstants.missedTherapyDays+stringConstants.colon, pdfMissedTherapyDays
+            ,stringConstants.runrate+stringConstants.colon, patientInfo.hmrRunRate
+            ,stringConstants.settingDeviation+stringConstants.colon, pdfSettingDeviation
+          ]
+      }
+
+    };    
+    pdf.cellInitialize();
+
+    pdf.margins = 1;
+    pdf.setFont("helvetica");
+                   
+    pdf.cellInitialize();
+         
+    var tabInfo = g_pdfMetaData.rTablePatInfo.tData;
+    var rCount =0;
+
+    for(var i=0;i<tabInfo.length;i=i+2){
+         rCount++;
+        if(i==0){  
+          pdf.setDrawColor(0);
+          pdf.setFillColor(124,163,220);
+          pdf.rect(margins.left, margins.top+50, margins.tCapWidth, 20, 'F');           
+          
+          //pdf.setFont("helvetica"); 
+          pdf.setFontType("bold");        
+          pdf.setFontSize(6);
+          pdf.setTextColor(234, 238, 242);
+          pdf.cell(margins.left, margins.top+50, margins.tCapWidth, 20, g_pdfMetaData.rTablePatInfo.title); 
+        }
+        pdf.setFontType("normal");
+        pdf.setTextColor(0,0,0)
+        pdf.cell(margins.left, margins.top+70, 80, 21, tabInfo[i].toString(), rCount+1);                     
+        pdf.cell(margins.left, margins.top+70, 200, 21, tabInfo[i+1].toString(), rCount+1);  
+    }
+
+    pdf.cellInitialize();
+    tabInfo = g_pdfMetaData.rDeviceInfo.tData;
+    var rCount =0;
+    for(var i=0;i<tabInfo.length;i=i+2){
+         rCount++;
+        if(i==0){
+          pdf.setDrawColor(0);
+          pdf.setFillColor(124,163,220);
+          pdf.rect(margins.t2TabLeft, margins.top+50, margins.tCapWidth, 20, 'F');           
+
+          //pdf.setFont("helvetica"); 
+          pdf.setFontType("bold");
+          pdf.setFontSize(6);
+          pdf.setTextColor(234, 238, 242);
+          pdf.cell(margins.t2TabLeft, margins.top+50, margins.tCapWidth, 20, g_pdfMetaData.rDeviceInfo.title); 
+        }
+        pdf.setTextColor(0,0,0)
+        pdf.setFontType("normal");
+        pdf.cell(margins.t2TabLeft, margins.top+70, margins.tCellWidth, 20, tabInfo[i], rCount+1);  
+        if(tabInfo[i].toString() === "Type:"){   
+          pdf.setTextColor(128, 179, 227);
+          pdf.setFontType("normal");           
+          pdf.cell(margins.t2TabLeft, margins.top+40, margins.tCellWidth, 20, tabInfo[i+1].toString(), rCount+1);
+        }else{
+          pdf.setTextColor(0,0,0);
+          pdf.setFontType("normal");              
+          pdf.cell(margins.t2TabLeft, margins.top+40, margins.tCellWidth, 20, tabInfo[i+1].toString(), rCount+1);  
+        }                     
+    }
+         
+
+    pdf.cellInitialize();
+    tabInfo = g_pdfMetaData.rNoteInfo.tData;
+    var rCount =0;
+    for(var i=0;i<tabInfo.length;i=i+2){      
+        rCount++;
+        if(i==0){
+          pdf.setDrawColor(0);
+          pdf.setFillColor(124,163,220);
+          pdf.rect(margins.t2TabLeft, margins.top+115, margins.tCapWidth, 20, 'F');
+
+          pdf.setFontType("bold");
+          pdf.setFontSize(6);
+          pdf.setTextColor(234, 238, 242);
+          pdf.cell(margins.t2TabLeft, margins.top+115, margins.tCapWidth, 20, g_pdfMetaData.rNoteInfo.title); 
+        }
+        pdf.setTextColor(0,0,0)
+        pdf.setFontType("normal");
+        pdf.cell(margins.t2TabLeft, margins.top+135, margins.tCellWidth, 20, tabInfo[i].toString(), rCount+1);   
+        pdf.cell(margins.t2TabLeft, margins.top+40, margins.tCellWidth, 20, tabInfo[i+1].toString(), rCount+1);  
+    }
+    return pdf;
+  }
+
+  this.exportHMRCGraphAsPDF = function(divId, canvasId, fromDate, toDate, patientInfo){
+    var pdf = this.getPdf();
+    var pageHeight = pdf.internal.pageSize.height;
+    var pageWidth = pdf.internal.pageSize.width;
+    pdf = this.setHeader(pdf, fromDate, toDate);
+    pdf = this.addPatientInfoToHMRCReport(pdf, patientInfo, fromDate, toDate); 
+    pdf = this.addAllSvgsToPDF(pdf, canvasId, divId, 20, 350, 540, 200, pdfServiceConstants.text.complianceStatistics);
+    pdf = this.setFooter(pdf, pdf.internal.pageSize.height-80);
+    pdf = this.setPageNumber(pdf, "1", "2");  
+    pdf.addPage(); 
+    pdf = this.setTopHeader(pdf, fromDate, toDate);
+    pdf = this.addSvgToPDF(pdf, canvasId, "HMRGraph", 20, 150, 540, 200, pdfServiceConstants.text.hmrStatistics); 
+    pdf = this.setFooter(pdf, pdf.internal.pageSize.height-80, "HCP Name");
+    pdf = this.setPageNumber(pdf, "2", "2");
+    setTimeout(function(){     
+      pdf.save('VisiView™.pdf'); 
+    },1000); 
+  }
+
+  this.exportHCPCharts = function(cdivId, tdivId, canvasId, fromDate, toDate){
+    var pdf = this.getPdf();
+    var imgY = 150;
+    pdf = this.setHeader(pdf, fromDate, toDate);
+    if(cdivId){
+      pdf = this.addSvgToPDF(pdf, canvasId, cdivId, 20, imgY, 540, 200, pdfServiceConstants.text.cumulativeStatistics); 
+      imgY = imgY + 250;
+    }
+    if(tdivId){
+      pdf = this.addSvgToPDF(pdf, canvasId, tdivId, 20, imgY, 540, 200, pdfServiceConstants.text.treatmentsStatistics); 
+    }    
+    pdf = this.setFooter(pdf, pdf.internal.pageSize.height-80);
+    pdf = this.setPageNumber(pdf, "1", "1");
+    setTimeout(function(){     
+      pdf.save('VisiView™.pdf'); 
+    },1000); 
   }
 }]);
