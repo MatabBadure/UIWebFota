@@ -53,6 +53,7 @@ angular.module('hillromvestApp')
 			$scope.xaxis = 'ageGroup';
 			$scope.range = 'all';
 			$scope.type = 'adherenceScore';
+			$scope.isGraphLoaded = false;
 			addressService.getAllStates().then(function(response){
 				$scope.processStates(response.data);
 			}).catch(function(response){
@@ -123,7 +124,6 @@ angular.module('hillromvestApp')
 			if($scope.selectedStates.length > 0 && $scope.selectedStates.length !== $scope.states.length){
 				var selectedStates = [];
 				addressService.getCitiesByState($scope.selectedStates[0].name).then(function(response){
-					console.log('SUCCESS :: ', response.data);
 					$scope.cities = [];
 					angular.forEach(response.data, function(city){
 						var obj = {
@@ -133,7 +133,7 @@ angular.module('hillromvestApp')
 						$scope.cities.push(obj);
 					});
 				}).catch(function(response){
-					console.log('ERROR :: ', response);
+					notyService.showError(response);
 				});
 				angular.forEach($scope.selectedStates, function(selectedState){
 					selectedStates.push(selectedState.name);
@@ -143,6 +143,11 @@ angular.module('hillromvestApp')
 				$scope.state = 'all';
 			}
 			$scope.getBenchmarkingReport($scope.serverFromDate, $scope.serverToDate, $scope.xaxis, $scope.type, $scope.benchmarkType, $scope.range, $scope.state, $scope.city);
+		};
+
+
+		$scope.onCitiesClose = function(){
+			console.log('OnCities close...!');
 		};
 
 		$scope.onXaxisChange = function(){
@@ -182,21 +187,30 @@ angular.module('hillromvestApp')
 
 		$scope.getBenchmarkingReport = function(fromDate, toDate, XAxis, type, benchmarkType,range, state, city){
 			benchmarkingService.getBenchmarkingReport(fromDate, toDate, XAxis, type, benchmarkType, range, state, city).then(function(response){
-				console.log('SUCCESS :: ', response);
 				$scope.benchmarkingGraph = response.data;
-				console.log($scope.benchmarkingGraph.xAxis.categories);
-				console.log('$scope.benchmarkingGraph.series ::: ', $scope.benchmarkingGraph.series);
 				$scope.drawBenchmarkingchart();
 			}).catch(function(response){
-				console.log('ERROR :: ', response);
+				notyService.showError(response);
 			});
 		};
 
+		$scope.dayView = function(){
+			console.log('Day View...!');
+		};
+
+		$scope.weekView = function(){
+			console.log('Week View...!');
+		};
+
+		$scope.monthView = function(){
+			console.log('Month View...!');
+		};
+
+		$scope.yearView = function(){
+			console.log('Year View...!');
+		};
+
 		$scope.init();
-
-
-
-
 
 		$scope.drawBenchmarkingchart = function(){
 			var chart = Highcharts.chart('benchmarkingGraph', {
@@ -214,7 +228,6 @@ angular.module('hillromvestApp')
 					labels:{
 			      style: {
 				      color: '#525151',
-				      //font: '10px Helvetica',
 				      fontWeight: 'bold'
 				    }
 			    }
@@ -249,6 +262,7 @@ angular.module('hillromvestApp')
 		    },
 		    plotOptions: {
 		      series: {
+		      	pointWidth: 50,
 		        events: {
 		          legendItemClick: function () {
 		         		var self = this,
@@ -291,7 +305,7 @@ angular.module('hillromvestApp')
 				series: $.extend(true, [], $scope.benchmarkingGraph.series),
 				loading: true,
 				size: {}
-		  });//.setSize(1140, 400);
+		  });
 		};
 
 		$scope.exportPDF = function(){

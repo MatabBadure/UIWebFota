@@ -19,9 +19,11 @@
 
 	<div class="col-md-16 reset-padding">
 		<div class="col-md-3 benchmarking__form__input reset-padding selected-box-container" >
-			<div class="dark_grey_color">
-		    <input class="custom-textbox " type="textbox" value="Average" placeholder="Average" ng-disabled="true"/>       
-		  </div> 
+		  <div class="custom-dropdown">
+		    <select ng-change="onYaxisChange()" ng-model="$parent.$parent.benchmarkType" ng-disabled="true">
+			    <option value="Average" label="Average" ng-selected="true">Average</option>
+			  </select>
+		  </div>
 		</div>
 		<div class="col-md-3 pull-left benchmarking__form__input reset-padding selected-box-container">
 			<span></span>
@@ -62,7 +64,7 @@
 		</div>
 		<div class="col-md-3 pull-right benchmarking__form__input reset-padding selected-box-container" >
 			<div class="custom-dropdown">
-		    <select class="" ng-if="selectedStates.length > 1 || selectedStates.length === 0">
+		    <select class="" ng-if="selectedStates.length > 1 || selectedStates.length === 0" ng-disabled="true">
 			    <option value="all" label="All" selected="selected">All</option>
 			  </select>
 			  <div ng-if="selectedStates.length === 1"
@@ -104,14 +106,14 @@
     <div class="bar_graph_header">
       <div class="col-md-3 benchmarking__form__input reset-padding selected-box-container" >
 				<div class="custom-dropdown">
-		      <select ng-change="onYaxisChange()" ng-model="$parent.$parent.type">
+		      <select ng-change="onYaxisChange()" ng-model="$parent.$parent.type" ng-disabled="true">
 			      <option value="adherenceScore" label="Adherence Score" ng-selected="true">Adherence Score</option>
 			      <option value="missedTherapy" label="Missed Therapy Days">Missed Therapy Days</option>
 			      <option value="HMRDeviation" label="HMR Deviation">HMR Deviation</option>
 			      <option value="settingDeviation" label="Setting Deviation">Setting Deviation</option>
 			      <option value="HMRRunrate" label="HMR Runrate">HMR Runrate</option>
-			    </select>            
-		    </div> 
+			    </select>
+		    </div>
 		  </div>
 			<div class="col-md-1 text-center benchmarking__form__input reset-padding selected-box-container" >
 				<span>for</span>
@@ -163,12 +165,11 @@
 			</div>
 	    <div class="col-md-4 col-sm-9 pull-right right_header_barchart cyan-blue-light">
 	 			<ul class="nav nav-pills pull-right ">
-					<li class="" role="presentation"><a translate="" ng-click="" ng-class="" href="" class="ng-scope">Day</a></li>
-					<li class="" role="presentation"><a ng-click="" href="" ng-class="" class="active">Week</a></li>
-					<li class="" role="presentation"><a translate="" ng-click="" ng-class="" href="" class="ng-scope">Month</a></li>
-					<li class="" role="presentation"><a translate="" ng-click="" ng-class="" href="" class="ng-scope">Year</a></li>
+					<li class="" role="presentation"><a ng-click="isGraphLoaded && dayView()" ng-class="" href="" class="ng-scope">Day</a></li>
+					<li class="" role="presentation"><a ng-click="isGraphLoaded && weekView()" href="" ng-class="" class="active">Week</a></li>
+					<li class="" role="presentation"><a ng-click="isGraphLoaded && monthView()" ng-class="" href="" class="ng-scope">Month</a></li>
+					<li class="" role="presentation"><a ng-click="isGraphLoaded && yearView()" ng-class="" href="" class="ng-scope">Year</a></li>
 					<li id="dp3" class="" role="presentation">
-						<!-- <a options="opts" id="dp1cal" parentel="#dp3" ng-model="dates" class="date-picker ng-pristine ng-untouched ng-valid ng-isolate-scope" date-range-picker="" href=""><span class="icon-calendar"></span></a> -->
 						<a href="" id="dp2cal" date-range-picker class="date-picker margin_tp13" ng-model="dates" parentEl="#dp1" options="opts" ><span class="icon-calendar"></span></a>
 					</li>
 				</ul>
@@ -181,6 +182,7 @@
 			<span ng-if="fromDate === toDate" class="date">{{fromDate}}<span>
 		</div>
   </div>
+  <loading loaded="isGraphLoaded"></loading>
   <div class="col-md-16 ">
   	<div id="benchmarkingGraph"></div>
 	</div>
