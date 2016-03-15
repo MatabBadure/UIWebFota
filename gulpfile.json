@@ -158,7 +158,9 @@
             "app/scripts/components/util/exportutil.service.js",
             "app/scripts/components/captcha/captcha.js",
             "app/scripts/modules/common/console/loginanalytics/services/loginanalytics.service.js",
-            "app/scripts/modules/patient/survey/services/patientSurvey.service.js"
+            "app/scripts/modules/patient/survey/services/patientSurvey.service.js",
+            "app/scripts/modules/common/console/benchmarking/controllers/benchmarking.controller.js",
+            "app/scripts/modules/common/console/benchmarking/services/benchmarking.service.js"
         ],
         "scripts_min_path":[
             "app/bower_components/canvg-gabelerner/rgbcolor.min.js",
@@ -303,7 +305,9 @@
             "app/scripts/components/util/exportutil.service.min.js",
             "app/scripts/components/captcha/captcha.min.js",
             "app/scripts/modules/common/console/loginanalytics/services/loginanalytics.service.min.js",
-            "app/scripts/modules/patient/survey/services/patientSurvey.service.min.js"
+            "app/scripts/modules/patient/survey/services/patientSurvey.service.min.js",
+            "app/scripts/modules/common/console/benchmarking/controllers/benchmarking.controller.min.js",
+            "app/scripts/modules/common/console/benchmarking/services/benchmarking.service.min.js"
         ],
         "clean": [
             "app/build/",
