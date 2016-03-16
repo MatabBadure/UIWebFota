@@ -237,8 +237,6 @@ angular.module('hillromvestApp')
 			$scope.getBenchmarkingReport($scope.serverFromDate, $scope.serverToDate, $scope.xaxis, $scope.type, $scope.benchmarkType, $scope.range, $scope.state, $scope.city);
 		};
 
-		// $scope.init();
-
 		$scope.drawBenchmarkingchart = function(){
 			var chart = Highcharts.chart('benchmarkingGraph', {
 				chart:{

@@ -157,10 +157,13 @@ angular.module('hillromvestApp').constant('pdfServiceConstants', {
         survey: "Survey",
         benchmarking:"Benchmarking",
         complianceStatistics: "Compliance Statistics",
-        hmrStatistics: "HRM Statistics",
+        hmrStatistics: "HMR Statistics",
         survey: "Survey",
         cumulativeStatistics: "Cumulative Statistics",
-        treatmentsStatistics: "Treatments Statistics"
+        treatmentsStatistics: "Treatments Statistics",
+        surveyForFiveDays: "Survey For 5 Days",
+        surveyForThirtyDays: "Survey For 30 Days",
+        surveyForNinetyDays: "Survey For Ninety Days"
     },
     style:{
         font:{
