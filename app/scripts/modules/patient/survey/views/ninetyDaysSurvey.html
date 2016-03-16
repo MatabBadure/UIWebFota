@@ -59,7 +59,7 @@
 	           		 <span class="ng-scope graphview_text_color" ng-bind="survey.questions[3].questionText"></span>
 	           		 <span ng-show="survey.questions[3].mandatory" class="has-error"> *</span> 
 	            </div>
-	            <div class="col-md-8" ng-if="isSecondaryNumber">
+	            <div class="col-md-16" ng-if="isSecondaryNumber">
 	           		 <input class="col-md-14" type="text" ng-model="survey.questions[3].answerValue1" ng-disabled="true">
 	           	</div>
 	           	<div class="col-md-16" ng-if="!isSecondaryNumber">

@@ -202,7 +202,7 @@ angular.module('hillromvestApp')
     $scope.opts = {
       maxDate: new Date(),
       format: patientDashboard.dateFormat,
-      dateLimit: {"months":24},
+      dateLimit: {"months":12},
       eventHandlers: {'apply.daterangepicker': function(ev, picker) {
           $scope.durationRange = "Custom";     
           $scope.calculateDateFromPicker(picker);  
