@@ -312,12 +312,11 @@ angular.module('hillromvestApp')
 		      false],
 					formatter: function() {
 						var date = ($scope.fromDate === $scope.toDate) ? $scope.fromDate : $scope.fromDate +' - '+$scope.toDate;
-
 						var xAxis = ($scope.xaxis === 'ageGroup')? 'Age Group': 'Clinic Size';
-						var s = '<div style="font-size:8x;padding-bottom: 3px;">'+ date + '</div><div style="font-size:10x; padding-bottom: 3px;">'+ xAxis + ' : ' + this.x +'</div><div>';
+
+						var s = '<div style="font-size:12px ;padding-bottom: 3px;">'+ date + '</div><div style="font-size:10px; padding-bottom: 3px;">'+ xAxis + ' : ' + this.x +'</div><div>';
 			    	$.each(this.points, function(i, point) {
-			    		console.log(point);
-			      	s += '<div style="font-size:10px; width:100%"><div style="color:'+ point.series +';padding:0;width:70%;float:left"> ' + point.series.name + '</div> ' 
+			      	s += '<div style="font-size:10px; width:100%"><div style="color:'+ point.series +';padding:0;width:70%;float:left"> ' + point.series.name + ' :</div> ' 
 			        + '<div style="padding:0;width:10%"><b>' + point.y + '</b></div><div style="line-height:24px">Total No. of Patients : '+ point.point.toolText.totalPatients +' </div></div>';
 			    	});
 			    	s += '</div>';
