@@ -70,7 +70,6 @@ angular.module('hillromvestApp')
 			}).catch(function(response){
 				notyService.showError(response);
 			});
-			// $scope.states = [ {name: 'one', 'true': true}, {name: 'two', 'true': true}, {name: 'three', 'true': true}, {name: 'four', 'true': true}];
 
 			$scope.ageGroups = [
 				{ ageRange: '0-5', 'true': true }, 
@@ -237,8 +236,6 @@ angular.module('hillromvestApp')
 			$scope.calculateTimeDuration(365);
 			$scope.getBenchmarkingReport($scope.serverFromDate, $scope.serverToDate, $scope.xaxis, $scope.type, $scope.benchmarkType, $scope.range, $scope.state, $scope.city);
 		};
-
-		$scope.init();
 
 		$scope.drawBenchmarkingchart = function(){
 			var chart = Highcharts.chart('benchmarkingGraph', {
