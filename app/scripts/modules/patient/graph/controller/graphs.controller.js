@@ -630,19 +630,13 @@ angular.module('hillromvestApp')
             var dateTextLabel = Highcharts.dateFormat("%m/%e/%Y",dateService.convertToTimestamp(x));
             dateTextLabel += (Highcharts.dateFormat("%I:%M %p",dateService.convertToTimestamp(x)))? ' ( ' + Highcharts.dateFormat("%I:%M %p",dateService.convertToTimestamp(x)) + ' )' : '';
             
-            responseData.xAxis.xLabels.push(dateTextLabel);
-            if($scope.durationRange !== "Day" && $scope.durationRange !== "Week" && responseData.xAxis.categories.length > 6){              
-              xData[key] = dateService.convertToTimestamp(x);               
-            }else{
-              // this is for week view  (only date should get displayed on X-axis and not time )             
-              var splittedX = x.split(" ");                
-              responseData.xAxis.categories[key] = splittedX[0];
-            }
-          });       
+            responseData.xAxis.xLabels.push(dateTextLabel);            
+              xData[key] = dateService.convertToTimestamp(x);                          
+            });       
 
           angular.forEach(responseData.series, function(s, key1){
             var marker = {};
-            marker.radius = (s.data && s.data.length < 50)? 3 : 0.8;    
+            marker.radius = (s.data && s.data.length < 50)? 2 : 0.5;    
             angular.forEach(s.data, function(d, key2){
               var tooltipDateText = responseData.series[key1].data[key2].x ;
               responseData.series[key1].data[key2].x = xData[key2];
@@ -662,12 +656,8 @@ angular.module('hillromvestApp')
             $scope.chartData.datasets.push(responseData.series[key1]);
           });
           $scope.chartData.xData = xData;
-          setTimeout(function(){
-            if($scope.durationRange === "Day" || $scope.durationRange === "Week" || responseData.xAxis.categories.length <= 6){
-              $scope.synchronizedcategoryChart();
-            }else{
-              $scope.synchronizedChart();
-            }            
+          setTimeout(function(){            
+              $scope.synchronizedChart();           
           }, 10);          
         } else{
           $scope.noDataAvailable = true;
@@ -694,7 +684,7 @@ angular.module('hillromvestApp')
           var charts = Highcharts.charts;               
           for (i = 0; i < Highcharts.charts.length; i = i + 1) {
             chart = Highcharts.charts[i];            
-            if(chart && chart.renderTo.offsetParent && chart.renderTo.offsetParent.id === divId){              
+            if(chart && chart.renderTo.offsetParent && chart.renderTo.offsetParent.id === "synchronizedChart"){              
               event = chart.pointer.normalize(e.originalEvent); // Find coordinates within the chart
               point = chart.series[0].searchPoint(event, true); // Get the hovered point
 
@@ -1070,21 +1060,17 @@ angular.module('hillromvestApp')
             angular.forEach($scope.hmrChartData.xAxis.categories, function(x, key){              
               // this is for year view or custom view having datapoints more than 7
               // x-axis will be plotted accordingly, chart type will be datetime
-              if($scope.durationRange !== "Day" && $scope.durationRange !== "Week" && $scope.hmrChartData.xAxis.categories.length > 6){
-                 $scope.hmrChartData.xAxis.xLabels.push(dateService.convertToTimestamp(x));
+              if($scope.durationRange !== "Day"){
+                $scope.hmrChartData.xAxis.xLabels.push(dateService.convertToTimestamp(x));
                 $scope.hmrChartData.xAxis.categories[key] = dateService.convertToTimestamp(x);               
-              }else if($scope.durationRange === "Week" || ( $scope.durationRange === "Custom" && $scope.hmrChartData.xAxis.categories.length <= 6) ){
-                // this is for week view  (only date should get displayed on X-axis and not time )
-                $scope.hmrChartData.xAxis.xLabels.push(x);
-                var splittedX = x.split(" ");                
-                $scope.hmrChartData.xAxis.categories[key] = splittedX[0];
               }else{
                 $scope.hmrChartData.xAxis.xLabels.push(x);
+                $scope.hmrChartData.xAxis.categories[key] = Highcharts.dateFormat("%I:%M %p",dateService.convertToTimestamp(x)) ;
               }
             });         
           angular.forEach($scope.hmrChartData.series, function(s, key1){
             var marker = {};
-            marker.radius = (s.data && s.data.length < 50)? 3 : 2; 
+            marker.radius = (s.data && s.data.length < 50)? 2 : 0.5; 
             angular.forEach(s.data, function(d, key2){
               var tooltipDateText = $scope.hmrChartData.series[key1].data[key2].x ;
               $scope.hmrChartData.series[key1].data[key2].marker = marker;
@@ -1097,7 +1083,7 @@ angular.module('hillromvestApp')
             
           }); 
           setTimeout(function(){
-            if($scope.durationRange === "Day" || $scope.durationRange === "Week" || ($scope.durationRange === "Custom" && $scope.hmrChartData.xAxis.categories.length <= 6)){              
+            if($scope.durationRange === "Day" ){          
               $scope.HMRCategoryChart();
             }else{
               $scope.HMRAreaChart();
@@ -1365,12 +1351,9 @@ angular.module('hillromvestApp')
       });
     };
      
-    $scope.drawHMRCChart =function(){
-      //if($scope.isHMR){
+    $scope.drawHMRCChart =function(){     
         $scope.getHMRGraph();
-      //}else{
         $scope.getComplianceGraph();
-      //}
     };
 
     $scope.getYearChart = function(){
