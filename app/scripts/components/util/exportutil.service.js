@@ -143,7 +143,7 @@ angular.module('hillromvestApp')
       pdf.setFontType(pdfServiceConstants.style.font.bold);        
       pdf.setFontSize(10);
       pdf.setTextColor(0, 0, 0);
-      pdf.text((pdf.internal.pageSize.width/2)-25,   imageY-30, graphTitle);
+      pdf.text((pdf.internal.pageSize.width/2)-(20+graphTitle.length),   imageY-30, graphTitle);
     }    
 
     var canvas = document.getElementById(canvasId);
@@ -273,6 +273,18 @@ angular.module('hillromvestApp')
     setTimeout(function(){     
       pdf.save('VisiView™.pdf'); 
     },1000); 
+  }
+
+  this.exportBenchmarkPDF = function(svgId, canvasId, fromDate, toDate, graphTitle){
+    var pdf = this.getPdf();
+    var pageHeight = pdf.internal.pageSize.height;
+    var pageWidth = pdf.internal.pageSize.width;
+    pdf = this.setHeader(pdf, fromDate, toDate);
+    pdf = this.addSvgToPDF(pdf, canvasId, svgId, 20, 150, 540, 200, graphTitle);
+    pdf = this.setFooter(pdf, pdf.internal.pageSize.height-80);
+    setTimeout(function(){
+      pdf.save('VisiView™.pdf');
+    },1000);
   }
 
   this.addQuestions = function(pdf, questions){
@@ -420,7 +432,7 @@ angular.module('hillromvestApp')
       pdf.setFontType(pdfServiceConstants.style.font.bold);        
       pdf.setFontSize(10);
       pdf.setTextColor(0, 0, 0);
-      pdf.text((pdf.internal.pageSize.width/2)-25,   imageY-30, chartName);
+      pdf.text((pdf.internal.pageSize.width/2)-60,   imageY-30, chartName);
     }
     var canvas = document.getElementById(canvasId);              
     var ctx = canvas.getContext('2d');

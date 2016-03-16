@@ -91,6 +91,7 @@ angular.module('hillromvestApp')
 		$scope.showComments = function(survey, index){
 			if(survey.noCount !== 0 || index === 6){
 				$scope.selectedSurvey = survey;
+				$scope.selectedSurvey.quesIndex = index;
 				$scope.surveyComments = [];
 				patientsurveyService.getSurveyComments(survey.id,  $scope.serverFromDate, $scope.serverToDate).then(function(response){
 					$scope.showCommentModal = true;
@@ -231,7 +232,8 @@ angular.module('hillromvestApp')
 		};
 
 		$scope.exportPDF = function(){
-			exportutilService.exportSurveyAsPDF('surveyGraph', 'surveyCanvas', $scope.fromDate, $scope.toDate, $scope.graphSurvey.surveyQuestions, pdfServiceConstants.text.survey);
+			var surveyHeaderText = ($scope.surveyType === 2 ? pdfServiceConstants.text.surveyForThirtyDays : ($scope.surveyType === 3 ? pdfServiceConstants.text.surveyForNinetyDays : pdfServiceConstants.text.surveyForFiveDays) );			
+			exportutilService.exportSurveyAsPDF('surveyGraph', 'surveyCanvas', $scope.fromDate, $scope.toDate, $scope.graphSurvey.surveyQuestions, surveyHeaderText);
 		};
 
 		$scope.init();
