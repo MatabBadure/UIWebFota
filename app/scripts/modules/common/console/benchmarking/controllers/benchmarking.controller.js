@@ -65,7 +65,7 @@ angular.module('hillromvestApp')
 			$scope.range = 'all';
 			$scope.type = 'adherenceScore';
 			$scope.isGraphLoaded = false;
-			addressService.getAllStates().then(function(response){
+			addressService.getAvailableStates().then(function(response){
 				$scope.processStates(response.data);
 			}).catch(function(response){
 				notyService.showError(response);
@@ -171,7 +171,11 @@ angular.module('hillromvestApp')
 
 		$scope.onXaxisChange = function(){
 			$scope.isAgeGroup = $scope.isAgeGroup ? false: true;
-			$scope.getBenchmarkingReport($scope.serverFromDate, $scope.serverToDate, $scope.xaxis, $scope.type, $scope.benchmarkType, $scope.range, $scope.state, $scope.city);
+			if($scope.isAgeGroup){
+				$scope.onAgeGroupClose();
+			}else{
+				$scope.onClinicRangeClose();
+			}
 		};
 
 		$scope.onYaxisChange = function(){
@@ -255,15 +259,24 @@ angular.module('hillromvestApp')
 				      color: '#525151',
 				      fontWeight: 'bold'
 				    }
-			    }
+			    },
+			    title: {
+		        text: ($scope.xaxis === 'ageGroup') ? 'Age Group':'Clinic Size',
+		        style: {
+			        color: '#525151',
+			        font: '10px Helvetica',
+			        fontWeight: 'bold'
+			      }
+		      },
 				},
 				yAxis: {
+					minRange: 1,
 					gridLineColor: '#FF0000',
 		      gridLineWidth: 0,
 		      lineWidth:1,
 		      min: 0,
 		      title: {
-		        text: 'Adherence Score',
+		        text: $scope.benchmarkingGraph.series[0].name,
 		        style: {
 			        color: '#525151',
 			        font: '10px Helvetica',
@@ -287,25 +300,8 @@ angular.module('hillromvestApp')
 		    },
 		    plotOptions: {
 		      series: {
-		      	pointWidth: 50,
-		        events: {
-		          legendItemClick: function () {
-		         		var self = this,
-		         		allow = false;
-		                        
-		            if(self.visible) {
-		              $.each(self.chart.series, function(i, series) {
-		                if(series !== self && series.visible) {
-		                 	allow = true;
-		                }
-		              });
-		              if(!allow){
-		               	notyService.showMessage(notyMessages.minComplianceError, notyMessages.typeWarning );
-		              }
-		              return allow;
-		            }
-		          }
-		        }
+		      	showInLegend: false,
+		      	pointWidth: 50
 		      }
 		    },
 				tooltip: {
@@ -315,10 +311,13 @@ angular.module('hillromvestApp')
 		        },
 		      false],
 					formatter: function() {
-						var s = '<div style="font-size:12x;font-weight: bold; padding-bottom: 3px;">'+  this.x +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div>';
+						var date = ($scope.fromDate === $scope.toDate) ? $scope.fromDate : $scope.fromDate +' - '+$scope.toDate;
+						var xAxis = ($scope.xaxis === 'ageGroup')? 'Age Group': 'Clinic Size';
+
+						var s = '<div style="font-size:12px ;padding-bottom: 3px;">'+ date + '</div><div style="font-size:10px; padding-bottom: 3px;">'+ xAxis + ' : ' + this.x +'</div><div>';
 			    	$.each(this.points, function(i, point) {
-			      	s += '<div style="font-size:10px; font-weight: bold; width:100%"><div style="color:'+ point.series.color +';padding:5px 0;width:80%;float:left"> ' + point.series.name + '</div> ' 
-			        + '<div style="padding:5px;width:10%"><b>' + point.y + '</b></div></div>';
+			      	s += '<div style="font-size:10px; width:100%"><div style="color:'+ point.series +';padding:0;width:70%;float:left"> ' + point.series.name + ' :</div> ' 
+			        + '<div style="padding:0;width:10%"><b>' + point.y + '</b></div><div style="line-height:24px">Total No. of Patients : '+ point.point.toolText.totalPatients +' </div></div>';
 			    	});
 			    	s += '</div>';
 		        return s;
