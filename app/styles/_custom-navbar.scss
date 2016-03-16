@@ -420,5 +420,8 @@ ul.logout-dropdown>li{
 @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {  
 	.multiSelect .caret{
 		display:block;
+		float:right;
+		position:relative;
+		top:4px;
 	}
 }
