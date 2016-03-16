@@ -27,6 +27,15 @@ angular.module('hillromvestApp')
         }).success(function (response) {
           return response;
         });
+      },
+
+      getCitiesByState: function(state){
+        var url = URL.getCitiesByState.replace('STATE', state);
+          return $http.get(url,{
+          headers: headerService.getHeader()
+        }).success(function (response) {
+          return response;
+        });
       }
       
     };
