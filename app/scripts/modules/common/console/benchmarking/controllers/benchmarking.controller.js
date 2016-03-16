@@ -65,7 +65,7 @@ angular.module('hillromvestApp')
 			$scope.range = 'all';
 			$scope.type = 'adherenceScore';
 			$scope.isGraphLoaded = false;
-			addressService.getAllStates().then(function(response){
+			addressService.getAvailableStates().then(function(response){
 				$scope.processStates(response.data);
 			}).catch(function(response){
 				notyService.showError(response);
@@ -171,7 +171,11 @@ angular.module('hillromvestApp')
 
 		$scope.onXaxisChange = function(){
 			$scope.isAgeGroup = $scope.isAgeGroup ? false: true;
-			$scope.getBenchmarkingReport($scope.serverFromDate, $scope.serverToDate, $scope.xaxis, $scope.type, $scope.benchmarkType, $scope.range, $scope.state, $scope.city);
+			if($scope.isAgeGroup){
+				$scope.onAgeGroupClose();
+			}else{
+				$scope.onClinicRangeClose();
+			}
 		};
 
 		$scope.onYaxisChange = function(){
@@ -258,6 +262,7 @@ angular.module('hillromvestApp')
 			    }
 				},
 				yAxis: {
+					minRange: 1,
 					gridLineColor: '#FF0000',
 		      gridLineWidth: 0,
 		      lineWidth:1,
