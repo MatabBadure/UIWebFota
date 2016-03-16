@@ -676,7 +676,7 @@ angular.module('hillromvestApp')
          * built-in events with handlers defined on the parent element.
          */
          
-        $("#"+divId).bind('mousemove touchmove touchstart', function(e) {
+        $("#"+divId).bind('mousemove touchmove touchstart mouseover', function(e) {
           var chart,
           point,
           i,
@@ -864,26 +864,38 @@ angular.module('hillromvestApp')
                     } //putting down x-axis, when we have zero for all y-axis values
                 }
               },
-              tooltip: {              
-                formatter: function() {
-                  var s = '<div style="font-size:12x;font-weight: bold; padding-bottom: 3px;">'+  this.point.toolText.dateText +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div>';                         
-                  s += '<div style="font-size:10px; font-weight: bold; width:100%"><div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left"> ' + this.point.series.name + '</div> ' 
-                  + '<div style="padding:5px;width:10%"><b>' + this.point.y + '</b></div></div>';
-                  s += '</div>';
-                  return s;
-                }, 
-                hideDelay: 0,
-                useHTML: true                
+              tooltip: { 
+                enabled: true, 
+                positioner: function () {
+                    return {
+                        x: this.chart.chartWidth - this.label.width, // right aligned
+                        y: -1 // align to title
+                    };
+                },            
+                // formatter: function() {
+                //   var s = '<div style="font-size:12x;font-weight: bold; padding-bottom: 3px;">'+  this.point.toolText.dateText +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div>';                         
+                //   s += '<div style="font-size:10px; font-weight: bold; width:100%"><div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left"> ' + this.point.series.name + '</div> ' 
+                //   + '<div style="padding:5px;width:10%"><b>' + this.point.y + '</b></div></div>';
+                //   s += '</div>';
+                //   return s;
+                // },
+                borderWidth: 0, 
+                backgroundColor: 'none',
+                pointFormat: '<span style="color:{point.series.color}"> {series.name}: {point.y}</span>',//'{point.series.name}' + ' : ' +'{point.y}',
+                headerFormat: '',
+                shadow: false,
+                style: {
+                    fontSize: '18px'
+                },
+                hideDelay: 0//,
+                //useHTML: true                
               },
               series: [{
                 data: dataset.data,
                 name: dataset.name,
                 type: dataset.type,
                 color: dataset.color,
-                fillOpacity: 0.3,
-                tooltip: {
-                  valueSuffix: ' ' + dataset.unit
-                }
+                fillOpacity: 0.3
               }]
             });
         });
