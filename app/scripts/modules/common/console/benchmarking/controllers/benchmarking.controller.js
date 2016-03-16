@@ -259,7 +259,15 @@ angular.module('hillromvestApp')
 				      color: '#525151',
 				      fontWeight: 'bold'
 				    }
-			    }
+			    },
+			    title: {
+		        text: ($scope.xaxis === 'ageGroup') ? 'Age Group':'Clinic Size',
+		        style: {
+			        color: '#525151',
+			        font: '10px Helvetica',
+			        fontWeight: 'bold'
+			      }
+		      },
 				},
 				yAxis: {
 					minRange: 1,
@@ -268,7 +276,7 @@ angular.module('hillromvestApp')
 		      lineWidth:1,
 		      min: 0,
 		      title: {
-		        text: 'Adherence Score',
+		        text: $scope.benchmarkingGraph.series[0].name,
 		        style: {
 			        color: '#525151',
 			        font: '10px Helvetica',
@@ -292,25 +300,8 @@ angular.module('hillromvestApp')
 		    },
 		    plotOptions: {
 		      series: {
-		      	pointWidth: 50,
-		        events: {
-		          legendItemClick: function () {
-		         		var self = this,
-		         		allow = false;
-		                        
-		            if(self.visible) {
-		              $.each(self.chart.series, function(i, series) {
-		                if(series !== self && series.visible) {
-		                 	allow = true;
-		                }
-		              });
-		              if(!allow){
-		               	notyService.showMessage(notyMessages.minComplianceError, notyMessages.typeWarning );
-		              }
-		              return allow;
-		            }
-		          }
-		        }
+		      	showInLegend: false,
+		      	pointWidth: 50
 		      }
 		    },
 				tooltip: {

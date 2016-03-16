@@ -175,7 +175,7 @@
 				</ul>
 	 	  </div>
    	</div>
-   	<div class="pull-left margin-top font-size16 cyan-blue-light">Average Adherence Score</div>
+   	<div class="pull-left margin-top font-size16 cyan-blue-light">{{benchmarkType}} <span ng-show="type === 'adherenceScore'">Adherence Score</span> for <span ng-show="xaxis === 'clinicSize'">Clinic Size</span><span ng-show="xaxis === 'ageGroup'">Age Group</span></div>
    	<div class="pull-right margin-top week_date_container">
 			<span ng-if="fromDate !== toDate">
 				<span class="date">{{fromDate}}</span> - <span class="date">{{toDate}}</span>
