@@ -1412,7 +1412,7 @@ angular.module('hillromvestApp')
     $scope.initGraph = function(){
       $scope.getHmrRunRateAndScore();      
       $scope.isHMR = true;
-      $scope.getWeekChart();
+      //$scope.getWeekChart();
     };
 
     $scope.initPatientDashboard = function(){
