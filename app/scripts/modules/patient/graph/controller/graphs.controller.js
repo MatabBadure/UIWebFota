@@ -658,9 +658,10 @@ angular.module('hillromvestApp')
           $scope.chartData.xData = xData;
           setTimeout(function(){            
               $scope.synchronizedChart();           
-          }, 10);          
+          }, 100);          
         } else{
           $scope.noDataAvailable = true;
+          $scope.removeAllCharts();
         }       
       });
     };
@@ -940,9 +941,10 @@ angular.module('hillromvestApp')
             }else{
               $scope.HMRAreaChart();
             }            
-          }, 10);          
+          }, 100);          
         } else{
           $scope.noDataAvailable = true;
+          $scope.removeAllCharts();
         }
       });
     };
@@ -1203,7 +1205,8 @@ angular.module('hillromvestApp')
       });
     };
      
-    $scope.drawHMRCChart =function(){     
+    $scope.drawHMRCChart =function(){ 
+        $scope.removeAllCharts();    
         $scope.getHMRGraph();
         $scope.getComplianceGraph();
     };
@@ -1601,7 +1604,12 @@ angular.module('hillromvestApp')
 
     $scope.initHMR = function(){
       $scope.isHMR = true;
-      $scope.noDataAvailable = false;
+      $scope.noDataAvailable = false;    
+    };
+
+    $scope.removeAllCharts = function(){
+      $("#HMRGraph").empty();
+      $("#synchronizedChart").empty();      
     };
     
 }]);
