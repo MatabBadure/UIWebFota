@@ -37,8 +37,8 @@
 	            	<span class="has-error" ng-show="surveyForm.phoneNumber.$error.required" translate="error.phoneNumber.required"></span>
 	              <span class="has-error" ng-show="!surveyForm.phoneNumber.$error.required && surveyForm.phoneNumber.$invalid" translate="error.phoneNumber.mask"></span>
 	            </div>
-	            <div class="col-md-16" ng-if="isPhoneNumber">
-	           		 <input class="col-md-14 col-xs-16 col-sm-16 padding0" type="text" value="{{survey.questions[1].answerValue1}}" ng-disabled="true">	           		 
+	            <div class="col-md-16 padding0" ng-if="isPhoneNumber">
+	           		 <input class="col-md-14 col-xs-16 col-sm-16 padding0 margin-bottom20" type="text" value="{{survey.questions[1].answerValue1}}" ng-disabled="true">	           		 
 	           	</div>	                   
           </div>
 	   </div>
@@ -59,7 +59,7 @@
 	           		 <span ng-show="survey.questions[2].mandatory" class="has-error"> *</span> 
 	            </div>
 	            <div class="col-md-16 reset-padding">
-	           		 <input class="col-md-14  col-xs-16 col-sm-16 padding0" type="text" ng-model="survey.questions[2].answerValue1" ng-disabled="true">
+	           		 <input class="col-md-14 col-xs-16 col-sm-16 padding0" type="text" ng-model="survey.questions[2].answerValue1" ng-disabled="true">
 	           	</div>
           </div> 
 	   </div>
@@ -246,12 +246,12 @@
 
 
 	    <div class="col-md-16 reset-padding dark_grey_text_color14">
-		 	<textarea class="col-md-15" rows="4" cols="10" ng-model="survey.questions[11].answerValue2"></textarea>
+		 	<textarea class="col-md-15 col-sm-16 col-xs-16 margin-bottom20" rows="4" cols="10" ng-model="survey.questions[11].answerValue2"></textarea>
 	    </div>
 	   <div class="col-md-16 reset-padding margin-top graphview_text_color">
 			<span translate="console.survey.clinical-follow-up"></span>
 	   </div>
-	   <div class="col-md-16 reset-padding margin-top-18">
+	   <div class="col-md-16 reset-padding">
 			<div class="reset-padding">
 				<label class="reset-padding padding_t2">
 					<input type="checkbox"  class="ng-pristine ng-untouched ng-valid" ng-model="survey.questions[12].answerValue1">
