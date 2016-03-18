@@ -44,7 +44,7 @@
 				  button-label="name"
 				  item-label="name"
 				  tick-property="ticked"
-				  max-labels="1"
+				  max-labels="4"
 				  translation="localLang"
 				  helper-elements="all filter none"
 				  min-search-length="1"
@@ -106,7 +106,7 @@
     <div class="bar_graph_header">
       <div class="col-md-3 benchmarking__form__input reset-padding selected-box-container" >
 				<div class="custom-dropdown">
-		      <select ng-change="onYaxisChange()" ng-model="$parent.$parent.type" ng-disabled="true">
+		      <select ng-change="onYaxisChange()" ng-model="$parent.$parent.type">
 			      <option value="adherenceScore" label="Adherence Score" ng-selected="true">Adherence Score</option>
 			      <option value="missedTherapy" label="Missed Therapy Days">Missed Therapy Days</option>
 			      <option value="HMRDeviation" label="HMR Deviation">HMR Deviation</option>
@@ -135,7 +135,7 @@
 					  button-label="ageRange"
 					  item-label="ageRange"
 					  tick-property="true"
-					  max-labels="1"
+					  max-labels="3"
 					  translation="localLang"
 					  helper-elements="all filter none"
 					  min-search-length="1"
@@ -152,7 +152,7 @@
 					  button-label="size"
 					  item-label="size"
 					  tick-property="true"
-					  max-labels="1"
+					  max-labels="3"
 					  translation="localLang"
 					  helper-elements="all filter none"
 					  min-search-length="1"
