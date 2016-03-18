@@ -765,8 +765,7 @@ angular.module('hillromvestApp')
               chart: {
                 marginLeft: 40, 
                 //spacingTop: 30,
-                spacingBottom: 30,
-                zoomType: 'xy',
+                spacingBottom: 30,                
                 backgroundColor:  "#e6f1f4"
               },
               title: {
@@ -775,7 +774,8 @@ angular.module('hillromvestApp')
                 margin: 25,
                 x: 30,
                 style:{
-                  color: dataset.color
+                  color: dataset.color,
+                  fontWeight: 'bold'
                 }                
               },
               credits: {
