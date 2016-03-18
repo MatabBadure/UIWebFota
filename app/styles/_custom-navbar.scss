@@ -416,6 +416,9 @@ ul.logout-dropdown>li{
 .benchmarking__form__input > .custom-dropdown:before{
 	z-index: 999;
 }
+.highcharts-tooltip {
+  pointer-events: none !important;
+  }
 
 @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {  
 	.multiSelect .caret{
