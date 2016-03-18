@@ -253,7 +253,18 @@
 	.col-hide-web{
     	display: block;
   	}
-	
+  	.no-padding{
+		padding:0px;
+	}
+	.tab-margin-bottom20{
+		margin-bottom:20px;
+	}
+	.tab-clear{
+		clear:both;
+	}
+	.margin-left-10-reset{
+		margin-left:0px;
+	}
 }
 @media screen and (min-width : 1024px){
 	.login{

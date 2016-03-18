@@ -7,7 +7,7 @@
 
 	  <div class="col-md-16 reset-padding margin-top">
           <div class="col-md-12 reset-padding ">
-            <span class="dashboard__form--type ng-scope survey_grey_color" translate="console.survey.general-info"></span>
+            <span class="dashboard__form--type ng-scope survey_grey_color pull-left-mob" translate="console.survey.general-info"></span>
           </div>
           <div class="col-md-4 user-required reset-padding">
             <span class="has-error">*</span> <span class="ng-scope" translate="console.survey.required-field"></span>
@@ -16,30 +16,30 @@
 
 	   <div class="col-md-16 reset-padding margin-top">
           <div class="col-md-8 reset-padding">
-	          	<div class="col-md-16 reset-padding ">
+	          	<div class="col-md-16 reset-padding col-xs-16 col-sm-16">
 	           		 <span class=" ng-scope graphview_text_color" ng-bind="survey.questions[0].questionText"></span>
                  <span ng-show="survey.questions[0].mandatory" class="has-error"> *</span>
 	            </div>
-	            <div class="col-md-16 reset-padding">
-	           		 <input class="col-md-14" type="text" ng-model="survey.questions[0].answerValue1" ng-disabled="true">
+	            <div class="col-md-16 reset-padding col-xs-16 col-sm-16">
+	           		 <input class="col-md-14 col-xs-16 col-sm-16 padding0 no-padding tab-margin-bottom20" type="text" ng-model="survey.questions[0].answerValue1" ng-disabled="true">
 	           	</div>
           </div>
           <div class="col-md-8 reset-padding">
-            <div class="col-md-16">
+              <div class="col-md-16 col-xs-16 col-sm-16 margin-top-18 padding0 no-padding">
 	           		 <span class=" ng-scope graphview_text_color"  ng-bind="survey.questions[1].questionText"></span>
                  <span ng-show="survey.questions[1].mandatory" class="has-error"> *</span>
 	            </div>
 	            
-              <div class="col-md-16" ng-if="!isPhoneNumber">
-                 <input class="col-md-14" type="text" name="phoneNumber" class="form-control" validate-on-blur ng-model="survey.questions[1].answerValue1" ng-readonly="validateADMINorASP()" ui-mask="(999)-999-9999" model-view-value="true" ui-options="{clearOnBlur: false}" required>   
+              <div class="col-md-16 padding0 no-padding" ng-if="!isPhoneNumber">
+                 <input class="col-md-14 col-xs-16 col-sm-16 margin-bottom20 padding0 no-padding tab-margin-bottom20" type="text" name="phoneNumber" class="form-control" validate-on-blur ng-model="survey.questions[1].answerValue1" ng-readonly="validateADMINorASP()" ui-mask="(999)-999-9999" model-view-value="true" ui-options="{clearOnBlur: false}" required>   
                                
               </div>
               <div ng-show="(surveyForm.phoneNumber.$showValidationMessage && surveyForm.phoneNumber.$invalid) || submitted">
                 <span class="has-error" ng-show="surveyForm.phoneNumber.$error.required" translate="error.phoneNumber.required"></span>
                 <span class="has-error" ng-show="!surveyForm.phoneNumber.$error.required && surveyForm.phoneNumber.$invalid" translate="error.phoneNumber.mask"></span>
               </div>
-              <div class="col-md-16" ng-if="isPhoneNumber">
-                 <input class="col-md-14" type="text" value="{{survey.questions[1].answerValue1}}" ng-readonly="validateADMINorASP()" ng-disabled="true">                
+              <div class="col-md-16 padding0 no-padding" ng-if="isPhoneNumber">
+                 <input class="col-md-14 col-xs-16 col-sm-16 padding0 margin-bottom20 tab-margin-bottom20 no-padding" type="text" value="{{survey.questions[1].answerValue1}}" ng-readonly="validateADMINorASP()" ng-disabled="true">                
               </div>
           </div>
 	   </div>
@@ -49,8 +49,8 @@
                  <span class="ng-scope graphview_text_color" ng-bind="survey.questions[2].questionText"></span>
                  <span ng-show="survey.questions[2].mandatory" class="has-error"> *</span>
               </div>
-              <div class="col-md-16 reset-padding">
-                 <input class="col-md-14" type="text" ng-model="survey.questions[2].answerValue1" ng-disabled="true">
+              <div class="col-md-16 reset-padding no-padding">
+                 <input class="col-md-14 col-xs-16 col-sm-16 padding0 margin-bottom20 tab-margin-bottom20 no-padding" type="text" ng-model="survey.questions[2].answerValue1" ng-disabled="true">
               </div>
           </div> 
 
@@ -72,7 +72,7 @@
                  <span ng-show="survey.questions[3].mandatory" class="has-error"> *</span>
 	            </div>
 	            <div class="col-md-16 reset-padding">
-	           		 <input class="col-md-14" type="text" ng-model="survey.questions[3].answerValue1" ng-disabled="true">
+	           		 <input class="col-md-14 col-xs-16 col-sm-16 padding0 margin-bottom20 tab-margin-bottom20 no-padding" type="text" ng-model="survey.questions[3].answerValue1" ng-disabled="true">
 	           	</div>
           </div>
        </div>
@@ -83,17 +83,17 @@
 	           		 <span class="ng-scope graphview_text_color" ng-bind="survey.questions[4].questionText"></span>
 	            </div>
 	            <div class="col-md-16 reset-padding">
-	           		 <input class="col-md-14" type="text" ng-model="survey.questions[4].answerValue1" ng-disabled="true">
+	           		 <input class="col-md-14 col-xs-16 col-sm-16 padding0 margin-bottom20 tab-margin-bottom20 no-padding" type="text" ng-model="survey.questions[4].answerValue1" ng-disabled="true">
                  <span ng-show="survey.questions[4].mandatory" class="has-error"> *</span>
 	           	</div>
           </div>
           <div class="col-md-8 reset-padding">
-            <div class="col-md-16 ">
+            <div class="col-md-16 padding0 no-padding">
 	           		 <span class="ng-scope graphview_text_color" ng-bind="survey.questions[5].questionText"></span>
                  <span ng-show="survey.questions[5].mandatory" class="has-error"> *</span>
 	            </div>
-	            <div class="col-md-16">
-	           		 <input class="col-md-14" type="text" ng-model="survey.questions[5].answerValue1" ng-disabled="true">
+	            <div class="col-md-16 padding0 no-padding">
+	           		 <input class="col-md-14 col-xs-16 col-sm-16 padding0 margin-bottom20 tab-margin-bottom20 no-padding" type="text" ng-model="survey.questions[5].answerValue1" ng-disabled="true">
 	           	</div>
           </div>
 	   </div>
@@ -108,7 +108,7 @@
      </div>
      <div class="col-md-16 dark_grey_text_color14 margin-tp10">
         <div class="col-md-3 reset-padding">
-            <div class="col-md-2 reset-padding">
+            <div class="col-md-2 col-xs-2 col-sm-1 reset-padding">
               <input type="radio" name="q1" ng-model="survey.questions[6].answerValue1" value="{{survey.questions[6].answers[0]}}">
             </div> 
             <div class="col-md-14">
@@ -117,7 +117,7 @@
         </div>
 
         <div class="col-md-3 reset-padding">
-            <div class="col-md-2 reset-padding">
+            <div class="col-md-2 col-xs-2 col-sm-1 reset-padding">
                <input type="radio" name="q1" ng-model="survey.questions[6].answerValue1" value="{{survey.questions[6].answers[1]}}">
             </div>
             <div class="col-md-14"> 
@@ -126,7 +126,7 @@
         </div>
 
         <div class="col-md-2 reset-padding">
-            <div class="col-md-2 reset-padding">
+            <div class="col-md-2 col-xs-2 col-sm-1  reset-padding">
                <input type="radio" name="q1" ng-model="survey.questions[6].answerValue1"  value="{{survey.questions[6].answers[2]}}">
             </div>
             <div class="col-md-13"> 
@@ -135,7 +135,7 @@
         </div>
 
         <div class="col-md-3 reset-padding">
-            <div class="col-md-2 reset-padding">
+            <div class="col-md-2 col-xs-2 col-sm-1 reset-padding">
                <input type="radio" name="q1" ng-model="survey.questions[6].answerValue1" value="{{survey.questions[6].answers[3]}}">
             </div>
             <div class="col-md-14"> 
@@ -144,7 +144,7 @@
         </div>
 
         <div class="col-md-3 reset-padding">
-            <div class="col-md-2 reset-padding">
+            <div class="col-md-2 col-xs-2 col-sm-1 reset-padding">
                <input type="radio" name="q1" ng-model="survey.questions[6].answerValue1" value="{{survey.questions[6].answers[4]}}">
             </div>
             <div class="col-md-14"> 
@@ -152,8 +152,8 @@
             </div>
         </div>
 
-        <div class="col-md-2 reset-padding margin-left-10">
-            <div class="col-md-2 reset-padding">
+        <div class="col-md-2 reset-padding margin-left-10 margin-left-10-reset">
+            <div class="col-md-2 col-xs-2 col-sm-1 reset-padding">
                <input type="radio" name="q1" ng-model="survey.questions[6].answerValue1" value="{{survey.questions[6].answers[5]}}">
             </div>
             <div class="col-md-14"> 
@@ -170,7 +170,7 @@
 
      <div class="col-md-16 dark_grey_text_color14 margin-tp10">
         <div class="col-md-3 reset-padding">
-            <div class="col-md-2 reset-padding">
+            <div class="col-md-2 col-xs-2 col-sm-1 reset-padding">
               <input type="radio" name="q2" ng-model="survey.questions[7].answerValue1" value="{{survey.questions[7].answers[0]}}">
             </div> 
             <div class="col-md-14">
@@ -179,7 +179,7 @@
         </div>
 
         <div class="col-md-3 reset-padding">
-            <div class="col-md-2 reset-padding">
+            <div class="col-md-2 col-xs-2 col-sm-1 reset-padding">
                <input type="radio" name="q2" ng-model="survey.questions[7].answerValue1" value="{{survey.questions[7].answers[1]}}">
             </div>
             <div class="col-md-14"> 
@@ -188,7 +188,7 @@
         </div>
 
         <div class="col-md-2 reset-padding">
-            <div class="col-md-2  reset-padding">
+            <div class="col-md-2 col-xs-2 col-sm-1 reset-padding">
                <input type="radio" name="q2" ng-model="survey.questions[7].answerValue1" value="{{survey.questions[7].answers[2]}}">
             </div>
             <div class="col-md-13"> 
@@ -197,7 +197,7 @@
         </div>
 
         <div class="col-md-3 reset-padding">
-            <div class="col-md-2 reset-padding">
+            <div class="col-md-2 col-xs-2 col-sm-1 reset-padding">
                <input type="radio" name="q2" ng-model="survey.questions[7].answerValue1" value="{{survey.questions[7].answers[3]}}">
             </div>
             <div class="col-md-14"> 
@@ -206,7 +206,7 @@
         </div>
 
         <div class="col-md-3 reset-padding">
-            <div class="col-md-2 reset-padding">
+            <div class="col-md-2 col-xs-2 col-sm-1 reset-padding">
                <input type="radio" name="q2" ng-model="survey.questions[7].answerValue1" value="{{survey.questions[7].answers[4]}}">
             </div>
             <div class="col-md-14"> 
@@ -214,8 +214,8 @@
             </div>
         </div>
 
-        <div class="col-md-2 reset-padding margin-left-10">
-            <div class="col-md-2 reset-padding">
+        <div class="col-md-2 reset-padding margin-left-10 margin-left-10-reset">
+            <div class="col-md-2 col-xs-2 col-sm-1 reset-padding">
                <input type="radio" name="q2" ng-model="survey.questions[7].answerValue1" value="{{survey.questions[7].answers[5]}}">
             </div>
             <div class="col-md-14"> 
@@ -232,7 +232,7 @@
 
      <div class="col-md-16 dark_grey_text_color14 margin-tp10">
         <div class="col-md-3 reset-padding">
-            <div class="col-md-2 reset-padding">
+            <div class="col-md-2 col-xs-2 col-sm-1 reset-padding">
               <input type="radio" name="q3" ng-model="survey.questions[8].answerValue1" value="{{survey.questions[8].answers[0]}}">
             </div> 
             <div class="col-md-14">
@@ -241,7 +241,7 @@
         </div>
 
         <div class="col-md-3 reset-padding">
-            <div class="col-md-2 reset-padding">
+            <div class="col-md-2 col-xs-2 col-sm-1 reset-padding">
                <input type="radio" name="q3" ng-model="survey.questions[8].answerValue1" value="{{survey.questions[8].answers[1]}}">
             </div>
             <div class="col-md-14"> 
@@ -250,7 +250,7 @@
         </div>
 
         <div class="col-md-2 reset-padding">
-            <div class="col-md-2  reset-padding">
+            <div class="col-md-2 col-xs-2 col-sm-1 reset-padding">
                <input type="radio" name="q3" ng-model="survey.questions[8].answerValue1" value="{{survey.questions[8].answers[2]}}">
             </div>
             <div class="col-md-13"> 
@@ -259,7 +259,7 @@
         </div>
 
         <div class="col-md-3 reset-padding">
-            <div class="col-md-2 reset-padding">
+            <div class="col-md-2 col-xs-2 col-sm-1 reset-padding">
                <input type="radio" name="q3" ng-model="survey.questions[8].answerValue1" value="{{survey.questions[8].answers[3]}}">
             </div>
             <div class="col-md-14"> 
@@ -268,7 +268,7 @@
         </div>
 
         <div class="col-md-3 reset-padding">
-            <div class="col-md-2 reset-padding">
+            <div class="col-md-2 col-xs-2 col-sm-1 reset-padding">
                <input type="radio" name="q3" ng-model="survey.questions[8].answerValue1" value="{{survey.questions[8].answers[4]}}">
             </div>
             <div class="col-md-14"> 
@@ -276,8 +276,8 @@
             </div>
         </div>
 
-        <div class="col-md-2 reset-padding margin-left-10">
-            <div class="col-md-2 reset-padding">
+        <div class="col-md-2 reset-padding margin-left-10 margin-left-10-reset">
+            <div class="col-md-2 col-xs-2 col-sm-1 reset-padding">
                <input type="radio" name="q3" ng-model="survey.questions[8].answerValue1" value="{{survey.questions[8].answers[5]}}">
             </div>
             <div class="col-md-14"> 
@@ -294,7 +294,7 @@
 
      <div class="col-md-16 dark_grey_text_color14 margin-tp10">
         <div class="col-md-3 reset-padding">
-            <div class="col-md-2 reset-padding">
+            <div class="col-md-2 col-xs-2 col-sm-1 reset-padding">
               <input type="radio" name="q4" ng-model="survey.questions[9].answerValue1" value="{{survey.questions[9].answers[0]}}">
             </div> 
             <div class="col-md-14">
@@ -303,7 +303,7 @@
         </div>
 
         <div class="col-md-3 reset-padding">
-            <div class="col-md-2 reset-padding">
+            <div class="col-md-2 col-xs-2 col-sm-1 reset-padding">
                <input type="radio" name="q4" ng-model="survey.questions[9].answerValue1" value="{{survey.questions[9].answers[1]}}">
             </div>
             <div class="col-md-14"> 
@@ -312,7 +312,7 @@
         </div>
 
         <div class="col-md-2 reset-padding">
-            <div class="col-md-2  reset-padding">
+            <div class="col-md-2 col-xs-2 col-sm-1 reset-padding">
                <input type="radio" name="q4" ng-model="survey.questions[9].answerValue1" value="{{survey.questions[9].answers[2]}}">
             </div>
             <div class="col-md-13"> 
@@ -321,7 +321,7 @@
         </div>
 
         <div class="col-md-3 reset-padding">
-            <div class="col-md-2 reset-padding">
+            <div class="col-md-2 col-xs-2 col-sm-1 reset-padding">
                <input type="radio" name="q4" ng-model="survey.questions[9].answerValue1" value="{{survey.questions[9].answers[3]}}">
             </div>
             <div class="col-md-14"> 
@@ -330,7 +330,7 @@
         </div>
 
         <div class="col-md-3 reset-padding">
-            <div class="col-md-2 reset-padding">
+            <div class="col-md-2 col-xs-2 col-sm-1 reset-padding">
                <input type="radio" name="q4" ng-model="survey.questions[9].answerValue1" value="{{survey.questions[9].answers[4]}}">
             </div>
             <div class="col-md-14"> 
@@ -338,8 +338,8 @@
             </div>
         </div>
 
-        <div class="col-md-2 reset-padding margin-left-10">
-            <div class="col-md-2 reset-padding">
+        <div class="col-md-2 reset-padding margin-left-10 margin-left-10-reset">
+            <div class="col-md-2 col-xs-2 col-sm-1 reset-padding">
                <input type="radio" name="q4" ng-model="survey.questions[9].answerValue1" value="{{survey.questions[9].answers[5]}}">
             </div>
             <div class="col-md-14"> 
@@ -356,7 +356,7 @@
 
      <div class="col-md-16 dark_grey_text_color14 margin-tp10">
         <div class="col-md-3 reset-padding">
-            <div class="col-md-2 reset-padding">
+            <div class="col-md-2 col-xs-2 col-sm-1 reset-padding">
               <input type="radio" name="q5" ng-model="survey.questions[10].answerValue1" value="{{survey.questions[10].answers[0]}}">
             </div> 
             <div class="col-md-14">
@@ -365,7 +365,7 @@
         </div>
 
         <div class="col-md-3 reset-padding">
-            <div class="col-md-2 reset-padding">
+            <div class="col-md-2 col-xs-2 col-sm-1 reset-padding">
                <input type="radio" name="q5" ng-model="survey.questions[10].answerValue1" value="{{survey.questions[10].answers[1]}}">
             </div>
             <div class="col-md-14"> 
@@ -374,7 +374,7 @@
         </div>
 
         <div class="col-md-2 reset-padding">
-            <div class="col-md-2  reset-padding">
+            <div class="col-md-2 col-xs-2 col-sm-1 reset-padding">
               <input type="radio" name="q5" ng-model="survey.questions[10].answerValue1" value="{{survey.questions[10].answers[2]}}">
             </div>
             <div class="col-md-13"> 
@@ -383,7 +383,7 @@
         </div>
 
         <div class="col-md-3 reset-padding">
-            <div class="col-md-2 reset-padding">
+            <div class="col-md-2 col-xs-2 col-sm-1 reset-padding">
                <input type="radio" name="q5" ng-model="survey.questions[10].answerValue1" value="{{survey.questions[10].answers[3]}}">
             </div>
             <div class="col-md-14"> 
@@ -392,7 +392,7 @@
         </div>
 
         <div class="col-md-3 reset-padding">
-            <div class="col-md-2 reset-padding">
+            <div class="col-md-2 col-xs-2 col-sm-1 reset-padding">
                <input type="radio" name="q5" ng-model="survey.questions[10].answerValue1" value="{{survey.questions[10].answers[4]}}">
             </div>
             <div class="col-md-14"> 
@@ -400,8 +400,8 @@
             </div>
         </div>
 
-        <div class="col-md-2 reset-padding margin-left-10">
-            <div class="col-md-2 reset-padding">
+        <div class="col-md-2 reset-padding margin-left-10 margin-left-10-reset">
+            <div class="col-md-2 col-xs-2 col-sm-1 reset-padding">
                <input type="radio" name="q5" ng-model="survey.questions[10].answerValue1" value="{{survey.questions[10].answers[5]}}">
             </div>
             <div class="col-md-14"> 
@@ -418,7 +418,7 @@
 
      <div class="col-md-16 dark_grey_text_color14 margin-tp10">
         <div class="col-md-3 reset-padding">
-            <div class="col-md-2 reset-padding">
+            <div class="col-md-2 col-xs-2 col-sm-1 reset-padding">
               <input type="radio" name="q6" ng-model="survey.questions[11].answerValue1" value="{{survey.questions[11].answers[0]}}">
             </div> 
             <div class="col-md-14">
@@ -427,7 +427,7 @@
         </div>
 
         <div class="col-md-3 reset-padding">
-            <div class="col-md-2 reset-padding">
+            <div class="col-md-2 col-xs-2 col-sm-1 reset-padding">
                <input type="radio" name="q6" ng-model="survey.questions[11].answerValue1" value="{{survey.questions[11].answers[1]}}">
             </div>
             <div class="col-md-14"> 
@@ -436,7 +436,7 @@
         </div>
 
         <div class="col-md-2 reset-padding">
-            <div class="col-md-2  reset-padding">
+            <div class="col-md-2 col-xs-2 col-sm-1 reset-padding">
                <input type="radio" name="q6" ng-model="survey.questions[11].answerValue1" value="{{survey.questions[11].answers[2]}}">
             </div>
             <div class="col-md-13"> 
@@ -445,7 +445,7 @@
         </div>
 
         <div class="col-md-3 reset-padding">
-            <div class="col-md-2 reset-padding">
+            <div class="col-md-2 col-xs-2 col-sm-1 reset-padding">
                <input type="radio" name="q6" ng-model="survey.questions[11].answerValue1" value="{{survey.questions[11].answers[3]}}">
             </div>
             <div class="col-md-14"> 
@@ -454,7 +454,7 @@
         </div>
 
         <div class="col-md-3 reset-padding">
-            <div class="col-md-2 reset-padding">
+            <div class="col-md-2 col-xs-2 col-sm-1 reset-padding">
                <input type="radio" name="q6" ng-model="survey.questions[11].answerValue1" value="{{survey.questions[11].answers[4]}}">
             </div>
             <div class="col-md-14"> 
@@ -462,8 +462,8 @@
             </div>
         </div>
 
-        <div class="col-md-2 reset-padding margin-left-10">
-            <div class="col-md-2 reset-padding">
+        <div class="col-md-2 reset-padding margin-left-10 margin-left-10-reset">
+            <div class="col-md-2 col-xs-2 col-sm-1 reset-padding">
                <input type="radio" name="q6" ng-model="survey.questions[11].answerValue1" value="{{survey.questions[11].answers[5]}}">
             </div>
             <div class="col-md-14"> 
@@ -480,7 +480,7 @@
 
      <div class="col-md-16 dark_grey_text_color14 margin-tp10">
         <div class="col-md-3 reset-padding">
-            <div class="col-md-2 reset-padding">
+            <div class="col-md-2 col-xs-2 col-sm-1 reset-padding">
               <input type="radio" name="q7" ng-model="survey.questions[12].answerValue1" value="{{survey.questions[12].answers[0]}}">
             </div> 
             <div class="col-md-14">
@@ -489,7 +489,7 @@
         </div>
 
         <div class="col-md-3 reset-padding">
-            <div class="col-md-2 reset-padding">
+            <div class="col-md-2 col-xs-2 col-sm-1 reset-padding">
               <input type="radio" name="q7" ng-model="survey.questions[12].answerValue1" value="{{survey.questions[12].answers[1]}}">
             </div>
             <div class="col-md-14"> 
@@ -498,7 +498,7 @@
         </div>
 
         <div class="col-md-2 reset-padding">
-            <div class="col-md-2  reset-padding">
+            <div class="col-md-2 col-xs-2 col-sm-1 reset-padding">
                <input type="radio" name="q7" ng-model="survey.questions[12].answerValue1" value="{{survey.questions[12].answers[2]}}">
             </div>
             <div class="col-md-13"> 
@@ -507,7 +507,7 @@
         </div>
 
         <div class="col-md-3 reset-padding">
-            <div class="col-md-2 reset-padding">
+            <div class="col-md-2 col-xs-2 col-sm-1 reset-padding">
                <input type="radio" name="q7" ng-model="survey.questions[12].answerValue1" value="{{survey.questions[12].answers[3]}}">
             </div>
             <div class="col-md-14"> 
@@ -516,7 +516,7 @@
         </div>
 
         <div class="col-md-3 reset-padding">
-            <div class="col-md-2 reset-padding">
+            <div class="col-md-2 col-xs-2 col-sm-1 reset-padding">
                <input type="radio" name="q7" ng-model="survey.questions[12].answerValue1" value="{{survey.questions[12].answers[4]}}">
             </div>
             <div class="col-md-14"> 
@@ -524,8 +524,8 @@
             </div>
         </div>
 
-        <div class="col-md-2 reset-padding margin-left-10">
-            <div class="col-md-2 reset-padding">
+        <div class="col-md-2 reset-padding margin-left-10 margin-left-10-reset">
+            <div class="col-md-2 col-xs-2 col-sm-1 reset-padding">
                <input type="radio" name="q7" ng-model="survey.questions[12].answerValue1" value="{{survey.questions[12].answers[5]}}">
             </div>
             <div class="col-md-14"> 
@@ -538,12 +538,12 @@
         </div>
    
          <div class="col-md-16 reset-padding">
-              <div class="pull-left reset-padding">
-                 <input type="checkbox" ng-model="survey.questions[13].answerValue1"> 
+            <div class="pull-left reset-padding">
+              <input type="checkbox" ng-model="survey.questions[13].answerValue1"> 
             </div>
-              <div class="col-md-15 reset-padding margin-left5"> 
-                  <span ng-bind="survey.questions[13].questionText"></span>
-              </div>  
+            <div class="col-md-15 col-xs-14 col-sm-14 reset-padding margin-bottom20 tab-margin-bottom20 margin-left5"> 
+              <span ng-bind="survey.questions[13].questionText"></span>
+            </div>  
           </div>
 
          </div>
