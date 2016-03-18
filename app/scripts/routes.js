@@ -4144,5 +4144,36 @@ angular.module('hillromvestApp')
                       }
                   ]
               }
+            })
+            .state('patientBenchmarking', {
+                parent: 'patient-dashboard',
+                url: '/p-benchmarking',
+                data: {
+                    roles: ['PATIENT'],
+                    pageTitle: 'patient.page-title.patient-benchmarking'
+                },
+                views: {
+                    'patient-view': {
+                        templateUrl: 'scripts/modules/patient/profile/profile-tabs/benchmarking.html',
+                        controller: 'patientBenchmarkingController'
+                    }
+                },
+                resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('PatientBenchmarkingModule');
+                    }],
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
             });
+
 }]);
