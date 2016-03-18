@@ -1045,7 +1045,7 @@ angular.module('hillromvestApp')
                     s += '</div><div style="font-size:10px; font-weight: bold; width:100%;height: auto;display: flex;flex-flow: row column;">';
                     headerStr = '<div style="font-size:10px; font-weight: bold; width:55%; float: left; border-right: 1px solid #cccccc;">';                                     
                     footerStr = '</div>';
-                    noteStr = '<div style="font-size:10px; font-weight: bold; width:45%; float: left;white-space:pre-wrap;white-space:-moz-pre-wrap;word-wrap: break-word;"><div style="padding:5px 10px;"> <span>'+ this.point.toolText.noteText+' </span></div></div>';
+                    noteStr = '<div style="font-size:10px; font-weight: bold; width:45%; float: left;white-space:pre-wrap;white-space:-moz-pre-wrap;word-wrap: break-word;"><div style="padding:5px 5px;"> <span>'+ this.point.toolText.noteText+' </span></div></div>';
                     s += headerStr+pointDetails+footerStr+noteStr+'</div>';
                   }else{
                      s = '<div style="font-size:12x;font-weight: bold; padding-bottom: 3px;">'+  dateTextLabel +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div style="font-size:10px; font-weight: bold; width:100%">';
