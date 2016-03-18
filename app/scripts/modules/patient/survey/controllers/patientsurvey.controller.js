@@ -132,13 +132,14 @@ angular.module('hillromvestApp')
 					surveyAnswer.surveyQuestion.id = question.id;
 					surveyAnswer.surveyQuestion.questionText = question.questionText;					
 					surveyEdited.userSurveyAnswer[key] = surveyAnswer;
-					if(($scope.survey.questions[key].answerValue1 && $scope.survey.questions[key].answerValue1.length > 0) || $scope.survey.questions[key].answerValue1 === 0 ){
+
+					if(($scope.survey.questions[key].answerValue1 && ($scope.survey.questions[key].answerValue1).toString().length > 0) || $scope.survey.questions[key].answerValue1 === 0 ){
 						surveyEdited.userSurveyAnswer[key].answerValue1 = $scope.survey.questions[key].answerValue1;
               		}
-              		if($scope.survey.questions[key].answerValue2 && $scope.survey.questions[key].answerValue2.length > 0){
+              		if($scope.survey.questions[key].answerValue2 && ($scope.survey.questions[key].answerValue2).toString().length > 0){
 						surveyEdited.userSurveyAnswer[key].answerValue2 = $scope.survey.questions[key].answerValue2;
               		}
-              		if($scope.survey.questions[key].answerValue3 && $scope.survey.questions[key].answerValue3.length > 0){
+              		if($scope.survey.questions[key].answerValue3 && ($scope.survey.questions[key].answerValue3).toString().length > 0){
 						surveyEdited.userSurveyAnswer[key].answerValue3 = $scope.survey.questions[key].answerValue3;
               		}  
 

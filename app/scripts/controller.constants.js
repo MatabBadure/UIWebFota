@@ -193,3 +193,32 @@ angular.module('hillromvestApp').constant('hcpDashboardConstants', {
 		"email_address": "Email"
 	}
 })
+.constant('surveyGraphConstants',{
+	legends : {
+		"YES": "yes",
+		"NO": "no",
+		"STRONGLYDISAGREE": "strongly disagree",
+		"SOMEWHATDISAGREE": "somewhat disagree",
+		"NEUTRAL": "neutral",
+		"SOMEWHATAGREE": "somewhat agree",
+		"STRONGLYAGREE": "strongly agree",
+		"UNABLETOASSESS":"unable to assess"
+	},
+	surveycolor : {
+		"YES": "#34978f",
+		"NO": "#f7972d",
+		"strongly_disagree": "#dd1f2e",
+		"somewhat_disagree": "#e65024",
+		"neutral": "#f7972d",
+		"somewhat_agree": "#3c9677",
+		"strongly_agree": "#55ad46",
+		"unable_to_assess": "#231f20"
+	},
+})
+.constant('patientGraphsConstants',{
+	colors: {
+		"pressure": "#ff9829",
+		"frequency": "#34978f",
+		"duration": "#4e95c4"
+	}
+})

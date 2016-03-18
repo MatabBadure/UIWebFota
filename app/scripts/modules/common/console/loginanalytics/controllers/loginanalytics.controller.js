@@ -224,6 +224,7 @@ angular.module('hillromvestApp')
 					gridLineColor: '#FF0000',
 		            gridLineWidth: 0,
 		            lineWidth:1,
+		            minRange: 1,
 		            min: 0,
 		            title: {
 		                text: 'No. of Users',
@@ -268,7 +269,8 @@ angular.module('hillromvestApp')
 		                }
 		            }
 		        },
-				tooltip: {					
+				tooltip: {
+					backgroundColor: "rgba(255,255,255,1)",  					
 					crosshairs: [{		                
 		                dashStyle: 'solid',
 		                color: '#b4e6f6'
@@ -320,6 +322,7 @@ angular.module('hillromvestApp')
 					gridLineColor: '#FF0000',
 		            gridLineWidth: 0,
 		            lineWidth:1,
+		            minRange: 1,
 		            min: 0,
 		            title: {
 		                text: 'No. of Users',
@@ -366,7 +369,8 @@ angular.module('hillromvestApp')
 		                }
 		            }
 		        },
-				tooltip: {					
+				tooltip: {	
+					backgroundColor: "rgba(255,255,255,1)",  				
 					crosshairs: [{		                
 		                dashStyle: 'solid',
 		                color: '#b4e6f6'
@@ -398,8 +402,7 @@ angular.module('hillromvestApp')
 				chart:{
 					type: 'line',
 					zoomType: 'xy',					
-                    backgroundColor:'#e3ecf7'/*,
-                    turboThreshold: 2000,*/
+                    backgroundColor:'#e3ecf7'
 				},
 		        title: {
 		            text: ''
@@ -428,8 +431,8 @@ angular.module('hillromvestApp')
 					gridLineColor: '#FF0000',
 		            gridLineWidth: 0,
 		            lineWidth:1,
-		            min: 0,
-		            //max: $scope.yMax,
+		            "minRange": 1,
+		            "min": 0,		            
 		            title: {
 		                text: 'No. of Users',
 		                style:{
@@ -453,10 +456,11 @@ angular.module('hillromvestApp')
 					x: 0,
 					y: 0
 		        },
-		        plotOptions: {
-		        	/*spline:{
-		        		turboThreshold: 50000
-		        	},*/
+		        plotOptions: {	
+			        line: {
+	                    lineWidth: 1,
+	                    softThreshold: false
+	                },	        	
 		            series: {
 		                events: {
 		                    legendItemClick: function () {
@@ -478,7 +482,8 @@ angular.module('hillromvestApp')
 		                }
 		            }
 		        },
-				tooltip: {					
+				tooltip: {	
+					backgroundColor: "rgba(255,255,255,1)",  				
 					crosshairs: [{		                
 		                dashStyle: 'solid',
 		                color: '#b4e6f6'

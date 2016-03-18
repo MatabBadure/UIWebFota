@@ -91,12 +91,15 @@ angular.module('hillromvestApp')
 	'getCityStateZipByState' : '/api/cityStateZipMapByState?state=STATE',	
 	'getAllStates' : '/api/allstates',
 	'getCityStateByZip': '/api/cityStateZipMapByZip?zipcode=ZIPCODE',
+	'getCitiesByState': '/api/availableCities?state=STATE',
 	'validateCredentials': '/api/validateCredentials',
 	'getLoginAnalytics': '/api/loginAnalytics?from=FROM&to=TO&filters=FILTERS&duration=DURATION',
 	'isSurvey': '/api/survey/user/USER_ID',
 	'getSurvey': '/api/survey/SURVEY_ID',
 	'saveSuvey': '/api/survey',
 	'getSurveyGridReport': '/api/survey/gridview/SURVEY_ID?fromDate=FROM_DATE&toDate=TO_DATE',
-	'getSurveycomments': '/api/survey/answerbyquestion/QUESTIONID',
-	'getGraphSurveyGridReport': '/api/survey/SURVEY_ID/graph?from=FROM_DATE&to=TO_DATE'
+	'getSurveycomments': '/api/survey/answerbyquestion/QUESTIONID?fromDate=FROM_DATE&toDate=TO_DATE',
+	'getGraphSurveyGridReport': '/api/survey/SURVEY_ID/graph?from=FROM_DATE&to=TO_DATE',
+	'getBenchmarking': '/api/benchmark/parameter?type=TYPE&benchmarkType=BENCHMARKTYPE&xAxisParameter=XAXIS&range=RANGE&from=FROM&to=TO',
+	'availableStates':'/api/availableStates'
 });
