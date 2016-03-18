@@ -316,8 +316,8 @@ angular.module('hillromvestApp')
 
 						var s = '<div style="font-size:12px ;padding-bottom: 3px;">'+ date + '</div><div style="font-size:10px; padding-bottom: 3px;">'+ xAxis + ' : ' + this.x +'</div><div>';
 			    	$.each(this.points, function(i, point) {
-			      	s += '<div style="font-size:10px; width:100%"><div style="color:'+ point.series +';padding:0;width:70%;float:left"> ' + point.series.name + ' :</div> ' 
-			        + '<div style="padding:0;width:10%"><b>' + point.y + '</b></div><div style="line-height:24px">Total No. of Patients : '+ point.point.toolText.totalPatients +' </div></div>';
+			      	s += '<div style="font-size:10px; width:100%"><div style="color:'+ point.series +';padding:0;width:auto;float:left"> ' + point.series.name + ' : </div> ' 
+			        + ' <div style="padding:0;width:auto">&nbsp;<b>' + point.y + '</b></div><div style="line-height:24px">Total No. of Patients : '+ point.point.toolText.totalPatients +' </div></div>';
 			    	});
 			    	s += '</div>';
 		        return s;
