@@ -226,5 +226,5 @@
 </alert-modal>
 
 
-<alert-modal ng-if="isNoChange" modall="showModal" onyes="openProtocolDetailPage()" onno="$parent.isNoChange = false" header="Alert !!" message="You have not made any changes in the protocol." message1=" You must make an update in the protocol before the protocol can be authorized in VisiView." buttonlabel="Continue">
+<alert-modal ng-if="isNoChange" modall="showModal" onyes="$parent.isNoChange = false" onno="$parent.isNoChange = false" header="Alert !!" message="You have not made any changes in the protocol." message1=" You must make an update in the protocol before the protocol can be authorized in VisiView." buttonlabel="Continue">
 </alert-modal>

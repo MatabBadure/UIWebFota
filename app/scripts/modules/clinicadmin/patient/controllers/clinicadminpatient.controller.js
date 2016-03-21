@@ -466,7 +466,7 @@ angular.module('hillromvestApp')
   $scope.getProtocolById = function(patientId, protocolId){
     patientService.getProtocolById(patientId, protocolId).then(function(response){
       $scope.protocol = response.data;
-      $scope.protocol.edit = true;  
+      $scope.protocol.edit = true;
       $scope.newProtocolPoint = ($scope.protocol.protocol) ? $scope.protocol.protocol.length : 1;
       if(!$scope.protocol){
         $scope.protocol = {};
@@ -477,7 +477,8 @@ angular.module('hillromvestApp')
         $scope.protocol.treatmentsPerDay = $scope.protocol.protocol[0].treatmentsPerDay;
         $scope.protocol.protocolEntries = $scope.protocol.protocol;
       }
-      $scope.tempProtocol = $scope.protocol;
+      $scope.tempProtocol = {};
+      angular.copy($scope.protocol, $scope.tempProtocol);
     }).catch(function(response){
       notyService.showError(response);
     });
@@ -525,24 +526,21 @@ angular.module('hillromvestApp')
     }, 250);
   };
 
-  $scope.isProtocolChnage = function(){
-    console.log($scope.protocol, $scope.tempProtocol);
+  $scope.isProtocolChange = function(){
     if($scope.protocol.protocol.length !== $scope.tempProtocol.protocol.length){
-      return false;
-    }else {
-      
+      return true;
+    }else if(JSON.stringify($scope.protocol) !== JSON.stringify($scope.tempProtocol)){
+      return true;
     }
-    return true;
+    return false;
   };
 
   $scope.showPrtocolUpdateModal = function(){
-    console.log($scope.protocol);
     $scope.submitted = true;
     if($scope.updateProtocolForm.$invalid){
       return false;
     }
-    console.log($scope.isProtocolChnage());
-    if(!$scope.updateProtocolForm.$dirty){
+    if(!$scope.isProtocolChange()){
       $scope.isNoChange = true;
     }else{
       if($scope.protocol.id){
