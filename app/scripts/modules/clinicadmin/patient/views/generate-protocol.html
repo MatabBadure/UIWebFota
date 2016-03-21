@@ -4,8 +4,8 @@
 <div class="container admin-user ng-scope">
   <div class="col-md-16 margin-top reset-padding">
    <div class="user-gen-details">
-     <span class="user-gen-details--name ng-binding">{{slectedPatient.firstName}} {{slectedPatient.lastName}}</span>
-     <span class="user-gen-details--hr-id ng-binding">{{slectedPatient.hillromId}}</span>
+     <span class="user-gen-details--name ng-binding">{{patient.firstName}} {{patient.lastName}}</span>
+     <span class="user-gen-details--hr-id ng-binding">{{patient.hillromId}}</span>
    </div>
   </div>
 </div>
@@ -23,7 +23,7 @@
             <span class="ng-scope">Patient Name</span>
           </div>
           <div class="col-md-10 dashboard__form--input reset-padding">
-            <input type="text" name="patientName" class="light_grey ng-pristine ng-untouched ng-isolate-scope ng-valid-minlength ng-valid-maxlength ng-valid ng-valid-required" ng-disabled="true" value="{{slectedPatient.firstName}} {{slectedPatient.lastName}}">
+            <input type="text" name="patientName" class="light_grey ng-pristine ng-untouched ng-isolate-scope ng-valid-minlength ng-valid-maxlength ng-valid ng-valid-required" ng-disabled="true" value="{{patient.firstName}} {{patient.lastName}}">
           </div>
         </div>
         <div class="col-md-7 reset-padding col-md-offset-2">
@@ -31,7 +31,7 @@
             <span class="ng-scope">Patient DOB</span>
           </div>
           <div class="col-md-10 dashboard__form--input reset-padding">
-            <input type="text" name="patiendDob" class="light_grey ng-pristine ng-untouched ng-valid ng-isolate-scope ng-valid-minlength ng-valid-maxlength" ng-disabled="true" value="{{slectedPatient.dob}}">
+            <input type="text" name="patiendDob" class="light_grey ng-pristine ng-untouched ng-valid ng-isolate-scope ng-valid-minlength ng-valid-maxlength" ng-disabled="true" value="{{patient.dob}}">
           </div>
         </div>
       </div>       

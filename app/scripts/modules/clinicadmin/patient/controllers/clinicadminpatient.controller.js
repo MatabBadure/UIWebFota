@@ -30,8 +30,18 @@ angular.module('hillromvestApp')
     }else if($state.current.name === 'clinicAdminUpdateProtocol'){
       $scope.getPatientInfo($stateParams.patientId);
       $scope.getProtocolById($stateParams.patientId, $stateParams.protocolId);
+    }else if($state.current.name === 'clinicadminGenerateProtocol'){
+      $scope.initGenerateProtocol();
     }
 	};
+
+  $scope.initGenerateProtocol = function(){
+    if(!$rootScope.protocols){
+      $state.go('clinicadminpatientProtocol', {'patientId': $stateParams.patientId});
+    }else{
+      $scope.getPatientInfo($stateParams.patientId);
+    }
+  };
 
   $scope.getStates = function(){
     UserService.getState().then(function(response) {
@@ -473,13 +483,7 @@ angular.module('hillromvestApp')
   };
 
   $scope.cancelProtocolUpdate = function() {
-    console.log('Coming Here...!');
     $state.go('clinicadminpatientProtocol', {'patientId': $stateParams.patientId});
-    // if($scope.patientStatus.role === loginConstants.role.acctservices){
-    //   $state.go('patientProtocolRcadmin', {'patientId': $stateParams.patientId});
-    // }else{
-    //   $state.go('patientProtocol');
-    // }
   };
 
   $scope.updateProtocol = function(){
@@ -500,13 +504,9 @@ angular.module('hillromvestApp')
         });
         patientService.editProtocol($stateParams.patientId, $rootScope.protocols).then(function(response){
           $scope.isVerificationModal = false;
-          exportutilService.exportChangePrescPDF($scope.slectedPatient, $rootScope.userFullName, $scope.currentDate, $rootScope.protocols);
+          // exportutilService.exportChangePrescPDF($scope.slectedPatient, $rootScope.userFullName, $scope.currentDate, $rootScope.protocols);
           notyService.showMessage(response.data.message, 'success');
-          if($scope.patientStatus.role === loginConstants.role.acctservices){
-            $state.go('patientProtocolRcadmin', {'patientId': $stateParams.patientId});
-          }else{
-            $state.go('patientProtocol');
-          }
+          $state.go('clinicadminpatientProtocol', {'patientId': $stateParams.patientId});
         }).catch(function(response){
           notyService.showError(response);
         });
