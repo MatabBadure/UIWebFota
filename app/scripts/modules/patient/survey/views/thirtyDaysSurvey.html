@@ -21,7 +21,7 @@
                  <span ng-show="survey.questions[0].mandatory" class="has-error"> *</span>
 	            </div>
 	            <div class="col-md-16 reset-padding col-xs-16 col-sm-16">
-	           		 <input class="col-md-14 col-xs-16 col-sm-16 padding0 no-padding tab-margin-bottom20" type="text" ng-model="survey.questions[0].answerValue1" ng-disabled="true">
+	           		 <input class="col-md-14 col-xs-16 col-sm-16 tab-margin-bottom20" type="text" ng-model="survey.questions[0].answerValue1" ng-disabled="true">
 	           	</div>
           </div>
           <div class="col-md-8 reset-padding">
@@ -31,7 +31,7 @@
 	            </div>
 	            
               <div class="col-md-16 padding0 no-padding" ng-if="!isPhoneNumber">
-                 <input class="col-md-14 col-xs-16 col-sm-16 margin-bottom20 padding0 no-padding tab-margin-bottom20" type="text" name="phoneNumber" class="form-control" validate-on-blur ng-model="survey.questions[1].answerValue1" ng-readonly="validateADMINorASP()" ui-mask="(999)-999-9999" model-view-value="true" ui-options="{clearOnBlur: false}" required>   
+                 <input class="col-md-14 col-xs-16 col-sm-16 margin-bottom20 tab-margin-bottom20" type="text" name="phoneNumber" class="form-control" validate-on-blur ng-model="survey.questions[1].answerValue1" ng-readonly="validateADMINorASP()" ui-mask="(999)-999-9999" model-view-value="true" ui-options="{clearOnBlur: false}" required>   
                                
               </div>
               <div ng-show="(surveyForm.phoneNumber.$showValidationMessage && surveyForm.phoneNumber.$invalid) || submitted">
@@ -39,7 +39,7 @@
                 <span class="has-error" ng-show="!surveyForm.phoneNumber.$error.required && surveyForm.phoneNumber.$invalid" translate="error.phoneNumber.mask"></span>
               </div>
               <div class="col-md-16 padding0 no-padding" ng-if="isPhoneNumber">
-                 <input class="col-md-14 col-xs-16 col-sm-16 padding0 margin-bottom20 tab-margin-bottom20 no-padding" type="text" value="{{survey.questions[1].answerValue1}}" ng-readonly="validateADMINorASP()" ng-disabled="true">                
+                 <input class="col-md-14 col-xs-16 col-sm-16 margin-bottom20 tab-margin-bottom20" type="text" value="{{survey.questions[1].answerValue1}}" ng-readonly="validateADMINorASP()" ng-disabled="true">                
               </div>
           </div>
 	   </div>
@@ -50,7 +50,7 @@
                  <span ng-show="survey.questions[2].mandatory" class="has-error"> *</span>
               </div>
               <div class="col-md-16 reset-padding no-padding">
-                 <input class="col-md-14 col-xs-16 col-sm-16 padding0 margin-bottom20 tab-margin-bottom20 no-padding" type="text" ng-model="survey.questions[2].answerValue1" ng-disabled="true">
+                 <input class="col-md-14 col-xs-16 col-sm-16 margin-bottom20 tab-margin-bottom20" type="text" ng-model="survey.questions[2].answerValue1" ng-disabled="true">
               </div>
           </div> 
 
@@ -72,7 +72,7 @@
                  <span ng-show="survey.questions[3].mandatory" class="has-error"> *</span>
 	            </div>
 	            <div class="col-md-16 reset-padding">
-	           		 <input class="col-md-14 col-xs-16 col-sm-16 padding0 margin-bottom20 tab-margin-bottom20 no-padding" type="text" ng-model="survey.questions[3].answerValue1" ng-disabled="true">
+	           		 <input class="col-md-14 col-xs-16 col-sm-16 margin-bottom20 tab-margin-bottom20" type="text" ng-model="survey.questions[3].answerValue1" ng-disabled="true">
 	           	</div>
           </div>
        </div>
@@ -83,7 +83,7 @@
 	           		 <span class="ng-scope graphview_text_color" ng-bind="survey.questions[4].questionText"></span>
 	            </div>
 	            <div class="col-md-16 reset-padding">
-	           		 <input class="col-md-14 col-xs-16 col-sm-16 padding0 margin-bottom20 tab-margin-bottom20 no-padding" type="text" ng-model="survey.questions[4].answerValue1" ng-disabled="true">
+	           		 <input class="col-md-14 col-xs-16 col-sm-16 margin-bottom20 tab-margin-bottom20" type="text" ng-model="survey.questions[4].answerValue1" ng-disabled="true">
                  <span ng-show="survey.questions[4].mandatory" class="has-error"> *</span>
 	           	</div>
           </div>
@@ -93,7 +93,7 @@
                  <span ng-show="survey.questions[5].mandatory" class="has-error"> *</span>
 	            </div>
 	            <div class="col-md-16 padding0 no-padding">
-	           		 <input class="col-md-14 col-xs-16 col-sm-16 padding0 margin-bottom20 tab-margin-bottom20 no-padding" type="text" ng-model="survey.questions[5].answerValue1" ng-disabled="true">
+	           		 <input class="col-md-14 col-xs-16 col-sm-16 margin-bottom20 tab-margin-bottom20" type="text" ng-model="survey.questions[5].answerValue1" ng-disabled="true">
 	           	</div>
           </div>
 	   </div>
