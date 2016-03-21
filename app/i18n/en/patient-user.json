@@ -10,7 +10,8 @@
       "my-dashboard": "HillRom | My Dashboard",
       "caregivers": "HillRom | Caregivers",
       "clinics-hcps": "HillRom | Clinics and HCPs",
-      "add-caregiver": "HillRom | Add Caregiver"
+      "add-caregiver": "HillRom | Add Caregiver",
+      "patient-benchmarking": "Hillrom | Benchmarking"
     },
     "home": {
         "title": "Patient"
@@ -222,7 +223,8 @@
         "caregiver": "Caregiver",
         "device-protocol": "Care Plan and Device",
         "clinic-hcp": "Clinic and HCP",
-        "patient-demographics": "Patient Demographics"
+        "patient-demographics": "Patient Demographics",
+        "patient-benchmarking": "Benchmarking"
       }
     },
     "errMSG":{
