@@ -43,6 +43,8 @@ angular.module('hillromvestApp')
     if(!$rootScope.protocols){
       $state.go('clinicadminpatientProtocol', {'patientId': $stateParams.patientId});
     }else{
+      var date = new Date();
+      $scope.currentDate = (date.getMonth() + 1) + '/' + date.getDate() + '/' +  date.getFullYear();
       $scope.getPatientInfo($stateParams.patientId);
     }
   };
