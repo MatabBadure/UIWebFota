@@ -28,12 +28,16 @@ angular.module('hillromvestApp')
       var clinicId = $stateParams.clinicId;
       $scope.searchPatients(); 
     }else if($state.current.name === 'clinicAdminUpdateProtocol'){
-      $scope.getPatientInfo($stateParams.patientId);
-      $scope.getProtocolById($stateParams.patientId, $stateParams.protocolId);
+      $scope.initUpdateProtocol();
     }else if($state.current.name === 'clinicadminGenerateProtocol'){
       $scope.initGenerateProtocol();
     }
 	};
+
+  $scope.initUpdateProtocol = function(){
+    $scope.getPatientInfo($stateParams.patientId);
+    $scope.getProtocolById($stateParams.patientId, $stateParams.protocolId);
+  };
 
   $scope.initGenerateProtocol = function(){
     if(!$rootScope.protocols){
@@ -470,7 +474,8 @@ angular.module('hillromvestApp')
         $scope.protocol.type = $scope.protocol.protocol[0].type;
         $scope.protocol.treatmentsPerDay = $scope.protocol.protocol[0].treatmentsPerDay;
         $scope.protocol.protocolEntries = $scope.protocol.protocol;
-      }      
+      }
+      $scope.tempProtocol = $scope.protocol;
     }).catch(function(response){
       notyService.showError(response);
     });
@@ -518,33 +523,49 @@ angular.module('hillromvestApp')
     }, 250);
   };
 
+  $scope.isProtocolChnage = function(){
+    console.log($scope.protocol, $scope.tempProtocol);
+    if($scope.protocol.protocol.length !== $scope.tempProtocol.protocol.length){
+      return false;
+    }else {
+      
+    }
+    return true;
+  };
+
   $scope.showPrtocolUpdateModal = function(){
+    console.log($scope.protocol);
     $scope.submitted = true;
     if($scope.updateProtocolForm.$invalid){
       return false;
     }
-    if($scope.protocol.id){
-      delete $scope.protocol.id;
-    }
-    if($scope.protocol.patient){
-      delete $scope.protocol.patient;
-    }
-    var data = $scope.protocol.protocol;
-    if($scope.protocol.type === 'Custom'){
-      angular.forEach(data, function(value, key){
-        if(!value.type){
-          value.type = 'Custom';
-        }
-        value.treatmentsPerDay = $scope.protocol.treatmentsPerDay;
-        if(!value.treatmentLabel){
-          value.treatmentLabel = 'point'+(key+1);
-        }
-      });
+    console.log($scope.isProtocolChnage());
+    if(!$scope.updateProtocolForm.$dirty){
+      $scope.isNoChange = true;
     }else{
-      data[0].treatmentsPerDay = $scope.protocol.treatmentsPerDay;
+      if($scope.protocol.id){
+        delete $scope.protocol.id;
+      }
+      if($scope.protocol.patient){
+        delete $scope.protocol.patient;
+      }
+      var data = $scope.protocol.protocol;
+      if($scope.protocol.type === 'Custom'){
+        angular.forEach(data, function(value, key){
+          if(!value.type){
+            value.type = 'Custom';
+          }
+          value.treatmentsPerDay = $scope.protocol.treatmentsPerDay;
+          if(!value.treatmentLabel){
+            value.treatmentLabel = 'point'+(key+1);
+          }
+        });
+      }else{
+        data[0].treatmentsPerDay = $scope.protocol.treatmentsPerDay;
+      }
+      $rootScope.protocols = data;
+      $scope.isAuthorizeProtocolModal = true;
     }
-    $rootScope.protocols = data;
-    $scope.isAuthorizeProtocolModal = true;
   };
 
   $scope.openProtocolDetailPage = function(){

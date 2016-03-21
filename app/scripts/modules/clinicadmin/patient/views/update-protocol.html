@@ -222,5 +222,9 @@
   </form>
 </div>
 
-<alert-modal ng-if="isAuthorizeProtocolModal" modall="showModal" onyes="openProtocolDetailPage()" onno="$parent.isAuthorizeProtocolModal = false; $parent.searchItem= ''" header="{{'patient.authorizeProtocol.warning' | translate}}" message="{{'patient.authorizeProtocol.message' | translate}}" message1="{{'patient.authorizeProtocol.prescription-message' | translate}}" buttonlabel="{{'patient.authorizeProtocol.buttonLabel' | translate}}">
+<alert-modal ng-if="isAuthorizeProtocolModal" modall="showModal" onyes="openProtocolDetailPage()" onno="$parent.isAuthorizeProtocolModal = false;" header="{{'patient.authorizeProtocol.warning' | translate}}" message="{{'patient.authorizeProtocol.message' | translate}}" message1="{{'patient.authorizeProtocol.prescription-message' | translate}}" buttonlabel="{{'patient.authorizeProtocol.buttonLabel' | translate}}">
+</alert-modal>
+
+
+<alert-modal ng-if="isNoChange" modall="showModal" onyes="openProtocolDetailPage()" onno="$parent.isNoChange = false" header="Alert !!" message="You have not made any changes in the protocol." message1=" You must make an update in the protocol before the protocol can be authorized in VisiView." buttonlabel="Continue">
 </alert-modal>
