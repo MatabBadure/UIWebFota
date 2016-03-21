@@ -414,5 +414,14 @@
       },
       "clinic-title" : "Clinic"
     }
+  },
+  "patient-benchmarking":{
+    "week": "Week",
+    "day": "Day",
+    "year": "Year",
+    "month": "Month",
+    "benchmark": "Benchmark",
+    "parameter": "Parameter",
+    "compareWith": "Compare with"
   }
 }

@@ -398,6 +398,7 @@ angular.module('hillromvestApp')
 		};		
 
 		$scope.drawDateRangeChartForNonDay = function(){
+			var daysInterval = getDaysIntervalInChart($scope.categoryChartData.xAxis.categories.length);
 			Highcharts.chart('containerCustom', {				
 				chart:{
 					type: 'line',
@@ -425,7 +426,10 @@ angular.module('hillromvestApp')
 						formatter:function(){
 							return  Highcharts.dateFormat("%m/%e/%Y",this.value);
 						}	              
-					}			           
+					},
+					units: [
+	                  ['day', [daysInterval]]
+	                ] 			           
 				},				
 				yAxis: {
 					gridLineColor: '#FF0000',
@@ -783,6 +787,13 @@ angular.module('hillromvestApp')
 			if($state.current.name === 'adminLoginAnalytics' || $state.current.name === 'rcadminLoginAnalytics' || $state.current.name === 'associatesLoginAnalytics'){
 				$scope.analyticsInit();
 			}
+		};
+
+		function getDaysIntervalInChart(noOfDataPoints){
+			var pInterval = 13;
+			var sInterval = 14;
+			var remainder  = 6;
+			return ( (parseInt(noOfDataPoints/pInterval) > 0) && noOfDataPoints%pInterval > remainder) ? parseInt(noOfDataPoints/sInterval) : ((parseInt(noOfDataPoints/pInterval) > 0)? parseInt(noOfDataPoints/pInterval): 1) ; 
 		};
 
 		
