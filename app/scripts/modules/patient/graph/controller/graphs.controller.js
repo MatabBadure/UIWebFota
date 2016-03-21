@@ -613,6 +613,13 @@ angular.module('hillromvestApp')
       $("#note_edit_container").addClass("hide_content");
     };
 
+    function getDaysIntervalInChart(noOfDataPoints){
+      var pInterval = 13;
+      var sInterval = 14;
+      var remainder  = 6;
+      return ( (parseInt(noOfDataPoints/pInterval) > 0) && noOfDataPoints%pInterval > remainder) ? parseInt(noOfDataPoints/sInterval) : ((parseInt(noOfDataPoints/pInterval) > 0)? parseInt(noOfDataPoints/pInterval): 1) ; 
+    };
+
     $scope.getComplianceGraph = function(){      
       patientDashBoardService.getcomplianceGraphData($scope.patientId, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.durationRange).then(function(response){
         var responseData = response.data;              
@@ -758,7 +765,9 @@ angular.module('hillromvestApp')
           var  minRange = (dataset.plotLines.max) ? dataset.plotLines.max : dataset.plotLines.min;
           var yMaxPlotLine = dataset.plotLines.max;
           var yMinPlotLine = dataset.plotLines.min;
-
+          var noOfDataPoints = ($scope.chartData.xData)? $scope.chartData.xData.length: 0;
+          var daysInterval = getDaysIntervalInChart(noOfDataPoints);
+          
           $('<div class="chart">')
             .appendTo('#'+divId)
             .highcharts({
@@ -803,7 +812,10 @@ angular.module('hillromvestApp')
                     return Highcharts.dateFormat("%m/%e/%Y", this.value);
                   }
                 },
-                lineWidth: 2
+                lineWidth: 2,
+                units: [
+                  ['day', [daysInterval]]
+                ] 
               },
               yAxis: {
                 gridLineColor: '#FF0000',
@@ -909,11 +921,17 @@ angular.module('hillromvestApp')
         $scope.noDataAvailable = false;       
         if($scope.hmrChartData && typeof($scope.hmrChartData) === "object"){ 
           $scope.noDataAvailable = false;      
-          $scope.hmrChartData.xAxis.xLabels=[];          
+          $scope.hmrChartData.xAxis.xLabels=[]; 
+          $scope.isSameDay = true;
+          var startDay = ($scope.hmrChartData.xAxis && $scope.hmrChartData.xAxis.categories.length > 0) ? $scope.hmrChartData.xAxis.categories[0].split(" "): null;  
+            angular.forEach($scope.hmrChartData.xAxis.categories, function(x, key){ 
+              var curDay = $scope.hmrChartData.xAxis.categories[key].split(" ");
+              $scope.isSameDay = ($scope.isSameDay && (curDay[0] === startDay[0]) )? true : false;  
+            });       
             angular.forEach($scope.hmrChartData.xAxis.categories, function(x, key){              
               // this is for year view or custom view having datapoints more than 7
               // x-axis will be plotted accordingly, chart type will be datetime
-              if($scope.durationRange !== "Day"){
+              if($scope.durationRange !== "Day" && !$scope.isSameDay){
                 $scope.hmrChartData.xAxis.xLabels.push(dateService.convertToTimestamp(x));
                 $scope.hmrChartData.xAxis.categories[key] = dateService.convertToTimestamp(x);               
               }else{
@@ -936,7 +954,7 @@ angular.module('hillromvestApp')
             
           }); 
           setTimeout(function(){
-            if($scope.durationRange === "Day" ){          
+            if($scope.durationRange === "Day" || $scope.isSameDay){          
               $scope.HMRCategoryChart();
             }else{
               $scope.HMRAreaChart();
@@ -950,6 +968,8 @@ angular.module('hillromvestApp')
     };
 
     $scope.HMRAreaChart = function(divId){ 
+      var noOfDataPoints = ($scope.hmrChartData && $scope.hmrChartData.xAxis.categories)?$scope.hmrChartData.xAxis.categories.length: 0;      
+      var daysInterval = getDaysIntervalInChart(noOfDataPoints);
       Highcharts.setOptions({
           global: {
               useUTC: false
@@ -985,7 +1005,10 @@ angular.module('hillromvestApp')
                   return  Highcharts.dateFormat("%m/%e/%Y",this.value);
                 }               
               }, 
-              lineWidth: 2  
+              lineWidth: 2,
+              units: [
+                ['day', [daysInterval]]
+              ] 
           },
           yAxis: {
               gridLineColor: '#FF0000',
@@ -1091,7 +1114,7 @@ angular.module('hillromvestApp')
     };
 
     $scope.HMRCategoryChart = function(divId){
-      var chartType = ($scope.durationRange !== "Day")? "area" : "column";
+      var chartType = "column";
       Highcharts.setOptions({
           global: {
               useUTC: false

@@ -222,3 +222,9 @@ angular.module('hillromvestApp').constant('hcpDashboardConstants', {
 		"duration": "#4e95c4"
 	}
 })
+.constant('benchmarkingConstants',{
+	string: {
+		"adherenceScore": "adherenceScore",
+		"average": "average"
+	}
+})
