@@ -101,5 +101,6 @@ angular.module('hillromvestApp')
 	'getSurveycomments': '/api/survey/answerbyquestion/QUESTIONID?fromDate=FROM_DATE&toDate=TO_DATE',
 	'getGraphSurveyGridReport': '/api/survey/SURVEY_ID/graph?from=FROM_DATE&to=TO_DATE',
 	'getBenchmarking': '/api/benchmark/parameter?type=TYPE&benchmarkType=BENCHMARKTYPE&xAxisParameter=XAXIS&range=RANGE&from=FROM&to=TO',
-	'availableStates':'/api/availableStates'
+	'availableStates':'/api/availableStates',
+	'getPateintBenchmarking': '/api/user/patient/PATIENTID/benchmark?parameterType=PARAMETERTYPE&benchMarkType=BENCHMARKTYPE&from=FROM&to=TO&clinicId=CLINICID'
 });
