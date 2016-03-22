@@ -790,8 +790,8 @@ angular.module('hillromvestApp')
 		};
 
 		function getDaysIntervalInChart(noOfDataPoints){
-			var pInterval = 13;
-			var sInterval = 14;
+			var pInterval = 12;
+			var sInterval = 13;
 			var remainder  = 6;
 			return ( (parseInt(noOfDataPoints/pInterval) > 0) && noOfDataPoints%pInterval > remainder) ? parseInt(noOfDataPoints/sInterval) : ((parseInt(noOfDataPoints/pInterval) > 0)? parseInt(noOfDataPoints/pInterval): 1) ; 
 		};
