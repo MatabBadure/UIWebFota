@@ -422,6 +422,8 @@
     "month": "Month",
     "benchmark": "Benchmark",
     "parameter": "Parameter",
-    "compareWith": "Compare with"
+    "compareWith": "Compare with",
+    "average" :"Average",
+    "adherenceScore": "Adherence Score"
   }
 }

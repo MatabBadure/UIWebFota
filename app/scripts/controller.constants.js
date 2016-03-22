@@ -225,6 +225,12 @@ angular.module('hillromvestApp').constant('hcpDashboardConstants', {
 .constant('benchmarkingConstants',{
 	string: {
 		"adherenceScore": "adherenceScore",
-		"average": "average"
+		"average": "average",
+		"myAvgAdherenceScore": "My Avg. Adherence Score",
+		"clinicAvgAdherenceScore": " Avg. Adherence Score",
+		"graphTitleMyAvgAdherenceScore": "My Average Adherence Score",
+		"graphTitleVs": " Vs. ",
+		"grapTitleClinicAdherenceScore": " Average Adherence Score",
+		"grapTitleClinic": "Clinic"
 	}
 })
