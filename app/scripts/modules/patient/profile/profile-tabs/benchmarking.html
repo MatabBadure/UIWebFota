@@ -9,11 +9,26 @@
 
 		</div>
 		<loading loaded="isGraphLoaded"></loading>
-		<div class="col-md-16 padding0" ng-class="{'pointer-no-event': !isGraphLoaded, 'pointer-fill-event': isGraphLoaded}">
+		<div class="col-md-16 reset-padding cyan-blue-light margin-top">
+			<div class="col-md-3 benchmarking__form__input reset-padding selected-box-container" >
+				<span>Benchmark</span>
+			</div>
+		
+			<div class="col-md-3  benchmarking__form__input reset-padding selected-box-container" >
+				<span>Parameter</span>
+			</div>
+			<div class="col-md-1  benchmarking__form__input reset-padding selected-box-container" >
+				<span></span>
+			</div>
+			<div class="col-md-3 benchmarking__form__input reset-padding selected-box-container" >
+				<span>Compare with</span>
+			</div>
+		</div>
+		<div class="col-md-16 padding0 reset-padding" ng-class="{'pointer-no-event': !isGraphLoaded, 'pointer-fill-event': isGraphLoaded}">
 		<div class="bar_graph_header"> 
 			
-			<div class="col-md-5 col-sm-7 left_header_barchart padding0">
-				<!-- <div class="row">
+		<!-- 	<div class="col-md-5 col-sm-7 left_header_barchart padding0">
+				<div class="row">
 					<span translate="patient-benchmarking.benchmark"></span>
 					<span translate="patient-benchmarking.parameter"></span>
 					<span translate="patient-benchmarking.compareWith"></span>
@@ -24,7 +39,38 @@
 					<select class="span1" ng-model="clinicsDetails.selectedClinic" ng-options="clinic as clinic.name for clinic in clinics" ng-change="drawBenchmarkingChart();">
 						
 					</span>					
-				</div> -->
+				</div>
+			</div> -->
+			 <div class="col-md-3 benchmarking__form__input reset-padding selected-box-container" >
+				<div class="custom-dropdown">
+				 <select ng-change="onYaxisChange()" ng-model="$parent.$parent.type" class="light-grey">
+					<option value="adherenceScore" label="Adherence Score" ng-selected="true">Adherence Score</option>
+					<option value="missedTherapy" label="Missed Therapy Days">Missed Therapy Days</option>
+					<option value="HMRDeviation" label="HMR Deviation">HMR Deviation</option>
+					<option value="settingDeviation" label="Setting Deviation">Setting Deviation</option>
+					<option value="HMRRunrate" label="HMR Runrate">HMR Runrate</option>
+				 </select>
+				</div>
+	  		</div>
+		
+			<div class="col-md-3 benchmarking__form__input reset-padding selected-box-container" >
+				<div class="custom-dropdown light-grey">
+					<select ng-change="onXaxisChange()" ng-model="$parent.$parent.xaxis" class="light-grey">
+						<option value="ageGroup" label="Age Group" ng-selected="true">Age Group</option>
+						<option value="clinicSize" label="Clinic Size">Clinic Size</option>
+					</select>            
+				</div> 
+			</div>
+			<div class="col-md-1 text-center survey_grey_color benchmarking__form__input reset-padding selected-box-container" >
+				<span>Vs.</span>
+			</div>
+			<div class="col-md-3 benchmarking__form__input reset-padding selected-box-container" >
+				<div class="custom-dropdown">
+					<select ng-change="onXaxisChange()" ng-model="$parent.$parent.xaxis">
+						<option value="ageGroup" label="Age Group" ng-selected="true">Age Group</option>
+						<option value="clinicSize" label="Clinic Size">Clinic Size</option>
+					</select>            
+				</div> 
 			</div>
 			<div class="col-md-4 col-sm-9 pull-right right_header_barchart cyan-blue-light">
 				<ul class="nav nav-pills pull-right ">
