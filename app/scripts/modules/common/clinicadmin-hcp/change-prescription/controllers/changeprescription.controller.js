@@ -171,5 +171,11 @@ function($scope, $state, clinicadminPatientService, notyService, $stateParams, c
     }, 250);
   };
 
+  $scope.addNewProtocolPoint = function (){
+    $scope.submitted = false;
+    $scope.newProtocolPoint += 1;
+    $scope.protocol.protocolEntries.push({});
+  };
+
 	$scope.init();
 }]);
