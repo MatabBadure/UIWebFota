@@ -32,7 +32,7 @@ angular.module('hillromvestApp')
   	$scope.opts = {
       maxDate: new Date(),
       format: patientDashboard.dateFormat,
-      dateLimit: {"months":12},
+      dateLimit: {"months":patientDashboard.maxDurationInMonths},
       eventHandlers: {'apply.daterangepicker': function(ev, picker) {
           $scope.durationRange = "Custom";     
           $scope.calculateDateFromPicker(picker);   
@@ -134,12 +134,10 @@ angular.module('hillromvestApp')
                 events: {                	
 		            setExtremes: function (e) {
 		                if(typeof e.min == 'undefined' && typeof e.max == 'undefined'){
-							isZoomReset = true;
-							console.log('reset zoom clicked', isZoomReset);   
+							isZoomReset = true;							
 		                }
 		            },
-		            afterSetExtremes: function(e){
-		            	console.log("extremes are set", isZoomReset);
+		            afterSetExtremes: function(e){		            	
 		            	if(isZoomReset){
 		            		isZoomReset = false;
 		            		var dExt;							
@@ -174,10 +172,22 @@ angular.module('hillromvestApp')
 			},
 
             tooltip: {
-                formatter: function () {
-                    return '<b>' + this.series.name + ', age-group ' + this.point.category + '</b><br/>' +
-                        'Average Adherence Score: ' + Highcharts.numberFormat(Math.abs(this.point.y), 0);
+                formatter: function () {                   
+					var dayDiff = dateService.getDateDiffIndays($scope.fromTimeStamp,$scope.toTimeStamp);  
+					var dateLabel = (dayDiff === 0)? Highcharts.dateFormat("%m/%e/%Y",$scope.fromTimeStamp) : Highcharts.dateFormat("%m/%e/%Y",$scope.fromTimeStamp)+' - '+Highcharts.dateFormat("%m/%e/%Y",$scope.toTimeStamp);
+					var adherenceScore = (this.point.y < 0) ? -1 * (this.point.y): this.point.y;
+					var s = '<div style="font-size:12x;font-weight: normal; padding: 5px;">'
+							+'<div id="tooltip-header" style="display: flex;align-items: center;justify-content: center;padding: 3px;"><b>'+ dateLabel +'</b></div>'
+							+'<div id="ageGroup" style="display: flex;align-items: center;justify-content: center;padding: 3px;">Age Group : '+ this.point.category +'</div>'	;
+					if(this.point.toolText && this.point.toolText.totalPatients){
+						s += '<div id="seriesName" style="display: flex;align-items: center;justify-content: center;padding: 3px;"> Total No. Of Patients : '+ this.point.toolText.totalPatients +'</div>';
+					}
+					s += '<div id="seriesName" style="display: flex;align-items: center;justify-content: center;padding: 3px;">'+this.series.name+' : '+ adherenceScore +'</div>'+'</div>';
+					return s;
                 },
+                borderWidth: 1,
+    			backgroundColor: "rgba(255,255,255,255)",
+                useHTML: true,
                 hideDelay: 0
             },
 
@@ -193,46 +203,75 @@ angular.module('hillromvestApp')
         });
     };
 
-    $scope.initBenchmarkingChart = function(){
-    	$scope.benchmarkingData = patientBenchMarking;
-		setTimeout(function(){            
-			$scope.drawBenchmarkingChart();   
-		}, 100); 
-    	// api call for chart data
-    	//patientId, parameterType, benchmarkingType, fromDate, toDate, clinicId
-    	patientService.getPatientBenchmarking(StorageService.get('logged').patientID , $scope.parameterType, $scope.benchMarkType, convertServerDateFormat($scope.fromTimeStamp), convertServerDateFormat($scope.toTimeStamp), $scope.clinicsDetails.selectedClinic.id).then(function(response){
-    		$scope.benchmarkingData = patientBenchMarking;    
-    		console.log("$scope.benchmarkingData : ",$scope.benchmarkingData);		
-    		/*setTimeout(function(){            
-				$scope.drawBenchmarkingChart();   
-			}, 100);  */
-    	}).catch(function(){
-			/*$scope.benchmarkingData = patientBenchMarking;
-			setTimeout(function(){            
-				$scope.drawBenchmarkingChart();   
-			}, 100);  */
-		});
+    function plotNoDataAvailable(){
+    	$scope.isNoDataAvailable = true;
+    }
+
+    function removeChart(){
+    	$("#patientBenchmarkingGraph").empty();
+    }
+
+    $scope.reDrawChartOnClinicChange = function(){
+    	// weekView is being called in order to reset the previously selected date range.
+    	// in order to retain the prev selected data range ng-chage invoke initBenchmarkingChart instead of weekView
+    	$scope.weekView();
+    };
+
+    $scope.initBenchmarkingChart = function(){ 
+    	if($scope.clinicsDetails.selectedClinic){
+	    	patientService.getPatientBenchmarking(StorageService.get('logged').patientID , $scope.parameterType, $scope.benchMarkType, convertServerDateFormat($scope.fromTimeStamp), convertServerDateFormat($scope.toTimeStamp), $scope.clinicsDetails.selectedClinic.id).then(function(response){
+	    		var responseData = response.data; 
+	    		$scope.benchmarkingData = {};    		
+	    		if(responseData && responseData.series && responseData.series.length){
+	    			$scope.benchmarkingData.series = [];
+		    		$scope.benchmarkingData.series[0]={"name": benchmarkingConstants.string.myAvgAdherenceScore}
+		    		$scope.benchmarkingData.series[1]={"name": $scope.clinicsDetails.selectedClinic.name  + benchmarkingConstants.string.clinicAvgAdherenceScore}
+		    		$scope.benchmarkingData.xAxis = responseData.xAxis;
+	    			$scope.isNoDataAvailable = false;
+					angular.forEach(responseData.series, function(s, i) {
+						if(s.name === "Self"){							
+							s.name = $scope.benchmarkingData.series[0].name;
+							$scope.benchmarkingData.series[0] = s;
+		    			}else{		    				
+		    				s.name = $scope.benchmarkingData.series[1].name; 
+		    				$scope.benchmarkingData.series[1] = s;
+		    			}
+					});    			
+	    		}else{
+	    			plotNoDataAvailable();
+	    		}				
+	    		setTimeout(function(){            
+					$scope.drawBenchmarkingChart();   
+				}, 100);  
+	    	}).catch(function(){
+				plotNoDataAvailable();
+			});	
+    	}else{    		
+    		plotNoDataAvailable();
+    	}    	   	
+    	
     };
     
   	$scope.initBenchmarking = function(){
   		$scope.clinicsDetails = {};   		
 		patientService.getClinicsLinkedToPatient(StorageService.get('logged').patientID ).then(function(response){
 			if(response.data.clinics){
-				$scope.clinics = response.data.clinics;
+				$scope.clinics = response.data.clinics;	
 				if($scope.clinics && $scope.clinics.length > 0){
 					$scope.clinicsDetails.selectedClinic = $scope.clinics[0];
-					UserService.getUser(StorageService.get('logged').patientID).then(function(response){
-						$scope.patientBenchmark = response.data.user;						
-						$scope.weekView();
-						$scope.initBenchmarkingChart();									
-					});	
-				}
+				}			
 			}
+			
+			UserService.getUser(StorageService.get('logged').patientID).then(function(response){
+				$scope.patientBenchmark = response.data.user;						
+				$scope.weekView();														
+			});	
+
 		});  		
   	};
 
   	$scope.exportPatientBMPDF = function(){		
-  		exportutilService.downloadPatientBMAsPDF("patientBenchmarkingGraph", "patientBenchmarkCanvas",$scope.fromDate, $scope.toDate);			
+  		exportutilService.downloadPatientBMAsPDF("patientBenchmarkingGraph", "patientBenchmarkCanvas",$scope.fromDate, $scope.toDate, benchmarkingConstants.string.graphTitleMyAvgAdherenceScore + benchmarkingConstants.string.graphTitleVs + benchmarkingConstants.string.grapTitleClinic + benchmarkingConstants.string.grapTitleClinicAdherenceScore);			
   	};
 
   	$scope.init= function(){
