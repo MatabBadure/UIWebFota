@@ -46,7 +46,7 @@
   <div class="col-md-2 treatments_per_day_count col-md-offset-3">
       <span class="v_middle">{{protocols[0].treatmentsPerDay}}</span>
   </div>
-  <div class="col-md-11 col-md-offset-2">
+  <div class="col-md-9 col-md-offset-2">
     <div class="col-md-16 protocol-list no_border" ng-repeat="protocol in protocols" ng-class="{'list-inactive':protocol.deleted, 'last' : $last}">
       <!-- <div class="col-md-3 protocol-list__treatment-day">
         <span class="protocol-list--value"> {{protocol.treatmentsPerDay}}</span>
@@ -62,6 +62,11 @@
         <span ng-if="protocol.type === 'Custom'" class="protocol-list--value"> {{protocol.minPressure}}</span>
         <span ng-if="protocol.type === 'Normal'" class="protocol-list--value"> {{protocol.minPressure}}-{{protocol.maxPressure}}</span>
       </div>
+    </div>
+  </div>
+  <div class="col-md-2 comon_action_div" ng-if="protocols">
+    <div class="col-md-16 protocol-list__edit icons text-center">
+      <span ng-if="!protocol.deleted" class="icon-edit-icon" ng-click="openEditProtocol(protocols[0])"></span>
     </div>
   </div>
 </div>
