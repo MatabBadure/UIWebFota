@@ -81,7 +81,7 @@ angular.module('hillromvestApp')
     pdf.setFontType(pdfServiceConstants.style.font.bold);
     pdf.setFontSize(8);
     pdf.setTextColor(0,0,0);
-    pdf.text((pdf.internal.pageSize.width/2)-((pageHeader.length*2.3)/2),   margins.titleTop-15, pageHeader);
+    pdf.text((pdf.internal.pageSize.width/2)-((pageHeader.length*3.5)/2),   margins.titleTop-15, pageHeader);
 
     pdf.setFont(pdfServiceConstants.style.font.helvetica);  
     pdf.setFontType(pdfServiceConstants.style.font.bold); 
@@ -437,7 +437,7 @@ angular.module('hillromvestApp')
       pdf.setFontType(pdfServiceConstants.style.font.bold);        
       pdf.setFontSize(10);
       pdf.setTextColor(0, 0, 0);
-      pdf.text((pdf.internal.pageSize.width/2)-60,   imageY-30, chartName);
+      pdf.text((pdf.internal.pageSize.width/2)-50,   imageY-30, chartName);
     }
     var canvas = document.getElementById(canvasId);              
     var ctx = canvas.getContext('2d');
@@ -603,12 +603,12 @@ angular.module('hillromvestApp')
     var pageWidth = pdf.internal.pageSize.width;
     pdf = this.setHeader(pdf, fromDate, toDate);
     pdf = this.addPatientInfoToHMRCReport(pdf, patientInfo, fromDate, toDate); 
-    pdf = this.addAllSvgsToPDF(pdf, canvasId, divId, 20, 350, 540, 200, pdfServiceConstants.text.complianceStatistics);
+    pdf = this.addAllSvgsToPDF(pdf, canvasId, divId, 30, 350, 540, 200, pdfServiceConstants.text.complianceStatistics);
     pdf = this.setFooter(pdf, pdf.internal.pageSize.height-80);
     pdf = this.setPageNumber(pdf, "1", "2");  
     pdf.addPage(); 
     pdf = this.setTopHeader(pdf, fromDate, toDate);
-    pdf = this.addSvgToPDF(pdf, canvasId, "HMRGraph", 20, 150, 540, 200, pdfServiceConstants.text.hmrStatistics); 
+    pdf = this.addSvgToPDF(pdf, canvasId, "HMRGraph", 30, 150, 540, 200, pdfServiceConstants.text.hmrStatistics); 
     pdf = this.setFooter(pdf, pdf.internal.pageSize.height-80, "HCP Name");
     pdf = this.setPageNumber(pdf, "2", "2");
     setTimeout(function(){     
@@ -639,7 +639,7 @@ angular.module('hillromvestApp')
     var imgY = 150;
     pdf = this.setHeader(pdf, fromDate, toDate, pdfServiceConstants.text.patientBMPageHeader);
     if(divId){
-      pdf = this.addSvgToPDF(pdf, canvasId, divId, 20, imgY, 540, 200, pdfServiceConstants.text.patientbenchmarkingStatistcs,null,null, 200); 
+      pdf = this.addSvgToPDF(pdf, canvasId, divId, 30, imgY, 540, 200, pdfServiceConstants.text.patientbenchmarkingStatistcs,null,null, 140); 
       imgY = imgY + 250;
     }    
     pdf = this.setFooter(pdf, pdf.internal.pageSize.height-80);
