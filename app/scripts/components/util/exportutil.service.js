@@ -634,12 +634,12 @@ angular.module('hillromvestApp')
     },1000); 
   }
 
-  this.downloadPatientBMAsPDF = function(divId, canvasId, fromDate, toDate){
+  this.downloadPatientBMAsPDF = function(divId, canvasId, fromDate, toDate, graphTitle){
     var pdf = this.getPdf();
     var imgY = 150;
     pdf = this.setHeader(pdf, fromDate, toDate, pdfServiceConstants.text.patientBMPageHeader);
     if(divId){
-      pdf = this.addSvgToPDF(pdf, canvasId, divId, 30, imgY, 540, 200, pdfServiceConstants.text.patientbenchmarkingStatistcs,null,null, 140); 
+      pdf = this.addSvgToPDF(pdf, canvasId, divId, 30, imgY, 540, 200, graphTitle,null,null, 140); 
       imgY = imgY + 250;
     }    
     pdf = this.setFooter(pdf, pdf.internal.pageSize.height-80);
