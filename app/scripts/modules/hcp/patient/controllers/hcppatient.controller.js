@@ -305,7 +305,13 @@ angular.module('hillromvestApp')
       $scope.sortPatientList.hcp = toggledSortOptions;
       $scope.sortOption = sortConstant.hcpname + sortOptionsService.getSortByASCString(toggledSortOptions);
       $scope.searchPatients();
-    }       
-    
+    }  
+  };
+
+  $scope.openEditProtocol = function(protocol){
+    if(!protocol){
+      return false;
+    }
+    $state.go('hcpUpdateProtocol', {'protocolId': protocol.id});
   };
 }]);
