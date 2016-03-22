@@ -177,5 +177,13 @@ function($scope, $state, clinicadminPatientService, notyService, $stateParams, c
     $scope.protocol.protocolEntries.push({});
   };
 
+  $scope.cancelProtocolUpdate = function() {
+  	if(StorageService.get('logged').role === 'HCP'){
+  		$state.go('hcppatientProtocol', {'patientId': $stateParams.patientId});	
+  	}else if(StorageService.get('logged').role  === 'CLINIC_ADMIN'){
+  		$state.go('clinicadminpatientProtocol', {'patientId': $stateParams.patientId});	
+  	}
+  };
+
 	$scope.init();
 }]);

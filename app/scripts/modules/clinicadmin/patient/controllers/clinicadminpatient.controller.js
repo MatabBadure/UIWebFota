@@ -27,27 +27,8 @@ angular.module('hillromvestApp')
       $scope.getClinicsAssociatedToHCP();
       var clinicId = $stateParams.clinicId;
       $scope.searchPatients(); 
-    }else if($state.current.name === 'clinicAdminUpdateProtocol'){
-      $scope.initUpdateProtocol();
-    }else if($state.current.name === 'clinicadminGenerateProtocol'){
-      $scope.initGenerateProtocol();
     }
 	};
-
-  $scope.initUpdateProtocol = function(){
-    $scope.getPatientInfo($stateParams.patientId);
-    $scope.getProtocolById($stateParams.patientId, $stateParams.protocolId);
-  };
-
-  $scope.initGenerateProtocol = function(){
-    if(!$rootScope.protocols){
-      $state.go('clinicadminpatientProtocol', {'patientId': $stateParams.patientId});
-    }else{
-      var date = new Date();
-      $scope.currentDate = (date.getMonth() + 1) + '/' + date.getDate() + '/' +  date.getFullYear();
-      $scope.getPatientInfo($stateParams.patientId);
-    }
-  };
 
   $scope.getStates = function(){
     UserService.getState().then(function(response) {
@@ -461,126 +442,6 @@ angular.module('hillromvestApp')
       return false;
     }
     $state.go('clinicAdminUpdateProtocol', {'protocolId': protocol.id});
-  };
-
-  $scope.getProtocolById = function(patientId, protocolId){
-    patientService.getProtocolById(patientId, protocolId).then(function(response){
-      $scope.protocol = response.data;
-      $scope.protocol.edit = true;
-      $scope.newProtocolPoint = ($scope.protocol.protocol) ? $scope.protocol.protocol.length : 1;
-      if(!$scope.protocol){
-        $scope.protocol = {};
-        $scope.protocol.type = 'Normal';
-        $scope.protocol.protocolEntries = [{}];
-      } else {
-        $scope.protocol.type = $scope.protocol.protocol[0].type;
-        $scope.protocol.treatmentsPerDay = $scope.protocol.protocol[0].treatmentsPerDay;
-        $scope.protocol.protocolEntries = $scope.protocol.protocol;
-      }
-      $scope.tempProtocol = {};
-      angular.copy($scope.protocol, $scope.tempProtocol);
-    }).catch(function(response){
-      notyService.showError(response);
-    });
-  };
-
-  $scope.addNewProtocolPoint = function (){
-    $scope.submitted = false;
-    $scope.newProtocolPoint += 1;
-    $scope.protocol.protocolEntries.push({});
-  };
-
-  $scope.cancelProtocolUpdate = function() {
-    $state.go('clinicadminpatientProtocol', {'patientId': $stateParams.patientId});
-  };
-
-  $scope.updateProtocol = function(){
-    $rootScope.$broadcast('validateCaptcha');
-    $scope.isProtocolSubmited = true;
-    setTimeout(function(){
-      if($scope.protocolVerificationForm.$invalid || !$scope.captchaValid){
-        return false;
-      }
-      var data = {
-        'password': $scope.password
-      };
-      UserService.validateCredentials(data).then(function(response){
-        angular.forEach($rootScope.protocols, function(protocol){
-          if(!protocol.type){
-            protocol.type = $rootScope.protocols[0].type;
-          }
-        });
-        patientService.editProtocol($stateParams.patientId, $rootScope.protocols).then(function(response){
-          $scope.isVerificationModal = false;
-          // exportutilService.exportChangePrescPDF($scope.slectedPatient, $rootScope.userFullName, $scope.currentDate, $rootScope.protocols);
-          notyService.showMessage(response.data.message, 'success');
-          $state.go('clinicadminpatientProtocol', {'patientId': $stateParams.patientId});
-        }).catch(function(response){
-          notyService.showError(response);
-        });
-      }).catch(function(response){
-        notyService.showError(response);
-        $scope.password = '';
-        $rootScope.$broadcast('initializeCaptcha');
-      });
-    }, 250);
-  };
-
-  $scope.isProtocolChange = function(){
-    if($scope.protocol.protocol.length !== $scope.tempProtocol.protocol.length){
-      return true;
-    }else if(JSON.stringify($scope.protocol) !== JSON.stringify($scope.tempProtocol)){
-      return true;
-    }
-    return false;
-  };
-
-  $scope.showPrtocolUpdateModal = function(){
-    $scope.submitted = true;
-    if($scope.updateProtocolForm.$invalid){
-      return false;
-    }
-    if(!$scope.isProtocolChange()){
-      $scope.isNoChange = true;
-    }else{
-      if($scope.protocol.id){
-        delete $scope.protocol.id;
-      }
-      if($scope.protocol.patient){
-        delete $scope.protocol.patient;
-      }
-      var data = $scope.protocol.protocol;
-      if($scope.protocol.type === 'Custom'){
-        angular.forEach(data, function(value, key){
-          if(!value.type){
-            value.type = 'Custom';
-          }
-          value.treatmentsPerDay = $scope.protocol.treatmentsPerDay;
-          if(!value.treatmentLabel){
-            value.treatmentLabel = 'point'+(key+1);
-          }
-        });
-      }else{
-        data[0].treatmentsPerDay = $scope.protocol.treatmentsPerDay;
-      }
-      $rootScope.protocols = data;
-      $scope.isAuthorizeProtocolModal = true;
-    }
-  };
-
-  $scope.openProtocolDetailPage = function(){
-    $state.go('clinicadminGenerateProtocol', {'protocolId': $stateParams.protocolId});
-  };
-
-  $scope.openVerificationModal = function(){
-    $scope.isProtocolSubmited = false;
-    $scope.isAuthorizeFormSubmited = true;
-    if($scope.authorizeForm.$invalid){
-      return false;
-    }
-    $rootScope.$broadcast('initializeCaptcha');
-    $scope.password = '';
-    $scope.isVerificationModal = true;
   };
 
 	$scope.init();
