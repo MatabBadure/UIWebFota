@@ -202,7 +202,7 @@ angular.module('hillromvestApp')
     $scope.opts = {
       maxDate: new Date(),
       format: patientDashboard.dateFormat,
-      dateLimit: {"months":24},
+      dateLimit: {"months":12},
       eventHandlers: {'apply.daterangepicker': function(ev, picker) {
           $scope.durationRange = "Custom";     
           $scope.calculateDateFromPicker(picker);  
@@ -613,6 +613,13 @@ angular.module('hillromvestApp')
       $("#note_edit_container").addClass("hide_content");
     };
 
+    function getDaysIntervalInChart(noOfDataPoints){
+      var pInterval = 13;
+      var sInterval = 14;
+      var remainder  = 6;
+      return ( (parseInt(noOfDataPoints/pInterval) > 0) && noOfDataPoints%pInterval > remainder) ? parseInt(noOfDataPoints/sInterval) : ((parseInt(noOfDataPoints/pInterval) > 0)? parseInt(noOfDataPoints/pInterval): 1) ; 
+    };
+
     $scope.getComplianceGraph = function(){      
       patientDashBoardService.getcomplianceGraphData($scope.patientId, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.durationRange).then(function(response){
         var responseData = response.data;              
@@ -658,9 +665,10 @@ angular.module('hillromvestApp')
           $scope.chartData.xData = xData;
           setTimeout(function(){            
               $scope.synchronizedChart();           
-          }, 10);          
+          }, 100);          
         } else{
           $scope.noDataAvailable = true;
+          $scope.removeAllCharts();
         }       
       });
     };
@@ -676,7 +684,7 @@ angular.module('hillromvestApp')
          * built-in events with handlers defined on the parent element.
          */
          
-        $("#"+divId).bind('mousemove touchmove touchstart', function(e) {
+        $("#"+divId).bind('mousemove touchmove touchstart mouseover', function(e) {
           var chart,
           point,
           i,
@@ -757,15 +765,16 @@ angular.module('hillromvestApp')
           var  minRange = (dataset.plotLines.max) ? dataset.plotLines.max : dataset.plotLines.min;
           var yMaxPlotLine = dataset.plotLines.max;
           var yMinPlotLine = dataset.plotLines.min;
-
+          var noOfDataPoints = ($scope.chartData.xData)? $scope.chartData.xData.length: 0;
+          var daysInterval = getDaysIntervalInChart(noOfDataPoints);
+          
           $('<div class="chart">')
             .appendTo('#'+divId)
             .highcharts({
               chart: {
                 marginLeft: 40, 
                 //spacingTop: 30,
-                spacingBottom: 30,
-                zoomType: 'xy',
+                spacingBottom: 30,                
                 backgroundColor:  "#e6f1f4"
               },
               title: {
@@ -774,7 +783,8 @@ angular.module('hillromvestApp')
                 margin: 25,
                 x: 30,
                 style:{
-                  color: dataset.color
+                  color: dataset.color,
+                  fontWeight: 'bold'
                 }                
               },
               credits: {
@@ -802,7 +812,10 @@ angular.module('hillromvestApp')
                     return Highcharts.dateFormat("%m/%e/%Y", this.value);
                   }
                 },
-                lineWidth: 2
+                lineWidth: 2,
+                units: [
+                  ['day', [daysInterval]]
+                ] 
               },
               yAxis: {
                 gridLineColor: '#FF0000',
@@ -864,203 +877,61 @@ angular.module('hillromvestApp')
                     } //putting down x-axis, when we have zero for all y-axis values
                 }
               },
-              tooltip: {              
-                formatter: function() {
-                  var s = '<div style="font-size:12x;font-weight: bold; padding-bottom: 3px;">'+  this.point.toolText.dateText +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div>';                         
-                  s += '<div style="font-size:10px; font-weight: bold; width:100%"><div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left"> ' + this.point.series.name + '</div> ' 
-                  + '<div style="padding:5px;width:10%"><b>' + this.point.y + '</b></div></div>';
-                  s += '</div>';
-                  return s;
-                }, 
-                hideDelay: 0,
-                useHTML: true                
-              },
-              series: [{
-                data: dataset.data,
-                name: dataset.name,
-                type: dataset.type,
-                color: dataset.color,
-                fillOpacity: 0.3,
-                tooltip: {
-                  valueSuffix: ' ' + dataset.unit
-                }
-              }]
-            });
-        });
-    };
-
-    $scope.synchronizedcategoryChart = function(divId){       
-
-        // Get the data. The contents of the data file can be viewed at
-        divId = (divId) ? divId : "synchronizedChart";
-        $("#"+divId).empty();
-        $scope.setSynchronizedChart(divId);
-        function syncExtremes(e) {
-              var thisChart = this.chart;
-
-        if (e.trigger !== 'syncExtremes') { // Prevent feedback loop
-            Highcharts.each(Highcharts.charts, function(chart) {
-              if(chart && chart.renderTo.offsetParent && chart.renderTo.offsetParent.id === "synchronizedChart"){ 
-                if (chart !== thisChart) {
-                  if (chart.xAxis[0].setExtremes) { // It is null while updating
-                    chart.xAxis[0].setExtremes(e.min, e.max, undefined, false, {
-                      trigger: 'syncExtremes'
-                    });
-                  }
-                }
-              }
-            });
-          }
-        }
-
-        
-        $.each($scope.chartData.datasets, function(i, dataset) {        
-          var  minRange = (dataset.plotLines.max) ? dataset.plotLines.max : dataset.plotLines.min;
-          var yMaxPlotLine = dataset.plotLines.max;
-          var yMinPlotLine = dataset.plotLines.min;
-
-          $('<div class="chart">')
-            .appendTo('#'+divId)
-            .highcharts({
-              chart: {
-                marginLeft: 40, 
-                //spacingTop: 30,
-                spacingBottom: 30,
-                zoomType: 'xy',
-                backgroundColor:  "#e6f1f4"
-              },
-              title: {
-                text: dataset.name,
-                align: 'left',
-                margin: 25,
-                x: 30,
-                style:{
-                  color: dataset.color
-                }                
-              },
-              credits: {
-                enabled: false
-              },
-              legend: {
-                enabled: false
-              },
-              xAxis: {
-                allowDecimals: false,
-                type: 'category',         
-                categories: $scope.chartData.xData,
-                labels:{
-                  style: {
-                      color: '#525151',                    
-                      fontWeight: 'bold'
-                  }               
-                }, 
-                formatter:function(){
-                  return  Highcharts.dateFormat("%m/%e/%Y",this.value);
-                },
-                lineWidth: 2   
-              },
-              yAxis: {
-                gridLineColor: '#FF0000',
-                gridLineWidth: 0,
-                lineWidth:2,
-                minRange: minRange,
-                min: 0,
-                allowDecimals:false,
-                title: {
-                  text: null
-                },
-                plotLines: [{
-                    value: yMinPlotLine,
-                    color: '#99cf99',
-                    dashStyle: 'Dash',
-                    width: 1,                    
-                    label: {
-                        align: "right",
-                        text: 'Min Threshold',
-                        y: -5,
-                        x: -10,
-                        style: {
-                            color: '#c1c1c1',
-                            font: '10px Helvetica',
-                            fontWeight: 'normal'
-                        }/*,
-                        textAlign: "left"*/
-                    }
-                }, {
-                    value: yMaxPlotLine,
-                    color: '#f19999',
-                    dashStyle: 'Dash',
-                    width: 1,                    
-                    label: {
-                      align: "right",
-                      text: 'Max Threshold',
-                      y: -5,
-                      x: -10,
-                      style: {
-                          color: '#c1c1c1',
-                          font: '10px Helvetica',
-                          fontWeight: 'normal'
-                      }/*,
-                        textAlign: "left"*/
-                    }
-                }],
-              },
-              plotOptions: {  
-                line: {
-                    lineWidth: 3,
-                    softThreshold: false,
-                    marker: {
-                          enabled: true
-                    },
-                    states: {
-                        hover: {
-                            enabled: false
-                        }                    
-                    } //putting down x-axis, when we have zero for all y-axis values
-                }
-              },
-              tooltip: {
-               /* positioner: function () {
+              tooltip: { 
+                enabled: true, 
+                positioner: function () {
                     return {
                         x: this.chart.chartWidth - this.label.width, // right aligned
                         y: -1 // align to title
                     };
-                }, */
-                formatter: function() {
-                  var s = '<div style="font-size:12x;font-weight: bold; padding-bottom: 3px;">'+  this.point.toolText.dateText +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div>';                         
-                  s += '<div style="font-size:10px; font-weight: bold; width:100%"><div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left"> ' + this.point.series.name + '</div> ' 
-                  + '<div style="padding:5px;width:10%"><b>' + this.point.y + '</b></div></div>';
-                  s += '</div>';
-                  return s;
-                }, 
-                hideDelay: 0,
-                useHTML: true                
+                },            
+                // formatter: function() {
+                //   var s = '<div style="font-size:12x;font-weight: bold; padding-bottom: 3px;">'+  this.point.toolText.dateText +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div>';                         
+                //   s += '<div style="font-size:10px; font-weight: bold; width:100%"><div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left"> ' + this.point.series.name + '</div> ' 
+                //   + '<div style="padding:5px;width:10%"><b>' + this.point.y + '</b></div></div>';
+                //   s += '</div>';
+                //   return s;
+                // },
+                borderWidth: 0, 
+                backgroundColor: 'none',
+                pointFormat: '<span style="color:{point.series.color}"> {series.name}: {point.y}</span>',//'{point.series.name}' + ' : ' +'{point.y}',
+                headerFormat: '',
+                shadow: false,
+                style: {
+                    fontSize: '18px'
+                },
+                hideDelay: 0//,
+                //useHTML: true                
               },
               series: [{
                 data: dataset.data,
                 name: dataset.name,
                 type: dataset.type,
                 color: dataset.color,
-                fillOpacity: 0.3,
-                tooltip: {
-                  valueSuffix: ' ' + dataset.unit
-                }
+                fillOpacity: 0.3
               }]
             });
         });
     };
 
+    
     $scope.getHMRGraph = function(){
       patientDashBoardService.getHMRGraphPoints($scope.patientId, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.durationRange).then(function(response){
         $scope.hmrChartData = response.data;        
         $scope.noDataAvailable = false;       
         if($scope.hmrChartData && typeof($scope.hmrChartData) === "object"){ 
           $scope.noDataAvailable = false;      
-          $scope.hmrChartData.xAxis.xLabels=[];          
+          $scope.hmrChartData.xAxis.xLabels=[]; 
+          $scope.isSameDay = true;
+          var startDay = ($scope.hmrChartData.xAxis && $scope.hmrChartData.xAxis.categories.length > 0) ? $scope.hmrChartData.xAxis.categories[0].split(" "): null;  
+            angular.forEach($scope.hmrChartData.xAxis.categories, function(x, key){ 
+              var curDay = $scope.hmrChartData.xAxis.categories[key].split(" ");
+              $scope.isSameDay = ($scope.isSameDay && (curDay[0] === startDay[0]) )? true : false;  
+            });       
             angular.forEach($scope.hmrChartData.xAxis.categories, function(x, key){              
               // this is for year view or custom view having datapoints more than 7
               // x-axis will be plotted accordingly, chart type will be datetime
-              if($scope.durationRange !== "Day"){
+              if($scope.durationRange !== "Day" && !$scope.isSameDay){
                 $scope.hmrChartData.xAxis.xLabels.push(dateService.convertToTimestamp(x));
                 $scope.hmrChartData.xAxis.categories[key] = dateService.convertToTimestamp(x);               
               }else{
@@ -1083,19 +954,22 @@ angular.module('hillromvestApp')
             
           }); 
           setTimeout(function(){
-            if($scope.durationRange === "Day" ){          
+            if($scope.durationRange === "Day" || $scope.isSameDay){          
               $scope.HMRCategoryChart();
             }else{
               $scope.HMRAreaChart();
             }            
-          }, 10);          
+          }, 100);          
         } else{
           $scope.noDataAvailable = true;
+          $scope.removeAllCharts();
         }
       });
     };
 
     $scope.HMRAreaChart = function(divId){ 
+      var noOfDataPoints = ($scope.hmrChartData && $scope.hmrChartData.xAxis.categories)?$scope.hmrChartData.xAxis.categories.length: 0;      
+      var daysInterval = getDaysIntervalInChart(noOfDataPoints);
       Highcharts.setOptions({
           global: {
               useUTC: false
@@ -1131,7 +1005,10 @@ angular.module('hillromvestApp')
                   return  Highcharts.dateFormat("%m/%e/%Y",this.value);
                 }               
               }, 
-              lineWidth: 2  
+              lineWidth: 2,
+              units: [
+                ['day', [daysInterval]]
+              ] 
           },
           yAxis: {
               gridLineColor: '#FF0000',
@@ -1186,12 +1063,12 @@ angular.module('hillromvestApp')
                     + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.coughPauses + '</b></div>';
                   if(this.point.toolText.noteText){
                     s = '<div style="font-size:10px; font-weight: bold; width:100%;display-inline:block;">' 
-                    s = '<div style="font-size:12x;font-weight: bold; padding-bottom: 3px; padding-right: 50px; float: left; width: 58%">'+  dateTextLabel +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>';
+                    s = '<div style="font-size:12x;font-weight: bold; padding-bottom: 3px; padding-right: 50px; float: left; width: 58%">'+  dateTextLabel +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>';
                     s += '<div style="font-size:12x;font-weight: bold;padding-left: 4px; padding-bottom: 3px;float: right;width: 40%;padding-right:10px;">Note </div>'
-                    s += '</div><div style="font-size:10px; font-weight: bold; width:100%">';
-                    headerStr = '<div style="font-size:10px; font-weight: bold; width:50%; float: left; border-right: 1px solid #cccccc">';                                     
+                    s += '</div><div style="font-size:10px; font-weight: bold; width:100%;height: auto;display: flex;flex-flow: row column;">';
+                    headerStr = '<div style="font-size:10px; font-weight: bold; width:55%; float: left; border-right: 1px solid #cccccc;">';                                     
                     footerStr = '</div>';
-                    noteStr = '<div style="font-size:10px; font-weight: bold; width:50%; float: right;"><div style="padding:5px 0;width:98%;"> <span style="padding: 5px;">'+ this.point.toolText.noteText+' </span></div></div>';
+                    noteStr = '<div style="font-size:10px; font-weight: bold; width:45%; float: left;white-space:pre-wrap;white-space:-moz-pre-wrap;word-wrap: break-word;"><div style="padding:5px 5px;"> <span>'+ this.point.toolText.noteText+' </span></div></div>';
                     s += headerStr+pointDetails+footerStr+noteStr+'</div>';
                   }else{
                      s = '<div style="font-size:12x;font-weight: bold; padding-bottom: 3px;">'+  dateTextLabel +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div style="font-size:10px; font-weight: bold; width:100%">';
@@ -1237,7 +1114,7 @@ angular.module('hillromvestApp')
     };
 
     $scope.HMRCategoryChart = function(divId){
-      var chartType = ($scope.durationRange !== "Day")? "area" : "column";
+      var chartType = "column";
       Highcharts.setOptions({
           global: {
               useUTC: false
@@ -1351,7 +1228,8 @@ angular.module('hillromvestApp')
       });
     };
      
-    $scope.drawHMRCChart =function(){     
+    $scope.drawHMRCChart =function(){ 
+        $scope.removeAllCharts();    
         $scope.getHMRGraph();
         $scope.getComplianceGraph();
     };
@@ -1400,7 +1278,7 @@ angular.module('hillromvestApp')
     $scope.initGraph = function(){
       $scope.getHmrRunRateAndScore();      
       $scope.isHMR = true;
-      $scope.getWeekChart();
+      //$scope.getWeekChart();
     };
 
     $scope.initPatientDashboard = function(){
@@ -1749,7 +1627,12 @@ angular.module('hillromvestApp')
 
     $scope.initHMR = function(){
       $scope.isHMR = true;
-      $scope.noDataAvailable = false;
+      $scope.noDataAvailable = false;    
+    };
+
+    $scope.removeAllCharts = function(){
+      $("#HMRGraph").empty();
+      $("#synchronizedChart").empty();      
     };
     
 }]);

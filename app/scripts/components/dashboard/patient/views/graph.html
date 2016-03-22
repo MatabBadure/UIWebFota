@@ -132,13 +132,12 @@
 			<span ng-if="fromDate === toDate" class="date">{{fromDate}}<span>
 		</div>
 	</div>
-	<div class="col-md-16" class="all_graph_wrapper" >	
+	<div class="col-md-16" class="all_graph_wrapper" ng-init="getWeekChart()" style="min-height: 300px;">	
 	<div class="graph_nodata" ng-show="noDataAvailable">
 		<span class="noData_text"> No Data Available!</span>
 	</div><!--  ng-show="isHMR && !noDataAvailable"-->	
 	<div class="complianceGraphPrim_wrapper" ng-show="!noDataAvailable" id="lineGraphWrapper" >
-		<div id="HMRGraph" ng-class="{ 'hide-chart': !isHMR, 'show-chart': isHMR}" ng-init="initHMR()">
-			
+		<div id="HMRGraph" ng-class="{ 'hide-chart': !isHMR, 'show-chart': isHMR}" >			
 		</div>
 	</div><!-- ng-show="!noDataAvailable && !isHMR"-->
 	<div id="complianceGraphWrapper" >

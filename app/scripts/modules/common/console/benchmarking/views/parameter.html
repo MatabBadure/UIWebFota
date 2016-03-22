@@ -20,7 +20,7 @@
 	<div class="col-md-16 reset-padding">
 		<div class="col-md-3 benchmarking__form__input reset-padding selected-box-container" >
 		  <div class="custom-dropdown">
-		    <select ng-change="onYaxisChange()" ng-model="$parent.$parent.benchmarkType" ng-disabled="true">
+		    <select class="" ng-change="onYaxisChange()" ng-model="$parent.$parent.benchmarkType" ng-disabled="true">
 			    <option value="Average" label="Average" ng-selected="true">Average</option>
 			  </select>
 		  </div>
@@ -44,7 +44,7 @@
 				  button-label="name"
 				  item-label="name"
 				  tick-property="ticked"
-				  max-labels="1"
+				  max-labels="4"
 				  translation="localLang"
 				  helper-elements="all filter none"
 				  min-search-length="1"
@@ -106,7 +106,8 @@
     <div class="bar_graph_header">
       <div class="col-md-3 benchmarking__form__input reset-padding selected-box-container" >
 				<div class="custom-dropdown">
-		      <select ng-change="onYaxisChange()" ng-model="$parent.$parent.type">
+
+			    <select ng-change="onYaxisChange()" ng-model="$parent.$parent.type">
 			      <option value="adherenceScore" label="Adherence Score" ng-selected="true">Adherence Score</option>
 			      <option value="missedTherapy" label="Missed Therapy Days">Missed Therapy Days</option>
 			      <option value="HMRDeviation" label="HMR Deviation">HMR Deviation</option>
@@ -127,7 +128,7 @@
 			  </div> 
 			</div>
 			<div class="col-md-3 benchmarking__form__input reset-padding selected-box-container" >
-				<div class="custom-dropdown">
+				<div class="custom-dropdown">	
 				  <div ng-show="isAgeGroup"
 					  isteven-multi-select
 					  input-model="ageGroups"
@@ -135,7 +136,7 @@
 					  button-label="ageRange"
 					  item-label="ageRange"
 					  tick-property="true"
-					  max-labels="1"
+					  max-labels="3"
 					  translation="localLang"
 					  helper-elements="all filter none"
 					  min-search-length="1"
@@ -152,7 +153,7 @@
 					  button-label="size"
 					  item-label="size"
 					  tick-property="true"
-					  max-labels="1"
+					  max-labels="3"
 					  translation="localLang"
 					  helper-elements="all filter none"
 					  min-search-length="1"
@@ -175,15 +176,16 @@
 				</ul>
 	 	  </div>
    	</div>
-   	<div class="pull-right week_date_container">
+   	<div class="pull-left margin-top font-size16 cyan-blue-light">{{benchmarkType}} <span ng-show="type === 'adherenceScore'">Adherence Score</span> for <span ng-show="xaxis === 'clinicSize'">Clinic Size</span><span ng-show="xaxis === 'ageGroup'">Age Group</span></div>
+   	<div class="pull-right margin-top week_date_container">
 			<span ng-if="fromDate !== toDate">
 				<span class="date">{{fromDate}}</span> - <span class="date">{{toDate}}</span>
 			</span>
 			<span ng-if="fromDate === toDate" class="date">{{fromDate}}<span>
-		</div>
+	</div>
   </div>
   <loading loaded="isGraphLoaded"></loading>
-  <div class="col-md-16 ">
+  <div class="col-md-16 margin-top">
   	<div id="benchmarkingGraph"></div>
 	</div>
 	<div style="clear:both"></div>

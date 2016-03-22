@@ -256,7 +256,8 @@ angular.module('hillromvestApp')
 		};
 
 		$scope.exportPDF = function(){
-			exportutilService.exportSurveyAsPDF('surveyGraph', 'surveyCanvas', $scope.fromDate, $scope.toDate, $scope.graphSurvey.surveyQuestions, pdfServiceConstants.text.survey);
+			var surveyHeaderText = ($scope.surveyType === 2 ? pdfServiceConstants.text.surveyForThirtyDays : ($scope.surveyType === 3 ? pdfServiceConstants.text.surveyForNinetyDays : pdfServiceConstants.text.surveyForFiveDays) );			
+			exportutilService.exportSurveyAsPDF('surveyGraph', 'surveyCanvas', $scope.fromDate, $scope.toDate, $scope.graphSurvey.surveyQuestions, surveyHeaderText);
 		};
 
 		$scope.init();

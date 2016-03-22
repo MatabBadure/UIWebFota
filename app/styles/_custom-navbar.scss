@@ -396,7 +396,7 @@ ul.logout-dropdown>li{
  .multiSelect > button{
 	border-radius:0;
 	min-height: 0!important;
-	background-image: linear-gradient(#fff, #fff);
+	background: transparent;
 	color: #34455C;
 	height: 30px;
     width: 210px;
@@ -404,16 +404,24 @@ ul.logout-dropdown>li{
     text-align:left;
 }
 .multiSelect > button:hover{
-	background-image: linear-gradient(#fff, #fff);
+	background: transparent;
 }
 .multiSelect .buttonLabel{
-	display:block;
+	display:inline-block!Important;
 	text-align: left;
 }
 .multiSelect .caret{
 	display:none;
 }
-.benchmarking__form__input > .custom-dropdown:before{
-	z-index: 999;
-}
+.highcharts-tooltip {
+  pointer-events: none !important;
+  }
 
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {  
+	.multiSelect .caret{
+		display:block;
+		float:right;
+		position:relative;
+		top:4px;
+	}
+}
