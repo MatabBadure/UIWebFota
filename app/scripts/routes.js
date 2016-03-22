@@ -2261,7 +2261,6 @@ angular.module('hillromvestApp')
                 }
             })
 
-
             .state('clinicadminpatientProtocol', {
                 parent: 'clinicadminpatientdashboard',
                 url: '/{patientId}/protocol-device',
@@ -4146,7 +4145,7 @@ angular.module('hillromvestApp')
               }
             })
 
-						.state('clinicAdminUpdateProtocol', {
+			.state('clinicAdminUpdateProtocol', {
                 parent: 'clinicadminpatientProtocol',
                 url: '/{protocolId}/editProtocol',
                 data: {
@@ -4156,7 +4155,7 @@ angular.module('hillromvestApp')
                 views: {
                     'content@': {
                         templateUrl: 'scripts/modules/clinicadmin/patient/views/update-protocol.html',
-                        controller: 'clinicadminPatientController'
+                        controller: 'changePrescriptionController'
                     }
                 },
                 resolve: {
@@ -4172,7 +4171,7 @@ angular.module('hillromvestApp')
                 }
             })
 
-						.state('clinicadminGenerateProtocol', {
+			.state('clinicadminGenerateProtocol', {
                 parent: 'clinicadminpatientProtocol',
                 url: '/{protocolId}/protocoldetail',
                 data: {
@@ -4182,7 +4181,7 @@ angular.module('hillromvestApp')
                 views: {
                     'content@': {
                         templateUrl: 'scripts/modules/clinicadmin/patient/views/generate-protocol.html',
-                        controller: 'clinicadminPatientController'
+                        controller: 'changePrescriptionController'
                     }
                 },
                 resolve: {
@@ -4215,6 +4214,58 @@ angular.module('hillromvestApp')
                     loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
                         return $ocLazyLoad.load('PatientBenchmarkingModule');
                     }],
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+
+            .state('hcpUpdateProtocol', {
+                parent: 'hcppatientProtocol',
+                url: '/{protocolId}/editProtocol',
+                data: {
+                    roles: ['HCP'],
+                    pageTitle: 'patient.title'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/hcp/patient/views/update-protocol.html',
+                        controller: 'changePrescriptionController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+
+            .state('hcpGenerateProtocol', {
+                parent: 'hcppatientProtocol',
+                url: '/{protocolId}/protocoldetail',
+                data: {
+                    roles: ['HCP'],
+                    pageTitle: 'patient.title'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/hcp/patient/views/generate-protocol.html',
+                        controller: 'changePrescriptionController'
+                    }
+                },
+                resolve: {
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('patient-user');
                         return $translate.refresh();
