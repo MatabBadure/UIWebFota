@@ -94,7 +94,8 @@ angular.module('hillromvestApp')
 			global: {
 				useUTC: false
 			}
-		});   
+		}); 
+		var isZoomReset = false;  
 		$scope.benchmarkingData.series[0].color = patientGraphsConstants.colors.pressure;
 		$scope.benchmarkingData.series[1].color = patientGraphsConstants.colors.frequency;		
 		var divId = (divId)? divId : "patientBenchmarkingGraph";
@@ -113,7 +114,7 @@ angular.module('hillromvestApp')
                 reversed: false,
                 labels: {
                     step: 1
-                }
+                }                
             }, { // mirror axis on right side
                 opposite: true,
                 reversed: false,
@@ -129,10 +130,27 @@ angular.module('hillromvestApp')
                         return Math.abs(this.value);
                     }
                 },
-                allowDecimals:false/*,
-                min: -50,
-                max: 50,*/
-
+                allowDecimals:false,
+                events: {                	
+		            setExtremes: function (e) {
+		                if(typeof e.min == 'undefined' && typeof e.max == 'undefined'){
+							isZoomReset = true;
+							console.log('reset zoom clicked', isZoomReset);   
+		                }
+		            },
+		            afterSetExtremes: function(e){
+		            	console.log("extremes are set", isZoomReset);
+		            	if(isZoomReset){
+		            		isZoomReset = false;
+		            		var dExt;							
+							var dMax = e.max;
+							var dMin = e.min;            
+							dMax >= dMin ? dExt = dMax : dExt = dMin;							
+							var min = 0 - dExt; 							         
+							this.setExtremes(min-1, dExt+1);
+		            	}		            		               
+		            }
+		        }
             },
 
             plotOptions: {               
@@ -169,8 +187,7 @@ angular.module('hillromvestApp')
             var ext = chart.yAxis[0].getExtremes();
             var dMax = Math.abs(ext.dataMax);
             var dMin = Math.abs(ext.dataMin);            
-            dMax >= dMin ? dExt = dMax : dExt = dMin;
-            console.log("dMax : ",dMax, " dMin : ", dMin, "dExt : ",dExt);
+            dMax >= dMin ? dExt = dMax : dExt = dMin;           
             var min = 0 - dExt;            
             chart.yAxis[0].setExtremes(min-1, dExt+1);
         });
@@ -196,29 +213,7 @@ angular.module('hillromvestApp')
 			}, 100);  */
 		});
     };
-
-    /*$scope.getPatientDevices = function(patientId){
-      patientService.getDevices(patientId).then(function(response){
-        $scope.patientDevices = response.data.deviceList;
-      });
-    };
-    $scope.getAssociatedClinics = function(patientId){
-      patientService.getClinicsLinkedToPatient(patientId).then(function(response) {
-        if(response.data.clinics){
-          $scope.associatedClinics = response.data.clinics;
-        }
-      });
-    };
-
-    $scope.getTransmissionDateForPatient = function(patientId){
-      patientService.getTransmissionDate(patientId).then(function(response) {
-        if(response.data && response.data.firstTransmissionDate){
-          $scope.hasTransmissionDate = true;
-          $scope.transmissionDate = response.data.firstTransmissionDate;
-        }
-      });
-    };   
-*/
+    
   	$scope.initBenchmarking = function(){
   		$scope.clinicsDetails = {};   		
 		patientService.getClinicsLinkedToPatient(StorageService.get('logged').patientID ).then(function(response){
