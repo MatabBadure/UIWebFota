@@ -10,7 +10,9 @@
 		position:static;
 		text-align: center
 	}
-
+	ul.logout-dropdown > li{
+		float:left!important;
+	}
 	.footer_container .footer_left_ul {
 		
 		&:li {
@@ -242,6 +244,9 @@
 		width:77px;
 		overflow:hidden;
 	}
+	.mob_label > div > label{
+	float:none !important;
+	}
 	.text-center-mob{
 		text-align:center;
 	}
@@ -275,6 +280,9 @@
 	}
 	.right_header_barchart ul li a{
 		margin:20px 0px 0px 19px;
+	}
+	.margin-left-10-reset{
+	margin-left:0;
 	}
 	/*datepicker*/
 	.daterangepicker.dropdown-menu{
