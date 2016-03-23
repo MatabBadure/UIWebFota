@@ -20,7 +20,7 @@
           </a>
         </li>
         <li class="pull-right-mob margin_lr">
-        <a ng-class="{ active: isActive('protocol-device')}" ng-href="" ng-click="switchPatientTab('patientProtocol')">
+        <a ng-class="{ active: isActive('protocol-device') || isActive('patients-editProtocol')}" ng-href="" ng-click="switchPatientTab('patientProtocol')">
             <span class="none" translate="patient.tab.protocol-device"></span>
              <span class="icons hillrom-icon icon-device hidden-md hidden-lg hidden-sm"></span>
           </a>
