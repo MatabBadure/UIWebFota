@@ -358,7 +358,7 @@ angular.module('hillromvestApp')
       },
 
       getPatientBenchmarking: function(patientId, parameterType, benchmarkingType, fromDate, toDate, clinicId){
-        var url = URL.getPateintBenchmarking.replace('PATIENTID', patientId).replace('PARAMETERTYPE', parameterType).replace('BENCHMARKTYPE', parameterType).replace('FROM', fromDate).replace('TO', toDate).replace('CLINICID', clinicId);
+        var url = URL.getPateintBenchmarking.replace('PATIENTID', patientId).replace('PARAMETERTYPE', parameterType).replace('BENCHMARKTYPE', benchmarkingType).replace('FROM', fromDate).replace('TO', toDate).replace('CLINICID', clinicId);
         return $http.get(url, {
           headers: headerService.getHeader()
         });

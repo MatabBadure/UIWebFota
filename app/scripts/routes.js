@@ -2261,7 +2261,6 @@ angular.module('hillromvestApp')
                 }
             })
 
-
             .state('clinicadminpatientProtocol', {
                 parent: 'clinicadminpatientdashboard',
                 url: '/{patientId}/protocol-device',
@@ -2422,58 +2421,6 @@ angular.module('hillromvestApp')
                 views: {
                     'content@': {
                         templateUrl: 'scripts/modules/admin/patient/directives/patient-info/device-protocol/add-protocol.html',
-                        controller: 'patientsController'
-                    }
-                },
-                resolve: {
-                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
-                        $translatePartialLoader.addPart('patient-user');
-                        return $translate.refresh();
-                    }],
-                    authorize: ['Auth',
-                        function(Auth) {
-                            return Auth.authorize(false);
-                        }
-                    ]
-                }
-            })
-
-            .state('updatedProtocolDetail', {
-                parent: 'patientProtocol',
-                url: '/{protocolId}/protocoldetail',
-                data: {
-                    roles: ['ADMIN'],
-                    pageTitle: 'patient.title'
-                },
-                views: {
-                    'content@': {
-                        templateUrl: 'scripts/modules/admin/patient/directives/patient-info/device-protocol/updatedprotocoldetail.html',
-                        controller: 'patientsController'
-                    }
-                },
-                resolve: {
-                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
-                        $translatePartialLoader.addPart('patient-user');
-                        return $translate.refresh();
-                    }],
-                    authorize: ['Auth',
-                        function(Auth) {
-                            return Auth.authorize(false);
-                        }
-                    ]
-                }
-            })
-
-            .state('updatedProtocolDetailRcadmin', {
-                parent: 'patientProtocolRcadmin',
-                url: '/{protocolId}/protocoldetail',
-                data: {
-                    roles: ['ACCT_SERVICES'],
-                    pageTitle: 'patient.title'
-                },
-                views: {
-                    'content@': {
-                        templateUrl: 'scripts/modules/rcadmin/patient/view/rcadminProtocolUpdate.html',
                         controller: 'patientsController'
                     }
                 },
@@ -4145,6 +4092,59 @@ angular.module('hillromvestApp')
                   ]
               }
             })
+
+			.state('clinicAdminUpdateProtocol', {
+                parent: 'clinicadminpatientProtocol',
+                url: '/{protocolId}/editProtocol',
+                data: {
+                    roles: ['CLINIC_ADMIN'],
+                    pageTitle: 'patient.title'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/clinicadmin/patient/views/update-protocol.html',
+                        controller: 'changePrescriptionController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+
+			.state('clinicadminGenerateProtocol', {
+                parent: 'clinicadminpatientProtocol',
+                url: '/{protocolId}/protocoldetail',
+                data: {
+                    roles: ['CLINIC_ADMIN'],
+                    pageTitle: 'patient.title'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/clinicadmin/patient/views/generate-protocol.html',
+                        controller: 'changePrescriptionController'
+                    }
+                },
+                resolve: {
+                	translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+
             .state('patientBenchmarking', {
                 parent: 'patient-dashboard',
                 url: '/p-benchmarking',
@@ -4159,11 +4159,61 @@ angular.module('hillromvestApp')
                     }
                 },
                 resolve: {
-                    //Lazy loading of controllers and external dependencies so boost intial load
-                    //time
                     loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
                         return $ocLazyLoad.load('PatientBenchmarkingModule');
                     }],
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+
+            .state('hcpUpdateProtocol', {
+                parent: 'hcppatientProtocol',
+                url: '/{protocolId}/editProtocol',
+                data: {
+                    roles: ['HCP'],
+                    pageTitle: 'patient.title'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/hcp/patient/views/update-protocol.html',
+                        controller: 'changePrescriptionController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+
+            .state('hcpGenerateProtocol', {
+                parent: 'hcppatientProtocol',
+                url: '/{protocolId}/protocoldetail',
+                data: {
+                    roles: ['HCP'],
+                    pageTitle: 'patient.title'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/hcp/patient/views/generate-protocol.html',
+                        controller: 'changePrescriptionController'
+                    }
+                },
+                resolve: {
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('patient-user');
                         return $translate.refresh();
