@@ -153,6 +153,12 @@
 	.survey_tab_modal > .modal__header{
 		padding: 10px 10px!important;
 	}
+	.hide-tab{
+		display:none !important;
+	}
+	.show-tab{
+		display:block !important;
+	}
 
 }
 
@@ -287,11 +293,12 @@
 	.margin-tp19{
 		margin-top:19px;
 	}
-	.flex1{
-    height:auto;
-    display: flex;
-    flex-flow: row column;
-}
+	.hide-tab{
+		display:none !important;
+	}
+	.show-tab{
+		display:block !important;
+	}
 }
 @media screen and (min-width : 1024px){
 	.login{
