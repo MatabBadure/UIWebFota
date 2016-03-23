@@ -14,7 +14,7 @@
 
   <div class="dashboard dashboard--content dashboard_mob ">
     <div class="dashboard__manage-view  pull-left-mob">
-      <div class="dashboard__manage-view--header">
+      <div class="dashboard__manage-view--header col-md-16 col-sm-16">
           <div class="col-md-3 col-sm-3 header--type text-align-left">
             <span translate="patient.protocol-caption.type"></span>
           </div>
@@ -38,12 +38,12 @@
 
 
 <div class="col-md-16 protocol_list_container" ng-class="{'no_border' : !protocols}">
-  <div class="col-md-3 ">
+  <div class="col-md-3">
     <div class="col-md-16 protocol-list__treatment-day protocol-list no_border text-align-left" ng-repeat="protocol in protocols" ng-class="{'list-inactive':protocol.deleted, 'last' : $last}">
       <span class="protocol-list--value"> {{protocol.type}} {{protocol.treatmentLabel}}</span>
     </div>
   </div>
-  <div class="col-md-2 treatments_per_day_count col-md-offset-3">
+  <div class="col-md-2 treatments_per_day_count col-md-offset-2 text-right">
       <span class="v_middle">{{protocols[0].treatmentsPerDay}}</span>
   </div>
   <div class="col-md-9 col-md-offset-2">
@@ -51,14 +51,14 @@
       <!-- <div class="col-md-3 protocol-list__treatment-day">
         <span class="protocol-list--value"> {{protocol.treatmentsPerDay}}</span>
       </div> -->
-      <div class="col-md-5 protocol-list__strt-date">
+      <div class="col-md-6 protocol-list__strt-date">
         <span class="protocol-list--value"> {{protocol.minMinutesPerTreatment}}</span>      
       </div>
-      <div class="col-md-5 protocol-list__end-date">
+      <div class="col-md-6 protocol-list__end-date">
         <span ng-if="protocol.type === 'Custom'" class="protocol-list--value"> {{protocol.minFrequency}}</span>
         <span ng-if="protocol.type === 'Normal'" class="protocol-list--value"> {{protocol.minFrequency}}-{{protocol.maxFrequency}}</span>
       </div>
-      <div class="col-md-3 protocol-list__end-date">
+      <div class="col-md-3 protocol-list__end-date text-right">
         <span ng-if="protocol.type === 'Custom'" class="protocol-list--value"> {{protocol.minPressure}}</span>
         <span ng-if="protocol.type === 'Normal'" class="protocol-list--value"> {{protocol.minPressure}}-{{protocol.maxPressure}}</span>
       </div>
