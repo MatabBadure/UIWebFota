@@ -404,6 +404,7 @@ ul.logout-dropdown>li{
     width: 210px;
     padding: 0 5px;
     text-align:left;
+    position:relative;
 }
 .multiSelect > button:hover{
 	background: transparent;
@@ -415,6 +416,9 @@ ul.logout-dropdown>li{
 .multiSelect .caret{
 	display:none;
 }
+.custom_arrow > span > select{
+	position: relative;
+}
 .highcharts-tooltip {
   pointer-events: none !important;
   }
@@ -422,8 +426,8 @@ ul.logout-dropdown>li{
 @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {  
 	.multiSelect .caret{
 		display:block;
-		float:right;
-		position:relative;
-		top:4px;
+		right:10px;
+		position:absolute;
+		top:10px;
 	}
 }
