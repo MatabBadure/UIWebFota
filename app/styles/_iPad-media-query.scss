@@ -299,6 +299,12 @@
 	.show-tab{
 		display:block !important;
 	}
+	.patient-user__navbar ul > li > a.active{
+		padding-bottom:28px !important;
+	}
+	.patient-user__navbar ul > li > a .icons{
+		left:8px !important
+	}
 }
 @media screen and (min-width : 1024px){
 	.login{
