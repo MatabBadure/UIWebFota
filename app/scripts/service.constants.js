@@ -154,7 +154,18 @@ angular.module('hillromvestApp').constant('pdfServiceConstants', {
         loginanalytic: "Login Analytic",
         hyphen: " - ",
         dateRangeOfReportLabel: "Date Range Of Report",
-        survey: "Survey"
+        survey: "Survey",
+        benchmarking:"Benchmarking",
+        complianceStatistics: "Compliance Statistics",
+        hmrStatistics: "HMR Statistics",
+        survey: "Survey",
+        cumulativeStatistics: "Cumulative Statistics",
+        treatmentsStatistics: "Treatments Statistics",
+        surveyForFiveDays: "Survey For 5 Days",
+        surveyForThirtyDays: "Survey For 30 Days",
+        surveyForNinetyDays: "Survey For Ninety Days",
+        patientbenchmarkingStatistcs: " My Average Adherence Score Vs. Clinic Average Adherence Score",
+        patientBMPageHeader : "Visi-View Respiratory Care"
     },
     style:{
         font:{

@@ -208,13 +208,14 @@
 		li{
 			a{
 				padding: 2px 0px;
-				color: $gray-light;
+				color: $silver-approx;
 				margin: 10px 0px 0px 20px;
 				border-radius: 0px;
 				border-bottom: solid 2px #fff;
 				font-size: 14px;
 				&:hover{
 					background-color: transparent;
+					color:$seashell;
 				}
 				&:focus{
 					background-color: transparent;

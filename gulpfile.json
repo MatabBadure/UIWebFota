@@ -5,6 +5,7 @@
             "app/bower_components/angular-loading-bar/build/loading-bar.css",
             "app/bower_components/angular-toastr/dist/angular-toastr.css",
             "app/bower_components/bootstrap-daterangepicker/daterangepicker-bs3.css",
+            "app/bower_components/isteven-angular-multiselect/isteven-multi-select.css",
             "app/bower_components/nvd3/src/nv.d3.css",
             "app/build/css/styles.css"
         ],
@@ -46,6 +47,7 @@
             "app/bower_components/angular-loading-bar/build/loading-bar.js",
             "app/bower_components/angular-validation-match/dist/angular-validation-match.js",
             "app/bower_components/angular-bootstrap/ui-bootstrap-tpls.js",
+            "app/bower_components/isteven-angular-multiselect/isteven-multi-select.js",
             "app/bower_components/spin.js/spin.js",
             "app/bower_components/angular-spinner/angular-spinner.js",
             "app/bower_components/angular-loading-spinner/angular-loading-spinner.js",            
@@ -158,7 +160,11 @@
             "app/scripts/components/util/exportutil.service.js",
             "app/scripts/components/captcha/captcha.js",
             "app/scripts/modules/common/console/loginanalytics/services/loginanalytics.service.js",
-            "app/scripts/modules/patient/survey/services/patientSurvey.service.js"
+            "app/scripts/modules/patient/survey/services/patientSurvey.service.js",
+            "app/scripts/modules/common/console/benchmarking/controllers/benchmarking.controller.js",
+            "app/scripts/modules/common/console/benchmarking/services/benchmarking.service.js",
+            "app/scripts/modules/patient/profile/controllers/patientbenchmarking.controller.js",
+            "app/scripts/modules/common/clinicadmin-hcp/change-prescription/controllers/changeprescription.controller.js"
         ],
         "scripts_min_path":[
             "app/bower_components/canvg-gabelerner/rgbcolor.min.js",
@@ -191,6 +197,7 @@
             "app/bower_components/angular-loading-bar/build/loading-bar.min.js",
             "app/bower_components/angular-validation-match/dist/angular-validation-match.min.js",
             "app/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js",
+            "app/bower_components/isteven-angular-multiselect/isteven-multi-select.min.js",
             "app/bower_components/spin.js/spin.min.js",
             "app/bower_components/angular-spinner/angular-spinner.min.js",
             "app/bower_components/angular-loading-spinner/angular-loading-spinner.min.js",            
@@ -303,7 +310,11 @@
             "app/scripts/components/util/exportutil.service.min.js",
             "app/scripts/components/captcha/captcha.min.js",
             "app/scripts/modules/common/console/loginanalytics/services/loginanalytics.service.min.js",
-            "app/scripts/modules/patient/survey/services/patientSurvey.service.min.js"
+            "app/scripts/modules/patient/survey/services/patientSurvey.service.min.js",
+            "app/scripts/modules/common/console/benchmarking/controllers/benchmarking.controller.min.js",
+            "app/scripts/modules/common/console/benchmarking/services/benchmarking.service.min.js",
+            "app/scripts/modules/patient/profile/controllers/patientbenchmarking.controller.min.js",
+            "app/scripts/modules/common/clinicadmin-hcp/change-prescription/controllers/changeprescription.controller.min.js"
         ],
         "clean": [
             "app/build/",

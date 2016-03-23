@@ -1,7 +1,7 @@
 'use strict';
 angular.module('hillromvestApp')
-.controller('surveyReportController',['$scope', '$state', 'patientsurveyService', 'dateService', '$timeout', 'notyService', 'exportutilService', 'pdfServiceConstants',
-	function($scope, $state, patientsurveyService, dateService, $timeout, notyService, exportutilService, pdfServiceConstants) {
+.controller('surveyReportController',['$scope', '$state', 'patientsurveyService', 'dateService', '$timeout', 'notyService', 'exportutilService', 'pdfServiceConstants', 'surveyGraphConstants',
+	function($scope, $state, patientsurveyService, dateService, $timeout, notyService, exportutilService, pdfServiceConstants, surveyGraphConstants) {
 		
 		$scope.calculateDateFromPicker = function(picker) {
 	    $scope.fromTimeStamp = new Date(picker.startDate._d).getTime();	      
@@ -91,6 +91,7 @@ angular.module('hillromvestApp')
 		$scope.showComments = function(survey, index){
 			if(survey.noCount !== 0 || index === 6){
 				$scope.selectedSurvey = survey;
+				$scope.selectedSurvey.quesIndex = index;
 				$scope.surveyComments = [];
 				patientsurveyService.getSurveyComments(survey.id,  $scope.serverFromDate, $scope.serverToDate).then(function(response){
 					$scope.showCommentModal = true;
@@ -113,7 +114,31 @@ angular.module('hillromvestApp')
 				$scope.graphSurvey = response.data;
 				$scope.yMax = 1;
 				angular.forEach($scope.graphSurvey.series, function(series, key) {
-					angular.forEach(series.data, function(data, index) {
+					if(series.name.toLowerCase() === surveyGraphConstants.legends.YES){
+				  		$scope.graphSurvey.series[key].color = surveyGraphConstants.surveycolor.YES;
+				  	}
+				  	if(series.name.toLowerCase() === surveyGraphConstants.legends.NO){
+				  		$scope.graphSurvey.series[key].color = surveyGraphConstants.surveycolor.NO;
+				  	}
+				angular.forEach(series.data, function(data, index) {
+					if(series.name.toLowerCase() === surveyGraphConstants.legends.STRONGLYDISAGREE){
+				  		$scope.graphSurvey.series[key].color = surveyGraphConstants.surveycolor.strongly_disagree;
+				  	}
+				  	if(series.name.toLowerCase() === surveyGraphConstants.legends.SOMEWHATDISAGREE){
+				  		$scope.graphSurvey.series[key].color = surveyGraphConstants.surveycolor.somewhat_disagree;
+				  	}
+					if(series.name.toLowerCase() === surveyGraphConstants.legends.NEUTRAL){
+				  		$scope.graphSurvey.series[key].color = surveyGraphConstants.surveycolor.neutral;
+				  	}
+				  	if(series.name.toLowerCase() === surveyGraphConstants.legends.SOMEWHATAGREE){
+				  		$scope.graphSurvey.series[key].color = surveyGraphConstants.surveycolor.somewhat_agree;
+				  	}
+					if(series.name.toLowerCase() === surveyGraphConstants.legends.STRONGLYAGREE){
+				  		$scope.graphSurvey.series[key].color = surveyGraphConstants.surveycolor.strongly_agree;
+				  	}
+				  	if(series.name.toLowerCase() === surveyGraphConstants.legends.UNABLETOASSESS){
+				  		$scope.graphSurvey.series[key].color = surveyGraphConstants.surveycolor.unable_to_assess;
+				  	}
 						$scope.yMax = ($scope.yMax === 1 && $scope.graphSurvey.series[key].data[index].y === 0) ? 1 : null;
 					});
 				});
@@ -231,7 +256,8 @@ angular.module('hillromvestApp')
 		};
 
 		$scope.exportPDF = function(){
-			exportutilService.exportSurveyAsPDF('surveyGraph', 'surveyCanvas', $scope.fromDate, $scope.toDate, $scope.graphSurvey.surveyQuestions, pdfServiceConstants.text.survey);
+			var surveyHeaderText = ($scope.surveyType === 2 ? pdfServiceConstants.text.surveyForThirtyDays : ($scope.surveyType === 3 ? pdfServiceConstants.text.surveyForNinetyDays : pdfServiceConstants.text.surveyForFiveDays) );			
+			exportutilService.exportSurveyAsPDF('surveyGraph', 'surveyCanvas', $scope.fromDate, $scope.toDate, $scope.graphSurvey.surveyQuestions, surveyHeaderText);
 		};
 
 		$scope.init();

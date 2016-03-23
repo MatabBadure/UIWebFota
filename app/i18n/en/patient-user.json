@@ -10,7 +10,8 @@
       "my-dashboard": "HillRom | My Dashboard",
       "caregivers": "HillRom | Caregivers",
       "clinics-hcps": "HillRom | Clinics and HCPs",
-      "add-caregiver": "HillRom | Add Caregiver"
+      "add-caregiver": "HillRom | Add Caregiver",
+      "patient-benchmarking": "Hillrom | Benchmarking"
     },
     "home": {
         "title": "Patient"
@@ -175,8 +176,8 @@
       "message": "If you delete the protocol, you will no longer be able to view the information. Are you sure to delete?"
     },
     "update-protocol":{
-      "warning": "Patient Care Plan - Protocol",
-      "message": "You have made changes/updates for Protocol. Are you sure to make updates?"
+      "warning": "Protocol Update",
+      "message": "Do you want to make updates in the Protocol?"
     },
     "update-device":{
       "warning": "Patient Device - Update",
@@ -222,7 +223,8 @@
         "caregiver": "Caregiver",
         "device-protocol": "Care Plan and Device",
         "clinic-hcp": "Clinic and HCP",
-        "patient-demographics": "Patient Demographics"
+        "patient-demographics": "Patient Demographics",
+        "patient-benchmarking": "Benchmarking"
       }
     },
     "errMSG":{
@@ -413,5 +415,16 @@
       },
       "clinic-title" : "Clinic"
     }
+  },
+  "patient-benchmarking":{
+    "week": "Week",
+    "day": "Day",
+    "year": "Year",
+    "month": "Month",
+    "benchmark": "Benchmark",
+    "parameter": "Parameter",
+    "compareWith": "Compare with",
+    "average" :"Average",
+    "adherenceScore": "Adherence Score"
   }
 }
