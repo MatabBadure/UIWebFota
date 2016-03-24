@@ -614,7 +614,9 @@
 .graphview_text_color{
 	color: $blue-btn;
 }
-
+.patient_padding li a{
+	padding-top:30px!important
+}
 #containerDay > .highcharts-container > .highcharts-tooltip > span{
 	left: -4px !important;
 }
