@@ -159,6 +159,9 @@
 	.show-tab{
 		display:block !important;
 	}
+	.height400{
+		height:auto;
+	}
 
 }
 
@@ -311,6 +314,9 @@
 	  display: -webkit-flex;
 	  flex-flow: -webkit-row column;
 	}
+	.height400{
+		height:auto;
+	}
 }
 @media screen and (min-width : 1024px){
 	.login{
@@ -332,6 +338,9 @@
 	}
 	.margin-left-10-reset{
 		margin-left:0px;
+	}
+	.height400{
+		height:auto;
 	}
 } 
 
