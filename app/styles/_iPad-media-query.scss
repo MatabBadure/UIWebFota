@@ -311,6 +311,9 @@
 	  display: -webkit-flex;
 	  flex-flow: -webkit-row column;
 	}
+	.height400{
+		height:auto;
+	}
 }
 @media screen and (min-width : 1024px){
 	.login{
