@@ -106,7 +106,7 @@
     <div class="bar_graph_header">
       <div class="col-md-3 benchmarking__form__input reset-padding selected-box-container" >
 		<div class="custom-dropdown">
-		      <select ng-change="onYaxisChange()" ng-model="$parent.$parent.type"  ng-disabled="true">
+		      <select ng-change="onYaxisChange()" ng-model="$parent.$parent.type">
 			      <option value="adherenceScore" label="Adherence Score" ng-selected="true">Adherence Score</option>
 			      <option value="missedTherapy" label="Missed Therapy Days">Missed Therapy Days</option>
 			      <option value="HMRDeviation" label="HMR Deviation">HMR Deviation</option>
@@ -175,7 +175,14 @@
 				</ul>
 	 	  </div>
    	</div>
-   	<div class="pull-left margin-top font-size16 cyan-blue-light">{{benchmarkType}} <span ng-show="type === 'adherenceScore'">Adherence Score</span> for <span ng-show="xaxis === 'clinicSize'">Clinic Size</span><span ng-show="xaxis === 'ageGroup'">Age Group</span></div>
+
+   	<div class="pull-left margin-top font-size16 cyan-blue-light">{{benchmarkType}} 
+   		<span ng-show="type === 'adherenceScore'">Adherence Score</span>
+   		<span ng-show="type === 'missedTherapy'">Missed Therapy</span>
+   		<span ng-show="type === 'HMRDeviation'">HMR Deviation</span>
+   		<span ng-show="type === 'settingDeviation'">Setting Deviation</span>
+   		<span ng-show="type === 'HMRRunrate'">HMR Runrate</span>
+   		 for <span ng-show="xaxis === 'clinicSize'">Clinic Size</span><span ng-show="xaxis === 'ageGroup'">Age Group</span></div>
    	<div class="pull-right margin-top week_date_container">
 			<span ng-if="fromDate !== toDate">
 				<span class="date">{{fromDate}}</span> - <span class="date">{{toDate}}</span>
@@ -191,7 +198,7 @@
 	<div class="col-md-16 dashboard__manage-view--pagination">
   <div class="btn_group patient_dashdoard_btns">
     <div dropdown="" class="pull-right left dropdown">
-      <button id="single-button" type="button" class="hillrom-btn btn-submit margin0 float-right ng-scope dropdown-toggle"  ng-click="exportPDF()">Export in PDF</button>
+      <button id="single-button" type="button" class="hillrom-btn btn-submit margin0 float-right ng-scope dropdown-toggle"  ng-click="exportPDF()">Download As PDF</button>
     </div>
   </div>
 </div>
