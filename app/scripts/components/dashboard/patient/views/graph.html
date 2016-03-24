@@ -332,10 +332,10 @@
   </div>
 </div>
 
-<div ng-if="surveyConfirmModal" id="survey_confirm_modal" class="modal survey_tab_modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true">
+<div ng-if="surveyConfirmModal" id="survey_confirm_modal" class="modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true">
   <div class="modal__dialog">
     <div class="modal__content">
-      <header class="modal__header">
+      <header class="modal__header survey_tab_modal">
         <button type="button" class="modal__close" data-dismiss="modal" ng-click="$parent.surveyConfirmModal = false">&times;</button>
         <p ng-if="surveyId === 1" translate="survey.5-days-header"> </p> 
         <p ng-if="surveyId === 2" translate="survey.30-days-header"> </p> 

@@ -150,7 +150,7 @@
 	.margin-tp19{
 		margin-top:19px;
 	}
-	.survey_tab_modal > .modal__header{
+	.survey_tab_modal{
 		padding: 10px 10px!important;
 	}
 	.hide-tab{
@@ -302,7 +302,7 @@
 	.show-tab{
 		display:block !important;
 	}
-	.survey_tab_modal > .modal__header{
+	.survey_tab_modal{
 		padding: 10px 10px!important;
 	}
 	
@@ -316,6 +316,9 @@
 	}
 	.height400{
 		height:auto;
+	}
+	.patient_padding li a{
+		padding-top:30px!important
 	}
 }
 @media screen and (min-width : 1024px){
