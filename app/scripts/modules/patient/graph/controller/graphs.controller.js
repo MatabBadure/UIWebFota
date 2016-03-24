@@ -1575,6 +1575,7 @@ angular.module('hillromvestApp')
       var toDate = dateService.convertDateToYyyyMmDdFormat(new Date().getTime());
       patientDashBoardService.getAdeherenceData(patientId, fromDate, toDate).then(function(response){
         $scope.adherenceScores = response.data;
+        // $scope.adherenceScores = adherenceScores;
       }).catch(function(response){
         notyService.showError(response);
       });
@@ -1633,6 +1634,15 @@ angular.module('hillromvestApp')
     $scope.removeAllCharts = function(){
       $("#HMRGraph").empty();
       $("#synchronizedChart").empty();      
+    };
+
+    $scope.viewProtocol = function(protcols){
+      $scope.protocols = protcols;
+      $scope.showProtocolModal = true;
+    };
+
+    $scope.closeProtocolModal = function(){
+      $scope.showProtocolModal = false;
     };
     
 }]);
