@@ -350,7 +350,7 @@
   </div>
 </div>
 
-<div ng-if="surveyConfirmModal" id="survey_confirm_modal" class="modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true">
+<div ng-if="surveyConfirmModal" id="survey_confirm_modal" class="modal survey_tab_modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true">
   <div class="modal__dialog">
     <div class="modal__content">
       <header class="modal__header">
@@ -361,7 +361,7 @@
       </header>
       <div class="modal__body">
         <div class="modal--message">Please complete the following survey. Press the Start button below to begin the survey.</div>
-       <!--  <div class="modal--message">Press Start button below and start the Survey</div> -->
+    
         <div class="row modal--custom-btn">
           <buton class="hillrom-btn btn-submit float-right" ng-click="$parent.surveyConfirmModal = false;takeSurveyNow(); ">Start</buton>
           <buton class="hillrom-btn btn-submit float-right" data-dismiss="modal" ng-click="$parent.surveyConfirmModal = false">Later</buton>
