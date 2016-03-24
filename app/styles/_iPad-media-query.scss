@@ -159,6 +159,9 @@
 	.show-tab{
 		display:block !important;
 	}
+	.height400{
+		height:auto;
+	}
 
 }
 
@@ -299,11 +302,20 @@
 	.show-tab{
 		display:block !important;
 	}
-	.patient-user__navbar ul > li > a.active{
-		padding-bottom:28px !important;
+	.survey_tab_modal > .modal__header{
+		padding: 10px 10px!important;
 	}
+	
 	.patient-user__navbar ul > li > a .icons{
 		left:8px !important
+	}
+	.flex1 {
+	  height: auto;
+	  display: -webkit-flex;
+	  flex-flow: -webkit-row column;
+	}
+	.height400{
+		height:auto;
 	}
 }
 @media screen and (min-width : 1024px){
@@ -326,6 +338,9 @@
 	}
 	.margin-left-10-reset{
 		margin-left:0px;
+	}
+	.height400{
+		height:auto;
 	}
 } 
 
