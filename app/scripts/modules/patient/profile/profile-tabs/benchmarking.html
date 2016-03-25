@@ -10,14 +10,14 @@
 		</div>
 		<loading loaded="isGraphLoaded"></loading>
 		<div class="col-md-16 reset-padding cyan-blue-light margin-top">
-			<div class="col-md-3 benchmarking__form__input reset-padding selected-box-container" >
+			<div class="col-md-3 benchmarking__form__input reset-padding selected-box-container">
 				<span>Benchmark</span>
 			</div>
 		
-			<div class="col-md-3  benchmarking__form__input reset-padding selected-box-container" >
+			<div class="col-md-3  benchmarking__form__input reset-padding selected-box-container margin-lt">
 				<span>Parameter</span>
 			</div>
-			<div class="col-md-1  benchmarking__form__input reset-padding selected-box-container" >
+			<div class="col-md-1  benchmarking__form__input reset-padding selected-box-container">
 				<span></span>
 			</div>
 			<div class="col-md-3 benchmarking__form__input reset-padding selected-box-container" ng-show="clinics && clinics.length > 0">
@@ -27,29 +27,23 @@
 		<div class="col-md-16 padding0 reset-padding" ng-class="{'pointer-no-event': !isGraphLoaded, 'pointer-fill-event': isGraphLoaded}">
 		<div class="bar_graph_header"> 
 	
-			 <div class="col-md-3 benchmarking__form__input reset-padding selected-box-container" >
+			 <div class="col-md-3 benchmarking__form__input reset-padding selected-box-container">
 				<div class="col-md-16 reset-padding">
-				 <!-- <select ng-change="onYaxisChange()" ng-model="$parent.$parent.type" class="light-grey" ng-disabled="true">
-					<option value="adherenceScore"  ng-selected="true" translate="patient-benchmarking.average"></option>					
-				 </select> -->
 				 <input type="text" value="Average" placeholder="Average" class="light-grey col-md-15 height30" ng-disabled="true"/>
 				</div>
 	  		</div>
 		
-			<div class="col-md-3 benchmarking__form__input reset-padding selected-box-container" >
-				<div class="light-grey col-md-16 reset-padding">
-				<!-- 	<select ng-change="onXaxisChange()" ng-model="$parent.$parent.xaxis" class="light-grey" ng-disabled="true">
-						<option value="ageGroup" ng-selected="true" translate="patient-benchmarking.adherenceScore"></option>						
-					</select>  -->      
+			<div class="col-md-3 benchmarking__form__input reset-padding selected-box-container margin-lt">
+				<div class="col-md-16 reset-padding">
 					 <input type="text" value="Adherence Score" placeholder="Adherence Score" class="light-grey col-md-15 height30" ng-disabled="true"/>     
 				</div> 
 			</div>
-			<div class="col-md-1 vertical_align_center text-center survey_grey_color benchmarking__form__input reset-padding selected-box-container" ng-show="clinics && clinics.length > 0">
+			<div class="col-md-1 vertical_align_center text-center benchmarking__form__input reset-padding selected-box-container" ng-show="clinics && clinics.length > 0">
 				<span>Vs.</span>
 			</div>
 			<div class="col-md-3 benchmarking__form__input reset-padding selected-box-container" ng-show="clinics && clinics.length === 1">
-				<div class="light-grey col-md-16 reset-padding">
-				 	<input type="text" value="{{clinicsDetails.selectedClinic.name}}" placeholder="{{clinicsDetails.selectedClinic.name}}" class="light-grey col-md-15 height30"/>								    
+				<div class="col-md-16 reset-padding">
+				 	<input type="text" value="{{clinicsDetails.selectedClinic.name}}" placeholder="{{clinicsDetails.selectedClinic.name}}" class="height30"/>								    
 				</div> 
 			</div>
 			<div class="col-md-3 benchmarking__form__input reset-padding selected-box-container" ng-show="clinics && clinics.length > 1">
