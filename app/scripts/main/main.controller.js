@@ -279,13 +279,19 @@ angular.module('hillromvestApp')
 	    return (x*$scope.factorial(x-1));
 		};
 
-		$scope.console = function(){
+	$scope.console = function(){
 	    if($rootScope.userRole === "ADMIN"){
 	      $state.go('adminSurveyReport');
 	    }else if($rootScope.userRole === loginConstants.role.acctservices){
 	      $state.go('rcddminSurveyReport');
 	    } else if($rootScope.userRole === loginConstants.role.associates){
 	      $state.go('associateSurveyReport');
+	    }
+	    else if($rootScope.userRole === loginConstants.role.hcp ){
+	      $state.go('hcpBenchmarking');
+	    }
+	    else if($rootScope.userRole === loginConstants.role.clinicadmin){
+	      $state.go('clinicAdminBenchmarking');
 	    }
     };
       	
