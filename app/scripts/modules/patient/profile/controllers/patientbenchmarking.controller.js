@@ -89,7 +89,8 @@ angular.module('hillromvestApp')
     Array.max = function( array ){
 	    return Math.max.apply( Math, array );
 	};
-    $scope.drawBenchmarkingChart = function(){    	
+    $scope.drawBenchmarkingChart = function(){  
+    $scope.graphTitle = benchmarkingConstants.string.graphTitleMyAvgAdherenceScore + benchmarkingConstants.string.graphTitleVs + $scope.clinicsDetails.selectedClinic.name + benchmarkingConstants.string.grapTitleClinicAdherenceScore;  	
 		Highcharts.setOptions({
 			global: {
 				useUTC: false
@@ -107,7 +108,11 @@ angular.module('hillromvestApp')
                 backgroundColor:  "#e6f1f4"
             },
             title: {
-                text: ''
+                text: $scope.graphTitle,
+                style:{
+                	color: "#646568",
+                	fontWeight: 'bold'
+                }
             },
             xAxis: [{
                 categories: $scope.benchmarkingData.xAxis.categories,
@@ -279,7 +284,7 @@ angular.module('hillromvestApp')
   	};
 
   	$scope.exportPatientBMPDF = function(){		
-  		exportutilService.downloadPatientBMAsPDF("patientBenchmarkingGraph", "patientBenchmarkCanvas",$scope.fromDate, $scope.toDate, benchmarkingConstants.string.graphTitleMyAvgAdherenceScore + benchmarkingConstants.string.graphTitleVs + benchmarkingConstants.string.grapTitleClinic + benchmarkingConstants.string.grapTitleClinicAdherenceScore);			
+  		exportutilService.downloadPatientBMAsPDF("patientBenchmarkingGraph", "patientBenchmarkCanvas",$scope.fromDate, $scope.toDate);			
   	};
 
   	$scope.init= function(){

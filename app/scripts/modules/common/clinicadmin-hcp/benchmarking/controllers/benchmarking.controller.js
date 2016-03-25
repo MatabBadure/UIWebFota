@@ -102,7 +102,8 @@ angular.module('hillromvestApp')
   Array.max = function( array ){
     return Math.max.apply( Math, array );
   };
-  $scope.drawBenchmarkingChart = function(){    	
+  $scope.drawBenchmarkingChart = function(){  
+  $scope.graphTitle = benchmarkingConstants.string.graphTitleClinicAvg + $scope.parameters.selectedParam.name + benchmarkingConstants.string.graphTitleVs + benchmarkingConstants.string.grapTitleClinic + benchmarkingConstants.string.graphTitleAverage + $scope.parameters.selectedParam.name;  	
     Highcharts.setOptions({
       global: {
         useUTC: false
@@ -120,7 +121,11 @@ angular.module('hillromvestApp')
         backgroundColor:  "#e6f1f4"
       },
       title: {
-        text: ''
+        text: $scope.graphTitle,
+        style:{
+          color: "#646568",
+          fontWeight: 'bold'
+        }
       },
       xAxis: [{
         categories: $scope.benchmarkingData.xAxis.categories,
@@ -285,7 +290,7 @@ angular.module('hillromvestApp')
   };
 
   $scope.exportPatientBMPDF = function(){		
-    exportutilService.downloadPatientBMAsPDF("hcpcabenchmarkingGraph", "hcpcabenchmarkingCanvas",$scope.fromDate, $scope.toDate, benchmarkingConstants.string.graphTitleClinicAvg + $scope.parameters.selectedParam.name + benchmarkingConstants.string.graphTitleVs + benchmarkingConstants.string.grapTitleClinic + benchmarkingConstants.string.graphTitleAverage + $scope.parameters.selectedParam.name);			
+    exportutilService.downloadPatientBMAsPDF("hcpcabenchmarkingGraph", "hcpcabenchmarkingCanvas",$scope.fromDate, $scope.toDate);			
   };
 
   $scope.initCABenchmarking = function(){
