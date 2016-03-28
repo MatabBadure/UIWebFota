@@ -233,7 +233,10 @@ angular.module('hillromvestApp').constant('hcpDashboardConstants', {
 		"grapTitleClinicAdherenceScore": " Average Adherence Score",
 		"grapTitleClinic": "Clinic",
 		"graphTitleClinicAvg":"Clinic Patients Average ",
-		"graphTitleAverage": "Average"
+		"graphTitleAverage": "Average",
+		"all": "All",
+		"stateParam": "&state=",
+		"cityParam": "&city="
 	}
 })
 
