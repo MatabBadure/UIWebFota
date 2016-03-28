@@ -5,13 +5,18 @@
         <div class="col-md-5 col-sm-7 left_header_barchart padding0">
           <div class="row">
             <ul class="nav nav-pills">
-              <li><a href="" ng-click="" translate="" class="active">Parameter</a></li>
-              <!-- <li><a href="" ng-click="" translate="" >Clinic and Disease</a></li> -->
+              <li><a href="" ng-click="switchBenchmarking('adminBenchmarking')" translate="" ng-class="{ active : !isActive('benchmarking/clinicanddisease') } ">Parameter</a></li>
+              <li><a href="" ng-click="switchBenchmarking('adminClinicDiseaseBenchmarking')" translate="" ng-class="{ active : isActive('benchmarking/clinicanddisease')}">Clinic and Disease</a></li>
             </ul>
           </div>
         </div>
       </div>
     </div>
-    <ng-include src="'scripts/modules/common/console/benchmarking/views/parameter.html'"></ng-include>
+    <div ng-show="!isActive('benchmarking/clinicanddisease')">
+      <ng-include src="'scripts/modules/common/console/benchmarking/views/parameter.html'"></ng-include>  
+    </div>
+    <div ng-show="isActive('benchmarking/clinicanddisease')">
+      <ng-include src="'scripts/modules/common/console/benchmarking/views/clinicanddisease.html'"></ng-include>  
+    </div>
   </div>
 </div>

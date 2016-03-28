@@ -1,7 +1,7 @@
 'use strict';
 angular.module('hillromvestApp')
-.controller('benchmarkingController', ['$scope', 'addressService', 'notyService', '$rootScope', 'benchmarkingService', 'dateService', 'exportutilService', 'pdfServiceConstants',
-	function($scope, addressService, notyService, $rootScope, benchmarkingService, dateService, exportutilService, pdfServiceConstants) {
+.controller('benchmarkingController', ['$scope', 'addressService', 'notyService', '$rootScope', 'benchmarkingService', 'dateService', 'exportutilService', 'pdfServiceConstants', '$state',
+	function($scope, addressService, notyService, $rootScope, benchmarkingService, dateService, exportutilService, pdfServiceConstants, $state) {
 
 		$scope.calculateDateFromPicker = function(picker) {
 	    $scope.fromTimeStamp = new Date(picker.startDate._d).getTime();	      
@@ -334,6 +334,12 @@ angular.module('hillromvestApp')
 
 		$scope.exportPDF = function(){
 			exportutilService.exportBenchmarkPDF('benchmarkingGraph', 'benchmarkCanvas', $scope.fromDate, $scope.toDate, pdfServiceConstants.text.benchmarking);
+		};
+
+
+		$scope.switchBenchmarking = function(state){
+			console.log('Switch Benchmarking....!', state);
+			$state.go(state);
 		};
 
 	}]);

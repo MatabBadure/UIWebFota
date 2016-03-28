@@ -4042,6 +4042,34 @@ angular.module('hillromvestApp')
                   ]
               }
             })
+            .state('adminClinicDiseaseBenchmarking', {
+              parent: 'adminBenchmarking',
+              url: '/clinicanddisease',
+              data: {
+                  roles: ['ADMIN'],
+                  pageTitle: 'console.page-title.benchmarking'
+              },
+              views: {
+                  'content@': {
+                      templateUrl: 'scripts/modules/common/console/benchmarking/views/admin/clinicanddisease.html',
+                      controller: 'benchmarkingController'
+                  }
+              },
+              resolve: {
+                loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('BenchmarkingModule');
+                    }],
+                  translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                      $translatePartialLoader.addPart('console');
+                      return $translate.refresh();
+                  }],
+                  authorize: ['Auth',
+                      function(Auth) {
+                          return Auth.authorize(false);
+                      }
+                  ]
+              }
+            })
             .state('rcadminBenchmarking', {
               parent: 'console',
               url: '/rcadmin/benchmarking',
