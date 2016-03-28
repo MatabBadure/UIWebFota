@@ -5,9 +5,9 @@ angular.module('hillromvestApp')
 	var chart;
 	$scope.noDataAvailable = false;
 	function getDaysIntervalInChart(noOfDataPoints){
-      var pInterval = 11;
-      var sInterval = 12;
-      var remainder  = 5;
+      var pInterval = 8;
+      var sInterval = 9;
+      var remainder  = 4;
       return ( (parseInt(noOfDataPoints/pInterval) > 0) && noOfDataPoints%pInterval > remainder) ? parseInt(noOfDataPoints/sInterval) : ((parseInt(noOfDataPoints/pInterval) > 0)? parseInt(noOfDataPoints/pInterval): 1) ; 
     };
 	$scope.init = function() {
@@ -598,9 +598,8 @@ angular.module('hillromvestApp')
     $scope.drawDualAxisChart = function(divId, chartData){
     	divId = (divId)? divId : "treatmentGraph";
 		    var chart = Highcharts.charts[document.getElementById(divId).getAttribute("data-highcharts-chart")]; // get old chart
-		    var noOfDataPoints = (chartData && chartData.xAxis.categories)? chartData.xAxis.categories.length: 0;
-          	var daysInterval = getDaysIntervalInChart(noOfDataPoints);
-
+		    var noOfDataPoints = (chartData && chartData.xAxis.categories)? chartData.xAxis.categories.length : 0;		    
+          	var daysInterval = getDaysIntervalInChart(noOfDataPoints);          
 			// set visibility to be the same as previous chart:
 		  	if(chart) {
 			    Highcharts.each(chartData.series, function(series, index) {
