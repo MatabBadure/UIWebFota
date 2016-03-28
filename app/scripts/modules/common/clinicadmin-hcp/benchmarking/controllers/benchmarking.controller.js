@@ -250,8 +250,7 @@ angular.module('hillromvestApp')
 
   $scope.initBenchmarkingChart = function(){ 
     if($scope.clinicsDetails.selectedClinic){
-      var getbenchmarking = null;
-      console.log("to date : ",convertServerDateFormat($scope.toTimeStamp));
+      var getbenchmarking = null;     
       if($rootScope.userRole === loginConstants.role.hcp){
         getbenchmarking = UserService.getHCPBenchmarking(StorageService.get('logged').userId , $scope.parameterType, $scope.benchMarkType, convertServerDateFormat($scope.fromTimeStamp), convertServerDateFormat($scope.toTimeStamp), $scope.clinicsDetails.selectedClinic.id, $scope.geographyParam);
       }else if($rootScope.userRole === loginConstants.role.clinicadmin){
@@ -259,8 +258,7 @@ angular.module('hillromvestApp')
       }
 
       getbenchmarking.then(function(response){
-        if(response.data && response.data.series && response.data.series.length === 2){
-          var responseData = response.data; 
+        if(response.data && response.data.series && response.data.series.length === 2){          
           $scope.benchmarkingData = response.data;         
           setTimeout(function(){            
             $scope.drawBenchmarkingChart();   
