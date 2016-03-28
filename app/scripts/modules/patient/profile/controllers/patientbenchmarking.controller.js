@@ -76,7 +76,7 @@ angular.module('hillromvestApp')
     	$scope.durationRange = "Year";
     	$scope.calculateTimeDuration(365);
 		$scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
-		$scope.drawBenchmarkingChart();
+		$scope.initBenchmarkingChart();
     };
 
     $scope.customDateRangeView = function(){
@@ -89,7 +89,8 @@ angular.module('hillromvestApp')
     Array.max = function( array ){
 	    return Math.max.apply( Math, array );
 	};
-    $scope.drawBenchmarkingChart = function(){    	
+    $scope.drawBenchmarkingChart = function(){  
+    $scope.graphTitle = benchmarkingConstants.string.graphTitleMyAvgAdherenceScore + benchmarkingConstants.string.graphTitleVs + $scope.clinicsDetails.selectedClinic.name + benchmarkingConstants.string.grapTitleClinicAdherenceScore;  	
 		Highcharts.setOptions({
 			global: {
 				useUTC: false
@@ -107,19 +108,30 @@ angular.module('hillromvestApp')
                 backgroundColor:  "#e6f1f4"
             },
             title: {
-                text: ''
+                text: $scope.graphTitle,
+                style:{
+                	color: "#646568",
+                	fontWeight: 'bold'
+                }
             },
             xAxis: [{
                 categories: $scope.benchmarkingData.xAxis.categories,
                 reversed: false,
                 labels: {
                     step: 1
-                }                
+                },
+                title: {
+	                text: 'Age Group'
+	            }
+                               
             }, { // mirror axis on right side
                 opposite: true,
                 reversed: false,
                 categories: $scope.benchmarkingData.xAxis.categories,
-                linkedTo: 0
+                linkedTo: 0,
+                title: {
+	                text: 'Age Group'
+	            }
             }],
             yAxis: {            	
                 title: {
@@ -236,13 +248,14 @@ angular.module('hillromvestApp')
 		    				s.name = $scope.benchmarkingData.series[1].name; 
 		    				$scope.benchmarkingData.series[1] = s;
 		    			}
-					});    			
+					}); 
+					setTimeout(function(){            
+						$scope.drawBenchmarkingChart();   
+					}, 100);     			
 	    		}else{
 	    			plotNoDataAvailable();
 	    		}				
-	    		setTimeout(function(){            
-					$scope.drawBenchmarkingChart();   
-				}, 100);  
+	    		
 	    	}).catch(function(){
 				plotNoDataAvailable();
 			});	
@@ -271,7 +284,7 @@ angular.module('hillromvestApp')
   	};
 
   	$scope.exportPatientBMPDF = function(){		
-  		exportutilService.downloadPatientBMAsPDF("patientBenchmarkingGraph", "patientBenchmarkCanvas",$scope.fromDate, $scope.toDate, benchmarkingConstants.string.graphTitleMyAvgAdherenceScore + benchmarkingConstants.string.graphTitleVs + benchmarkingConstants.string.grapTitleClinic + benchmarkingConstants.string.grapTitleClinicAdherenceScore);			
+  		exportutilService.downloadPatientBMAsPDF("patientBenchmarkingGraph", "patientBenchmarkCanvas",$scope.fromDate, $scope.toDate);			
   	};
 
   	$scope.init= function(){

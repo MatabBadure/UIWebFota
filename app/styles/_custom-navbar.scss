@@ -381,18 +381,17 @@ ul.logout-dropdown>li{
 	height:30px;
 }
 
-.benchmarking__form__input select, .custom-textbox{
-	height: 30px;
+.benchmarking__form__input select, .custom-textbox, .benchmarking__form__input input[type="text"]{
+  height: 30px;
   width: 210px;
   font-weight: normal;
   color: #34455C;
-  border: 1px solid #aeb5be;
+  border: 1px solid #c1c1c1;
   background-color: inherit;
   -webkit-appearance: none;
   -moz-appearance: none;
   text-indent: 7px;
   border-radius:0;
-  color:#276092;
 }
 
  .multiSelect > button{
@@ -421,6 +420,12 @@ ul.logout-dropdown>li{
 }
 .text-right{
 	text-align:right!important;
+}
+.height400{
+	height:400px;
+}
+.margin-lt{
+	margin-left:4px;
 }
 .highcharts-tooltip {
   pointer-events: none !important;

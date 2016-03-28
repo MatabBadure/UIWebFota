@@ -172,7 +172,7 @@
 	<div class="col-md-16" style="margin-top: 30px;">
 		<div class="btn_group patient_dashdoard_btns" ng-class="{ 'btn_group patient_dashdoard_btns_compliance': complianceGraph, 'btn_group patient_dashdoard_btns': !complianceGraph}">
 			<div dropdown class="pull-right left">
-				<button id="single-button" type="button" class="hillrom-btn btn-submit margin0 float-right" ng-class="{ 'pointer-fill-event': (!noDataAvailable && isGraphLoaded) , 'pointer-no-event': (!isGraphLoaded || noDataAvailable) }" dropdown-toggle ng-disabled="disabled" translate="graph.download" >
+				<button id="single-button" type="button" class="hillrom-btn btn-submit float-right" ng-class="{ 'pointer-fill-event': (!noDataAvailable && isGraphLoaded) , 'pointer-no-event': (!isGraphLoaded || noDataAvailable) }" dropdown-toggle ng-disabled="disabled" translate="graph.download" >
 					<span class="caret"></span>
 				</button>
 				
@@ -186,7 +186,7 @@
 				</ul>
 
 			</div>
-			 <button class="hillrom-btn btn-submit margin0 float-right" ng-click="showAllNotes();" translate="graph.note"></button>
+			 <button class="hillrom-btn btn-submit float-right" ng-click="showAllNotes();" translate="graph.note"></button>
 
 
 		</div>
@@ -350,10 +350,10 @@
   </div>
 </div>
 
-<div ng-if="surveyConfirmModal" id="survey_confirm_modal" class="modal survey_tab_modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true">
+<div ng-if="surveyConfirmModal" id="survey_confirm_modal" class="modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true">
   <div class="modal__dialog">
     <div class="modal__content">
-      <header class="modal__header">
+      <header class="modal__header survey_tab_modal">
         <button type="button" class="modal__close" data-dismiss="modal" ng-click="$parent.surveyConfirmModal = false">&times;</button>
         <p ng-if="surveyId === 1" translate="survey.5-days-header"> </p> 
         <p ng-if="surveyId === 2" translate="survey.30-days-header"> </p> 

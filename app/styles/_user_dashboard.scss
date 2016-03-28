@@ -609,7 +609,7 @@
 	margin-left:25px;
 }
 .margin-left30{
-	margin-left: -30px!important;
+	margin-left: -60px!important;
 }
 .graphview_text_color{
 	color: $blue-btn;
@@ -664,6 +664,9 @@
 	max-height:400px;
 	height:auto;
 	overflow-y: auto!important;
+}
+.light_gray{
+	color: $bombay !important;
 }
 .dashboard__manage-view--pagination{
 	&.pagination_notes{

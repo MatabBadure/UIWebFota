@@ -1,7 +1,7 @@
 .dashboard {
 	// position: fixed;
 	background-color: $iceberg;
-	font-weight: bold;
+	//font-weight: bold;
 }
 
 .dashboard--content {
@@ -68,9 +68,7 @@ textarea {
   color: $regent-gray;
   font-weight: normal;
 }
-.light-grey{
-  color:#c1c1c1!important;
-}
+
 .dashboard__form--input input {
 	height: 30px;
 	//width: 270px;
