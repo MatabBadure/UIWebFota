@@ -1,11 +1,12 @@
 'use strict';
 
 angular.module('hillromvestApp')
-.controller('hcpCAdminBenchmarkingController', ['$scope', '$state', '$rootScope', 'patientService', 'UserService', 'StorageService', 'dateService', 'benchmarkingConstants', 'patientGraphsConstants', 'exportutilService', 'clinicadminService', 'DoctorService',
-  function ($scope, $state, $rootScope, patientService, UserService, StorageService, dateService, benchmarkingConstants, patientGraphsConstants, exportutilService, clinicadminService, DoctorService) {  	
+.controller('hcpCAdminBenchmarkingController', ['$scope', '$state', '$rootScope', 'patientService', 'UserService', 'StorageService', 'dateService', 'benchmarkingConstants', 'patientGraphsConstants', 'exportutilService', 'clinicadminService', 'DoctorService', 'loginConstants', 'clinicService',
+  function ($scope, $state, $rootScope, patientService, UserService, StorageService, dateService, benchmarkingConstants, patientGraphsConstants, exportutilService, clinicadminService, DoctorService, loginConstants, clinicService) {  	
 	$scope.parameterType = benchmarkingConstants.string.adherenceScore;
 	$scope.benchMarkType = benchmarkingConstants.string.average;
 	$scope.isGraphLoaded = false;
+  $scope.geographyParam = benchmarkingConstants.string.stateParam + benchmarkingConstants.string.all;
 
   function resetBenchmarkParameters(){
     $scope.benchmarkingParam = benchmarkingParams;
@@ -121,7 +122,7 @@ angular.module('hillromvestApp')
         backgroundColor:  "#e6f1f4"
       },
       title: {
-        text: $scope.graphTitle,
+        text: $scope.benchmarkingData.series[0].name + benchmarkingConstants.string.graphTitleVs + $scope.benchmarkingData.series[1].name,
         style:{
           color: "#646568",
           fontWeight: 'bold'
@@ -240,53 +241,57 @@ angular.module('hillromvestApp')
     // weekView is being called in order to reset the previously selected date range.
     // in order to retain the prev selected data range ng-chage invoke initBenchmarkingChart instead of weekView
 
-    resetBenchmarkParameters();
-    resetBenchmarkGeoLocation();
-    $scope.clinicsDetails.selectedClinic = clinicSelected;      
-    $scope.weekView();
+    //resetBenchmarkParameters();
+    //resetBenchmarkGeoLocation();    
+    //$scope.weekView();
+    $scope.clinicsDetails.selectedClinic = clinicSelected;    
+    $scope.redrawBenchmarkingChart();  
   };
 
   $scope.initBenchmarkingChart = function(){ 
     if($scope.clinicsDetails.selectedClinic){
-      //need to add params properly
-      /*patientService.getPatientBenchmarking(StorageService.get('logged').userId , $scope.parameterType, $scope.benchMarkType, convertServerDateFormat($scope.fromTimeStamp), convertServerDateFormat($scope.toTimeStamp), $scope.clinicsDetails.selectedClinic.id).then(function(response){
-        var responseData = response.data; 
-        $scope.benchmarkingData = {};    		
-        if(responseData && responseData.series && responseData.series.length){
-          $scope.benchmarkingData.series = [];
-          $scope.benchmarkingData.series[0]={"name": benchmarkingConstants.string.myAvgAdherenceScore}
-          $scope.benchmarkingData.series[1]={"name": $scope.clinicsDetails.selectedClinic.name  + benchmarkingConstants.string.clinicAvgAdherenceScore}
-          $scope.benchmarkingData.xAxis = responseData.xAxis;
-          $scope.isNoDataAvailable = false;
-          angular.forEach(responseData.series, function(s, i) {
-            if(s.name === "Self"){							
-              s.name = $scope.benchmarkingData.series[0].name;
-              $scope.benchmarkingData.series[0] = s;
-            }else{		    				
-              s.name = $scope.benchmarkingData.series[1].name; 
-              $scope.benchmarkingData.series[1] = s;
-            }
-          });
+      var getbenchmarking = null;
+      console.log("to date : ",convertServerDateFormat($scope.toTimeStamp));
+      if($rootScope.userRole === loginConstants.role.hcp){
+        getbenchmarking = UserService.getHCPBenchmarking(StorageService.get('logged').userId , $scope.parameterType, $scope.benchMarkType, convertServerDateFormat($scope.fromTimeStamp), convertServerDateFormat($scope.toTimeStamp), $scope.clinicsDetails.selectedClinic.id, $scope.geographyParam);
+      }else if($rootScope.userRole === loginConstants.role.clinicadmin){
+        getbenchmarking = UserService.getClinicAdminBenchmarking(StorageService.get('logged').userId , $scope.parameterType, $scope.benchMarkType, convertServerDateFormat($scope.fromTimeStamp), convertServerDateFormat($scope.toTimeStamp), $scope.clinicsDetails.selectedClinic.id, $scope.geographyParam);
+      }
+
+      getbenchmarking.then(function(response){
+        if(response.data && response.data.series && response.data.series.length === 2){
+          var responseData = response.data; 
+          $scope.benchmarkingData = response.data;         
           setTimeout(function(){            
             $scope.drawBenchmarkingChart();   
-          }, 100);     			
+          }, 100);          
         }else{
           plotNoDataAvailable();
-        }					    		 
-      }).catch(function(){
-        plotNoDataAvailable();
-      });	*/
-      $scope.benchmarkingData = patientBenchMarking;
-      setTimeout(function(){            
-        $scope.drawBenchmarkingChart();   
-      }, 100); 
+        }        
+      });      
     }else{    		
       plotNoDataAvailable();
     }    	   	
   };
 
   $scope.redrawBenchmarkingChart = function(){
-    $scope.initBenchmarkingChart();
+    // if selected geo is state or city, get the corresponding state and city of the clinic
+    $scope.parameterType = $scope.parameters.selectedParam.parameter;
+    if($scope.geoLocation.selectedGeo &&  ($scope.geoLocation.selectedGeo.name !== $scope.geographyOption[0].name)){        
+      clinicService.getClinic($scope.clinicsDetails.selectedClinic.id).then(function(response){                
+        if(response && response.data && response.data.clinic){
+          if($scope.geoLocation.selectedGeo.name === $scope.geographyOption[1].name){
+            $scope.geographyParam = benchmarkingConstants.string.stateParam + response.data.clinic.state;          
+          }else if($scope.geoLocation.selectedGeo.name === $scope.geographyOption[2].name){           
+            $scope.geographyParam = benchmarkingConstants.string.cityParam + response.data.clinic.city;      
+          }
+          $scope.initBenchmarkingChart();
+        }               
+      });
+    }else{
+      $scope.geographyParam = benchmarkingConstants.string.stateParam + benchmarkingConstants.string.all;
+      $scope.initBenchmarkingChart();
+    }    
   };
 
   $scope.exportPatientBMPDF = function(){		
