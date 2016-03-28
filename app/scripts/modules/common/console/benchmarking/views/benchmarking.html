@@ -12,10 +12,10 @@
         </div>
       </div>
     </div>
-    <div ng-show="!isActive('benchmarking/clinicanddisease')">
+    <div ng-if = "!isActive('benchmarking/clinicanddisease')">
       <ng-include src="'scripts/modules/common/console/benchmarking/views/parameter.html'"></ng-include>  
     </div>
-    <div ng-show="isActive('benchmarking/clinicanddisease')">
+    <div ng-if = "isActive('benchmarking/clinicanddisease')">
       <ng-include src="'scripts/modules/common/console/benchmarking/views/clinicanddisease.html'"></ng-include>  
     </div>
   </div>

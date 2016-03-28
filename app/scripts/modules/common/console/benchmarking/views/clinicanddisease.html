@@ -40,7 +40,7 @@
 			  <div 
 				  isteven-multi-select
 				  input-model="states"
-				  output-model="$parent.$parent.selectedStates"
+				  output-model="$parent.$parent.$parent.selectedStates"
 				  button-label="name"
 				  item-label="name"
 				  tick-property="ticked"
@@ -103,7 +103,7 @@
 	</div>
 
 	<div class="col-md-16 reset-padding pointer-fill-event">
-    <div class="bar_graph_header">
+   <!--  <div class="bar_graph_header"> -->
       <div class="col-md-3 benchmarking__form__input reset-padding selected-box-container" >
 		<div class="custom-dropdown">
 		      <select ng-change="onYaxisChange()" ng-model="$parent.$parent.type"  ng-disabled="true">
@@ -123,12 +123,13 @@
 		      <select ng-change="onXaxisChange()" ng-model="$parent.$parent.xaxis">
 			      <option value="ageGroup" label="Age Group" ng-selected="true">Age Group</option>
 			      <option value="clinicSize" label="Clinic Size">Clinic Size</option>
-			    </select>            
-			  </div> 
+			      <option value="both" label="Both">Both</option>
+			    </select>        
+			  </div>
 			</div>
-			<div class="col-md-3 benchmarking__form__input reset-padding selected-box-container" >
+			<div ng-show="xaxis === 'ageGroup'" class="col-md-3 benchmarking__form__input reset-padding selected-box-container" >
 				<div class="custom-dropdown">	
-				  <div ng-show="isAgeGroup"
+				  <div 
 					  isteven-multi-select
 					  input-model="ageGroups"
 					  output-model="$parent.$parent.selectedAges"
@@ -145,7 +146,44 @@
 					>
 					</div>
 
-					<div ng-show="!isAgeGroup"
+<!-- 					<div ng-show="!isAgeGroup"
+					  isteven-multi-select
+					  input-model="clinicSizes"
+					  output-model="$parent.$parent.selectedClinicSizes"
+					  button-label="size"
+					  item-label="size"
+					  tick-property="true"
+					  max-labels="3"
+					  translation="localLang"
+					  helper-elements="all filter none"
+					  min-search-length="1"
+					  search-property="size"
+					  max-height="250px"
+					  on-close="onClinicRangeClose()"
+					>
+					</div>   -->      
+			  </div> 
+			</div>
+			<div ng-show="xaxis === 'clinicSize'" class="col-md-3 benchmarking__form__input reset-padding selected-box-container" >
+				<div class="custom-dropdown">	
+				  <!-- <div ng-show="isAgeGroup"
+					  isteven-multi-select
+					  input-model="ageGroups"
+					  output-model="$parent.$parent.selectedAges"
+					  button-label="ageRange"
+					  item-label="ageRange"
+					  tick-property="true"
+					  max-labels="3"
+					  translation="localLang"
+					  helper-elements="all filter none"
+					  min-search-length="1"
+					  search-property="ageRange"
+					  max-height="250px"
+					  on-close="onAgeGroupClose()"
+					>
+					</div> -->
+
+					<div
 					  isteven-multi-select
 					  input-model="clinicSizes"
 					  output-model="$parent.$parent.selectedClinicSizes"
@@ -163,18 +201,112 @@
 					</div>        
 			  </div> 
 			</div>
+			<div ng-show="xaxis === 'both'" class="benchmarking__form__input reset-padding margin-bottom selected-box-container" >
+			  <div class="col-md-3 col-sm-3 benchmarking__form__input reset-padding selected-box-container" >
+				  <!-- <div
+					  isteven-multi-select
+					  input-model="ageGroups"
+					  output-model="$parent.$parent.selectedAges"
+					  button-label="ageRange"
+					  item-label="ageRange"
+					  tick-property="true"
+					  max-labels="3"
+					  translation="localLang"
+					  helper-elements="all filter none"
+					  min-search-length="1"
+					  search-property="ageRange"
+					  max-height="250px"
+					  on-close="onAgeGroupClose()"
+					>
+					</div> -->
+					<div class="custom-dropdown">
+			      <select ng-disabled="true">
+				      <option value="ageGroup" label="Age Group" ng-selected="true">Age Group</option>
+				    </select>
+
+			      <select ng-disabled="true" class="margin-top">
+				      <option value="clinicSize" label="Clinic Size" ng-selected="true">Clinic Size</option>
+				    </select>        
+			  	</div>
+
+					<!-- <div
+					  isteven-multi-select
+					  input-model="clinicSizes"
+					  output-model="$parent.$parent.selectedClinicSizes"
+					  button-label="size"
+					  item-label="size"
+					  tick-property="true"
+					  max-labels="3"
+					  translation="localLang"
+					  helper-elements="all filter none"
+					  min-search-length="1"
+					  search-property="size"
+					  max-height="250px"
+					  on-close="onClinicRangeClose()"
+					>
+					</div>   -->
+			  </div>
+			 <div class="col-md-3 col-sm-3 benchmarking__form__input reset-padding selected-box-container" >
+			  <div class="custom-dropdown">	
+				  <div
+					  isteven-multi-select
+					  input-model="ageGroups"
+					  output-model="$parent.$parent.$parent.selectedAges"
+					  button-label="ageRange"
+					  item-label="ageRange"
+					  tick-property="true"
+					  max-labels="3"
+					  translation="localLang"
+					  helper-elements="all filter none"
+					  min-search-length="1"
+					  search-property="ageRange"
+					  max-height="250px"
+					  on-close="onAgeGroupClose()"
+					>
+					</div>
+
+
+					<div class="margin-top"
+					  isteven-multi-select
+					  input-model="clinicSizes"
+					  output-model="$parent.$parent.$parent.selectedClinicSizes"
+					  button-label="size"
+					  item-label="size"
+					  tick-property="true"
+					  max-labels="3"
+					  translation="localLang"
+					  helper-elements="all filter none"
+					  min-search-length="1"
+					  search-property="size"
+					  max-height="250px"
+					  on-close="onClinicRangeClose()"
+					>
+					</div>        
+			  </div>
+			 </div>
+			 
+			</div>
+			
+	
+  <!--  	</div> -->
+    <div class="col-md-16">
+	   <div class="bar_graph_header">
+	    <div class="col-md-2 col-sm-4 margin-top col-md-offset-4 pull-left right_header_barchart">
+				 		<input type="checkbox" /> <span class="" >Ignore X-axis</span>
+		</div>
 	    <div class="col-md-4 col-sm-9 pull-right right_header_barchart cyan-blue-light">
-	 			<ul class="nav nav-pills pull-right ">
-					<li class="" role="presentation"><a ng-click="isGraphLoaded && dayView()" href="" ng-class="{'active': durationview.day, '': !durationview.day}">Day</a></li>
-					<li class="" role="presentation"><a ng-click="isGraphLoaded && weekView()" href="" ng-class="{'active': durationview.week, '': !durationview.week}">Week</a></li>
-					<li class="" role="presentation"><a ng-click="isGraphLoaded && monthView()" href="" ng-class="{'active': durationview.month, '': !durationview.month}">Month</a></li>
-					<li class="" role="presentation"><a ng-click="isGraphLoaded && yearView()" href="" ng-class="{'active': durationview.year, '': !durationview.year}">Year</a></li>
-					<li id="dp3" class="" role="presentation">
-						<a href="" id="dp2cal" date-range-picker class="date-picker margin_tp13" ng-model="dates" parentEl="#dp1" options="opts" ><span class="icon-calendar"></span></a>
-					</li>
-				</ul>
-	 	  </div>
-   	</div>
+		 			<ul class="nav nav-pills pull-right margin-top">
+						<li class="" role="presentation"><a ng-click="isGraphLoaded && dayView()" href="" ng-class="{'active': durationview.day, '': !durationview.day}">Day</a></li>
+						<li class="" role="presentation"><a ng-click="isGraphLoaded && weekView()" href="" ng-class="{'active': durationview.week, '': !durationview.week}">Week</a></li>
+						<li class="" role="presentation"><a ng-click="isGraphLoaded && monthView()" href="" ng-class="{'active': durationview.month, '': !durationview.month}">Month</a></li>
+						<li class="" role="presentation"><a ng-click="isGraphLoaded && yearView()" href="" ng-class="{'active': durationview.year, '': !durationview.year}">Year</a></li>
+						<li id="dp3" class="" role="presentation">
+							<a href="" id="dp2cal" date-range-picker class="date-picker margin_tp13" ng-model="dates" parentEl="#dp1" options="opts" ><span class="icon-calendar"></span></a>
+						</li>
+					</ul>
+		 	  </div>
+	  </div>
+  </div>
    	<div class="pull-left margin-top font-size16 cyan-blue-light">{{benchmarkType}} <span ng-show="type === 'adherenceScore'">Adherence Score</span> for <span ng-show="xaxis === 'clinicSize'">Clinic Size</span><span ng-show="xaxis === 'ageGroup'">Age Group</span></div>
    	<div class="pull-right margin-top week_date_container">
 			<span ng-if="fromDate !== toDate">
@@ -183,6 +315,7 @@
 			<span ng-if="fromDate === toDate" class="date">{{fromDate}}<span>
 	</div>
   </div>
+
   <loading loaded="isGraphLoaded"></loading>
   <div class="col-md-16 margin-top">
   	<div id="benchmarkingGraph"></div>
