@@ -135,7 +135,11 @@ angular.module('hillromvestApp')
           step: 1
         } ,
         title: {
-          text: 'Age Group'
+          text: 'Age Group',
+          style:{
+            color: "#646568",
+            fontWeight: 'bold'
+          }
         }               
       }, 
       { // mirror axis on right side
@@ -144,7 +148,11 @@ angular.module('hillromvestApp')
         categories: $scope.benchmarkingData.xAxis.categories,
         linkedTo: 0,
         title: {
-          text: 'Age Group'
+          text: 'Age Group',
+          style:{
+            color: "#646568",
+            fontWeight: 'bold'
+          }
         }
       }],
       yAxis: {            	

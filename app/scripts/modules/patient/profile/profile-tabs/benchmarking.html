@@ -43,7 +43,7 @@
 			</div>
 			<div class="col-md-3 benchmarking__form__input reset-padding selected-box-container" ng-show="clinics && clinics.length === 1">
 				<div class="col-md-16 reset-padding">
-				 	<input type="text" value="{{clinicsDetails.selectedClinic.name}}" placeholder="{{clinicsDetails.selectedClinic.name}}" class="height30"/>								    
+				 	<input type="text" value="{{clinicsDetails.selectedClinic.name}}" placeholder="{{clinicsDetails.selectedClinic.name}}" class="height30" ng-disabled="true" />								    
 				</div> 
 			</div>
 			<div class="col-md-3 benchmarking__form__input reset-padding selected-box-container" ng-show="clinics && clinics.length > 1">
@@ -75,7 +75,7 @@
 				<span class="noData_text"> No Data Available!</span>
 			</div>
 			<div class="col-md-16 margin-top" ng-show="!isNoDataAvailable">
-				<div id="patientBenchmarkingGraph"></div>
+				<div id="patientBenchmarkingGraph" style="height: 500px;"></div>
 			</div>
 		</div>
 
