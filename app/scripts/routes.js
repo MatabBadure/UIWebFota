@@ -4224,6 +4224,64 @@ angular.module('hillromvestApp')
                         }
                     ]
                 }
+            })
+            .state('hcpBenchmarking', {
+                parent: 'hcp-user-profile',
+                url: '/benchmarking',
+                data: {
+                    roles: ['HCP'],
+                    pageTitle: 'profile.page-title.benchmarking'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/common/clinicadmin-hcp/benchmarking/views/hcpbenchmarking.html',
+                        controller: 'hcpCAdminBenchmarkingController'
+                    }
+                },
+                resolve: {
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('HCPCABenchmarkingModule');
+                    }],
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('profile');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+            .state('clinicAdminBenchmarking', {
+                parent: 'clinic-admin-user-profile',
+                url: '/benchmarking',
+                data: {
+                    roles: ['CLINIC_ADMIN'],
+                    pageTitle: 'profile.page-title.benchmarking'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/common/clinicadmin-hcp/benchmarking/views/cabenchmarking.html',
+                        controller: 'hcpCAdminBenchmarkingController'
+                    }
+                },
+                resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('HCPCABenchmarkingModule');
+                    }],
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('profile');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
             });
 
 }]);
