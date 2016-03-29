@@ -467,6 +467,23 @@ angular.module('hillromvestApp')
 			exportutilService.exportBenchmarkPDF('benchmarkingGraph', 'benchmarkCanvas', $scope.fromDate, $scope.toDate, pdfServiceConstants.text.benchmarking);
 		};
 
+		$scope.ignoreXaxis = function(){
+			console.log('Ignore Xasis will start from here...!',$scope.isIgnoreXaxis);
+			if($scope.isIgnoreXaxis){
+				benchmarkingService.getClinicDiseaseReportIgnoreXaxis($scope.serverFromDate, $scope.serverToDate, $scope.state, $scope.city).then(function(response){
+					$scope.clinicDesieaseNonXaxis = response.data;
+					$scope.drawNonXaxisChart();
+				}).catch(function(response){
+
+				});
+			}else{
+
+			}
+		};
+
+		$scope.drawNonXaxisChart = function(){
+
+		};
 
 		$scope.switchBenchmarking = function(state){
 			$state.go(state);

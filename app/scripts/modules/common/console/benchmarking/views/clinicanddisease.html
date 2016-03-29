@@ -222,7 +222,7 @@
     <div class="col-md-16">
    		<div class="bar_graph_header">
     		<div class="col-md-2 col-sm-4 margintpp35 margin-top col-md-offset-4 right_header_barchart">
-			 		<input class="vertical_align" type="checkbox" /> <span class="" >Ignore X-axis</span>
+			 		<input class="vertical_align" type="checkbox" ng-model="$parent.$parent.$parent.isIgnoreXaxis" ng-change="ignoreXaxis()"/> <span class="" >Ignore X-axis</span>
 				</div>
     		<div class="col-md-4 col-sm-9 pull-right right_header_barchart cyan-blue-light">
 	 				<ul class="nav nav-pills pull-right margin-top">
@@ -251,9 +251,13 @@
 
   <loading loaded="isGraphLoaded"></loading>
   	
-	<div class="col-md-16 margin-top">
+	<div class="col-md-16 margin-top" ng-show="xaxis !== 'both'">
 		<div id="clinicdiseaseGraph"></div>
 	</div>
+	<div class="col-md-16 margin-top" ng-show="xaxis === 'both'">
+		<div id="clinicdiseaseGraph123"></div>
+	</div>
+
 	<div style="clear:both"></div>
 	<div class="col-md-16 dashboard__manage-view--pagination">
 		<div class="btn_group patient_dashdoard_btns">

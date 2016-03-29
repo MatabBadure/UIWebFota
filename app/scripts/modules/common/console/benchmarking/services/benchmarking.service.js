@@ -43,6 +43,22 @@ angular.module('hillromvestApp')
         }).success(function(response) {
           return response;
         });
+      },
+
+      getClinicDiseaseReportIgnoreXaxis: function(from, to, state, city){
+        var url = URL.getClinicDiseaseNonXaxis.replace('FROM', from).replace('TO', to);
+        if(state && state !== 'all'){
+          url = url+'&state='+state;
+        }
+        if(city && city !== 'all'){
+          url = url+'&city='+city;
+        }
+
+        return $http.get(url,{
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });
       }
 
     };
