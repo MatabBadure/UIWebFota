@@ -200,7 +200,10 @@ angular.module('hillromvestApp')
 	    };
 		
 		$scope.drawCategoryChartForDay = function(){
-			Highcharts.chart('containerDay', {				
+			Highcharts.chart('containerDay', {
+				credits: {
+					enabled: false
+				},					
 				chart:{
 					type: 'column',
 					zoomType: 'xy',
@@ -298,7 +301,10 @@ angular.module('hillromvestApp')
 		};
 
 		$scope.drawCategoryChartForNonDay = function(){
-			var chart = Highcharts.chart('containerNonDay', {				
+			var chart = Highcharts.chart('containerNonDay', {	
+				credits: {
+					enabled: false
+				},				
 				chart:{
 					type: 'column',
 					zoomType: 'xy',
@@ -399,7 +405,10 @@ angular.module('hillromvestApp')
 
 		$scope.drawDateRangeChartForNonDay = function(){
 			var daysInterval = getDaysIntervalInChart($scope.categoryChartData.xAxis.categories.length);
-			Highcharts.chart('containerCustom', {				
+			Highcharts.chart('containerCustom', {
+				credits: {
+					enabled: false
+				},					
 				chart:{
 					type: 'line',
 					zoomType: 'xy',					
