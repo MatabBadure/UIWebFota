@@ -151,15 +151,18 @@ angular.module('hillromvestApp')
 
 		$scope.drawCategoryChartForNonDay = function(){
 			var chart = Highcharts.chart('surveyGraph', {
+				credits: {
+					enabled: false
+				},
 				chart:{
 					type: 'column',
 					zoomType: 'xy',
 					backgroundColor: "#e6f1f4"
 				},
-        title: {
-          text: ''
-        },  	
-		    xAxis:{
+		        title: {
+		          text: ''
+		        },  	
+				    xAxis:{
 					type: 'category',
 					categories: $scope.graphSurvey.xAxis.categories,
 					labels:{
