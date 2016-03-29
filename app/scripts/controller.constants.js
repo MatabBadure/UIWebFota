@@ -143,4 +143,113 @@ angular.module('hillromvestApp').constant('hcpDashboardConstants', {
 	}
 })
 
+.constant('loginAnalyticsConstants',{
+	legends : {
+		"ALL" : "all",
+		"PATIENT" : "patient",
+		"HCP" : "hcp",
+		"CLINICADMIN": "clinicadmin",
+		"CAREGIVER": "caregiver"
+	},
+	duration:{
+		"DAY": "Day",
+		"WEEK": "Week",
+		"MONTH": "Month",
+		"YEAR": "Year",
+		"CUSTOM": "Custom"
+	},
+	string:{
+		"COMMA": ","
+	},
+	filters:{
+		"PATIENT": "PATIENT",
+		"HCP": "HCP",
+		"CLINICADMIN": "CLINIC_ADMIN",
+		"CAREGIVER": "CARE_GIVER"
+	},
+	colors:{
+		"PATIENT": "#ff9829",
+		"HCP": "#35978f",
+		"CLINICADMIN": "#4d95c4",
+		"CAREGIVER": "#8b6baf"
+	},
 
+})
+.constant('surveyConstants',{
+	questions : {
+		"patient_name": "Patient name",
+		"patient_phone_number": "Patient phone number",
+		"hours_of_use": "Hours of use",
+		"serial_number": "Serial number",
+		"patient_dob": "Patient date of birth",
+		"survey_date": "Date",
+		"space": " ",
+		"main_phone_number": "Main phone number",
+		"secondary_phone_number": "Secondary phone number",
+		"address": "Address",
+		"city": "City",
+		"zipcode":"Zip code",
+		"state": "State",
+		"email_address": "Email"
+	}
+})
+.constant('surveyGraphConstants',{
+	legends : {
+		"YES": "yes",
+		"NO": "no",
+		"STRONGLYDISAGREE": "strongly disagree",
+		"SOMEWHATDISAGREE": "somewhat disagree",
+		"NEUTRAL": "neutral",
+		"SOMEWHATAGREE": "somewhat agree",
+		"STRONGLYAGREE": "strongly agree",
+		"UNABLETOASSESS":"unable to assess"
+	},
+	surveycolor : {
+		"YES": "#34978f",
+		"NO": "#f7972d",
+		"strongly_disagree": "#dd1f2e",
+		"somewhat_disagree": "#e65024",
+		"neutral": "#f7972d",
+		"somewhat_agree": "#3c9677",
+		"strongly_agree": "#55ad46",
+		"unable_to_assess": "#231f20"
+	},
+})
+.constant('patientGraphsConstants',{
+	colors: {
+		"pressure": "#ff9829",
+		"frequency": "#34978f",
+		"duration": "#4e95c4"
+	}
+})
+.constant('benchmarkingConstants',{
+	string: {
+		"adherenceScore": "adherenceScore",
+		"average": "average",
+		"myAvgAdherenceScore": "My Avg. Adherence Score",
+		"clinicAvgAdherenceScore": " Avg. Adherence Score",
+		"graphTitleMyAvgAdherenceScore": "My Average Adherence Score",
+		"graphTitleVs": " Vs. ",
+		"grapTitleClinicAdherenceScore": " Average Adherence Score",
+		"grapTitleClinic": "Clinic",
+		"graphTitleClinicAvg":"Clinic Patients Average ",
+		"graphTitleAverage": "Average",
+		"all": "All",
+		"stateParam": "&state=",
+		"cityParam": "&city="
+	}
+})
+
+var benchmarkingParams = [
+					{"parameter" : "adherenceScore", "name": "Adherence Score"},
+					{"parameter" : "missedTherapy", "name": "Missed Therapy Days"},
+					{"parameter" : "settingDeviation", "name": "Setting Deviations"},
+					{"parameter" : "HMRNonAdherence", "name": "HMR Non-Adherence"},
+					{"parameter" : "HMRRunRate", "name": "HMR Run Rate"}
+				]
+
+var geographyOption = [
+					{"name": "National"},
+					{"name": "State"},
+					{"name": "City"}
+				]

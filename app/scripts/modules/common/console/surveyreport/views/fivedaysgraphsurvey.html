@@ -1,0 +1,20 @@
+<div class="col-md-16 ">
+	<div class="graph_nodata" ng-if="yMax === 1">
+		<span class="noData_text"> No Data Available!</span>
+	</div>
+  <div id="surveyGraph" ng-init="switchSurvey()" ng-if="yMax !== 1"></div>
+</div>
+
+<div class="col-md-16 col-sm-16 dashboard__manage-view--list" ng-repeat="surveyQuestion in graphSurvey.surveyQuestions track by $index">
+ <div class="col-md-1 col-sm-1"><span>Q-{{$index + 1}}</span></div>
+ <div class="col-md-15 col-sm-15 cyan-blue-light"><span>{{surveyQuestion}}</span></div>
+</div>
+
+<div class="col-md-16 col-sm-16 margin-top tab-margin-bottom20">
+  <div class="btn_group patient_dashdoard_btns" ng-class="{ 'btn_group patient_dashdoard_btns_compliance': complianceGraph, 'btn_group patient_dashdoard_btns': !complianceGraph}">
+    <div dropdown="" class="pull-right left dropdown">
+      <button id="single-button" type="button" class="hillrom-btn btn-submit margin0 float-right ng-scope dropdown-toggle"  ng-click="exportPDF()">Export in PDF</button>
+    </div>
+  </div>
+</div>
+<canvas id="surveyCanvas" width=1300 height=350 style="display:none;"></canvas>

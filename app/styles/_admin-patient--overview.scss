@@ -15,7 +15,9 @@
   font-weight: $font-weight-bold;
   color: $pickled-bluewood;
 }
-
+#containerNonDay > .highcharts-container > .highcharts-tooltip > span{
+  left:4px !important;
+}
 .patient-details {
     padding: 10px 0;
     border-bottom: 1px solid $alto-solid;
@@ -35,7 +37,22 @@
 .patient-overview--graph {
   padding: 0;
 }
-
+.termsandconditon_color{
+  color: #34455C;
+}
+.reload-icon{
+  position:absolute;
+  right:0;
+  font-size:22px;
+  z-index:999;
+  color:#7ca3dc;
+  cursor:pointer;
+}
+.captcha{
+  color:#000;
+  font-size:20px; 
+  font-weigh:bold;
+}
 .delete-patient {
   margin: 30px 0;
   padding: 0;

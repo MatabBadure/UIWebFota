@@ -138,4 +138,58 @@ angular.module('hillromvestApp').constant('hcpServiceConstants', {
 	}
 });
 
+angular.module('hillromvestApp').constant('pdfServiceConstants', {
+    text : {
+        hillrom : 'HillRom',
+        visiviewHealthPortal: 'VisiView™ Health Portal',
+        hillromOverview: "Hillrom | Overview",
+        reportGenerationDate: "Report Generation Date ",
+        hcpName: "HCP Name: ",
+        date: "Date: ",
+        signature: "Signature: ",
+        name: "Name: ",
+        colon: ":",
+        fromDate: "From",
+        toDate: "To",
+        loginanalytic: "Login Analytic",
+        hyphen: " - ",
+        dateRangeOfReportLabel: "Date Range Of Report",
+        survey: "Survey",
+        benchmarking:"Benchmarking",
+        complianceStatistics: "Compliance Statistics",
+        hmrStatistics: "HMR Statistics",
+        survey: "Survey",
+        cumulativeStatistics: "Cumulative Statistics",
+        treatmentsStatistics: "Treatments Statistics",
+        surveyForFiveDays: "Survey For 5 Days",
+        surveyForThirtyDays: "Survey For 30 Days",
+        surveyForNinetyDays: "Survey For Ninety Days",
+        patientbenchmarkingStatistcs: " My Average Adherence Score Vs. Clinic Average Adherence Score",
+        patientBMPageHeader : "Visi-View Respiratory Care"
+    },
+    style:{
+        font:{
+            helvetica: "helvetica",
+            bold: "bold",
+            normal: "normal"
+        }
+    },
+    pdfDraw:{
+        p: "p",
+        pt: "pt",
+        a4: "a4",
+        line:{
+            f: "F"
+        }
+    },
+    loginanalytics:{
+        day: "Day",
+        patient: "Patient",
+        hcp: "HCP",
+        clinicadmin: "Clinic Admin",
+        caregiver: "Caregiver"
+    }
+});
+
+
 
