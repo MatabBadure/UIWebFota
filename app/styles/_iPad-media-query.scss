@@ -320,6 +320,9 @@
 	.patient_padding li a{
 		padding-top:30px!important
 	}
+	.hideOverflow{
+		overflow:hidden;
+	}
 }
 @media screen and (min-width : 1024px){
 	.login{
