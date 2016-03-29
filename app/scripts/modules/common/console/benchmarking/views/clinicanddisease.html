@@ -20,7 +20,7 @@
 	<div class="col-md-16 reset-padding">
 		<div class="col-md-3 benchmarking__form__input reset-padding selected-box-container" >
 		  <div class="custom-dropdown">
-		    <select class="" ng-change="onYaxisChange()" ng-model="$parent.$parent.benchmarkType" ng-disabled="true">
+		    <select class="" ng-change="" ng-model="benchmarkType" ng-disabled="true">
 			    <option value="CF" label="CF" ng-selected="true">CF</option>
 			  </select>
 		  </div>
@@ -70,7 +70,7 @@
 			  <div ng-show="selectedStates.length === 1"
 				  isteven-multi-select
 				  input-model="cities"
-				  output-model="$parent.$parent.selectedCities"
+				  output-model="$parent.$parent.$parent.selectedCities"
 				  button-label="name"
 				  item-label="name"
 				  tick-property="ticked"
@@ -103,11 +103,10 @@
 	</div>
 
 	<div class="col-md-16 reset-padding pointer-fill-event">
-   <!--  <div class="bar_graph_header"> -->
       <div class="col-md-3 benchmarking__form__input reset-padding selected-box-container" >
 		<div class="custom-dropdown">
 		      <select ng-change="onYaxisChange()" ng-model="$parent.$parent.type"  ng-disabled="true">
-			      <option value="adherenceScore" label="Adherence Score" ng-selected="true">No. of Patients</option>
+			      <option value="noOfPatients" label="Adherence Score" ng-selected="true">No. of Patients</option>
 			      <option value="missedTherapy" label="Missed Therapy Days">Missed Therapy Days</option>
 			      <option value="HMRDeviation" label="HMR Deviation">HMR Deviation</option>
 			      <option value="settingDeviation" label="Setting Deviation">Setting Deviation</option>
@@ -120,7 +119,7 @@
 		  </div>
 			<div class="col-md-3 benchmarking__form__input reset-padding selected-box-container" >
 				<div class="custom-dropdown">
-		      <select ng-change="onXaxisChange()" ng-model="$parent.$parent.xaxis">
+		      <select ng-change="onXaxisChange()" ng-model="$parent.$parent.$parent.xaxis">
 			      <option value="ageGroup" label="Age Group" ng-selected="true">Age Group</option>
 			      <option value="clinicSize" label="Clinic Size">Clinic Size</option>
 			      <option value="both" label="Both">Both</option>
@@ -146,42 +145,11 @@
 					>
 					</div>
 
-<!-- 					<div ng-show="!isAgeGroup"
-					  isteven-multi-select
-					  input-model="clinicSizes"
-					  output-model="$parent.$parent.selectedClinicSizes"
-					  button-label="size"
-					  item-label="size"
-					  tick-property="true"
-					  max-labels="3"
-					  translation="localLang"
-					  helper-elements="all filter none"
-					  min-search-length="1"
-					  search-property="size"
-					  max-height="250px"
-					  on-close="onClinicRangeClose()"
-					>
-					</div>   -->      
 			  </div> 
 			</div>
 			<div ng-show="xaxis === 'clinicSize'" class="col-md-3 benchmarking__form__input reset-padding selected-box-container" >
 				<div class="custom-dropdown">	
-				  <!-- <div ng-show="isAgeGroup"
-					  isteven-multi-select
-					  input-model="ageGroups"
-					  output-model="$parent.$parent.selectedAges"
-					  button-label="ageRange"
-					  item-label="ageRange"
-					  tick-property="true"
-					  max-labels="3"
-					  translation="localLang"
-					  helper-elements="all filter none"
-					  min-search-length="1"
-					  search-property="ageRange"
-					  max-height="250px"
-					  on-close="onAgeGroupClose()"
-					>
-					</div> -->
+
 
 					<div
 					  isteven-multi-select
@@ -203,48 +171,17 @@
 			</div>
 			<div ng-show="xaxis === 'both'" class="benchmarking__form__input reset-padding margin-bottom selected-box-container" >
 			  <div class="col-md-3 col-sm-3 benchmarking__form__input reset-padding selected-box-container" >
-				  <!-- <div
-					  isteven-multi-select
-					  input-model="ageGroups"
-					  output-model="$parent.$parent.selectedAges"
-					  button-label="ageRange"
-					  item-label="ageRange"
-					  tick-property="true"
-					  max-labels="3"
-					  translation="localLang"
-					  helper-elements="all filter none"
-					  min-search-length="1"
-					  search-property="ageRange"
-					  max-height="250px"
-					  on-close="onAgeGroupClose()"
-					>
-					</div> -->
+				
 					<div class="custom-dropdown">
 			      <select ng-disabled="true">
 				      <option value="ageGroup" label="Age Group" ng-selected="true">Age Group</option>
 				    </select>
-
-			      <select ng-disabled="true" class="margin-top">
+				    </div>
+				    <div class="custom-dropdown margintp53">
+			      <select ng-disabled="true" class="">
 				      <option value="clinicSize" label="Clinic Size" ng-selected="true">Clinic Size</option>
 				    </select>        
 			  	</div>
-
-					<!-- <div
-					  isteven-multi-select
-					  input-model="clinicSizes"
-					  output-model="$parent.$parent.selectedClinicSizes"
-					  button-label="size"
-					  item-label="size"
-					  tick-property="true"
-					  max-labels="3"
-					  translation="localLang"
-					  helper-elements="all filter none"
-					  min-search-length="1"
-					  search-property="size"
-					  max-height="250px"
-					  on-close="onClinicRangeClose()"
-					>
-					</div>   -->
 			  </div>
 			 <div class="col-md-3 col-sm-3 benchmarking__form__input reset-padding selected-box-container" >
 			  <div class="custom-dropdown">	
@@ -266,7 +203,7 @@
 					</div>
 
 
-					<div class="margin-top"
+					<div class="margin-top custom-dropdown"
 					  isteven-multi-select
 					  input-model="clinicSizes"
 					  output-model="$parent.$parent.$parent.selectedClinicSizes"
@@ -288,11 +225,11 @@
 			</div>
 			
 	
-  <!--  	</div> -->
+
     <div class="col-md-16">
 	   <div class="bar_graph_header">
-	    <div class="col-md-2 col-sm-4 margin-top col-md-offset-4 pull-left right_header_barchart">
-				 		<input type="checkbox" /> <span class="" >Ignore X-axis</span>
+	    <div class="col-md-2 col-sm-4 margintpp35 margin-top col-md-offset-4 right_header_barchart">
+				 		<input class="vertical_align" type="checkbox" /> <span class="" >Ignore X-axis</span>
 		</div>
 	    <div class="col-md-4 col-sm-9 pull-right right_header_barchart cyan-blue-light">
 		 			<ul class="nav nav-pills pull-right margin-top">
@@ -307,7 +244,7 @@
 		 	  </div>
 	  </div>
   </div>
-   	<div class="pull-left margin-top font-size16 cyan-blue-light">{{benchmarkType}} <span ng-show="type === 'adherenceScore'">Adherence Score</span> for <span ng-show="xaxis === 'clinicSize'">Clinic Size</span><span ng-show="xaxis === 'ageGroup'">Age Group</span></div>
+   	<div class="pull-left margin-top font-size16 cyan-blue-light">{{benchmarkType}} <span ng-show="type === 'noOfPatients'">No. of Patients</span> for <span ng-show="xaxis === 'clinicSize'">Clinic Size</span><span ng-show="xaxis === 'ageGroup'">Age Group</span><span ng-show="xaxis === 'both'">Both</span></div>
    	<div class="pull-right margin-top week_date_container">
 			<span ng-if="fromDate !== toDate">
 				<span class="date">{{fromDate}}</span> - <span class="date">{{toDate}}</span>
@@ -318,7 +255,7 @@
 
   <loading loaded="isGraphLoaded"></loading>
   <div class="col-md-16 margin-top">
-  	<div id="benchmarkingGraph"></div>
+  	<div id="clinicdiseaseGraph"></div>
 	</div>
 	<div style="clear:both"></div>
 	<div class="col-md-16 dashboard__manage-view--pagination">

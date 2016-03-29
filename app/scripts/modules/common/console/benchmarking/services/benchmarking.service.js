@@ -28,6 +28,21 @@ angular.module('hillromvestApp')
         }).success(function(response) {
           return response;
         });
+      },
+
+      getClinicDiseaseReport: function(fromDate, toDate, XAxis, ageGroupRange, clinicSizeRange, state, city){
+        var url = URL.getClinicDisease.replace('FROM', fromDate).replace('TO', toDate).replace('XAXIS',XAxis).replace('AGERANGE', ageGroupRange).replace('CLINICRANGE', clinicSizeRange);
+        if(state && state !== 'all'){
+          url = url+'&state='+state;
+        }
+        if(city && city !== 'all'){
+          url = url+'&city='+city;
+        }
+        return $http.get(url,{
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });
       }
 
     };
