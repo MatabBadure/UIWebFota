@@ -31,7 +31,7 @@
 	            </div>
 	            
               <div class="col-md-16 padding0 no-padding" ng-if="!isPhoneNumber">
-                 <input class="col-md-14 col-xs-16 col-sm-16 margin-bottom20 tab-margin-bottom20" type="text" name="phoneNumber" class="form-control" validate-on-blur ng-model="survey.questions[1].answerValue1" ng-readonly="validateADMINorASP()" ui-mask="(999)-999-9999" model-view-value="true" ui-options="{clearOnBlur: false}" required>   
+                 <input class="col-md-14 col-xs-16 col-sm-16 overlay margin-bottom20 tab-margin-bottom20" type="text" name="phoneNumber" class="form-control" validate-on-blur ng-model="survey.questions[1].answerValue1" ng-readonly="validateADMINorASP()" ui-mask="(999)-999-9999" model-view-value="true" ui-options="{clearOnBlur: false}" required>   
                                
               </div>
               <div ng-show="(surveyForm.phoneNumber.$showValidationMessage && surveyForm.phoneNumber.$invalid) || submitted">
