@@ -377,20 +377,21 @@ ul.logout-dropdown>li{
 	visibility: visible;
 	width: 100%;
 }
+.height30{
+	height:30px;
+}
 
-
-.benchmarking__form__input select, .custom-textbox{
-	height: 30px;
+.benchmarking__form__input select, .custom-textbox, .benchmarking__form__input input[type="text"]{
+  height: 30px;
   width: 210px;
   font-weight: normal;
   color: #34455C;
-  border: 1px solid #aeb5be;
+  border: 1px solid #c1c1c1;
   background-color: inherit;
   -webkit-appearance: none;
   -moz-appearance: none;
   text-indent: 7px;
   border-radius:0;
-  color:#276092;
 }
 
  .multiSelect > button{
@@ -402,6 +403,7 @@ ul.logout-dropdown>li{
     width: 210px;
     padding: 0 5px;
     text-align:left;
+    position:relative;
 }
 .multiSelect > button:hover{
 	background: transparent;
@@ -413,6 +415,18 @@ ul.logout-dropdown>li{
 .multiSelect .caret{
 	display:none;
 }
+.custom_arrow > span > select{
+	position: relative;
+}
+.text-right{
+	text-align:right!important;
+}
+.height400{
+	height:400px;
+}
+.margin-lt{
+	margin-left:4px;
+}
 .highcharts-tooltip {
   pointer-events: none !important;
   }
@@ -420,8 +434,8 @@ ul.logout-dropdown>li{
 @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {  
 	.multiSelect .caret{
 		display:block;
-		float:right;
-		position:relative;
-		top:4px;
+		right:10px;
+		position:absolute;
+		top:10px;
 	}
 }

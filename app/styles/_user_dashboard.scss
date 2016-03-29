@@ -208,13 +208,14 @@
 		li{
 			a{
 				padding: 2px 0px;
-				color: $gray-light;
+				color: $silver-approx;
 				margin: 10px 0px 0px 20px;
 				border-radius: 0px;
 				border-bottom: solid 2px #fff;
 				font-size: 14px;
 				&:hover{
 					background-color: transparent;
+					color:$seashell;
 				}
 				&:focus{
 					background-color: transparent;
@@ -608,7 +609,7 @@
 	margin-left:25px;
 }
 .margin-left30{
-	margin-left: -30px!important;
+	margin-left: -60px!important;
 }
 .graphview_text_color{
 	color: $blue-btn;
@@ -631,14 +632,41 @@
 .margin-left5{
 	margin-left:5px;
 }
-.padding_tl10
-{
+.padding_tl10{
 	padding:10px 0px;
+}
+
+.padding0{
+	padding:0;
+}
+.margin0{
+	margin:0 !important;
+}
+.border-lt{
+	border-left:1px solid #ccc;
+}
+.border-rt{
+	border-right:1px solid #ccc;
+}
+.border-bottom{
+	border-bottom:1px solid #ccc;
+}
+.vertical_align{
+	display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+}
+.adherence_protocol{
+	max-width:1000px;
+	width:1000px;
 }
 .survey__body{
 	max-height:400px;
 	height:auto;
 	overflow-y: auto!important;
+}
+.light_gray{
+	color: $bombay !important;
 }
 .dashboard__manage-view--pagination{
 	&.pagination_notes{

@@ -1,6 +1,6 @@
 angular.module('hillromvestApp')
-.controller('clinicadminPatientController',['$scope', '$state', '$stateParams', 'clinicadminPatientService', 'patientService', 'notyService', 'DoctorService', 'clinicadminService', 'clinicService', 'dateService', 'UserService', 'searchFilterService', '$timeout', 'StorageService', 'sortOptionsService','$filter', 'commonsUserService', '$q', 'addressService',
-  function($scope, $state, $stateParams, clinicadminPatientService, patientService, notyService, DoctorService, clinicadminService, clinicService, dateService, UserService, searchFilterService, $timeout, StorageService, sortOptionsService,$filter, commonsUserService, $q, addressService) { 
+.controller('clinicadminPatientController',['$scope', '$state', '$stateParams', 'clinicadminPatientService', 'patientService', 'notyService', 'DoctorService', 'clinicadminService', 'clinicService', 'dateService', 'UserService', 'searchFilterService', '$timeout', 'StorageService', 'sortOptionsService','$filter', 'commonsUserService', '$q', 'addressService', '$rootScope', 'exportutilService',
+  function($scope, $state, $stateParams, clinicadminPatientService, patientService, notyService, DoctorService, clinicadminService, clinicService, dateService, UserService, searchFilterService, $timeout, StorageService, sortOptionsService,$filter, commonsUserService, $q, addressService, $rootScope, exportutilService) { 
 	var searchOnLoad = true;
 	$scope.init = function(){
     if($state.current.name === 'clinicadminpatientDemographic'  || $state.current.name === 'clinicadmminpatientDemographicEdit'){
@@ -433,9 +433,17 @@ angular.module('hillromvestApp')
   };
 
  angular.element('#dp2').datepicker({
-          endDate: '+0d',
-          startDate: '-100y',
-          autoclose: true});
+  endDate: '+0d',
+  startDate: '-100y',
+  autoclose: true});
+
+  $scope.openEditProtocol = function(protocol){
+    if(!protocol){
+      return false;
+    }
+    $state.go('clinicAdminUpdateProtocol', {'protocolId': protocol.id});
+  };
+
 	$scope.init();
 
   $scope.$watch("patient.formatedDOB", function(value) {

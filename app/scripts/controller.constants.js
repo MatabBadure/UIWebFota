@@ -225,6 +225,31 @@ angular.module('hillromvestApp').constant('hcpDashboardConstants', {
 .constant('benchmarkingConstants',{
 	string: {
 		"adherenceScore": "adherenceScore",
-		"average": "average"
+		"average": "average",
+		"myAvgAdherenceScore": "My Avg. Adherence Score",
+		"clinicAvgAdherenceScore": " Avg. Adherence Score",
+		"graphTitleMyAvgAdherenceScore": "My Average Adherence Score",
+		"graphTitleVs": " Vs. ",
+		"grapTitleClinicAdherenceScore": " Average Adherence Score",
+		"grapTitleClinic": "Clinic",
+		"graphTitleClinicAvg":"Clinic Patients Average ",
+		"graphTitleAverage": "Average",
+		"all": "All",
+		"stateParam": "&state=",
+		"cityParam": "&city="
 	}
 })
+
+var benchmarkingParams = [
+					{"parameter" : "adherenceScore", "name": "Adherence Score"},
+					{"parameter" : "missedTherapy", "name": "Missed Therapy Days"},
+					{"parameter" : "settingDeviation", "name": "Setting Deviations"},
+					{"parameter" : "HMRNonAdherence", "name": "HMR Non-Adherence"},
+					{"parameter" : "HMRRunRate", "name": "HMR Run Rate"}
+				]
+
+var geographyOption = [
+					{"name": "National"},
+					{"name": "State"},
+					{"name": "City"}
+				]

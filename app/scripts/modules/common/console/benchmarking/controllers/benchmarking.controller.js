@@ -66,6 +66,7 @@ angular.module('hillromvestApp')
 			$scope.type = 'adherenceScore';
 			$scope.isGraphLoaded = false;
 			addressService.getAvailableStates().then(function(response){
+				$scope.rawStates = response.data;
 				$scope.processStates(response.data);
 			}).catch(function(response){
 				notyService.showError(response);
@@ -121,9 +122,9 @@ angular.module('hillromvestApp')
 
 		$scope.processStates = function(states){
 			$scope.states = [];
-			angular.forEach(states, function(state){
+			angular.forEach(states, function(state, key){
 				var obj = {
-					'name': state,
+					'name': key,
 					'ticked': true
 				};
 				$scope.states.push(obj);
@@ -134,17 +135,14 @@ angular.module('hillromvestApp')
 			delete $scope.city;
 			if($scope.selectedStates.length > 0 && $scope.selectedStates.length !== $scope.states.length){
 				var selectedStates = [];
-				addressService.getCitiesByState($scope.selectedStates[0].name).then(function(response){
-					$scope.cities = [];
-					angular.forEach(response.data, function(city){
-						var obj = {
-							'name':city,
-							'ticked':true 
-						};
-						$scope.cities.push(obj);
-					});
-				}).catch(function(response){
-					notyService.showError(response);
+				var state = $scope.selectedStates[0].name;
+				$scope.cities = [];
+				angular.forEach($scope.rawStates[state.toString()], function(city){
+					var obj = {
+						'name':city,
+						'ticked':true 
+					};
+					$scope.cities.push(obj);
 				});
 				angular.forEach($scope.selectedStates, function(selectedState){
 					selectedStates.push(selectedState.name);
@@ -243,15 +241,18 @@ angular.module('hillromvestApp')
 
 		$scope.drawBenchmarkingchart = function(){
 			var chart = Highcharts.chart('benchmarkingGraph', {
+				credits: {
+					enabled: false
+				},	
 				chart:{
 					type: 'column',
 					zoomType: 'xy',
 					backgroundColor: "#e6f1f4"
 				},
-        title: {
-          text: ''
-        },
-		    xAxis:{
+		        title: {
+		          text: ''
+		        },
+		    	xAxis:{
 					type: 'category',
 					categories: $scope.benchmarkingGraph.xAxis.categories,
 					labels:{

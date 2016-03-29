@@ -210,6 +210,22 @@ angular.module('hillromvestApp')
         }).success(function(response) {
           return response;
         });
+      },
+      
+      getHCPBenchmarking: function(userId, parameterType, benchmarkingType, fromDate, toDate, clinicId, geographyParam){
+        var url = URL.getHCPBenchmarking.replace('USERID', userId).replace('PARAMETERTYPE', parameterType).replace('BENCHMARKTYPE', benchmarkingType).replace('FROM', fromDate).replace('TO', toDate).replace('CLINICID', clinicId).concat(geographyParam);
+        return $http.get(url, {
+          headers: headerService.getHeader()
+        });
+      },
+
+
+      getClinicAdminBenchmarking: function(userId, parameterType, benchmarkingType, fromDate, toDate, clinicId, geographyParam){
+        var url = URL.getClinicAdminBenchmarking.replace('USERID', userId).replace('PARAMETERTYPE', parameterType).replace('BENCHMARKTYPE', benchmarkingType).replace('FROM', fromDate).replace('TO', toDate).replace('CLINICID', clinicId).concat(geographyParam);
+        return $http.get(url, {
+          headers: headerService.getHeader()
+        });
       }
+
     };
   }]);

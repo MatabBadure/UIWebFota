@@ -176,8 +176,8 @@
       "message": "If you delete the protocol, you will no longer be able to view the information. Are you sure to delete?"
     },
     "update-protocol":{
-      "warning": "Patient Care Plan - Protocol",
-      "message": "You have made changes/updates for Protocol. Are you sure to make updates?"
+      "warning": "Protocol Update",
+      "message": "Do you want to make updates in the Protocol?"
     },
     "update-device":{
       "warning": "Patient Device - Update",
@@ -326,7 +326,8 @@
       "date": "Date",
       "notification": "Notification",
       "change" :"Change",  
-      "updated-score": "Updated Score"
+      "updated-score": "Updated Score",
+      "protocol": "Protocol"
     }
   },
   "no-clinic-found": "No clinic associated.",
@@ -422,6 +423,8 @@
     "month": "Month",
     "benchmark": "Benchmark",
     "parameter": "Parameter",
-    "compareWith": "Compare with"
+    "compareWith": "Compare with",
+    "average" :"Average",
+    "adherenceScore": "Adherence Score"
   }
 }

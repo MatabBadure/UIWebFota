@@ -4,6 +4,12 @@ angular.module('hillromvestApp')
 	function($scope, $state, hcpDashBoardService, dateService, graphUtil, $stateParams, hcpDashboardConstants, DoctorService, clinicadminService, notyService, StorageService,$filter,commonsUserService, exportutilService) {
 	var chart;
 	$scope.noDataAvailable = false;
+	function getDaysIntervalInChart(noOfDataPoints){
+      var pInterval = 8;
+      var sInterval = 9;
+      var remainder  = 4;
+      return ( (parseInt(noOfDataPoints/pInterval) > 0) && noOfDataPoints%pInterval > remainder) ? parseInt(noOfDataPoints/sInterval) : ((parseInt(noOfDataPoints/pInterval) > 0)? parseInt(noOfDataPoints/pInterval): 1) ; 
+    };
 	$scope.init = function() {
 		$scope.cumulativeStatitics = {};
 		$scope.cumulativeStatitics.isMissedTherapyDays = true;
@@ -290,7 +296,8 @@ angular.module('hillromvestApp')
 			                $scope.cumulativeChartData.series[key1].data[key2].color = "red";
 			              }
 			            });            
-						setTimeout(function(){								
+						setTimeout(function(){	
+							$scope.removeAllCharts();						
 							$scope.cumulativeChart("cumulativeGraph", $scope.cumulativeChartData);          
 						}, 10); 
 			          });
@@ -336,7 +343,8 @@ angular.module('hillromvestApp')
 			                $scope.treatmentChartData.series[key1].data[key2].color = "red";
 			              }
 			            });            
-						setTimeout(function(){								
+						setTimeout(function(){
+							$scope.removeAllCharts();								
 							$scope.treatmentChart("treatmentGraph", $scope.treatmentChartData);          
 						}, 10); 
 		          });
@@ -470,6 +478,8 @@ angular.module('hillromvestApp')
 		}); 
     	divId = (divId)? divId : "cumulativeGraph";
 	    var chart = Highcharts.charts[document.getElementById(divId).getAttribute("data-highcharts-chart")]; // get old chart
+	    var noOfDataPoints = (chartData && chartData.xAxis.categories)? chartData.xAxis.categories.length: 0;
+        var daysInterval = getDaysIntervalInChart(noOfDataPoints);
 
 		// set visibility to be the same as previous chart:
 	  	if(chart) {
@@ -478,6 +488,9 @@ angular.module('hillromvestApp')
 		    });
 	 	}          
       $('#'+divId).highcharts({
+			credits: {
+				enabled: false
+			},
           chart: {
               type: 'line',
               zoomType: 'xy',
@@ -505,7 +518,10 @@ angular.module('hillromvestApp')
                   return  Highcharts.dateFormat("%m/%e/%Y",this.value);
                 }               
               },
-              lineWidth:2   
+              lineWidth:2,
+              units: [
+                  ['day', [daysInterval]]
+                ]    
           },
           yAxis: {
               	gridLineColor: '#FF0000',
@@ -587,7 +603,8 @@ angular.module('hillromvestApp')
     $scope.drawDualAxisChart = function(divId, chartData){
     	divId = (divId)? divId : "treatmentGraph";
 		    var chart = Highcharts.charts[document.getElementById(divId).getAttribute("data-highcharts-chart")]; // get old chart
-
+		    var noOfDataPoints = (chartData && chartData.xAxis.categories)? chartData.xAxis.categories.length : 0;		    
+          	var daysInterval = getDaysIntervalInChart(noOfDataPoints);          
 			// set visibility to be the same as previous chart:
 		  	if(chart) {
 			    Highcharts.each(chartData.series, function(series, index) {
@@ -595,6 +612,9 @@ angular.module('hillromvestApp')
 			    });
 		 	}          
 	      $('#'+divId).highcharts({
+	      	  credits: {
+		        enabled: false
+		      },
 	          chart: {
 	              type: 'line',
 	              zoomType: 'xy',
@@ -622,7 +642,10 @@ angular.module('hillromvestApp')
 	                  return  Highcharts.dateFormat("%m/%e/%Y",this.value);
 	                }               
 	              },
-	              lineWidth: 2   
+	              lineWidth: 2,
+	              units: [
+	                  ['day', [daysInterval]]
+	                ]    
 	          },	         
 			 yAxis: [{ // Primary yAxis
 	            labels: {	                
@@ -730,6 +753,11 @@ angular.module('hillromvestApp')
     		exportutilService.exportHCPCharts(null, "treatmentGraph", "hcpCharts", $scope.fromDate, $scope.toDate);
     	}
     	
+    };
+
+    $scope.removeAllCharts = function(){
+      $("#cumulativeGraph").empty();
+      $("#treatmentGraph").empty();      
     };
 }]);
 

@@ -614,8 +614,8 @@ angular.module('hillromvestApp')
     };
 
     function getDaysIntervalInChart(noOfDataPoints){
-      var pInterval = 13;
-      var sInterval = 14;
+      var pInterval = 12;
+      var sInterval = 13;
       var remainder  = 6;
       return ( (parseInt(noOfDataPoints/pInterval) > 0) && noOfDataPoints%pInterval > remainder) ? parseInt(noOfDataPoints/sInterval) : ((parseInt(noOfDataPoints/pInterval) > 0)? parseInt(noOfDataPoints/pInterval): 1) ; 
     };
@@ -771,6 +771,9 @@ angular.module('hillromvestApp')
           $('<div class="chart">')
             .appendTo('#'+divId)
             .highcharts({
+              credits: {
+                enabled: false
+              },
               chart: {
                 marginLeft: 40, 
                 //spacingTop: 30,
@@ -969,7 +972,7 @@ angular.module('hillromvestApp')
 
     $scope.HMRAreaChart = function(divId){ 
       var noOfDataPoints = ($scope.hmrChartData && $scope.hmrChartData.xAxis.categories)?$scope.hmrChartData.xAxis.categories.length: 0;      
-      var daysInterval = getDaysIntervalInChart(noOfDataPoints);
+      var daysInterval = getDaysIntervalInChart(noOfDataPoints);      
       Highcharts.setOptions({
           global: {
               useUTC: false
@@ -978,6 +981,9 @@ angular.module('hillromvestApp')
       divId = (divId)? divId : "HMRGraph";
       $('#'+divId).empty();
       $('#'+divId).highcharts({
+          credits: {
+            enabled: false
+          },
           chart: {
               type: 'area',
               zoomType: 'xy',
@@ -1123,6 +1129,9 @@ angular.module('hillromvestApp')
       divId = (divId)? divId : "HMRGraph";
       $('#'+divId).empty();
       $('#'+divId).highcharts({
+          credits: {
+            enabled: false
+          },
           chart: {
               type: chartType,
               zoomType: 'xy',
@@ -1575,6 +1584,7 @@ angular.module('hillromvestApp')
       var toDate = dateService.convertDateToYyyyMmDdFormat(new Date().getTime());
       patientDashBoardService.getAdeherenceData(patientId, fromDate, toDate).then(function(response){
         $scope.adherenceScores = response.data;
+        // $scope.adherenceScores = adherenceScores;
       }).catch(function(response){
         notyService.showError(response);
       });
@@ -1633,6 +1643,15 @@ angular.module('hillromvestApp')
     $scope.removeAllCharts = function(){
       $("#HMRGraph").empty();
       $("#synchronizedChart").empty();      
+    };
+
+    $scope.viewProtocol = function(protcols){
+      $scope.protocols = protcols;
+      $scope.showProtocolModal = true;
+    };
+
+    $scope.closeProtocolModal = function(){
+      $scope.showProtocolModal = false;
     };
     
 }]);

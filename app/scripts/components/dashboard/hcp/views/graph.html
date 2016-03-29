@@ -84,8 +84,8 @@
 		</span>
 		<span ng-if="fromDate === toDate" class="date">{{fromDate}}<span>
 	</div> 
-	<div class="col-md-16" class="all_graph_wrapper" ng-class="{treatmentGraphTL: treatmentGraph}">
-		<div class="graph_nodata" ng-if="noDataAvailable">
+	<div class="col-md-16" class="all_graph_wrapper" ng-class="{treatmentGraphTL: treatmentGraph}" style="min-height: 300px;">
+		<div class="graph_nodata" ng-if="noDataAvailable" >
 			<span class="noData_text"> No Data Available!</span>
 		</div>
 		<div class="row hcp_graph_container">
@@ -98,8 +98,8 @@
 				</div>				
 			</div>
 		</div>
-		<button ng-if="!noDataAvailable" class="float-right hillrom-btn btn-submit margin-top margin-right13" ng-click="downloadChartsAsPdf()">Download As PDF</button>
-     	<button ng-if="noDataAvailable" class="float-right hillrom-btn btn-submit margin-top margin-right13" style="color: #cccccc;">Download As PDF</button>
-       <canvas id="hcpCharts" width=1300 height=350 style="display:none;"></canvas>
+		
 	</div>
+	<button class="float-right hillrom-btn btn-submit margin-top margin-right13" ng-click="!noDataAvailable && downloadChartsAsPdf()" ng-class="{ 'pointer-fill-event': (!noDataAvailable && isGraphLoaded) , 'pointer-no-event': (!isGraphLoaded || noDataAvailable) }">Download As PDF</button>     	
+       <canvas id="hcpCharts" width=1300 height=350 style="display:none;"></canvas>
 </div>

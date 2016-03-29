@@ -829,28 +829,6 @@ var caregiver = {
     "message": "Caregiver User fetched successfully."
 }
 
-var adherenceScores = [{
-        'date':'10/12/2015',
-        'notificationPoints':{'HMR_NON_COMPLIANCE': -2},
-        'updatedScore':'67'
-    },
-    {
-        'date':'10/12/2015',
-        'notificationPoints':{'HMR_NON_COMPLIANCE': -2},
-        'updatedScore':'67'
-    },
-    {
-        'date':'10/12/2015',
-        'notificationPoints':{'No Notification': 0, 'MISSED_THERAPY': 2},
-        'updatedScore':'67'
-    },
-    {
-        'date':'10/12/2015',
-        'notificationPoints':{'No Notification': 0, 'MISSED_THERAPY': 2},
-        'updatedScore':'67'
-    }
-];
-
 var loginAnalyticsData= {
     "dayData":
     {
@@ -1144,4 +1122,24 @@ var loginAnalyticsData= {
             }
         ] 
     }
+};
+
+var patientBenchMarking = {
+    xAxis:{
+        type: 'categories',
+        categories: ["0-5","6-10","11-15","16-20","21-25","26-30","31-35","36-40","41-45","46-50","51-55","56-60","65-70","71-75","76-80","80-above"]
+    },
+    series: [{
+                name: 'Self Avg Adherence Score',
+                data: [
+                {"y": 0},{"y": 0},{"y": 0},{"y": -10},{"y": 0},{"y": 0},{"y": 0},{"y": 0},
+                {"y": 0},{"y": 0},{"y": 0},{"y": 0},{"y": 0},{"y": 0},{"y": 0},{"y": 0}
+                ]
+            }, {
+                name: 'Clinic level avg adherence score',
+                data: [
+                {"y": 5},{"y": 15},{"y": 20},{"y": 40},{"y": 10},{"y": 10},{"y": 40},{"y": 30},
+                {"y": 20},{"y": 19},{"y": 10},{"y": 40},{"y": 20},{"y": 20},{"y":  11},{"y": 23}
+                ]
+            }]
 };

@@ -1,7 +1,7 @@
 .dashboard {
 	// position: fixed;
 	background-color: $iceberg;
-	font-weight: bold;
+	//font-weight: bold;
 }
 
 .dashboard--content {
@@ -1116,6 +1116,11 @@ ul.dropdown-menu {
     display: flex;
     flex-flow: row column;
 }
+.vertical_align_center{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 .padding20{
   padding:20px 0px!important;
 }

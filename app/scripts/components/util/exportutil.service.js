@@ -69,7 +69,8 @@ angular.module('hillromvestApp')
     return pdf;
   }
 
-  this.setTopHeader = function(pdf, fromDate, toDate){
+  this.setTopHeader = function(pdf, fromDate, toDate, pageHeader){
+    pageHeader = (pageHeader) ? pageHeader : pdfServiceConstants.text.hillromOverview;    
     pdf.setFont(pdfServiceConstants.style.font.helvetica);
     pdf.setFontType(pdfServiceConstants.style.font.bold);   
     pdf.setFontSize(8);
@@ -80,7 +81,7 @@ angular.module('hillromvestApp')
     pdf.setFontType(pdfServiceConstants.style.font.bold);
     pdf.setFontSize(8);
     pdf.setTextColor(0,0,0);
-    pdf.text(margins.width-305,   margins.titleTop-15, pdfServiceConstants.text.hillromOverview);
+    pdf.text((pdf.internal.pageSize.width/2)-((pageHeader.length*3.5)/2),   margins.titleTop-15, pageHeader);
 
     pdf.setFont(pdfServiceConstants.style.font.helvetica);  
     pdf.setFontType(pdfServiceConstants.style.font.bold); 
@@ -101,12 +102,12 @@ angular.module('hillromvestApp')
     return pdf;
   }
 
-  this.setHeader = function(pdf, fromDate, toDate) {
+  this.setHeader = function(pdf, fromDate, toDate, pageHeader) {
     var pageHeight = pdf.internal.pageSize.height;
     var pageWidth = pdf.internal.pageSize.width;
     margins.t2TabLeft=(pageWidth/2)+5;
     
-    pdf = this.setTopHeader(pdf, fromDate, toDate);
+    pdf = this.setTopHeader(pdf, fromDate, toDate, pageHeader);
     pdf = this.setDateRange(pdf, fromDate, toDate);
     return pdf;
   }
@@ -137,13 +138,17 @@ angular.module('hillromvestApp')
     return pdf;
   }
 
-  this.addSvgToPDF = function(pdf, canvasId, svgId, imageX, imageY, imageWidth, imageHeight, graphTitle, durationType, legends){
+  this.addSvgToPDF = function(pdf, canvasId, svgId, imageX, imageY, imageWidth, imageHeight, graphTitle, durationType, legends, startGraphTitleX){
     if(graphTitle){
       pdf.setFont(pdfServiceConstants.style.font.helvetica); 
       pdf.setFontType(pdfServiceConstants.style.font.bold);        
       pdf.setFontSize(10);
-      pdf.setTextColor(0, 0, 0);
-      pdf.text((pdf.internal.pageSize.width/2)-(20+graphTitle.length),   imageY-30, graphTitle);
+      pdf.setTextColor(0, 0, 0);  
+      if(startGraphTitleX) {
+        pdf.text(startGraphTitleX,    imageY-30, graphTitle); 
+      }else{
+        pdf.text((pdf.internal.pageSize.width/2)-(20+graphTitle.length),   imageY-30, graphTitle); 
+      }                
     }    
 
     var canvas = document.getElementById(canvasId);
@@ -432,7 +437,7 @@ angular.module('hillromvestApp')
       pdf.setFontType(pdfServiceConstants.style.font.bold);        
       pdf.setFontSize(10);
       pdf.setTextColor(0, 0, 0);
-      pdf.text((pdf.internal.pageSize.width/2)-60,   imageY-30, chartName);
+      pdf.text((pdf.internal.pageSize.width/2)-50,   imageY-30, chartName);
     }
     var canvas = document.getElementById(canvasId);              
     var ctx = canvas.getContext('2d');
@@ -598,12 +603,12 @@ angular.module('hillromvestApp')
     var pageWidth = pdf.internal.pageSize.width;
     pdf = this.setHeader(pdf, fromDate, toDate);
     pdf = this.addPatientInfoToHMRCReport(pdf, patientInfo, fromDate, toDate); 
-    pdf = this.addAllSvgsToPDF(pdf, canvasId, divId, 20, 350, 540, 200, pdfServiceConstants.text.complianceStatistics);
+    pdf = this.addAllSvgsToPDF(pdf, canvasId, divId, 30, 350, 540, 200, pdfServiceConstants.text.complianceStatistics);
     pdf = this.setFooter(pdf, pdf.internal.pageSize.height-80);
     pdf = this.setPageNumber(pdf, "1", "2");  
     pdf.addPage(); 
     pdf = this.setTopHeader(pdf, fromDate, toDate);
-    pdf = this.addSvgToPDF(pdf, canvasId, "HMRGraph", 20, 150, 540, 200, pdfServiceConstants.text.hmrStatistics); 
+    pdf = this.addSvgToPDF(pdf, canvasId, "HMRGraph", 30, 150, 540, 200, pdfServiceConstants.text.hmrStatistics); 
     pdf = this.setFooter(pdf, pdf.internal.pageSize.height-80, "HCP Name");
     pdf = this.setPageNumber(pdf, "2", "2");
     setTimeout(function(){     
@@ -621,6 +626,21 @@ angular.module('hillromvestApp')
     }
     if(tdivId){
       pdf = this.addSvgToPDF(pdf, canvasId, tdivId, 20, imgY, 540, 200, pdfServiceConstants.text.treatmentsStatistics); 
+    }    
+    pdf = this.setFooter(pdf, pdf.internal.pageSize.height-80);
+    pdf = this.setPageNumber(pdf, "1", "1");
+    setTimeout(function(){     
+      pdf.save('VisiView™.pdf'); 
+    },1000); 
+  }
+
+  this.downloadPatientBMAsPDF = function(divId, canvasId, fromDate, toDate, graphTitle){
+    var pdf = this.getPdf();
+    var imgY = 150;
+    pdf = this.setHeader(pdf, fromDate, toDate, pdfServiceConstants.text.patientBMPageHeader);
+    if(divId){
+      pdf = this.addSvgToPDF(pdf, canvasId, divId, 30, imgY, 540, 200, graphTitle,null,null, 140); 
+      imgY = imgY + 250;
     }    
     pdf = this.setFooter(pdf, pdf.internal.pageSize.height-80);
     pdf = this.setPageNumber(pdf, "1", "1");

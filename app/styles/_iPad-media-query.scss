@@ -150,6 +150,20 @@
 	.margin-tp19{
 		margin-top:19px;
 	}
+	.survey_tab_modal{
+		padding: 10px 10px!important;
+	}
+	.hide-tab{
+		display:none !important;
+	}
+	.show-tab{
+		display:block !important;
+	}
+	.height400{
+		height:auto;
+	}
+
+
 }
 
 @media only screen and (min-width : 768px) and (max-width : 1024px) and (orientation : portrait) { 
@@ -283,6 +297,34 @@
 	.margin-tp19{
 		margin-top:19px;
 	}
+	.hide-tab{
+		display:none !important;
+	}
+	.show-tab{
+		display:block !important;
+	}
+	.survey_tab_modal{
+		padding: 10px 10px!important;
+	}
+	
+	.patient-user__navbar ul > li > a .icons{
+		left:8px !important
+	}
+	.flex1 {
+	  height: auto;
+	  display: -webkit-flex;
+	  flex-flow: -webkit-row column;
+	}
+	.height400{
+		height:auto;
+	}
+	.patient_padding li a{
+		padding-top:30px!important
+	}
+
+	.overlay{
+		z-index:9999;
+	}
 }
 @media screen and (min-width : 1024px){
 	.login{
@@ -304,6 +346,9 @@
 	}
 	.margin-left-10-reset{
 		margin-left:0px;
+	}
+	.height400{
+		height:auto;
 	}
 } 
 
