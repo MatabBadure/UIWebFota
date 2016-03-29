@@ -4056,6 +4056,9 @@ angular.module('hillromvestApp')
                   }
               },
               resolve: {
+                loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('BenchmarkingModule');
+                    }],
                   translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                       $translatePartialLoader.addPart('console');
                       return $translate.refresh();
@@ -4081,6 +4084,9 @@ angular.module('hillromvestApp')
                   }
               },
               resolve: {
+                loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('BenchmarkingModule');
+                    }],
                   translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                       $translatePartialLoader.addPart('console');
                       return $translate.refresh();
