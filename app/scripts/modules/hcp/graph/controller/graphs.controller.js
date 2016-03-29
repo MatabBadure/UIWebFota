@@ -296,7 +296,8 @@ angular.module('hillromvestApp')
 			                $scope.cumulativeChartData.series[key1].data[key2].color = "red";
 			              }
 			            });            
-						setTimeout(function(){								
+						setTimeout(function(){	
+							$scope.removeAllCharts();						
 							$scope.cumulativeChart("cumulativeGraph", $scope.cumulativeChartData);          
 						}, 10); 
 			          });
@@ -342,7 +343,8 @@ angular.module('hillromvestApp')
 			                $scope.treatmentChartData.series[key1].data[key2].color = "red";
 			              }
 			            });            
-						setTimeout(function(){								
+						setTimeout(function(){
+							$scope.removeAllCharts();								
 							$scope.treatmentChart("treatmentGraph", $scope.treatmentChartData);          
 						}, 10); 
 		          });
@@ -486,6 +488,9 @@ angular.module('hillromvestApp')
 		    });
 	 	}          
       $('#'+divId).highcharts({
+			credits: {
+				enabled: false
+			},
           chart: {
               type: 'line',
               zoomType: 'xy',
@@ -607,6 +612,9 @@ angular.module('hillromvestApp')
 			    });
 		 	}          
 	      $('#'+divId).highcharts({
+	      	  credits: {
+		        enabled: false
+		      },
 	          chart: {
 	              type: 'line',
 	              zoomType: 'xy',
@@ -745,6 +753,11 @@ angular.module('hillromvestApp')
     		exportutilService.exportHCPCharts(null, "treatmentGraph", "hcpCharts", $scope.fromDate, $scope.toDate);
     	}
     	
+    };
+
+    $scope.removeAllCharts = function(){
+      $("#cumulativeGraph").empty();
+      $("#treatmentGraph").empty();      
     };
 }]);
 

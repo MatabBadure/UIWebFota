@@ -243,15 +243,18 @@ angular.module('hillromvestApp')
 
 		$scope.drawBenchmarkingchart = function(){
 			var chart = Highcharts.chart('benchmarkingGraph', {
+				credits: {
+					enabled: false
+				},	
 				chart:{
 					type: 'column',
 					zoomType: 'xy',
 					backgroundColor: "#e6f1f4"
 				},
-        title: {
-          text: ''
-        },
-		    xAxis:{
+		        title: {
+		          text: ''
+		        },
+		    	xAxis:{
 					type: 'category',
 					categories: $scope.benchmarkingGraph.xAxis.categories,
 					labels:{
