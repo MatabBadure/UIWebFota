@@ -771,6 +771,9 @@ angular.module('hillromvestApp')
           $('<div class="chart">')
             .appendTo('#'+divId)
             .highcharts({
+              credits: {
+                enabled: false
+              },
               chart: {
                 marginLeft: 40, 
                 //spacingTop: 30,
@@ -978,6 +981,9 @@ angular.module('hillromvestApp')
       divId = (divId)? divId : "HMRGraph";
       $('#'+divId).empty();
       $('#'+divId).highcharts({
+          credits: {
+            enabled: false
+          },
           chart: {
               type: 'area',
               zoomType: 'xy',
@@ -1123,6 +1129,9 @@ angular.module('hillromvestApp')
       divId = (divId)? divId : "HMRGraph";
       $('#'+divId).empty();
       $('#'+divId).highcharts({
+          credits: {
+            enabled: false
+          },
           chart: {
               type: chartType,
               zoomType: 'xy',

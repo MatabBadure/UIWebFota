@@ -115,7 +115,10 @@ angular.module('hillromvestApp')
 		$scope.benchmarkingData.series[1].color = patientGraphsConstants.colors.frequency;		
 		var divId = (divId)? divId : "hcpcabenchmarkingGraph";
 
-    $('#hcpcabenchmarkingGraph').highcharts({			
+    $('#hcpcabenchmarkingGraph').highcharts({	
+      credits: {
+        enabled: false
+      },		
       chart: {
         type: 'bar',
         zoomType: 'xy',
