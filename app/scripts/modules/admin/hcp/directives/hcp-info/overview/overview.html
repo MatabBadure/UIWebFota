@@ -94,7 +94,7 @@
     <ng-include src="'scripts/components/navbar/searchfilter.html'"></ng-include>
   </div>
     <div class="dashboard__manage-view--header">
-        <div class="col-md-2 col-sm-3 header--type">
+        <div class="col-md-3 col-sm-3 header--type">
           <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="doctor.patient-name">Patient Name</span>
         </div>
         <div class="col-md-2 col-sm-3 header--type">
@@ -109,12 +109,12 @@
         <div class="col-md-2 header--type col-hide-iPad">
           <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="doctor.transmission">Transmission</span>
         </div>
-        <div class="col-md-2 col-sm-4 header--type">
+        <div class="col-md-3 col-sm-4 header--type">
           <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" translate="doctor.clinic-name">Clinic Name</span>
         </div>
-        <div class="col-md-2 col-sm-3 header--type">
+       <!--  <div class="col-md-2 col-sm-3 header--type">
           <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="doctor.status">Status</span>
-        </div>
+        </div> -->
         <div class="col-md-2 header--type col-hide-iPad">
           <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="doctor.adherence">Adherence</span>
         </div>
@@ -122,7 +122,7 @@
       </div>
 
     <div class="dashboard__manage-view--list" ng-repeat="patient in patients" readonly="true" ng-click="selectPatient(patient.patientUser)">
-      <div class="col-md-2 col-sm-3 reset-padding">
+      <div class="col-md-3 col-sm-3 reset-padding">
         <span class="main-prim-info">{{patient.patientUser.lastName}}, {{patient.patientUser.firstName}}</span>
         <span class="main-secon-info">{{patient.patientUser.email}}</span>
       </div>
@@ -143,15 +143,15 @@
         <span class="short-info">{{patient.patientUser.transmission}}</span>
       </div>
 
-      <div class="col-md-2 col-sm-4 reset-padding centered">
+      <div class="col-md-3 col-sm-4 reset-padding centered">
         <span class="short-info">{{patient.patientUser.clinicName}}</span>
       </div>
 
-      <div class="col-md-2 col-sm-3 reset-padding centered">
+      <!-- <div class="col-md-2 col-sm-3 reset-padding centered">
         <span class="short-info expired" ng-if="patient.patientUser.expired" translate="doctor.status-type.expired"></span>
           <span class="short-info active" ng-if="!patient.patientUser.expired && !patient.patientUser.isDeleted" translate="doctor.status-type.active"></span>
           <span class="short-info inactive" ng-if="!patient.patientUser.expired && patient.patientUser.isDeleted" translate="doctor.status-type.inactive"></span>
-      </div>
+      </div> -->
 
       <div class="col-md-2 reset-padding-left text-centered col-hide-iPad">
         <span class="short-info">{{patient.patientUser.adherence}}</span>
