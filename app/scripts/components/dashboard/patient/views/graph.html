@@ -354,7 +354,7 @@
   <div class="modal__dialog">
     <div class="modal__content">
       <header class="modal__header survey_tab_modal">
-        <button type="button" class="modal__close" data-dismiss="modal" ng-click="$parent.surveyConfirmModal = false">&times;</button>
+        <button type="button" class="modal__close" data-dismiss="modal" ng-click="cancelSurvey();">&times;</button>
         <p ng-if="surveyId === 1" translate="survey.5-days-header"> </p> 
         <p ng-if="surveyId === 2" translate="survey.30-days-header"> </p> 
         <p ng-if="surveyId === 3" translate="survey.90-days-header"> </p>
@@ -364,7 +364,7 @@
     
         <div class="row modal--custom-btn">
           <buton class="hillrom-btn btn-submit float-right" ng-click="$parent.surveyConfirmModal = false;takeSurveyNow(); ">Start</buton>
-          <buton class="hillrom-btn btn-submit float-right" data-dismiss="modal" ng-click="$parent.surveyConfirmModal = false">Later</buton>
+          <buton class="hillrom-btn btn-submit float-right" data-dismiss="modal" ng-click="cancelSurvey();">Later</buton>
         </div>
       </div>
       <footer class="modal__footer">
