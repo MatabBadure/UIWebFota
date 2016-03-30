@@ -1298,7 +1298,7 @@ angular.module('hillromvestApp')
       $scope.textNote = "";
       $scope.initGraph();
       $scope.getPatientById($scope.patientId);
-      $scope.getPatientNotification();      
+      $scope.getPatientNotification();           
       if(!$rootScope.surveyTaken && $rootScope.surveyId){
         $scope.surveyConfirmModal = true;                
       }
@@ -1654,5 +1654,10 @@ angular.module('hillromvestApp')
       $scope.showProtocolModal = false;
     };
     
+    $scope.cancelSurvey = function(){
+      $rootScope.surveyTaken = true;
+      $scope.surveyConfirmModal = false;
+      delete $rootScope.surveyId;      
+    };
 }]);
 

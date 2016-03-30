@@ -1,10 +1,10 @@
 
 	<div class="row lebel-indent col-md-16 margin-bottom15">
-		<label>
+		<label ng-if="!searchFilter.isHideStatusFilter">
 			<input type="checkbox" ng-model="searchFilter.isActive" ng-click="searchOnFilters()"> 
 			<span translate="search-filter.active"></span> 
 		</label>
-		<label>
+		<label ng-if="!searchFilter.isHideStatusFilter">
 			<input type="checkbox" ng-model="searchFilter.isInActive" ng-click="searchOnFilters()"> 
 			<span translate="search-filter.inactive"></span>
 		</label>		
