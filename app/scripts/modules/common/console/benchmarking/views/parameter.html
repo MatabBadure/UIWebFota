@@ -13,7 +13,7 @@
 			<span>State</span>
 	  </div>
 	  <div class="col-md-3 col-sm-3 pull-right benchmarking__form__input reset-padding selected-box-container" >
-			<span>City</span>
+			<span class="margin-left11">City</span>
 	  </div>
 	</div>
 
@@ -28,16 +28,16 @@
 		<div class="col-md-3 col-sm-3 pull-left benchmarking__form__input reset-padding selected-box-container">
 			<span></span>
 	  </div>
-		<div class="col-md-3 col-sm-3 pull-left col-md-offset-1 benchmarking__form__input reset-padding selected-box-container" >
-			<div class="custom-dropdown">
-		    <select class="" ng-disabled="true">
+		<div class="col-md-3 col-sm-2 tabwidth pull-left col-md-offset-1 benchmarking__form__input reset-padding selected-box-container" >
+			<div class="custom-dropdown col-sm-16 reset-padding">
+		    <select class="width100" ng-disabled="true">
 			  	<option value="USA" label="USA" selected="selected">USA</option>
 			  </select>            
 		  </div> 
 		</div>
-		<div class="col-md-3 col-sm-3 pull-left benchmarking__form__input reset-padding selected-box-container" >
-			<div class="custom-dropdown">
-			  <div 
+		<div class="col-md-3 col-sm-4 margin-left11 benchmarking__form__input reset-padding selected-box-container" >
+			<div class="custom-dropdown col-sm-16 reset-padding">
+			  <div class=""
 				  isteven-multi-select
 				  input-model="states"
 				  output-model="$parent.$parent.selectedStates"
@@ -62,9 +62,9 @@
 				</div>
 		  </div> 
 		</div>
-		<div class="col-md-3 col-sm-3 pull-right benchmarking__form__input reset-padding selected-box-container" >
-			<div class="custom-dropdown">
-		    <select class="" ng-if="selectedStates.length > 1 || selectedStates.length === 0" ng-disabled="true">
+		<div class="col-md-3 col-sm-3 tabwidth pull-right benchmarking__form__input reset-padding selected-box-container" >
+			<div class="custom-dropdown reset-padding col-sm-16">
+		    <select class="width100" ng-if="selectedStates.length > 1 || selectedStates.length === 0" ng-disabled="true">
 			    <option value="all" label="All" selected="selected">All</option>
 			  </select>
 			  <div ng-show="selectedStates.length === 1"
@@ -88,23 +88,23 @@
 	</div>
 
 	<div class="col-md-16 col-sm-16 reset-padding cyan-blue-light margin-top">
-		<div class="col-md-3 col-sm-3 benchmarking__form__input reset-padding selected-box-container" >
+		<div class="col-md-3 col-sm-5 benchmarking__form__input reset-padding selected-box-container" >
 			<span>Y-axis</span>
 	  </div>
 	  <div class="col-md-1 col-sm-1 benchmarking__form__input reset-padding selected-box-container" >
 			<span></span>
 	  </div>
-	  <div class="col-md-3 col-sm-3 benchmarking__form__input reset-padding selected-box-container" >
+	  <div class="col-md-3 col-sm-5 benchmarking__form__input reset-padding selected-box-container" >
 			<span>X-axis</span>
 	  </div>
-	  <div class="col-md-3 col-sm-3 benchmarking__form__input reset-padding selected-box-container" >
+	  <div class="col-md-3 col-sm-5 benchmarking__form__input reset-padding selected-box-container" >
 			<span>Range</span>
 	  </div>
 	</div>
 
 	<div class="col-md-16 col-sm-16 reset-padding pointer-fill-event">
     <div class="bar_graph_header">
-      <div class="col-md-3 col-sm-3 benchmarking__form__input reset-padding selected-box-container" >
+      <div class="col-md-3 col-sm-5 benchmarking__form__input reset-padding selected-box-container" >
 		<div class="custom-dropdown">
 		      <select ng-change="onYaxisChange()" ng-model="$parent.$parent.type">
 			      <option value="adherenceScore" label="Adherence Score" ng-selected="true">Adherence Score</option>
@@ -118,7 +118,7 @@
 			<div class="col-md-1 col-sm-1 text-center benchmarking__form__input reset-padding selected-box-container" >
 				<span class="light_gray">for</span>
 		  </div>
-			<div class="col-md-3 col-sm-3 benchmarking__form__input reset-padding selected-box-container" >
+			<div class="col-md-3 col-sm-5 benchmarking__form__input reset-padding selected-box-container" >
 				<div class="custom-dropdown">
 		      <select ng-change="onXaxisChange()" ng-model="$parent.$parent.xaxis">
 			      <option value="ageGroup" label="Age Group" ng-selected="true">Age Group</option>
@@ -126,7 +126,7 @@
 			    </select>            
 			  </div> 
 			</div>
-			<div class="col-md-3 col-sm-3 benchmarking__form__input reset-padding selected-box-container" >
+			<div class="col-md-3 col-sm-5 benchmarking__form__input reset-padding selected-box-container" >
 				<div class="custom-dropdown">	
 				  <div ng-show="isAgeGroup"
 					  isteven-multi-select

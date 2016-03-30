@@ -321,10 +321,19 @@
 	.patient_padding li a{
 		padding-top:30px!important
 	}
-
-	.overlay{
-		z-index:9999;
+	.tabwidth{
+		width:17%!important;
 	}
+	.width100{
+		width:100%!important;
+	}
+	.multiSelect > button{
+		width:188px !important;
+	}
+	.margin-left11{
+		margin-left:11px;
+	}
+
 }
 @media screen and (min-width : 1024px){
 	.login{
