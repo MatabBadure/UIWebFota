@@ -40,7 +40,7 @@
 			  <div 
 				  isteven-multi-select
 				  input-model="states"
-				  output-model="$parent.$parent.selectedStates"
+				  output-model="$parent.$parent.$parent.selectedStates"
 				  button-label="name"
 				  item-label="name"
 				  tick-property="ticked"
@@ -70,7 +70,7 @@
 			  <div ng-show="selectedStates.length === 1"
 				  isteven-multi-select
 				  input-model="cities"
-				  output-model="$parent.$parent.selectedCities"
+				  output-model="$parent.$parent.$parent.selectedCities"
 				  button-label="name"
 				  item-label="name"
 				  tick-property="ticked"
