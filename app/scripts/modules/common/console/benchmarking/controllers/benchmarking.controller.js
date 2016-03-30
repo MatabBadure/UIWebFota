@@ -468,11 +468,10 @@ angular.module('hillromvestApp')
 		};
 
 		$scope.ignoreXaxis = function(){
-			console.log('Ignore Xasis will start from here...!',$scope.isIgnoreXaxis);
 			if($scope.isIgnoreXaxis){
 				benchmarkingService.getClinicDiseaseReportIgnoreXaxis($scope.serverFromDate, $scope.serverToDate, $scope.state, $scope.city).then(function(response){
-					$scope.clinicDesieaseNonXaxis = response.data;
-					$scope.drawNonXaxisChart();
+					$scope.clinicDiseaseGraphData = response.data;
+					$scope.drawClinicDiseaseChart();
 				}).catch(function(response){
 
 				});
