@@ -4051,7 +4051,7 @@ angular.module('hillromvestApp')
               },
               views: {
                   'content@': {
-                      templateUrl: 'scripts/modules/common/console/benchmarking/views/admin/clinicanddisease.html',
+                      templateUrl: 'scripts/modules/common/console/benchmarking/views/admin/view.html',
                       controller: 'benchmarkingController'
                   }
               },
@@ -4073,6 +4073,34 @@ angular.module('hillromvestApp')
             .state('rcadminBenchmarking', {
               parent: 'console',
               url: '/rcadmin/benchmarking',
+              data: {
+                  roles: ['ACCT_SERVICES'],
+                  pageTitle: 'console.page-title.benchmarking'
+              },
+              views: {
+                  'content@': {
+                      templateUrl: 'scripts/modules/common/console/benchmarking/views/rcadmin/view.html',
+                      controller: 'benchmarkingController'
+                  }
+              },
+              resolve: {
+                loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('BenchmarkingModule');
+                    }],
+                  translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                      $translatePartialLoader.addPart('console');
+                      return $translate.refresh();
+                  }],
+                  authorize: ['Auth',
+                      function(Auth) {
+                          return Auth.authorize(false);
+                      }
+                  ]
+              }
+            })
+            .state('rcadminClinicDiseaseBenchmarking', {
+              parent: 'rcadminBenchmarking',
+              url: '/clinicanddisease',
               data: {
                   roles: ['ACCT_SERVICES'],
                   pageTitle: 'console.page-title.benchmarking'
@@ -4126,7 +4154,34 @@ angular.module('hillromvestApp')
                   ]
               }
             })
-
+            .state('associatesClinicDiseaseBenchmarking', {
+              parent: 'associatesBenchmarking',
+              url: '/clinicanddisease',
+              data: {
+                  roles: ['ASSOCIATES'],
+                  pageTitle: 'console.page-title.benchmarking'
+              },
+              views: {
+                  'content@': {
+                      templateUrl: 'scripts/modules/common/console/benchmarking/views/associates/view.html',
+                      controller: 'benchmarkingController'
+                  }
+              },
+              resolve: {
+                loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('BenchmarkingModule');
+                    }],
+                  translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                      $translatePartialLoader.addPart('console');
+                      return $translate.refresh();
+                  }],
+                  authorize: ['Auth',
+                      function(Auth) {
+                          return Auth.authorize(false);
+                      }
+                  ]
+              }
+            })
 			.state('clinicAdminUpdateProtocol', {
                 parent: 'clinicadminpatientProtocol',
                 url: '/{protocolId}/editProtocol',
