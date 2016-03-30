@@ -45,7 +45,11 @@ angular.module('hillromvestApp')
 
 		$scope.customDateRangeView = function(){
 			$scope.toggleDuration(false, false, false, false, true);
-			$scope.getBenchmarkingReport($scope.serverFromDate, $scope.serverToDate, $scope.xaxis, $scope.type, $scope.benchmarkType, $scope.range, $scope.state, $scope.city);
+			if($state.current.name === 'adminBenchmarking'){
+				$scope.getBenchmarkingReport($scope.serverFromDate, $scope.serverToDate, $scope.xaxis, $scope.type, $scope.benchmarkType, $scope.range, $scope.state, $scope.city);
+			}else if($state.current.name === 'adminClinicDiseaseBenchmarking'){
+				$scope.getClinicDiseaseReport($scope.serverFromDate, $scope.serverToDate, $scope.xaxis, $scope.ageRange, $scope.clinicRange, $scope.state, $scope.city);
+			}
 		};
 
 
