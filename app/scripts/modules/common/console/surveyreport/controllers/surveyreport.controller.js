@@ -143,13 +143,15 @@ angular.module('hillromvestApp')
 					});
 				});
 				$scope.count = response.data.count;
-				$scope.drawCategoryChartForNonDay();
+				$scope.drawCategoryChartForNonDay(type);
 			}).catch(function(response){
 				notyService.showError(response);
 			});
 		};
 
-		$scope.drawCategoryChartForNonDay = function(){
+		$scope.drawCategoryChartForNonDay = function(type){
+			var isStackedChart = (type && type == 2)? true : false;
+			console.log("isStackedChart : ", isStackedChart, " type : ", type);
 			var chart = Highcharts.chart('surveyGraph', {
 				credits: {
 					enabled: false
@@ -176,60 +178,84 @@ angular.module('hillromvestApp')
 				yAxis: {
 					minRange: 1,
 					gridLineColor: '#FF0000',
-		      gridLineWidth: 0,
-		      lineWidth:1,
-		      min: 0,
-		      title: {
-		        text: 'No. of Users',
-		        style: {
-			        color: '#525151',
-			        font: '10px Helvetica',
-			        fontWeight: 'bold'
-			      }
-		      },
-		      allowDecimals:false,
-		      labels:{
-		       	style: {
-			        color: '#525151',
-			        //font: '10px Helvetica',
-			        fontWeight: 'bold'
-			      }
-		      }
-		    },
-        legend: {
-		      align: 'center',
-			    verticalAlign: 'bottom',
-			    x: 0,
-			    y: 0
-		    },
-		    plotOptions: {
-		      series: {
-		        events: {
-		          legendItemClick: function () {
-		         		var self = this,
-		         		allow = false;
-		                        
-		            if(self.visible) {
-		              $.each(self.chart.series, function(i, series) {
-		                if(series !== self && series.visible) {
-		                 	allow = true;
+					gridLineWidth: 0,
+					lineWidth:1,
+					min: 0,
+					title: {
+						text: 'No. of Users',
+						style: {
+							color: '#525151',
+							font: '10px Helvetica',
+							fontWeight: 'bold'
+						}
+					},
+					allowDecimals:false,
+					labels:{
+						style: {
+							color: '#525151',
+							//font: '10px Helvetica',
+							fontWeight: 'bold'
+						}
+					},
+					stackLabels: {
+		                enabled: isStackedChart,
+		                style: {
+		                    fontWeight: 'bold',
+		                    color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
 		                }
-		              });
-		              if(!allow){
-		               	notyService.showMessage(notyMessages.minComplianceError, notyMessages.typeWarning );
-		              }
-		              return allow;
 		            }
-		          }
-		        }
-		      }
-		    },
+				},
+        		legend: {
+			      align: 'center',
+				    verticalAlign: 'bottom',
+				    x: 0,
+				    y: 0
+			    },
+			    plotOptions: {
+			      series: {
+			        events: {
+			          legendItemClick: function () {
+			         		var self = this,
+			         		allow = false;
+			                        
+			            if(self.visible) {
+			              $.each(self.chart.series, function(i, series) {
+			                if(series !== self && series.visible) {
+			                 	allow = true;
+			                }
+			              });
+			              if(!allow){
+			               	notyService.showMessage(notyMessages.minComplianceError, notyMessages.typeWarning );
+			              }
+			              return allow;
+			            }
+			          }
+			        }
+			      },
+			      column: {
+						stacking: 'normal',
+						dataLabels: {
+							enabled: true,
+							color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white',
+							style: {
+								textShadow: '0 0 3px black'
+							},
+							formatter: function() {
+						        if (this.y != 0 && isStackedChart) {
+						          return this.y ;
+						        } else {
+						          return null;
+						        }
+						    }
+						}
+					}
+			    },
 				tooltip: {
-					crosshairs: [{
-		        dashStyle: 'solid',
-		        color: '#b4e6f6'
-		        },
-		      false],
+						crosshairs: [{
+			        dashStyle: 'solid',
+			        color: '#b4e6f6'
+			        },
+			      false],
 					formatter: function() {
 						if($scope.surveyType === 1){
 							var s = '<div style="font-size:12x;font-weight: bold; padding-bottom: 3px;">'+  this.x +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div>';
