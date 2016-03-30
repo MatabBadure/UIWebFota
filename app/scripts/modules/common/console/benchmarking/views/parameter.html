@@ -40,7 +40,7 @@
 			  <div 
 				  isteven-multi-select
 				  input-model="states"
-				  output-model="$parent.$parent.selectedStates"
+				  output-model="$parent.$parent.$parent.selectedStates"
 				  button-label="name"
 				  item-label="name"
 				  tick-property="ticked"
@@ -70,7 +70,7 @@
 			  <div ng-show="selectedStates.length === 1"
 				  isteven-multi-select
 				  input-model="cities"
-				  output-model="$parent.$parent.selectedCities"
+				  output-model="$parent.$parent.$parent.selectedCities"
 				  button-label="name"
 				  item-label="name"
 				  tick-property="ticked"
@@ -109,7 +109,7 @@
 		      <select ng-change="onYaxisChange()" ng-model="$parent.$parent.type">
 			      <option value="adherenceScore" label="Adherence Score" ng-selected="true">Adherence Score</option>
 			      <option value="missedTherapy" label="Missed Therapy Days">Missed Therapy Days</option>
-			      <option value="HMRDeviation" label="HMR Deviation">HMR Deviation</option>
+			      <option value="HMRDeviation" label="HMR Non Adherence">HMR Non Adherence</option>
 			      <option value="settingDeviation" label="Setting Deviation">Setting Deviation</option>
 			      <option value="HMRRunrate" label="HMR Runrate">HMR Runrate</option>
 			    </select>
