@@ -27,15 +27,30 @@
 		<div class="col-md-16 col-sm-16 padding0 reset-padding" ng-class="{'pointer-no-event': !isGraphLoaded, 'pointer-fill-event': isGraphLoaded}">
 		<div class="bar_graph_header"> 
 	
-			 <div class="col-md-3 col-sm-3 benchmarking__form__input reset-padding selected-box-container">
+			<!--  <div class="col-md-3 col-sm-3 benchmarking__form__input reset-padding selected-box-container">
 				<div class="col-md-16 col-sm-16 reset-padding">
 				 <input type="text" value="Average" placeholder="Average" class="light-grey col-md-15 col-sm-15 height30" ng-disabled="true"/>
 				</div>
-	  		</div>
+	  		</div> -->
+	  		<div class="col-md-3 col-sm-3 benchmarking__form__input reset-padding selected-box-container" >
+				<div class="light-grey col-md-16 reset-padding">				
+					<div class="custom-dropdown" ng-class="{'gray_dropdown': benchmarks.length == 1}">
+						<select ng-model="benchmarkings.selectedBM" ng-options="benchmark as benchmark.name for benchmark in benchmarks" ng-disabled="benchmarks.length === 1" ng-class="{'gray_dropdown': benchmarks.length == 1}"></select>					    
+					</div>   					   
+				</div> 
+			</div>
 		
-			<div class="col-md-3 col-sm-3 benchmarking__form__input reset-padding selected-box-container margin-lt">
+			<!-- <div class="col-md-3 col-sm-3 benchmarking__form__input reset-padding selected-box-container margin-lt">
 				<div class="col-md-16 col-sm-16 reset-padding">
 					 <input type="text" value="Adherence Score" placeholder="Adherence Score" class="light-grey col-sm-15 col-md-15 height30" ng-disabled="true"/>     
+				</div> 
+			</div> -->
+
+			<div class="col-md-3 col-sm-3 benchmarking__form__input reset-padding selected-box-container" >
+				<div class="light-grey col-md-16 reset-padding">				
+					<div class="custom-dropdown" ng-class="{'gray_dropdown': benchmarkingParam.length == 1}">
+						<select ng-model="parameters.selectedParam" ng-options="param as param.name for param in benchmarkingParam" ng-disabled="benchmarkingParam.length === 1" ng-class="{'gray_dropdown': benchmarkingParam.length == 1}"></select>					    
+					</div>   					   
 				</div> 
 			</div>
 			<div class="col-md-1 col-sm-1 vertical_align_center text-center benchmarking__form__input reset-padding selected-box-container" ng-show="clinics && clinics.length > 0">
