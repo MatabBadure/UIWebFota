@@ -375,6 +375,9 @@ ul.logout-dropdown>li{
 	height: 0;
 	overflow: hidden;
 }
+.clinic_diseases > .highcharts-container > .highcharts-tooltip > span{
+	width:160px!important;
+}
 .show-chart{
 	visibility: visible;
 	width: 100%;
