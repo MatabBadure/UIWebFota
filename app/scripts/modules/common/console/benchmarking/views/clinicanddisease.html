@@ -118,7 +118,7 @@
 	      <select ng-change="onXaxisChange()" ng-model="$parent.$parent.$parent.xaxis" ng-class="{disabled: $parent.$parent.$parent.isIgnoreXaxis}" ng-disabled="isIgnoreXaxis">
 		      <option value="ageGroup" label="Age Group" ng-selected="true">Age Group</option>
 		      <option value="clinicSize" label="Clinic Size">Clinic Size</option>
-		     <!--  <option value="both" label="Both">Both</option> -->
+		      <option value="both" label="Both">Both</option>
 		    </select>
 		  </div>
 		</div>
@@ -255,11 +255,8 @@
 
   <loading loaded="isGraphLoaded"></loading>
   	
-	<div class="col-md-16 margin-top" ng-show="xaxis !== 'both'">
+	<div class="col-md-16 margin-top">
 		<div id="clinicdiseaseGraph" class="clinic_diseases"></div>
-	</div>
-	<div class="col-md-16 margin-top" ng-show="xaxis === 'both'">
-		<div id="clinicdiseaseGraph123"></div>
 	</div>
 
 	<div style="clear:both"></div>
