@@ -220,7 +220,7 @@
     <div class="col-md-16">
    		<div class="bar_graph_header">
     		<div class="col-md-2 col-sm-4 margintpp35 margin-top col-md-offset-4 right_header_barchart">
-			 		<input class="vertical_align" type="checkbox" ng-model="$parent.$parent.$parent.isIgnoreXaxis" ng-change="ignoreXaxis()"/> <span class="" >Ignore X-axis</span>
+			 		<input class="vertical_align pull-left margin-rt6" type="checkbox" ng-model="$parent.$parent.$parent.isIgnoreXaxis" ng-change="ignoreXaxis()"/> <span class="" >Ignore X-axis</span>
 				</div>
     		<div class="col-md-4 col-sm-9 pull-right right_header_barchart cyan-blue-light">
 	 				<ul class="nav nav-pills pull-right margin-top">
@@ -260,11 +260,11 @@
 	<div class="col-md-16 dashboard__manage-view--pagination">
 		<div class="btn_group patient_dashdoard_btns">
   		<div dropdown="" class="pull-right left dropdown">
-    		<!-- <button id="single-button" type="button" class="hillrom-btn btn-submit margin0 float-right ng-scope dropdown-toggle"  ng-click="exportPDF()">Export in PDF</button> -->
+    		<button id="single-button" type="button" class="hillrom-btn btn-submit margin0 float-right ng-scope dropdown-toggle"  ng-click="downloadClinicDiseasePDF()">Download As PDF</button>
   		</div>
 		</div>
 	</div>
 	<div style="clear:both"></div>
 
-	<canvas id="benchmarkCanvas" width=1300 height=350 style="display:none;"></canvas>
+	<canvas id="clinicdiseaseCanvas" width=1300 height=350 style="display:none;"></canvas>
 </div>
