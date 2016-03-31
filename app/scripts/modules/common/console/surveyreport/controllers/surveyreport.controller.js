@@ -151,7 +151,7 @@ angular.module('hillromvestApp')
 
 		$scope.drawCategoryChartForNonDay = function(type){
 			var isStackedChart = (type && type == 2)? true : false;
-			console.log("isStackedChart : ", isStackedChart, " type : ", type);
+			var stackType = (type && type == 2)? 'normal' : false;			
 			var chart = Highcharts.chart('surveyGraph', {
 				credits: {
 					enabled: false
@@ -212,28 +212,29 @@ angular.module('hillromvestApp')
 				    y: 0
 			    },
 			    plotOptions: {
-			      series: {
-			        events: {
-			          legendItemClick: function () {
-			         		var self = this,
-			         		allow = false;
-			                        
-			            if(self.visible) {
-			              $.each(self.chart.series, function(i, series) {
-			                if(series !== self && series.visible) {
-			                 	allow = true;
-			                }
-			              });
-			              if(!allow){
-			               	notyService.showMessage(notyMessages.minComplianceError, notyMessages.typeWarning );
-			              }
-			              return allow;
-			            }
-			          }
-			        }
+					pointWidth: 50,
+					series: {
+				        events: {
+				          legendItemClick: function () {
+				         		var self = this,
+				         		allow = false;
+				                        
+				            if(self.visible) {
+				              $.each(self.chart.series, function(i, series) {
+				                if(series !== self && series.visible) {
+				                 	allow = true;
+				                }
+				              });
+				              if(!allow){
+				               	notyService.showMessage(notyMessages.minComplianceError, notyMessages.typeWarning );
+				              }
+				              return allow;
+				            }
+				          }
+				        }
 			      },
 			      column: {
-						stacking: 'normal',
+						stacking: stackType,
 						dataLabels: {
 							enabled: true,
 							color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white',
