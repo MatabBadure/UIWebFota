@@ -491,6 +491,7 @@ angular.module('hillromvestApp')
 		$scope.ignoreXaxis = function(){
 			if($scope.isIgnoreXaxis){
 				/* This Should be made Generic*/
+				$scope.xaxis = 'ageGroup';
 				if($scope.selectedStates.length === 0){
 					$scope.state = Object.keys($scope.rawStates).join();
 				}else{

@@ -115,7 +115,7 @@
 	  </div>
 		<div class="col-md-3 benchmarking__form__input reset-padding selected-box-container" >
 			<div class="custom-dropdown">
-	      <select ng-change="onXaxisChange()" ng-model="$parent.$parent.$parent.xaxis" ng-class="{disabled: $parent.$parent.$parent.isIgnoreXaxis}">
+	      <select ng-change="onXaxisChange()" ng-model="$parent.$parent.$parent.xaxis" ng-class="{disabled: $parent.$parent.$parent.isIgnoreXaxis}" ng-disabled="isIgnoreXaxis">
 		      <option value="ageGroup" label="Age Group" ng-selected="true">Age Group</option>
 		      <option value="clinicSize" label="Clinic Size">Clinic Size</option>
 		      <!-- <option value="both" label="Both">Both</option> -->
@@ -138,6 +138,7 @@
 				  search-property="ageRange"
 				  max-height="250px"
 				  on-close="onAgeGroupClose()"
+				  is-disabled="isIgnoreXaxis"
 				>
 				</div>
 
