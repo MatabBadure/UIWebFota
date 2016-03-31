@@ -4,16 +4,18 @@ angular.module('hillromvestApp')
 
   	$scope.init = function(){
       var currentRoute = $state.current.name;
-      if (currentRoute === 'clinicadminclinicdashboard') {
+      if (currentRoute === 'clinicadminclinicdashboard') {        
         $scope.clinicDashboardInit();
       }
   	};
 
     $scope.clinicDashboardInit = function(){
+      var benchmarkingClinic = (StorageService.get('benchmarkingClinic') && StorageService.get('benchmarkingClinic').clinic) ? StorageService.get('benchmarkingClinic').clinic.id : null;
+      $scope.stateParamclinicId = ($stateParams.clinicId) ? $stateParams.clinicId : (benchmarkingClinic ? benchmarkingClinic : null) ;      
       $scope.clinicStatus={'editMode' : true};
       $scope.getClinicsAssociatedToClinicadmin();
       $scope.getStates();
-      $scope.getClinic($stateParams.clinicId);
+      $scope.getClinic($scope.stateParamclinicId);
     };
 
     $scope.getStates = function(){
@@ -28,7 +30,7 @@ angular.module('hillromvestApp')
       clinicadminService.getClinicsAssociated(StorageService.get('logged').userId).then(function(response){
         $scope.clinics = response.data.clinics;
         angular.forEach($scope.clinics, function(clinic){
-          if(clinic.id === $stateParams.clinicId){
+          if(clinic.id === $scope.stateParamclinicId){
             $scope.selectedClinic =  clinic;
           }
         });

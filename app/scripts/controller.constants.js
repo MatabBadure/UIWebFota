@@ -244,7 +244,7 @@ var benchmarkingParams = [
 					{"parameter" : "adherenceScore", "name": "Adherence Score"},
 					{"parameter" : "missedTherapy", "name": "Missed Therapy Days"},
 					{"parameter" : "settingDeviation", "name": "Setting Deviations"},
-					{"parameter" : "HMRNonAdherence", "name": "HMR Non-Adherence"},
+					{"parameter" : "HMRDeviation", "name": "HMR Non-Adherence"},
 					{"parameter" : "HMRRunRate", "name": "HMR Run Rate"}
 				]
 
@@ -252,4 +252,12 @@ var geographyOption = [
 					{"name": "National"},
 					{"name": "State"},
 					{"name": "City"}
+				]
+
+var benchmarks = [
+	{"benchmark" : "Average", "name": "Average"}
+]
+
+var patientBMParams = [
+					{"parameter" : "adherenceScore", "name": "Adherence Score"}
 				]
