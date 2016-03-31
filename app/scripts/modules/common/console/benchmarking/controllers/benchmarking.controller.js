@@ -403,9 +403,6 @@ angular.module('hillromvestApp')
 			}else{
 				xAxisTitle =  ($scope.xaxis === 'ageGroup') ? 'Age Group':($scope.xaxis === 'both')? 'Both': 'Clinic Size';	
 			}
-			if($scope.xaxis === 'both'){
-				$scope.clinicDiseaseGraphData = stackedgraphData;
-			}
 			var chart = Highcharts.chart('clinicdiseaseGraph', {
 				chart:{
 					type: 'column',
