@@ -43,11 +43,13 @@
 		<div class="col-md-16 padding0 reset-padding" ng-class="{'pointer-no-event': !isGraphLoaded, 'pointer-fill-event': isGraphLoaded}">
 		<div class="bar_graph_header"> 
 	
-			 <div class="col-md-3 benchmarking__form__input reset-padding selected-box-container" >
-				<div class="col-md-16 reset-padding">				
-				 <input type="text" value="Average" placeholder="Average" class="light-grey col-md-15 height30"/>
-				</div>
-	  		</div>
+	  		<div class="col-md-3 benchmarking__form__input reset-padding selected-box-container" >
+				<div class="light-grey col-md-16 reset-padding">				
+					<div class="custom-dropdown" ng-class="{'gray_dropdown': benchmarks.length == 1}">
+						<select ng-model="benchmarkings.selectedBM" ng-options="benchmark as benchmark.name for benchmark in benchmarks" ng-disabled="benchmarks.length === 1" ng-class="{'gray_dropdown': benchmarks.length == 1}"></select>					    
+					</div>   					   
+				</div> 
+			</div>
 		
 			<div class="col-md-3 benchmarking__form__input reset-padding selected-box-container" >
 				<div class="light-grey col-md-16 reset-padding">				
