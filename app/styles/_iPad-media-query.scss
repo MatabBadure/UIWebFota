@@ -162,7 +162,17 @@
 	.height400{
 		height:auto;
 	}
-
+	.hideOverflow{
+			overflow:hidden!important;
+		}
+	@media screen and (-webkit-min-device-pixel-ratio:0) {
+		.hideOverflow{
+			overflow:hidden!important;
+		}
+		.survey_tab_modal{
+		padding: 10px 5px!important;
+		}
+	}
 
 }
 
@@ -321,9 +331,16 @@
 	.patient_padding li a{
 		padding-top:30px!important
 	}
-
-	.overlay{
-		z-index:9999;
+	.hideOverflow{
+			overflow:hidden!important;
+		}
+	@media screen and (-webkit-min-device-pixel-ratio:0) {
+		.hideOverflow{
+			overflow:hidden!important;
+		}
+		.survey_tab_modal{
+		padding: 10px 5px!important;
+		}
 	}
 }
 @media screen and (min-width : 1024px){
