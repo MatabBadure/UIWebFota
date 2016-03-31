@@ -106,11 +106,7 @@
     <div class="col-md-3 benchmarking__form__input reset-padding selected-box-container" >
 			<div class="custom-dropdown">
 		    <select ng-change="onYaxisChange()" ng-model="$parent.$parent.type"  ng-disabled="true">
-		      <option value="noOfPatients" label="Adherence Score" ng-selected="true">No. of Patients</option>
-		      <option value="missedTherapy" label="Missed Therapy Days">Missed Therapy Days</option>
-		      <option value="HMRDeviation" label="HMR Deviation">HMR Deviation</option>
-		      <option value="settingDeviation" label="Setting Deviation">Setting Deviation</option>
-		      <option value="HMRRunrate" label="HMR Runrate">HMR Runrate</option>
+		      <option value="noOfPatients" label="No. of Patients" ng-selected="true">No. of Patients</option>
 		    </select>
 	    </div>
 	  </div>
@@ -119,7 +115,7 @@
 	  </div>
 		<div class="col-md-3 benchmarking__form__input reset-padding selected-box-container" >
 			<div class="custom-dropdown">
-	      <select ng-change="onXaxisChange()" ng-model="$parent.$parent.$parent.xaxis">
+	      <select ng-change="onXaxisChange()" ng-model="$parent.$parent.$parent.xaxis" ng-class="{disabled: $parent.$parent.$parent.isIgnoreXaxis}" ng-disabled="isIgnoreXaxis">
 		      <option value="ageGroup" label="Age Group" ng-selected="true">Age Group</option>
 		      <option value="clinicSize" label="Clinic Size">Clinic Size</option>
 		      <!-- <option value="both" label="Both">Both</option> -->
@@ -127,8 +123,8 @@
 		  </div>
 		</div>
 		<div ng-show="xaxis === 'ageGroup'" class="col-md-3 benchmarking__form__input reset-padding selected-box-container" >
-			<div class="custom-dropdown">	
-			  <div 
+			<div class="custom-dropdown">
+			  <div ng-class="{disabled: $parent.$parent.$parent.isIgnoreXaxis}"
 				  isteven-multi-select
 				  input-model="ageGroups"
 				  output-model="$parent.$parent.selectedAges"
@@ -142,6 +138,7 @@
 				  search-property="ageRange"
 				  max-height="250px"
 				  on-close="onAgeGroupClose()"
+				  is-disabled="isIgnoreXaxis"
 				>
 				</div>
 
@@ -149,7 +146,7 @@
 		</div>
 		<div ng-show="xaxis === 'clinicSize'" class="col-md-3 benchmarking__form__input reset-padding selected-box-container" >
 			<div class="custom-dropdown">	
-				<div
+				<div ng-class="{disabled: $parent.$parent.$parent.isIgnoreXaxis}"
 				  isteven-multi-select
 				  input-model="clinicSizes"
 				  output-model="$parent.$parent.selectedClinicSizes"
@@ -182,7 +179,7 @@
 			</div>
 			<div class="col-md-3 col-sm-3 benchmarking__form__input reset-padding selected-box-container" >
 			  <div class="custom-dropdown">	
-				  <div
+				  <div ng-class="{disabled: $parent.$parent.$parent.isIgnoreXaxis}"
 					  isteven-multi-select
 					  input-model="ageGroups"
 					  output-model="$parent.$parent.$parent.selectedAges"
@@ -200,6 +197,7 @@
 					</div>
 
 					<div class="margin-top custom-dropdown"
+						ng-class="{disabled: $parent.$parent.$parent.isIgnoreXaxis}"
 					  isteven-multi-select
 					  input-model="clinicSizes"
 					  output-model="$parent.$parent.$parent.selectedClinicSizes"
@@ -222,7 +220,7 @@
     <div class="col-md-16">
    		<div class="bar_graph_header">
     		<div class="col-md-2 col-sm-4 margintpp35 margin-top col-md-offset-4 right_header_barchart">
-			 		<!-- <input class="vertical_align" type="checkbox" ng-model="$parent.$parent.$parent.isIgnoreXaxis" ng-change="ignoreXaxis()"/> <span class="" >Ignore X-axis</span> -->
+			 		<input class="vertical_align" type="checkbox" ng-model="$parent.$parent.$parent.isIgnoreXaxis" ng-change="ignoreXaxis()"/> <span class="" >Ignore X-axis</span>
 				</div>
     		<div class="col-md-4 col-sm-9 pull-right right_header_barchart cyan-blue-light">
 	 				<ul class="nav nav-pills pull-right margin-top">

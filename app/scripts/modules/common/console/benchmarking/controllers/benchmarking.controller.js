@@ -45,11 +45,7 @@ angular.module('hillromvestApp')
 
 		$scope.customDateRangeView = function(){
 			$scope.toggleDuration(false, false, false, false, true);
-			if($state.current.name === 'adminBenchmarking' || $state.current.name === 'rcadminBenchmarking' || $state.current.name === 'associatesBenchmarking'){
-				$scope.getBenchmarkingReport($scope.serverFromDate, $scope.serverToDate, $scope.xaxis, $scope.type, $scope.benchmarkType, $scope.range, $scope.state, $scope.city);
-			}else if($state.current.name === 'adminClinicDiseaseBenchmarking' || $state.current.name === 'rcadminClinicDiseaseBenchmarking' || $state.current.name === 'associatesClinicDiseaseBenchmarking'){
-				$scope.getClinicDiseaseReport($scope.serverFromDate, $scope.serverToDate, $scope.xaxis, $scope.ageRange, $scope.clinicRange, $scope.state, $scope.city);
-			}
+			$scope.getGraphData();
 		};
 
 
@@ -148,48 +144,56 @@ angular.module('hillromvestApp')
 		};
 
 		$scope.onClose = function(){
-			delete $scope.city;
-			if($scope.selectedStates.length > 0 && $scope.selectedStates.length !== $scope.states.length){
+			if($scope.selectedStates.length > 0){
 				var selectedStates = [];
-				var state = $scope.selectedStates[0].name;
-				$scope.cities = [];
-				angular.forEach($scope.rawStates[state.toString()], function(city){
-					var obj = {
-						'name':city,
-						'ticked':true 
-					};
-					$scope.cities.push(obj);
-				});
+				if($scope.selectedStates.length === 1){
+					var state = $scope.selectedStates[0].name;
+					$scope.cities = [];
+					angular.forEach($scope.rawStates[state.toString()], function(city){
+						var obj = {
+							'name':city,
+							'ticked':true 
+						};
+						$scope.cities.push(obj);
+					});
+					if($scope.cities.length > 0 ){
+						var cities = [];
+						angular.forEach($scope.cities, function(city){
+							cities.push(city.name);
+						});
+						$scope.city = cities.join();
+					}
+				}else{
+					delete $scope.city;
+				}
 				angular.forEach($scope.selectedStates, function(selectedState){
 					selectedStates.push(selectedState.name);
 				});
 				$scope.state = selectedStates.join();
 			}else{
-				$scope.state = 'all';
+				delete $scope.city;
+				$scope.state = Object.keys($scope.rawStates).join();
 			}
-			if($state.current.name === 'adminBenchmarking' || $state.current.name === 'rcadminBenchmarking' || $state.current.name === 'associatesBenchmarking'){
-				$scope.getBenchmarkingReport($scope.serverFromDate, $scope.serverToDate, $scope.xaxis, $scope.type, $scope.benchmarkType, $scope.range, $scope.state, $scope.city);	
-			}
-			if($state.current.name === 'adminClinicDiseaseBenchmarking' || $state.current.name === 'rcadminClinicDiseaseBenchmarking' || $state.current.name === 'associatesClinicDiseaseBenchmarking'){
-				$scope.getClinicDiseaseReport($scope.serverFromDate, $scope.serverToDate, $scope.xaxis, $scope.ageRange, $scope.clinicRange, $scope.state, $scope.city);
-			}
+			$scope.getGraphData();
 		};
 
 		$scope.onCitiesClose = function(){
-			if($scope.selectedCities.length > 0 && $scope.selectedCities.length !== $scope.cities.length){
+			if($scope.selectedCities.length > 0 ){
 				var cities = [];
 				angular.forEach($scope.selectedCities, function(city){
 					cities.push(city.name);
 				});
 				$scope.city = cities.join();
 			}else{
-				$scope.city = 'all';
+				if($scope.cities.length > 0){
+					var cities = [];
+					angular.forEach($scope.cities, function(city){
+						cities.push(city.name);
+					});
+					$scope.city = cities.join();
+				}
 			}
-			if($state.current.name === 'adminBenchmarking' || $state.current.name === 'rcadminBenchmarking' || $state.current.name === 'associatesBenchmarking'){
-				$scope.getBenchmarkingReport($scope.serverFromDate, $scope.serverToDate, $scope.xaxis, $scope.type, $scope.benchmarkType, $scope.range, $scope.state, $scope.city);
-			}else if($state.current.name === 'adminClinicDiseaseBenchmarking' || $state.current.name === 'rcadminClinicDiseaseBenchmarking' || $state.current.name === 'associatesClinicDiseaseBenchmarking'){
-				$scope.getClinicDiseaseReport($scope.serverFromDate, $scope.serverToDate, $scope.xaxis, $scope.ageRange, $scope.clinicRange, $scope.state, $scope.city);
-			}
+			$scope.getGraphData();
 		};
 
 		$scope.onXaxisChange = function(){
@@ -217,11 +221,7 @@ angular.module('hillromvestApp')
 				$scope.range = 'all';
 				$scope.ageRange = 'all';
 			}
-			if($state.current.name === 'adminBenchmarking' || $state.current.name === 'rcadminBenchmarking' || $state.current.name === 'associatesBenchmarking'){
-				$scope.getBenchmarkingReport($scope.serverFromDate, $scope.serverToDate, $scope.xaxis, $scope.type, $scope.benchmarkType, $scope.range, $scope.state, $scope.city);
-			}else if($state.current.name === 'adminClinicDiseaseBenchmarking' || $state.current.name === 'rcadminClinicDiseaseBenchmarking' || $state.current.name === 'associatesClinicDiseaseBenchmarking'){
-				$scope.getClinicDiseaseReport($scope.serverFromDate, $scope.serverToDate, $scope.xaxis, $scope.ageRange, $scope.clinicRange, $scope.state, $scope.city);
-			}
+			$scope.getGraphData();
 		};
 
 		$scope.onClinicRangeClose = function(){
@@ -236,12 +236,20 @@ angular.module('hillromvestApp')
 				$scope.range = 'all';	
 				$scope.clinicRange = 'all';
 			}
-			if($state.current.name === 'adminBenchmarking' || $state.current.name === 'rcadminBenchmarking' || $state.current.name === 'associatesBenchmarking'){
-				$scope.getBenchmarkingReport($scope.serverFromDate, $scope.serverToDate, $scope.xaxis, $scope.type, $scope.benchmarkType, $scope.range, $scope.state, $scope.city);
-			}else if($state.current.name === 'adminClinicDiseaseBenchmarking' || $state.current.name === 'rcadminClinicDiseaseBenchmarking' || $state.current.name === 'associatesClinicDiseaseBenchmarking'){
-				$scope.getClinicDiseaseReport($scope.serverFromDate, $scope.serverToDate, $scope.xaxis, $scope.ageRange, $scope.clinicRange, $scope.state, $scope.city);
-			}
+			$scope.getGraphData();
 		};
+
+		$scope.getGraphData = function(){
+			if($state.current.name === 'adminBenchmarking' || $state.current.name === 'rcadminBenchmarking' || $state.current.name === 'associatesBenchmarking'){
+				$scope.getBenchmarkingReport($scope.serverFromDate, $scope.serverToDate, $scope.xaxis, $scope.type, $scope.benchmarkType, $scope.range, $scope.state, $scope.city);	
+			}else if($state.current.name === 'adminClinicDiseaseBenchmarking' || $state.current.name === 'rcadminClinicDiseaseBenchmarking' || $state.current.name === 'associatesClinicDiseaseBenchmarking'){
+				if($scope.isIgnoreXaxis){
+					$scope.getClinicDiseaseReportIgnoreXaxis();
+				}else{
+					$scope.getClinicDiseaseReport($scope.serverFromDate, $scope.serverToDate, $scope.xaxis, $scope.ageRange, $scope.clinicRange, $scope.state, $scope.city);
+				}
+			}
+		}
 
 		$scope.getBenchmarkingReport = function(fromDate, toDate, XAxis, type, benchmarkType,range, state, city){
 			benchmarkingService.getBenchmarkingReport(fromDate, toDate, XAxis, type, benchmarkType, range, state, city).then(function(response){
@@ -252,8 +260,8 @@ angular.module('hillromvestApp')
 			});
 		};
 
-		$scope.getClinicDiseaseReport = function(fromDate, toDate, xaxis, ageRange, clinicRange, state){
-			benchmarkingService.getClinicDiseaseReport(fromDate, toDate, xaxis, ageRange, clinicRange, state).then(function(response){
+		$scope.getClinicDiseaseReport = function(fromDate, toDate, xaxis, ageRange, clinicRange, state, city){
+			benchmarkingService.getClinicDiseaseReport(fromDate, toDate, xaxis, ageRange, clinicRange, state, city).then(function(response){
 				$scope.clinicDiseaseGraphData = response.data;
 				$scope.drawClinicDiseaseChart();
 			}).catch(function(response){
@@ -264,25 +272,25 @@ angular.module('hillromvestApp')
 		$scope.dayView = function(){
 			$scope.toggleDuration(true, false, false, false, false);
 			$scope.calculateTimeDuration(0);
-			$scope.getBenchmarkingReport($scope.serverFromDate, $scope.serverToDate, $scope.xaxis, $scope.type, $scope.benchmarkType, $scope.range, $scope.state, $scope.city);
+			$scope.getGraphData();
 		};
 
 		$scope.weekView = function(){
 			$scope.toggleDuration(false, true, false, false, false);
 			$scope.calculateTimeDuration(5);
-			$scope.getBenchmarkingReport($scope.serverFromDate, $scope.serverToDate, $scope.xaxis, $scope.type, $scope.benchmarkType, $scope.range, $scope.state, $scope.city);
+			$scope.getGraphData();
 		};
 
 		$scope.monthView = function(){
 			$scope.toggleDuration(false, false, true, false, false);
 			$scope.calculateTimeDuration(30);
-			$scope.getBenchmarkingReport($scope.serverFromDate, $scope.serverToDate, $scope.xaxis, $scope.type, $scope.benchmarkType, $scope.range, $scope.state, $scope.city);
+			$scope.getGraphData();
 		};
 
 		$scope.yearView = function(){
 			$scope.toggleDuration(false, false, false, true, false);
 			$scope.calculateTimeDuration(365);
-			$scope.getBenchmarkingReport($scope.serverFromDate, $scope.serverToDate, $scope.xaxis, $scope.type, $scope.benchmarkType, $scope.range, $scope.state, $scope.city);
+			$scope.getGraphData();
 		};
 
 		$scope.drawBenchmarkingchart = function(){
@@ -380,6 +388,12 @@ angular.module('hillromvestApp')
 		};
 
 		$scope.drawClinicDiseaseChart = function(){
+			var xAxisTitle = '';
+			if($scope.isIgnoreXaxis){
+				xAxisTitle = 'Geography';	
+			}else{
+				xAxisTitle =  ($scope.xaxis === 'ageGroup') ? 'Age Group':($scope.xaxis === 'both')? 'Both': 'Clinic Size';	
+			}
 			var chart = Highcharts.chart('clinicdiseaseGraph', {
 				chart:{
 					type: 'column',
@@ -399,7 +413,7 @@ angular.module('hillromvestApp')
 				    }
 			    },
 			    title: {
-		        text: ($scope.xaxis === 'ageGroup') ? 'Age Group':($scope.xaxis === 'both')? 'Both': 'Clinic Size',
+		        text: xAxisTitle,
 		        style: {
 			        color: '#525151',
 			        font: '10px Helvetica',
@@ -476,25 +490,35 @@ angular.module('hillromvestApp')
 
 		$scope.ignoreXaxis = function(){
 			if($scope.isIgnoreXaxis){
-				benchmarkingService.getClinicDiseaseReportIgnoreXaxis($scope.serverFromDate, $scope.serverToDate, $scope.state, $scope.city).then(function(response){
-					$scope.clinicDiseaseGraphData = response.data;
-					$scope.drawClinicDiseaseChart();
-				}).catch(function(response){
-
-				});
+				/* This Should be made Generic*/
+				$scope.xaxis = 'ageGroup';
+				if($scope.selectedStates.length === 0){
+					$scope.state = Object.keys($scope.rawStates).join();
+				}else{
+					var selectedStates = [];
+					angular.forEach($scope.selectedStates, function(selectedState){
+						selectedStates.push(selectedState.name);
+					});
+					$scope.state = selectedStates.join();	
+				}
+				$scope.getClinicDiseaseReportIgnoreXaxis();
 			}else{
-
+				$scope.getClinicDiseaseReport($scope.serverFromDate, $scope.serverToDate, $scope.xaxis, $scope.ageRange, $scope.clinicRange, $scope.state, $scope.city);
 			}
 		};
 
-		$scope.drawNonXaxisChart = function(){
-
+		$scope.getClinicDiseaseReportIgnoreXaxis = function(){
+			benchmarkingService.getClinicDiseaseReportIgnoreXaxis($scope.serverFromDate, $scope.serverToDate, $scope.state, $scope.city).then(function(response){
+				$scope.clinicDiseaseGraphData = response.data;
+				$scope.drawClinicDiseaseChart();
+			}).catch(function(response){
+			  notyService.showError(response);
+			});
 		};
 
 		$scope.switchBenchmarking = function(state){
 			
 			switch(StorageService.get('logged').role){
-				
 				case loginConstants.role.admin: 
 					if(state === 'parameter'){
 						$state.go('adminBenchmarking');
@@ -502,7 +526,6 @@ angular.module('hillromvestApp')
 						$state.go('adminClinicDiseaseBenchmarking');
 					}
 					break;
-				
 				case loginConstants.role.acctservices: 
 					if(state === 'parameter'){
 						$state.go('rcadminBenchmarking');
