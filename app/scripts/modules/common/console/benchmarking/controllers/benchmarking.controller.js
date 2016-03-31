@@ -702,7 +702,7 @@ angular.module('hillromvestApp')
 			}else if($scope.xaxis === 'clinicSize' && !$scope.isIgnoreXaxis){
 				pdfTitle = pdfTitle + ' Clinic Size'; 
 			}else if($scope.xaxis === 'both' && !$scope.isIgnoreXaxis){
-				pdfTitle = pdfTitle + ' Both';
+				pdfTitle = pdfTitle + ' Age Group and Clinic Size';
 			}else if($scope.isIgnoreXaxis){
 				pdfTitle = pdfTitle + ' Geography';
 			}
