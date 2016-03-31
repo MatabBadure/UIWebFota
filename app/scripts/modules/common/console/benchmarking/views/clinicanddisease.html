@@ -141,7 +141,7 @@
 				  is-disabled="isIgnoreXaxis"
 				>
 				</div>
-				<span class="has-error">Some text.....</span>
+				<span class="has-error" ng-show="$parent.$parent.$parent.showRangeError">Please select atleast one range</span>
 		  </div> 
 		</div>
 		<div ng-show="xaxis === 'clinicSize'" class="col-md-3 benchmarking__form__input reset-padding selected-box-container" >
@@ -162,7 +162,7 @@
 				  on-close="onClinicRangeClose()"
 				>
 				</div>
-					<span class="has-error">Some text.....</span>
+					<span class="has-error" ng-show="$parent.$parent.$parent.showRangeError">Please select atleast one range</span>
 			</div> 
 		</div>
 
@@ -216,7 +216,7 @@
 					  on-close="onClinicRangeClose()"
 					>
 					</div>
-				 	<span class="has-error error-message">Some text.....</span>
+				 	<span class="has-error error-message" ng-show="$parent.$parent.$parent.showRangeError">Please select atleast one range</span>
 			  </div>
 
 			</div>
