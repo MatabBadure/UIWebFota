@@ -120,13 +120,13 @@
 		  </div>
 			<div class="col-md-3 col-sm-3 benchmarking__form__input reset-padding selected-box-container" >
 				<div class="custom-dropdown">
-		      <select ng-change="onXaxisChange()" ng-model="$parent.$parent.xaxis">
+		      <select ng-change="onXaxisChange()" ng-model="$parent.$parent.$parent.xaxis">
 			      <option value="ageGroup" label="Age Group" ng-selected="true">Age Group</option>
 			      <option value="clinicSize" label="Clinic Size">Clinic Size</option>
 			    </select>            
 			  </div> 
 			</div>
-			<div class="col-md-3 col-sm-3 benchmarking__form__input reset-padding selected-box-container" >
+			<div class="col-md-3 col-sm-3 margin-bottom benchmarking__form__input reset-padding selected-box-container" >
 				<div class="custom-dropdown">	
 				  <div ng-show="isAgeGroup"
 					  isteven-multi-select
@@ -148,7 +148,7 @@
 					<div ng-show="!isAgeGroup"
 					  isteven-multi-select
 					  input-model="clinicSizes"
-					  output-model="$parent.$parent.selectedClinicSizes"
+					  output-model="$parent.$parent.$parent.selectedClinicSizes"
 					  button-label="size"
 					  item-label="size"
 					  tick-property="true"
@@ -160,8 +160,10 @@
 					  max-height="250px"
 					  on-close="onClinicRangeClose()"
 					>
-					</div>        
-			  </div> 
+					</div>
+					 <span class="has-error" ng-show="$parent.$parent.$parent.showRangeError">Please select atleast one range</span> 
+			  </div>
+
 			</div>
 	    <div class="col-md-4 col-sm-9 pull-right right_header_barchart cyan-blue-light">
 	 			<ul class="nav nav-pills pull-right ">
