@@ -7,6 +7,20 @@ angular.module('hillromvestApp')
 	$scope.benchMarkType = benchmarkingConstants.string.average;
 	$scope.isGraphLoaded = false;
 
+  function resetBenchmarks(){
+    $scope.benchmarks= benchmarks;    
+    $scope.benchmarkings = {};
+    $scope.benchmarkings.selectedBM = $scope.benchmarks[0];
+  };
+
+  function resetBenchmarkParameters(){
+    $scope.benchmarkingParam = patientBMParams;
+    $scope.parameters = {};
+    $scope.parameters.selectedParam = $scope.benchmarkingParam[0];
+  };
+
+  resetBenchmarkParameters();
+  resetBenchmarks();
 
 	$scope.calculateTimeDuration = function(durationInDays) {
       $scope.toTimeStamp = new Date().getTime();

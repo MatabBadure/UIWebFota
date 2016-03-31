@@ -1,12 +1,24 @@
 'use strict';
 
 angular.module('hillromvestApp')
-.controller('hcpCAdminBenchmarkingController', ['$scope', '$state', '$rootScope', 'patientService', 'UserService', 'StorageService', 'dateService', 'benchmarkingConstants', 'patientGraphsConstants', 'exportutilService', 'clinicadminService', 'DoctorService', 'loginConstants', 'clinicService',
-  function ($scope, $state, $rootScope, patientService, UserService, StorageService, dateService, benchmarkingConstants, patientGraphsConstants, exportutilService, clinicadminService, DoctorService, loginConstants, clinicService) {  	
+.controller('hcpCAdminBenchmarkingController', ['$scope', '$state', '$rootScope', 'patientService', 'UserService', 'StorageService', 'dateService', 'benchmarkingConstants', 'patientGraphsConstants', 'exportutilService', 'clinicadminService', 'DoctorService', 'loginConstants', 'clinicService', '$filter',
+  function ($scope, $state, $rootScope, patientService, UserService, StorageService, dateService, benchmarkingConstants, patientGraphsConstants, exportutilService, clinicadminService, DoctorService, loginConstants, clinicService, $filter) {  	
 	$scope.parameterType = benchmarkingConstants.string.adherenceScore;
 	$scope.benchMarkType = benchmarkingConstants.string.average;
 	$scope.isGraphLoaded = false;
   $scope.geographyParam = null;
+
+  function storeSelectedClinic(clinic){    
+    var benchmarkingClinic = {};
+    benchmarkingClinic.clinic = clinic;
+    StorageService.save('benchmarkingClinic', benchmarkingClinic);    
+  };
+
+  function resetBenchmarks(){
+    $scope.benchmarks= benchmarks;    
+    $scope.benchmarkings = {};
+    $scope.benchmarkings.selectedBM = $scope.benchmarks[0];
+  };
 
   function resetBenchmarkParameters(){
     $scope.benchmarkingParam = benchmarkingParams;
@@ -21,6 +33,7 @@ angular.module('hillromvestApp')
   };
   resetBenchmarkParameters();
   resetBenchmarkGeoLocation();
+  resetBenchmarks();
 
   $scope.calculateTimeDuration = function(durationInDays) {
     $scope.toTimeStamp = new Date().getTime();
@@ -255,7 +268,8 @@ angular.module('hillromvestApp')
     //resetBenchmarkParameters();
     //resetBenchmarkGeoLocation();    
     //$scope.weekView();
-    $scope.clinicsDetails.selectedClinic = clinicSelected;    
+    storeSelectedClinic(clinicSelected);
+    $scope.clinicsDetails.selectedClinic = clinicSelected;  
     $scope.redrawBenchmarkingChart();  
   };
 
@@ -290,9 +304,11 @@ angular.module('hillromvestApp')
       clinicService.getClinic($scope.clinicsDetails.selectedClinic.id).then(function(response){                
         if(response && response.data && response.data.clinic){
           if($scope.geoLocation.selectedGeo.name === $scope.geographyOption[1].name){
-            $scope.geographyParam = benchmarkingConstants.string.stateParam + response.data.clinic.state;          
-          }else if($scope.geoLocation.selectedGeo.name === $scope.geographyOption[2].name){           
-            $scope.geographyParam = benchmarkingConstants.string.cityParam + response.data.clinic.city;      
+            var state = (response.data.clinic.state && response.data.clinic.state !== null)? response.data.clinic.state : "";
+            $scope.geographyParam = benchmarkingConstants.string.stateParam + state;          
+          }else if($scope.geoLocation.selectedGeo.name === $scope.geographyOption[2].name){    
+            var city = (response.data.clinic.state && response.data.clinic.state !== null)? response.data.clinic.state : "";       
+            $scope.geographyParam = benchmarkingConstants.string.cityParam + city;      
           }
           $scope.initBenchmarkingChart();
         }               
@@ -314,9 +330,10 @@ angular.module('hillromvestApp')
     $scope.clinicsDetails = {}; 
     clinicadminService.getClinicsAssociated(StorageService.get('logged').userId).then(function(response){          
       if(response.data.clinics){
-        $scope.clinics = response.data.clinics; 
+        $scope.clinics = $filter('orderBy')(response.data.clinics, "name");
         if($scope.clinics && $scope.clinics.length > 0){
           $scope.clinicsDetails.selectedClinic = $scope.clinics[0];
+          storeSelectedClinic($scope.clinics[0]);
         }     
       }
       UserService.getUser(StorageService.get('logged').userId).then(function(response){
@@ -333,9 +350,10 @@ angular.module('hillromvestApp')
     $scope.clinicsDetails = {}; 
     DoctorService.getClinicsAssociatedToHCP(StorageService.get('logged').userId).then(function(response){      
       if(response.data.clinics){
-        $scope.clinics = response.data.clinics; 
+        $scope.clinics = $filter('orderBy')(response.data.clinics, "name");
         if($scope.clinics && $scope.clinics.length > 0){
           $scope.clinicsDetails.selectedClinic = $scope.clinics[0];
+          storeSelectedClinic($scope.clinics[0]);
         }     
       }
       UserService.getUser(StorageService.get('logged').userId).then(function(response){

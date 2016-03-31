@@ -405,7 +405,9 @@ ul.logout-dropdown>li{
   text-indent: 7px;
   border-radius:0;
 }
-
+.gray_dropdown:before, .gray_dropdown{
+	color:#C1C1C1!important;
+}
  .multiSelect > button{
 	border-radius:0;
 	min-height: 0!important;
