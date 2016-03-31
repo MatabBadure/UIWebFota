@@ -197,7 +197,7 @@ angular.module('hillromvestApp')
 		};
 
 		$scope.onXaxisChange = function(){
-			console.log($scope.xaxis)
+			$scope.isAgeGroup = $scope.isAgeGroup ? false: true;
 			if($scope.xaxis === 'ageGroup'){
 				$scope.onAgeGroupClose();
 			}else if($scope.xaxis === 'clinicSize'){
@@ -205,12 +205,6 @@ angular.module('hillromvestApp')
 			}else if($scope.xaxis === 'both'){
 				$scope.getClinicDiseaseReport($scope.serverFromDate, $scope.serverToDate, $scope.xaxis, $scope.ageRange, $scope.clinicRange, $scope.state, $scope.city);
 			}
-			// $scope.isAgeGroup = $scope.isAgeGroup ? false: true;
-			// if($scope.isAgeGroup){
-			// 	$scope.onAgeGroupClose();
-			// }else{
-			// 	$scope.onClinicRangeClose();
-			// }
 		};
 
 		$scope.onYaxisChange = function(){
@@ -218,33 +212,34 @@ angular.module('hillromvestApp')
 		};
 
 		$scope.onAgeGroupClose =function(){
-			if($scope.selectedAges.length > 0 && $scope.selectedAges.length !== $scope.ageGroups.length){
+			if($scope.selectedAges.length > 0){
 				var ranges = [];
 				angular.forEach($scope.selectedAges, function(selectedAge){
 					ranges.push(selectedAge.ageRange);
 				});
 				$scope.range = ranges.join();
 				$scope.ageRange = ranges.join();
+				$scope.showRangeError = false;
+				$scope.getGraphData();
 			}else{
-				$scope.range = 'all';
-				$scope.ageRange = 'all';
+				$scope.showRangeError = true;
 			}
-			$scope.getGraphData();
 		};
 
 		$scope.onClinicRangeClose = function(){
-			if($scope.selectedClinicSizes.length > 0 && $scope.selectedClinicSizes.length !== $scope.clinicSizes.length){
+			if($scope.selectedClinicSizes.length > 0 ){
 				var ranges = [];
 				angular.forEach($scope.selectedClinicSizes, function(selectedClinic){
 					ranges.push(selectedClinic.size);
 				});
 				$scope.range = ranges.join();
 				$scope.clinicRange = ranges.join();
+				$scope.showRangeError = false;
+				$scope.getGraphData();
 			}else{
-				$scope.range = 'all';	
-				$scope.clinicRange = 'all';
+				$scope.showRangeError = true;
 			}
-			$scope.getGraphData();
+			
 		};
 
 		$scope.getGraphData = function(){
