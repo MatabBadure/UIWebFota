@@ -197,12 +197,20 @@ angular.module('hillromvestApp')
 		};
 
 		$scope.onXaxisChange = function(){
-			$scope.isAgeGroup = $scope.isAgeGroup ? false: true;
-			if($scope.isAgeGroup){
+			console.log($scope.xaxis)
+			if($scope.xaxis === 'ageGroup'){
 				$scope.onAgeGroupClose();
-			}else{
+			}else if($scope.xaxis === 'clinicSize'){
 				$scope.onClinicRangeClose();
+			}else if($scope.xaxis === 'both'){
+				$scope.getClinicDiseaseReport($scope.serverFromDate, $scope.serverToDate, $scope.xaxis, $scope.ageRange, $scope.clinicRange, $scope.state, $scope.city);
 			}
+			// $scope.isAgeGroup = $scope.isAgeGroup ? false: true;
+			// if($scope.isAgeGroup){
+			// 	$scope.onAgeGroupClose();
+			// }else{
+			// 	$scope.onClinicRangeClose();
+			// }
 		};
 
 		$scope.onYaxisChange = function(){
@@ -394,6 +402,9 @@ angular.module('hillromvestApp')
 			}else{
 				xAxisTitle =  ($scope.xaxis === 'ageGroup') ? 'Age Group':($scope.xaxis === 'both')? 'Both': 'Clinic Size';	
 			}
+			if($scope.xaxis === 'both'){
+				$scope.clinicDiseaseGraphData = stackedgraphData;
+			}
 			var chart = Highcharts.chart('clinicdiseaseGraph', {
 				chart:{
 					type: 'column',
@@ -442,7 +453,14 @@ angular.module('hillromvestApp')
 			        //font: '10px Helvetica',
 			        fontWeight: 'bold'
 			      }
-		      }
+		      },
+		      stackLabels: {
+             enabled: ($scope.xaxis === 'both')? true: false,
+             style: {
+                fontWeight: 'bold',
+                color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
+            }
+          }
 		    },
         legend: {
 		      align: 'center',
@@ -454,7 +472,24 @@ angular.module('hillromvestApp')
 		      series: {
 		      	showInLegend: false,
 		      	pointWidth: 50
-		      }
+		      },
+		      column: {
+						stacking: ($scope.xaxis === 'both') ? 'normal': false,
+						dataLabels: {
+							enabled: true,
+							color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white',
+							style: {
+								textShadow: '0 0 3px black'
+							},
+							formatter: function() {
+						        if (this.y != 0 && $scope.xaxis === 'both') {
+						          return this.y ;
+						        } else {
+						          return null;
+						        }
+						    }
+						}
+					}
 		    },
 				tooltip: {
 					crosshairs: [{
