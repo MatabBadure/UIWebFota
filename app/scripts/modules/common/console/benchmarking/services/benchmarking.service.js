@@ -17,10 +17,10 @@ angular.module('hillromvestApp')
       */
       getBenchmarkingReport: function(fromDate, toDate, XAxis, type, benchmarkType, range, state, city) {
         var url = URL.getBenchmarking.replace('FROM', fromDate).replace('TO', toDate).replace('XAXIS',XAxis).replace('TYPE',type).replace('BENCHMARKTYPE',benchmarkType).replace('RANGE',range);
-        if(state && state !== 'all'){
+        if(state ){
           url = url+'&state='+state;
         }
-        if(city && city !== 'all'){
+        if(city ){
           url = url+'&city='+city;
         }
         return $http.get(url,{
