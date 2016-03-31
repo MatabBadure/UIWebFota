@@ -417,6 +417,10 @@ ul.logout-dropdown>li{
     text-align:left;
     position:relative;
 }
+.disabled{
+	background-color:#f1f1f1 !important;
+	color:#c1c1c1!important;
+}
 .multiSelect > button:hover{
 	background: transparent;
 }

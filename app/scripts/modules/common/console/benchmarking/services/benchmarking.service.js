@@ -32,10 +32,10 @@ angular.module('hillromvestApp')
 
       getClinicDiseaseReport: function(fromDate, toDate, XAxis, ageGroupRange, clinicSizeRange, state, city){
         var url = URL.getClinicDisease.replace('FROM', fromDate).replace('TO', toDate).replace('XAXIS',XAxis).replace('AGERANGE', ageGroupRange).replace('CLINICRANGE', clinicSizeRange);
-        if(state && state !== 'all'){
+        if(state){
           url = url+'&state='+state;
         }
-        if(city && city !== 'all'){
+        if(city){
           url = url+'&city='+city;
         }
         return $http.get(url,{
@@ -47,10 +47,10 @@ angular.module('hillromvestApp')
 
       getClinicDiseaseReportIgnoreXaxis: function(from, to, state, city){
         var url = URL.getClinicDiseaseNonXaxis.replace('FROM', from).replace('TO', to);
-        if(state && state !== 'all'){
+        if(state){
           url = url+'&state='+state;
         }
-        if(city && city !== 'all'){
+        if(city){
           url = url+'&city='+city;
         }
 
