@@ -398,6 +398,121 @@ angular.module('hillromvestApp')
 			}else{
 				xAxisTitle =  ($scope.xaxis === 'ageGroup') ? 'Age Group':($scope.xaxis === 'both')? 'Both': 'Clinic Size';	
 			}
+
+			if($scope.xaxis === 'both'){				
+				$('#clinicdiseaseGraph').highcharts({	
+					chart: {
+			            type: 'column',
+			            zoomType: 'xy',
+						backgroundColor: "#e6f1f4"
+			        },
+			        title: {
+			            text: ''
+			        },
+			        xAxis: {
+			            categories: $scope.clinicDiseaseGraphData.xAxis.categories,
+			            labels:{
+							style: {
+								color: '#525151',							
+								fontWeight: 'bold'
+							}
+						}
+			        },
+			        yAxis: {
+			        	allowDecimals:false,
+			        	gridLineColor: '#FF0000',
+						gridLineWidth: 0,
+						lineWidth:1,
+			        	minRange: 1,
+			            min: 0,
+			            title: {
+			                text: 'No. of patients'
+			            },
+			            labels:{
+							style: {
+								color: '#525151',								
+								fontWeight: 'bold'
+							}
+						},
+			            stackLabels: {
+			                enabled: true,
+			                style: {
+			                    fontWeight: 'bold',
+			                    color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
+			                }
+			            }
+			        },
+			        legend: {
+			            align: 'center',
+					    verticalAlign: 'bottom',
+					    x: 0,
+					    y: 0
+			        },
+			        tooltip: {
+						crosshairs: [{
+							dashStyle: 'solid',
+							color: '#b4e6f6'
+						},
+						false],
+						formatter: function() {	
+						console.log(this);						
+							var s = '<div style="font-size:12x;font-weight: bold; padding-bottom: 3px;text-align:center"> Age Group : '+  this.x +'</div>';
+							s += '<div style="font-size:12x; padding-bottom: 3px;text-align:center"> Total No. Of Patients : '+  this.points[0].total +'</div>';
+							s += '<div style="font-size:12x;padding-bottom: 3px;float:left;text-align:center">Clinic Size  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div style="font-size:12x; padding-bottom: 3px;text-align:right">Patients &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div>';
+							$.each(this.points, function(i, point) {
+
+							s += '<div style="font-size:10px; font-weight: bold; width:88%;padding:0 12px"><div style="color:'+ point.series.color +';padding:5px 0;width:80%;float:left"> ' + point.series.name + '</div> ' 
+							+ '<div style="padding:5px;width:10%"><b>' + point.y + '</b></div></div>';
+							});
+							s += '</div>';
+							return s;
+						},
+						hideDelay: 0,
+						useHTML: true,
+						shared: true
+			        },
+			        plotOptions: {
+			        	series: {
+							events: {
+								legendItemClick: function () {
+									var self = this,
+									allow = false;
+
+									if(self.visible) {
+										$.each(self.chart.series, function(i, series) {
+											if(series !== self && series.visible) {
+												allow = true;
+											}
+										});
+										if(!allow){
+											notyService.showMessage(notyMessages.minComplianceError, notyMessages.typeWarning );
+										}
+										return allow;
+									}
+								}
+							}
+						},
+			            column: {
+							stacking: 'normal',
+							dataLabels: {
+								enabled: true,
+								color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white',
+								style: {
+									textShadow: '0 0 3px black'
+								},
+								formatter: function() {
+							        if (this.y != 0) {
+							          return this.y ;
+							        } else {
+							          return null;
+							        }
+							    }
+							}
+						}
+			        },
+			        series: $scope.clinicDiseaseGraphData.series 
+				});
+			}else{
 			var chart = Highcharts.chart('clinicdiseaseGraph', {
 				chart:{
 					type: 'column',
@@ -513,6 +628,8 @@ angular.module('hillromvestApp')
 				loading: true,
 				size: {}
 		  });
+
+}
 		};
 
 		$scope.exportPDF = function(){
