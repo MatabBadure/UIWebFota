@@ -544,4 +544,22 @@ angular.module('hillromvestApp')
 			}
 		};
 
+		$scope.downloadClinicDiseasePDF = function(){
+			var pdfTitle = $scope.benchmarkType+' ';
+			if($scope.type === 'noOfPatients') {
+				pdfTitle = pdfTitle+ 'No. of Patients for';
+			}
+			if($scope.xaxis === 'ageGroup' && !$scope.isIgnoreXaxis){ 
+				pdfTitle = pdfTitle + ' Age Group'; 
+			}else if($scope.xaxis === 'clinicSize' && !$scope.isIgnoreXaxis){
+				pdfTitle = pdfTitle + ' Clinic Size'; 
+			}else if($scope.xaxis === 'both' && !$scope.isIgnoreXaxis){
+				pdfTitle = pdfTitle + ' Both';
+			}else if($scope.isIgnoreXaxis){
+				pdfTitle = pdfTitle + ' Geography';
+			}
+			
+			exportutilService.exportBenchmarkPDF('clinicdiseaseGraph', 'clinicdiseaseCanvas', $scope.fromDate, $scope.toDate, pdfTitle);
+		};
+
 	}]);
