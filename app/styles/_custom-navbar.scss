@@ -352,7 +352,9 @@ ul.logout-dropdown>li{
   top:0; 
   width:100%;
 }
-
+.margin-rt6{
+	margin-right:6px!important;
+}
 .content {
 	margin-top: 62px;
 }
@@ -372,6 +374,9 @@ ul.logout-dropdown>li{
 	opacity: 0;
 	height: 0;
 	overflow: hidden;
+}
+.clinic_diseases > .highcharts-container > .highcharts-tooltip > span{
+	width:210px!important;
 }
 .show-chart{
 	visibility: visible;

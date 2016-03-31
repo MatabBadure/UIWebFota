@@ -369,7 +369,7 @@ angular.module('hillromvestApp')
 						var date = ($scope.fromDate === $scope.toDate) ? $scope.fromDate : $scope.fromDate +' - '+$scope.toDate;
 						var xAxis = ($scope.xaxis === 'ageGroup')? 'Age Group': 'Clinic Size';
 
-						var s = '<div style="font-size:12px ;padding-bottom: 3px;">'+ date + '</div><div style="font-size:10px; padding-bottom: 3px;">'+ xAxis + ' : ' + this.x +'</div><div>';
+						var s = '<div style="font-size:12px ;padding-bottom: 3px;width:150px">'+ date + '</div><div style="font-size:10px; padding-bottom: 3px;">'+ xAxis + ' : ' + this.x +'</div><div>';
 			    	$.each(this.points, function(i, point) {
 			      	s += '<div style="font-size:10px; width:100%"><div style="color:'+ point.series +';padding:0;width:auto;float:left"> ' + point.series.name + ' : </div> ' 
 			        + ' <div style="padding:0;width:auto">&nbsp;<b>' + point.y + '</b></div><div style="line-height:24px">Total No. of Patients : '+ point.point.toolText.totalPatients +' </div></div>';
@@ -465,7 +465,8 @@ angular.module('hillromvestApp')
 					formatter: function() {
 						var date = ($scope.fromDate === $scope.toDate) ? $scope.fromDate : $scope.fromDate +' - '+$scope.toDate;
 						var xAxis = ($scope.xaxis === 'ageGroup')? 'Age Group': 'Clinic Size';
-						var s = '<div style="font-size:12px ;padding-bottom: 5px;">'+ date + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div style="font-size:10px; padding-bottom: 3px;">'+ xAxis + ' : ' + this.x +'</div><div>';
+
+						var s = '<div style="font-size:12px ;padding-bottom: 5px;">'+ date + '</div><div style="font-size:10px; padding-bottom: 3px;">'+ xAxis + ' : ' + this.x +'</div><div>';
 
 			    	$.each(this.points, function(i, point) {
 			      	s += '<div style="font-size:10px; width:100%;"><div style="color:'+ point.series +';padding:0;width:auto;float:left"> ' + point.series.name + ' : </div> ' 
@@ -542,6 +543,24 @@ angular.module('hillromvestApp')
 					}
 					break;
 			}
+		};
+
+		$scope.downloadClinicDiseasePDF = function(){
+			var pdfTitle = $scope.benchmarkType+' ';
+			if($scope.type === 'noOfPatients') {
+				pdfTitle = pdfTitle+ 'No. of Patients for';
+			}
+			if($scope.xaxis === 'ageGroup' && !$scope.isIgnoreXaxis){ 
+				pdfTitle = pdfTitle + ' Age Group'; 
+			}else if($scope.xaxis === 'clinicSize' && !$scope.isIgnoreXaxis){
+				pdfTitle = pdfTitle + ' Clinic Size'; 
+			}else if($scope.xaxis === 'both' && !$scope.isIgnoreXaxis){
+				pdfTitle = pdfTitle + ' Both';
+			}else if($scope.isIgnoreXaxis){
+				pdfTitle = pdfTitle + ' Geography';
+			}
+			
+			exportutilService.exportBenchmarkPDF('clinicdiseaseGraph', 'clinicdiseaseCanvas', $scope.fromDate, $scope.toDate, pdfTitle);
 		};
 
 	}]);
