@@ -141,7 +141,7 @@
 				  is-disabled="isIgnoreXaxis"
 				>
 				</div>
-
+				<span class="has-error">Some text.....</span>
 		  </div> 
 		</div>
 		<div ng-show="xaxis === 'clinicSize'" class="col-md-3 benchmarking__form__input reset-padding selected-box-container" >
@@ -162,8 +162,10 @@
 				  on-close="onClinicRangeClose()"
 				>
 				</div>
+					<span class="has-error">Some text.....</span>
 			</div> 
 		</div>
+
 		<div ng-show="xaxis === 'both'" class="benchmarking__form__input reset-padding margin-bottom selected-box-container" >
 		  <div class="col-md-3 col-sm-3 benchmarking__form__input reset-padding selected-box-container" >
 				<div class="custom-dropdown">
@@ -176,6 +178,7 @@
 			      <option value="clinicSize" label="Clinic Size" ng-selected="true">Clinic Size</option>
 				  </select>
 			 	</div>
+			
 			</div>
 			<div class="col-md-3 col-sm-3 benchmarking__form__input reset-padding selected-box-container" >
 			  <div class="custom-dropdown">	
@@ -213,8 +216,11 @@
 					  on-close="onClinicRangeClose()"
 					>
 					</div>
+				 	<span class="has-error error-message">Some text.....</span>
 			  </div>
+
 			</div>
+
 		</div>
 			
     <div class="col-md-16">
