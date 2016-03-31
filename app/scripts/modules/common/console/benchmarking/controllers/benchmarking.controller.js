@@ -198,10 +198,12 @@ angular.module('hillromvestApp')
 
 		$scope.onXaxisChange = function(){
 			$scope.isAgeGroup = $scope.isAgeGroup ? false: true;
-			if($scope.isAgeGroup){
+			if($scope.xaxis === 'ageGroup'){
 				$scope.onAgeGroupClose();
-			}else{
+			}else if($scope.xaxis === 'clinicSize'){
 				$scope.onClinicRangeClose();
+			}else if($scope.xaxis === 'both'){
+				$scope.getClinicDiseaseReport($scope.serverFromDate, $scope.serverToDate, $scope.xaxis, $scope.ageRange, $scope.clinicRange, $scope.state, $scope.city);
 			}
 		};
 
@@ -210,33 +212,34 @@ angular.module('hillromvestApp')
 		};
 
 		$scope.onAgeGroupClose =function(){
-			if($scope.selectedAges.length > 0 && $scope.selectedAges.length !== $scope.ageGroups.length){
+			if($scope.selectedAges.length > 0){
 				var ranges = [];
 				angular.forEach($scope.selectedAges, function(selectedAge){
 					ranges.push(selectedAge.ageRange);
 				});
 				$scope.range = ranges.join();
 				$scope.ageRange = ranges.join();
+				$scope.showRangeError = false;
+				$scope.getGraphData();
 			}else{
-				$scope.range = 'all';
-				$scope.ageRange = 'all';
+				$scope.showRangeError = true;
 			}
-			$scope.getGraphData();
 		};
 
 		$scope.onClinicRangeClose = function(){
-			if($scope.selectedClinicSizes.length > 0 && $scope.selectedClinicSizes.length !== $scope.clinicSizes.length){
+			if($scope.selectedClinicSizes.length > 0 ){
 				var ranges = [];
 				angular.forEach($scope.selectedClinicSizes, function(selectedClinic){
 					ranges.push(selectedClinic.size);
 				});
 				$scope.range = ranges.join();
 				$scope.clinicRange = ranges.join();
+				$scope.showRangeError = false;
+				$scope.getGraphData();
 			}else{
-				$scope.range = 'all';	
-				$scope.clinicRange = 'all';
+				$scope.showRangeError = true;
 			}
-			$scope.getGraphData();
+			
 		};
 
 		$scope.getGraphData = function(){
@@ -367,9 +370,10 @@ angular.module('hillromvestApp')
 		      false],
 					formatter: function() {
 						var date = ($scope.fromDate === $scope.toDate) ? $scope.fromDate : $scope.fromDate +' - '+$scope.toDate;
+						
 						var xAxis = ($scope.xaxis === 'ageGroup')? 'Age Group': 'Clinic Size';
 
-						var s = '<div style="font-size:12px ;padding-bottom: 3px;width:150px">'+ date + '</div><div style="font-size:10px; padding-bottom: 3px;">'+ xAxis + ' : ' + this.x +'</div><div>';
+						var s = '<div style="font-size:12px ;padding-bottom: 3px;">'+ date + '</div><div style="font-size:10px; padding-bottom: 3px;">'+ xAxis + ' : ' + this.x +'</div><div>';
 			    	$.each(this.points, function(i, point) {
 			      	s += '<div style="font-size:10px; width:100%"><div style="color:'+ point.series +';padding:0;width:auto;float:left"> ' + point.series.name + ' : </div> ' 
 			        + ' <div style="padding:0;width:auto">&nbsp;<b>' + point.y + '</b></div><div style="line-height:24px">Total No. of Patients : '+ point.point.toolText.totalPatients +' </div></div>';
@@ -442,7 +446,14 @@ angular.module('hillromvestApp')
 			        //font: '10px Helvetica',
 			        fontWeight: 'bold'
 			      }
-		      }
+		      },
+		      stackLabels: {
+             enabled: ($scope.xaxis === 'both')? true: false,
+             style: {
+                fontWeight: 'bold',
+                color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
+            }
+          }
 		    },
         legend: {
 		      align: 'center',
@@ -454,7 +465,24 @@ angular.module('hillromvestApp')
 		      series: {
 		      	showInLegend: false,
 		      	pointWidth: 50
-		      }
+		      },
+		      column: {
+						stacking: ($scope.xaxis === 'both') ? 'normal': false,
+						dataLabels: {
+							enabled: true,
+							color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white',
+							style: {
+								textShadow: '0 0 3px black'
+							},
+							formatter: function() {
+						        if (this.y != 0 && $scope.xaxis === 'both') {
+						          return this.y ;
+						        } else {
+						          return null;
+						        }
+						    }
+						}
+					}
 		    },
 				tooltip: {
 					crosshairs: [{
@@ -464,12 +492,15 @@ angular.module('hillromvestApp')
 		      false],
 					formatter: function() {
 						var date = ($scope.fromDate === $scope.toDate) ? $scope.fromDate : $scope.fromDate +' - '+$scope.toDate;
-						var xAxis = ($scope.xaxis === 'ageGroup')? 'Age Group': 'Clinic Size';
+						var xAxis = ($scope.isIgnoreXaxis) ? 'Geography' : ($scope.xaxis === 'ageGroup')? 'Age Group': 'Clinic Size';
 
 						var s = '<div style="font-size:12px ;padding-bottom: 5px;">'+ date + '</div><div style="font-size:10px; padding-bottom: 3px;">'+ xAxis + ' : ' + this.x +'</div><div>';
+
 			    	$.each(this.points, function(i, point) {
-			      	s += '<div style="font-size:10px; width:100%"><div style="color:'+ point.series +';padding:0;width:auto;float:left"> ' + point.series.name + ' : </div> ' 
-			        + ' <div style="padding:0;width:auto">&nbsp;<b>' + point.y + '</b></div><div style="line-height:24px">Total No. of Patients :  </div></div>';
+
+			      	s += '<div style="font-size:10px; width:100%"><div style="color:'+ point.series +';padding:0;width:auto;float:left">  Total No. of Patients  : </div> ' 
+			        + ' <div style="padding:0;width:auto">&nbsp;<b>' + point.y + '</b></div></div>';
+
 			    	});
 			    	s += '</div>';
 		        return s;

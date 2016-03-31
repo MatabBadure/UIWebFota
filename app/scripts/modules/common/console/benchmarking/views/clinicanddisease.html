@@ -118,7 +118,7 @@
 	      <select ng-change="onXaxisChange()" ng-model="$parent.$parent.$parent.xaxis" ng-class="{disabled: $parent.$parent.$parent.isIgnoreXaxis}" ng-disabled="isIgnoreXaxis">
 		      <option value="ageGroup" label="Age Group" ng-selected="true">Age Group</option>
 		      <option value="clinicSize" label="Clinic Size">Clinic Size</option>
-		      <!-- <option value="both" label="Both">Both</option> -->
+		      <option value="both" label="Both">Both</option>
 		    </select>
 		  </div>
 		</div>
@@ -141,7 +141,7 @@
 				  is-disabled="isIgnoreXaxis"
 				>
 				</div>
-
+				<span class="has-error" ng-show="$parent.$parent.$parent.showRangeError">Please select atleast one range</span>
 		  </div> 
 		</div>
 		<div ng-show="xaxis === 'clinicSize'" class="col-md-3 benchmarking__form__input reset-padding selected-box-container" >
@@ -162,8 +162,10 @@
 				  on-close="onClinicRangeClose()"
 				>
 				</div>
+					<span class="has-error" ng-show="$parent.$parent.$parent.showRangeError">Please select atleast one range</span>
 			</div> 
 		</div>
+
 		<div ng-show="xaxis === 'both'" class="benchmarking__form__input reset-padding margin-bottom selected-box-container" >
 		  <div class="col-md-3 col-sm-3 benchmarking__form__input reset-padding selected-box-container" >
 				<div class="custom-dropdown">
@@ -176,6 +178,7 @@
 			      <option value="clinicSize" label="Clinic Size" ng-selected="true">Clinic Size</option>
 				  </select>
 			 	</div>
+			
 			</div>
 			<div class="col-md-3 col-sm-3 benchmarking__form__input reset-padding selected-box-container" >
 			  <div class="custom-dropdown">	
@@ -213,8 +216,11 @@
 					  on-close="onClinicRangeClose()"
 					>
 					</div>
+				 	<span class="has-error error-message" ng-show="$parent.$parent.$parent.showRangeError">Please select atleast one range</span>
 			  </div>
+
 			</div>
+
 		</div>
 			
     <div class="col-md-16">
@@ -249,11 +255,8 @@
 
   <loading loaded="isGraphLoaded"></loading>
   	
-	<div class="col-md-16 margin-top" ng-show="xaxis !== 'both'">
+	<div class="col-md-16 margin-top">
 		<div id="clinicdiseaseGraph" class="clinic_diseases"></div>
-	</div>
-	<div class="col-md-16 margin-top" ng-show="xaxis === 'both'">
-		<div id="clinicdiseaseGraph123"></div>
 	</div>
 
 	<div style="clear:both"></div>
