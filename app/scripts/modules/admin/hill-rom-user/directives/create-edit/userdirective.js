@@ -176,6 +176,14 @@ angular.module('hillromvestApp')
           $state.go('hillRomUser');
         };
 
+        $scope.showUpdateModal = function(){
+          $scope.submitted = true;
+          if($scope.form.$invalid){
+            return false;
+          }
+          $scope.updateModal = true;
+        };
+
         $scope.init();
       }]
     };
