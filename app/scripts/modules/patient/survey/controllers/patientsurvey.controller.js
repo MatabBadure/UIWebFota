@@ -1,7 +1,7 @@
 'use strict';
 angular.module('hillromvestApp')
-.controller('patientSurveyController',['$scope', '$state', 'patientsurveyService', '$stateParams', 'StorageService', '$rootScope', 'notyService', 'patientService', 'dateService', 'surveyConstants', 'addressService',
-	function($scope, $state, patientsurveyService, $stateParams, StorageService, $rootScope, notyService, patientService, dateService, surveyConstants, addressService) {
+.controller('patientSurveyController',['$scope', '$state', 'patientsurveyService', '$stateParams', 'StorageService', '$rootScope', 'notyService', 'patientService', 'dateService', 'surveyConstants', 'addressService', '$timeout',
+	function($scope, $state, patientsurveyService, $stateParams, StorageService, $rootScope, notyService, patientService, dateService, surveyConstants, addressService, $timeout) {
 		var logged = StorageService.get('logged') || {};
 		$scope.initPatientSurvey = function(){
 			$rootScope.surveyId = null;	
@@ -155,6 +155,9 @@ angular.module('hillromvestApp')
 				if($scope.surveyForm.$invalid){
 					$rootScope.isSurveyCancelled = false;
 		    		$rootScope.showSurveyCancelModal = false;
+		    		$timeout(function() {
+		    			angular.element('input.ng-invalid').first().focus();
+		    		});
 					return false;
 				}else{					
 					patientsurveyService.saveSuvey(surveyEdited).then(function(){
