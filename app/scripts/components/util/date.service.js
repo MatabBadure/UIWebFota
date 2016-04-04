@@ -347,14 +347,14 @@ angular.module('hillromvestApp')
     // this method converts the date string mm/dd/yyyy hh:mm:ss to timestamp 
     convertToTimestamp: function(date){ 
         var dateTime1 = date;  
-        var dateTime2 = "";
+        var dateTime2 = false;
         if(date && date.indexOf("/") > -1){
         if(date.indexOf(" ") > -1 ){
           var dateTime = date.split(" ");
           dateTime1 = dateTime[0]; dateTime2 = dateTime[1];
         }
         var startDate = dateTime1.split("/"); // turning it from MM/DD/YYYY HH:MM:SS to timestamp
-        var formattedDate = startDate[2] + "-" + startDate[0] + "-" + startDate[1] + " " + dateTime2;
+        var formattedDate = (dateTime2) ? startDate[2] + "-" + startDate[0] + "-" + startDate[1] + " " + dateTime2 : startDate[2] + "-" + startDate[0] + "-" + startDate[1];
         if(this.isChrome().indexOf("chrome") !== -1){
           return new Date(formattedDate).getTime();
         }else{

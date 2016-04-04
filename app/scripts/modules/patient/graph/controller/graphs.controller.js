@@ -565,8 +565,6 @@ angular.module('hillromvestApp')
               $scope.addNoteActive = false;
               $("#note_edit_container").removeClass("show_content");
               $("#note_edit_container").addClass("hide_content");
-            }).catch(function(){
-              notyService.showMessage(server_error_msg,'warning' );
             });
           }else{
             $scope.noteTextError = "Please select a date.";
