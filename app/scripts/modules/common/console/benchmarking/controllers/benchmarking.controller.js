@@ -400,7 +400,10 @@ angular.module('hillromvestApp')
 			}
 
 			if($scope.xaxis === 'both'){				
-				$('#clinicdiseaseGraph').highcharts({	
+				$('#clinicdiseaseGraph').highcharts({
+					credits: {
+						enabled: false
+					},		
 					chart: {
 			            type: 'column',
 			            zoomType: 'xy',
@@ -514,15 +517,18 @@ angular.module('hillromvestApp')
 				});
 			}else{
 			var chart = Highcharts.chart('clinicdiseaseGraph', {
+				credits: {
+					enabled: false
+				},	
 				chart:{
 					type: 'column',
 					zoomType: 'xy',
 					backgroundColor: "#e6f1f4"
 				},
-        title: {
-          text: ''
-        },
-		    xAxis:{
+		        title: {
+		          text: ''
+		        },
+		    	xAxis:{
 					type: 'category',
 					categories: $scope.clinicDiseaseGraphData.xAxis.categories,
 					labels:{
