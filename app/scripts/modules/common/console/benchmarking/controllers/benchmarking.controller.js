@@ -185,10 +185,7 @@ angular.module('hillromvestApp')
 				});
 				$scope.range = ranges.join();
 				$scope.ageRange = ranges.join();
-				$scope.showRangeError = false;
 				$scope.getGraphData();
-			}else{
-				$scope.showRangeError = true;
 			}
 		};
 
@@ -200,10 +197,7 @@ angular.module('hillromvestApp')
 				});
 				$scope.range = ranges.join();
 				$scope.clinicRange = ranges.join();
-				$scope.showRangeError = false;
 				$scope.getGraphData();
-			}else{
-				$scope.showRangeError = true;
 			}
 		};
 
