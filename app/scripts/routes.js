@@ -1078,7 +1078,7 @@ angular.module('hillromvestApp')
                     pageTitle: 'patient.page-title.my-dashboard'
                 },
                 views: {
-                    'patient-view': {
+                    'content@': {
                         templateUrl: 'scripts/modules/patient/graph/views/dashboard-landing.html',
                         controller: 'graphController'
                     }
