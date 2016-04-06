@@ -144,6 +144,7 @@
 	.no-padding{
 		padding:0px;
 	}
+
 	.tab-margin-bottom20{
 		margin-bottom:20px;
 	}
@@ -156,8 +157,8 @@
 	.margin-tp19{
 		margin-top:19px;
 	}
-	.survey_tab_modal{
-		padding: 10px 10px!important;
+	.modal__header{
+		padding: 10px!important;
 	}
 	.hide-tab{
 		display:none !important;
@@ -174,22 +175,21 @@
 	.hideOverflow{
 			overflow:hidden!important;
 		}
-	.survey_tab_modal{
-		padding: 10px 5px!important;
-		}
 	.benchmarking__form__input select{
 		width:130px!important;
 	}
 	.multiSelect > button{
 		width:180px;
 	}
+	.navbar-secondary .navbar-right > li{
+		padding:0 14px !important;
+	}
+
 	@media screen and (-webkit-min-device-pixel-ratio:0) {
 		.hideOverflow{
 			overflow:hidden!important;
 		}
-		.survey_tab_modal{
-		padding: 10px 5px!important;
-		}
+
 	}
 
 }
@@ -316,6 +316,7 @@
 	.tab-margin-bottom20{
 		margin-bottom:20px;
 	}
+
 	.tab-clear{
 		clear:both;
 	}
@@ -330,9 +331,6 @@
 	}
 	.show-tab{
 		display:block !important;
-	}
-	.survey_tab_modal{
-		padding: 10px 5px!important;
 	}
 	
 	.patient-user__navbar ul > li > a .icons{
@@ -353,22 +351,21 @@
 	.hideOverflow{
 			overflow:hidden!important;
 		}
-	.survey_tab_modal{
-		padding: 10px 5px!important;
-		}
+
 	.benchmarking__form__input select{
 		width:130px!important;
 	}
 	.multiSelect > button{
 		width:180px;
 	}
+	.navbar-secondary .navbar-right > li{
+		padding:0 14px !important;
+	}
 	@media screen and (-webkit-min-device-pixel-ratio:0) {
 		.hideOverflow{
 			overflow:hidden!important;
 		}
-		.survey_tab_modal{
-		padding: 10px 5px!important;
-		}
+	
 	}
 }
 @media screen and (min-width : 1024px){
@@ -395,6 +392,7 @@
 	.height400{
 		height:auto;
 	}
+
 
 	.hideOverflow{
 			overflow:hidden!important;

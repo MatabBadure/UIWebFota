@@ -351,16 +351,16 @@
   </div>
 </div>
 
-<div ng-if="surveyConfirmModal" id="survey_confirm_modal" class="modal survey_tab_modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true">
+<div ng-if="surveyConfirmModal" id="survey_confirm_modal" class="modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true">
   <div class="modal__dialog">
     <div class="modal__content">
-      <header class="modal__header survey_tab_modal">
+      <header class="modal__header">
         <button type="button" class="modal__close" data-dismiss="modal" ng-click="cancelSurvey();">&times;</button>
         <p ng-if="surveyId === 1" translate="survey.5-days-header"> </p> 
         <p ng-if="surveyId === 2" translate="survey.30-days-header"> </p> 
         <p ng-if="surveyId === 3" translate="survey.90-days-header"> </p>
       </header>
-      <div class="modal__body survey_tab_modal">
+      <div class="modal__body">
         <div class="modal--message">Please complete the following survey. Press the Start button below to begin the survey.</div>
     
         <div class="row modal--custom-btn">
