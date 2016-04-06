@@ -112,6 +112,12 @@
 		display: inline-block;
 	}
 
+	.height300{
+		height:auto!important;
+	}
+	.height500{
+		height:auto!important;
+	}
 	/*Admin Responsive column style*/
 	.col-hide-iPad{
 		display: none;
@@ -159,12 +165,24 @@
 	.show-tab{
 		display:block !important;
 	}
+	.margin-left15{
+		margin-left:15px;
+	}
 	.height400{
 		height:auto;
 	}
 	.hideOverflow{
 			overflow:hidden!important;
 		}
+	.survey_tab_modal{
+		padding: 10px 5px!important;
+		}
+	.benchmarking__form__input select{
+		width:130px!important;
+	}
+	.multiSelect > button{
+		width:180px;
+	}
 	@media screen and (-webkit-min-device-pixel-ratio:0) {
 		.hideOverflow{
 			overflow:hidden!important;
@@ -314,7 +332,7 @@
 		display:block !important;
 	}
 	.survey_tab_modal{
-		padding: 10px 10px!important;
+		padding: 10px 5px!important;
 	}
 	
 	.patient-user__navbar ul > li > a .icons{
@@ -325,15 +343,25 @@
 	  display: -webkit-flex;
 	  flex-flow: -webkit-row column;
 	}
-	.height400{
-		height:auto;
-	}
+	
 	.patient_padding li a{
 		padding-top:30px!important
+	}
+	.height400{
+		height:auto;
 	}
 	.hideOverflow{
 			overflow:hidden!important;
 		}
+	.survey_tab_modal{
+		padding: 10px 5px!important;
+		}
+	.benchmarking__form__input select{
+		width:130px!important;
+	}
+	.multiSelect > button{
+		width:180px;
+	}
 	@media screen and (-webkit-min-device-pixel-ratio:0) {
 		.hideOverflow{
 			overflow:hidden!important;
@@ -366,6 +394,23 @@
 	}
 	.height400{
 		height:auto;
+	}
+
+	.hideOverflow{
+			overflow:hidden!important;
+		}
+
+/*	.benchmarking__form__input select{
+		width:130px!important;
+	}
+	.multiSelect > button{
+		width:180px;
+	}*/
+	@media screen and (-webkit-min-device-pixel-ratio:0) {
+		.hideOverflow{
+			overflow:hidden!important;
+		}
+	
 	}
 } 
 

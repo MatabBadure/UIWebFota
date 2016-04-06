@@ -28,7 +28,7 @@
 			<input type="checkbox" ng-model="searchFilter.isMissedTherapy" ng-click="searchOnFilters()"> 
 			<span translate="search-filter.missed-therapy"></span>
 		</label>
-		<div class="col-md-3 pull-right dashboard__form__input reset-padding selected-box-container" ng-if="isUsersTab">
+		<div class="col-md-3 col-sm-5 pull-right dashboard__form__input reset-padding selected-box-container" ng-if="isUsersTab">
 		<label> Select Role</label>
           <div class="custom-dropdown">
           <select name="selectRole" id="selectRole" class="selectrole" ng-options="option.text for option in roleData.userRoles track by option.value" ng-model="roleData.roleSelected" ng-click="searchUsers()"  style="padding:6px"></select>            
