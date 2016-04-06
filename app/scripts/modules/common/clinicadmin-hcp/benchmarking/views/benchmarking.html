@@ -25,44 +25,44 @@
 <div class="container admin-user">
 	<div class="dashboard dashboard--content margin-top" ng-show="patientBenchmark">		
 		<loading loaded="isGraphLoaded"></loading>
-		<div class="col-md-16 reset-padding cyan-blue-light margin-top">
-			<div class="col-md-3 benchmarking__form__input reset-padding selected-box-container" >
+		<div class="col-md-16 col-sm-16 reset-padding cyan-blue-light margin-top">
+			<div class="col-md-3 col-sm-3 benchmarking__form__input reset-padding selected-box-container" >
 				<span translate="benchmarking.benchmark">Benchmark</span>
 			</div>
 		
-			<div class="col-md-3  benchmarking__form__input reset-padding selected-box-container" >
+			<div class="col-md-3 col-sm-3 benchmarking__form__input reset-padding selected-box-container" >
 				<span translate="benchmarking.parameter">Parameter</span>
 			</div>
-			<div class="col-md-1  benchmarking__form__input reset-padding selected-box-container" >
+			<div class="col-md-1 col-sm-1 benchmarking__form__input reset-padding selected-box-container" >
 				<span></span>
 			</div>
-			<div class="col-md-3 benchmarking__form__input reset-padding selected-box-container" ng-show="clinics && clinics.length > 0">
+			<div class="col-md-3 col-sm-3 benchmarking__form__input reset-padding selected-box-container" ng-show="clinics && clinics.length > 0">
 				<span translate="benchmarking.geography">Geography</span>
 			</div>
 		</div>
-		<div class="col-md-16 padding0 reset-padding" ng-class="{'pointer-no-event': !isGraphLoaded, 'pointer-fill-event': isGraphLoaded}">
+		<div class="col-md-16 col-sm-16 padding0 reset-padding" ng-class="{'pointer-no-event': !isGraphLoaded, 'pointer-fill-event': isGraphLoaded}">
 		<div class="bar_graph_header"> 
 	
-	  		<div class="col-md-3 benchmarking__form__input reset-padding selected-box-container" >
-				<div class="light-grey col-md-16 reset-padding">				
+	  		<div class="col-md-3 col-sm-3 benchmarking__form__input reset-padding selected-box-container" >
+				<div class="light-grey col-md-16 col-sm-16 reset-padding">				
 					<div class="custom-dropdown" ng-class="{'gray_dropdown': benchmarks.length == 1}">
 						<select ng-model="benchmarkings.selectedBM" ng-options="benchmark as benchmark.name for benchmark in benchmarks" ng-disabled="benchmarks.length === 1" ng-class="{'gray_dropdown': benchmarks.length == 1}"></select>					    
 					</div>   					   
 				</div> 
 			</div>
 		
-			<div class="col-md-3 benchmarking__form__input reset-padding selected-box-container" >
-				<div class="light-grey col-md-16 reset-padding">				
+			<div class="col-md-3 col-sm-3 benchmarking__form__input reset-padding selected-box-container" >
+				<div class="light-grey col-md-16 col-sm-16 reset-padding">				
 					<div class="custom-dropdown">
 						<select ng-model="parameters.selectedParam" ng-options="param as param.name for param in benchmarkingParam" ng-change="redrawBenchmarkingChart()"></select>					    
 					</div>   					   
 				</div> 
 			</div>
-			<div class="col-md-1 vertical_align_center text-center survey_grey_color benchmarking__form__input reset-padding selected-box-container">
+			<div class="col-md-1 col-sm-1 vertical_align_center text-center survey_grey_color benchmarking__form__input reset-padding selected-box-container">
 				<span>Vs.</span>
 			</div>
 			
-			<div class="col-md-3 benchmarking__form__input reset-padding selected-box-container" >
+			<div class="col-md-3 col-sm-3 benchmarking__form__input reset-padding selected-box-container" >
 				<div class="custom-dropdown">
 					<select ng-model="geoLocation.selectedGeo" ng-options="geo as geo.name for geo in geographyOption" ng-change="redrawBenchmarkingChart()"></select>					    
 				</div> 
@@ -86,12 +86,12 @@
 			<span ng-if="fromDate === toDate" class="date">{{fromDate}}<span>
 		</div>
     	</div>
-    	<div class="col-md-16" class="all_graph_wrapper" style="min-height: 300px;">
+    	<div class="col-md-16" class="all_graph_wrapper height300" style="min-height: 300px;">
 		  	<div class="graph_nodata" ng-show="isNoDataAvailable">
 				<span class="noData_text"> No Data Available!</span>
 			</div>
 			<div class="col-md-16 margin-top" ng-show="!isNoDataAvailable">
-				<div id="hcpcabenchmarkingGraph" style="height: 500px;"></div>
+				<div id="hcpcabenchmarkingGraph" class="height500" style="height: 500px;"></div>
 			</div>
 		</div>
 
