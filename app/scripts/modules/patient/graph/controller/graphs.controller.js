@@ -552,8 +552,8 @@ angular.module('hillromvestApp')
         $scope.noteTextError =  null;
         if($scope.textNote && $scope.textNote.text.length > 0){
           if($scope.textNote.edit_date && $scope.textNote.edit_date != 'undefined' && $scope.textNote.edit_date.length > 0){
-            var editDate = $scope.textNote.edit_date;
-            var data = {};
+            var editDate =  dateService.convertDateToYyyyMmDdFormat(new Date(dateService.convertToTimestamp($scope.textNote.edit_date))); //$scope.textNote.edit_date;
+            var data = {}; 
             data.noteText = $scope.textNote.text;
             data.userId = StorageService.get('logged').patientID;
             data.date = editDate;
@@ -565,8 +565,6 @@ angular.module('hillromvestApp')
               $scope.addNoteActive = false;
               $("#note_edit_container").removeClass("show_content");
               $("#note_edit_container").addClass("hide_content");
-            }).catch(function(){
-              notyService.showMessage(server_error_msg,'warning' );
             });
           }else{
             $scope.noteTextError = "Please select a date.";
@@ -599,7 +597,11 @@ angular.module('hillromvestApp')
     $scope.openAddNote = function(){
       $scope.noteTextError =  null;
       $scope.textNote = {};
-      $scope.textNote.edit_date = dateService.convertDateToYyyyMmDdFormat(new Date());
+      var formattedDate = dateService.getDateTimeFromTimeStamp(new Date().getTime(),patientDashboard.dateFormat,'/');
+      if(formattedDate && formattedDate.indexOf(" ") !== -1){
+        formattedDate =  formattedDate.split(" ");
+        $scope.textNote.edit_date = formattedDate[0];//dateService.convertDateToYyyyMmDdFormat(new Date());
+      }      
        $scope.textNote.text = "";
       $scope.addNoteActive = true;
       $("#note_edit_container").removeClass("hide_content");
@@ -1483,7 +1485,8 @@ angular.module('hillromvestApp')
       patientService.getTransmissionDate(patientId).then(function(response) {
         if(response.data && response.data.firstTransmissionDate){
           $scope.hasTransmissionDate = true;
-          $scope.transmissionDate = response.data.firstTransmissionDate;
+          var formattedTransmissionDate = dateService.getDateTimeFromTimeStamp(dateService.convertYyyyMmDdToTimestamp(response.data.firstTransmissionDate),patientDashboard.dateFormat,'/');
+          $scope.transmissionDate = (formattedTransmissionDate && formattedTransmissionDate.indexOf(" "))? formattedTransmissionDate.split(" ")[0] : null;          
         }
       });
     };
