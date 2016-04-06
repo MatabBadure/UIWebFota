@@ -70,7 +70,10 @@ angular.module('hillromvestApp')
         });
       }
       $scope.user.role = $scope.user.authorities[0].name;
-      UserService.editUser($scope.user).then(function(response){        
+      UserService.editUser($scope.user).then(function(response){
+        var loggedUser = StorageService.get('logged');
+        loggedUser.userFirstName = $scope.user.firstName;
+        StorageService.save('logged', loggedUser);
         if(StorageService.get("logged").userEmail === $scope.user.email){
           notyService.showMessage(response.data.message, 'success');
           if($scope.role === loginConstants.role.acctservices){
