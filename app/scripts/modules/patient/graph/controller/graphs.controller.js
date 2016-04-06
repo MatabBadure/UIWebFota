@@ -791,10 +791,7 @@ angular.module('hillromvestApp')
                   color: dataset.color,
                   fontWeight: 'bold'
                 }                
-              },
-              credits: {
-                enabled: false
-              },
+              },             
               legend: {
                 enabled: false
               },
