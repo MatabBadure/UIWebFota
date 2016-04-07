@@ -216,8 +216,12 @@ angular.module('hillromvestApp')
 		$scope.getBenchmarkingReport = function(fromDate, toDate, XAxis, type, benchmarkType,range, state, city){
 			benchmarkingService.getBenchmarkingReport(fromDate, toDate, XAxis, type, benchmarkType, range, state, city).then(function(response){
 				$scope.benchmarkingGraph = response.data;
+				$scope.isNoDataAvailable = false;
 				$scope.drawBenchmarkingchart();
 			}).catch(function(response){
+				if(response.status === 400){
+					$scope.isNoDataAvailable = true;
+				}
 				notyService.showError(response);
 			});
 		};
@@ -225,8 +229,12 @@ angular.module('hillromvestApp')
 		$scope.getClinicDiseaseReport = function(fromDate, toDate, xaxis, ageRange, clinicRange, state, city){
 			benchmarkingService.getClinicDiseaseReport(fromDate, toDate, xaxis, ageRange, clinicRange, state, city).then(function(response){
 				$scope.clinicDiseaseGraphData = response.data;
+				$scope.isNoDataAvailable = false;
 				$scope.drawClinicDiseaseChart();
 			}).catch(function(response){
+				if(response.status === 400){
+					$scope.isNoDataAvailable = true;
+				}
 				notyService.showError(response);
 			});
 		};
