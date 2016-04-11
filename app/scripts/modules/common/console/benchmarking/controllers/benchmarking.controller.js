@@ -224,7 +224,6 @@ angular.module('hillromvestApp')
 				if(response.status === 400){
 					$scope.isNoDataAvailable = true;
 				}
-				notyService.showError(response);
 			});
 		};
 
@@ -239,7 +238,6 @@ angular.module('hillromvestApp')
 				if(response.status === 400){
 					$scope.isNoDataAvailable = true;
 				}
-				notyService.showError(response);
 			});
 		};
 
