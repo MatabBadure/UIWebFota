@@ -128,7 +128,10 @@ var stringConstants = {
     deviceType : "The Vest System",
     emptyString: "",
     comma: ", ",
-    runrate: "HMR Runrate"
+    runrate: "HMR Runrate",
+    averageSessionMinutes: "Average Session Minutes",
+    consecutiveMissedDays: " Consecutive Missed Days",
+    consecutiveFrequencyDeviationDays : "Consecutive Frequency Deviation Days"
 
 }
 
