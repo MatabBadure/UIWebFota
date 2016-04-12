@@ -4,6 +4,11 @@ angular.module('hillromvestApp')
 .controller('patientDiagnosticController', ['$scope', '$state', '$rootScope', 'StorageService',
   function ($scope, $state, $rootScope, StorageService) {  
   	console.log("inside patientDiagnosticController....");
+
+  	$scope.addDiagnostics = function(){
+  		$rootScope.isAddDiagnostics = true;
+  	};
+  	
   	$scope.init = function(){
   		if($state.current.name === "patientDiagnostic"){
   			$scope.hidePatientNavbar = true;

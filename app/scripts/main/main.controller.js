@@ -8,7 +8,8 @@ angular.module('hillromvestApp')
       $scope.isAuthenticated = Principal.isAuthenticated;
     });
 
-    $scope.mainInit = function(){
+    $scope.mainInit = function(){    		
+    		$rootScope.isAddDiagnostics = false;
 			$rootScope.userRole = null;
 			$rootScope.username = null;
 			if(StorageService.get('logged')){
@@ -321,7 +322,8 @@ angular.module('hillromvestApp')
 	    }
     };
 
-    $scope.patientDiagnostics = function(){
+    $rootScope.patientDiagnostics = function(){
+
 	    if($rootScope.userRole === "PATIENT"){
   			var patientID = StorageService.get('logged').patientID;
   			console.log("patientDiagnostic", patientID);
@@ -334,5 +336,10 @@ angular.module('hillromvestApp')
   			$state.go("HCPDiagnostic");
   		}
     };
+
+    $rootScope.backToDiagnostics = function(){
+  		$rootScope.isAddDiagnostics = false;
+  		$rootScope.patientDiagnostics();
+  	};
 
   }]);

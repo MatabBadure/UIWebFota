@@ -4373,14 +4373,14 @@ angular.module('hillromvestApp')
                 }
             })
             .state('patientDiagnostic', {
-                //parent: 'patient-dashboard',
-                url: '/patient/patientDiagnostic',
+                parent: 'patient-dashboard',
+                url: '/patientDiagnostic',
                 data: {
                     roles: ['PATIENT'],
                     pageTitle: 'profile.page-title.benchmarking'
                 },
                 views: {
-                    'content@': {
+                    'patient-view': {
                         templateUrl: 'scripts/modules/common/clinicadmin-hcp/patient-diagnostics/views/patientDiagnostic.html',
                         controller: 'patientDiagnosticController'
                     }
@@ -4392,7 +4392,7 @@ angular.module('hillromvestApp')
                         return $ocLazyLoad.load('PatientDiagnosticModule');
                     }],
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
-                        $translatePartialLoader.addPart('profile');
+                        $translatePartialLoader.addPart('patient-user');
                         return $translate.refresh();
                     }],
                     authorize: ['Auth',
@@ -4422,7 +4422,7 @@ angular.module('hillromvestApp')
                         return $ocLazyLoad.load('PatientDiagnosticModule');
                     }],
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
-                        $translatePartialLoader.addPart('profile');
+                        $translatePartialLoader.addPart('patient-user');
                         return $translate.refresh();
                     }],
                     authorize: ['Auth',
@@ -4433,7 +4433,7 @@ angular.module('hillromvestApp')
                 }
             })
             .state('CADiagnostic', {
-                parent: 'hcppatientList',
+                parent: 'clinicadminpatientdashboard',
                 url: '/patientDiagnostic',
                 data: {
                     roles: ['CLINIC_ADMIN'],
@@ -4452,7 +4452,7 @@ angular.module('hillromvestApp')
                         return $ocLazyLoad.load('PatientDiagnosticModule');
                     }],
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
-                        $translatePartialLoader.addPart('profile');
+                        $translatePartialLoader.addPart('patient-user');
                         return $translate.refresh();
                     }],
                     authorize: ['Auth',
