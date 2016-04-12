@@ -1,1 +1,37 @@
-Diagnostic content
+<div class="dashboard dashboard--content margin-top">
+	<div class="user-gen-details">
+		<span class="user-gen-details--name">{{::patient.firstName}} {{::patient.lastName}}</span>
+		<span class="user-gen-details--hr-id">{{::patient.hillromId}}</span>
+	</div>
+
+	<div class="col-md-16 padding0">
+    <div class="patient_wrapper reset-padding">
+      <div class="col-md-16 reset-padding pointer-fill-event" ng-class="">
+        <div class="bar_graph_header">
+          
+          <div class="col-md-5 col-sm-7 left_header_barchart padding0">
+            <div class="">
+              <ul class="nav nav-pills">
+                <li><a href="" ng-click="switchView('grid')" translate="" ng-class="{'active': viewType === 'grid'}">Grid View</a></li>
+                <li><a href="" ng-click="switchView('graph')" translate="" ng-class="{'active': viewType === 'graph'}">Graph View</a></li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="col-md-11 col-sm-5 right_header_barchart cyan-blue-light">
+            <ul class="nav nav-pills pull-right">
+             <li><span class="pull-left margin_tp15" ng-if="fromDate !== toDate">
+              <span class="date">{{fromDate}}</span> - <span class="date">{{toDate}}</span>
+            </span></li>
+            <span ng-if="fromDate === toDate" class="date pull-left margin_tp15">{{fromDate}}</span>
+              <li role="" class="" id="dp1">
+                <a href="" id="dp1cal" date-range-picker class="date-picker margin_tp13" ng-model="dates" parentEl="#dp1" options="opts" ><span class="icon-calendar"></span></a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
