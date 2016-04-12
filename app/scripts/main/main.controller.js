@@ -321,4 +321,18 @@ angular.module('hillromvestApp')
 	    }
     };
 
+    $scope.patientDiagnostics = function(){
+	    if($rootScope.userRole === "PATIENT"){
+  			var patientID = StorageService.get('logged').patientID;
+  			console.log("patientDiagnostic", patientID);
+  			$state.go("patientDiagnostic");
+  		}else if($rootScope.userRole === "CLINIC_ADMIN"){
+  			console.log("clinic admin");
+  			$state.go("CADiagnostic");
+  		}else if($rootScope.userRole === "HCP"){
+  			console.log("hcp");
+  			$state.go("HCPDiagnostic");
+  		}
+    };
+
   }]);

@@ -223,6 +223,11 @@ angular.module('hillromvestApp',
           'bower_components/angular-daterangepicker/js/angular-daterangepicker.js',
           'https://code.highcharts.com/highcharts.js'
         ]
+      },{
+        name: 'PatientDiagnosticModule',
+        files:[          
+          'bower_components/angular-daterangepicker/js/angular-daterangepicker.js'
+        ]
       }]
     });
   }])
