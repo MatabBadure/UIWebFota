@@ -5,7 +5,7 @@ angular.module('hillromvestApp')
   function ($scope, $state, $rootScope, StorageService, UserService) {
 
   $scope.addDiagnostics = function(){
-    $rootScope.isAddDiagnostics = true;
+    $scope.isAddDiagnostics = true;
   };
 
   $scope.init = function(){
