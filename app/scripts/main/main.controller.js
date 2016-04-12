@@ -8,8 +8,8 @@ angular.module('hillromvestApp')
       $scope.isAuthenticated = Principal.isAuthenticated;
     });
 
-    $scope.mainInit = function(){
-    		$rootScope.appState = $state;
+    $scope.mainInit = function(){    		
+    		$rootScope.isAddDiagnostics = false;
 			$rootScope.userRole = null;
 			$rootScope.username = null;
 			if(StorageService.get('logged')){
@@ -322,7 +322,7 @@ angular.module('hillromvestApp')
 	    }
     };
 
-    $scope.patientDiagnostics = function(){
+    $rootScope.patientDiagnostics = function(){
 
 	    if($rootScope.userRole === "PATIENT"){
   			var patientID = StorageService.get('logged').patientID;

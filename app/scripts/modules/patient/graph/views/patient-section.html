@@ -1,5 +1,5 @@
 <ng-include src="'scripts/components/navbar/navbarpatientuser.html'"></ng-include>
-<patient-navbar ng-if="!appState.includes('patientDiagnostic')"></patient-navbar>
+<patient-navbar ng-if="!isAddDiagnostics"></patient-navbar>
 <div class="container admin-user">  
 	<div class="ng-cloak" ui-view="patient-view" ></div>
 </div>

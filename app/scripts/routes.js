@@ -4433,7 +4433,7 @@ angular.module('hillromvestApp')
                 }
             })
             .state('CADiagnostic', {
-                parent: 'hcppatientList',
+                parent: 'clinicadminpatientdashboard',
                 url: '/patientDiagnostic',
                 data: {
                     roles: ['CLINIC_ADMIN'],
