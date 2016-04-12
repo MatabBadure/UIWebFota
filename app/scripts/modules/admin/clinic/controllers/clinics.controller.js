@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('hillromvestApp')
-  .controller('clinicsController', [ '$rootScope', '$scope', '$state', '$stateParams', '$timeout', 'Auth', 'clinicService', 'UserService', 'notyService', 'searchFilterService', 'dateService', 'sortOptionsService', 'StorageService', 'loginConstants', 'commonsUserService', '$q',
-    function ($rootScope, $scope, $state, $stateParams, $timeout, Auth, clinicService, UserService, notyService, searchFilterService, dateService,sortOptionsService, StorageService, loginConstants, commonsUserService, $q) {
+  .controller('clinicsController', [ '$rootScope', '$scope', '$state', '$stateParams', '$timeout', 'Auth', 'clinicService', 'UserService', 'notyService', 'searchFilterService', 'dateService', 'sortOptionsService', 'StorageService', 'loginConstants', 'commonsUserService', '$q', 'addressService',
+    function ($rootScope, $scope, $state, $stateParams, $timeout, Auth, clinicService, UserService, notyService, searchFilterService, dateService,sortOptionsService, StorageService, loginConstants, commonsUserService, $q, addressService) {
     var searchOnLoad = true;
     $scope.clinic = {};
     $scope.clinicStatus = {
@@ -939,6 +939,36 @@ angular.module('hillromvestApp')
         return false;
       }else{
         $scope.updateClinicModal = true;
+      }
+    };
+
+    $scope.getCityState = function(zipcode){
+      delete $scope.serviceError;
+      $scope.isServiceError = false;
+      if(zipcode){
+        addressService.getCityStateByZip(zipcode).then(function(response){
+          $scope.clinic.city = response.data[0].city;
+          $scope.clinic.state = response.data[0].state;
+        }).catch(function(response){
+          $scope.clinic.state = null;
+          $scope.clinic.city = null;
+          $scope.serviceError = response.data.ERROR;
+          $scope.isServiceError = true;
+        });
+      }else{
+        delete $scope.clinic.city;
+        delete $scope.clinic.state;
+        if($scope.form.zip.$dirty && $scope.form.zip.$showValidationMessage && $scope.form.zip.$invalid){
+        }else{
+          $scope.serviceError = 'Invalid Zipcode';
+          $scope.isServiceError = true;
+        }
+      }
+    };
+
+    $scope.clearMessages = function(){
+      if($scope.clinic.zipcode){
+        delete $scope.serviceError;
       }
     };
 
