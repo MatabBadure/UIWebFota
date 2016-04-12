@@ -1,1 +1,84 @@
-Diagnostic content
+<div class="container admin-user">
+  <div class="container margin-top">
+    <div class="col-md-16 reset-padding">
+      <span class="dashboard__form--type survey_grey_color pull-right">Jose RubertHR2015000066</span>
+    </div>
+  </div>
+
+  <div class="col-md-16 padding0">
+    <div class="patient_wrapper reset-padding">
+
+      <div ng-class="" class="col-md-16 reset-padding pointer-fill-event">
+        <div class="bar_graph_header">
+          <div class="col-md-5 col-sm-7 left_header_barchart padding0">
+            <div class="">
+              <ul class="nav nav-pills">
+              <!-- Required for Graph view -->
+                <!-- ngIf: surveyType !== 3 --><li  class="ng-scope"><a ng-class="{'active': viewType === 'graph'}" translate="" ng-click="switchView('graph')" href="" class="ng-scope active">Graph View</a></li><!-- end ngIf: surveyType !== 3 -->
+                <li><a ng-class="{'active': viewType === 'grid'}" translate="" ng-click="switchView('grid')" href="" class="ng-scope">Grid View</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="col-md-11 col-sm-5 right_header_barchart cyan-blue-light">
+
+
+            <ul class="nav nav-pills pull-right">
+             <li><!-- ngIf: fromDate !== toDate --><span ng-if="fromDate !== toDate" class="pull-left margin_tp15 ng-scope">
+              <span class="date ng-binding">04/07/2016</span> - <span class="date ng-binding">04/12/2016</span>
+            </span><!-- end ngIf: fromDate !== toDate --></li>
+            <!-- ngIf: fromDate === toDate -->
+              <li id="dp1" class="" role="">
+                <a options="opts" parentel="#dp1" ng-model="dates" class="date-picker margin_tp13 ng-pristine ng-untouched ng-valid ng-isolate-scope" date-range-picker="" id="dp1cal" href=""><span class="icon-calendar"></span></a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- Required for Graph View -->
+      <!-- ngIf: viewType === 'graph' --><!-- ngInclude: undefined -->
+
+      <!-- <ng-include ng-if="viewType === 'graph'" src="'scripts/modules/common/console/surveyreport/views/fivedaysgraphsurvey.html'" class="ng-scope" style=""> -->
+      <div class="col-md-16  ng-scope">
+     <div  class="">
+              <span class="noData_text" style="font-size:18px;position:relative;top:12px"> No Data Available!</span>
+           </div>
+
+     </div>
+
+
+<div class="col-md-16 col-sm-16 margin-top tab-margin-bottom20 ng-scope">
+  <a class="dashboard__form--type survey_grey_color pull-right" style="color: #7ca3dc;font-size: 15px;text-decoration: initial;padding-bottom: 10px;">Would you like to add test results ?</a>
+  <div class="btn_group patient_dashdoard_btns">
+    <div class="pull-right left dropdown" dropdown="">
+      <button class="hillrom-btn btn-submit margin0 float-right ng-scope dropdown-toggle" type="button" id="add-test-result-button">Add Test Result</button>
+    </div>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+
+<div class="grid-view ng-scope">
+  <div class="col-md-16 col-sm-16 text-center reset-padding flex1 margin-top">
+
+    <div class="col-md-3 col-sm-3 cyan-blue-light text-center  border-right">
+      <span>Select Date</span>
+    </div>
+    <div class="col-md-9 col-sm-9 cyan-blue-light text-center  border-right">
+      <span>Enter Results</span>
+    </div>
+    <div class="col-md-4 col-sm-4 cyan-blue-light text-center  border-right">
+      <span>Comments ( if any )</span>
+    </div>
+
+  </div>
+
+
+</div>
+
+
+
+</div>
+
