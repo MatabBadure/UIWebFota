@@ -507,9 +507,9 @@ angular.module('hillromvestApp')
       , rNoteInfo :{
          title: stringConstants.NotificationLabel
           , tData: [
-            stringConstants.missedTherapyDays+stringConstants.colon, pdfMissedTherapyDays
-            ,stringConstants.runrate+stringConstants.colon, patientInfo.hmrRunRate
-            ,stringConstants.settingDeviation+stringConstants.colon, pdfSettingDeviation
+            stringConstants.consecutiveMissedDays+stringConstants.colon, pdfMissedTherapyDays
+            ,stringConstants.averageSessionMinutes+stringConstants.colon, patientInfo.hmrRunRate
+            ,stringConstants.consecutiveFrequencyDeviationDays+stringConstants.colon, pdfSettingDeviation
           ]
       }
 

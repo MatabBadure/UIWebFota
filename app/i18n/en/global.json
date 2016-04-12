@@ -326,11 +326,11 @@
         "hillromrespiratorycare": "Hill-Rom Respiratory Care Site"
     },
     "search-filter" : {
-        "active" : "Active", 
+        "active" : "Active",
         "inactive" : "InActive", "no-event" : "No Transmission",
-        "setting-deviation" : "Setting Deviation", 
-        "hmr-non-compliant" : "HMR Non-Adherence", 
-        "missed-therapy" :"Missed Therapy",
+        "setting-deviation" : "Consecutive Frequency Deviation Day",
+        "hmr-non-compliant" : "HMR Non-Adherence",
+        "missed-therapy" :"Consecutive Missed Day",
         "pending": "Pending"
     },
 
