@@ -1,9 +1,8 @@
-
 <div class="container admin-user">
-  <div class="container margin-top">
-    <div class="col-md-16 reset-padding">
-      <span class="dashboard__form--type survey_grey_color pull-right">Jose RubertHR2015000066</span>
-    </div>
+ <div class="dashboard dashboard--content margin-top">
+  <div class="user-gen-details">
+    <span class="user-gen-details--name">{{::patient.firstName}} {{::patient.lastName}}</span>
+    <span class="user-gen-details--hr-id">{{::patient.hillromId}}</span>
   </div>
 
   <div class="col-md-16 padding0">
@@ -13,11 +12,12 @@
         <div class="bar_graph_header">
           <div class="col-md-5 col-sm-7 left_header_barchart padding0">
             <div class="">
+
               <ul class="nav nav-pills">
-              <!-- Required for Graph view -->
-                <!-- ngIf: surveyType !== 3 --><li  class="ng-scope"><a ng-class="{'active': viewType === 'graph'}" translate="" ng-click="switchView('graph')" href="" class="ng-scope active">Graph View</a></li><!-- end ngIf: surveyType !== 3 -->
-                <li><a ng-class="{'active': viewType === 'grid'}" translate="" ng-click="switchView('grid')" href="" class="ng-scope">Grid View</a></li>
+                <li><a href="" ng-click="switchView('grid')" translate="" ng-class="{'active': viewType === 'grid'}">Grid View</a></li>
+                <li><a href="" ng-click="switchView('graph')" translate="" ng-class="{'active': viewType === 'graph'}">Graph View</a></li>
               </ul>
+
             </div>
           </div>
 
@@ -36,6 +36,7 @@
           </div>
         </div>
       </div>
+
       <!-- Required for Graph View -->
       <!-- ngIf: viewType === 'graph' --><!-- ngInclude: undefined -->
 
@@ -84,4 +85,6 @@
 </div>
 
 
+
+    </div>
 
