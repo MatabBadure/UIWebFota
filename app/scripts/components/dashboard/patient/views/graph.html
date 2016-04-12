@@ -25,7 +25,7 @@
 									<div class="pie_chart"  easypiechart options="hmr" percent="hmrRunRate"></div>
 									<div class="stats_chart_content hmr">
 										<h4 class="percent"  ng-bind="hmrRunRate"></h4>
-										<p class="descrip" translate="graph.hmr-runrate" ></p>
+										<p class="descrip" translate="graph.averageSessionMinutes" ></p>
 									</div>
 									<div class="chart_inner_icon icon-man-running"></div>
 								</div>
@@ -33,7 +33,7 @@
 									<div class="pie_chart"  easypiechart options="missedtherapy" percent="missedtherapyDays"></div>
 									<div class="stats_chart_content missed">
 										<h4 class="percent" ng-bind="missedtherapyDays"></h4>
-										<p class="descrip" translate="graph.missed-therapy-days"> </p>
+										<p class="descrip" translate="graph.consecutiveMissedDays"> </p>
 									</div>
 									<div class="chart_inner_icon icon-lungs"></div>
 								</div>
@@ -41,7 +41,7 @@
 									<div class="pie_chart"  easypiechart options="settingDeviation" percent="settingsDeviatedDaysCount"></div>
 									<div class="stats_chart_content deviation">
 										<h4 class="percent" ng-bind="settingsDeviatedDaysCount"></h4>
-										<p class="descrip" translate="graph.setting-deviation-days"> </p>
+										<p class="descrip" translate="graph.consecutiveFrequencyDeviationDays"> </p>
 									</div>
 									<div class="chart_inner_icon icon-settings"></div>
 								</div>
@@ -58,25 +58,27 @@
 										</div>
 									</div>
 								</div>
-								<table class="table">
+								<table class="table margin0">
 									<thead>
 										<tr>
-											<th class="col-md-4" translate="graph.adherence-score-table.date">Date</th>
-											<th class="col-md-8">
+											<th class="col-md-3" translate="graph.adherence-score-table.date">Date</th>
+											<th class="col-md-7">
 											<table class="col-md-16 row">
 												<thead>
 													<tr class="col-md-16 row">
-														<th  class="col-md-8 inner_th" translate="graph.adherence-score-table.notification"></th>
+														<th class="col-md-8 inner_th text-center" translate="graph.adherence-score-table.notification"></th>
 														<th class="col-md-8 inner_th text-center" translate="graph.adherence-score-table.change"></th>
 													</tr>
 												</thead>
 											</table>
 											</th>
 											<!-- <th class="col-md-4 text-center" >Change</th> -->
-											<th class="col-md-4 text-center" translate="graph.adherence-score-table.updated-score">Updated Score</th>
+											<th class="col-md-3" translate="graph.adherence-score-table.updated-score">Updated Score</th>
+											<th class="col-md-3 text-center padding-left44" translate="graph.adherence-score-table.protocol">Protocol</th>
 										</tr>
 									</thead>
-									<tbody>
+								</table>
+								<!-- 	<tbody>
 										<tr ng-repeat="adherenceScore in adherenceScores">
 											<td class="col-md-4">{{adherenceScore.date}}</td>
 											<td class="col-md-8">
@@ -90,11 +92,28 @@
 
 												</table>	 
 											</td>
-											<!-- <td class="col-md-4 text-center">{{adherenceScore.change}}</td> -->
+											<td class="col-md-4 text-center">{{adherenceScore.change}}</td>
 											<td class="col-md-4 text-center">{{adherenceScore.updatedScore}}</td>
 										</tr>
 									</tbody>
-								</table>
+								</table> -->
+
+								<div class="col-md-16 col-sm-16 col-xs-16 padding0 vertical_align border-bottom border-lt border-rt" ng-repeat="adherenceScore in adherenceScores">
+									<div class="col-md-14 padding0">
+										<div class="col-md-16 col-sm-16 col-xs-16 padding0 adherencescore survey_grey_color" ng-class="{'border-bottom': adherenceScore.adherenceTrends.length !== $index+1}" ng-repeat ="adherenceTrend in adherenceScore.adherenceTrends track by $index">
+											<div class="col-md-4 col-sm-4 col-xs-4 first-row padding10">{{adherenceTrend.date}}</div>
+												<div class="col-md-8 col-sm-8 padding10">
+													<div class="col-md-16 col-sm-16 col-xs-16 row" ng-repeat="(key, value) in adherenceTrend.notificationPoints">
+													<div class="col-md-8 col-sm-8 col-xs-8 first-row ">{{key}} </div>
+													<div class="col-md-5 col-sm-8 col-xs-8 first-row text-center">{{value}}</div>
+													</div>
+												</div>
+												<div class="col-md-4 col-sm-4 col-xs-4 first-row padding10">{{adherenceTrend.updatedScore}}</div>
+										</div>
+									</div>
+										<div class="col-md-2 col-sm-2 col-xs-2 pull-right text-center cyan-blue-light first-row-view1 pointer-fill-event view-column" ng-click="viewProtocol(adherenceScore.protcols)">View</div>
+
+								</div>
 								</div>
 
 							</div>
@@ -102,107 +121,59 @@
 					</div>					
 				</div>
 			</div>
-			<div class="col-md-16 padding0" ng-class="{'pointer-no-event': !isGraphLoaded, 'pointer-fill-event': isGraphLoaded}">
-				<div class="bar_graph_header">
-					<div class="col-md-5 col-sm-7 left_header_barchart padding0">
-						<div class="row">
-							<ul class="nav nav-pills">
-							<li><a ng-class="{active: selectedGraph === 'HMR'}" href="" ng-click="isGraphLoaded && showHmrGraph()" translate="graph.hmr-data"></a></li>
-							<li><a href="" ng-class="{active: selectedGraph === 'COMPLIANCE'}" ng-click="isGraphLoaded && showComplianceGraph()" translate="graph.compliance"></a></li>
-						</ul>
-						</div>
-					</div>
-					<div class="col-md-11 col-sm-9 right_header_barchart">
-						<ul class="nav nav-pills pull-right ">
-							<li role="presentation" class=""><a href="" ng-class="{active: selectedDateOption === 'DAY'}" ng-hide="complianceGraph" ng-click="isGraphLoaded && dayChart()" translate="graph.day"></a></li>
-							<li role="presentation" class=""><a ng-class="{active: selectedDateOption === 'WEEK'}" href="" ng-click="isGraphLoaded && weeklyChart()">Week</a></li>
-							<li role="presentation" class=""><a href="" ng-class="{active: selectedDateOption === 'MONTH'}" ng-click="isGraphLoaded && monthlyChart()" translate="graph.month"></a></li>
-							<li role="presentation" class=""><a href="" ng-class="{active: selectedDateOption === 'YEAR'}" ng-click="isGraphLoaded && yearlyChart()" translate="graph.year"></a></li>
-							<li role="presentation" class="" id="dp3"><a href="" date-range-picker class="date-picker" ng-model="dates" parentEl="#dp3" options="opts" ><span class="icon-calendar"></span></a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="pull-right week_date_container">
-					<span ng-if="fromDate !== toDate">
-							<span class="date">{{fromDate}}</span> - <span class="date">{{toDate}}</span>
-					</span>
-					<span ng-if="fromDate === toDate" class="date">{{fromDate}}<span>
+			
+		<loading loaded="isGraphLoaded"></loading>		
+	<!-- adding new section for graphs -->
+	<div class="col-md-16 padding0" ng-class="{'pointer-no-event': !isGraphLoaded, 'pointer-fill-event': isGraphLoaded}">
+		<div class="bar_graph_header">
+			<div class="col-md-5 col-sm-7 left_header_barchart padding0">
+				<div class="row">
+					<ul class="nav nav-pills">
+					<li><a ng-class="{active: isHMR}" href="" ng-click="isGraphLoaded && getHMR()" translate="graph.hmr-data"></a></li>
+					<li><a href="" ng-class="{active: !isHMR}" ng-click="isGraphLoaded && getCompliance()" translate="graph.compliance"></a></li>
+				</ul>
 				</div>
 			</div>
-
-		<loading loaded="isGraphLoaded"></loading>
-		<div class="col-md-16" class="all_graph_wrapper" >		
-			<div class="graph_nodata" ng-if="noDataAvailable">
-					<span class="noData_text"> No Data Available!</span>
-			</div>
-			<div ng-if="hmrGraph" class="complianceGraphPrim_wrapper" id="lineGraphWrapper">
-				<div ng-if="hmrLineGraph">
-					<div id="hmrLineGraphSVG" class="complianceGraph col-md-16" style="position:relative;z-index:2;">
-						<svg id="hmrLineSVG" ng-if="!noDataAvailable"> </svg>						
-					</div>
-					<div id="hmrLineGraphCompliance" class="complianceGraph col-md-16" style="margin-top: -351px;position:absolute;z-index:-1;">
-						<svg id="hmrCompliance" style="opacity: 1;"  ng-if="hmrLineGraph && !noDataAvailable"> </svg>
-					</div>
-					<div id="hmrLineGraphCompliance1" class="complianceGraph col-md-16" style="margin-top: -351px;position:absolute;z-index:-1;" >		
-						<svg id="hmrCompliance1" style="opacity: 1;"  ng-if="hmrLineGraph && !noDataAvailable"> </svg>
-					</div>
-				</div>
-				<div ng-if="hmrBarGraph" id="hmrBarGraphWrapper">
-					<div id="hmrBarGraph" class="complianceGraph col-md-16" style="position:relative;z-index:2;">
-						<svg ng-if="!noDataAvailable"> </svg>
-					</div>
-					<div id="hmrBarGraphCompliance" class="complianceGraph col-md-16" style="margin-top: -351px;position:absolute;z-index:-1;">
-						<svg id="hmrCompliance" style="opacity: 1;"  ng-if="hmrBarGraph && !noDataAvailable"> </svg>
-					</div>
-					<div id="hmrBarGraphCompliance1" class="complianceGraph col-md-16" style="margin-top: -351px;position:absolute;z-index:-1;" >		
-						<svg id="hmrCompliance1" style="opacity: 1;"  ng-if="hmrBarGraph && !noDataAvailable"> </svg>
-					</div>
-				</div>
-			</div>
-			<div ng-if="complianceGraph" id="complianceGraphWrapper">
-				<div class="col-md-16"> 
-					<div class="pull-right wrapper_custom_check">
-						<form action="#" ng-if="isComplianceExist">
-							<div class="custom_check_container" ng-class="{'pointer-no-event': !isGraphLoaded, 'pointer-fill-event': isGraphLoaded}" ng-click="isGraphLoaded && pressureIsDisabled && isLegendEnabled('pressureIsDisabled');">
-								<input id="pressure" class="check" type="checkbox" name="pressure" ng-disabled="pressureIsDisabled" ng-model="compliance.pressure" ng-change="isGraphLoaded && reCreateComplianceGraph();$event.stopPropagation();">
-			  		 			<label class="check_label pressure_legend" for="pressure" translate="graph.pressure" ></label>
-							</div>
-				  		 	<div class="custom_check_container" ng-class="{'pointer-no-event': !isGraphLoaded, 'pointer-fill-event': isGraphLoaded}" ng-click="isGraphLoaded && frequencyIsDisabled && isLegendEnabled('frequencyIsDisabled');">
-				  		 		<input id="frequency" class="check" type="checkbox" name="frequency" ng-disabled="frequencyIsDisabled" ng-model="compliance.frequency" ng-change="isGraphLoaded && reCreateComplianceGraph();$event.stopPropagation();">
-				  		 		<label class="check_label frequency_legend" for="frequency" translate="graph.frequency" ></label>
-				  		 	</div>
-				  		 	<div class="custom_check_container" ng-class="{'pointer-no-event': !isGraphLoaded, 'pointer-fill-event': isGraphLoaded}" ng-click="isGraphLoaded && durationIsDisabled && isLegendEnabled('durationIsDisabled');">
-				  		 		<input id="duration" class="check" type="checkbox" name="duration" ng-disabled="durationIsDisabled" ng-model="compliance.duration" ng-change="isGraphLoaded && reCreateComplianceGraph();$event.stopPropagation();">
-				  		 		<label class="check_label duration_legend" for="duration" translate="graph.duration" ></label>
-				  		 	</div>
-			  		 	</form>
-			  		 	<!-- <span ng-show="complianceParamErrMsg" translate="graph.please-deselect-one-item" class="has-error graph_check_error" id="max-compliance-err"></span>
-		  		 		<span ng-show="minComplianceParamErrMsg" translate="graph.min-legend-required" class="has-error graph_check_error" id="min-compliance-err"></span> -->
-					</div>
-				</div>
-				<div id="complianceGraphPrim" class="complianceGraphPrim_wrapper" >
-					<div id="complianceGraph" class="complianceGraph col-md-16">
-						<svg id="compCompliance" ng-if="!noDataAvailable"> </svg>
-					</div>
-					<div id="complianceGraph1" class="complianceGraph col-md-16" style="margin-top: -351px;position:absolute;z-index:-1;"> 
-						<svg id="compCompliance1" ng-if="!noDataAvailable"> </svg>
-					</div>
-					<div id="complianceGraph2" class="complianceGraph col-md-16" style="margin-top: -351px;position:absolute;z-index:-1;"> 
-						<svg id="compCompliance2" ng-if="!noDataAvailable"> </svg>
-					</div>
-					<div id="complianceGraphHMR" class="complianceGraph col-md-16" style="margin-top: -351px;position:absolute;z-index:-1;">
-						<svg id="complianceHMR" ng-if="!noDataAvailable"> </svg>
-					</div>
-				</div>
+			<div class="col-md-11 col-sm-9 right_header_barchart">
+				<ul class="nav nav-pills pull-right ">
+					<li role="presentation" class=""><a href="" ng-class="{active: durationRange === 'Day'}" ng-hide="complianceGraph" ng-click="isGraphLoaded && getDayChart()" translate="graph.day"></a></li>
+					<li role="presentation" class=""><a ng-class="{active: durationRange === 'Week'}" href="" ng-click="isGraphLoaded && getWeekChart()">Week</a></li>
+					<li role="presentation" class=""><a href="" ng-class="{active: durationRange === 'Month'}" ng-click="isGraphLoaded && getMonthChart()" translate="graph.month"></a></li>
+					<li role="presentation" class=""><a href="" ng-class="{active: durationRange === 'Year'}" ng-click="isGraphLoaded && getYearChart()" translate="graph.year"></a></li>
+					<li role="presentation" class="" id="dp1"><a href="" date-range-picker class="date-picker" ng-model="dates" parentEl="#dp1" options="opts" ><span class="icon-calendar"></span></a></li>
+				</ul>
 			</div>
 		</div>
+		<div class="pull-right week_date_container">
+			<span ng-if="fromDate !== toDate">
+					<span class="date">{{fromDate}}</span> - <span class="date">{{toDate}}</span>
+			</span>
+			<span ng-if="fromDate === toDate" class="date">{{fromDate}}<span>
+		</div>
+	</div>
+	<div class="col-md-16" class="all_graph_wrapper" ng-init="getWeekChart()" style="min-height: 300px;">	
+	<div class="graph_nodata" ng-show="noDataAvailable">
+		<span class="noData_text"> No Data Available!</span>
+	</div><!--  ng-show="isHMR && !noDataAvailable"-->	
+	<div class="complianceGraphPrim_wrapper" ng-show="!noDataAvailable" id="lineGraphWrapper" >
+		<div id="HMRGraph" ng-class="{ 'hide-chart': !isHMR, 'show-chart': isHMR}" >			
+		</div>
+	</div><!-- ng-show="!noDataAvailable && !isHMR"-->
+	<div id="complianceGraphWrapper" >
+		<div id="complianceGraphPrim" ng-show="!noDataAvailable" class="complianceGraphPrim_wrapper" >
+			<div id="synchronizedChart" class="complianceGraph col-md-16" ng-class="{ 'hide-chart': isHMR, 'show-chart': !isHMR}">
+			</div>
+		</div>
+	</div>
+	</div>
 
+	<!-- ending new section of graphs -->
 
 	<!-- Note section HTML -->
-	<div class="col-md-16">
+	<div class="col-md-16" style="margin-top: 30px;">
 		<div class="btn_group patient_dashdoard_btns" ng-class="{ 'btn_group patient_dashdoard_btns_compliance': complianceGraph, 'btn_group patient_dashdoard_btns': !complianceGraph}">
 			<div dropdown class="pull-right left">
-				<button id="single-button" type="button" class="hillrom-btn btn-submit margin0 float-right" ng-class="{ 'pointer-fill-event': (!noDataAvailable && isGraphLoaded) , 'pointer-no-event': (!isGraphLoaded || noDataAvailable) }" dropdown-toggle ng-disabled="disabled" translate="graph.download" >
+				<button id="single-button" type="button" class="hillrom-btn btn-submit float-right" ng-class="{ 'pointer-fill-event': (!noDataAvailable && isGraphLoaded) , 'pointer-no-event': (!isGraphLoaded || noDataAvailable) }" dropdown-toggle ng-disabled="disabled" translate="graph.download" >
 					<span class="caret"></span>
 				</button>
 				
@@ -216,7 +187,7 @@
 				</ul>
 
 			</div>
-			 <button class="hillrom-btn btn-submit margin0 float-right" ng-click="showAllNotes();" translate="graph.note"></button>
+			 <button class="hillrom-btn btn-submit float-right" ng-click="showAllNotes();" translate="graph.note"></button>
 
 
 		</div>
@@ -279,7 +250,7 @@
    </div>
 	<form name="form" ng-submit="createNote();">
 		<div class="col-md-2 col-sm-4 date_col">
-			<input class="date_input"  data-provide="datepicker"  data-date-format="yyyy-mm-dd"  bootstrap-datepicker data-date-end-date="0d"   data-date-start-date="{{transmissionDate}}" id="edit_note_date" ng-model="textNote.edit_date" placeholder="Date"/></div>
+			<input class="date_input"  data-provide="datepicker"  data-date-format="mm/dd/yyyy"  bootstrap-datepicker data-date-end-date="0d"   data-date-start-date="{{transmissionDate}}" id="edit_note_date" ng-model="textNote.edit_date" placeholder="Date"/></div>
 			<div class="col-md-11 col-sm-8 description">
 				<div class="form-group">
 
@@ -325,6 +296,7 @@
 		</div>
 		<div id= "png-container" ></div>
 		<canvas id="canvas" width="1800px" height="1800px" class="graph-canvas-hide"></canvas>
+		<canvas id="HMRCCanvas" width=1300 height=350 style="display:none;"></canvas>
 
 
 <div ng-if="deleteNoteModal" class="modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true">
@@ -377,4 +349,92 @@
       </footer>
     </div>
   </div>
+</div>
+
+<div ng-if="surveyConfirmModal" id="survey_confirm_modal" class="modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true">
+  <div class="modal__dialog">
+    <div class="modal__content">
+      <header class="modal__header">
+        <button type="button" class="modal__close" data-dismiss="modal" ng-click="cancelSurvey();">&times;</button>
+        <p ng-if="surveyId === 1" translate="survey.5-days-header"> </p> 
+        <p ng-if="surveyId === 2" translate="survey.30-days-header"> </p> 
+        <p ng-if="surveyId === 3" translate="survey.90-days-header"> </p>
+      </header>
+      <div class="modal__body">
+        <div class="modal--message">Please complete the following survey. Press the Start button below to begin the survey.</div>
+    
+        <div class="row modal--custom-btn">
+          <buton class="hillrom-btn btn-submit float-right" ng-click="$parent.surveyConfirmModal = false;takeSurveyNow(); ">Start</buton>
+          <buton class="hillrom-btn btn-submit float-right" data-dismiss="modal" ng-click="cancelSurvey();">Later</buton>
+        </div>
+      </div>
+      <footer class="modal__footer">
+      </footer>
+    </div>
+  </div>
+</div>
+
+<div ng-if="showProtocolModal" id="showProtocolModal" class="modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true">
+	<div class="modal__dialog">
+		<div class="modal__content adherence_protocol">
+			<header class="modal__header">
+				Protocol
+				<button type="button" class="modal__close" data-dismiss="modal" ng-click="closeProtocolModal()">&times;</button>
+				<p ng-if="surveyId === 1" translate="survey.5-days-header"> </p> 
+				<p ng-if="surveyId === 2" translate="survey.30-days-header"> </p> 
+				<p ng-if="surveyId === 3" translate="survey.90-days-header"> </p>
+			</header>
+			<div class="modal__body">
+				<div class="dashboard dashboard--content col-md-16">
+					<div class="dashboard__manage-view">
+						<div class="dashboard__manage-view--header no_border care_plan_and_device">
+							<div class="col-md-3 header--type text-align-left">
+								<span translate="patient.protocol-caption.type"></span>
+							</div>
+							<div class="col-md-3 header--type text-align-left">
+								<span translate="patient.protocol-caption.treatments-per-day"></span>
+							</div>
+							<div class="col-md-3 header--type text-align-left">
+								<span translate="patient.protocol-caption.minutes-per-treatment"></span>
+							</div>
+							<div class="col-md-3 header--type text-align-left">
+								<span translate="patient.protocol-caption.frequency-per-treatment"></span>
+							</div>
+							<div class="col-md-3 header--type text-align-left">
+								<span translate="patient.protocol-caption.pressure-per-treatment"></span>
+							</div>
+							<div class="clr"></div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-16 border-top protocol_list_container padding10" ng-class="{'no_border' : !protocols}">
+					<div class="col-md-3 text-center">
+						<div class="col-md-16 protocol-list__treatment-day protocol-list no_border text-align-left" ng-repeat="protocol in protocols" ng-class="{'list-inactive':protocol.deleted, 'last' : $last}">
+							<span class="protocol-list--value"> {{protocol.type}} {{protocol.treatmentLabel}}</span>
+						</div>
+					</div>
+					<div class="col-md-2 treatments_per_day_count col-md-offset-3 text-center">
+						<span class="v_middle">{{protocols[0].treatmentsPerDay}}</span>
+					</div>
+					<div class="col-md-11 col-md-offset-2 text-center">
+						<div class="col-md-16 protocol-list no_border" ng-repeat="protocol in protocols" ng-class="{'list-inactive':protocol.deleted, 'last' : $last}">
+
+							<div class="col-md-5 protocol-list__strt-date">
+								<span class="protocol-list--value"> {{protocol.minMinutesPerTreatment}}</span>
+							</div>
+							<div class="col-md-5 protocol-list__end-date">
+								<span ng-if="protocol.type === 'Custom'" class="protocol-list--value"> {{protocol.minFrequency}}</span>
+								<span ng-if="protocol.type === 'Normal'" class="protocol-list--value"> {{protocol.minFrequency}}-{{protocol.maxFrequency}}</span>
+							</div>
+							<div class="col-md-4 protocol-list__end-date">
+								<span ng-if="protocol.type === 'Custom'" class="protocol-list--value"> {{protocol.minPressure}}</span>
+								<span ng-if="protocol.type === 'Normal'" class="protocol-list--value"> {{protocol.minPressure}}-{{protocol.maxPressure}}</span>
+							</div>
+						</div>
+					</div>
+					<div class="padding10 font-size18" ng-if="protocols.length === 0">No Data Available</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>

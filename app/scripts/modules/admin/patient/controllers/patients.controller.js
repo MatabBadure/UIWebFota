@@ -10,13 +10,14 @@ angular.module('hillromvestApp')
     return val;
   };
 })
-.controller('patientsController',['$scope', '$state', '$stateParams', 'patientService', 'dateService', 'notyService', 'UserService', 'DoctorService', 'clinicService', '$q', 'StorageService', 'loginConstants', 'commonsUserService', 'searchFilterService', 'addressService',
-  function($scope, $state, $stateParams, patientService, dateService, notyService, UserService, DoctorService, clinicService, $q, StorageService, loginConstants, commonsUserService, searchFilterService, addressService) {
+.controller('patientsController',['$scope','$rootScope', '$state', '$stateParams', 'patientService', 'dateService', 'notyService', 'UserService', 'DoctorService', 'clinicService', '$q', 'StorageService', 'loginConstants', 'commonsUserService', 'searchFilterService', 'addressService','exportutilService',
+  function($scope, $rootScope, $state, $stateParams, patientService, dateService, notyService, UserService, DoctorService, clinicService, $q, StorageService, loginConstants, commonsUserService, searchFilterService, addressService, exportutilService) {
     var isFormLoaded = false;
     $scope.patient = {};
     $scope.patientTab = "";
     $scope.newProtocolPoint = 1;
     $scope.patientActivateModal = false;
+    $scope.captchaValid = false;
     $scope.patientStatus = {
       'role': StorageService.get('logged').role,
       'editMode': false,
@@ -129,17 +130,17 @@ angular.module('hillromvestApp')
     };
 
     $scope.initPatientAddProtocol = function(){
-          $scope.getPatientById($stateParams.patientId);
-          $scope.protocol = $stateParams.protocol;
-          if(!$scope.protocol){
-            $scope.protocol = {};
-            $scope.protocol.type = 'Normal';
-            $scope.protocol.protocolEntries = [{}];
-          } else {
-            $scope.protocol.type = $scope.protocol.protocol[0].type;
-            $scope.protocol.treatmentsPerDay = $scope.protocol.protocol[0].treatmentsPerDay;
-            $scope.protocol.protocolEntries = $scope.protocol.protocol;
-          }
+      $scope.getPatientById($stateParams.patientId);
+      $scope.protocol = $stateParams.protocol;
+      if(!$scope.protocol){
+        $scope.protocol = {};
+        $scope.protocol.type = 'Normal';
+        $scope.protocol.protocolEntries = [{}];
+      } else {
+        $scope.protocol.type = $scope.protocol.protocol[0].type;
+        $scope.protocol.treatmentsPerDay = $scope.protocol.protocol[0].treatmentsPerDay;
+        $scope.protocol.protocolEntries = $scope.protocol.protocol;
+      }
     };
 
     $scope.initPatientAddDevice = function(){
@@ -180,7 +181,6 @@ angular.module('hillromvestApp')
       }else if(currentRoute === 'patientEditProtocol' || currentRoute === 'patientEditProtocolRcadmin'){
         $scope.initpatientEditProtocol();
       }
-
     };
 
     $scope.setEditMode = function(patient) {
@@ -664,22 +664,22 @@ angular.module('hillromvestApp')
     };
 
     $scope.editCaregiver = function(careGiverId){
-        UserService.getState().then(function(response) {
-          $scope.states = response.data.states;
-        }).catch(function(response) {});
-        UserService.getRelationships().then(function(response) {
-          $scope.relationships = response.data.relationshipLabels;
-        }).catch(function(response) {});
-        var caregiverId = $stateParams.caregiverId;
-        patientService.getCaregiverById($stateParams.patientId, caregiverId).then(function(response){
-          $scope.associateCareGiver = response.data.caregiver.userPatientAssocPK.user;
-          $scope.associateCareGiver.relationship = response.data.caregiver.relationshipLabel;
-          if($scope.associateCareGiver.zipcode){
-            $scope.associateCareGiver.zipcode = commonsUserService.formatZipcode($scope.associateCareGiver.zipcode);
-          }
-        }).catch(function(response){
-          notyService.showError(response);
-        });
+      UserService.getState().then(function(response) {
+        $scope.states = response.data.states;
+      }).catch(function(response) {});
+      UserService.getRelationships().then(function(response) {
+        $scope.relationships = response.data.relationshipLabels;
+      }).catch(function(response) {});
+      var caregiverId = $stateParams.caregiverId;
+      patientService.getCaregiverById($stateParams.patientId, caregiverId).then(function(response){
+        $scope.associateCareGiver = response.data.caregiver.userPatientAssocPK.user;
+        $scope.associateCareGiver.relationship = response.data.caregiver.relationshipLabel;
+        if($scope.associateCareGiver.zipcode){
+          $scope.associateCareGiver.zipcode = commonsUserService.formatZipcode($scope.associateCareGiver.zipcode);
+        }
+      }).catch(function(response){
+        notyService.showError(response);
+      });
     };
 
     $scope.updateCaregiver = function(patientId, caregiverId , careGiver){
@@ -743,11 +743,7 @@ angular.module('hillromvestApp')
     };
 
     $scope.updateProtocol = function(){
-      $scope.submitted = true;
-      $scope.protocolUpdateModal =false;
-      if($scope.addProtocolForm.$invalid){
-        return false;
-      }
+      $scope.isProtocolSubmited = true;
       if($scope.protocol.id){
         delete $scope.protocol.id;
       }
@@ -757,6 +753,9 @@ angular.module('hillromvestApp')
       var data = $scope.protocol.protocol;
       if($scope.protocol.type === 'Custom'){
         angular.forEach(data, function(value, key){
+          if(!value.type){
+            value.type = 'Custom';
+          }
           value.treatmentsPerDay = $scope.protocol.treatmentsPerDay;
           if(!value.treatmentLabel){
             value.treatmentLabel = 'point'+(key+1);
@@ -766,6 +765,8 @@ angular.module('hillromvestApp')
         data[0].treatmentsPerDay = $scope.protocol.treatmentsPerDay;
       }
       patientService.editProtocol($stateParams.patientId, data).then(function(response){
+        $scope.isVerificationModal = false;
+        notyService.showMessage(response.data.message, 'success');
         if($scope.patientStatus.role === loginConstants.role.acctservices){
           $state.go('patientProtocolRcadmin', {'patientId': $stateParams.patientId});
         }else{
@@ -1014,9 +1015,8 @@ angular.module('hillromvestApp')
       $scope.submitted = true;
       if($scope.addProtocolForm.$invalid){
         return false;
-      }else{
-        $scope.protocolUpdateModal =true;  
       }
+      $scope.isAuthorizeProtocolModal = true;
     };
 
     $scope.showDeviceUpdateModal = function(){
@@ -1057,13 +1057,6 @@ angular.module('hillromvestApp')
         }
       }
     };
-
-    $scope.clearMessages = function(){
-      if($scope.patient.zipcode){
-        delete $scope.serviceError;
-      }
-    };
-
 
     $scope.init();
   }]);

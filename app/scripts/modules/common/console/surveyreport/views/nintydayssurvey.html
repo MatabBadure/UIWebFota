@@ -1,0 +1,50 @@
+<div class="grid-view">
+  <div class="col-md-16 col-sm-16 text-center reset-padding flex1 margin-top">
+    <div class="col-md-1 col-sm-1 cyan-blue-light text-center border-right">
+      <span>#</span>
+    </div>
+    <div class="col-md-3 col-sm-3 cyan-blue-light text-center border-right">
+      <span>Patient Name</span>
+    </div>
+    <div class="col-md-2 col-sm-2 cyan-blue-light text-center  border-right">
+      <span>Patient DOB</span>
+    </div>
+    <div class="col-md-2 col-sm-2 cyan-blue-light text-center  border-right">
+      <span>Phone Number</span>
+    </div>
+    <div class="col-md-4 col-sm-4 cyan-blue-light text-center  border-right">
+      <span>Email Address</span>
+    </div>
+     <div class="col-md-2 col-sm-2 cyan-blue-light text-center  border-right">
+      <span>Hours of Use</span>
+    </div>
+     <div class="col-md-2 col-sm-2 cyan-blue-light text-center padding10">
+      <span>Serial Number</span>
+    </div>
+  </div>
+
+  <div class="col-md-16 col-sm-16 reset-padding flex1 survey_grey_color" ng-repeat="survey in surveyGridView track by $index">
+    <div class="col-md-1 col-sm-1 border-right text-center ">
+      <span>{{$index + 1}}</span>
+    </div>
+     <div class="col-md-3 col-sm-3 text-center border-right ">
+      <span>{{survey.pName}}</span>
+    </div>
+    <div class="col-md-2 col-sm-2 text-center border-right ">
+      <span>{{survey.dob}}</span>
+    </div>
+    <div class="col-md-2 col-sm-2 text-center border-right ">
+      <span>{{survey.pPhoneNumber}}</span>
+    </div>
+    <div class="col-md-4 col-sm-4 text-center border-right ">
+      <span>{{survey.pEmail}}</span>
+    </div>
+     <div class="col-md-2 col-sm-2 text-center border-right ">
+      <span>{{survey.hoursOfUse}}</span>
+    </div>
+     <div class="col-md-2 col-sm-2 text-center padding10 ">
+      <span>{{survey.serNumver}}</span>
+    </div>
+  </div>
+
+</div>

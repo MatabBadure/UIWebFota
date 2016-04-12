@@ -143,4 +143,156 @@ angular.module('hillromvestApp').constant('hcpDashboardConstants', {
 	}
 })
 
+.constant('loginAnalyticsConstants',{
+	legends : {
+		"ALL" : "all",
+		"PATIENT" : "patient",
+		"HCP" : "hcp",
+		"CLINICADMIN": "clinicadmin",
+		"CAREGIVER": "caregiver"
+	},
+	duration:{
+		"DAY": "Day",
+		"WEEK": "Week",
+		"MONTH": "Month",
+		"YEAR": "Year",
+		"CUSTOM": "Custom"
+	},
+	string:{
+		"COMMA": ","
+	},
+	filters:{
+		"PATIENT": "PATIENT",
+		"HCP": "HCP",
+		"CLINICADMIN": "CLINIC_ADMIN",
+		"CAREGIVER": "CARE_GIVER"
+	},
+	colors:{
+		"PATIENT": "#ff9829",
+		"HCP": "#35978f",
+		"CLINICADMIN": "#4d95c4",
+		"CAREGIVER": "#8b6baf"
+	},
 
+})
+.constant('surveyConstants',{
+	questions : {
+		"patient_name": "Patient name",
+		"patient_phone_number": "Patient phone number",
+		"hours_of_use": "Hours of use",
+		"serial_number": "Serial number",
+		"patient_dob": "Patient date of birth",
+		"survey_date": "Date",
+		"space": " ",
+		"main_phone_number": "Main phone number",
+		"secondary_phone_number": "Secondary phone number",
+		"address": "Address",
+		"city": "City",
+		"zipcode":"Zip code",
+		"state": "State",
+		"email_address": "Email"
+	}
+})
+.constant('surveyGraphConstants',{
+	legends : {
+		"YES": "yes",
+		"NO": "no",
+		"STRONGLYDISAGREE": "strongly disagree",
+		"SOMEWHATDISAGREE": "somewhat disagree",
+		"NEUTRAL": "neutral",
+		"SOMEWHATAGREE": "somewhat agree",
+		"STRONGLYAGREE": "strongly agree",
+		"UNABLETOASSESS":"unable to assess"
+	},
+	surveycolor : {
+		"YES": "#34978f",
+		"NO": "#f7972d",
+		"strongly_disagree": "#dd1f2e",
+		"somewhat_disagree": "#e65024",
+		"neutral": "#f7972d",
+		"somewhat_agree": "#3c9677",
+		"strongly_agree": "#55ad46",
+		"unable_to_assess": "#231f20"
+	},
+})
+.constant('patientGraphsConstants',{
+	colors: {
+		"pressure": "#ff9829",
+		"frequency": "#34978f",
+		"duration": "#4e95c4"
+	}
+})
+.constant('benchmarkingConstants',{
+	string: {
+		"adherenceScore": "adherenceScore",
+		"average": "average",
+		"myAvgAdherenceScore": "My Avg. Adherence Score",
+		"clinicAvgAdherenceScore": " Avg. Adherence Score",
+		"graphTitleMyAvgAdherenceScore": "My Average Adherence Score",
+		"graphTitleVs": " Vs. ",
+		"grapTitleClinicAdherenceScore": " Average Adherence Score",
+		"grapTitleClinic": "Clinic",
+		"graphTitleClinicAvg":"Clinic Patients Average ",
+		"graphTitleAverage": "Average",
+		"all": "All",
+		"stateParam": "&state=",
+		"cityParam": "&city="
+	}
+})
+
+var benchmarkingParams = [
+					{"parameter" : "adherenceScore", "name": "Adherence Score"},
+					{"parameter" : "missedTherapy", "name": "Missed Therapy Days"},
+					{"parameter" : "settingDeviation", "name": "Setting Deviations"},
+					{"parameter" : "HMRDeviation", "name": "HMR Non-Adherence"},
+					{"parameter" : "HMRRunRate", "name": "HMR Run Rate"}
+				]
+
+var geographyOption = [
+					{"name": "National"},
+					{"name": "State"},
+					{"name": "City"}
+				]
+
+var benchmarks = [
+	{"benchmark" : "Average", "name": "Average"}
+]
+
+var patientBMParams = [
+	{"parameter" : "adherenceScore", "name": "Adherence Score"}
+]
+
+
+var ageGroups = [
+	{ ageRange: '0-5', 'true': true },
+	{ ageRange: '6-10', 'true': true},
+	{ ageRange: '11-15',  'true': true},
+	{ ageRange: '16-20',  'true': true},
+	{ ageRange: '21-25', 'true': true},
+	{ ageRange: '26-30', 'true': true},
+	{ ageRange: '31-35', 'true': true},
+	{ ageRange: '36-40', 'true': true},
+	{ ageRange: '41-45', 'true': true},
+	{ ageRange: '46-50', 'true': true},
+	{ ageRange: '51-55', 'true': true},
+	{ ageRange: '56-60', 'true': true},
+	{ ageRange: '61-65', 'true': true},
+	{ ageRange: '66-70', 'true': true},
+	{ ageRange: '71-75', 'true': true},
+	{ ageRange: '76-80', 'true': true},
+	{ ageRange: '81-above', 'true': true}
+];
+
+var clinicSizes = [
+	{ size: '1-25', 'true': true},
+	{ size: '26-50', 'true': true},
+	{ size: '51-75', 'true': true},
+	{ size: '76-100', 'true': true},
+	{ size: '101-150', 'true': true},
+	{ size: '151-200', 'true': true},
+	{ size: '201-250', 'true': true},
+	{ size: '251-300', 'true': true},
+	{ size: '301-350', 'true': true},
+	{ size: '351-400', 'true': true},
+	{ size: '401-above', 'true': true}
+];

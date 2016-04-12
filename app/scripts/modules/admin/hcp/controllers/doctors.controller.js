@@ -23,6 +23,7 @@ angular.module('hillromvestApp')
         $scope.filterClinicId = "all";
         $scope.searchItem = "";
         $scope.searchFilter = searchFilterService.initSearchFiltersForPatient();
+        $scope.searchFilter.isHideStatusFilter = true;
         $scope.searchPatientsForHCP();
         $scope.getDoctorDetails($stateParams.doctorId, $scope.setEditMode);        
       } else if (currentRoute === 'hcpNew' || currentRoute === 'hcpNewRcadmin') {

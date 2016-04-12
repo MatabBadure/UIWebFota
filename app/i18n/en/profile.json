@@ -5,13 +5,15 @@
       "update-password": "HillRom | Update Password",
       "notification-settings": "HillRom | Notification Settings",
       "profile-update": "HillRom | Profile Update",
-      "profile-settings": "HillRom | Profile Settings"
+      "profile-settings": "HillRom | Profile Settings",
+      "benchmarking": "Hillrom | Benchmarking"
     },
     "tabs": {
       "profile-details": "Profile Details",
       "update-password": "Update Password",
       "setting": "Notification Settings",
-      "profile-setting": "Profile Settings"
+      "profile-setting": "Profile Settings",
+      "benchmarking": "Benchmarking"
     },
     "userId":"User ID",
     "title-name": "Title",
@@ -113,5 +115,15 @@
       "warning" : "Update Security Q & A",
       "message" : "Are you sure to update your Security Question and Answer?"
     }
+  },
+  "benchmarking":{
+    "day": "Day",
+    "week": "Week",
+    "month": "Month",
+    "year": "Year",
+    "benchmark": "Benchmark",
+    "parameter": "Parameter",
+    "comparewith": "Compare With",
+    "geography": "Geography"
   }
 }

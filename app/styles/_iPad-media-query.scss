@@ -112,6 +112,12 @@
 		display: inline-block;
 	}
 
+	.height300{
+		height:auto!important;
+	}
+	.height500{
+		height:auto!important;
+	}
 	/*Admin Responsive column style*/
 	.col-hide-iPad{
 		display: none;
@@ -135,6 +141,57 @@
 			width: 16.666%;
 		}
 	}
+	.no-padding{
+		padding:0px;
+	}
+
+	.tab-margin-bottom20{
+		margin-bottom:20px;
+	}
+	.tab-clear{
+		clear:both;
+	}
+	.margin-left-10-reset{
+		margin-left:0px;
+	}
+	.margin-tp19{
+		margin-top:19px;
+	}
+	.modal__header{
+		padding: 10px!important;
+	}
+	.hide-tab{
+		display:none !important;
+	}
+	.show-tab{
+		display:block !important;
+	}
+	.margin-left15{
+		margin-left:15px;
+	}
+	.height400{
+		height:auto;
+	}
+	.hideOverflow{
+			overflow:hidden!important;
+		}
+	.benchmarking__form__input select{
+		width:130px!important;
+	}
+	.multiSelect > button{
+		width:180px;
+	}
+	.navbar-secondary .navbar-right > li{
+		padding:0 14px !important;
+	}
+
+	@media screen and (-webkit-min-device-pixel-ratio:0) {
+		.hideOverflow{
+			overflow:hidden!important;
+		}
+
+	}
+
 }
 
 @media only screen and (min-width : 768px) and (max-width : 1024px) and (orientation : portrait) { 
@@ -253,7 +310,63 @@
 	.col-hide-web{
     	display: block;
   	}
+  	.no-padding{
+		padding:0px;
+	}
+	.tab-margin-bottom20{
+		margin-bottom:20px;
+	}
+
+	.tab-clear{
+		clear:both;
+	}
+	.margin-left-10-reset{
+		margin-left:0px;
+	}
+	.margin-tp19{
+		margin-top:19px;
+	}
+	.hide-tab{
+		display:none !important;
+	}
+	.show-tab{
+		display:block !important;
+	}
 	
+	.patient-user__navbar ul > li > a .icons{
+		left:8px !important
+	}
+	.flex1 {
+	  height: auto;
+	  display: -webkit-flex;
+	  flex-flow: -webkit-row column;
+	}
+	
+	.patient_padding li a{
+		padding-top:30px!important
+	}
+	.height400{
+		height:auto;
+	}
+	.hideOverflow{
+			overflow:hidden!important;
+		}
+
+	.benchmarking__form__input select{
+		width:130px!important;
+	}
+	.multiSelect > button{
+		width:180px;
+	}
+	.navbar-secondary .navbar-right > li{
+		padding:0 14px !important;
+	}
+	@media screen and (-webkit-min-device-pixel-ratio:0) {
+		.hideOverflow{
+			overflow:hidden!important;
+		}
+	
+	}
 }
 @media screen and (min-width : 1024px){
 	.login{
@@ -263,6 +376,39 @@
 		-o-background-size: cover;
 		background-size: cover;
 		background-size: 100% 100%;
+	}
+	.no-padding{
+		padding:0px;
+	}
+	.tab-margin-bottom20{
+		margin-bottom:20px;
+	}
+	.tab-clear{
+		clear:both;
+	}
+	.margin-left-10-reset{
+		margin-left:0px;
+	}
+	.height400{
+		height:auto;
+	}
+
+
+	.hideOverflow{
+			overflow:hidden!important;
+		}
+
+/*	.benchmarking__form__input select{
+		width:130px!important;
+	}
+	.multiSelect > button{
+		width:180px;
+	}*/
+	@media screen and (-webkit-min-device-pixel-ratio:0) {
+		.hideOverflow{
+			overflow:hidden!important;
+		}
+	
 	}
 } 
 

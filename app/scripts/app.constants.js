@@ -90,5 +90,21 @@ angular.module('hillromvestApp')
 	'validateResetKey' : 'api/validateResetKey?key=KEYDATA',
 	'getCityStateZipByState' : '/api/cityStateZipMapByState?state=STATE',	
 	'getAllStates' : '/api/allstates',
-	'getCityStateByZip': '/api/cityStateZipMapByZip?zipcode=ZIPCODE'
+	'getCityStateByZip': '/api/cityStateZipMapByZip?zipcode=ZIPCODE',
+	'getCitiesByState': '/api/availableCities?state=STATE',
+	'validateCredentials': '/api/validateCredentials',
+	'getLoginAnalytics': '/api/loginAnalytics?from=FROM&to=TO&filters=FILTERS&duration=DURATION',
+	'isSurvey': '/api/survey/user/USER_ID',
+	'getSurvey': '/api/survey/SURVEY_ID',
+	'saveSuvey': '/api/survey',
+	'getSurveyGridReport': '/api/survey/gridview/SURVEY_ID?fromDate=FROM_DATE&toDate=TO_DATE',
+	'getSurveycomments': '/api/survey/answerbyquestion/QUESTIONID?fromDate=FROM_DATE&toDate=TO_DATE',
+	'getGraphSurveyGridReport': '/api/survey/SURVEY_ID/graph?from=FROM_DATE&to=TO_DATE',
+	'getBenchmarking': '/api/benchmark/parameter?type=TYPE&benchmarkType=BENCHMARKTYPE&xAxisParameter=XAXIS&range=RANGE&from=FROM&to=TO',
+	'availableStates':'/api/availableStates',
+	'getPateintBenchmarking': '/api/user/patient/PATIENTID/benchmark?parameterType=PARAMETERTYPE&benchmarkType=BENCHMARKTYPE&from=FROM&to=TO&clinicId=CLINICID',
+	'getHCPBenchmarking': '/api/user/hcp/USERID/benchmark?from=FROM&to=TO&benchmarkType=BENCHMARKTYPE&parameterType=PARAMETERTYPE&clinicId=CLINICID',
+	'getClinicAdminBenchmarking': '/api/user/clinicadmin/USERID/benchmark?from=FROM&to=TO&benchmarkType=BENCHMARKTYPE&parameterType=PARAMETERTYPE&clinicId=CLINICID',
+	'getClinicDisease':'/api/benchmark/statistics?from=FROM&to=TO&xAxisParameter=XAXIS&ageGroupRange=AGERANGE&clinicSizeRange=CLINICRANGE',
+	'getClinicDiseaseNonXaxis':'/api/benchmark/statistics?from=FROM&to=TO&xAxisParameter=&ageGroupRange=all&clinicSizeRange=all&ignoreXAxis=true'
 });
