@@ -127,13 +127,16 @@
           </div>
           <div class="col-md-7 reset-padding col-md-offset-2">
             <div class="col-md-6 dashboard__form--label reset-padding">
-              <span class="" translate="clinic.city"></span>
+              <span class="" translate="clinic.zipcode"></span>
+              <span class="">*</span>
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
-              <input class="" type="text" ng-model="clinic.city" validate-on-blur name="city" ng-maxlength=15>
-              <div ng-show="(form.city.$showValidationMessage && form.city.$invalid)">
-                <span class="has-error" ng-show="form.city.$error.maxlength" translate="error.city.maxlength"></span>
+              <input class="" type="text" validate-on-blur name="zip" maxlength="5" ng-pattern="/^(?=.*[1-9].*)[0-9]{5}$/" ng-model="clinic.zipcode" ng-blur="getCityState(clinic.zipcode)" ng-enter="" ng-keyup="clearMessages()" required>
+              <div ng-show="(form.zip.$showValidationMessage && form.zip.$invalid) || submitted">
+                <span class="has-error" ng-show="form.zip.$error.pattern" translate="error.zipcode.pattern"></span>
+                <span class="has-error" ng-show="form.zip.$error.required && !form.zip.$error.pattern" translate="error.zipcode.required"></span>
               </div>
+              <span class="has-error" ng-show="serviceError && !form.zip.$error.pattern && !form.zip.$error.required">{{serviceError}}</span>
             </div>
           </div>
         </div>
@@ -142,23 +145,16 @@
             <div class="col-md-6 dashboard__form--label reset-padding">
               <span class="" translate="clinic.state"></span>
             </div>
-            <div class="col-md-6 dashboard__form__input--option reset-padding selected-box-container">
-              <div class="custom-dropdown">
-                <select name="state" ng-model="clinic.state" ng-options="state.name as state.name for state in states">
-                  <option selected="selected">Select a state</option>
-                </select>
-              </div>
+            <div class="col-md-10 dashboard__form--input reset-padding">
+              <input class="" type="text" validate-on-blur ng-model="clinic.state" name="state" ng-disabled="true">
             </div>
           </div>
           <div class="col-md-7 reset-padding col-md-offset-2">
             <div class="col-md-6 dashboard__form--label reset-padding">
-              <span class="" translate="clinic.zipcode"></span>
+              <span class="" translate="clinic.city"></span>
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
-              <input class="" type="text" validate-on-blur name="zip" maxlength="5" ng-pattern="/^(?=.*[1-9].*)[0-9]{5}$/" ng-model="clinic.zipcode">
-              <div ng-show="(form.zip.$showValidationMessage && form.zip.$invalid) || submitted">
-                <span class="has-error" ng-show="form.zip.$error.pattern" translate="error.zipcode.pattern"></span>
-              </div>
+              <input class="" type="text" ng-model="clinic.city" validate-on-blur name="city" ng-disabled="true">
             </div>
           </div>
         </div>
