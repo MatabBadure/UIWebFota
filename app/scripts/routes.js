@@ -4373,14 +4373,14 @@ angular.module('hillromvestApp')
                 }
             })
             .state('patientDiagnostic', {
-                //parent: 'patient-dashboard',
+                parent: 'patient-dashboard',
                 url: '/patient/patientDiagnostic',
                 data: {
                     roles: ['PATIENT'],
                     pageTitle: 'profile.page-title.benchmarking'
                 },
                 views: {
-                    'content@': {
+                    'patient-view': {
                         templateUrl: 'scripts/modules/common/clinicadmin-hcp/patient-diagnostics/views/patientDiagnostic.html',
                         controller: 'patientDiagnosticController'
                     }

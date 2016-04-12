@@ -9,6 +9,7 @@ angular.module('hillromvestApp')
     });
 
     $scope.mainInit = function(){
+    		$rootScope.appState = $state;
 			$rootScope.userRole = null;
 			$rootScope.username = null;
 			if(StorageService.get('logged')){
@@ -322,6 +323,7 @@ angular.module('hillromvestApp')
     };
 
     $scope.patientDiagnostics = function(){
+
 	    if($rootScope.userRole === "PATIENT"){
   			var patientID = StorageService.get('logged').patientID;
   			console.log("patientDiagnostic", patientID);
