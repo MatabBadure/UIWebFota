@@ -4374,7 +4374,7 @@ angular.module('hillromvestApp')
             })
             .state('patientDiagnostic', {
                 parent: 'patient-dashboard',
-                url: '/patient/patientDiagnostic',
+                url: '/patientDiagnostic',
                 data: {
                     roles: ['PATIENT'],
                     pageTitle: 'profile.page-title.benchmarking'
@@ -4392,7 +4392,7 @@ angular.module('hillromvestApp')
                         return $ocLazyLoad.load('PatientDiagnosticModule');
                     }],
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
-                        $translatePartialLoader.addPart('profile');
+                        $translatePartialLoader.addPart('patient-user');
                         return $translate.refresh();
                     }],
                     authorize: ['Auth',
@@ -4422,7 +4422,7 @@ angular.module('hillromvestApp')
                         return $ocLazyLoad.load('PatientDiagnosticModule');
                     }],
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
-                        $translatePartialLoader.addPart('profile');
+                        $translatePartialLoader.addPart('patient-user');
                         return $translate.refresh();
                     }],
                     authorize: ['Auth',
@@ -4452,7 +4452,7 @@ angular.module('hillromvestApp')
                         return $ocLazyLoad.load('PatientDiagnosticModule');
                     }],
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
-                        $translatePartialLoader.addPart('profile');
+                        $translatePartialLoader.addPart('patient-user');
                         return $translate.refresh();
                     }],
                     authorize: ['Auth',

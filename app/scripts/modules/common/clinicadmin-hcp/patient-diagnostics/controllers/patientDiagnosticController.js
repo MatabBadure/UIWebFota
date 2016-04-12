@@ -8,10 +8,7 @@ angular.module('hillromvestApp')
   	$scope.addDiagnostics = function(){
   		$rootScope.isAddDiagnostics = true;
   	};
-  	$scope.backToDiagnostics = function(){
-  		$rootScope.isAddDiagnostics = false;
-  		$rootScope.patientDiagnostics();
-  	};
+  	
   	$scope.init = function(){
   		if($state.current.name === "patientDiagnostic"){
   			$scope.hidePatientNavbar = true;

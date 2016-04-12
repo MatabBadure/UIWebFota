@@ -337,4 +337,9 @@ angular.module('hillromvestApp')
   		}
     };
 
+    $rootScope.backToDiagnostics = function(){
+  		$rootScope.isAddDiagnostics = false;
+  		$rootScope.patientDiagnostics();
+  	};
+
   }]);
