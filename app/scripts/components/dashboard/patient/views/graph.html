@@ -128,9 +128,9 @@
 		<div class="bar_graph_header">
 			<div class="col-md-5 col-sm-7 left_header_barchart padding0">
 				<div class="row">
-					<ul class="nav nav-pills">
+					<ul class="nav nav-pills">					
+					<li><a href="" ng-class="{active: !isHMR}" ng-click="isGraphLoaded && getCompliance()" translate="graph.adherence"></a></li>
 					<li><a ng-class="{active: isHMR}" href="" ng-click="isGraphLoaded && getHMR()" translate="graph.hmr-data"></a></li>
-					<li><a href="" ng-class="{active: !isHMR}" ng-click="isGraphLoaded && getCompliance()" translate="graph.compliance"></a></li>
 				</ul>
 				</div>
 			</div>
