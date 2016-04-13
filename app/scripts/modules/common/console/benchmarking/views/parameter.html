@@ -192,13 +192,20 @@
 			<span ng-if="fromDate === toDate" class="date">{{fromDate}}<span>
 	</div>
   </div>
+
+  <div class="col-md-16" ng-if="isNoDataAvailable">
+		<div class="graph_nodata">
+			<span class="noData_text">No Data Available!</span>
+		</div>
+	</div>
+
   <loading loaded="isGraphLoaded"></loading>
-  <div class="col-md-16 col-sm-16 margin-top">
+  <div class="col-md-16 col-sm-16 margin-top" ng-show="!isNoDataAvailable">
   	<div id="benchmarkingGraph"></div>
 	</div>
 	<div style="clear:both"></div>
 	<div class="col-md-16 col-sm-16 dashboard__manage-view--pagination">
-  <div class="btn_group patient_dashdoard_btns">
+  <div class="btn_group patient_dashdoard_btns" ng-if="!isNoDataAvailable">
     <div dropdown="" class="pull-right left dropdown">
       <button id="single-button" type="button" class="hillrom-btn btn-submit margin0 float-right ng-scope dropdown-toggle"  ng-click="exportPDF()">Download As PDF</button>
     </div>

@@ -216,18 +216,28 @@ angular.module('hillromvestApp')
 		$scope.getBenchmarkingReport = function(fromDate, toDate, XAxis, type, benchmarkType,range, state, city){
 			benchmarkingService.getBenchmarkingReport(fromDate, toDate, XAxis, type, benchmarkType, range, state, city).then(function(response){
 				$scope.benchmarkingGraph = response.data;
-				$scope.drawBenchmarkingchart();
+				$scope.isNoDataAvailable = false;
+				setTimeout(function() {
+        	$scope.drawBenchmarkingchart();
+    		}, 10);
 			}).catch(function(response){
-				notyService.showError(response);
+				if(response.status === 400){
+					$scope.isNoDataAvailable = true;
+				}
 			});
 		};
 
 		$scope.getClinicDiseaseReport = function(fromDate, toDate, xaxis, ageRange, clinicRange, state, city){
 			benchmarkingService.getClinicDiseaseReport(fromDate, toDate, xaxis, ageRange, clinicRange, state, city).then(function(response){
 				$scope.clinicDiseaseGraphData = response.data;
-				$scope.drawClinicDiseaseChart();
+				$scope.isNoDataAvailable = false;
+				setTimeout(function() {
+        	$scope.drawClinicDiseaseChart();
+    		}, 10);
 			}).catch(function(response){
-				notyService.showError(response);
+				if(response.status === 400){
+					$scope.isNoDataAvailable = true;
+				}
 			});
 		};
 
@@ -612,7 +622,9 @@ angular.module('hillromvestApp')
 		$scope.getClinicDiseaseReportIgnoreXaxis = function(){
 			benchmarkingService.getClinicDiseaseReportIgnoreXaxis($scope.serverFromDate, $scope.serverToDate, $scope.state, $scope.city).then(function(response){
 				$scope.clinicDiseaseGraphData = response.data;
-				$scope.drawClinicDiseaseChart();
+				setTimeout(function() {
+        	$scope.drawClinicDiseaseChart();
+    		}, 10);
 			}).catch(function(response){
 			  notyService.showError(response);
 			});
