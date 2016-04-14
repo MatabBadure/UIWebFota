@@ -662,10 +662,13 @@ angular.module('hillromvestApp')
               }
             });
             if(responseData.series[key1].name === "Pressure"){
+              responseData.series[key1].unit = ""; 
               responseData.series[key1].color = patientGraphsConstants.colors.pressure;
             }else if(responseData.series[key1].name === "Frequency"){
+              responseData.series[key1].unit = patientGraphsConstants.units.frequency; 
               responseData.series[key1].color = patientGraphsConstants.colors.frequency;
             }else if(responseData.series[key1].name === "Duration"){
+              responseData.series[key1].unit = patientGraphsConstants.units.duration; 
               responseData.series[key1].color = patientGraphsConstants.colors.duration;
             }
             $scope.chartData.datasets.push(responseData.series[key1]);
@@ -789,7 +792,7 @@ angular.module('hillromvestApp')
                 backgroundColor:  "#e6f1f4"
               },
               title: {
-                text: dataset.name,
+                text: dataset.name + " " +dataset.unit,
                 align: 'left',
                 margin: 25,
                 x: 30,
@@ -915,8 +918,11 @@ angular.module('hillromvestApp')
                 data: dataset.data,
                 name: dataset.name,
                 type: dataset.type,
-                color: dataset.color,
-                fillOpacity: 0.3
+                color: dataset.color,                
+                fillOpacity: 0.3,
+                 tooltip: {
+                    valueSuffix: ' ' + dataset.unit
+                }
               }]
             });
         });
