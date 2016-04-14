@@ -111,21 +111,21 @@
       <div class="row lebel-indent margin-top col-md-16 margin-bottom15 ng-scope">
         <div>
   		    <input type="checkbox" name="termsAndCondition" class="ng-pristine ng-untouched ng-valid" value="false" ng-model="terms" ng-required="!terms">
-  		    <span class="ng-scope link-text termsandconditon_color">Accept Terms and Conditions</span>
+  		    <span class="ng-scope link-text termsandconditon_color impo-highlight">I agree and give my consent by clicking on "I Accept" button.</span> <a ng-href="">(Esign Disclosures and Consent)</a>
         </div>
         <div>
           <span class="has-error" ng-if="authorizeForm.termsAndCondition.$error.required && isAuthorizeFormSubmited">Please indicate that you have read and agree to the Terms and Conditions.</span>
         </div>
       </div>
-      <div class="row lebel-indent col-md-16 margin-bottom15 ng-scope dark_grey_text_color">
+     <!--  <div class="row lebel-indent col-md-16 margin-bottom15 ng-scope dark_grey_text_color">
   		  <p>1. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim </p>
   		  <p>2. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim </p>
   		  <p>3. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim </p>
-      </div>
+      </div> -->
 
       <div class="col-md-16 margin-top reset-padding">
         <div class="">
-          <input type="submit" class="hillrom-btn btn-primary float-right btn-margin-left"  value="Electronically Sign">
+          <input type="submit" class="hillrom-btn btn-primary float-right btn-margin-left"  value="I Accept">
           <input type="button" class="hillrom-btn btn-secondary float-right" ng-click="cancelProtocolUpdate()" value="Cancel">
           <div class="clr"></div>
         </div>
