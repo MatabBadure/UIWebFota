@@ -284,13 +284,16 @@ angular.module('hillromvestApp')
 
       getbenchmarking.then(function(response){
         if(response.data && response.data.series && response.data.series.length === 2){          
-          $scope.benchmarkingData = response.data;         
-          setTimeout(function(){            
+          $scope.benchmarkingData = response.data;
+          $scope.isNoDataAvailable = false;
+          setTimeout(function(){
             $scope.drawBenchmarkingChart();   
           }, 100);          
         }else{
           plotNoDataAvailable();
         }        
+      }).catch(function(response){
+        plotNoDataAvailable();
       });      
     }else{    		
       plotNoDataAvailable();
