@@ -20,10 +20,15 @@
             </div>
             <div class="col-md-11 col-sm-5 right_header_barchart cyan-blue-light">
               <ul class="nav nav-pills pull-right">
-               <li><!-- ngIf: fromDate !== toDate --><span ng-if="fromDate !== toDate" class="pull-left margin_tp15 ng-scope">
-                <span class="date ng-binding">04/07/2016</span> - <span class="date ng-binding">04/12/2016</span>
-              </span><!-- end ngIf: fromDate !== toDate --></li>
-              <!-- ngIf: fromDate === toDate -->
+                <li>
+                  <span ng-if="fromDate !== toDate" class="pull-left margin_tp15 ng-scope">
+                    <span class="date ng-binding">{{fromDate}}</span> - <span class="date ng-binding">{{toDate}}</span>
+                  </span>
+                  <span ng-if="fromDate === toDate" class="pull-left margin_tp15 ng-scope">
+                    <span class="date ng-binding">{{fromDate}}</span>
+                  </span>
+                </li>
+              
                 <li id="dp1" class="" role="">
                   <a options="opts" parentel="#dp1" ng-model="dates" class="date-picker margin_tp13 ng-pristine ng-untouched ng-valid ng-isolate-scope" date-range-picker="" id="dp1cal" href=""><span class="icon-calendar"></span></a>
                 </li>
