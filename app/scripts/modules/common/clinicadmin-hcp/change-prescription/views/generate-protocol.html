@@ -31,7 +31,7 @@
             <input type="text" name="patiendDob" class="light_grey ng-pristine ng-untouched ng-valid ng-isolate-scope ng-valid-minlength ng-valid-maxlength" ng-disabled="true" value="{{patient.dob}}">
           </div>
         </div>
-      </div>       
+      </div>
       <div class="clr"></div>
 
       <div class="col-md-16 reset-padding margin-top">
@@ -51,7 +51,7 @@
             <input type="text" ng-maxlength="50" ng-minlength="1" name="date" class="light_grey ng-pristine ng-untouched ng-valid ng-isolate-scope ng-valid-minlength ng-valid-maxlength" ng-model="currentDate" ng-disabled="true">
           </div>
         </div>
-      </div> 
+      </div>
       <div class="clr"></div>
 			<div class="col-md-16 margin-top reset-padding">
 				<span translate="" class="dashboard__form--type ng-scope">New Protocol</span>
@@ -92,7 +92,7 @@
           <div class="col-md-11 col-md-offset-2">
             <div class="col-md-16 protocol-list no_border" ng-repeat="protocol in protocols" ng-class="{'list-inactive':protocol.deleted, 'last' : $last}">
             <div class="col-md-5 protocol-list__strt-date">
-              <span class="protocol-list--value"> {{protocol.minMinutesPerTreatment}}</span>      
+              <span class="protocol-list--value"> {{protocol.minMinutesPerTreatment}}</span>
             </div>
             <div class="col-md-5 protocol-list__end-date">
               <span ng-if="protocol.type === 'Custom'" class="protocol-list--value"> {{protocol.minFrequency}}</span>
@@ -111,7 +111,7 @@
       <div class="row lebel-indent margin-top col-md-16 margin-bottom15 ng-scope">
         <div>
   		    <input type="checkbox" name="termsAndCondition" class="ng-pristine ng-untouched ng-valid" value="false" ng-model="terms" ng-required="!terms">
-  		    <span class="ng-scope link-text termsandconditon_color impo-highlight">I agree and give my consent by clicking on "I Accept" button.</span> <a ng-href="">(Esign Disclosures and Consent)</a>
+  		    <span class="ng-scope link-text termsandconditon_color impo-highlight"><b>I agree and give my consent by clicking on "I Accept" button.</b></span> <a ng-href="/scripts/components/staticPages/protocolTermsCondition.html" target="_blank">(Esign Disclosures and Consent)</a>
         </div>
         <div>
           <span class="has-error" ng-if="authorizeForm.termsAndCondition.$error.required && isAuthorizeFormSubmited">Please indicate that you have read and agree to the Terms and Conditions.</span>
