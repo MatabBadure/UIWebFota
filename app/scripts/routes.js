@@ -4402,6 +4402,36 @@ angular.module('hillromvestApp')
                     ]
                 }
             })
+            .state('patientDiagnosticAdd', {
+                parent: 'patient-dashboard',
+                url: '/patientDiagnostic/add',
+                data: {
+                    roles: ['PATIENT'],
+                    pageTitle: 'profile.page-title.benchmarking'
+                },
+                views: {
+                    'patient-view': {
+                        templateUrl: 'scripts/modules/common/clinicadmin-hcp/patient-diagnostics/views/diagnosticadd.html',
+                        controller: 'patientDiagnosticController'
+                    }
+                },
+                resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('PatientDiagnosticModule');
+                    }],
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
             .state('HCPDiagnostic', {
                 parent: 'hcppatientList',
                 url: '/patientDiagnostic',

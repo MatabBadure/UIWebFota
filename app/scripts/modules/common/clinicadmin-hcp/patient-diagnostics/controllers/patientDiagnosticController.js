@@ -1,11 +1,11 @@
 'use strict';
 
 angular.module('hillromvestApp')
-.controller('patientDiagnosticController', ['$scope', '$state', '$rootScope', 'StorageService', 'UserService', 'patientDiagnosticService',
-  function ($scope, $state, $rootScope, StorageService, UserService, patientDiagnosticService) {
+.controller('patientDiagnosticController', ['$scope', '$state', '$rootScope', 'StorageService', 'UserService', 'patientDiagnosticService', 'notyService',
+  function ($scope, $state, $rootScope, StorageService, UserService, patientDiagnosticService, notyService) {
 
   $scope.addDiagnostics = function(){
-    $scope.isAddDiagnostics = true;
+    $state.go('patientDiagnosticAdd');
   };
 
   $scope.init = function(){
@@ -31,21 +31,24 @@ angular.module('hillromvestApp')
 
   $scope.getTestResultsByPatientId = function(patientID){
     patientDiagnosticService.getTestResultsByPatientId(patientID).then(function(response){
-      console.log(response.data);
       $scope.testResults = response.data;
     }).catch(function(response){
-
+      notyService.showError(response);
     });
   };
 
   $scope.addTestResult = function(){
-    console.log('It is cominf here...!', $scope.testResult);
     $scope.testResult.completionDate = new Date();
     patientDiagnosticService.addTestResult(StorageService.get('logged').patientID, $scope.testResult).then(function(response){
-      console.log('Success...!');
+      notyService.showMessage(response.data.message, 'success');
+      $state.go('patientDiagnostic');
     }).catch(function(response){
-      console.log('ERRORE: ',response)
+      notyService.showError(response);
     });
+  };
+
+  $scope.cancelDiagnostic = function(){
+    $state.go('patientDiagnostic');
   };
 
 	$scope.init();

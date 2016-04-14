@@ -1,0 +1,133 @@
+<div class="container admin-user">
+  <div class="dashboard dashboard--content margin-top">
+    <div class="user-gen-details">
+      <span class="user-gen-details--name">{{::patient.firstName}} {{::patient.lastName}}</span>
+      <span class="user-gen-details--hr-id">{{::patient.hillromId}}</span>
+    </div>
+
+    <form name="form"  ng-submit="addTestResult()">
+      <div class="grid-view ng-scope">
+        <div class="col-md-16 col-sm-16 text-center reset-padding flex1 margin-top">
+          <div class="col-md-3 col-sm-3 cyan-blue-light text-center  border-right">
+            <span>Select Date</span>
+          </div>
+          <div class="col-md-9 col-sm-9 cyan-blue-light text-center  border-right">
+            <span>Enter Results</span>
+          </div>
+          <div class="col-md-4 col-sm-4 cyan-blue-light text-center  border-right">
+            <span>Comments ( if any )</span>
+          </div>
+        </div>
+        <div  class="col-md-16 col-sm-16 reset-padding survey_grey_color flex1 ng-scope" style="">
+          <div class="col-md-3 col-sm-3 border-right text-center">
+            <div class="col-md-16 reset-padding">
+              <div class="col-md-13 col-sm-13 dashboard__form--input reset-padding">
+                <input type="text" name="completionDate" validate-on-blur="" ng-model="testResult.completionDate" required="" class="ng-pristine ng-isolate-scope ng-invalid ng-invalid-required ng-touched">
+              </div>
+              <span class="icons hillrom-icon icon-calendar col-md-2" style="padding: 4%;"></span>
+            </div>
+          </div>
+          <div class="col-md-9 col-sm-9 padding10 cyan-blue-light border-right">
+            <div class="col-md-16 col-sm-16">
+              <div class="col-md-6 col-sm-6">
+                <div class="col-md-7 col-sm-7 dashboard__form--label reset-padding">
+                  <span class="ng-scope">FVC (L)</span>
+                </div>
+                <div class="col-md-6 col-sm-6 dashboard__form--input reset-padding">
+                  <input type="text" name="fvc_L" validate-on-blur="" ng-model="testResult.fvc_L" class="ng-pristine ng-valid ng-isolate-scope ng-touched">
+                </div>
+              </div>
+              <div class="col-md-10 col-sm-10 ">
+                <div class="col-md-1 col-sm-1 dashboard__form--label reset-padding pull-right" style="padding-left:2%">
+                  <span class="ng-scope">%</span>
+                </div>
+                <div class="col-md-7 col-sm-7 dashboard__form--input reset-padding pull-right">
+                  <input type="text" name="fvc_P" validate-on-blur="" ng-model="testResult.fvc_P" class="ng-pristine ng-valid ng-isolate-scope ng-touched ng-untouched">
+                </div>
+                <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding pull-right">
+                  <span class="ng-scope">FVC ( Predicted )</span>
+                </div>
+                <div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-16 col-sm-16 margin-top">
+              <div class="col-md-6 col-sm-6">
+                <div class="col-md-7 col-sm-7 dashboard__form--label reset-padding">
+                  <span class="ng-scope">FVC1 (L)</span>
+                </div>
+                <div class="col-md-6 col-sm-6 dashboard__form--input reset-padding">
+                  <input type="text" name="fev1_L" validate-on-blur="" ng-model="testResult.fev1_L" class="ng-pristine ng-valid ng-isolate-scope ng-touched">
+                </div>
+              </div>
+              <div class="col-md-10 col-sm-10 ">
+                <div class="col-md-1 col-sm-1 dashboard__form--label reset-padding pull-right" style="padding-left:2%">
+                  <span class="ng-scope">%</span>
+                </div>
+                <div class="col-md-7 col-sm-7 dashboard__form--input reset-padding pull-right">
+                  <input type="text" name="fev1_P" validate-on-blur="" ng-model="testResult.fev1_P" class="ng-pristine ng-valid ng-isolate-scope ng-touched ng-untouched">
+                </div>
+                <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding pull-right">
+                  <span class="ng-scope">FVC1 ( Predicted )</span>
+                </div>
+                <div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-16 col-sm-16 margin-top">
+              <div class="col-md-6 col-sm-6">
+                <div class="col-md-7 dashboard__form--label reset-padding">
+                  <span class="ng-scope">PEF (L)</span>
+                </div>
+                <div class="col-md-6 dashboard__form--input reset-padding">
+                  <input type="text" name="pef_L_Min" validate-on-blur="" ng-model="testResult.pef_L_Min" class="ng-pristine ng-valid ng-isolate-scope ng-touched">
+                </div>
+              </div>
+              <div class="col-md-10 col-sm-10 ">
+                <div class="col-md-1 col-sm-1 dashboard__form--label reset-padding pull-right" style="padding-left:2%">
+                  <span class="ng-scope">%</span>
+                </div>
+                <div class="col-md-7 col-sm-6 dashboard__form--input reset-padding pull-right">
+                  <input type="text" name="pef_P" validate-on-blur="" ng-model="testResult.pef_P" class="ng-pristine ng-valid ng-isolate-scope ng-touched ng-untouched">
+                </div>
+                <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding pull-right">
+                  <span class="ng-scope">PEF ( Predicted )</span>
+                </div>
+                <div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-16 col-sm-16 margin-top">
+              <div class="col-md-10 col-sm-10 col-md-offset-6">
+                <div class="col-md-1 col-sm-1 dashboard__form--label reset-padding pull-right" style="padding-left:2%">
+                  <span class="ng-scope">%</span>
+                </div>
+                <div class="col-md-7 col-sm-7 dashboard__form--input reset-padding pull-right">
+                  <input type="text" name="fev1_TO_FVC_RATIO" validate-on-blur="" ng-model="testResult.fev1_TO_FVC_RATIO" class="ng-pristine ng-valid ng-isolate-scope ng-touched ng-untouched">
+                </div>
+                <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding pull-right">
+                  <span class="ng-scope">FEV1/FVC (Predicted)</span>
+                </div>
+                <div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 col-sm-4 text-center padding10">
+            <div class="col-md-16 col-sm-16 dashboard__form--input reset-padding pull-right">
+              <textarea class="form-control custom_textarea" rows="6" ng-model="testResult.comments"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-16 reset-padding margin-top">
+        <div class="">
+          <button type="submit" class="hillrom-btn btn-primary float-right btn-margin-left ng-scope" >Save</button>
+          <button type="reset" ng-click="cancelDiagnostic();" class="hillrom-btn btn-secondary float-right ng-scope" >Cancel</button>
+          <div class="clr"></div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
