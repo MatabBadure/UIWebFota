@@ -4376,7 +4376,7 @@ angular.module('hillromvestApp')
                 parent: 'account',
                 url: '/prescription-terms',
                 data: {
-                    roles: [],
+                    roles: ['HCP', 'CLINIC_ADMIN'],
                     pageTitle: 'login.page-title.privacy-policy'
                 },
                 views: {
