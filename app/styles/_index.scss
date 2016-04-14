@@ -128,7 +128,6 @@ a::-moz-focus-inner {
   position: absolute;
   top: 9px;
   right: 3px;
-  z-index: -1;
   font-weight: 300;
   background-color: #fff;
   width: 15px;
@@ -155,7 +154,6 @@ select>option
 .custom-dropdown {
   background-color: transparent;
   background-repeat: no-repeat;
-  z-index: 1;
   display: inline;
   line-height: 100%;
   position: absolute;
