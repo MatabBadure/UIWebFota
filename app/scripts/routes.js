@@ -4371,6 +4371,25 @@ angular.module('hillromvestApp')
                         }
                     ]
                 }
+            })
+            .state('changePrescriptionTermsConditions', {
+                parent: 'account',
+                url: '/prescription-terms',
+                data: {
+                    roles: [],
+                    pageTitle: 'login.page-title.privacy-policy'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/components/staticPages/protocolTermsCondition.html',
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('login');
+                        return $translate.refresh();
+                    }]
+                }
             });
 
 }]);
