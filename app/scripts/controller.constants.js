@@ -220,6 +220,10 @@ angular.module('hillromvestApp').constant('hcpDashboardConstants', {
 		"pressure": "#ff9829",
 		"frequency": "#34978f",
 		"duration": "#4e95c4"
+	},
+	units:{
+		"frequency": "(Hz.)",
+		"duration": "(Mins)"
 	}
 })
 .constant('benchmarkingConstants',{
