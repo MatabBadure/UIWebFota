@@ -325,6 +325,7 @@
     "export-raw-data": "Therapy Data (XLS)",
     "export-processed-data": "Processed Data (CSV)",
     "download": "Download",
+    "adherence": "Adherence",
     "adherence-score-table":{
       "title":"Adherence Score History for last 7 days",
       "date": "Date",
