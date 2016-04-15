@@ -63,8 +63,10 @@ function ($scope, $state, $rootScope, StorageService, UserService, patientDiagno
   $scope.init = function(){
   	$scope.calculateTimeDuration(90);
     $scope.testResult = {};
+    $scope.isPatinetLogin = false;
 		if($state.current.name === "patientDiagnostic"){
 			$scope.hidePatientNavbar = true;
+      $scope.isPatinetLogin = true;
       $scope.viewType = 'grid';
       $scope.diagnosticPatientId = StorageService.get('logged').patientID;		  
 		}else if($state.current.name === "CADiagnostic" ){
@@ -75,7 +77,8 @@ function ($scope, $state, $rootScope, StorageService, UserService, patientDiagno
       $scope.diagnosticPatientId =  $stateParams.patientId;
 		}else if($state.current.name === "patientDiagnosticAdd"){
       $scope.isAddDiagnostic = true;
-      $scope.diagnosticPatientId = StorageService.get('logged').patientID;  
+      $scope.diagnosticPatientId = StorageService.get('logged').patientID;
+      $scope.isPatinetLogin = true;
     }else if($state.current.name === "CADiagnosticAdd"){
       $scope.isAddDiagnostic = true;
       $scope.diagnosticPatientId =  $stateParams.patientId;
@@ -83,7 +86,6 @@ function ($scope, $state, $rootScope, StorageService, UserService, patientDiagno
       $scope.isAddDiagnostic = true;
       $scope.diagnosticPatientId =  $stateParams.patientId;
     }
-    console.log("PATIENT ID : ", $scope.diagnosticPatientId);
     $scope.getTestResultsByPatientId();
     UserService.getUser($scope.diagnosticPatientId).then(function(response){
       $scope.patient = response.data.user;
@@ -103,6 +105,9 @@ function ($scope, $state, $rootScope, StorageService, UserService, patientDiagno
   };
 
   $scope.addTestResult = function(){
+    if($scope.form.$invalid){
+      return false;
+    }
     patientDiagnosticService.addTestResult($scope.diagnosticPatientId, $scope.testResult).then(function(response){
       notyService.showMessage(response.data.message, 'success');
       //$state.go('patientDiagnostic');
@@ -159,6 +164,11 @@ function ($scope, $state, $rootScope, StorageService, UserService, patientDiagno
     } else if($scope.userRole === "CLINIC_ADMIN"){
       $state.go(value, {'patientId':$stateParams.patientId});
     }  
+  };
+
+  $scope.editDiagnostic = function(testResult){
+    console.log(testResult);
+
   };
 
 	$scope.init();

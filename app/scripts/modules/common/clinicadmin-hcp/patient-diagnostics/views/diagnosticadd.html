@@ -23,7 +23,7 @@
             <div class="col-md-16 reset-padding">
               <div class="col-md-13 col-sm-13 dashboard__form--input reset-padding">
                 <!-- <input type="text" name="completionDate" validate-on-blur="" ng-model="testResult.completionDate" required="" class="ng-pristine ng-isolate-scope ng-invalid ng-invalid-required ng-touched" ng-disabled="true"> -->
-                <input class="custom-dob span2" type="text" name="completionDate" validate-on-blur value="" ng-model="testResult.completionDate" data-date-format="mm/dd/yyyy" id="dp2" required ng-pattern="/^\d{2}\/\d{2}\/\d{4}$/" readonly="readonly" >
+                <input class="custom-dob span2" type="text" name="completionDate" validate-on-blur ng-model="testResult.completionDate" data-date-format="mm/dd/yyyy" id="dp2" required="" ng-pattern="/^\d{2}\/\d{2}\/\d{4}$/" readonly="readonly" >
               </div>
                 <input class="date_input"  data-provide="datepicker"  data-date-format="mm/dd/yyyy"  bootstrap-datepicker data-date-end-date="0d" id="edit_note_date" ng-model="textNote.edit_date" placeholder="Date" style="display:none;"/>
             </div>
@@ -124,7 +124,8 @@
       </div>
       <div class="col-md-16 reset-padding margin-top">
         <div class="">
-          <button type="submit" class="hillrom-btn btn-primary float-right btn-margin-left ng-scope" >Save</button>
+          <button type="submit" ng-if="isPatinetLogin" class="hillrom-btn btn-primary float-right btn-margin-left ng-scope" >Save</button>
+          <button type="submit" ng-if="!isPatinetLogin" class="hillrom-btn btn-primary float-right btn-margin-left ng-scope" >Update</button>
           <button type="reset" ng-click="cancelDiagnostic();" class="hillrom-btn btn-secondary float-right ng-scope" >Cancel</button>
           <div class="clr"></div>
         </div>
