@@ -310,7 +310,7 @@ angular.module('hillromvestApp')
             var state = (response.data.clinic.state && response.data.clinic.state !== null)? response.data.clinic.state : "";
             $scope.geographyParam = benchmarkingConstants.string.stateParam + state;          
           }else if($scope.geoLocation.selectedGeo.name === $scope.geographyOption[2].name){    
-            var city = (response.data.clinic.state && response.data.clinic.state !== null)? response.data.clinic.state : "";       
+            var city = (response.data.clinic.city && response.data.clinic.city !== null)? response.data.clinic.city : "";
             $scope.geographyParam = benchmarkingConstants.string.cityParam + city;      
           }
           $scope.initBenchmarkingChart();
