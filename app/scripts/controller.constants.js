@@ -265,38 +265,3 @@ var benchmarks = [
 var patientBMParams = [
 	{"parameter" : "adherenceScore", "name": "Adherence Score"}
 ]
-
-
-var ageGroups = [
-	{ ageRange: '0-5', 'true': true },
-	{ ageRange: '6-10', 'true': true},
-	{ ageRange: '11-15',  'true': true},
-	{ ageRange: '16-20',  'true': true},
-	{ ageRange: '21-25', 'true': true},
-	{ ageRange: '26-30', 'true': true},
-	{ ageRange: '31-35', 'true': true},
-	{ ageRange: '36-40', 'true': true},
-	{ ageRange: '41-45', 'true': true},
-	{ ageRange: '46-50', 'true': true},
-	{ ageRange: '51-55', 'true': true},
-	{ ageRange: '56-60', 'true': true},
-	{ ageRange: '61-65', 'true': true},
-	{ ageRange: '66-70', 'true': true},
-	{ ageRange: '71-75', 'true': true},
-	{ ageRange: '76-80', 'true': true},
-	{ ageRange: '81-above', 'true': true}
-];
-
-var clinicSizes = [
-	{ size: '1-25', 'true': true},
-	{ size: '26-50', 'true': true},
-	{ size: '51-75', 'true': true},
-	{ size: '76-100', 'true': true},
-	{ size: '101-150', 'true': true},
-	{ size: '151-200', 'true': true},
-	{ size: '201-250', 'true': true},
-	{ size: '251-300', 'true': true},
-	{ size: '301-350', 'true': true},
-	{ size: '351-400', 'true': true},
-	{ size: '401-above', 'true': true}
-];
