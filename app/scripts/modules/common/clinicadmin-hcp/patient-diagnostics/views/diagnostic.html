@@ -1,4 +1,4 @@
-<div class="container admin-user">
+<div class="container admin-user" ng-if="!isAddDiagnostic">
   <div class="dashboard dashboard--content margin-top">
     <div class="user-gen-details">
       <span class="user-gen-details--name">{{::patient.firstName}} {{::patient.lastName}}</span>
@@ -162,4 +162,7 @@
       </div>
     </div>
   </div>
+</div>
+<div ng-if="isAddDiagnostic">
+<ng-include src="'scripts/modules/common/clinicadmin-hcp/patient-diagnostics/views/diagnosticadd.html'"></ng-include>
 </div>

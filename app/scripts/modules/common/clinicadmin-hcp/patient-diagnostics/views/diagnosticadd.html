@@ -22,9 +22,11 @@
           <div class="col-md-3 col-sm-3 border-right text-center">
             <div class="col-md-16 reset-padding">
               <div class="col-md-13 col-sm-13 dashboard__form--input reset-padding">
-                <input type="text" name="completionDate" validate-on-blur="" ng-model="testResult.completionDate" required="" class="ng-pristine ng-isolate-scope ng-invalid ng-invalid-required ng-touched">
+                <input type="text" name="completionDate" validate-on-blur="" ng-model="testResult.completionDate" required="" class="ng-pristine ng-isolate-scope ng-invalid ng-invalid-required ng-touched" ng-disabled="true">
               </div>
-              <span class="icons hillrom-icon icon-calendar col-md-2" style="padding: 4%;"></span>
+              <span class="icons hillrom-icon icon-calendar col-md-2 date_input" style="padding: 4%;" id="date_input" ng-click="addDiagnosticsDate()" ></span>              
+                <input class="date_input"  data-provide="datepicker"  data-date-format="mm/dd/yyyy"  bootstrap-datepicker data-date-end-date="0d" id="edit_note_date" ng-model="textNote.edit_date" placeholder="Date" style="display:none;"/>
+             
             </div>
           </div>
           <div class="col-md-9 col-sm-9 padding10 cyan-blue-light border-right">
@@ -34,7 +36,7 @@
                   <span class="ng-scope">FVC (L)</span>
                 </div>
                 <div class="col-md-6 col-sm-6 dashboard__form--input reset-padding">
-                  <input type="text" name="fvc_L" validate-on-blur="" ng-model="testResult.fvc_L" class="ng-pristine ng-valid ng-isolate-scope ng-touched">
+                  <input type="number" name="fvc_L" validate-on-blur="" ng-model="testResult.fvc_L" class="ng-pristine ng-valid ng-isolate-scope ng-touched" min="0" max="9" >
                 </div>
               </div>
               <div class="col-md-10 col-sm-10 ">
@@ -42,7 +44,7 @@
                   <span class="ng-scope">%</span>
                 </div>
                 <div class="col-md-7 col-sm-7 dashboard__form--input reset-padding pull-right">
-                  <input type="text" name="fvc_P" validate-on-blur="" ng-model="testResult.fvc_P" class="ng-pristine ng-valid ng-isolate-scope ng-touched ng-untouched">
+                  <input type="number" name="fvc_P" validate-on-blur="" ng-model="testResult.fvc_P" class="ng-pristine ng-valid ng-isolate-scope ng-touched ng-untouched" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" max="100">
                 </div>
                 <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding pull-right">
                   <span class="ng-scope">FVC ( Predicted )</span>
@@ -57,7 +59,7 @@
                   <span class="ng-scope">FVC1 (L)</span>
                 </div>
                 <div class="col-md-6 col-sm-6 dashboard__form--input reset-padding">
-                  <input type="text" name="fev1_L" validate-on-blur="" ng-model="testResult.fev1_L" class="ng-pristine ng-valid ng-isolate-scope ng-touched">
+                  <input type="number" name="fev1_L" validate-on-blur="" ng-model="testResult.fev1_L" class="ng-pristine ng-valid ng-isolate-scope ng-touched" min="1" max="9">
                 </div>
               </div>
               <div class="col-md-10 col-sm-10 ">
@@ -80,7 +82,7 @@
                   <span class="ng-scope">PEF (L)</span>
                 </div>
                 <div class="col-md-6 dashboard__form--input reset-padding">
-                  <input type="text" name="pef_L_Min" validate-on-blur="" ng-model="testResult.pef_L_Min" class="ng-pristine ng-valid ng-isolate-scope ng-touched">
+                  <input type="number" name="pef_L_Min" validate-on-blur="" ng-model="testResult.pef_L_Min" class="ng-pristine ng-valid ng-isolate-scope ng-touched" min="1" max="9">
                 </div>
               </div>
               <div class="col-md-10 col-sm-10 ">
