@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('hillromvestApp')
-.controller('patientDiagnosticController', ['$scope', '$state', '$rootScope', 'StorageService', 'UserService', 'patientDiagnosticService', 'notyService', 'dateService','$stateParams',
-function ($scope, $state, $rootScope, StorageService, UserService, patientDiagnosticService, notyService, dateService, $stateParams) {
+.controller('patientDiagnosticController', ['$scope', '$state', '$rootScope', 'StorageService', 'UserService', 'patientDiagnosticService', 'notyService', 'dateService', '$stateParams', 'commonsUserService',
+function ($scope, $state, $rootScope, StorageService, UserService, patientDiagnosticService, notyService, dateService, $stateParams, commonsUserService) {
   $scope.isAddDiagnostic = false;
 	$scope.calculateDateFromPicker = function(picker) {
     $scope.fromTimeStamp = new Date(picker.startDate._d).getTime();	      
@@ -103,7 +103,6 @@ function ($scope, $state, $rootScope, StorageService, UserService, patientDiagno
   };
 
   $scope.addTestResult = function(){
-    $scope.testResult.completionDate = new Date();
     patientDiagnosticService.addTestResult($scope.diagnosticPatientId, $scope.testResult).then(function(response){
       notyService.showMessage(response.data.message, 'success');
       //$state.go('patientDiagnostic');
@@ -162,10 +161,12 @@ function ($scope, $state, $rootScope, StorageService, UserService, patientDiagno
     }  
   };
 
-  $scope.addDiagnosticsDate = function(){
-    
-  }
-
-
 	$scope.init();
+
+  angular.element('#dp2').datepicker({
+    endDate: '+0d',
+    startDate: '-100y',
+    autoclose: true
+  });
+
 }]);
