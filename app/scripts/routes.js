@@ -4464,7 +4464,7 @@ angular.module('hillromvestApp')
             })
             .state('HCPDiagnosticAdd', {
                 parent: 'hcppatientList',
-                url: '/{patientId}/patientDiagnostic/add',
+                url: '/{resultId}/patientDiagnostic/add',
                 data: {
                     roles: ['HCP'],
                     pageTitle: 'profile.page-title.benchmarking'
@@ -4524,7 +4524,7 @@ angular.module('hillromvestApp')
             })
             .state('CADiagnosticAdd', {
                 parent: 'clinicadminpatientdashboard',
-                url: '/{patientId}/patientDiagnostic/add',
+                url: '/{resultId}/{patientId}/patientDiagnostic/add',
                 data: {
                     roles: ['CLINIC_ADMIN'],
                     pageTitle: 'profile.page-title.benchmarking'

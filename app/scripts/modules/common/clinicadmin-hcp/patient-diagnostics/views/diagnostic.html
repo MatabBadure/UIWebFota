@@ -38,9 +38,12 @@
         </div>
 
         <div class="col-md-16  ng-scope" ng-if="testResults && testResults.length === 0">
-          <div  class="">
-            <span class="noData_text" style="font-size:18px;position:relative;top:12px">No Data Available!</span>
+          <div class="graph_nodata">
+            <span class="noData_text"> No Data Available!</span>
           </div>
+          <!-- <div  class="">
+            <span class="noData_text" style="font-size:18px;position:relative;top:12px">No Data Available!</span>
+          </div> -->
         </div>
       </div>
     </div>
@@ -64,7 +67,7 @@
       <div  class="col-md-16 col-sm-16 reset-padding survey_grey_color flex1 ng-scope" ng-repeat="testResult in testResults">
         <div class="col-md-3 col-sm-3 border-right text-center">
           <div class="col-md-16 reset-padding center">
-            <span>{{testResult.completionDate}}</span>
+            <span>{{testResult.testResultDate}}</span>
           </div>
         </div>
         <div class="col-md-6 col-sm-6 padding10 cyan-blue-light border-right">
@@ -149,8 +152,8 @@
         <div class="col-md-3 col-sm-3 text-center padding10">
           <div class="col-md-16 col-sm-16 dashboard__form--label reset-padding pull-right">
             <span>Ryan Baker</span>
-            <div ng-if="!isPatinetLogin">
-              <a href="" ng-click="editDiagnostic(testResult)">Edit</a>
+            <div> <!-- ng-if="!isPatinetLogin"-->
+              <a href="" ng-click="addUpdateDiagnostics(testResult.id)">Edit</a>
             </div>
           </div>
         </div>
@@ -160,7 +163,7 @@
       <a class="dashboard__form--type survey_grey_color pull-right" style="color: #7ca3dc;font-size: 15px;text-decoration: initial;padding-bottom: 10px;">Would you like to add test results ?</a>
       <div class="btn_group patient_dashdoard_btns">
         <div class="pull-right left">
-          <button class="hillrom-btn btn-submit margin0 float-right ng-scope dropdown-toggle" type="button" id="add-test-result-button" ng-click="addDiagnostics()">Add Test Result</button>
+          <button class="hillrom-btn btn-submit margin0 float-right ng-scope dropdown-toggle" type="button" id="add-test-result-button" ng-click="addUpdateDiagnostics()">Add Test Result</button>
         </div>
       </div>
     </div>

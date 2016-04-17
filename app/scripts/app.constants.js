@@ -107,6 +107,8 @@ angular.module('hillromvestApp')
 	'getClinicAdminBenchmarking': '/api/user/clinicadmin/USERID/benchmark?from=FROM&to=TO&benchmarkType=BENCHMARKTYPE&parameterType=PARAMETERTYPE&clinicId=CLINICID',
 	'getClinicDisease':'/api/benchmark/statistics?from=FROM&to=TO&xAxisParameter=XAXIS&ageGroupRange=AGERANGE&clinicSizeRange=CLINICRANGE',
 	'getClinicDiseaseNonXaxis':'/api/benchmark/statistics?from=FROM&to=TO&xAxisParameter=&ageGroupRange=all&clinicSizeRange=all&ignoreXAxis=true',
-	'getTestResultByPatientId':'/api/testresult/PATIENTID?from=FROM_DATE&to=TO_DATE',
-	'testResult': '/api/testresult/PATIENTID'
+	'getTestResultByPatientId':'/api/testresult/user/PATIENTID?from=FROM_DATE&to=TO_DATE',
+	'testResult': '/api/testresult/user/PATIENTID',
+	'getTestResultById': '/api/testresult/ID',
+	'updateTestRESULT' : '/api/testresult/user/PATIENTID'
 });

@@ -12,10 +12,27 @@ angular.module('hillromvestApp')
       });
     },
 
-    addTestResult : function(patientID, data){
-      console.log('DATA :: ', data)
+    addTestResult : function(patientID, data){      
     	var url = URL.testResult.replace('PATIENTID', patientID);
       return $http.post(url, data, {
+        headers: headerService.getHeader()
+      }).success(function(response) {
+        return response;
+      });
+    },
+
+    getTestResultById : function(id){      
+      var url = URL.getTestResultById.replace('ID', id);
+      return $http.get(url, {
+        headers: headerService.getHeader()
+      }).success(function (response) {
+        return response;
+      });
+    },
+
+    updateTestResult: function(patientID, data){      
+      var url = URL.getTestResultById.replace('ID', patientID);
+      return $http.put(url, data, {
         headers: headerService.getHeader()
       }).success(function(response) {
         return response;
