@@ -4372,6 +4372,186 @@ angular.module('hillromvestApp')
                     ]
                 }
             })
+            .state('patientDiagnostic', {
+                parent: 'patient-dashboard',
+                url: '/patientDiagnostic',
+                data: {
+                    roles: ['PATIENT'],
+                    pageTitle: 'profile.page-title.benchmarking'
+                },
+                views: {
+                    'patient-view': {
+                        templateUrl: 'scripts/modules/common/clinicadmin-hcp/patient-diagnostics/views/patientDiagnostic.html',
+                        controller: 'patientDiagnosticController'
+                    }
+                },
+                resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('PatientDiagnosticModule');
+                    }],
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+            .state('patientDiagnosticAdd', {
+                parent: 'patient-dashboard',
+                url: '/patientDiagnostic/add',
+                data: {
+                    roles: ['PATIENT'],
+                    pageTitle: 'profile.page-title.benchmarking'
+                },
+                views: {
+                    'patient-view': {
+                        templateUrl: 'scripts/modules/common/clinicadmin-hcp/patient-diagnostics/views/diagnosticadd.html',
+                        controller: 'patientDiagnosticController'
+                    }
+                },
+                resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('PatientDiagnosticModule');
+                    }],
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+            .state('HCPDiagnostic', {
+                parent: 'hcppatientList',
+                url: '/{patientId}/patientDiagnostic',
+                data: {
+                    roles: ['HCP'],
+                    pageTitle: 'profile.page-title.benchmarking'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/common/clinicadmin-hcp/patient-diagnostics/views/hcpPatientDiagnostic.html',
+                        controller: 'patientDiagnosticController'
+                    }
+                },
+                resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('PatientDiagnosticModule');
+                    }],
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+            .state('HCPDiagnosticAdd', {
+                parent: 'hcppatientList',
+                url: '/{resultId}/patientDiagnostic/add',
+                data: {
+                    roles: ['HCP'],
+                    pageTitle: 'profile.page-title.benchmarking'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/common/clinicadmin-hcp/patient-diagnostics/views/hcpPatientDiagnostic.html',
+                        controller: 'patientDiagnosticController'
+                    }
+                },
+                resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('PatientDiagnosticModule');
+                    }],
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+            .state('CADiagnostic', {
+                parent: 'clinicadminpatientdashboard',
+                url: '/{patientId}/patientDiagnostic',
+                data: {
+                    roles: ['CLINIC_ADMIN'],
+                    pageTitle: 'profile.page-title.benchmarking'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/common/clinicadmin-hcp/patient-diagnostics/views/clinicadminPatientDiagnostic.html',
+                        controller: 'patientDiagnosticController'
+                    }
+                },
+                resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('PatientDiagnosticModule');
+                    }],
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+            .state('CADiagnosticAdd', {
+                parent: 'clinicadminpatientdashboard',
+                url: '/{resultId}/{patientId}/patientDiagnostic/add',
+                data: {
+                    roles: ['CLINIC_ADMIN'],
+                    pageTitle: 'profile.page-title.benchmarking'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/common/clinicadmin-hcp/patient-diagnostics/views/clinicadminPatientDiagnostic.html',
+                        controller: 'patientDiagnosticController'
+                    }
+                },
+                resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('PatientDiagnosticModule');
+                    }],
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
             .state('changePrescriptionTermsConditions', {
                 parent: 'account',
                 url: '/prescription-terms',
@@ -4390,6 +4570,5 @@ angular.module('hillromvestApp')
                         return $translate.refresh();
                     }]
                 }
-            });
-
+            });           
 }]);
