@@ -297,3 +297,22 @@ select>option
 		}
 	}
 }
+
+.headerAccount{
+  background:#F5F5F5;
+  color:#7CA3DC;
+  cursor:pointer;
+  border: 1px solid rgba(124, 163, 220, 0.53);
+  border-bottom: none;
+  padding: 4px 10px 4px;
+}
+
+#collapseTwo{
+  border:1px solid #ccc;
+  border-bottom:none;
+  padding-left:25px;
+}
+
+.expanded{
+  color:#7CA3DC !important;
+}
