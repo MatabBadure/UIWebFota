@@ -65,7 +65,7 @@
 										</div>
 										<div class="col-md-1">
 											<span class="pull-right">
-												<a class="close expanded">+</a></span>
+												<a class="close expanded" ng-click="toggleHeaderAccount()">{{expandedSign}}</a></span>
 										</div>
 									</div>
 								</div>
@@ -455,15 +455,4 @@
 	</div>
 </div>
 
-<script type="text/javascript">
-$('.headerAccount').on('click',function(){
-	    $( "#collapseTwo" ).slideToggle( "slow" );
-	     var $this = $(this);
-	    $this.toggleClass("closeHtml");
-	    if ($this.hasClass("closeHtml")) {
-            $('.expanded').html("+");
-        } else {
-            $('.expanded').html("-");
-        }
-})
-</script>
+
