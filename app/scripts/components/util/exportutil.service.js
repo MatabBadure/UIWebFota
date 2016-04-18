@@ -70,7 +70,7 @@ angular.module('hillromvestApp')
   }
 
   this.setTopHeader = function(pdf, fromDate, toDate, pageHeader){
-    pageHeader = (pageHeader) ? pageHeader : pdfServiceConstants.text.patientBMPageHeader;      
+    pageHeader = (pageHeader) ? pageHeader : pdfServiceConstants.text.pdfpageHeader;      
     /*pdf.setFont(pdfServiceConstants.style.font.helvetica);
     pdf.setFontType(pdfServiceConstants.style.font.bold);   
     pdf.setFontSize(8);
