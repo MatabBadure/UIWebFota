@@ -284,13 +284,16 @@ angular.module('hillromvestApp')
 
       getbenchmarking.then(function(response){
         if(response.data && response.data.series && response.data.series.length === 2){          
-          $scope.benchmarkingData = response.data;         
-          setTimeout(function(){            
+          $scope.benchmarkingData = response.data;
+          $scope.isNoDataAvailable = false;
+          setTimeout(function(){
             $scope.drawBenchmarkingChart();   
           }, 100);          
         }else{
           plotNoDataAvailable();
         }        
+      }).catch(function(response){
+        plotNoDataAvailable();
       });      
     }else{    		
       plotNoDataAvailable();
@@ -307,7 +310,7 @@ angular.module('hillromvestApp')
             var state = (response.data.clinic.state && response.data.clinic.state !== null)? response.data.clinic.state : "";
             $scope.geographyParam = benchmarkingConstants.string.stateParam + state;          
           }else if($scope.geoLocation.selectedGeo.name === $scope.geographyOption[2].name){    
-            var city = (response.data.clinic.state && response.data.clinic.state !== null)? response.data.clinic.state : "";       
+            var city = (response.data.clinic.city && response.data.clinic.city !== null)? response.data.clinic.city : "";
             $scope.geographyParam = benchmarkingConstants.string.cityParam + city;      
           }
           $scope.initBenchmarkingChart();

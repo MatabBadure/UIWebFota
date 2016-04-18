@@ -70,7 +70,7 @@ angular.module('hillromvestApp')
       $scope.perPageCount = 4;
       $scope.notePageCount = 0;
       $scope.totalNotes = 0;
-      $scope.isHMR = true; 
+      $scope.isHMR = false; 
       $scope.noDataAvailable = false;          
     };
 
@@ -184,8 +184,7 @@ angular.module('hillromvestApp')
       var count = 5;
       $scope.waitFunction = function waitHandler() {
          datePickerCount = document.getElementsByClassName('input-mini').length;
-        if(datePickerCount > 0 || count === 0 ) {
-          //$scope.customizationForBarGraph();
+        if(datePickerCount > 0 || count === 0 ) {          
           while(datePickerCount >0){
             document.getElementsByClassName('input-mini')[datePickerCount-1].setAttribute("disabled", "true");
             datePickerCount --;
@@ -615,7 +614,7 @@ angular.module('hillromvestApp')
       $("#note_edit_container").addClass("hide_content");
     };
 
-    function getDaysIntervalInChart(noOfDataPoints){
+    function getDaysIntervalInChart(noOfDataPoints){      
       var pInterval = 12;
       var sInterval = 13;
       var remainder  = 6;
@@ -632,10 +631,17 @@ angular.module('hillromvestApp')
           $scope.noDataAvailable = false;        
           xData = responseData.xAxis.categories; 
           responseData.xAxis.xLabels = []; 
-
+          var startDay = (responseData.xAxis && responseData.xAxis.categories.length > 0) ? responseData.xAxis.categories[0].split(" "): null;  
+          $scope.complianceXAxisLabelCount = 0;
           angular.forEach(responseData.xAxis.categories, function(x, key){              
             // this is for year view or custom view having datapoints more than 7
             // x-axis will be plotted accordingly, chart type will be datetime
+            var curDay = responseData.xAxis.categories[key].split(" ");
+            $scope.isSameDay = ($scope.isSameDay && (curDay[0] === startDay[0]) )? true : false;  
+            if(curDay[0] !== startDay[0]){
+              startDay[0] = curDay[0];
+              $scope.complianceXAxisLabelCount++;
+            }
             var dateTextLabel = Highcharts.dateFormat("%m/%e/%Y",dateService.convertToTimestamp(x));
             dateTextLabel += (Highcharts.dateFormat("%I:%M %p",dateService.convertToTimestamp(x)))? ' ( ' + Highcharts.dateFormat("%I:%M %p",dateService.convertToTimestamp(x)) + ' )' : '';
             
@@ -656,10 +662,13 @@ angular.module('hillromvestApp')
               }
             });
             if(responseData.series[key1].name === "Pressure"){
+              responseData.series[key1].unit = ""; 
               responseData.series[key1].color = patientGraphsConstants.colors.pressure;
             }else if(responseData.series[key1].name === "Frequency"){
+              responseData.series[key1].unit = patientGraphsConstants.units.frequency; 
               responseData.series[key1].color = patientGraphsConstants.colors.frequency;
             }else if(responseData.series[key1].name === "Duration"){
+              responseData.series[key1].unit = patientGraphsConstants.units.duration; 
               responseData.series[key1].color = patientGraphsConstants.colors.duration;
             }
             $scope.chartData.datasets.push(responseData.series[key1]);
@@ -768,7 +777,7 @@ angular.module('hillromvestApp')
           var yMaxPlotLine = dataset.plotLines.max;
           var yMinPlotLine = dataset.plotLines.min;
           var noOfDataPoints = ($scope.chartData.xData)? $scope.chartData.xData.length: 0;
-          var daysInterval = getDaysIntervalInChart(noOfDataPoints);
+          var daysInterval = getDaysIntervalInChart($scope.complianceXAxisLabelCount);
           
           $('<div class="chart">')
             .appendTo('#'+divId)
@@ -783,7 +792,7 @@ angular.module('hillromvestApp')
                 backgroundColor:  "#e6f1f4"
               },
               title: {
-                text: dataset.name,
+                text: dataset.name + " " +dataset.unit,
                 align: 'left',
                 margin: 25,
                 x: 30,
@@ -909,8 +918,11 @@ angular.module('hillromvestApp')
                 data: dataset.data,
                 name: dataset.name,
                 type: dataset.type,
-                color: dataset.color,
-                fillOpacity: 0.3
+                color: dataset.color,                
+                fillOpacity: 0.3,
+                 tooltip: {
+                    valueSuffix: ' ' + dataset.unit
+                }
               }]
             });
         });
@@ -926,9 +938,14 @@ angular.module('hillromvestApp')
           $scope.hmrChartData.xAxis.xLabels=[]; 
           $scope.isSameDay = true;
           var startDay = ($scope.hmrChartData.xAxis && $scope.hmrChartData.xAxis.categories.length > 0) ? $scope.hmrChartData.xAxis.categories[0].split(" "): null;  
+            $scope.hmrXAxisLabelCount = 0;
             angular.forEach($scope.hmrChartData.xAxis.categories, function(x, key){ 
               var curDay = $scope.hmrChartData.xAxis.categories[key].split(" ");
               $scope.isSameDay = ($scope.isSameDay && (curDay[0] === startDay[0]) )? true : false;  
+              if(curDay[0] !== startDay[0]){
+                startDay[0] = curDay[0];
+                $scope.hmrXAxisLabelCount++;
+              }
             });       
             angular.forEach($scope.hmrChartData.xAxis.categories, function(x, key){              
               // this is for year view or custom view having datapoints more than 7
@@ -971,7 +988,7 @@ angular.module('hillromvestApp')
 
     $scope.HMRAreaChart = function(divId){ 
       var noOfDataPoints = ($scope.hmrChartData && $scope.hmrChartData.xAxis.categories)?$scope.hmrChartData.xAxis.categories.length: 0;      
-      var daysInterval = getDaysIntervalInChart(noOfDataPoints);      
+      var daysInterval = getDaysIntervalInChart($scope.hmrXAxisLabelCount);      
       Highcharts.setOptions({
           global: {
               useUTC: false
@@ -1285,7 +1302,7 @@ angular.module('hillromvestApp')
 
     $scope.initGraph = function(){
       $scope.getHmrRunRateAndScore();      
-      $scope.isHMR = true;
+      $scope.isHMR = false;
       //$scope.getWeekChart();
     };
 
