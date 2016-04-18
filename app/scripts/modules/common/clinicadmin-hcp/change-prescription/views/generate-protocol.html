@@ -111,7 +111,7 @@
       <div class="row lebel-indent margin-top col-md-16 margin-bottom15 ng-scope">
         <div>
   		    <input type="checkbox" name="termsAndCondition" class="ng-pristine ng-untouched ng-valid" value="false" ng-model="terms" ng-required="!terms">
-  		    <span class="ng-scope link-text termsandconditon_color impo-highlight"><b>I agree and give my consent by clicking on "I Accept" button.</b></span> <a href="#/prescription-terms" target="_blank">(Esign Disclosures and Consent)</a>
+  		    <span class="ng-scope link-text termsandconditon_color impo-highlight"><b>I agree and give my consent by clicking on "I Accept" button.</b></span> <a href="" ng-click="goToChangePrescriptionTermsConditions();" target="_blank">(Esign Disclosures and Consent)</a>
         </div>
         <div>
           <span class="has-error" ng-if="authorizeForm.termsAndCondition.$error.required && isAuthorizeFormSubmited">Please indicate that you have read and agree to the Terms and Conditions.</span>

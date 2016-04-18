@@ -346,4 +346,8 @@ angular.module('hillromvestApp')
   		return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
   	};
 
+  	$rootScope.goToChangePrescriptionTermsConditions = function(){
+  		$state.go("changePrescriptionTermsConditions");
+  	}
+
   }]);
