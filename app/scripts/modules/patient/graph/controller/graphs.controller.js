@@ -1555,8 +1555,9 @@ angular.module('hillromvestApp')
       $scope.patientInfo.missedtherapyDays = $scope.missedtherapyDays;
       $scope.patientInfo.adherenceScore = $scope.adherenceScore;
       $scope.patientInfo.settingsDeviatedDaysCount = $scope.settingsDeviatedDaysCount;
-      $scope.patientInfo.hmrRunRate = $scope.hmrRunRate;      
-      exportutilService.exportHMRCGraphAsPDF("synchronizedChart", "HMRCCanvas", $scope.fromDate, $scope.toDate, $scope.patientInfo);
+      $scope.patientInfo.hmrRunRate = $scope.hmrRunRate;  
+      var pageHeader = ($scope.patientInfo.clinics && $scope.patientInfo.clinics.length === 1) ? $scope.patientInfo.clinics[0].name: null ;    
+      exportutilService.exportHMRCGraphAsPDF("synchronizedChart", "HMRCCanvas", $scope.fromDate, $scope.toDate, $scope.patientInfo, pageHeader);
     };
 
     $scope.cloaseXLSModal = function(){
