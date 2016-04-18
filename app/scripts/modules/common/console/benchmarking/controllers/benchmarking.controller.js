@@ -3,6 +3,7 @@ angular.module('hillromvestApp')
 .controller('benchmarkingController', ['$scope', 'addressService', 'notyService', '$rootScope', 'benchmarkingService', 'dateService', 'exportutilService', 'pdfServiceConstants', '$state', 'StorageService', 'loginConstants',
 	function($scope, addressService, notyService, $rootScope, benchmarkingService, dateService, exportutilService, pdfServiceConstants, $state, StorageService, loginConstants) {
 
+		$scope.pointWidth = $rootScope.isIOS()  ? 30 : 50;
 		$scope.calculateDateFromPicker = function(picker) {
 	    $scope.fromTimeStamp = new Date(picker.startDate._d).getTime();	      
 		  $scope.toTimeStamp = (new Date().getTime() < new Date(picker.endDate._d).getTime())? new Date().getTime() : new Date(picker.endDate._d).getTime();
@@ -358,7 +359,7 @@ angular.module('hillromvestApp')
 		    plotOptions: {
 		      series: {
 		      	showInLegend: false,
-		      	pointWidth: 50
+		      	pointWidth: $scope.pointWidth
 		      }
 		    },
 				tooltip: {
@@ -578,7 +579,7 @@ angular.module('hillromvestApp')
 		    	plotOptions: {
 		      	series: {
 		      		showInLegend: false,
-		      		pointWidth: 50
+		      		pointWidth: $scope.pointWidth
 		      	},
 		      	column: {
 							stacking: ($scope.xaxis === 'both') ? 'normal': false,

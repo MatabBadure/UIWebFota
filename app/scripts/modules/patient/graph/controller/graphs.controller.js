@@ -6,7 +6,7 @@ angular.module('hillromvestApp')
   function($scope, $state, patientDashBoardService, StorageService, dateService, graphUtil, patientService, UserService, $stateParams, notyService, $timeout, graphService, caregiverDashBoardService, loginConstants, $location, $filter, commonsUserService, clinicadminPatientService, $rootScope, patientGraphsConstants, exportutilService) {
   
     $scope.isGraphLoaded = false;    
-    
+    $scope.expandedSign = "-";
     $scope.isIE = function(){        
       if(window.navigator.userAgent.indexOf("MSIE") !== -1){
         return true
@@ -614,10 +614,18 @@ angular.module('hillromvestApp')
       $("#note_edit_container").addClass("hide_content");
     };
 
-    function getDaysIntervalInChart(noOfDataPoints){      
-      var pInterval = 12;
+    function getDaysIntervalInChart(noOfDataPoints){             
+      /*var pInterval = 12;
       var sInterval = 13;
-      var remainder  = 6;
+      var remainder  = 6;*/
+      var pInterval = 9;
+      var sInterval = 10;
+      var remainder  = 4;
+      if($rootScope.isIOS()){
+        pInterval = 7;
+        sInterval = 8;
+        remainder = 3;
+      }
       return ( (parseInt(noOfDataPoints/pInterval) > 0) && noOfDataPoints%pInterval > remainder) ? parseInt(noOfDataPoints/sInterval) : ((parseInt(noOfDataPoints/pInterval) > 0)? parseInt(noOfDataPoints/pInterval): 1) ; 
     };
 
@@ -777,7 +785,7 @@ angular.module('hillromvestApp')
           var yMaxPlotLine = dataset.plotLines.max;
           var yMinPlotLine = dataset.plotLines.min;
           var noOfDataPoints = ($scope.chartData.xData)? $scope.chartData.xData.length: 0;
-          var daysInterval = getDaysIntervalInChart($scope.complianceXAxisLabelCount);
+          var daysInterval = getDaysIntervalInChart($scope.complianceXAxisLabelCount);         
           
           $('<div class="chart">')
             .appendTo('#'+divId)
@@ -988,7 +996,7 @@ angular.module('hillromvestApp')
 
     $scope.HMRAreaChart = function(divId){ 
       var noOfDataPoints = ($scope.hmrChartData && $scope.hmrChartData.xAxis.categories)?$scope.hmrChartData.xAxis.categories.length: 0;      
-      var daysInterval = getDaysIntervalInChart($scope.hmrXAxisLabelCount);      
+      var daysInterval = getDaysIntervalInChart($scope.hmrXAxisLabelCount);           
       Highcharts.setOptions({
           global: {
               useUTC: false
@@ -1676,5 +1684,10 @@ angular.module('hillromvestApp')
       $scope.surveyConfirmModal = false;
       delete $rootScope.surveyId;      
     };
+
+    $scope.toggleHeaderAccount = function(){
+      $( "#collapseTwo" ).slideToggle( "slow" );
+      $scope.expandedSign = ($scope.expandedSign === "+") ? "-" : "+";      
+    }
 }]);
 
