@@ -81,7 +81,7 @@
               </div>
             </div>
             <div class="col-md-10 col-sm-10 ">
-              <div class="col-md-3 col-sm-3 dashboard__form--label reset-padding pull-right">
+              <div class="col-md-4 col-sm-4 dashboard__form--label reset-padding pull-right">
                 <span> {{testResult.fvc_P}} %</span>
               </div>
               <div class="col-md-12 col-sm-12 dashboard__form--label reset-padding pull-right">
@@ -101,7 +101,7 @@
               </div>
             </div>
             <div class="col-md-10 col-sm-10 ">
-              <div class="col-md-3 col-sm-3 dashboard__form--label reset-padding pull-right">
+              <div class="col-md-4 col-sm-4 dashboard__form--label reset-padding pull-right">
                 <span>{{testResult.fev1_P}} %</span>
               </div>
               <div class="col-md-12 col-sm-12 dashboard__form--label reset-padding pull-right">
@@ -121,7 +121,7 @@
               </div>
             </div>
             <div class="col-md-10 col-sm-10 ">
-              <div class="col-md-3 col-sm-3 dashboard__form--label reset-padding pull-right">
+              <div class="col-md-4 col-sm-4 dashboard__form--label reset-padding pull-right">
                 <span>{{testResult.pef_P}} %</span>
               </div>
               <div class="col-md-12 col-sm-12 dashboard__form--label reset-padding pull-right">
@@ -133,7 +133,7 @@
           </div>
           <div class="col-md-16 col-sm-16">
             <div class="col-md-10 col-sm-10 col-md-offset-6">
-              <div class="col-md-3 col-sm-3 dashboard__form--label reset-padding pull-right">
+              <div class="col-md-4 col-sm-4 dashboard__form--label reset-padding pull-right">
                 <span>{{testResult.fev1_TO_FVC_RATIO}} %</span>
               </div>
               <div class="col-md-12 col-sm-12 dashboard__form--label reset-padding pull-right">
@@ -149,10 +149,10 @@
             <span>{{testResult.comments}}</span>
           </div>
         </div>
-        <div class="col-md-3 col-sm-3 text-center padding10">
+        <div class="col-md-3 col-sm-4 text-center padding10"> 
           <div class="col-md-16 col-sm-16 dashboard__form--label reset-padding pull-right">
-            <span>Ryan Baker</span>
-            <div> <!-- ng-if="!isPatinetLogin"-->
+            <span ng-bind="testResult.lastUpdatedBy"></span>
+            <div  ng-if="!isPatinetLogin">
               <a href="" ng-click="addUpdateDiagnostics(testResult.id)">Edit</a>
             </div>
           </div>

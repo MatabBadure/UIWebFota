@@ -155,11 +155,11 @@ function ($scope, $state, $rootScope, StorageService, UserService, patientDiagno
 
   $scope.setTwoNumberDecimal = function(applicableVarname){          
     if($parse(applicableVarname)($scope)){      
-      //replace non-digited chars and decimal.
+      //replace non-digited chars and decimal.      
       var digiTed = $parse(applicableVarname)($scope).replace(/[^0-9\.]/g, '');   
-      digiTed = (digiTed === ".") ? "0.": (digiTed > 0 ? digiTed : (digiTed.toString().indexOf(".") === -1 && digiTed == 0)? 0 : digiTed );
+      digiTed = (digiTed === ".") ? "0.": (digiTed > 0 ? (digiTed.toString().indexOf(".") === -1 ? parseFloat(digiTed).toString() : digiTed) : (digiTed.toString().indexOf(".") === -1 && digiTed == 0)? 0 : digiTed );
       //  get only two digits after decimal, if available   
-      digiTed = (digiTed && digiTed.indexOf(".") !== -1) ? ((digiTed.split(".")[1]).toString().length > 2? digiTed.substring(0, digiTed.length-1) : digiTed ): digiTed;
+      digiTed = (digiTed && digiTed.toString().indexOf(".") !== -1) ? ((digiTed.split(".")[1]).toString().length > 2? digiTed.substring(0, digiTed.length-1) : digiTed ): digiTed;
       //check for max value
       digiTed = (digiTed.length > 0) ? ((digiTed <= 100 ) ? $parse(applicableVarname).assign($scope,digiTed) : $parse(applicableVarname).assign($scope,digiTed.substring(0, digiTed.length-1)) ) : (digiTed === 0 ? $parse(applicableVarname).assign($scope,0): $parse(applicableVarname).assign($scope,null)) ;
     }else{

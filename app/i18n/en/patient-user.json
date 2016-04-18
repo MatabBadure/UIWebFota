@@ -302,7 +302,7 @@
     "hmr-runrate": "HMR Runrate",
     "averageSessionMinutes": " Average Session Minutes",
     "consecutiveMissedDays":"Consecutive Missed Days",
-    "consecutiveFrequencyDeviationDays":"Consecutive Freq Deviation Days",
+    "consecutiveFrequencyDeviationDays":"Consecutive Freq Dev Days",
     "missed-therapy-days": "Missed Therapy Days",
     "setting-deviation-days": "Setting Deviation Days",
     "notification": "Notification",

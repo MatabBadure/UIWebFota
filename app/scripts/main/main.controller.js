@@ -341,4 +341,9 @@ angular.module('hillromvestApp')
   		$rootScope.patientDiagnostics();
   	};
 
+  	$rootScope.isIOS = function(){
+  		
+  		return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+  	};
+
   }]);
