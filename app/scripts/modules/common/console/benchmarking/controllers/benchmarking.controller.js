@@ -3,7 +3,7 @@ angular.module('hillromvestApp')
 .controller('benchmarkingController', ['$scope', 'addressService', 'notyService', '$rootScope', 'benchmarkingService', 'dateService', 'exportutilService', 'pdfServiceConstants', '$state', 'StorageService', 'loginConstants',
 	function($scope, addressService, notyService, $rootScope, benchmarkingService, dateService, exportutilService, pdfServiceConstants, $state, StorageService, loginConstants) {
 
-		$scope.pointWidth = $rootScope.isIOS()  ? 50 : 30;
+		$scope.pointWidth = $rootScope.isIOS()  ? 30 : 50;
 		$scope.calculateDateFromPicker = function(picker) {
 	    $scope.fromTimeStamp = new Date(picker.startDate._d).getTime();	      
 		  $scope.toTimeStamp = (new Date().getTime() < new Date(picker.endDate._d).getTime())? new Date().getTime() : new Date(picker.endDate._d).getTime();
