@@ -149,9 +149,9 @@
             <span>{{testResult.comments}}</span>
           </div>
         </div>
-        <div class="col-md-4 col-sm-4 text-center padding10">
+        <div class="col-md-3 col-sm-4 text-center padding10"> 
           <div class="col-md-16 col-sm-16 dashboard__form--label reset-padding pull-right">
-            <span>Ryan Baker</span>
+            <span ng-bind="testResult.lastUpdatedBy"></span>
             <div  ng-if="!isPatinetLogin">
               <a href="" ng-click="addUpdateDiagnostics(testResult.id)">Edit</a>
             </div>
