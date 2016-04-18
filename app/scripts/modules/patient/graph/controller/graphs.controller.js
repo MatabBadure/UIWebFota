@@ -6,7 +6,7 @@ angular.module('hillromvestApp')
   function($scope, $state, patientDashBoardService, StorageService, dateService, graphUtil, patientService, UserService, $stateParams, notyService, $timeout, graphService, caregiverDashBoardService, loginConstants, $location, $filter, commonsUserService, clinicadminPatientService, $rootScope, patientGraphsConstants, exportutilService) {
   
     $scope.isGraphLoaded = false;    
-    $scope.expandedSign = "-";
+    $scope.expandedSign = "+";
     $scope.isIE = function(){        
       if(window.navigator.userAgent.indexOf("MSIE") !== -1){
         return true
@@ -1555,9 +1555,8 @@ angular.module('hillromvestApp')
       $scope.patientInfo.missedtherapyDays = $scope.missedtherapyDays;
       $scope.patientInfo.adherenceScore = $scope.adherenceScore;
       $scope.patientInfo.settingsDeviatedDaysCount = $scope.settingsDeviatedDaysCount;
-      $scope.patientInfo.hmrRunRate = $scope.hmrRunRate;  
-      var pageHeader = ($scope.patientInfo.clinics && $scope.patientInfo.clinics.length === 1) ? $scope.patientInfo.clinics[0].name: null ;    
-      exportutilService.exportHMRCGraphAsPDF("synchronizedChart", "HMRCCanvas", $scope.fromDate, $scope.toDate, $scope.patientInfo, pageHeader);
+      $scope.patientInfo.hmrRunRate = $scope.hmrRunRate;      
+      exportutilService.exportHMRCGraphAsPDF("synchronizedChart", "HMRCCanvas", $scope.fromDate, $scope.toDate, $scope.patientInfo);
     };
 
     $scope.cloaseXLSModal = function(){
