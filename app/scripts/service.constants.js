@@ -168,7 +168,8 @@ angular.module('hillromvestApp').constant('pdfServiceConstants', {
         surveyForThirtyDays: "Survey For 30 Days",
         surveyForNinetyDays: "Survey For Ninety Days",
         patientbenchmarkingStatistcs: " My Average Adherence Score Vs. Clinic Average Adherence Score",
-        patientBMPageHeader : "Visi-View Respiratory Care"
+        patientBMPageHeader : "Visi-View Respiratory Care",
+        pdfpageHeader: "Hill-Rom Respiratory Care"
     },
     style:{
         font:{
