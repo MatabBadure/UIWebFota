@@ -6,7 +6,7 @@ angular.module('hillromvestApp')
   function($scope, $state, patientDashBoardService, StorageService, dateService, graphUtil, patientService, UserService, $stateParams, notyService, $timeout, graphService, caregiverDashBoardService, loginConstants, $location, $filter, commonsUserService, clinicadminPatientService, $rootScope, patientGraphsConstants, exportutilService) {
   
     $scope.isGraphLoaded = false;    
-    
+    $scope.expandedSign = "-";
     $scope.isIE = function(){        
       if(window.navigator.userAgent.indexOf("MSIE") !== -1){
         return true
@@ -1684,5 +1684,10 @@ angular.module('hillromvestApp')
       $scope.surveyConfirmModal = false;
       delete $rootScope.surveyId;      
     };
+
+    $scope.toggleHeaderAccount = function(){
+      $( "#collapseTwo" ).slideToggle( "slow" );
+      $scope.expandedSign = ($scope.expandedSign === "+") ? "-" : "+";      
+    }
 }]);
 
