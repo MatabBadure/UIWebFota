@@ -357,8 +357,8 @@ angular.module('hillromvestApp')
 		    },
 		    plotOptions: {
 		      series: {
-		      	showInLegend: false,
-		      	pointWidth: 50
+		      	showInLegend: false/*,
+		      	pointWidth: 50*/
 		      }
 		    },
 				tooltip: {
@@ -577,8 +577,8 @@ angular.module('hillromvestApp')
 		    	},
 		    	plotOptions: {
 		      	series: {
-		      		showInLegend: false,
-		      		pointWidth: 50
+		      		showInLegend: false/*,
+		      		pointWidth: 50*/
 		      	},
 		      	column: {
 							stacking: ($scope.xaxis === 'both') ? 'normal': false,
