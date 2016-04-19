@@ -184,7 +184,12 @@
 	.navbar-secondary .navbar-right > li{
 		padding:0 14px !important;
 	}
-
+	.flex1 {
+	  height: auto;
+	  display: -webkit-flex;
+	  flex-flow: -webkit-row column;
+	}
+	
 	@media screen and (-webkit-min-device-pixel-ratio:0) {
 		.hideOverflow{
 			overflow:hidden!important;
