@@ -459,6 +459,9 @@ ul.logout-dropdown>li{
 .highcharts-tooltip {
   pointer-events: none !important;
   }
+.navbar-fixed-top{
+	z-index:99999;
+}
 
 @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {  
 	.multiSelect .caret{
