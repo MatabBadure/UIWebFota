@@ -1,5 +1,5 @@
 <div class="container admin-user">
-	<div class="col-md-16 margin-top reset-padding mob_no_margin">
+	<div class="col-md-16 col-sm-16 margin-top reset-padding mob_no_margin">
 		<div class="user-gen-details">
 			<span class="user-gen-details--name">{{slectedPatient.firstName}} {{slectedPatient.lastName}}</span>
 			<span class="user-gen-details--hr-id">{{slectedPatient.hillromId}}</span>
@@ -7,7 +7,7 @@
 	</div>
 </div>
 		<div class="container patient_wrapper">
-			<div class="col-md-16 padding_0">
+			<div class="col-md-16 col-sm-16 padding_0">
 				<div class="row">
 					<div class="col-md-16 col-sm-16 padding_0">
 						<div class="stats_chart_section">
@@ -46,11 +46,11 @@
 									<div class="chart_inner_icon icon-settings"></div>
 								</div>
 							</div>
-							<div class="col-md-16 adherence_details_wrapper" ng-show="adherenceTable">
+							<div class="col-md-16 col-sm-16 adherence_details_wrapper" ng-show="adherenceTable">
 								<div class="row">
-									<div class="col-md-16 header_adherence_details">
+									<div class="col-md-16 col-sm-16 header_adherence_details">
 									<div class="row">
-										<div class="col-md-15">
+										<div class="col-md-15 col-sm-15">
 											<p class="head_txt" translate="graph.adherence-score-table.title"></p>
 										</div>
 										<div class="col-md-1">
@@ -58,18 +58,18 @@
 										</div>
 									</div>
 								</div>
-								<div class="col-md-16 headerAccount closeHtml">
-									<div class="row" >
-										<div class="col-md-15">
+								<div class="col-md-16 col-sm-16 headerAccount closeHtml">
+									<div class="row">
+										<div class="col-md-15 col-sm-15">
 											<p class="head_txt">Calculated on the basis of therapy done over the last 3 days</p>
 										</div>
-										<div class="col-md-1">
+										<div class="col-md-1 col-sm-1">
 											<span class="pull-right">
 												<a class="close expanded" ng-click="toggleHeaderAccount()">{{expandedSign}}</a></span>
 										</div>
 									</div>
 								</div>
-							<div  class="col-md-16 padding10 survey_grey_color" id="collapseTwo">
+							<div  class="col-md-16 col-sm-16 padding10 survey_grey_color" id="collapseTwo">
 								<p><span><b>HMR Non Adherance : </b></span>Therapy duration < min duration of the protocol</p>
 								<p><span><b>Setting Deviation : </b></span>Weighted avg. frequency < 15% of the min. frequency of the protocol</p>
 								<p><span><b>Missed Therapy : </b></span>Number of concecutive days therapy was missed</p>
@@ -77,20 +77,20 @@
 								<table class="table margin0">
 									<thead>
 										<tr>
-											<th class="col-md-3" translate="graph.adherence-score-table.date">Date</th>
-											<th class="col-md-7">
-											<table class="col-md-16 row">
+											<th class="col-md-3 col-sm-3" translate="graph.adherence-score-table.date">Date</th>
+											<th class="col-md-7 col-sm-7">
+											<table class="col-md-16 col-sm-16 row">
 												<thead>
-													<tr class="col-md-16 row">
-														<th class="col-md-8 inner_th text-center" translate="graph.adherence-score-table.notification"></th>
-														<th class="col-md-8 inner_th text-center" translate="graph.adherence-score-table.change"></th>
+													<tr class="col-md-16 col-sm-16 row">
+														<th class="col-md-8 col-sm-8 inner_th text-center" translate="graph.adherence-score-table.notification"></th>
+														<th class="col-md-8 col-sm-8 inner_th text-center" translate="graph.adherence-score-table.change"></th>
 													</tr>
 												</thead>
 											</table>
 											</th>
 											<!-- <th class="col-md-4 text-center" >Change</th> -->
-											<th class="col-md-3" translate="graph.adherence-score-table.updated-score">Updated Score</th>
-											<th class="col-md-3 text-center padding-left44" translate="graph.adherence-score-table.protocol">Protocol</th>
+											<th class="col-md-3 col-sm-3" translate="graph.adherence-score-table.updated-score">Updated Score</th>
+											<th class="col-md-3 col-sm-3 text-center padding-left44" translate="graph.adherence-score-table.protocol">Protocol</th>
 										</tr>
 									</thead>
 								</table>
@@ -140,7 +140,7 @@
 
 		<loading loaded="isGraphLoaded"></loading>
 	<!-- adding new section for graphs -->
-	<div class="col-md-16 padding0" ng-class="{'pointer-no-event': !isGraphLoaded, 'pointer-fill-event': isGraphLoaded}">
+	<div class="col-md-16 col-sm-16 padding0" ng-class="{'pointer-no-event': !isGraphLoaded, 'pointer-fill-event': isGraphLoaded}">
 		<div class="bar_graph_header">
 			<div class="col-md-5 col-sm-7 left_header_barchart padding0">
 				<div class="row">
@@ -167,6 +167,7 @@
 			<span ng-if="fromDate === toDate" class="date">{{fromDate}}<span>
 		</div>
 	</div>
+	<div class="clr"></div>
 	<div class="col-md-16" class="all_graph_wrapper" ng-init="getWeekChart()" style="min-height: 300px;">
 	<div class="graph_nodata" ng-show="noDataAvailable">
 		<span class="noData_text"> No Data Available!</span>
@@ -186,7 +187,7 @@
 	<!-- ending new section of graphs -->
 
 	<!-- Note section HTML -->
-	<div class="col-md-16" style="margin-top: 30px;">
+	<div class="col-md-16 col-sm-16" style="margin-top: 30px;">
 		<div class="btn_group patient_dashdoard_btns" ng-class="{ 'btn_group patient_dashdoard_btns_compliance': complianceGraph, 'btn_group patient_dashdoard_btns': !complianceGraph}">
 			<div dropdown class="pull-right left">
 				<button id="single-button" type="button" class="hillrom-btn btn-submit float-right" ng-class="{ 'pointer-fill-event': (!noDataAvailable && isGraphLoaded) , 'pointer-no-event': (!isGraphLoaded || noDataAvailable) }" dropdown-toggle ng-disabled="disabled" translate="graph.download" >
@@ -208,7 +209,7 @@
 
 		</div>
 	</div>
-	<div class="col-md-16 hide_content" id="add_note_container">
+	<div class="col-md-16 col-sm-16 hide_content" id="add_note_container">
 		<div class="add_note_container">
 			<div class="note_header">
 				<div class="col-md-14 col-sm-12 note_header_left pull-left-mob">
