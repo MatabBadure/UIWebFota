@@ -37,7 +37,7 @@
       <span class="v_middle">{{protocols[0].treatmentsPerDay}}</span>
   </div>
   <div class="col-md-11 col-sm-11 col-sm-offset-2 col-md-offset-2">
-    <div class="col-md-16 protocol-list no_border" ng-repeat="protocol in protocols" ng-class="{'list-inactive':protocol.deleted, 'last' : $last}">
+    <div class="col-md-16 col-sm-16 protocol-list no_border" ng-repeat="protocol in protocols" ng-class="{'list-inactive':protocol.deleted, 'last' : $last}">
       
       <div class="col-md-5 col-sm-5 protocol-list__strt-date">
         <span class="protocol-list--value"> {{protocol.minMinutesPerTreatment}}</span>      
