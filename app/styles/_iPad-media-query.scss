@@ -100,13 +100,17 @@
 		font-size: 12px;
 	}
 	.patient-user__navbar ul > li{
-		padding-right: 40px;
+		padding-right: 20px;
 	}
 	.patient-user__navbar ul > li > a .icons{
 		top: 13px;
 		display:none;
-
+		left: 8px !important;
 	}
+	.patient_padding li a {
+    padding-top: 30px !important;
+}
+
 	.patient-user__navbar{
 		width: 100%;
 		display: inline-block;
@@ -144,7 +148,9 @@
 	.no-padding{
 		padding:0px;
 	}
-
+	.word_wrap{
+		word-wrap: break-word;
+	}
 	.tab-margin-bottom20{
 		margin-bottom:20px;
 	}
@@ -169,6 +175,9 @@
 	.margin-left15{
 		margin-left:15px;
 	}
+	.margin-l{
+		margin-left:6px;
+	}
 	.height400{
 		height:auto;
 	}
@@ -184,6 +193,7 @@
 	.navbar-secondary .navbar-right > li{
 		padding:0 14px !important;
 	}
+
 	.flex1 {
 	  height: auto;
 	  display: -webkit-flex;
@@ -235,7 +245,7 @@
 	}
 
 	.patient-user__navbar ul > li {
-		padding-right: 30px;
+		padding-right: 20px;
 	}
 
 	/*Login page Style*/
@@ -321,7 +331,9 @@
 	.tab-margin-bottom20{
 		margin-bottom:20px;
 	}
-
+	.word_wrap{
+		word-wrap: break-word;
+	}
 	.tab-clear{
 		clear:both;
 	}
@@ -330,6 +342,9 @@
 	}
 	.margin-tp19{
 		margin-top:19px;
+	}
+	.margin-l{
+		margin-left:6px;
 	}
 	.hide-tab{
 		display:none !important;
@@ -394,10 +409,15 @@
 	.margin-left-10-reset{
 		margin-left:0px;
 	}
+	.word_wrap{
+		word-wrap: break-word;
+	}
+	.margin-l{
+		margin-left:6px;
+	}
 	.height400{
 		height:auto;
 	}
-
 
 	.hideOverflow{
 			overflow:hidden!important;
