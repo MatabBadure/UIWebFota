@@ -314,9 +314,7 @@ angular.module('hillromvestApp')
             $scope.geographyParam = benchmarkingConstants.string.cityParam + city;      
           }
           $scope.initBenchmarkingChart();
-        } else{
-          plotNoDataAvailable();
-        }              
+        }             
       });
     }else{
       $scope.geographyParam = null;
