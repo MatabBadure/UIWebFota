@@ -224,7 +224,7 @@ angular.module('hillromvestApp')
       tooltip: {
         formatter: function () {                   
           var dayDiff = dateService.getDateDiffIndays($scope.fromTimeStamp,$scope.toTimeStamp);  
-          var dateLabel = (dayDiff === 0)? Highcharts.dateFormat("%m/%e/%Y",$scope.fromTimeStamp) : Highcharts.dateFormat("%m/%e/%Y",$scope.fromTimeStamp)+' - '+Highcharts.dateFormat("%m/%e/%Y",$scope.toTimeStamp);
+          var dateLabel = (dayDiff === 0)? Highcharts.dateFormat("%m/%d/%Y",$scope.fromTimeStamp) : Highcharts.dateFormat("%m/%d/%Y",$scope.fromTimeStamp)+' - '+Highcharts.dateFormat("%m/%d/%Y",$scope.toTimeStamp);
           var adherenceScore = (this.point.y < 0) ? -1 * (this.point.y): this.point.y;
           var s = '<div style="font-size:12x;font-weight: normal; padding: 5px;">'
           +'<div id="tooltip-header" style="display: flex;align-items: center;justify-content: center;padding: 3px;"><b>'+ dateLabel +'</b></div>'
@@ -322,8 +322,9 @@ angular.module('hillromvestApp')
     }    
   };
 
-  $scope.exportPatientBMPDF = function(){		
-    exportutilService.downloadPatientBMAsPDF("hcpcabenchmarkingGraph", "hcpcabenchmarkingCanvas",$scope.fromDate, $scope.toDate);			
+  $scope.exportPatientBMPDF = function(){	
+    var pageHeader = (StorageService.get('benchmarkingClinic')) ? StorageService.get('benchmarkingClinic').clinic : null;    
+    exportutilService.downloadPatientBMAsPDF("hcpcabenchmarkingGraph", "hcpcabenchmarkingCanvas",$scope.fromDate, $scope.toDate, pageHeader);			
   };
 
   $scope.initCABenchmarking = function(){

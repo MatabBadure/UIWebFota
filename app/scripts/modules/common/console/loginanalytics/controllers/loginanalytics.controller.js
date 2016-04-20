@@ -433,7 +433,7 @@ angular.module('hillromvestApp')
 							fontWeight: 'bold'
 						},
 						formatter:function(){
-							return  Highcharts.dateFormat("%m/%e/%Y",this.value);
+							return  Highcharts.dateFormat("%m/%d/%Y",this.value);
 						}	              
 					},
 					units: [
@@ -503,7 +503,7 @@ angular.module('hillromvestApp')
 		            },
 		            false],
 					formatter: function() {
-				        var s = '<div style="font-size:12x; font-weight: bold; padding-bottom: 3px;">&nbsp;'+  Highcharts.dateFormat('%m/%e/%Y', this.x) +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div>';
+				        var s = '<div style="font-size:12x; font-weight: bold; padding-bottom: 3px;">&nbsp;'+  Highcharts.dateFormat('%m/%d/%Y', this.x) +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div>';
 
 				        $.each(this.points, function(i, point) {
 				            s += '<div style="font-size:10px; font-weight: bold; width="100%"><div style="color:'+ point.series.color +';padding:5px;width:85%;float:left"> ' + point.series.name + '</div> ' 
