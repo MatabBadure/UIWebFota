@@ -82,7 +82,7 @@ gulp.task('styles_process', function() {
 			image: 'app/images/',
 			comments: false
 		}))
-		.pipe(autoprefixer('last 2 version', 'safari 5', 'ie 7', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'))
+		.pipe(autoprefixer('last 2 version', 'safari 5', 'ie 7', 'ie 8', 'ie 9', 'ie Edge', 'opera 12.1', 'ios 6', 'android 4'))
 		.pipe(gulp.dest('app/styles'))
 		.pipe(connect.reload());
 });
