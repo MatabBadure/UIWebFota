@@ -765,11 +765,11 @@ angular.module('hillromvestApp')
   this.downloadPatientBMAsPDF = function(divId, canvasId, fromDate, toDate, clinicDetails){
     var pdf = this.getPdf();
     var imgY = 150;    
-    if(clinicDetails && clinicDetails !== null){
+   /* if(clinicDetails && clinicDetails !== null){
       this.setHeaderAsClinic(pdf, fromDate, toDate, clinicDetails);
-    }else{
-      pdf = this.setHeaderAsClinic(pdf, fromDate, toDate, pdfServiceConstants.text.pdfpageHeader);
-    }
+    }else{*/
+      pdf = this.setHeader(pdf, fromDate, toDate, pdfServiceConstants.text.pdfpageHeader);
+    //y}
     if(divId){
       pdf = this.addSvgToPDF(pdf, canvasId, divId, 30, imgY, 540, 200, null,null,null, 140); 
       imgY = imgY + 250;
