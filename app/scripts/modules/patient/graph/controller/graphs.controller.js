@@ -201,7 +201,7 @@ angular.module('hillromvestApp')
     $scope.opts = {
       maxDate: new Date(),
       format: patientDashboard.dateFormat,
-      dateLimit: {"months":12},
+      dateLimit: {"months":24},
       eventHandlers: {'apply.daterangepicker': function(ev, picker) {
           $scope.durationRange = "Custom";     
           $scope.calculateDateFromPicker(picker);  
@@ -618,8 +618,8 @@ angular.module('hillromvestApp')
       /*var pInterval = 12;
       var sInterval = 13;
       var remainder  = 6;*/
-      var pInterval = 9;
-      var sInterval = 10;
+      var pInterval = 8;
+      var sInterval = 9;
       var remainder  = 4;
       if($rootScope.isIOS()){
         pInterval = 7;
@@ -650,7 +650,7 @@ angular.module('hillromvestApp')
               startDay[0] = curDay[0];
               $scope.complianceXAxisLabelCount++;
             }
-            var dateTextLabel = Highcharts.dateFormat("%m/%e/%Y",dateService.convertToTimestamp(x));
+            var dateTextLabel = Highcharts.dateFormat("%m/%d/%Y",dateService.convertToTimestamp(x));
             dateTextLabel += (Highcharts.dateFormat("%I:%M %p",dateService.convertToTimestamp(x)))? ' ( ' + Highcharts.dateFormat("%I:%M %p",dateService.convertToTimestamp(x)) + ' )' : '';
             
             responseData.xAxis.xLabels.push(dateTextLabel);            
@@ -828,7 +828,7 @@ angular.module('hillromvestApp')
                     fontWeight: 'bold'
                   },
                   formatter: function() {
-                    return Highcharts.dateFormat("%m/%e/%Y", this.value);
+                    return Highcharts.dateFormat("%m/%d/%Y", this.value);
                   }
                 },
                 lineWidth: 2,
@@ -972,7 +972,11 @@ angular.module('hillromvestApp')
             angular.forEach(s.data, function(d, key2){
               var tooltipDateText = $scope.hmrChartData.series[key1].data[key2].x ;
               $scope.hmrChartData.series[key1].data[key2].marker = marker;
-              $scope.hmrChartData.series[key1].data[key2].x = $scope.hmrChartData.xAxis.categories[key2];
+              if($scope.durationRange === "Day" || $scope.isSameDay){
+                delete $scope.hmrChartData.series[key1].data[key2].x;
+              }else{
+                $scope.hmrChartData.series[key1].data[key2].x = $scope.hmrChartData.xAxis.categories[key2];
+              }
               $scope.hmrChartData.series[key1].data[key2].toolText.dateText = $scope.hmrChartData.xAxis.xLabels[key2];
               if($scope.hmrChartData.series[key1].data[key2].toolText.missedTherapy){
                 $scope.hmrChartData.series[key1].data[key2].color = "red";
@@ -1032,7 +1036,7 @@ angular.module('hillromvestApp')
                   fontWeight: 'bold'
                 },
                 formatter:function(){
-                  return  Highcharts.dateFormat("%m/%e/%Y",this.value);
+                  return  Highcharts.dateFormat("%m/%d/%Y",this.value);
                 }               
               }, 
               lineWidth: 2,
@@ -1072,7 +1076,7 @@ angular.module('hillromvestApp')
                   var headerStr = '';
                   var footerStr = '';
                   var noteStr = '';                  
-                  var dateTextLabel = Highcharts.dateFormat("%m/%e/%Y",this.point.toolText.dateText);
+                  var dateTextLabel = Highcharts.dateFormat("%m/%d/%Y",this.point.toolText.dateText);
                   if(this.point.toolText.sessionNo && this.point.toolText.sessionNo.indexOf("/" > 0)){
                     var splitSession = this.point.toolText.sessionNo.split("/");
                     if(parseInt(splitSession[1]) > 0){
@@ -1175,7 +1179,7 @@ angular.module('hillromvestApp')
                 }               
               }, 
               formatter:function(){
-                return  Highcharts.dateFormat("%m/%e/%Y",this.value);
+                return  Highcharts.dateFormat("%m/%d/%Y",this.value);
               },
               lineWidth: 2                
           },
@@ -1205,7 +1209,7 @@ angular.module('hillromvestApp')
               backgroundColor: "rgba(255,255,255,1)",            
               formatter: function() {
                   var dateX = dateService.convertToTimestamp(this.point.toolText.dateText);
-                  var dateTextLabel = Highcharts.dateFormat("%m/%e/%Y",dateX);                  
+                  var dateTextLabel = Highcharts.dateFormat("%m/%d/%Y",dateX);                  
                   if(this.point.toolText.sessionNo && this.point.toolText.sessionNo.indexOf("/" > 0)){
                     var splitSession = this.point.toolText.sessionNo.split("/");                    
                     if(parseInt(splitSession[1]) > 0){                      
@@ -1556,8 +1560,8 @@ angular.module('hillromvestApp')
       $scope.patientInfo.adherenceScore = $scope.adherenceScore;
       $scope.patientInfo.settingsDeviatedDaysCount = $scope.settingsDeviatedDaysCount;
       $scope.patientInfo.hmrRunRate = $scope.hmrRunRate;  
-      var pageHeader = ($scope.patientInfo.clinics && $scope.patientInfo.clinics.length === 1) ? $scope.patientInfo.clinics[0].name: null ;    
-      exportutilService.exportHMRCGraphAsPDF("synchronizedChart", "HMRCCanvas", $scope.fromDate, $scope.toDate, $scope.patientInfo, pageHeader);
+      var clinicDetail = ($scope.patientInfo.clinics && $scope.patientInfo.clinics.length === 1) ? $scope.patientInfo.clinics[0]: null ; 
+      exportutilService.exportHMRCGraphAsPDF("synchronizedChart", "HMRCCanvas", $scope.fromDate, $scope.toDate, $scope.patientInfo, clinicDetail);
     };
 
     $scope.cloaseXLSModal = function(){
