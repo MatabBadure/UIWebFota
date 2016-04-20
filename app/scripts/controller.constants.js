@@ -246,10 +246,10 @@ angular.module('hillromvestApp').constant('hcpDashboardConstants', {
 
 var benchmarkingParams = [
 					{"parameter" : "adherenceScore", "name": "Adherence Score"},
-					{"parameter" : "missedTherapy", "name": "Missed Therapy Days"},
-					{"parameter" : "settingDeviation", "name": "Setting Deviations"},
+					{"parameter" : "missedTherapy", "name": "Cumulative Missed Days"},
+					{"parameter" : "settingDeviation", "name": "Cumulative Frequency Deviation Days"},
 					{"parameter" : "HMRDeviation", "name": "HMR Non-Adherence"},
-					{"parameter" : "HMRRunRate", "name": "HMR Run Rate"}
+					{"parameter" : "HMRRunRate", "name": "Average Session Minutes"}
 				]
 
 var geographyOption = [
