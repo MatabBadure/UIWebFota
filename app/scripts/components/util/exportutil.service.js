@@ -70,13 +70,13 @@ angular.module('hillromvestApp')
   }
 
   this.setTopHeader = function(pdf, fromDate, toDate, pageHeader){
-    pageHeader = (pageHeader) ? pageHeader : pdfServiceConstants.text.hillromOverview;    
-    pdf.setFont(pdfServiceConstants.style.font.helvetica);
+    pageHeader = (pageHeader) ? pageHeader : pdfServiceConstants.text.pdfpageHeader;      
+    /*pdf.setFont(pdfServiceConstants.style.font.helvetica);
     pdf.setFontType(pdfServiceConstants.style.font.bold);   
     pdf.setFontSize(8);
     pdf.setTextColor(0,0,0);
     pdf.text(margins.left,   margins.titleTop-15, dateService.getDateFromTimeStamp(new Date().getTime(), patientDashboard.dateFormat, "/"));
-
+*/
     pdf.setFont(pdfServiceConstants.style.font.helvetica);   
     pdf.setFontType(pdfServiceConstants.style.font.bold);
     pdf.setFontSize(8);
@@ -597,11 +597,11 @@ angular.module('hillromvestApp')
     return pdf;
   }
 
-  this.exportHMRCGraphAsPDF = function(divId, canvasId, fromDate, toDate, patientInfo){
+  this.exportHMRCGraphAsPDF = function(divId, canvasId, fromDate, toDate, patientInfo, pageHeader){
     var pdf = this.getPdf();
     var pageHeight = pdf.internal.pageSize.height;
     var pageWidth = pdf.internal.pageSize.width;
-    pdf = this.setHeader(pdf, fromDate, toDate);
+    pdf = this.setHeader(pdf, fromDate, toDate, pageHeader);
     pdf = this.addPatientInfoToHMRCReport(pdf, patientInfo, fromDate, toDate); 
     pdf = this.addAllSvgsToPDF(pdf, canvasId, divId, 30, 350, 540, 200, pdfServiceConstants.text.complianceStatistics);
     pdf = this.setFooter(pdf, pdf.internal.pageSize.height-80);

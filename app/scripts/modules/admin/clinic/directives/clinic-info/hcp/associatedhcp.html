@@ -1,7 +1,7 @@
 <ng-include src="'scripts/components/navbar/navbar.html'"></ng-include>
 <clinic-navbar></clinic-navbar>
 <div class="container admin-user">
-  <div class="col-md-16 margin-top reset-padding">
+  <div class="col-md-16 col-sm-16 margin-top reset-padding">
    <div class="user-gen-details">
    <span class="user-gen-details--name">{{::clinic.name}}</span>
      <span class="user-gen-details--hr-id">{{::clinic.hillromId}}</span>
@@ -19,30 +19,30 @@
       </div>
     </div>
 
-    <div class="col-md-16">
+    <div class="col-md-16 col-sm-16">
       <ng-include src="'scripts/components/navbar/searchfilter.html'"></ng-include>
     </div>
 
     <div class="dashboard__manage-view--header">
-        <div class="col-md-2 header--type">
+        <div class="col-md-2 col-sm-2 header--type">
           <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="clinic.hcp-name"></span>
         </div>
-        <div class="col-md-2 header--type">
+        <div class="col-md-2 col-sm-2 header--type">
           <span translate="clinic.credentials"></span>
         </div>
-        <div class="col-md-2 header--type">
+        <div class="col-md-2 col-sm-2 header--type">
           <span translate="clinic.npiNumber"></span>
         </div>
-        <div class="col-md-2 header--type">
+        <div class="col-md-2 col-sm-2 header--type">
           <span translate="clinic.clinic-name"></span>
         </div>
-        <div class="col-md-2 header--type">
+        <div class="col-md-2 col-sm-2 header--type">
           <span translate="clinic.city"></span>
         </div>
-        <div class="col-md-2 header--type">
+        <div class="col-md-2 col-sm-2 header--type">
           <span translate="clinic.state"></span>
         </div>
-        <div class="col-md-2 header--type">
+        <div class="col-md-2 col-sm-2 header--type">
           <span translate="clinic.status"></span>
         </div>
         <div class="clr"></div>
@@ -50,46 +50,46 @@
 
       <div class="dashboard__manage-view--list assoc" ng-repeat="hcp in associatedHcps" readonly="true">
         <span ng-click="selectDoctor(hcp)">
-          <div class="col-md-2 centered">
+          <div class="col-md-2 col-sm-2 centered">
             <span class="main-prim-info">{{hcp.lastName}}, {{hcp.firstName}}</span>
           </div>
-          <div class="col-md-2 centered">
+          <div class="col-md-2 col-sm-2 centered">
             <span class="impo-highlight">{{hcp.credentials}}</span>
           </div>
-          <div class="col-md-2 centered">
+          <div class="col-md-2 col-sm-2 centered">
             <span class="short-info">{{hcp.npiNumber}}</span>
           </div>
 
-          <div class="col-md-2 centered">
+          <div class="col-md-2 col-sm-2 centered">
             <span class="short-info">{{clinic.name}}</span>
           </div>
 
-          <div class="col-md-2 centered">
+          <div class="col-md-2 col-sm-2 centered">
             <span class="short-info">{{hcp.city}}</span>
           </div>
 
-          <div class="col-md-2 centered">
+          <div class="col-md-2 col-sm-2 centered">
             <span class="short-info">{{hcp.state}}</span>
           </div>
 
-          <div class="col-md-2 centered">
+          <div class="col-md-2 col-sm-2 centered">
             <span class="short-info active" ng-if="!hcp.deleted" translate="clinic.status-type.active"></span>
             <span class="short-info inactive" ng-if="hcp.deleted" translate="clinic.status-type.inactive"></span>
           </div>
         </span>
-          <div class="col-md-2 centered text-center" >
+          <div class="col-md-2 col-sm-2 centered text-center" >
             <span class="icon-delete-icon" ng-click="hcp.deleted || openHcpDeactivateModal(hcp.id);"></span>
           </div>
 
           <div class="clr"></div>
        </div>
 
-       <div class="col-md-16 empty-list-message" ng-if="associatedHcps && associatedHcps.length === 0">
+       <div class="col-md-16 col-sm-16 empty-list-message" ng-if="associatedHcps && associatedHcps.length === 0">
         <span translate="clinic.noHCPs"></span>
       </div>
 
       <div class="dashboard__manage-view--pagination">
-        <div class="col-md-16 reset-padding-right">
+        <div class="col-md-16 col-sm-16 reset-padding-right">
           <div class="navbar-right">
             <span class="record-found" ng-if="associatedHcps.length > 0">{{total}}</span><span class="record-found" ng-if="associatedHcps.length > 0" translate="clinic.associated-hcps.hcps">HCPs</span>
             <span class="record-found" ng-if="associatedHcps.length > 0" translate="clinic.associated-hcps.found">Found</span>
@@ -107,12 +107,12 @@
 </div>
 
 <div class="container admin-user">
-  <div class="col-md-16 reset-padding">
-    <div class="col-md-8 clinic-link">
+  <div class="col-md-16 col-sm-16 reset-padding">
+    <div class="col-md-8 col-sm-8 clinic-link">
       <input class="form-control" type="text" ng-model="searchHcp" typeahead="hcp as hcp.lastName + ', &nbsp' + hcp.firstName +' ' + hcp.clinicName for hcp in getHCPsToLinkClinic($viewValue)" typeahead-on-select="showAssociateHCPModal($item)" placeholder="{{'clinic.placeholder.hcp-search' | translate}}" ng-show="isAssociateHCP">
     </div>
 
-    <div class="col-md-8 clinic-link" ng-if="!clinic.deleted">
+    <div class="col-md-8 col-sm-8 clinic-link" ng-if="!clinic.deleted">
       <buton class="hillrom-btn btn-primary float-right" ng-click="linkHCP()" translate="clinic.link-hcp" ng-show="!isAssociateHCP && associatedHcps"></buton>
     </div>
   </div>

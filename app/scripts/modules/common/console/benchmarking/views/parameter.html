@@ -108,10 +108,10 @@
 		<div class="custom-dropdown">
 		      <select ng-change="onYaxisChange()" ng-model="$parent.$parent.$parent.type">
 			      <option value="adherenceScore" label="Adherence Score" ng-selected="true">Adherence Score</option>
-			      <option value="missedTherapy" label="Missed Therapy Days">Missed Therapy Days</option>
+			      <option value="missedTherapy" label="Cumulative Missed Days">Cumulative Missed Days</option>
 			      <option value="HMRDeviation" label="HMR Non Adherence">HMR Non Adherence</option>
-			      <option value="settingDeviation" label="Setting Deviation">Setting Deviation</option>
-			      <option value="HMRRunrate" label="HMR Runrate">HMR Runrate</option>
+			      <option value="settingDeviation" label="Cumulative Frequency Deviation Days">Cumulative Frequency Deviation Days</option>
+			      <option value="HMRRunrate" label="Average Session Minutes">Average Session Minutes</option>
 			    </select>
 		    </div>
 		  </div>
@@ -178,13 +178,13 @@
 	 	  </div>
    	</div>
 
-   	<div class="pull-left margin-top font-size16 cyan-blue-light">{{benchmarkType}} 
-   		<span ng-show="type === 'adherenceScore'">Adherence Score</span>
+   	<div class="pull-left margin-top font-size16 cyan-blue-light">{{benchmarkingGraph.series[0].name}} 
+   		<!-- <span ng-show="type === 'adherenceScore'">Adherence Score</span>
    		<span ng-show="type === 'missedTherapy'">Missed Therapy</span>
    		<span ng-show="type === 'HMRDeviation'">HMR Non Adherence</span>
    		<span ng-show="type === 'settingDeviation'">Setting Deviation</span>
-   		<span ng-show="type === 'HMRRunrate'">HMR Runrate</span>
-   		 for <span ng-show="xaxis === 'clinicSize'">Clinic Size</span><span ng-show="xaxis === 'ageGroup'">Age Group</span></div>
+   		<span ng-show="type === 'HMRRunrate'">HMR Runrate</span> -->
+   		 For <span ng-show="xaxis === 'clinicSize'">Clinic Size</span><span ng-show="xaxis === 'ageGroup'">Age Group</span></div>
    	<div class="pull-right margin-top week_date_container">
 			<span ng-if="fromDate !== toDate">
 				<span class="date">{{fromDate}}</span> - <span class="date">{{toDate}}</span>
