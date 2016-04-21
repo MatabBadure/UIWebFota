@@ -30,6 +30,7 @@ function ($scope, $state, $rootScope, StorageService, UserService, patientDiagno
 	$scope.opts = {
 		maxDate: new Date(),
 		format: patientDashboard.dateFormat,
+    dateLimit: {"months":12},
 		eventHandlers: {'apply.daterangepicker': function(ev, picker) {  
 				$scope.calculateDateFromPicker(picker);				
 				$scope.getTestResultsByPatientId();
@@ -73,7 +74,7 @@ function ($scope, $state, $rootScope, StorageService, UserService, patientDiagno
   };
 
   $scope.init = function(){
-  	$scope.calculateTimeDuration(90);
+  	$scope.calculateTimeDuration(365);
     $scope.testResult = {};
     $scope.isPatinetLogin = false;
 		if($state.current.name === "patientDiagnostic"){
