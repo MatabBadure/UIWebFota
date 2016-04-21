@@ -2,7 +2,7 @@
 <clinic-navbar></clinic-navbar>
 
 <div class="container admin-user">
-  <div class="col-md-16 margin-top reset-padding">
+  <div class="col-md-16 col-sm-16 margin-top reset-padding">
    <div class="user-gen-details">
      <span class="user-gen-details--name">{{::clinic.name}}</span>
      <span class="user-gen-details--hr-id">{{::clinic.hillromId}}</span>
@@ -11,7 +11,7 @@
 </div>
 
 <div class="container admin-user">
-  <div class="col-md-16 admin-views">
+  <div class="col-md-16 col-sm-16 admin-views">
     <span class="admin-views--title" translate="clinic.tab.clinic-admin"></span>
   </div>
 </div>
@@ -19,10 +19,10 @@
 <div class="dashboard dashboard--content">
     <div class="container dashboard__manage-view margin-top" ng-show="!clinicAdminEdit">
       <div class="dashboard__manage-view--header">
-        <div class="col-md-4 header--type">
+        <div class="col-md-4 col-sm-4 header--type">
           <span translate="clinic.clinic-admin-name"></span>
         </div>
-        <div class="col-md-10 header--type">
+        <div class="col-md-10 col-sm-10 header--type">
           <span translate="clinic.email"></span>
         </div>
         <div class="clr"></div>
@@ -31,16 +31,16 @@
 </div>
 
 <div class="container admin-user">
-	<div class="col-md-16 crud-list" ng-show="clinicAdmins && !clinicAdminEdit" ng-repeat="clinicAdmin in clinicAdmins">
-    <div class="col-md-4">
+	<div class="col-md-16 col-sm-16 crud-list" ng-show="clinicAdmins && !clinicAdminEdit" ng-repeat="clinicAdmin in clinicAdmins">
+    <div class="col-md-4 col-sm-4">
       <span>{{clinicAdmin.lastName}}, {{clinicAdmin.firstName}}</span>
     </div>
-    <div class="col-md-10">
+    <div class="col-md-10 col-sm-10">
       <span>{{clinicAdmin.email}}</span>
     </div>
   </div>
 
-  <div class="col-md-16 empty-list-message" ng-if="clinicAdmins && clinicAdmins.length === 0">
+  <div class="col-md-16 col-sm-16 empty-list-message" ng-if="clinicAdmins && clinicAdmins.length === 0">
     <span translate="clinic.noClinicAdmins"></span>
   </div>
 </div>
