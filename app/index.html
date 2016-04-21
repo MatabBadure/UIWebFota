@@ -1,7 +1,7 @@
 <!doctype html>
 <html class="no-js">
 <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=10">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
     <title>Hill-Rom Vest</title>
     <meta name="description" content="">
@@ -9,9 +9,10 @@
 
     <!-- build:css -->
     <link rel="stylesheet" href="bower_components/ng-tags-input/ng-tags-input.min.css" />
-    <link rel="stylesheet" href="bower_components/angular-notys/angular-notys.css" />
     <link rel="stylesheet" href="bower_components/bootstrap-daterangepicker/daterangepicker-bs3.css" />
     <link rel="stylesheet" href="bower_components/nvd3/src/nv.d3.css" />
+    <link rel="stylesheet" href="bower_components/angular-toastr/dist/angular-toastr.min.css"/>
+    <link rel="stylesheet" href="bower_components/isteven-angular-multiselect/isteven-multi-select.css"/>
     <link rel="stylesheet" href="styles/styles.css">
     <!-- endbuild -->
 
@@ -50,6 +51,9 @@
 </div> 
 
 <!-- build:js -->
+<script src="bower_components/canvg-gabelerner/rgbcolor.js"></script>
+<script src="bower_components/canvg-gabelerner/StackBlur.js"></script>
+<script src="bower_components/canvg-gabelerner/canvg.js"></script>
 <script src="bower_components/canvg/dist/canvg.bundle.min.js"></script>
 <script src="bower_components/jspdf/dist/jspdf.min.js"></script>
 <script src="bower_components/jspdf/dist/jspdf.debug.min.js"></script>
@@ -72,13 +76,15 @@
 <script src="bower_components/angular-recaptcha/release/angular-recaptcha.min.js"></script>
 <script src="bower_components/bootstrap-sass-datepicker/js/bootstrap-sass-datepicker.min.js"></script>
 <script src="bower_components/ng-tags-input/ng-tags-input.min.js"></script>
-<script src="bower_components/angular-notys/angular-notys.min.js"></script>
 <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script> 
 <script src="bower_components/angular-spinner/angular-spinner.min.js"></script>
 <script src="bower_components/angular-loading-spinner/angular-loading-spinner.js"></script>   
 <script src="bower_components/spin.js/spin.js"></script>          
 <script src="bower_components/angular-validation-match/dist/angular-validation-match.min.js"></script>
+<script src="bower_components/angular-toastr/dist/angular-toastr.min.js"></script>
+<script src="bower_components/angular-toastr/dist/angular-toastr.tpls.min.js"></script>
 <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+<script src="bower_components/isteven-angular-multiselect/isteven-multi-select.js"></script>
 <script src="bower_components/requirejs/require.min.js"></script>
 <script src="bower_components/d3/d3.min.js"></script>
 <script src="scripts/third_party_library/nv.d3.js"></script>
@@ -178,6 +184,22 @@
 <script src="scripts/modules/patient/graph/controller/graphs.controller.js"></script>
 <script src="scripts/components/modal/modal.min.js"></script>
 <script src="scripts/modules/clinicadmin/graph/services/clinicadmin.service.min.js"></script>
+<script src="scripts/components/util/addressUtil.service.js"></script>
+<script src="scripts/components/modal/alertmodal.js"></script>
+<script src="scripts/modules/common/console/loginanalytics/controllers/loginanalytics.controller.js"></script>
+<script src="scripts/modules/common/console/surveyreport/controllers/surveyreport.controller.js"></script>
+<script src="scripts/modules/patient/survey/controllers/patientsurvey.controller.js"></script>
+<script src="scripts/components/util/exportutil.service.js"></script>
+<script src="scripts/components/captcha/captcha.min.js"></script>
+<script src="scripts/modules/common/console/loginanalytics/services/loginanalytics.service.js"></script>
+<script src="scripts/modules/patient/survey/services/patientSurvey.service.js"></script>
+<script src="scripts/modules/common/console/benchmarking/controllers/benchmarking.controller.js"></script>
+<script src="scripts/modules/common/console/benchmarking/services/benchmarking.service.js"></script>
+<script src="scripts/modules/patient/profile/controllers/patientbenchmarking.controller.js"></script>
+<script src="scripts/modules/common/clinicadmin-hcp/change-prescription/controllers/changeprescription.controller.js"></script>
+<script src="scripts/modules/common/clinicadmin-hcp/benchmarking/controllers/benchmarking.controller.js"></script>
+<script src="scripts/modules/common/clinicadmin-hcp/patient-diagnostics/controllers/patientDiagnosticController.js"></script>
+<script src="scripts/modules/common/clinicadmin-hcp/patient-diagnostics/services/patientdiagnostic.service.js"></script>
 <!-- endbuild -->
 
 </body>

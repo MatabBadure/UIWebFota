@@ -1,0 +1,280 @@
+<div class="dashboard dashboard--content margin-top" ng-init="init()">
+	<div class="col-md-16 col-sm-16 reset-padding cyan-blue-light  margin-top">
+		<div class="col-md-3  pull-left benchmarking__form__input reset-padding selected-box-container">
+			<span>Disease Type</span>
+	  </div>
+	  <div class="col-md-3 col-sm-2 pull-left benchmarking__form__input reset-padding selected-box-container">
+			<span></span>
+	  </div>
+	  <div class="col-md-3 col-sm-3 col-md-offset-1 col-sm-offset-0 benchmarking__form__input reset-padding selected-box-container" >
+			<span class="margin-left15">Geography</span>
+	  </div>
+	 	<div class="col-md-3 col-sm-3 benchmarking__form__input reset-padding selected-box-container" >
+			<span class="margin-left15">State</span>
+	  </div>
+	  <div class="col-md-3 col-sm-4 pull-right benchmarking__form__input reset-padding selected-box-container" >
+			<span>City</span>
+	  </div>
+	</div>
+
+	<div class="col-md-16 col-sm-16 reset-padding">
+		<div class="col-md-3 col-sm-3 benchmarking__form__input reset-padding selected-box-container" >
+		  <div class="custom-dropdown">
+		    <select class="" ng-change="" ng-model="benchmarkType" ng-disabled="true">
+			    <option value="CF" label="CF" ng-selected="true">CF</option>
+			  </select>
+		  </div>
+		</div>
+		<div class="col-md-3 col-sm-1 benchmarking__form__input reset-padding selected-box-container">
+			<span></span>
+	  </div>
+		<div class="col-md-3 col-sm-3 col-md-offset-1 col-sm-offset-0 benchmarking__form__input reset-padding selected-box-container" >
+			<div class="custom-dropdown">
+		    <select class="" ng-disabled="true">
+			  	<option value="USA" label="USA" selected="selected">USA</option>
+			  </select>
+		  </div> 
+		</div>
+		<div class="col-md-3 col-sm-3 pull-left benchmarking__form__input reset-padding selected-box-container" >
+			<div class="custom-dropdown">
+			  <div 
+				  isteven-multi-select
+				  input-model="states"
+				  output-model="$parent.$parent.$parent.selectedStates"
+				  button-label="name"
+				  item-label="name"
+				  tick-property="ticked"
+				  max-labels="4"
+				  translation="localLang"
+				  helper-elements="all filter none"
+				  min-search-length="1"
+				  search-property="name"
+				  max-height="250px"
+				  on-open="onOpen()"
+				  on-close="onClose()"
+				  on-item-click= "onItemclick()"
+				  on-select-all="onSelectAll()"
+				  on-select-none="onSelectNone()"
+				  on-reset="onReset()"
+				  on-clear="onClear()"
+				  on-search-change="onSearchChange()"
+				>
+				</div>
+		  </div> 
+		</div>
+		<div class="col-md-3 col-sm-4 pull-right benchmarking__form__input reset-padding selected-box-container" >
+			<div class="custom-dropdown">
+		    <select ng-if="selectedStates.length > 1 || selectedStates.length === 0" ng-disabled="true">
+			    <option value="all" label="All" selected="selected">All</option>
+			  </select>
+			  <div ng-show="selectedStates.length === 1"
+				  isteven-multi-select
+				  input-model="cities"
+				  output-model="$parent.$parent.$parent.selectedCities"
+				  button-label="name"
+				  item-label="name"
+				  tick-property="ticked"
+				  max-labels="1"
+				  translation="localLang"
+				  helper-elements="all filter none"
+				  min-search-length="1"
+				  search-property="name"
+				  max-height="250px"
+				  on-close="onCitiesClose()"
+				>
+				</div>
+		  </div> 
+		</div>
+	</div>
+
+	<div class="col-md-16 col-sm-16 reset-padding cyan-blue-light margin-top">
+		<div class="col-md-3 col-sm-3 benchmarking__form__input reset-padding selected-box-container" >
+			<span>Y-axis</span>
+	  </div>
+	  <div class="col-md-1 col-sm-1 benchmarking__form__input reset-padding selected-box-container" >
+			<span></span>
+	  </div>
+	  <div class="col-md-3 col-sm-3 benchmarking__form__input reset-padding selected-box-container" >
+			<span>X-axis</span>
+	  </div>
+	  <div class="col-md-3 col-sm-3 benchmarking__form__input reset-padding selected-box-container" >
+			<span>Range</span>
+	  </div>
+	</div>
+
+	<div class="col-md-16 col-sm-16 reset-padding pointer-fill-event">
+    <div class="col-md-3 col-sm-3 benchmarking__form__input reset-padding selected-box-container" >
+			<div class="custom-dropdown">
+		    <select ng-change="onYaxisChange()" ng-model="$parent.$parent.type"  ng-disabled="true">
+		      <option value="noOfPatients" label="No. of Patients" ng-selected="true">No. of Patients</option>
+		    </select>
+	    </div>
+	  </div>
+		<div class="col-md-1 col-sm-1 text-center benchmarking__form__input reset-padding selected-box-container" >
+			<span class="light_gray">for</span>
+	  </div>
+		<div class="col-md-3 col-sm-3 benchmarking__form__input reset-padding selected-box-container" >
+			<div class="custom-dropdown">
+	      <select ng-change="onXaxisChange()" ng-model="$parent.$parent.$parent.xaxis" ng-class="{disabled: $parent.$parent.$parent.isIgnoreXaxis}" ng-disabled="isIgnoreXaxis">
+		      <option value="ageGroup" label="Age Group" ng-selected="true">Age Group</option>
+		      <option value="clinicSize" label="Clinic Size">Clinic Size</option>
+		      <option value="both" label="Both">Both</option>
+		    </select>
+		  </div>
+		</div>
+		<div ng-show="xaxis === 'ageGroup'" class="col-md-3 col-sm-3 benchmarking__form__input reset-padding selected-box-container" >
+			<div class="custom-dropdown">
+			  <div ng-class="{disabled: $parent.$parent.$parent.isIgnoreXaxis}"
+				  isteven-multi-select
+				  input-model="ageGroups"
+				  output-model="$parent.$parent.selectedAges"
+				  button-label="ageRange"
+				  item-label="ageRange"
+				  tick-property="true"
+				  max-labels="3"
+				  translation="localLang"
+				  helper-elements="all filter none"
+				  min-search-length="1"
+				  search-property="ageRange"
+				  max-height="250px"
+				  on-close="onAgeGroupClose()"
+				  is-disabled="isIgnoreXaxis"
+				>
+				</div>
+				<!-- <span class="has-error" ng-show="$parent.$parent.$parent.selectedAges.length === 0 && !isIgnoreXaxis">Please select atleast one range</span> -->
+		  </div> 
+		</div>
+		<div ng-show="xaxis === 'clinicSize'" class="col-md-3 col-sm-3 benchmarking__form__input reset-padding selected-box-container" >
+			<div class="custom-dropdown">	
+				<div ng-class="{disabled: $parent.$parent.$parent.isIgnoreXaxis}"
+				  isteven-multi-select
+				  input-model="clinicSizes"
+				  output-model="$parent.$parent.selectedClinicSizes"
+				  button-label="size"
+				  item-label="size"
+				  tick-property="true"
+				  max-labels="3"
+				  translation="localLang"
+				  helper-elements="all filter none"
+				  min-search-length="1"
+				  search-property="size"
+				  max-height="250px"
+				  on-close="onClinicRangeClose()"
+				>
+				</div>
+					<!-- <span class="has-error" ng-show="$parent.$parent.$parent.selectedClinicSizes.length === 0 && !isIgnoreXaxis">Please select atleast one range</span> -->
+			</div> 
+		</div>
+
+		<div ng-show="xaxis === 'both'" class="benchmarking__form__input reset-padding margin-bottom selected-box-container" >
+		  <div class="col-md-3 col-sm-3 benchmarking__form__input reset-padding selected-box-container" >
+				<div class="custom-dropdown">
+			    <select ng-disabled="true">
+			      <option value="ageGroup" label="Age Group" ng-selected="true">Age Group</option>
+			    </select>
+				</div>
+		    <div class="custom-dropdown margintp53">
+		      <select ng-disabled="true" class="">
+			      <option value="clinicSize" label="Clinic Size" ng-selected="true">Clinic Size</option>
+				  </select>
+			 	</div>
+			
+			</div>
+			<div class="col-md-3 col-sm-3 benchmarking__form__input reset-padding selected-box-container" >
+			  <div class="custom-dropdown">	
+				  <div ng-class="{disabled: $parent.$parent.$parent.isIgnoreXaxis}"
+					  isteven-multi-select
+					  input-model="ageGroups"
+					  output-model="$parent.$parent.$parent.selectedAges"
+					  button-label="ageRange"
+					  item-label="ageRange"
+					  tick-property="true"
+					  max-labels="3"
+					  translation="localLang"
+					  helper-elements="all filter none"
+					  min-search-length="1"
+					  search-property="ageRange"
+					  max-height="250px"
+					  on-close="onAgeGroupClose()"
+					>
+					</div>
+
+					<div class="margin-top custom-dropdown"
+						ng-class="{disabled: $parent.$parent.$parent.isIgnoreXaxis}"
+					  isteven-multi-select
+					  input-model="clinicSizes"
+					  output-model="$parent.$parent.$parent.selectedClinicSizes"
+					  button-label="size"
+					  item-label="size"
+					  tick-property="true"
+					  max-labels="3"
+					  translation="localLang"
+					  helper-elements="all filter none"
+					  min-search-length="1"
+					  search-property="size"
+					  max-height="250px"
+					  on-close="onClinicRangeClose()"
+					>
+					</div>
+				 	<!-- <span class="has-error error-message" ng-show="($parent.$parent.$parent.selectedAges.length === 0 || $parent.$parent.$parent.selectedClinicSizes.length === 0) && !isIgnoreXaxis">Please select atleast one range</span> -->
+			  </div>
+
+			</div>
+
+		</div>
+			
+    <div class="col-md-16 tab-clear">
+   		<div class="bar_graph_header">
+    		<div class="col-md-2 col-sm-4 margintpp35 margin-top col-md-offset-4 right_header_barchart">
+			 		<input class="vertical_align pull-left margin-rt6" type="checkbox" ng-model="$parent.$parent.$parent.isIgnoreXaxis" ng-change="ignoreXaxis()"/> <span class="" >Ignore X-axis</span>
+				</div>
+    		<div class="col-md-4 col-sm-9 pull-right right_header_barchart cyan-blue-light">
+	 				<ul class="nav nav-pills pull-right margin-top">
+						<li class="" role="presentation"><a ng-click="isGraphLoaded && dayView()" href="" ng-class="{'active': durationview.day, '': !durationview.day}">Day</a></li>
+						<li class="" role="presentation"><a ng-click="isGraphLoaded && weekView()" href="" ng-class="{'active': durationview.week, '': !durationview.week}">Week</a></li>
+						<li class="" role="presentation"><a ng-click="isGraphLoaded && monthView()" href="" ng-class="{'active': durationview.month, '': !durationview.month}">Month</a></li>
+						<li class="" role="presentation"><a ng-click="isGraphLoaded && yearView()" href="" ng-class="{'active': durationview.year, '': !durationview.year}">Year</a></li>
+						<li id="dp3" class="" role="presentation">
+							<a href="" id="dp2cal" date-range-picker class="date-picker margin_tp13" ng-model="dates" parentEl="#dp1" options="opts" ><span class="icon-calendar"></span></a>
+						</li>
+					</ul>
+	 	  	</div>
+  		</div>
+		</div>
+   		
+ 		<div class="pull-left margin-top font-size16 cyan-blue-light">{{benchmarkType}} <span ng-show="type === 'noOfPatients'">No. of Patients</span> for <span ng-show="xaxis === 'clinicSize'">Clinic Size</span><span ng-show="xaxis === 'ageGroup'">Age Group</span><span ng-show="xaxis === 'both'">Age Group and Clinic Size</span>
+ 		</div>
+
+ 		<div class="pull-right margin-top week_date_container">
+			<span ng-if="fromDate !== toDate">
+				<span class="date">{{fromDate}}</span> - <span class="date">{{toDate}}</span>
+			</span>
+			<span ng-if="fromDate === toDate" class="date">{{fromDate}}<span>
+		</div>
+  </div>
+
+  <div class="col-md-16" ng-if="isNoDataAvailable">
+		<div class="graph_nodata">
+			<span class="noData_text">No Data Available!</span>
+		</div>
+	</div>
+
+  <loading loaded="isGraphLoaded"></loading>
+  	
+	<div class="col-md-16 hideOverflow margin-top" ng-show="!isNoDataAvailable">
+		<div id="clinicdiseaseGraph" class="clinic_diseases"></div>
+	</div>
+
+	<div style="clear:both"></div>
+	<div class="col-md-16 dashboard__manage-view--pagination" ng-if="!isNoDataAvailable">
+		<div class="btn_group patient_dashdoard_btns">
+  		<div dropdown="" class="pull-right left dropdown">
+    		<button id="single-button" type="button" class="hillrom-btn btn-submit margin0 float-right ng-scope dropdown-toggle"  ng-click="downloadClinicDiseasePDF()">Download As PDF</button>
+  		</div>
+		</div>
+	</div>
+	<div style="clear:both"></div>
+
+	<canvas id="clinicdiseaseCanvas" width=1300 height=350 style="display:none;"></canvas>
+</div>
+

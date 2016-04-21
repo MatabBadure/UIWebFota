@@ -150,6 +150,7 @@ angular.module('hillromvestApp')
 
         $scope.resendActivationLink = function(){
           UserService.resendActivationLink($scope.user.id).then(function(response){
+            $scope.isDisableResendButton = true;
             notyService.showMessage(response.data.message, 'success'); 
           }).catch(function(response){
             notyService.showError(response);
@@ -173,6 +174,14 @@ angular.module('hillromvestApp')
           $scope.form.$setPristine();
           $scope.submitted = false;
           $state.go('hillRomUser');
+        };
+
+        $scope.showUpdateModal = function(){
+          $scope.submitted = true;
+          if($scope.form.$invalid){
+            return false;
+          }
+          $scope.updateModal = true;
         };
 
         $scope.init();

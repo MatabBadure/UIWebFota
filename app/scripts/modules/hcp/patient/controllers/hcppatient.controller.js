@@ -29,9 +29,11 @@ angular.module('hillromvestApp')
     DoctorService.getClinicsAssociatedToHCP(StorageService.get('logged').userId).then(function(response){
       if(response.data && response.data.clinics){
         $scope.clinics = $filter('orderBy')(response.data.clinics, "name");
+        var benchmarkingClinic = (StorageService.get('benchmarkingClinic') && StorageService.get('benchmarkingClinic').clinic) ? StorageService.get('benchmarkingClinic').clinic.id : null;
+        var currentClinicId = ($stateParams.clinicId) ? $stateParams.clinicId : (benchmarkingClinic ? benchmarkingClinic : null) ;            
         $scope.clinics.push({"id": "others", "name": "Others"});
-        if($stateParams.clinicId){
-          $scope.selectedClinic = commonsUserService.getSelectedClinicFromList($scope.clinics, $stateParams.clinicId);
+        if(currentClinicId){
+          $scope.selectedClinic = commonsUserService.getSelectedClinicFromList($scope.clinics, currentClinicId);
         }else if($scope.clinics && $scope.clinics.length > 0){
           $scope.selectedClinic =  $scope.clinics[0];
         }
@@ -305,7 +307,13 @@ angular.module('hillromvestApp')
       $scope.sortPatientList.hcp = toggledSortOptions;
       $scope.sortOption = sortConstant.hcpname + sortOptionsService.getSortByASCString(toggledSortOptions);
       $scope.searchPatients();
-    }       
-    
+    }  
+  };
+
+  $scope.openEditProtocol = function(protocol){
+    if(!protocol){
+      return false;
+    }
+    $state.go('hcpUpdateProtocol', {'protocolId': protocol.id});
   };
 }]);

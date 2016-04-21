@@ -128,7 +128,6 @@ a::-moz-focus-inner {
   position: absolute;
   top: 9px;
   right: 3px;
-  z-index: -1;
   font-weight: 300;
   background-color: #fff;
   width: 15px;
@@ -155,7 +154,6 @@ select>option
 .custom-dropdown {
   background-color: transparent;
   background-repeat: no-repeat;
-  z-index: 1;
   display: inline;
   line-height: 100%;
   position: absolute;
@@ -298,4 +296,23 @@ select>option
 			}
 		}
 	}
+}
+
+.headerAccount{
+  background:#F5F5F5;
+  color:#7CA3DC;
+  cursor:pointer;
+  border: 1px solid rgba(124, 163, 220, 0.53);
+  border-bottom: none;
+}
+
+#collapseTwo{
+  border:1px solid #ccc;
+  border-bottom:none;
+  padding-left:25px;
+}
+
+.expanded{
+  color:#7CA3DC !important;
+  font-weight:bolder;
 }

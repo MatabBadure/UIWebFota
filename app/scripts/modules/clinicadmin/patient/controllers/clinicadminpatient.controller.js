@@ -1,6 +1,6 @@
 angular.module('hillromvestApp')
-.controller('clinicadminPatientController',['$scope', '$state', '$stateParams', 'clinicadminPatientService', 'patientService', 'notyService', 'DoctorService', 'clinicadminService', 'clinicService', 'dateService', 'UserService', 'searchFilterService', '$timeout', 'StorageService', 'sortOptionsService','$filter', 'commonsUserService', '$q',
-  function($scope, $state, $stateParams, clinicadminPatientService, patientService, notyService, DoctorService, clinicadminService, clinicService, dateService, UserService, searchFilterService, $timeout, StorageService, sortOptionsService,$filter, commonsUserService, $q) { 
+.controller('clinicadminPatientController',['$scope', '$state', '$stateParams', 'clinicadminPatientService', 'patientService', 'notyService', 'DoctorService', 'clinicadminService', 'clinicService', 'dateService', 'UserService', 'searchFilterService', '$timeout', 'StorageService', 'sortOptionsService','$filter', 'commonsUserService', '$q', 'addressService', '$rootScope', 'exportutilService',
+  function($scope, $state, $stateParams, clinicadminPatientService, patientService, notyService, DoctorService, clinicadminService, clinicService, dateService, UserService, searchFilterService, $timeout, StorageService, sortOptionsService,$filter, commonsUserService, $q, addressService, $rootScope, exportutilService) { 
 	var searchOnLoad = true;
 	$scope.init = function(){
     if($state.current.name === 'clinicadminpatientDemographic'  || $state.current.name === 'clinicadmminpatientDemographicEdit'){
@@ -197,20 +197,29 @@ angular.module('hillromvestApp')
     if($scope.form.$invalid){
       return false;
     }
-    var data = $scope.patient;
-    data.role = 'PATIENT';
-    data.clinicMRNId.clinicId = $stateParams.clinicId;
-    delete data.status;
-    if(data.clinicMRNId.clinic){
-      delete data.clinicMRNId.clinic;
-    }
-    UserService.editUser(data).then(function (response) {
-      $state.go('clinicadminpatientDemographic', {'patientId': $stateParams.patientId});
-      notyService.showMessage(response.data.message, 'success');
+    $scope.updateModal = false;
+    addressService.getCityStateByZip($scope.patient.zipcode).then(function(response){
+      $scope.patient.city = response.data[0].city;
+      $scope.patient.state = response.data[0].state;
+      var data = $scope.patient;
+      data.role = 'PATIENT';
+      data.clinicMRNId.clinicId = $stateParams.clinicId;
+      delete data.status;
+      if(data.clinicMRNId.clinic){
+        delete data.clinicMRNId.clinic;
+      }
+      UserService.editUser(data).then(function (response) {
+        $state.go('clinicadminpatientDemographic', {'patientId': $stateParams.patientId});
+        notyService.showMessage(response.data.message, 'success');
+      }).catch(function(response){
+        notyService.showError(response);
+      });
     }).catch(function(response){
-      notyService.showError(response);
+      $scope.patient.state = null;
+      $scope.patient.city = null;
+      $scope.serviceError = response.data.ERROR;
+      $scope.isServiceError = true;
     });
-
   };
 
   $scope.setEditMode = function(patient) {
@@ -399,10 +408,42 @@ angular.module('hillromvestApp')
     }
   };
 
+  $scope.getCityState = function(zipcode){   
+    delete $scope.serviceError;
+    $scope.isServiceError = false;
+    if(zipcode){
+      addressService.getCityStateByZip(zipcode).then(function(response){
+        $scope.patient.city = response.data[0].city;
+        $scope.patient.state = response.data[0].state;
+      }).catch(function(response){
+        $scope.patient.state = null;
+        $scope.patient.city = null;
+        $scope.serviceError = response.data.ERROR;
+        $scope.isServiceError = true;
+      });  
+    }else{
+      delete $scope.patient.city;
+      delete $scope.patient.state;
+      if($scope.form.zip.$dirty && $scope.form.zip.$showValidationMessage && $scope.form.zip.$invalid){
+      }else{
+        $scope.serviceError = 'Invalid Zipcode';  
+        $scope.isServiceError = true;
+      }
+    }
+  };
+
  angular.element('#dp2').datepicker({
-          endDate: '+0d',
-          startDate: '-100y',
-          autoclose: true});
+  endDate: '+0d',
+  startDate: '-100y',
+  autoclose: true});
+
+  $scope.openEditProtocol = function(protocol){
+    if(!protocol){
+      return false;
+    }
+    $state.go('clinicAdminUpdateProtocol', {'protocolId': protocol.id});
+  };
+
 	$scope.init();
 
   $scope.$watch("patient.formatedDOB", function(value) {

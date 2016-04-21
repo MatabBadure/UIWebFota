@@ -23,6 +23,7 @@ angular.module('hillromvestApp')
         $scope.filterClinicId = "all";
         $scope.searchItem = "";
         $scope.searchFilter = searchFilterService.initSearchFiltersForPatient();
+        $scope.searchFilter.isHideStatusFilter = true;
         $scope.searchPatientsForHCP();
         $scope.getDoctorDetails($stateParams.doctorId, $scope.setEditMode);        
       } else if (currentRoute === 'hcpNew' || currentRoute === 'hcpNewRcadmin') {
@@ -332,6 +333,7 @@ angular.module('hillromvestApp')
       if($scope.doctor && $scope.doctor.id){
         UserService.resendActivationLink($scope.doctor.id).then(function(response){
           notyService.showMessage(response.data.message, 'success');
+          $scope.isDisableResendButton = true;
         }).catch(function(response){
           notyService.showError(response);
         });  

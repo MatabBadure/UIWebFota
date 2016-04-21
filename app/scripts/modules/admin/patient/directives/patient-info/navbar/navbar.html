@@ -20,7 +20,7 @@
           </a>
         </li>
         <li class="pull-right-mob margin_lr">
-        <a ng-class="{ active: isActive('protocol-device')}" ng-href="" ng-click="switchPatientTab('patientProtocol')">
+        <a ng-class="{ active: isActive('protocol-device') || isActive('patients-editProtocol') || isActive('patients-addProtocol') || isActive('patients-addDevice')}" ng-href="" ng-click="switchPatientTab('patientProtocol')">
             <span class="none" translate="patient.tab.protocol-device"></span>
              <span class="icons hillrom-icon icon-device hidden-md hidden-lg hidden-sm"></span>
           </a>
@@ -29,6 +29,12 @@
           <a ng-class="{ active: isActive('caregiver')}" ng-href="" ng-click="switchPatientTab('patientCraegiver')">
             <span class="none" translate="patient.tab.caregiver-info"></span>
              <span class="icons hillrom-icon icon-caregiver hidden-md hidden-lg hidden-sm"></span>
+          </a>
+        </li>
+        <li class="pull-right-mob margin_lr" ng-if= "userRole === 'CLINIC_ADMIN' || userRole === 'HCP'" >
+          <a ng-class="{ active: isActive('patientDiagnostic')}" ng-href="" ng-click="patientDiagnostics();">
+            <span class="none" translate="patient.profile.tabs.patient-test-results"></span>
+             <span class="icons hillrom-icon icon-test-results hidden-md hidden-lg hidden-sm"></span>
           </a>
         </li>
       </ul>

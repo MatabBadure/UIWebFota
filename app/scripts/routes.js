@@ -2261,7 +2261,6 @@ angular.module('hillromvestApp')
                 }
             })
 
-
             .state('clinicadminpatientProtocol', {
                 parent: 'clinicadminpatientdashboard',
                 url: '/{patientId}/protocol-device',
@@ -2437,6 +2436,7 @@ angular.module('hillromvestApp')
                     ]
                 }
             })
+
             .state('contactus', {
                 parent: 'account',
                 url: '/contactus',
@@ -3808,5 +3808,767 @@ angular.module('hillromvestApp')
                       }
                   ]
               }
-            });
+            })
+            .state('survey', {               
+                url:'/patient',
+                parent: 'entity',
+                abstract: true,                
+            })                    
+            .state('patientSurvey', {
+              parent: 'survey',
+              url: '/{surveyId}/survey',
+              data: {
+                  roles: ['PATIENT'],
+                  pageTitle: 'console.console-tabs.patient-survey'
+              },
+              views: {
+                  'content@': {
+                      templateUrl: 'scripts/modules/patient/survey/views/survey.html',
+                      controller: 'patientSurveyController'
+                  }
+              },
+              resolve: {
+                  translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                      $translatePartialLoader.addPart('console');
+                      return $translate.refresh();
+                  }],
+                  authorize: ['Auth',
+                      function(Auth) {
+                          return Auth.authorize(false);
+                      }
+                  ]
+              }
+            })
+            .state('console', {               
+                url:'/console',
+                parent: 'entity',
+                abstract: true,                
+            })
+            .state('adminSurveyReport', {
+              parent: 'console',
+              url: '/admin/survey-report',
+              data: {
+                  roles: ['ADMIN'],
+                  pageTitle: 'console.page-title.survey'
+              },
+              views: {
+                  'content@': {
+                      templateUrl: 'scripts/modules/common/console/surveyreport/views/admin/view.html',
+                      controller: 'surveyReportController'
+                  }
+              },
+              resolve: {
+                loadMyCtrl:['$ocLazyLoad', function($ocLazyLoad){
+                    return $ocLazyLoad.load('surveyModule');
+                }],
+                  translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                      $translatePartialLoader.addPart('console');
+                      return $translate.refresh();
+                  }],
+                  authorize: ['Auth',
+                      function(Auth) {
+                          return Auth.authorize(false);
+                      }
+                  ]
+              }
+            })
+            .state('rcddminSurveyReport', {
+              parent: 'console',
+              url: '/rcadmin/survey-report',
+              data: {
+                  roles: ['ACCT_SERVICES'],
+                  pageTitle: 'console.page-title.survey'
+              },
+              views: {
+                  'content@': {
+                      templateUrl: 'scripts/modules/common/console/surveyreport/views/rcadmin/view.html',
+                      controller: 'surveyReportController'
+                  }
+              },
+              resolve: {
+                loadMyCtrl:['$ocLazyLoad', function($ocLazyLoad){
+                    return $ocLazyLoad.load('surveyModule');
+                }],
+                  translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                      $translatePartialLoader.addPart('console');
+                      return $translate.refresh();
+                  }],
+                  authorize: ['Auth',
+                      function(Auth) {
+                          return Auth.authorize(false);
+                      }
+                  ]
+              }
+            })
+            .state('associateSurveyReport', {
+              parent: 'console',
+              url: '/associates/survey-report',
+              data: {
+                  roles: ['ASSOCIATES'],
+                  pageTitle: 'console.page-title.survey'
+              },
+              views: {
+                  'content@': {
+                      templateUrl: 'scripts/modules/common/console/surveyreport/views/associates/view.html',
+                      controller: 'surveyReportController'
+                  }
+              },
+              resolve: {
+                loadMyCtrl:['$ocLazyLoad', function($ocLazyLoad){
+                    return $ocLazyLoad.load('surveyModule');
+                }],
+                  translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                      $translatePartialLoader.addPart('console');
+                      return $translate.refresh();
+                  }],
+                  authorize: ['Auth',
+                      function(Auth) {
+                          return Auth.authorize(false);
+                      }
+                  ]
+              }
+            })
+
+            .state('adminLoginAnalytics', {
+              parent: 'console',
+              url: '/admin/useranalytics',
+              data: {
+                  roles: ['ADMIN'],
+                  pageTitle: 'console.page-title.login-analytics'
+              },
+              views: {
+                  'content@': {
+                      templateUrl: 'scripts/modules/common/console/loginanalytics/views/admin/view.html',
+                      controller: 'loginAnalyticsController'
+                  }
+              },
+              resolve: {
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('LoginAnalyticsModule');
+                    }],
+                  translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                      $translatePartialLoader.addPart('console');
+                      return $translate.refresh();
+                  }],
+                  authorize: ['Auth',
+                      function(Auth) {
+                          return Auth.authorize(false);
+                      }
+                  ]
+              }
+            })
+            .state('rcadminLoginAnalytics', {
+              parent: 'console',
+              url: '/rcadmin/useranalytics',
+              data: {
+                  roles: ['ACCT_SERVICES'],
+                  pageTitle: 'console.page-title.login-analytics'
+              },
+              views: {
+                  'content@': {
+                      templateUrl: 'scripts/modules/common/console/loginanalytics/views/rcadmin/view.html',
+                      controller: 'loginAnalyticsController'
+                  }
+              },
+              resolve: {
+                loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('LoginAnalyticsModule');
+                    }],
+                  translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                      $translatePartialLoader.addPart('console');
+                      return $translate.refresh();
+                  }],
+                  authorize: ['Auth',
+                      function(Auth) {
+                          return Auth.authorize(false);
+                      }
+                  ]
+              }
+            })
+            .state('associatesLoginAnalytics', {
+              parent: 'console',
+              url: '/associates/useranalytics',
+              data: {
+                  roles: ['ASSOCIATES'],
+                  pageTitle: 'console.page-title.login-analytics'
+              },
+              views: {
+                  'content@': {
+                      templateUrl: 'scripts/modules/common/console/loginanalytics/views/associates/view.html',
+                      controller: 'loginAnalyticsController'
+                  }
+              },
+              resolve: {
+                loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('LoginAnalyticsModule');
+                    }],
+                  translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                      $translatePartialLoader.addPart('console');
+                      return $translate.refresh();
+                  }],
+                  authorize: ['Auth',
+                      function(Auth) {
+                          return Auth.authorize(false);
+                      }
+                  ]
+              }
+            })
+
+            .state('adminBenchmarking', {
+              parent: 'console',
+              url: '/admin/benchmarking',
+              data: {
+                  roles: ['ADMIN'],
+                  pageTitle: 'console.page-title.benchmarking'
+              },
+              views: {
+                  'content@': {
+                      templateUrl: 'scripts/modules/common/console/benchmarking/views/admin/view.html',
+                      controller: 'benchmarkingController'
+                  }
+              },
+              resolve: {
+                loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('BenchmarkingModule');
+                    }],
+                  translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                      $translatePartialLoader.addPart('console');
+                      return $translate.refresh();
+                  }],
+                  authorize: ['Auth',
+                      function(Auth) {
+                          return Auth.authorize(false);
+                      }
+                  ]
+              }
+            })
+            .state('adminClinicDiseaseBenchmarking', {
+              parent: 'adminBenchmarking',
+              url: '/clinicanddisease',
+              data: {
+                  roles: ['ADMIN'],
+                  pageTitle: 'console.page-title.benchmarking'
+              },
+              views: {
+                  'content@': {
+                      templateUrl: 'scripts/modules/common/console/benchmarking/views/admin/view.html',
+                      controller: 'benchmarkingController'
+                  }
+              },
+              resolve: {
+                loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('BenchmarkingModule');
+                    }],
+                  translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                      $translatePartialLoader.addPart('console');
+                      return $translate.refresh();
+                  }],
+                  authorize: ['Auth',
+                      function(Auth) {
+                          return Auth.authorize(false);
+                      }
+                  ]
+              }
+            })
+            .state('rcadminBenchmarking', {
+              parent: 'console',
+              url: '/rcadmin/benchmarking',
+              data: {
+                  roles: ['ACCT_SERVICES'],
+                  pageTitle: 'console.page-title.benchmarking'
+              },
+              views: {
+                  'content@': {
+                      templateUrl: 'scripts/modules/common/console/benchmarking/views/rcadmin/view.html',
+                      controller: 'benchmarkingController'
+                  }
+              },
+              resolve: {
+                loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('BenchmarkingModule');
+                    }],
+                  translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                      $translatePartialLoader.addPart('console');
+                      return $translate.refresh();
+                  }],
+                  authorize: ['Auth',
+                      function(Auth) {
+                          return Auth.authorize(false);
+                      }
+                  ]
+              }
+            })
+            .state('rcadminClinicDiseaseBenchmarking', {
+              parent: 'rcadminBenchmarking',
+              url: '/clinicanddisease',
+              data: {
+                  roles: ['ACCT_SERVICES'],
+                  pageTitle: 'console.page-title.benchmarking'
+              },
+              views: {
+                  'content@': {
+                      templateUrl: 'scripts/modules/common/console/benchmarking/views/rcadmin/view.html',
+                      controller: 'benchmarkingController'
+                  }
+              },
+              resolve: {
+                loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('BenchmarkingModule');
+                    }],
+                  translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                      $translatePartialLoader.addPart('console');
+                      return $translate.refresh();
+                  }],
+                  authorize: ['Auth',
+                      function(Auth) {
+                          return Auth.authorize(false);
+                      }
+                  ]
+              }
+            })
+            .state('associatesBenchmarking', {
+              parent: 'console',
+              url: '/associates/benchmarking',
+              data: {
+                  roles: ['ASSOCIATES'],
+                  pageTitle: 'console.page-title.benchmarking'
+              },
+              views: {
+                  'content@': {
+                      templateUrl: 'scripts/modules/common/console/benchmarking/views/associates/view.html',
+                      controller: 'benchmarkingController'
+                  }
+              },
+              resolve: {
+                loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('BenchmarkingModule');
+                    }],
+                  translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                      $translatePartialLoader.addPart('console');
+                      return $translate.refresh();
+                  }],
+                  authorize: ['Auth',
+                      function(Auth) {
+                          return Auth.authorize(false);
+                      }
+                  ]
+              }
+            })
+            .state('associatesClinicDiseaseBenchmarking', {
+              parent: 'associatesBenchmarking',
+              url: '/clinicanddisease',
+              data: {
+                  roles: ['ASSOCIATES'],
+                  pageTitle: 'console.page-title.benchmarking'
+              },
+              views: {
+                  'content@': {
+                      templateUrl: 'scripts/modules/common/console/benchmarking/views/associates/view.html',
+                      controller: 'benchmarkingController'
+                  }
+              },
+              resolve: {
+                loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('BenchmarkingModule');
+                    }],
+                  translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                      $translatePartialLoader.addPart('console');
+                      return $translate.refresh();
+                  }],
+                  authorize: ['Auth',
+                      function(Auth) {
+                          return Auth.authorize(false);
+                      }
+                  ]
+              }
+            })
+			.state('clinicAdminUpdateProtocol', {
+                parent: 'clinicadminpatientProtocol',
+                url: '/{protocolId}/editProtocol',
+                data: {
+                    roles: ['CLINIC_ADMIN'],
+                    pageTitle: 'patient.title'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/clinicadmin/patient/views/update-protocol.html',
+                        controller: 'changePrescriptionController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+
+			.state('clinicadminGenerateProtocol', {
+                parent: 'clinicadminpatientProtocol',
+                url: '/{protocolId}/protocoldetail',
+                data: {
+                    roles: ['CLINIC_ADMIN'],
+                    pageTitle: 'patient.title'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/clinicadmin/patient/views/generate-protocol.html',
+                        controller: 'changePrescriptionController'
+                    }
+                },
+                resolve: {
+                	translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+
+            .state('patientBenchmarking', {
+                parent: 'patient-dashboard',
+                url: '/p-benchmarking',
+                data: {
+                    roles: ['PATIENT'],
+                    pageTitle: 'patient.page-title.patient-benchmarking'
+                },
+                views: {
+                    'patient-view': {
+                        templateUrl: 'scripts/modules/patient/profile/profile-tabs/benchmarking.html',
+                        controller: 'patientBenchmarkingController'
+                    }
+                },
+                resolve: {
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('PatientBenchmarkingModule');
+                    }],
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+
+            .state('hcpUpdateProtocol', {
+                parent: 'hcppatientProtocol',
+                url: '/{protocolId}/editProtocol',
+                data: {
+                    roles: ['HCP'],
+                    pageTitle: 'patient.title'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/hcp/patient/views/update-protocol.html',
+                        controller: 'changePrescriptionController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+
+            .state('hcpGenerateProtocol', {
+                parent: 'hcppatientProtocol',
+                url: '/{protocolId}/protocoldetail',
+                data: {
+                    roles: ['HCP'],
+                    pageTitle: 'patient.title'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/hcp/patient/views/generate-protocol.html',
+                        controller: 'changePrescriptionController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+            .state('hcpBenchmarking', {
+                parent: 'hcp-user-profile',
+                url: '/benchmarking',
+                data: {
+                    roles: ['HCP'],
+                    pageTitle: 'profile.page-title.benchmarking'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/common/clinicadmin-hcp/benchmarking/views/hcpbenchmarking.html',
+                        controller: 'hcpCAdminBenchmarkingController'
+                    }
+                },
+                resolve: {
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('HCPCABenchmarkingModule');
+                    }],
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('profile');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+            .state('clinicAdminBenchmarking', {
+                parent: 'clinic-admin-user-profile',
+                url: '/benchmarking',
+                data: {
+                    roles: ['CLINIC_ADMIN'],
+                    pageTitle: 'profile.page-title.benchmarking'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/common/clinicadmin-hcp/benchmarking/views/cabenchmarking.html',
+                        controller: 'hcpCAdminBenchmarkingController'
+                    }
+                },
+                resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('HCPCABenchmarkingModule');
+                    }],
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('profile');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+            .state('patientDiagnostic', {
+                parent: 'patient-dashboard',
+                url: '/patientDiagnostic',
+                data: {
+                    roles: ['PATIENT'],
+                    pageTitle: 'profile.page-title.benchmarking'
+                },
+                views: {
+                    'patient-view': {
+                        templateUrl: 'scripts/modules/common/clinicadmin-hcp/patient-diagnostics/views/patientDiagnostic.html',
+                        controller: 'patientDiagnosticController'
+                    }
+                },
+                resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('PatientDiagnosticModule');
+                    }],
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+            .state('patientDiagnosticAdd', {
+                parent: 'patient-dashboard',
+                url: '/patientDiagnostic/add',
+                data: {
+                    roles: ['PATIENT'],
+                    pageTitle: 'profile.page-title.benchmarking'
+                },
+                views: {
+                    'patient-view': {
+                        templateUrl: 'scripts/modules/common/clinicadmin-hcp/patient-diagnostics/views/diagnosticadd.html',
+                        controller: 'patientDiagnosticController'
+                    }
+                },
+                resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('PatientDiagnosticModule');
+                    }],
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+            .state('HCPDiagnostic', {
+                parent: 'hcppatientList',
+                url: '/{patientId}/patientDiagnostic',
+                data: {
+                    roles: ['HCP'],
+                    pageTitle: 'profile.page-title.benchmarking'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/common/clinicadmin-hcp/patient-diagnostics/views/hcpPatientDiagnostic.html',
+                        controller: 'patientDiagnosticController'
+                    }
+                },
+                resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('PatientDiagnosticModule');
+                    }],
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+            .state('HCPDiagnosticAdd', {
+                parent: 'hcppatientList',
+                url: '/{resultId}/patientDiagnostic/add',
+                data: {
+                    roles: ['HCP'],
+                    pageTitle: 'profile.page-title.benchmarking'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/common/clinicadmin-hcp/patient-diagnostics/views/hcpPatientDiagnostic.html',
+                        controller: 'patientDiagnosticController'
+                    }
+                },
+                resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('PatientDiagnosticModule');
+                    }],
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+            .state('CADiagnostic', {
+                parent: 'clinicadminpatientdashboard',
+                url: '/{patientId}/patientDiagnostic',
+                data: {
+                    roles: ['CLINIC_ADMIN'],
+                    pageTitle: 'profile.page-title.benchmarking'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/common/clinicadmin-hcp/patient-diagnostics/views/clinicadminPatientDiagnostic.html',
+                        controller: 'patientDiagnosticController'
+                    }
+                },
+                resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('PatientDiagnosticModule');
+                    }],
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+            .state('CADiagnosticAdd', {
+                parent: 'clinicadminpatientdashboard',
+                url: '/{resultId}/{patientId}/patientDiagnostic/add',
+                data: {
+                    roles: ['CLINIC_ADMIN'],
+                    pageTitle: 'profile.page-title.benchmarking'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/common/clinicadmin-hcp/patient-diagnostics/views/clinicadminPatientDiagnostic.html',
+                        controller: 'patientDiagnosticController'
+                    }
+                },
+                resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('PatientDiagnosticModule');
+                    }],
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+            .state('changePrescriptionTermsConditions', {
+                parent: 'account',
+                url: '/prescription-terms',
+                data: {
+                    roles: ['HCP', 'CLINIC_ADMIN'],
+                    pageTitle: 'login.page-title.privacy-policy'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/components/staticPages/protocolTermsCondition.html',
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('login');
+                        return $translate.refresh();
+                    }]
+                }
+            });           
 }]);

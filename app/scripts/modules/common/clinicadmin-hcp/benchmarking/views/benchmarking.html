@@ -1,0 +1,110 @@
+<div class="navbar patient-user patient-user--nav">
+  <div class="container">
+    <div class="collapse navbar-collapse patient-user__navbar" id="navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li >
+          <a ng-class="{active: isActive('/benchmarking')}" ng-href="" ng-click="console();">
+            <span class="" translate="profile.tabs.benchmarking"></span>
+          </a>
+        </li>       
+      </ul>
+      <ul class="nav navbar-nav pull-right right width42 dashboard_container" ng-show="clinics.length > 0">
+        
+        <li class="hcp_hsp_name_a" dropdown>
+          <a ng-href="" data-target="#" id="dropdownMenu1" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            <span class="">{{clinicsDetails.selectedClinic.name}} <span class="nav_drop_arrow hillrom-icon icon-arrow-down"></span></span>
+          </a>
+          <ul class="dropdown-menu hcp_dashbaord dashboard_clinic_list" role="menu" aria-labelledby="dropdownMenu1">
+              <li role="menuitem" ng-repeat='clinic in clinics' ng-click="reDrawChartOnClinicChange(clinic);"><a>{{::clinic.name}}</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="container admin-user">
+	<div class="dashboard dashboard--content margin-top" ng-show="patientBenchmark">		
+		<loading loaded="isGraphLoaded"></loading>
+		<div class="col-md-16 col-sm-16 reset-padding cyan-blue-light margin-top">
+			<div class="col-md-3 col-sm-3 benchmarking__form__input reset-padding selected-box-container" >
+				<span translate="benchmarking.benchmark">Benchmark</span>
+			</div>
+		
+			<div class="col-md-3 col-sm-3 benchmarking__form__input reset-padding selected-box-container" >
+				<span translate="benchmarking.parameter">Parameter</span>
+			</div>
+			<div class="col-md-1 col-sm-1 benchmarking__form__input reset-padding selected-box-container" >
+				<span></span>
+			</div>
+			<div class="col-md-3 col-sm-3 benchmarking__form__input reset-padding selected-box-container" ng-show="clinics && clinics.length > 0">
+				<span translate="benchmarking.geography">Geography</span>
+			</div>
+		</div>
+		<div class="col-md-16 col-sm-16 padding0 reset-padding" ng-class="{'pointer-no-event': !isGraphLoaded, 'pointer-fill-event': isGraphLoaded}">
+		<div class="bar_graph_header"> 
+	
+	  		<div class="col-md-3 col-sm-3 benchmarking__form__input reset-padding selected-box-container" >
+				<div class="light-grey col-md-16 col-sm-16 reset-padding">				
+					<div class="custom-dropdown" ng-class="{'gray_dropdown': benchmarks.length == 1}">
+						<select ng-model="benchmarkings.selectedBM" ng-options="benchmark as benchmark.name for benchmark in benchmarks" ng-disabled="benchmarks.length === 1" ng-class="{'gray_dropdown': benchmarks.length == 1}"></select>					    
+					</div>   					   
+				</div> 
+			</div>
+		
+			<div class="col-md-3 col-sm-3 benchmarking__form__input reset-padding selected-box-container" >
+				<div class="light-grey col-md-16 col-sm-16 reset-padding">				
+					<div class="custom-dropdown">
+						<select ng-model="parameters.selectedParam" ng-options="param as param.name for param in benchmarkingParam" ng-change="redrawBenchmarkingChart()"></select>					    
+					</div>   					   
+				</div> 
+			</div>
+			<div class="col-md-1 col-sm-1 vertical_align_center text-center survey_grey_color benchmarking__form__input reset-padding selected-box-container">
+				<span>Vs.</span>
+			</div>
+			
+			<div class="col-md-3 col-sm-3 benchmarking__form__input reset-padding selected-box-container" >
+				<div class="custom-dropdown">
+					<select ng-model="geoLocation.selectedGeo" ng-options="geo as geo.name for geo in geographyOption" ng-change="redrawBenchmarkingChart()"></select>					    
+				</div> 
+			</div>
+			<div class="col-md-4 col-sm-9 pull-right right_header_barchart cyan-blue-light">
+				<ul class="nav nav-pills pull-right ">
+					<li class="" role="presentation"><a ng-click="isGraphLoaded && dayView()" href="" ng-class="{'active': durationRange === 'Day'}" translate="benchmarking.day"></a></li>
+					<li class="" role="presentation"><a ng-click="isGraphLoaded && weekView()" href="" ng-class="{'active': durationRange === 'Week'}" translate="benchmarking.week"></a></li>
+					<li class="" role="presentation"><a ng-click="isGraphLoaded && monthView()" href="" ng-class="{'active': durationRange === 'Month'}" translate="benchmarking.month"></a></li>
+					<li class="" role="presentation"><a ng-click="isGraphLoaded && yearView()" href="" ng-class="{'active': durationRange === 'Year'}" translate="benchmarking.year"></a></li>
+					<li id="dp1" class="" role="presentation" >
+					<a  href="" id="dp2cal" date-range-picker class="date-picker margin_tp13" ng-model="dates" parentEl="#dp1" options="opts" ><span class="icon-calendar"></span></a>
+					</li>
+				</ul>
+			</div>     			
+		</div>   
+		<div class="pull-right margin-top week_date_container">
+			<span ng-if="fromDate !== toDate">
+			<span class="date">{{fromDate}}</span> - <span class="date">{{toDate}}</span>
+			</span>
+			<span ng-if="fromDate === toDate" class="date">{{fromDate}}<span>
+		</div>
+    	</div>
+    	<div class="clr"></div>
+    	<div class="col-md-16" class="all_graph_wrapper height300" style="min-height: 300px;">
+		  	<div class="graph_nodata" ng-show="isNoDataAvailable">
+				<span class="noData_text"> No Data Available!</span>
+			</div>
+			<div class="col-md-16 margin-top" ng-show="!isNoDataAvailable">
+				<div id="hcpcabenchmarkingGraph" class="height500" style="height: 500px;"></div>
+			</div>
+		</div>
+
+		<div class="clr"></div>
+		<div class="col-md-16 dashboard__manage-view--pagination">
+			<div class="btn_group patient_dashdoard_btns">
+				<div dropdown="" class="pull-right left dropdown">
+					<button id="single-button" type="button" class="hillrom-btn btn-submit margin0 float-right ng-scope dropdown-toggle"  ng-click="exportPatientBMPDF()" ng-class="{ 'pointer-fill-event': (!isNoDataAvailable && isGraphLoaded) , 'pointer-no-event': (!isGraphLoaded || isNoDataAvailable) }">Export in PDF</button>
+				</div>
+			</div>
+		</div>
+		<div style="clear:both"></div>
+		<canvas id="hcpcabenchmarkingCanvas" width=1300 height=350 style="display:none;"></canvas>
+	</div>
+</div>

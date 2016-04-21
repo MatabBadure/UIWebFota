@@ -10,13 +10,14 @@ angular.module('hillromvestApp',
    'ngCacheBuster',
    'vcRecaptcha',
    'ngTagsInput',
-   'angular-noty',
    'angularSpinner',
    'ngLoadingSpinner',
    'ui.mask',
    'validation.match',
    'ui.bootstrap',
    'ngSanitize',
+   'ngAnimate',
+   'toastr',
    'oc.lazyLoad'
 
    ])
@@ -24,18 +25,26 @@ angular.module('hillromvestApp',
     $rootScope.ENV = ENV;
     $rootScope.VERSION = VERSION;
     $rootScope.$on('$stateChangeStart', function(event, toState, toStateParams) {
-      $rootScope.toState = toState;
-      $rootScope.toStateParams = toStateParams;
+      if($state.current.name === "patientSurvey"){ 
+        $rootScope.showSurveyCancelModal = true;       
+        if(!$rootScope.isSurveyCancelled){          
+          event.preventDefault();
+        } else{
+          $rootScope.showSurveyCancelModal = false;
+        }       
+      }else{
+        $rootScope.toState = toState;
+        $rootScope.toStateParams = toStateParams;
 
-      if (Principal.isIdentityResolved()) {
-        Auth.authorize();
+        if (Principal.isIdentityResolved()) {
+          Auth.authorize();
+        }
+
+        // Update the language
+        Language.getCurrent().then(function(language) {
+          $translate.use(language);
+        });
       }
-
-      // Update the language
-      Language.getCurrent().then(function(language) {
-        $translate.use(language);
-      });
-
     });
 
     $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
@@ -131,13 +140,23 @@ angular.module('hillromvestApp',
         name: 'PatientGraphModule',
         files: ['scripts/modules/patient/graph/controller/graphs.controller.js',
                 'scripts/third_party_library/angular.easypiechart.js',
-                'bower_components/angular-daterangepicker/js/angular-daterangepicker.js']
+                'bower_components/angular-daterangepicker/js/angular-daterangepicker.js',
+                'bower_components/canvg-gabelerner/rgbcolor.js',
+                'bower_components/canvg-gabelerner/StackBlur.js',
+                'bower_components/canvg-gabelerner/canvg.js',  
+                'https://code.highcharts.com/highcharts.js'
+                ]
       },{
         name: 'HCPGraphModule',
         files: ['scripts/modules/clinicadmin/graph/services/clinicadmin.service.js', 
                 'scripts/modules/hcp/graph/controller/graphs.controller.js',
                 'scripts/third_party_library/angular.easypiechart.js',
-                'bower_components/angular-daterangepicker/js/angular-daterangepicker.js']
+                'bower_components/angular-daterangepicker/js/angular-daterangepicker.js',
+                'bower_components/canvg-gabelerner/rgbcolor.js',
+                'bower_components/canvg-gabelerner/StackBlur.js',
+                'bower_components/canvg-gabelerner/canvg.js',  
+                'https://code.highcharts.com/highcharts.js'
+                ]
       },{
         name: 'PatientProfileModule',
         files: ['scripts/modules/patient/profile/controllers/patientprofile.controller.js']
@@ -154,6 +173,75 @@ angular.module('hillromvestApp',
         name: 'ClinicAdminPatientModule',
         files: ['scripts/modules/clinicadmin/graph/services/clinicadmin.service.js', 
                 'scripts/modules/clinicadmin/patient/controllers/clinicadminpatient.controller.js']
+      },
+      {
+        name: 'LoginAnalyticsModule',
+        files: ['scripts/modules/common/console/loginanalytics/controllers/loginanalytics.controller.js',                
+                'bower_components/angular-daterangepicker/js/angular-daterangepicker.js',
+                'bower_components/canvg-gabelerner/rgbcolor.js',
+                'bower_components/canvg-gabelerner/StackBlur.js',
+                'bower_components/canvg-gabelerner/canvg.js',            
+                'https://code.highcharts.com/highcharts.js']
+      },
+      {
+        name: 'surveyModule',
+        files:[
+          'bower_components/canvg-gabelerner/rgbcolor.js',
+          'bower_components/canvg-gabelerner/StackBlur.js',
+          'bower_components/canvg-gabelerner/canvg.js',
+          'https://code.highcharts.com/highcharts.js',
+          'bower_components/angular-daterangepicker/js/angular-daterangepicker.js'
+          ]
+      },
+      {
+        name: 'BenchmarkingModule',
+        files:[
+          'bower_components/canvg-gabelerner/rgbcolor.js',
+          'bower_components/canvg-gabelerner/StackBlur.js',
+          'bower_components/canvg-gabelerner/canvg.js',
+          'bower_components/isteven-angular-multiselect/isteven-multi-select.js',
+          'bower_components/angular-daterangepicker/js/angular-daterangepicker.js',
+          'https://code.highcharts.com/highcharts.js'
+        ]
+      },{
+        name: 'PatientBenchmarkingModule',
+        files:[
+          'bower_components/canvg-gabelerner/rgbcolor.js',
+          'bower_components/canvg-gabelerner/StackBlur.js',
+          'bower_components/canvg-gabelerner/canvg.js',
+          'bower_components/isteven-angular-multiselect/isteven-multi-select.js',
+          'bower_components/angular-daterangepicker/js/angular-daterangepicker.js',
+          'https://code.highcharts.com/highcharts.js'
+        ]
+      },{
+        name: 'HCPCABenchmarkingModule',
+        files:[
+          'bower_components/canvg-gabelerner/rgbcolor.js',
+          'bower_components/canvg-gabelerner/StackBlur.js',
+          'bower_components/canvg-gabelerner/canvg.js',
+          'bower_components/isteven-angular-multiselect/isteven-multi-select.js',
+          'bower_components/angular-daterangepicker/js/angular-daterangepicker.js',
+          'https://code.highcharts.com/highcharts.js'
+        ]
+      },{
+        name: 'PatientDiagnosticModule',
+        files:[          
+          'bower_components/angular-daterangepicker/js/angular-daterangepicker.js'
+        ]
       }]
     });
-  }]);
+  }])
+  .config(['toastrConfig', function(toastrConfig) {
+  angular.extend(toastrConfig, {
+    autoDismiss: false,
+    containerId: 'toast-container',
+    maxOpened: 0,
+    newestOnTop: true,
+    positionClass: 'toast-top-right',
+    preventDuplicates: false,
+    preventOpenDuplicates: true,
+    target: 'body',
+    closeButton: true,
+    progressBar:true
+  });
+}]);

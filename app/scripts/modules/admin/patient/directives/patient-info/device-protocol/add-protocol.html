@@ -211,9 +211,9 @@
     </div>
     <div class="col-md-16 margin-top reset-padding">
       <div class="">
-        <buton ng-if="!protocol.edit" type="submit" class="hillrom-btn btn-primary float-right btn-margin-left" ng-click="addProtocol()" translate="patient.btn.save">Save</buton>
+        <buton ng-if="protocol && !protocol.edit" type="submit" class="hillrom-btn btn-primary float-right btn-margin-left" ng-click="addProtocol()" translate="patient.btn.save">Save</buton>
         <buton ng-if="protocol.edit" type="submit" class="hillrom-btn btn-primary float-right btn-margin-left" ng-click="showPrtocolUpdateModal()" >Update</buton>
-        <buton type="submit" class="hillrom-btn btn-secondary float-right" ng-click="cancelProtocolDevice()" translate="patient.btn.cancel">cancel</buton>
+        <buton ng-if="protocol" type="submit" class="hillrom-btn btn-secondary float-right" ng-click="cancelProtocolDevice()" translate="patient.btn.cancel">cancel</buton>
         <div class="clr"></div>
       </div>
     </div>
@@ -221,22 +221,5 @@
   </form>
 </div>
 
-<div ng-if="protocolUpdateModal" class="modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true">
-  <div class="modal__dialog">
-    <div class="modal__content">
-      <header class="modal__header">
-        <button type="button" class="modal__close" data-dismiss="modal" ng-click="$parent.protocolUpdateModal= false">&times;</button>
-         <p translate="patient.update-protocol.warning"></p>
-      </header>
-      <div class="modal__body">
-         <div class="modal--message" translate="patient.update-protocol.message"></div>
-         <div class="row modal--custom-btn">
-          <buton class="hillrom-btn btn-submit float-right" ng-click="updateProtocol()">Yes</buton>
-          <buton class="hillrom-btn btn-secondary btn-submit float-right" data-dismiss="modal" ng-click="$parent.protocolUpdateModal= false">No</buton>
-         </div>
-      </div>
-      <footer class="modal__footer">
-      </footer>
-    </div>
-  </div>
-</div>
+<modal ng-if="isAuthorizeProtocolModal" modall="showModal" onyes="updateProtocol()" onno="$parent.isAuthorizeProtocolModal = false" header="{{'patient.update-protocol.warning' | translate}}" message="{{'patient.update-protocol.message' | translate}}">
+</modal>

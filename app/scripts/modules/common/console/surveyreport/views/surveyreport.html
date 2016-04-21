@@ -1,0 +1,77 @@
+<div class="container admin-user">
+  <div class="container margin-top">
+    <div class="col-md-16 reset-padding">
+      <span class="dashboard__form--type survey_grey_color">Select Survey</span>
+    </div>
+  </div>
+  <div class="col-md-16 protocol-radio reset-padding margin_tp15">
+    <div class="form-group">
+      <span>
+        <label>
+          <input type="radio" name="protocolType" ng-model="protocol.type" value="1" ng-change="switchSurvey(1)" ng-checked="true">
+          <span class="cyan-blue-light">5 Days</span>
+        </label>
+      </span>
+      <span>
+        <label>
+          <input type="radio" name="protocolType" ng-model="protocol.type" value="2" ng-change="switchSurvey(2)">
+          <span class="cyan-blue-light">30 Days</span>
+        </label>
+      </span>
+       <span>
+        <label>
+          <input type="radio" name="protocolType" ng-model="protocol.type" value="3" ng-change="switchSurvey(3)">
+          <span class="cyan-blue-light">90 Days</span>
+        </label>
+      </span>
+    </div>
+  </div>
+  
+  <div class="col-md-16 padding0">
+    <div class="patient_wrapper reset-padding">
+    
+      <div class="col-md-16 reset-padding pointer-fill-event" ng-class="">
+        <div class="bar_graph_header">
+          <div class="col-md-5 col-sm-7 left_header_barchart padding0">
+            <div class="">
+              <ul class="nav nav-pills">
+              <!-- Required for Graph view -->
+                <li ng-if="surveyType !== 3"><a href="" ng-click="switchView('graph')" translate="" ng-class="{'active': viewType === 'graph'}">Graph View</a></li>
+                <li><a href="" ng-click="switchView('grid')" translate="" ng-class="{'active': viewType === 'grid'}">Grid View</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md-7 pull-left text-center margin_tp15"><span class="survey_grey_color">No. of survey taken :</span> <span class="cyan-blue-light">{{count}}</span></div>
+          <div class="col-md-4 col-sm-5 right_header_barchart cyan-blue-light">
+           
+
+            <ul class="nav nav-pills pull-right">
+             <li><span class="pull-left margin_tp15" ng-if="fromDate !== toDate">
+              <span class="date">{{fromDate}}</span> - <span class="date">{{toDate}}</span>
+            </span></li>
+            <span ng-if="fromDate === toDate" class="date pull-left margin_tp15">{{fromDate}}</span>
+              <li role="" class="" id="dp1">
+                <a href="" id="dp1cal" date-range-picker class="date-picker margin_tp13" ng-model="dates" parentEl="#dp1" options="opts" ><span class="icon-calendar"></span></a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- Required for Graph View -->
+      <ng-include src="'scripts/modules/common/console/surveyreport/views/fivedaysgraphsurvey.html'" ng-if="viewType === 'graph'"></ng-include>
+     
+      
+      <ng-include src="'scripts/modules/common/console/surveyreport/views/fivedayssurvey.html'" ng-if="viewType === 'grid' &&surveyType === 1"></ng-include>
+      
+
+      <!--grid view 30 days therapy -->
+      <ng-include src="'scripts/modules/common/console/surveyreport/views/thirtydayssurvey.html'" ng-if="viewType === 'grid' && surveyType === 2"></ng-include>
+      <!--gird view 30 days therapy ends --> 
+
+
+      <!--grid view 90 days therapy -->
+      <ng-include src="'scripts/modules/common/console/surveyreport/views/nintydayssurvey.html'" ng-if="viewType === 'grid' && surveyType === 3"></ng-include>
+      <!--gird view 90 days therapy ends --> 
+    </div>
+  </div>
+</div>

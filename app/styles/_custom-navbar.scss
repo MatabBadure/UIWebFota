@@ -303,6 +303,28 @@ $header--background: $body-bg;
 		}
 	}
 }
+ul.logout-dropdown{
+ white-space: nowrap;
+}
+ul.logout-dropdown>li{
+	display:inline-block;
+	float:none !important;
+}
+.navbar-secondary .navbar-right .header-popover ul li:first-child:after{
+	border-right:1px solid #c1c1c1;
+}
+.navbar-secondary .navbar-right .header-popover ul li:last-child:after{
+	border-right:none !important;
+}
+.navbar-secondary .navbar-right .header-popover ul li:nth-child(2):after{
+	height: 35px;
+    border-right: 1px solid #C1C1C1;
+    content: '';
+    position: absolute;
+    top: 11px;
+    right: 0px;
+}
+
 
 #top-shadow {
   position: fixed;
@@ -316,16 +338,136 @@ $header--background: $body-bg;
   box-shadow: 0 5px 5px $gray-darken;
   display: none;
 }
-
+.text-align-left{
+	text-align:left;
+}
+.text-align-center{
+	text-align:center !important;
+}
+.survey_dialog{
+    height: 500px;
+    overflow-y: scroll;
+}
 .navbar.affix {
   top:0; 
   width:100%;
 }
-
+.margin-rt6{
+	margin-right:6px!important;
+}
 .content {
 	margin-top: 62px;
 }
 
 .patient-user__navbar ul > li.create-tab {
 	margin-right: 20px;
+}
+
+#synchronizedChart .chart {
+	width: 100%;
+  height: 250px;
+  margin: 0 auto;
+}
+.hide-chart{
+	visibility: hidden;
+	width: 100%;
+	opacity: 0;
+	height: 0;
+	overflow: hidden;
+}
+.clinic_diseases > .highcharts-container > .highcharts-tooltip > span{
+	width:160px!important;
+}
+.show-chart{
+	visibility: visible;
+	width: 100%;
+}
+.height30{
+	height:30px;
+}
+.margin-bottom{
+	margin-bottom:20px;
+}
+.margintp53{
+	margin-top:53px;
+}
+.margintpp35{
+	margin-top:35px;
+}
+.vertical_align{
+	vertical-align:sub;
+}
+#collapseTwo{
+	display:none;
+}
+
+.benchmarking__form__input select, .custom-textbox, .benchmarking__form__input input[type="text"]{
+  height: 30px;
+  width: 210px;
+  font-weight: normal;
+  color: #34455C;
+  border: 1px solid #c1c1c1;
+  background-color: inherit;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-indent: 7px;
+  border-radius:0;
+}
+.gray_dropdown:before, .gray_dropdown{
+	color:#C1C1C1!important;
+}
+ .multiSelect > button{
+	border-radius:0;
+	min-height: 0!important;
+	background: transparent;
+	color: #34455C;
+	height: 30px;
+    width: 210px;
+    padding: 0 5px;
+    text-align:left;
+    position:relative;
+}
+.disabled{
+	background-color:#f1f1f1 !important;
+	color:#c1c1c1!important;
+}
+.multiSelect > button:hover{
+	background: transparent;
+}
+.multiSelect .buttonLabel{
+	display:inline-block!Important;
+	text-align: left;
+}
+.multiSelect .caret{
+	display:none;
+}
+.custom_arrow > span > select{
+	position: relative;
+}
+.text-right{
+	text-align:right!important;
+}
+.height400{
+	height:400px;
+}
+.font-size18{
+	font-size:18px;
+}
+.margin-lt{
+	margin-left:4px;
+}
+.highcharts-tooltip {
+  pointer-events: none !important;
+  }
+.navbar-fixed-top{
+	z-index:99999;
+}
+
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {  
+	.multiSelect .caret{
+		display:block;
+		right:10px;
+		position:absolute;
+		top:10px;
+	}
 }

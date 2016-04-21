@@ -10,7 +10,8 @@
       "my-dashboard": "HillRom | My Dashboard",
       "caregivers": "HillRom | Caregivers",
       "clinics-hcps": "HillRom | Clinics and HCPs",
-      "add-caregiver": "HillRom | Add Caregiver"
+      "add-caregiver": "HillRom | Add Caregiver",
+      "patient-benchmarking": "Hillrom | Benchmarking"
     },
     "home": {
         "title": "Patient"
@@ -175,8 +176,8 @@
       "message": "If you delete the protocol, you will no longer be able to view the information. Are you sure to delete?"
     },
     "update-protocol":{
-      "warning": "Patient Care Plan - Protocol",
-      "message": "You have made changes/updates for Protocol. Are you sure to make updates?"
+      "warning": "Protocol Update",
+      "message": "Do you want to make updates in the Protocol?"
     },
     "update-device":{
       "warning": "Patient Device - Update",
@@ -210,13 +211,21 @@
       "warning":"Are you sure you want to delete the Note?",
       "message":"If you delete the Note, you will no longer be able to view the Note."
     },
+    "authorizeProtocol":{
+      "buttonLabel":"Authorize Updated Prescription",
+      "warning":"Update Prescription",
+      "message":"You must authorize an update to the prescription before the protocol can be updated in VisiView.",
+      "prescription-message": "You will need the prescriber to electronically sign the updated prescription."
+    },
     "profile": {
       "tabs": {
         "mydashboard": "Dashboard",
         "caregiver": "Caregiver",
         "device-protocol": "Care Plan and Device",
         "clinic-hcp": "Clinic and HCP",
-        "patient-demographics": "Patient Demographics"
+        "patient-demographics": "Patient Demographics",
+        "patient-benchmarking": "Benchmarking",
+        "patient-test-results": "Test Results"
       }
     },
     "errMSG":{
@@ -291,6 +300,9 @@
     "statistics": "Statistics",
     "adherence-score": "Adherence Score",
     "hmr-runrate": "HMR Runrate",
+    "averageSessionMinutes": " Average Session Minutes",
+    "consecutiveMissedDays":"Consecutive Missed Days",
+    "consecutiveFrequencyDeviationDays":"Consecutive Freq Dev Days",
     "missed-therapy-days": "Missed Therapy Days",
     "setting-deviation-days": "Setting Deviation Days",
     "notification": "Notification",
@@ -313,12 +325,14 @@
     "export-raw-data": "Therapy Data (XLS)",
     "export-processed-data": "Processed Data (CSV)",
     "download": "Download",
+    "adherence": "Adherence",
     "adherence-score-table":{
       "title":"Adherence Score History for last 7 days",
       "date": "Date",
       "notification": "Notification",
       "change" :"Change",  
-      "updated-score": "Updated Score"
+      "updated-score": "Updated Score",
+      "protocol": "Protocol"
     }
   },
   "no-clinic-found": "No clinic associated.",
@@ -406,5 +420,16 @@
       },
       "clinic-title" : "Clinic"
     }
+  },
+  "patient-benchmarking":{
+    "week": "Week",
+    "day": "Day",
+    "year": "Year",
+    "month": "Month",
+    "benchmark": "Benchmark",
+    "parameter": "Parameter",
+    "compareWith": "Compare with",
+    "average" :"Average",
+    "adherenceScore": "Adherence Score"
   }
 }
