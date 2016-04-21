@@ -1,47 +1,47 @@
 <ng-include src="'scripts/components/navbar/navbar.html'"></ng-include>
 <hcp-navbar></hcp-navbar>
 <div class="container admin-user" ng-show="doctor">
-  <div class="col-md-16 admin-views">
+  <div class="col-md-16 col-sm-16 admin-views">
     <span class="admin-views--title">
       {{::doctor.title}} {{::doctor.firstName}} {{::doctor.middleName}} {{::doctor.lastName}}
     </span>
   </div>
 
-  <div class="col-md-16 user-detail-info">
-    <div class="col-md-5 user-detail-info__data">
+  <div class="col-md-16 col-sm-16 user-detail-info">
+    <div class="col-md-5 col-sm-5 user-detail-info__data">
       <span class="user-detail-info__data--key" translate="doctor.credentials"></span>
       <span class="user-detail-info__data--key">:</span>
       <span class="user-detail-info__data--value">{{::doctor.credentials}}</span>
     </div>
-    <div class="col-md-6 user-detail-info__data">
+    <div class="col-md-6 col-sm-6 user-detail-info__data">
       <span class="user-detail-info__data--key" translate="doctor.npiNumber"></span>
       <span class="user-detail-info__data--key">:</span>
       <span class="user-detail-info__data--value">{{::doctor.npiNumber}}</span>
     </div>
-<div class="col-md-5 user-detail-info__data">
+<div class="col-md-5 col-sm-5 user-detail-info__data">
   <span class="user-detail-info__data--key" translate="doctor.speciality"></span>
   <span class="user-detail-info__data--key">:</span>
   <span class="user-detail-info__data--value">{{::doctor.speciality}}</span>
 </div>
 
-<div class="col-md-5 user-detail-info__data">
+<div class="col-md-5 col-sm-5 user-detail-info__data">
   <span class="user-detail-info__data--key" translate="doctor.city"></span>
   <span class="user-detail-info__data--key">:</span>
   <span class="user-detail-info__data--value">{{::doctor.city}}</span>
 </div>
-<div class="col-md-6 user-detail-info__data">
+<div class="col-md-6 col-sm-6 user-detail-info__data">
   <span class="user-detail-info__data--key" translate="doctor.state"></span>
   <span class="user-detail-info__data--key">:</span>
   <span class="user-detail-info__data--value">{{::doctor.state}}</span>
 </div>
-<div class="col-md-5 user-detail-info__data">
+<div class="col-md-5 col-sm-5 user-detail-info__data">
   <span class="user-detail-info__data--key" translate="doctor.status"></span>
   <span class="user-detail-info__data--key">:</span>
   <span ng-if="!doctor.deleted && doctor.activated" class="user-detail-info__data--value" translate="doctor.status-type.active">Active</span>
   <span ng-if="!doctor.deleted && !doctor.activated" class="user-detail-info__data--value" translate="doctor.status-type.pending">Pending</span>
   <span ng-if="doctor.deleted" class="user-detail-info__data--value" translate="doctor.status-type.inactive">Inactive</span>
 </div>
-<div class="col-md-16 user-detail-info__data">
+<div class="col-md-16 col-sm-16 user-detail-info__data">
   <span class="user-detail-info__data--key" translate="doctor.clinic-name"></span>
   <span class="user-detail-info__data--key">:</span>
   <span class="user-detail-info__data--value" ng-repeat="clinic in clinicsOfHCP">{{::clinic.name}}{{$last ? '' : ', '}}</span>
@@ -50,7 +50,7 @@
 
 </div>
 
-<div class="col-md-16 reset-padding margin-top">
+<div class="col-md-16 col-sm-16 reset-padding margin-top">
 
   <button class="hillrom-btn btn-primary float-right btn-margin-left" ng-if="!doctor.deleted && !doctor.activated" translate="doctor.reactivate-button-text" ng-click="resendActivationLink()" ng-class="{'disabled btn-inactive': isDisableResendButton}" ng-disabled="isDisableResendButton"></button>
   <button class="hillrom-btn btn-primary float-right btn-margin-left" translate="doctor.edit-button-text" ng-click="editHCP()"></button>
@@ -61,7 +61,7 @@
 
 
 <div class="container admin-user">
-  <div class="col-md-16 admin-views">
+  <div class="col-md-16 col-sm-16 admin-views">
     <span class="admin-views--title" translate="doctor.patient-associated"></span>
   </div>
 </div>
@@ -90,7 +90,7 @@
 
 <div class="dashboard dashboard--content">
   <div class="container dashboard__manage-view margin-top">
-  <div class="col-md-16">
+  <div class="col-md-16 col-sm-16">
     <ng-include src="'scripts/components/navbar/searchfilter.html'"></ng-include>
   </div>
     <div class="dashboard__manage-view--header">
