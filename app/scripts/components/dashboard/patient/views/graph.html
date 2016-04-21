@@ -58,21 +58,35 @@
 										</div>
 									</div>
 								</div>
-								<div class="col-md-16 col-sm-16 headerAccount closeHtml">
-									<div class="row">
+								<div class="col-md-16 col-sm-16 headerAccount closeHtml reset-padding">
+									<div class="row close expanded head_txt" ng-click="toggleHeaderAccount()">
 										<div class="col-md-15 col-sm-15">
-											<p class="head_txt">Calculated on the basis of therapy done over the last 3 days</p>
+											<p class="head_txt">How is my Adherence Score Calculated?</p>
 										</div>
 										<div class="col-md-1 col-sm-1">
 											<span class="pull-right">
-												<a class="close expanded" ng-click="toggleHeaderAccount()">{{expandedSign}}</a></span>
+												<a class="close expanded">{{expandedSign}}</a></span>
 										</div>
 									</div>
 								</div>
 							<div  class="col-md-16 col-sm-16 padding10 survey_grey_color" id="collapseTwo">
-								<p><span><b>HMR Non Adherance : </b></span>Therapy duration < min duration of the protocol</p>
-								<p><span><b>Setting Deviation : </b></span>Weighted avg. frequency < 15% of the min. frequency of the protocol</p>
-								<p><span><b>Missed Therapy : </b></span>Number of concecutive days therapy was missed</p>
+							<ul>
+							<li>Everyone gets an Adherence Score of 100 to start.</li>
+							<li>The system looks at your activity for the past 3 days.
+								<ul>
+									<li>Example, if it were a Monday it looks at the previous Friday, Saturday and Sunday and calculates your score.</li>
+								</ul>
+							</li>
+							<li>Every notification subtracts points from your Adherence Score (only one time).</li>
+							<li>Notification type and amount off your score are as follows:
+								<ul>
+									<li>Missed therapy days = 5 points off your score.</li>
+									<li>Average Therapy Minutes is below your prescribed protocol = 2 points off score.</li>
+									<li>Device settings are below your prescribed settings = 1 point off your score.</li>
+								</ul>
+							</li>
+							<li>Every day you follow your care plan, 1 point is added (if below 100) back to your score.</li>
+							</ul>
 							</div>
 								<table class="table margin0">
 									<thead>
@@ -167,6 +181,7 @@
 			<span ng-if="fromDate === toDate" class="date">{{fromDate}}<span>
 		</div>
 	</div>
+	<div class="clr"></div>
 	<div class="col-md-16" class="all_graph_wrapper" ng-init="getWeekChart()" style="min-height: 300px;">
 	<div class="graph_nodata" ng-show="noDataAvailable">
 		<span class="noData_text"> No Data Available!</span>
