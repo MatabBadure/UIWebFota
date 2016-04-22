@@ -499,7 +499,8 @@ angular.module('hillromvestApp')
           chart: {
               type: 'line',
               zoomType: 'xy',
-              backgroundColor:  "#e6f1f4"
+              backgroundColor:  "#e6f1f4",
+              spacingBottom: 100
           },
           title: {
               text: ''
@@ -599,7 +600,11 @@ angular.module('hillromvestApp')
             }
         },				              	       
 		legend:{
-			enabled: true
+			enabled: true,
+			floating: true,
+			verticalAlign: "bottom",
+			align:"center",
+			y: 40
 		},          
 		series: chartData.series
       });
@@ -623,7 +628,8 @@ angular.module('hillromvestApp')
 	          chart: {
 	              type: 'line',
 	              zoomType: 'xy',
-	              backgroundColor:  "#e6f1f4"
+	              backgroundColor:  "#e6f1f4",
+              	  spacingBottom: 100
 	          },
 	          title: {
 	              text: ''
@@ -745,7 +751,11 @@ angular.module('hillromvestApp')
 	            }
 	        },				              	       
 			legend:{
-				enabled: true
+				enabled: true,
+				floating: true,
+				verticalAlign: "bottom",
+				align:"center",
+				y: 40
 			},          
 			series: chartData.series
 	      });
