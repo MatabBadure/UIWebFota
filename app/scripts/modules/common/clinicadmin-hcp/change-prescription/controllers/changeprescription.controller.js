@@ -143,6 +143,10 @@ function($scope, $state, clinicadminPatientService, notyService, $stateParams, c
     $scope.isVerificationModal = true;
   };
 
+  $scope.closeVerificationModal = function(){
+    $scope.isVerificationModal = false;
+  };
+
   $scope.updateProtocol = function(){
     $rootScope.$broadcast('validateCaptcha');
     $scope.isProtocolSubmited = true;
