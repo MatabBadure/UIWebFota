@@ -317,7 +317,7 @@ angular.module('hillromvestApp')
     pdf.setDrawColor(241,241,241);
     pdf.setFillColor(241,241,241);
     pdf.rect(85, 85, 110, 20, 'FD');
-    var patientName = slectedPatient.lastName+' '+slectedPatient.firstName;
+    var patientName = slectedPatient.firstName+' '+slectedPatient.lastName;
     if(patientName.length > 17) {
       patientName = patientName.slice(0, 17) + '...'; 
     }
@@ -346,7 +346,7 @@ angular.module('hillromvestApp')
 
     pdf.setFontSize(12);
     pdf.setTextColor(124,163,218);
-    pdf.text(15, 160, 'New Protocol');
+    pdf.text(15, 160, 'Protocol');
     pdf.setFontSize(8);
 
     pdf.text(50, 180,'Type');
