@@ -39,6 +39,7 @@ angular.module('hillromvestApp')
       $scope.isAuthenticated = false;
       $rootScope.username = null;
       $rootScope.userFullName = null;
+      $rootScope.userLastName = null;
       $scope.password = null;
       $scope.isLoaded = true;
       $scope.submitted = false;
@@ -72,6 +73,7 @@ angular.module('hillromvestApp')
       $scope.isAuthenticated = false;
       $rootScope.username = null;
       $rootScope.userFullName = null;
+      $rootScope.userLastName = null;
       $scope.password = null;
       $scope.isLoaded = true;
       $scope.message = '';
@@ -118,12 +120,14 @@ angular.module('hillromvestApp')
           StorageService.remove('loginCount');
           logged.userFirstName = response.data.user.firstName;
           logged.userFullName = response.data.user.lastName+' '+response.data.user.firstName;
+          logged.userLastName = response.data.user.lastName;
           logged.role = response.data.user.authorities[0].name;
           logged.userEmail = response.data.user.email;
           $rootScope.isFooter = false;
           $rootScope.userRole = response.data.user.authorities[0].name;
           $rootScope.username = response.data.user.firstName;
           $rootScope.userFullName = response.data.user.lastName + ' ' +response.data.user.firstName;
+          $rootScope.userLastName = response.data.user.lastName;
           $rootScope.userEmail = response.data.user.email;
           
           if(response.data.user.authorities[0].name === loginConstants.role.patient){

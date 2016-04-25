@@ -136,12 +136,11 @@
     </div>
   </div>
 </div>
-
 <div ng-show="isVerificationModal" class="modal">
   <div class="modal__dialog">
     <div class="modal__content">
       <header class="modal__header">
-        <button type="button" class="modal__close" data-dismiss="modal" ng-click="isVerificationModal= false">×</button>
+        <button type="button" class="modal__close" data-dismiss="modal" ng-click="closeVerificationModal()">×</button>
          <p class="ng-scope">Login Verification</p>
       </header>
       <div class="modal__body">
