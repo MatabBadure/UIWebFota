@@ -1,6 +1,6 @@
 angular.module('hillromvestApp')
-.controller('changePrescriptionController',['$scope', '$state', 'clinicadminPatientService', 'notyService', '$stateParams', 'commonsUserService', 'patientService', '$rootScope', 'UserService', 'StorageService',
-function($scope, $state, clinicadminPatientService, notyService, $stateParams, commonsUserService, patientService, $rootScope, UserService, StorageService) {
+.controller('changePrescriptionController',['$scope', '$state', 'clinicadminPatientService', 'notyService', '$stateParams', 'commonsUserService', 'patientService', '$rootScope', 'UserService', 'StorageService', 'exportutilService',
+function($scope, $state, clinicadminPatientService, notyService, $stateParams, commonsUserService, patientService, $rootScope, UserService, StorageService, exportutilService) {
 
 	$scope.init = function(){
 		if($state.current.name === 'clinicAdminUpdateProtocol'|| $state.current.name === 'hcpUpdateProtocol'){
@@ -153,7 +153,7 @@ function($scope, $state, clinicadminPatientService, notyService, $stateParams, c
         });
         patientService.editProtocol($stateParams.patientId, $rootScope.protocols).then(function(response){
           $scope.isVerificationModal = false;
-          // exportutilService.exportChangePrescPDF($scope.slectedPatient, $rootScope.userFullName, $scope.currentDate, $rootScope.protocols);
+          exportutilService.exportChangePrescPDF($scope.patient, $rootScope.userFullName, $scope.currentDate, $rootScope.protocols);
           notyService.showMessage(response.data.message, 'success');
           if(StorageService.get('logged').role === 'HCP'){
           	$state.go('hcppatientProtocol', {'patientId': $stateParams.patientId});
