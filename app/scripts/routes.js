@@ -4233,7 +4233,7 @@ angular.module('hillromvestApp')
                     ]
                 }
             })
-
+/*
             .state('patientBenchmarking', {
                 parent: 'patient-dashboard',
                 url: '/p-benchmarking',
@@ -4262,6 +4262,7 @@ angular.module('hillromvestApp')
                     ]
                 }
             })
+*/            
 
             .state('hcpUpdateProtocol', {
                 parent: 'hcppatientProtocol',
@@ -4314,6 +4315,7 @@ angular.module('hillromvestApp')
                     ]
                 }
             })
+/*
             .state('hcpBenchmarking', {
                 parent: 'hcp-user-profile',
                 url: '/benchmarking',
@@ -4342,6 +4344,8 @@ angular.module('hillromvestApp')
                     ]
                 }
             })
+*/            
+/*
             .state('clinicAdminBenchmarking', {
                 parent: 'clinic-admin-user-profile',
                 url: '/benchmarking',
@@ -4372,6 +4376,7 @@ angular.module('hillromvestApp')
                     ]
                 }
             })
+*/            
             .state('patientDiagnostic', {
                 parent: 'patient-dashboard',
                 url: '/patientDiagnostic',
