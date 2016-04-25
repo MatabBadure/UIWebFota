@@ -346,7 +346,7 @@ angular.module('hillromvestApp')
 
     pdf.setFontSize(12);
     pdf.setTextColor(124,163,218);
-    pdf.text(15, 160, 'New Protocol');
+    pdf.text(15, 160, 'Protocol');
     pdf.setFontSize(8);
 
     pdf.text(50, 180,'Type');
