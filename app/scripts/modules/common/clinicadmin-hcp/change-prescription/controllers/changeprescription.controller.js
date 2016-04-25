@@ -24,7 +24,15 @@ function($scope, $state, clinicadminPatientService, notyService, $stateParams, c
     	}
     }else{
       var date = new Date();
-      $scope.currentDate = (date.getMonth() + 1) + '/' + date.getDate() + '/' +  date.getFullYear();
+      var dd = date.getDate();
+      var mm = date.getMonth() + 1;
+      if(dd < 10){
+        dd='0'+dd
+      }
+      if(mm < 10){
+        mm = '0'+mm;
+      }
+      $scope.currentDate = mm + '/' + dd + '/' +  date.getFullYear();
       $scope.getPatientInfo($stateParams.patientId);
     }
   };
@@ -153,7 +161,8 @@ function($scope, $state, clinicadminPatientService, notyService, $stateParams, c
         });
         patientService.editProtocol($stateParams.patientId, $rootScope.protocols).then(function(response){
           $scope.isVerificationModal = false;
-          exportutilService.exportChangePrescPDF($scope.patient, $rootScope.userFullName, $scope.currentDate, $rootScope.protocols);
+          var userFullName = $rootScope.username + ' ' + $rootScope.userLastName;
+          exportutilService.exportChangePrescPDF($scope.patient, userFullName, $scope.currentDate, $rootScope.protocols);
           notyService.showMessage(response.data.message, 'success');
           if(StorageService.get('logged').role === 'HCP'){
           	$state.go('hcppatientProtocol', {'patientId': $stateParams.patientId});
