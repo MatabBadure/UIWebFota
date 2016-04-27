@@ -98,20 +98,20 @@
 								<table class="table margin0">
 									<thead>
 										<tr>
-											<th class="col-md-3 col-sm-3" translate="graph.adherence-score-table.date">Date</th>
-											<th class="col-md-7 col-sm-7">
-											<table class="col-md-16 col-sm-16 row">
+											<th class="col-md-3 col-sm-3 col-xs-4" translate="graph.adherence-score-table.date">Date</th>
+											<th class="col-md-7 col-sm-7 col-xs-7">
+											<table class="col-md-16 col-sm-16 col-xs-16 row">
 												<thead>
-													<tr class="col-md-16 col-sm-16 row">
-														<th class="col-md-8 col-sm-8 inner_th text-center" translate="graph.adherence-score-table.notification"></th>
-														<th class="col-md-8 col-sm-8 inner_th text-center" translate="graph.adherence-score-table.change"></th>
+													<tr class="col-md-16 col-sm-16 col-xs-16 row">
+														<th class="col-md-8 col-sm-8 col-xs-13 inner_th text-center" translate="graph.adherence-score-table.notification"></th>
+														<th class="col-md-8 col-sm-8 col-xs-3 inner_th text-center" translate="graph.adherence-score-table.change"></th>
 													</tr>
 												</thead>
 											</table>
 											</th>
 											<!-- <th class="col-md-4 text-center" >Change</th> -->
-											<th class="col-md-3 col-sm-3" translate="graph.adherence-score-table.updated-score">Updated Score</th>
-											<th class="col-md-3 col-sm-3 text-center padding-left44" translate="graph.adherence-score-table.protocol">Protocol</th>
+											<th class="col-md-3 col-sm-2 col-xs-5 text-center-mob" translate="graph.adherence-score-table.updated-score">Updated Score</th>
+											<th class="col-md-3 col-sm-3 hidden-xs text-center padding-left44" translate="graph.adherence-score-table.protocol">Protocol</th>
 										</tr>
 									</thead>
 								</table>
@@ -136,16 +136,16 @@
 								</table> -->
 
 								<div class="col-md-16 col-sm-16 col-xs-16 padding0 vertical_align border-bottom border-lt border-rt" ng-repeat="adherenceScore in adherenceScores">
-									<div class="col-md-14 padding0">
+									<div class="col-md-14 col-xs-16 padding0">
 										<div class="col-md-16 col-sm-16 col-xs-16 padding0 adherencescore survey_grey_color" ng-class="{'border-bottom': adherenceScore.adherenceTrends.length !== $index+1}" ng-repeat ="adherenceTrend in adherenceScore.adherenceTrends track by $index">
 											<div class="col-md-4 col-sm-4 col-xs-4 first-row padding10">{{adherenceTrend.date}}</div>
-												<div class="col-md-8 col-sm-8 padding10">
+												<div class="col-md-8 col-sm-8 col-xs-8 padding10">
 													<div class="col-md-16 col-sm-16 col-xs-16 row" ng-repeat="(key, value) in adherenceTrend.notificationPoints">
-													<div class="col-md-8 col-sm-8 col-xs-8 first-row ">{{key}} </div>
-													<div class="col-md-5 col-sm-8 col-xs-8 first-row text-center">{{value}}</div>
+													<div class="col-md-8 col-sm-8 col-xs-13 first-row ">{{key}} </div>
+													<div class="col-md-5 col-sm-8 col-xs-3 first-row text-center">{{value}}</div>
 													</div>
 												</div>
-												<div class="col-md-4 col-sm-4 col-xs-4 first-row padding10">{{adherenceTrend.updatedScore}}</div>
+												<div class="col-md-4 col-sm-4 col-xs-4 first-row padding10 text-center-mob">{{adherenceTrend.updatedScore}}</div>
 										</div>
 									</div>
 										<div class="col-md-2 col-sm-2 col-xs-2 pull-right text-center cyan-blue-light first-row-view1 pointer-fill-event view-column" ng-click="viewProtocol(adherenceScore.protcols)">View</div>
@@ -423,9 +423,9 @@
 				<p ng-if="surveyId === 3" translate="survey.90-days-header"> </p>
 			</header>
 			<div class="modal__body">
-				<div class="dashboard dashboard--content col-md-16">
-					<div class="dashboard__manage-view">
-						<div class="dashboard__manage-view--header no_border care_plan_and_device">
+				<div class="dashboard dashboard--content col-md-16 col-xs-16 padding0">
+					<div class="dashboard__manage-view col-xs-16 padding0">
+						<div class="dashboard__manage-view--header no_border care_plan_and_device hidden-xs col-md-16 col-sm-16">
 							<div class="col-md-3 header--type text-align-left">
 								<span translate="patient.protocol-caption.type"></span>
 							</div>
@@ -443,28 +443,53 @@
 							</div>
 							<div class="clr"></div>
 						</div>
+
+					<div class="dashboard__manage-view--header col-xs-16 hidden-md hidden-sm hidden-lg">
+						<div class="col-xs-3 header--type">
+							<span translate="">Type</span>
+						</div>
+						<div class="col-xs-4 padding0 header--type">
+							<span translate="">Trtm/day</span>
+						</div>
+						<div class="col-xs-3 header--type">
+							<span translate="">Mins</span>
+						</div>
+						<div class="col-xs-3 header--type">
+							<span translate="">Freq.</span>
+						</div>
+						<div class="col-xs-3 header--type">
+							<span translate="">Press.</span>
+						</div>
+						<div class="clr"></div>
+						</div>
 					</div>
 				</div>
-				<div class="col-md-16 border-top protocol_list_container padding10" ng-class="{'no_border' : !protocols}">
-					<div class="col-md-3 text-center">
+				<div class="col-md-16 col-xs-16 border-top protocol_list_container padding0 padding10" ng-class="{'no_border' : !protocols}">
+					<div class="col-md-3 hidden-xs text-center">
 						<div class="col-md-16 protocol-list__treatment-day protocol-list no_border text-align-left" ng-repeat="protocol in protocols" ng-class="{'list-inactive':protocol.deleted, 'last' : $last}">
 							<span class="protocol-list--value"> {{protocol.type}} {{protocol.treatmentLabel}}</span>
 						</div>
 					</div>
-					<div class="col-md-2 treatments_per_day_count col-md-offset-3 text-center">
+					<div class="col-xs-3 hidden-sm hidden-md hidden-lg">
+						<div class="col-md-16 col-xs-16 protocol-list__treatment-day protocol-list no_border text-align-left" ng-repeat="protocol in protocols" ng-class="{'list-inactive':protocol.deleted, 'last' : $last}">
+							<span class="protocol-list--value uppercase">{{protocol.treatmentLabel}}</span>
+						</div>
+					</div>
+
+					<div class="col-md-2 col-xs-2 col-xs-offset-3 treatments_per_day_count col-md-offset-3 text-center">
 						<span class="v_middle">{{protocols[0].treatmentsPerDay}}</span>
 					</div>
-					<div class="col-md-11 col-md-offset-2 text-center">
-						<div class="col-md-16 protocol-list no_border" ng-repeat="protocol in protocols" ng-class="{'list-inactive':protocol.deleted, 'last' : $last}">
+					<div class="col-md-11 col-xs-11 col-md-offset-2 col-xs-offset-2 text-center">
+						<div class="col-md-16 col-xs-16 protocol-list no_border" ng-repeat="protocol in protocols" ng-class="{'list-inactive':protocol.deleted, 'last' : $last}">
 
-							<div class="col-md-5 protocol-list__strt-date">
+							<div class="col-md-5 col-xs-5 protocol-list__strt-date">
 								<span class="protocol-list--value"> {{protocol.minMinutesPerTreatment}}</span>
 							</div>
-							<div class="col-md-5 protocol-list__end-date">
+							<div class="col-md-5 col-xs-5 protocol-list__end-date">
 								<span ng-if="protocol.type === 'Custom'" class="protocol-list--value"> {{protocol.minFrequency}}</span>
 								<span ng-if="protocol.type === 'Normal'" class="protocol-list--value"> {{protocol.minFrequency}}-{{protocol.maxFrequency}}</span>
 							</div>
-							<div class="col-md-4 protocol-list__end-date">
+							<div class="col-md-4 col-xs-5 protocol-list__end-date">
 								<span ng-if="protocol.type === 'Custom'" class="protocol-list--value"> {{protocol.minPressure}}</span>
 								<span ng-if="protocol.type === 'Normal'" class="protocol-list--value"> {{protocol.minPressure}}-{{protocol.maxPressure}}</span>
 							</div>
