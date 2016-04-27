@@ -88,6 +88,9 @@
  	.footer{
  		line-height:25px;
  	}
+ 	.word_wrap{
+ 	    word-wrap: break-word;
+ 	}
  	.login__container__right-section {
  		width: 100%;
  	}
@@ -206,7 +209,7 @@
 		left: 9px;
 	}
 	.partient_dashboard_mob li a{
-		padding:24px 0px 9px 30px !important ;
+		padding:24px 0px 9px 27px !important ;
 		margin:0!important;
 		&:hover{
 				padding:24px 0px 9px 30px !important;
