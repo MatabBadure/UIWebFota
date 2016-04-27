@@ -229,6 +229,9 @@
 	.pull-left-mob{
 		float:left;
 	}
+	.width85{
+		width:80%;
+	}
 	.protocol_heading_color{
 		span{
 		color:#7ca3dc !important;
@@ -247,6 +250,14 @@
 		width:77px;
 		overflow:hidden;
 	}
+	.comon_action_div{
+		margin-left:-18px;
+	}
+
+	.dashboard__manage-view--header {
+    border-bottom: 1px solid #c1c1c1;
+	}
+
 	.mob_label > div > label{
 	float:none !important;
 	}
@@ -256,10 +267,18 @@
 	.text-right-mob{
 		text-align:right;
 	}
+	.admin-user .protocol-list div{
+		text-align: right;
+	}
+	.text-left-mob{
+		text-align:left;
+	}
 	.width120{
 		width:120px;
 	}
-
+	.uppercase{
+		text-transform: capitalize;
+	}
 	.padding0{
 		padding:0;
 	}
