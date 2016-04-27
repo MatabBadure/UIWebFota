@@ -38,7 +38,7 @@
                   <span class="ng-scope">FVC (L)</span>
                 </div>
                 <div class="col-md-8 col-sm-10 dashboard__form--input reset-padding">                
-                 <input type="text" name="fvc_L" max-float="testResult.fvc_L" max-limit="9" ng-model="testResult.fvc_L" class="ng-pristine ng-valid ng-isolate-scope ng-touched ng-untouched" required>
+                 <input type="text" name="fvc_L" max-float="testResult.fvc_L" max-bound="10" ng-model="testResult.fvc_L" class="ng-pristine ng-valid ng-isolate-scope ng-touched ng-untouched" required>
                   <div ng-show="(form.fvc_L.$dirty && form.fvc_L.$invalid) || submitted">                    
                     <span class="has-error" ng-show="form.fvc_L.$error.required" translate="error.diagnostics.fvcL.required">
                     </span>
@@ -77,7 +77,7 @@
                   <span class="ng-scope">FEV1 (L)</span>
                 </div>
                 <div class="col-md-8 col-sm-10 dashboard__form--input reset-padding">               
-                 <input type="text" name="fev1_L" max-float="testResult.fev1_L" max-limit="9" ng-model="testResult.fev1_L" class="ng-pristine ng-valid ng-isolate-scope ng-touched ng-untouched" required>
+                 <input type="text" name="fev1_L" max-float="testResult.fev1_L" max-bound="10" ng-model="testResult.fev1_L" class="ng-pristine ng-valid ng-isolate-scope ng-touched ng-untouched" required>
                   <div ng-show="(form.fev1_L.$dirty && form.fev1_L.$invalid) || submitted">
                     <span class="has-error" ng-show="form.fev1_L.$error.required" translate="error.diagnostics.fev1L.required">
                     </span>
@@ -116,7 +116,7 @@
                   <span class="ng-scope">PEF (L/Min)</span>
                 </div>
                 <div class="col-md-8 col-sm-10 dashboard__form--input reset-padding">                
-                  <input type="text" name="pef_L_Min" max-float="testResult.pef_L_Min" max-limit="9" ng-model="testResult.pef_L_Min" class="ng-pristine ng-valid ng-isolate-scope ng-touched ng-untouched" required>
+                  <input type="text" name="pef_L_Min" max-float="testResult.pef_L_Min" max-bound="10" ng-model="testResult.pef_L_Min" class="ng-pristine ng-valid ng-isolate-scope ng-touched ng-untouched" required>
                   <div ng-show="(form.pef_L_Min.$dirty && form.pef_L_Min.$invalid) || submitted">
                     <span class="has-error" ng-show="form.pef_L_Min.$error.required" translate="error.diagnostics.pefLMin.required">
                     </span>

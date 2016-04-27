@@ -65,9 +65,19 @@ angular.module('hillromvestApp')
             //  get only two digits after decimal, if available              
             digiTed = (digiTed && digiTed.toString().indexOf(".") !== -1) ? ((digiTed.split(".")[1]).toString().length > 2? digiTed.substring(0, digiTed.length-1) : digiTed ): digiTed;            
             //check for max value  
-            digiTed = (digiTed.length > 0) ? ((digiTed <= parseInt(attrs.maxLimit) )? digiTed : oldValue ) : (digiTed === 0 ? 0: null) ;                   
+            if(attrs.maxLimit){
+              digiTed = (digiTed.length > 0) ? ((digiTed <= parseInt(attrs.maxLimit) )? digiTed : oldValue ) : (digiTed === 0 ? 0: null) ;
+            }else if(attrs.maxBound){
+              digiTed = (digiTed.length > 0) ? ((digiTed < parseInt(attrs.maxBound) )? digiTed : oldValue ) : (digiTed === 0 ? 0: null) ;
+            }
+                               
+          }           
+          try{
+            digiTed = digiTed.toString().replace(/^0+(?!\.|$)/, '');
+          }catch(e){
+            digiTed = digiTed.toString();
           }          
-          $parse(attrs.maxFloat).assign(scope,digiTed.toString());             
+          $parse(attrs.maxFloat).assign(scope,digiTed);             
       })
     }
   };
