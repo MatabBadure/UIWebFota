@@ -51,3 +51,24 @@ angular.module('hillromvestApp')
     }; 
     return ddo;
   }])
+
+angular.module('hillromvestApp')
+  .directive('maxFloat', ['$parse', function ($parse) {
+  return {
+    require: 'ngModel',
+    link: function(scope, elem, attrs, ngModel) {     
+      scope.$watch(attrs.maxFloat, function (newValue, oldValue){          
+          var digiTed = "";
+          if(newValue){
+            digiTed = newValue.replace(/[^0-9\.]/g, '');              
+            digiTed = (digiTed === ".") ? "0.": (digiTed > 0 ? (digiTed.toString().indexOf(".") === -1 ? parseFloat(digiTed).toString() : digiTed) : (digiTed.toString().indexOf(".") === -1 && digiTed == 0)? 0 : digiTed );            
+            //  get only two digits after decimal, if available              
+            digiTed = (digiTed && digiTed.toString().indexOf(".") !== -1) ? ((digiTed.split(".")[1]).toString().length > 2? digiTed.substring(0, digiTed.length-1) : digiTed ): digiTed;            
+            //check for max value  
+            digiTed = (digiTed.length > 0) ? ((digiTed <= parseInt(attrs.maxLimit) )? digiTed : oldValue ) : (digiTed === 0 ? 0: null) ;                   
+          }          
+          $parse(attrs.maxFloat).assign(scope,digiTed.toString());             
+      })
+    }
+  };
+}]);

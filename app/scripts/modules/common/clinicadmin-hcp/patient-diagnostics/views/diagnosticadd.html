@@ -38,7 +38,7 @@
                   <span class="ng-scope">FVC (L)</span>
                 </div>
                 <div class="col-md-8 col-sm-10 dashboard__form--input reset-padding">                
-                 <input type="text" name="fvc_L" validate-on-blur="" ng-model="testResult.fvc_L" class="ng-pristine ng-valid ng-isolate-scope ng-touched ng-untouched" ng-change="setTwoDigitedNumber('testResult.fvc_L')" required>
+                 <input type="text" name="fvc_L" max-float="testResult.fvc_L" max-limit="9" ng-model="testResult.fvc_L" class="ng-pristine ng-valid ng-isolate-scope ng-touched ng-untouched" required>
                   <div ng-show="(form.fvc_L.$dirty && form.fvc_L.$invalid) || submitted">                    
                     <span class="has-error" ng-show="form.fvc_L.$error.required" translate="error.diagnostics.fvcL.required">
                     </span>
@@ -54,7 +54,7 @@
                   <span class="ng-scope">%</span>
                 </div>
                 <div class="col-md-8 col-sm-6 dashboard__form--input reset-padding pull-right">
-                  <input type="text" name="fvc_P" validate-on-blur="" ng-model="testResult.fvc_P" class="ng-pristine ng-valid ng-isolate-scope ng-touched ng-untouched" min="0" max="100" ng-change="setTwoNumberDecimal('testResult.fvc_P')" required>
+                  <input type="text" name="fvc_P" max-float="testResult.fvc_P" max-limit="100" ng-model="testResult.fvc_P" class="ng-pristine ng-valid ng-isolate-scope ng-touched ng-untouched" required>
                   <div ng-show="(form.fvc_P.$dirty && form.fvc_P.$invalid) || submitted">
                     <span class="has-error" ng-show="form.fvc_P.$error.required" translate="error.diagnostics.fvcP.required">
                     </span>
@@ -77,7 +77,7 @@
                   <span class="ng-scope">FEV1 (L)</span>
                 </div>
                 <div class="col-md-7 col-sm-10 dashboard__form--input reset-padding">               
-                 <input type="text" name="fev1_L" validate-on-blur="" ng-model="testResult.fev1_L" class="ng-pristine ng-valid ng-isolate-scope ng-touched ng-untouched" ng-change="setTwoDigitedNumber('testResult.fev1_L')" required>
+                 <input type="text" name="fev1_L" max-float="testResult.fev1_L" max-limit="9" ng-model="testResult.fev1_L" class="ng-pristine ng-valid ng-isolate-scope ng-touched ng-untouched" required>
                   <div ng-show="(form.fev1_L.$dirty && form.fev1_L.$invalid) || submitted">
                     <span class="has-error" ng-show="form.fev1_L.$error.required" translate="error.diagnostics.fev1L.required">
                     </span>
@@ -93,7 +93,7 @@
                   <span class="ng-scope">%</span>
                 </div>
                 <div class="col-md-8 col-sm-6 dashboard__form--input reset-padding pull-right">                  
-                  <input type="text" name="fev1_P" validate-on-blur="" ng-model="testResult.fev1_P" class="ng-pristine ng-valid ng-isolate-scope ng-touched ng-untouched" min="0" max="100" ng-change="setTwoNumberDecimal('testResult.fev1_P')" required>
+                  <input type="text" name="fev1_P" ng-model="testResult.fev1_P" class="ng-pristine ng-valid ng-isolate-scope ng-touched ng-untouched" max-float="testResult.fev1_P" max-limit="100" required>
                   <div ng-show="(form.fev1_P.$dirty && form.fev1_P.$invalid) || submitted">
                     <span class="has-error" ng-show="form.fev1_P.$error.required" translate="error.diagnostics.fev1P.required">
                     </span>
@@ -116,7 +116,7 @@
                   <span class="ng-scope">PEF (L/Min)</span>
                 </div>
                 <div class="col-md-7 col-sm-10 dashboard__form--input reset-padding">                
-                  <input type="text" name="pef_L_Min" validate-on-blur="" ng-model="testResult.pef_L_Min" class="ng-pristine ng-valid ng-isolate-scope ng-touched ng-untouched" ng-change="setTwoDigitedNumber('testResult.pef_L_Min')" required>
+                  <input type="text" name="pef_L_Min" max-float="testResult.pef_L_Min" max-limit="9" ng-model="testResult.pef_L_Min" class="ng-pristine ng-valid ng-isolate-scope ng-touched ng-untouched" required>
                   <div ng-show="(form.pef_L_Min.$dirty && form.pef_L_Min.$invalid) || submitted">
                     <span class="has-error" ng-show="form.pef_L_Min.$error.required" translate="error.diagnostics.pefLMin.required">
                     </span>
@@ -132,7 +132,7 @@
                   <span class="ng-scope">%</span>
                 </div>
                 <div class="col-md-8 col-sm-6 dashboard__form--input reset-padding pull-right">               
-                  <input type="text" name="pef_P" validate-on-blur="" ng-model="testResult.pef_P" class="ng-pristine ng-valid ng-isolate-scope ng-touched ng-untouched" min="0" max="100" ng-change="setTwoNumberDecimal('testResult.pef_P')" required>
+                  <input type="text" name="pef_P" max-float="testResult.pef_P" max-limit="100" ng-model="testResult.pef_P" class="ng-pristine ng-valid ng-isolate-scope ng-touched ng-untouched" required>
                   <div ng-show="(form.pef_P.$dirty && form.pef_P.$invalid) || submitted">
                     <span class="has-error" ng-show="form.pef_P.$error.required" translate="error.diagnostics.pefP.required">
                     </span>
@@ -155,7 +155,7 @@
                   <span class="ng-scope">%</span>
                 </div>
                 <div class="col-md-8 col-sm-7 dashboard__form--input reset-padding pull-right">                
-                 <input type="text" name="fev1_TO_FVC_RATIO" validate-on-blur="" ng-model="testResult.fev1_TO_FVC_RATIO" class="ng-pristine ng-valid ng-isolate-scope ng-touched ng-untouched" min="0" max="100" ng-change="setTwoNumberDecimal('testResult.fev1_TO_FVC_RATIO')" required>
+                 <input type="text" name="fev1_TO_FVC_RATIO" max-float="testResult.fev1_TO_FVC_RATIO" max-limit="100" ng-model="testResult.fev1_TO_FVC_RATIO" class="ng-pristine ng-valid ng-isolate-scope ng-touched ng-untouched" required>
                   <div ng-show="(form.fev1_TO_FVC_RATIO.$dirty && form.fev1_TO_FVC_RATIO.$invalid) || submitted">
                     <span class="has-error" ng-show="form.fev1_TO_FVC_RATIO.$error.required" translate="error.diagnostics.fev1TOFVCRATIO.required">
                     </span>
