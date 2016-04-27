@@ -88,6 +88,9 @@
  	.footer{
  		line-height:25px;
  	}
+ 	.word_wrap{
+ 	    word-wrap: break-word;
+ 	}
  	.login__container__right-section {
  		width: 100%;
  	}
@@ -206,7 +209,7 @@
 		left: 9px;
 	}
 	.partient_dashboard_mob li a{
-		padding:24px 0px 9px 30px !important ;
+		padding:24px 0px 9px 27px !important ;
 		margin:0!important;
 		&:hover{
 				padding:24px 0px 9px 30px !important;
@@ -226,6 +229,9 @@
 	.pull-left-mob{
 		float:left;
 	}
+	.width85{
+		width:80%;
+	}
 	.protocol_heading_color{
 		span{
 		color:#7ca3dc !important;
@@ -244,8 +250,18 @@
 		width:77px;
 		overflow:hidden;
 	}
+	.comon_action_div{
+		margin-left:-18px;
+	}
+
+	.dashboard__manage-view--header {
+    	border-bottom: 1px solid #c1c1c1;
+	}
+	.adherence_details_wrapper .table thead th{
+		padding: 1px 8px;
+	}
 	.mob_label > div > label{
-	float:none !important;
+		float:none !important;
 	}
 	.text-center-mob{
 		text-align:center;
@@ -253,10 +269,18 @@
 	.text-right-mob{
 		text-align:right;
 	}
+	.admin-user .protocol-list div{
+		text-align: right;
+	}
+	.text-left-mob{
+		text-align:left;
+	}
 	.width120{
 		width:120px;
 	}
-
+	.uppercase{
+		text-transform: capitalize;
+	}
 	.padding0{
 		padding:0;
 	}

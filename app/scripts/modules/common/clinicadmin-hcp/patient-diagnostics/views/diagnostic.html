@@ -9,7 +9,7 @@
       <div class="patient_wrapper reset-padding">
         <div ng-class="" class="col-md-16 reset-padding pointer-fill-event">
           <div class="bar_graph_header">
-            <div class="col-md-5 col-sm-7 left_header_barchart padding0">
+            <div class="col-md-5 col-sm-7 col-xs-5 left_header_barchart padding0">
               <div class="">
                 <ul class="nav nav-pills">
                   <li><a href="" ng-click="switchView('grid')" translate="" ng-class="{'active': viewType === 'grid'}">Grid View</a></li>
@@ -73,7 +73,7 @@
         <div class="col-md-6 col-sm-7 padding0 cyan-blue-light border-right">
           <div class="col-md-16 col-sm-16 padding0">
             <div class="col-md-6 col-sm-5">
-              <div class="col-md-7 col-sm-12 dashboard__form--label reset-padding">
+              <div class="col-md-10 col-sm-12 dashboard__form--label reset-padding">
                 <span >FVC (L)</span>
               </div>
               <div class="col-md-6 col-sm-4 dashboard__form--label reset-padding">
@@ -93,7 +93,7 @@
           </div> 
           <div class="col-md-16 col-sm-16 padding0">
             <div class="col-md-6 col-sm-5">
-              <div class="col-md-7 col-sm-12 dashboard__form--label reset-padding">
+              <div class="col-md-10 col-sm-12 dashboard__form--label reset-padding">
                 <span >FEV1 (L)</span>
               </div>
               <div class="col-md-6 col-sm-4 dashboard__form--label reset-padding">
@@ -105,7 +105,7 @@
                 <span>{{testResult.fev1_P}} %</span>
               </div>
               <div class="col-md-12 col-sm-12 dashboard__form--label reset-padding pull-right">
-                <span class="ng-scope">FVC1 ( Predicted )</span>
+                <span class="ng-scope">FEV1 ( Predicted )</span>
               </div>
               <div>
               </div>
@@ -113,8 +113,8 @@
           </div>
           <div class="col-md-16 col-sm-16 padding0">
             <div class="col-md-6 col-sm-5">
-              <div class="col-md-7 col-sm-12 dashboard__form--label reset-padding">
-                <span >PEF (L)</span>
+              <div class="col-md-10 col-sm-12 dashboard__form--label reset-padding">
+                <span >PEF (L/Min)</span>
               </div>
               <div class="col-md-6 col-sm-4 dashboard__form--label reset-padding">
                 <span>{{testResult.pef_L_Min}}</span>

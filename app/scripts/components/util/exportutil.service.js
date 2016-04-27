@@ -317,7 +317,7 @@ angular.module('hillromvestApp')
     pdf.setDrawColor(241,241,241);
     pdf.setFillColor(241,241,241);
     pdf.rect(85, 85, 110, 20, 'FD');
-    var patientName = slectedPatient.lastName+' '+slectedPatient.firstName;
+    var patientName = slectedPatient.firstName+' '+slectedPatient.lastName;
     if(patientName.length > 17) {
       patientName = patientName.slice(0, 17) + '...'; 
     }
@@ -334,9 +334,11 @@ angular.module('hillromvestApp')
     pdf.setFillColor(241,241,241);
     pdf.rect(85, 118, 110, 20, 'FD');
     if(userFullName.length > 17){
-      userFullName = userFullName.slice(0, 17) + '...'; 
+      var tempUserFullName = userFullName.slice(0, 17) + '...'; 
+      pdf.text(90, 130, tempUserFullName);
+    }else{
+      pdf.text(90, 130, userFullName);
     }
-    pdf.text(90, 130, userFullName);
 
     pdf.text(300, 130, 'Date');
     pdf.setDrawColor(241,241,241);
@@ -346,20 +348,20 @@ angular.module('hillromvestApp')
 
     pdf.setFontSize(12);
     pdf.setTextColor(124,163,218);
-    pdf.text(15, 160, 'New Protocol');
+    pdf.text(15, 170, 'Protocol');
     pdf.setFontSize(8);
 
-    pdf.text(50, 180,'Type');
-    pdf.text(100, 180,'Treatment Per Day');
-    pdf.text(200, 180,'Minutes Per Treatment');
-    pdf.text(330, 180,'Frequency Per Treatment');
-    pdf.text(470, 180,'Pressure Per Treatment');
+    pdf.text(50, 190,'Type');
+    pdf.text(100, 190,'Treatment Per Day');
+    pdf.text(200, 190,'Minutes Per Treatment');
+    pdf.text(330, 190,'Frequency Per Treatment');
+    pdf.text(470, 190,'Pressure Per Treatment');
 
     pdf.setDrawColor(0);
     pdf.setFillColor(114, 111, 111);
     pdf.setTextColor(100, 101, 104);
-    pdf.rect(margins.left, 190, margins.width-5, .5, pdfServiceConstants.pdfDraw.line.f);
-    var x =30 , y = 200;
+    pdf.rect(margins.left, 200, margins.width-5, .5, pdfServiceConstants.pdfDraw.line.f);
+    var x =30 , y = 210;
     angular.forEach(protocols, function(protocol, key){
       x = 30;
       if(protocol.type === 'Normal'){
@@ -385,6 +387,10 @@ angular.module('hillromvestApp')
       }
       y = y + 20;
     });
+
+    pdf.setFontType(pdfServiceConstants.style.font.bold);
+    pdf.text(15, y + 20, 'This is an Electronically signed document by '+ userFullName);
+
     var treatmentsPerDay = protocols[0].treatmentsPerDay.toString();
     if(protocols[0].type === 'Normal'){
       pdf.text( 125, 200, treatmentsPerDay);

@@ -15,6 +15,7 @@ angular.module('hillromvestApp')
 			if(StorageService.get('logged')){
 				$rootScope.userRole = StorageService.get('logged').role;
 				$rootScope.username = StorageService.get('logged').userFirstName;
+				$rootScope.userLastName = StorageService.get('logged').userLastName;
 				$rootScope.userFullName = StorageService.get('logged').userFullName;
 				$rootScope.userEmail = StorageService.get('logged').userEmail;  
 			}
