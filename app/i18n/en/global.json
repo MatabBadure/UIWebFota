@@ -277,9 +277,9 @@
                 "invalid": "FVC ( Predicted ) is invalid"
             },
             "fev1L":{
-                "required": "FVC1 (L) is required",
-                "min-max-range": "FVC1 (L)  should be 0 to 9",               
-                "invalid": "FVC1 (L) is invalid"
+                "required": "FEV1 (L) is required",
+                "min-max-range": "FEV1 (L)  should be 0 to 9",               
+                "invalid": "FEV1 (L) is invalid"
             },
             "fev1P":{
                 "required": "FEV1 ( Predicted ) is required",
