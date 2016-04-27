@@ -282,14 +282,14 @@
                 "invalid": "FVC1 (L) is invalid"
             },
             "fev1P":{
-                "required": "FVC1 ( Predicted ) is required",
-                "min-max-range": "FVC1 ( Predicted ) should be 0 to 9",               
-                "invalid": "FVC1 ( Predicted ) is invalid"
+                "required": "FEV1 ( Predicted ) is required",
+                "min-max-range": "FEV1 ( Predicted ) should be 0 to 9",               
+                "invalid": "FEV1 ( Predicted ) is invalid"
             },
             "pefLMin":{
-                "required": "PEF (L) is required.",
-                "min-max-range": "PEF (L) should be 0 to 9",                
-                "invalid": "PEF (L) is invalid"
+                "required": "PEF (L/Min) is required.",
+                "min-max-range": "PEF (L/Min) should be 0 to 9",                
+                "invalid": "PEF (L/Min) is invalid"
             },
             "pefP":{
                 "required": "PEF ( Predicted ) is required.",
