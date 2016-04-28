@@ -218,6 +218,9 @@
 .patient-user__navbar ul > li{
 	padding:0;
 }
+.dash_heading_mob{
+	margin: 5px 0px 0px 20px;
+}
 	/*patient Dashboard  */
 	.admin-user .clinic-list, .vertical-align{
 		padding: 12px 0px 29px 0 !important;
@@ -228,6 +231,9 @@
 	}
 	.pull-left-mob{
 		float:left;
+	}
+	.clr_mob{
+		clear:none;
 	}
 	.width85{
 		width:80%;
@@ -402,8 +408,21 @@
 
 .patient_nav_link_right li a{
 	margin: -7px 6px;
-}
 
+}
+.padding_tblr_secondary_nav li a{
+	padding: 19px 15px 20px 15px!important;
+}
+.bgcolor{
+	background-color:#7ca3dc !important;	
+}
+.bgcolor li a{
+	color:#ffffff !important;
+	padding:7px 0 0 14px!important;
+}
+.left-mob{
+	float:left!important;
+}
 /*notification*/
 .navbar-secondary .navbar-right .header-popover .noti-list li{
 	width:100%;
@@ -455,6 +474,7 @@
 .navbar-nav .open .dropdown-menu{
 	position:relative ;
 }
+
 .patient-user__navbar{
 ul {
 	li {
