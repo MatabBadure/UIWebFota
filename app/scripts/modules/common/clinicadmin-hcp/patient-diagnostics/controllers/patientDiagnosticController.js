@@ -177,7 +177,7 @@ function ($scope, $state, $rootScope, StorageService, UserService, patientDiagno
       digiTed = (digiTed.length > 0) ? ((digiTed < 10 ) ? $parse(applicableVarname).assign($scope,digiTed) : $parse(applicableVarname).assign($scope,digiTed.substring(0, digiTed.length-1)) ) : (digiTed === 0 ? $parse(applicableVarname).assign($scope,0): $parse(applicableVarname).assign($scope,null)) ;      
     }else{
       $parse(applicableVarname).assign($scope,null);
-    }   
+    }
   };
 
 	$scope.init();
@@ -187,15 +187,19 @@ function ($scope, $state, $rootScope, StorageService, UserService, patientDiagno
     endDate: '+0d',
     startDate: '-100y',
     defaultDate: $scope.defaultTestResultDate,
-    autoclose: true
+    autoclose: true,
+    dateFormat: 'mm/dd/yyyy'
   })
   .on('hide', function () {
-    if(!$(this).val())  {
+    if(!$(this).val()){
+       $("#dp2").datepicker('setDate', $scope.defaultTestResultDate);
        $(this).val($scope.defaultTestResultDate).datepicker('update');
        if($scope.testResult){
           $scope.testResult.testResultDate = $scope.defaultTestResultDate;
        }
     }
   });
+
+  $("#dp2").datepicker('setDate', $scope.defaultTestResultDate);
 
 }]);

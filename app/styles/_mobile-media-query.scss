@@ -255,11 +255,13 @@
 	}
 
 	.dashboard__manage-view--header {
-    border-bottom: 1px solid #c1c1c1;
+    	border-bottom: 1px solid #c1c1c1;
 	}
-
+	.adherence_details_wrapper .table thead th{
+		padding: 1px 8px;
+	}
 	.mob_label > div > label{
-	float:none !important;
+		float:none !important;
 	}
 	.text-center-mob{
 		text-align:center;
