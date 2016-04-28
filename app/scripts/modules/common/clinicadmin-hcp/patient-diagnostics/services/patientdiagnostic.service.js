@@ -37,6 +37,15 @@ angular.module('hillromvestApp')
       }).success(function(response) {
         return response;
       });
+    },
+
+    addTestResultByClinicadminHCP: function(patientID, userId, data){
+      var url = URL.addTestResultByClinicadminHCP.replace('PATIENTID', patientID).replace('USERID', userId);
+      return $http.post(url, data, {
+        headers: headerService.getHeader()
+      }).success(function(response) {
+        return response;
+      });
     }
 	};
 }]);
