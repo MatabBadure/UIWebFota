@@ -44,17 +44,25 @@ function ($scope, $state, $rootScope, StorageService, UserService, patientDiagno
 	}
 
 
-  $scope.addUpdateDiagnostics = function(resultId){
+  $scope.addUpdateDiagnostics = function(){
     $scope.isAddDiagnostic = true;
-    resultId = (resultId) ? resultId : "";    
     if($rootScope.userRole === "PATIENT"){
-        var patientID = StorageService.get('logged').patientID;        
-        $state.go("patientDiagnosticAdd", {'resultId': resultId});
-      }else if($rootScope.userRole === "CLINIC_ADMIN"){        
-        $state.go("CADiagnosticAdd", {'patientId': $stateParams.patientId,'resultId': resultId});
-      }else if($rootScope.userRole === "HCP"){        
-        $state.go("HCPDiagnosticAdd", {'patientId': $stateParams.patientId,'resultId': resultId});
-      }   
+      $state.go("patientDiagnosticAdd");
+    }else if($rootScope.userRole === "CLINIC_ADMIN"){
+      $state.go("CADiagnosticEdit", {'patientId': $stateParams.patientId});
+    }else if($rootScope.userRole === "HCP"){
+      $state.go("HCPDiagnosticEdit", {'patientId': $stateParams.patientId});
+    }
+  };
+
+  $scope.openEditDiagnostics = function(resultId){
+    $scope.isAddDiagnostic = true;
+    resultId = (resultId) ? resultId : "";
+    if($rootScope.userRole === "CLINIC_ADMIN"){
+      $state.go("CADiagnosticAdd", {'patientId': $stateParams.patientId,'resultId': resultId});
+    }else if($rootScope.userRole === "HCP"){
+      $state.go("HCPDiagnosticAdd", {'patientId': $stateParams.patientId,'resultId': resultId});
+    }
   };
 
   $scope.initAddEditDiagnostics = function(){
@@ -96,8 +104,13 @@ function ($scope, $state, $rootScope, StorageService, UserService, patientDiagno
     }else if($state.current.name === "HCPDiagnosticAdd"){
       $scope.diagnosticPatientId =  $stateParams.patientId;
       $scope.initAddEditDiagnostics();    
+    }else if($state.current.name === 'CADiagnosticEdit' || $state.current.name === 'HCPDiagnosticEdit' ){
+      $scope.diagnosticPatientId =  $stateParams.patientId;
+      $scope.initAddEditDiagnostics();
     }
-    $scope.getTestResultsByPatientId();
+    if($state.current.name !== 'CADiagnosticEdit' && $state.current.name !== 'HCPDiagnosticEdit'){
+      $scope.getTestResultsByPatientId();
+    }
     UserService.getUser($scope.diagnosticPatientId).then(function(response){
       $scope.patient = response.data.user;
     });
@@ -125,19 +138,28 @@ function ($scope, $state, $rootScope, StorageService, UserService, patientDiagno
     data.testResultDate = dateService.getDateFromTimeStamp(dateService.convertToTimestamp(data.testResultDate),patientDashboard.serverDateFormat,"-"); 
     delete data.createdDate;
     if($scope.isEditDiagnostics){
-      patientDiagnosticService.updateTestResult($scope.diagnosticPatientId, data).then(function(response){      
-        notyService.showMessage(response.data.message, 'success');      
+      patientDiagnosticService.updateTestResult($scope.diagnosticPatientId, data).then(function(response){
+        notyService.showMessage(response.data.message, 'success');
         $rootScope.patientDiagnostics();
       }).catch(function(response){
         notyService.showError(response);
       });
     }else{
-      patientDiagnosticService.addTestResult($scope.diagnosticPatientId, data).then(function(response){      
-        notyService.showMessage(response.data.message, 'success');      
-        $rootScope.patientDiagnostics();
-      }).catch(function(response){
-        notyService.showError(response);
-      });
+      if($scope.isPatinetLogin){
+        patientDiagnosticService.addTestResult($scope.diagnosticPatientId, data).then(function(response){
+          notyService.showMessage(response.data.message, 'success');
+          $rootScope.patientDiagnostics();
+        }).catch(function(response){
+          notyService.showError(response);
+        });
+      }else{
+        patientDiagnosticService.addTestResultByClinicadminHCP($scope.diagnosticPatientId, StorageService.get('logged').userId, data).then(function(response){
+          notyService.showMessage(response.data.message, 'success');
+          $rootScope.patientDiagnostics();
+        }).catch(function(response){
+          notyService.showError(response);
+        });
+      }
     }
   };
 
