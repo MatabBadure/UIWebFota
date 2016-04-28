@@ -59,7 +59,7 @@ angular.module('hillromvestApp')
     link: function(scope, elem, attrs, ngModel) {     
       scope.$watch(attrs.maxFloat, function (newValue, oldValue){          
           var digiTed = "";
-          //if(newValue){
+          if(newValue !== undefined){
             try{
               digiTed = newValue.replace(/[^0-9\.]/g, ''); 
             }catch(e){
@@ -74,7 +74,7 @@ angular.module('hillromvestApp')
             }else if(attrs.maxBound){
               digiTed = (digiTed && digiTed.toString().length > 0) ? ((digiTed < parseInt(attrs.maxBound) )? digiTed : oldValue ) : (digiTed === 0 ? 0: null) ;
             }                                    
-         // }           
+         }           
           try{
             digiTed = digiTed.toString().replace(/^0+(?!\.|$)/, '');
           }catch(e){
