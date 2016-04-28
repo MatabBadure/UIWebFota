@@ -110,5 +110,6 @@ angular.module('hillromvestApp')
 	'getTestResultByPatientId':'/api/testresult/user/PATIENTID?from=FROM_DATE&to=TO_DATE',
 	'testResult': '/api/testresult/user/PATIENTID',
 	'getTestResultById': '/api/testresult/ID',
-	'updateTestRESULT' : '/api/testresult/user/PATIENTID'
+	'updateTestRESULT' : '/api/testresult/user/PATIENTID',
+	'addTestResultByClinicadminHCP' : '/api/testresult/patient/PATIENTID/user/USERID'
 });
