@@ -387,16 +387,16 @@ angular.module('hillromvestApp')
       }
       y = y + 20;
     });
+    var treatmentsPerDay = protocols[0].treatmentsPerDay.toString();
+    if(protocols[0].type === 'Normal'){
+      pdf.text( 125, 210, treatmentsPerDay);
+    }else{
+      pdf.text( 125, (210 + y - 20)/2, treatmentsPerDay);
+    }
 
     pdf.setFontType(pdfServiceConstants.style.font.bold);
     pdf.text(15, y + 20, 'This is an Electronically signed document by '+ userFullName);
 
-    var treatmentsPerDay = protocols[0].treatmentsPerDay.toString();
-    if(protocols[0].type === 'Normal'){
-      pdf.text( 125, 200, treatmentsPerDay);
-    }else{
-      pdf.text( 125, (200 + y - 20)/2, treatmentsPerDay);
-    }
     pdf.setDrawColor(0);
     pdf.setFillColor(114, 111, 111);
     pdf.rect(margins.left, y - 15, margins.width-5, .5, pdfServiceConstants.pdfDraw.line.f);
