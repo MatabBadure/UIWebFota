@@ -111,8 +111,10 @@ angular.module('hillromvestApp')
     };
 
     $scope.getDevices = function(patientId){
+      $scope.totalHmr = 0;
       patientService.getDevices(patientId).then(function(response){
         angular.forEach(response.data.deviceList, function(device){
+          $scope.totalHmr = $scope.totalHmr + device.hmr;
           device.createdDate = dateService.getDateByTimestamp(device.createdDate);
           device.lastModifiedDate = dateService.getDateByTimestamp(device.lastModifiedDate);
         });

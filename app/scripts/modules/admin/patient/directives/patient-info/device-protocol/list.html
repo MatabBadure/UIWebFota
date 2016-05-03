@@ -123,7 +123,7 @@
       <span ng-if="!device.active" class="device--list__status--text" translate="patient.device.inactive-status"></span>
     </div>
     <div class="col-md-3 col-sm-3">
-      <span>100</span>
+      <span>{{device.hmr}}</span>
     </div>
     <div class="col-md-3 col-sm-3 device-list__date">
       <span>{{device.lastModifiedDate}}</span>
@@ -135,7 +135,7 @@
   </div>
 
   <div class="col-md-16 col-sm-16 margin-top">
-    <span class="patient-device--title">Global HMR Reading</span> <span>2300 mins</span>
+    <div class="patient-device--title">Global HMR Reading</div> <span class="total_hmr_text">{{totalHmr}} mins</span>
   </div>
 
   <div class="col-md-16 col-sm-16 empty-list-message" ng-if="isDevicesLoaded && !devices"><span translate="patient.empty-device-list-message"></span></div>
