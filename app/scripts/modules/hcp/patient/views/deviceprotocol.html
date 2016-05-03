@@ -77,10 +77,10 @@
       <!-- <div class="col-md-3 protocol-list__treatment-day">
         <span class="protocol-list--value"> {{protocol.treatmentsPerDay}}</span>
       </div> -->
-      <div class="col-md-6 col-sm-6 col-xs-6 protocol-list__strt-date">
+      <div class="col-md-6 col-sm-6 col-xs-6 protocol-list__strt-date text-middle">
         <span class="protocol-list--value"> {{protocol.minMinutesPerTreatment}}</span>      
       </div>
-      <div class="col-md-6 col-sm-6 col-xs-6 protocol-list__end-date">
+      <div class="col-md-6 col-sm-6 col-xs-6 protocol-list__end-date text-middle">
         <span ng-if="protocol.type === 'Custom'" class="protocol-list--value"> {{protocol.minFrequency}}</span>
         <span ng-if="protocol.type === 'Normal'" class="protocol-list--value"> {{protocol.minFrequency}}-{{protocol.maxFrequency}}</span>
       </div>
