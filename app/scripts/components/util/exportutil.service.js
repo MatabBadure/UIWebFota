@@ -404,13 +404,29 @@ angular.module('hillromvestApp')
     return pdf;
   }
 
+  this.setFooterForChangePrescription = function(pdf, imgY, signatureContent, userFullName, currentDate){ 
+    signatureContent += userFullName + " at "+ new Date(); 
+
+    pdf.setFont(pdfServiceConstants.style.font.helvetica); 
+    pdf.setFontType(pdfServiceConstants.style.font.bold);        
+    pdf.setFontSize(8);
+    pdf.setTextColor(0, 0, 0);    
+    pdf.text(40,imgY+30, pdfServiceConstants.text.signature);
+    pdf.text(90, imgY+30, signatureContent);
+    
+    pdf.setDrawColor(0);
+    pdf.setFillColor(114, 111, 111);
+    pdf.rect(margins.left, pdf.internal.pageSize.height-30, margins.width-5, .5, pdfServiceConstants.pdfDraw.line.f);
+    return pdf;
+  }
+
   this.exportChangePrescPDF = function(slectedPatient, userFullName, currentDate, protocols) {
     var pdf = this.getPdf();
     var pageHeight = pdf.internal.pageSize.height;
     var pageWidth = pdf.internal.pageSize.width;
     pdf = this.setHeader(pdf);
     pdf = this.addBody(pdf, slectedPatient, userFullName, currentDate, protocols);
-    pdf = this.setFooter(pdf, pdf.internal.pageSize.height-80, pdfServiceConstants.text.name);
+    pdf = this.setFooterForChangePrescription(pdf, pdf.internal.pageSize.height-80, pdfServiceConstants.text.signatureContent, userFullName, currentDate);
     setTimeout(function(){
       pdf.save('VisiView™.pdf');
     },1000);
