@@ -765,6 +765,9 @@ angular.module('hillromvestApp')
         angular.forEach(data, function(value, key){
           if(value){
             value.type = 'Normal';
+          }
+          if(value){
+            value.treatmentLabel = "";
           }          
         });
         data[0].treatmentsPerDay = $scope.protocol.treatmentsPerDay;
