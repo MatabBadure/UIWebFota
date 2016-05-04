@@ -39,7 +39,7 @@
                 <span class="has-error" ng-show="!surveyForm.phoneNumber.$error.required && surveyForm.phoneNumber.$invalid" translate="error.phoneNumber.mask"></span>
               </div>
               <div class="col-md-16 padding0 no-padding" ng-if="isPhoneNumber">
-                 <input class="col-md-14 col-xs-16 col-sm-16 margin-bottom20 tab-margin-bottom20" type="text" value="{{survey.questions[1].answerValue1}}" ng-readonly="validateADMINorASP()" ng-disabled="true">                
+                 <input class="col-md-14 col-xs-16 col-sm-16 margin-bottom20 tab-margin-bottom20" type="text" ng-model="survey.questions[1].answerValue1" ng-readonly="validateADMINorASP()" name="phoneNumber" ng-disabled="true">
               </div>
           </div>
 	   </div>
