@@ -404,13 +404,27 @@ angular.module('hillromvestApp')
     return pdf;
   }
 
+  this.setFooterForChangePrescription = function(pdf, imgY, signatureContent, userFullName, currentDate){ 
+    signatureContent += userFullName + "at "+ currentDate;   
+    pdf.text(40,imgY+30, pdfServiceConstants.text.signature);
+    pdf.text(90, imgY+34, signatureContent);
+    //pdf.line(90, imgY+34, 350,imgY+34); //left, top, right, top    
+
+    //the line at the end of each page in pdf.
+    // this line will always start at 30pts above the bottom of the page
+    pdf.setDrawColor(0);
+    pdf.setFillColor(114, 111, 111);
+    pdf.rect(margins.left, pdf.internal.pageSize.height-30, margins.width-5, .5, pdfServiceConstants.pdfDraw.line.f);
+    return pdf;
+  }
+
   this.exportChangePrescPDF = function(slectedPatient, userFullName, currentDate, protocols) {
     var pdf = this.getPdf();
     var pageHeight = pdf.internal.pageSize.height;
     var pageWidth = pdf.internal.pageSize.width;
     pdf = this.setHeader(pdf);
     pdf = this.addBody(pdf, slectedPatient, userFullName, currentDate, protocols);
-    pdf = this.setFooter(pdf, pdf.internal.pageSize.height-80, pdfServiceConstants.text.name);
+    pdf = this.setFooterForChangePrescription(pdf, pdf.internal.pageSize.height-80, pdfServiceConstants.text.name, userFullName, currentDate);
     setTimeout(function(){
       pdf.save('VisiView™.pdf');
     },1000);
