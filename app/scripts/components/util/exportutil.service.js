@@ -411,13 +411,12 @@ angular.module('hillromvestApp')
 
     var splittedDate = (new Date()).toString().split(":");
     var splittedDay = (splittedDate[0]).toString().split(" ");
-    console.log(splittedDate);
-    var signatureContent = pdfServiceConstants.text.signatureContent + userFullName + " on "+ splittedDay[1] + " " +this.ordinal_suffix_of(parseInt( splittedDay[2])) + " , " + splittedDay[3] + " "+ splittedDay[4] + ":" + splittedDate[1]; 
+    var signatureContent = pdfServiceConstants.text.signatureContent + userFullName + " on "+ splittedDay[1] + " " +this.ordinal_suffix_of(parseInt( splittedDay[2])) + ", " + splittedDay[3] + ", " +  splittedDay[4] + ":" + splittedDate[1]+"."; 
 
     pdf.setTextColor(0, 0, 0); 
     pdf.setFontType(pdfServiceConstants.style.font.normal);    
     pdf.text(15, y + 60, pdfServiceConstants.text.signature);
-    pdf.text(65, y + 60, signatureContent);
+    pdf.text(60, y + 60, signatureContent);
 
     pdf.setDrawColor(0);
     pdf.setFillColor(114, 111, 111);
