@@ -77,7 +77,7 @@ function($scope, $state, clinicadminPatientService, notyService, $stateParams, c
     });
   };
 
-  $scope.showPrtocolUpdateModal = function(protocolType){
+  $scope.showPrtocolUpdateModal = function(){
     $scope.submitted = true;
     if($scope.updateProtocolForm.$invalid){
       return false;
