@@ -17,13 +17,13 @@
     <div class="form-group">
       <span>
         <label>
-          <input type="radio" name="protocolType" ng-model="protocol.type" value="Normal" ng-disabled="true">
+          <input type="radio" name="protocolType" ng-model="protocol.type" value="Normal" ng-change="switchProtocolType(protocol.type)">
           <span class="radio-box-text">Normal</span>
         </label>
       </span>
       <span>
         <label>
-          <input type="radio" name="protocolType" ng-model="protocol.type" value="Custom" ng-disabled="true">
+          <input type="radio" name="protocolType" ng-model="protocol.type" value="Custom" ng-change="switchProtocolType(protocol.type)">
           <span class="radio-box-text">Custom</span>
         </label>
       </span>
