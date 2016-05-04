@@ -751,9 +751,9 @@ angular.module('hillromvestApp')
         delete $scope.protocol.patient;
       }
       var data = $scope.protocol.protocol;
-      if($scope.protocol.type === 'Custom'){
+      if($scope.protocol.type === 'Custom'){        
         angular.forEach(data, function(value, key){
-          if(!value.type){
+          if(value){
             value.type = 'Custom';
           }
           value.treatmentsPerDay = $scope.protocol.treatmentsPerDay;
@@ -762,6 +762,11 @@ angular.module('hillromvestApp')
           }
         });
       }else{
+        angular.forEach(data, function(value, key){
+          if(value){
+            value.type = 'Normal';
+          }          
+        });
         data[0].treatmentsPerDay = $scope.protocol.treatmentsPerDay;
       }
       patientService.editProtocol($stateParams.patientId, data).then(function(response){
@@ -805,9 +810,13 @@ angular.module('hillromvestApp')
     };
 
     $scope.switchtoNormal = function(){
-      $scope.submitted = false;
-      $scope.protocol.protocolEntries.splice(1);
-      $scope.clearFn();
+      $scope.submitted = false;  
+      $scope.protocol.protocolEntries.splice(1);                
+      if($scope.protocol.edit && $scope.prevProtocolType && $scope.prevProtocolType.indexOf("Normal") !== -1){                  
+        $scope.protocol = angular.copy($scope.prevProtocol);                        
+      } else{
+        $scope.clearFn();
+      } 
     };
 
     $scope.linkClinic = function(){
@@ -893,8 +902,12 @@ angular.module('hillromvestApp')
 
     $scope.switchtoCustom = function(){
       $scope.submitted = false;
-      $scope.newProtocolPoint = 1;
-      $scope.clearFn();
+      $scope.newProtocolPoint = 1;      
+      if($scope.protocol.edit && $scope.prevProtocolType && $scope.prevProtocolType.indexOf("Custom") !== -1){                 
+        $scope.protocol = angular.copy($scope.prevProtocol);             
+      }else{
+        $scope.clearFn();
+     }     
     };
 
     $scope.clearFn = function(){
@@ -924,7 +937,9 @@ angular.module('hillromvestApp')
           $scope.protocol.type = $scope.protocol.protocol[0].type;
           $scope.protocol.treatmentsPerDay = $scope.protocol.protocol[0].treatmentsPerDay;
           $scope.protocol.protocolEntries = $scope.protocol.protocol;
-        }      
+        }
+        $scope.prevProtocolType = $scope.protocol.type;
+        $scope.prevProtocol = angular.copy($scope.protocol);        
       }).catch(function(response){
         notyService.showError(response);
       });
