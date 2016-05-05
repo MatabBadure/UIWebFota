@@ -19,6 +19,20 @@ angular.module('hillromvestApp')
       patientPageTop: 40
     };
 
+    this.isMobile = function(){
+      if( navigator.userAgent.match(/Android/i)
+     || navigator.userAgent.match(/webOS/i)
+     || navigator.userAgent.match(/iPhone/i)
+     || navigator.userAgent.match(/BlackBerry/i)
+     || navigator.userAgent.match(/Windows Phone/i)
+     ){
+        return true;
+      }
+     else {
+        return false;
+      }
+    };
+
   this.ordinal_suffix_of = function (i) {
     var j = i % 10,
         k = i % 100;
@@ -167,7 +181,14 @@ angular.module('hillromvestApp')
         pdf.text((pdf.internal.pageSize.width/2)-((graphTitle.length*4)/2),   imageY-30, graphTitle);
         //pdf.text((pdf.internal.pageSize.width/2)-(20+graphTitle.length),   imageY-30, graphTitle); 
       }                
-    }    
+    }  
+
+    var canvasImgHeight = imageHeight;
+    var canvasImgWidth = imageWidth;
+    if(this.isMobile()){
+      canvasImgHeight = 390;
+      canvasImgWidth = 300;
+    }  
 
     var canvas = document.getElementById(canvasId);
 
@@ -176,7 +197,7 @@ angular.module('hillromvestApp')
     var svgString = serializer.serializeToString(document.getElementById(svgId).querySelector('svg'));          
     canvg(canvas, svgString);
     var img = $("#"+canvasId)[0].toDataURL('image/png', 1.0);
-    pdf.addImage(img, 'png', imageX, imageY, imageWidth, imageHeight);
+    pdf.addImage(img, 'png', imageX, imageY, canvasImgWidth, canvasImgHeight);
     if(durationType && durationType === pdfServiceConstants.loginanalytics.day){
       //chart footer
       pdf.setDrawColor(0);
@@ -470,6 +491,14 @@ angular.module('hillromvestApp')
       pdf.setTextColor(0, 0, 0);
       pdf.text((pdf.internal.pageSize.width/2)-((chartName.length*3.5)/2),   imageY-30, chartName);
     }
+
+    var canvasImgWidth = imageWidth;
+    var canvasImgHeight = 100;
+    if(this.isMobile()){
+      canvasImgWidth = 300;
+      canvasImgHeight = 158;
+    }
+   imageY -= 15;
     var canvas = document.getElementById(canvasId);              
     var ctx = canvas.getContext('2d');
     var serializer = new XMLSerializer();
@@ -480,8 +509,8 @@ angular.module('hillromvestApp')
       var svgString = serializer.serializeToString(allSvgs[count]);          
       canvg(canvas, svgString);
       var img = $("#"+canvasId)[0].toDataURL('image/png', 1.0);
-      pdf.addImage(img, 'png', imageX, imageY, imageWidth, 100);
-      imageY += 100;
+      pdf.addImage(img, 'png', imageX, imageY, canvasImgWidth, canvasImgHeight);
+      imageY += canvasImgHeight;
     }
 
     return pdf;
