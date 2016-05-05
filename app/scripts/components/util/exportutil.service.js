@@ -345,6 +345,7 @@ angular.module('hillromvestApp')
   }
 
   this.addBody = function(pdf, slectedPatient, userFullName, currentDate, protocols){
+    var dob = (slectedPatient && slectedPatient.dob) ? slectedPatient.dob : "";
     pdf.setFont(pdfServiceConstants.style.font.helvetica);
     pdf.setFontSize(8);
     pdf.setTextColor(100, 101, 104);
@@ -363,7 +364,7 @@ angular.module('hillromvestApp')
     pdf.setDrawColor(241,241,241);
     pdf.setFillColor(241,241,241);
     pdf.rect(365, 85, 110, 20, 'FD');
-    pdf.text(370, 100, slectedPatient.dob);
+    pdf.text(370, 100, dob);
 
     pdf.text(15, 130, 'Prescriber Name');
     pdf.setDrawColor(241,241,241);
@@ -440,7 +441,7 @@ angular.module('hillromvestApp')
     pdf.text(55, y + 60, signatureContent);
     pdf.setDrawColor(0);
     pdf.setFillColor(114, 111, 111);
-    pdf.rect(55, y+63, margins.width-290, .5, pdfServiceConstants.pdfDraw.line.f);
+    pdf.rect(55, y+63, signatureContent.length * 3.75, .5, pdfServiceConstants.pdfDraw.line.f);
 
     pdf.setDrawColor(0);
     pdf.setFillColor(114, 111, 111);
