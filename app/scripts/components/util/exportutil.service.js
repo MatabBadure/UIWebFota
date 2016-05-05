@@ -19,6 +19,21 @@ angular.module('hillromvestApp')
       patientPageTop: 40
     };
 
+  this.ordinal_suffix_of = function (i) {
+    var j = i % 10,
+        k = i % 100;
+    if (j == 1 && k != 11) {
+        return i + "st";
+    }
+    if (j == 2 && k != 12) {
+        return i + "nd";
+    }
+    if (j == 3 && k != 13) {
+        return i + "rd";
+    }
+    return i + "th";
+  };
+
   this.getPdf = function() {
     var pdf = new jsPDF(pdfServiceConstants.pdfDraw.p, pdfServiceConstants.pdfDraw.pt, pdfServiceConstants.pdfDraw.a4, true), specialElementHandlers = {
        '#bypassme': function(element, renderer){
@@ -394,8 +409,14 @@ angular.module('hillromvestApp')
       pdf.text( 125, (210 + y - 20)/2, treatmentsPerDay);
     }
 
-    pdf.setFontType(pdfServiceConstants.style.font.bold);
-    pdf.text(15, y + 20, 'This is an Electronically signed document by '+ userFullName);
+    var splittedDate = (new Date()).toString().split(":");
+    var splittedDay = (splittedDate[0]).toString().split(" ");
+    var signatureContent = pdfServiceConstants.text.signatureContent + userFullName + " on "+ splittedDay[1] + " " +this.ordinal_suffix_of(parseInt( splittedDay[2])) + ", " + splittedDay[3] + ", " +  splittedDay[4] + ":" + splittedDate[1]+"."; 
+
+    pdf.setTextColor(0, 0, 0); 
+    pdf.setFontType(pdfServiceConstants.style.font.normal);    
+    pdf.text(15, y + 60, pdfServiceConstants.text.signature);
+    pdf.text(60, y + 60, signatureContent);
 
     pdf.setDrawColor(0);
     pdf.setFillColor(114, 111, 111);
@@ -410,7 +431,8 @@ angular.module('hillromvestApp')
     var pageWidth = pdf.internal.pageSize.width;
     pdf = this.setHeader(pdf);
     pdf = this.addBody(pdf, slectedPatient, userFullName, currentDate, protocols);
-    pdf = this.setFooter(pdf, pdf.internal.pageSize.height-80, pdfServiceConstants.text.name);
+    pdf = this.setFooter(pdf, pdf.internal.pageSize.height-80);
+    pdf = this.setPageNumber(pdf, "1", "1");
     setTimeout(function(){
       pdf.save('VisiView™.pdf');
     },1000);

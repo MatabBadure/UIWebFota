@@ -91,9 +91,12 @@ function($scope, $state, clinicadminPatientService, notyService, $stateParams, c
       if($scope.protocol.patient){
         delete $scope.protocol.patient;
       }
-      var data = $scope.protocol.protocol;
+      var data = $scope.protocol.protocolEntries;
       if($scope.protocol.type === 'Custom'){
         angular.forEach(data, function(value, key){
+          if(!value.protocolKey){
+            value.protocolKey = $scope.protocol.protocol[0].protocolKey;  
+          }
           if(!value.type){
             value.type = 'Custom';
           }
@@ -104,7 +107,16 @@ function($scope, $state, clinicadminPatientService, notyService, $stateParams, c
         });
       }else{
         data[0].treatmentsPerDay = $scope.protocol.treatmentsPerDay;
+        if(!data[0].protocolKey){
+          data[0].protocolKey = $scope.protocol.protocol[0].protocolKey;
+        }
+        if(!data[0].type){
+          data[0].type = 'Normal';
+        }
       }
+      angular.forEach(data, function(protocol){
+        protocol.id = $scope.protocol.protocol[0].id;
+      });
       $rootScope.protocols = data;
       $scope.isAuthorizeProtocolModal = true;
     }
@@ -169,9 +181,9 @@ function($scope, $state, clinicadminPatientService, notyService, $stateParams, c
           exportutilService.exportChangePrescPDF($scope.patient, userFullName, $scope.currentDate, $rootScope.protocols);
           notyService.showMessage(response.data.message, 'success');
           if(StorageService.get('logged').role === 'HCP'){
-          	$state.go('hcppatientProtocol', {'patientId': $stateParams.patientId});
+           $state.go('hcppatientProtocol', {'patientId': $stateParams.patientId});
           }else if(StorageService.get('logged').role  === 'CLINIC_ADMIN'){
-          	$state.go('clinicadminpatientProtocol', {'patientId': $stateParams.patientId});
+           $state.go('clinicadminpatientProtocol', {'patientId': $stateParams.patientId});
           }
         }).catch(function(response){
           notyService.showError(response);
@@ -196,6 +208,23 @@ function($scope, $state, clinicadminPatientService, notyService, $stateParams, c
   	}else if(StorageService.get('logged').role  === 'CLINIC_ADMIN'){
   		$state.go('clinicadminpatientProtocol', {'patientId': $stateParams.patientId});	
   	}
+  };
+
+  $scope.switchProtocolType = function(){
+    $scope.submitted = false;
+    $scope.updateProtocolForm.$setPristine();
+    $scope.protocol.treatmentsPerDay = '';
+    if(this.protocol.type === $scope.tempProtocol.type){
+      $scope.protocol = {};
+      angular.copy($scope.tempProtocol, $scope.protocol);
+      delete $scope.protocol.protocolEntries;
+      var tempProtocolEntries = $scope.tempProtocol.protocol
+      $scope.protocol.protocolEntries = tempProtocolEntries;
+    }else{
+      $scope.newProtocolPoint = 1;
+      delete $scope.protocol.protocolEntries;
+      $scope.protocol.protocolEntries = [{}];
+    }
   };
 
 	$scope.init();

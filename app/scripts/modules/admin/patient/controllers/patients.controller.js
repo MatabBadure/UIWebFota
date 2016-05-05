@@ -111,8 +111,10 @@ angular.module('hillromvestApp')
     };
 
     $scope.getDevices = function(patientId){
+      $scope.totalHmr = 0;
       patientService.getDevices(patientId).then(function(response){
         angular.forEach(response.data.deviceList, function(device){
+          $scope.totalHmr = $scope.totalHmr + device.hmr;
           device.createdDate = dateService.getDateByTimestamp(device.createdDate);
           device.lastModifiedDate = dateService.getDateByTimestamp(device.lastModifiedDate);
         });
@@ -755,20 +757,23 @@ angular.module('hillromvestApp')
         angular.forEach(data, function(value, key){
           if(value){
             value.type = 'Custom';
-          }
-          value.treatmentsPerDay = $scope.protocol.treatmentsPerDay;
+            value.treatmentsPerDay = $scope.protocol.treatmentsPerDay;           
+          }          
           if(!value.treatmentLabel){
             value.treatmentLabel = 'point'+(key+1);
-          }
+          }          
         });
+        data[0].protocolKey = $scope.protocol.protocol[0].protocolKey;
       }else{
         angular.forEach(data, function(value, key){
           if(value){
             value.type = 'Normal';
+            value.treatmentLabel = "";
           }          
-        });
+        });        
         data[0].treatmentsPerDay = $scope.protocol.treatmentsPerDay;
       }
+      
       patientService.editProtocol($stateParams.patientId, data).then(function(response){
         $scope.isVerificationModal = false;
         notyService.showMessage(response.data.message, 'success');
