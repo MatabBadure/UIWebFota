@@ -761,9 +761,12 @@ angular.module('hillromvestApp')
           }          
           if(!value.treatmentLabel){
             value.treatmentLabel = 'point'+(key+1);
-          }          
+          }           
+          if(!value.protocolKey){
+            value.protocolKey = $scope.protocol.protocol[0].protocolKey;
+          }         
         });
-        data[0].protocolKey = $scope.protocol.protocol[0].protocolKey;
+
       }else{
         angular.forEach(data, function(value, key){
           if(value){
