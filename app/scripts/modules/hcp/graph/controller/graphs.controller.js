@@ -13,6 +13,11 @@ angular.module('hillromvestApp')
         sInterval = 8;
         remainder = 3;
       }
+      else if($rootScope.isMobile()){
+        pInterval = 2;
+        sInterval = 3;
+        remainder = 1;
+      }
       return ( (parseInt(noOfDataPoints/pInterval) > 0) && noOfDataPoints%pInterval > remainder) ? parseInt(noOfDataPoints/sInterval) : ((parseInt(noOfDataPoints/pInterval) > 0)? parseInt(noOfDataPoints/pInterval): 1) ; 
     };
 	$scope.init = function() {
@@ -601,7 +606,7 @@ angular.module('hillromvestApp')
         },				              	       
 		legend:{
 			enabled: true,
-			floating: true,
+			floating: false,
 			verticalAlign: "bottom",
 			align:"center",
 			y: 40
