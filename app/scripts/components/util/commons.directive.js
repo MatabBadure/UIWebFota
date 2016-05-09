@@ -77,7 +77,7 @@ angular.module('hillromvestApp')
             try{
               digiTed = digiTed.toString().replace(/^0+(?!\.|$)/, '');
             }catch(e){
-              digiTed = digiTed.toString();
+              digiTed = digiTed ? digiTed.toString() : 0;
             }
             $parse(attrs.maxFloat).assign(scope,digiTed.toString());
          }
