@@ -19,6 +19,35 @@ angular.module('hillromvestApp')
       patientPageTop: 40
     };
 
+    this.isMobile = function(){
+      if( navigator.userAgent.match(/Android/i)
+     || navigator.userAgent.match(/webOS/i)
+     || navigator.userAgent.match(/iPhone/i)
+     || navigator.userAgent.match(/BlackBerry/i)
+     || navigator.userAgent.match(/Windows Phone/i)
+     ){
+        return true;
+      }
+     else {
+        return false;
+      }
+    };
+
+  this.ordinal_suffix_of = function (i) {
+    var j = i % 10,
+        k = i % 100;
+    if (j == 1 && k != 11) {
+        return i + "st";
+    }
+    if (j == 2 && k != 12) {
+        return i + "nd";
+    }
+    if (j == 3 && k != 13) {
+        return i + "rd";
+    }
+    return i + "th";
+  };
+
   this.getPdf = function() {
     var pdf = new jsPDF(pdfServiceConstants.pdfDraw.p, pdfServiceConstants.pdfDraw.pt, pdfServiceConstants.pdfDraw.a4, true), specialElementHandlers = {
        '#bypassme': function(element, renderer){
@@ -152,7 +181,14 @@ angular.module('hillromvestApp')
         pdf.text((pdf.internal.pageSize.width/2)-((graphTitle.length*4)/2),   imageY-30, graphTitle);
         //pdf.text((pdf.internal.pageSize.width/2)-(20+graphTitle.length),   imageY-30, graphTitle); 
       }                
-    }    
+    }  
+
+    var canvasImgHeight = imageHeight;
+    var canvasImgWidth = imageWidth;
+    if(this.isMobile()){
+      canvasImgHeight = 390;
+      canvasImgWidth = 300;
+    }  
 
     var canvas = document.getElementById(canvasId);
 
@@ -161,7 +197,7 @@ angular.module('hillromvestApp')
     var svgString = serializer.serializeToString(document.getElementById(svgId).querySelector('svg'));          
     canvg(canvas, svgString);
     var img = $("#"+canvasId)[0].toDataURL('image/png', 1.0);
-    pdf.addImage(img, 'png', imageX, imageY, imageWidth, imageHeight);
+    pdf.addImage(img, 'png', imageX, imageY, canvasImgWidth, canvasImgHeight);
     if(durationType && durationType === pdfServiceConstants.loginanalytics.day){
       //chart footer
       pdf.setDrawColor(0);
@@ -309,6 +345,7 @@ angular.module('hillromvestApp')
   }
 
   this.addBody = function(pdf, slectedPatient, userFullName, currentDate, protocols){
+    var dob = (slectedPatient && slectedPatient.dob) ? slectedPatient.dob : "";
     pdf.setFont(pdfServiceConstants.style.font.helvetica);
     pdf.setFontSize(8);
     pdf.setTextColor(100, 101, 104);
@@ -327,7 +364,7 @@ angular.module('hillromvestApp')
     pdf.setDrawColor(241,241,241);
     pdf.setFillColor(241,241,241);
     pdf.rect(365, 85, 110, 20, 'FD');
-    pdf.text(370, 100, slectedPatient.dob);
+    pdf.text(370, 100, dob);
 
     pdf.text(15, 130, 'Prescriber Name');
     pdf.setDrawColor(241,241,241);
@@ -394,8 +431,17 @@ angular.module('hillromvestApp')
       pdf.text( 125, (210 + y - 20)/2, treatmentsPerDay);
     }
 
-    pdf.setFontType(pdfServiceConstants.style.font.bold);
-    pdf.text(15, y + 20, 'This is an Electronically signed document by '+ userFullName);
+    var splittedDate = (new Date()).toString().split(":");
+    var splittedDay = (splittedDate[0]).toString().split(" ");
+    var signatureContent = pdfServiceConstants.text.signatureContent + userFullName + " on "+ splittedDay[1] + " " +this.ordinal_suffix_of(parseInt( splittedDay[2])) + ", " + splittedDay[3] + ", " +  splittedDay[4] + ":" + splittedDate[1]; 
+
+    pdf.setTextColor(0, 0, 0); 
+    pdf.setFontType(pdfServiceConstants.style.font.normal);    
+    pdf.text(15, y + 60, pdfServiceConstants.text.signature);
+    pdf.text(55, y + 60, signatureContent);
+    pdf.setDrawColor(0);
+    pdf.setFillColor(114, 111, 111);
+    pdf.rect(55, y+63, signatureContent.length * 3.75, .5, pdfServiceConstants.pdfDraw.line.f);
 
     pdf.setDrawColor(0);
     pdf.setFillColor(114, 111, 111);
@@ -410,7 +456,8 @@ angular.module('hillromvestApp')
     var pageWidth = pdf.internal.pageSize.width;
     pdf = this.setHeader(pdf);
     pdf = this.addBody(pdf, slectedPatient, userFullName, currentDate, protocols);
-    pdf = this.setFooter(pdf, pdf.internal.pageSize.height-80, pdfServiceConstants.text.name);
+    pdf = this.setFooter(pdf, pdf.internal.pageSize.height-80);
+    pdf = this.setPageNumber(pdf, "1", "1");
     setTimeout(function(){
       pdf.save('VisiView™.pdf');
     },1000);
@@ -448,6 +495,14 @@ angular.module('hillromvestApp')
       pdf.setTextColor(0, 0, 0);
       pdf.text((pdf.internal.pageSize.width/2)-((chartName.length*3.5)/2),   imageY-30, chartName);
     }
+
+    var canvasImgWidth = imageWidth;
+    var canvasImgHeight = 100;
+    if(this.isMobile()){
+      canvasImgWidth = 300;
+      canvasImgHeight = 158;
+    }
+   imageY -= 15;
     var canvas = document.getElementById(canvasId);              
     var ctx = canvas.getContext('2d');
     var serializer = new XMLSerializer();
@@ -458,8 +513,8 @@ angular.module('hillromvestApp')
       var svgString = serializer.serializeToString(allSvgs[count]);          
       canvg(canvas, svgString);
       var img = $("#"+canvasId)[0].toDataURL('image/png', 1.0);
-      pdf.addImage(img, 'png', imageX, imageY, imageWidth, 100);
-      imageY += 100;
+      pdf.addImage(img, 'png', imageX, imageY, canvasImgWidth, canvasImgHeight);
+      imageY += canvasImgHeight;
     }
 
     return pdf;

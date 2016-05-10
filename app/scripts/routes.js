@@ -3813,8 +3813,8 @@ angular.module('hillromvestApp')
                 url:'/patient',
                 parent: 'entity',
                 abstract: true,                
-            })                    
-            /* Disabling Patient Survey
+            })
+            /* Disable Patient Survey
             .state('patientSurvey', {
               parent: 'survey',
               url: '/{surveyId}/survey',

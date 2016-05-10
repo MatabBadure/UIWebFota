@@ -625,6 +625,10 @@ angular.module('hillromvestApp')
         pInterval = 7;
         sInterval = 8;
         remainder = 3;
+      }else if($rootScope.isMobile()){
+        pInterval = 2;
+        sInterval = 3;
+        remainder = 1;
       }
       return ( (parseInt(noOfDataPoints/pInterval) > 0) && noOfDataPoints%pInterval > remainder) ? parseInt(noOfDataPoints/sInterval) : ((parseInt(noOfDataPoints/pInterval) > 0)? parseInt(noOfDataPoints/pInterval): 1) ; 
     };
@@ -806,7 +810,8 @@ angular.module('hillromvestApp')
                 x: 30,
                 style:{
                   color: dataset.color,
-                  fontWeight: 'bold'
+                  fontWeight: 'bold',
+                  fontSize: '14px'
                 }                
               },             
               legend: {
@@ -917,7 +922,7 @@ angular.module('hillromvestApp')
                 headerFormat: '',
                 shadow: false,
                 style: {
-                    fontSize: '18px'
+                    fontSize: '14px'
                 },
                 hideDelay: 0//,
                 //useHTML: true                
