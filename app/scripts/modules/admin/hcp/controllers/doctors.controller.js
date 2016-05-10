@@ -242,7 +242,7 @@ angular.module('hillromvestApp')
           }
           for(var i=0; i< $scope.clinicsOfHCP.length; i++){
             for(var j=0;j< $scope.clinics.length ; j++){
-              if($scope.clinicsOfHCP[i].id === $scope.clinics[j].id){
+              if($scope.clinicsOfHCP[i].id.trim() === $scope.clinics[j].id.trim()){
                 $scope.clinics.splice(j,1);
               }
             }
