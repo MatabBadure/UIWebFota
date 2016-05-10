@@ -93,30 +93,34 @@ function($scope, $state, clinicadminPatientService, notyService, $stateParams, c
       }
       var data = $scope.protocol.protocolEntries;
       if($scope.protocol.type === 'Custom'){
-        angular.forEach(data, function(value, key){
-          if(!value.protocolKey){
-            value.protocolKey = $scope.protocol.protocol[0].protocolKey;  
-          }
-          if(!value.type){
+        angular.forEach(data, function(value, key){          
+          if(value){
             value.type = 'Custom';
-          }
-          value.treatmentsPerDay = $scope.protocol.treatmentsPerDay;
+            value.treatmentsPerDay = $scope.protocol.treatmentsPerDay;           
+          }          
           if(!value.treatmentLabel){
             value.treatmentLabel = 'point'+(key+1);
-          }
-        });
+          } 
+          if(!value.protocolKey){
+            value.protocolKey = $scope.protocol.protocol[0].protocolKey;
+          }          
+        });        
       }else{
-        data[0].treatmentsPerDay = $scope.protocol.treatmentsPerDay;
+        data[0].treatmentsPerDay = $scope.protocol.treatmentsPerDay; 
         if(!data[0].protocolKey){
-          data[0].protocolKey = $scope.protocol.protocol[0].protocolKey;
-        }
+           data[0].protocolKey = $scope.protocol.protocol[0].protocolKey;
+         }       
         if(!data[0].type){
           data[0].type = 'Normal';
-        }
+        }         
       }
-      angular.forEach(data, function(protocol){
+
+      if(data && data[0]){
+        data[0].id = $scope.protocol.protocol[0].id;
+      }
+     /* angular.forEach(data, function(protocol){
         protocol.id = $scope.protocol.protocol[0].id;
-      });
+      });*/
       $rootScope.protocols = data;
       $scope.isAuthorizeProtocolModal = true;
     }
