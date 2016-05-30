@@ -70,7 +70,7 @@
 									</div>
 								</div>
 							<div  class="col-md-16 col-sm-16 padding10 survey_grey_color" id="collapseTwo">
-							<ul class="padding0">
+							<ul class="reset-padding">
 								<li>Everyone gets an Adherence Score of 100 to start</li>
 								<li>Every notification subtracts points from your Adherence Score</li>
 								<li>Notifications are based upon activity over the past three days
@@ -135,21 +135,23 @@
 									</tbody>
 								</table> -->
 
-								<div class="col-md-16 col-sm-16 col-xs-16 padding0 vertical_align border-bottom border-lt border-rt" ng-repeat="adherenceScore in adherenceScores">
-									<div class="col-md-14 col-xs-16 padding0">
-										<div class="col-md-16 col-sm-16 col-xs-16 padding0 adherencescore survey_grey_color" ng-class="{'border-bottom': adherenceScore.adherenceTrends.length !== $index+1}" ng-repeat ="adherenceTrend in adherenceScore.adherenceTrends track by $index">
-											<div class="col-md-4 col-sm-4 col-xs-4 first-row padding10">{{adherenceTrend.date}}</div>
+								<div class="col-md-16 col-sm-16 col-xs-16 padding0 reset-padding vertical_align border-bottom border-lt border-rt" ng-repeat="adherenceScore in adherenceScores">
+									<div class="col-md-14 col-sm-16 col-xs-16 padding0 reset-padding">
+										<div class="col-md-16 col-sm-16 col-xs-16 padding0 reset-padding adherencescore survey_grey_color" ng-class="{'border-bottom': adherenceScore.adherenceTrends.length !== $index+1}" ng-repeat ="adherenceTrend in adherenceScore.adherenceTrends track by $index">
+											<div class="col-md-4 col-sm-3 col-xs-4 first-row padding10">{{adherenceTrend.date}}</div>
 												<div class="col-md-8 col-sm-8 col-xs-8 padding10">
 													<div class="col-md-16 col-sm-16 col-xs-16 row" ng-repeat="(key, value) in adherenceTrend.notificationPoints">
 													<div class="col-md-8 col-sm-8 col-xs-13 first-row ">{{key}} </div>
 													<div class="col-md-5 col-sm-8 col-xs-3 first-row text-center">{{value}}</div>
 													</div>
 												</div>
-												<div class="col-md-4 col-sm-4 col-xs-4 first-row padding10 text-center-mob">{{adherenceTrend.updatedScore}}</div>
+												<div class="col-md-4 col-sm-2 col-xs-4 first-row padding10 text-center-mob">{{adherenceTrend.updatedScore}}</div>
+												
 										</div>
-									</div>
-										<div class="col-md-2 col-sm-2 col-xs-2 pull-right text-center cyan-blue-light first-row-view1 pointer-fill-event view-column" ng-click="viewProtocol(adherenceScore.protcols)">View</div>
 
+
+									</div>
+										<div class="col-md-2 col-sm-2 col-xs-2  text-center text-align-r padding10 cyan-blue-light first-row-view1 pointer-fill-event view-column" ng-click="viewProtocol(adherenceScore.protcols)">View</div>
 								</div>
 								</div>
 
@@ -425,8 +427,8 @@
 				<p ng-if="surveyId === 3" translate="survey.90-days-header"> </p>
 			</header>
 			<div class="modal__body">
-				<div class="dashboard dashboard--content col-md-16 col-xs-16 padding0">
-					<div class="dashboard__manage-view col-xs-16 padding0">
+				<div class="dashboard dashboard--content col-md-16 col-xs-16 padding0 reset-padding">
+					<div class="dashboard__manage-view col-xs-16 padding0 reset-padding">
 						<div class="dashboard__manage-view--header no_border care_plan_and_device hidden-xs col-md-16 col-sm-16">
 							<div class="col-md-3 header--type text-align-left">
 								<span translate="patient.protocol-caption.type"></span>
