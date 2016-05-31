@@ -129,6 +129,10 @@
 	.col-hide-web{
     	display: block;
   	}
+  	.adherence_protocol_width{
+  		max-width: 759px!important;
+    	width: 759px!important;
+  	}
 	.dashboard__manage-view--header{
 		.header--type{
 			/*width: 20%;*/
@@ -281,6 +285,10 @@
 	.login__container__right-section{
 		width: 100%;
 	}	
+		.adherence_protocol_width{
+  		max-width: 759px!important;
+    	width: 759px!important;
+  	}
 	/*Login page Style END*/
 
 	/* User Particular info tab padding */
@@ -351,6 +359,12 @@
 	}
 	.show-tab{
 		display:block !important;
+	}
+	.text-align-r{
+		text-align: right;
+	}
+	.text-align_c{
+		text-align:center!important;
 	}
 	
 	.patient-user__navbar ul > li > a .icons{
