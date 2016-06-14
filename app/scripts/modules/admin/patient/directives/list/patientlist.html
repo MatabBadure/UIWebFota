@@ -31,8 +31,13 @@
         <div class="col-md-2 col-sm-3 header--type pull-left-mob width120">
           <span ng-class="{'sort-icon--default' : sortPatientList.hillromId.isDefault, 'sort-icon-down': sortPatientList.hillromId.isDown, 'sort-icon-up':sortPatientList.hillromId.isUp}" ng-click="sortType('hillromId')" translate="patient.hillromId">Hillrom ID</span>
         </div>
-        <div class="col-md-2 header--type col-hide-iPad none">
+        <!--This code have been commented because DOB is been replaced by serial number 
+        during serarch -->
+        <!-- <div class="col-md-2 header--type col-hide-iPad none">
           <span ng-class="{'sort-icon--default' : sortPatientList.dob.isDefault, 'sort-icon-down': sortPatientList.dob.isDown, 'sort-icon-up':sortPatientList.dob.isUp}" ng-click="sortType('dob')" translate="patient.date-of-birth">DOB</span>
+        </div> -->
+         <div class="col-md-2 header--type col-hide-iPad none">
+          <span ng-class="{'sort-icon--default' : sortPatientList.dob.isDefault, 'sort-icon-down': sortPatientList.dob.isDown, 'sort-icon-up':sortPatientList.dob.isUp}" ng-click="sortType('dob')" translate="patient.serial-number">DOB</span>
         </div>
         <div class="col-md-2 col-sm-3 header--type none">
           <span ng-class="{'sort-icon--default' : sortPatientList.city.isDefault, 'sort-icon-down': sortPatientList.city.isDown, 'sort-icon-up':sortPatientList.city.isUp}" ng-click="sortType('city')" translate="patient.city-state">City/State</span>
@@ -60,9 +65,14 @@
           <div class="col-md-2 col-sm-3 col-xs-3 reset-padding centered pull-left-mob width120">
             <span class="impo-highlight">{{patient.hillromId}}</span>
           </div>
-          <div class="col-md-2 reset-padding centered col-hide-iPad none">
+          <!-- <div class="col-md-2 reset-padding centered col-hide-iPad none">
             <span class="short-info">{{patient.dob}}</span>
+          </div> -->
+
+          <div class="col-md-2 reset-padding centered col-hide-iPad none">
+            <span class="short-info">{{patient.serialNumber}}</span>
           </div>
+          
 
           <div class="col-md-2 col-sm-3 col-xs-3 reset-padding centered none">
             <span class="short-info">{{patient.city}} </span>

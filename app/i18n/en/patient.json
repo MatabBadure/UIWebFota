@@ -65,6 +65,7 @@
         "hcp-name": "HCP Name",
         "phone-number": "Phone No",
         "mobile-number": "Mobile No.",
+        "serial-number": "Serial Number",
         "home-phone-number": "Home Phone No.",
         "faxNumber": "FaxNumber",
         "hillromId": "HillromId",
