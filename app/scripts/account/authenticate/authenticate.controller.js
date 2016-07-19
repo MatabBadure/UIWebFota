@@ -14,6 +14,7 @@ angular.module('hillromvestApp')
     $scope.formSubmit = function(){
        $scope.submitted  = true;
    }
+   //alert("exe..");
    
    AuthServerProvider.isValidActivationKey($stateParams.key).
    then(function (response) {
@@ -25,6 +26,7 @@ angular.module('hillromvestApp')
    Auth.getSecurityQuestions().
    then(function (response) {
     $scope.questions = response.data;
+    //console.log($scope.questions);
     }).catch(function (response) {
       $scope.showServerError(response);
     });

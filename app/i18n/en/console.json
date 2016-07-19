@@ -49,5 +49,15 @@
 			"question-info": "The following questions ask about the Vest Airway Clearance System training session. Please answer the following questions by choosing Yes or No. If your response is No, Please feel free to explain or comment on the experience.",
 			"usage-info-message": "Please type the reading from the total use display in field below. The display reads to the tength of the hour. Confirm your device is turned on, at the Normal/Custom screen press the OFF button to obtain the hour meter reading."
 		}	
+	},
+	"patient":{
+		"patient-name": "Patient Name",
+		"hillromId": "HillromId",
+		"date-of-birth": "DOB",
+		"city-state": "City/State",
+		"transmission": "Transmission",
+		"clinic-name": "Clinic Name",
+		"adherence": "Adherence"
+
 	}
 }

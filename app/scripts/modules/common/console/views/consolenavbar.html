@@ -17,6 +17,11 @@
             <span class=""> Login Analytics</span>
           </a>
         </li>
+         <li>
+          <a ng-class="{ active: isActive('devicelist')}" ng-show="userRole === 'ADMIN'" ng-href="" ng-click="deviceList()">
+            <span class=""> Device List</span>
+          </a>
+        </li>
       </ul>
     </div>
   </div>

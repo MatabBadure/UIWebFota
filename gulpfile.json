@@ -167,7 +167,10 @@
             "app/scripts/modules/common/clinicadmin-hcp/change-prescription/controllers/changeprescription.controller.js",
             "app/scripts/modules/common/clinicadmin-hcp/benchmarking/controllers/benchmarking.controller.js",
             "app/scripts/modules/common/clinicadmin-hcp/patient-diagnostics/controllers/patientDiagnosticController.js",
-            "app/scripts/modules/common/clinicadmin-hcp/patient-diagnostics/services/patientdiagnostic.service.js"
+            "app/scripts/modules/common/clinicadmin-hcp/patient-diagnostics/services/patientdiagnostic.service.js",
+            "app/scripts/modules/admin/profile/service/charger.service.js",
+            "app/scripts/modules/admin/profile/controller/chargercontroller.js",
+            "app/scripts/modules/admin/profile/chargerTab/chargerTab.directive.js"
         ],
         "scripts_min_path":[
             "app/bower_components/canvg-gabelerner/rgbcolor.min.js",
@@ -320,7 +323,10 @@
             "app/scripts/modules/common/clinicadmin-hcp/change-prescription/controllers/changeprescription.controller.min.js",
             "app/scripts/modules/common/clinicadmin-hcp/benchmarking/controllers/benchmarking.controller.min.js",
             "app/scripts/modules/common/clinicadmin-hcp/patient-diagnostics/controllers/patientDiagnosticController.min.js",
-            "app/scripts/modules/common/clinicadmin-hcp/patient-diagnostics/services/patientdiagnostic.service.min.js"
+            "app/scripts/modules/common/clinicadmin-hcp/patient-diagnostics/services/patientdiagnostic.service.min.js",
+            "app/scripts/modules/admin/profile/service/charger.service.min.js",
+            "app/scripts/modules/admin/profile/controller/chargercontroller.min.js",
+            "app/scripts/modules/admin/profile/chargerTab/chargerTab.directive.min.js"
         ],
         "clean": [
             "app/build/",

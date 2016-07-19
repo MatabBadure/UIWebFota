@@ -231,6 +231,7 @@ angular.module('hillromvestApp')
                 url: '/{patientId}/pclinics',
                 data: {
                     roles: ['ADMIN'],
+                    
                     pageTitle: 'patient.title'
                 },
                 views: {
@@ -1293,6 +1294,40 @@ angular.module('hillromvestApp')
                     'content@': {
                         templateUrl: 'scripts/modules/admin/profile/profile-tabs/my-profile.html',
                         controller: 'adminProfileController'
+                    }
+                },
+                resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('AdminProfileModule');
+                    }],
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('profile');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+
+        /*
+        below code for charger dummy data (Suggested by raghy)
+        */
+            .state('charger', {
+                parent: 'admin',
+                url: '/charger',
+                data: {
+                    roles: ['ADMIN'],
+                    pageTitle: 'profile.page-title.charger'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/admin/profile/profile-tabs/charger.html',
+                        controller: 'chargercontroller'
                     }
                 },
                 resolve: {
@@ -4033,6 +4068,35 @@ angular.module('hillromvestApp')
                 loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
                         return $ocLazyLoad.load('BenchmarkingModule');
                     }],
+                  translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                      $translatePartialLoader.addPart('console');
+                      return $translate.refresh();
+                  }],
+                  authorize: ['Auth',
+                      function(Auth) {
+                          return Auth.authorize(false);
+                      }
+                  ]
+              }
+            })
+//device list routing
+ .state('admindevicelist', {
+              parent: 'console',
+              url: '/admin/devicelist',
+              data: {
+                  roles: ['ADMIN'],
+                  pageTitle: 'console.page-title.benchmarking'
+              },
+              views: {
+                  'content@': {
+                      templateUrl: 'scripts/modules/common/console/devicelist/views/view.html',
+                      controller: 'devicelistController'
+                  }
+              },
+              resolve: {
+               /* loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('BenchmarkingModule');
+                    }],*/
                   translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                       $translatePartialLoader.addPart('console');
                       return $translate.refresh();

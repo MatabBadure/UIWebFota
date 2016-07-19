@@ -93,6 +93,15 @@ angular.module('hillromvestApp')
       }
     };
 
+
+    $scope.chargerdummydata = function()
+    {
+    	if($rootScope.userRole === "ADMIN"){
+        $state.go('charger');
+      }
+    };
+
+
     $scope.goToHomePage = function(){
       if(!$rootScope.userRole){
         $state.go("home");
@@ -316,6 +325,11 @@ angular.module('hillromvestApp')
       	$state.go('associatesBenchmarking');
       }
     };
+
+    $scope.deviceList = function(){ 
+      	$state.go('admindevicelist');
+    };
+   
 
     $scope.userSurvey = function(){
 	    if($rootScope.userRole === "PATIENT"){

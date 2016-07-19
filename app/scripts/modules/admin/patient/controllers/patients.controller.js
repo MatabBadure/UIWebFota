@@ -26,6 +26,9 @@ angular.module('hillromvestApp')
       'message': ''
     };
 
+    /*
+      *To Apply active class on selected tab
+    */
     $scope.isActive = function(tab) {
       if ($scope.patientTab.indexOf(tab) !== -1) {
         return true;
@@ -34,6 +37,9 @@ angular.module('hillromvestApp')
       }
     };
 
+    /*
+    * To Switch to respective state depending on the role of the user
+    */
     $scope.switchPatientTab = function(status){
       $scope.patientTab = status;
       if($scope.patientStatus.role === loginConstants.role.admin){
@@ -45,6 +51,11 @@ angular.module('hillromvestApp')
       }
     };
 
+    /*
+    * @ngdoc : method
+    * @name : setOverviewMode
+    * @description : It is a function which makes the dob of patient in human readable format. This function is passed as a callback to $scope.getPatiendDetails
+    */
     $scope.setOverviewMode = function(patient){
       $scope.patient = patient;
       if (patient.dob !== null) {
@@ -74,10 +85,14 @@ angular.module('hillromvestApp')
       });
     };
 
+    /*
+    * Initialization method for Patient overvirew page (patientOverview or patientOverviewRcadmin state)
+    */
     $scope.initPatientOverview = function(){
       $scope.patientTab = "patientEdit";
       $scope.getPatiendDetails($stateParams.patientId, $scope.setOverviewMode);
     };
+
 
     $scope.initpatientDemographic = function(){
       $scope.getPatientById($stateParams.patientId);
@@ -87,6 +102,9 @@ angular.module('hillromvestApp')
       $scope.getPatiendDetails($stateParams.patientId, $scope.setEditMode);
     };
 
+    /*
+     * Method to open Edit Patient Details form From Patient Info tab.
+    */
     $scope.openEditDetail = function(){
       if($scope.patientStatus.role === loginConstants.role.acctservices){
         $state.go('patientDemographicEditRcadmin', {'patientId': $stateParams.patientId});
@@ -95,6 +113,9 @@ angular.module('hillromvestApp')
       }
     };
 
+    /*
+     * To get protocols of a particular patient. (Care Plan and Device Tab)
+    */
     $scope.getProtocols = function(patientId){
       patientService.getProtocol(patientId).then(function(response){
         $scope.protocols = response.data.protocol;
@@ -110,6 +131,9 @@ angular.module('hillromvestApp')
       }).catch(function(){});
     };
 
+    /*
+     * To get devicess of a particular patient. (Care Plan and Device Tab)
+    */
     $scope.getDevices = function(patientId){
       $scope.totalHmr = 0;
       patientService.getDevices(patientId).then(function(response){
@@ -125,12 +149,18 @@ angular.module('hillromvestApp')
       });
     };
 
+    /*
+     * Initilization of careplan and device page. 
+    */
     $scope.initProtocolDevice = function(patientId){
       $scope.getPatientById(patientId);
       $scope.getDevices(patientId);
       $scope.getProtocols(patientId);
     };
 
+    /*
+     * Add protocol page (Careplan and device tab). 
+    */
     $scope.initPatientAddProtocol = function(){
       $scope.getPatientById($stateParams.patientId);
       $scope.protocol = $stateParams.protocol;
@@ -145,11 +175,17 @@ angular.module('hillromvestApp')
       }
     };
 
+    /*
+     * Add device page (careplan and device page).
+    */
     $scope.initPatientAddDevice = function(){
       $scope.getPatientById($stateParams.patientId);
       $scope.device = $stateParams.device;
     };
 
+    /*
+     * This method is called each time this controller is loaded.
+    */
     $scope.init = function() {
       var currentRoute = $state.current.name;
       //in case the route is changed from other thatn switching tabs
@@ -185,6 +221,11 @@ angular.module('hillromvestApp')
       }
     };
 
+    /*
+    * @ngdoc : method
+    * @name : setEditMode
+    * @description : This methods calulates the age of a patient and format zipcode and set status. This function is passed as a callback to $scope.getPatiendDetails and $scope.getPatiendDetails
+    */
     $scope.setEditMode = function(patient) {
       $scope.patientStatus.editMode = true;
       $scope.patientStatus.isCreate = false;
@@ -202,6 +243,9 @@ angular.module('hillromvestApp')
       }
     };
 
+    /*
+     * Method to get patient detail. 
+    */
     $scope.getPatiendDetails = function(patientId, callback) {
       patientService.getPatientInfo(patientId).then(function(response) {
         $scope.patientInfo = response.data;
@@ -212,6 +256,9 @@ angular.module('hillromvestApp')
       }).catch(function(response) {});
     };
 
+    /*
+     * Method to set flag variables in create state.
+    */
     $scope.createPatient = function() {
       $scope.patientStatus.isCreate = true;
       $scope.patientStatus.isMessage = false;
@@ -220,10 +267,17 @@ angular.module('hillromvestApp')
       };
     };
 
+    /*
+    * Need to check if it is really in use.
+    */
     $scope.goToPatientClinics = function(){
       $state.go('patientEditClinics',{'patientId': $stateParams.patientId});
     }
-    
+
+
+    /*
+     * Need to check if it is really in use. 
+    */
     $scope.availableClinicsForPatient = function(associatedClinics){
       clinicService.getClinics($scope.searchItem, $scope.sortOption, $scope.currentPageIndex, $scope.perPageCount).then(function (response) {
           $scope.clinics = response.data;
@@ -234,6 +288,9 @@ angular.module('hillromvestApp')
         });
     };
 
+    /*
+     * 
+    */
     $scope.initializeClinics = function(clinics){
       $scope.clinics = []; $scope.clinics.length = 0;
       angular.forEach(clinics, function(clinic, clinicKey){
@@ -248,7 +305,7 @@ angular.module('hillromvestApp')
         }else{
           clinic.hillromId = clinic.hillromId + ' &nbsp; ';
         }
-
+        /*splicing out associated clinics from all clinics set */
         angular.forEach($scope.associatedClinics, function(associatedClinic, associatedClinicKey){
           if(associatedClinic.id === clinic.id){
             clinics.splice(clinicKey, 1);
@@ -259,6 +316,9 @@ angular.module('hillromvestApp')
     };
 
     /** starts for patient clinics **/
+    /*
+    Get associated clinics of a patient
+    */
     $scope.getPatientClinicInfo = function(patientId){
       $scope.associatedClinics =[]; $scope.associatedClinics.length = 0;
       patientService.getClinicsLinkedToPatient(patientId).then(function(response) {
@@ -266,6 +326,9 @@ angular.module('hillromvestApp')
       }).catch(function(response) {});
     };
 
+    /*
+     * To disassociate the clinic and remove the name of clinic in the list and available for adding the clinic in the list again
+    */
     $scope.disassociateLinkedClinics = function(id){
       $scope.showModalClinic = false;
       var data = [{"id": id}];
@@ -288,6 +351,9 @@ angular.module('hillromvestApp')
       });
     };
 
+    /*
+     * Need to see if really used.
+    */
     $scope.searchClinics = function (track) {
       if (track !== undefined) {
         if (track === "PREV" && $scope.currentPageIndex > 1) {
@@ -311,6 +377,7 @@ angular.module('hillromvestApp')
       });
     };
 
+
     $scope.initPatientClinics = function(patientId){
       if($scope.searchItem && $scope.searchItem.length > 0){
         clinicService.getClinics($scope.searchItem, $scope.sortOption, $scope.currentPageIndex, $scope.perPageCount).then(function (response) {
@@ -326,11 +393,17 @@ angular.module('hillromvestApp')
       }
     };
 
+    /*
+    * To Show pop-up modal while associating Clinic to patient
+    */
     $scope.showAssociateClinicModal = function(clinic){
       $scope.selectedClinic = clinic;
       $scope.associatedClinicModal = true;
     };
 
+    /*
+     * To Associate Clinic to a patient on confirming from pop-up modal
+    */
     $scope.selectClinicForPatient = function(){
       var data = [{"id": $scope.selectedClinic.id, "mrnId": null, "notes": null}];
       $scope.clinic.name = "";
@@ -345,6 +418,9 @@ angular.module('hillromvestApp')
       });
     };
 
+    /*
+     * Initialization method for Patient clincs and HCPs tab 
+    */
     $scope.initPatientClinicsInfo = function(patientId){
       $scope.patientTab = "patientClinics";
       $scope.currentPageIndex = 1;
@@ -359,6 +435,8 @@ angular.module('hillromvestApp')
       $scope.getAvailableAndAssociatedHCPs(patientId);     
     };
 
+    /*
+    */
     $scope.getAssociatedHCPs = function(patientId){
       patientService.getAssociateHCPToPatient(patientId).then(function(response){
         $scope.associatedHCPs = response.data.hcpUsers
@@ -383,6 +461,9 @@ angular.module('hillromvestApp')
       });
     };
 
+    /*
+    * Need to check
+    */
     $scope.getHCPs = function(){
       DoctorService.getDoctorsList($scope.searchItem, $scope.currentPageIndex, $scope.perPageCount).then(function(response){
         $scope.hcps = response.data;
@@ -391,6 +472,9 @@ angular.module('hillromvestApp')
       });
     };
 
+    /*
+     Need to check
+    */
     $scope.getClinics = function(){
       clinicService.getClinics($scope.searchItem, $scope.sortOption, $scope.currentPageIndex, $scope.perPageCount).then(function (response) {
           $scope.initializeClinics(response.data);
@@ -401,6 +485,9 @@ angular.module('hillromvestApp')
         });
     }
 
+    /*
+    This method gets called while updating patient details
+    */
     $scope.formSubmit = function(){
       $scope.submitted = true;
       if($scope.form.$invalid){
@@ -436,6 +523,9 @@ angular.module('hillromvestApp')
       });
     };
 
+    /*
+    TO Cancle update protocol flow and go back to careplan and device tab
+    */
     $scope.cancelProtocolDevice = function() {
       if($scope.patientStatus.role === loginConstants.role.acctservices){
         $state.go('patientProtocolRcadmin', {'patientId': $stateParams.patientId});
@@ -444,6 +534,7 @@ angular.module('hillromvestApp')
       }
     };
 
+    /*To cancel Patient Edit /Update flow and got back to patient info tab in readonly mode*/
     $scope.cancelEditDemographics = function(){
       if($scope.patientStatus.role === loginConstants.role.acctservices){
           $state.go('patientDemographicRcadmin', {'patientId': $stateParams.patientId});
@@ -452,23 +543,37 @@ angular.module('hillromvestApp')
         }
     };
 
-
+    /*
+     *  TO cancel modal pop up of delete device.
+    */
     $scope.cancelDeviceModel = function(){
       $scope.showModalDevice = false;
     };
 
+
+    /*
+    To cancel modal pop up of delete protocl modal
+    */
     $scope.cancelProtocolModel = function(){
       $scope.showModalProtocol = false;
     };
-
+/*
+    Cancel model popup while disassociating HCP from patient 
+*/
     $scope.cancelHCPModel = function(){
       $scope.showModalHCP = false;
     };
 
+    /*
+    Cancel model popup while disassociating clinic from patient 
+    */
     $scope.cancelClinicModel = function(){
       $scope.showModalClinic = false;
     };
 
+    /*
+    Need to check
+    */
     $scope.disassociatePatient =function(disassociatePatient){
       patientService.disassociatePatient(disassociatePatient.id).then(function(response){
         notyService.showMessage(response.data.message, 'success');
@@ -483,6 +588,7 @@ angular.module('hillromvestApp')
     };
 
     /** start of caregiver tab for admin->patient **/
+    /** List of caregiver information for the particulat patient in caregiver info tab**/
     $scope.getCaregiversForPatient = function(patientId){
       patientService.getCaregiversLinkedToPatient(patientId).then(function(response){
         $scope.caregivers =  response.data.caregivers;
@@ -491,7 +597,7 @@ angular.module('hillromvestApp')
         notyService.showError(response);
       });
     };
-
+    /** Adding a caregiver to patient in caregiver info tab -> add caregiver (save button) **/
     $scope.associateCaregiverstoPatient = function(patientId, careGiver){
         patientService.associateCaregiversFromPatient(patientId, careGiver).then(function(response){
         notyService.showMessage(response.data.message, 'success');
@@ -504,6 +610,7 @@ angular.module('hillromvestApp')
       });
     };
 
+  /** Delete or disassociate the caregiver from the patient (on click of yes button for modal during deleting) **/
     $scope.disassociateCaregiversFromPatient = function(caregiver){
       $scope.closeModalCaregiver();
       patientService.disassociateCaregiversFromPatient($stateParams.patientId, caregiver.id).then(function(response){
@@ -513,12 +620,13 @@ angular.module('hillromvestApp')
         notyService.showError(response);
       });
     };
-
+  /** On page load for caregiver info tab **/
     $scope.initpatientCraegiver = function (patientId){
       $scope.getPatientById(patientId);
       $scope.getCaregiversForPatient($stateParams.patientId);
     };
 
+    /** On page load of add care giver in care giver info tab**/
     $scope.initpatientCraegiverAdd = function(){
       $scope.getPatientById($stateParams.patientId);
       $scope.careGiverStatus = "new";
@@ -532,6 +640,7 @@ angular.module('hillromvestApp')
       }).catch(function(response) {});
     };
 
+    /** On click of add caregiver in caregiver info tab**/
     $scope.linkCaregiver = function(){
       if($scope.patientStatus.role === loginConstants.role.acctservices){
         $state.go('patientCraegiverAddRcadmin', {'patientId': $stateParams.patientId});
@@ -540,6 +649,7 @@ angular.module('hillromvestApp')
       }
     };
 
+    /** On click of save button on care giver info tab ->Add caregiver **/
     $scope.formSubmitCaregiver = function(){
       $scope.submitted = true;
       if($scope.form.$invalid){
@@ -555,6 +665,7 @@ angular.module('hillromvestApp')
       }
     };
 
+    /** on click of update button for showing POP up **/
     $scope.showCaregiverUpdateModal = function(){
       $scope.submitted = true;
       if($scope.form.$invalid){
@@ -563,6 +674,7 @@ angular.module('hillromvestApp')
       $scope.caregiverUpdateModal = true;
     };
 
+    /** On click of add device button on care plan and device tab **/
     $scope.linkDevice = function(){
       if($scope.patientStatus.role === loginConstants.role.acctservices){
         $state.go('patientAddDeviceRcadmin',{patientId: $stateParams.patientId});
@@ -571,6 +683,7 @@ angular.module('hillromvestApp')
       }
     };
 
+    /** Inside add device on care plan and device tab on click of save button **/
     $scope.addDevice = function(){
       $scope.submitted = true;
       if($scope.addDeviceForm.$invalid){
@@ -590,6 +703,7 @@ angular.module('hillromvestApp')
       });
     };
 
+    /** inside care plan and device tab on click of add protocol (if its active) **/
     $scope.linkProtocol = function(){
       if($scope.patientStatus.role === loginConstants.role.acctservices){
         $state.go('patientAddProtocolRcadmin', {'patientId': $stateParams.patientId});
@@ -598,6 +712,7 @@ angular.module('hillromvestApp')
       }
     };
 
+    /** On click of save button while adding a new protocol inside care plan and device **/
     $scope.addProtocol = function(){
       $scope.submitted = true;
       if($scope.addProtocolForm.$invalid){
@@ -619,6 +734,7 @@ angular.module('hillromvestApp')
       });
     };
 
+    /** On click of yes button on modal pop up of delete device **/
     $scope.deleteDevice = function(){
       $scope.showModalDevice = false;
       patientService.deleteDevice($stateParams.patientId, $scope.deviceToDelete).then(function(response){
@@ -629,6 +745,7 @@ angular.module('hillromvestApp')
       });
     };
 
+    /** On click of delete icon of protocol in care plan and device tab  **/
     $scope.deleteProtocolModel = function(protocolId){
       $scope.toDeleteProtocolId = protocolId;
       $scope.showModalProtocol = true;
@@ -659,12 +776,14 @@ angular.module('hillromvestApp')
       });
     };
 
+    /** Initilisation method for caregiver edit page **/
     $scope.initpatientCraegiverEdit = function(careGiverId){
       $scope.careGiverStatus = "edit";
       $scope.getPatientById($stateParams.patientId);
       $scope.editCaregiver(careGiverId);
     };
 
+    /** during intialisation of edit caregiver page for getting relationship and states **/
     $scope.editCaregiver = function(careGiverId){
       UserService.getState().then(function(response) {
         $scope.states = response.data.states;
@@ -684,6 +803,7 @@ angular.module('hillromvestApp')
       });
     };
 
+    /** This is getting call inside formsubmit function which is been called when the form is submitted or saved /update**/
     $scope.updateCaregiver = function(patientId, caregiverId , careGiver){
       var tempCaregiver = {};
       tempCaregiver.title = careGiver.title;
@@ -708,6 +828,7 @@ angular.module('hillromvestApp')
       });
     };
 
+    /** this will get called on click of edit button icon in caregiver info and been used for routing **/
     $scope.goToCaregiverEdit = function(careGiverId){
       if($scope.patientStatus.role === loginConstants.role.acctservices){
         $state.go('patientCraegiverEditRcadmin', {'caregiverId': careGiverId, 'patientId': $stateParams.patientId});
@@ -716,6 +837,7 @@ angular.module('hillromvestApp')
       }
     };
 
+    /** In care plan and device for edit button icon  (symbol) for protocol**/
     $scope.openEditProtocol = function(protocol){
       if(!protocol){
         return false;
@@ -732,6 +854,7 @@ angular.module('hillromvestApp')
       }
     };
 
+    /** In care plan and device for edit button icon (symbol) for device**/
     $scope.openEditDevice = function(device){
       if(!device.active){
         return false;
@@ -744,6 +867,7 @@ angular.module('hillromvestApp')
       }
     };
 
+    /** It been called from dirctivce which is been used when on click of yes in update protocol modal**/
     $scope.updateProtocol = function(){
       $scope.isProtocolSubmited = true;
       if($scope.protocol.id){
@@ -798,6 +922,7 @@ angular.module('hillromvestApp')
       });
     };
 
+    /** On click of yes button in modal pop up while updating device from care plan and device**/
     $scope.updateDevice = function(){
       $scope.deviceUpdateModal =true;
       patientService.addDevice($stateParams.patientId, $scope.device).then(function(response){
@@ -811,12 +936,14 @@ angular.module('hillromvestApp')
       });
     };
 
+    /** On click of add new point while adding or updating custom protocol in care plan and device**/
     $scope.addNewProtocolPoint = function (){
       $scope.submitted = false;
       $scope.newProtocolPoint += 1;
       $scope.protocol.protocolEntries.push({});
     };
 
+    /** on click of RadioButton switching from custom to normal**/
     $scope.switchtoNormal = function(){
       $scope.submitted = false;  
       $scope.protocol.protocolEntries.splice(1);                
@@ -827,16 +954,19 @@ angular.module('hillromvestApp')
       } 
     };
 
+    /** inside Clinininfo on click of link clinic button**/
     $scope.linkClinic = function(){
       $scope.getAvailableAndAssociatedClinics($stateParams.patientId);
       $scope.searchClinicText = true;
     };
 
+    /** inside Clinininfo on click of link HCP button**/
     $scope.linkHCP = function(){
       $scope.getAvailableAndAssociatedHCPs($stateParams.patientId);
       $scope.searchHCPText = true;
     };
 
+    /** called inside link clinic for getting associated clinics**/
     $scope.getAvailableAndAssociatedClinics = function(patientId){
       $scope.associatedClinicsErrMsg = null;
       $scope.associatedHCPsErrMsg = null;            
@@ -853,6 +983,7 @@ angular.module('hillromvestApp')
       });
     };
 
+    /** called inside link HCP for getting associated HCP**/
     $scope.getAvailableAndAssociatedHCPs = function(patientId){
       $scope.associatedClinicsErrMsg = null;
       $scope.associatedHCPsErrMsg = null;  
@@ -883,22 +1014,26 @@ angular.module('hillromvestApp')
       });
     };
 
+    /** Need to check**/
     $scope.getHCPsToLinkToPatient = function($viewValue){
       return searchFilterService.getMatchingUser($viewValue, $scope.hcps, true);
     };
 
+    /** Not used**/
     $scope.openPatientDeactivateModal = function(patient){
       $scope.deletePatient = patient;
       $scope.patientDeactivateModal = true;
     };
-
+    /** Not used**/
     $scope.closePatientDeactivateModal = function(){
       $scope.patientDeactivateModal = false;
     };
+    /** Inside care giver info on click of delete icon for open modal pop up**/
     $scope.openModalCaregiver = function(caregiverId, index){
       $scope.showModalCaregiver = true;
       $scope.deleteCaregiver = {'id':caregiverId, 'index':index};
     };
+    /** Inside care giver info on click of delete icon for closing modal pop up**/
     $scope.closeModalCaregiver = function(){
       $scope.showModalCaregiver = false;
     };
@@ -908,6 +1043,7 @@ angular.module('hillromvestApp')
           startDate: '-100y',
           autoclose: true});
 
+    /** on click of RadioButton switching from normal to custom**/
     $scope.switchtoCustom = function(){
       $scope.submitted = false;
       $scope.newProtocolPoint = 1;      
@@ -918,6 +1054,7 @@ angular.module('hillromvestApp')
      }     
     };
 
+    /** To clear all the Protocol data when we switch from normal to custom and vice versa**/
     $scope.clearFn = function(){
       $scope.protocol.treatmentsPerDay = null;
       angular.forEach($scope.protocol.protocolEntries, function(protocolEntry, key){
@@ -931,6 +1068,7 @@ angular.module('hillromvestApp')
       $scope.addProtocolForm.$setPristine();
     };
 
+    /** For intilising the protocol edit**/
     $scope.initpatientEditProtocol = function(){
       $scope.getPatientById($stateParams.patientId);
       patientService.getProtocolById($stateParams.patientId, $stateParams.protocolId).then(function(response){
@@ -953,6 +1091,7 @@ angular.module('hillromvestApp')
       });
     };
 
+    /** oOn clinic info when you HCP on any of the HCp inside the list**/
     $scope.selectDoctor = function(doctor) {
       if($scope.patientStatus.role === loginConstants.role.acctservices){
         $state.go('hcpProfileRcadmin',{
@@ -967,6 +1106,7 @@ angular.module('hillromvestApp')
       }
     };
 
+    /** oOn clinic info when you click on any of the clinic inside the list**/
     $scope.selectClinic = function(clinic) {
       if($scope.patientStatus.role === loginConstants.role.acctservices){
         $state.go('clinicProfileRcadmin', {
@@ -981,10 +1121,12 @@ angular.module('hillromvestApp')
       }
     };
 
+    /** Need to check**/
     $scope.gotoPatient = function(){
       $state.go('patientOverview',{'patientId': $scope.deviceAssociatedPatient.id});
     };
 
+    /** Not used**/
     $scope.activatePatient = function(){
       patientService.reactivatePatient($scope.patient.id).then(function(response){
         notyService.showMessage(response.data.message, 'success');
@@ -994,6 +1136,7 @@ angular.module('hillromvestApp')
       });
     };
 
+    /** Not used**/
     $scope.toggleReactivationModal = function(){
       $scope.patientActivateModal = $scope.patientActivateModal ? false:true;
     };
@@ -1016,6 +1159,7 @@ angular.module('hillromvestApp')
       isFormLoaded = true;
     });
 
+    /** Not in use as of now**/
     $scope.resendActivationLink = function(){
       UserService.resendActivationLink($scope.patient.id).then(function(response){
         notyService.showMessage(response.data.message, 'success');
@@ -1025,6 +1169,7 @@ angular.module('hillromvestApp')
       });
     };
 
+    /** During updating the patient details on click of update during saving in patient info**/
     $scope.showPatientUpdateModal = function(){
       if($scope.form.$invalid){
         $scope.submitted = true;
@@ -1034,6 +1179,7 @@ angular.module('hillromvestApp')
       }
     };
 
+    /** During updating the protocol on click of udpate during saving in care plan and device**/
     $scope.showPrtocolUpdateModal = function(){
       $scope.submitted = true;
       if($scope.addProtocolForm.$invalid){
@@ -1042,6 +1188,7 @@ angular.module('hillromvestApp')
       $scope.isAuthorizeProtocolModal = true;
     };
 
+    /** During updating the patient details on click of udpate during saving in care plan and device tab **/
     $scope.showDeviceUpdateModal = function(){
       $scope.submitted = true;
       if($scope.addDeviceForm.$invalid){
@@ -1050,11 +1197,12 @@ angular.module('hillromvestApp')
         $scope.deviceUpdateModal =true;
       }
     };
-
+    /** used while searching the clinic, returns array of clinics**/
     $scope.getClinicToLinkToPatient = function($viewValue){
       return searchFilterService.getMatchingClinic($viewValue, $scope.clinics);
     };
 
+    /*Stae and city are not editable in create or edit patient, when zipcode is entered, this function is used to make both fields editable*/
     $scope.getCityStateByZip = function(){
       delete $scope.serviceError;
       $scope.isServiceError = false;

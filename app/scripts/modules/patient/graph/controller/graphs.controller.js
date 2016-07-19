@@ -197,11 +197,11 @@ angular.module('hillromvestApp')
       }
       $scope.waitFunction();
     };
-    
+    //To set calendar
     $scope.opts = {
       maxDate: new Date(),
       format: patientDashboard.dateFormat,
-      dateLimit: {"months":24},
+      dateLimit: {"months":24}, //gap of 2 years by default in the 2 calendars
       eventHandlers: {'apply.daterangepicker': function(ev, picker) {
           $scope.durationRange = "Custom";     
           $scope.calculateDateFromPicker(picker);  
@@ -648,6 +648,7 @@ angular.module('hillromvestApp')
           angular.forEach(responseData.xAxis.categories, function(x, key){              
             // this is for year view or custom view having datapoints more than 7
             // x-axis will be plotted accordingly, chart type will be datetime
+            //unused 
             var curDay = responseData.xAxis.categories[key].split(" ");
             $scope.isSameDay = ($scope.isSameDay && (curDay[0] === startDay[0]) )? true : false;  
             if(curDay[0] !== startDay[0]){
@@ -663,7 +664,8 @@ angular.module('hillromvestApp')
 
           angular.forEach(responseData.series, function(s, key1){
             var marker = {};
-            marker.radius = (s.data && s.data.length < 50)? 2 : 0.5;    
+            //condition needs to be added before changing radius of single dot
+            marker.radius = (s.data && s.data.length < 50)? (s.data.length == 1? 4 : 2) : 0.5;    
             angular.forEach(s.data, function(d, key2){
               var tooltipDateText = responseData.series[key1].data[key2].x ;
               responseData.series[key1].data[key2].x = xData[key2];

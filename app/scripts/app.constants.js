@@ -12,6 +12,7 @@ angular.module('hillromvestApp')
 	},
 	'clinicBaseURL': 'api/clinics',
 	'userBaseUrl' : '/api/user/',
+	'chargerBaseURL':'/api/chargerdevicedata',
 	'patientRelationships' : 'api/patient/relationships',
 	'searchUsers': 'api/user/search?searchString=',
 	'searchHcpUser': 'api/user/hcp/search?searchString=',

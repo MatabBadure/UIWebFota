@@ -46,6 +46,7 @@
             "health-portal": "Health Portal"
         },
         "my-dashboard": "My Profile",
+        "charger": "Charger Device",
         "logout": "Logout",
         "console": "Console",
         "tabs": {
