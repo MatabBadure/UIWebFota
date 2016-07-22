@@ -1,0 +1,7 @@
+<ng-include src="'scripts/components/navbar/navbar.html'"></ng-include>
+<div class="dashboard dashboard--content padding-bottom-ls" style="padding-top:100px; padding-left:40px; color:black !important" >
+    <input type="textarea" style="width:600px;height:100px" readonly="readonly" value= {{data.data.device_data.deviceData}}></br>
+    <div style="padding-left:120px;">
+    <input type="button" ng-click="refreshData()" value = "Refresh">
+</div>
+</div>
