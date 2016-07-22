@@ -33,14 +33,14 @@ var notifyInfo = {
 gulp.task('webserver', function() {
   gulp.src('app')
     .pipe(webserver({
-      host:'localhost',
+      host:'192.168.1.148',
       port:9000,
       livereload: true,
       directoryListing: false,
       fallback:'dev_index.html',
       proxies: [{
             source: '/api',
-            target: 'http://localhost:8080/api'
+            target: 'http://devserver.hillromvest.com/api'
         }],
       open: true
     }));
