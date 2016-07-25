@@ -1,7 +1,13 @@
 <ng-include src="'scripts/components/navbar/navbar.html'"></ng-include>
-<div class="dashboard dashboard--content padding-bottom-ls" style="padding-top:100px; padding-left:40px; color:black !important" >
-    <input type="textarea" style="width:600px;height:100px" readonly="readonly" value= {{data.data.device_data.deviceData}}></br>
+<div class="dashboard dashboard--content padding-bottom-ls" style="padding-top:100px; padding-left:40px; color:black !important" ng-init = "init()">
+    <input id = "viewtxt" type="textarea" style="width:600px;height:100px" readonly="readonly" value = {{data.data.device_data.deviceData}}></br>
     <div style="padding-left:120px;">
     <input type="button" ng-click="refreshData()" value = "Refresh">
 </div>
+ <div  ng-repeat = "listValue in listData" >
+ 	<div class="dashboard__manage-view--list" ng-repeat = "listArrayIndex in listValue.device_data.content" ng-if = "listValue.device_data.content[$index][1]!=null" ng-click="sample(listValue.device_data.content[$index][0])">
+ 			 <span class="main-prim-info">{{dateArray[$index]}}</span>
+          </div>
+ 	</div>
+
 </div>
