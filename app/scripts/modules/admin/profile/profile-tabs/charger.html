@@ -1,11 +1,23 @@
+<!-- <style type="text/css">
+.selected{
+	background-color:lavender;
+}
+</style>-->
 <ng-include src="'scripts/components/navbar/navbar.html'"></ng-include>
 <div class="dashboard dashboard--content padding-bottom-ls" style="padding-top:100px; padding-left:40px; color:black !important" ng-init = "init()">
-    <input id = "viewtxt" type="textarea" style="width:600px;height:100px" readonly="readonly" value = {{data.data.device_data.deviceData}}></br>
-    <div style="padding-left:120px;">
-    <input type="button" ng-click="refreshData()" value = "Refresh">
+	 <div style=" float:left; ">
+   <div id = "viewtxt" style="overflow-y: scroll; border:solid; border-color:black;width:600px;height:500px;">
+<!--      <textarea id = "viewtxt" style="width:600px;height:150px;" wrap = "hard" readonly="readonly"></textarea></br>
+ -->   
+ 
 </div>
- <div  ng-repeat = "listValue in listData" >
- 	<div class="dashboard__manage-view--list" ng-repeat = "listArrayIndex in listValue.device_data.content" ng-if = "listValue.device_data.content[$index][1]!=null" ng-click="sample(listValue.device_data.content[$index][0])">
+ <div style="padding-left:120px; float:left; ">
+    <input type="button" ng-click="refreshData()" value = "Refresh">
+     <input type="button" ng-click="clearData()" value = "Clear">
+</div>
+</div> 
+ <div  ng-repeat = "listValue in listData"   style="float:right; width:580px; padding-right:400px;" >
+ 	<div class="dashboard__manage-view--list" ng-class="{selected: listValue.device_data.content[$index][0] === selctedItem}" ng-repeat = "listArrayIndex in listValue.device_data.content" ng-if = "listValue.device_data.content[$index][1]!=null" ng-click="sample(listValue.device_data.content[$index][0])">
  			 <span class="main-prim-info">{{dateArray[$index]}}</span>
           </div>
  	</div>
