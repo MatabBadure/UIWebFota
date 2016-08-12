@@ -155,11 +155,11 @@
         "dashboard":{
             "missedTherapy": "Missed Therapy Days",
             "averageTreatmentsPerDay": "Average Treatments Per Day",
-            "hmrNonCompliance": "HMR Non-Adherence",
+            "hmrNonCompliance": "Below Treatment Minutes",
             "settingDeviation": "Setting Deviation",
             "averageSessionMinutes": " Average Session Minutes",
             "consecutiveMissedDays":"Consecutive Missed Days",
-            "consecutiveFrequencyDeviationDays":"Consecutive Freq Dev Days",
+            "consecutiveFrequencyDeviationDays":"Below Frequency Setting",
             "noEventsRecorded": "No Transmission Recorded",
             "todayStatistics": "Current Statistics -",
             "patients": "Patients",
