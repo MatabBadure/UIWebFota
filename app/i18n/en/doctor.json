@@ -158,7 +158,7 @@
             "hmrNonCompliance": "Below Treatment Minutes",
             "settingDeviation": "Setting Deviation",
             "averageSessionMinutes": " Average Session Minutes",
-            "consecutiveMissedDays":"Consecutive Missed Days",
+            "consecutiveMissedDays":" with Missed Therapy Day(s)",
             "consecutiveFrequencyDeviationDays":"Below Frequency Setting",
             "noEventsRecorded": "No Transmission Recorded",
             "todayStatistics": "Current Statistics -",
