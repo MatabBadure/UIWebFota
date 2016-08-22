@@ -12,6 +12,8 @@ angular.module('hillromvestApp')
       'isMessage':false,
       'message': ''
     }
+ $scope.specialities = ["Adult CF","Pediatric CF","Adult General Pulmonologist","Pediatric General Pulmonologist","Adult Neurology","Pediatric Neurology","Bronchiectasis"]
+
     /*check the state from the route*/
     $scope.init = function() {
       var currentRoute = $state.current.name;

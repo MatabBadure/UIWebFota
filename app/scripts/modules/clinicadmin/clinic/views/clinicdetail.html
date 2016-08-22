@@ -134,7 +134,7 @@
             </div>
           </div>
         </div>
-
+  
         <div class="col-md-16 reset-padding margin-top">
           <div class="col-md-7 reset-padding">
             <div class="col-md-6 dashboard__form--label reset-padding">
@@ -147,7 +147,24 @@
               </div>
             </div>
         </div>
-      </div>
+
+          <div class="col-md-7 reset-padding col-md-offset-2">
+            <div class="col-md-6 dashboard__form--label reset-padding">
+              <span class="" translate="clinic.clinic-speciality"></span>
+            </div>
+            <div class="col-md-10  reset-padding form__select__input--option selected-box-container">
+              <div class="custom-dropdown">
+                <select  ng-model="clinic.speciality" ng-options="x for x in specialities">
+                  <!-- <option selected="selected"></option> -->
+                </select>
+              </div>
+            </div>
+          </div>
+
+        </div> 
+     
+     
+      
 
       
       <div class="clr"></div>

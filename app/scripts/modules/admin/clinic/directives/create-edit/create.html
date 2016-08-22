@@ -49,8 +49,24 @@
                 </select>
               </div>
             </div>
+
           </div>
-          <div class="col-md-7 col-sm-7 reset-padding col-sm-offset-2 col-md-offset-2" ng-if="clinic.type === 'child'">
+          <div class="col-md-7 col-sm-7 col-sm-offset-2 col-md-offset-2 reset-padding">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+              <span class="" translate="clinic.clinic-speciality"></span>
+              <span class="">*</span>
+            </div>
+            <div class="col-md-10 col-sm-10 form__select__input--option reset-padding selected-box-container">
+              <div class="custom-dropdown" >
+                <select name="type" ng-model="clinic.speciality"  ng-options="x for x in specialities">
+                </select>
+              </div>
+            </div>
+            
+          </div>
+          
+        </div>
+        <div class="col-md-7 col-sm-7 reset-padding margin-top" ng-if="clinic.type === 'child'">
             <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
               <span class="dashboard__form--type" translate="clinic.select-parent"></span>
               <span class="">*</span>
@@ -66,7 +82,6 @@
 
             </div>
           </div>
-        </div>
         <div class="col-md-16 col-sm-16 reset-padding margin-top">
           <div class="col-md-7 col-sm-7 reset-padding">
             <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
