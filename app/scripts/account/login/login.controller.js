@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('hillromvestApp')
-  .controller('LoginController',['$scope', '$state', '$timeout', 'Auth', 'vcRecaptchaService', 'globalConfig', '$rootScope', 'loginConstants', 'Principal', 'StorageService', 'patientsurveyService',
-    function($scope, $state, $timeout, Auth, vcRecaptchaService, globalConfig, $rootScope, loginConstants, Principal, StorageService, patientsurveyService) {
+  .controller('LoginController',['$scope','deviceDetector', '$state', '$timeout', 'Auth', 'vcRecaptchaService', 'globalConfig', '$rootScope', 'loginConstants', 'Principal', 'StorageService', 'patientsurveyService',
+    function($scope, $state,deviceDetector, $timeout, Auth, vcRecaptchaService, globalConfig, $rootScope, loginConstants, Principal, StorageService, patientsurveyService) {
     $scope.showLogin = true;
     $scope.isEmailExist = true;
     $scope.isFirstLogin = false;
@@ -20,6 +20,17 @@ angular.module('hillromvestApp')
     $scope.otherError = false;
     $scope.message = "";
     $scope.showSubmit = true;
+	$scope.isBrowserCompatible= false;
+	
+	$scope.chechBrowserCompatibility = function() {
+    
+     if ((deviceDetector.browser == 'chrome' && deviceDetector.browser_version >'38' ) || (deviceDetector.browser == 'ie' && deviceDetector.browser_version < 9 ) || (deviceDetector.browser == 'firefox' && deviceDetector.browser_version < '38' ) || (deviceDetector.browser == 'opera') ) {
+        $scope.isBrowserCompatible= true;
+          }
+    else  {
+      $scope.isBrowserCompatible = false;
+          } 
+    };
 
     $scope.setResponse = function(response) {
       $scope.response = response;
@@ -84,6 +95,7 @@ angular.module('hillromvestApp')
 
     $scope.init = function() {
       var currentRoute = $state.current.name;
+	  $scope.chechBrowserCompatibility();
       if(currentRoute === "activateUser"){
         if(StorageService.get('logged') && StorageService.get('logged').token && StorageService.get('logged').isActivate){
           $scope.resetForActivateUser();  
