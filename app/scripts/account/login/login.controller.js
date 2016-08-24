@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hillromvestApp')
-  .controller('LoginController',['$scope','deviceDetector', '$state', '$timeout', 'Auth', 'vcRecaptchaService', 'globalConfig', '$rootScope', 'loginConstants', 'Principal', 'StorageService', 'patientsurveyService',
+  .controller('LoginController',['$scope','$state','deviceDetector', '$timeout', 'Auth', 'vcRecaptchaService', 'globalConfig', '$rootScope', 'loginConstants', 'Principal', 'StorageService', 'patientsurveyService',
     function($scope, $state,deviceDetector, $timeout, Auth, vcRecaptchaService, globalConfig, $rootScope, loginConstants, Principal, StorageService, patientsurveyService) {
     $scope.showLogin = true;
     $scope.isEmailExist = true;
@@ -24,7 +24,7 @@ angular.module('hillromvestApp')
 	
 	$scope.chechBrowserCompatibility = function() {
     
-     if ((deviceDetector.browser == 'chrome' && deviceDetector.browser_version >'38' ) || (deviceDetector.browser == 'ie' && deviceDetector.browser_version < 9 ) || (deviceDetector.browser == 'firefox' && deviceDetector.browser_version < '38' ) || (deviceDetector.browser == 'opera') ) {
+     if ((deviceDetector.browser == 'chrome' && deviceDetector.browser_version <'38' ) || (deviceDetector.browser == 'ie' && deviceDetector.browser_version < 11 ) || (deviceDetector.browser == 'firefox' && deviceDetector.browser_version < '38' ) || (deviceDetector.browser == 'opera') ) {
         $scope.isBrowserCompatible= true;
           }
     else  {
