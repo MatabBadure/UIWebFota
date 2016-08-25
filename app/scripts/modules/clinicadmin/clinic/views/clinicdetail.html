@@ -154,8 +154,7 @@
             </div>
             <div class="col-md-10  reset-padding form__select__input--option selected-box-container">
               <div class="custom-dropdown">
-                <select  ng-model="clinic.speciality" ng-options="x for x in specialities">
-                  <!-- <option selected="selected"></option> -->
+                <select name="type" ng-model="clinic.speciality"  ng-options="item.type_code_value as item.type_code_value for item in specialities">
                 </select>
               </div>
             </div>

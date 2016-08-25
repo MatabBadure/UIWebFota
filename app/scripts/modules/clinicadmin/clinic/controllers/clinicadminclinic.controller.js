@@ -1,12 +1,14 @@
 angular.module('hillromvestApp')
 .controller('clinicadminclinicController',['$scope', '$state', 'clinicadminService', 'notyService', '$stateParams', 'clinicService', 'UserService', 'StorageService', 'commonsUserService',
   function($scope, $state, clinicadminService, notyService, $stateParams, clinicService, UserService, StorageService, commonsUserService) {
-  $scope.specialities = ["Adult CF","Pediatric CF","Adult General Pulmonologist","Pediatric General Pulmonologist","Adult Neurology","Pediatric Neurology","Bronchiectasis"]
   	$scope.init = function(){
       var currentRoute = $state.current.name;
       if (currentRoute === 'clinicadminclinicdashboard') {        
         $scope.clinicDashboardInit();
       }
+	  clinicService.getClinicSpeciality().then(function(response){
+         $scope.specialities =  response.data.typeCode;
+      }).catch(function(response){});
   	};
 
     $scope.clinicDashboardInit = function(){

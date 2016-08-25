@@ -12,8 +12,6 @@ angular.module('hillromvestApp')
       'isMessage':false,
       'message': ''
     }
- $scope.specialities = ["Adult CF","Pediatric CF","Adult General Pulmonologist","Pediatric General Pulmonologist","Adult Neurology","Pediatric Neurology","Bronchiectasis"]
-
     /*check the state from the route*/
     $scope.init = function() {
       var currentRoute = $state.current.name;
@@ -165,6 +163,9 @@ angular.module('hillromvestApp')
       $scope.clinic.type = 'parent';
       $scope.clinicStatus.editMode = false;
       $scope.clinicStatus.isCreate = true;
+	  clinicService.getClinicSpeciality().then(function(response){
+         $scope.specialities =  response.data.typeCode;
+      }).catch(function(response){});
       UserService.getState().then(function(response) {
         $scope.states = response.data.states;
       }).catch(function(response) {});
@@ -183,6 +184,9 @@ angular.module('hillromvestApp')
       $scope.states = [];
       $scope.clinicStatus.editMode = true;
       $scope.clinicStatus.isCreate = false;
+	  clinicService.getClinicSpeciality().then(function(response){
+         $scope.specialities =  response.data.typeCode;
+      }).catch(function(response){});
       UserService.getState().then(function(response) {
         $scope.states = response.data.states;
       }).catch(function(response) {});
