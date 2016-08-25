@@ -18,7 +18,8 @@ angular.module('hillromvestApp',
    'ngSanitize',
    'ngAnimate',
    'toastr',
-   'oc.lazyLoad'
+   'oc.lazyLoad',
+   'ng.deviceDetector'
 
    ])
 .run(['$rootScope', '$location', '$window', '$http', '$state', '$translate', 'Language', 'Auth', 'Principal', 'ENV', 'VERSION', function($rootScope, $location, $window, $http, $state, $translate, Language, Auth, Principal, ENV, VERSION) {
