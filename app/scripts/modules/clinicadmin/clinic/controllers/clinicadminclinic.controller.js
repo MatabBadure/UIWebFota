@@ -7,6 +7,9 @@ angular.module('hillromvestApp')
       if (currentRoute === 'clinicadminclinicdashboard') {        
         $scope.clinicDashboardInit();
       }
+	  clinicService.getClinicSpeciality().then(function(response){
+         $scope.specialities =  response.data.typeCode;
+      }).catch(function(response){});
   	};
 
     $scope.clinicDashboardInit = function(){
