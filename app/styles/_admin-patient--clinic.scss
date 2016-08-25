@@ -138,10 +138,12 @@
     }
   }
   .patientInfo_update_note{
-	background-color:#CCCCCC;
-	width:52%;
-	color: #003594;
-	line-height: 30px;
-	font-weight: normal;
-	margin-left:25px;
+float:left;
+  background-color:#CCCCCC;
+color: #003594;
+line-height: 30px;
+  font-weight: normal;
+  text-align:center;
+  padding-right:4px !important;
+  padding-left:3px !important;
 }
