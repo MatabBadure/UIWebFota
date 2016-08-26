@@ -46,12 +46,14 @@
             "health-portal": "Health Portal"
         },
         "my-dashboard": "My Profile",
+        "charger": "Charger Device",
         "logout": "Logout",
         "console": "Console",
         "tabs": {
             "manage-patients": "Patients",
             "manage-hcps": "HCPs",
             "manage-clinics": "Clinics",
+            "manage-clinic": "Clinic",
             "manage-users": "Users",
             "notifications": "Notifications",
             "dashboard": "Dashboard",
@@ -364,10 +366,10 @@
     },
     "search-filter" : {
         "active" : "Active",
-        "inactive" : "InActive", "no-event" : "No Transmission",
-        "setting-deviation" : "Consecutive Frequency Deviation Day",
-        "hmr-non-compliant" : "HMR Non-Adherence",
-        "missed-therapy" :"Consecutive Missed Day",
+        "inactive" : "InActive", "no-event" : "No Transmission Recorded",
+        "setting-deviation" : "Below Frequency Setting",
+        "hmr-non-compliant" : "Below Treatment Minutes",
+        "missed-therapy" :"Missed Therapy Days",
         "pending": "Pending"
     },
 
