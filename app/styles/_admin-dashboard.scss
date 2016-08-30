@@ -8,6 +8,16 @@
 	background-color: $body-bg;
 }
 
+.selected{
+  background-color:lavender;
+}
+.Charger_Data_Box{
+overflow-y: scroll; 
+border:solid;
+ border-color:black;
+ width:600px;
+ height:500px;
+}
 .dashbord-nav {
 	max-height: 40px;
 	min-height: 40px;

@@ -3,6 +3,12 @@ angular.module('hillromvestApp')
   function($scope, $state, clinicadminService, notyService, $stateParams, clinicService, UserService, StorageService, commonsUserService) {
 
   	$scope.init = function(){
+      clinicService.getClinicSpeciality().then(function(response){
+         $scope.specialities =  response.data.typeCode;
+      }).catch(function(response){
+      
+      });
+
       var currentRoute = $state.current.name;
       if (currentRoute === 'clinicadminclinicdashboard') {        
         $scope.clinicDashboardInit();

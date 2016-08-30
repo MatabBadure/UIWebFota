@@ -220,6 +220,14 @@ angular.module('hillromvestApp')
         }).success(function(response) {
           return response;
         });
+      },
+	  getClinicSpeciality : function(){
+        var url = URL.getClinicSpeciality;
+        return $http.get(url, {
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });
       }
     };
   }]);

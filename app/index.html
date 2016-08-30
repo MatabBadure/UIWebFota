@@ -21,7 +21,7 @@
 </head>
  
 <body ng-app="hillromvestApp">
-<!--  <span us-spinner></span> -->
+<!--  <span us-spinner> </span> -->
   <span us-spinner="{radius:15, width:6, length:10, color: '#7ca3dc', position: 'fixed'}"></span>
     <div noty-container></div>
     <div id="wrap" ng-controller="MainController">
@@ -93,6 +93,8 @@
 <script src="bower_components/oclazyload/dist/ocLazyLoad.min.js"></script>
 <script src="bower_components/angular-ui-mask/dist/mask.min.js"></script>
 <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+<script src="bower_components/ng-device-detector/ng-device-detector.min.js"></script>
+<script src="bower_components/re-tree/re-tree.min.js"></script>
 <script src="scripts/app.min.js"></script>
 <script src="scripts/recaptcha.min.js"></script>
 <script src="scripts/app.constants.min.js"></script>
@@ -202,6 +204,12 @@
 <script src="scripts/modules/common/clinicadmin-hcp/benchmarking/controllers/benchmarking.controller.js"></script>
 <script src="scripts/modules/common/clinicadmin-hcp/patient-diagnostics/controllers/patientDiagnosticController.js"></script>
 <script src="scripts/modules/common/clinicadmin-hcp/patient-diagnostics/services/patientdiagnostic.service.js"></script>
+<script src="scripts/modules/common/console/devicelist/controllers/devicelist.controller.js"></script>
+<script src="scripts/modules/admin/profile/controller/chargercontroller.js"></script>
+<script src="scripts/modules/admin/profile/service/charger.service.js"></script>
+<script src="scripts/modules/admin/profile/chargerTab/chargerTab.directive.js"></script>
+<script src="scripts/modules/admin/profile/chargerTab/chargerTab.directive.min.js"></script>
+
 <!-- endbuild -->
 
 </body>
