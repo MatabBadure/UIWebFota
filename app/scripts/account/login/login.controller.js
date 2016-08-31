@@ -24,7 +24,7 @@ angular.module('hillromvestApp')
 	
 	$scope.chechBrowserCompatibility = function() {
     
-      if ((deviceDetector.browser == 'chrome' && deviceDetector.browser_version <'38' ) || (deviceDetector.browser == 'ie' && deviceDetector.browser_version < '11' ) || (deviceDetector.browser == 'firefox' && deviceDetector.browser_version < '38' )  || (deviceDetector.browser == 'safari' && deviceDetector.browser_version < '7' ) || (deviceDetector.browser == 'opera') {
+      if ((deviceDetector.browser == 'chrome' && deviceDetector.browser_version <'38' ) || (deviceDetector.browser == 'ie' && deviceDetector.browser_version < 11 ) || (deviceDetector.browser == 'firefox' && deviceDetector.browser_version < '38' )  || (deviceDetector.browser == 'safari' && deviceDetector.browser_version < '7' ) || (deviceDetector.browser == 'opera')){
         $scope.isBrowserCompatible= true;
           }
     else  {
