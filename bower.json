@@ -41,8 +41,8 @@
     "jspdf": "1.0.272",
     "canvg": "~1.3.0",
     "canvg-gabelerner": "*",
-	"ng-device-detector": "^3.0.1",
-	"re-tree": "^0.0.2"
+    "re-tree": "~0.0.2",
+	"ng-device-detector": "~3.0.1"
   },
   "devDependencies": {
     "angular-mask": "~3.0.12",
