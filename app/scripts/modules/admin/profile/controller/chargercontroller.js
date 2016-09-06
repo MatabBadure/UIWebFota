@@ -10,7 +10,7 @@ angular.module('hillromvestApp')
     			chargerservice.getListDataFromService().then(function(response){
     			$scope.data = response;
                 $scope.m = response.data;
-                $scope.sample(Number(max));
+                $scope.sample(Number(max+1));
         		}).catch(function(response){
         	});
     	};
@@ -28,8 +28,7 @@ angular.module('hillromvestApp')
                 $scope.selctedItem = id;
                 var i = (Number(max)) - id;
                  var text = document.getElementById("viewtxt");
-                 text.innerHTML = '<span style="color:blue">' +$scope.dateArray[i] + '</span></br>' +$scope.clickedMessage.data.device_data.deviceData;
-                 //text.value = $scope.dateArray[i] + "\n\n\n"+$scope.clickedMessage.data.device_data.deviceData;
+                        text.innerHTML = '<span style="color:blue">' +getDateInUTC($scope.clickedMessage.data.device_data.createdTime) + '</span></br>' +$scope.clickedMessage.data.device_data.deviceData;
                 }).catch(function(response){
             });
     		
@@ -45,33 +44,41 @@ angular.module('hillromvestApp')
                 $scope.dateArray = [];
                 for(var i = 0 ;i<$scope.listValueForDate.device_data.totalElements;i++)
                 {
-                        var value = $scope.listValueForDate.device_data.content[k][1];
-                        var _dateLocal = dateService.getDate(value);
-                        var _date = _dateLocal.toUTCString();
-                        var _month = _dateLocal.getUTCMonth();
-                        var _day = _dateLocal.getUTCDate();
-                        var _year = _dateLocal.getUTCFullYear();
-                        var _hours = _dateLocal.getUTCHours();
-                        var _minutes = _dateLocal.getUTCMinutes();
-                        var _seconds = _dateLocal.getUTCSeconds();
-                        if(_hours < 10)
-                        {
-                            _hours = "0"+_hours;
-                        }
-                        if(_seconds < 10)
-                        {
-                            _seconds = "0"+_seconds;
-                        }
-                        if(_minutes< 10)
-                        {
-                            _minutes = "0"+_minutes;
-                        }
-                        var dob = _month + "/" + _day + "/" + _year + " " + _hours + ":" + _minutes + ":" + _seconds;
-                        k++;
-                        $scope.dateArray.push(dob);
+                        var value = ($scope.listValueForDate.device_data.content[k][1]);
+                         var dobUtc = getDateInUTC(value);
+                         k++;
+                        $scope.dateArray.push(dobUtc);
                 }
                 }).catch(function(response){
             });
         };
+
+
+        function getDateInUTC(value) {
+            var _dateLocal = dateService.getDate(value);
+            var _month = _dateLocal.getUTCMonth()+1;
+            var _day = _dateLocal.getUTCDate();
+            var _year = _dateLocal.getUTCFullYear();
+            var _hours = _dateLocal.getUTCHours();
+            var _minutes = _dateLocal.getUTCMinutes();
+            var _seconds = _dateLocal.getUTCSeconds();
+
+
+            if(_hours < 10)
+                {
+                     _hours = "0"+_hours;
+                }
+            if(_seconds < 10)
+                {
+                    _seconds = "0"+_seconds;
+                }
+            if(_minutes< 10)
+                {
+                    _minutes = "0"+_minutes;
+                }
+            var dob = _month + "/" + _day + "/" + _year + " " + _hours + ":" + _minutes + ":" + _seconds;
+            return dob;
+        }
+
 
 }]);
