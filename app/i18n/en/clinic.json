@@ -151,6 +151,7 @@
             "first-name": "First Name",
             "middle-name": "Middle Name",
             "last-name": "Last Name",
+            "phone": "Mobile Number",
             "email": "Email"
         },
         "deleteClinicAdmin":{

@@ -84,8 +84,24 @@
               </div>
             </div>
           </div>
+
+           <div class="col-md-7 reset-padding col-md-offset-2">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+              <span class="" translate="profile.phone"></span>
+            </div>
+           <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding">
+              <input class="ng-valid ng-isolate-scope ng-valid-mask ng-dirty ng-valid-parse ng-touched" type="text" ui-options="{clearOnBlur: false}" model-view-value="true" ui-mask="(999)-999-9999" ng-model="user.mobilePhone" validate-on-blur="" name="mobilePhone">
+              <div ng-show="(form.mobilePhone.$showValidationMessage && form.mobilePhone.$invalid) || submitted">
+                <span class="has-error" ng-show="form.mobilePhone.$error.pattern" translate="error.mobilePhone.pattern"></span>
+                <span class="has-error" ng-show="form.mobilePhone.$error.maxlength" translate="error.mobilePhone.maxlength"></span>
+                <span class="has-error" ng-show="form.mobilePhone.$error.mask" translate="error.mobilePhone.mask"></span>
+              </div>
+            </div>
+          </div>
+
         </div>
-       
+
+
         <div class="col-md-16 reset-padding margin-top-xl">
           <div class="col-md-7 reset-padding">
             <div class="col-md-6 dashboard__form--label reset-padding">
