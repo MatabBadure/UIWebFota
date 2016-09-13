@@ -10,6 +10,7 @@
   </div>
 </div>
 
+
 <div class="container admin-user">
   <div class="col-md-16 col-sm-16 admin-views">
     <span class="admin-views--title" translate="clinic.tab.clinic-admin"></span>
@@ -76,6 +77,7 @@
 	</div>
 </div>
 
+
 <div class="dashboard dashboard--content padding-bottom-ls" ng-show="showAddclinicAdmin && addAdmin === 'newAdmin' || clinicAdminEdit">
   <form name="createClinicAdminForm" ng-submit="submitClinicAdmin()" novalidate autocomplete="off">
     <div class="container dashboard__form">
@@ -139,13 +141,24 @@
             </div>
           </div>
 
+            
             <div class="col-md-7 col-sm-7 reset-padding margin-top">
             <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
               <span class="" translate="clinic.admin.phone"></span>
             </div>
            <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding">
-              <input class="" type="text" name="mobile" ng-model="newAdmin.mobilePhone" ng-minlength=10 ng-maxlength=15 ui-mask="(999)-999-9999" required>
+              <input class="" type="text" name="mobilePhone" ng-model="newAdmin.mobilePhone" ui-mask="(999)-999-9999" ui-options="{clearOnBlur: false}" model-view-value="true">
+               <div ng-show="(createClinicAdminForm.mobilePhone.$showValidationMessage && createClinicAdminForm.mobilePhone.$invalid) || submitted">
+                <span class="has-error" ng-show="createClinicAdminForm.mobilePhone.$error.pattern" translate="error.mobilePhone.pattern"></span>
+                <span class="has-error" ng-show="createClinicAdminForm.mobilePhone.$error.maxlength" translate="error.mobilePhone.maxlength"></span>
+                <span class="has-error" ng-show="createClinicAdminForm.mobilePhone.$error.mask" translate="error.mobilePhone.mask"></span>
+              </div>
             </div>
+           <!--  <div ng-show="(userForm.mobilePhone.$showValidationMessage && userForm.mobilePhone.$invalid)">
+                <span class="has-error" ng-show="userForm.mobilePhone.$error.pattern" translate="error.mobilePhone.pattern"></span>
+                <span class="has-error" ng-show="userForm.mobilePhone.$error.maxlength" translate="error.mobilePhone.maxlength"></span>
+                <span class="has-error" ng-show="userForm.mobilePhone.$error.mask" translate="error.mobilePhone.mask"></span>
+              </div> -->
           </div>
 
         </div>
