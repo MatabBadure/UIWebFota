@@ -12,6 +12,9 @@ angular.module('hillromvestApp')
 	},
 	'clinicBaseURL': 'api/clinics',
 	'userBaseUrl' : '/api/user/',
+	'chargerBaseURL':'/api/chargerdevicedata',
+	'chargerDataList' : 'api/chargerdevicedatalist',
+	'clickedListData' : 'api/chargerdevicedata/ID',
 	'patientRelationships' : 'api/patient/relationships',
 	'searchUsers': 'api/user/search?searchString=',
 	'searchHcpUser': 'api/user/hcp/search?searchString=',
@@ -111,5 +114,6 @@ angular.module('hillromvestApp')
 	'testResult': '/api/testresult/user/PATIENTID',
 	'getTestResultById': '/api/testresult/ID',
 	'updateTestRESULT' : '/api/testresult/user/PATIENTID',
-	'addTestResultByClinicadminHCP' : '/api/testresult/patient/PATIENTID/user/USERID'
+	'addTestResultByClinicadminHCP' : '/api/testresult/patient/PATIENTID/user/USERID',
+	'getClinicSpeciality' : 'api/codeValues/clinic_speciality'
 });
