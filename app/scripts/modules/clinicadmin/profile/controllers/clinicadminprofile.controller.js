@@ -69,6 +69,20 @@ angular.module('hillromvestApp')
       $state.go(status);
     };
 
+
+ $scope.close = function(value)
+    {
+      $scope.showUpdateModal = value;
+    };
+
+    $scope.showUpdate = function(){
+          $scope.submitted = true;
+          if($scope.form.$invalid){
+            return false;
+          }
+          $scope.showUpdateModal = true;
+        };
+        
     $scope.updateProfile = function(){
       $scope.submitted = true;
       if($scope.form.$invalid){
