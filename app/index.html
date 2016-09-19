@@ -1,5 +1,7 @@
 <!doctype html>
-<html class="no-js">
+<!-- START : UI Changes for fixed bottom -->
+<html class="no-js" style= "height : 100%">
+<!-- END : UI Changes for fixed bottom -->
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -20,7 +22,9 @@
 
 </head>
  
-<body ng-app="hillromvestApp">
+ <!-- START : UI Changes for fixed bottom -->
+<body ng-app="hillromvestApp" style= "position: relative;margin: 0;height: 100%;">
+<!-- END : UI Changes for fixed bottom -->
 <!--  <span us-spinner> </span> -->
   <span us-spinner="{radius:15, width:6, length:10, color: '#7ca3dc', position: 'fixed'}"></span>
     <div noty-container></div>
@@ -30,7 +34,9 @@
 
         <div class="content-body" ui-view="content"></div>
 
-        <footer class="footer navbar-fixed-bottom">
+        <!-- START : UI Changes for fixed bottom -->
+        <footer class="footer navbar-fixed-bottom" style="position: absolute; right: 0;  bottom: 0;left: 0;">
+       <!-- END : UI Changes for fixed bottom -->
 
 <div class="col-md-16 footer_container ">
     <div class="container">
