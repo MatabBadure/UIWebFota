@@ -50,6 +50,24 @@ border:solid;
   position: relative;
 }
 
+.agree-content{
+  color: black; 
+  font-size: 16px; 
+  font-weight: bold;
+}
+
+.agree-main{
+  padding-left:1cm;
+}
+
+.agree-desc{
+ color:black;
+}
+
+.agree-check{
+ padding-left:10px;
+}
+
 .create-user .hillrom-icon {
 	font-weight: $font-weight-bold;
 }
