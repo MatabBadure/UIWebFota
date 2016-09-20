@@ -61,6 +61,19 @@ angular.module('hillromvestApp')
       $scope.updateCaregiver($scope.associateCareGiver);
     };
 
+     $scope.close = function(value)
+    {
+      $scope.showUpdateModal = value;
+    };
+
+    $scope.showUpdate = function(){
+          $scope.submitted = true;
+          if($scope.form.$invalid){
+            return false;
+          }
+          $scope.showUpdateModal = true;
+        };
+
     $scope.changePassword = function(){
       var data = {
         'password': $scope.profile.password,
@@ -122,3 +135,4 @@ angular.module('hillromvestApp')
 
     $scope.init();
   }]);
+  

@@ -1,4 +1,3 @@
-
 <div class="dashboard dashboard--content padding-bottom-ls">
   <form name="form" novalidate autocomplete="off">
     <div class="container dashboard__form">
@@ -163,7 +162,7 @@
 
     <div class="col-md-16 margin-top reset-padding">
       <div class="">
-          <button type="button" class="hillrom-btn btn-submit float-right" ng-show="!userStatus.isCreate" translate="profile.update-button-text" ng-click="$parent.showUpdateModal = true">Update</button>
+          <button type="button" class="hillrom-btn btn-submit float-right" ng-show="!userStatus.isCreate" translate="profile.update-button-text" ng-click="showUpdate()">Update</button>
           <button type="reset" ng-click="cancel()" ng-show="!userStatus.isCreate" class="cancel hillrom-btn btn-submit float-right" translate="profile.cancel-button-text">Cancel</button>
           <div class="clr"></div>
       </div>
@@ -176,7 +175,7 @@
   <div class="modal__dialog">
     <div class="modal__content">
       <header class="modal__header">
-        <button type="button" class="modal__close" data-dismiss="modal" ng-click="$parent.showUpdateModal= false">&times;</button>
+        <button type="button" class="modal__close" data-dismiss="modal" ng-click="close(false)">&times;</button>
          <p translate="profile.update.warning"></p>
       </header>
       <div class="modal__body">
@@ -191,7 +190,3 @@
     </div>
   </div>
 </div>
-
-
-
-

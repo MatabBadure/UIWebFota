@@ -185,15 +185,30 @@
               <span class=""></span>
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
-              <input type="text" class="form-control" validate-on-blur  name="mobilePhone"  ng-readonly="validateADMINorASP()" ng-model="associateCareGiver.mobilePhone" ui-mask="(999)-999-9999" model-view-value="true" ui-options="{clearOnBlur: false}">
+              <input type="text" class="form-control" validate-on-blur  name="mobilePhone"  ng-readonly="validateADMINorASP()" ng-model="associateCareGiver.mobilePhone" ui-mask="(999)-999-9999" model-view-value="true" ui-options="{clearOnBlur: false}"><br>  
               <div ng-show="(form.mobilePhone.$showValidationMessage && form.mobilePhone.$invalid) || submitted">
                 <span class="has-error" ng-show="form.mobilePhone.$invalid" translate="patient.errMSG.mobile-phone-invalid">
-                 </span>               
+                 </span>             
               </div>
             </div>
         </div>
       </div>
-      <div class="clr"></div>
+
+     <div class = "agree-main">
+      <span class = "agree-content" translate="patient.AgreementNote"></span><br><br>
+      <div class="form-group">
+        <span class="sec-quest agree-desc" translate="patient.Agreement">
+        </span><br><br>
+        <input type="checkbox" name="tnc" ng-model="user.tnc" required>
+        <span class="sec-quest agree-check" translate="patient.AgreementApprovalNote"></span>
+            <div ng-show="(form.tnc.$dirty && form.tnc.$invalid) || submitted">
+            <span class="login-has-error" ng-show="form.tnc.$error.required">
+                Please agree to Terms and Conditions.
+            </span>
+            </div>
+      </div>
+     </div>
+    <div class="clr"></div>
     </div>
 
 
