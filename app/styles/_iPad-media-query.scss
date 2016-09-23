@@ -129,6 +129,10 @@
 	.col-hide-web{
     	display: block;
   	}
+  	.adherence_protocol_width{
+  		max-width: 759px!important;
+    	width: 759px!important;
+  	}
 	.dashboard__manage-view--header{
 		.header--type{
 			/*width: 20%;*/
@@ -190,6 +194,9 @@
 	.multiSelect > button{
 		width:180px;
 	}
+	.dark_grey_text_colour{
+	color: $storm-dust !important;
+}
 	.navbar-secondary .navbar-right > li{
 		padding:0 14px !important;
 	}
@@ -281,6 +288,10 @@
 	.login__container__right-section{
 		width: 100%;
 	}	
+		.adherence_protocol_width{
+  		max-width: 759px!important;
+    	width: 759px!important;
+  	}
 	/*Login page Style END*/
 
 	/* User Particular info tab padding */
@@ -337,6 +348,9 @@
 	.tab-clear{
 		clear:both;
 	}
+	.dark_grey_text_colour{
+	color: $storm-dust !important;
+}
 	.margin-left-10-reset{
 		margin-left:0px;
 	}
@@ -351,6 +365,12 @@
 	}
 	.show-tab{
 		display:block !important;
+	}
+	.text-align-r{
+		text-align: right;
+	}
+	.text-align_c{
+		text-align:center!important;
 	}
 	
 	.patient-user__navbar ul > li > a .icons{
@@ -435,6 +455,100 @@
 		}
 	
 	}
+	
+	.incompatible_browser_message{
+ 	 background-color:rgba(255, 255, 255, 0.7);
+	padding:5px 5px;
+	box-shadow:0px 0px 6px #777777;
+	margin-top:20px; text-align:center;
+}
+.incompatible_browser_message img{
+	height:40px;
+	width:40px;
+}
+.incompatible_browser_message figcaption{
+ 	 font-size:10px;
+}
+.incompatible_browser_message a{
+	 margin-right:15px;
+ 	 float:left;
+}
+.incompatible_browser_message_Header{
+	color:black; 
+	font-weight:900;
+ 	font-size:12px; 
+	}
+	.incompatible_browser_message_Body{
+	color:black; 
+	font-weight:300; 
+	font-size:10px;
+	}
 } 
+@media only screen and (min-width : 700px) and (max-width : 1024px) and (orientation : portrait) { 
+.incompatible_browser_message{
+  background-color:rgba(255, 255, 255, 0.7);
+padding:5px 5px;
+box-shadow:0px 0px 6px #777777;
+margin-top:20px; text-align:center;
+}
+.incompatible_browser_message img{
+height:40px;
+width:40px;
+}
+.incompatible_browser_message figcaption{
+  font-size:10px;
+}
+.incompatible_browser_message a{
+  margin-right:15px;
+  float:left;
+}
+.incompatible_browser_message_Header{
+color:black; 
+font-weight:900;
+ font-size:18px; 
+	}
+	.incompatible_browser_message_Body{
+color:black; 
+font-weight:300; 
+font-size:12px;
+	}
+	#Message_Text{
+	width:50% !important;
+	}
+
+}
+@media only screen and (min-width : 700px) and (max-width : 1024px) and (orientation : landscape) { 
+.incompatible_browser_message{
+  background-color:rgba(255, 255, 255, 0.7);
+padding:5px 5px;
+box-shadow:0px 0px 6px #777777;
+margin-top:20px; text-align:center;
+}
+.incompatible_browser_message img{
+height:40px;
+width:40px;
+}
+.incompatible_browser_message figcaption{
+  font-size:10px;
+}
+.incompatible_browser_message a{
+  margin-right:15px;
+  float:left;
+}
+.incompatible_browser_message_Header{
+color:black; 
+font-weight:900;
+ font-size:18px; 
+	}
+	.incompatible_browser_message_Body{
+color:black; 
+font-weight:300; 
+font-size:12px;
+	}
+	#Message_Text{
+	width:50% !important;
+	}
+}
+
 
 

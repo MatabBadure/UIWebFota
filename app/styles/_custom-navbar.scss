@@ -324,6 +324,14 @@ ul.logout-dropdown>li{
     top: 11px;
     right: 0px;
 }
+.navbar-secondary .navbar-right .header-popover ul li:nth-child(3):after{
+	height: 35px;
+    border-right: 1px solid #C1C1C1;
+    content: '';
+    position: absolute;
+    top: 11px;
+    right: 0px;
+}
 
 
 #top-shadow {
@@ -456,6 +464,9 @@ ul.logout-dropdown>li{
 }
 .font-size18{
 	font-size:18px;
+}
+.dark_grey_text_colour{
+	color: $storm-dust !important;
 }
 .margin-lt{
 	margin-left:4px;

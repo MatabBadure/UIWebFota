@@ -2,7 +2,8 @@
 
 angular.module('hillromvestApp').controller('patientprofileController', ['$scope', '$state', 'notyService', 'patientService', 'UserService', 'AuthServerProvider', 'Password', 'Auth', 'StorageService', 'caregiverDashBoardService', '$stateParams', 'loginConstants', '$q', 'dateService', '$rootScope', 'commonsUserService',
   function ($scope, $state, notyService, patientService, UserService, AuthServerProvider,Password, Auth, StorageService, caregiverDashBoardService, $stateParams, loginConstants, $q, dateService, $rootScope, commonsUserService) {
-	
+    $scope.isPhoneUpdated = false;
+   $scope.isEmailUpdated = false;
   $scope.init = function(){
 		var currentRoute = $state.current.name;
 		$scope.profileTab = currentRoute;	
@@ -185,21 +186,64 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
   };
 
   $scope.updateEmail = function(){
-    $scope.emailFormSubmitted = true;
-    if($scope.emailForm.$invalid){
-      return false;
+    if($scope.isPhoneUpdated ==true && $scope.isEmailUpdated == false)
+    {
+        $scope.emailFormSubmitted = true;
+      if($scope.emailForm.$invalid){
+        return false;
+      }
+      var data = $scope.patient;
+      data.role = 'PATIENT';
+      UserService.editUser(data).then(function(response){
+        notyService.showMessage(response.data.message, 'success');
+        $scope.isPhoneUpdated = false;
+      }).catch(function(response){
+        notyService.showError(response);
+        $scope.isPhoneUpdated = false;
+      });
     }
-    var data = $scope.patient;
-    data.role = 'PATIENT';
-    UserService.editUser(data).then(function(response){
-      Auth.logout();
-      StorageService.clearAll();
-      $rootScope.userRole = null;
-      notyService.showMessage(response.data.message, 'success');
-      $state.go('login');
-    }).catch(function(response){
-      notyService.showError(response);
-    });
+    else if($scope.isPhoneUpdated ==false && $scope.isEmailUpdated == true)
+    {
+      $scope.emailFormSubmitted = true;
+      if($scope.emailForm.$invalid){
+        return false;
+      }
+      var data = $scope.patient;
+      data.role = 'PATIENT';
+      UserService.editUser(data).then(function(response){
+        Auth.logout();
+        StorageService.clearAll();
+        $rootScope.userRole = null;
+        notyService.showMessage(response.data.message, 'success');
+        $scope.isEmailUpdated = false;
+        $state.go('login');
+      }).catch(function(response){
+        notyService.showError(response);
+        $scope.isEmailUpdated = false;
+      });
+    }
+    else
+    {
+       $scope.emailFormSubmitted = true;
+      if($scope.emailForm.$invalid){
+        return false;
+      }
+      var data = $scope.patient;
+      data.role = 'PATIENT';
+      UserService.editUser(data).then(function(response){
+        Auth.logout();
+        StorageService.clearAll();
+        $rootScope.userRole = null;
+        notyService.showMessage(response.data.message, 'success');
+        $scope.isEmailUpdated = false;
+        $scope.isPhoneUpdated = false;
+        $state.go('login');
+      }).catch(function(response){
+        notyService.showError(response);
+        $scope.isEmailUpdated = false;
+        $scope.isPhoneUpdated = false;
+      });
+    }
   };
 
   $scope.updatePassword = function(){

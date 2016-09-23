@@ -80,6 +80,9 @@
     "mobile": "Mobile:",
     "fax": "Fax:",
     "hr-id": "ID:",
+    "AgreementApprovalNote":"I agree to the terms of services for this site",
+     "AgreementNote":"Please read the following important information before continuing.",
+    "Agreement" : "I request that Hill-Rom grant access to my medical information contained in my VisiView Portal (the “Portal”) to the above named individual (the “Recipient”).Health information to be disclosed: All information contained in the Portal.Purpose of the disclosure: To allow the Recipient to view my medical information.I authorize the release of my medical information contained in the Portal to the Recipient(s). This Authorization does not authorize the release of my medical information by other means, methods, or forms. I understand that once information has been disclosed, it may potentially be re-disclosed by the Recipient and the disclosed information may not be covered by state or federal privacy protections. I understand that authorizing Hill-Rom to disclose my medical information to the Recipient via the Portal is completely voluntary. I understand that Hill-Rom will not condition healthcare treatment or payment for treatment upon my signing this Authorization.I understand that unless earlier revoked by me in writing, this Authorization is valid until I discontinue my use of the Portal. I may submit a written revocation request at any time. Written revocation requests should be mailed to Hill-Rom at 1020 West County Road F St. Paul, MN 55126. I understand that a revocation is not effective for uses and disclosures of my medical information that have already been made or other actions that have been taken in reliance on this Authorization or as required by law.",
     "link-clinic": "Link Clinic",
     "link-caregiver": "Add Caregiver",
     "link-device": "Add Device",
@@ -300,9 +303,9 @@
     "statistics": "Statistics",
     "adherence-score": "Adherence Score",
     "hmr-runrate": "HMR Runrate",
-    "averageSessionMinutes": " Average Session Minutes",
-    "consecutiveMissedDays":"Consecutive Missed Days",
-    "consecutiveFrequencyDeviationDays":"Consecutive Freq Dev Days",
+    "averageSessionMinutes": " Average Treatment Minutes",
+    "consecutiveMissedDays":"Missed Therapy Days",
+    "consecutiveFrequencyDeviationDays":"Below Treatment Minutes Days",
     "missed-therapy-days": "Missed Therapy Days",
     "setting-deviation-days": "Setting Deviation Days",
     "notification": "Notification",
@@ -432,4 +435,6 @@
     "average" :"Average",
     "adherenceScore": "Adherence Score"
   }
+ 
+
 }

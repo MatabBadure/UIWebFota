@@ -57,6 +57,8 @@
             "app/bower_components/angular-sanitize/angular-sanitize.js",
             "app/bower_components/oclazyload/dist/ocLazyLoad.js",
             "app/bower_components/angular-ui-mask/dist/mask.js",
+            "app/bower_components/re-tree/re-tree.js", 
+            "app/bower_components/ng-device-detector/ng-device-detector.js", 
             "app/scripts/app.js",
             "app/scripts/app.constants.js",
             "app/scripts/routes.js",
@@ -166,6 +168,9 @@
             "app/scripts/modules/patient/profile/controllers/patientbenchmarking.controller.js",
             "app/scripts/modules/common/clinicadmin-hcp/change-prescription/controllers/changeprescription.controller.js",
             "app/scripts/modules/common/clinicadmin-hcp/benchmarking/controllers/benchmarking.controller.js",
+		"app/scripts/modules/admin/profile/service/charger.service.js",
+            "app/scripts/modules/admin/profile/controller/chargercontroller.js",
+		"app/scripts/modules/admin/profile/chargerTab/chargerTab.directive.js",
             "app/scripts/modules/common/clinicadmin-hcp/patient-diagnostics/controllers/patientDiagnosticController.js",
             "app/scripts/modules/common/clinicadmin-hcp/patient-diagnostics/services/patientdiagnostic.service.js"
         ],
@@ -210,6 +215,8 @@
             "app/bower_components/angular-sanitize/angular-sanitize.min.js",
             "app/bower_components/oclazyload/dist/ocLazyLoad.min.js",
             "app/bower_components/angular-ui-mask/dist/mask.min.js",
+            "app/bower_components/re-tree/re-tree.min.js",
+            "app/bower_components/ng-device-detector/ng-device-detector.min.js",
             "app/scripts/app.min.js",
             "app/scripts/app.constants.min.js",
             "app/scripts/routes.min.js",
@@ -320,7 +327,10 @@
             "app/scripts/modules/common/clinicadmin-hcp/change-prescription/controllers/changeprescription.controller.min.js",
             "app/scripts/modules/common/clinicadmin-hcp/benchmarking/controllers/benchmarking.controller.min.js",
             "app/scripts/modules/common/clinicadmin-hcp/patient-diagnostics/controllers/patientDiagnosticController.min.js",
-            "app/scripts/modules/common/clinicadmin-hcp/patient-diagnostics/services/patientdiagnostic.service.min.js"
+            "app/scripts/modules/common/clinicadmin-hcp/patient-diagnostics/services/patientdiagnostic.service.min.js",
+		"app/scripts/modules/admin/profile/service/charger.service.min.js",
+            "app/scripts/modules/admin/profile/controller/chargercontroller.min.js",
+            "app/scripts/modules/admin/profile/chargerTab/chargerTab.directive.min.js"
         ],
         "clean": [
             "app/build/",

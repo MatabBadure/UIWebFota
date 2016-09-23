@@ -21,6 +21,7 @@
             "title": "Clinic"
         },
         "clinic-type": "Clinic Type",
+        "clinic-speciality": "Speciality",
         "transmission": "Transmission",
         "clinic-option": {
             "parent-clinic": "Parent Clinic",
@@ -150,6 +151,7 @@
             "first-name": "First Name",
             "middle-name": "Middle Name",
             "last-name": "Last Name",
+            "phone": "Mobile Number",
             "email": "Email"
         },
         "deleteClinicAdmin":{

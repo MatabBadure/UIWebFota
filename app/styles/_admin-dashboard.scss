@@ -8,6 +8,16 @@
 	background-color: $body-bg;
 }
 
+.selected{
+  background-color:lavender;
+}
+.Charger_Data_Box{
+overflow-y: scroll; 
+border:solid;
+ border-color:black;
+ width:600px;
+ height:500px;
+}
 .dashbord-nav {
 	max-height: 40px;
 	min-height: 40px;
@@ -38,6 +48,24 @@
 
 .create-user{
   position: relative;
+}
+
+.agree-content{
+  color: black; 
+  font-size: 16px; 
+  font-weight: bold;
+}
+
+.agree-main{
+  padding-left:1cm;
+}
+
+.agree-desc{
+ color:black;
+}
+
+.agree-check{
+ padding-left:10px;
 }
 
 .create-user .hillrom-icon {
