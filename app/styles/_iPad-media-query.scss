@@ -1,4 +1,9 @@
 @media only screen and (min-width : 768px) and (max-width : 1024px) and (orientation : landscape) { 
+/*To remove static border bottom*/
+.remove-static-padding{
+	padding-bottom:60% !important;
+}
+/*End of remove static border bottom*/
 	/*HCP dashboard Style device-*/
  	.stats_chart_container{ 
 		.pie_chart{
@@ -217,6 +222,11 @@
 }
 
 @media only screen and (min-width : 768px) and (max-width : 1024px) and (orientation : portrait) { 
+/*To remove static border bottom*/
+.remove-static-padding{
+	padding-bottom:60% !important;
+}
+/*End of remove static border bottom*/
 	/*HCP dashboard Style*/
 	.stats_chart_container{ 
 		.pie_chart{
