@@ -15,6 +15,14 @@ angular.module('hillromvestApp')
         return $http.get(url, {
           headers: headerService.getHeader()
         });
+      },
+      updatePatientNotes :  function(notes) {
+        var url  = URL.addPatientNotes;
+        return $http.post(url, notes, {
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });
       }
     };
 }]);

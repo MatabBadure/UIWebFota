@@ -56,7 +56,7 @@ angular.module('hillromvestApp')
         $scope.getPatientDevices($stateParams.patientId);
         $scope.patientId = parseInt($stateParams.patientId);
         if(currentRoute === 'clinicadminpatientOverview'){
-          $scope.getMRNByPatientIdAndClinicId($stateParams.patientId, $stateParams.clinicId);
+          $scope.getMRNByPatientIdAndClinicId($stateParams.patientId, $stateParams.clinicId,StorageService.get('logged').userId);
         }else{
           $scope.getPatientById($scope.patientId);
         }
@@ -309,8 +309,8 @@ angular.module('hillromvestApp')
       $scope.getCaregiversForPatient(StorageService.get('logged').patientID);
     };
     
-    $scope.getMRNByPatientIdAndClinicId = function(patientId, clinicId){
-      clinicadminPatientService.getPatientInfo(patientId, clinicId).then(function(response){
+    $scope.getMRNByPatientIdAndClinicId = function(patientId, clinicId,userID){
+      clinicadminPatientService.getPatientInfo(patientId, clinicId,userID).then(function(response){
         $scope.slectedPatient = response.data.patientUser;
         $scope.slectedPatient.mrnId = response.data.patientUser.clinicMRNId.mrnId;
       }).catch(function(response){
