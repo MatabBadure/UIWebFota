@@ -153,7 +153,8 @@
             "required": "Other justification is required."  
         },
         "ResetTo":{
-            "required": "Reset to  is required."
+            "required": "Reset to  is required.",
+            "invalid":"Reset to is invalid,It should accept only Numbers."
         },
         "justification":{
             "required": "Justification is required."

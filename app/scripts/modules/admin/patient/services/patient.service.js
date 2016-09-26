@@ -48,6 +48,16 @@ angular.module('hillromvestApp')
         });
       },
 
+
+      getJustification: function() {
+        var url = URL.getReasonForJustification;
+        return $http.get(url, {
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });
+      },
+
       /**
        * @ngdoc method
        * @name associateHCPToPatient

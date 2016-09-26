@@ -17,6 +17,7 @@ angular.module('hillromvestApp')
 	'chargerDataList' : 'api/chargerdevicedatalist',
 	'clickedListData' : 'api/chargerdevicedata/ID',
 	'patientRelationships' : 'api/patient/relationships',
+	'getReasonForJustification': 'api/codeValues/justification_reset',
 	'resetAdherenceScore': 'api/adherenceReset',
 	'searchUsers': 'api/user/search?searchString=',
 	'searchHcpUser': 'api/user/hcp/search?searchString=',

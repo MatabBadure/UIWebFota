@@ -188,9 +188,10 @@
               <span class="">*</span>
             </div>
             <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding">
-              <input class="" name="ResetTo" ng-model = "scoreToReset" type="text" required>
+              <input class="" name="ResetTo" ng-pattern="/^[0-9]{1,7}$/" ng-model = "scoreToReset" type="text" required>
               <div ng-show="(form.ResetTo.$dirty && form.ResetTo.$invalid) || resetsubmitted">
                 <span class="has-error" ng-show="form.ResetTo.$error.required" translate="error.ResetTo.required"></span>
+                <span class="has-error" ng-show="form.ResetTo.$error.pattern && !form.ResetTo.$error.required" translate="error.ResetTo.invalid"></span>
               </div>  
             </div>
           </div>
@@ -216,7 +217,7 @@
             </div>
             <div class="col-md-10 col-sm-10 dashboard__form__input reset-padding selected-box-container">
               <div class="custom-dropdown">
-                <select name="justification" ng-model="justification" required ng-options="option for option in ['Hospitalisation', 'Device Issue', 'No Connectivity','Others']" ng-change="SelectOthers(justification)">
+                <select name="justification" ng-model="justification" required ng-options="item.type_code_value as item.type_code_value for item in justificationlist" ng-change="SelectOthers(justification)">
                 </select>
                 <div ng-show="(form.justification.$dirty && form.justification.$invalid) || resetsubmitted">
                 <span class="has-error" ng-show="form.justification.$error.required" translate="error.justification.required"></span>
