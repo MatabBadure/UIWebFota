@@ -6,30 +6,9 @@ $footer--background: $body-bg;
 	line-height: 40px;
 	font-size: $font-size-small;
 	color: $davys-grey;
-	/* START : UI Changes for fixed bottom */
-	/*position: fixed; */
-	/* END : UI Changes for fixed bottom */
-    border-top: 1px solid $silver-approx;
+	/* position: fixed; */
+  /* border-top: 1px solid $silver-approx; */
 }
-
-
-/* START : UI Changes for fixed bottom */
-.footer-idx
-{
-  position: absolute; right: 0;  bottom: 0;left: 0;
-}
-
-.body-idx
-{
-  position: relative; margin: 0; min-height: 100%;
-}
-
-.html-idx
-{
-   height : 100%;
-}
-/* END : UI Changes for fixed bottom */
-
 .footer_container{
 	.footer_left_ul{
 		margin-left: 0;
