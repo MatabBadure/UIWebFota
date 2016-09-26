@@ -38,7 +38,7 @@ function($scope, $state, clinicadminPatientService, notyService, $stateParams, c
   };
 
   $scope.getPatientInfo = function(patinetId, callback){
-    clinicadminPatientService.getPatientInfo(patinetId, $stateParams.clinicId).then(function(response){
+    clinicadminPatientService.getPatientInfo(patinetId, $stateParams.clinicId,StorageService.get('logged').userId).then(function(response){
       $scope.patient = response.data.patientUser;
       if($scope.patient.zipcode){
         $scope.patient.zipcode = commonsUserService.formatZipcode($scope.patient.zipcode);

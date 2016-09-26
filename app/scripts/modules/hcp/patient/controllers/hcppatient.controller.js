@@ -5,7 +5,10 @@ angular.module('hillromvestApp')
 	$scope.init = function(){     
     if($state.current.name === 'hcppatientDemographic'){
       $scope.getPatientInfo($stateParams.patientId, $scope.setEditMode);
-    }else if($state.current.name === 'hcppatientClinics'){
+    }else if($state.current.name === 'hcppatientdemographicEdit'){
+      $scope.getPatientInfo($stateParams.patientId);
+    }
+    else if($state.current.name === 'hcppatientClinics'){
       $scope.getClinicsandHcpAssociatedToPatient($stateParams.patientId);      
     }else if($state.current.name === 'hcppatientProtocol'){
       $scope.getPatientInfo($stateParams.patientId);
@@ -59,7 +62,7 @@ angular.module('hillromvestApp')
   };
 
   $scope.getPatientInfo = function(patinetId, callback){
-    clinicadminPatientService.getPatientInfo(patinetId, $stateParams.clinicId).then(function(response){
+    clinicadminPatientService.getPatientInfo(patinetId, $stateParams.clinicId,StorageService.get('logged').userId).then(function(response){
       $scope.patient = response.data.patientUser;
       $scope.patient.zipcode = commonsUserService.formatZipcode($scope.patient.zipcode);
       if(callback){
@@ -316,4 +319,53 @@ angular.module('hillromvestApp')
     }
     $state.go('hcpUpdateProtocol', {'protocolId': protocol.id});
   };
+  $scope.openEditDetail = function(){
+        $state.go('hcppatientdemographicEdit', {'patientId': $stateParams.patientId});  
+    };
+  $scope.showPatientUpdateModel = function(){
+    /*alert($scope.form.$invalid);
+    if($scope.form.$invalid){
+      $scope.submitted = true;
+      return false;
+    }else{*/
+      $scope.updateModel = true;
+     
+   // }  
+    };
+    $scope.cancelEditDemographics = function(){
+          $state.go('hcppatientDemographic', {'patientId': $stateParams.patientId});    
+    };
+
+
+     $scope.setModelValue = function(){
+          $scope.updateModel = false;
+    };
+
+    $scope.editPatientNotes = function(notes){
+     $scope.updateModel = false;
+     patientID=$stateParams.patientId;
+
+     patientService.getPatientInfo(patientID).then(function(response){
+      $scope.slectedPatient = response.data;
+    });
+
+      var notes = $scope.patient.clinicMRNId.memoNote;
+
+       $scope.patientNotesMemo = {
+      'note': notes,
+      'userId': StorageService.get('logged').userId,
+      'patientId': $scope.patient.hillromId
+    };
+
+     var temp = $scope.patientNotesMemo;
+
+      hcpPatientService.updatePatientNotes(temp).then(function (response) {
+        notyService.showMessage('User Updated Successfully', 'success');
+        $state.go('hcppatientDemographic', {'patientId': $stateParams.patientId});
+      }).catch(function(response){
+        notyService.showError(response);
+      });
+    
+  };
+
 }]);

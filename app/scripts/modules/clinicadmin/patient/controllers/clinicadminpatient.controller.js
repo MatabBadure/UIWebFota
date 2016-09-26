@@ -68,7 +68,7 @@ angular.module('hillromvestApp')
   };
 
   $scope.getPatientInfo = function(patinetId, callback){
-    clinicadminPatientService.getPatientInfo(patinetId, $stateParams.clinicId).then(function(response){
+    clinicadminPatientService.getPatientInfo(patinetId, $stateParams.clinicId,StorageService.get('logged').userId).then(function(response){
       $scope.patient = response.data.patientUser;
       if($scope.patient.zipcode){
         $scope.patient.zipcode = commonsUserService.formatZipcode($scope.patient.zipcode);
@@ -208,9 +208,30 @@ angular.module('hillromvestApp')
       if(data.clinicMRNId.clinic){
         delete data.clinicMRNId.clinic;
       }
-      UserService.editUser(data).then(function (response) {
-        $state.go('clinicadminpatientDemographic', {'patientId': $stateParams.patientId});
+
+      var notes = $scope.patient.clinicMRNId.memoNote;
+
+      if(($scope.patient.clinicMRNId.memoNote).length==0)
+      {
+        notes = " ";
+      }
+
+       $scope.patientNotesMemo = {
+      'note': notes,
+      'userId': StorageService.get('logged').userId,
+      'patientId': $scope.patient.hillromId
+    };
+
+     var temp = $scope.patientNotesMemo;
+    
+      UserService.editUserNotes(temp).then(function (response) {
+        console.log("Notes Updated");
+        UserService.editUser(data).then(function (response) {
         notyService.showMessage(response.data.message, 'success');
+         $state.go('clinicadminpatientDemographic', {'patientId': $stateParams.patientId});
+      }).catch(function(response){
+        notyService.showError(response);
+      });
       }).catch(function(response){
         notyService.showError(response);
       });

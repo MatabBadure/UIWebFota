@@ -53,6 +53,17 @@ angular.module('hillromvestApp')
         });
       },
 
+      // Code for posting memo notes in clinic admin
+      editUserNotes: function(data) {
+        var url  = URL.addPatientNotes;
+        return $http.post(url, data, {
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });
+      },
+      
+
       /**
        * @ngdoc method
        * @name getState

@@ -137,7 +137,8 @@
     "edit-patient": "Edit",
     "demo-graph": {
       "identifier": "Patient Identifiers",
-      "personal-details": "Personal Details"
+      "personal-details": "Personal Details",
+      "patient-notes": "Patient Notes"
     },
     "btn": {
       "update": "Update",
