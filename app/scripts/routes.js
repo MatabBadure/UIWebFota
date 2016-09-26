@@ -4671,5 +4671,32 @@ angular.module('hillromvestApp')
                         return $translate.refresh();
                     }]
                 }
-            });           
+            })
+        
+
+            .state('hcppatientdemographicEdit', {
+                parent: 'hcppatientDemographic',
+                url: '/{patientId}/hcppatientdemographicedit',
+                data: {
+                    roles: ['HCP'],
+                    pageTitle: 'patient.page-title.patient-info'
+                },
+                views: {
+                    'content@': {
+                         templateUrl: 'scripts/modules/hcp/patient/views/patientdemographicsedit.html',
+                        controller: 'hcpPatientController'
+                    }
+                },
+               resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient');$translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            });
 }]);

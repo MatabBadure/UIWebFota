@@ -97,6 +97,14 @@
     "empty-protocol-list-message": "No Protocol Associated",
     "empty-device-list-message": "No Device Associated",
     "empty-caregiver-list-message": "No Caregiver Associated",
+    "reset-adherence": {
+      "reset-date-set": "Adherence score Start date",
+      "reset-date": "Reset Date",
+      "reset": "Reset To",
+      "others": "Others",
+      "justification": "Justification",
+      "reset-button": "Reset"
+    },
     "placeholder": {
       "clinic-link": "Search Clinic here",
       "device-link": "Search Device here",
@@ -137,7 +145,8 @@
     "edit-patient": "Edit",
     "demo-graph": {
       "identifier": "Patient Identifiers",
-      "personal-details": "Personal Details"
+      "personal-details": "Personal Details",
+      "patient-notes": "Patient Notes"
     },
     "btn": {
       "update": "Update",
@@ -181,6 +190,12 @@
     "delete-protocol": {
       "warning": "Delete Protocol",
       "message": "If you delete the protocol, you will no longer be able to view the information. Are you sure to delete?"
+    },
+    "reset-score": {
+      "warning": "Reset Adherence Score",
+      "message": "Are you sure you want to reset the score of ",
+      "to": "to",
+      "from": "from the date"
     },
     "update-protocol":{
       "warning": "Protocol Update",

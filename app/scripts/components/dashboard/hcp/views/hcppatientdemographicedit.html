@@ -184,25 +184,57 @@
           </div>
         </div>
       </div>
+        
+
       <div class="col-md-16 col-sm-16 margin-top reset-padding">
        
    <div class="col-md-7 col-sm-7 reset-padding">
+     
     <div class=" col-md-6 col-sm-6  dashboard__form--label reset-padding">
           <span  translate="patient.demo-graph.patient-notes" ></span>
         </div>
         
         <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding">
-          <textarea class="patientInfo_patient_Notes_Edit" wrap = "hard" readonly="readonly" >{{::patient.clinicMRNId.memoNote}}</textarea>
-          <div class="">
-        <buton type="submit"  class="hillrom-btn btn-primary float-right btn-margin-left edit-patientNotes-hcp" ng-click="openEditDetail()" translate="patient.btn.edit">Edit</buton>
-       
+            <form name="form" novalidate autocomplete="off" >
+          <textarea ng-model="patient.clinicMRNId.memoNote" name="notes" class="patientInfo_patient_Notes_Edit memoNote_changeColor" wrap = "hard" ></textarea>
+         <div class="col-md-16 col-sm-16 margin-top reset-padding">
+      <div class="">
+      <buton type="submit" class="hillrom-btn btn-secondary float-right cancel-patientNotes-hcp" ng-click="cancelEditDemographics()" ng-show="!patientStatus.isCreate"  translate="patient.btn.cancel">cancel</buton>
+        <buton type="submit" class="hillrom-btn btn-primary  float-right  btn-margin-left update-patientNotes-hcp" ng-click="showPatientUpdateModel()" translate="patient.btn.update">Update</buton>
+        
         <div class="clr"></div>
       </div>
+    </div>
+  </form>
         </div>
+      
         </div>
+
      
       </div>
+   
       
     </div>
   </div>
 </div>
+
+<div ng-if="updateModel" class="modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true">
+  <div class="modal__dialog">
+    <div class="modal__content">
+      <header class="modal__header">
+        <button type="button" class="modal__close" data-dismiss="modal" ng-click="setModelValue()">&times;</button>
+        <p translate="patient.update.warning"></p>
+      </header>
+      <div class="modal__body">
+        <div class="modal--message" translate="patient.update.message"></div>
+        <div class="row modal--custom-btn">
+          <buton class="hillrom-btn btn-submit float-right" ng-click="editPatientNotes(notes)">Yes</buton>
+          <buton class="hillrom-btn btn-secondary btn-submit float-right" data-dismiss="modal" ng-click="setModelValue()">No</buton>
+        </div>
+      </div>
+      <footer class="modal__footer">
+      </footer>
+    </div>
+  </div>
+</div>
+
