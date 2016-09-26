@@ -149,6 +149,119 @@
       <buton class="hillrom-btn btn-primary float-right" ng-click="linkDevice()" translate="patient.link-device"></buton>
     </div>
   </div>
+
+  <div class="col-md-16 col-sm-16 patient-protocol">
+    <span class="patient-protocol--title">Reset Adherence Score</span>
+  </div>
+  <form name ="form">
+    <div class="col-md-16 col-sm-16 margin-top reset-padding">
+          <div class="col-md-7 col-sm-7 reset-padding">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+              <span class="" translate="patient.reset-adherence.reset-date-set">Adherence score Start date</span>
+              <span class="">*</span>
+            </div>
+            <div class="col-md-10 col-sm-8 dashboard__form--input reset-padding">
+              <input type="text" style="box-shadow:none !important;" ng-model = "resetStartDate" name="adherenceStartDate" validate-on-blur class="custom-dob span2" value=" " required data-date-format="mm/dd/yyyy" id="dp2" ng-pattern="/^\d{2}\/\d{2}\/\d{4}$/" readonly="readonly" >
+              <span readonly class="dashboard__form--label-age"></span>
+                <div ng-show="(form.adherenceStartDate.$dirty && form.adherenceStartDate.$invalid) || resetsubmitted">
+                <span class="has-error" ng-show="form.adherenceStartDate.$error.required" translate="error.adherenceStartDate.required"></span>
+                <!-- <span class="has-error" ng-if="!form.adherenceStartDate.$error.required && !form.adherenceStartDate.$error.pattern" translate="error.adherenceStartDate.future"></span> -->
+                <span class="has-error" ng-show="form.adherenceStartDate.$error.pattern && !form.adherenceStartDate.$error.required" translate="error.adherenceStartDate.invalid"></span>
+              </div>  
+            </div>
+          </div>
+          <div class="col-md-7 col-sm-7 col-sm-offset-0 col-md-offset-2 reset-padding">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+              <span class="" translate="patient.reset-adherence.reset-date">Reset Date</span>
+              <span class="">*</span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding">
+              <input class="" type="text" readonly ng-disabled = "true" ng-model="todayDate" name="MRNID">
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-16 col-sm-16 margin-top reset-padding">
+          <div class="col-md-7 col-sm-7 reset-padding">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+              <span class="" translate="patient.reset-adherence.reset">Reset To</span>
+              <span class="">*</span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding">
+              <input class="" name="ResetTo" ng-model = "scoreToReset" type="text" required>
+              <div ng-show="(form.ResetTo.$dirty && form.ResetTo.$invalid) || resetsubmitted">
+                <span class="has-error" ng-show="form.ResetTo.$error.required" translate="error.ResetTo.required"></span>
+              </div>  
+            </div>
+          </div>
+          <div  ng-if = "ShowOther" class="col-md-7 col-sm-7 col-sm-offset-0 col-md-offset-2 reset-padding">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+              <span class="" translate="patient.reset-adherence.others">Others</span>
+              <span class="">*</span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding">
+              <textarea name="oth" class="" style="box-shadow:none !important;" ng-model = "othersContent" required></textarea>
+              <div ng-show="(form.oth.$dirty && form.oth.$invalid) || resetsubmitted">
+                <span class="has-error" ng-show="form.oth.$error.required" translate="error.others.required"></span>
+              </div>   
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-16 col-sm-16 margin-top reset-padding">
+          <div class="col-md-7 col-sm-7 reset-padding">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+              <span class="" translate="patient.reset-adherence.justification">Justification</span>
+              <span class="">*</span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form__input reset-padding selected-box-container">
+              <div class="custom-dropdown">
+                <select name="justification" ng-model="justification" required ng-options="option for option in ['Hospitalisation', 'Device Issue', 'No Connectivity','Others']" ng-change="SelectOthers(justification)">
+                </select>
+                <div ng-show="(form.justification.$dirty && form.justification.$invalid) || resetsubmitted">
+                <span class="has-error" ng-show="form.justification.$error.required" translate="error.justification.required"></span>
+              </div>  
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-16 col-sm-16 reset-padding" >
+        <div class="col-md-8 col-sm-8 clinic-link">
+        </div>
+        <div class="col-md-8 col-sm-8 clinic-link">
+          <buton  type="submit" class="hillrom-btn btn-primary float-right" ng-click = "showUpdateReset()" translate = "patient.reset-adherence.reset-button">Reset</buton>
+        </div>
+      </div>
+      </form>
+</div>
+
+
+<div ng-if="showUpdateModalReset" class="modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true">
+  <div class="modal__dialog">
+    <div class="modal__content">
+      <header class="modal__header">
+        <button type="button" class="modal__close" data-dismiss="modal" ng-click="$parent.showUpdateModalReset = false">&times;</button>
+         <p translate="patient.reset-score.warning"></p>
+      </header>
+      <div class="modal__body">
+         <div class="modal--message">
+         <span translate="patient.reset-score.message"></span>
+         <span>{{::slectedPatient.firstName}} {{::slectedPatient.lastName}}</span>
+         <span translate="patient.reset-score.to"></span>
+         <span>{{scoreToReset}}</span>
+         <span translate="patient.reset-score.from"></span>
+         <span>{{resetStartDate}}</span>
+         </div>
+         <div class="row modal--custom-btn">
+          <buton class="hillrom-btn btn-submit float-right" ng-click="resetScore()">Yes</buton>
+          <buton class="hillrom-btn btn-submit float-right" data-dismiss="modal" ng-click="$parent.showUpdateModalReset = false"">No</buton>          
+         </div>
+      </div>
+      <footer class="modal__footer">
+      </footer>
+    </div>
+  </div>
 </div>
 
 <div ng-if="showModalProtocol" class="modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true">

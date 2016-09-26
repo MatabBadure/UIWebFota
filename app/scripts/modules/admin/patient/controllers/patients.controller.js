@@ -129,6 +129,27 @@ angular.module('hillromvestApp')
       $scope.getPatientById(patientId);
       $scope.getDevices(patientId);
       $scope.getProtocols(patientId);
+      $scope.getTodayDateForReset();
+      $scope.scoreToReset = 100;
+      $scope.resetStartDate = null;
+      $scope.ShowOther = false;
+    };
+
+    $scope.getTodayDateForReset = function()
+    {
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth()+1; //January is 0!
+
+        var yyyy = today.getFullYear().toString();
+        if(dd<10){
+            dd='0'+dd
+        } 
+        if(mm<10){
+            mm='0'+mm
+        } 
+        var today = mm+'/'+dd+'/'+yyyy;
+        $scope.todayDate = today;
     };
 
     $scope.initPatientAddProtocol = function(){
@@ -367,6 +388,65 @@ angular.module('hillromvestApp')
       });
     };
 
+    $scope.resetScore = function()
+    {
+      
+      //$scope.resetsubmitted = true;
+      var createdById = StorageService.get('logged').userId;
+      var userID = $stateParams.patientId;
+      var patientHillromId = $scope.patientInformation;
+      var resetDate = $scope.resetStartDate;
+      var res = resetDate.split("/");
+      var resetDateFinal = res[2]+"-"+res[0]+"-"+res[1];
+      console.log(resetDateFinal);
+      var resetTo = $scope.scoreToReset;
+      if($scope.ShowOther)
+      {
+        var reason = $scope.othersContent;
+      }
+      else(!$scope.ShowOther)
+      {
+        var reason = $scope.justification;
+      }
+
+      $scope.patientAdherenceInfo = {
+      'createdBy': createdById,
+      'userId': userID,
+      'patientId': patientHillromId,
+      'resetStartDate': resetDateFinal,
+      'resetScore': resetTo,
+      'justification': reason
+      };
+
+      patientService.addAdherenceScore($scope.patientAdherenceInfo).then(function(response){
+        notyService.showMessage(response.data.message, 'success');
+        $scope.form.$setPristine();
+        $scope.showUpdateModalReset = false;
+        $scope.resetStartDate = null;
+        $scope.justification = "";
+        $scope.scoreToReset = 100;
+        $scope.othersContent = "";
+        $scope.resetsubmitted = false ; 
+        $scope.ShowOther = false;
+        if($scope.patientStatus.role === loginConstants.role.acctservices){
+        $state.go('patientProtocolRcadmin', {'patientId': $stateParams.patientId});
+      }else{
+        $state.go('patientProtocol');
+      }
+      }).catch(function(response){
+        notyService.showError(response);
+        $scope.form.$setPristine();
+        $scope.showUpdateModalReset = false;
+        $scope.resetStartDate = null;
+        $scope.justification = "";
+        $scope.scoreToReset = 100;
+        $scope.othersContent = "";
+        $scope.resetsubmitted = false ; 
+        $scope.ShowOther = false;
+      });
+
+    };
+
     $scope.showAssociateHcpModal = function(hcp){
       $scope.selectedHCP = hcp;
       $scope.associatedHCPModal = true;
@@ -459,6 +539,29 @@ angular.module('hillromvestApp')
 
     $scope.cancelProtocolModel = function(){
       $scope.showModalProtocol = false;
+    };
+
+    $scope.showUpdateReset = function()
+    {
+      if($scope.form.$invalid){
+        $scope.resetsubmitted = true;
+        return false;
+      }else{
+         $scope.showUpdateModalReset = true;
+      }
+     
+    };
+
+    $scope.SelectOthers = function(option){
+      if(option == 'Others')
+      {
+        $scope.ShowOther = true;
+      }
+      else
+      {
+        $scope.ShowOther = false;
+      }
+
     };
 
     $scope.cancelHCPModel = function(){
@@ -793,6 +896,7 @@ angular.module('hillromvestApp')
     $scope.getPatientById = function(patientid){
       patientService.getPatientInfo(patientid).then(function(response){
         $scope.slectedPatient = response.data;
+        $scope.patientInformation = $scope.slectedPatient.hillromId;
       }).catch(function(response){
         notyService.showError(response);
       });
