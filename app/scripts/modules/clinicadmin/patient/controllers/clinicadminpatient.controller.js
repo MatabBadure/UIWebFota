@@ -18,6 +18,9 @@ angular.module('hillromvestApp')
       $scope.scoreToReset = 100;
       //$scope.resetStartDate = null;
       $scope.ShowOther = false;
+      patientService.getJustification().then(function(response){
+         $scope.justificationlist =  response.data.typeCode;
+      }).catch(function(response){});
     }else if($state.current.name === 'clinicadminpatientCraegiver'){
       $scope.getPatientInfo($stateParams.patientId);
       $scope.getCaregiversAssociatedWithPatient($stateParams.patientId);

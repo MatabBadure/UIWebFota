@@ -179,7 +179,7 @@
             </div>
             <div class="col-md-10 col-sm-10 dashboard__form__input reset-padding selected-box-container">
               <div class="custom-dropdown">
-                <select name="justification" ng-model="justification" required ng-options="option for option in ['Hospitalisation', 'Device Issue', 'No Connectivity','Others']" ng-change="SelectOthers(justification)">
+                <select name="justification" ng-model="justification" required ng-options="item.type_code_value as item.type_code_value for item in justificationlist" ng-change="SelectOthers(justification)">
                 </select>
                 <div ng-show="(form.justification.$dirty && form.justification.$invalid) || resetsubmitted">
                 <span class="has-error" ng-show="form.justification.$error.required" translate="error.justification.required"></span>
