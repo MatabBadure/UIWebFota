@@ -131,8 +131,11 @@ angular.module('hillromvestApp')
       $scope.getProtocols(patientId);
       $scope.getTodayDateForReset();
       $scope.scoreToReset = 100;
-      $scope.resetStartDate = null;
+      //$scope.resetStartDate = null;
       $scope.ShowOther = false;
+        patientService.getJustification().then(function(response){
+         $scope.justificationlist =  response.data.typeCode;
+      }).catch(function(response){});
     };
 
     $scope.getTodayDateForReset = function()
@@ -422,12 +425,12 @@ angular.module('hillromvestApp')
         notyService.showMessage(response.data.message, 'success');
         $scope.form.$setPristine();
         $scope.showUpdateModalReset = false;
-        $scope.resetStartDate = null;
+        /*$scope.resetStartDate = null;
         $scope.justification = "";
         $scope.scoreToReset = 100;
         $scope.othersContent = "";
+        $scope.ShowOther = false;*/
         $scope.resetsubmitted = false ; 
-        $scope.ShowOther = false;
         if($scope.patientStatus.role === loginConstants.role.acctservices){
         $state.go('patientProtocolRcadmin', {'patientId': $stateParams.patientId});
       }else{
@@ -437,12 +440,12 @@ angular.module('hillromvestApp')
         notyService.showError(response);
         $scope.form.$setPristine();
         $scope.showUpdateModalReset = false;
-        $scope.resetStartDate = null;
+       /* $scope.resetStartDate = null;
         $scope.justification = "";
         $scope.scoreToReset = 100;
         $scope.othersContent = "";
+        $scope.ShowOther = false;*/
         $scope.resetsubmitted = false ; 
-        $scope.ShowOther = false;
       });
 
     };

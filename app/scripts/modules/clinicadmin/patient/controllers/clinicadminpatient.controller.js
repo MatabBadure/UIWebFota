@@ -16,8 +16,11 @@ angular.module('hillromvestApp')
       $scope.getPatientDevicesandProtocols($stateParams.patientId);
        $scope.getTodayDateForReset();
       $scope.scoreToReset = 100;
-      $scope.resetStartDate = null;
+      //$scope.resetStartDate = null;
       $scope.ShowOther = false;
+      patientService.getJustification().then(function(response){
+         $scope.justificationlist =  response.data.typeCode;
+      }).catch(function(response){});
     }else if($state.current.name === 'clinicadminpatientCraegiver'){
       $scope.getPatientInfo($stateParams.patientId);
       $scope.getCaregiversAssociatedWithPatient($stateParams.patientId);
@@ -68,12 +71,12 @@ angular.module('hillromvestApp')
         notyService.showMessage(response.data.message, 'success');
         $scope.form.$setPristine();
         $scope.showUpdateModalReset = false;
-        $scope.resetStartDate = null;
+   /*     $scope.resetStartDate = null;
         $scope.justification = "";
         $scope.scoreToReset = 100;
         $scope.othersContent = null;
+        $scope.ShowOther = false;*/
         $scope.resetsubmitted = false ; 
-        $scope.ShowOther = false;
         if($scope.patientStatus.role === loginConstants.role.acctservices){
         $state.go('patientProtocolRcadmin', {'patientId': $stateParams.patientId});
       }else{
@@ -83,12 +86,12 @@ angular.module('hillromvestApp')
         notyService.showError(response);
         $scope.form.$setPristine();
         $scope.showUpdateModalReset = false;
-        $scope.resetStartDate = null;
+       /* $scope.resetStartDate = null;
         $scope.justification = "";
         $scope.scoreToReset = 100;
         $scope.othersContent = null;
+          $scope.ShowOther = false;*/
         $scope.resetsubmitted = false ; 
-        $scope.ShowOther = false;
       });
 
     };
