@@ -246,3 +246,19 @@ color:black;
 font-weight:300; 
 font-size:10px;
   }
+  /* To Remove Static Border Bottom*/
+  .navbar-fixed-bottom-login {
+  bottom: 0;
+  margin-bottom: 0;
+  border-width: 1px 0 0;
+  right: 0;
+  left: 0;
+  z-index: 999;
+  transform: translate3d(0, 0, 0);
+  position:absolute;
+}
+.remove-static{
+  position: relative;
+   z-index:-1 ;
+}
+/* End of Remove Static Border Bottom*/

@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js">
+<html class="no-js" >
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -20,7 +20,7 @@
 
 </head>
  
-<body ng-app="hillromvestApp">
+<body ng-app="hillromvestApp"  >
 <!--  <span us-spinner> </span> -->
   <span us-spinner="{radius:15, width:6, length:10, color: '#7ca3dc', position: 'fixed'}"></span>
     <div noty-container></div>
@@ -28,11 +28,11 @@
         <ng-include src="'scripts/components/navbar/navbarmain.html'"></ng-include>
         <div id="top-shadow"></div>
 
-        <div class="content-body" ui-view="content"></div>
+        <div class="content-body remove-static-padding" ui-view="content"   ></div>
 
-        <footer class="footer navbar-fixed-bottom">
+        <footer class="footer navbar-fixed-bottom remove-static">
 
-<div class="col-md-16 footer_container ">
+<div class="col-md-16 footer_container" style="border-top: 1px solid #C1C1C1 !important;">
     <div class="container">
         <div class="col-md-10 footer_left">
             <ul class="footer_left_ul">
