@@ -1,8 +1,9 @@
 @media only screen and (min-width : 768px) and (max-width : 1024px) and (orientation : landscape) { 
 /*To remove static border bottom*/
-.remove-static-padding{
-	padding-bottom:60% !important;
+.minheight{
+	min-height:600px !important;
 }
+
 /*End of remove static border bottom*/
 	/*HCP dashboard Style device-*/
  	.stats_chart_container{ 
@@ -223,8 +224,8 @@
 
 @media only screen and (min-width : 768px) and (max-width : 1024px) and (orientation : portrait) { 
 /*To remove static border bottom*/
-.remove-static-padding{
-	padding-bottom:60% !important;
+.minheight{
+	min-height:900px !important;
 }
 /*End of remove static border bottom*/
 	/*HCP dashboard Style*/
@@ -559,6 +560,11 @@ font-size:12px;
 	width:50% !important;
 	}
 }
-
-
+@media only screen and (min-width : 1024px) and (max-width :1366px ) and (orientation : landscape) { 
+/*To remove static border bottom*/
+.minheight{
+	min-height:600px !important;
+}
+/*End of remove static border bottom*/
+}
 
