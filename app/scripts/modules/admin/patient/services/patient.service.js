@@ -48,6 +48,16 @@ angular.module('hillromvestApp')
         });
       },
 
+
+      getJustification: function() {
+        var url = URL.getReasonForJustification;
+        return $http.get(url, {
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });
+      },
+
       /**
        * @ngdoc method
        * @name associateHCPToPatient
@@ -235,6 +245,16 @@ angular.module('hillromvestApp')
           return response;
         });
       },
+
+      addAdherenceScore: function(data) {
+        var url = URL.resetAdherenceScore;
+        return $http.post(url, data, {
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });
+      },
+
 
       addDevice: function(id, data) {
         var url = URL.addDevice.replace('PATIENTID', id);

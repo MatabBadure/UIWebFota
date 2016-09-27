@@ -22,8 +22,8 @@ angular.module('hillromvestApp')
       },
 
 
-      getPatientInfo : function(patientId, clinicId){
-        var url = URL.getPatientInfoWithMRN.replace('PATIENTID', patientId).replace('CLINICID', clinicId);
+      getPatientInfo : function(patientId, clinicId,userID){
+        var url = URL.getPatientInfoWithMRN.replace('PATIENTID', patientId).replace('CLINICID', clinicId).replace('USERID',userID);
         return $http.get(url, {
           headers: headerService.getHeader()
         });
