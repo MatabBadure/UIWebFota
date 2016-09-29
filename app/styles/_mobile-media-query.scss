@@ -1,8 +1,8 @@
 
 @media only screen and (min-width : 320px) and (max-width : 700px) {
 /*To remove static border bottom */
-.display-none {
-  display:none !important;
+.minheight{
+	min-height:0 !important;
 }
 /*End of remove static border bottom */
 
