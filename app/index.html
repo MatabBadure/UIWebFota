@@ -28,9 +28,9 @@
         <ng-include src="'scripts/components/navbar/navbarmain.html'"></ng-include>
         <div id="top-shadow"></div>
 
-        <div class="content-body remove-static-padding" ui-view="content"   ></div>
+        <div class="content-body remove-static-padding minheight" ui-view="content"   ></div>
 
-        <footer class="footer navbar-fixed-bottom remove-static">
+        <footer ng-class="FooterLoginZindex()" class="footer navbar-fixed-bottom">
 
 <div class="col-md-16 footer_container" style="border-top: 1px solid #C1C1C1 !important;">
     <div class="container">
