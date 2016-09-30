@@ -58,6 +58,8 @@ border:solid;
 
 .agree-main{
   padding-left:1cm;
+  padding-top : 5px;
+  border:1px solid #c1c1c1;
 }
 
 .agree-desc{
@@ -1187,4 +1189,19 @@ ul.dropdown-menu {
 .complianceGraphPrim_wrapper{
   display: inline-block;
   width: 100%;
+}
+
+.edit-patientNotes-hcp{
+  padding:0px !important; 
+   margin-top:18px !important;
+  min-width:60px !important;
+}
+.update-patientNotes-hcp{
+  padding:0px !important; 
+  margin-right:8px !important; 
+  min-width:60px !important;
+}
+.cancel-patientNotes-hcp{
+  padding:0px !important; 
+  min-width:60px !important;
 }
