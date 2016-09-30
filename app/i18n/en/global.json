@@ -153,8 +153,8 @@
             "required": "Other justification is required."  
         },
         "ResetTo":{
-            "required": "Reset to  is required.",
-            "invalid":"Reset to is invalid,It should accept only Numbers."
+            "required": "Reset to is required.",
+            "invalid":"Invalid Reset number, Please enter between 1 to 100 without decimals."
         },
         "justification":{
             "required": "Justification is required."
