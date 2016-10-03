@@ -22,8 +22,16 @@ angular.module('hillromvestApp')
 			if($rootScope.userRole === 'PATIENT'){
 				$scope.getNotifications();
 			}
+
     };
-	      
+    $scope.FooterLoginZindex = function(){
+    	if($state.current.name === "login" || $state.current.name === "home" ){
+		    return "remove-static-loginPage";
+			}
+    	else {
+    		return "remove-static";
+    	}
+    };	      
     $scope.isActive = function(tab) {
       var path = $location.path();
       if (path.indexOf(tab) !== -1) {
