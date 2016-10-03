@@ -663,7 +663,8 @@ angular.module('hillromvestApp')
 
           angular.forEach(responseData.series, function(s, key1){
             var marker = {};
-            marker.radius = (s.data && s.data.length < 50)? 2 : 0.5;    
+            marker.radius = (s.data && s.data.length < 50)? 2 : 0.5;
+            $scope.markerRadius = marker.radius; 
             angular.forEach(s.data, function(d, key2){
               var tooltipDateText = responseData.series[key1].data[key2].x ;
               responseData.series[key1].data[key2].x = xData[key2];
@@ -893,7 +894,7 @@ angular.module('hillromvestApp')
                     softThreshold: false,
                     marker: {
                           enabled: true,
-                          radius:2
+                           radius: $scope.markerRadius
                     },
                     states: {
                         hover: {
@@ -974,7 +975,8 @@ angular.module('hillromvestApp')
             });         
           angular.forEach($scope.hmrChartData.series, function(s, key1){
             var marker = {};
-            marker.radius = (s.data && s.data.length < 50)? 2 : 0.5; 
+            marker.radius = (s.data && s.data.length < 50)? 2 : 0.5;
+            $scope.markerRadius = marker.radius;
             angular.forEach(s.data, function(d, key2){
               var tooltipDateText = $scope.hmrChartData.series[key1].data[key2].x ;
               $scope.hmrChartData.series[key1].data[key2].marker = marker;
@@ -1128,7 +1130,7 @@ angular.module('hillromvestApp')
                 //allowPointSelect: true,
                 marker: {
                       enabled: true,
-                      radius:2
+                       radius: $scope.markerRadius
                 },
                 states: {
                     hover: {
@@ -1247,7 +1249,7 @@ angular.module('hillromvestApp')
                 pointWidth: 50,
                 marker: {
                       enabled: true,
-                      radius:2
+                      radius: $scope.markerRadius
                 },
                 states: {
                     hover: {
