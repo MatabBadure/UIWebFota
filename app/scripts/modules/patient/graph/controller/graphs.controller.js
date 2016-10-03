@@ -892,7 +892,8 @@ angular.module('hillromvestApp')
                     lineWidth: 3,
                     softThreshold: false,
                     marker: {
-                          enabled: true
+                          enabled: true,
+                          radius:2
                     },
                     states: {
                         hover: {
@@ -1126,7 +1127,8 @@ angular.module('hillromvestApp')
             series: {
                 //allowPointSelect: true,
                 marker: {
-                      enabled: true
+                      enabled: true,
+                      radius:2
                 },
                 states: {
                     hover: {
@@ -1244,7 +1246,8 @@ angular.module('hillromvestApp')
             series: {
                 pointWidth: 50,
                 marker: {
-                      enabled: true
+                      enabled: true,
+                      radius:2
                 },
                 states: {
                     hover: {
