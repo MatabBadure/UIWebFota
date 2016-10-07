@@ -122,21 +122,22 @@
               <span class="" translate="patient.reset-adherence.reset-date-set">Adherence score Start date</span>
               <span class="">*</span>
             </div>
-            <div class="col-md-10 col-sm-8 dashboard__form--input reset-padding" style="width:auto;">
+            <div class="col-md-10 col-sm-8 dashboard__form--input reset-padding">
                <input type="text" ng-model = "resetStartDate" name="adherenceStartDate" validate-on-blur class="datepickerNew" value=" " id= "dp2" required data-date-format="mm/dd/yyyy"  ng-pattern="/^\d{2}\/\d{2}\/\d{4}$/" readonly="readonly"/>
                 <div ng-show="(form.adherenceStartDate.$dirty && form.adherenceStartDate.$invalid) || resetsubmitted">
                 <span class="has-error" ng-show="form.adherenceStartDate.$error.required" translate="error.adherenceStartDate.required"></span>
                 <!-- <span class="has-error" ng-if="!form.adherenceStartDate.$error.required && !form.adherenceStartDate.$error.pattern" translate="error.adherenceStartDate.future"></span> -->
+                 
                 <span class="has-error" ng-show="form.adherenceStartDate.$error.pattern && !form.adherenceStartDate.$error.required" translate="error.adherenceStartDate.invalid"></span>
               </div>  
             </div>
           </div>
-          <div class="col-md-7 col-sm-7 col-sm-offset-0 col-md-offset-2 reset-padding">
+          <div class="col-md-7 col-sm-7 col-sm-offset-0 col-md-offset-2 reset-padding marginLeftForDevices">
             <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
               <span class="" translate="patient.reset-adherence.reset-date">Reset Date</span>
               <span class="">*</span>
             </div>
-            <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding" style="width:auto;">
+            <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding">
               <input class="" type="text" readonly ng-disabled = "true" ng-model="todayDate" name="MRNID">
             </div>
           </div>
@@ -148,20 +149,21 @@
               <span class="" translate="patient.reset-adherence.reset">Reset To</span>
               <span class="">*</span>
             </div>
-            <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding" style="width:auto;">
-              <input class="" name="ResetTo" ng-model = "scoreToReset" ng-pattern="/^[0-9]{1,7}$/" type="text" required>
-              <div ng-show="(form.ResetTo.$dirty && form.ResetTo.$invalid) || resetsubmitted">
+            <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding">
+              <input class="" name="ResetTo" ng-model = "scoreToReset" ng-pattern="/^[0-9]{1,7}$/" type="text" ng-change="handleChange()" required>
+              <div ng-show="(form.ResetTo.$dirty && form.ResetTo.$invalid) || resetsubmitted || maxNumberReached">
                 <span class="has-error" ng-show="form.ResetTo.$error.required" translate="error.ResetTo.required"></span>
+                <span class="has-error" ng-show="maxNumberReached" translate="error.ResetTo.invalid"></span>
                   <span class="has-error" ng-show="form.ResetTo.$error.pattern && !form.ResetTo.$error.required" translate="error.ResetTo.invalid"></span>
               </div>  
             </div>
           </div>
-          <div  ng-if = "ShowOther" class="col-md-7 col-sm-7 col-sm-offset-0 col-md-offset-2 reset-padding">
+          <div  ng-if = "ShowOther" class="col-md-7 col-sm-7 col-sm-offset-0 col-md-offset-2 reset-padding marginLeftForDevices">
             <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
               <span class="" translate="patient.reset-adherence.others">Others</span>
               <span class="">*</span>
             </div>
-            <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding" style="width:auto;">
+            <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding" >
               <textarea name="oth" class="" style="box-shadow:none !important;"  ng-model = "othersContent" required></textarea>
               <div ng-show="(form.oth.$dirty && form.oth.$invalid) || resetsubmitted">
                 <span class="has-error" ng-show="form.oth.$error.required" translate="error.others.required"></span>
@@ -176,7 +178,7 @@
               <span class="" translate="patient.reset-adherence.justification">Justification</span>
               <span class="">*</span>
             </div>
-            <div class="col-md-10 col-sm-10 dashboard__form__input reset-padding selected-box-container" style="width:auto;">
+            <div class="col-md-10 col-sm-10 dashboard__form__input reset-padding selected-box-container" >
               <div class="custom-dropdown">
                 <select name="justification" ng-model="justification" required ng-options="item.type_code_value as item.type_code_value for item in justificationlist" ng-change="SelectOthers(justification)">
                 </select>
