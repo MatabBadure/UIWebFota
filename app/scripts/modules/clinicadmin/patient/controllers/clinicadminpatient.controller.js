@@ -96,12 +96,30 @@ angular.module('hillromvestApp')
 
     };
 
+    $scope.handleChange = function()
+     {
+      if(Number($scope.scoreToReset) >100 || Number($scope.scoreToReset) ==0)
+      {
+        $scope.maxNumberReached = true;
+      }
+      else
+      {
+        $scope.maxNumberReached = false;
+      }
+     };
+
      $scope.showUpdateReset = function()
     {
       if($scope.form.$invalid){
         $scope.resetsubmitted = true;
+       
         return false;
-      }else{
+      }else if($scope.maxNumberReached)
+      {
+         $scope.maxNumberReached= true;
+         return false;
+      }
+      else{
          $scope.showUpdateModalReset = true;
       }
      

@@ -154,6 +154,7 @@
         },
         "ResetTo":{
             "required": "Reset to is required.",
+            "maxlength": "Reset to is Invalid.",
             "invalid":"Invalid Reset number, Please enter between 1 to 100 without decimals."
         },
         "justification":{
