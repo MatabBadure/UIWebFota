@@ -1,10 +1,18 @@
 @media only screen and (min-width : 768px) and (max-width : 1024px) and (orientation : landscape) { 
-/*To remove static border bottom*/
+//******To remove static border bottom******/
 .minheight{
 	min-height:600px !important;
 }
-
-/*End of remove static border bottom*/
+/******End of remove static border bottom******/
+/******Activation page footer alignment ******/
+FooterAlignmentForDevices{
+	margin-top:13% !important;
+	float:none !important;
+}
+LoginContentHeightForDevices{
+	max-height:none !important;
+}
+/****** End of Activation page footer alignment ******/
 	/*HCP dashboard Style device-*/
  	.stats_chart_container{ 
 		.pie_chart{
@@ -223,11 +231,32 @@
 }
 
 @media only screen and (min-width : 768px) and (max-width : 1024px) and (orientation : portrait) { 
-/*To remove static border bottom*/
+/******To remove static border bottom******/
 .minheight{
 	min-height:900px !important;
 }
-/*End of remove static border bottom*/
+/******End of remove static border bottom******/
+/******Balancing badge height for Below treatment minutes******/
+.ipadHeightBalance{
+	height:200px;
+}
+/******End of Balancing badge height for Below treatment minutes******/
+/******Wrap text for bigger text on smaller devices******/
+.wrapTextForSmallScreens{
+	word-wrap: break-word;
+} 
+/******End of Wrap text for bigger text on smaller devices******/
+/****** For spacing between list and search box in devices like ipad  ******/
+.marginBottomforDevices
+{
+	margin-bottom:10px;
+}
+/****** End of spacing between list and search box in devices like ipad  ******/
+/******Activation page footer alignment ******/
+LoginContentHeightForDevices{
+	max-height:none;
+}
+/****** End of Activation page footer alignment ******/
 /****** ResetAdherence score alignment for ipad ******/
 .marginLeftForDevices{
 	margin-left:4% !important;
@@ -566,10 +595,10 @@ font-size:12px;
 	}
 }
 @media only screen and (min-width : 1290px) and (max-width :1366px ) and (orientation : landscape) { 
-/*To remove static border bottom*/
+/******To remove static border bottom******/
 .minheight{
 	min-height:600px !important;
 }
-/*End of remove static border bottom*/
+/******End of remove static border bottom******/
 }
 
