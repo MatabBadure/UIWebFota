@@ -384,7 +384,7 @@ angular.module('hillromvestApp')
     $scope.initPatientClinicsInfo = function(patientId){
       $scope.patientTab = "patientClinics";
       $scope.currentPageIndex = 1;
-      $scope.perPageCount = 90;
+      $scope.perPageCount = 500;
       $scope.pageCount = 0;
       $scope.total = 0;
       $scope.sortOption = "";
