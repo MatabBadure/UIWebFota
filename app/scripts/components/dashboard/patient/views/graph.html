@@ -13,7 +13,7 @@
 						<div class="stats_chart_section">
 							<div class="stats_header"><h4 translate="graph.statistics"></h4></div>
 							<div class="stats_chart_container">
-								<div class="col-3 hover_symbol" ng-click="$parent.adherenceTable = true; getAdherenceScore()">
+								<div class="col-3 hover_symbol ipadHeightBalance" ng-click="$parent.adherenceTable = true; getAdherenceScore()">
 									<div class="pie_chart" easypiechart options="adherence" percent="adherenceScore"></div>
 									<div class="stats_chart_content score">
 										<h4 class="percent" ng-bind="adherenceScore"></h4>
@@ -21,7 +21,7 @@
 									</div>
 									<div class="chart_inner_icon icon-adherence"></div>
 								</div>
-								<div class="col-3">
+								<div class="col-3 ipadHeightBalance">
 									<div class="pie_chart"  easypiechart options="hmr" percent="hmrRunRate"></div>
 									<div class="stats_chart_content hmr">
 										<h4 class="percent"  ng-bind="hmrRunRate"></h4>
@@ -29,7 +29,7 @@
 									</div>
 									<div class="chart_inner_icon icon-man-running"></div>
 								</div>
-								<div class="col-3">
+								<div class="col-3 ipadHeightBalance">
 									<div class="pie_chart"  easypiechart options="missedtherapy" percent="missedtherapyDays"></div>
 									<div class="stats_chart_content missed">
 										<h4 class="percent" ng-bind="missedtherapyDays"></h4>
@@ -37,7 +37,7 @@
 									</div>
 									<div class="chart_inner_icon icon-lungs"></div>
 								</div>
-								<div class="col-3">
+								<div class="col-3 ipadHeightBalance">
 									<div class="pie_chart"  easypiechart options="settingDeviation" percent="settingsDeviatedDaysCount"></div>
 									<div class="stats_chart_content deviation">
 										<h4 class="percent" ng-bind="settingsDeviatedDaysCount"></h4>
