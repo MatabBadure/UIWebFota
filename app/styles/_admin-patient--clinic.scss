@@ -159,6 +159,7 @@ color: #003594;
 line-height: 30px;
   font-weight: normal;
   text-align:center;
+  margin-top:15px;
 }
 
 .patientInfo_patient_Notes{
@@ -166,6 +167,7 @@ line-height: 30px;
     height:130px;
     width: 305%;
     border: 0.5px solid #c1c1c1;
+    -webkit-overflow-scrolling: touch;
 }
 .memoNote_changeColor{
     font-weight:normal !important;
@@ -185,11 +187,8 @@ line-height: 30px;
     background-position:right;
     background-size: 17px 17px;
 }
-.dropdownListView .dropdown-menu, .exist-link .dropdown-menu {
-    z-index: 9999;
+.dropdownListView .dropdown-menu{
     width: 100%;
-    height: 300px;
-    overflow-y: scroll;
 }
 select:disabled{
   background-color: rgb(235, 235, 228);
