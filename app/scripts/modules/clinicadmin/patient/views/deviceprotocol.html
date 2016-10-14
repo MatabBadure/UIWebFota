@@ -150,7 +150,7 @@
               <span class="">*</span>
             </div>
             <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding">
-              <input class="" name="ResetTo" ng-model = "scoreToReset" ng-pattern="/^[0-9]{1,7}$/" type="text" ng-change="handleChange()" required>
+              <input class="" name="ResetTo" ng-model = "scoreToReset" ng-pattern="/^[0-9]{1,7}$/" type="text" ng-change="handleChange()" ng-disabled = "true" required>
               <div ng-show="(form.ResetTo.$dirty && form.ResetTo.$invalid) || resetsubmitted || maxNumberReached">
                 <span class="has-error" ng-show="form.ResetTo.$error.required" translate="error.ResetTo.required"></span>
                 <span class="has-error" ng-show="maxNumberReached" translate="error.ResetTo.invalid"></span>
