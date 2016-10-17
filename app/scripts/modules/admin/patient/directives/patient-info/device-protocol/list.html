@@ -161,8 +161,7 @@
               <span class="">*</span>
             </div>
             <div class="col-md-10 col-sm-8 dashboard__form--input reset-padding">
-              <input type="text" style="box-shadow:none !important;" ng-model = "resetStartDate" name="adherenceStartDate" validate-on-blur class="custom-dob span2" value=" " required data-date-format="mm/dd/yyyy" id="dp2" ng-pattern="/^\d{2}\/\d{2}\/\d{4}$/" readonly="readonly" >
-                            <span readonly class="dashboard__form--label-age"><img src="images/calendar-image.png"></span>
+             <input type="text" ng-model = "resetStartDate" name="adherenceStartDate" validate-on-blur class="datepickerNew" value=" " id= "dp2" required data-date-format="mm/dd/yyyy"  ng-pattern="/^\d{2}\/\d{2}\/\d{4}$/" readonly="readonly"/>
                 <div ng-show="(form.adherenceStartDate.$dirty && form.adherenceStartDate.$invalid) || resetsubmitted">
                 <span class="has-error" ng-show="form.adherenceStartDate.$error.required" translate="error.adherenceStartDate.required"></span>
                 <!-- <span class="has-error" ng-if="!form.adherenceStartDate.$error.required && !form.adherenceStartDate.$error.pattern" translate="error.adherenceStartDate.future"></span> -->
@@ -170,7 +169,7 @@
               </div>  
             </div>
           </div>
-          <div class="col-md-7 col-sm-7 col-sm-offset-0 col-md-offset-2 reset-padding">
+          <div class="col-md-7 col-sm-7 col-sm-offset-0 col-md-offset-2 reset-padding marginLeftForDevices">
             <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
               <span class="" translate="patient.reset-adherence.reset-date">Reset Date</span>
               <span class="">*</span>
@@ -188,14 +187,15 @@
               <span class="">*</span>
             </div>
             <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding">
-              <input class="" name="ResetTo" ng-pattern="/^[0-9]{1,7}$/" ng-model = "scoreToReset" type="text" required>
-              <div ng-show="(form.ResetTo.$dirty && form.ResetTo.$invalid) || resetsubmitted">
+              <input class="" name="ResetTo" ng-pattern="/^[0-9]{1,7}$/" ng-model = "scoreToReset" type="text" ng-change="handleChange()" ng-disabled = "true" required>
+              <div ng-show="(form.ResetTo.$dirty && form.ResetTo.$invalid) || resetsubmitted || maxNumberReached">
                 <span class="has-error" ng-show="form.ResetTo.$error.required" translate="error.ResetTo.required"></span>
+                <span class="has-error" ng-show="maxNumberReached" translate="error.ResetTo.invalid"></span>
                 <span class="has-error" ng-show="form.ResetTo.$error.pattern && !form.ResetTo.$error.required" translate="error.ResetTo.invalid"></span>
               </div>  
             </div>
           </div>
-          <div  ng-if = "ShowOther" class="col-md-7 col-sm-7 col-sm-offset-0 col-md-offset-2 reset-padding">
+          <div  ng-if = "ShowOther" class="col-md-7 col-sm-7 col-sm-offset-0 col-md-offset-2 reset-padding marginLeftForDevices">
             <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
               <span class="" translate="patient.reset-adherence.others">Others</span>
               <span class="">*</span>
