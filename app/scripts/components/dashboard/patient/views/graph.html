@@ -166,10 +166,11 @@
 	<div class="col-md-16 col-sm-16 padding0" ng-class="{'pointer-no-event': !isGraphLoaded, 'pointer-fill-event': isGraphLoaded}">
 		<div class="bar_graph_header">
 			<div class="col-md-5 col-sm-7 left_header_barchart padding0">
-				<div class="row">
+				<div class="row" style = "width:500px">
 					<ul class="nav nav-pills">
-					<li><a href="" ng-class="{active: !isHMR}" ng-click="isGraphLoaded && getCompliance()" translate="graph.adherence"></a></li>
-					<li><a ng-class="{active: isHMR}" href="" ng-click="isGraphLoaded && getHMR()" translate="graph.hmr-data"></a></li>
+					<li><a href="" ng-class="{active: isCompliance}" ng-click="isGraphLoaded  && getCompliance()" translate="graph.protocolGraph"></a></li>
+					<li><a ng-class="{active: isHMR }" href="" ng-click="isGraphLoaded && getHMR()" translate="graph.hmr-data"></a></li>
+					<li><a ng-class="{active: isAdherenceTrend}" href="" ng-click="isGraphLoaded && getAdherenceTrend()" translate="graph.adherenceTrend"></a></li>
 				</ul>
 				</div>
 			</div>
@@ -192,16 +193,24 @@
 	</div>
 	<div class="clr"></div>
 	<div class="col-md-16" class="all_graph_wrapper" ng-init="getWeekChart()" style="min-height: 300px;">
-	<div class="graph_nodata" ng-show="noDataAvailable">
+	<div id = "NodataDiv" class="graph_nodata" ng-if = "(hmrChartData.length == 0) && noDataStatus">
 		<span class="noData_text"> No Data Available!</span>
-	</div><!--  ng-show="isHMR && !noDataAvailable"-->
-	<div class="complianceGraphPrim_wrapper" ng-show="!noDataAvailable" id="lineGraphWrapper" >
+	</div>
+
+	<div class="complianceGraphPrim_wrapper" ng-show="!noDataAvailableForHMR" id="lineGraphWrapper" >
 		<div id="HMRGraph" ng-class="{ 'hide-chart': !isHMR, 'show-chart': isHMR}" >
 		</div>
 	</div><!-- ng-show="!noDataAvailable && !isHMR"-->
+	
+	<div class="complianceGraphPrim_wrapper" ng-show="!noDataAvailableForAdherence" id="lineGraphWrapper1" >
+		<div id="AdherenceTrendGraph" ng-class="{ 'hide-chart': !isAdherenceTrend, 'show-chart': isAdherenceTrend}" >
+		</div>
+	
+	</div>
+
 	<div id="complianceGraphWrapper" >
 		<div id="complianceGraphPrim" ng-show="!noDataAvailable" class="complianceGraphPrim_wrapper" >
-			<div id="synchronizedChart" class="col-md-16" ng-class="{ 'hide-chart': isHMR, 'show-chart': !isHMR}">
+			<div id="synchronizedChart" class="col-md-16" ng-class="{ 'hide-chart': !isCompliance, 'show-chart': isCompliance}">
 			</div>
 		</div>
 	</div>
@@ -211,13 +220,13 @@
 
 	<!-- Note section HTML -->
 	<div class="col-md-16 col-sm-16" style="margin-top: 30px;">
-		<div class="btn_group patient_dashdoard_btns" ng-class="{ 'btn_group patient_dashdoard_btns_compliance': complianceGraph, 'btn_group patient_dashdoard_btns': !complianceGraph}">
+		<div class="btn_group patient_dashdoard_btns" ng-class="{ 'btn_group patient_dashdoard_btns_compliance': true, 'btn_group patient_dashdoard_btns': !complianceGraph}">
 			<div dropdown class="pull-right left">
-				<button id="single-button" type="button" class="hillrom-btn btn-submit float-right" ng-class="{ 'pointer-fill-event': (!noDataAvailable && isGraphLoaded) , 'pointer-no-event': (!isGraphLoaded || noDataAvailable) }" dropdown-toggle ng-disabled="disabled" translate="graph.download" >
+				<button id="single-button" type="button" class="hillrom-btn btn-submit float-right" ng-class="{ 'pointer-fill-event': true , 'pointer-no-event': true }" dropdown-toggle ng-disabled="disabled" translate="graph.download" >
 					<span class="caret"></span>
 				</button>
 
-				<ul class="dropdown-menu" role="menu" aria-labelledby="single-button" ng-if="!noDataAvailable">
+				<ul class="dropdown-menu" role="menu" aria-labelledby="single-button">
 					<li role="menuitem">
 						<a href="javascript:void(0);" ng-click="downloadAsPdf();" translate="graph.export-as-pdf"></a>
 					</li>
@@ -232,6 +241,8 @@
 
 		</div>
 	</div>
+
+
 	<div class="col-md-16 col-sm-16 hide_content" id="add_note_container">
 		<div class="add_note_container">
 			<div class="note_header">

@@ -30,6 +30,21 @@ angular.module('hillromvestApp')
         });
       },
 
+      getAdherenceTrendGraphPoints: function(id, fromTimeStamp, toTimeStamp, duration, date) {
+        var url = patient.graph.baseURL;
+        url  = url + '/' + id + '/adherenceTrendGraphData';
+        if ( fromTimeStamp !== undefined && toTimeStamp !== undefined && duration !== undefined) {
+          url = url + '?from=' + fromTimeStamp + '&to=' + toTimeStamp + '&duration=' + duration;
+        } else if(date !== undefined){
+          url = url + '?date=' + date;
+        }
+        return $http.get(url, {
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });
+      },
+
       getHMRBarGraphPoints: function(id, date) {
         var url = patient.graph.baseURL;
         url  = url + '/' + id + '/therapyData';
