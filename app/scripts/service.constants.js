@@ -160,7 +160,9 @@ angular.module('hillromvestApp').constant('pdfServiceConstants', {
         survey: "Survey",
         benchmarking:"Benchmarking",
         complianceStatistics: "Statistics",
+        protocolGraph: "Protocol Graph",
         hmrStatistics: "HMR",
+        adherenceTrend: "Adherence Trend",
         survey: "Survey",
         cumulativeStatistics: "Cumulative Statistics",
         treatmentsStatistics: "Treatments Statistics",
@@ -170,6 +172,7 @@ angular.module('hillromvestApp').constant('pdfServiceConstants', {
         patientbenchmarkingStatistcs: " My Average Adherence Score Vs. Clinic Average Adherence Score",
         patientBMPageHeader : "Visi-View Respiratory Care",
         pdfpageHeader: "Hill-Rom Respiratory Care",
+        noHMRGraphContentForPDF : "Protocol and HMR Graph is Not Available because of No Data",
         signatureContent : "Electronically signed by "
     },
     style:{
