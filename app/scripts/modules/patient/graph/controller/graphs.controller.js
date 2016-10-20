@@ -71,7 +71,10 @@ angular.module('hillromvestApp')
       $scope.notePageCount = 0;
       $scope.totalNotes = 0;
       $scope.isHMR = false; 
-      $scope.noDataAvailable = false;          
+      $scope.noDataAvailable = false;        
+      $scope.noDataAvailableForHMR = false;  
+      $scope.noDataAvailableForAdherence = false;  
+      $scope.noDataStatus = true;
     };
 
     angular.element('#edit_date').datepicker({
@@ -946,10 +949,10 @@ angular.module('hillromvestApp')
     
     $scope.getHMRGraph = function(){
       patientDashBoardService.getHMRGraphPoints($scope.patientId, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.durationRange).then(function(response){
-        $scope.hmrChartData = response.data;        
-        $scope.noDataAvailable = false;       
+        $scope.hmrChartData = response.data;      
+        $scope.noDataAvailableForHMR  = false;       
         if($scope.hmrChartData && typeof($scope.hmrChartData) === "object"){ 
-          $scope.noDataAvailable = false;      
+          $scope.noDataAvailableForHMR = false;      
           $scope.hmrChartData.xAxis.xLabels=[]; 
           $scope.isSameDay = true;
           var startDay = ($scope.hmrChartData.xAxis && $scope.hmrChartData.xAxis.categories.length > 0) ? $scope.hmrChartData.xAxis.categories[0].split(" "): null;  
@@ -1000,7 +1003,76 @@ angular.module('hillromvestApp')
             }            
           }, 100);          
         } else{
-          $scope.noDataAvailable = true;
+          $scope.noDataAvailableForHMR = true;
+          $scope.removeAllCharts();
+        }
+      });
+    };
+
+
+    $scope.getAdhereneTrendGraph = function()
+    {
+      patientDashBoardService.getAdherenceTrendGraphPoints($scope.patientId, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.durationRange).then(function(response){
+      $scope.adherenceTrendData = response.data;
+
+      $scope.noDataAvailableForAdherence= false;       
+        if($scope.adherenceTrendData && typeof($scope.adherenceTrendData) === "object"){ 
+         $scope.noDataAvailableForAdherence = false;      
+          $scope.adherenceTrendData.xAxis.xLabels=[]; 
+          $scope.isSameDay = true;
+          var startDay = ($scope.adherenceTrendData.xAxis && $scope.adherenceTrendData.xAxis.categories.length > 0) ? $scope.adherenceTrendData.xAxis.categories[0].split(" "): null;  
+            $scope.adherenceTrendXAxisLabelCount = 0;
+            angular.forEach($scope.adherenceTrendData.xAxis.categories, function(x, key){ 
+              var curDay = $scope.adherenceTrendData.xAxis.categories[key].split(" ");
+              $scope.isSameDay = ($scope.isSameDay && (curDay[0] === startDay[0]) )? true : false;  
+              if(curDay[0] !== startDay[0]){
+                startDay[0] = curDay[0];
+                $scope.adherenceTrendXAxisLabelCount++;
+              }
+            });       
+            angular.forEach($scope.adherenceTrendData.xAxis.categories, function(x, key){              
+              // this is for year view or custom view having datapoints more than 7
+              // x-axis will be plotted accordingly, chart type will be datetime
+              if($scope.durationRange !== "Day" && !$scope.isSameDay){
+                $scope.adherenceTrendData.xAxis.xLabels.push(dateService.convertToTimestamp(x));
+                $scope.adherenceTrendData.xAxis.categories[key] = dateService.convertToTimestamp(x);               
+              }else{
+                $scope.adherenceTrendData.xAxis.xLabels.push(x);
+                $scope.adherenceTrendData.xAxis.categories[key] = Highcharts.dateFormat("%I:%M %p",dateService.convertToTimestamp(x)) ;
+              }
+            });         
+          angular.forEach($scope.adherenceTrendData.series, function(s, key1){
+            var marker = {};
+            marker.radius = (s.data && s.data.length < 50)? 2 : 0.5;
+            $scope.markerRadius = marker.radius;
+            angular.forEach(s.data, function(d, key2){
+              var tooltipDateText = $scope.adherenceTrendData.series[key1].data[key2].x ;
+              $scope.adherenceTrendData.series[key1].data[key2].marker = marker;
+              if($scope.durationRange === "Day" || $scope.isSameDay){
+                delete $scope.adherenceTrendData.series[key1].data[key2].x;
+              }else{
+                $scope.adherenceTrendData.series[key1].data[key2].x = $scope.adherenceTrendData.xAxis.categories[key2];
+              }
+              $scope.adherenceTrendData.series[key1].data[key2].toolText.dateText = $scope.adherenceTrendData.xAxis.xLabels[key2];
+              if($scope.adherenceTrendData.series[key1].data[key2].toolText.scoreReset){
+                $scope.adherenceTrendData.series[key1].data[key2].color = "#8c6bb1";
+              }
+              if(!$scope.adherenceTrendData.series[key1].data[key2].toolText.scoreReset)
+              {
+                $scope.adherenceTrendData.series[key1].data[key2].color = '#41ae76';
+              }
+            });            
+            
+          }); 
+          setTimeout(function(){
+            if($scope.durationRange === "Day" || $scope.isSameDay){          
+              $scope.AdherenceTrendCategoryChart();
+            }else{
+              $scope.AdherenceTrendAreaChart();
+            }            
+          }, 100);          
+        } else{
+          $scope.noDataAvailableForAdherence = true;
           $scope.removeAllCharts();
         }
       });
@@ -1274,10 +1346,252 @@ angular.module('hillromvestApp')
           series: $scope.hmrChartData.series
       });
     };
+
+    /*
+    Function for Adherence Trend
+    */
+    $scope.AdherenceTrendAreaChart = function(divId){ 
+      var noOfDataPoints = ($scope.adherenceTrendData && $scope.adherenceTrendData.xAxis.categories)?$scope.adherenceTrendData.xAxis.categories.length: 0;      
+      var daysInterval = getDaysIntervalInChart($scope.adherenceTrendXAxisLabelCount);           
+      Highcharts.setOptions({
+          global: {
+              useUTC: false
+          }
+      });      
+      divId = (divId)? divId : "AdherenceTrendGraph";
+      $('#'+divId).empty();
+      $('#'+divId).highcharts({
+          credits: {
+            enabled: false
+          },
+          chart: {
+              type: 'area',
+              zoomType: 'xy',
+              backgroundColor:  "#e6f1f4"
+          },
+          title: {
+              text: ''
+          },
+          xAxis: {
+              allowDecimals: false,
+              type: 'datetime',         
+              title: {
+                    text: ''
+                },
+              minPadding: 0,
+              maxPadding: 0,
+              startOnTick: false,
+              endOnTick: false,
+              labels:{
+                style: {
+                  color: '#525151',                  
+                  fontWeight: 'bold'
+                },
+                formatter:function(){
+                  return  Highcharts.dateFormat("%m/%d/%Y",this.value);
+                }               
+              }, 
+              lineWidth: 2,
+              units: [
+                ['day', [daysInterval]]
+              ] 
+          },
+          yAxis: {
+              gridLineColor: '#FF0000',
+                gridLineWidth: 0,
+                lineWidth:2,
+                "minRange": 1,
+                "min": 0,               
+                title: {
+                    text: $scope.adherenceTrendData.series[0].name,
+                    style:{
+                      color: '#525151',
+                      font: '10px Helvetica',
+                      fontWeight: 'bold'
+                  }     
+                },
+                 allowDecimals:false,
+                 labels:{
+                  style: {
+                      color: '#525151',                      
+                      fontWeight: 'bold'
+                  }               
+                }
+          },
+          tooltip: { 
+              backgroundColor: "rgba(255,255,255,1)", 
+              useHTML: true , 
+              hideDelay: 0,  
+              enabled: true,        
+              formatter: function() {
+                  var s = '';
+                  var headerStr = '';
+                  var footerStr = '';
+                  var noteStr = '';                  
+                  var dateTextLabel = Highcharts.dateFormat("%m/%d/%Y",this.point.toolText.dateText);
+                  /*if(this.point.toolText.sessionNo && this.point.toolText.sessionNo.indexOf("/" > 0)){
+                    var splitSession = this.point.toolText.sessionNo.split("/");
+                    if(parseInt(splitSession[1]) > 0){
+                      dateTextLabel += ' ( ' + Highcharts.dateFormat("%I:%M %p",this.x) + ' )';
+                    }
+                  }*/
+                  var s = '<div style="font-size:12x;font-weight: bold; padding-bottom: 3px;">'+  dateTextLabel +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div>';
+                  s += '<div style="font-size:10px; font-weight: bold; width:100%"><div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left"> Adherence Score</div> ' 
+                  + '<div style="padding:5px;width:10%"><b>' + this.point.y  + '</b></div></div>';                 
+                  return s;
+                   
+                  return s;
+                }
+               
+                
+          },
+          plotOptions: {
+            series: {
+                //allowPointSelect: true,
+                marker: {
+                      enabled: true,
+                       radius: $scope.markerRadius
+                },
+                states: {
+                    hover: {
+                        enabled: false
+                    }                    
+                },
+                cursor: 'pointer',
+                point: {
+                    events: {
+                        click: function () {
+                            if(this.toolText && !this.toolText.scoreReset){
+                              $scope.getDayChart(this.x);
+                            }                            
+                        }
+                    }
+                  }
+            }
+          },         
+          legend:{
+            enabled: false
+          },          
+          series: $scope.adherenceTrendData.series
+      });
+    };
+
+
+    /*
+    Function for Adherence Trend
+    */
+      $scope.AdherenceTrendCategoryChart = function(divId){
+      var chartType = "column";
+      Highcharts.setOptions({
+          global: {
+              useUTC: false
+          }
+      });      
+      divId = (divId)? divId : "AdherenceTrendGraph";
+      $('#'+divId).empty();
+      $('#'+divId).highcharts({
+          credits: {
+            enabled: false
+          },
+          chart: {
+              type: chartType,
+              zoomType: 'xy',
+              backgroundColor:  "#e6f1f4"
+          },
+          title: {
+              text: ''
+          },
+          xAxis: {
+              allowDecimals: false,
+              type: 'category',         
+              categories: $scope.adherenceTrendData.xAxis.categories,
+              labels:{
+                style: {
+                    color: '#525151',                    
+                    fontWeight: 'bold'
+                }               
+              }, 
+              formatter:function(){
+                return  Highcharts.dateFormat("%m/%d/%Y",this.value);
+              },
+              lineWidth: 2                
+          },
+          yAxis: {
+              gridLineColor: '#FF0000',
+                gridLineWidth: 0,
+                lineWidth:2,
+                "minRange": 1,
+                "min": 0,               
+                title: {
+                    text: $scope.adherenceTrendData.series[0].name,
+                    style:{
+                      color: '#525151',
+                      font: '10px Helvetica',
+                      fontWeight: 'bold'
+                  }     
+                },
+                 allowDecimals:false,
+                 labels:{
+                  style: {
+                      color: '#525151',                      
+                      fontWeight: 'bold'
+                  }               
+                }
+          },
+          tooltip: { 
+              backgroundColor: "rgba(255,255,255,1)",            
+              formatter: function() {
+                  var dateX = dateService.convertToTimestamp(this.point.toolText.dateText);
+                  var dateTextLabel = Highcharts.dateFormat("%m/%d/%Y",dateX);                  
+                  if(this.point.toolText.sessionNo && this.point.toolText.sessionNo.indexOf("/" > 0)){
+                    var splitSession = this.point.toolText.sessionNo.split("/");                    
+                    if(parseInt(splitSession[1]) > 0){                      
+                      dateTextLabel += ' ( ' + Highcharts.dateFormat("%I:%M %p",dateX) + ' )';                      
+                    }
+                  }                 
+                  var s = '<div style="font-size:12x;font-weight: bold; padding-bottom: 3px;">'+  dateTextLabel +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div>';
+                  s += '<div style="font-size:10px; font-weight: bold; width:100%"><div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left"> Adherence Score</div> ' 
+                  + '<div style="padding:5px;width:10%"><b>' + this.point.y  + '</b></div></div>';                 
+                  return s;
+                }, 
+                hideDelay: 0,
+                useHTML: true 
+          },
+          plotOptions: {
+            series: {
+                pointWidth: 50,
+                marker: {
+                      enabled: true,
+                      radius: $scope.markerRadius
+                },
+                states: {
+                    hover: {
+                        enabled: false
+                    }                    
+                },
+                cursor: 'pointer',
+                point: {
+                    events: {
+                        click: function () {
+                            if($scope.durationRange !== "Day" && this.toolText && !this.toolText.scoreReset){                              
+                              $scope.getDayChart(this.category);
+                            } 
+                        }
+                    }
+                  }
+            }
+          },         
+          legend:{
+            enabled: false
+          },          
+          series: $scope.adherenceTrendData.series
+      });
+    };
      
     $scope.drawHMRCChart =function(){ 
         $scope.removeAllCharts();    
         $scope.getHMRGraph();
+        $scope.getAdhereneTrendGraph();
         $scope.getComplianceGraph();
     };
 
@@ -1325,6 +1639,8 @@ angular.module('hillromvestApp')
     $scope.initGraph = function(){
       $scope.getHmrRunRateAndScore();      
       $scope.isHMR = false;
+      $scope.isCompliance = true;
+      $scope.isAdherenceTrend = false;
       //$scope.getWeekChart();
     };
 
@@ -1561,7 +1877,7 @@ angular.module('hillromvestApp')
       //
       }
       
-    $scope.downloadAsPdf = function(){      
+    $scope.downloadAsPdf = function(){    
       $scope.patientInfo = {};
       $scope.patientInfo.patient = $scope.slectedPatient;
       $scope.patientInfo.clinics = $scope.associatedClinics;
@@ -1571,7 +1887,15 @@ angular.module('hillromvestApp')
       $scope.patientInfo.settingsDeviatedDaysCount = $scope.settingsDeviatedDaysCount;
       $scope.patientInfo.hmrRunRate = $scope.hmrRunRate;  
       var clinicDetail = ($scope.patientInfo.clinics && $scope.patientInfo.clinics.length === 1) ? $scope.patientInfo.clinics[0]: null ; 
-      exportutilService.exportHMRCGraphAsPDF("synchronizedChart", "HMRCCanvas", $scope.fromDate, $scope.toDate, $scope.patientInfo, clinicDetail);
+      //exportutilService.exportHMRCGraphAsPDF("synchronizedChart", "HMRCCanvas", $scope.fromDate, $scope.toDate, $scope.patientInfo, clinicDetail);
+        if($scope.hmrChartData.length===0)
+        {
+          exportutilService.exportHMRCGraphAsPDFForAdherenceTrendHavingNoHMR("synchronizedChart", "HMRCCanvas", $scope.fromDate, $scope.toDate, $scope.patientInfo, clinicDetail);
+        }
+        else
+        {
+          exportutilService.exportHMRCGraphAsPDFForAdherenceTrend("synchronizedChart", "HMRCCanvas", $scope.fromDate, $scope.toDate, $scope.patientInfo, clinicDetail);
+        }
     };
 
     $scope.cloaseXLSModal = function(){
@@ -1657,13 +1981,30 @@ angular.module('hillromvestApp')
 
     };
 
+    /*
+    For Adherenve Trend
+    */
+    $scope.getAdherenceTrend = function(){
+      $scope.isHMR = false;
+      $scope.isCompliance = false;
+      $scope.isAdherenceTrend = true;
+      $scope.noDataStatus = false;
+      $scope.selectChart($scope.fromDate);
+    };
+
     $scope.getHMR = function(){
       $scope.isHMR = true;
+      $scope.isCompliance = false;
+      $scope.isAdherenceTrend = false;
+      $scope.noDataStatus = true;
       $scope.selectChart($scope.fromDate);
     };
 
     $scope.getCompliance = function(){
       $scope.isHMR = false;
+      $scope.isCompliance = true;
+      $scope.isAdherenceTrend = false;
+      $scope.noDataStatus = true;
       $scope.selectChart($scope.fromDate);
     };
 
@@ -1682,7 +2023,8 @@ angular.module('hillromvestApp')
 
     $scope.removeAllCharts = function(){
       $("#HMRGraph").empty();
-      $("#synchronizedChart").empty();      
+      $("#synchronizedChart").empty(); 
+      $("#AdherenceTrendGraph").empty();       
     };
 
     $scope.viewProtocol = function(protcols){
@@ -1699,6 +2041,7 @@ angular.module('hillromvestApp')
       $scope.surveyConfirmModal = false;
       delete $rootScope.surveyId;      
     };
+
 
     $scope.toggleHeaderAccount = function(){
       $( "#collapseTwo" ).slideToggle( "slow" );
