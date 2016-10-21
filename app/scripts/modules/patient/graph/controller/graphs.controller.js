@@ -1462,15 +1462,6 @@ angular.module('hillromvestApp')
                     }                    
                 },
                 cursor: 'pointer',
-                point: {
-                    events: {
-                        click: function () {
-                            if(this.toolText && !this.toolText.scoreReset){
-                              $scope.getDayChart(this.x);
-                            }                            
-                        }
-                    }
-                  }
             }
           },         
           legend:{
@@ -1574,15 +1565,6 @@ angular.module('hillromvestApp')
                     }                    
                 },
                 cursor: 'pointer',
-                point: {
-                    events: {
-                        click: function () {
-                            if($scope.durationRange !== "Day" && this.toolText && !this.toolText.scoreReset){                              
-                              $scope.getDayChart(this.category);
-                            } 
-                        }
-                    }
-                  }
             }
           },         
           legend:{
