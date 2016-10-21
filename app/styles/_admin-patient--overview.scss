@@ -83,3 +83,30 @@
     }
   }
 }
+/******For Hill-1848 ******/
+.adherence_history_date ul li a {
+  padding: 2px 0px;
+  color: white;
+  margin: 10px 0px 0px 20px;
+  border-radius: 0px;
+  font-size: 14px;
+}
+.nav1 > li > a:hover, .nav > li > a:focus {
+  text-decoration: none;
+ color: #cccccc;
+}
+.nav1 {
+  margin-bottom: 0;
+  padding-left: 0;
+  list-style: none;
+}
+.nav1 > li > a {
+  position: relative;
+  display: block;
+  padding: 10px 15px;
+}
+.adherence_history_date ul li a.active {
+  background-color: transparent;
+  color: #3967b5;
+}
+/******For Hill-1848 ******/
