@@ -484,10 +484,11 @@ angular.module('hillromvestApp')
           $scope.devicesErrMsg = true;
         }
       });
-      $scope.getProtocols(StorageService.get('logged').patientID || $scope.patientId);
+       $scope.protocols = []; $scope.protocols.length = 0;
+    //  $scope.getProtocols(StorageService.get('logged').patientID || $scope.patientId);
     };
 
-    $scope.getProtocols = function(patientId){
+  /*  $scope.getProtocols = function(patientId){
       $scope.protocols = []; $scope.protocols.length = 0;
       $scope.protocolsErrMsg = null;
       $scope.devicesErrMsg = null;
@@ -506,7 +507,7 @@ angular.module('hillromvestApp')
           }
         });
       });
-    };
+    }; */
 
     $scope.initPatientClinicHCPs = function(){
       $scope.getClinicsOfPatient();
@@ -1943,7 +1944,6 @@ angular.module('hillromvestApp')
       dateLimit: {"months":24},
       eventHandlers: {'apply.daterangepicker': function(ev, picker) {
           $scope.duration = "custom";
-              console.log("Inside opts eventhandler");
           $scope.calculateDateFromPicker(picker);
           var dayDiff = dateService.getDateDiffIndays($scope.fromTimeStamp,$scope.toTimeStamp);
           if( dayDiff === 0){
@@ -1967,26 +1967,22 @@ angular.module('hillromvestApp')
       }
 
       if(customSelection == 'day'){
-         console.log("Inside day selection");
          $scope.calculateTimeDuration(1);
        }
       else if(customSelection == 'week'){
-      console.log("Inside week selection");
       $scope.calculateTimeDuration(6);
       }
       else if(customSelection == 'month'){
-            console.log("Inside month selection");
       $scope.calculateTimeDuration(30);
       }
        else  if(customSelection == 'year'){
-             console.log("Inside year selection");
       $scope.calculateTimeDuration(365);
       }
        else  if(customSelection == 'custom'){
-        console.log("Inside custom selection");
+        //For custom date selection, event handler of dateOpts calculates to and from date
         }
       else{
-        console.log("Inside default selection");
+        $scope.activeSelection='week';
         $scope.calculateTimeDuration(6);
       }
     $scope.customdates = {startDate: $scope.fromDate, endDate: $scope.toDate};
@@ -1994,15 +1990,16 @@ angular.module('hillromvestApp')
       var toDate = dateService.convertDateToYyyyMmDdFormat($scope.toDate);
       patientDashBoardService.getAdeherenceData(patientId, fromDate, toDate).then(function(response){
         $scope.adherenceScores = response.data;
-        console.log($scope.adherenceScores);
         $scope.adherencetrendlength=0;
         for(var i=0; i <$scope.adherenceScores.length;i++){
                    $scope.adherencetrendlength= $scope.adherencetrendlength+$scope.adherenceScores[i].adherenceTrends.length;
         }
+        $scope.displayFromDate = fromDate;
+        $scope.displayToDate = toDate;
         $scope.lengthTrack=0;
         $scope.adherencetrendData = new Array();
    loop1:    for(var j = 0 ; j<$scope.adherenceScores.length;j++){
-        $scope.adherencetrendData.push(new Object({"adherenceTrends": [] , "protocols": []}));                    console.log(j);
+        $scope.adherencetrendData.push(new Object({"adherenceTrends": [] , "protocols": []}));
           $scope.adherencetrendData[j].protocols=angular.extend({},$scope.adherencetrendData[j].protocols,$scope.adherenceScores[j].protcols);
           for(var i=0; i <$scope.adherenceScores[j].adherenceTrends.length;i++){
                    $scope.adherencetrendData[j].adherenceTrends[i]= angular.extend({},$scope.adherencetrendData[j].adherenceTrends[i],$scope.adherenceScores[j].adherenceTrends[i]);
@@ -2099,7 +2096,8 @@ angular.module('hillromvestApp')
     };
 
     $scope.viewProtocol = function(protcols){
-      $scope.protocols = protcols;
+      $scope.protocols=protcols;
+     $scope.noProtocol= angular.equals({}, $scope.protocols);
       $scope.showProtocolModal = true;
     };
 

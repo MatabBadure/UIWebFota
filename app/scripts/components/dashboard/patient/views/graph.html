@@ -13,7 +13,7 @@
 						<div class="stats_chart_section">
 							<div class="stats_header"><h4 translate="graph.statistics"></h4></div>
 							<div class="stats_chart_container">
-								<div class="col-3 hover_symbol ipadHeightBalance" ng-click="$parent.adherenceTable = true; getAdherenceScore('')">
+								<div class="col-3 hover_symbol ipadHeightBalance" ng-click="$parent.adherenceTable = true; getAdherenceScore('week')">
 									<div class="pie_chart" easypiechart options="adherence" percent="adherenceScore"></div>
 									<div class="stats_chart_content score">
 										<h4 class="percent" ng-bind="adherenceScore"></h4>
@@ -64,14 +64,19 @@
 				</ul>
 			</div>
 										<div class="col-md-1">
-											<span class="pull-right"><a class="close" href="javascript:void(0)" ng-click="$parent.adherenceTable = false">X</a></span>
+											<span class="pull-right" style="padding-top:5px;"><a class="close" href="javascript:void(0)" ng-click="$parent.adherenceTable = false">X</a></span>
 										</div>
 									</div>
 								</div>
 								<div class="col-md-16 col-sm-16 headerAccount closeHtml reset-padding">
 									<div class="row close expanded head_txt" ng-click="toggleHeaderAccount()">
-										<div class="col-md-15 col-sm-15 col-xs-14">
+										<div class="col-md-8 col-sm-8 col-xs-8">
 											<p class="head_txt">How to calculate adherence score?</p>
+										</div>
+										<div class="col-md-7 col-sm-7 col-xs-7">
+											<span class="pull-right">
+											<span class="date">{{displayFromDate}}</span> - <span class="date">{{displayToDate}}</span>
+										</span>
 										</div>
 										<div class="col-md-1 col-sm-1">
 											<span class="pull-right">
@@ -529,7 +534,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="padding10 font-size18" ng-if="protocols.length === 0">No Data Available</div>
+					<div class="padding10 font-size18" ng-if="noProtocol">No Data Available</div>
 				</div>
 			</div>
 		</div>
