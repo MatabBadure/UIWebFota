@@ -40,7 +40,16 @@ angular.module('hillromvestApp')
        *
        */
       getPatientInfo: function(id) {
-        var url = URL.patientById.replace('PATIENTID', id);
+        var url = URL.clinicBaseURL.replace('PATIENTID', id);
+        return $http.get(url, {
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });
+      },
+
+      getAdherenceCalculatedScore: function(id) {
+        var url = URL.clinicBaseURL + '/' + id;
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {

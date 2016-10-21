@@ -1,0 +1,82 @@
+<ng-include src="'scripts/components/navbar/navbarclinicadmin.html'"></ng-include>
+<div class="navbar patient-user patient-user--nav">
+  <div class="container">
+    <div class="collapse navbar-collapse patient-user__navbar" id="navbar-collapse">
+      <ul class="nav navbar-nav patient-dashboard">
+        <li style="padding-right:50px;">
+          <a  ng-class="{active: isActive('clinicadminclinicdashboard')}" ng-href="" ng-click="switchTab('clinicadminclinicdashboard')" >
+            <span class="" translate="navbar.clinic-info"></span>
+          </a>
+        </li>
+        <li >
+          <a class = "active" ng-class="{active: isActive('adherenceSettingPage')}" ng-href="" ng-click="switchTab('adherenceSettingPage')">
+            <span class="" translate="navbar.adherence-setting"></span>
+          </a>
+        </li>
+      </ul>
+
+      <ul class="nav navbar-nav pull-right right">
+        <li class="hcp_hsp_name_a" dropdown>
+          <a ng-href="" data-target="#" id="dropdownMenu1" dropdown-toggle>
+            <span class="">{{selectedClinic.name}} <span class="nav_drop_arrow hillrom-icon icon-arrow-down"></span></span>
+          </a>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+          <li role="menuitem" ng-repeat='clinic in clinics' ng-click="switchClinic(clinic)"><a>{{::clinic.name}}</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="dashboard dashboard--content padding-bottom-ls">
+  <form name="form" novalidate autocomplete="off">
+    <div class="container dashboard__form">
+      <div class="margin-top-xl">
+		<div class="col-md-14 reset-padding col-md-offset-2">
+            <div class="col-md-3 col-sm-3 dashboard__form--label reset-padding ipadFloat-left">
+              <span class="" translate="clinic.adherence-setting"></span>
+            </div>
+            <div class="col-md-4 col-sm-3 reset-padding form__select__input--option selected-box-container">
+              <div class="custom-dropdown ipadFloat-right">
+                <select ng-model="prop.value" ng-options="item.type_code as item.type_code for item in prop.values" name="daysCounterCalculate">
+                  <!--<option selected="selected"></option> -->
+                </select>
+              </div>
+            </div>
+          </div>
+      </div>
+
+      
+      <div class="clr"></div>
+    </div>
+    <div class="col-md-10 reset-padding" style = "margin-top:80px;">
+      <div class="">
+        <buton type="submit" ng-click="showSetDays()" class="hillrom-btn btn-primary float-right btn-margin-left ipadMargin-right normalMargin-right" translate="clinic.submit-button-text">Submit</buton>
+        <div class="clr"></div>
+      </div>
+    </div>
+    </div>
+  </form>
+</div>
+
+<div ng-if="showSetDayModal" class="modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true">
+  <div class="modal__dialog">
+    <div class="modal__content">
+      <header class="modal__header">
+        <button type="button" class="modal__close" data-dismiss="modal" ng-click="$parent.showSetDayModal = false">&times;</button>
+        <p translate="clinic.adherence.warning"></p>
+      </header>
+      <div class="modal__body">
+        <div class="modal--message" translate="clinic.adherence.message"></div>
+        <div class="row modal--custom-btn">
+          <buton class="hillrom-btn btn-submit float-right" ng-click="setDays()">Yes</buton>
+          <buton class="hillrom-btn btn-submit float-right" data-dismiss="modal" ng-click="$parent.showSetDayModal = false">No</buton>
+        </div>
+      </div>
+      <footer class="modal__footer">
+      </footer>
+    </div>
+  </div>
+</div>
+
