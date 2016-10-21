@@ -521,6 +521,23 @@ angular.module('hillromvestApp')
         }else if(response.data.message){
           $scope.clinicsOfPatientErrMsg = response.data.message;
         }
+        
+        patientService.getAdherenceCalculatedScore($scope.clinics[0].id).then(function(responseforPatient){
+          if(responseforPatient.data.clinic){
+          $scope.adherenceDays = responseforPatient.data.clinic.adherenceSetting;
+          var adherenceInNumber = Number($scope.adherenceDays);
+          if(adherenceInNumber==1)
+          {
+            $scope.adherenceDaysForPatient = $scope.adherenceDays + " Day";
+          }
+          else
+          {
+            $scope.adherenceDaysForPatient = $scope.adherenceDays + " Days";
+          }
+        }else if(responseforPatient.data.message){
+          $scope.clinicsOfPatientErrMsg = response.data.message;
+        }
+        });
       });
     };
 
@@ -531,6 +548,7 @@ angular.module('hillromvestApp')
         }else if(response.data.message){
           $scope.hcpsOfPatientErrMsg = response.data.message;
         }
+
       });
     };
 
