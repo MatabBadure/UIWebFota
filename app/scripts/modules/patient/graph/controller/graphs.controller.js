@@ -1956,6 +1956,8 @@ angular.module('hillromvestApp')
     }
 
     $scope.getAdherenceScore = function(customSelection){
+      $scope.dayFlag = false;
+      $scope.noDataAvailable = false;
       $scope.activeSelection = customSelection;
        $scope.currentPageIndex = 1;
           $scope.pageCount = 0;
@@ -1968,6 +1970,7 @@ angular.module('hillromvestApp')
 
       if(customSelection == 'day'){
          $scope.calculateTimeDuration(1);
+          $scope.dayFlag = true;
        }
       else if(customSelection == 'week'){
       $scope.calculateTimeDuration(6);
@@ -1994,10 +1997,27 @@ angular.module('hillromvestApp')
         for(var i=0; i <$scope.adherenceScores.length;i++){
                    $scope.adherencetrendlength= $scope.adherencetrendlength+$scope.adherenceScores[i].adherenceTrends.length;
         }
-        $scope.displayFromDate = fromDate;
-        $scope.displayToDate = toDate;
+        $scope.displayFromDate = $scope.fromDate;
+        $scope.displayToDate = $scope.toDate;
         $scope.lengthTrack=0;
         $scope.adherencetrendData = new Array();
+         if($scope.dayFlag == true){
+        for(var j = 0 ; j<$scope.adherenceScores.length;j++){
+$scope.adherencetrendData.push(new Object({"adherenceTrends": [] , "protocols": []}));
+          for(var i=0; i <$scope.adherenceScores[j].adherenceTrends.length;i++){
+                 if($scope.adherenceScores[j].adherenceTrends[i].date == $scope.toDate){
+                 $scope.adherencetrendData[j].adherenceTrends[i]= angular.extend({},$scope.adherencetrendData[j].adherenceTrends[i],$scope.adherenceScores[j].adherenceTrends[i]);
+                 $scope.adherencetrendData[j].protocols=angular.extend({},$scope.adherencetrendData[j].protocols,$scope.adherenceScores[j].protcols);
+                $scope.noDataAvailable = false;
+                }
+                else{
+                  $scope.adherencetrendlength=0;
+                   $scope.noDataAvailable = true;
+                }
+        }
+      }
+    }
+    else{
    loop1:    for(var j = 0 ; j<$scope.adherenceScores.length;j++){
         $scope.adherencetrendData.push(new Object({"adherenceTrends": [] , "protocols": []}));
           $scope.adherencetrendData[j].protocols=angular.extend({},$scope.adherencetrendData[j].protocols,$scope.adherenceScores[j].protcols);
@@ -2016,6 +2036,7 @@ angular.module('hillromvestApp')
                       }
         }
       }
+    }
         $scope.pageCount = Math.ceil($scope.adherencetrendlength / 7);
       }).catch(function(response){
         notyService.showError(response);
