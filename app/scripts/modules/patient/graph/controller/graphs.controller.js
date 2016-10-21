@@ -15,7 +15,10 @@ angular.module('hillromvestApp')
       }
     };
     var isIEBrowser = $scope.isIE();
-    $scope.init = function() {                                                
+    $scope.init = function() {
+      $scope.currentPageIndex = 1;
+      $scope.pageCount = 0;
+      $scope.nextDate= new Date();
       $scope.disableDatesInDatePicker();
       $scope.role = StorageService.get('logged').role;
       $scope.patientId = parseInt(StorageService.get('logged').patientID);
@@ -481,10 +484,11 @@ angular.module('hillromvestApp')
           $scope.devicesErrMsg = true;
         }
       });
-      $scope.getProtocols(StorageService.get('logged').patientID || $scope.patientId);
+       $scope.protocols = []; $scope.protocols.length = 0;
+    //  $scope.getProtocols(StorageService.get('logged').patientID || $scope.patientId);
     };
 
-    $scope.getProtocols = function(patientId){
+  /*  $scope.getProtocols = function(patientId){
       $scope.protocols = []; $scope.protocols.length = 0;
       $scope.protocolsErrMsg = null;
       $scope.devicesErrMsg = null;
@@ -503,7 +507,7 @@ angular.module('hillromvestApp')
           }
         });
       });
-    };
+    }; */
 
     $scope.initPatientClinicHCPs = function(){
       $scope.getClinicsOfPatient();
@@ -1934,21 +1938,85 @@ angular.module('hillromvestApp')
     $scope.$watch("textNote.edit_date", function(){
       angular.element(document.querySelector('.datepicker')).hide();
     });
+    $scope.dateOpts = {
+      maxDate: new Date(),
+      format: patientDashboard.dateFormat,
+      dateLimit: {"months":24},
+      eventHandlers: {'apply.daterangepicker': function(ev, picker) {
+          $scope.duration = "custom";
+          $scope.calculateDateFromPicker(picker);
+          var dayDiff = dateService.getDateDiffIndays($scope.fromTimeStamp,$scope.toTimeStamp);
+          if( dayDiff === 0){
+            $scope.duration = "day";
+          }
+          $scope.getAdherenceScore($scope.duration);
+        }
+      },
+      opens: 'left'
+    }
 
-    $scope.getAdherenceScore = function(){
+    $scope.getAdherenceScore = function(customSelection){
+      $scope.activeSelection = customSelection;
+       $scope.currentPageIndex = 1;
+          $scope.pageCount = 0;
       var patientId;
       if($stateParams.patientId){
         patientId = $stateParams.patientId;
       }else if(StorageService.get('logged').patientID){
         patientId = StorageService.get('logged').patientID;
       }
-      var oneWeekAgo = new Date();
-      oneWeekAgo.setDate(oneWeekAgo.getDate() - 6);
-      var fromDate = dateService.convertDateToYyyyMmDdFormat(oneWeekAgo.getTime());
-      var toDate = dateService.convertDateToYyyyMmDdFormat(new Date().getTime());
+
+      if(customSelection == 'day'){
+         $scope.calculateTimeDuration(1);
+       }
+      else if(customSelection == 'week'){
+      $scope.calculateTimeDuration(6);
+      }
+      else if(customSelection == 'month'){
+      $scope.calculateTimeDuration(30);
+      }
+       else  if(customSelection == 'year'){
+      $scope.calculateTimeDuration(365);
+      }
+       else  if(customSelection == 'custom'){
+        //For custom date selection, event handler of dateOpts calculates to and from date
+        }
+      else{
+        $scope.activeSelection='week';
+        $scope.calculateTimeDuration(6);
+      }
+    $scope.customdates = {startDate: $scope.fromDate, endDate: $scope.toDate};
+     var fromDate = dateService.convertDateToYyyyMmDdFormat($scope.fromDate);
+      var toDate = dateService.convertDateToYyyyMmDdFormat($scope.toDate);
       patientDashBoardService.getAdeherenceData(patientId, fromDate, toDate).then(function(response){
         $scope.adherenceScores = response.data;
-        // $scope.adherenceScores = adherenceScores;
+        $scope.adherencetrendlength=0;
+        for(var i=0; i <$scope.adherenceScores.length;i++){
+                   $scope.adherencetrendlength= $scope.adherencetrendlength+$scope.adherenceScores[i].adherenceTrends.length;
+        }
+        $scope.displayFromDate = fromDate;
+        $scope.displayToDate = toDate;
+        $scope.lengthTrack=0;
+        $scope.adherencetrendData = new Array();
+   loop1:    for(var j = 0 ; j<$scope.adherenceScores.length;j++){
+        $scope.adherencetrendData.push(new Object({"adherenceTrends": [] , "protocols": []}));
+          $scope.adherencetrendData[j].protocols=angular.extend({},$scope.adherencetrendData[j].protocols,$scope.adherenceScores[j].protcols);
+          for(var i=0; i <$scope.adherenceScores[j].adherenceTrends.length;i++){
+                   $scope.adherencetrendData[j].adherenceTrends[i]= angular.extend({},$scope.adherencetrendData[j].adherenceTrends[i],$scope.adherenceScores[j].adherenceTrends[i]);
+                      $scope.lengthTrack++;//no. of records to be displayed in a page
+                      if(i == ($scope.adherenceScores[j].adherenceTrends.length-1))
+                       { //If records available are less than no. of records to be displayed in a page
+                        $scope.nextDate=$scope.adherenceScores[j].adherenceTrends[i].date;
+                        $scope.lessThanSeven = i;
+                       }
+                      if($scope.lengthTrack == 7){
+                        $scope.nextDate=$scope.adherenceScores[j].adherenceTrends[i].date; //Store the date of the last row from the displayed records
+                        $scope.lessThanSeven = 6;
+                       break loop1; //break if the no. of records to be displayed in a page is reached
+                      }
+        }
+      }
+        $scope.pageCount = Math.ceil($scope.adherencetrendlength / 7);
       }).catch(function(response){
         notyService.showError(response);
       });
@@ -2028,7 +2096,8 @@ angular.module('hillromvestApp')
     };
 
     $scope.viewProtocol = function(protcols){
-      $scope.protocols = protcols;
+      $scope.protocols=protcols;
+     $scope.noProtocol= angular.equals({}, $scope.protocols);
       $scope.showProtocolModal = true;
     };
 
@@ -2047,5 +2116,77 @@ angular.module('hillromvestApp')
       $( "#collapseTwo" ).slideToggle( "slow" );
       $scope.expandedSign = ($scope.expandedSign === "+") ? "-" : "+";      
     }
+        $scope.searchPatients = function(track) {
+      var patientId;
+      if($stateParams.patientId){
+        patientId = $stateParams.patientId;
+      }else if(StorageService.get('logged').patientID){
+        patientId = StorageService.get('logged').patientID;
+      }
+      var referenceDate = $scope.convertStringToDate($scope.nextDate);
+      var relativeReferenceDate = new Date();
+      var fromDate = new Date();
+      var toDate = new Date();
+          if (track !== undefined) {
+            if (track === "PREV" && $scope.currentPageIndex > 1) {
+            relativeReferenceDate = dateService.convertDateToYyyyMmDdFormat($scope.getnDaysBeforeOrAfter(referenceDate,6-(6-$scope.lessThanSeven)));
+            toDate = relativeReferenceDate;
+            fromDate = dateService.convertDateToYyyyMmDdFormat($scope.getnDaysBeforeOrAfter(relativeReferenceDate,13-(6-$scope.lessThanSeven)));
+              $scope.currentPageIndex--;
+            } else if (track === "NEXT" && $scope.currentPageIndex < $scope.pageCount) {
+            relativeReferenceDate = dateService.convertDateToYyyyMmDdFormat($scope.getnDaysBeforeOrAfter(referenceDate,-8));
+            toDate = relativeReferenceDate;
+            fromDate = dateService.convertDateToYyyyMmDdFormat($scope.getnDaysBeforeOrAfter(referenceDate,-1));
+              $scope.currentPageIndex++;
+            } else {
+              return false;
+            }
+          } else {
+            $scope.currentPageIndex = 1;
+          }
+          //call the API with from and to date
+        patientDashBoardService.getAdeherenceData(patientId,fromDate,toDate).then(function(response){
+        $scope.adherenceScores = response.data;
+        $scope.lengthTrack=0;
+        $scope.adherencetrendData = new Array();
+   loop1:    for(var j = 0 ; j<$scope.adherenceScores.length;j++){
+                      $scope.adherencetrendData.push(new Object({"adherenceTrends": []},{"protocols": []}));
+                      $scope.adherencetrendData[j].protocols=angular.extend({},$scope.adherencetrendData[j].protocols,$scope.adherenceScores[j].protcols);
+                    for(var i=0; i <$scope.adherenceScores[j].adherenceTrends.length;i++){
+                       $scope.adherencetrendData[j].adherenceTrends[i]= angular.extend({},$scope.adherencetrendData[j].adherenceTrends[i],$scope.adherenceScores[j].adherenceTrends[i]);
+                       $scope.lengthTrack++;//no. of records to be displayed in a page
+                       if(i == ($scope.adherenceScores[j].adherenceTrends.length-1))
+                       {//If records available are less than no. of records to be displayed in a page
+                        $scope.nextDate=$scope.adherenceScores[j].adherenceTrends[i].date;
+                        $scope.lessThanSeven = i;
+                       }
+                       if($scope.lengthTrack == 7){
+                        $scope.nextDate=$scope.adherenceScores[j].adherenceTrends[i].date; //Store the date of the last row from the displayed records
+                        $scope.lessThanSeven = 6;
+                        break loop1;//break if the no. of records to be displayed in a page is reached
+                         }
+                       }
+              }
+               $scope.adherencetrendlength =  $scope.adherencetrendlength;
+                $scope.pageCount= $scope.pageCount;
+      }).catch(function(response){
+        notyService.showError(response);
+      }); 
+   };
+   /******Function to convert string to Date ******/
+   $scope.convertStringToDate = function(dateString){
+    var parts=$scope.nextDate.split("/");
+    return(new Date(parts[2],parts[0]-1,parts[1]));
+   };
+    /******End of Function to convert string to Date ******/
+   /******Function to get n days before or after a given date******/
+   $scope.getnDaysBeforeOrAfter = function(givenDate,n){
+    var finalDate = new Date($scope.convertStringToDate(givenDate).getTime() - (n * 24 * 60 * 60 * 1000));
+    var day =finalDate.getDate();
+    var month=finalDate.getMonth();
+    var year=finalDate.getFullYear();
+    return (new Date(year,month,day));
+   };
+    /******End of Function to get n days before or after a given date******/
 }]);
 
