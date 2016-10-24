@@ -20,6 +20,7 @@ angular.module('hillromvestApp')
 	'getReasonForJustification': 'api/codeValues/justification_reset',
 	'resetAdherenceScore': 'api/adherenceReset',
 	'searchUsers': 'api/user/search?searchString=',
+	'getAdherenceDays' : 'api/codeValues/adherence_setting',
 	'searchHcpUser': 'api/user/hcp/search?searchString=',
 	'addPatientNotes':'api/memoNotes',
 	'getStatistics':'/api/users/USERID/clinics/CLINICID/statistics',

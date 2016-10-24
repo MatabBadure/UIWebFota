@@ -1,8 +1,9 @@
 angular.module('hillromvestApp')
-.controller('clinicadminclinicController',['$scope', '$state', 'clinicadminService', 'notyService', '$stateParams', 'clinicService', 'UserService', 'StorageService', 'commonsUserService',
-  function($scope, $state, clinicadminService, notyService, $stateParams, clinicService, UserService, StorageService, commonsUserService) {
+.controller('clinicadminclinicController',['$scope', '$location','$state', 'clinicadminService', 'notyService', '$stateParams', 'clinicService', 'UserService', 'StorageService', 'commonsUserService',
+  function($scope, $location,$state, clinicadminService, notyService, $stateParams, clinicService, UserService, StorageService, commonsUserService) {
 
   	$scope.init = function(){
+      $scope.statusForColor = false;
       clinicService.getClinicSpeciality().then(function(response){
          $scope.specialities =  response.data.typeCode;
       }).catch(function(response){
@@ -10,10 +11,52 @@ angular.module('hillromvestApp')
       });
 
       var currentRoute = $state.current.name;
-      if (currentRoute === 'clinicadminclinicdashboard') {        
+      if (currentRoute === 'clinicadminclinicdashboard' || currentRoute === 'adherenceSettingPage') {        
         $scope.clinicDashboardInit();
       }
   	};
+
+
+      clinicService.getAdherenceScoreDays().then(function(response){
+         $scope.adherenceDays =  response.data.typeCode;
+         var data = response.data.typeCode.length;
+         var len = Number(data);
+         $scope.ItemIndexForDefault = 0;
+         for(var i = 0 ;i<len;i++)
+         {
+           if($scope.adherenceDays[i].type_code.includes("Default"))
+           {
+            $scope.statusForColor = true;
+               $scope.ItemIndexForDefault = i ;
+              break;
+           }
+  
+         }
+         var IndexValue = $scope.adherenceDays[$scope.ItemIndexForDefault].type_code;
+
+         $scope.prop = {   "type": "select", 
+        "name": "Service", 
+        "value": IndexValue, 
+        "values":  $scope.adherenceDays
+        };
+      }).catch(function(response){
+      
+      });
+
+     $scope.isActive = function(tab) {
+          var path = $location.path();
+          if (path.indexOf(tab) !== -1) {
+            return true;
+          } else {
+            return false;
+          }
+        };
+
+
+    $scope.switchTab = function(tab)
+    {
+        $state.go(tab, {"clinicId": $stateParams.clinicId});
+    };
 
     $scope.clinicDashboardInit = function(){
       var benchmarkingClinic = (StorageService.get('benchmarkingClinic') && StorageService.get('benchmarkingClinic').clinic) ? StorageService.get('benchmarkingClinic').clinic.id : null;
@@ -76,12 +119,44 @@ angular.module('hillromvestApp')
       });
   	};
 
+    $scope.setDays = function(){
+      if($scope.form.$invalid){
+        return false;
+      }
+      var daysCount = $scope.prop.value;
+      var res = daysCount.split(" ");
+      var dayValue = Number(res[0]);
+      var data = {
+        'adherenceSetting':dayValue
+      };
+      clinicService.updateDaysForCalculation(data,$stateParams.clinicId).then(function(response){
+        notyService.showMessage(response.data.message, 'success');
+        $state.go('adherenceSettingPage');
+        $scope.showSetDayModal = false;
+      }).catch(function(response){
+        $scope.showSetDayModal = false;
+        notyService.showError(response);
+      });
+    };
+
   	$scope.cancelEditClinic = function(){
   		$state.go('clinicadmindashboard');
   	};
 
+    $scope.cancelEditSetDays= function(){
+      $state.go('adherenceSettingPage');
+    };
+
     $scope.switchClinic = function(clinic){
       $state.go('clinicadminclinicdashboard', {'clinicId':clinic.id})
+    };
+
+    $scope.showSetDays = function(){
+      if($scope.form.$invalid){
+        return false;
+      }else {
+        $scope.showSetDayModal= true;
+      }
     };
 
     $scope.showUpdateClinicModal = function(){
