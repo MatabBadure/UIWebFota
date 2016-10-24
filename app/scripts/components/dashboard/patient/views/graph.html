@@ -74,9 +74,11 @@
 											<p class="head_txt">How to calculate adherence score?</p>
 										</div>
 										<div class="col-md-7 col-sm-7 col-xs-7">
-											<span class="pull-right">
+											<span ng-if="!dayFlag" class="pull-right">
 											<span class="date">{{displayFromDate}}</span> - <span class="date">{{displayToDate}}</span>
 										</span>
+										</span>
+			<span ng-if="dayFlag" class="date pull-right">{{toDate}}<span>
 										</div>
 										<div class="col-md-1 col-sm-1">
 											<span class="pull-right">
@@ -149,8 +151,12 @@
 										</tr>
 									</tbody>
 								</table> -->
-								<div class="col-md-16 col-sm-16 col-xs-16 padding0 reset-padding vertical_align border-bottom border-lt border-rt" ng-repeat="adherenceScore in adherencetrendData">
-									<div class="col-md-14 col-sm-14 col-xs-16 padding0 reset-padding">
+								
+								<div  class="col-md-16 col-sm-16 col-xs-16 padding0 reset-padding vertical_align border-bottom border-lt border-rt" ng-repeat="adherenceScore in adherencetrendData">
+									<div id = "NodataDiv" class="graph_nodata" ng-if = "noDataAvailable">
+		<span class="noData_text"> No Data Available!</span>
+	</div>
+									<div ng-if="!noDataAvailable" class="col-md-14 col-sm-14 col-xs-16 padding0 reset-padding">
 										<div class="col-md-16 col-sm-16 col-xs-16 padding0 reset-padding adherencescore survey_grey_color" ng-class="{'border-bottom': adherenceScore.adherenceTrends.length !== $index+1}" ng-repeat ="adherenceTrend in adherenceScore.adherenceTrends track by $index">
 											<div class="col-md-4 col-sm-4 col-xs-4 first-row padding10">{{adherenceTrend.date}}</div>
 												<div class="col-md-8 col-sm-8 col-xs-8 padding10">
@@ -163,7 +169,7 @@
 												
 										</div>
 									</div>
-										<div class="col-md-2 col-sm-2 col-xs-2  text-center text-align-r padding10 cyan-blue-light first-row-view1 pointer-fill-event view-column" ng-click="viewProtocol(adherenceScore.protocols)">View</div>
+										<div ng-if="!noDataAvailable" class="col-md-2 col-sm-2 col-xs-2  text-center text-align-r padding10 cyan-blue-light first-row-view1 pointer-fill-event view-column" ng-click="viewProtocol(adherenceScore.protocols)">View</div>
 								</div>
 							</div>
 						</div>

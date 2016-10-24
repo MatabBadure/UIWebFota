@@ -521,6 +521,23 @@ angular.module('hillromvestApp')
         }else if(response.data.message){
           $scope.clinicsOfPatientErrMsg = response.data.message;
         }
+        
+        patientService.getAdherenceCalculatedScore($scope.clinics[0].id).then(function(responseforPatient){
+          if(responseforPatient.data.clinic){
+          $scope.adherenceDays = responseforPatient.data.clinic.adherenceSetting;
+          var adherenceInNumber = Number($scope.adherenceDays);
+          if(adherenceInNumber==1)
+          {
+            $scope.adherenceDaysForPatient = $scope.adherenceDays + " Day";
+          }
+          else
+          {
+            $scope.adherenceDaysForPatient = $scope.adherenceDays + " Days";
+          }
+        }else if(responseforPatient.data.message){
+          $scope.clinicsOfPatientErrMsg = response.data.message;
+        }
+        });
       });
     };
 
@@ -531,6 +548,7 @@ angular.module('hillromvestApp')
         }else if(response.data.message){
           $scope.hcpsOfPatientErrMsg = response.data.message;
         }
+
       });
     };
 
@@ -1462,15 +1480,6 @@ angular.module('hillromvestApp')
                     }                    
                 },
                 cursor: 'pointer',
-                point: {
-                    events: {
-                        click: function () {
-                            if(this.toolText && !this.toolText.scoreReset){
-                              $scope.getDayChart(this.x);
-                            }                            
-                        }
-                    }
-                  }
             }
           },         
           legend:{
@@ -1574,15 +1583,6 @@ angular.module('hillromvestApp')
                     }                    
                 },
                 cursor: 'pointer',
-                point: {
-                    events: {
-                        click: function () {
-                            if($scope.durationRange !== "Day" && this.toolText && !this.toolText.scoreReset){                              
-                              $scope.getDayChart(this.category);
-                            } 
-                        }
-                    }
-                  }
             }
           },         
           legend:{
@@ -1956,6 +1956,8 @@ angular.module('hillromvestApp')
     }
 
     $scope.getAdherenceScore = function(customSelection){
+      $scope.dayFlag = false;
+      $scope.noDataAvailable = false;
       $scope.activeSelection = customSelection;
        $scope.currentPageIndex = 1;
           $scope.pageCount = 0;
@@ -1968,6 +1970,7 @@ angular.module('hillromvestApp')
 
       if(customSelection == 'day'){
          $scope.calculateTimeDuration(1);
+          $scope.dayFlag = true;
        }
       else if(customSelection == 'week'){
       $scope.calculateTimeDuration(6);
@@ -1994,10 +1997,27 @@ angular.module('hillromvestApp')
         for(var i=0; i <$scope.adherenceScores.length;i++){
                    $scope.adherencetrendlength= $scope.adherencetrendlength+$scope.adherenceScores[i].adherenceTrends.length;
         }
-        $scope.displayFromDate = fromDate;
-        $scope.displayToDate = toDate;
+        $scope.displayFromDate = $scope.fromDate;
+        $scope.displayToDate = $scope.toDate;
         $scope.lengthTrack=0;
         $scope.adherencetrendData = new Array();
+         if($scope.dayFlag == true){
+        for(var j = 0 ; j<$scope.adherenceScores.length;j++){
+$scope.adherencetrendData.push(new Object({"adherenceTrends": [] , "protocols": []}));
+          for(var i=0; i <$scope.adherenceScores[j].adherenceTrends.length;i++){
+                 if($scope.adherenceScores[j].adherenceTrends[i].date == $scope.toDate){
+                 $scope.adherencetrendData[j].adherenceTrends[i]= angular.extend({},$scope.adherencetrendData[j].adherenceTrends[i],$scope.adherenceScores[j].adherenceTrends[i]);
+                 $scope.adherencetrendData[j].protocols=angular.extend({},$scope.adherencetrendData[j].protocols,$scope.adherenceScores[j].protcols);
+                $scope.noDataAvailable = false;
+                }
+                else{
+                  $scope.adherencetrendlength=0;
+                   $scope.noDataAvailable = true;
+                }
+        }
+      }
+    }
+    else{
    loop1:    for(var j = 0 ; j<$scope.adherenceScores.length;j++){
         $scope.adherencetrendData.push(new Object({"adherenceTrends": [] , "protocols": []}));
           $scope.adherencetrendData[j].protocols=angular.extend({},$scope.adherencetrendData[j].protocols,$scope.adherenceScores[j].protcols);
@@ -2016,6 +2036,7 @@ angular.module('hillromvestApp')
                       }
         }
       }
+    }
         $scope.pageCount = Math.ceil($scope.adherencetrendlength / 7);
       }).catch(function(response){
         notyService.showError(response);
