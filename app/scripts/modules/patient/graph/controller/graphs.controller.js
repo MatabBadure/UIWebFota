@@ -74,7 +74,8 @@ angular.module('hillromvestApp')
       $scope.notePageCount = 0;
       $scope.totalNotes = 0;
       $scope.isHMR = false; 
-      $scope.noDataAvailable = false;        
+      $scope.noDataAvailable = false;   
+      $scope.noHistoryAvailable = false;     
       $scope.noDataAvailableForHMR = false;  
       $scope.noDataAvailableForAdherence = false;  
       $scope.noDataStatus = true;
@@ -1957,7 +1958,7 @@ angular.module('hillromvestApp')
 
     $scope.getAdherenceScore = function(customSelection){
       $scope.dayFlag = false;
-      $scope.noDataAvailable = false;
+      $scope.noHistoryAvailable = false;
       $scope.activeSelection = customSelection;
        $scope.currentPageIndex = 1;
           $scope.pageCount = 0;
@@ -2009,11 +2010,11 @@ $scope.adherencetrendData.push(new Object({"adherenceTrends": [] , "protocols": 
                  if($scope.adherenceScores[j].adherenceTrends[i].date == $scope.toDate){
                  $scope.adherencetrendData[j].adherenceTrends[i]= angular.extend({},$scope.adherencetrendData[j].adherenceTrends[i],$scope.adherenceScores[j].adherenceTrends[i]);
                  $scope.adherencetrendData[j].protocols=angular.extend({},$scope.adherencetrendData[j].protocols,$scope.adherenceScores[j].protcols);
-                $scope.noDataAvailable = false;
+                $scope.noHistoryAvailable = false;
                 }
                 else{
                   $scope.adherencetrendlength=0;
-                   $scope.noDataAvailable = true;
+                   $scope.noHistoryAvailable = true;
                 }
         }
       }
