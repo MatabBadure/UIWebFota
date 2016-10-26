@@ -74,7 +74,8 @@ angular.module('hillromvestApp')
       $scope.notePageCount = 0;
       $scope.totalNotes = 0;
       $scope.isHMR = false; 
-      $scope.noDataAvailable = false;        
+      $scope.noDataAvailable = false;   
+      $scope.noHistoryAvailable = false;     
       $scope.noDataAvailableForHMR = false;  
       $scope.noDataAvailableForAdherence = false;  
       $scope.noDataStatus = true;
@@ -1957,7 +1958,7 @@ angular.module('hillromvestApp')
 
     $scope.getAdherenceScore = function(customSelection){
       $scope.dayFlag = false;
-      $scope.noDataAvailable = false;
+      $scope.noHistoryAvailable = false;
       $scope.activeSelection = customSelection;
        $scope.currentPageIndex = 1;
           $scope.pageCount = 0;
@@ -1993,6 +1994,7 @@ angular.module('hillromvestApp')
       var toDate = dateService.convertDateToYyyyMmDdFormat($scope.toDate);
       patientDashBoardService.getAdeherenceData(patientId, fromDate, toDate).then(function(response){
         $scope.adherenceScores = response.data;
+        $scope.adherenceHistoryAllData = response.data;
         $scope.adherencetrendlength=0;
         for(var i=0; i <$scope.adherenceScores.length;i++){
                    $scope.adherencetrendlength= $scope.adherencetrendlength+$scope.adherenceScores[i].adherenceTrends.length;
@@ -2008,11 +2010,11 @@ $scope.adherencetrendData.push(new Object({"adherenceTrends": [] , "protocols": 
                  if($scope.adherenceScores[j].adherenceTrends[i].date == $scope.toDate){
                  $scope.adherencetrendData[j].adherenceTrends[i]= angular.extend({},$scope.adherencetrendData[j].adherenceTrends[i],$scope.adherenceScores[j].adherenceTrends[i]);
                  $scope.adherencetrendData[j].protocols=angular.extend({},$scope.adherencetrendData[j].protocols,$scope.adherenceScores[j].protcols);
-                $scope.noDataAvailable = false;
+                $scope.noHistoryAvailable = false;
                 }
                 else{
                   $scope.adherencetrendlength=0;
-                   $scope.noDataAvailable = true;
+                   $scope.noHistoryAvailable = true;
                 }
         }
       }
@@ -2137,7 +2139,121 @@ $scope.adherencetrendData.push(new Object({"adherenceTrends": [] , "protocols": 
       $( "#collapseTwo" ).slideToggle( "slow" );
       $scope.expandedSign = ($scope.expandedSign === "+") ? "-" : "+";      
     }
-        $scope.searchPatients = function(track) {
+      $scope.GetAdherenceScoreReason = function(hoverdate){
+      var MTDdates = ""; //Variable to store dates of Missed therapies
+      var HNAdates = ""; //Variable to store dates of HMR Non Adherence
+      var ASRdates = ""; //Variable to store dates of HMR Non Adherence
+      var MTDflag = false; //Flag for Missed therapies
+      var HNAflag = false; //Flag for HMR Non Adherence
+      var ASRflag = false; //Flag for Adherence Reset
+       var NNflag = false; //Flag for No Notification
+      var HNACounter = 0;
+      $scope.myPopoverData="";
+    
+    for(var j=0; j < ($scope.adherenceHistoryAllData.length) ; j++){
+     var adherenceTrends = $scope.adherenceHistoryAllData[j].adherenceTrends;
+      for(var i=0; i < (adherenceTrends.length) ; i++)
+      {
+        var date = adherenceTrends[i].date;
+        var notificationPoints = Object.keys(adherenceTrends[i].notificationPoints)[0]; 
+      switch(notificationPoints){
+          case 'Missed Therapy Days':
+          if(HNACounter >= 2)
+          {
+            var res = HNAdates.split(",");
+            if(MTDdates == ""){
+             MTDdates =res[res.length-2]+ ", "+res[res.length-1] + "," + date;
+            }
+            else{
+            MTDdates =MTDdates + ", "+ res[res.length-2]+ ", "+res[res.length-1] + "," + date;
+            }
+            MTDflag = true;
+            HNACounter = 0;
+            HNAflag = false;
+            ASRflag = false;
+             NNflag = false;
+             HNAdates = "";
+            ASRdates = "";
+          }
+          else
+          {
+             HNACounter = 0;
+             HNAflag = false;
+             ASRflag = false;
+             NNflag = false;
+             HNAdates = "";
+             ASRdates = "";
+             if(MTDdates == ""){
+             MTDdates = date;
+           }
+           else{
+             MTDdates = MTDdates + ", "+date;
+           }
+             MTDflag = true;
+          }
+          break;
+          case 'HMR Non-Adherence':
+             HNACounter++;
+             MTDflag = false;
+             ASRflag = false;
+             NNflag = false;
+             MTDdates= "";
+             ASRdates = "";
+             if(HNAdates == ""){
+             HNAdates = date;
+           }
+           else{
+             HNAdates = HNAdates +", "+ date;
+           }
+             HNAflag = true;
+          break;
+          case 'Adherence Score Reset':
+           if(ASRdates == ""){
+             ASRdates = date;
+           }
+           else{
+             ASRdates = ASRdates +", "+ date;
+           }
+            ASRflag = true;
+            HNACounter = 0;
+            MTDflag = false;
+            HNAflag = false;
+            NNflag = false;
+            MTDdates= "";
+            HNAdates = "";
+          break;
+          case 'No Notification':
+            HNACounter = 0;
+            NNflag = true;
+            MTDflag = false;
+            HNAflag = false;
+            ASRflag = false;
+           MTDdates = "";
+           HNAdates = "";
+            ASRdates = "";
+            break;
+         };
+         
+        if(hoverdate == date){
+          if(MTDflag == true){
+         $scope.myPopoverData=notificationPoints+' on ('+MTDdates+' )';
+             }
+          else if(HNAflag == true){
+         $scope.myPopoverData=notificationPoints+' on ('+HNAdates+' )';
+          }
+          else if(ASRflag == true)
+          {
+         $scope.myPopoverData=notificationPoints+' on ('+ASRdates+' )';
+          }
+          else if(NNflag == true){
+            $scope.myPopoverData = "No notification available!";
+          }
+      }
+    
+    }
+  }
+    };
+        $scope.AdherenceHistoryPagination = function(track) {
       var patientId;
       if($stateParams.patientId){
         patientId = $stateParams.patientId;

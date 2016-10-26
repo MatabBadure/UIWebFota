@@ -109,4 +109,18 @@
   background-color: transparent;
   color: #3967b5;
 }
-/******For Hill-1848 ******/
+/******End of Hill-1848 ******/
+/******For Hill-1882 ******/
+.popover{
+  background-color : #ffffff;
+  border: 0.25px solid #7ca3dc;
+  border-radius: 0px;
+  width:250px !important;
+}
+.popover.top .arrow:after{
+  border-top-color:#ffffff;
+}
+.popover.top .arrow{
+  border-top-color:#7ca3dc;
+}
+/******End of Hill-1882 ******/
