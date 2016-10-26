@@ -1232,6 +1232,7 @@ angular.module('hillromvestApp')
                         enabled: false
                     }                    
                 },
+                turboThreshold : $scope.hmrChartData.series[0].data.length,
                 cursor: 'pointer',
                 point: {
                     events: {
@@ -1351,6 +1352,7 @@ angular.module('hillromvestApp')
                         enabled: false
                     }                    
                 },
+                turboThreshold : $scope.hmrChartData.series[0].data.length,
                 cursor: 'pointer',
                 point: {
                     events: {
@@ -1480,6 +1482,7 @@ angular.module('hillromvestApp')
                         enabled: false
                     }                    
                 },
+                 turboThreshold : $scope.hmrChartData.series[0].data.length,
                 cursor: 'pointer',
             }
           },         
@@ -1583,6 +1586,7 @@ angular.module('hillromvestApp')
                         enabled: false
                     }                    
                 },
+                 turboThreshold : $scope.hmrChartData.series[0].data.length,
                 cursor: 'pointer',
             }
           },         
