@@ -113,7 +113,8 @@ angular.module('hillromvestApp')
       }
       var data = $scope.clinic;
       clinicService.updateClinic(data).then(function(response){
-        $state.go('clinicadmindashboard');
+        $scope.showModal = false;
+        notyService.showMessage(response.data.message, 'success');
       }).catch(function(response){
         notyService.showError(response);
       });
