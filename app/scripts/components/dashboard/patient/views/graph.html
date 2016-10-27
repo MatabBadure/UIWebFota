@@ -151,12 +151,11 @@
 										</tr>
 									</tbody>
 								</table> -->
-								
-								<div  class="col-md-16 col-sm-16 col-xs-16 padding0 reset-padding vertical_align border-bottom border-lt border-rt" ng-repeat="adherenceScore in adherencetrendData">
-									<div id = "NodataDiv" class="graph_nodata" ng-if = "noHistoryAvailable">
+	<div id = "NodataDiv" class="historyNoData first-row" ng-if = "noHistoryAvailable">
 		<span class="noData_text"> No Data Available!</span>
 	</div>
-									<div ng-if="!noHistoryAvailable" class="col-md-14 col-sm-14 col-xs-16 padding0 reset-padding">
+								<div ng-if="!noHistoryAvailable" class="col-md-16 col-sm-16 col-xs-16 padding0 reset-padding vertical_align border-bottom border-lt border-rt" ng-repeat="adherenceScore in adherencetrendData">
+									<div class="col-md-14 col-sm-14 col-xs-16 padding0 reset-padding">
 										<div class="col-md-16 col-sm-16 col-xs-16 padding0 reset-padding adherencescore survey_grey_color" ng-class="{'border-bottom': adherenceScore.adherenceTrends.length !== $index+1}" ng-repeat ="adherenceTrend in adherenceScore.adherenceTrends track by $index">
 											<div class="col-md-4 col-sm-4 col-xs-4 first-row padding10">{{adherenceTrend.date}}</div>
 												<div class="col-md-8 col-sm-8 col-xs-8 padding10">

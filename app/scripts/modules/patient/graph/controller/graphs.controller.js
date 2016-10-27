@@ -1996,6 +1996,8 @@ angular.module('hillromvestApp')
     $scope.customdates = {startDate: $scope.fromDate, endDate: $scope.toDate};
      var fromDate = dateService.convertDateToYyyyMmDdFormat($scope.fromDate);
       var toDate = dateService.convertDateToYyyyMmDdFormat($scope.toDate);
+       $scope.displayFromDate = $scope.fromDate;
+        $scope.displayToDate = $scope.toDate;
       patientDashBoardService.getAdeherenceData(patientId, fromDate, toDate).then(function(response){
         $scope.adherenceScores = response.data;
         $scope.adherenceHistoryAllData = response.data;
@@ -2003,8 +2005,6 @@ angular.module('hillromvestApp')
         for(var i=0; i <$scope.adherenceScores.length;i++){
                    $scope.adherencetrendlength= $scope.adherencetrendlength+$scope.adherenceScores[i].adherenceTrends.length;
         }
-        $scope.displayFromDate = $scope.fromDate;
-        $scope.displayToDate = $scope.toDate;
         $scope.lengthTrack=0;
         $scope.adherencetrendData = new Array();
          if($scope.dayFlag == true){
@@ -2045,7 +2045,8 @@ $scope.adherencetrendData.push(new Object({"adherenceTrends": [] , "protocols": 
     }
         $scope.pageCount = Math.ceil($scope.adherencetrendlength / 7);
       }).catch(function(response){
-        notyService.showError(response);
+        $scope.noHistoryAvailable = true;
+       // notyService.showError(response);
       });
     };
     
