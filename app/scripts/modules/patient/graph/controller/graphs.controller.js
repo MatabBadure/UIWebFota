@@ -1232,6 +1232,7 @@ angular.module('hillromvestApp')
                         enabled: false
                     }                    
                 },
+                turboThreshold : $scope.hmrChartData.series[0].data.length,
                 cursor: 'pointer',
                 point: {
                     events: {
@@ -1351,6 +1352,7 @@ angular.module('hillromvestApp')
                         enabled: false
                     }                    
                 },
+                turboThreshold : $scope.hmrChartData.series[0].data.length,
                 cursor: 'pointer',
                 point: {
                     events: {
@@ -1480,6 +1482,7 @@ angular.module('hillromvestApp')
                         enabled: false
                     }                    
                 },
+                 turboThreshold : $scope.adherenceTrendData.series[0].data.length,
                 cursor: 'pointer',
             }
           },         
@@ -1583,6 +1586,7 @@ angular.module('hillromvestApp')
                         enabled: false
                     }                    
                 },
+                 turboThreshold : $scope.adherenceTrendData.series[0].data.length,
                 cursor: 'pointer',
             }
           },         
@@ -2079,7 +2083,14 @@ $scope.adherencetrendData.push(new Object({"adherenceTrends": [] , "protocols": 
       $scope.isHMR = false;
       $scope.isCompliance = false;
       $scope.isAdherenceTrend = true;
-      $scope.noDataStatus = false;
+      if(($scope.adherenceTrendData.length == 0) || ($scope.adherenceTrendData==null))
+      {
+        $scope.noDataStatus = true;
+      }
+      else
+      {
+        $scope.noDataStatus = false
+      }
       $scope.selectChart($scope.fromDate);
     };
 
@@ -2106,6 +2117,7 @@ $scope.adherencetrendData.push(new Object({"adherenceTrends": [] , "protocols": 
       $scope.initGraph();
       $scope.getPatientById($scope.patientId);     
     };
+
 
     $scope.initHMR = function(){
       $scope.isHMR = true;
