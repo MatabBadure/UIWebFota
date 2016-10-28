@@ -2151,7 +2151,7 @@ $scope.adherencetrendData.push(new Object({"adherenceTrends": [] , "protocols": 
       $( "#collapseTwo" ).slideToggle( "slow" );
       $scope.expandedSign = ($scope.expandedSign === "+") ? "-" : "+";      
     }
-      $scope.GetAdherenceScoreReason = function(hoverdate){
+        $scope.GetAdherenceScoreReason = function(hoverdate){
       var MTDdates = ""; //Variable to store dates of Missed therapies
       var HNAdates = ""; //Variable to store dates of HMR Non Adherence
       var ASRdates = ""; //Variable to store dates of HMR Non Adherence
@@ -2160,6 +2160,7 @@ $scope.adherencetrendData.push(new Object({"adherenceTrends": [] , "protocols": 
       var ASRflag = false; //Flag for Adherence Reset
        var NNflag = false; //Flag for No Notification
       var HNACounter = 0;
+      var res ="";
       $scope.myPopoverData="";
     
     for(var j=0; j < ($scope.adherenceHistoryAllData.length) ; j++){
@@ -2172,7 +2173,7 @@ $scope.adherencetrendData.push(new Object({"adherenceTrends": [] , "protocols": 
           case 'Missed Therapy Days':
           if(HNACounter >= 2)
           {
-            var res = HNAdates.split(",");
+             res = HNAdates.split(",");
             if(MTDdates == ""){
              MTDdates =res[res.length-2]+ ", "+res[res.length-1] + "," + date;
             }
@@ -2245,7 +2246,19 @@ $scope.adherencetrendData.push(new Object({"adherenceTrends": [] , "protocols": 
             ASRdates = "";
             break;
          };
-         
+        if(MTDdates != "")
+        {
+         MTDdates = $scope.GetLastTenDates(MTDdates);
+     }
+     if(HNAdates != "")
+        {
+    HNAdates = $scope.GetLastTenDates(HNAdates);
+     }
+        if(ASRdates != "")
+        {  
+          ASRdates = $scope.GetLastTenDates(ASRdates);
+     }
+
         if(hoverdate == date){
           if(MTDflag == true){
          $scope.myPopoverData=notificationPoints+' on ('+MTDdates+' )';
@@ -2265,6 +2278,19 @@ $scope.adherencetrendData.push(new Object({"adherenceTrends": [] , "protocols": 
     }
   }
     };
+    $scope.GetLastTenDates = function(allDates){
+        var res = allDates.split(",");
+         if(res.length > 10)
+         {
+          allDates = "";
+           allDates = res[(res.length)-10];
+          for(var i=((res.length)-9);i<=((res.length)-1);i++)
+          {
+            allDates = allDates+", " + res[i] ;
+           }
+          }
+       return allDates;
+    }
         $scope.AdherenceHistoryPagination = function(track) {
       var patientId;
       if($stateParams.patientId){
