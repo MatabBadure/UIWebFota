@@ -486,10 +486,10 @@ angular.module('hillromvestApp')
         }
       });
        $scope.protocols = []; $scope.protocols.length = 0;
-    //  $scope.getProtocols(StorageService.get('logged').patientID || $scope.patientId);
+      $scope.getProtocols(StorageService.get('logged').patientID || $scope.patientId);
     };
 
-  /*  $scope.getProtocols = function(patientId){
+    $scope.getProtocols = function(patientId){
       $scope.protocols = []; $scope.protocols.length = 0;
       $scope.protocolsErrMsg = null;
       $scope.devicesErrMsg = null;
@@ -508,7 +508,7 @@ angular.module('hillromvestApp')
           }
         });
       });
-    }; */
+    };
 
     $scope.initPatientClinicHCPs = function(){
       $scope.getClinicsOfPatient();
