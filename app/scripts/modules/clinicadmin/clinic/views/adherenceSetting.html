@@ -33,14 +33,13 @@
   <form name="form" novalidate autocomplete="off">
     <div class="container dashboard__form">
       <div class="margin-top-xl">
-		<div class="col-md-14 reset-padding col-md-offset-2">
+    <div class="col-md-14 reset-padding col-md-offset-2">
             <div class="col-md-3 col-sm-3 dashboard__form--label reset-padding ipadFloat-left">
               <span class="" translate="clinic.adherence-setting"></span>
             </div>
             <div class="col-md-4 col-sm-3 reset-padding form__select__input--option selected-box-container">
               <div class="custom-dropdown ipadFloat-right">
-                <select ng-model="prop.value" ng-options="item.type_code as item.type_code for item in prop.values" name="daysCounterCalculate">
-                  <!--<option selected="selected"></option> -->
+                <select ng-model="selectedNumberOfDays"  ng-options="item.type_code as item.type_code for item in adherenceDays" name="daysCounterCalculate">
                 </select>
               </div>
             </div>
@@ -79,4 +78,3 @@
     </div>
   </div>
 </div>
-

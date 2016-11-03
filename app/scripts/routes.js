@@ -1907,12 +1907,12 @@ angular.module('hillromvestApp')
             })
 
 
-            .state('adherenceSettingPage', {
+     .state('adherenceSettingPage', {
                 parent: 'clinicadmin-dashboard',
                 url: '/{clinicId}/adherenceSettingPage',
                 data: {
                     roles: ['CLINIC_ADMIN'],
-                    pageTitle: 'clinic.page-title.clinics'
+                    pageTitle: 'clinic.page-title.adherence-settings'
                 },
                 views: {
                     'content@': {
