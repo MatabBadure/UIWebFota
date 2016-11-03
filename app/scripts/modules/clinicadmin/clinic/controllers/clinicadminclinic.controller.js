@@ -2,47 +2,41 @@ angular.module('hillromvestApp')
 .controller('clinicadminclinicController',['$scope', '$location','$state', 'clinicadminService', 'notyService', '$stateParams', 'clinicService', 'UserService', 'StorageService', 'commonsUserService',
   function($scope, $location,$state, clinicadminService, notyService, $stateParams, clinicService, UserService, StorageService, commonsUserService) {
 
-  	$scope.init = function(){
+    $scope.init = function(){
       $scope.statusForColor = false;
       clinicService.getClinicSpeciality().then(function(response){
          $scope.specialities =  response.data.typeCode;
       }).catch(function(response){
       
       });
-
       var currentRoute = $state.current.name;
-      if (currentRoute === 'clinicadminclinicdashboard' || currentRoute === 'adherenceSettingPage') {        
-        $scope.clinicDashboardInit();
-      }
-  	};
+      if (currentRoute === 'clinicadminclinicdashboard' || currentRoute === 'adherenceSettingPage') {   
+      $scope.clinicDashboardInit(); 
+    }
+    if(currentRoute === 'adherenceSettingPage'){
+      $scope.getAdherenceScoreSettingDays();  
+    }
+    }; 
 
-
-      clinicService.getAdherenceScoreDays().then(function(response){
-         $scope.adherenceDays =  response.data.typeCode;
-         var data = response.data.typeCode.length;
-         var len = Number(data);
-         $scope.ItemIndexForDefault = 0;
-         for(var i = 0 ;i<len;i++)
+$scope.getAdherenceScoreSettingDays = function(){
+ clinicService.getAdherenceScoreDays().then(function(response){
+          $scope.adherenceDays =  response.data.typeCode;
+      /*   var adherenceDayslength = Number($scope.adherenceDays.length);
+         for(var i = 0 ;i<adherenceDayslength;i++)
          {
-           if($scope.adherenceDays[i].type_code.includes("Default"))
+          var res = $scope.adherenceDays[i].type_code.split(" ");
+           if(Number(res[0]) === $scope.clinic.adherenceSetting)
            {
-            $scope.statusForColor = true;
-               $scope.ItemIndexForDefault = i ;
+           $scope.selectedNumberOfDays = $scope.adherenceDays[i].type_code;
               break;
            }
   
          }
-         var IndexValue = $scope.adherenceDays[$scope.ItemIndexForDefault].type_code;
-
-         $scope.prop = {   "type": "select", 
-        "name": "Service", 
-        "value": IndexValue, 
-        "values":  $scope.adherenceDays
-        };
+        $scope.adherenceDaysList = $scope.adherenceDays;*/
       }).catch(function(response){
       
       });
-
+};
      $scope.isActive = function(tab) {
           var path = $location.path();
           if (path.indexOf(tab) !== -1) {
@@ -102,12 +96,17 @@ angular.module('hillromvestApp')
         }else{
           $scope.clinic.status = 'Active';
         }
+        if($scope.clinic.adherenceSetting == 3){
+          $scope.selectedNumberOfDays = $scope.clinic.adherenceSetting+" Days(Default)";
+        }
+        else
+          $scope.selectedNumberOfDays = $scope.clinic.adherenceSetting+" Days";
       }).catch(function(response){
         notyService.showError(response);
       });
     };
 
-  	$scope.editClinic = function(){
+    $scope.editClinic = function(){
       if($scope.form.$invalid){
         return false;
       }
@@ -118,13 +117,13 @@ angular.module('hillromvestApp')
       }).catch(function(response){
         notyService.showError(response);
       });
-  	};
+    };
 
     $scope.setDays = function(){
       if($scope.form.$invalid){
         return false;
       }
-      var daysCount = $scope.prop.value;
+      var daysCount = $scope.selectedNumberOfDays;
       var res = daysCount.split(" ");
       var dayValue = Number(res[0]);
       var data = {
@@ -140,9 +139,9 @@ angular.module('hillromvestApp')
       });
     };
 
-  	$scope.cancelEditClinic = function(){
-  		$state.go('clinicadmindashboard');
-  	};
+    $scope.cancelEditClinic = function(){
+      $state.go('clinicadmindashboard');
+    };
 
     $scope.cancelEditSetDays= function(){
       $state.go('adherenceSettingPage');
@@ -168,6 +167,6 @@ angular.module('hillromvestApp')
       }
     };
 
-  	$scope.init();
+    $scope.init();
 
   }]);
