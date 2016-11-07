@@ -6,7 +6,8 @@
           "clinic-profile": "HillRom | Clinic Profile",
           "associated-HCPs": "HillRom | Associated HCPs",
           "associated-patients" : "HillRom | Associated Patients",
-          "clinic-admin": "Hillrom | Clinic Admin"
+          "clinic-admin": "Hillrom | Clinic Admin",
+          "adherence-settings": "Hillrom | Adherence Settings"
         },
         "home": {
             "createLabel": "Create New Clinic",

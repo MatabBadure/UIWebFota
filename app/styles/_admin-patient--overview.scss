@@ -124,4 +124,16 @@ text-decoration:none;
 .popover.top .arrow{
   border-top-color:#7ca3dc;
 }
+.historyNoData{
+  margin: 0% auto;
+  text-align: center;
+  border-bottom: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  border-left: 1px solid #ccc;
+  .noData_text{
+    font-size: 18px;
+    font-weight: bold;
+    color: #555555;
+  }
+}
 /******End of Hill-1882 ******/

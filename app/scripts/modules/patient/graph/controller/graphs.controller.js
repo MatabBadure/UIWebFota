@@ -486,10 +486,10 @@ angular.module('hillromvestApp')
         }
       });
        $scope.protocols = []; $scope.protocols.length = 0;
-    //  $scope.getProtocols(StorageService.get('logged').patientID || $scope.patientId);
+      $scope.getProtocols(StorageService.get('logged').patientID || $scope.patientId);
     };
 
-  /*  $scope.getProtocols = function(patientId){
+    $scope.getProtocols = function(patientId){
       $scope.protocols = []; $scope.protocols.length = 0;
       $scope.protocolsErrMsg = null;
       $scope.devicesErrMsg = null;
@@ -508,7 +508,7 @@ angular.module('hillromvestApp')
           }
         });
       });
-    }; */
+    };
 
     $scope.initPatientClinicHCPs = function(){
       $scope.getClinicsOfPatient();
@@ -1959,7 +1959,7 @@ angular.module('hillromvestApp')
       },
       opens: 'left'
     }
-
+ /******Adherence History Grid view Date selection-Hill-1848 ******/
     $scope.getAdherenceScore = function(customSelection){
       $scope.dayFlag = false;
       $scope.noHistoryAvailable = false;
@@ -1996,6 +1996,8 @@ angular.module('hillromvestApp')
     $scope.customdates = {startDate: $scope.fromDate, endDate: $scope.toDate};
      var fromDate = dateService.convertDateToYyyyMmDdFormat($scope.fromDate);
       var toDate = dateService.convertDateToYyyyMmDdFormat($scope.toDate);
+       $scope.displayFromDate = $scope.fromDate;
+        $scope.displayToDate = $scope.toDate;
       patientDashBoardService.getAdeherenceData(patientId, fromDate, toDate).then(function(response){
         $scope.adherenceScores = response.data;
         $scope.adherenceHistoryAllData = response.data;
@@ -2003,8 +2005,6 @@ angular.module('hillromvestApp')
         for(var i=0; i <$scope.adherenceScores.length;i++){
                    $scope.adherencetrendlength= $scope.adherencetrendlength+$scope.adherenceScores[i].adherenceTrends.length;
         }
-        $scope.displayFromDate = $scope.fromDate;
-        $scope.displayToDate = $scope.toDate;
         $scope.lengthTrack=0;
         $scope.adherencetrendData = new Array();
          if($scope.dayFlag == true){
@@ -2045,10 +2045,11 @@ $scope.adherencetrendData.push(new Object({"adherenceTrends": [] , "protocols": 
     }
         $scope.pageCount = Math.ceil($scope.adherencetrendlength / 7);
       }).catch(function(response){
-        notyService.showError(response);
+        $scope.noHistoryAvailable = true;
+       // notyService.showError(response);
       });
     };
-    
+  /******End of Adherence History Grid view Date selection-Hill-1848 ******/  
     $scope.takeSurveyNow = function(){          
         $state.go("patientSurvey", {'surveyId': $rootScope.surveyId});
     };
@@ -2151,65 +2152,74 @@ $scope.adherencetrendData.push(new Object({"adherenceTrends": [] , "protocols": 
       $( "#collapseTwo" ).slideToggle( "slow" );
       $scope.expandedSign = ($scope.expandedSign === "+") ? "-" : "+";      
     }
-      $scope.GetAdherenceScoreReason = function(hoverdate){
+    /******For Hill-1882******/
+        $scope.GetAdherenceScoreReason = function(hoverdate,key){
       var MTDdates = ""; //Variable to store dates of Missed therapies
       var HNAdates = ""; //Variable to store dates of HMR Non Adherence
       var ASRdates = ""; //Variable to store dates of HMR Non Adherence
-      var MTDflag = false; //Flag for Missed therapies
-      var HNAflag = false; //Flag for HMR Non Adherence
-      var ASRflag = false; //Flag for Adherence Reset
-       var NNflag = false; //Flag for No Notification
+      var FDdates = ""; //Variable to store dates of Frequency Deviation
       var HNACounter = 0;
-      $scope.myPopoverData="";
-    
+      var res ="";
+      $scope.myPopoverData=""; 
     for(var j=0; j < ($scope.adherenceHistoryAllData.length) ; j++){
      var adherenceTrends = $scope.adherenceHistoryAllData[j].adherenceTrends;
       for(var i=0; i < (adherenceTrends.length) ; i++)
       {
         var date = adherenceTrends[i].date;
-        var notificationPoints = Object.keys(adherenceTrends[i].notificationPoints)[0]; 
-      switch(notificationPoints){
-          case 'Missed Therapy Days':
+         var notificationPoints = Object.keys(adherenceTrends[i].notificationPoints); 
+/******Collecting the dates to be displayed in details******/  
+         if(notificationPoints.indexOf('Missed Therapy Days') >-1){
           if(HNACounter >= 2)
           {
-            var res = HNAdates.split(",");
+             res = HNAdates.split(",");
             if(MTDdates == ""){
              MTDdates =res[res.length-2]+ ", "+res[res.length-1] + "," + date;
             }
             else{
             MTDdates =MTDdates + ", "+ res[res.length-2]+ ", "+res[res.length-1] + "," + date;
             }
-            MTDflag = true;
             HNACounter = 0;
-            HNAflag = false;
-            ASRflag = false;
-             NNflag = false;
-             HNAdates = "";
+            HNAdates = "";
+            FDdates = "";
             ASRdates = "";
           }
           else
           {
              HNACounter = 0;
-             HNAflag = false;
-             ASRflag = false;
-             NNflag = false;
              HNAdates = "";
+             FDdates = "";
              ASRdates = "";
-             if(MTDdates == ""){
+          if(MTDdates == ""){//To remove unnecessary comma
              MTDdates = date;
-           }
-           else{
+               }
+           else{//add comma only for more than 1 date
              MTDdates = MTDdates + ", "+date;
            }
-             MTDflag = true;
           }
-          break;
-          case 'HMR Non-Adherence':
+         }
+          else if(notificationPoints.indexOf('HMR Non-Adherence') > -1 && notificationPoints.indexOf('Frequency Deviation') > -1){
+             //for HMR Non-Adherence and Frequency Deviation
              HNACounter++;
-             MTDflag = false;
-             ASRflag = false;
-             NNflag = false;
              MTDdates= "";
+             ASRdates = "";
+             if(HNAdates == ""){
+             HNAdates = date;
+           }
+            else{
+             HNAdates = HNAdates +", "+ date;
+           }
+             if(FDdates == ""){
+             FDdates = date;
+           }
+           else{
+             FDdates = FDdates +", "+ date;
+           }
+         }
+         else if(notificationPoints.indexOf('HMR Non-Adherence')>-1 && notificationPoints.indexOf('Frequency Deviation') < 0){
+             //for HMR Non-Adherence
+              HNACounter++;
+             MTDdates= "";
+             FDdates = "";
              ASRdates = "";
              if(HNAdates == ""){
              HNAdates = date;
@@ -2217,54 +2227,95 @@ $scope.adherencetrendData.push(new Object({"adherenceTrends": [] , "protocols": 
            else{
              HNAdates = HNAdates +", "+ date;
            }
-             HNAflag = true;
-          break;
-          case 'Adherence Score Reset':
-           if(ASRdates == ""){
+         }
+           else if(notificationPoints.indexOf('Frequency Deviation')>-1 && notificationPoints.indexOf('HMR Non-Adherence') < 0){
+            //for Frequency Deviation
+             HNACounter++;
+             HNAdates = "";
+             MTDdates= "";
+             ASRdates = "";
+             if(FDdates == ""){
+             FDdates = date;
+           }
+           else{
+             FDdates = FDdates +", "+ date;
+           }     
+         }
+         else if(notificationPoints.indexOf('No Notification')>-1){
+            HNACounter = 0;
+           MTDdates = "";
+           FDdates = "";
+           HNAdates = "";
+            ASRdates = "";
+         }
+         else if(notificationPoints.indexOf('Adherence Score Reset')>-1){
+            HNACounter = 0;
+            MTDdates= "";
+            FDdates = "";
+            HNAdates = "";
+            if(ASRdates == ""){
              ASRdates = date;
            }
            else{
              ASRdates = ASRdates +", "+ date;
            }
-            ASRflag = true;
-            HNACounter = 0;
-            MTDflag = false;
-            HNAflag = false;
-            NNflag = false;
-            MTDdates= "";
-            HNAdates = "";
-          break;
-          case 'No Notification':
-            HNACounter = 0;
-            NNflag = true;
-            MTDflag = false;
-            HNAflag = false;
-            ASRflag = false;
-           MTDdates = "";
-           HNAdates = "";
-            ASRdates = "";
-            break;
-         };
-         
+         }
+/******End of collecting the dates to be displayed in details******/  
+ /*****Display only last ten dates *****/
+        if(MTDdates != "")
+           {
+                MTDdates = $scope.GetLastTenDates(MTDdates);
+            }
+         if(HNAdates != "")
+            {
+                HNAdates = $scope.GetLastTenDates(HNAdates);
+            }
+          if(ASRdates != "")
+           {  
+                ASRdates = $scope.GetLastTenDates(ASRdates);
+            }
+          if(FDdates != "")
+          {  
+                FDdates = $scope.GetLastTenDates(FDdates);
+           }
+ /******End of Display only last ten dates ******/
+/****** To fetch the details to be displayed ******/
         if(hoverdate == date){
-          if(MTDflag == true){
-         $scope.myPopoverData=notificationPoints+' on ('+MTDdates+' )';
+         if(key == 'Missed Therapy Days'){
+         $scope.myPopoverData=key+' on ('+MTDdates+' )';
              }
-          else if(HNAflag == true){
-         $scope.myPopoverData=notificationPoints+' on ('+HNAdates+' )';
+          else if(key == 'HMR Non-Adherence'){
+         $scope.myPopoverData=key+' on ('+HNAdates+' )';
           }
-          else if(ASRflag == true)
+          else if(key == 'Frequency Deviation'){
+            $scope.myPopoverData=key+' on ('+FDdates+' )';
+          }
+          else if(key == 'Adherence Score Reset')
           {
-         $scope.myPopoverData=notificationPoints+' on ('+ASRdates+' )';
+         $scope.myPopoverData=key+' on ('+ASRdates+' )';
           }
-          else if(NNflag == true){
+          else if(key == 'No Notification'){
             $scope.myPopoverData = "No notification available!";
           }
       }
-    
-    }
-  }
+/****** End of fetch the details to be displayed ******/
+    }//End of for
+  }//End of for
     };
+    $scope.GetLastTenDates = function(allDates){
+        var res = allDates.split(",");
+         if(res.length > 10)
+         {
+          allDates = "";
+           allDates = res[(res.length)-10];
+          for(var i=((res.length)-9);i<=((res.length)-1);i++)
+          {
+            allDates = allDates+", " + res[i] ;
+           }
+          }
+       return allDates;
+    };
+    /******Adherence History Pagination-Hill-1848 ******/
         $scope.AdherenceHistoryPagination = function(track) {
       var patientId;
       if($stateParams.patientId){
@@ -2322,6 +2373,7 @@ $scope.adherencetrendData.push(new Object({"adherenceTrends": [] , "protocols": 
         notyService.showError(response);
       }); 
    };
+    /******End of Adherence History Pagination-Hill-1848 ******/
    /******Function to convert string to Date ******/
    $scope.convertStringToDate = function(dateString){
     var parts=$scope.nextDate.split("/");
