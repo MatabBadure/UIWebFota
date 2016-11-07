@@ -1,8 +1,9 @@
 'use strict';
 
 angular.module('hillromvestApp')
-  .controller('MainController',['$scope', 'Principal', 'Auth', '$state', 'Account', '$location', '$stateParams', '$rootScope', 'loginConstants', 'StorageService', 'UserService', '$window', 
-  function ($scope, Principal,Auth, $state, Account, $location,$stateParams, $rootScope,loginConstants,StorageService, UserService, $window) {
+  .controller('MainController', 
+  	['$scope', 'Principal', 'Auth', '$state', 'Account', '$location', '$stateParams', '$rootScope', 'loginConstants', 'StorageService', 'UserService', '$window', 'patientService', 
+  function ($scope, Principal,Auth, $state, Account, $location,$stateParams, $rootScope,loginConstants,StorageService, UserService, $window, patientService) {
     Principal.identity().then(function(account) {
       $scope.account = account;
       $scope.isAuthenticated = Principal.isAuthenticated;
@@ -188,13 +189,21 @@ angular.module('hillromvestApp')
 	  };
 
 	  $scope.getPatientNotifications = function(notifications){
-	   	if(notifications.length === 0){            
+	  		$scope.getNumberofDays();
+		   	if(notifications.length === 0){            
 		  	var noNotification = {
 		      'notificationType' : 'NO_NOTIFICATION'
 		    }
 		    $scope.notifications.push(noNotification);
 			}
 	  };
+	  /******Written to fix Hill-2002. Calling clinics API to get number of days(adherenceSetting) ******/
+	    $scope.getNumberofDays = function(){
+	  patientService.getClinicsLinkedToPatient(StorageService.get('logged').patientID).then(function(response){
+          $scope.notificationData = response.data.clinics[0].adherenceSetting;
+       });
+	};
+	 /******End of Calling clinics API to get number of days(adherenceSetting) ******/
 
 		$scope.mainInit();
 		$scope.isUserChanged = function(){
