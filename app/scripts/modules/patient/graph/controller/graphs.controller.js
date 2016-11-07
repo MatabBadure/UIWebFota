@@ -29,14 +29,18 @@ angular.module('hillromvestApp')
       if( $scope.role === loginConstants.role.caregiver){
         $scope.getPatientListForCaregiver($scope.caregiverID);
       }
-      var server_error_msg = "Some internal error occurred. Please try after sometime.";
+       var server_error_msg = "Some internal error occurred. Please try after sometime.";
       $scope.showNotes = false;      
-      $scope.toTimeStamp = new Date().getTime();      
+      $scope.toTimeStamp = new Date().getTime(); 
+      $scope.toTimeStampHistory = new Date().getTime();     
       $scope.hmrRunRate = $scope.adherenceScore = $scope.missedtherapyDays = $scope.notePageCount = $scope.totalNotes = 0;
       $scope.edit_date = dateService.convertDateToYyyyMmDdFormat(new Date());
       $scope.fromTimeStamp = dateService.getnDaysBackTimeStamp(6);
+      $scope.fromTimeStampHistory = dateService.getnDaysBackTimeStamp(6);
       $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
       $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');
+      $scope.fromDateHistory = dateService.getDateFromTimeStamp($scope.fromTimeStampHistory,patientDashboard.dateFormat,'/');
+      $scope.toDateHistory = dateService.getDateFromTimeStamp($scope.toTimeStampHistory,patientDashboard.dateFormat,'/');
       $scope.curNotePageIndex = 1;
       $scope.perPageCount = 4;
       $scope.patientTab = currentRoute;
@@ -176,7 +180,15 @@ angular.module('hillromvestApp')
       $state.go(status, {'caregiverId': $stateParams.caregiverId});
     };
     /*caregiver code ends*/
-    $scope.calculateDateFromPicker = function(picker) {
+    $scope.calculateDateFromPicker = function(picker,flag) {
+      if(flag == 'AdherenceScoreHistory')
+      {
+      $scope.fromTimeStampHistory = new Date(picker.startDate._d).getTime();
+      $scope.toTimeStampHistory = new Date(picker.endDate._d).getTime();
+      $scope.fromDateHistory = dateService.getDateFromTimeStamp($scope.fromTimeStampHistory,patientDashboard.dateFormat,'/');
+      $scope.toDateHistory = dateService.getDateFromTimeStamp($scope.toTimeStampHistory,patientDashboard.dateFormat,'/');
+      }
+    else{
       $scope.fromTimeStamp = new Date(picker.startDate._d).getTime();
       $scope.toTimeStamp = new Date(picker.endDate._d).getTime();
       $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
@@ -184,6 +196,7 @@ angular.module('hillromvestApp')
       if ($scope.fromDate === $scope.toDate ) {
         $scope.fromTimeStamp = $scope.toTimeStamp;
       }
+    }
     };
 
     $scope.disableDatesInDatePicker = function() {
@@ -304,13 +317,20 @@ angular.module('hillromvestApp')
       }
     };
     
-    $scope.calculateTimeDuration = function(durationInDays) {
+   $scope.calculateTimeDuration = function(durationInDays,flag) {
+      if(flag == 'AdherenceScoreHistory'){
+      $scope.toTimeStampHistory = new Date().getTime();
+      $scope.toDateHistory = dateService.getDateFromTimeStamp($scope.toTimeStampHistory,patientDashboard.dateFormat,'/');
+      $scope.fromTimeStampHistory = dateService.getnDaysBackTimeStamp(durationInDays);;
+      $scope.fromDateHistory = dateService.getDateFromTimeStamp($scope.fromTimeStampHistory,patientDashboard.dateFormat,'/');
+      }
+      else{
       $scope.toTimeStamp = new Date().getTime();
       $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');
       $scope.fromTimeStamp = dateService.getnDaysBackTimeStamp(durationInDays);;
       $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
+         }
     };
-
     /*this should initiate the list of caregivers associated to the patient*/
     $scope.initPatientCaregiver = function(){
       $scope.getCaregiversForPatient(StorageService.get('logged').patientID);
@@ -1606,21 +1626,21 @@ angular.module('hillromvestApp')
 
     $scope.getYearChart = function(){
       $scope.durationRange = "Year";
-      $scope.calculateTimeDuration(365);
+      $scope.calculateTimeDuration(365,'NotAdherenceScoreHistory');
       $scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
       $scope.drawHMRCChart();
     };
 
     $scope.getMonthChart = function(){
       $scope.durationRange = "Month";
-      $scope.calculateTimeDuration(30);
+      $scope.calculateTimeDuration(30,'NotAdherenceScoreHistory');
       $scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
       $scope.drawHMRCChart();
     };
 
     $scope.getWeekChart = function(){
       $scope.durationRange = "Week";
-      $scope.calculateTimeDuration(6);
+      $scope.calculateTimeDuration(6,'NotAdherenceScoreHistory');
       $scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
       $scope.drawHMRCChart();
     };
@@ -1974,30 +1994,28 @@ angular.module('hillromvestApp')
       }
 
       if(customSelection == 'day'){
-         $scope.calculateTimeDuration(1);
+         $scope.calculateTimeDuration(1,'AdherenceScoreHistory');
           $scope.dayFlag = true;
        }
       else if(customSelection == 'week'){
-      $scope.calculateTimeDuration(6);
+      $scope.calculateTimeDuration(6,'AdherenceScoreHistory');
       }
       else if(customSelection == 'month'){
-      $scope.calculateTimeDuration(30);
+      $scope.calculateTimeDuration(30,'AdherenceScoreHistory');
       }
        else  if(customSelection == 'year'){
-      $scope.calculateTimeDuration(365);
+      $scope.calculateTimeDuration(365,'AdherenceScoreHistory');
       }
        else  if(customSelection == 'custom'){
         //For custom date selection, event handler of dateOpts calculates to and from date
         }
       else{
         $scope.activeSelection='week';
-        $scope.calculateTimeDuration(6);
+        $scope.calculateTimeDuration(6,'AdherenceScoreHistory');
       }
-    $scope.customdates = {startDate: $scope.fromDate, endDate: $scope.toDate};
-     var fromDate = dateService.convertDateToYyyyMmDdFormat($scope.fromDate);
-      var toDate = dateService.convertDateToYyyyMmDdFormat($scope.toDate);
-       $scope.displayFromDate = $scope.fromDate;
-        $scope.displayToDate = $scope.toDate;
+    $scope.customdates = {startDate: $scope.fromDateHistory, endDate: $scope.toDateHistory};
+     var fromDate = dateService.convertDateToYyyyMmDdFormat($scope.fromDateHistory);
+      var toDate = dateService.convertDateToYyyyMmDdFormat($scope.toDateHistory);
       patientDashBoardService.getAdeherenceData(patientId, fromDate, toDate).then(function(response){
         $scope.adherenceScores = response.data;
         $scope.adherenceHistoryAllData = response.data;
