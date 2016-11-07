@@ -1906,6 +1906,33 @@ angular.module('hillromvestApp')
                 }
             })
 
+
+     .state('adherenceSettingPage', {
+                parent: 'clinicadmin-dashboard',
+                url: '/{clinicId}/adherenceSettingPage',
+                data: {
+                    roles: ['CLINIC_ADMIN'],
+                    pageTitle: 'clinic.page-title.adherence-settings'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/clinicadmin/clinic/views/adherenceSetting.html',
+                        controller: 'clinicadminclinicController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('clinic');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+
             .state('clinicadminnewhcp', {
                 parent: 'clinicadminhcpdashboard',
                 url: '/new',

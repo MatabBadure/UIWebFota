@@ -330,6 +330,8 @@
     "notification": "Notification",
     "more": "more",
     "hmr-data": "HMR Data",
+    "adherenceTrend":"Adherence Trend",
+    "protocolGraph":"Protocol Graph",
     "compliance": "Compliance",
     "day": "Day",
     "year": "Year",
@@ -349,7 +351,7 @@
     "download": "Download",
     "adherence": "Adherence",
     "adherence-score-table":{
-      "title":"Adherence Score History for last 7 days",
+      "title":"Adherence Score History",
       "date": "Date",
       "notification": "Notification",
       "change" :"Change",  

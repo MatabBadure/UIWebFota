@@ -39,7 +39,7 @@
                     
                     <span ng-if="notification.notificationType === 'MISSED_THERAPY'">
                       <span class="dsh_icon icon-lungs"></span>
-                      <span translate="global.notification.missed-therapy"></span>
+                      <span>Your recommended therapy is missed by {{notificationData}} days</span>
                     </span>
                     <span ng-if="notification.notificationType === 'SETTINGS_DEVIATION'">
                       <span class="dsh_icon icon-settings"></span>
