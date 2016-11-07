@@ -224,7 +224,7 @@ angular.module('hillromvestApp')
       dateLimit: {"months":24},
       eventHandlers: {'apply.daterangepicker': function(ev, picker) {
           $scope.durationRange = "Custom";     
-          $scope.calculateDateFromPicker(picker);  
+          $scope.calculateDateFromPicker(picker,'NotAdherenceScoreHistory');  
           var dayDiff = dateService.getDateDiffIndays($scope.fromTimeStamp,$scope.toTimeStamp);          
           if( dayDiff === 0){
             $scope.durationRange = "Day";
@@ -1969,7 +1969,7 @@ angular.module('hillromvestApp')
       dateLimit: {"months":24},
       eventHandlers: {'apply.daterangepicker': function(ev, picker) {
           $scope.duration = "custom";
-          $scope.calculateDateFromPicker(picker);
+          $scope.calculateDateFromPicker(picker, 'AdherenceScoreHistory');
           var dayDiff = dateService.getDateDiffIndays($scope.fromTimeStamp,$scope.toTimeStamp);
           if( dayDiff === 0){
             $scope.duration = "day";
