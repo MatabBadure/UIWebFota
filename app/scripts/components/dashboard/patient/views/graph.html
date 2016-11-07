@@ -56,7 +56,7 @@
 										</div>
 										<div class="col-md-9 col-sm-9 adherence_history_date">
 				<ul class="nav1 nav-pills pull-right ">
-					<li role="presentation" class=""><a href="" ng-class="{active: activeSelection === 'day'}" ng-hide="complianceGraph" ng-click="getAdherenceScore('day')" translate="graph.day"></a></li>
+					<li role="presentation" class=""><a href="" ng-class="{active: activeSelection === 'day'}"  ng-click="getAdherenceScore('day')" translate="graph.day"></a></li>
 					<li role="presentation" class=""><a ng-class="{active: activeSelection === 'week'}" ng-click="getAdherenceScore('week')" href="">Week</a></li>
 					<li role="presentation" class=""><a href="" ng-class="{active: activeSelection === 'month'}" ng-click="getAdherenceScore('month')" translate="graph.month"></a></li>
 					<li role="presentation" class=""><a href="" ng-class="{active: activeSelection === 'year'}" ng-click="getAdherenceScore('year')" translate="graph.year"></a></li>
@@ -75,10 +75,10 @@
 										</div>
 										<div class="col-md-7 col-sm-7 col-xs-7">
 											<span ng-if="!dayFlag" class="pull-right">
-											<span class="date">{{displayFromDate}}</span> - <span class="date">{{displayToDate}}</span>
+											<span class="date">{{fromDateHistory}}</span> - <span class="date">{{toDateHistory}}</span>
 										</span>
 										</span>
-			<span ng-if="dayFlag" class="date pull-right">{{toDate}}<span>
+			<span ng-if="dayFlag" class="date pull-right">{{toDateHistory}}<span>
 										</div>
 										<div class="col-md-1 col-sm-1">
 											<span class="pull-right">
