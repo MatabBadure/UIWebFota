@@ -53,21 +53,30 @@
     "security-ans": "Answer",
     "notification": "Notifications",
     "noti-desc": "The Notification will be sent to your registered email address. You can Switch On/Off",
+    "noti-verbiage":"You can switch the notification on or off by clicking on the pill icon. Green indicates it is turned on while grey indicates it is turned off.",
     "noti": {
       "miss-therapy-days" : "Missed Therapy Days",
       "hmr-non-adher": "HMR Non-Adherence",
       "setting-deviation": "Setting Deviation",
+      "below-treatment":"Below Treatment Minutes",
       "miss-therapy-days-desc": "You will get Notification email if you missed therapy for three or more days.",
+      "miss-therapy-new":"You will receive a notification if one or more of your patients missed a day of therapy within your clinic's adherence window.",
       "hmr-non-adher-desc": "You will get Notification email if your HMR Non-Adherence is below protocol for three or more days.",
-      "setting-deviation-desc": "You will get Notification email if your frequency is 15% below protocol for three or more days."
+      "hmr-non-adher-new":"You will receive a notification if one or more of your patients did not complete the therapy time in their protocol within your clinic's adherence window.",
+      "setting-deviation-desc": "You will get Notification email if your frequency is 15% below protocol for three or more days.",
+      "setting-dev-new":"You will receive a notification if one or more of your patients frequency setting was 15% below protocol within your clinic's adherence window.",
+      "messages":"Messages",
+      "message-new":"You will receive a notification if you have one or more messages in your clinic's inbox."
     },
     "noti_hcp": {
       "miss-therapy-days" : "Missed Therapy Days",
       "hmr-non-adher": "HMR Non-Adherence",
       "setting-deviation": "Setting Deviation",
-      "miss-therapy-days-desc": "You will get Notification email for Patients, who has missed therapy for three or more days.",
-      "hmr-non-adher-desc": "You will get Notification email for Patients,who has HMR Non-Adherence below protocol for three or more days.",
-      "setting-deviation-desc": "You will get Notification email for Patients,who has Setting Deviation 15% below protocol for three or more days."
+      "miss-therapy-days-desc": "You will receive a notification if one or more of your patients missed a day of therapy within your clinic's adherence window.",
+      "hmr-non-adher-desc": "You will receive a notification if one or more of your patients did not complete the therapy time in their protocol within your clinic's adherence window.",
+      "setting-deviation-desc": "You will receive a notification if one or more of your patients frequency setting was 15% below protocol within your clinic's adherence window.",
+      "messages":"Messages",
+      "message-new":"You will receive a notification if you have one or more messages in your clinic's inbox."
     },
     "select-secutity-question": "-- select a security question --",
     "clinic":{
