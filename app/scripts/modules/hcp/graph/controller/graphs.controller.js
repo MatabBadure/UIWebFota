@@ -61,7 +61,7 @@ angular.module('hillromvestApp')
 		} else if($state.current.name === 'clinicadmindashboard') {
 			$scope.getClinicsForClinicAdmin($scope.hcpId);
 		}
-		else if($state.current.name === 'clinicDashboard' || $state.current.name === 'clinicDashboardAssociate') {
+		else if($state.current.name === 'clinicDashboard' || $state.current.name === 'clinicDashboardAssociate' || $state.current.name === 'clinicDashboardRcadmin'){
 			$scope.getclinicAdminID($scope.toStateParams.clinicId);
 		}
 	};
@@ -154,7 +154,7 @@ angular.module('hillromvestApp')
 		});
 
 		}
-		else if($state.current.name === 'clinicDashboard' || $state.current.name === 'clinicDashboardAssociate'){
+		else if($state.current.name === 'clinicDashboard' || $state.current.name === 'clinicDashboardAssociate' || $state.current.name === 'clinicDashboardRcadmin'){
 		  clinicadminService.getStatistics(clinicId, userId).then(function(response){
 		  $scope.statistics = response.data.statitics;
 		  $scope.statistics.date = $scope.getYesterday();
@@ -484,6 +484,9 @@ angular.module('hillromvestApp')
 	$scope.gotoPatients = function(value){
 		if($state.current.name === 'clinicDashboard'){
 			$state.go('clinicAssociatedPatients',{'filter':value, 'clinicId':$scope.selectedClinic.id});
+		}
+		else if($state.current.name === 'clinicDashboardRcadmin'){
+			$state.go('clinicAssociatedPatientsRcadmin',{'filter':value, 'clinicId':$scope.selectedClinic.id});
 		}
 		else if($state.current.name === 'clinicDashboardAssociate'){
 			$state.go('clinicAssociatedPatientsAssociate',{'filter':value, 'clinicId':$scope.selectedClinic.id});

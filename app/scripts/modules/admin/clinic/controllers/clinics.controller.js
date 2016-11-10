@@ -310,7 +310,7 @@ angular.module('hillromvestApp')
         });
       }
         else if($scope.clinicStatus.role === loginConstants.role.acctservices){
-          $state.go('clinicProfileRcadmin', {
+          $state.go('clinicDashboardRcadmin', {
             'clinicId': clinic.id
           });
         }else if($scope.clinicStatus.role === loginConstants.role.associates){
