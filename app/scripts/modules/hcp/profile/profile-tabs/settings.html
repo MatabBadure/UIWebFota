@@ -6,7 +6,7 @@
   </div>
 
   <div class="col-md-16 col-sm-16 user-header--desc">
-    <span translate="profile.noti-desc"></span>
+    <span translate="profile.noti-verbiage"></span>
   </div>
 
   <div class="col-md-16 col-sm-16 user-notification">
@@ -18,19 +18,19 @@
         <span ng-class="user.missedTherapyNotification ? 'icon-toggle-on active': 'icon-toggle-off'"></span>
       </div>
       <div class="col-md-12 col-sm-11 user-notification--icon padding-left-10" translate="profile.noti_hcp.miss-therapy-days-desc">
-        You will get Notification email if you missed therapy for three or more days.
+        You will receive a notification if one or more of your patients missed a day of therapy within your clinic's adherence window.
       </div>
     </div>
 
     <div class="row margin-bottom20">
       <div class="col-md-3 col-sm-4 pull-left-mob">
-        <span class="user-notification--head" translate="profile.noti.hmr-non-adher"></span>
+        <span class="user-notification--head" translate="profile.noti.below-treatment"></span>
       </div>
       <div class="col-md-1 col-sm-1 user-notification--icon text-right-mob" ng-click="toggleNotification('nonHMRNotification');">
         <span ng-class="user.nonHMRNotification ? 'icon-toggle-on active': 'icon-toggle-off'"></span>
       </div>
        <div class="col-md-12 col-sm-11 user-notification--icon padding-left-10" translate="profile.noti_hcp.hmr-non-adher-desc">
-        You will get Notification email if your HMR Non-Adherence is below protocol for three or more days.
+       You will receive a notification if one or more of your patients did not complete the therapy time in their protocol within your clinic's adherence window.
       </div>
     </div>
 
@@ -42,8 +42,22 @@
         <span ng-class="user.settingDeviationNotification ? 'icon-toggle-on active': 'icon-toggle-off'"></span>
       </div>
        <div class="col-md-12 col-sm-11 user-notification--icon padding-left-10 " translate="profile.noti_hcp.setting-deviation-desc">
-        You will get Notification email if your frequency is 15% below protocol for three or more days.
+         You will receive a notification if one or more of your patients frequency setting was 15% below protocol within your clinic's adherence window.
       </div>
     </div>
+
+     <div class="row margin-bottom20">
+      <div class="col-md-3 col-sm-4 pull-left-mob">
+        <span class="user-notification--head" translate="profile.noti_hcp.messages"></span>
+      </div>
+      <div class="col-md-1 col-sm-1 user-notification--icon text-right-mob">
+        <!-- <span ng-class="user.settingDeviationNotification ? 'icon-toggle-on active': 'icon-toggle-off'"></span> -->
+        <span ng-class="user.message ? 'icon-toggle-on active': 'icon-toggle-off'"></span>
+      </div>
+       <div class="col-md-12 col-sm-11 user-notification--icon padding-left-10" translate="profile.noti.message-new">
+       You will receive a notification if you have one or more messages in your clinic's inbox.
+      </div>
+    </div>
+
   </div>
 </div>
