@@ -49,8 +49,8 @@
       <div class="col-md-3 col-sm-4 pull-left-mob padding0">
         <span class="user-notification--head" translate="profile.noti_patient.messages"></span>
       </div>
-      <div class="col-md-1 col-sm-1 user-notification--icon text-right-mob">
-        <span ng-class="patientUser.message ? 'icon-toggle-on active': 'icon-toggle-off'"></span>
+      <div class="col-md-1 col-sm-1 user-notification--icon text-right-mob" ng-click="toggleNotification('messageNotification');">
+        <span ng-class="patientUser.messageNotification ? 'icon-toggle-on active': 'icon-toggle-off'"></span>
       </div>
        <div class="col-md-12 col-sm-11 user-notification--icon" translate="profile.noti_patient.message-new">
         You will receive a notification if you have one or more messages in your inbox
