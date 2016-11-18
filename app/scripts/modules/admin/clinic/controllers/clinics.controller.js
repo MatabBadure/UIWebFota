@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('hillromvestApp')
-  .controller('clinicsController', [ '$rootScope', '$scope', '$state', '$stateParams', '$timeout', 'Auth', 'clinicService', 'UserService', 'notyService', 'searchFilterService', 'dateService', 'sortOptionsService', 'StorageService', 'loginConstants', 'commonsUserService', '$q', 'addressService',
-    function ($rootScope, $scope, $state, $stateParams, $timeout, Auth, clinicService, UserService, notyService, searchFilterService, dateService,sortOptionsService, StorageService, loginConstants, commonsUserService, $q, addressService) {
+  .controller('clinicsController', [ '$rootScope', '$scope', '$state', '$stateParams', '$timeout', 'Auth','clinicService', 'UserService', 'notyService', 'searchFilterService', 'dateService', 'sortOptionsService', 'StorageService', 'loginConstants', 'commonsUserService', '$q', 'addressService',
+    function ($rootScope, $scope, $state, $stateParams, $timeout, Auth,clinicService, UserService, notyService, searchFilterService, dateService,sortOptionsService, StorageService, loginConstants, commonsUserService, $q, addressService) {
     var searchOnLoad = true;
     $scope.clinic = {};
     $scope.clinicStatus = {
@@ -29,7 +29,7 @@ angular.module('hillromvestApp')
         $scope.initClinicProfile($stateParams.clinicId);
       } else if(currentRoute === 'clinicAssociatedPatients' || currentRoute === 'clinicAssociatedPatientsRcadmin' || currentRoute === 'clinicAssociatedPatientsAssociate'){
         $scope.searchFilter = {};    
-        $scope.searchFilter = searchFilterService.initSearchFiltersForPatient();
+        $scope.searchFilter = searchFilterService.initSearchFiltersForPatient($stateParams.filter, true);
         $scope.initPaginationVars();
         $scope.initClinicAssoctPatients($stateParams.clinicId);
       } else if(currentRoute === 'clinicAssociatedHCP' || currentRoute === 'clinicAssociatedHCPRcadmin' || currentRoute === 'clinicAssociatedHCPAssociate'){
@@ -303,12 +303,18 @@ angular.module('hillromvestApp')
       };
 
       $scope.selectClinic = function(clinic) {
-        if($scope.clinicStatus.role === loginConstants.role.acctservices){
-          $state.go('clinicProfileRcadmin', {
+      if($scope.clinicStatus.role === 'ADMIN')
+      {
+        $state.go('clinicDashboard', {
+          'clinicId': clinic.id
+        });
+      }
+        else if($scope.clinicStatus.role === loginConstants.role.acctservices){
+          $state.go('clinicDashboardRcadmin', {
             'clinicId': clinic.id
           });
         }else if($scope.clinicStatus.role === loginConstants.role.associates){
-          $state.go('clinicProfileAssociate', {
+          $state.go('clinicDashboardAssociate', {
             'clinicId': clinic.id
           });
         }else {
