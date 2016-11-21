@@ -934,7 +934,7 @@ angular.module('hillromvestApp')
 
             .state('clinicAssociatedPatients', {
               parent: 'clinicEdit',
-              url: '/associatedPatients',
+              url: '/associatedPatients/{filter}',
               data: {
                   roles: ['ADMIN'],
                   pageTitle: 'clinic.page-title.associated-patients'
@@ -1868,6 +1868,68 @@ angular.module('hillromvestApp')
                     }
                 },
                 resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('doctor');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+
+            .state('clinicDashboard', {
+                parent: 'clinicUser',
+                url: '/{clinicId}/clinicadmin-dashboard',
+                data: {
+                    roles: ['ADMIN'],
+                    pageTitle: 'doctor.page-title.my-dashboard'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/clinicadmin/graph/views/dashboard-landing-admin.html',
+                        controller: 'hcpGraphController'
+                    }
+                },
+                resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('HCPGraphModule');
+                    }],
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('doctor');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+
+            .state('clinicDashboardRcadmin', {
+              parent: 'rcadmin',
+              url: '/{doctorId}/{clinicId}/clinicadmin-dashboard',
+              data: {
+                  roles: ['ACCT_SERVICES'],
+                  pageTitle: 'clinic.page-title.clinic-profile'
+              },
+              views: {
+                  'rcadmin-view': {
+                      templateUrl: 'scripts/modules/clinicadmin/graph/views/dashboard-landing-admin.html',
+                      controller: 'hcpGraphController'
+                  }
+              },
+              resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('HCPGraphModule');
+                    }],
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('doctor');
                         return $translate.refresh();
@@ -3094,7 +3156,7 @@ angular.module('hillromvestApp')
             })
             .state('clinicAssociatedPatientsRcadmin', {
               parent: 'rcadmin',
-              url: '/{clinicId}/clinics-associatedPatients',
+              url: '/{clinicId}/clinics-associatedPatients/{filter}',
               data: {
                   roles: ['ACCT_SERVICES'],
                   pageTitle: 'clinic.page-title.associated-patients'
@@ -3793,6 +3855,37 @@ angular.module('hillromvestApp')
                   ]
               }
             })
+
+            .state('clinicDashboardAssociate', {
+              parent: 'associateClinicUser',
+              url: '/{clinicId}/clinicadmin-dashboard',
+              data: {
+                  roles: ['ASSOCIATES'],
+                  pageTitle: 'clinic.page-title.clinic-profile'
+              },
+              views: {
+                  'content@': {
+                      templateUrl: 'scripts/modules/clinicadmin/graph/views/dashboard-landing-admin.html',
+                      controller: 'hcpGraphController'
+                  }
+              },
+              resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('HCPGraphModule');
+                    }],
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('doctor');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
             
             .state('clinicAssociatedHCPAssociate', {
               parent: 'associateClinicUser',
@@ -3822,7 +3915,7 @@ angular.module('hillromvestApp')
 
             .state('clinicAssociatedPatientsAssociate', {
               parent: 'associateClinicUser',
-              url: '/{clinicId}/associatedPatients',
+              url: '/{clinicId}/associatedPatients/{filter}',
               data: {
                   roles: ['ASSOCIATES'],
                   pageTitle: 'clinic.page-title.associated-patients'

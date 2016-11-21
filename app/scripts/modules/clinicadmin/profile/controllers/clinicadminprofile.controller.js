@@ -143,7 +143,7 @@ angular.module('hillromvestApp')
     };
 
     $scope.toggleNotification = function(notification){
-      var data = {"isMissedTherapyNotification" : $scope.user.missedTherapyNotification, "isNonHMRNotification": $scope.user.nonHMRNotification, "isSettingDeviationNotification": $scope.user.settingDeviationNotification };
+      var data = {"isMissedTherapyNotification" : $scope.user.missedTherapyNotification, "isNonHMRNotification": $scope.user.nonHMRNotification, "isSettingDeviationNotification": $scope.user.settingDeviationNotification , "isMessageNotification": $scope.user.messageNotification};
       if(notification === 'missedTherapyNotification'){
         data.isMissedTherapyNotification = !$scope.user.missedTherapyNotification;
       }
@@ -152,6 +152,10 @@ angular.module('hillromvestApp')
       }
       if(notification === 'settingDeviationNotification'){
         data.isSettingDeviationNotification = !$scope.user.settingDeviationNotification;
+      }
+      if(notification === 'messageNotification')
+      {
+        data.isMessageNotification = !$scope.user.messageNotification;
       }
       UserService.updatePatientUserNotification(StorageService.get('logged').userId, data).then(function(response){
         $scope.user = response.data.user;    
