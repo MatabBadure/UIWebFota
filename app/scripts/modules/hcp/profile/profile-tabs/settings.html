@@ -50,9 +50,8 @@
       <div class="col-md-3 col-sm-4 pull-left-mob">
         <span class="user-notification--head" translate="profile.noti_hcp.messages"></span>
       </div>
-      <div class="col-md-1 col-sm-1 user-notification--icon text-right-mob">
-        <!-- <span ng-class="user.settingDeviationNotification ? 'icon-toggle-on active': 'icon-toggle-off'"></span> -->
-        <span ng-class="user.message ? 'icon-toggle-on active': 'icon-toggle-off'"></span>
+      <div class="col-md-1 col-sm-1 user-notification--icon text-right-mob" ng-click="toggleNotification('messageNotification');">
+        <span ng-class="user.messageNotification ? 'icon-toggle-on active': 'icon-toggle-off'"></span>
       </div>
        <div class="col-md-12 col-sm-11 user-notification--icon padding-left-10" translate="profile.noti.message-new">
        You will receive a notification if you have one or more messages in your clinic's inbox.
