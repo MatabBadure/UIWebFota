@@ -13,7 +13,7 @@
 						<div class="stats_chart_section">
 							<div class="stats_header"><h4 translate="graph.statistics"></h4></div>
 							<div class="stats_chart_container">
-								<div class="col-3 hover_symbol ipadHeightBalance" ng-click="$parent.adherenceTable = true; getAdherenceScore()">
+								<div class="col-3 hover_symbol ipadHeightBalance" ng-click="$parent.adherenceTable = true; getAdherenceScore('week')">
 									<div class="pie_chart" easypiechart options="adherence" percent="adherenceScore"></div>
 									<div class="stats_chart_content score">
 										<h4 class="percent" ng-bind="adherenceScore"></h4>
@@ -50,18 +50,35 @@
 								<div class="row">
 									<div class="col-md-16 col-sm-16 header_adherence_details">
 									<div class="row">
-										<div class="col-md-15 col-sm-15 col-xs-14">
-											<p class="head_txt" translate="graph.adherence-score-table.title"></p>
+										<div class="col-md-6 col-sm-6">
+											<p class="head_txt" translate="graph.adherence-score-table.title" style="font-size: 17px;
+    padding-top: 5px;"></p>
 										</div>
+										<div class="col-md-9 col-sm-9 adherence_history_date">
+				<ul class="nav1 nav-pills pull-right ">
+					<li role="presentation" class=""><a href="" ng-class="{active: activeSelection === 'day'}"  ng-click="getAdherenceScore('day')" translate="graph.day"></a></li>
+					<li role="presentation" class=""><a ng-class="{active: activeSelection === 'week'}" ng-click="getAdherenceScore('week')" href="">Week</a></li>
+					<li role="presentation" class=""><a href="" ng-class="{active: activeSelection === 'month'}" ng-click="getAdherenceScore('month')" translate="graph.month"></a></li>
+					<li role="presentation" class=""><a href="" ng-class="{active: activeSelection === 'year'}" ng-click="getAdherenceScore('year')" translate="graph.year"></a></li>
+					<li role="presentation" class="" id="dp1"><a href="" date-range-picker class="date-picker" ng-model="customdates" parentEl="#dp1" options="dateOpts" ><span class="icon-calendar"></span></a></li>
+				</ul>
+			</div>
 										<div class="col-md-1">
-											<span class="pull-right"><a class="close" href="javascript:void(0)" ng-click="$parent.adherenceTable = false">X</a></span>
+											<span class="pull-right" style="padding-top:5px;"><a class="close" href="javascript:void(0)" ng-click="$parent.adherenceTable = false">X</a></span>
 										</div>
 									</div>
 								</div>
 								<div class="col-md-16 col-sm-16 headerAccount closeHtml reset-padding">
 									<div class="row close expanded head_txt" ng-click="toggleHeaderAccount()">
-										<div class="col-md-15 col-sm-15 col-xs-14">
+										<div class="col-md-8 col-sm-8 col-xs-8">
 											<p class="head_txt">How to calculate adherence score?</p>
+										</div>
+										<div class="col-md-7 col-sm-7 col-xs-7">
+											<span ng-if="!dayFlag" class="pull-right">
+											<span class="date">{{fromDateHistory}}</span> - <span class="date">{{toDateHistory}}</span>
+										</span>
+										</span>
+			<span ng-if="dayFlag" class="date pull-right">{{toDateHistory}}<span>
 										</div>
 										<div class="col-md-1 col-sm-1">
 											<span class="pull-right">
@@ -134,29 +151,43 @@
 										</tr>
 									</tbody>
 								</table> -->
-
-								<div class="col-md-16 col-sm-16 col-xs-16 padding0 reset-padding vertical_align border-bottom border-lt border-rt" ng-repeat="adherenceScore in adherenceScores">
+	<div id = "NodataDiv" class="historyNoData first-row" ng-if = "noHistoryAvailable">
+		<span class="noData_text"> No Data Available!</span>
+	</div>
+								<div ng-if="!noHistoryAvailable" class="col-md-16 col-sm-16 col-xs-16 padding0 reset-padding vertical_align border-bottom border-lt border-rt" ng-repeat="adherenceScore in adherencetrendData">
 									<div class="col-md-14 col-sm-14 col-xs-16 padding0 reset-padding">
 										<div class="col-md-16 col-sm-16 col-xs-16 padding0 reset-padding adherencescore survey_grey_color" ng-class="{'border-bottom': adherenceScore.adherenceTrends.length !== $index+1}" ng-repeat ="adherenceTrend in adherenceScore.adherenceTrends track by $index">
 											<div class="col-md-4 col-sm-4 col-xs-4 first-row padding10">{{adherenceTrend.date}}</div>
 												<div class="col-md-8 col-sm-8 col-xs-8 padding10">
 													<div class="col-md-16 col-sm-16 col-xs-16 row" ng-repeat="(key, value) in adherenceTrend.notificationPoints">
-													<div class="col-md-8 col-sm-8 col-xs-13 first-row ">{{key}} </div>
+													<div class="col-md-8 col-sm-8 col-xs-13 first-row ">{{key}} 
+													<div style="float:right" ng-init = "popoverFlag = false" ng-mouseup="GetAdherenceScoreReason(adherenceTrend.date,key)" ng-mouseleave = "popoverFlag = false" ><a href="#" id="mypopover"  ng-click = "popoverFlag =true" popover={{myPopoverData}} popover-placement="top" popover-trigger="click" popover-is-open="popoverFlag">Details</a>
+														</div></div>
 													<div class="col-md-5 col-sm-8 col-xs-3 first-row text-center">{{value}}</div>
 													</div>
 												</div>
 												<div class="col-md-4 col-sm-2 col-xs-4 text-align_c first-row padding10  text-center-mob">{{adherenceTrend.updatedScore}}</div>
 												
 										</div>
-
-
 									</div>
-										<div class="col-md-2 col-sm-2 col-xs-2  text-center text-align-r padding10 cyan-blue-light first-row-view1 pointer-fill-event view-column" ng-click="viewProtocol(adherenceScore.protcols)">View</div>
+										<div ng-if="!noHistoryAvailable" class="col-md-2 col-sm-2 col-xs-2  text-center text-align-r padding10 cyan-blue-light first-row-view1 pointer-fill-event view-column" ng-click="viewProtocol(adherenceScore.protocols)">View</div>
 								</div>
-								</div>
-
 							</div>
 						</div>
+						 <div class="dashboard__manage-view--pagination">
+        <div class="col-md-16 reset-padding-right">
+          <div class="navbar-right">
+            <span class="record-found" ng-if="adherencetrendlength > 0">{{adherencetrendlength}} Record(s)</span>
+            <span class="record-found" ng-if="adherencetrendlength > 0">Found</span>
+            <span ng-show="pageCount > 1">
+              <span class="navigaion-link cursor-pointer" ng-class="{ 'inactive': !(currentPageIndex > 1) }" ng-click="AdherenceHistoryPagination('PREV')">Previous</span>
+              <span class="navigaion-no">{{currentPageIndex}}/{{pageCount}}</span>
+              <span class="navigaion-link cursor-pointer" ng-class="{ 'inactive': !(pageCount > currentPageIndex) }" ng-click="AdherenceHistoryPagination('NEXT')">Next</span>
+            </span>
+          </div>
+          <div class="clr"></div>
+        </div>
+      </div>
 					</div>
 				</div>
 			</div>
@@ -510,7 +541,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="padding10 font-size18" ng-if="protocols.length === 0">No Data Available</div>
+					<div class="padding10 font-size18" ng-if="noProtocol">No Data Available</div>
 				</div>
 			</div>
 		</div>

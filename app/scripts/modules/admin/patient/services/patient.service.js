@@ -48,6 +48,15 @@ angular.module('hillromvestApp')
         });
       },
 
+      getAdherenceCalculatedScore: function(id) {
+        var url = URL.clinicBaseURL + '/' + id;
+        return $http.get(url, {
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });
+      },
+
 
       getJustification: function() {
         var url = URL.getReasonForJustification;

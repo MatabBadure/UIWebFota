@@ -3,9 +3,14 @@
   <div class="container">
     <div class="collapse navbar-collapse patient-user__navbar" id="navbar-collapse">
       <ul class="nav navbar-nav patient-dashboard">
-        <li >
-          <a ng-href="" class="nav_bar_title">
+        <li style="padding-right:50px;">
+          <a class = "active" ng-class="{active: isActive('clinicadminclinicdashboard')}" ng-href="" ng-click="switchTab('clinicadminclinicdashboard')" >
             <span class="" translate="navbar.clinic-info"></span>
+          </a>
+        </li>
+        <li >
+          <a ng-class="{active: isActive('adherenceSettingPage')}" ng-href="" ng-click="switchTab('adherenceSettingPage')">
+            <span class="" translate="">Adherence Settings</span>
           </a>
         </li>
       </ul>

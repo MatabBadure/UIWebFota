@@ -13,6 +13,11 @@ LoginContentHeightForDevices{
 	max-height:none !important;
 }
 /****** End of Activation page footer alignment ******/
+/******Adherence Setting Tab ******/
+.ipadMargin-right{
+	margin-right:240px !important;
+}
+/******End ofAdherence Setting Tab ******/
 	/*HCP dashboard Style device-*/
  	.stats_chart_container{ 
 		.pie_chart{
@@ -231,6 +236,11 @@ LoginContentHeightForDevices{
 }
 
 @media only screen and (min-width : 768px) and (max-width : 1024px) and (orientation : portrait) { 
+/******Adherence Setting Tab ******/
+.ipadMargin-right{
+	margin-right:240px !important;
+}
+/******End ofAdherence Setting Tab ******/
 /******To remove static border bottom******/
 .minheight{
 	min-height:900px !important;
