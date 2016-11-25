@@ -3865,7 +3865,7 @@ angular.module('hillromvestApp')
               },
               views: {
                   'content@': {
-                      templateUrl: 'scripts/modules/clinicadmin/graph/views/dashboard-landing-admin.html',
+                      templateUrl: 'scripts/modules/clinicadmin/graph/views/dashboard-landing-associates.html',
                       controller: 'hcpGraphController'
                   }
               },
