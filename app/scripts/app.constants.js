@@ -120,6 +120,15 @@ angular.module('hillromvestApp')
 	'getTestResultById': '/api/testresult/ID',
 	'updateTestRESULT' : '/api/testresult/user/PATIENTID',
 	'addTestResultByClinicadminHCP' : '/api/testresult/patient/PATIENTID/user/USERID',
-	'getClinicSpeciality' : 'api/codeValues/clinic_speciality'
+	'getClinicSpeciality' : 'api/codeValues/clinic_speciality',
+	'sendMessage' : 'api/message',
+	'getSentItems' : 'api/messagesSent/ID?isClinic=ISCLINIC&page=PAGE&per_page=PER_PAGE&sort_by=SORT_OPTION',
+	'archiveMessages' : 'api/messages/archived',
+	'markReadUnread' : 'api/messages/readunread',
+	'getInboxItems' : 'api/messagesReceived/ID?isClinic=BOOL&mailBoxType=MAILBOXTYPE&page=PAGE&per_page=PER_PAGE&sort_by=SORT_OPTION',
+	'getInboxItemsCA' : 'api/messagesReceived/ID?isClinic=BOOL&clinicId=CLINICID&mailBoxType=MAILBOXTYPE&page=PAGE&per_page=PER_PAGE&sort_by=SORT_OPTION',
+	'getUnreadCount' : 'api/messages/ID/readunredCount?isClinic=BOOL',
+	'getUnreadCountCA' : 'api/messages/ID/readunredCount?isClinic=BOOL&clinicId=CLINICID',
+	'getMessageBody' : 'api/messageDetails/MESSAGEID',
+	'getSentItemsCA' : 'api/messagesSent/ID?isClinic=ISCLINIC&clinicId=CLINICID&page=PAGE&per_page=PER_PAGE&sort_by=SORT_OPTION'
 });
-
