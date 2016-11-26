@@ -21,7 +21,14 @@
             <span class="link-text" translate="global.tabs.dashboard" ></span>
           </a>
         </li>
-
+ <li class="icon-border">
+          <a ng-class="{ active: isActive('patient/messages')}" href="" ng-click="GoToMessages();" >
+            <span class=""> <i class="fa fa-envelope" aria-hidden="true"></i>
+</span>
+            <span class="link-text" translate="global.tabs.messages" ></span>
+          <!--   <span class="msg_count">{{UnreadMessages}}</span> -->
+          </a>
+        </li>
         <li class="icon-border dropdown header-popover" ng-init="getNotifications()">
           <a ng-href="" data-target="#" class="dropdown-toggle noti_bell" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
             <span class="icons hillrom-icon icon-notification-bell"></span>
