@@ -11,7 +11,8 @@
       "caregivers": "HillRom | Caregivers",
       "clinics-hcps": "HillRom | Clinics and HCPs",
       "add-caregiver": "HillRom | Add Caregiver",
-      "patient-benchmarking": "Hillrom | Benchmarking"
+      "patient-benchmarking": "Hillrom | Benchmarking",
+       "messages": "Hillrom | Messages"
     },
     "home": {
         "title": "Patient"

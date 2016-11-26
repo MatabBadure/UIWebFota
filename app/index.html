@@ -15,6 +15,8 @@
     <link rel="stylesheet" href="bower_components/nvd3/src/nv.d3.css" />
     <link rel="stylesheet" href="bower_components/angular-toastr/dist/angular-toastr.min.css"/>
     <link rel="stylesheet" href="bower_components/isteven-angular-multiselect/isteven-multi-select.css"/>
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css"/>
+
     <link rel="stylesheet" href="styles/styles.css">
     <!-- endbuild -->
 
@@ -24,7 +26,7 @@
 <!--  <span us-spinner> </span> -->
   <span us-spinner="{radius:15, width:6, length:10, color: '#7ca3dc', position: 'fixed'}"></span>
     <div noty-container></div>
-    <div id="wrap" ng-controller="MainController">
+    <div id="wrap" ng-init="messagecontroller" ng-controller="MainController">
         <ng-include src="'scripts/components/navbar/navbarmain.html'"></ng-include>
         <div id="top-shadow"></div>
 
@@ -209,6 +211,8 @@
 <script src="scripts/modules/admin/profile/service/charger.service.js"></script>
 <script src="scripts/modules/admin/profile/chargerTab/chargerTab.directive.js"></script>
 <script src="scripts/modules/admin/profile/chargerTab/chargerTab.directive.min.js"></script>
+<script src="scripts/modules/common/messagesMain/controller/messagecontroller.js"></script>
+<script src="scripts/modules/common/messagesMain/services/message.service.js"></script>
 
 <!-- endbuild -->
 

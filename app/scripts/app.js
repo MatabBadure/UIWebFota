@@ -143,6 +143,7 @@ angular.module('hillromvestApp',
                 'scripts/third_party_library/angular.easypiechart.js',
                 'bower_components/angular-daterangepicker/js/angular-daterangepicker.js',
                 'bower_components/canvg-gabelerner/rgbcolor.js',
+                'bower_components/isteven-angular-multiselect/isteven-multi-select.js',
                 'bower_components/canvg-gabelerner/StackBlur.js',
                 'bower_components/canvg-gabelerner/canvg.js',  
                 'https://code.highcharts.com/highcharts.js'
@@ -160,7 +161,8 @@ angular.module('hillromvestApp',
                 ]
       },{
         name: 'PatientProfileModule',
-        files: ['scripts/modules/patient/profile/controllers/patientprofile.controller.js']
+        files: ['scripts/modules/patient/profile/controllers/patientprofile.controller.js',
+                'bower_components/isteven-angular-multiselect/isteven-multi-select.js']
       },{
         name: 'AdminProfileModule',
         files: ['scripts/modules/admin/profile/controller/admin-profile.controller.js',
