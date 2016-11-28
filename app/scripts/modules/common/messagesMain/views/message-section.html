@@ -172,6 +172,9 @@
           </div> -->
  <div class="col-xs-10" >
            <div class="message-thread-container" id="messageBodyArea"> 
+                                <div id = "NodataDiv" class="graph_nodata" ng-if = "nosentmessageavailable">
+    <span class="noData_text"> Nothing to display!</span>
+  </div>
            </div>   
           </div>
 
@@ -225,6 +228,9 @@
          </div>
  <div class="col-xs-10" >
            <div class="message-thread-container" id="messageBodyArea"> 
+                     <div id = "NodataDiv" class="graph_nodata" ng-if = "noarchivemessageavailable">
+    <span class="noData_text"> Nothing to display!</span>
+  </div>
            </div> 
           <!--  <div class="col-xs-8" style="float:right;">
                     <button class="hillrom-btn btn-primary float-right" ng-click="setflag('inbox')" translate="global.messaging.reply"></button>
