@@ -14,6 +14,8 @@ angular.module('hillromvestApp')
     $scope.selectedClinicForHCP = [];
     $scope.nodataflag = false;
     $scope.counter = 0;
+    $scope.noarchivemessageavailable = false;
+    $scope.nosentmessageavailable = false;
   /* console.log("clinic ID");
    console.log(StorageService.get('logged').userId);*/
     $scope.getClinicsAssociatedToHCP = function(){
@@ -93,7 +95,7 @@ angular.module('hillromvestApp')
    $scope.getunreadcount = function(){
   if(StorageService.get('logged').role === 'PATIENT'){
   messageService.getUnreadMessagesCount(StorageService.get('logged').patientID,0).then(function(response){
-if(response.data){
+if(response.data.length){
 if(response.data[0][0] == false){
   $scope.UnreadMessages = response.data[0][1];
 }
@@ -371,8 +373,9 @@ $scope.ArchiveMessageList = angular.extend({},$scope.ArchiveMessageList, $scope.
 
 }
 }
- if($scope.ArchiveMessageList.length == 0){
+ if($scope.totalMessages == 0){
   $scope.noarchivedataflag = true;
+  $scope.noarchivemessageavailable = true;
  }
 
  }).catch(function(response){
@@ -398,8 +401,9 @@ $scope.ArchiveMessageList = angular.extend({},$scope.ArchiveMessageList, $scope.
    
 }
 }
-if($scope.ArchiveMessageList.length == 0){
+if($scope.totalMessages == 0){
   $scope.noarchivedataflag = true;
+  $scope.noarchivemessageavailable = true;
  }
  }).catch(function(response){
 
@@ -422,8 +426,9 @@ $scope.ArchiveMessageList = angular.extend({},$scope.ArchiveMessageList, $scope.
     $scope.ArchiveMessageList[i][4] = $scope.GetDateifToday(tempDate[i]); 
 }
 }
-if($scope.ArchiveMessageList.length == 0){
+if($scope.totalMessages == 0){
   $scope.noarchivedataflag = true;
+  $scope.noarchivemessageavailable = true;
  }
  }).catch(function(response){
 
@@ -456,7 +461,7 @@ if($scope.InboxListRawData.content.length){
 }
 
 
-if($scope.InboxMessageList.length == 0){
+if($scope.totalMessages == 0){
   $scope.nodataflag = true;
   $scope.nomessagebodyavailable = true;
  }
@@ -483,7 +488,7 @@ $scope.InboxMessageList = angular.extend({},$scope.InboxMessageList, $scope.Inbo
     $scope.InboxMessageList[i][4] = $scope.GetDateifToday(tempDate[i]); 
 }
 }
-if($scope.InboxMessageList.length == 0){
+if($scope.totalMessages == 0){
   $scope.nodataflag = true;
    $scope.nomessagebodyavailable = true;
  }
@@ -507,7 +512,7 @@ isClinic = 1;
     $scope.InboxMessageList[i][4] = $scope.GetDateifToday(tempDate[i]); 
 }
 }
- if($scope.InboxMessageList.length == 0){
+ if($scope.totalMessages == 0){
   $scope.nodataflag = true;
   $scope.nomessagebodyavailable = true;
  }
@@ -623,14 +628,16 @@ isclinic = 0;
 messageService.fetchSentItems(toPassID,isclinic,$scope.PageNumber,$scope.perPageCount,$scope.SentsortOption).then(function(response){
     $scope.sentmessageListRawData = response.data;
       $scope.pageCount = $scope.sentmessageListRawData.totalPages;
+      $scope.totalMessages = $scope.sentmessageListRawData.totalElements;
  $scope.MessageDetails = angular.copy($scope.sentmessageListRawData.content[0]);
         $scope.sentmessageList = angular.extend({},$scope.sentmessageList, $scope.sentmessageListRawData.content);
     for(var i=0;i<$scope.sentmessageListRawData.content.length;i++){
     $scope.sentmessageList[i][1] = dateService.getDateTimeFromTimeStamp($scope.sentmessageList[i][1],patientDashboard.dateFormat ,'/'); 
 
  }
-if($scope.sentmessageList.length == 0){
+if($scope.totalMessages == 0){
   $scope.nosentdataflag = true;
+  $scope.nosentmessageavailable = true;
  }
  }).catch(function(response){
      
@@ -642,13 +649,15 @@ else if((StorageService.get('logged').role === 'CLINIC_ADMIN')){
   messageService.fetchSentItemsCA(toPassID,isclinic,$scope.selectedClinicForCA.id,$scope.PageNumber,$scope.perPageCount,$scope.SentsortOption).then(function(response){
     $scope.sentmessageListRawData = response.data;
       $scope.pageCount = $scope.sentmessageListRawData.totalPages;
+       $scope.totalMessages = $scope.sentmessageListRawData.totalElements;
  $scope.MessageDetails = angular.copy($scope.sentmessageListRawData.content[0]);
         $scope.sentmessageList = angular.extend({},$scope.sentmessageList, $scope.sentmessageListRawData.content);
     for(var i=0;i<$scope.sentmessageListRawData.content.length;i++){
     $scope.sentmessageList[i][1] = dateService.getDateTimeFromTimeStamp($scope.sentmessageList[i][1],patientDashboard.dateFormat ,'/'); 
  }
-if($scope.sentmessageList.length == 0){
+if($scope.totalMessages == 0){
   $scope.nosentdataflag = true;
+  $scope.nosentmessageavailable = true;
  }
  }).catch(function(response){
        
