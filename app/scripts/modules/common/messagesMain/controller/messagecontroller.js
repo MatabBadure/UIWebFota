@@ -1162,7 +1162,7 @@ $scope.getMessageBody =function(arrayobject)
     var name = "";
     var date = "";
     var id = 0;
-  
+  $scope.nomessagebodyavailable = false;
     if($scope.flag == 'inbox' || $scope.flag == 'archive'){
 name = arrayobject[8];
 date = arrayobject[4];
@@ -1182,8 +1182,13 @@ var formatedDateTime =  $scope.GetDateifToday(date);
     console.log($scope.messageBody);
     console.log($scope.messageBody.messageText);
      var text = document.getElementById("messageBodyArea");
-  text.innerHTML = '<div class="row"><div class="col-md-15 msghead">'+name+'</div></div><div class="row"><div class="col-md-11 msgtitle">'+name+'</div><div class="col-md-4 msgtimestamp">'+formatedDateTime+'</div></div><div class="row"><div class="col-md-15 msgbody">'+
-$scope.messageBody.messageText+'</div></div>';
+     if(arrayobject){
+     text.innerHTML = '<div class="row"><div class="col-md-15 msghead">'+name+'</div></div><div class="row"><div class="col-md-11 msgtitle">'+name+'</div><div class="col-md-4 msgtimestamp">'+formatedDateTime+'</div></div><div class="row"><div class="col-md-15 msgbody">'+
+$scope.messageBody.messageText+'</div></div>'; 
+     }
+     else{
+      $scope.nomessagebodyavailable = true;
+     }
 
 }).catch(function(response){
       });
@@ -1214,8 +1219,14 @@ var formatedDateTime =  $scope.GetDateifToday(date);
     console.log($scope.messageBody);
     console.log($scope.messageBody.messageText);
      var text = document.getElementById("messageBodyArea");
-  text.innerHTML = '<div class="row"><div class="col-md-15 msghead">'+name+'</div></div><div class="row"><div class="col-md-11 msgtitle">'+name+'</div><div class="col-md-4 msgtimestamp">'+formatedDateTime+'</div></div><div class="row"><div class="col-md-15 msgbody">'+
-$scope.messageBody.messageText+'</div></div>';
+     if(arrayobject){
+     text.innerHTML = '<div class="row"><div class="col-md-15 msghead">'+name+'</div></div><div class="row"><div class="col-md-11 msgtitle">'+name+'</div><div class="col-md-4 msgtimestamp">'+formatedDateTime+'</div></div><div class="row"><div class="col-md-15 msgbody">'+
+$scope.messageBody.messageText+'</div></div>'; 
+     }
+     else{
+      $scope.nomessagebodyavailable = true;
+     }
+  
 
 }).catch(function(response){
        

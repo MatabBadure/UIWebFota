@@ -172,7 +172,9 @@
             "app/scripts/modules/admin/profile/controller/chargercontroller.js",
 		"app/scripts/modules/admin/profile/chargerTab/chargerTab.directive.js",
             "app/scripts/modules/common/clinicadmin-hcp/patient-diagnostics/controllers/patientDiagnosticController.js",
-            "app/scripts/modules/common/clinicadmin-hcp/patient-diagnostics/services/patientdiagnostic.service.js"
+            "app/scripts/modules/common/clinicadmin-hcp/patient-diagnostics/services/patientdiagnostic.service.js",
+            "app/scripts/modules/common/messagesMain/controller/messagecontroller.js",
+            "app/scripts/modules/common/messagesMain/services/message.service.js"
         ],
         "scripts_min_path":[
             "app/bower_components/canvg-gabelerner/rgbcolor.min.js",
@@ -330,7 +332,9 @@
             "app/scripts/modules/common/clinicadmin-hcp/patient-diagnostics/services/patientdiagnostic.service.min.js",
 		"app/scripts/modules/admin/profile/service/charger.service.min.js",
             "app/scripts/modules/admin/profile/controller/chargercontroller.min.js",
-            "app/scripts/modules/admin/profile/chargerTab/chargerTab.directive.min.js"
+            "app/scripts/modules/admin/profile/chargerTab/chargerTab.directive.min.js",
+            "app/scripts/modules/common/messagesMain/controller/messagecontroller.min.js",
+            "app/scripts/modules/common/messagesMain/services/message.service.min.js"
         ],
         "clean": [
             "app/build/",

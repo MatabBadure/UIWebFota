@@ -232,6 +232,22 @@ angular.module('hillromvestApp',
         files:[          
           'bower_components/angular-daterangepicker/js/angular-daterangepicker.js'
         ]
+      },
+      {
+        name: 'MessagesModule',
+        files:[          
+          'bower_components/angular-daterangepicker/js/angular-daterangepicker.js',
+          'scripts/modules/patient/graph/controller/graphs.controller.js',
+          'scripts/modules/common/messagesMain/controller/messagecontroller.js',
+          'scripts/modules/common/messagesMain/services/message.service.js',
+                'scripts/third_party_library/angular.easypiechart.js',
+                'bower_components/angular-daterangepicker/js/angular-daterangepicker.js',
+                'bower_components/canvg-gabelerner/rgbcolor.js',
+                'bower_components/isteven-angular-multiselect/isteven-multi-select.js',
+                'bower_components/canvg-gabelerner/StackBlur.js',
+                'bower_components/canvg-gabelerner/canvg.js',  
+                'https://code.highcharts.com/highcharts.js'
+        ]
       }]
     });
   }])
