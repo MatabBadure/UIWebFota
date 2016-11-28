@@ -40,6 +40,33 @@
             },
             "language": "Language"
         },
+          "messaging": {
+        "title":"Messages",
+        "new-message":"New Message",
+        "sent-items":"Sent Items",
+        "inbox":"Inbox",
+        "archive":"Archive",
+        "total-message":"Total Messages",
+        "total-archive":"Total Archived",
+        "from":"From",
+        "subject-of-message": "Subject of Message",
+        "date": "Date",
+        "compose-message":"Compose a New Message",
+        "subject": "Subject",
+        "message": "Message",
+        "send-message": "Send Message",
+        "cancel": "Cancel",
+        "to": "To",
+        "more-threads":"More Threads",
+        "mark-as-read": "Mark as Read",
+        "mark-as-unread": "Mark as Unread",
+        "reply" : "Reply",
+        "confirmsendmessage" : "Do you want to send the message?",
+        "sendmessageWarning" : "Compose Message",
+        "NomessageWarning" : "Do you want to send an empty message?",
+        "NoSubjectWarning" : "Do you want to send this message without a Subject?",
+        "Reply": "Reply"
+    },
         "logo-text": {
             "visi-view": "VisiView",
             "tm-sup": "TM",
@@ -57,7 +84,9 @@
             "manage-users": "Users",
             "notifications": "Notifications",
             "dashboard": "Dashboard",
-            "patients": "Patients"
+            "patients": "Patients",
+            "messages":"Messages",
+            "compose-message":"Write a new Message"
         },
         "form": {
             "username": "Login",

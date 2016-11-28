@@ -3865,7 +3865,7 @@ angular.module('hillromvestApp')
               },
               views: {
                   'content@': {
-                      templateUrl: 'scripts/modules/clinicadmin/graph/views/dashboard-landing-admin.html',
+                      templateUrl: 'scripts/modules/clinicadmin/graph/views/dashboard-landing-associates.html',
                       controller: 'hcpGraphController'
                   }
               },
@@ -4808,6 +4808,91 @@ angular.module('hillromvestApp')
                     }
                 },
                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient');$translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+
+ .state('Messages', {
+                parent: 'patient-dashboard',
+                url: '/messages',
+                data: {
+                    roles: ['PATIENT'],
+                    pageTitle: 'patient.page-title.messages'
+                },
+                views: {
+                    'content@': {
+                    templateUrl:'scripts/modules/common/messagesMain/views/message-section.html',
+                controller: 'messagecontroller'
+                    }
+                },
+               resolve: {
+                loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('MessagesModule');
+                    }],
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient');$translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+.state('Messages_CA', {
+                parent: 'clinicadmin-dashboard',
+                url: '/messages_CA',
+                data: {
+                    roles: ['CLINIC_ADMIN'],
+                    pageTitle: 'patient.page-title.messages'
+                },
+                views: {
+                    'content@': {
+                    templateUrl:'scripts/modules/common/messagesMain/views/messages_CA.html',
+                controller: 'messagecontroller'
+                    }
+                },
+               resolve: {
+                  loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('MessagesModule');
+                    }],
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient');$translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+.state('Messages_HCP', {
+                parent: 'hcp-dashboard',
+                url: '/messages_HCP',
+                data: {
+                    roles: ['HCP'],
+                    pageTitle: 'patient.page-title.messages'
+                },
+                views: {
+                    'content@': {
+                    templateUrl:'scripts/modules/common/messagesMain/views/messages_HCP.html',
+                controller: 'messagecontroller'
+                    }
+                },
+               resolve: {
+                  loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('MessagesModule');
+                    }],
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('patient');$translatePartialLoader.addPart('patient-user');
                         return $translate.refresh();

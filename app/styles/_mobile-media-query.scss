@@ -573,6 +573,7 @@ ul {
 			}
 		}
 	}
+	/* Incompatible browser alert message */
 	.incompatible_browser_message{
 	background-color:rgba(255, 255, 255, 0.7);
 	padding:5px 5px;
@@ -601,5 +602,49 @@ ul {
 	font-size:12px;
 	}
 }
+/*End of Incompatible browser alert message */
+/*Messaging Implementation-Hill-1839*/
+@media only screen and (min-width : 320px) and (max-width : 700px){
+.after-head-container{
+	min-height:340px;
+	max-height:340px;
+}
+.optionSection{
+min-height: 135px;
+    max-height: 135px;
+    }
+.messageList-container{
+	min-height:300px;
+	max-height:300px;	
+}
+.message-thread-container{
+  min-height:300px;
+  max-height:300px;
+}
+.messageList-container{
+	overflow-y:scroll;
+}
+.compose-message-container{
+min-height:150px;
+	max-height:150px;		
+}
+#MessagingBadges{
+	display:none;
+}
+.after-head-container-for-compose-message{
+	overflow-y:scroll;
+	 max-height: 200px;
+   min-height:200px;
+}
+.buttons >div >buton {
+	min-width:100px;
+}
 
+.compose-msg-container
+{
+   max-height: 1000px;
+    min-height: 570px;
+}
+}
+/*End of Messaging Implementation-Hill-1839*/
 
