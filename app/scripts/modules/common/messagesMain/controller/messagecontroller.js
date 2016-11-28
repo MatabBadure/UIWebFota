@@ -576,6 +576,8 @@ $scope.SendMessage = function(){
   "toUserIds":$scope.SelectedPatientsID
 };
   }
+
+
   $scope.flag= 'inbox';
     $scope.currentPageIndex = 1;
   $scope.pageCount = 0;
@@ -583,6 +585,8 @@ $scope.SendMessage = function(){
    $scope.PageNumber=1; 
   messageService.sendMessageService($scope.sampleData).then(function(response){
      notyService.showMessage(response.data.statusMsg, 'success');
+     
+      $scope.submitted = true;
  }).catch(function(response){
       
       });
@@ -820,6 +824,7 @@ if($scope.selectedPatients[j].name == $scope.patients[i].name){
     "read": "true"
   }];*/
     messageService.addToArchive(responseData).then(function(response){
+      $scope.getunreadcount();
       $scope.InboxMessageList = "";
      $scope.Inbox();
     // $scope.ArchiveBox();
@@ -989,23 +994,23 @@ $scope.SwitchTabs('inbox');
 
 /******For select all option ******/
    $scope.toggleAll = function() {
-    var checkFlag = true;
+      
     if($scope.isAllSelected)
     {
       $scope.isAllSelected = false;
+      $scope.unreadflag = false;
+      $scope.readflag = false;
     }
     else
     {
       $scope.isAllSelected = true;
-      checkFlag = true;
+      $scope.unreadflag = true;
+      $scope.readflag = true;
     }
      var toggleStatus = $scope.isAllSelected;
      angular.forEach($scope.InboxMessageList, function(itm){ 
       itm.selected = toggleStatus;
       });
- 
-   $scope.unreadflag = true;
-      $scope.readflag = true;
   };
 
 /******For getting the ID of selected checkboxes ******/  
@@ -1269,8 +1274,9 @@ $scope.messageBody.messageText+'</div></div>';
       }
       return formatedDateTime;
     };
-/*  $scope.getMessageBody =function(arrayobject)
+ /* $scope.getMessageBody =function(arrayobject)
   {
+     $scope.arrayobject = arrayobject;
      $scope.checkedArrayforRead = [];
     $scope.checkedArrayforRead.push(arrayobject[3]);
     $scope.markAsRead();
@@ -1281,7 +1287,7 @@ $scope.messageBody.messageText+'</div></div>';
     console.log($scope.messageBody.messageText);
      var text = document.getElementById("messageBodyArea");
   var innerHTML = '<div class="row"><div class="col-md-15 msghead">'+arrayobject[8]+'</div></div><div class="row"><div class="col-md-11 msgtitle">'+arrayobject[8]+'</div><div class="col-md-4 msgtimestamp">'+arrayobject[4]+'</div></div><div class="row"><div class="col-md-15 msgbody">'+
-$scope.messageBody.messageText+'</div></div><div class="row"><div class="col-md-15 msgreply alignright"><a ng-click="replyToMessage(arrayobject,)">Reply</a></div></div>';
+$scope.messageBody.messageText+'</div></div><div class="row"><div class="col-md-15 msgreply alignright"><a ng-click="replyToMessage(arrayobject)">Reply</a></div></div>';
 
 var displayMessage = angular.element(text);
  displayMessage.empty();
@@ -1291,20 +1297,25 @@ displayMessage.append( $compile(innerHTML)($scope) );
         notyService.showError(response);
       });
 
-  };*/
-/*  $scope.replyToMessage = function(){
-    $scope.SelectedClinicsID = [];
-    for(var i=0;i<$scope.clinicsListdata.clinics.length;i++){
-if($scope.selectedMessage[8] ==$scope.clinicsListdata.clinics[i].name){
-$scope.SelectedClinicsID = $scope.clinicsListdata.clinics[i].id;
-$scope.messageAttributes.subject = $scope.selectedMessage[5];
-$scope.messageAttributes.messageData = $scope.messageBody.messageText;
-break;
-}
-}
-$scope.SwitchTabs('new');
-
   };
+  $scope.replyToMessage = function(){
+$scope.replyFlag = true;
+
+  };*/
+/*
+$scope.showUpdate = function(){
+          $scope.submitted = true;
+          if($scope.form.$invalid){
+            return false;
+          }
+          $scope.showNoMessageModal = true;
+        };
+
+         $scope.close = function(value)
+    {
+      $scope.showNoMessageModal = value;
+    };
 */
+
 $scope.init();
   }]);
