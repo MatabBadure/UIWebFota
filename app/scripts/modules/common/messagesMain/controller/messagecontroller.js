@@ -980,6 +980,7 @@ $scope.SwitchTabs('inbox');
 
 /******For select all option ******/
    $scope.toggleAll = function() {
+    var checkFlag = true;
     if($scope.isAllSelected)
     {
       $scope.isAllSelected = false;
@@ -987,42 +988,15 @@ $scope.SwitchTabs('inbox');
     else
     {
       $scope.isAllSelected = true;
+      checkFlag = true;
     }
      var toggleStatus = $scope.isAllSelected;
      angular.forEach($scope.InboxMessageList, function(itm){ 
       itm.selected = toggleStatus;
-       if(itm.selected){
-      
-            if(itm[2] == true){
-          readcount++;
-        }
-        else if(itm[2] == false){
-          unreadcount++;
-          }
-        }
-        else if(!itm.selected){
-          checkFlag = false;
-      
-        $scope.readflag = false;
-      $scope.unreadflag = false;
-        }
       });
-    if(readcount!=0 && unreadcount!=0){
-      $scope.unreadflag = true;
-      $scope.readflag = true;
-    }
-    else if(unreadcount!=0 && readcount==0){
-      $scope.readflag = true;
-      $scope.unreadflag = false;
-    }
-    else if(readcount!=0 && unreadcount==0)
-    {
-       $scope.unreadflag = true;
-      $scope.readflag = false;
-    }
-      $scope.isAllSelected = checkFlag;
  
-   
+   $scope.unreadflag = true;
+      $scope.readflag = true;
   };
 
 /******For getting the ID of selected checkboxes ******/  
@@ -1073,6 +1047,7 @@ $scope.SwitchTabs('inbox');
   };
 
    $scope.toggleAllForArchive = function() {
+      var checkFlag = true;
     if($scope.isAllSelected)
     {
       $scope.isAllSelected = false;
@@ -1080,41 +1055,15 @@ $scope.SwitchTabs('inbox');
     else
     {
       $scope.isAllSelected = true;
+      checkFlag = true;
     }
      var toggleStatus = $scope.isAllSelected;
      angular.forEach($scope.ArchiveMessageList, function(itm){ 
       itm.selected = toggleStatus;
-       if(itm.selected){
-      
-            if(itm[2] == true){
-          readcount++;
-        }
-        else if(itm[2] == false){
-          unreadcount++;
-          }
-        }
-        else if(!itm.selected){
-          checkFlag = false;
-      
-        $scope.readflag = false;
-      $scope.unreadflag = false;
-        }
       });
-    if(readcount!=0 && unreadcount!=0){
-      $scope.unreadflag = true;
-      $scope.readflag = true;
-    }
-    else if(unreadcount!=0 && readcount==0){
-      $scope.readflag = true;
-      $scope.unreadflag = false;
-    }
-    else if(readcount!=0 && unreadcount==0)
-    {
-       $scope.unreadflag = true;
-      $scope.readflag = false;
-    }
-      $scope.isAllSelected = checkFlag;
  
+   $scope.unreadflag = true;
+      $scope.readflag = true;
    
   };
 
