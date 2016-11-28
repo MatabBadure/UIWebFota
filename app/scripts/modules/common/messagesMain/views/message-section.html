@@ -172,6 +172,15 @@
           </div> -->
  <div class="col-xs-10" >
            <div class="message-thread-container" id="messageBodyArea"> 
+            <div ng-if="replyFlag" class="write-message col-xs-14 compose-message-container">
+                <div class="row">
+                <div class="col-md-2"><span translate="global.messaging.message"></span></div>               
+                    <textarea class="col-md-10 write-message" ng-model="messageAttributes.messageData"/>   
+                </div>
+                 <div class="row">
+
+                 </div>
+                </div>
                                 <div id = "NodataDiv" class="graph_nodata" ng-if = "nosentmessageavailable">
     <span class="noData_text"> Nothing to display!</span>
   </div>
@@ -250,7 +259,7 @@
       </div>
       </div>
      <!-- For compose message display -->
-     
+     <form name="form">
             <div ng-if="flag == 'new'" class="col-xs-14 reset-padding after-head-container-for-compose-message"> 
               <div class="col-xs-14 compose-message-container-header"> 
                 <div class="row">
@@ -298,7 +307,13 @@
                 <div class="row">
                   <div class="col-md-2"><span translate="global.messaging.subject"></span></div>
                   <div class="col-md-10">
-                    <input class="col-md-9" name = "SubjectName" ng-model="messageAttributes.subject" type="text"/>  
+                    <input class="col-md-9" name ="SubjectName" ng-model="messageAttributes.subject" type="text"/>  
+           <!--            <div ng-show="(form.SubjectName.$dirty && form.SubjectName.$showValidationMessage && form.SubjectName.$invalid) || submitted" class="">
+            <span class="has-error" ng-show="form.SubjectName.$error.required">This field is required
+            </span>
+            <span class="has-error" ng-show="form.SubjectName.$error.maxlength"> Subject too long or too short
+            </span>
+          </div> -->
                 </div>
                 </div>
                 </div>
@@ -306,17 +321,24 @@
                 <div class="write-message col-xs-14 compose-message-container">
                 <div class="row">
                 <div class="col-md-2"><span translate="global.messaging.message"></span></div>               
-                    <textarea class="col-md-10 write-message" ng-model="messageAttributes.messageData"/>   
+                    <textarea name="messageBody" class="col-md-10 write-message" ng-model="messageAttributes.messageData"/>  
+          <!--            <div ng-show="(form.messageBody.$dirty && form.messageBody.$showValidationMessage && form.messageBody.$invalid) || submitted" class="">
+            <span class="has-error" ng-show="form.messageBody.$error.required">This field is required
+            </span>
+            <span class="has-error" ng-show="form.messageBody.$error.maxlength"> Message too long or too short
+            </span>
+          </div>  -->
                 </div>
                 </div>
                 <div class="col-xs-14 compose-message-container   alignright">
                   <div class="btn-group cmp-btns">
-                    <button ng-click = "SendMessage()" class="hillrom-btn btn-primary "  translate="global.messaging.send-message"></button>
+                    <button ng-click = "showUpdate()" class="hillrom-btn btn-primary "  translate="global.messaging.send-message"></button>
                   
                     <button class="hillrom-btn btn-primary " ng-click="setflag('inbox')" translate="global.messaging.cancel"></button>
                   </div>
                 </div>   
               </div>
+            </form>
             </div> 
 <div ng-if="showUpdateModal" class="modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true">
   <div class="modal__dialog">
