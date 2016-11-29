@@ -6,6 +6,7 @@ angular.module('hillromvestApp')
    $scope.messageAttributes = {};	
    $scope.ReplymessageAttributes = {};
    $scope.selectedClinics = [];
+   $scope.selectedPatients = [];
    $scope.checkedArray = [];
    $scope.checkedArrayforRead = [];
    $scope.checkedArrayforUnRead = [];
@@ -935,19 +936,21 @@ $scope.patientnames = [];
     }
 } 
   };
-  $scope.selectPatient = function(){
+  $scope.selectpatient = function(){
  $scope.SelectedPatientsID = [];
+ console.log("patient object");
+ console.log($scope.patients);
+ console.log("selectedpatient object");
+ console.log($scope.selectedPatients);
  for(var j=0;j<$scope.selectedPatients.length;j++){
     for(var i=0;i<$scope.patients.length;i++){
-if($scope.selectedPatients[j].name == $scope.patients[i].name){
+if($scope.selectedPatients[j].name == ($scope.patients[i].firstName + ' ' + $scope.patients[i].lastName)){
         $scope.SelectedPatientsID.push($scope.patients[i].id);
        }
 
     }
  }
-  };
-
-  $scope.selectAll = function(){
+  alert($scope.SelectedPatientsID);
   };
   $scope.ArchiveMessages = function(){
     var userid= "";
@@ -993,6 +996,7 @@ if($scope.selectedPatients[j].name == $scope.patients[i].name){
     var userid = "";
     var responseData = [];
     var clinicid = 0;
+    $scope.isAllSelected = false;
       if($scope.flag === 'inbox'){
     $scope.getSeletedDataForRead();
    }
@@ -1063,6 +1067,7 @@ $scope.ArchiveBox();
     var userid = "" ;
     var responseData = [];
         var clinicid = 0;
+        $scope.isAllSelected = false;
           if($scope.flag === 'inbox'){
     $scope.getSeletedDataForUnRead();
    }
