@@ -316,11 +316,60 @@ float:right;
 .navigaion-link-messages{
 color:blue;
 }
-.inactive{
-  color:#5d6a7d;
+.inactiveColor{
+  color:#c1c1c1 !important;
+}
+.activeColor{
+  color:#5d6a7d ;
 }
 .msgtitles {
   overflow: hidden;
   text-overflow: ellipsis;
 }
 /* End messaging implementation- Hill-1839 */
+/*Changes to fix issues after Hill-1839 */
+.compose-message-container > .row > textarea, input, textarea:focus, input:focus {
+  border: 1px solid #bdbdbd;
+  color: #a9afb9;
+  outline: medium none;
+} 
+input[type="text"], input[type="email"], select, textarea {
+  border: 1px solid #bdbdbd;
+} 
+/* 29-11-16   */
+#messageBodyArea {
+  max-height: 400px;
+}
+/* textarea:focus, input:focus, select:focus {
+  border: 1px solid #646568;
+  color: #646568;
+  outline: medium none;
+}
+input[type="text"], textarea, select {
+  color: #646568;
+}
+input[type="text"] {
+  max-height: 30px;
+  max-width: 270px;
+}
+.form__select__input--option select
+{
+   color: #646568;
+}
+.dashboard__form--type {
+  color: #646568;
+}
+.dashboard__form--label {
+  color: #646568;
+}
+.dashboard__form .has-error {
+  color: #c1c1c1;
+}
+.custom-dropdown::before {
+  color: #c1c1c1;
+}
+.navbar-fixed-top {
+  border-bottom: 1px solid #c1c1c1;
+} 
+*/
+
