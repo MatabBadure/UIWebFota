@@ -715,7 +715,6 @@ else{
 };
 $scope.Reply = function(){
   //$scope.ReplymessageAttributes.subject = ;
- console.log($scope.ReplymessageAttributesObject);
 if(StorageService.get('logged').role === 'PATIENT'){
   $scope.sampleData = {
     "fromUserId" : StorageService.get('logged').patientID, 
@@ -729,8 +728,6 @@ if(StorageService.get('logged').role === 'PATIENT'){
     "messageText":$scope.replyattributes.replyData,
     "toClinicIds":[$scope.ReplymessageAttributesObject[9]]
   };
-  console.log("patient reply");
-  console.log($scope.sampleData);
   }
   else if((StorageService.get('logged').role === 'CLINIC_ADMIN'))
   {
@@ -747,14 +744,10 @@ if(StorageService.get('logged').role === 'PATIENT'){
   "messageText":$scope.replyattributes.replyData,
   "toUserIds":[$scope.ReplymessageAttributesObject[10]]
 };
-console.log("CA reply");
-console.log($scope.sampleData);
 }
 
   messageService.sendMessageService($scope.sampleData).then(function(response){
      notyService.showMessage(response.data.statusMsg, 'success');
-     console.log("data sent successfully")
-     console.log(response);
       $scope.submitted = false;
       $scope.replyattributes.replyData = "";
  }).catch(function(response){
@@ -938,10 +931,6 @@ $scope.patientnames = [];
   };
   $scope.selectpatient = function(){
  $scope.SelectedPatientsID = [];
- console.log("patient object");
- console.log($scope.patients);
- console.log("selectedpatient object");
- console.log($scope.selectedPatients);
  for(var j=0;j<$scope.selectedPatients.length;j++){
     for(var i=0;i<$scope.patients.length;i++){
 if($scope.selectedPatients[j].name == ($scope.patients[i].firstName + ' ' + $scope.patients[i].lastName)){
@@ -950,7 +939,6 @@ if($scope.selectedPatients[j].name == ($scope.patients[i].firstName + ' ' + $sco
 
     }
  }
-  alert($scope.SelectedPatientsID);
   };
   $scope.ArchiveMessages = function(){
     var userid= "";
@@ -1384,9 +1372,6 @@ id = arrayobject[3];
     messageService.getMessageBodyService(id).then(function(response){
     $scope.messageBody = response.data;
 var formatedDateTime =  $scope.GetDateifToday(date);
-
-    console.log($scope.messageBody);
-    console.log($scope.messageBody.messageText);
     if($scope.newCounterInbox==1 || $scope.newCounterArchive==1 || $scope.newCounterSent==1)
         {  
      if(arrayobject){
@@ -1414,9 +1399,6 @@ id = arrayobject[3];
     messageService.getMessageBodyService(id).then(function(response){
     $scope.messageBody = response.data;
 var formatedDateTime =  $scope.GetDateifToday(date);
-
-    console.log($scope.messageBody);
-    console.log($scope.messageBody.messageText);
     if($scope.newCounterInbox==1 || $scope.newCounterArchive==1 || $scope.newCounterSent==1)
         {  
      if(arrayobject){
@@ -1442,9 +1424,6 @@ id = arrayobject[2];
     messageService.getMessageBodyService(id).then(function(response){
     $scope.messageBody = response.data;
 var formatedDateTime =  $scope.GetDateifToday(date);
-
-    console.log($scope.messageBody);
-    console.log($scope.messageBody.messageText);
     if($scope.newCounterInbox==1 || $scope.newCounterArchive==1 || $scope.newCounterSent==1)
         { 
      var text = document.getElementById("messageBodyArea");
@@ -1625,7 +1604,6 @@ displayMessage.append( $compile(innerHTML)($scope) );
 
   };*/
   $scope.replyToMessage = function(arrayobject){
-    console.log(arrayobject);
 $scope.replyFlag = true;
 $scope.ReplymessageAttributesObject = arrayobject;
 
