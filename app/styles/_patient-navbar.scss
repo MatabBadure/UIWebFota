@@ -316,11 +316,23 @@ float:right;
 .navigaion-link-messages{
 color:blue;
 }
-.inactive{
-  color:#5d6a7d;
+.inactiveColor{
+  color:#c1c1c1 !important;
+}
+.activeColor{
+  color:#5d6a7d ;
 }
 .msgtitles {
   overflow: hidden;
   text-overflow: ellipsis;
 }
 /* End messaging implementation- Hill-1839 */
+/*Changes to fix issues after Hill-1839 */
+.compose-message-container > .row > textarea, input, textarea:focus, input:focus {
+  border: 1px solid #bdbdbd;
+  color: #a9afb9;
+  outline: medium none;
+} 
+input[type="text"], input[type="email"], select, textarea {
+  border: 1px solid #bdbdbd;
+} 

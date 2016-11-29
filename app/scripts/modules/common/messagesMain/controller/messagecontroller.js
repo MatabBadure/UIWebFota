@@ -363,6 +363,8 @@ if(tabName == 'sentitems'){
     $scope.sortTypeSentItems('Date');
 }
 if(tabName == 'new'){
+  $scope.messageAttributes.subject = "";
+  $scope.messageAttributes.messageData = "";
   $scope.flag = 'new';
    if(StorageService.get('logged').role === 'PATIENT'){
     $scope.initclinicsList();
@@ -401,7 +403,7 @@ $scope.ArchiveMessageList = angular.extend({},$scope.ArchiveMessageList, $scope.
 }
 }
  if($scope.totalMessages == 0){
-  $scope.noarchivedataflagCA = true;
+  $scope.noarchivedataflag = true;
   $scope.noarchivemessageavailable = true;
  }
 
@@ -429,7 +431,7 @@ $scope.ArchiveMessageList = angular.extend({},$scope.ArchiveMessageList, $scope.
 }
 }
 if($scope.totalMessages == 0){
-  $scope.noarchivedataflag = true;
+  $scope.noarchivedataflagCA = true;
   $scope.noarchivemessageavailable = true;
  }
  }).catch(function(response){
@@ -492,16 +494,21 @@ if($scope.InboxListRawData.content.length){
     $scope.InboxMessageList[i][4] = $scope.GetDateifToday(tempDate[i]);
 }
 }
-if($scope.totalMessages == 0){
-  $scope.nodataflag = true;
-  $scope.nomessagebodyavailable = true;
- }
+
 /* if($scope.InboxMessageList.length){
   $scope.getMessageBody($scope.InboxMessageList[0]);
  }*/
  }).catch(function(response){
 
       });
+ if($scope.totalMessages == 0){
+  $scope.nodataflag = true;
+  $scope.nomessagebodyavailable = true;
+ }
+ else{
+  $scope.nodataflag = false;
+  $scope.nomessagebodyavailable = false;
+ }
 }
 else if(StorageService.get('logged').role === 'CLINIC_ADMIN'){
 toPassID = StorageService.get('logged').userId; //to be changed to $scope.selectedClinicForMessagesID when inbox with clinic Id is implemented
@@ -568,7 +575,7 @@ $scope.showUpdate = function(){
   $scope.submitted = true;
   if($scope.SelectedClinicsID.length==0)
   {
-   toastr.error('Please fill out To field');
+   toastr.error('Please enter To field');
     $scope.showUpdateModal = false;
       $scope.showNoSubjectModal = false;
       $scope.showNoMessageModal = false;
@@ -600,7 +607,7 @@ $scope.showmodalOnReply = false;
   $scope.submitted = true;
   if($scope.SelectedPatientsID.length==0)
   {
-   toastr.error('Please fill out To field');
+   toastr.error('Please enter To field');
     $scope.showUpdateModalCA = false;
       $scope.showNoSubjectModalCA = false;
       $scope.showNoMessageModalCA = false;
@@ -1361,8 +1368,9 @@ $scope.getMessageBodyOnPageload =function(arrayobject)
     var name = "";
     var date = "";
     var id = 0;
+    $scope.replyFlag = false;
     $scope.checkedArrayforRead = [];
-    if($scope.flag == 'inbox' || $scope.flag == 'archive'){
+    if($scope.flag == 'inbox'){
       $scope.arrayobject = arrayobject;
 name = arrayobject[8];
 date = arrayobject[4];
@@ -1375,12 +1383,40 @@ var formatedDateTime =  $scope.GetDateifToday(date);
     console.log($scope.messageBody);
     console.log($scope.messageBody.messageText);
     if($scope.newCounterInbox==1 || $scope.newCounterArchive==1 || $scope.newCounterSent==1)
-        { 
-     
+        {  
      if(arrayobject){
       var text = document.getElementById("messageBodyArea");
      var innerHTML = '<div class="row"><div class="col-md-15 msghead">'+name+'</div></div><div class="row"><div class="col-md-11 msgtitle">'+name+'</div><div class="col-md-4 msgtimestamp">'+formatedDateTime+'</div></div><div class="row"><div class="col-md-15 msgbody">'+
 $scope.messageBody.messageText+'</div></div><div class="row"><div class="col-md-15 msgreply alignright"><a ng-click="replyToMessage(arrayobject)">Reply</a></div></div>'; 
+var displayMessage = angular.element(text);
+ displayMessage.empty();
+displayMessage.append( $compile(innerHTML)($scope) );
+     }
+     else{
+      $scope.nomessagebodyavailable = true;
+     }
+   }
+}).catch(function(response){
+       
+      });    
+    }
+    else if($scope.flag == 'archive'){
+ $scope.arrayobject = arrayobject;
+name = arrayobject[8];
+date = arrayobject[4];
+id = arrayobject[3]; 
+
+    messageService.getMessageBodyService(id).then(function(response){
+    $scope.messageBody = response.data;
+var formatedDateTime =  $scope.GetDateifToday(date);
+
+    console.log($scope.messageBody);
+    console.log($scope.messageBody.messageText);
+    if($scope.newCounterInbox==1 || $scope.newCounterArchive==1 || $scope.newCounterSent==1)
+        {  
+     if(arrayobject){
+      var text = document.getElementById("messageBodyArea");
+     var innerHTML = '<div class="row"><div class="col-md-15 msghead">'+name+'</div></div><div class="row"><div class="col-md-11 msgtitle">'+name+'</div><div class="col-md-4 msgtimestamp">'+formatedDateTime+'</div></div><div class="row"><div class="col-md-15 msgbody">'+$scope.messageBody.messageText+'</div></div>'; 
 var displayMessage = angular.element(text);
  displayMessage.empty();
 displayMessage.append( $compile(innerHTML)($scope) );
@@ -1493,9 +1529,10 @@ $scope.messageBody.messageText+'</div></div>';
     var name = "";
     var date = "";
     var id = 0;
+    $scope.replyFlag = false;
   $scope.nomessagebodyavailable = false;
   if(arrayobject){
-    if($scope.flag == 'inbox' || $scope.flag == 'archive'){
+    if($scope.flag == 'inbox') {
        $scope.arrayobject = arrayobject;
 name = arrayobject[8];
 date = arrayobject[4];
@@ -1515,7 +1552,26 @@ displayMessage.append( $compile(innerHTML)($scope) );
 }).catch(function(response){
       });     
     }
-    if($scope.flag == 'sentitems'){
+    else if($scope.flag == 'archive'){
+       $scope.arrayobject = arrayobject;
+name = arrayobject[8];
+date = arrayobject[4];
+id = arrayobject[3];
+$scope.checkedArrayforRead.push(id);
+    $scope.markAsRead(); 
+      messageService.getMessageBodyService(id).then(function(response){
+    $scope.messageBody = response.data;
+var formatedDateTime =  $scope.GetDateifToday(date);
+       var text = document.getElementById("messageBodyArea");
+     var innerHTML = '<div class="row"><div class="col-md-15 msghead">'+name+'</div></div><div class="row"><div class="col-md-11 msgtitle">'+name+'</div><div class="col-md-4 msgtimestamp">'+formatedDateTime+'</div></div><div class="row"><div class="col-md-15 msgbody">'+$scope.messageBody.messageText+'</div></div>'; 
+
+    var displayMessage = angular.element(text);
+ displayMessage.empty();
+displayMessage.append( $compile(innerHTML)($scope) );
+}).catch(function(response){
+      });        
+    }
+    else if($scope.flag == 'sentitems'){
       name = arrayobject[6];
 date = arrayobject[1];
 id = arrayobject[2];
