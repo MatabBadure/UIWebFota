@@ -1,9 +1,10 @@
 'use strict';
 angular.module('hillromvestApp')
-.controller('messagecontroller', [ '$scope','$state','$filter','$rootScope','$stateParams','messageService', 'dateService','patientService','DoctorService','StorageService','notyService','clinicService','clinicadminService','sortOptionsService',
-  function ($scope,$state,$filter,$rootScope,$stateParams,messageService,dateService,patientService,DoctorService,StorageService,notyService,clinicService,clinicadminService,sortOptionsService) {
+.controller('messagecontroller', [ '$scope','$state','$filter','$compile','$rootScope','$stateParams','messageService', 'dateService','patientService','DoctorService','StorageService','notyService','toastr','clinicService','clinicadminService','sortOptionsService',
+  function ($scope,$state,$filter,$compile,$rootScope,$stateParams,messageService,dateService,patientService,DoctorService,StorageService,notyService,toastr,clinicService,clinicadminService,sortOptionsService) {
    $scope.dummyvalue = 12 ;
    $scope.messageAttributes = {};	
+   $scope.ReplymessageAttributes = {};
    $scope.selectedClinics = [];
    $scope.checkedArray = [];
    $scope.checkedArrayforRead = [];
@@ -16,6 +17,14 @@ angular.module('hillromvestApp')
     $scope.counter = 0;
     $scope.noarchivemessageavailable = false;
     $scope.nosentmessageavailable = false;
+    $scope.replyFlag = false;
+    $scope.newCounterInbox = 0;
+    $scope.newCounterArchive = 0;
+    $scope.newCounterSent = 0;
+    $scope.showNoMessageOnReply = false;
+      $scope.showmodalOnReply = false;
+      $scope.replyattributes = {};
+      $scope.replyattributes.replyData = "";
   /* console.log("clinic ID");
    console.log(StorageService.get('logged').userId);*/
     $scope.getClinicsAssociatedToHCP = function(){
@@ -275,13 +284,26 @@ if(option === 'Date'){
 $scope.initialiseAllLists();
   $scope.init =function(){
   $scope.flag= 'inbox';
+   $scope.replyattributes = {};
   $scope.PageNumber=1;
   $scope.currentPageIndex = 1;
   $scope.pageCount = 0;
   $scope.perPageCount = 5;
+  $scope.totalMessages = 0;
    $scope.sentmessageList = '';
    $scope.readflag = false;
    $scope.unreadflag = false;
+   $scope.submitted = false;
+   $scope.nodataflag = false;
+   $scope.noarchivedataflag = false;
+   $scope.nosentdataflag = false;
+      $scope.nodataflagCA = false;
+   $scope.noarchivedataflagCA = false;
+   $scope.nosentdataflagCA = false;
+  $scope.nomessagebodyavailable = false;
+  $scope.showNoMessageOnReply = false;
+  $scope.showmodalOnReply = false;
+  $scope.replyattributes.replyData = "";
    $scope.sortMessageList = sortOptionsService.getSortOptionsForMessages();
    $scope.sortSentMessageList = sortOptionsService.getSortOptionsForMessages();
    $scope.sortArchiveMessageList = sortOptionsService.getSortOptionsForMessages();
@@ -291,7 +313,7 @@ $scope.initialiseAllLists();
    $scope.getunreadcount();
   $scope.sortType('Date');
  // $scope.Inbox();
-
+$scope.SelectedPatientsID=[];
   $scope.SelectedClinicsID=[];
    $scope.localLang = {
         selectAll       : "Select all",
@@ -319,13 +341,17 @@ $scope.SwitchTabs = function(tabName){
   $scope.currentPageIndex = 1;
   $scope.pageCount = 0;
   $scope.perPageCount = 5;
+  $scope.totalMessages = 0;
   $scope.isAllSelected = false;
   $scope.readflag = false;
   $scope.unreadflag = false;
+   $scope.newCounterInbox = 0;
+    $scope.newCounterSent = 0;
+     $scope.newCounterArchive =0;
 if(tabName == 'inbox'){
   $scope.getunreadcount();
-  $scope.sortType('Date');
-//$scope.Inbox();
+  //$scope.sortType('Date');
+$scope.Inbox();
 }
 if(tabName == 'archive'){
   $scope.sortTypeArchive('Date');
@@ -349,12 +375,13 @@ if(tabName == 'new'){
 
 
 $scope.ArchiveBox = function(){
-
+$scope.incrementerArchive();
 $scope.MessageDetails =null;
 
 var toPassID = 0;
 var isClinic = 0;
 var tempDate = [];
+$scope.totalMessages = 0;
 if(StorageService.get('logged').role === 'PATIENT'){
 toPassID = StorageService.get('logged').patientID;
 isClinic = false;
@@ -374,7 +401,7 @@ $scope.ArchiveMessageList = angular.extend({},$scope.ArchiveMessageList, $scope.
 }
 }
  if($scope.totalMessages == 0){
-  $scope.noarchivedataflag = true;
+  $scope.noarchivedataflagCA = true;
   $scope.noarchivemessageavailable = true;
  }
 
@@ -427,8 +454,12 @@ $scope.ArchiveMessageList = angular.extend({},$scope.ArchiveMessageList, $scope.
 }
 }
 if($scope.totalMessages == 0){
-  $scope.noarchivedataflag = true;
-  $scope.noarchivemessageavailable = true;
+  $scope.noarchivedataflagHCP = true;
+  $scope.noarchivemessageavailableHCP = true;
+ }
+ else{
+  $scope.noarchivedataflagHCP = false;
+  $scope.noarchivemessageavailableHCP = false;
  }
  }).catch(function(response){
 
@@ -438,11 +469,13 @@ if($scope.totalMessages == 0){
 };
  /****** Fetch Inbox items******/
 $scope.Inbox = function(){
+  $scope.incrementerInbox();
 $scope.counter++;
 $scope.MessageDetails =null;
 var toPassID = 0;
 var isClinic = 0;
 var tempDate = [];
+$scope.totalMessages = 0;
 if(StorageService.get('logged').role === 'PATIENT'){
 toPassID = StorageService.get('logged').patientID;
 isClinic = 0;
@@ -459,8 +492,6 @@ if($scope.InboxListRawData.content.length){
     $scope.InboxMessageList[i][4] = $scope.GetDateifToday(tempDate[i]);
 }
 }
-
-
 if($scope.totalMessages == 0){
   $scope.nodataflag = true;
   $scope.nomessagebodyavailable = true;
@@ -489,8 +520,12 @@ $scope.InboxMessageList = angular.extend({},$scope.InboxMessageList, $scope.Inbo
 }
 }
 if($scope.totalMessages == 0){
-  $scope.nodataflag = true;
-   $scope.nomessagebodyavailable = true;
+  $scope.nodataflagCA = true;
+   $scope.nomessagebodyavailableCA = true;
+ }
+ else{
+  $scope.nodataflagCA = false;
+   $scope.nomessagebodyavailableCA = false;
  }
  }).catch(function(response){
 
@@ -513,8 +548,12 @@ isClinic = 1;
 }
 }
  if($scope.totalMessages == 0){
-  $scope.nodataflag = true;
-  $scope.nomessagebodyavailable = true;
+  $scope.nodataflagHCP = true;
+  $scope.nomessagebodyavailableHCP = true;
+ }
+ else{
+  $scope.nodataflagHCP = false;
+  $scope.nomessagebodyavailableHCP = false;
  }
  }).catch(function(response){
       
@@ -526,11 +565,22 @@ isClinic = 1;
 /****** End of Fetch Inbox items******/
 /******Take a confirmation on sending message ******/
 $scope.showUpdate = function(){
-  if($scope.messageAttributes.subject == null || $scope.messageAttributes.subject == ""){
+  $scope.submitted = true;
+  if($scope.SelectedClinicsID.length==0)
+  {
+   toastr.error('Please fill out To field');
+    $scope.showUpdateModal = false;
+      $scope.showNoSubjectModal = false;
+      $scope.showNoMessageModal = false;
+      $scope.submitted = false;
+  }
+ else if($scope.messageAttributes.subject == null || $scope.messageAttributes.subject == ""){
 $scope.showNoSubjectModal = true;
   }
   else if($scope.messageAttributes.messageData == null || $scope.messageAttributes.messageData == ""){
 $scope.showNoMessageModal = true;
+$scope.showUpdateModal = false;
+$scope.showNoSubjectModal = false;
   }
       else{
         $scope.showUpdateModal = true;
@@ -542,6 +592,45 @@ $scope.showNoMessageModal = true;
       $scope.showUpdateModal = false;
       $scope.showNoSubjectModal = false;
       $scope.showNoMessageModal = false;
+      $scope.submitted = false;
+       $scope.showNoMessageOnReply = false;
+$scope.showmodalOnReply = false;
+    };
+    $scope.showUpdateCA = function(){
+  $scope.submitted = true;
+  if($scope.SelectedPatientsID.length==0)
+  {
+   toastr.error('Please fill out To field');
+    $scope.showUpdateModalCA = false;
+      $scope.showNoSubjectModalCA = false;
+      $scope.showNoMessageModalCA = false;
+     // $scope.submittedCA = false;
+  }
+ else if($scope.messageAttributes.subject == null || $scope.messageAttributes.subject == ""){
+$scope.showNoSubjectModalCA = true;
+$scope.showNoMessageModalCA = false;
+$scope.showUpdateModalCA = false;
+  }
+  else if($scope.messageAttributes.messageData == null || $scope.messageAttributes.messageData == ""){
+$scope.showNoMessageModalCA = true;
+$scope.showUpdateModalCA = false;
+$scope.showNoSubjectModalCA = false;
+  }
+      else{
+        $scope.showUpdateModalCA = true;
+        $scope.showNoSubjectModalCA = false;
+$scope.showNoMessageModalCA = false;
+      }    
+        };
+       
+        $scope.closeCA = function()
+    {
+      $scope.showUpdateModalCA = false;
+      $scope.showNoSubjectModalCA = false;
+      $scope.showNoMessageModalCA = false;
+      $scope.submitted = false;
+       $scope.showNoMessageOnReplyCA = false;
+$scope.showmodalOnReplyCA = false;
     };
 /******End of -Take a confirmation on sending message ******/
 /*******On click of Send Message under compose mail ******/
@@ -583,10 +672,11 @@ $scope.SendMessage = function(){
   $scope.pageCount = 0;
   $scope.perPageCount = 5;
    $scope.PageNumber=1; 
+     $scope.totalMessages = 0;
   messageService.sendMessageService($scope.sampleData).then(function(response){
      notyService.showMessage(response.data.statusMsg, 'success');
      
-      $scope.submitted = true;
+      $scope.submitted = false;
  }).catch(function(response){
       
       });
@@ -595,37 +685,86 @@ $scope.SendMessage = function(){
 };
 /*******End of On click of Send Message under compose mail ******/
 /******On click of Reply******/
+$scope.showmodalonReplyFunc = function(){
+  if( ($scope.replyattributes.replyData == "") || ($scope.replyattributes.replyData == null) ){
+    $scope.showNoMessageOnReply = true;
+    $scope.showmodalOnReply = false;
+}
+else{
+  $scope.showmodalOnReply = true;
+  $scope.showNoMessageOnReply = false;
+}
+};
+$scope.showmodalonReplyFuncCA = function(){
+  if( ($scope.replyattributes.replyData == "") || ($scope.replyattributes.replyData == null) ){
+    $scope.showNoMessageOnReplyCA = true;
+    $scope.showmodalOnReplyCA = false;
+}
+else{
+  $scope.showmodalOnReplyCA = true;
+  $scope.showNoMessageOnReplyCA = false;
+}
+};
 $scope.Reply = function(){
-$scope.sampleData = {
-    'fromUserId':'4', //this should be dynamic
-    //'fromClinicID': $scope.selectedClinicForMessagesID,
-    'messageSubject':$scope.messageAttributes.subject,
-    'messageSizeMbs':$scope.dummyvalue,
-    'messageType':'text',
-    'toMessageId':'', //this will change
-    'rootMessageId':'', //this will change
-    'messageText':$scope.messageAttributes.messageData,
-    'toUserIds':[3,4,5] //this should be dynamic
+  //$scope.ReplymessageAttributes.subject = ;
+ console.log($scope.ReplymessageAttributesObject);
+if(StorageService.get('logged').role === 'PATIENT'){
+  $scope.sampleData = {
+    "fromUserId" : StorageService.get('logged').patientID, 
+    "messageSubject" : "RE: "+$scope.ReplymessageAttributesObject[5],
+    "messageSizeMbs": $scope.dummyvalue,
+    "messageType": 'RE',
+    "isArchived":"false",
+    "isRead":"false",
+    "toMessageId":$scope.ReplymessageAttributesObject[3],
+    "rootMessageId":$scope.ReplymessageAttributesObject[3],
+    "messageText":$scope.replyattributes.replyData,
+    "toClinicIds":[$scope.ReplymessageAttributesObject[9]]
   };
-  $scope.flag= 'inbox';
-    $scope.currentPageIndex = 1;
-  $scope.pageCount = 0;
-  $scope.perPageCount = 5;
-   $scope.PageNumber=1; 
-   $scope.messageAttributes.subject = "";
-   $scope.messageAttributes.messageData = "";
-  messageService.sendMessageService($scope.sampleData).then(function(response){
+  console.log("patient reply");
+  console.log($scope.sampleData);
+  }
+  else if((StorageService.get('logged').role === 'CLINIC_ADMIN'))
+  {
+ $scope.sampleData = {
+  "fromUserId" : StorageService.get('logged').userId,
+  "fromClinicId" : $scope.selectedClinicForCA.id,//$scope.selectedClinicForMessagesID,
+  "messageSubject" : "RE: "+$scope.ReplymessageAttributesObject[5],
+  "messageSizeMbs": $scope.dummyvalue,
+  "messageType": 'RE',
+  "isArchived":"false",
+  "isRead":"false",
+  "toMessageId":$scope.ReplymessageAttributesObject[3],
+  "rootMessageId":$scope.ReplymessageAttributesObject[3],
+  "messageText":$scope.replyattributes.replyData,
+  "toUserIds":[$scope.ReplymessageAttributesObject[10]]
+};
+console.log("CA reply");
+console.log($scope.sampleData);
+}
 
+  messageService.sendMessageService($scope.sampleData).then(function(response){
+     notyService.showMessage(response.data.statusMsg, 'success');
+     console.log("data sent successfully")
+     console.log(response);
+      $scope.submitted = false;
+      $scope.replyattributes.replyData = "";
  }).catch(function(response){
-    
+      
       });
+    $scope.ReplymessageAttributesObject = {};
+    $scope.replyattributes.replyData = "";
+    $scope.close();
+     $scope.closeCA();
 };
 /******End of-On click of Reply******/
 /*******To fetch sent items on click of sent items menu option******/
 $scope.SentItems = function(){
+  $scope.incrementerSent();
   $scope.MessageDetails =null;
   var toPassID = 0;
   var isclinic = 0;
+  var tempDate = [];
 if(StorageService.get('logged').role === 'PATIENT'){
 toPassID = StorageService.get('logged').patientID;
 isclinic = 0;
@@ -636,9 +775,14 @@ messageService.fetchSentItems(toPassID,isclinic,$scope.PageNumber,$scope.perPage
  $scope.MessageDetails = angular.copy($scope.sentmessageListRawData.content[0]);
         $scope.sentmessageList = angular.extend({},$scope.sentmessageList, $scope.sentmessageListRawData.content);
     for(var i=0;i<$scope.sentmessageListRawData.content.length;i++){
-    $scope.sentmessageList[i][1] = dateService.getDateTimeFromTimeStamp($scope.sentmessageList[i][1],patientDashboard.dateFormat ,'/'); 
+     tempDate.push(dateService.getDateTimeFromTimeStamp($scope.sentmessageList[i][1],patientDashboard.dateFormat ,'/')); 
 
  }
+ if($scope.sentmessageListRawData.content.length){
+  for(var i=0;i<$scope.sentmessageListRawData.content.length;i++){
+    $scope.sentmessageList[i][1] = $scope.GetDateifToday(tempDate[i]); 
+}
+}
 if($scope.totalMessages == 0){
   $scope.nosentdataflag = true;
   $scope.nosentmessageavailable = true;
@@ -657,10 +801,15 @@ else if((StorageService.get('logged').role === 'CLINIC_ADMIN')){
  $scope.MessageDetails = angular.copy($scope.sentmessageListRawData.content[0]);
         $scope.sentmessageList = angular.extend({},$scope.sentmessageList, $scope.sentmessageListRawData.content);
     for(var i=0;i<$scope.sentmessageListRawData.content.length;i++){
-    $scope.sentmessageList[i][1] = dateService.getDateTimeFromTimeStamp($scope.sentmessageList[i][1],patientDashboard.dateFormat ,'/'); 
+     tempDate.push(dateService.getDateTimeFromTimeStamp($scope.sentmessageList[i][1],patientDashboard.dateFormat ,'/')); 
  }
+ if($scope.sentmessageListRawData.content.length){
+  for(var i=0;i<$scope.sentmessageListRawData.content.length;i++){
+    $scope.sentmessageList[i][1] = $scope.GetDateifToday(tempDate[i]); 
+}
+}
 if($scope.totalMessages == 0){
-  $scope.nosentdataflag = true;
+  $scope.nosentdataflagCA = true;
   $scope.nosentmessageavailable = true;
  }
  }).catch(function(response){
@@ -1012,7 +1161,25 @@ $scope.SwitchTabs('inbox');
       itm.selected = toggleStatus;
       });
   };
-
+$scope.toggleAllForArchive = function() {
+    if($scope.isAllSelected)
+    {
+      $scope.isAllSelected = false;
+       $scope.unreadflag = false;
+      $scope.readflag = false;
+    }
+    else
+    {
+      $scope.isAllSelected = true;
+     $scope.unreadflag = true;
+      $scope.readflag = true;
+    }
+     var toggleStatus = $scope.isAllSelected;
+     angular.forEach($scope.ArchiveMessageList, function(itm){ 
+      itm.selected = toggleStatus;
+      });
+   
+  };
 /******For getting the ID of selected checkboxes ******/  
   $scope.optionToggled = function(){
     var checkFlag = true;
@@ -1060,26 +1227,7 @@ $scope.SwitchTabs('inbox');
     });
   };
 
-   $scope.toggleAllForArchive = function() {
-      var checkFlag = true;
-    if($scope.isAllSelected)
-    {
-      $scope.isAllSelected = false;
-    }
-    else
-    {
-      $scope.isAllSelected = true;
-      checkFlag = true;
-    }
-     var toggleStatus = $scope.isAllSelected;
-     angular.forEach($scope.ArchiveMessageList, function(itm){ 
-      itm.selected = toggleStatus;
-      });
- 
-   $scope.unreadflag = true;
-      $scope.readflag = true;
    
-  };
 
    $scope.optionToggledForArchive = function(){
   var checkFlag = true;
@@ -1171,7 +1319,7 @@ $scope.messageBody.messageText+'</span><span>'+name+'</span><span>'+date+'</span
 
   };
 */
-$scope.getMessageBody =function(arrayobject)
+/*$scope.getMessageBody =function(arrayobject)
   {
     var name = "";
     var date = "";
@@ -1207,7 +1355,7 @@ $scope.messageBody.messageText+'</div></div>';
 }).catch(function(response){
       });
 
-  };
+  };*/
 $scope.getMessageBodyOnPageload =function(arrayobject)
   {
     var name = "";
@@ -1215,23 +1363,49 @@ $scope.getMessageBodyOnPageload =function(arrayobject)
     var id = 0;
     $scope.checkedArrayforRead = [];
     if($scope.flag == 'inbox' || $scope.flag == 'archive'){
+      $scope.arrayobject = arrayobject;
 name = arrayobject[8];
 date = arrayobject[4];
-id = arrayobject[3];     
-    }
-    if($scope.flag == 'sentitems'){
-      name = arrayobject[6];
-date = arrayobject[1];
-id = arrayobject[2];
-    }
-    
-   
+id = arrayobject[3]; 
+
     messageService.getMessageBodyService(id).then(function(response){
     $scope.messageBody = response.data;
 var formatedDateTime =  $scope.GetDateifToday(date);
 
     console.log($scope.messageBody);
     console.log($scope.messageBody.messageText);
+    if($scope.newCounterInbox==1 || $scope.newCounterArchive==1 || $scope.newCounterSent==1)
+        { 
+     
+     if(arrayobject){
+      var text = document.getElementById("messageBodyArea");
+     var innerHTML = '<div class="row"><div class="col-md-15 msghead">'+name+'</div></div><div class="row"><div class="col-md-11 msgtitle">'+name+'</div><div class="col-md-4 msgtimestamp">'+formatedDateTime+'</div></div><div class="row"><div class="col-md-15 msgbody">'+
+$scope.messageBody.messageText+'</div></div><div class="row"><div class="col-md-15 msgreply alignright"><a ng-click="replyToMessage(arrayobject)">Reply</a></div></div>'; 
+var displayMessage = angular.element(text);
+ displayMessage.empty();
+displayMessage.append( $compile(innerHTML)($scope) );
+     }
+     else{
+      $scope.nomessagebodyavailable = true;
+     }
+   }
+}).catch(function(response){
+       
+      });    
+    }
+    if($scope.flag == 'sentitems'){
+      name = arrayobject[6];
+date = arrayobject[1];
+id = arrayobject[2];
+
+    messageService.getMessageBodyService(id).then(function(response){
+    $scope.messageBody = response.data;
+var formatedDateTime =  $scope.GetDateifToday(date);
+
+    console.log($scope.messageBody);
+    console.log($scope.messageBody.messageText);
+    if($scope.newCounterInbox==1 || $scope.newCounterArchive==1 || $scope.newCounterSent==1)
+        { 
      var text = document.getElementById("messageBodyArea");
      if(arrayobject){
      text.innerHTML = '<div class="row"><div class="col-md-15 msghead">'+name+'</div></div><div class="row"><div class="col-md-11 msgtitle">'+name+'</div><div class="col-md-4 msgtimestamp">'+formatedDateTime+'</div></div><div class="row"><div class="col-md-15 msgbody">'+
@@ -1240,11 +1414,15 @@ $scope.messageBody.messageText+'</div></div>';
      else{
       $scope.nomessagebodyavailable = true;
      }
+   }
   
 
 }).catch(function(response){
        
       });
+    }
+    
+   
 
   }; 
   $scope.GetDateifToday = function(datevariable){
@@ -1260,9 +1438,17 @@ $scope.messageBody.messageText+'</div></div>';
       var convertedDate=res[0];
       var convertedTime=res[1];
       var noSecond = convertedTime;
+      var finalTimestamp;
+      if(noSecond.length==8)
+      {
       var timeWithoutSecond =  noSecond.split(":");
       timeWithoutSecond.pop();
-      var finalTimestamp =  timeWithoutSecond.join(":");
+       finalTimestamp =  timeWithoutSecond.join(":");
+      }
+      else
+     {
+          finalTimestamp =  noSecond;
+      }
       var formatedDateTime;
       if(todayformat==convertedDate) 
       {
@@ -1274,13 +1460,92 @@ $scope.messageBody.messageText+'</div></div>';
       }
       return formatedDateTime;
     };
- /* $scope.getMessageBody =function(arrayobject)
+
+  // $scope.GetDateifToday = function(datevariable){
+  //  Number.prototype.padLeft = function(base,chr){
+  //  var  len = (String(base || 10).length - String(this).length)+1;
+  //  return len > 0? new Array(len).join(chr || '0')+this : this;
+  //  }
+  //    var d = new Date,
+  //     todayformat = [ (d.getMonth()+1).padLeft(),d.getDate().padLeft(),d.getFullYear()].join('/');
+
+  //     var str = datevariable.toString();
+  //     var res = str.split(" ", 3);
+  //     var convertedDate=res[0];
+  //     var convertedTime=res[1];
+  //     var noSecond = convertedTime;
+  //     var timeWithoutSecond =  noSecond.split(":");
+  //     timeWithoutSecond.pop();
+  //     var finalTimestamp =  timeWithoutSecond.join(":");
+  //     var formatedDateTime;
+  //     if(todayformat==convertedDate) 
+  //     {
+  //        formatedDateTime = "Today"+ " "+ finalTimestamp;
+  //     }
+  //     else
+  //     {
+  //       formatedDateTime = convertedDate+" "+finalTimestamp;
+  //     }
+  //     return formatedDateTime;
+  //   };
+    $scope.getMessageBody =function(arrayobject)
+  {
+    var name = "";
+    var date = "";
+    var id = 0;
+  $scope.nomessagebodyavailable = false;
+  if(arrayobject){
+    if($scope.flag == 'inbox' || $scope.flag == 'archive'){
+       $scope.arrayobject = arrayobject;
+name = arrayobject[8];
+date = arrayobject[4];
+id = arrayobject[3];
+$scope.checkedArrayforRead.push(id);
+    $scope.markAsRead(); 
+      messageService.getMessageBodyService(id).then(function(response){
+    $scope.messageBody = response.data;
+var formatedDateTime =  $scope.GetDateifToday(date);
+       var text = document.getElementById("messageBodyArea");
+     var innerHTML = '<div class="row"><div class="col-md-15 msghead">'+name+'</div></div><div class="row"><div class="col-md-11 msgtitle">'+name+'</div><div class="col-md-4 msgtimestamp">'+formatedDateTime+'</div></div><div class="row"><div class="col-md-15 msgbody">'+
+$scope.messageBody.messageText+'</div></div><div class="row"><div class="col-md-15 msgreply alignright"><a ng-click="replyToMessage(arrayobject)">Reply</a></div></div>'; 
+
+    var displayMessage = angular.element(text);
+ displayMessage.empty();
+displayMessage.append( $compile(innerHTML)($scope) );
+}).catch(function(response){
+      });     
+    }
+    if($scope.flag == 'sentitems'){
+      name = arrayobject[6];
+date = arrayobject[1];
+id = arrayobject[2];
+messageService.getMessageBodyService(id).then(function(response){
+    $scope.messageBody = response.data;
+var formatedDateTime =  $scope.GetDateifToday(date);
+       var text = document.getElementById("messageBodyArea");
+     var innerHTML = '<div class="row"><div class="col-md-15 msghead">'+name+'</div></div><div class="row"><div class="col-md-11 msgtitle">'+name+'</div><div class="col-md-4 msgtimestamp">'+formatedDateTime+'</div></div><div class="row"><div class="col-md-15 msgbody">'+
+$scope.messageBody.messageText+'</div></div>'; 
+
+    var displayMessage = angular.element(text);
+ displayMessage.empty();
+displayMessage.append( $compile(innerHTML)($scope) );
+}).catch(function(response){
+      });  
+    }
+  }
+    else{
+      $scope.nomessagebodyavailable = true;
+     }
+  
+
+  };
+  /*$scope.getMessageBody =function(arrayobject)
   {
      $scope.arrayobject = arrayobject;
      $scope.checkedArrayforRead = [];
     $scope.checkedArrayforRead.push(arrayobject[3]);
     $scope.markAsRead();
-    $scope.selectedMessage = angular.copy(clinic);
+   // $scope.selectedMessage = angular.copy(clinic);
     messageService.getMessageBodyService(arrayobject[3]).then(function(response){
     $scope.messageBody = response.data;
     console.log($scope.messageBody);
@@ -1297,13 +1562,15 @@ displayMessage.append( $compile(innerHTML)($scope) );
         notyService.showError(response);
       });
 
-  };
-  $scope.replyToMessage = function(){
-$scope.replyFlag = true;
-
   };*/
-/*
-$scope.showUpdate = function(){
+  $scope.replyToMessage = function(arrayobject){
+    console.log(arrayobject);
+$scope.replyFlag = true;
+$scope.ReplymessageAttributesObject = arrayobject;
+
+  };
+
+/*$scope.showUpdate = function(){
           $scope.submitted = true;
           if($scope.form.$invalid){
             return false;
@@ -1314,8 +1581,26 @@ $scope.showUpdate = function(){
          $scope.close = function(value)
     {
       $scope.showNoMessageModal = value;
-    };
-*/
+    };*/
 
+
+
+/* 28  */
+$scope.incrementerInbox = function()
+{
+  
+   $scope.newCounterInbox++;
+   //alert($scope.newCounterInbox);
+}
+$scope.incrementerArchive = function()
+{  
+  $scope.newCounterArchive++;
+}
+$scope.incrementerSent = function()
+{
+  
+  $scope.newCounterSent++;
+  // alert($scope.newCounterSent);
+}
 $scope.init();
   }]);
