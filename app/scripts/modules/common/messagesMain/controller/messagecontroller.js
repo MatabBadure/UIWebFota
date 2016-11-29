@@ -313,7 +313,7 @@ $scope.initialiseAllLists();
    $scope.getunreadcount();
   $scope.sortType('Date');
  // $scope.Inbox();
-
+$scope.SelectedPatientsID=[];
   $scope.SelectedClinicsID=[];
    $scope.localLang = {
         selectAll       : "Select all",
