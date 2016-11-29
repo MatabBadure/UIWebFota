@@ -108,13 +108,13 @@
                  </div>
            </div>
                      <div id = "NodataDiv" class="graph_nodata" ng-if = "nodataflagCA">
-    <span class="noData_text"> No Data Available!</span>
+    <span class="noData_text"> No Messages Available!</span>
   </div>
          </div>
  <div class="col-xs-10" style="max-height:400px; min-height:400px; overflow-y:scroll;" >
            <div class="message-thread-container" id="messageBodyArea"> 
             <div id = "NodataDiv" class="graph_nodata" ng-if = "nomessagebodyavailable">
-    <span class="noData_text"> Nothing to display!</span>
+    <span class="noData_text"> No Messages Available!</span>
   </div>
            </div>
              <div ng-if="replyFlag" class="row">           
@@ -135,8 +135,8 @@
           <div class="col-sm-5" style="float:right; margin-top: 14px;">
            <span style="color:blue;"> Showing {{totalMessages}} messages  &nbsp  </span>
            <span ng-show="pageCount > 1">
-<span class="navigaion-link cursor-pointer" ng-class="{ 'inactive': !(PageNumber > 1) }" ng-click="Pagination('PREV')">Previous</span>
-            <span class="navigaion-no ng-binding">{{currentPageIndex}}/{{pageCount}}</span>  <span class="navigaion-link cursor-pointer" ng-class="{ 'inactive': false }" ng-click="Pagination('NEXT')">Next</span>
+<span class="navigaion-link cursor-pointer activeColor" ng-class="{ 'inactiveColor': !(PageNumber > 1) }" ng-click="Pagination('PREV')">Previous</span>
+            <span class="navigaion-no ng-binding ">{{currentPageIndex}}/{{pageCount}}</span>  <span class="navigaion-link cursor-pointer activeColor" ng-class="{ 'inactiveColor': (PageNumber >= pageCount) }" ng-click="Pagination('NEXT')">Next</span>
           </span>
           </div>
         </div>
@@ -171,7 +171,7 @@
                  </div>
            </div>
                            <div id = "NodataDiv" class="graph_nodata" ng-if = "nosentdataflagCA">
-    <span class="noData_text"> No Data Available!</span>
+    <span class="noData_text"> No Messages Available!</span>
   </div>
          </div>
                 <!--    <div class="col-xs-12">
@@ -201,8 +201,8 @@
        <div class="col-sm-18">
           <div class="col-sm-5" style="float:right;">
            <span style="color:blue;"> Showing {{totalMessages}} messages  &nbsp </span>
-<span class="navigaion-link cursor-pointer " ng-class="{ 'inactive': !(PageNumber > 1) }" ng-click="Pagination('PREV')">Previous</span>
-            <span class="navigaion-no ng-binding">{{currentPageIndex}}/{{pageCount}}</span>  <span class="navigaion-link cursor-pointer" ng-class="{ 'inactive': !(pageCount > PageNumber) }" ng-click="Pagination('NEXT')">Next</span>
+<span class="navigaion-link cursor-pointer activeColor" ng-class="{ 'inactiveColor': !(PageNumber > 1) }" ng-click="Pagination('PREV')">Previous</span>
+            <span class="navigaion-no ng-binding">{{currentPageIndex}}/{{pageCount}}</span>  <span class="navigaion-link cursor-pointer activeColor" ng-class="{ 'inactiveColor': (PageNumber >= pageCount) }" ng-click="Pagination('NEXT')">Next</span>
           </div>
         </div>
     </div>
@@ -240,13 +240,13 @@
                  </div>
            </div> 
     <div id = "NodataDiv" class="graph_nodata" ng-if = "noarchivedataflagCA">
-    <span class="noData_text"> No Data Available!</span>
+    <span class="noData_text"> No Messages Available!</span>
   </div>      
          </div>
  <div class="col-xs-10" >
            <div class="message-thread-container" id="messageBodyArea"> 
                                  <div id = "NodataDiv" class="graph_nodata" ng-if = "noarchivemessageavailable">
-    <span class="noData_text"> Nothing to display!</span>
+    <span class="noData_text"> No Messages Available!</span>
   </div>
            </div> 
           <!--  <div class="col-xs-8" style="float:right;">
@@ -260,8 +260,8 @@
         <div class="col-sm-18">
           <div class="col-sm-5" style="float:right; margin-top: 14px;">
            <span style="color:blue;"> Showing {{totalMessages}} messages  &nbsp  </span>
-<span class="navigaion-link cursor-pointer" ng-class="{ 'inactive': !(PageNumber > 1) }" ng-click="Pagination('PREV')">Previous</span>
-            <span class="navigaion-no ng-binding">{{currentPageIndex}}/{{pageCount}}</span>  <span class="navigaion-link cursor-pointer" ng-class="{ 'inactive': false }" ng-click="Pagination('NEXT')">Next</span>
+<span class="navigaion-link cursor-pointer activeColor" ng-class="{ 'inactiveColor': !(PageNumber > 1) }" ng-click="Pagination('PREV')">Previous</span>
+            <span class="navigaion-no ng-binding">{{currentPageIndex}}/{{pageCount}}</span>  <span class="navigaion-link cursor-pointer activeColor" ng-class="{ 'inactiveColor': (PageNumber >= pageCount) }" ng-click="Pagination('NEXT')">Next</span>
           </div>
         </div>
       </div>
