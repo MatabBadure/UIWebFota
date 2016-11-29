@@ -63,7 +63,7 @@
         "reply" : "Reply",
         "confirmsendmessage" : "Do you want to send the message?",
         "sendmessageWarning" : "Compose Message",
-        "NomessageWarning" : "Do you want to send an empty message?",
+        "NomessageWarning" : "Do you want to send a blank message?",
         "NoSubjectWarning" : "Do you want to send this message without a Subject?",
         "Reply": "Reply"
     },
@@ -86,7 +86,7 @@
             "dashboard": "Dashboard",
             "patients": "Patients",
             "messages":"Messages",
-            "compose-message":"Write a new Message"
+            "compose-message":"Write a New Message"
         },
         "form": {
             "username": "Login",
