@@ -94,7 +94,7 @@
             </div> 
           <div ng-repeat="InboxMessage in InboxMessageList" ng-class="{'unread': (InboxMessage[2] != true) }" style=" padding: 8px;
                border-bottom: 0.5px solid #d0cbcb;color: #d0cbcb;cursor: pointer; " >
-                  <span>  <input type="checkbox" ng-model="InboxMessage.selected" ng-change="optionToggled()"></span> 
+                  <div class="col-md-2">  <input type="checkbox" ng-model="InboxMessage.selected" ng-change="optionToggled()"></div> 
                    <a href="" ng-click = "getMessageBody(InboxMessage)" style=" color:#999; text-decoration:none;">
                    <span style="font-size:20px;white-space: nowrap;"> {{InboxMessage[8]}} </span> <span><i style="color:red;" class="fa fa-flag" ng-if="InboxMessage[2] != true" aria-hidden="true"></i><i style="color:green;" class="fa fa-check" ng-if="InboxMessage[2] == true" aria-hidden="true"></i></span> <br/>  
                    <div style=" min-width:200px; max-width:200px;    overflow: hidden;
