@@ -41,17 +41,17 @@
         <span ng-if="(flag == 'inbox')" > <input type="checkbox" ng-click="toggleAll()" ng-checked="isAllSelected"></span>
         <span ng-if="(flag == 'archive')" > <input type="checkbox" ng-click="toggleAllForArchive()" ng-checked="isAllSelected"></span>
        </div>
-       <div class="col-xs-2" style="padding-top:10px; cursor:pointer;" ng-click="ArchiveMessages()">
+       <div class="col-xs-2 aligncenter" style="padding-top:10px; cursor:pointer;" ng-click="ArchiveMessages()">
        <div ng-if = "((flag=='inbox') && (readflag || unreadflag))" style=" border:0.5px solid white">
         <img src="images/archive-folder.png" style="width:20px; height:20px"/> <span translate="global.messaging.archive"></span>
        </div>
      </div>
-       <div ng-if="readflag" class="col-xs-4" style="padding-top:10px; cursor:pointer;" ng-click="markAsRead()">
+       <div ng-if="readflag" class="col-xs-4 aligncenter" style="padding-top:10px; cursor:pointer;" ng-click="markAsRead()">
        <div style="border:0.5px solid white;">
          <img src="images/Mark-read.png" style="width:20px; height:20px;"/> <span translate="global.messaging.mark-as-read"></span>
        </div>
      </div>
-       <div ng-if="unreadflag" class="col-xs-4" style="padding-top:10px; cursor:pointer;" ng-click="markAsUnread()">
+       <div ng-if="unreadflag" class="col-xs-4 aligncenter" style="padding-top:10px; cursor:pointer;" ng-click="markAsUnread()">
        <div style=" border:0.5px solid white">
          <img src="images/mark-unread.png" style="width:20px; height:20px"/> <span translate="global.messaging.mark-as-unread"></span>
        </div>
@@ -65,7 +65,7 @@
         <div class="col-sm-2 optionSection">
           
            <a href="" ng-click="SwitchTabs('inbox')" ng-class="isactive('inbox')" > <i class="fa fa-inbox" aria-hidden="true"></i>
-           <span translate="global.messaging.inbox"></span>({{::UnreadMessages}})</a>
+           <span translate="global.messaging.inbox"></span>({{UnreadMessages}})</a>
 
            <a href="" ng-click="SwitchTabs('archive')" ng-class="isactive('archive')" ><i class="fa fa-archive" aria-hidden="true"></i>
            <span translate="global.messaging.archive"></span></a>
@@ -96,19 +96,19 @@
                border-bottom: 0.5px solid #d0cbcb;color: #d0cbcb;cursor: pointer; " >
                   <div class="col-md-2">  <input type="checkbox" ng-model="InboxMessage.selected" ng-change="optionToggled()"></div> 
                    <a href="" ng-click = "getMessageBody(InboxMessage)" style=" color:#999; text-decoration:none;">
-                   <span style="font-size:20px;white-space: nowrap;"> {{InboxMessage[8]}} </span> <span><i style="color:red;" class="fa fa-flag" ng-if="InboxMessage[2] != true" aria-hidden="true"></i><i style="color:green;" class="fa fa-check" ng-if="InboxMessage[2] == true" aria-hidden="true"></i></span> <br/>  
+                   <span style="font-size:20px;white-space: nowrap;"> {{InboxMessage[8]}}  {{InboxMessage[9]}} </span> <span><i style="color:red;" class="fa fa-flag" ng-if="InboxMessage[2] != true" aria-hidden="true"></i><i style="color:green;" class="fa fa-check" ng-if="InboxMessage[2] == true" aria-hidden="true"></i></span> <br/>  
                    <div style=" min-width:200px; max-width:200px;    overflow: hidden;
     text-overflow: ellipsis;"><span style="white-space: nowrap;">{{InboxMessage[4]}}</span></div><span style="white-space:nowrap;">{{InboxMessage[5]}}</span> 
                    </a>
            </div>
                      <div id = "NodataDiv" class="graph_nodata" ng-if = "nodataflagHCP">
-    <span class="noData_text"> No Data Available!</span>
+    <span class="noData_text"> No Messages Available!</span>
   </div>
          </div>
  <div class="col-xs-10" >
            <div class="message-thread-container" id="messageBodyArea"> 
                        <div id = "NodataDiv" class="graph_nodata" ng-if = "nomessagebodyavailableHCP">
-    <span class="noData_text"> Nothing to display!</span>
+    <span class="noData_text"> No Messages Available!</span>
   </div>
            </div> 
           <!--  <div class="col-xs-8" style="float:right;">
@@ -156,7 +156,7 @@
                   <div class="col-md-2">  <input type="checkbox" ng-model="ArchiveMessage.selected" ng-change="optionToggledForArchive()"></div>
                    <div class="col-md-14 msgtitles">
                    <a href="" ng-click="getMessageBody(ArchiveMessage)" style=" color:#999; text-decoration:none;">
-                   <span style="font-size:20px;white-space: nowrap;"> {{ArchiveMessage[8]}} </span> <span><i style="color:red;" class="fa fa-flag" ng-if="ArchiveMessage[2] != true" aria-hidden="true"></i><i style="color:green;" class="fa fa-check" ng-if="ArchiveMessage[2] == true" aria-hidden="true"></i></span> <br/>  
+                   <span style="font-size:20px;white-space: nowrap;"> {{ArchiveMessage[8]}}  {{ArchiveMessage[9]}} </span> <span><i style="color:red;" class="fa fa-flag" ng-if="ArchiveMessage[2] != true" aria-hidden="true"></i><i style="color:green;" class="fa fa-check" ng-if="ArchiveMessage[2] == true" aria-hidden="true"></i></span> <br/>  
                    <div style=" min-width:200px; max-width:200px;    overflow: hidden;
     text-overflow: ellipsis;"><span style="white-space: nowrap;">{{ArchiveMessage[4]}}</span></div><span style="white-space:nowrap;">{{ArchiveMessage[5]}}</span> 
                    </a></div>
