@@ -30,17 +30,17 @@
         <span ng-if="(flag == 'inbox')" > <input type="checkbox" ng-click="toggleAll()" ng-checked="isAllSelected"></span>
         <span ng-if="(flag == 'archive')" > <input type="checkbox" ng-click="toggleAllForArchive()" ng-checked="isAllSelected"></span>
        </div>
-       <div class="col-xs-2" style="padding-top:10px; cursor:pointer;" ng-click="ArchiveMessages()">
+       <div class="col-xs-2 aligncenter" style="padding-top:10px; cursor:pointer;" ng-click="ArchiveMessages()">
        <div ng-if = "((flag=='inbox') && (readflag || unreadflag))" style=" border:0.5px solid white">
         <img src="images/archive-folder.png" style="width:20px; height:20px"/> <span translate="global.messaging.archive"></span>
        </div>
      </div>
-       <div ng-if="readflag" class="col-xs-4" style="padding-top:10px; cursor:pointer;" ng-click="markAsRead()">
+       <div ng-if="readflag" class="col-xs-4 aligncenter" style="padding-top:10px; cursor:pointer;" ng-click="markAsRead()">
        <div style="border:0.5px solid white;">
          <img src="images/Mark-read.png" style="width:20px; height:20px;"/> <span translate="global.messaging.mark-as-read"></span>
        </div>
      </div>
-       <div ng-if="unreadflag" class="col-xs-4" style="padding-top:10px; cursor:pointer;" ng-click="markAsUnread()">
+       <div ng-if="unreadflag" class="col-xs-4 aligncenter" style="padding-top:10px; cursor:pointer;" ng-click="markAsUnread()">
        <div style=" border:0.5px solid white">
          <img src="images/mark-unread.png" style="width:20px; height:20px"/> <span translate="global.messaging.mark-as-unread"></span>
        </div>
@@ -100,7 +100,7 @@
   </div>
             
          </div>
- <div class="col-xs-10" style="max-height:400px; min-height:400px; overflow-y:scroll;">
+ <div class="col-xs-10" >
            <div class="message-thread-container" id="messageBodyArea"> 
             
               
@@ -198,8 +198,10 @@
        <div class="col-sm-18">
           <div class="col-sm-5" style="float:right;">
            <span style="color:blue;"> {{totalMessages}} messages found &nbsp </span>
+           <span ng-show="pageCount > 1">
 <span class="navigaion-link cursor-pointer activeColor" ng-class="{ 'inactiveColor': !(PageNumber > 1) }" ng-click="Pagination('PREV')">Previous</span>
             <span class="navigaion-no ng-binding">{{currentPageIndex}}/{{pageCount}}</span>  <span class="navigaion-link cursor-pointer activeColor" ng-class="{ 'inactiveColor': (PageNumber >= pageCount) }" ng-click="Pagination('NEXT')">Next</span>
+          </span>
           </div>
         </div>
     </div>
@@ -257,8 +259,10 @@
         <div class="col-sm-18">
           <div class="col-sm-5" style="float:right; margin-top: 14px;">
            <span style="color:blue;"> {{totalMessages}} messages found &nbsp </span>
+           <span ng-show="pageCount > 1">
 <span class="navigaion-link cursor-pointer activeColor" ng-class="{ 'inactiveColor': !(PageNumber > 1) }" ng-click="Pagination('PREV')">Previous</span>
             <span class="navigaion-no ng-binding">{{currentPageIndex}}/{{pageCount}}</span>  <span class="navigaion-link cursor-pointer activeColor" ng-class="{ 'inactiveColor': (PageNumber >= pageCount) }" ng-click="Pagination('NEXT')">Next</span>
+          </span>
           </div>
         </div>
       </div>
