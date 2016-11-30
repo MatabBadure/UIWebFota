@@ -337,10 +337,14 @@ input[type="text"], input[type="email"], select, textarea {
   border: 1px solid #bdbdbd;
 } 
 /* 29-11-16   */
+
 #messageBodyArea {
   max-height: 400px;
 }
-/* textarea:focus, input:focus, select:focus {
+.compose-message-container input[type="text"], .compose-message-container textarea {
+  border: 0 none !important;
+}
+textarea:focus, input:focus, select:focus {
   border: 1px solid #646568;
   color: #646568;
   outline: medium none;
@@ -371,5 +375,13 @@ input[type="text"] {
 .navbar-fixed-top {
   border-bottom: 1px solid #c1c1c1;
 } 
-*/
+.aligncenter {
+  text-align: center;
+}
+
+.msgbody {
+  max-width: 100%;
+  overflow-wrap: break-word;
+} 
+
 
