@@ -98,7 +98,14 @@ var sortConstant = {
     pHillromId: "phillrom_id",
     patientDoB: "patientDoB",
     comma: ",",
-    isActivated: "isActivated"
+    isActivated: "isActivated",
+    from: "messages.user.firstName",
+    subject: "messages.messageSubject",
+    date: "messages.messageDatetime",
+    sentTo: "toClinic.name",
+    sentSubject: "messages.messageSubject",
+    sentDate: "messages.messageDatetime",
+    sentToCA: "user.firstName"
 }
 
 var stringConstants = {

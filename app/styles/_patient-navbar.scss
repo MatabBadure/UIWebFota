@@ -126,3 +126,262 @@
   top:0 ;
   right:5px ;
 }
+/* For messaging implementation- Hill-1839 */
+.messageList > ul > li > div {
+  padding: 8px;
+  border-bottom: 0.5px solid #d0cbcb;
+  text-decoration:none;
+}
+.messageList > ul > li > a > div {
+  padding: 8px;
+  border-bottom: 0.5px solid #d0cbcb;
+  color: #d0cbcb;
+}
+.messageList > ul{
+ list-style-type: none; 
+   text-decoration:none;
+   padding:0px !important;
+}
+.ulheader > li > div > span{
+color:#999;
+font-weight: bold;
+}
+.optionSection{
+  padding-left:0px;
+  padding-right:0px;
+}
+.unselectclass{
+color: #7e7e7f; 
+ padding:2px 0px 10px 20px;
+margin-top:10px;
+display:block;
+text-decoration:none;
+font-weight: bold;
+width: 100%;
+}
+.selectclass{
+  border: 0.5px solid #999;
+  color: #7fa9c8 !important;
+  display: block;
+  padding: 2px 0 10px 20px;
+  text-decoration: none !important;
+  width: 100%;
+} 
+.super-head{
+  background:linear-gradient(#a7c0e5, #7898c6);
+  max-height: 40px;
+  min-height:40px;   
+  border-top-right-radius: 10px;    
+  border-top-left-radius: 10px; 
+  color:white;
+}
+.after-head-container{
+  border: 0.5px solid #d0cbcb; 
+   max-height: 500px;
+   min-height:500px;
+   border-bottom-right-radius: 10px; 
+   border-bottom-left-radius: 10px; 
+}
+.optionSection{
+  background-color:#f2f3f3;
+  max-height: 460px;
+  min-height:460px; 
+  border-right:0.5px solid #d0cbcb;
+  border-bottom:0.5px solid #d0cbcb;
+}
+.optionSection > a{
+text-decoration:none;
+}
+.messageList-container{
+  background-color:#f9f9f9;
+  border-bottom:0.5px solid #d0cbcb;
+  max-height: 460px;
+  min-height: 460px;
+}
+.compose-message-container > .row {
+  border:0.5px solid #7ca3dc;
+  border-radius:10px;
+  padding:8px;
+  margin-left:0px;
+  margin-right:0px;
+  margin-bottom: 15px;
+}
+.compose-message-container > .row > textarea,input, textarea:focus, input:focus{
+    outline: none;
+border: none;
+color:#a9afb9;
+}
+.compose-message-container > div > div > span{
+  color:#b6bac3;
+  font-weight: 700;
+}
+.compose-message-container{
+  margin-left:15px;
+}
+.compose-message-container-header > .row{
+  color: #a7a7a7;
+  font-weight:bold;
+  padding:10px 10px 0px 10px;
+  margin-bottom: 15px;
+}
+.write-message{
+  min-height:260px;
+}
+.buttons{
+float:right;
+  border:none !important;
+}
+.message-block{
+  background-color:rgba(184, 191, 202, 0.22);
+  border:0.5px solid #d0cbcb;
+  padding:10px;
+}
+.message-thread-container > .row{
+  padding-left:20px;
+  padding-top:8px;
+}
+.message-thread-container{
+  overflow-y:scroll;
+  min-height:400px;
+  max-height:1000px;
+}
+.unread{
+  font-weight:800;
+  colo:#d2d3d3;
+}
+.sort-icon--default:after {
+  font-family: 'hillrom';
+  content: "\e613";
+  font-size: 10px;
+  padding-left: 5px;
+  cursor: pointer;
+  position: absolute;
+}
+.sort-icon-down:after {
+  font-family: 'hillrom';
+  content: "\e611";
+  font-size: 7px;
+  padding-left: 7px;
+  cursor: pointer;
+  position: absolute;
+  top: 5px;
+}
+.sort-icon-up:after {
+  font-family: 'hillrom';
+  content: "\e612";
+  font-size: 7px;
+  padding-left: 5px;
+  cursor: pointer;
+  position: absolute;
+}
+.toFieldmultiselect > span  > button {
+  width: 400px !important;
+}
+.toFieldmultiselect > span > .checkboxLayer{
+    width: 400px !important;
+} 
+.msghead
+{
+  background-color: #426ead;
+  color: #fff;
+  padding: 5px 10px;
+  text-transform: uppercase;
+}
+.msgtitle {
+  color: #000;
+  text-transform: uppercase;
+}
+.msgtimestamp {
+  color: #000;
+  font-size: 12px;
+}
+.msg_count {
+    background: #276092 none repeat scroll 0 0;
+    border-radius: 50%;
+    color: #fff !important;
+    display: inline-block;
+    font-size: 9px;
+    height: 18px;
+    left: 26px;
+    line-height: 17px;
+    position: absolute;
+    text-align: center;
+    top: 4px;
+    width: 18px;
+}
+.alignright {
+  text-align: right;
+  cursor:pointer;
+}
+.navigaion-link-messages{
+color:blue;
+}
+.inactiveColor{
+  color:#c1c1c1 !important;
+}
+.activeColor{
+  color:#5d6a7d ;
+}
+.msgtitles {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* End messaging implementation- Hill-1839 */
+/*Changes to fix issues after Hill-1839 */
+.compose-message-container > .row > textarea, input, textarea:focus, input:focus {
+  border: 1px solid #bdbdbd;
+  color: #a9afb9;
+  outline: medium none;
+} 
+input[type="text"], input[type="email"], select, textarea {
+  border: 1px solid #bdbdbd;
+} 
+/* 29-11-16   */
+
+#messageBodyArea {
+  max-height: 400px;
+}
+.compose-message-container input[type="text"], .compose-message-container textarea {
+  border: 0 none !important;
+}
+textarea:focus, input:focus, select:focus {
+  border: 1px solid #646568;
+  color: #646568;
+  outline: medium none;
+}
+input[type="text"], textarea, select {
+  color: #646568;
+}
+input[type="text"] {
+  max-height: 30px;
+  max-width: 270px;
+}
+.form__select__input--option select
+{
+   color: #646568;
+}
+.dashboard__form--type {
+  color: #646568;
+}
+.dashboard__form--label {
+  color: #646568;
+}
+.dashboard__form .has-error {
+  color: #c1c1c1;
+}
+.custom-dropdown::before {
+  color: #c1c1c1;
+}
+.navbar-fixed-top {
+  border-bottom: 1px solid #c1c1c1;
+} 
+.aligncenter {
+  text-align: center;
+}
+
+.msgbody {
+  max-width: 100%;
+  overflow-wrap: break-word;
+} 
+
+

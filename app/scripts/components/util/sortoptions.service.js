@@ -105,4 +105,12 @@ angular.module('hillromvestApp')
             defaultSortOption.isUp = false;
             return defaultSortOption;
         };
+        this.getSortOptionsForMessages = function(){
+            var sortMessageList = {};
+            sortMessageList.from = sortIcons;
+            sortMessageList.subject =  sortIcons;
+            sortMessageList.date = sortIcons;
+            sortMessageList.to = sortIcons;
+            return sortMessageList;
+        };
     }]);

@@ -2,8 +2,8 @@
 
 angular.module('hillromvestApp')
   .controller('MainController', 
-  	['$scope', 'Principal', 'Auth', '$state', 'Account', '$location', '$stateParams', '$rootScope', 'loginConstants', 'StorageService', 'UserService', '$window', 'patientService', 
-  function ($scope, Principal,Auth, $state, Account, $location,$stateParams, $rootScope,loginConstants,StorageService, UserService, $window, patientService) {
+  	['$scope', 'Principal', 'Auth','notyService', 'DoctorService','$state', 'Account', '$location', '$stateParams', '$rootScope', 'loginConstants', 'StorageService', 'UserService', '$window', 'patientService',
+  function ($scope, Principal,Auth,notyService,DoctorService, $state, Account, $location,$stateParams, $rootScope,loginConstants,StorageService, UserService, $window, patientService) {
     Principal.identity().then(function(account) {
       $scope.account = account;
       $scope.isAuthenticated = Principal.isAuthenticated;
@@ -15,6 +15,7 @@ angular.module('hillromvestApp')
 			$rootScope.username = null;
 			if(StorageService.get('logged')){
 				$rootScope.userRole = StorageService.get('logged').role;
+				$rootScope.userId = StorageService.get('logged').userId;
 				$rootScope.username = StorageService.get('logged').userFirstName;
 				$rootScope.userLastName = StorageService.get('logged').userLastName;
 				$rootScope.userFullName = StorageService.get('logged').userFullName;
@@ -25,6 +26,46 @@ angular.module('hillromvestApp')
 			}
 
     };
+
+    /*$scope.getreadunreadcount = function(){
+    if($rootScope.userRole === 'PATIENT'){
+  			messageService.getUnreadMessagesCount(StorageService.get('logged').patientID,0).then(function(response){
+			if(response.data[0][0] === false){
+  				$scope.messageCount = response.data[0][1];
+			}
+			else{
+  					$scope.messageCount = 0;
+				}
+ 			}).catch(function(response){
+      	
+    		});
+ 		}
+ 			if($rootScope.userRole === 'CLINIC_ADMIN'){
+  			messageService.getUnreadMessagesCount(StorageService.get('logged').userId,1,$stateParams.clinicId).then(function(response){
+			if(response.data[0][0] === false){
+  				$scope.messageCount = response.data[0][1];
+			}
+			else{
+  					$scope.messageCount = 0;
+				}
+ 			}).catch(function(response){
+    		});
+ 		}
+ 			if($rootScope.userRole === 'HCP'){
+ 				//alert("Clinic Id "+$rootScope.userId);
+  		messageService.getUnreadMessagesCount(StorageService.get('logged').userId,1, $rootScope.ClinicForHCP).then(function(response){
+			if(response.data[0][0] === false){
+  				$scope.messageCount = response.data[0][1];
+			}
+			else{
+  					$scope.messageCount = 0;
+				}
+ 			}).catch(function(response){
+    
+    		});
+ 		} 
+ 	};*/
+
     $scope.FooterLoginZindex = function(){
     	if($state.current.name === "login" || $state.current.name === "home" ){
 		    return "remove-static-loginPage";
@@ -389,6 +430,17 @@ angular.module('hillromvestApp')
 
   	$rootScope.goToChangePrescriptionTermsConditions = function(){		
   		$window.open('#/prescription-terms', '_blank');
-  	}
+  	};
+  	 $scope.GoToMessages = function(){
+  	 	 if(StorageService.get('logged').role === 'PATIENT'){
+$state.go('Messages');
+  	 	 }
+  	 	 else if(StorageService.get('logged').role === 'CLINIC_ADMIN'){
+$state.go('Messages_CA');
+  	 	 }
+  	 	 else if(StorageService.get('logged').role === 'HCP'){
+  	 	 $state.go('Messages_HCP');	
+  	 	 }
+    };
 
   }]);
