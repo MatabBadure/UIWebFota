@@ -123,9 +123,9 @@ else {
     });
 
 }
-if(StorageService.get('logged').role === 'CLINIC_ADMIN'){
+else if(StorageService.get('logged').role === 'CLINIC_ADMIN'){
   messageService.getUnreadMessagesCountCA(StorageService.get('logged').userId,1,$scope.selectedClinicForCA.id).then(function(response){
-if(response.data){
+if(response.data.length){
 if(response.data[0][0] == false){
   $scope.UnreadMessages = response.data[0][1];
 }
@@ -143,9 +143,9 @@ else {
     });
 
 }
-if(StorageService.get('logged').role === 'HCP'){
+else if(StorageService.get('logged').role === 'HCP'){
   messageService.getUnreadMessagesCountCA(StorageService.get('logged').userId,1,$scope.selectedClinicForHCP.id).then(function(response){
-if(response.data){
+if(response.data.length){
 if(response.data[0][0] == false){
   $scope.UnreadMessages = response.data[0][1];
 }
@@ -499,17 +499,14 @@ if($scope.InboxListRawData.content.length){
 /* if($scope.InboxMessageList.length){
   $scope.getMessageBody($scope.InboxMessageList[0]);
  }*/
- }).catch(function(response){
-
-      });
- if($scope.totalMessages == 0){
+  if($scope.totalMessages == 0){
   $scope.nodataflag = true;
   $scope.nomessagebodyavailable = true;
  }
- else{
-  $scope.nodataflag = false;
-  $scope.nomessagebodyavailable = false;
- }
+ }).catch(function(response){
+
+      });
+
 }
 else if(StorageService.get('logged').role === 'CLINIC_ADMIN'){
 toPassID = StorageService.get('logged').userId; //to be changed to $scope.selectedClinicForMessagesID when inbox with clinic Id is implemented
@@ -605,7 +602,6 @@ $scope.showNoSubjectModal = false;
 $scope.showmodalOnReply = false;
     };
     $scope.showUpdateCA = function(){
-  $scope.submitted = true;
   if($scope.SelectedPatientsID.length==0)
   {
    toastr.error('Please enter To field');
@@ -690,6 +686,8 @@ $scope.SendMessage = function(){
       });
     $scope.messageAttributes.subject = "";
    $scope.messageAttributes.messageData = "";
+   $scope.close();
+   $scope.closeCA();
 };
 /*******End of On click of Send Message under compose mail ******/
 /******On click of Reply******/
@@ -1514,8 +1512,9 @@ $scope.messageBody.messageText+'</div></div>';
     var date = "";
     var id = 0;
     $scope.replyFlag = false;
-  $scope.nomessagebodyavailable = false;
+ 
   if(arrayobject){
+     $scope.nomessagebodyavailable = false;
     if($scope.flag == 'inbox') {
        $scope.arrayobject = arrayobject;
 name = arrayobject[8];
