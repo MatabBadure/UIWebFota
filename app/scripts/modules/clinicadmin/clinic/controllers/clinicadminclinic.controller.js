@@ -127,7 +127,8 @@ $scope.getAdherenceScoreSettingDays = function(){
       var res = daysCount.split(" ");
       var dayValue = Number(res[0]);
       var data = {
-        'adherenceSetting':dayValue
+        'adherenceSetting':dayValue,
+        'adherenceSettingFlag':'true'
       };
       clinicService.updateDaysForCalculation(data,$stateParams.clinicId).then(function(response){
         notyService.showMessage(response.data.message, 'success');
