@@ -117,6 +117,26 @@ angular.module('hillromvestApp')
         }).success(function(response) {
           return response;
         });
+      },
+   /*   gettestthreaddata: function(id,rootid,bool,clinicid,isarchived,mailtype){
+        var url = URL.getThreaddata.replace('ID',id).replace('ROOTID',rootid).replace('BOOL',bool).replace('CLINICID',clinicid).replace('ISARCHIVED',isarchived).replace('MAIL_TYPE',mailtype);
+        console.log("checking url");
+        console.log(url);
+        return $http.get(url, {
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });
+      },*/
+          getthreaddata: function(id,rootid){
+        var url = URL.getThreaddata.replace('ID',id).replace('ROOTID',rootid);
+      console.log("checking url");
+        console.log(url);
+        return $http.get(url, {
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });
       }
   };
      }]);
