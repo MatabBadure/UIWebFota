@@ -37,24 +37,7 @@ $scope.messageBodyObject = {};
   $scope.archivemessageBodyObject = {};
   /* console.log("clinic ID");
    console.log(StorageService.get('logged').userId);*/
-    $scope.getClinicsAssociatedToHCP = function(){
-    clinicadminService.getClinicsAssociated(StorageService.get('logged').userId).then(function(response){
-      if(response.data && response.data.clinics){
-        $scope.clinics = $filter('orderBy')(response.data.clinics, "name");
-        if($stateParams.clinicId){
-          $scope.selectedClinicForCA = commonsUserService.getSelectedClinicFromList($scope.clinics, $stateParams.clinicId);
-        $scope.switchClinic($scope.selectedClinicForCA);
-        }else if($scope.clinics && $scope.clinics.length > 0){
-          $scope.selectedClinicForCA=angular.copy($scope.clinics[0]);
-          //$rootScope.ClinicForCA = $scope.selectedClinicForCA;
-          $scope.switchClinic($scope.clinics[0]);
-        }
-        //$scope.switchClinic($scope.clinics[0]);
-      }
-    }).catch(function(response){
-    
-    });
-  };
+ 
   $scope.getClinicsForHCP = function() {
     var userId = StorageService.get('logged').userId;
     DoctorService.getClinicsAssociatedToHCP(userId).then(function(response){
@@ -86,9 +69,31 @@ $scope.messageBodyObject = {};
         //$scope.processClinics($scope.clinicsListdata.clinics);
        });
  };
-
+   $scope.getClinicsAssociatedToHCP = function(){
+    clinicadminService.getClinicsAssociated(StorageService.get('logged').userId).then(function(response){
+      if(response.data && response.data.clinics){
+        $scope.clinics = $filter('orderBy')(response.data.clinics, "name");
+        console.log("clinics me kya hai");
+        console.log($scope.clinics);
+        if($stateParams.clinicId){
+          console.log("i shud not be here");
+          $scope.selectedClinicForCA = commonsUserService.getSelectedClinicFromList($scope.clinics, $stateParams.clinicId);
+        $scope.switchClinic($scope.selectedClinicForCA);
+        }else if($scope.clinics && $scope.clinics.length > 0){
+        //  $scope.selectedClinicForCA=angular.copy($scope.clinics[0]);
+          //$rootScope.ClinicForCA = $scope.selectedClinicForCA;
+          $scope.switchClinic($scope.clinics[0]);
+ }
+        //$scope.switchClinic($scope.clinics[0]);
+      }
+    }).catch(function(response){
+    
+    });
+  };
    $scope.getAllPatientsByClinicId = function(){
-    clinicService.getClinicAssoctPatients($scope.selectedClinicForCA.id,1,20).then(function(response){
+    console.log("Jsygdlviuefvlihwe");
+    console.log($scope.selectedClinicForCA.id);
+    clinicService.getClinicAssoctPatients($scope.selectedClinicForCA.id,1,100).then(function(response){
       $scope.patients = [];
       angular.forEach(response.data.patientUsers, function(patientList){
         patientList.patient.hcp = patientList.hcp;
@@ -255,9 +260,9 @@ if(option === 'Date'){
 var toggledSortOptions = {};
 $scope.archivesortOption = "";
 var toggleSortOptiondefault = {}; 
-        toggleSortOptiondefault.isDefault = true;
-            toggleSortOptiondefault.isDown = false;
-            toggleSortOptiondefault.isUp = false;
+toggleSortOptiondefault.isDefault = true;
+toggleSortOptiondefault.isDown = false;
+toggleSortOptiondefault.isUp = false;
 if(option === 'From'){                        
       toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortArchiveMessageList.from);
       $scope.sortArchiveMessageList.from = toggledSortOptions;
@@ -302,12 +307,13 @@ if(option === 'Date'){
  };
 $scope.initialiseAllLists();
   $scope.init =function(){
+     $scope.initialiseAllLists(); 
   $scope.flag= 'inbox';
    $scope.replyattributes = {};
   $scope.PageNumber=1;
   $scope.currentPageIndex = 1;
   $scope.pageCount = 0;
-  $scope.perPageCount = 5;
+  $scope.perPageCount = 8;
   $scope.totalMessages = 0;
    $scope.sentmessageList = '';
    $scope.readflag = false;
@@ -326,7 +332,7 @@ $scope.initialiseAllLists();
    $scope.sortMessageList = sortOptionsService.getSortOptionsForMessages();
    $scope.sortSentMessageList = sortOptionsService.getSortOptionsForMessages();
    $scope.sortArchiveMessageList = sortOptionsService.getSortOptionsForMessages();
-      $scope.initialiseAllLists();   
+       
   // $scope.sortType('Date');
   $scope.sortOption = "";
    $scope.getunreadcount();
@@ -359,7 +365,7 @@ $scope.SwitchTabs = function(tabName){
   $scope.PageNumber=1;
   $scope.currentPageIndex = 1;
   $scope.pageCount = 0;
-  $scope.perPageCount = 5;
+  $scope.perPageCount = 8;
   $scope.totalMessages = 0;
   $scope.isAllSelected = false;
   $scope.readflag = false;
@@ -369,6 +375,23 @@ $scope.SwitchTabs = function(tabName){
      $scope.newCounterArchive =0;
      $scope.replyFlag = false;
      var isswitchtab = 1;
+       $scope.nomessagebodyavailableHCP = false;
+       $scope.nodataflagHCP = false;
+       $scope.noarchivedataflagHCP = false;
+
+  $scope.nomessagebodyavailableCA = false;
+  $scope.noarchivedataflagCA = false;
+   $scope.nosentdataflagCA = false;
+  $scope.nodataflagCA = false;
+
+  $scope.nomessagebodyavailable = false;
+  $scope.noarchivedataflag = false;
+  $scope.nosentdataflag = false;
+  $scope.nodataflag = false;
+
+  
+
+  $scope.nodataflag = false;
 if(tabName == 'inbox'){
   $scope.messagelistflag = true;
   $scope.messagebodyflag = false;
@@ -376,6 +399,8 @@ if(tabName == 'inbox'){
   $scope.archivemessagebodyflag = false;
   $scope.getunreadcount();
   $scope.sortOption = "";
+  $scope.InboxMessageList = "";
+  $scope.InboxListRawData = {};
   $scope.sortType('Date',isswitchtab);
 //$scope.Inbox();
 }
@@ -384,7 +409,11 @@ if(tabName == 'archive'){
     $scope.archivemessagelistflag = true;
     $scope.sentmessagebodyflag = false;
   $scope.archivemessagebodyflag = false;
+  $scope.noarchivedataflagHCP = false;
   $scope.messagebodyflag = false;
+
+  $scope.ArchiveListRawData = {};
+$scope.ArchiveMessageList = "";
   $scope.sortTypeArchive('Date',isswitchtab);
 
 //$scope.ArchiveBox();
@@ -396,6 +425,8 @@ if(tabName == 'sentitems'){
   $scope.sentmessagebodyflag = false;
   $scope.messagebodyflag = false;
 $scope.archivemessagebodyflag = false;
+$scope.sentmessageList = "";
+$scope.sentmessageListRawData = "";
   //$scope.SentItems();
     $scope.sortTypeSentItems('Date',isswitchtab);
 }
@@ -712,7 +743,7 @@ $scope.SendMessage = function(){
   $scope.flag= 'inbox';
     $scope.currentPageIndex = 1;
   $scope.pageCount = 0;
-  $scope.perPageCount = 5;
+  $scope.perPageCount = 8;
    $scope.PageNumber=1; 
      $scope.totalMessages = 0;
   messageService.sendMessageService($scope.sampleData).then(function(response){
@@ -1441,7 +1472,16 @@ messageService.getMessageBodyService(id).then(function(response){
     $scope.sentmessageBody = response.data;
    $scope.sentmessageBody.date = arrayobject[1];
        if(StorageService.get('logged').role === 'CLINIC_ADMIN'){
-$scope.sentmessageBody.name = arrayobject[7] + ' ' +arrayobject[6];
+        if(!arrayobject[6] && arrayobject[7]){
+ $scope.archivemessageBodyObject.name = arrayobject[7];
+}
+else if(!arrayobject[7] && arrayobject[6]){
+  $scope.archivemessageBodyObject.name = arrayobject[6] ;
+}
+else if(arrayobject[7] && arrayobject[6]){
+$scope.sentmessageBody.name = arrayobject[6] + ' ' +arrayobject[7];
+}
+
 }
 else if(StorageService.get('logged').role === 'PATIENT'){
 
@@ -1463,7 +1503,15 @@ messageService.getMessageBodyService(id).then(function(response){
     $scope.archivemessageBodyObject  = response.data;
     $scope.archivemessageBodyObject.date = arrayobject[4];
        if(StorageService.get('logged').role === 'CLINIC_ADMIN'){
- $scope.archivemessageBodyObject.name = arrayobject[10] + ' ' +arrayobject[11];
+        if(!arrayobject[8] && arrayobject[9]){
+ $scope.archivemessageBodyObject.name = arrayobject[9];
+}
+else if(!arrayobject[9] && arrayobject[8]){
+  $scope.archivemessageBodyObject.name = arrayobject[8] ;
+}
+else if(arrayobject[9] && arrayobject[8]){
+  $scope.archivemessageBodyObject.name = arrayobject[8] + ' ' + arrayobject[9];
+}
 }
 else if(StorageService.get('logged').role === 'PATIENT'){
 
