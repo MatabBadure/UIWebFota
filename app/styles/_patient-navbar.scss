@@ -143,8 +143,22 @@
    padding:0px !important;
 }
 .ulheader > li > div > span{
-color:#999;
-font-weight: bold;
+color:#646568;
+font-weight: 500;
+font-size: 17px;
+}
+
+.ulheader{
+  margin-top:10px;
+  padding-left:7px;
+  border-bottom:0.5px solid #d0cbcb;
+  padding-bottom:7px;
+}
+.msgtitles{
+  font-size: 14px;
+}
+.ulheader .sort-icon--default:after, .ulheader  .sort-icon-down:after, .ulheader  .sort-icon-up:after{
+  margin-top:5px;
 }
 .optionSection{
   padding-left:0px;
@@ -333,13 +347,11 @@ color:blue;
   color: #a9afb9;
   outline: medium none;
 } 
-input[type="text"], input[type="email"], select, textarea {
-  border: 1px solid #bdbdbd;
-} 
+ 
 /* 29-11-16   */
 
 #messageBodyArea {
-  max-height: 400px;
+  max-height: 100%;
 }
 .compose-message-container input[type="text"], .compose-message-container textarea {
   border: 0 none !important;
@@ -352,26 +364,12 @@ textarea:focus, input:focus, select:focus {
 input[type="text"], textarea, select {
   color: #646568;
 }
-input[type="text"] {
-  max-height: 30px;
-  max-width: 270px;
-}
 .form__select__input--option select
 {
    color: #646568;
 }
-.dashboard__form--type {
-  color: #646568;
-}
-.dashboard__form--label {
-  color: #646568;
-}
-.dashboard__form .has-error {
-  color: #c1c1c1;
-}
-.custom-dropdown::before {
-  color: #c1c1c1;
-}
+
+
 .navbar-fixed-top {
   border-bottom: 1px solid #c1c1c1;
 } 
@@ -384,4 +382,47 @@ input[type="text"] {
   overflow-wrap: break-word;
 } 
 
+/* 1 dec   */
 
+.back {
+  color: #fff;
+  cursor: pointer;
+  height: 45px;
+  line-height: 45px;
+  text-decoration: none;
+}
+.message-thread-container {
+  border: 1px solid #ccc;
+  margin-top: 10px;
+  max-height: 1000px;
+  min-height: auto;
+  overflow-y: initial;
+  padding: 0 0 10px;
+}
+.fa {
+  padding-right: 5px;
+}
+.btngroups
+{
+  margin-top:10px;
+}
+.paginationcontainer
+{
+  float: right;
+  margin-top: 14px;
+  text-align: right;
+}
+.messages
+{
+  line-height:1px;
+}
+.btngroups {
+  float: right;
+  margin-top: 10px;
+  margin-right: 10px;
+}
+body
+{ 
+color:#646568;
+
+}
