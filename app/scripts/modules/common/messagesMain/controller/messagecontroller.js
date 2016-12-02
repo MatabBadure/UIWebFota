@@ -318,7 +318,7 @@ $scope.initialiseAllLists();
   $scope.PageNumber=1;
   $scope.currentPageIndex = 1;
   $scope.pageCount = 0;
-  $scope.perPageCount = 8;
+  $scope.perPageCount = 10;
   $scope.totalMessages = 0;
    $scope.sentmessageList = '';
    $scope.readflag = false;
@@ -370,8 +370,7 @@ $scope.SwitchTabs = function(tabName){
   $scope.PageNumber=1;
   $scope.currentPageIndex = 1;
   $scope.pageCount = 0;
-  $scope.perPageCount = 8;
-  $scope.totalMessages = 0;
+  $scope.perPageCount = 10;
   $scope.isAllSelected = false;
   $scope.readflag = false;
   $scope.unreadflag = false;
@@ -416,7 +415,7 @@ if(tabName == 'archive'){
   $scope.archivemessagebodyflag = false;
   $scope.noarchivedataflagHCP = false;
   $scope.messagebodyflag = false;
-
+   $scope.totalMessages = 0;
   $scope.ArchiveListRawData = {};
 $scope.ArchiveMessageList = "";
   $scope.sortTypeArchive('Date',isswitchtab);
@@ -433,6 +432,7 @@ $scope.archivemessagebodyflag = false;
 $scope.sentmessageList = "";
 $scope.sentmessageListRawData = "";
   //$scope.SentItems();
+   $scope.totalMessages = 0;
     $scope.sortTypeSentItems('Date',isswitchtab);
 }
 if(tabName == 'new'){
@@ -748,12 +748,11 @@ $scope.SendMessage = function(){
   $scope.flag= 'inbox';
     $scope.currentPageIndex = 1;
   $scope.pageCount = 0;
-  $scope.perPageCount = 8;
+  $scope.perPageCount = 10;
    $scope.PageNumber=1; 
-     $scope.totalMessages = 0;
   messageService.sendMessageService($scope.sampleData).then(function(response){
      notyService.showMessage(response.data.statusMsg, 'success');
-     
+     $scope.SwitchTabs('inbox',1);
       $scope.submitted = false;
  }).catch(function(response){
       
