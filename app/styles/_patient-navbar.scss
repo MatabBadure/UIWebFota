@@ -305,6 +305,8 @@ float:right;
 }
 .msgtitle {
   color: #000;
+  max-width: 100%;
+  overflow-wrap: break-word;
 }
 .msgtimestamp {
   color: #000;
