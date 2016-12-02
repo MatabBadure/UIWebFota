@@ -4850,7 +4850,7 @@ angular.module('hillromvestApp')
             })
 .state('Messages_CA', {
                 parent: 'clinicadmin-dashboard',
-                url: '/messages_CA',
+                url: '/messages_CA/{clinicId}',
                 data: {
                     roles: ['CLINIC_ADMIN'],
                     pageTitle: 'patient.page-title.messages'
@@ -4878,7 +4878,7 @@ angular.module('hillromvestApp')
             })
 .state('Messages_HCP', {
                 parent: 'hcp-dashboard',
-                url: '/messages_HCP',
+                url: '/messages_HCP/{clinicId}',
                 data: {
                     roles: ['HCP'],
                     pageTitle: 'patient.page-title.messages'

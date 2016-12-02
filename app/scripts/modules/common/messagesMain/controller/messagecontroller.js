@@ -1,7 +1,7 @@
 'use strict';
 angular.module('hillromvestApp')
-.controller('messagecontroller', [ '$scope','$state','$filter','$compile','$rootScope','$stateParams','messageService', 'dateService','patientService','DoctorService','StorageService','notyService','toastr','clinicService','clinicadminService','sortOptionsService',
-  function ($scope,$state,$filter,$compile,$rootScope,$stateParams,messageService,dateService,patientService,DoctorService,StorageService,notyService,toastr,clinicService,clinicadminService,sortOptionsService) {
+.controller('messagecontroller', [ '$scope','$state','$filter','$compile','$rootScope','$stateParams','messageService', 'dateService','patientService','DoctorService','StorageService','notyService','toastr','clinicService','clinicadminService','sortOptionsService', 'commonsUserService',
+  function ($scope,$state,$filter,$compile,$rootScope,$stateParams,messageService,dateService,patientService,DoctorService,StorageService,notyService,toastr,clinicService,clinicadminService,sortOptionsService,commonsUserService) {
    $scope.dummyvalue = 12 ;
    $scope.messageAttributes = {};	
    $scope.ReplymessageAttributes = {};
@@ -35,6 +35,7 @@ $scope.messageBodyObject = {};
   $scope.sentmessagebodyflag = false;
   $scope.sentmessageBody = {};
   $scope.archivemessageBodyObject = {};
+  $scope.toID = [];
   /* console.log("clinic ID");
    console.log(StorageService.get('logged').userId);*/
  
@@ -44,11 +45,11 @@ $scope.messageBodyObject = {};
       //$scope.getDashboardForHCPOrPatient(response, userId);
       if(response.data && response.data.clinics){
       $scope.clinicsHCP = $filter('orderBy')(response.data.clinics, "name");
-     /* if($stateParams.clinicId !== undefined && $stateParams.clinicId !== null){
+      if($stateParams.clinicId !== undefined && $stateParams.clinicId !== null){
          $scope.selectedClinicForHCP = commonsUserService.getSelectedClinicFromList($scope.clinicsHCP, $stateParams.clinicId);
        $scope.switchClinicHCP($scope.selectedClinicForHCP);
      
-      }*/
+      }
         $scope.selectedClinicForHCP = angular.copy($scope.clinicsHCP[0]);
         $scope.switchClinicHCP($scope.selectedClinicForHCP);
         //$rootScope.ClinicForHCP = $scope.selectedClinicForHCP;
@@ -75,9 +76,13 @@ $scope.messageBodyObject = {};
         $scope.clinics = $filter('orderBy')(response.data.clinics, "name");
         console.log("clinics me kya hai");
         console.log($scope.clinics);
+        console.log("state params");
+        console.log($stateParams.clinicId);
         if($stateParams.clinicId){
           console.log("i shud not be here");
           $scope.selectedClinicForCA = commonsUserService.getSelectedClinicFromList($scope.clinics, $stateParams.clinicId);
+      console.log("selectedclinicforCa");
+      console.log($scope.selectedClinicForCA);
         $scope.switchClinic($scope.selectedClinicForCA);
         }else if($scope.clinics && $scope.clinics.length > 0){
         //  $scope.selectedClinicForCA=angular.copy($scope.clinics[0]);
@@ -110,7 +115,7 @@ $scope.messageBodyObject = {};
    }
    if(StorageService.get('logged').role === 'CLINIC_ADMIN'){
       $scope.getClinicsAssociatedToHCP();
-      $scope.getAllPatientsByClinicId();
+      //$scope.getAllPatientsByClinicId();
    }
    if(StorageService.get('logged').role === 'HCP'){
     $scope.getClinicsForHCP();
@@ -782,19 +787,23 @@ else{
 };
 $scope.Reply = function(){
   //$scope.ReplymessageAttributes.subject = ;
-  if($scope.ReplymessageAttributesObject[0][7] === 'ROOT'){
+  console.log("$scope.toID");
+  console.log($scope.toID);
+  console.log("reply attri");
+  console.log($scope.ReplymessageAttributesObject[0][0].messageType);
+  if($scope.ReplymessageAttributesObject[0][0].messageType === 'ROOT'){
 if(StorageService.get('logged').role === 'PATIENT'){
   $scope.sampleData = {
     "fromUserId" : StorageService.get('logged').patientID, 
-    "messageSubject" : "RE: "+$scope.ReplymessageAttributesObject[0][5],
+    "messageSubject" : "RE: "+$scope.ReplymessageAttributesObject[0][0].messageSubject,
     "messageSizeMbs": $scope.dummyvalue,
     "messageType": 'RE',
     "isArchived":"false",
     "isRead":"false",
-    "toMessageId":$scope.ReplymessageAttributesObject[0][3],
-    "rootMessageId":$scope.ReplymessageAttributesObject[0][3],
+    "toMessageId":$scope.ReplymessageAttributesObject[0][0].toMessageId,
+    "rootMessageId":$scope.ReplymessageAttributesObject[0][0].rootMessageId,
     "messageText":$scope.replyattributes.replyData,
-    "toClinicIds":[$scope.ReplymessageAttributesObject[0][10]]
+    "toClinicIds":[$scope.toID]
   };
   }
   else if((StorageService.get('logged').role === 'CLINIC_ADMIN'))
@@ -802,31 +811,31 @@ if(StorageService.get('logged').role === 'PATIENT'){
  $scope.sampleData = {
   "fromUserId" : StorageService.get('logged').userId,
   "fromClinicId" : $scope.selectedClinicForCA.id,//$scope.selectedClinicForMessagesID,
-  "messageSubject" : "RE: "+$scope.ReplymessageAttributesObject[0][5],
+  "messageSubject" : "RE: "+$scope.ReplymessageAttributesObject[0][0].messageSubject,
   "messageSizeMbs": $scope.dummyvalue,
   "messageType": 'RE',
   "isArchived":"false",
   "isRead":"false",
-  "toMessageId":$scope.ReplymessageAttributesObject[0][3],
-  "rootMessageId":$scope.ReplymessageAttributesObject[0][3],
+  "toMessageId":$scope.ReplymessageAttributesObject[0][0].toMessageId,
+  "rootMessageId":$scope.ReplymessageAttributesObject[0][0].rootMessageId,
   "messageText":$scope.replyattributes.replyData,
-  "toUserIds":[$scope.ReplymessageAttributesObject[0][11]]
+  "toUserIds":[$scope.toID]
 };
 }
 }
-else if($scope.ReplymessageAttributesObject[0][7] === 'RE'){
+else if($scope.ReplymessageAttributesObject[0][0].messageType === 'RE'){
   if(StorageService.get('logged').role === 'PATIENT'){
   $scope.sampleData = {
     "fromUserId" : StorageService.get('logged').patientID, 
-    "messageSubject" :$scope.ReplymessageAttributesObject[0][5],
+    "messageSubject" :$scope.ReplymessageAttributesObject[0][0].messageSubject,
     "messageSizeMbs": $scope.dummyvalue,
     "messageType": 'RE',
     "isArchived":"false",
     "isRead":"false",
-    "toMessageId":$scope.ReplymessageAttributesObject[0][3],
-    "rootMessageId":$scope.ReplymessageAttributesObject.rootid,
+    "toMessageId":$scope.ReplymessageAttributesObject[0][0].toMessageId,
+    "rootMessageId":$scope.ReplymessageAttributesObject[0][0].rootMessageId,
     "messageText":$scope.replyattributes.replyData,
-    "toClinicIds":[$scope.ReplymessageAttributesObject[0][10]]
+    "toClinicIds":[$scope.toID]
   };
   }
   else if((StorageService.get('logged').role === 'CLINIC_ADMIN'))
@@ -834,19 +843,20 @@ else if($scope.ReplymessageAttributesObject[0][7] === 'RE'){
  $scope.sampleData = {
   "fromUserId" : StorageService.get('logged').userId,
   "fromClinicId" : $scope.selectedClinicForCA.id,//$scope.selectedClinicForMessagesID,
-  "messageSubject" :$scope.ReplymessageAttributesObject[0][5],
+  "messageSubject" :$scope.ReplymessageAttributesObject[0][0].messageSubject,
   "messageSizeMbs": $scope.dummyvalue,
   "messageType": 'RE',
   "isArchived":"false",
   "isRead":"false",
-  "toMessageId":$scope.ReplymessageAttributesObject[0][3],
-  "rootMessageId":$scope.ReplymessageAttributesObject.rootid,
+  "toMessageId":$scope.ReplymessageAttributesObject[0][0].toMessageId,
+  "rootMessageId":$scope.ReplymessageAttributesObject[0][0].rootMessageId,
   "messageText":$scope.replyattributes.replyData,
-  "toUserIds":[$scope.ReplymessageAttributesObject[0][11]]
+  "toUserIds":[$scope.toID]
 };
 }
 }
-
+console.log("sample data");
+console.log($scope.sampleData);
   messageService.sendMessageService($scope.sampleData).then(function(response){
      notyService.showMessage(response.data.statusMsg, 'success');
       $scope.submitted = false;
@@ -1407,13 +1417,19 @@ $scope.toggleAllForArchive = function() {
   $scope.getMessageBody = function(arrayobject){
  var inboxObject = {};
     inboxObject = angular.copy(arrayobject);
+    $scope.toID = [];
+   
     var id=arrayobject[3];
       var rootid=0;
   var tempDate = [];
-
+console.log("arrayobject");
+console.log(arrayobject);
+console.log("inbox object");
+console.log(inboxObject);
  
     if(StorageService.get('logged').role === 'PATIENT')
       {
+$scope.toID = arrayobject[9];
          if(inboxObject[7] == 'ROOT'){
          rootid=inboxObject[3];
        }
@@ -1422,6 +1438,7 @@ $scope.toggleAllForArchive = function() {
        }
       }
       else if(StorageService.get('logged').role === 'CLINIC_ADMIN'){ 
+        $scope.toID = arrayobject[10];
       if(inboxObject[7] == 'ROOT'){
          rootid=inboxObject[3];
        }
@@ -1448,6 +1465,8 @@ if(response.data.length){
     $scope.messageBodyObject[i][0].messageDatetime = $scope.GetDateifToday(tempDate[i]);
 }
 }
+console.log("message onject");
+console.log($scope.messageBodyObject);
 }).catch(function(response){
         notyService.showError(response);
       });
@@ -1530,9 +1549,11 @@ else if(StorageService.get('logged').role === 'PATIENT'){
   $scope.replyToMessage = function(arrayobject){
     $scope.ReplymessageAttributesObject = {};
 $scope.ReplymessageAttributesObject = angular.copy(arrayobject);
-$scope.ReplymessageAttributesObject.rootid = arrayobject.rootid;
+console.log("reply array obj");
+console.log(arrayobject);
 $scope.replyFlag = true;
-
+console.log("reply me=sg attributes");
+  console.log($scope.ReplymessageAttributesObject);
   };
 $scope.incrementerInbox = function()
 {
