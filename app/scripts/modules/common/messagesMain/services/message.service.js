@@ -5,8 +5,6 @@ angular.module('hillromvestApp')
     return {
         sendMessageService: function(data) {
         var url = URL.sendMessage;
-        console.log("Compose message data:");
-        console.log(data);
         return $http.post(url, data, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -31,8 +29,6 @@ angular.module('hillromvestApp')
       },
 
     fetchInboxItems: function(id,isClinic,pageNumber,perPage,sortOption){
-      console.log("sort Option in service");
-      console.log(sortOption);
       var url = URL.getInboxItems.replace('ID',id).replace('BOOL',isClinic).replace('PAGE',pageNumber).replace('PER_PAGE',perPage).replace('SORT_OPTION',sortOption).replace('MAILBOXTYPE','Inbox');
       return $http.get(url, {
           headers: headerService.getHeader()
@@ -41,8 +37,6 @@ angular.module('hillromvestApp')
         });
     },
     fetchInboxItemsCA: function(id,isClinic,clinicid,pageNumber,perPage,sortOption){
-      console.log("sort Option in service");
-      console.log(sortOption);
       var url = URL.getInboxItemsCA.replace('ID',id).replace('BOOL',isClinic).replace('CLINICID',clinicid).replace('PAGE',pageNumber).replace('PER_PAGE',perPage).replace('SORT_OPTION',sortOption).replace('MAILBOXTYPE','Inbox');
       return $http.get(url, {
           headers: headerService.getHeader()
@@ -52,8 +46,6 @@ angular.module('hillromvestApp')
     },
 
      fetchArchiveItems: function(id,isClinic,pageNumber,perPage,sortOption){
-      console.log("sort Option in service");
-      console.log(sortOption);
       var url = URL.getInboxItems.replace('ID',id).replace('BOOL',isClinic).replace('PAGE',pageNumber).replace('PER_PAGE',perPage).replace('SORT_OPTION',sortOption).replace('MAILBOXTYPE','archive');
       return $http.get(url, {
           headers: headerService.getHeader()
@@ -62,8 +54,6 @@ angular.module('hillromvestApp')
         });
     },
        fetchArchiveItemsCA_HCP: function(id,isClinic,clinicid,pageNumber,perPage,sortOption){
-      console.log("sort Option in service");
-      console.log(sortOption);
       var url = URL.getInboxItemsCA.replace('ID',id).replace('BOOL',isClinic).replace('CLINICID',clinicid).replace('PAGE',pageNumber).replace('PER_PAGE',perPage).replace('SORT_OPTION',sortOption).replace('MAILBOXTYPE','archive');
       return $http.get(url, {
           headers: headerService.getHeader()
@@ -110,7 +100,6 @@ angular.module('hillromvestApp')
         });
       },
        getUnreadMessagesCountCA: function(id,isClinic,clinicid){
-        console.log("clinicID:"+clinicid);
         var url = URL.getUnreadCountCA.replace('ID',id).replace('BOOL',isClinic).replace('CLINICID',clinicid);
          return $http.get(url, {
           headers: headerService.getHeader()
@@ -130,8 +119,6 @@ angular.module('hillromvestApp')
       },*/
           getthreaddata: function(id,rootid){
         var url = URL.getThreaddata.replace('ID',id).replace('ROOTID',rootid);
-      console.log("checking url");
-        console.log(url);
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
