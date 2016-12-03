@@ -153,6 +153,8 @@ font-size: 17px;
   padding-left:7px;
   border-bottom:0.5px solid #d0cbcb;
   padding-bottom:7px;
+    list-style: inside none none;
+  overflow: hidden;
 }
 .msgtitles{
   font-size: 14px;
@@ -182,7 +184,7 @@ width: 100%;
   width: 100%;
 } 
 .super-head{
-  background:linear-gradient(#a7c0e5, #7898c6);
+   background:#7ca3dc;
   max-height: 40px;
   min-height:40px;   
   border-top-right-radius: 10px;    
@@ -303,7 +305,8 @@ float:right;
 }
 .msgtitle {
   color: #000;
-  text-transform: uppercase;
+  max-width: 100%;
+  overflow-wrap: break-word;
 }
 .msgtimestamp {
   color: #000;
@@ -425,4 +428,14 @@ body
 { 
 color:#646568;
 
+}
+.full-width{
+  width:100%;
+}
+.msgcontainer
+{
+-webkit-overflow-scrolling: touch;
+}
+.msgbody {
+  white-space: pre;
 }
