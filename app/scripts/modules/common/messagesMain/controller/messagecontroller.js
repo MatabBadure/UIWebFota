@@ -1203,6 +1203,7 @@ $scope.ArchiveBox();
     $scope.selectedClinicForCA = null;
 $scope.selectedClinicForCA = angular.copy(clinic);
 $scope.InboxMessageList = "";
+//$stateParams.clinicId = $scope.selectedClinicForCA.id;
 $scope.SwitchTabs('inbox');
 //$rootScope.ClinicForCA = $scope.selectedClinicForCA;
   };
@@ -1517,10 +1518,12 @@ $scope.sentmessagelistflag = false;
 var date = arrayobject[4];
 var id = arrayobject[3];
 var tempDate = [];
+ $scope.checkedArrayforRead.push(arrayobject[3]);
+    $scope.markAsRead();
 messageService.getMessageBodyService(id).then(function(response){
     $scope.archivemessageBodyObject  = response.data;
     $scope.archivemessageBodyObject.date = arrayobject[4];
-       if(StorageService.get('logged').role === 'CLINIC_ADMIN'){
+       if(StorageService.get('logged').role === 'CLINIC_ADMIN' || StorageService.get('logged').role === 'HCP'){
         if(!arrayobject[8] && arrayobject[9]){
  $scope.archivemessageBodyObject.name = arrayobject[9];
 }
