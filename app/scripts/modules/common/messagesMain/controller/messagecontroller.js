@@ -1523,7 +1523,7 @@ var tempDate = [];
 messageService.getMessageBodyService(id).then(function(response){
     $scope.archivemessageBodyObject  = response.data;
     $scope.archivemessageBodyObject.date = arrayobject[4];
-       if(StorageService.get('logged').role === 'CLINIC_ADMIN'){
+       if(StorageService.get('logged').role === 'CLINIC_ADMIN' || StorageService.get('logged').role === 'HCP'){
         if(!arrayobject[8] && arrayobject[9]){
  $scope.archivemessageBodyObject.name = arrayobject[9];
 }
