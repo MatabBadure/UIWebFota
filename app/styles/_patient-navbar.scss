@@ -437,5 +437,11 @@ color:#646568;
 -webkit-overflow-scrolling: touch;
 }
 .msgbody {
-  white-space: pre;
+    max-width: 100%;
+    overflow-wrap: break-word;
+    white-space: pre-wrap;
 }
+/* IE6 and below */
+* html .msgbody { white-space: pre  }
+/* IE7 */
+*:first-child+html .msgbody { white-space: pre  }
