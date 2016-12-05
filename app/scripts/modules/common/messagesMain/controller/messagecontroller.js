@@ -45,13 +45,15 @@ $scope.messageBodyObject = {};
       //$scope.getDashboardForHCPOrPatient(response, userId);
       if(response.data && response.data.clinics){
       $scope.clinicsHCP = $filter('orderBy')(response.data.clinics, "name");
-      if($stateParams.clinicId !== undefined && $stateParams.clinicId !== null){
+       if($stateParams.clinicId){
          $scope.selectedClinicForHCP = commonsUserService.getSelectedClinicFromList($scope.clinicsHCP, $stateParams.clinicId);
-       $scope.switchClinicHCP($scope.selectedClinicForHCP);
+      // $scope.switchClinicHCP($scope.selectedClinicForHCP);
      
       }
+      else{
         $scope.selectedClinicForHCP = angular.copy($scope.clinicsHCP[0]);
         $scope.switchClinicHCP($scope.selectedClinicForHCP);
+      }
         //$rootScope.ClinicForHCP = $scope.selectedClinicForHCP;
     }
       }).catch(function(response){
@@ -74,15 +76,8 @@ $scope.messageBodyObject = {};
     clinicadminService.getClinicsAssociated(StorageService.get('logged').userId).then(function(response){
       if(response.data && response.data.clinics){
         $scope.clinics = $filter('orderBy')(response.data.clinics, "name");
-        console.log("clinics me kya hai");
-        console.log($scope.clinics);
-        console.log("state params");
-        console.log($stateParams.clinicId);
         if($stateParams.clinicId){
-          console.log("i shud not be here");
           $scope.selectedClinicForCA = commonsUserService.getSelectedClinicFromList($scope.clinics, $stateParams.clinicId);
-      console.log("selectedclinicforCa");
-      console.log($scope.selectedClinicForCA);
         $scope.switchClinic($scope.selectedClinicForCA);
         }else if($scope.clinics && $scope.clinics.length > 0){
         //  $scope.selectedClinicForCA=angular.copy($scope.clinics[0]);
@@ -219,7 +214,7 @@ if(option === 'Date'){
        $scope.sortMessageList.from = toggleSortOptiondefault;
       $scope.Inbox();
     }
-          
+    $scope.isAllSelected = false;      
   };
   $scope.sortTypeSentItems = function(option,isswitchtab){
 var toggledSortOptions = {};
@@ -295,7 +290,8 @@ if(option === 'Date'){
        $scope.sortArchiveMessageList.from = toggleSortOptiondefault;
       $scope.ArchiveBox();
     }
-          
+       $scope.isAllSelected = false;      
+       
   };
   /******End of sorting the list of messages ******/
   $scope.initialiseAllLists = function(){
@@ -1206,16 +1202,13 @@ $scope.ArchiveBox();
   $scope.switchClinic = function(clinic){
 /*$scope.selectedClinicForCA = null;
 $scope.selectedClinicForCA = angular.copy(clinic);*/
-$state.go('Messages_CA', {'clinicId':clinic.id})
+$state.go('Messages_CA', {'clinicId':clinic.id});
 //$scope.SwitchTabs('inbox');
 //$rootScope.ClinicForCA = $scope.selectedClinicForCA;
   };
 
    $scope.switchClinicHCP = function(clinic){
-$scope.selectedClinicForHCP = null;
-$scope.selectedClinicForHCP = angular.copy(clinic);
-$scope.InboxMessageList = "";
-$scope.SwitchTabs('inbox');
+$state.go('Messages_HCP', {'clinicId':clinic.id});
 //$rootScope.ClinicForHCP = $scope.selectedClinicForHCP;
   };
 
