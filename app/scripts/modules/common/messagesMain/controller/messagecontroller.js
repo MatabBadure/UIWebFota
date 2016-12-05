@@ -660,6 +660,7 @@ $scope.showNoSubjectModal = true;
 $scope.showNoMessageModal = true;
 $scope.showUpdateModal = false;
 $scope.showNoSubjectModal = false;
+document.getElementById('noWrite').readOnly = true;
   }
       else{
         $scope.showUpdateModal = true;
@@ -674,6 +675,7 @@ $scope.showNoSubjectModal = false;
       $scope.submitted = false;
        $scope.showNoMessageOnReply = false;
 $scope.showmodalOnReply = false;
+document.getElementById('noWrite').readOnly = false;
     };
     $scope.showUpdateCA = function(){
   if($scope.SelectedPatientsID.length==0)
@@ -693,6 +695,7 @@ $scope.showUpdateModalCA = false;
 $scope.showNoMessageModalCA = true;
 $scope.showUpdateModalCA = false;
 $scope.showNoSubjectModalCA = false;
+document.getElementById('noWrite').readOnly = true;
   }
       else{
         $scope.showUpdateModalCA = true;
@@ -709,6 +712,7 @@ $scope.showNoMessageModalCA = false;
       $scope.submitted = false;
        $scope.showNoMessageOnReplyCA = false;
 $scope.showmodalOnReplyCA = false;
+document.getElementById('noWrite').readOnly = false;
     };
 /******End of -Take a confirmation on sending message ******/
 /*******On click of Send Message under compose mail ******/
@@ -1200,13 +1204,13 @@ $scope.ArchiveBox();
   };
 
   $scope.switchClinic = function(clinic){
-    $scope.selectedClinicForCA = null;
-$scope.selectedClinicForCA = angular.copy(clinic);
-$scope.InboxMessageList = "";
-//$stateParams.clinicId = $scope.selectedClinicForCA.id;
-$scope.SwitchTabs('inbox');
+/*$scope.selectedClinicForCA = null;
+$scope.selectedClinicForCA = angular.copy(clinic);*/
+$state.go('Messages_CA', {'clinicId':clinic.id})
+//$scope.SwitchTabs('inbox');
 //$rootScope.ClinicForCA = $scope.selectedClinicForCA;
   };
+
    $scope.switchClinicHCP = function(clinic){
 $scope.selectedClinicForHCP = null;
 $scope.selectedClinicForHCP = angular.copy(clinic);
