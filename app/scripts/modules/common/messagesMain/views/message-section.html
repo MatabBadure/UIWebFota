@@ -143,7 +143,7 @@
       
         <div class="col-sm-18" ng-if="(messagelistflag && !messagebodyflag)">
           <div class="col-sm-5 paginationcontainer " style="float:right; margin-top: 14px;">
-           <span style="color:blue;">  {{totalMessages}} Messages Found  &nbsp </span>
+           <span style="color:#7ca3dc;">  {{totalMessages}} Messages Found  &nbsp </span>
            <span ng-show="pageCount > 1">
 <span class="navigaion-link-messages cursor-pointer activeColor" ng-class="{ 'inactiveColor': !(PageNumber > 1) }" ng-click="Pagination('PREV')">Previous</span>
             <span class="navigaion-no ng-binding" style="color:#5d6a7d;">{{currentPageIndex}}/{{pageCount}}</span>  <span class="navigaion-link-messages cursor-pointer activeColor" ng-class="{ 'inactiveColor': (PageNumber >= pageCount) }" ng-click="Pagination('NEXT')">Next</span>
@@ -213,7 +213,7 @@
    
        <div class="col-sm-18" ng-if="(sentmessagelistflag && !sentmessagebodyflag)">
           <div class="col-sm-5 paginationcontainer " style="float:right;">
-           <span style="color:blue;"> {{totalMessages}} Messages Found &nbsp </span>
+           <span style="color:#7ca3dc;"> {{totalMessages}} Messages Found &nbsp </span>
            <span ng-show="pageCount > 1">
 <span class="navigaion-link cursor-pointer activeColor" ng-class="{ 'inactiveColor': !(PageNumber > 1) }" ng-click="Pagination('PREV')">Previous</span>
             <span class="navigaion-no ng-binding">{{currentPageIndex}}/{{pageCount}}</span>  <span class="navigaion-link cursor-pointer activeColor" ng-class="{ 'inactiveColor': (PageNumber >= pageCount) }" ng-click="Pagination('NEXT')">Next</span>
@@ -287,7 +287,7 @@
       
         <div class="col-sm-18" ng-if="(archivemessagelistflag && !archivemessagebodyflag)">
           <div class="col-sm-5 paginationcontainer " style="float:right; margin-top: 14px;">
-           <span style="color:blue;"> {{totalMessages}} Messages Found &nbsp </span>
+           <span style="color:#7ca3dc;"> {{totalMessages}} Messages Found &nbsp </span>
            <span ng-show="pageCount > 1">
 <span class="navigaion-link cursor-pointer activeColor" ng-class="{ 'inactiveColor': !(PageNumber > 1) }" ng-click="Pagination('PREV')">Previous</span>
             <span class="navigaion-no ng-binding">{{currentPageIndex}}/{{pageCount}}</span>  <span class="navigaion-link cursor-pointer activeColor" ng-class="{ 'inactiveColor': (PageNumber >= pageCount) }" ng-click="Pagination('NEXT')">Next</span>
