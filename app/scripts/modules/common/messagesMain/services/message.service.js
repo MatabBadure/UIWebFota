@@ -117,8 +117,8 @@ angular.module('hillromvestApp')
           return response;
         });
       },*/
-          getthreaddata: function(id,rootid){
-        var url = URL.getThreaddata.replace('ID',id).replace('ROOTID',rootid);
+     getthreaddata: function(id,rootid,userid,clinicid){
+        var url = URL.getThreaddata.replace('ID',id).replace('ROOTID',rootid).replace('USERID',userid).replace('CLINICID',clinicid);
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
