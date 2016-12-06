@@ -45,7 +45,7 @@ $scope.messageBodyObject = {};
       //$scope.getDashboardForHCPOrPatient(response, userId);
       if(response.data && response.data.clinics){
       $scope.clinicsHCP = $filter('orderBy')(response.data.clinics, "name");
-       if($stateParams.clinicId){
+       if($stateParams.clinicId && $stateParams.clinicId != 'others'){
          $scope.selectedClinicForHCP = commonsUserService.getSelectedClinicFromList($scope.clinicsHCP, $stateParams.clinicId);
       // $scope.switchClinicHCP($scope.selectedClinicForHCP);
      
