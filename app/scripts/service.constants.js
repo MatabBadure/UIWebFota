@@ -99,13 +99,13 @@ var sortConstant = {
     patientDoB: "patientDoB",
     comma: ",",
     isActivated: "isActivated",
-    from: "messages.user.firstName",
+    from: "messages.user.lastName",
     subject: "messages.messageSubject",
     date: "messages.messageDatetime",
     sentTo: "toClinic.name",
     sentSubject: "messages.messageSubject",
     sentDate: "messages.messageDatetime",
-    sentToCA: "user.firstName"
+    sentToCA: "user.lastName"
 }
 
 var stringConstants = {
