@@ -84,7 +84,6 @@ $scope.messageBodyObject = {};
           //$rootScope.ClinicForCA = $scope.selectedClinicForCA;
           $scope.switchClinic($scope.clinics[0]);
  }
-        $scope.switchClinic($scope.clinics[0]);
       }
     }).catch(function(response){
     
