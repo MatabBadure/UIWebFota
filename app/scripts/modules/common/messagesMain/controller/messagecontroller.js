@@ -45,13 +45,15 @@ $scope.messageBodyObject = {};
       //$scope.getDashboardForHCPOrPatient(response, userId);
       if(response.data && response.data.clinics){
       $scope.clinicsHCP = $filter('orderBy')(response.data.clinics, "name");
-      if($stateParams.clinicId !== undefined && $stateParams.clinicId !== null){
+       if($stateParams.clinicId && $stateParams.clinicId != 'others'){
          $scope.selectedClinicForHCP = commonsUserService.getSelectedClinicFromList($scope.clinicsHCP, $stateParams.clinicId);
        $scope.switchClinicHCP($scope.selectedClinicForHCP);
      
       }
+      else{
         $scope.selectedClinicForHCP = angular.copy($scope.clinicsHCP[0]);
         $scope.switchClinicHCP($scope.selectedClinicForHCP);
+      }
         //$rootScope.ClinicForHCP = $scope.selectedClinicForHCP;
     }
       }).catch(function(response){
@@ -74,22 +76,15 @@ $scope.messageBodyObject = {};
     clinicadminService.getClinicsAssociated(StorageService.get('logged').userId).then(function(response){
       if(response.data && response.data.clinics){
         $scope.clinics = $filter('orderBy')(response.data.clinics, "name");
-        console.log("clinics me kya hai");
-        console.log($scope.clinics);
-        console.log("state params");
-        console.log($stateParams.clinicId);
         if($stateParams.clinicId){
-          console.log("i shud not be here");
           $scope.selectedClinicForCA = commonsUserService.getSelectedClinicFromList($scope.clinics, $stateParams.clinicId);
-      console.log("selectedclinicforCa");
-      console.log($scope.selectedClinicForCA);
         $scope.switchClinic($scope.selectedClinicForCA);
         }else if($scope.clinics && $scope.clinics.length > 0){
         //  $scope.selectedClinicForCA=angular.copy($scope.clinics[0]);
           //$rootScope.ClinicForCA = $scope.selectedClinicForCA;
           $scope.switchClinic($scope.clinics[0]);
  }
-        //$scope.switchClinic($scope.clinics[0]);
+        $scope.switchClinic($scope.clinics[0]);
       }
     }).catch(function(response){
     
@@ -219,7 +214,7 @@ if(option === 'Date'){
        $scope.sortMessageList.from = toggleSortOptiondefault;
       $scope.Inbox();
     }
-          
+    $scope.isAllSelected = false;      
   };
   $scope.sortTypeSentItems = function(option,isswitchtab){
 var toggledSortOptions = {};
@@ -295,7 +290,8 @@ if(option === 'Date'){
        $scope.sortArchiveMessageList.from = toggleSortOptiondefault;
       $scope.ArchiveBox();
     }
-          
+       $scope.isAllSelected = false;      
+       
   };
   /******End of sorting the list of messages ******/
   $scope.initialiseAllLists = function(){
@@ -366,7 +362,7 @@ return "unselectclass";
 };
 /*******End of -To set the menu item active on select ******/
 /******Switch tabs ******/
-$scope.SwitchTabs = function(tabName){
+$scope.SwitchTabs = function(tabName, isswitchtab){
   $scope.PageNumber=1;
   $scope.currentPageIndex = 1;
   $scope.pageCount = 0;
@@ -378,7 +374,7 @@ $scope.SwitchTabs = function(tabName){
     $scope.newCounterSent = 0;
      $scope.newCounterArchive =0;
      $scope.replyFlag = false;
-     var isswitchtab = 1;
+     var isswitchtab =isswitchtab;
        $scope.nomessagebodyavailableHCP = false;
        $scope.nodataflagHCP = false;
        $scope.noarchivedataflagHCP = false;
@@ -660,6 +656,7 @@ $scope.showNoSubjectModal = true;
 $scope.showNoMessageModal = true;
 $scope.showUpdateModal = false;
 $scope.showNoSubjectModal = false;
+document.getElementById('noWrite').readOnly = true;
   }
       else{
         $scope.showUpdateModal = true;
@@ -674,6 +671,7 @@ $scope.showNoSubjectModal = false;
       $scope.submitted = false;
        $scope.showNoMessageOnReply = false;
 $scope.showmodalOnReply = false;
+document.getElementById('noWrite').readOnly = false;
     };
     $scope.showUpdateCA = function(){
   if($scope.SelectedPatientsID.length==0)
@@ -693,6 +691,7 @@ $scope.showUpdateModalCA = false;
 $scope.showNoMessageModalCA = true;
 $scope.showUpdateModalCA = false;
 $scope.showNoSubjectModalCA = false;
+document.getElementById('noWrite').readOnly = true;
   }
       else{
         $scope.showUpdateModalCA = true;
@@ -709,6 +708,7 @@ $scope.showNoMessageModalCA = false;
       $scope.submitted = false;
        $scope.showNoMessageOnReplyCA = false;
 $scope.showmodalOnReplyCA = false;
+document.getElementById('noWrite').readOnly = false;
     };
 /******End of -Take a confirmation on sending message ******/
 /*******On click of Send Message under compose mail ******/
@@ -1200,18 +1200,18 @@ $scope.ArchiveBox();
   };
 
   $scope.switchClinic = function(clinic){
-    $scope.selectedClinicForCA = null;
+/*$scope.selectedClinicForCA = null;*/
+
+$state.go('Messages_CA', {'clinicId':clinic.id});
 $scope.selectedClinicForCA = angular.copy(clinic);
-$scope.InboxMessageList = "";
-//$stateParams.clinicId = $scope.selectedClinicForCA.id;
-$scope.SwitchTabs('inbox');
+$scope.SwitchTabs('inbox',1);
 //$rootScope.ClinicForCA = $scope.selectedClinicForCA;
   };
+
    $scope.switchClinicHCP = function(clinic){
-$scope.selectedClinicForHCP = null;
+$state.go('Messages_HCP', {'clinicId':clinic.id});
 $scope.selectedClinicForHCP = angular.copy(clinic);
-$scope.InboxMessageList = "";
-$scope.SwitchTabs('inbox');
+$scope.SwitchTabs('inbox',1);
 //$rootScope.ClinicForHCP = $scope.selectedClinicForHCP;
   };
 

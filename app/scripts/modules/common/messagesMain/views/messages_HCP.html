@@ -46,17 +46,17 @@
        </div>
        <div class="col-xs-2 aligncenter" style="padding-top:10px; cursor:pointer;" ng-click="ArchiveMessages()">
        <div ng-if = "((flag=='inbox') && (readflag || unreadflag))" style=" border:0.5px solid white">
-        <img src="images/archive-folder.png" style="width:20px; height:20px"/> <span translate="global.messaging.archive"></span>
+        <img src="images/archive-folder.png" style="width:20px; height:20px"/> <span translate="global.messaging.archive" class="aligntextwithimg"></span>
        </div>
      </div>
        <div ng-if="readflag" class="col-xs-4 aligncenter" style="padding-top:10px; cursor:pointer;" ng-click="markAsRead()">
        <div style="border:0.5px solid white;">
-         <img src="images/Mark-read.png" style="width:20px; height:20px;"/> <span translate="global.messaging.mark-as-read"></span>
+         <img src="images/Mark-read.png" style="width:20px; height:20px;"/> <span translate="global.messaging.mark-as-read" class="aligntextwithimg"></span>
        </div>
      </div>
        <div ng-if="unreadflag" class="col-xs-4 aligncenter" style="padding-top:10px; cursor:pointer;" ng-click="markAsUnread()">
        <div style=" border:0.5px solid white">
-         <img src="images/mark-unread.png" style="width:20px; height:20px"/> <span translate="global.messaging.mark-as-unread"></span>
+         <img src="images/mark-unread.png" style="width:20px; height:20px"/> <span translate="global.messaging.mark-as-unread" class="aligntextwithimg"></span>
        </div>
      </div>
      </div>
