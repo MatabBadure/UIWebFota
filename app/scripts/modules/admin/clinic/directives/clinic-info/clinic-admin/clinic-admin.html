@@ -132,7 +132,7 @@
               <span class="">*</span>
             </div>
            <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding">
-              <input class="" type="email" name="email" ng-model="newAdmin.email" required ng-pattern="/^[a-zA-Z]+(\.[a-zA-Z0-9_\+-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.([a-zA-Z]{2,4})$/" ng-maxlength=100>
+              <input class="" type="email" name="email" ng-model="newAdmin.email" required ng-pattern="/^[a-zA-Z][a-zA-Z0-9_\+-]+(\.[a-zA-Z0-9_\+-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.([a-zA-Z]{2,4})$/" ng-maxlength=100>
               <div ng-show="(createClinicAdminForm.email.$dirty && createClinicAdminForm.email.$invalid) || submitted">
                 <span class="has-error" ng-show="createClinicAdminForm.email.$error.required" translate="error.email.required"></span>
                 <span class="has-error" ng-show="createClinicAdminForm.email.$error.pattern" translate="error.email.invalid"></span>
