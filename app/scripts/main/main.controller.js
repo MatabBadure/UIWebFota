@@ -158,7 +158,7 @@ angular.module('hillromvestApp')
 
 	  $scope.isFooter();
 
-	  $scope.goToPatientDashboard = function(value){
+	/*  $scope.goToPatientDashboard = function(value){
 	    if(value){
 	      $state.go(value, {"clinicId": $stateParams.clinicId});
 	    }else{
@@ -172,7 +172,7 @@ angular.module('hillromvestApp')
 	      $state.go("patientdashboard");
 	    }
 	  };
-
+*/
 	  $scope.getNotifications = function(){
 	    UserService.getPatientNotification(StorageService.get("logged").patientID, new Date().getTime()).then(function(response){
 				$scope.notifications = response.data;
