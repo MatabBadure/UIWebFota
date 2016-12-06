@@ -305,7 +305,7 @@ if(option === 'Date'){
     $scope.getClinicsForHCP();
    }
  };
-$scope.initialiseAllLists();
+
   $scope.init =function(){
      $scope.initialiseAllLists(); 
   $scope.flag= 'inbox';
@@ -361,7 +361,7 @@ return "unselectclass";
 };
 /*******End of -To set the menu item active on select ******/
 /******Switch tabs ******/
-$scope.SwitchTabs = function(tabName, isswitchtab){
+$scope.SwitchTabs = function(tabName){
   $scope.PageNumber=1;
   $scope.currentPageIndex = 1;
   $scope.pageCount = 0;
@@ -373,7 +373,7 @@ $scope.SwitchTabs = function(tabName, isswitchtab){
     $scope.newCounterSent = 0;
      $scope.newCounterArchive =0;
      $scope.replyFlag = false;
-     var isswitchtab =isswitchtab;
+     var isswitchtab =1;
        $scope.nomessagebodyavailableHCP = false;
        $scope.nodataflagHCP = false;
        $scope.noarchivedataflagHCP = false;
@@ -580,7 +580,7 @@ if($scope.InboxListRawData.content.length){
 else if(StorageService.get('logged').role === 'CLINIC_ADMIN'){
 toPassID = StorageService.get('logged').userId; //to be changed to $scope.selectedClinicForMessagesID when inbox with clinic Id is implemented
 isClinic = 1;
-  messageService.fetchInboxItemsCA(toPassID,isClinic,$scope.selectedClinicForCA.id,$scope.PageNumber,$scope.perPageCount,$scope.sortOption).then(function(response){
+  messageService.fetchInboxItemsCA(toPassID,isClinic,$stateParams.clinicId,$scope.PageNumber,$scope.perPageCount,$scope.sortOption).then(function(response){
 $scope.InboxListRawData = response.data;
 $scope.pageCount = $scope.InboxListRawData.totalPages;
 $scope.totalMessages = $scope.InboxListRawData.totalElements;
@@ -608,7 +608,7 @@ if($scope.totalMessages == 0){
 else if(StorageService.get('logged').role === 'HCP'){
   toPassID = StorageService.get('logged').userId; //to be changed to $scope.selectedClinicForMessagesID when inbox with clinic Id is implemented
 isClinic = 1;
-  messageService.fetchInboxItemsCA(toPassID,isClinic,$scope.selectedClinicForHCP.id,$scope.PageNumber, $scope.perPageCount,$scope.sortOption).then(function(response){
+  messageService.fetchInboxItemsCA(toPassID,isClinic,$stateParams.clinicId,$scope.PageNumber, $scope.perPageCount,$scope.sortOption).then(function(response){
     $scope.InboxListRawData = response.data;
     $scope.pageCount = $scope.InboxListRawData.totalPages;
     $scope.totalMessages = $scope.InboxListRawData.totalElements;
@@ -634,7 +634,6 @@ isClinic = 1;
       });
 }
  $scope.flag = 'inbox'; 
-
 };
 /****** End of Fetch Inbox items******/
 /******Take a confirmation on sending message ******/
@@ -751,7 +750,7 @@ $scope.SendMessage = function(){
    $scope.PageNumber=1; 
   messageService.sendMessageService($scope.sampleData).then(function(response){
      notyService.showMessage(response.data.statusMsg, 'success');
-     $scope.SwitchTabs('inbox',1);
+     $scope.SwitchTabs('inbox');
       $scope.submitted = false;
  }).catch(function(response){
       
@@ -1203,14 +1202,14 @@ $scope.ArchiveBox();
 
 $state.go('Messages_CA', {'clinicId':clinic.id});
 $scope.selectedClinicForCA = angular.copy(clinic);
-$scope.SwitchTabs('inbox',1);
+//$scope.SwitchTabs('inbox',1);
 //$rootScope.ClinicForCA = $scope.selectedClinicForCA;
   };
 
    $scope.switchClinicHCP = function(clinic){
 $state.go('Messages_HCP', {'clinicId':clinic.id});
 $scope.selectedClinicForHCP = angular.copy(clinic);
-$scope.SwitchTabs('inbox',1);
+$scope.SwitchTabs('inbox');
 //$rootScope.ClinicForHCP = $scope.selectedClinicForHCP;
   };
 
