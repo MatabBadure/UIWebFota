@@ -47,7 +47,7 @@ $scope.messageBodyObject = {};
       $scope.clinicsHCP = $filter('orderBy')(response.data.clinics, "name");
        if($stateParams.clinicId && $stateParams.clinicId != 'others'){
          $scope.selectedClinicForHCP = commonsUserService.getSelectedClinicFromList($scope.clinicsHCP, $stateParams.clinicId);
-      // $scope.switchClinicHCP($scope.selectedClinicForHCP);
+       $scope.switchClinicHCP($scope.selectedClinicForHCP);
      
       }
       else{
@@ -84,7 +84,7 @@ $scope.messageBodyObject = {};
           //$rootScope.ClinicForCA = $scope.selectedClinicForCA;
           $scope.switchClinic($scope.clinics[0]);
  }
-        //$scope.switchClinic($scope.clinics[0]);
+        $scope.switchClinic($scope.clinics[0]);
       }
     }).catch(function(response){
     
@@ -362,7 +362,7 @@ return "unselectclass";
 };
 /*******End of -To set the menu item active on select ******/
 /******Switch tabs ******/
-$scope.SwitchTabs = function(tabName){
+$scope.SwitchTabs = function(tabName, isswitchtab){
   $scope.PageNumber=1;
   $scope.currentPageIndex = 1;
   $scope.pageCount = 0;
@@ -374,7 +374,7 @@ $scope.SwitchTabs = function(tabName){
     $scope.newCounterSent = 0;
      $scope.newCounterArchive =0;
      $scope.replyFlag = false;
-     var isswitchtab = 1;
+     var isswitchtab =isswitchtab;
        $scope.nomessagebodyavailableHCP = false;
        $scope.nodataflagHCP = false;
        $scope.noarchivedataflagHCP = false;
@@ -1200,15 +1200,18 @@ $scope.ArchiveBox();
   };
 
   $scope.switchClinic = function(clinic){
-/*$scope.selectedClinicForCA = null;
-$scope.selectedClinicForCA = angular.copy(clinic);*/
+/*$scope.selectedClinicForCA = null;*/
+
 $state.go('Messages_CA', {'clinicId':clinic.id});
-//$scope.SwitchTabs('inbox');
+$scope.selectedClinicForCA = angular.copy(clinic);
+$scope.SwitchTabs('inbox',1);
 //$rootScope.ClinicForCA = $scope.selectedClinicForCA;
   };
 
    $scope.switchClinicHCP = function(clinic){
 $state.go('Messages_HCP', {'clinicId':clinic.id});
+$scope.selectedClinicForHCP = angular.copy(clinic);
+$scope.SwitchTabs('inbox',1);
 //$rootScope.ClinicForHCP = $scope.selectedClinicForHCP;
   };
 
