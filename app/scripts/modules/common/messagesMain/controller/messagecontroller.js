@@ -189,6 +189,7 @@ if(option === 'From'){
       toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortMessageList.from);
       $scope.sortMessageList.from = toggledSortOptions;
       $scope.sortOption = sortConstant.from + sortOptionsService.getSortByASCString(toggledSortOptions);
+      $scope.sortOption = $scope.sortOption + "&sort_by=messages.messageDatetime&asc=false";
       $scope.sortMessageList.subject = toggleSortOptiondefault;
       $scope.sortMessageList.date = toggleSortOptiondefault;
       $scope.Inbox();
@@ -226,9 +227,11 @@ if(option === 'To'){
       $scope.sortSentMessageList.to = toggledSortOptions;
       if(StorageService.get('logged').role === 'PATIENT'){
       $scope.SentsortOption = sortConstant.sentTo + sortOptionsService.getSortByASCString(toggledSortOptions);
+      $scope.SentsortOption = $scope.SentsortOption + "&sort_by=messages.messageDatetime&asc=false";
       }
       else if(StorageService.get('logged').role === 'CLINIC_ADMIN'){
       $scope.SentsortOption = sortConstant.sentToCA + sortOptionsService.getSortByASCString(toggledSortOptions);
+      $scope.SentsortOption = $scope.SentsortOption + "&sort_by=messages.messageDatetime&asc=false";
     }
     $scope.sortSentMessageList.subject = toggleSortOptiondefault;
       $scope.sortSentMessageList.date= toggleSortOptiondefault;
@@ -265,6 +268,7 @@ if(option === 'From'){
       toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortArchiveMessageList.from);
       $scope.sortArchiveMessageList.from = toggledSortOptions;
       $scope.archivesortOption = sortConstant.from + sortOptionsService.getSortByASCString(toggledSortOptions);
+     $scope.archivesortOption = $scope.archivesortOption + "&sort_by=messages.messageDatetime&asc=false";
       $scope.sortArchiveMessageList.date = toggleSortOptiondefault;
        $scope.sortArchiveMessageList.subject = toggleSortOptiondefault;
       $scope.ArchiveBox();
@@ -376,7 +380,7 @@ $scope.SwitchTabs = function(tabName){
        $scope.nomessagebodyavailableHCP = false;
        $scope.nodataflagHCP = false;
        $scope.noarchivedataflagHCP = false;
-
+$scope.replyattributes.replyData = "";
   $scope.nomessagebodyavailableCA = false;
   $scope.noarchivedataflagCA = false;
    $scope.nosentdataflagCA = false;
