@@ -1031,7 +1031,7 @@ if($scope.selectedPatients[j].name == ($scope.patients[i].firstName + ' ' + $sco
     for(var i = 0 ; i<$scope.checkedArray.length;i++)
     {
       var res = {
-        "ïd": $scope.checkedArray[i],
+        "id": $scope.checkedArray[i],
         "userId": userid,
         "messageId": "",
         "archived": "true",
@@ -1479,7 +1479,7 @@ else if($scope.flag == 'archive'){
   $scope.archivemessagelistflag = false;
   $scope.archivemessagebodyflag = true;
 }
-  $scope.checkedArrayforRead.push(inboxObject[3]);
+  $scope.checkedArrayforRead.push(inboxObject[0]);
     $scope.markAsRead();
   
   }; 
