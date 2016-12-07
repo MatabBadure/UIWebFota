@@ -162,15 +162,22 @@ angular.module('hillromvestApp')
       },
 
 
-      getAdeherenceData : function(userId, startDate, endDate){
-        var url = URL.getAdeherenceData.replace('USERID', userId).replace('FROMDATE', startDate).replace('TODATE', endDate)
+    getAdeherenceData : function(userId, startDate, endDate,pagenumber,perpage){
+      console.log("pagenumber,perpage:");
+      console.log(pagenumber);
+      console.log(perpage);
+    console.log("from date::to date service:");
+    console.log(startDate);
+    console.log(endDate);
+        var url = URL.getAdeherenceData.replace('USERID', userId).replace('FROM_DATE', startDate).replace('TO_DATE', endDate).replace('PAGE',pagenumber).replace('PER_PAGE',perpage);
+       console.log("url::");
+       console.log(url);
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
           return response;
         });
-      }, 
-
+      },  
 
       getcomplianceGraphData: function(id, fromTimeStamp, toTimeStamp, duration, date){
         var url = patient.graph.baseURL;

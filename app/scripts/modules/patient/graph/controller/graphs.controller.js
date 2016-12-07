@@ -2016,8 +2016,11 @@ angular.module('hillromvestApp')
     $scope.customdates = {startDate: $scope.fromDateHistory, endDate: $scope.toDateHistory};
      var fromDate = dateService.convertDateToYyyyMmDdFormat($scope.fromDateHistory);
       var toDate = dateService.convertDateToYyyyMmDdFormat($scope.toDateHistory);
-      patientDashBoardService.getAdeherenceData(patientId, fromDate, toDate).then(function(response){
-        $scope.adherenceScores = response.data;
+console.log("from date::todate");
+      console.log(fromDate);
+      console.log(toDate);
+      patientDashBoardService.getAdeherenceData(patientId, fromDate, toDate, 1, 7).then(function(response){
+               $scope.adherenceScores = response.data;
         $scope.adherenceHistoryAllData = response.data;
         $scope.adherencetrendlength=0;
         for(var i=0; i <$scope.adherenceScores.length;i++){
@@ -2171,14 +2174,29 @@ $scope.adherencetrendData.push(new Object({"adherenceTrends": [] , "protocols": 
       $scope.expandedSign = ($scope.expandedSign === "+") ? "-" : "+";      
     }
     /******For Hill-1882******/
-        $scope.GetAdherenceScoreReason = function(hoverdate,key){
+       $scope.GetAdherenceScoreReason = function(hoverdate,key){
       var MTDdates = ""; //Variable to store dates of Missed therapies
       var HNAdates = ""; //Variable to store dates of HMR Non Adherence
       var ASRdates = ""; //Variable to store dates of HMR Non Adherence
       var FDdates = ""; //Variable to store dates of Frequency Deviation
       var HNACounter = 0;
       var res ="";
-      $scope.myPopoverData=""; 
+      var dates = "";
+      $scope.myPopoverData="";
+      console.log("adherencetrenddata");
+      console.log($scope.adherencetrendData[0].adherenceTrends);
+      for(var i=0;i<$scope.adherencetrendData[0].adherenceTrends.length;i++){
+         console.log("adherencetrenddata inside loop");
+        if(hoverdate == $scope.adherencetrendData[0].adherenceTrends[i].date){
+           console.log("adherencetrenddata inside if  ");
+           for(var j =0;j<$scope.adherencetrendData[0].adherenceTrends[i].prevNotificationDetails.length;j++){
+          $scope.myPopoverData=+ '\n' +$scope.myPopoverData + $scope.adherencetrendData[0].adherenceTrends[i].prevNotificationDetails[j].notificationType + ' on ' + $scope.adherencetrendData[0].adherenceTrends[i].prevNotificationDetails[j].date;
+        }
+          break;
+        }
+      } 
+        
+      /*
     for(var j=0; j < ($scope.adherenceHistoryAllData.length) ; j++){
      var adherenceTrends = $scope.adherenceHistoryAllData[j].adherenceTrends;
       for(var i=0; i < (adherenceTrends.length) ; i++)
@@ -2186,7 +2204,7 @@ $scope.adherencetrendData.push(new Object({"adherenceTrends": [] , "protocols": 
         var date = adherenceTrends[i].date;
          var notificationPoints = Object.keys(adherenceTrends[i].notificationPoints); 
 /******Collecting the dates to be displayed in details******/  
-         if(notificationPoints.indexOf('Missed Therapy Days') >-1){
+    /*     if(notificationPoints.indexOf('Missed Therapy Days') >-1){
           if(HNACounter >= 2)
           {
              res = HNAdates.split(",");
@@ -2280,7 +2298,7 @@ $scope.adherencetrendData.push(new Object({"adherenceTrends": [] , "protocols": 
          }
 /******End of collecting the dates to be displayed in details******/  
  /*****Display only last ten dates *****/
-        if(MTDdates != "")
+   /*     if(MTDdates != "")
            {
                 MTDdates = $scope.GetLastTenDates(MTDdates);
             }
@@ -2298,7 +2316,7 @@ $scope.adherencetrendData.push(new Object({"adherenceTrends": [] , "protocols": 
            }
  /******End of Display only last ten dates ******/
 /****** To fetch the details to be displayed ******/
-        if(hoverdate == date){
+  /*      if(hoverdate == date){
          if(key == 'Missed Therapy Days'){
          $scope.myPopoverData=key+' on ('+MTDdates+' )';
              }
@@ -2317,8 +2335,9 @@ $scope.adherencetrendData.push(new Object({"adherenceTrends": [] , "protocols": 
           }
       }
 /****** End of fetch the details to be displayed ******/
-    }//End of for
+ /*   }//End of for
   }//End of for
+  */
     };
     $scope.GetLastTenDates = function(allDates){
         var res = allDates.split(",");
