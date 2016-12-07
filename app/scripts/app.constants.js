@@ -131,5 +131,5 @@ angular.module('hillromvestApp')
 	'getUnreadCountCA' : 'api/messages/ID/readunredCount?isClinic=BOOL&clinicId=CLINICID',
 	'getMessageBody' : 'api/messageDetails/MESSAGEID',
 	'getSentItemsCA' : 'api/messagesSent/ID?isClinic=ISCLINIC&clinicId=CLINICID&page=PAGE&per_page=PER_PAGE&sort_by=SORT_OPTION',
-	'getThreaddata':'api/messagesReceivedThreads/ID/ROOTID'
+	'getThreaddata':'api/messagesReceivedThreads/ID/ROOTID?userId=USERID&clinicId=CLINICID'
 });
