@@ -345,7 +345,7 @@
                 <div class="row">
                   <div class="col-xs-2"><span translate="global.messaging.subject"></span></div>
                   <div class="col-xs-14">
-                    <input class="full-width" id ="noWrite" name ="SubjectName" ng-model="messageAttributes.subject" type="text" maxlength="250" />  
+                    <input class="full-width" id ="noWrite" name ="SubjectName" ng-model="messageAttributes.subject" type="text" maxlength="250" onkeydown="return (event.keyCode!=13);"/>  
   
                 </div>
                 </div>
