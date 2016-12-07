@@ -83,6 +83,7 @@ angular.module('hillromvestApp')
       $scope.noDataAvailableForHMR = false;  
       $scope.noDataAvailableForAdherence = false;  
       $scope.noDataStatus = true;
+      $scope.initCount("");
     };
 
     angular.element('#edit_date').datepicker({
