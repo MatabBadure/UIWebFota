@@ -1558,5 +1558,23 @@ $scope.incrementerSent = function()
   $scope.newCounterSent++;
   // alert($scope.newCounterSent);
 }
+$scope.goToBack = function(flag)
+{  
+  if(flag=="inbox")
+  {
+     $scope.messagelistflag = true;
+     $scope.messagebodyflag = false;
+  }
+  else if(flag=="sentitems")
+  {
+       $scope.sentmessagelistflag = true;
+      $scope.sentmessagebodyflag = false; 
+  }
+  else if(flag=="archive")
+  {
+     $scope.archivemessagelistflag = true;
+     $scope.archivemessagebodyflag = false;
+  }
+}
 $scope.init();
   }]);
