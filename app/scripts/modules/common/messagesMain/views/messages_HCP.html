@@ -37,7 +37,7 @@
             <span ng-if="(flag == 'sentitems')" class="" translate="global.messaging.sent-items"></span>
       </div>
       <div class="col-xs-13" ng-if="(messagebodyflag) || (archivemessagebodyflag)">
-<a ng-click="SwitchTabs(flag)" class="back"><i class="fa fa-mail-reply" aria-hidden="true"></i> Back </a>
+<a ng-click="goToBack(flag)" class="back"><i class="fa fa-mail-reply" aria-hidden="true"></i> Back </a>
       </div>
       <div class="col-xs-13" ng-if="(flag != 'new') && (flag != 'sentitems') && (!nodataflagHCP) && (!noarchivedataflagHCP)">
        <div ng-if="(flag != 'thread')" class="col-xs-2" style="padding-top:10px;">
@@ -139,7 +139,7 @@
           </div>      
         </div>      
       
-        <div class="col-sm-18" ng-if="(messagelistflag && !messagebodyflag)">
+        <div class="col-sm-18" ng-if="(messagelistflag && !messagebodyflag)" ng-show="totalMessages > 1">
           <div class="col-sm-5 paginationcontainer " style="float:right; margin-top: 14px;">
            <span style="color:#7ca3dc;"> {{totalMessages}} Messages Found &nbsp  </span>
             <span ng-show="pageCount > 1">
@@ -215,7 +215,7 @@
           </div>      
         </div>     
       
-        <div class="col-sm-18" ng-if="(archivemessagelistflag && !archivemessagebodyflag)">
+        <div class="col-sm-18" ng-if="(archivemessagelistflag && !archivemessagebodyflag)" ng-show="totalMessages > 1">
           <div class="col-sm-5 paginationcontainer " style="float:right; margin-top: 14px;">
            <span style="color:#7ca3dc;"> {{totalMessages}} Messages Found  &nbsp  </span>
            <span ng-show="pageCount > 1">
