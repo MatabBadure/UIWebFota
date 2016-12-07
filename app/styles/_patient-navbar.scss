@@ -445,13 +445,8 @@ color:#646568;
 * html .msgbody { white-space: pre  }
 /* IE7 */
 *:first-child+html .msgbody { white-space: pre  }
-.messageList-container .msgcontainer .row:last-child {
-  border: 0 none !important;
-  padding-bottom:0 !important;
-} 
-.messageList-container .msgcontainer .row:first-child {
-  padding-top: 0 !important;
-} 
+ 
+
 .aligntextwithimg
 {
   padding-top: 3px;
@@ -471,3 +466,19 @@ color:#646568;
 .hcp_wrapper {
   margin-bottom: 10px;
 }
+
+/* 07-12  */
+.ulheader {
+  margin-top: 13px;
+  padding-bottom: 13px;
+  margin-bottom:0px !important;
+
+}
+.messageList-container .msgcontainer .row {
+   height:40.5px;
+}
+.messageList-container .msgcontainer .row:nth-child(10) {
+  border-bottom: 0 none !important;
+  padding-bottom: 0 !important;
+   height: 35px;
+} 
