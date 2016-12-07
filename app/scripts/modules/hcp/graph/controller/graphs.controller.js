@@ -60,10 +60,12 @@ angular.module('hillromvestApp')
 		  $scope.getClinicsForHCP($scope.hcpId);
 		} else if($state.current.name === 'clinicadmindashboard') {
 			$scope.getClinicsForClinicAdmin($scope.hcpId);
+		
 		}
 		else if($state.current.name === 'clinicDashboard' || $state.current.name === 'clinicDashboardAssociate' || $state.current.name === 'clinicDashboardRcadmin'){
 			$scope.getclinicAdminID($scope.toStateParams.clinicId);
 		}
+		    
 	};
 
 	$scope.getclinicAdminID = function(clinicId){
@@ -272,6 +274,7 @@ angular.module('hillromvestApp')
 	  $scope.getStatistics($scope.selectedClinic.id, StorageService.get('logged').userId);
 	  $scope.drawGraph();
 	}
+	$scope.initCount($scope.selectedClinic.id);
   };
 
 	$scope.calculateDateFromPicker = function(picker) {
@@ -509,6 +512,7 @@ angular.module('hillromvestApp')
 				$scope.selectedClinic = $scope.clinics[0];
 			}
 		}
+			$scope.initCount($scope.selectedClinic.id);
 		$scope.weeklyChart();
 		if($scope.selectedClinic){
 			$scope.getStatistics($scope.selectedClinic.id, userId);

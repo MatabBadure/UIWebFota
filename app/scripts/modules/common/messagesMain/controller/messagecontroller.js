@@ -36,6 +36,7 @@ $scope.messageBodyObject = {};
   $scope.sentmessageBody = {};
   $scope.archivemessageBodyObject = {};
   $scope.toID = [];
+  $rootScope.UnreadMessages = 0;
   /* console.log("clinic ID");
    console.log(StorageService.get('logged').userId);*/
  
@@ -90,8 +91,6 @@ $scope.messageBodyObject = {};
     });
   };
    $scope.getAllPatientsByClinicId = function(){
-    console.log("Jsygdlviuefvlihwe");
-    console.log($scope.selectedClinicForCA.id);
     clinicService.getClinicAssoctPatients($scope.selectedClinicForCA.id,1,100).then(function(response){
       $scope.patients = [];
       angular.forEach(response.data.patientUsers, function(patientList){
@@ -120,58 +119,58 @@ $scope.messageBodyObject = {};
   messageService.getUnreadMessagesCount(StorageService.get('logged').patientID,0).then(function(response){
 if(response.data.length){
 if(response.data[0][0] == false){
-  $scope.UnreadMessages = response.data[0][1];
+  $rootScope.UnreadMessages = response.data[0][1];
 }
 else{
-  $scope.UnreadMessages = 0;
+  $rootScope.UnreadMessages = 0;
 }
 }
 else {
-  $scope.UnreadMessages = 0;
+  $rootScope.UnreadMessages = 0;
 }
    }).catch(function(response){
     if(response.message == 'No message available'){
-    $scope.UnreadMessages = 0;  
+    $rootScope.UnreadMessages = 0;  
   }
     });
 
 }
 else if(StorageService.get('logged').role === 'CLINIC_ADMIN'){
-  messageService.getUnreadMessagesCountCA(StorageService.get('logged').userId,1,$scope.selectedClinicForCA.id).then(function(response){
+  messageService.getUnreadMessagesCountCA(StorageService.get('logged').userId,1,$stateParams.clinicId).then(function(response){
 if(response.data.length){
 if(response.data[0][0] == false){
-  $scope.UnreadMessages = response.data[0][1];
+  $rootScope.UnreadMessages = response.data[0][1];
 }
 else{
-  $scope.UnreadMessages = 0;
+  $rootScope.UnreadMessages = 0;
 }
 }
 else {
-  $scope.UnreadMessages = 0;
+  $rootScope.UnreadMessages = 0;
 }
    }).catch(function(response){
     if(response.message == 'No message available'){
-    $scope.UnreadMessages = 0;  
+    $rootScope.UnreadMessages = 0;  
   }
     });
 
 }
 else if(StorageService.get('logged').role === 'HCP'){
-  messageService.getUnreadMessagesCountCA(StorageService.get('logged').userId,1,$scope.selectedClinicForHCP.id).then(function(response){
+  messageService.getUnreadMessagesCountCA(StorageService.get('logged').userId,1,$stateParams.clinicId).then(function(response){
 if(response.data.length){
 if(response.data[0][0] == false){
-  $scope.UnreadMessages = response.data[0][1];
+  $rootScope.UnreadMessages = response.data[0][1];
 }
 else{
-  $scope.UnreadMessages = 0;
+  $rootScope.UnreadMessages = 0;
 }
 }
 else {
-  $scope.UnreadMessages = 0;
+  $rootScope.UnreadMessages = 0;
 }
    }).catch(function(response){
     if(response.message == 'No message available'){
-    $scope.UnreadMessages = 0;  
+    $rootScope.UnreadMessages = 0;  
   }
     });
 
@@ -784,10 +783,6 @@ else{
 };
 $scope.Reply = function(){
   //$scope.ReplymessageAttributes.subject = ;
-  console.log("$scope.toID");
-  console.log($scope.toID);
-  console.log("reply attri");
-  console.log($scope.ReplymessageAttributesObject[0][0].messageType);
   if($scope.ReplymessageAttributesObject[0][0].messageType === 'ROOT'){
 if(StorageService.get('logged').role === 'PATIENT'){
   $scope.sampleData = {
@@ -852,8 +847,6 @@ else if($scope.ReplymessageAttributesObject[0][0].messageType === 'RE'){
 };
 }
 }
-console.log("sample data");
-console.log($scope.sampleData);
   messageService.sendMessageService($scope.sampleData).then(function(response){
      notyService.showMessage(response.data.statusMsg, 'success');
       $scope.submitted = false;
@@ -1420,10 +1413,6 @@ $scope.toggleAllForArchive = function() {
     var id=arrayobject[3];
       var rootid=0;
   var tempDate = [];
-console.log("arrayobject");
-console.log(arrayobject);
-console.log("inbox object");
-console.log(inboxObject);
  
     if(StorageService.get('logged').role === 'PATIENT')
       {
@@ -1463,8 +1452,6 @@ if(response.data.length){
     $scope.messageBodyObject[i][0].messageDatetime = $scope.GetDateifToday(tempDate[i]);
 }
 }
-console.log("message onject");
-console.log($scope.messageBodyObject);
 }).catch(function(response){
         notyService.showError(response);
       });
@@ -1549,11 +1536,7 @@ else if(StorageService.get('logged').role === 'PATIENT'){
   $scope.replyToMessage = function(arrayobject){
     $scope.ReplymessageAttributesObject = {};
 $scope.ReplymessageAttributesObject = angular.copy(arrayobject);
-console.log("reply array obj");
-console.log(arrayobject);
 $scope.replyFlag = true;
-console.log("reply me=sg attributes");
-  console.log($scope.ReplymessageAttributesObject);
   };
 $scope.incrementerInbox = function()
 {
