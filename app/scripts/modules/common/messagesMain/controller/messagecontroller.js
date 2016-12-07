@@ -1038,8 +1038,9 @@ if($scope.selectedPatients[j].name == ($scope.patients[i].firstName + ' ' + $sco
     for(var i = 0 ; i<$scope.checkedArray.length;i++)
     {
       var res = {
+        "ïd": $scope.checkedArray[i],
         "userId": userid,
-        "messageId": $scope.checkedArray[i],
+        "messageId": "",
         "archived": "true",
         "read": ""
       }
@@ -1072,8 +1073,9 @@ if($scope.selectedPatients[j].name == ($scope.patients[i].firstName + ' ' + $sco
       for(var i = 0 ; i<$scope.checkedArrayforRead.length;i++)
     {
       var res = {
+        "id": $scope.checkedArrayforRead[i],
         "userId": userid,
-        "messageId": $scope.checkedArrayforRead[i],
+        "messageId": "",
         "archived": "",
         "read": "true"
       }
@@ -1096,8 +1098,9 @@ clinicid = $scope.selectedClinicForHCP.id;
         for(var i = 0 ; i<$scope.checkedArrayforRead.length;i++)
     {
       var res = {
+        "id":$scope.checkedArrayforRead[i],
         "userId": userid,
-        "messageId": $scope.checkedArrayforRead[i],
+        "messageId": "",
         "clinicId" : clinicid,
         "archived": "",
         "read": "true"
@@ -1143,8 +1146,9 @@ $scope.ArchiveBox();
       for(var i = 0 ; i<$scope.checkedArrayforUnRead.length;i++)
     {
       var res = {
+        "id": $scope.checkedArrayforUnRead[i],
         "userId": userid,
-        "messageId": $scope.checkedArrayforUnRead[i],
+        "messageId": "",
         "archived": "",
         "read": "false"
       }
@@ -1166,8 +1170,9 @@ $scope.ArchiveBox();
         for(var i = 0 ; i<$scope.checkedArrayforUnRead.length;i++)
     {
       var res = {
+        "id":$scope.checkedArrayforUnRead[i],
         "userId": userid,
-        "messageId": $scope.checkedArrayforUnRead[i],
+        "messageId": "",
         "clinicId" : clinicid,
         "archived": "",
         "read": "false"
@@ -1298,7 +1303,7 @@ $scope.toggleAllForArchive = function() {
     angular.forEach($scope.InboxMessageList, function(itm){
       if (itm.selected) 
       {
-          $scope.checkedArray.push(itm[3]);
+          $scope.checkedArray.push(itm[0]);
       }
     });
   };
@@ -1345,7 +1350,7 @@ $scope.toggleAllForArchive = function() {
     angular.forEach($scope.InboxMessageList, function(itm){
       if (itm.selected) 
       {
-          $scope.checkedArrayforRead.push(itm[3]);
+          $scope.checkedArrayforRead.push(itm[0]);
       }
      
     });
@@ -1355,7 +1360,7 @@ $scope.toggleAllForArchive = function() {
     angular.forEach($scope.InboxMessageList, function(itm){
       if (itm.selected) 
       {
-          $scope.checkedArrayforUnRead.push(itm[3]);
+          $scope.checkedArrayforUnRead.push(itm[0]);
       }
     });
   };
@@ -1363,7 +1368,7 @@ $scope.toggleAllForArchive = function() {
     angular.forEach($scope.ArchiveMessageList, function(itm){
       if (itm.selected) 
       {
-          $scope.checkedArrayforRead.push(itm[3]);
+          $scope.checkedArrayforRead.push(itm[0]);
       }
      
     });
@@ -1373,7 +1378,7 @@ $scope.toggleAllForArchive = function() {
     angular.forEach($scope.ArchiveMessageList, function(itm){
       if (itm.selected) 
       {
-          $scope.checkedArrayforUnRead.push(itm[3]);
+          $scope.checkedArrayforUnRead.push(itm[0]);
       }
     });
   };
