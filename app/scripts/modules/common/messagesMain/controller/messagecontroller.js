@@ -1408,11 +1408,12 @@ $scope.toggleAllForArchive = function() {
       return formatedDateTime;
     };
 
- 
-  $scope.getMessageBody = function(arrayobject){
+$scope.getMessageBody = function(arrayobject){
  var inboxObject = {};
     inboxObject = angular.copy(arrayobject);
     $scope.toID = [];
+    var userid = "";
+    var clinicid = "";
    
     var id=arrayobject[3];
       var rootid=0;
@@ -1420,7 +1421,10 @@ $scope.toggleAllForArchive = function() {
  
     if(StorageService.get('logged').role === 'PATIENT')
       {
+        userid = StorageService.get('logged').patientID; 
+
 $scope.toID = arrayobject[9];
+clinicid = arrayobject[9];
          if(inboxObject[7] == 'ROOT'){
          rootid=inboxObject[3];
        }
@@ -1428,7 +1432,9 @@ $scope.toID = arrayobject[9];
         rootid=inboxObject[13];
        }
       }
-      else if(StorageService.get('logged').role === 'CLINIC_ADMIN'){ 
+      else if(StorageService.get('logged').role === 'CLINIC_ADMIN'){
+      userid = arrayobject[10]; 
+      clinicid = $scope.selectedClinicForCA.id;
         $scope.toID = arrayobject[10];
       if(inboxObject[7] == 'ROOT'){
          rootid=inboxObject[3];
@@ -1438,7 +1444,8 @@ $scope.toID = arrayobject[9];
        }
     }
     else if(StorageService.get('logged').role === 'HCP'){
-       
+             userid = arrayobject[10]; 
+      clinicid = $scope.selectedClinicForHCP.id;
       if(inboxObject[7] == 'ROOT'){
          rootid=inboxObject[3];
        }
@@ -1446,7 +1453,7 @@ $scope.toID = arrayobject[9];
         rootid=inboxObject[12];
        }
     }
-messageService.getthreaddata(id,rootid).then(function(response){
+messageService.getthreaddata(id,rootid,userid,clinicid).then(function(response){
   $scope.messageBodyObject = response.data;
   for(var i=0;i<response.data.length;i++){
     tempDate.push(dateService.getDateTimeFromTimeStamp(response.data[i][0].messageDatetime,patientDashboard.dateFormat ,'/')); 
@@ -1470,7 +1477,8 @@ else if($scope.flag == 'archive'){
   $scope.checkedArrayforRead.push(inboxObject[3]);
     $scope.markAsRead();
   
-  };
+  }; 
+
    $scope.getMessageBodySent = function(arrayobject){
     var name = arrayobject[6];
 var date = arrayobject[1];
