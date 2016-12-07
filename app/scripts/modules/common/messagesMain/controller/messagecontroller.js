@@ -36,7 +36,7 @@ $scope.messageBodyObject = {};
   $scope.sentmessageBody = {};
   $scope.archivemessageBodyObject = {};
   $scope.toID = [];
-  $rootScope.UnreadMessages = 0;
+  $rootScope.UnreadMessages = "";
   /* console.log("clinic ID");
    console.log(StorageService.get('logged').userId);*/
  
