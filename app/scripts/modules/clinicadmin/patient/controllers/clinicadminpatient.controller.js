@@ -33,6 +33,7 @@ angular.module('hillromvestApp')
       $scope.pageCount = 0;
       $scope.getClinicsAssociatedToHCP();
       var clinicId = $stateParams.clinicId;
+      $scope.initCount($stateParams.clinicId);
       $scope.searchPatients(); 
     }
   };
@@ -304,6 +305,7 @@ angular.module('hillromvestApp')
       $scope.selectedClinic = clinic;
       $scope.searchPatients();      
     }
+    $scope.initCount($scope.selectedClinic.id);
   };
 
   $scope.changeSortOption = function(){
