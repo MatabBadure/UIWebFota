@@ -613,17 +613,176 @@ ul {
 /*End of Incompatible browser alert message */
 /*Messaging Implementation-Hill-1839*/
 @media only screen and (min-width : 320px) and (max-width : 700px){
-.after-head-container{
+.super-head .col-xs-4 {
+   
+    width: 53%;
+    text-align:left;
+}
+.patient-user .dashboard_container
+{
+	margin:0 !important;
+}
+.super-head .read,.super-head .unread
+{
+	margin-left:12%;
+}
+.dashboard__form .col-xs-14
+{
+	width:99%;
+}
+.dashboard__form .col-xs-13
+{
+	width: 84%;
+}
+.inb-subject,.arc-subject,.hcp-msg-subject
+{
+	width: 67%;
+    /* margin-right: 31px; */
+    margin-left: 21px;
+}
+.inb-desc,.arc-desc,.hcp-msg-desc
+{
+	margin-left:20px;
+}
+.inb-date,.arc-date,.hcp-msg-date
+{
+	position:absolute;
+	right:5%;
+}
+.inb-date1,.sent-date
+{
+	right:9%;
+	position:absolute;
+	width:18%;
+}
+.main-msg
+{
+	width:86%;
+}
+.inb-date span,.arc-date span,.sent-date span,.hcp-msg-date span,.inb-date1 span
+{
+	    white-space: pre-line !important;
+}
+.inb-from,.arc-from,.sent-to,.hcp-msg-from
+{
+	width: 18%;
+    margin-left: -14px;
+}
+.sent-to
+{
+	width:18%;
+}
+.inb-date-head,.hcp-msg-date-head
+{
+	width:20%;
+}
+.sent-msg{
+	    margin-left: 10%;
+	    width:70%;
+}
+.inb-sub,.hcp-msg-sub
+{
+	width: 55%;
+}
+.inb-subject1
+{
+	width:60%;
+}
+.inb-tick,.inb-flag,hcp-msg-tick,hcp-msg-flag
+{
+	position: absolute;
+    top: 10%;
+    right: 0%;
+}
+.header-item
+{
+	width:30%
+}
+.arc-sub
+{
+	width:50%;
+}
+.arc-date
+{
+	width:15%;
+
+}
+.compose-to
+{
+	width:50%;
+}
+.inb-desc1,.inb-subject2
+{
+	margin-left:10%;
+}
+.pat-unread
+{
+	    width: 115%;
+}
+.arc-unread
+{
+	margin-left: 28%;
+    width: 115%;
+}
+.arc-pos-read
+{
+	margin-left:0% !important;
+}
+.hcp-arc-div,.dashboard__form .arc-read
+{
+	display:none;
+} 
+
+.after-head-container-for-compose-message
+{
+	overflow-y: scroll;
+    border: 2px solid #C0BFBF;
+    border-radius: 4px;
+    margin: 2px;
+    margin-top: 15px;
+}
+ .compose-message-container > .row
+{
+	border:0;
+} 
+.compose-message-container-header > .row
+{
+	padding: 0px !important;
+}
+.compose-message-container
+{
+	margin-left:4px;
+}
+.compose-message-container .custom-dropdown .multiSelect > button
+{
+	    height: 40px;
+	    border-radius:5px;
+}
+.compose-to
+{
+	width:50%;
+}
+.compose-message-container .cmp-msg
+{
+	width:149%;
+}
+.compose-message-container input[type="text"], .compose-message-container textarea
+{
+	 border: 1px solid #C0BFBF !important;
+    border-radius: 5px;
+    height: 40px
+}
+/* ani .after-head-container{
 	min-height:340px;
 	max-height:340px;
-}
+} */
 .optionSection{
 min-height: 135px;
     max-height: 135px;
     }
 .messageList-container{
 	min-height:300px;
-	max-height:300px;	
+	max-height:100%;	
 }
 .message-thread-container{
   min-height:300px;
@@ -631,11 +790,15 @@ min-height: 135px;
 }
 .messageList-container{
 	overflow-y:scroll;
+	border:2px solid #C0BFBF;
+	border-radius:4px;
+	margin:2px;
+	margin-top:15px;
 }
-.compose-message-container{
-min-height:150px;
+/*.compose-message-container{
+	 min-height:150px;
 	max-height:150px;		
-}
+} */
 #MessagingBadges{
 	display:none;
 }
