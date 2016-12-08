@@ -139,7 +139,7 @@
           </div>      
         </div>      
       
-        <div class="col-sm-18" ng-if="(messagelistflag && !messagebodyflag)" ng-show="totalMessages > 1">
+        <div class="col-sm-18" ng-if="(messagelistflag && !messagebodyflag)" ng-show="totalMessages >= 1">
           <div class="col-sm-5 paginationcontainer " style="float:right; margin-top: 14px;">
            <span style="color:#7ca3dc;"> {{totalMessages}} Messages Found &nbsp  </span>
             <span ng-show="pageCount > 1">
@@ -215,7 +215,7 @@
           </div>      
         </div>     
       
-        <div class="col-sm-18" ng-if="(archivemessagelistflag && !archivemessagebodyflag)" ng-show="totalMessages > 1">
+        <div class="col-sm-18" ng-if="(archivemessagelistflag && !archivemessagebodyflag)" ng-show="totalMessages >= 1">
           <div class="col-sm-5 paginationcontainer " style="float:right; margin-top: 14px;">
            <span style="color:#7ca3dc;"> {{totalMessages}} Messages Found  &nbsp  </span>
            <span ng-show="pageCount > 1">
