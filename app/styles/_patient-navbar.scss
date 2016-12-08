@@ -209,13 +209,13 @@ width: 100%;
 text-decoration:none;
 }
 .messageList-container{
-  background-color:#f9f9f9;
+ /* background-color:#f9f9f9; */
   border-bottom:0.5px solid #d0cbcb;
   max-height: 460px;
   min-height: 460px;
 }
 .compose-message-container > .row {
-  border:0.5px solid #7ca3dc;
+  border:0.5px solid #ccced0;
   border-radius:10px;
   padding:8px;
   margin-left:0px;
@@ -319,7 +319,7 @@ float:right;
     display: inline-block;
     font-size: 9px;
     height: 18px;
-    left: 26px;
+    left: 14px;
     line-height: 17px;
     position: absolute;
     text-align: center;
@@ -347,7 +347,7 @@ color:blue;
 /*Changes to fix issues after Hill-1839 */
 .compose-message-container > .row > textarea, input, textarea:focus, input:focus {
   border: 1px solid #bdbdbd;
-  color: #a9afb9;
+  color: #646568;
   outline: medium none;
 } 
  
@@ -445,3 +445,40 @@ color:#646568;
 * html .msgbody { white-space: pre  }
 /* IE7 */
 *:first-child+html .msgbody { white-space: pre  }
+ 
+
+.aligntextwithimg
+{
+  padding-top: 3px;
+  vertical-align: middle;
+  display: inline-block;
+}
+.super-head .aligncenter {
+  padding-top: 7px !important;
+}
+.after-head-container-for-compose-message {
+  border-bottom: 0.5px solid #d0cbcb;
+  max-height: 460px;
+}
+.col-xs-14.compose-message-container.alignright {
+  margin-top: 5px;
+} 
+.hcp_wrapper {
+  margin-bottom: 10px;
+}
+
+/* 07-12  */
+.ulheader {
+  margin-top: 13px;
+  padding-bottom: 13px;
+  margin-bottom:0px !important;
+
+}
+.messageList-container .msgcontainer .row {
+   height:40.5px;
+}
+.messageList-container .msgcontainer .row:nth-child(10) {
+  border-bottom: 0 none !important;
+  padding-bottom: 0 !important;
+   height: 35px;
+} 

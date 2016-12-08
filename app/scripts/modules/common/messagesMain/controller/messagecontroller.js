@@ -36,6 +36,7 @@ $scope.messageBodyObject = {};
   $scope.sentmessageBody = {};
   $scope.archivemessageBodyObject = {};
   $scope.toID = [];
+  $rootScope.UnreadMessages = "";
   /* console.log("clinic ID");
    console.log(StorageService.get('logged').userId);*/
  
@@ -45,13 +46,15 @@ $scope.messageBodyObject = {};
       //$scope.getDashboardForHCPOrPatient(response, userId);
       if(response.data && response.data.clinics){
       $scope.clinicsHCP = $filter('orderBy')(response.data.clinics, "name");
-      if($stateParams.clinicId !== undefined && $stateParams.clinicId !== null){
+       if($stateParams.clinicId && $stateParams.clinicId != 'others'){
          $scope.selectedClinicForHCP = commonsUserService.getSelectedClinicFromList($scope.clinicsHCP, $stateParams.clinicId);
        $scope.switchClinicHCP($scope.selectedClinicForHCP);
      
       }
+      else{
         $scope.selectedClinicForHCP = angular.copy($scope.clinicsHCP[0]);
         $scope.switchClinicHCP($scope.selectedClinicForHCP);
+      }
         //$rootScope.ClinicForHCP = $scope.selectedClinicForHCP;
     }
       }).catch(function(response){
@@ -74,30 +77,20 @@ $scope.messageBodyObject = {};
     clinicadminService.getClinicsAssociated(StorageService.get('logged').userId).then(function(response){
       if(response.data && response.data.clinics){
         $scope.clinics = $filter('orderBy')(response.data.clinics, "name");
-        console.log("clinics me kya hai");
-        console.log($scope.clinics);
-        console.log("state params");
-        console.log($stateParams.clinicId);
         if($stateParams.clinicId){
-          console.log("i shud not be here");
           $scope.selectedClinicForCA = commonsUserService.getSelectedClinicFromList($scope.clinics, $stateParams.clinicId);
-      console.log("selectedclinicforCa");
-      console.log($scope.selectedClinicForCA);
         $scope.switchClinic($scope.selectedClinicForCA);
         }else if($scope.clinics && $scope.clinics.length > 0){
         //  $scope.selectedClinicForCA=angular.copy($scope.clinics[0]);
           //$rootScope.ClinicForCA = $scope.selectedClinicForCA;
           $scope.switchClinic($scope.clinics[0]);
  }
-        //$scope.switchClinic($scope.clinics[0]);
       }
     }).catch(function(response){
     
     });
   };
    $scope.getAllPatientsByClinicId = function(){
-    console.log("Jsygdlviuefvlihwe");
-    console.log($scope.selectedClinicForCA.id);
     clinicService.getClinicAssoctPatients($scope.selectedClinicForCA.id,1,100).then(function(response){
       $scope.patients = [];
       angular.forEach(response.data.patientUsers, function(patientList){
@@ -126,58 +119,58 @@ $scope.messageBodyObject = {};
   messageService.getUnreadMessagesCount(StorageService.get('logged').patientID,0).then(function(response){
 if(response.data.length){
 if(response.data[0][0] == false){
-  $scope.UnreadMessages = response.data[0][1];
+  $rootScope.UnreadMessages = response.data[0][1];
 }
 else{
-  $scope.UnreadMessages = 0;
+  $rootScope.UnreadMessages = 0;
 }
 }
 else {
-  $scope.UnreadMessages = 0;
+  $rootScope.UnreadMessages = 0;
 }
    }).catch(function(response){
     if(response.message == 'No message available'){
-    $scope.UnreadMessages = 0;  
+    $rootScope.UnreadMessages = 0;  
   }
     });
 
 }
 else if(StorageService.get('logged').role === 'CLINIC_ADMIN'){
-  messageService.getUnreadMessagesCountCA(StorageService.get('logged').userId,1,$scope.selectedClinicForCA.id).then(function(response){
+  messageService.getUnreadMessagesCountCA(StorageService.get('logged').userId,1,$stateParams.clinicId).then(function(response){
 if(response.data.length){
 if(response.data[0][0] == false){
-  $scope.UnreadMessages = response.data[0][1];
+  $rootScope.UnreadMessages = response.data[0][1];
 }
 else{
-  $scope.UnreadMessages = 0;
+  $rootScope.UnreadMessages = 0;
 }
 }
 else {
-  $scope.UnreadMessages = 0;
+  $rootScope.UnreadMessages = 0;
 }
    }).catch(function(response){
     if(response.message == 'No message available'){
-    $scope.UnreadMessages = 0;  
+    $rootScope.UnreadMessages = 0;  
   }
     });
 
 }
 else if(StorageService.get('logged').role === 'HCP'){
-  messageService.getUnreadMessagesCountCA(StorageService.get('logged').userId,1,$scope.selectedClinicForHCP.id).then(function(response){
+  messageService.getUnreadMessagesCountCA(StorageService.get('logged').userId,1,$stateParams.clinicId).then(function(response){
 if(response.data.length){
 if(response.data[0][0] == false){
-  $scope.UnreadMessages = response.data[0][1];
+  $rootScope.UnreadMessages = response.data[0][1];
 }
 else{
-  $scope.UnreadMessages = 0;
+  $rootScope.UnreadMessages = 0;
 }
 }
 else {
-  $scope.UnreadMessages = 0;
+  $rootScope.UnreadMessages = 0;
 }
    }).catch(function(response){
     if(response.message == 'No message available'){
-    $scope.UnreadMessages = 0;  
+    $rootScope.UnreadMessages = 0;  
   }
     });
 
@@ -196,6 +189,7 @@ if(option === 'From'){
       toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortMessageList.from);
       $scope.sortMessageList.from = toggledSortOptions;
       $scope.sortOption = sortConstant.from + sortOptionsService.getSortByASCString(toggledSortOptions);
+      $scope.sortOption = $scope.sortOption + "&sort_by=messages.messageDatetime&asc=false";
       $scope.sortMessageList.subject = toggleSortOptiondefault;
       $scope.sortMessageList.date = toggleSortOptiondefault;
       $scope.Inbox();
@@ -219,7 +213,7 @@ if(option === 'Date'){
        $scope.sortMessageList.from = toggleSortOptiondefault;
       $scope.Inbox();
     }
-          
+    $scope.isAllSelected = false;      
   };
   $scope.sortTypeSentItems = function(option,isswitchtab){
 var toggledSortOptions = {};
@@ -233,9 +227,11 @@ if(option === 'To'){
       $scope.sortSentMessageList.to = toggledSortOptions;
       if(StorageService.get('logged').role === 'PATIENT'){
       $scope.SentsortOption = sortConstant.sentTo + sortOptionsService.getSortByASCString(toggledSortOptions);
+      $scope.SentsortOption = $scope.SentsortOption + "&sort_by=messages.messageDatetime&asc=false";
       }
       else if(StorageService.get('logged').role === 'CLINIC_ADMIN'){
       $scope.SentsortOption = sortConstant.sentToCA + sortOptionsService.getSortByASCString(toggledSortOptions);
+      $scope.SentsortOption = $scope.SentsortOption + "&sort_by=messages.messageDatetime&asc=false";
     }
     $scope.sortSentMessageList.subject = toggleSortOptiondefault;
       $scope.sortSentMessageList.date= toggleSortOptiondefault;
@@ -272,6 +268,7 @@ if(option === 'From'){
       toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortArchiveMessageList.from);
       $scope.sortArchiveMessageList.from = toggledSortOptions;
       $scope.archivesortOption = sortConstant.from + sortOptionsService.getSortByASCString(toggledSortOptions);
+     $scope.archivesortOption = $scope.archivesortOption + "&sort_by=messages.messageDatetime&asc=false";
       $scope.sortArchiveMessageList.date = toggleSortOptiondefault;
        $scope.sortArchiveMessageList.subject = toggleSortOptiondefault;
       $scope.ArchiveBox();
@@ -295,7 +292,8 @@ if(option === 'Date'){
        $scope.sortArchiveMessageList.from = toggleSortOptiondefault;
       $scope.ArchiveBox();
     }
-          
+       $scope.isAllSelected = false;      
+       
   };
   /******End of sorting the list of messages ******/
   $scope.initialiseAllLists = function(){
@@ -310,7 +308,7 @@ if(option === 'Date'){
     $scope.getClinicsForHCP();
    }
  };
-$scope.initialiseAllLists();
+
   $scope.init =function(){
      $scope.initialiseAllLists(); 
   $scope.flag= 'inbox';
@@ -378,11 +376,11 @@ $scope.SwitchTabs = function(tabName){
     $scope.newCounterSent = 0;
      $scope.newCounterArchive =0;
      $scope.replyFlag = false;
-     var isswitchtab = 1;
+     var isswitchtab =1;
        $scope.nomessagebodyavailableHCP = false;
        $scope.nodataflagHCP = false;
        $scope.noarchivedataflagHCP = false;
-
+$scope.replyattributes.replyData = "";
   $scope.nomessagebodyavailableCA = false;
   $scope.noarchivedataflagCA = false;
    $scope.nosentdataflagCA = false;
@@ -585,7 +583,7 @@ if($scope.InboxListRawData.content.length){
 else if(StorageService.get('logged').role === 'CLINIC_ADMIN'){
 toPassID = StorageService.get('logged').userId; //to be changed to $scope.selectedClinicForMessagesID when inbox with clinic Id is implemented
 isClinic = 1;
-  messageService.fetchInboxItemsCA(toPassID,isClinic,$scope.selectedClinicForCA.id,$scope.PageNumber,$scope.perPageCount,$scope.sortOption).then(function(response){
+  messageService.fetchInboxItemsCA(toPassID,isClinic,$stateParams.clinicId,$scope.PageNumber,$scope.perPageCount,$scope.sortOption).then(function(response){
 $scope.InboxListRawData = response.data;
 $scope.pageCount = $scope.InboxListRawData.totalPages;
 $scope.totalMessages = $scope.InboxListRawData.totalElements;
@@ -613,7 +611,7 @@ if($scope.totalMessages == 0){
 else if(StorageService.get('logged').role === 'HCP'){
   toPassID = StorageService.get('logged').userId; //to be changed to $scope.selectedClinicForMessagesID when inbox with clinic Id is implemented
 isClinic = 1;
-  messageService.fetchInboxItemsCA(toPassID,isClinic,$scope.selectedClinicForHCP.id,$scope.PageNumber, $scope.perPageCount,$scope.sortOption).then(function(response){
+  messageService.fetchInboxItemsCA(toPassID,isClinic,$stateParams.clinicId,$scope.PageNumber, $scope.perPageCount,$scope.sortOption).then(function(response){
     $scope.InboxListRawData = response.data;
     $scope.pageCount = $scope.InboxListRawData.totalPages;
     $scope.totalMessages = $scope.InboxListRawData.totalElements;
@@ -639,7 +637,6 @@ isClinic = 1;
       });
 }
  $scope.flag = 'inbox'; 
-
 };
 /****** End of Fetch Inbox items******/
 /******Take a confirmation on sending message ******/
@@ -660,6 +657,7 @@ $scope.showNoSubjectModal = true;
 $scope.showNoMessageModal = true;
 $scope.showUpdateModal = false;
 $scope.showNoSubjectModal = false;
+document.getElementById('noWrite').readOnly = true;
   }
       else{
         $scope.showUpdateModal = true;
@@ -674,6 +672,7 @@ $scope.showNoSubjectModal = false;
       $scope.submitted = false;
        $scope.showNoMessageOnReply = false;
 $scope.showmodalOnReply = false;
+document.getElementById('noWrite').readOnly = false;
     };
     $scope.showUpdateCA = function(){
   if($scope.SelectedPatientsID.length==0)
@@ -693,6 +692,7 @@ $scope.showUpdateModalCA = false;
 $scope.showNoMessageModalCA = true;
 $scope.showUpdateModalCA = false;
 $scope.showNoSubjectModalCA = false;
+document.getElementById('noWrite').readOnly = true;
   }
       else{
         $scope.showUpdateModalCA = true;
@@ -709,6 +709,7 @@ $scope.showNoMessageModalCA = false;
       $scope.submitted = false;
        $scope.showNoMessageOnReplyCA = false;
 $scope.showmodalOnReplyCA = false;
+document.getElementById('noWrite').readOnly = false;
     };
 /******End of -Take a confirmation on sending message ******/
 /*******On click of Send Message under compose mail ******/
@@ -752,7 +753,7 @@ $scope.SendMessage = function(){
    $scope.PageNumber=1; 
   messageService.sendMessageService($scope.sampleData).then(function(response){
      notyService.showMessage(response.data.statusMsg, 'success');
-     $scope.SwitchTabs('inbox',1);
+     $scope.SwitchTabs('inbox');
       $scope.submitted = false;
  }).catch(function(response){
       
@@ -786,10 +787,6 @@ else{
 };
 $scope.Reply = function(){
   //$scope.ReplymessageAttributes.subject = ;
-  console.log("$scope.toID");
-  console.log($scope.toID);
-  console.log("reply attri");
-  console.log($scope.ReplymessageAttributesObject[0][0].messageType);
   if($scope.ReplymessageAttributesObject[0][0].messageType === 'ROOT'){
 if(StorageService.get('logged').role === 'PATIENT'){
   $scope.sampleData = {
@@ -854,8 +851,6 @@ else if($scope.ReplymessageAttributesObject[0][0].messageType === 'RE'){
 };
 }
 }
-console.log("sample data");
-console.log($scope.sampleData);
   messageService.sendMessageService($scope.sampleData).then(function(response){
      notyService.showMessage(response.data.statusMsg, 'success');
       $scope.submitted = false;
@@ -1036,8 +1031,9 @@ if($scope.selectedPatients[j].name == ($scope.patients[i].firstName + ' ' + $sco
     for(var i = 0 ; i<$scope.checkedArray.length;i++)
     {
       var res = {
+        "id": $scope.checkedArray[i],
         "userId": userid,
-        "messageId": $scope.checkedArray[i],
+        "messageId": "",
         "archived": "true",
         "read": ""
       }
@@ -1070,8 +1066,9 @@ if($scope.selectedPatients[j].name == ($scope.patients[i].firstName + ' ' + $sco
       for(var i = 0 ; i<$scope.checkedArrayforRead.length;i++)
     {
       var res = {
+        "id": $scope.checkedArrayforRead[i],
         "userId": userid,
-        "messageId": $scope.checkedArrayforRead[i],
+        "messageId": "",
         "archived": "",
         "read": "true"
       }
@@ -1094,8 +1091,9 @@ clinicid = $scope.selectedClinicForHCP.id;
         for(var i = 0 ; i<$scope.checkedArrayforRead.length;i++)
     {
       var res = {
+        "id":$scope.checkedArrayforRead[i],
         "userId": userid,
-        "messageId": $scope.checkedArrayforRead[i],
+        "messageId": "",
         "clinicId" : clinicid,
         "archived": "",
         "read": "true"
@@ -1141,8 +1139,9 @@ $scope.ArchiveBox();
       for(var i = 0 ; i<$scope.checkedArrayforUnRead.length;i++)
     {
       var res = {
+        "id": $scope.checkedArrayforUnRead[i],
         "userId": userid,
-        "messageId": $scope.checkedArrayforUnRead[i],
+        "messageId": "",
         "archived": "",
         "read": "false"
       }
@@ -1164,8 +1163,9 @@ $scope.ArchiveBox();
         for(var i = 0 ; i<$scope.checkedArrayforUnRead.length;i++)
     {
       var res = {
+        "id":$scope.checkedArrayforUnRead[i],
         "userId": userid,
-        "messageId": $scope.checkedArrayforUnRead[i],
+        "messageId": "",
         "clinicId" : clinicid,
         "archived": "",
         "read": "false"
@@ -1200,17 +1200,17 @@ $scope.ArchiveBox();
   };
 
   $scope.switchClinic = function(clinic){
-    $scope.selectedClinicForCA = null;
+/*$scope.selectedClinicForCA = null;*/
+
+$state.go('Messages_CA', {'clinicId':clinic.id});
 $scope.selectedClinicForCA = angular.copy(clinic);
-$scope.InboxMessageList = "";
-//$stateParams.clinicId = $scope.selectedClinicForCA.id;
-$scope.SwitchTabs('inbox');
+//$scope.SwitchTabs('inbox',1);
 //$rootScope.ClinicForCA = $scope.selectedClinicForCA;
   };
+
    $scope.switchClinicHCP = function(clinic){
-$scope.selectedClinicForHCP = null;
+$state.go('Messages_HCP', {'clinicId':clinic.id});
 $scope.selectedClinicForHCP = angular.copy(clinic);
-$scope.InboxMessageList = "";
 $scope.SwitchTabs('inbox');
 //$rootScope.ClinicForHCP = $scope.selectedClinicForHCP;
   };
@@ -1296,7 +1296,7 @@ $scope.toggleAllForArchive = function() {
     angular.forEach($scope.InboxMessageList, function(itm){
       if (itm.selected) 
       {
-          $scope.checkedArray.push(itm[3]);
+          $scope.checkedArray.push(itm[0]);
       }
     });
   };
@@ -1343,7 +1343,7 @@ $scope.toggleAllForArchive = function() {
     angular.forEach($scope.InboxMessageList, function(itm){
       if (itm.selected) 
       {
-          $scope.checkedArrayforRead.push(itm[3]);
+          $scope.checkedArrayforRead.push(itm[0]);
       }
      
     });
@@ -1353,7 +1353,7 @@ $scope.toggleAllForArchive = function() {
     angular.forEach($scope.InboxMessageList, function(itm){
       if (itm.selected) 
       {
-          $scope.checkedArrayforUnRead.push(itm[3]);
+          $scope.checkedArrayforUnRead.push(itm[0]);
       }
     });
   };
@@ -1361,7 +1361,7 @@ $scope.toggleAllForArchive = function() {
     angular.forEach($scope.ArchiveMessageList, function(itm){
       if (itm.selected) 
       {
-          $scope.checkedArrayforRead.push(itm[3]);
+          $scope.checkedArrayforRead.push(itm[0]);
       }
      
     });
@@ -1371,7 +1371,7 @@ $scope.toggleAllForArchive = function() {
     angular.forEach($scope.ArchiveMessageList, function(itm){
       if (itm.selected) 
       {
-          $scope.checkedArrayforUnRead.push(itm[3]);
+          $scope.checkedArrayforUnRead.push(itm[0]);
       }
     });
   };
@@ -1413,23 +1413,23 @@ $scope.toggleAllForArchive = function() {
       return formatedDateTime;
     };
 
- 
-  $scope.getMessageBody = function(arrayobject){
+$scope.getMessageBody = function(arrayobject){
  var inboxObject = {};
     inboxObject = angular.copy(arrayobject);
     $scope.toID = [];
+    var userid = "";
+    var clinicid = "";
    
     var id=arrayobject[3];
       var rootid=0;
   var tempDate = [];
-console.log("arrayobject");
-console.log(arrayobject);
-console.log("inbox object");
-console.log(inboxObject);
  
     if(StorageService.get('logged').role === 'PATIENT')
       {
+        userid = StorageService.get('logged').patientID; 
+
 $scope.toID = arrayobject[9];
+clinicid = arrayobject[9];
          if(inboxObject[7] == 'ROOT'){
          rootid=inboxObject[3];
        }
@@ -1437,7 +1437,9 @@ $scope.toID = arrayobject[9];
         rootid=inboxObject[13];
        }
       }
-      else if(StorageService.get('logged').role === 'CLINIC_ADMIN'){ 
+      else if(StorageService.get('logged').role === 'CLINIC_ADMIN'){
+      userid = arrayobject[10]; 
+      clinicid = $scope.selectedClinicForCA.id;
         $scope.toID = arrayobject[10];
       if(inboxObject[7] == 'ROOT'){
          rootid=inboxObject[3];
@@ -1447,7 +1449,8 @@ $scope.toID = arrayobject[9];
        }
     }
     else if(StorageService.get('logged').role === 'HCP'){
-       
+             userid = arrayobject[10]; 
+      clinicid = $scope.selectedClinicForHCP.id;
       if(inboxObject[7] == 'ROOT'){
          rootid=inboxObject[3];
        }
@@ -1455,7 +1458,7 @@ $scope.toID = arrayobject[9];
         rootid=inboxObject[12];
        }
     }
-messageService.getthreaddata(id,rootid).then(function(response){
+messageService.getthreaddata(id,rootid,userid,clinicid).then(function(response){
   $scope.messageBodyObject = response.data;
   for(var i=0;i<response.data.length;i++){
     tempDate.push(dateService.getDateTimeFromTimeStamp(response.data[i][0].messageDatetime,patientDashboard.dateFormat ,'/')); 
@@ -1465,8 +1468,6 @@ if(response.data.length){
     $scope.messageBodyObject[i][0].messageDatetime = $scope.GetDateifToday(tempDate[i]);
 }
 }
-console.log("message onject");
-console.log($scope.messageBodyObject);
 }).catch(function(response){
         notyService.showError(response);
       });
@@ -1478,10 +1479,11 @@ else if($scope.flag == 'archive'){
   $scope.archivemessagelistflag = false;
   $scope.archivemessagebodyflag = true;
 }
-  $scope.checkedArrayforRead.push(inboxObject[3]);
+  $scope.checkedArrayforRead.push(inboxObject[0]);
     $scope.markAsRead();
   
-  };
+  }; 
+
    $scope.getMessageBodySent = function(arrayobject){
     var name = arrayobject[6];
 var date = arrayobject[1];
@@ -1551,11 +1553,7 @@ else if(StorageService.get('logged').role === 'PATIENT'){
   $scope.replyToMessage = function(arrayobject){
     $scope.ReplymessageAttributesObject = {};
 $scope.ReplymessageAttributesObject = angular.copy(arrayobject);
-console.log("reply array obj");
-console.log(arrayobject);
 $scope.replyFlag = true;
-console.log("reply me=sg attributes");
-  console.log($scope.ReplymessageAttributesObject);
   };
 $scope.incrementerInbox = function()
 {
@@ -1572,6 +1570,24 @@ $scope.incrementerSent = function()
   
   $scope.newCounterSent++;
   // alert($scope.newCounterSent);
+}
+$scope.goToBack = function(flag)
+{  
+  if(flag=="inbox")
+  {
+     $scope.messagelistflag = true;
+     $scope.messagebodyflag = false;
+  }
+  else if(flag=="sentitems")
+  {
+       $scope.sentmessagelistflag = true;
+      $scope.sentmessagebodyflag = false; 
+  }
+  else if(flag=="archive")
+  {
+     $scope.archivemessagelistflag = true;
+     $scope.archivemessagebodyflag = false;
+  }
 }
 $scope.init();
   }]);

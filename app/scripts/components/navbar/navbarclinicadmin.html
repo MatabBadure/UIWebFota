@@ -13,8 +13,8 @@
         <span class="navbar-brand__desc--text-secondary" translate="global.logo-text.health-portal"></span>
       </div>
     </div>
-    <div class="collapse navbar-collapse navbar-secondary" id="navbar-collapse" ng-switch-when=true>
-      <ul class="nav navbar-nav navbar-right">
+    <div class="collapse navbar-collapse navbar-secondary header-nav" id="navbar-collapse"  ng-switch-when=true>
+      <ul class="nav navbar-nav navbar-right header-nav-content">
         <li class="icon-border">
           <a ng-class="{ active: isActive('clinicadmin/clinicadmin-dashboard')}" href="" ng-click="goToPatientDashboard('clinicadmindashboard');" >
             <span class="icons hillrom-icon icon-dashboard"></span>
@@ -26,7 +26,7 @@
             <span class="icons messages"> <i class="fa fa-envelope" aria-hidden="true"></i>
             </span>
             <span class="link-text" translate="global.tabs.messages" ></span>
-           <!--  <span class="msg_count">{{UnreadMessages}}</span> -->
+           <span class="msg_count">{{$root.UnreadMessages}}</span> 
           </a>
         </li>
         <li class="icon-border">

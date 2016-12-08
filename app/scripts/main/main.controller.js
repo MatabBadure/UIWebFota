@@ -2,12 +2,19 @@
 
 angular.module('hillromvestApp')
   .controller('MainController', 
-  	['$scope', 'Principal', 'Auth','notyService', 'DoctorService','$state', 'Account', '$location', '$stateParams', '$rootScope', 'loginConstants', 'StorageService', 'UserService', '$window', 'patientService',
-  function ($scope, Principal,Auth,notyService,DoctorService, $state, Account, $location,$stateParams, $rootScope,loginConstants,StorageService, UserService, $window, patientService) {
+  	['$scope', 'Principal', 'Auth','notyService', 'DoctorService','$state', 'Account', '$location', '$stateParams', '$rootScope', 'loginConstants', 'StorageService', 'UserService', '$window', 'patientService', 'messageService',
+  function ($scope, Principal,Auth,notyService,DoctorService, $state, Account, $location,$stateParams, $rootScope,loginConstants,StorageService, UserService, $window, patientService,messageService) {
     Principal.identity().then(function(account) {
       $scope.account = account;
       $scope.isAuthenticated = Principal.isAuthenticated;
     });
+	$rootScope.initCount = function(clinicid){
+	if($rootScope.userRole === 'PATIENT' || $rootScope.userRole === 'CLINIC_ADMIN' || $rootScope.userRole === 'HCP'){
+				$rootScope.UnreadMessages ="";
+				$scope.getunreadcount(clinicid);
+			}	
+	}
+	
 
     $scope.mainInit = function(){    		
     		$rootScope.isAddDiagnostics = false;
@@ -22,9 +29,76 @@ angular.module('hillromvestApp')
 			}
 			if($rootScope.userRole === 'PATIENT'){
 				$scope.getNotifications();
+				
 			}
-
+			
+		
     };
+	 /*****Get unread messages *****/
+   $scope.getunreadcount = function(clinicid){
+  if(StorageService.get('logged').role === 'PATIENT'){
+  messageService.getUnreadMessagesCount(StorageService.get('logged').patientID,0).then(function(response){
+  if(response.data.length){
+if(response.data[0][0] == false){
+  $rootScope.UnreadMessages = response.data[0][1];
+}
+else{
+  $rootScope.UnreadMessages = 0;
+}
+}
+else {
+  $rootScope.UnreadMessages = 0;
+}
+   }).catch(function(response){
+    if(response.message == 'No message available'){
+    $rootScope.UnreadMessages = 0;
+  }
+    });
+
+}
+else if(StorageService.get('logged').role === 'CLINIC_ADMIN'){
+  messageService.getUnreadMessagesCountCA(StorageService.get('logged').userId,1,clinicid).then(function(response){
+if(response.data.length){
+if(response.data[0][0] == false){
+  $rootScope.UnreadMessages = response.data[0][1];
+}
+else{
+  $rootScope.UnreadMessages = 0;
+}
+}
+else {
+  $rootScope.UnreadMessages = 0;
+}
+   }).catch(function(response){
+    if(response.message == 'No message available'){
+    $rootScope.UnreadMessages = 0;  
+  }
+    });
+
+}
+else if(StorageService.get('logged').role === 'HCP'){
+  messageService.getUnreadMessagesCountCA(StorageService.get('logged').userId,1,clinicid).then(function(response){
+if(response.data.length){
+if(response.data[0][0] == false){
+  $rootScope.UnreadMessages = response.data[0][1];
+}
+else{
+  $rootScope.UnreadMessages = 0;
+}
+}
+else {
+  $rootScope.UnreadMessages = 0;
+}
+   }).catch(function(response){
+    if(response.message == 'No message available'){
+    $rootScope.UnreadMessages = 0;  
+  }
+    });
+
+}
+
+};
+//$scope.getunreadcount();
 
     $scope.FooterLoginZindex = function(){
     	if($state.current.name === "login" || $state.current.name === "home" ){
@@ -158,7 +232,7 @@ angular.module('hillromvestApp')
 
 	  $scope.isFooter();
 
-	  $scope.goToPatientDashboard = function(value){
+	/*  $scope.goToPatientDashboard = function(value){
 	    if(value){
 	      $state.go(value, {"clinicId": $stateParams.clinicId});
 	    }else{
@@ -172,7 +246,7 @@ angular.module('hillromvestApp')
 	      $state.go("patientdashboard");
 	    }
 	  };
-
+*/
 	  $scope.getNotifications = function(){
 	    UserService.getPatientNotification(StorageService.get("logged").patientID, new Date().getTime()).then(function(response){
 				$scope.notifications = response.data;
@@ -360,13 +434,10 @@ angular.module('hillromvestApp')
     $rootScope.patientDiagnostics = function(){
 	    if($rootScope.userRole === "PATIENT"){
   			var patientID = StorageService.get('logged').patientID;
-  			console.log("patientDiagnostic", patientID);
   			$state.go("patientDiagnostic");
   		}else if($rootScope.userRole === "CLINIC_ADMIN"){
-  			console.log("clinic admin", $stateParams.patientId);
   			$state.go("CADiagnostic", {'patientId': $stateParams.patientId});
   		}else if($rootScope.userRole === "HCP"){
-  			console.log("hcp", $stateParams.patientId);
   			$state.go("HCPDiagnostic", {'patientId': $stateParams.patientId});
   		}
     };
