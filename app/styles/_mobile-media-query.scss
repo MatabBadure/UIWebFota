@@ -7,7 +7,7 @@
 }
 
 
-@media only screen and (min-width : 320px) and (max-width : 700px) {
+@media only screen and (min-width : 320px) and (max-width : 765px) {
 /*To remove static border bottom */
 .minheight{
 	min-height:0 !important;
@@ -622,10 +622,7 @@ ul {
 {
 	margin:0 !important;
 }
-.super-head .read,.super-head .unread
-{
-	margin-left:12%;
-}
+
 .dashboard__form .col-xs-14
 {
 	width:99%;
@@ -692,7 +689,7 @@ ul {
 {
 	position: absolute;
     top: 10%;
-    right: 0%;
+    right: -2%;
 }
 .header-item
 {
@@ -721,18 +718,34 @@ ul {
 }
 .arc-unread
 {
-	margin-left: 28%;
     width: 115%;
 }
 .arc-pos-read
 {
 	margin-left:0% !important;
-}
+} 
 .hcp-arc-div,.dashboard__form .arc-read
 {
-	display:none;
-} 
-
+	width: 50%;
+    text-align: left;
+}
+.checkallbox
+{
+	width:100%;
+}
+.read1
+{
+	margin-left:0% !important;
+}
+.read2
+{
+	
+    width: 155px;
+}
+.messageList-container .msgcontainer .row
+{
+	height:auto !important;
+}
 .after-head-container-for-compose-message
 {
 	overflow-y: scroll;
@@ -772,6 +785,10 @@ ul {
     border-radius: 5px;
     height: 40px
 }
+.after-head-container:first-child .optionSection
+{
+	min-height:auto !important;
+}
 /* ani .after-head-container{
 	min-height:340px;
 	max-height:340px;
@@ -804,8 +821,9 @@ min-height: 135px;
 }
 .after-head-container-for-compose-message{
 	overflow-y:scroll;
-	 max-height: 200px;
+	 max-height: 100%;
    min-height:200px;
+   width:100%;
 }
 .buttons >div >buton {
 	min-width:100px;
@@ -819,3 +837,28 @@ min-height: 135px;
 }
 /*End of Messaging Implementation-Hill-1839*/
 
+@media only screen and (min-width : 320px) and (max-width : 766px)
+{
+	.after-head-container:first-child .optionSection
+	{
+		min-height:auto !important;
+	}
+	.messageList-container .msgcontainer .row {
+    height: auto;
+       }
+       .col-xs-14.messageList-container {
+        width: 100%;
+    }
+    .after-head-container-for-compose-message{
+	overflow-y:scroll;
+	 max-height: 100%;
+   min-height:200px;
+   width:100%;
+	}
+}
+.dt-flag
+{
+	position: absolute;
+    top: 1%;
+    right: -2%;
+}

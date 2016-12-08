@@ -40,7 +40,7 @@
 <a ng-click="goToBack(flag)" class="back"><i class="fa fa-mail-reply" aria-hidden="true"></i> Back </a>
       </div>
       <div class="col-xs-13" ng-if="(flag != 'new') && (flag != 'sentitems') && (!messagebodyflag) &&(!sentmessagebodyflag) && (!archivemessagebodyflag) && (!nodataflagCA) && (!nosentdataflagCA) && (!noarchivedataflagCA)">
-       <div ng-if="(flag != 'thread')" class="col-xs-2" style="padding-top:10px;">
+       <div ng-if="(flag != 'thread')" class="col-xs-2 checkallbox" style="padding-top:10px;">
         <span ng-if="(flag == 'inbox')" > <input type="checkbox" ng-click="toggleAll()" ng-checked="isAllSelected"></span>
         <span ng-if="(flag == 'archive')" > <input type="checkbox" ng-click="toggleAllForArchive()" ng-checked="isAllSelected"></span>
        </div>
@@ -49,7 +49,7 @@
         <img src="images/archive-folder.png" style="width:20px; height:20px"/> <span translate="global.messaging.archive" class="aligntextwithimg"></span>
        </div>
      </div>
-       <div ng-if="readflag" class="col-xs-4 aligncenter" style="padding-top:10px; cursor:pointer;" ng-click="markAsRead()">
+       <div ng-if="readflag" class="col-xs-4 aligncenter read arc-pos-read read1" style="padding-top:10px; cursor:pointer;" ng-click="markAsRead()">
        <div style="border:0.5px solid white;">
          <img src="images/Mark-read.png" style="width:20px; height:20px;"/> <span translate="global.messaging.mark-as-read" class="aligntextwithimg"></span>
        </div>
@@ -152,7 +152,7 @@
           </div>      
         </div>     
       
-        <div class="col-sm-18" ng-if="(messagelistflag && !messagebodyflag)" ng-show="totalMessages > 1">
+        <div class="col-sm-18" ng-if="(messagelistflag && !messagebodyflag)" ng-show="totalMessages >= 1">
           <div class="col-sm-5 paginationcontainer " style="float:right; margin-top: 14px;">
            <span style="color:#7ca3dc;">  {{totalMessages}} Messages Found  &nbsp  </span>
            <span ng-show="pageCount > 1">
@@ -222,7 +222,7 @@
           </div>      
         </div>    
    
-       <div class="col-sm-18" ng-if="sentmessagelistflag && !sentmessagebodyflag" ng-show="totalMessages > 1">
+       <div class="col-sm-18" ng-if="sentmessagelistflag && !sentmessagebodyflag" ng-show="totalMessages >= 1">
           <div class="col-sm-5 paginationcontainer " style="float:right;">
            <span style="color:#7ca3dc;">  {{totalMessages}} Messages Found  &nbsp </span>
            <span ng-show="pageCount > 1">
@@ -288,7 +288,7 @@
           </div>      
         </div>     
       
-        <div class="col-sm-18" ng-if="(archivemessagelistflag && !archivemessagebodyflag)" ng-show="totalMessages > 1">
+        <div class="col-sm-18" ng-if="(archivemessagelistflag && !archivemessagebodyflag)" ng-show="totalMessages >= 1">
           <div class="col-sm-5 paginationcontainer " style="float:right; margin-top: 14px;">
            <span style="color:#7ca3dc;"> {{totalMessages}} Messages Found  &nbsp  </span>
 <span ng-show="pageCount > 1">
@@ -374,7 +374,7 @@
                   <div class="btn-group cmp-btns">
                     <button ng-click = "showUpdateCA()" class="hillrom-btn btn-primary "  translate="global.messaging.send-message"></button>
                   
-                    <button class="hillrom-btn btn-primary " ng-click="setflag('inbox')" translate="global.messaging.cancel"></button>
+                    <button class="hillrom-btn btn-primary " ng-click="SwitchTabs('inbox')" translate="global.messaging.cancel"></button>
                   </div>
                 </div>   
               </div>

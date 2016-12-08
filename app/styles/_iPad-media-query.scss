@@ -32,6 +32,9 @@ LoginContentHeightForDevices{
     top: 25%;
     right: 0%;
 }
+.messageList-container .msgcontainer .row {
+    height: auto;
+}
 .unselectclass, .selectclass
 {
 	padding-left:4px;
@@ -262,7 +265,12 @@ LoginContentHeightForDevices{
 
 }
 
-@media only screen and (min-width : 768px) and (max-width : 1024px) and (orientation : portrait) { 
+@media only screen and (min-width : 768px) and (max-width : 1024px) and (orientation : portrait) {
+/******Archive option responsiveness ******/
+.arc-read {
+    width: 20%;
+} 
+/******Archive option responsiveness ******/
 /******Adherence Setting Tab ******/
 .ipadMargin-right{
 	margin-right:240px !important;
@@ -275,6 +283,9 @@ LoginContentHeightForDevices{
 .inb-date span,.arc-date span,.sent-date span,.hcp-msg-date span,.inb-date1 span
 {
 	    white-space: pre-line !important;
+}
+.messageList-container .msgcontainer .row {
+    height: auto;
 }
 .unselectclass, .selectclass
 {
