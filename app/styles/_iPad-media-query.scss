@@ -32,6 +32,9 @@ LoginContentHeightForDevices{
     top: 25%;
     right: 0%;
 }
+.messageList-container .msgcontainer .row {
+    height: auto;
+}
 .unselectclass, .selectclass
 {
 	padding-left:4px;
@@ -275,6 +278,9 @@ LoginContentHeightForDevices{
 .inb-date span,.arc-date span,.sent-date span,.hcp-msg-date span,.inb-date1 span
 {
 	    white-space: pre-line !important;
+}
+.messageList-container .msgcontainer .row {
+    height: auto;
 }
 .unselectclass, .selectclass
 {
