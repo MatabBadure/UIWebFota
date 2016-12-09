@@ -40,22 +40,22 @@
 <a ng-click="goToBack(flag)" class="back"><i class="fa fa-mail-reply" aria-hidden="true"></i> Back </a>
       </div>
       <div class="col-xs-13" ng-if="(flag != 'new') && (flag != 'sentitems') && (!nodataflagHCP) && (!noarchivedataflagHCP)">
-       <div ng-if="(flag != 'thread')" class="col-xs-2" style="padding-top:10px;">
+       <div ng-if="(flag != 'thread')" class="col-xs-2 checkallbox" style="padding-top:10px;">
         <span ng-if="(flag == 'inbox')" > <input type="checkbox" ng-click="toggleAll()" ng-checked="isAllSelected"></span>
         <span ng-if="(flag == 'archive')" > <input type="checkbox" ng-click="toggleAllForArchive()" ng-checked="isAllSelected"></span>
        </div>
-       <div class="col-xs-2 aligncenter" style="padding-top:10px; cursor:pointer;" ng-click="ArchiveMessages()">
+       <div class="col-xs-2 aligncenter hcp-arc-div" style="padding-top:10px; cursor:pointer;" ng-click="ArchiveMessages()">
        <div ng-if = "((flag=='inbox') && (readflag || unreadflag))" style=" border:0.5px solid white">
         <img src="images/archive-folder.png" style="width:20px; height:20px"/> <span translate="global.messaging.archive" class="aligntextwithimg"></span>
        </div>
      </div>
-       <div ng-if="readflag" class="col-xs-4 aligncenter" style="padding-top:10px; cursor:pointer;" ng-click="markAsRead()">
+       <div ng-if="readflag" class="col-xs-4 aligncenter read arc-pos-read read1" style="padding-top:10px; cursor:pointer;" ng-click="markAsRead()">
        <div style="border:0.5px solid white;">
          <img src="images/Mark-read.png" style="width:20px; height:20px;"/> <span translate="global.messaging.mark-as-read" class="aligntextwithimg"></span>
        </div>
      </div>
        <div ng-if="unreadflag" class="col-xs-4 aligncenter" style="padding-top:10px; cursor:pointer;" ng-click="markAsUnread()">
-       <div style=" border:0.5px solid white">
+       <div class="arc-unread" style=" border:0.5px solid white">
          <img src="images/mark-unread.png" style="width:20px; height:20px"/> <span translate="global.messaging.mark-as-unread" class="aligntextwithimg"></span>
        </div>
      </div>
@@ -80,13 +80,13 @@
             <div class="row" ng-if="(messagelistflag && !messagebodyflag)">
           <ul class="ulheader">
             <li>
-              <div class="col-xs-5">
+              <div class="col-xs-5 hcp-msg-from">
                 <span ng-class="{'sort-icon--default' : sortMessageList.from.isDefault, 'sort-icon-down': sortMessageList.from.isDown, 'sort-icon-up':sortMessageList.from.isUp}" ng-click="sortType('From',0)" translate="global.messaging.from"></span> 
               </div>
-            <div class="col-xs-9">
+            <div class="col-xs-9 hcp-msg-sub">
               <span ng-class="{'sort-icon--default' : sortMessageList.subject.isDefault, 'sort-icon-down': sortMessageList.subject.isDown, 'sort-icon-up':sortMessageList.subject.isUp}" ng-click="sortType('Subject',0)" translate="global.messaging.subject-of-message"></span>
             </div>
-             <div class="col-xs-2">
+             <div class="col-xs-2 hcp-msg-date-head">
               <span ng-class="{'sort-icon--default' : sortMessageList.date.isDefault, 'sort-icon-down': sortMessageList.date.isDown, 'sort-icon-up':sortMessageList.date.isUp}" ng-click="sortType('Date',0)" translate="global.messaging.date"></span>
             </div>
             </li>
@@ -100,12 +100,12 @@
           <div ng-repeat="InboxMessage in InboxMessageList" ng-class="{'unread': (InboxMessage[2] != true) }"  style=" padding: 8px;
                border-bottom: 0.5px solid #d0cbcb;color: #d0cbcb;cursor: pointer; " class="row">
                   <div class="col-xs-1">  <input type="checkbox" ng-model="InboxMessage.selected" ng-change="optionToggled()"></div> 
-                  <div class="col-xs-15"> <a href=""  ng-click = "getMessageBody(InboxMessage)" style=" color:#999; text-decoration:none;">
-                     <div class="col-xs-4" style="overflow: hidden; text-overflow: ellipsis;">
-                   <span style="white-space: nowrap;"> {{InboxMessage[8]}} </span> <span><i style="color:red;" class="fa fa-flag" ng-if="InboxMessage[2] != true" aria-hidden="true"></i><i style="color:green;" class="fa fa-check" ng-if="InboxMessage[2] == true" aria-hidden="true"></i></span> </div> 
-                   <div class="col-xs-9" style=" min-width:200px; overflow: hidden;
+                  <div class="col-xs-15 main-msg"> <a href=""  ng-click = "getMessageBody(InboxMessage)" style=" color:#999; text-decoration:none;">
+                     <div class="col-xs-4 hcp-msg-subject" style="overflow: hidden; text-overflow: ellipsis;">
+                   <span style="white-space: nowrap;"> {{InboxMessage[8]}} </span> <span><i style="color:red;" class="fa fa-flag hcp-msg-flag" ng-if="InboxMessage[2] != true" aria-hidden="true"></i><i style="color:green;" class="fa fa-check hcp-msg-tick" ng-if="InboxMessage[2] == true" aria-hidden="true"></i></span> </div> 
+                   <div class="col-xs-9 hcp-msg-desc" style=" min-width:200px; overflow: hidden;
     text-overflow: ellipsis;"><span style="white-space: nowrap;">{{InboxMessage[5]}}</span></div>
-     <div class="col-xs-2">
+     <div class="col-xs-2 hcp-msg-date">
       <span style="white-space:nowrap;">{{InboxMessage[4]}}</span> 
     </div>
                    </a></div>
@@ -139,7 +139,7 @@
           </div>      
         </div>      
       
-        <div class="col-sm-18" ng-if="(messagelistflag && !messagebodyflag)" ng-show="totalMessages > 1">
+        <div class="col-sm-18" ng-if="(messagelistflag && !messagebodyflag)" ng-show="totalMessages >= 1">
           <div class="col-sm-5 paginationcontainer " style="float:right; margin-top: 14px;">
            <span style="color:#7ca3dc;"> {{totalMessages}} Messages Found &nbsp  </span>
             <span ng-show="pageCount > 1">
@@ -157,13 +157,13 @@
             <div class="row" ng-if="(archivemessagelistflag && !archivemessagebodyflag)">
           <ul class="ulheader">
             <li>
-              <div class="col-xs-5">
+              <div class="col-xs-5 hcp-msg-from">
                 <span ng-class="{'sort-icon--default' : sortArchiveMessageList.from.isDefault, 'sort-icon-down': sortArchiveMessageList.from.isDown, 'sort-icon-up':sortArchiveMessageList.from.isUp}" ng-click="sortTypeArchive('From',0)" translate="global.messaging.from"></span> 
               </div>
-            <div class="col-xs-9">
+            <div class="col-xs-9 hcp-msg-sub">
               <span ng-class="{'sort-icon--default' : sortArchiveMessageList.subject.isDefault, 'sort-icon-down': sortArchiveMessageList.subject.isDown, 'sort-icon-up':sortArchiveMessageList.subject.isUp}" ng-click="sortTypeArchive('Subject',0)" translate="global.messaging.subject-of-message"></span>
             </div>
-             <div class="col-xs-2">
+             <div class="col-xs-2 hcp-msg-date-head">
               <span ng-class="{'sort-icon--default' : sortArchiveMessageList.date.isDefault, 'sort-icon-down': sortArchiveMessageList.date.isDown, 'sort-icon-up':sortArchiveMessageList.date.isUp}" ng-click="sortTypeArchive('Date',0)" translate="global.messaging.date"></span>
             </div>
             </li>
@@ -176,13 +176,13 @@
             </div>  -->
           <div ng-repeat="ArchiveMessage in ArchiveMessageList" ng-class="{'unread': (ArchiveMessage[2] != true) }" style=" padding: 8px; border-bottom: 0.5px solid #d0cbcb;color: #d0cbcb;cursor: pointer; " class="row" >
                  <div class="col-xs-1"><input type="checkbox" ng-model="ArchiveMessage.selected" ng-change="optionToggledForArchive()"></div>
-                  <div class="col-xs-15">
+                  <div class="col-xs-15 main-msg">
                    <a href="" ng-click="getMessageBody(ArchiveMessage)" style=" color:#999; text-decoration:none;">
-                    <div class="col-xs-4" style="overflow: hidden; text-overflow: ellipsis;">
-                   <span style="white-space: nowrap;"> {{ArchiveMessage[8]}} </span> <span><i style="color:red;" class="fa fa-flag" ng-if="ArchiveMessage[2] != true" aria-hidden="true"></i><i style="color:green;" class="fa fa-check" ng-if="ArchiveMessage[2] == true" aria-hidden="true"></i></span> </div>
-                   <div class="col-xs-9" style=" min-width:200px; overflow: hidden;
+                    <div class="col-xs-4 hcp-msg-subject" style="overflow: hidden; text-overflow: ellipsis;">
+                   <span style="white-space: nowrap;"> {{ArchiveMessage[8]}} </span> <span><i style="color:red;" class="fa fa-flag hcp-msg-flag" ng-if="ArchiveMessage[2] != true" aria-hidden="true"></i><i style="color:green;" class="fa fa-check hcp-msg-tick" ng-if="ArchiveMessage[2] == true" aria-hidden="true"></i></span> </div>
+                   <div class="col-xs-9 hcp-msg-desc" style=" min-width:200px; overflow: hidden;
     text-overflow: ellipsis;"><span style="white-space: nowrap;">{{ArchiveMessage[5]}}</span></div>
-    <div class="col-xs-2"><span style="white-space:nowrap;">{{ArchiveMessage[4]}}</span>
+    <div class="col-xs-2 hcp-msg-date"><span style="white-space:nowrap;">{{ArchiveMessage[4]}}</span>
     </div> 
                    </a>
                  </div>
@@ -215,7 +215,7 @@
           </div>      
         </div>     
       
-        <div class="col-sm-18" ng-if="(archivemessagelistflag && !archivemessagebodyflag)" ng-show="totalMessages > 1">
+        <div class="col-sm-18" ng-if="(archivemessagelistflag && !archivemessagebodyflag)" ng-show="totalMessages >= 1">
           <div class="col-sm-5 paginationcontainer " style="float:right; margin-top: 14px;">
            <span style="color:#7ca3dc;"> {{totalMessages}} Messages Found  &nbsp  </span>
            <span ng-show="pageCount > 1">
