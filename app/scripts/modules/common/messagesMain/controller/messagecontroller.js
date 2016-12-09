@@ -755,13 +755,14 @@ $scope.SendMessage = function(){
      notyService.showMessage(response.data.statusMsg, 'success');
      $scope.SwitchTabs('inbox');
       $scope.submitted = false;
+       $scope.close();
+   $scope.closeCA();
  }).catch(function(response){
-      
+       $scope.close();
+   $scope.closeCA();
       });
     $scope.messageAttributes.subject = "";
    $scope.messageAttributes.messageData = "";
-   $scope.close();
-   $scope.closeCA();
 };
 /*******End of On click of Send Message under compose mail ******/
 /******On click of Reply******/
@@ -855,14 +856,16 @@ else if($scope.ReplymessageAttributesObject[0][0].messageType === 'RE'){
      notyService.showMessage(response.data.statusMsg, 'success');
       $scope.submitted = false;
       $scope.replyattributes.replyData = "";
+       $scope.close();
+     $scope.closeCA();
+     $scope.replyFlag = false;
  }).catch(function(response){
-      
+      $scope.close();
+     $scope.closeCA();
       });
     $scope.ReplymessageAttributesObject = {};
     $scope.replyattributes.replyData = "";
-    $scope.replyFlag = false;
-    $scope.close();
-     $scope.closeCA();
+    $scope.replyFlag = false;  
 };
 /******End of-On click of Reply******/
 /*******To fetch sent items on click of sent items menu option******/
@@ -872,6 +875,7 @@ $scope.SentItems = function(){
   var toPassID = 0;
   var isclinic = 0;
   var tempDate = [];
+  $scope.totalMessages = 0;
 if(StorageService.get('logged').role === 'PATIENT'){
 toPassID = StorageService.get('logged').patientID;
 isclinic = 0;
@@ -966,6 +970,7 @@ if (track !== undefined) {
 /******To load a section like inbox,compose message,archive etc ******/
   $scope.setflag = function(value){
     $scope.flag = value;
+
   };
   /*$scope.searchToItemsOnQueryChange = function(){
          

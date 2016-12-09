@@ -4,6 +4,10 @@
 	min-height:600px !important;
 }
 /******End of remove static border bottom******/
+.compose-message-container > .row
+{
+	border: 0.5px solid #7ca3dc;
+}
 /******Activation page footer alignment ******/
 FooterAlignmentForDevices{
 	margin-top:13% !important;
@@ -18,6 +22,28 @@ LoginContentHeightForDevices{
 	margin-right:240px !important;
 }
 /******End ofAdherence Setting Tab ******/
+.inb-date span,.arc-date span,.sent-date span,.hcp-msg-date span,.inb-date1 span
+{
+	white-space: pre-line !important;
+}
+.inb-flag,.inb-tick
+{
+	position: absolute;
+    top: 25%;
+    right: 0%;
+}
+.messageList-container .msgcontainer .row {
+    height: auto;
+}
+.unselectclass, .selectclass
+{
+	padding-left:4px;
+	font-size:0.75em;
+}
+.paginationcontainer
+{
+	width:50%;
+}
 	/*HCP dashboard Style device-*/
  	.stats_chart_container{ 
 		.pie_chart{
@@ -225,6 +251,10 @@ LoginContentHeightForDevices{
 	  display: -webkit-flex;
 	  flex-flow: -webkit-row column;
 	}
+	.after-head-container
+{
+	    border: 0.5px solid #d0cbcb;
+}
 	
 	@media screen and (-webkit-min-device-pixel-ratio:0) {
 		.hideOverflow{
@@ -235,12 +265,47 @@ LoginContentHeightForDevices{
 
 }
 
-@media only screen and (min-width : 768px) and (max-width : 1024px) and (orientation : portrait) { 
+@media only screen and (min-width : 768px) and (max-width : 1024px) and (orientation : portrait) {
+/******Archive option responsiveness ******/
+.arc-read {
+    width: 20%;
+} 
+/******Archive option responsiveness ******/
 /******Adherence Setting Tab ******/
 .ipadMargin-right{
 	margin-right:240px !important;
 }
 /******End ofAdherence Setting Tab ******/
+.compose-message-container > .row
+{
+	border: 0.5px solid #7ca3dc;
+}
+.inb-date span,.arc-date span,.sent-date span,.hcp-msg-date span,.inb-date1 span
+{
+	    white-space: pre-line !important;
+}
+.messageList-container .msgcontainer .row {
+    height: auto;
+}
+.unselectclass, .selectclass
+{
+	padding-left:4px;
+	font-size:0.75em;
+}
+.inb-flag,.inb-tick
+{
+	position: absolute;
+    top: 25%;
+    right: 0%;
+}
+.after-head-container
+{
+	    border: 0.5px solid #d0cbcb;
+}
+.paginationcontainer
+{
+	width:50%;
+}
 /******To remove static border bottom******/
 .minheight{
 	min-height:900px !important;
@@ -622,8 +687,13 @@ font-size:12px;
   max-height: 100%;
 }
 .custom-dropdown .multiSelect > button {
-  max-width: 100% !important;
-  width: 100% !important;
+  /* max-width: 100% !important; */
+  width: 105% !important;
+  padding-right: 30%;
+}
+.inb-date span,.arc-date span,.sent-date span,.hcp-msg-date span,.inb-date1 span
+{
+	    white-space: pre-line !important;
 }
 .after-head-container {
   min-height: 100%;
