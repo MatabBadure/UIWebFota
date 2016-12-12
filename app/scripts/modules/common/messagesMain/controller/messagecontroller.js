@@ -1498,17 +1498,8 @@ messageService.getMessageBodyService(id).then(function(response){
     $scope.sentmessageBody = response.data;
    $scope.sentmessageBody.date = arrayobject[1];
        if(StorageService.get('logged').role === 'CLINIC_ADMIN'){
-        if(!arrayobject[6] && arrayobject[7]){
- $scope.archivemessageBodyObject.name = arrayobject[7];
-}
-else if(!arrayobject[7] && arrayobject[6]){
-  $scope.archivemessageBodyObject.name = arrayobject[6] ;
-}
-else if(arrayobject[7] && arrayobject[6]){
-$scope.sentmessageBody.name = arrayobject[6] + ' ' +arrayobject[7];
-}
-
-}
+       $scope.sentmessageBody.name = arrayobject[6];
+        }
 else if(StorageService.get('logged').role === 'PATIENT'){
 
  $scope.sentmessageBody.name = arrayobject[6];
