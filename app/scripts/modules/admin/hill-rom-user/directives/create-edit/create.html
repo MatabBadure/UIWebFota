@@ -179,8 +179,8 @@
           <button type="submit" class="hillrom-btn btn-primary btn-margin-left float-right" ng-show="userStatus.isCreate" ng-click="formSubmit()" translate="user.submit-button-text">Submit</button>
           <button type="reset" ng-click="cancel()" ng-show="userStatus.isCreate" class="hillrom-btn btn-secondary float-right" translate="user.cancel-button-text">Cancel</button>
           <button type="button" class="hillrom-btn btn-primary btn-margin-left float-right" ng-click="showUpdateModal()" ng-show="!userStatus.isCreate" translate="user.update-button-text">Update</button>
-          <button type="button" class="hillrom-btn btn-secondary float-right" ng-click="open()" ng-show="!userStatus.isCreate && !user.deleted && user.id != loggedUserId && nonHillRomUsers.indexOf(user.role) === -1" translate="user.deactivate-button-text">Deactivate</button>
-          <button type="button" class="hillrom-btn btn-secondary float-right" ng-click="$parent.showActivateModal= true" ng-show="!userStatus.isCreate && user.deleted && nonHillRomUsers.indexOf(user.role) === -1" translate="user.activate-button-text">Activate</button>
+          <button type="button" class="hillrom-btn btn-secondary float-right" ng-click="open()" ng-show="!userStatus.isCreate && !user.deleted && user.id != loggedUserId" translate="user.deactivate-button-text">Deactivate</button>
+          <button type="button" class="hillrom-btn btn-secondary float-right" ng-click="$parent.showActivateModal= true" ng-show="!userStatus.isCreate && user.deleted" translate="user.activate-button-text">Activate</button>
           <div class="clr"></div>
           <div class="clr"></div>
         </div>

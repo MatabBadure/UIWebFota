@@ -3129,6 +3129,31 @@ angular.module('hillromvestApp')
                   ]
               }
             })
+            .state('clinicUserRcadmin', {
+              parent: 'rcadmin',
+              url: '/rcadmin-users',
+              data: {
+                roles: ['ACCT_SERVICES'],
+                pageTitle: 'clinic.page-title.clinics'
+              },
+              views: {
+                  'rcadmin-view': {
+                      templateUrl: 'scripts/modules/admin/clinic/directives/list/list.html',
+                      controller: 'clinicsController'
+                  }
+              },
+              resolve: {
+                  translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                      $translatePartialLoader.addPart('clinic');
+                      return $translate.refresh();
+                  }],
+                  authorize: ['Auth',
+                      function(Auth) {
+                          return Auth.authorize(false);
+                      }
+                  ]
+              }
+            })
             .state('clinicAssociatedHCPRcadmin', {
               parent: 'rcadmin',
               url: '/{clinicId}/clinics-associatedHCP',
