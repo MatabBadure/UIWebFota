@@ -482,3 +482,24 @@ color:#646568;
   padding-bottom: 0 !important;
    height: 35px;
 } 
+
+/* 12-12 */
+
+msgreplyconatiner {
+  margin-top: 10px;
+}
+
+.clinic-link .dropdown-menu, .exist-link .dropdown-menu {
+  position: relative !important;
+  top: 0 !important;
+}
+.datepickerNew {
+  cursor: pointer;
+}
+.dashboard__manage-view--search select:focus {
+  color: #fff;
+}
+.empty-reply textarea
+{
+border:1px solid #ccc;
+}
