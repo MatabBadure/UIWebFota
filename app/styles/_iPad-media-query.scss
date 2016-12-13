@@ -32,6 +32,10 @@ LoginContentHeightForDevices{
     top: 25%;
     right: 0%;
 }
+.message-thread-container > .row
+{
+	margin-right:10px;
+}
 .messageList-container .msgcontainer .row {
     height: auto;
 }
@@ -283,6 +287,10 @@ LoginContentHeightForDevices{
 .inb-date span,.arc-date span,.sent-date span,.hcp-msg-date span,.inb-date1 span
 {
 	    white-space: pre-line !important;
+}
+.message-thread-container > .row
+{
+	margin-right:10px;
 }
 .messageList-container .msgcontainer .row {
     height: auto;
@@ -635,6 +643,10 @@ font-size:12px;
 	#Message_Text{
 	width:50% !important;
 	}
+	.message-thread-container > .row
+{
+	margin-right:10px;
+}
 
 }
 @media only screen and (min-width : 700px) and (max-width : 1024px) and (orientation : landscape) { 
@@ -668,6 +680,10 @@ font-size:12px;
 	#Message_Text{
 	width:50% !important;
 	}
+	.message-thread-container > .row
+{
+	margin-right:10px;
+}
 }
 @media only screen and (min-width : 1290px) and (max-width :1366px ) and (orientation : landscape) { 
 /******To remove static border bottom******/
@@ -708,5 +724,9 @@ font-size:12px;
 .super-head .col-sm-3, .super-head .col-xs-4 {
   margin-bottom: 10px;
   width: 100%;
+}
+.message-thread-container > .row
+{
+	margin-right:10px;
 }
 } 
