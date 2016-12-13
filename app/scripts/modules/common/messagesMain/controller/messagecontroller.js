@@ -1581,6 +1581,8 @@ $scope.incrementerSent = function()
 }
 $scope.goToBack = function(flag)
 {  
+  $scope.replyFlag = false;
+  $scope.replyattributes.replyData = "";
   if(flag=="inbox")
   {
      $scope.messagelistflag = true;
@@ -1596,6 +1598,6 @@ $scope.goToBack = function(flag)
      $scope.archivemessagelistflag = true;
      $scope.archivemessagebodyflag = false;
   }
-}
+} 
 $scope.init();
   }]);
