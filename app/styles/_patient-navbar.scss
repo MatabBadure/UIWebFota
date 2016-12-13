@@ -485,10 +485,12 @@ color:#646568;
 
 /* 12-12 */
 
-msgreplyconatiner {
+.msgreplyconatiner {
   margin-top: 10px;
 }
-
+.write-message{
+  width:98% !important;
+}
 .clinic-link .dropdown-menu, .exist-link .dropdown-menu {
   position: relative !important;
   top: 0 !important;
@@ -502,4 +504,19 @@ msgreplyconatiner {
 .empty-reply textarea
 {
 border:1px solid #ccc;
+}
+.assositatedselectbox {
+  direction: rtl;
+} 
+.fa-check::before {
+  content: "" !important;
+}
+.fa-flag::before {
+    content: "" !important;
+}
+.unread a{
+  color:#666 !important;
+} 
+.message-thread-container:last-child {
+    margin-bottom: 10px;
 }
