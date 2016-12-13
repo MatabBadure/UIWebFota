@@ -1499,7 +1499,8 @@ var tempDate = [];
 messageService.getMessageBodyService(id).then(function(response){
     $scope.sentmessageBody = response.data;
    $scope.sentmessageBody.date = arrayobject[1];
-       if(StorageService.get('logged').role === 'CLINIC_ADMIN'){       
+
+if(StorageService.get('logged').role === 'CLINIC_ADMIN'){       
   $scope.sentmessageBody.name = arrayobject[6];
 }
 else if(StorageService.get('logged').role === 'PATIENT'){
