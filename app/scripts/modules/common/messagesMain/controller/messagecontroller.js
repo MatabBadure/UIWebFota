@@ -657,7 +657,7 @@ $scope.showNoSubjectModal = true;
 $scope.showNoMessageModal = true;
 $scope.showUpdateModal = false;
 $scope.showNoSubjectModal = false;
-document.getElementById('noWrite').readOnly = true;
+
   }
       else{
         $scope.showUpdateModal = true;
@@ -672,7 +672,7 @@ document.getElementById('noWrite').readOnly = true;
       $scope.submitted = false;
        $scope.showNoMessageOnReply = false;
 $scope.showmodalOnReply = false;
-document.getElementById('noWrite').readOnly = false;
+
     };
     $scope.showUpdateCA = function(){
   if($scope.SelectedPatientsID.length==0)
@@ -692,7 +692,7 @@ $scope.showUpdateModalCA = false;
 $scope.showNoMessageModalCA = true;
 $scope.showUpdateModalCA = false;
 $scope.showNoSubjectModalCA = false;
-document.getElementById('noWrite').readOnly = true;
+
   }
       else{
         $scope.showUpdateModalCA = true;
@@ -709,7 +709,7 @@ $scope.showNoMessageModalCA = false;
       $scope.submitted = false;
        $scope.showNoMessageOnReplyCA = false;
 $scope.showmodalOnReplyCA = false;
-document.getElementById('noWrite').readOnly = false;
+
     };
 /******End of -Take a confirmation on sending message ******/
 /*******On click of Send Message under compose mail ******/
@@ -854,6 +854,7 @@ else if($scope.ReplymessageAttributesObject[0][0].messageType === 'RE'){
 }
   messageService.sendMessageService($scope.sampleData).then(function(response){
      notyService.showMessage(response.data.statusMsg, 'success');
+     document.getElementById("replybox").style.display = "none";
       $scope.submitted = false;
       $scope.replyattributes.replyData = "";
        $scope.close();
@@ -1020,6 +1021,7 @@ if($scope.selectedPatients[j].name == ($scope.patients[i].firstName + ' ' + $sco
  }
   };
   $scope.ArchiveMessages = function(){
+    $scope.isAllSelected = false;
     var userid= "";
     var responseData = [];
     $scope.getSeletedData();
@@ -1497,17 +1499,8 @@ var tempDate = [];
 messageService.getMessageBodyService(id).then(function(response){
     $scope.sentmessageBody = response.data;
    $scope.sentmessageBody.date = arrayobject[1];
-       if(StorageService.get('logged').role === 'CLINIC_ADMIN'){
-        if(!arrayobject[6] && arrayobject[7]){
- $scope.archivemessageBodyObject.name = arrayobject[7];
-}
-else if(!arrayobject[7] && arrayobject[6]){
-  $scope.archivemessageBodyObject.name = arrayobject[6] ;
-}
-else if(arrayobject[7] && arrayobject[6]){
-$scope.sentmessageBody.name = arrayobject[6] + ' ' +arrayobject[7];
-}
-
+       if(StorageService.get('logged').role === 'CLINIC_ADMIN'){       
+  $scope.sentmessageBody.name = arrayobject[6];
 }
 else if(StorageService.get('logged').role === 'PATIENT'){
 
@@ -1558,6 +1551,7 @@ else if(StorageService.get('logged').role === 'PATIENT'){
   $scope.replyToMessage = function(arrayobject){
     $scope.ReplymessageAttributesObject = {};
 $scope.ReplymessageAttributesObject = angular.copy(arrayobject);
+document.getElementById("replybox").style.display = "block";
 $scope.replyFlag = true;
   };
 $scope.incrementerInbox = function()
@@ -1578,6 +1572,8 @@ $scope.incrementerSent = function()
 }
 $scope.goToBack = function(flag)
 {  
+  $scope.replyFlag = false;
+  $scope.replyattributes.replyData = "";
   if(flag=="inbox")
   {
      $scope.messagelistflag = true;
@@ -1593,6 +1589,6 @@ $scope.goToBack = function(flag)
      $scope.archivemessagelistflag = true;
      $scope.archivemessagebodyflag = false;
   }
-}
+} 
 $scope.init();
   }]);

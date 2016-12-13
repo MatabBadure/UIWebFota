@@ -631,24 +631,25 @@ ul {
 {
 	width: 84%;
 }
-.inb-subject,.arc-subject,.hcp-msg-subject
-{
-	width: 67%;
-    /* margin-right: 31px; */
-    margin-left: 21px;
-}
-.inb-desc,.arc-desc,.hcp-msg-desc
-{
-	margin-left:20px;
-}
-.inb-date,.arc-date,.hcp-msg-date
+
+
+.inb-date,.arc-date
 {
 	position:absolute;
 	right:5%;
 }
+.hcp-msg-date
+{
+	position:absolute;
+	right:10%;
+}
+.hcp-msg-desc{
+	margin-left: -7%;
+    width: 50%;
+}
 .inb-date1,.sent-date
 {
-	right:9%;
+	right:7%;
 	position:absolute;
 	width:18%;
 }
@@ -656,13 +657,14 @@ ul {
 {
 	width:86%;
 }
-.inb-date span,.arc-date span,.sent-date span,.hcp-msg-date span,.inb-date1 span
+.inb-date span,.arc-date span,.sent-date span,.hcp-msg-date span,.inb-date1 span,
+.inb-subject span
 {
 	    white-space: pre-line !important;
 }
 .inb-from,.arc-from,.sent-to,.hcp-msg-from
 {
-	width: 18%;
+	width: 27%;
     margin-left: -14px;
 }
 .sent-to
@@ -674,22 +676,45 @@ ul {
 	width:20%;
 }
 .sent-msg{
-	    margin-left: 10%;
-	    width:70%;
+margin-left: -7%;
+    width: 40%;
+    height: 40px;
+}
+.sent-msg1{
+margin-left: -11%;
+    width: 60%;
+    height: 40px;
 }
 .inb-sub,.hcp-msg-sub
 {
-	width: 55%;
+	width: 50%;
 }
-.inb-subject1
+.ulheader > li > div > span
 {
-	width:60%;
+	font-size:15px;
+}
+.msgtitles >div
+{
+	padding:0;
+}
+
+.hcp-msg-tick
+{
+	right:0%;
+    position: absolute;
+    top: 4px;
 }
 .inb-tick,.inb-flag,hcp-msg-tick,hcp-msg-flag
 {
-	position: absolute;
-    top: 10%;
-    right: -2%;
+	margin-right:-4px;
+}
+.hcp-msg-subject
+{
+	width:40%;
+}
+.hcp-msg-subject1
+{
+	width:30%;
 }
 .header-item
 {
@@ -708,9 +733,31 @@ ul {
 {
 	width:50%;
 }
+.inb-subject
+{
+	
+    height: 40px !important;
+}
 .inb-desc1,.inb-subject2
 {
-	margin-left:10%;
+	padding:0px;
+	padding-right:5px !important;
+	width:20%;min-width:65px !important;
+}
+.inb-desc
+{
+	overflow: hidden;
+    text-overflow: ellipsis;
+    
+    height: 40px;
+    width: 50%;
+    
+    margin-left:-3px;
+    
+}
+.inb-desc span
+{
+	white-space: pre-line !important;
 }
 .pat-unread
 {
@@ -724,6 +771,10 @@ ul {
 {
 	margin-left:0% !important;
 } 
+.super-head div
+{
+	width:50% ;
+}
 .hcp-arc-div,.dashboard__form .arc-read
 {
 	width: 50%;
@@ -745,6 +796,7 @@ ul {
 .messageList-container .msgcontainer .row
 {
 	height:auto !important;
+	padding-bottom:20px !important;
 }
 .after-head-container-for-compose-message
 {
@@ -788,6 +840,22 @@ ul {
 .after-head-container:first-child .optionSection
 {
 	min-height:auto !important;
+}
+.toFieldmultiselect > span > .checkboxLayer
+{
+	width:auto !important;
+}
+.compose-message-container .cmp-btns
+{
+	margin-bottom:25px;
+}
+.message-thread-container > .row
+{
+	margin-right:10px;
+}
+.patient-user__navbar ul > li > #dropdownMenu1
+{
+	padding-top: 10px !important;
 }
 /* ani .after-head-container{
 	min-height:340px;

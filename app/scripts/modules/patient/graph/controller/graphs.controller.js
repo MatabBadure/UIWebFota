@@ -3,8 +3,8 @@
 angular.module('hillromvestApp')
 .controller('graphController',
   ['$scope', '$state', 'patientDashBoardService', 'StorageService', 'dateService', 'graphUtil', 'patientService', 'UserService', '$stateParams', 'notyService', '$timeout', 'graphService', 'caregiverDashBoardService', 'loginConstants', '$location','$filter', 'commonsUserService', 'clinicadminPatientService', '$rootScope', 'patientGraphsConstants', 'exportutilService',
-  function($scope, $state, patientDashBoardService, StorageService, dateService, graphUtil, patientService, UserService, $stateParams, notyService, $timeout, graphService, caregiverDashBoardService, loginConstants, $location, $filter, commonsUserService, clinicadminPatientService, $rootScope, patientGraphsConstants, exportutilService) {
-  
+  function($scope, $state, patientDashBoardService, StorageService, dateService, graphUtil, patientService, UserService, $stateParams, notyService, $timeout, graphService, caregiverDashBoardService, loginConstants, $location, $filter, commonsUserService, clinicadminPatientService, $rootScope, patientGraphsConstants, exportutilService) { 
+      $scope.loading = false;
     $scope.isGraphLoaded = false;    
     $scope.expandedSign = "+";
     $scope.isIE = function(){        
@@ -1982,6 +1982,8 @@ angular.module('hillromvestApp')
     }
  /******Adherence History Grid view Date selection-Hill-1848 ******/
     $scope.getAdherenceScore = function(customSelection){
+      //$scope.dateslist = [[]];
+
       $scope.dayFlag = false;
       $scope.noHistoryAvailable = false;
       $scope.activeSelection = customSelection;
@@ -2014,16 +2016,20 @@ angular.module('hillromvestApp')
         $scope.activeSelection='week';
         $scope.calculateTimeDuration(6,'AdherenceScoreHistory');
       }
+      $scope.loading = true;
     $scope.customdates = {startDate: $scope.fromDateHistory, endDate: $scope.toDateHistory};
      var fromDate = dateService.convertDateToYyyyMmDdFormat($scope.fromDateHistory);
       var toDate = dateService.convertDateToYyyyMmDdFormat($scope.toDateHistory);
       patientDashBoardService.getAdeherenceData(patientId, fromDate, toDate).then(function(response){
+
         $scope.adherenceScores = response.data;
         $scope.adherenceHistoryAllData = response.data;
         $scope.adherencetrendlength=0;
         for(var i=0; i <$scope.adherenceScores.length;i++){
                    $scope.adherencetrendlength= $scope.adherencetrendlength+$scope.adherenceScores[i].adherenceTrends.length;
         }
+         $scope.pageCount = Math.ceil($scope.adherencetrendlength / 7);
+        
         $scope.lengthTrack=0;
         $scope.adherencetrendData = new Array();
          if($scope.dayFlag == true){
@@ -2062,7 +2068,11 @@ $scope.adherencetrendData.push(new Object({"adherenceTrends": [] , "protocols": 
         }
       }
     }
-        $scope.pageCount = Math.ceil($scope.adherencetrendlength / 7);
+       angular.element(document).ready(function () {
+     
+     $scope.loading = false;
+    });
+   
       }).catch(function(response){
         $scope.noHistoryAvailable = true;
        // notyService.showError(response);
@@ -2342,6 +2352,7 @@ $scope.adherencetrendData.push(new Object({"adherenceTrends": [] , "protocols": 
       }else if(StorageService.get('logged').patientID){
         patientId = StorageService.get('logged').patientID;
       }
+  
       var referenceDate = $scope.convertStringToDate($scope.nextDate);
       var relativeReferenceDate = new Date();
       var fromDate = new Date();
@@ -2364,11 +2375,15 @@ $scope.adherencetrendData.push(new Object({"adherenceTrends": [] , "protocols": 
             $scope.currentPageIndex = 1;
           }
           //call the API with from and to date
+    
+           $scope.loading = true;
         patientDashBoardService.getAdeherenceData(patientId,fromDate,toDate).then(function(response){
+  
         $scope.adherenceScores = response.data;
         $scope.lengthTrack=0;
         $scope.adherencetrendData = new Array();
    loop1:    for(var j = 0 ; j<$scope.adherenceScores.length;j++){
+     $scope.noHistoryAvailable = false;
                       $scope.adherencetrendData.push(new Object({"adherenceTrends": []},{"protocols": []}));
                       $scope.adherencetrendData[j].protocols=angular.extend({},$scope.adherencetrendData[j].protocols,$scope.adherenceScores[j].protcols);
                     for(var i=0; i <$scope.adherenceScores[j].adherenceTrends.length;i++){
@@ -2388,8 +2403,25 @@ $scope.adherencetrendData.push(new Object({"adherenceTrends": [] , "protocols": 
               }
                $scope.adherencetrendlength =  $scope.adherencetrendlength;
                 $scope.pageCount= $scope.pageCount;
+
+     angular.element(document).ready(function () {
+     
+     $scope.loading = false;
+    });
       }).catch(function(response){
-        notyService.showError(response);
+        $scope.noHistoryAvailable = true;
+        //$scope.nextDate =dateService.convertDateToYyyyMmDdFormat($scope.getnDaysBeforeOrAfter(toDate,1)); 
+        var dateString = toDate;
+var myDate = new Date(dateString);
+
+//add a day to the date
+myDate.setDate(myDate.getDate() + 1); 
+$scope.nextDate = dateService.convertDateToYyyyMmDdFormat(myDate);
+
+
+var res = $scope.nextDate.split("-");
+$scope.nextDate = res[1]+"/"+res[2]+"/"+res[0];
+        //notyService.showError(response);
       }); 
    };
     /******End of Adherence History Pagination-Hill-1848 ******/
