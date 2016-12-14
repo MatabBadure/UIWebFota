@@ -1,7 +1,7 @@
 'use strict';
 angular.module('hillromvestApp')
-.controller('messagecontroller', [ '$scope','$state','$filter','$compile','$rootScope','$stateParams','messageService', 'dateService','patientService','DoctorService','StorageService','notyService','toastr','clinicService','clinicadminService','sortOptionsService', 'commonsUserService',
-  function ($scope,$state,$filter,$compile,$rootScope,$stateParams,messageService,dateService,patientService,DoctorService,StorageService,notyService,toastr,clinicService,clinicadminService,sortOptionsService,commonsUserService) {
+.controller('messagecontroller', [ '$scope','$sce','$state','$filter','$compile','$rootScope','$stateParams','messageService', 'dateService','patientService','DoctorService','StorageService','notyService','toastr','clinicService','clinicadminService','sortOptionsService', 'commonsUserService',
+  function ($scope,$sce,$state,$filter,$compile,$rootScope,$stateParams,messageService,dateService,patientService,DoctorService,StorageService,notyService,toastr,clinicService,clinicadminService,sortOptionsService,commonsUserService) {
    $scope.dummyvalue = 12 ;
    $scope.messageAttributes = {};	
    $scope.ReplymessageAttributes = {};
@@ -657,7 +657,7 @@ $scope.showNoSubjectModal = true;
 $scope.showNoMessageModal = true;
 $scope.showUpdateModal = false;
 $scope.showNoSubjectModal = false;
-document.getElementById('noWrite').readOnly = true;
+
   }
       else{
         $scope.showUpdateModal = true;
@@ -672,7 +672,7 @@ document.getElementById('noWrite').readOnly = true;
       $scope.submitted = false;
        $scope.showNoMessageOnReply = false;
 $scope.showmodalOnReply = false;
-document.getElementById('noWrite').readOnly = false;
+
     };
     $scope.showUpdateCA = function(){
   if($scope.SelectedPatientsID.length==0)
@@ -692,7 +692,7 @@ $scope.showUpdateModalCA = false;
 $scope.showNoMessageModalCA = true;
 $scope.showUpdateModalCA = false;
 $scope.showNoSubjectModalCA = false;
-document.getElementById('noWrite').readOnly = true;
+
   }
       else{
         $scope.showUpdateModalCA = true;
@@ -709,7 +709,7 @@ $scope.showNoMessageModalCA = false;
       $scope.submitted = false;
        $scope.showNoMessageOnReplyCA = false;
 $scope.showmodalOnReplyCA = false;
-document.getElementById('noWrite').readOnly = false;
+
     };
 /******End of -Take a confirmation on sending message ******/
 /*******On click of Send Message under compose mail ******/
@@ -854,6 +854,7 @@ else if($scope.ReplymessageAttributesObject[0][0].messageType === 'RE'){
 }
   messageService.sendMessageService($scope.sampleData).then(function(response){
      notyService.showMessage(response.data.statusMsg, 'success');
+     document.getElementById("replybox").style.display = "none";
       $scope.submitted = false;
       $scope.replyattributes.replyData = "";
        $scope.close();
@@ -1559,6 +1560,7 @@ else if(StorageService.get('logged').role === 'PATIENT'){
     $scope.ReplymessageAttributesObject = {};
 $scope.ReplymessageAttributesObject = angular.copy(arrayobject);
 $scope.replyFlag = true;
+document.getElementById("replybox").style.display = "block";
   };
 $scope.incrementerInbox = function()
 {
@@ -1578,6 +1580,8 @@ $scope.incrementerSent = function()
 }
 $scope.goToBack = function(flag)
 {  
+  $scope.replyFlag = false;
+  $scope.replyattributes.replyData = "";
   if(flag=="inbox")
   {
      $scope.messagelistflag = true;
@@ -1594,5 +1598,25 @@ $scope.goToBack = function(flag)
      $scope.archivemessagebodyflag = false;
   }
 }
+  $scope.pdfGeneration = function(){
+   messageService.getPdfGenerator().then(function(response){
+     var file = new Blob([(response)], {type: 'application/pdf'});
+     var fileURL = URL.createObjectURL(file);
+     $scope.content = $sce.trustAsResourceUrl(fileURL);
+         
+
+      }).catch(function(response){});
+   };
+
+   $scope.pdfGenerationNew = function(){
+    console.log("clicked");
+    require('pdfjs-dist');
+    var fs = require('fs');
+    var data = new Uint8Array(fs.readFileSync('PF.pdf'));
+    PDFJS.getDocument(data).then(function (pdfDocument) {
+      console.log('Number of pages: ' + pdfDocument.numPages);
+    });
+   };
+
 $scope.init();
   }]);

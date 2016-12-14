@@ -45,9 +45,9 @@
      </div>
        <div ng-if="unreadflag" class="col-xs-4 aligncenter unread" style="padding-top:10px; cursor:pointer;" ng-click="markAsUnread()">
      
-	   <div class="pat-unread"style=" border:0.5px solid white">
+     <div class="pat-unread"style=" border:0.5px solid white">
         
-		 <img src="images/mark-unread.png" style="width:20px; height:20px"/> <span translate="global.messaging.mark-as-unread" class="aligntextwithimg"></span>
+     <img src="images/mark-unread.png" style="width:20px; height:20px"/> <span translate="global.messaging.mark-as-unread" class="aligntextwithimg"></span>
        </div>
      </div>
      </div>
@@ -112,6 +112,14 @@
             
          </div>
  <div ng-if="messagebodyflag" class="col-xs-16" style="max-height:400px; min-height:400px; overflow-y:scroll;" >
+      <div class="row msgreplyconatiner"><div class="col-xs-15 msgreply alignright"><a ng-click="replyToMessage(messageBodyObject); replyFlag=true"><i class="fa fa-reply" aria-hidden="true"></i>Reply</a></div></div> 
+             <div ng-show="replyFlag" class="row" id="replybox">           
+                    <div style="padding-bottom:15px;"> <textarea class="col-xs-10 write-message" placeholder="Type your message here..." style="width: 98%; margin-left: 10px; min-height:140px;" ng-model="replyattributes.replyData"/>   </div><br><br>
+    <div class="btngroups">
+      <button ng-click = "replyFlag = false;" class="hillrom-btn btn-primary pull-right" style="margin-right: 0px;">Cancel</button>
+      <button ng-click = "showmodalonReplyFunc()" class="hillrom-btn btn-primary pull-right" style="margin-right: 10px;">Send Reply</button>
+</div>
+                </div>
            <div class="message-thread-container" ng-repeat="message in messageBodyObject" id="messageBodyArea"> 
           <div class="row">
             <div class="col-xs-15 msghead">
@@ -127,14 +135,7 @@
     <span class="noData_text"> No Messages Available!</span>
   </div>
            </div>
-           <div class="row"><div class="col-xs-15 msgreply alignright"><a ng-click="replyToMessage(messageBodyObject); replyFlag=true"><i class="fa fa-reply" aria-hidden="true"></i>Reply</a></div></div> 
-             <div ng-show="replyFlag" class="row">           
-                    <div style="padding-bottom:15px;"> <textarea class="col-xs-10 write-message" placeholder="Type your message here..." style="width: 98%; margin-left: 10px; min-height:140px;" ng-model="replyattributes.replyData"/>   </div><br><br>
-    <div class="btngroups">
-      <button ng-click = "replyFlag = false;" class="hillrom-btn btn-primary pull-right" style="margin-right: 0px;">Cancel</button>
-      <button ng-click = "showmodalonReplyFunc()" class="hillrom-btn btn-primary pull-right" style="margin-right: 10px;">Send Reply</button>
-</div>
-                </div> 
+
           <!--  <div class="col-xs-8" style="float:right;">
                     <button class="hillrom-btn btn-primary float-right" ng-click="setflag('inbox')" translate="global.messaging.reply"></button>
                   </div> -->   
@@ -464,6 +465,13 @@
       </footer>
     </div>
   </div>
+</div>
+
+<!-- For pdf display -->
+<div>
+pad will come here
+<object ng-show="content" data="{{content}}" type="application/pdf" style="width: 100%; height: 400px;"></object>
+<button ng-click="pdfGeneration()">Generate pdf</button>
 </div>
       </div>
         

@@ -107,6 +107,14 @@ angular.module('hillromvestApp')
           return response;
         });
       },
+        getPdfGenerator: function() {
+        var url = URL.getPDF;
+        return $http.get(url,{headers: headerService.getHeader()}, {
+           responseType: 'arraybuffer'
+        }).success(function(response) {
+          return response;
+        });
+      },
    /*   gettestthreaddata: function(id,rootid,bool,clinicid,isarchived,mailtype){
         var url = URL.getThreaddata.replace('ID',id).replace('ROOTID',rootid).replace('BOOL',bool).replace('CLINICID',clinicid).replace('ISARCHIVED',isarchived).replace('MAIL_TYPE',mailtype);
         console.log("checking url");
