@@ -4,10 +4,10 @@
 	min-height:600px !important;
 }
 /******End of remove static border bottom******/
-.compose-message-container > .row
+/* .compose-message-container > .row
 {
 	border: 0.5px solid #7ca3dc;
-}
+} */
 /******Activation page footer alignment ******/
 FooterAlignmentForDevices{
 	margin-top:13% !important;
@@ -241,7 +241,7 @@ LoginContentHeightForDevices{
 		width:130px!important;
 	}
 	.multiSelect > button{
-		width:180px;
+		width:180px !important;
 	}
 	.dark_grey_text_colour{
 	color: $storm-dust !important;
@@ -280,10 +280,10 @@ LoginContentHeightForDevices{
 	margin-right:240px !important;
 }
 /******End ofAdherence Setting Tab ******/
-.compose-message-container > .row
+/* .compose-message-container > .row
 {
 	border: 0.5px solid #7ca3dc;
-}
+} */
 .inb-date span,.arc-date span,.sent-date span,.hcp-msg-date span,.inb-date1 span
 {
 	    white-space: pre-line !important;
