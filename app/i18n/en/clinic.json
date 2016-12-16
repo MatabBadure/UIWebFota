@@ -23,7 +23,7 @@
         },
         "clinic-type": "Clinic Type",
         "clinic-speciality": "Speciality",
-        "adherence-setting": "Adherence Settings",
+        "adherence-setting": "Adherence Window",
         "transmission": "Transmission",
         "clinic-option": {
             "parent-clinic": "Parent Clinic",
