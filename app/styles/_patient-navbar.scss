@@ -520,7 +520,9 @@ border:1px solid #ccc;
 .message-thread-container:last-child {
     margin-bottom: 10px;
 }
-
+.specific-user .user-header--desc span {    
+    color: #999 !important;
+    }
 
 /*  16-12 */
 
