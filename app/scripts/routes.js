@@ -4389,6 +4389,34 @@ angular.module('hillromvestApp')
                     ]
                 }
             })
+.state('rcadminAnnouncements', {
+              parent: 'console',
+              url: '/rcadmin/announcements',
+              data: {
+                  roles: ['ACCT_SERVICES'],
+                  pageTitle: 'console.page-title.login-analytics'
+              },
+              views: {
+                  'content@': {
+                      templateUrl: 'scripts/modules/common/console/announcements/views/rcadmin/view.html',
+                      controller: 'announcementsController'
+                  }
+              },
+              resolve: {
+                /*loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('LoginAnalyticsModule');
+                    }],*/
+                  translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                      $translatePartialLoader.addPart('console');
+                      return $translate.refresh();
+                  }],
+                  authorize: ['Auth',
+                      function(Auth) {
+                          return Auth.authorize(false);
+                      }
+                  ]
+              }
+            })
 /*
             .state('patientBenchmarking', {
                 parent: 'patient-dashboard',

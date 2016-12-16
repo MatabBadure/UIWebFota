@@ -404,7 +404,13 @@ else {
 	      $state.go('clinicAdminBenchmarking');
 	    }
     };
-      	
+      $scope.announcements = function(){
+	    if($rootScope.userRole === "ADMIN"){
+	      $state.go('adminSurveyReport');
+	    }else if($rootScope.userRole === "ACCT_SERVICES"){
+	      $state.go('rcadminAnnouncements');
+	    }
+	    };	
     $scope.loginAnalyitcs = function(){
 	    if($rootScope.userRole === "ADMIN"){
 	      $state.go('adminLoginAnalytics');
