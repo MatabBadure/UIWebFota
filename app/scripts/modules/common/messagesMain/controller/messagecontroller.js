@@ -347,8 +347,10 @@ $scope.SelectedPatientsID=[];
         selectAll       : "Select all",
         selectNone      : "Select none",
         search          : "Type here to search...",
-        nothingSelected : "Please Select the User",
-        allSelected : "All Selected"
+        nothingSelected : "Please Select the recepient",
+        allSelected : "All Selected",
+        Cancel : "Cancel",
+        OK:"OK"
       };
       /******To get list of clinics associated with patient ******/
   };
@@ -991,8 +993,9 @@ if (track !== undefined) {
 $scope.processpatients = function(patients){
 $scope.patientnames = [];
      angular.forEach(patients, function(patient, key){
+       var patientsname = patient.lastName + ' , ' + patient.firstName;
         var obj = {
-          'name': patient.firstName + ' ' + patient.lastName,
+          'name': patientsname,
           'ticked': true
         };
         $scope.patientnames.push(obj);  
@@ -1011,9 +1014,10 @@ $scope.patientnames = [];
   };
   $scope.selectpatient = function(){
  $scope.SelectedPatientsID = [];
+ console.log($scope.selectedPatients);
  for(var j=0;j<$scope.selectedPatients.length;j++){
     for(var i=0;i<$scope.patients.length;i++){
-if($scope.selectedPatients[j].name == ($scope.patients[i].firstName + ' ' + $scope.patients[i].lastName)){
+if($scope.selectedPatients[j].name == ($scope.patients[i].lastName + ' , ' + $scope.patients[i].firstName)){
         $scope.SelectedPatientsID.push($scope.patients[i].id);
        }
 

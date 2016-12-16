@@ -110,7 +110,9 @@ angular.module('hillromvestApp')
 				selectNone      : "Tick none",
 		    search          : "Type here to search...",
 		    nothingSelected : "Nothing is selected",
-		    allSelected : "All Selected"
+		    allSelected : "All Selected",
+		    Cancel : "Cancel",
+        	OK:"OK"
 			}
 
 			$scope.toggleDuration(false, true, false, false, false);
