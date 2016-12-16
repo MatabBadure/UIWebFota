@@ -520,10 +520,9 @@ border:1px solid #ccc;
 .message-thread-container:last-child {
     margin-bottom: 10px;
 }
-.specific-user .user-header--desc span {    
-    color: #999 !important;
-    }
-
+.specific-user .user-header--desc span {
+  color: #999 !important;
+}
 /*  16-12 */
 
 .infocontainer {
@@ -550,15 +549,11 @@ border:1px solid #ccc;
    content: url(../images/on_icon.png);
     display: block;
     width: 45px;
-    line-height:10px;
-    
-   
+    line-height:10px;  
 }
 .icon-toggle-off::before {
   content: url(../images/off_icon.png);
    display: block;
     width: 45px;
     line-height:10px;
-
-
-}
+    }
