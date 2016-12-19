@@ -347,7 +347,7 @@ $scope.SelectedPatientsID=[];
         selectAll       : "Select all",
         selectNone      : "Select none",
         search          : "Type here to search...",
-        nothingSelected : "Please Select the recepient",
+        nothingSelected : "Please select the recipient",
         allSelected : "All Selected",
         Cancel : "Cancel",
         OK:"OK"
