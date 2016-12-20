@@ -116,8 +116,9 @@
              <div ng-show="replyFlag" class="row" id="replybox">           
                     <div style="padding-bottom:15px;" class="empty-reply"> <textarea class="col-xs-10 write-message" placeholder="Type your message here..." style="width: 96%; margin-left: 10px; min-height:140px;" ng-model="replyattributes.replyData"/>   </div><br><br>
     <div class="btngroups">
-      <button ng-click = "replyFlag = false;" class="hillrom-btn btn-primary pull-right" style="margin-right: 0px;">Cancel</button>
-      <button ng-click = "showmodalonReplyFunc()" class="hillrom-btn btn-primary pull-right" style="margin-right: 10px;">Send Reply</button>
+    <button ng-click = "showmodalonReplyFunc()" class="hillrom-btn btn-primary pull-right" style="margin-right: 0px;">Send Reply</button>
+      <button ng-click = "replyFlag = false;" class="hillrom-btn btn-primary pull-right" style="margin-right: 10px;">Cancel</button>
+      
 </div>
                 </div>
            <div class="message-thread-container" ng-repeat="message in messageBodyObject" id="messageBodyArea"> 
@@ -213,8 +214,13 @@
 
           </div>      
         </div>    
-   
-       <div class="col-sm-18" ng-if="(sentmessagelistflag && !sentmessagebodyflag)" ng-show="totalMessages >= 1">
+    <div class="col-sm-18" ng-if="(sentmessagelistflag && !sentmessagebodyflag)" ng-show="totalMessages >= 1 && numberOfMessages==1 && checkFirst==true">
+    <div class="col-sm-5 paginationcontainer " style="float:right;">
+           <span style="color:#7ca3dc;"> {{1}} Messages Found &nbsp </span>
+    </div>
+    </div>
+
+ <div class="col-sm-18" ng-if="(sentmessagelistflag && !sentmessagebodyflag)" ng-show="(totalMessages >= 1 && numberOfMessages>1) || (totalMessages>1 && currentPageIndex > 1)">
           <div class="col-sm-5 paginationcontainer " style="float:right;">
            <span style="color:#7ca3dc;"> {{totalMessages}} Messages Found &nbsp </span>
            <span ng-show="pageCount > 1">
@@ -363,9 +369,10 @@
                 </div>
                 <div class="col-xs-14 compose-message-container   alignright">
                   <div class="btn-group cmp-btns">
+                  <button class="hillrom-btn btn-primary " ng-click="SwitchTabs('inbox')" translate="global.messaging.cancel"></button>
                     <button ng-click = "showUpdate()" class="hillrom-btn btn-primary "  translate="global.messaging.send-message"></button>
                   
-                    <button class="hillrom-btn btn-primary " ng-click="SwitchTabs('inbox')" translate="global.messaging.cancel"></button>
+                    
                   </div>
                 </div>   
               </div>
