@@ -305,6 +305,7 @@ angular.module('hillromvestApp')
       $scope.selectedClinic = clinic;
       $scope.searchPatients();      
     }
+    $state.go('clinicadminpatientdashboard',{'clinicId': $scope.selectedClinic.id});
     $scope.initCount($scope.selectedClinic.id);
   };
 

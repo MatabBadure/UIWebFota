@@ -391,6 +391,12 @@ angular.module('hillromvestApp')
         return $http.get(url, {
           headers: headerService.getHeader()
         });
+      },
+      getLatestAdherenceSetting: function(patientId){
+         var url = URL.getlatestAdherenceWindow.replace('USERID', patientId);
+        return $http.get(url, {
+          headers: headerService.getHeader()
+        });
       }
 
       
