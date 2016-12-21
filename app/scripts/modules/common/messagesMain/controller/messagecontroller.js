@@ -762,6 +762,7 @@ $scope.SendMessage = function(){
  }).catch(function(response){
        $scope.close();
    $scope.closeCA();
+   notyService.showError(response);
       });
     $scope.messageAttributes.subject = "";
    $scope.messageAttributes.messageData = "";
