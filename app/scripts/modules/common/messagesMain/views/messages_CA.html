@@ -125,8 +125,9 @@
              <div ng-show="replyFlag" class="row" id="replybox">           
                     <div class="empty-reply"> <textarea class="col-xs-10 write-message" placeholder="Type your message here..." style="width: 96%; margin-left: 10px; min-height:140px;" ng-model="replyattributes.replyData"/>   </div><br><br>
     <div class="btngroups">
-      <button ng-click = "replyFlag = false;" class="hillrom-btn btn-primary pull-right" style="margin-right: 0px;">Cancel</button>
-      <button ng-click = "showmodalonReplyFuncCA()" class="hillrom-btn btn-primary pull-right" style="margin-right: 10px;">Send Reply</button>
+    <button ng-click = "showmodalonReplyFuncCA()" class="hillrom-btn btn-primary pull-right" style="margin-right: 0px;">Send Reply</button>
+      <button ng-click = "replyFlag = false;" class="hillrom-btn btn-primary pull-right" style="margin-right: 10px;">Cancel</button>
+      
 </div>
                 </div> 
            <div class="message-thread-container" ng-repeat="message in messageBodyObject" id="messageBodyArea"> 
@@ -373,9 +374,10 @@
                 </div>
                 <div class="col-xs-14 compose-message-container   alignright">
                   <div class="btn-group cmp-btns">
+                  <button class="hillrom-btn btn-primary " ng-click="SwitchTabs('inbox')" translate="global.messaging.cancel"></button>
                     <button ng-click = "showUpdateCA()" class="hillrom-btn btn-primary "  translate="global.messaging.send-message"></button>
                   
-                    <button class="hillrom-btn btn-primary " ng-click="SwitchTabs('inbox')" translate="global.messaging.cancel"></button>
+                    
                   </div>
                 </div>   
               </div>
