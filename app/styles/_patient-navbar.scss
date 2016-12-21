@@ -488,7 +488,7 @@ color:#646568;
 .msgreplyconatiner {
   margin-top: 10px;
 }
-.write-message{
+#replybox .write-message{
   width:98% !important;
 }
 .clinic-link .dropdown-menu, .exist-link .dropdown-menu {
@@ -520,3 +520,37 @@ border:1px solid #ccc;
 .message-thread-container:last-child {
     margin-bottom: 10px;
 }
+.specific-user .user-header--desc span {
+  color: #999 !important;
+}
+/*  16-12 */
+      
+      .infocontainer {
+        border: 1px solid #ccc;
+        margin-top: 30px;
+        padding: 10px;
+        float: left;
+      }
+      .infoicon {
+        font-size: 19px;
+        margin-right: 5px;
+      }
+      .adhtxt {
+        font-weight: bold;
+      }
+      .adhrenbtncontainer buton {
+        display: inline-block;
+      }
+      .icon-toggle-on::before
+      {
+         content: url(../images/on_icon.png);
+          display: block;
+          width: 45px;
+          line-height:10px;  
+      }
+      .icon-toggle-off::before {
+        content: url(../images/off_icon.png);
+         display: block;
+          width: 45px;
+          line-height:10px;
+          }

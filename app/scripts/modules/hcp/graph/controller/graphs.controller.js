@@ -41,6 +41,7 @@ angular.module('hillromvestApp')
 		$scope.fromTimeStamp = dateService.getnDaysBackTimeStamp(patientDashboard.maxDaysForWeeklyGraph);
 		$scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,hcpDashboardConstants.USdateFormat,'/');
 		$scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,hcpDashboardConstants.USdateFormat,'/');
+		$scope.prescribeDevice = false;
 		$scope.statistics = {
 			"date":$scope.toDate,
 			"patientsWithSettingDeviation":0,
@@ -59,6 +60,7 @@ angular.module('hillromvestApp')
 		if($state.current.name === 'hcpdashboard'){
 		  $scope.getClinicsForHCP($scope.hcpId);
 		} else if($state.current.name === 'clinicadmindashboard') {
+			$scope.prescribeDevice = true;
 			$scope.getClinicsForClinicAdmin($scope.hcpId);
 		
 		}
@@ -145,6 +147,7 @@ angular.module('hillromvestApp')
 				  notyService.showError(response);
 				});
 		} else if($state.current.name === 'clinicadmindashboard'){
+			$scope.prescribeDevice = true;
 		  clinicadminService.getStatistics(clinicId, userId).then(function(response){
 		  $scope.statistics = response.data.statitics;
 		  $scope.statistics.date = $scope.getYesterday();
@@ -274,6 +277,7 @@ angular.module('hillromvestApp')
 	  $scope.getStatistics($scope.selectedClinic.id, StorageService.get('logged').userId);
 	  $scope.drawGraph();
 	}
+	$state.go('clinicadmindashboard',{'clinicId': $scope.selectedClinic.id});
 	$scope.initCount($scope.selectedClinic.id);
   };
 

@@ -127,7 +127,7 @@ angular.module('hillromvestApp')
     };
 
     $scope.SelectOthers = function(option){
-      if(option == 'Others')
+      if(option == 'Other')
       {
         $scope.ShowOther = true;
       }
@@ -305,6 +305,7 @@ angular.module('hillromvestApp')
       $scope.selectedClinic = clinic;
       $scope.searchPatients();      
     }
+    $state.go('clinicadminpatientdashboard',{'clinicId': $scope.selectedClinic.id});
     $scope.initCount($scope.selectedClinic.id);
   };
 
