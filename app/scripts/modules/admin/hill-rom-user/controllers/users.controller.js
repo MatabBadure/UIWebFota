@@ -13,9 +13,9 @@ angular.module('hillromvestApp')
 
     $scope.init = function() {
       var currentRoute = $state.current.name;
-      if ($state.current.name === 'hillRomUserEdit' || $state.current.name === 'associateHillRomUserView') {
+      if ($state.current.name === 'hillRomUserEdit' || $state.current.name === 'associateHillRomUserView' || $state.current.name === 'rcadmin-hillRomUserEdit') {
         $scope.getUserDetails($stateParams.userId, $scope.setEditMode);
-      } else if ($state.current.name === 'hillRomUserNew') {
+      } else if ($state.current.name === 'hillRomUserNew' || $state.current.name === 'rcadmin-hillRomUserNew') {
         $scope.createUser();
       }
     };
@@ -36,7 +36,13 @@ angular.module('hillromvestApp')
         $scope.$broadcast('getUserDetail', {user: $scope.user});
       }).catch(function(response) {
         notyService.showError(response);
-        $state.go('hillRomUser');
+        if($scope.userStatus.role == 'ADMIN'){
+          $state.go('hillRomUser');
+        }
+         else if($scope.userStatus.role == 'ACCT_SERVICES'){
+          $state.go('rcadmin-hillRomUser');
+        }
+        
       });
     };
 
