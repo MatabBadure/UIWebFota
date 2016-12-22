@@ -1742,7 +1742,7 @@ angular.module('hillromvestApp')
 
             .state('clinicadminUserProfile', {
                 parent: 'clinic-admin-user-profile',
-                url: '/profile',
+                url: '/{clinicId}/profile',
                 data: {
                     roles: ['CLINIC_ADMIN'],
                     pageTitle: 'profile.page-title.my-profile'
@@ -1773,7 +1773,7 @@ angular.module('hillromvestApp')
 
             .state('clinicadminUpdatePassword', {
                 parent: 'clinic-admin-user-profile',
-                url: '/updatepassword',
+                url: '/{clinicId}/updatepassword',
                 data: {
                     roles: ['CLINIC_ADMIN'],
                     pageTitle: 'profile.page-title.update-password'
@@ -1799,7 +1799,7 @@ angular.module('hillromvestApp')
 
             .state('editClinicadminProfile', {
                 parent: 'clinic-admin-user-profile',
-                url: '/update',
+                url: '/{clinicId}/update',
                 data: {
                     roles: ['CLINIC_ADMIN'],
                     pageTitle: 'profile.page-title.profile-update'
@@ -2479,7 +2479,7 @@ angular.module('hillromvestApp')
 
             .state('clinicadminSettings', {
                 parent: 'clinic-admin-user-profile',
-                url: '/notification-settings',
+                url: '/{clinicId}/notification-settings',
                 data: {
                     roles: ['CLINIC_ADMIN'],
                     pageTitle: 'profile.page-title.notification-settings'

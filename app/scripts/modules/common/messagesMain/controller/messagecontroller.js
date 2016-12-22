@@ -762,6 +762,7 @@ $scope.SendMessage = function(){
  }).catch(function(response){
        $scope.close();
    $scope.closeCA();
+   notyService.showError(response);
       });
     $scope.messageAttributes.subject = "";
    $scope.messageAttributes.messageData = "";
@@ -886,6 +887,9 @@ messageService.fetchSentItems(toPassID,isclinic,$scope.PageNumber,$scope.perPage
     $scope.sentmessageListRawData = response.data;
       $scope.pageCount = $scope.sentmessageListRawData.totalPages;
       $scope.totalMessages = $scope.sentmessageListRawData.totalElements;
+      $scope.numberOfMessages = $scope.sentmessageListRawData.numberOfElements;
+      $scope.checkFirst = $scope.sentmessageListRawData.first;
+
  $scope.MessageDetails = angular.copy($scope.sentmessageListRawData.content[0]);
         $scope.sentmessageList = angular.extend({},$scope.sentmessageList, $scope.sentmessageListRawData.content);
     for(var i=0;i<$scope.sentmessageListRawData.content.length;i++){
@@ -943,11 +947,15 @@ if (track !== undefined) {
           $scope.PageNumber--;
           $scope.currentPageIndex--;
           $scope.isAllSelected = false;
+          $scope.unreadflag = false;
+          $scope.readflag = false;
         }
         else if (track === 'NEXT' && $scope.currentPageIndex < $scope.pageCount){
             $scope.PageNumber++;
             $scope.currentPageIndex++;
             $scope.isAllSelected = false;
+            $scope.unreadflag = false;
+            $scope.readflag = false;
         }
         else{
             return false;
