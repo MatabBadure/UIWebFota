@@ -66,12 +66,20 @@ angular.module('hillromvestApp')
           var role = StorageService.get('logged').role;
           if(role === loginConstants.role.associates){
             $state.go('associateHillRomUserView', { userId: user.id });
-          }else{
+          }else if(role === loginConstants.role.acctservices){
+             $state.go('rcadmin-hillRomUserEdit', { userId: user.id });
+          }
+            else{
             $state.go('hillRomUserEdit', { userId: user.id });
           }
         };
 
         $scope.createUser = function() {
+           var role = StorageService.get('logged').role;
+          if(role === loginConstants.role.acctservices){
+          $state.go('rcadmin-hillRomUserNew');
+          }
+          else
           $state.go('hillRomUserNew');
         };
 

@@ -4338,7 +4338,7 @@ angular.module('hillromvestApp')
                   ]
               }
             })
-			.state('clinicAdminUpdateProtocol', {
+            .state('clinicAdminUpdateProtocol', {
                 parent: 'clinicadminpatientProtocol',
                 url: '/{protocolId}/editProtocol',
                 data: {
@@ -4364,7 +4364,7 @@ angular.module('hillromvestApp')
                 }
             })
 
-			.state('clinicadminGenerateProtocol', {
+            .state('clinicadminGenerateProtocol', {
                 parent: 'clinicadminpatientProtocol',
                 url: '/{protocolId}/protocoldetail',
                 data: {
@@ -4378,7 +4378,7 @@ angular.module('hillromvestApp')
                     }
                 },
                 resolve: {
-                	translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('patient-user');
                         return $translate.refresh();
                     }],
@@ -4895,6 +4895,81 @@ angular.module('hillromvestApp')
                     }],
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('patient');$translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+.state('rcadmin-hillRomUser', {
+                parent: 'rcadmin',
+                url: '/rcadmin-hillRomUser',
+                data: {
+                    roles: ['ACCT_SERVICES'],
+                    pageTitle: 'user.page-title.users'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/rcadmin/hill-rom-user/views/list/view.html',
+                        controller: 'UsersController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('hillRomUser');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+            .state('rcadmin-hillRomUserNew', {
+                parent: 'rcadmin-hillRomUser',
+                url: '/new',
+                data: {
+                    roles: ['ACCT_SERVICES'],
+                    pageTitle: 'patient.title'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/rcadmin/hill-rom-user/views/create-edit/view.html',
+                        controller: 'UsersController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('hillRomUser');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+            .state('rcadmin-hillRomUserEdit', {
+                parent: 'rcadmin-hillRomUser',
+                url: '/{userId}',
+                data: {
+                    roles: ['ACCT_SERVICES'],
+                    pageTitle: 'user.page-title.user'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/rcadmin/hill-rom-user/views/create-edit/view.html',
+                        controller: 'UsersController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('hillRomUser');
                         return $translate.refresh();
                     }],
                     authorize: ['Auth',
