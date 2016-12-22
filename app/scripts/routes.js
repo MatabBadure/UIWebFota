@@ -1742,7 +1742,7 @@ angular.module('hillromvestApp')
 
             .state('clinicadminUserProfile', {
                 parent: 'clinic-admin-user-profile',
-                url: '//{clinicId}/profile',
+                url: '/{clinicId}/profile',
                 data: {
                     roles: ['CLINIC_ADMIN'],
                     pageTitle: 'profile.page-title.my-profile'
@@ -1773,7 +1773,7 @@ angular.module('hillromvestApp')
 
             .state('clinicadminUpdatePassword', {
                 parent: 'clinic-admin-user-profile',
-                url: '{clinicId}/updatepassword',
+                url: '/{clinicId}/updatepassword',
                 data: {
                     roles: ['CLINIC_ADMIN'],
                     pageTitle: 'profile.page-title.update-password'
@@ -4338,7 +4338,7 @@ angular.module('hillromvestApp')
                   ]
               }
             })
-			.state('clinicAdminUpdateProtocol', {
+            .state('clinicAdminUpdateProtocol', {
                 parent: 'clinicadminpatientProtocol',
                 url: '/{protocolId}/editProtocol',
                 data: {
@@ -4364,7 +4364,7 @@ angular.module('hillromvestApp')
                 }
             })
 
-			.state('clinicadminGenerateProtocol', {
+            .state('clinicadminGenerateProtocol', {
                 parent: 'clinicadminpatientProtocol',
                 url: '/{protocolId}/protocoldetail',
                 data: {
@@ -4378,7 +4378,7 @@ angular.module('hillromvestApp')
                     }
                 },
                 resolve: {
-                	translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('patient-user');
                         return $translate.refresh();
                     }],
