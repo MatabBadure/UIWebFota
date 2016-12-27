@@ -793,7 +793,7 @@ angular.module('hillromvestApp')
 
 		/* This method initiates the required methods required for a specific route*/
 		$scope.init = function(){
-			if($state.current.name === 'adminLoginAnalytics' || $state.current.name === 'rcadminLoginAnalytics' || $state.current.name === 'associatesLoginAnalytics'){
+			if($state.current.name === 'adminLoginAnalytics' || $state.current.name === 'rcadminLoginAnalytics' || $state.current.name === 'associatesLoginAnalytics' || $state.current.name === 'customerserviceLoginAnalytics'){
 				$scope.analyticsInit();
 			}
 		};

@@ -175,6 +175,9 @@ else {
       }else if($rootScope.userRole === loginConstants.role.associates){
       	$state.go('associateProfile');
       }
+      else if($rootScope.userRole === loginConstants.role.customerservices){
+      	$state.go('customerserviceProfile');
+      }
     };
     $scope.profileCA = function(clinicid){
       	var clinicId = ($stateParams.clinicId) ? $stateParams.clinicId : clinicid;
@@ -402,6 +405,9 @@ else {
 	    } else if($rootScope.userRole === loginConstants.role.associates){
 	      $state.go('associateSurveyReport');
 	    }
+	    else if($rootScope.userRole === loginConstants.role.customerservices){
+	      $state.go('customerserviceSurveyReport');
+	    }
 	    else if($rootScope.userRole === loginConstants.role.hcp ){
 	      $state.go('hcpBenchmarking');
 	    }
@@ -418,6 +424,9 @@ else {
 	    } else if($rootScope.userRole === loginConstants.role.associates){
 	      $state.go('associatesLoginAnalytics');
 	    }
+	    else if($rootScope.userRole === loginConstants.role.customerservices){
+	      $state.go('customerserviceLoginAnalytics');
+	    }
     };
 
     $scope.benchMarking = function(){
@@ -427,6 +436,9 @@ else {
       	$state.go('rcadminBenchmarking');
       }else if($rootScope.userRole === loginConstants.role.associates){
       	$state.go('associatesBenchmarking');
+      }
+      else if($rootScope.userRole === loginConstants.role.customerservices){
+      	$state.go('customerserviceBenchmarking');
       }
     };
 

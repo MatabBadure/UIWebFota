@@ -52,7 +52,7 @@ angular.module('hillromvestApp')
 		};
 		
 		$scope.init = function(){
-			if($state.current.name === 'adminSurveyReport' || $state.current.name === 'rcddminSurveyReport' || $state.current.name === 'associateSurveyReport'){
+			if($state.current.name === 'adminSurveyReport' || $state.current.name === 'rcddminSurveyReport' || $state.current.name === 'associateSurveyReport' || $state.current.name === 'customerserviceSurveyReport'){
 				$scope.viewType = 'graph';
 				$scope.surveyType = 1;
 				$scope.calculateTimeDuration(5);

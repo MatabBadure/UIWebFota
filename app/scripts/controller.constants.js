@@ -138,7 +138,8 @@ angular.module('hillromvestApp').constant('hcpDashboardConstants', {
 		"admin": "ADMIN",
 		"Rcadmin": "Rcadmin",
 		"Rc": "Rc",
-		"associates" : "ASSOCIATES"
+		"associates" : "ASSOCIATES",
+		"customerservices" : "CUSTOMER_SERVICES"
 
 	}
 })

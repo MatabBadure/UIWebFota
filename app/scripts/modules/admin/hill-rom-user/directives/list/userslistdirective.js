@@ -66,12 +66,21 @@ angular.module('hillromvestApp')
           var role = StorageService.get('logged').role;
           if(role === loginConstants.role.associates){
             $state.go('associateHillRomUserView', { userId: user.id });
+          }else if(role === loginConstants.role.acctservices){
+             $state.go('rcadmin-hillRomUserEdit', { userId: user.id });
+          }else if(role === loginConstants.role.customerservices){
+            $state.go('customerserviceHillRomUserView', { userId: user.id });
           }else{
             $state.go('hillRomUserEdit', { userId: user.id });
           }
         };
 
         $scope.createUser = function() {
+           var role = StorageService.get('logged').role;
+          if(role === loginConstants.role.acctservices){
+          $state.go('rcadmin-hillRomUserNew');
+          }
+          else
           $state.go('hillRomUserNew');
         };
 
@@ -158,7 +167,7 @@ angular.module('hillromvestApp')
           var x = {};
           x.text = "All"; x.value = "All";
           $scope.userRoleList.push(x);
-          var roles = ['ADMIN', 'ACCT_SERVICES', 'ASSOCIATES', 'PATIENT', 'HCP', 'CARE_GIVER', 'CLINIC_ADMIN'];
+          var roles = ['ADMIN', 'ACCT_SERVICES', 'ASSOCIATES', 'PATIENT', 'HCP', 'CARE_GIVER', 'CLINIC_ADMIN', 'CUSTOMER_SERVICES'];
           angular.forEach(roles, function(role){
               x = {};
               x.value = role;              
@@ -183,6 +192,9 @@ angular.module('hillromvestApp')
                   break;
                 case 'ASSOCIATES':
                   x.text = "Associates";                
+                  break;
+                case 'CUSTOMER_SERVICES':
+                  x.text = "Customer Services";                
                   break;
               } 
               $scope.userRoleList.push(x);                         

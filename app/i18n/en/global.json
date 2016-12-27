@@ -134,7 +134,8 @@
             "caregiver": "Caregiver",
             "clinic-admin": "Clinic Admin",
             "hcp": "HCP",
-            "patient": "Patient"
+            "patient": "Patient",
+            "customerservices" : "Customer Services"
         },
         "not-applicable": "NA",
         "notification":{
