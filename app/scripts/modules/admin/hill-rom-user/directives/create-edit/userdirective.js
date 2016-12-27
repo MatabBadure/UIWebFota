@@ -18,10 +18,11 @@ angular.module('hillromvestApp')
         userStatus: '=userStatus'
       },
       controller: ['$scope', 'notyService', '$state', 'UserService', 'StorageService', 'Auth', '$rootScope', function ($scope, notyService, $state, UserService, StorageService, Auth, $rootScope) {
+        $scope.currentUserRole = StorageService.get('logged').role;
 
         $scope.init = function(){
           $scope.nonHillRomUsers = ['PATIENT', 'HCP', 'CLINIC_ADMIN', 'CARE_GIVER'];
-          if($state.current.name === 'hillRomUserEdit'){
+          if($state.current.name === 'hillRomUserEdit' || $state.current.name === 'rcadmin-hillRomUserEdit' || $state.current.name === 'customerserviceHillRomUserView'){
             $scope.loggedUserId = StorageService.get('logged').userId;
           }
         };
@@ -39,9 +40,11 @@ angular.module('hillromvestApp')
         };
 
         $scope.validateSuperAdmin = function () {
-          if ($scope.userStatus.editMode && $scope.userStatus.role !== roleEnum.ADMIN) {
+         $scope.isSuperadmin = ($scope.user.role === 'ADMIN' && $scope.currentUserRole === 'ACCT_SERVICES') ? true : false;
+          if ($scope.userStatus.editMode &&  !($scope.userStatus.role === roleEnum.ADMIN || $scope.userStatus.role === roleEnum.ACCT_SERVICES)) {
             return true;
           }
+          else return false;
         };
 
         /**
@@ -161,7 +164,12 @@ angular.module('hillromvestApp')
           $scope.showActivateModal = false;
           UserService.reactivateUser($scope.user.id).then(function(response){
            notyService.showMessage(response.data.message, 'success');
-           $state.go('hillRomUser');
+           if($scope.currentUserRole == 'ADMIN'){
+            $state.go('hillRomUser');
+          }
+          else if($scope.currentUserRole == 'ACCT_SERVICES'){
+             $state.go('rcadmin-hillRomUser');
+          }
           }).catch(function(response){
            notyService.showError(response);
           });
@@ -173,7 +181,12 @@ angular.module('hillromvestApp')
           $scope.userStatus.editMode = false;
           $scope.form.$setPristine();
           $scope.submitted = false;
-          $state.go('hillRomUser');
+          if($scope.currentUserRole == 'ADMIN'){
+            $state.go('hillRomUser');
+          }
+          else if($scope.currentUserRole == 'ACCT_SERVICES'){
+             $state.go('rcadmin-hillRomUser');
+          }
         };
 
         $scope.showUpdateModal = function(){

@@ -4,7 +4,7 @@
     <div class="dashbord-nav__primary pull-left">
       <span class="dashbord-nav__primary--title" translate="user.home.manageLabel"></span>
     </div>
-    <div ng-if="userRole !== 'ASSOCIATES'" class="dashbord-nav__secondary create-user navbar-right cursor-pointer" ng-click="createUser()">
+    <div ng-if="userRole !== 'ASSOCIATES' && userRole !== 'CUSTOMER_SERVICES'" class="dashbord-nav__secondary create-user navbar-right cursor-pointer" ng-click="createUser()">
       <span class="dashbord-nav__secondary--create-new" translate="user.home.createLabel"></span>
       <span class="icon-plus-icon add-new"></span>
     </div>
@@ -57,6 +57,7 @@
         <span class="impo-highlight" ng-if="user.role === 'CLINIC_ADMIN'" translate="global.role.clinic-admin"></span>
         <span class="impo-highlight" ng-if="user.role === 'ADMIN'" translate="global.role.super-admin"></span>
         <span class="impo-highlight" ng-if="user.role === 'ASSOCIATES'" translate="global.role.associates"></span>
+         <span class="impo-highlight" ng-if="user.role === 'CUSTOMER_SERVICES'" translate="global.role.customerservices"></span>
         <span class="impo-highlight" ng-if="user.role === 'ACCT_SERVICES'" translate="global.role.account-services"> </span>
       </div>
       <div class="col-md-3 col-sm-3 reset-padding centered pull-left-mob width120">

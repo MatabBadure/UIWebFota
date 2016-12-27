@@ -115,13 +115,13 @@ angular.module('hillromvestApp')
 
 			$scope.toggleDuration(false, true, false, false, false);
 
-			if($state.current.name === 'adminClinicDiseaseBenchmarking' || $state.current.name === 'rcadminClinicDiseaseBenchmarking' || $state.current.name === 'associatesClinicDiseaseBenchmarking'){
+			if($state.current.name === 'adminClinicDiseaseBenchmarking' || $state.current.name === 'rcadminClinicDiseaseBenchmarking' || $state.current.name === 'associatesClinicDiseaseBenchmarking' || $state.current.name === 'customerserviceClinicDiseaseBenchmarking'){
 				$scope.benchmarkType = "CF";
 				$scope.type = 'noOfPatients';
 				$scope.ageRange = 'all';
 				$scope.clinicRange = 'all';
 				$scope.getClinicDiseaseReport($scope.serverFromDate, $scope.serverToDate, $scope.xaxis, $scope.ageRange, $scope.clinicRange, $scope.state, $scope.city);
-			}else if($state.current.name === 'adminBenchmarking' || $state.current.name === 'rcadminBenchmarking' || $state.current.name === 'associatesBenchmarking'){
+			}else if($state.current.name === 'adminBenchmarking' || $state.current.name === 'rcadminBenchmarking' || $state.current.name === 'associatesBenchmarking' || $state.current.name === 'customerserviceBenchmarking'){
 				$scope.benchmarkType = "Average";
 				$scope.type = 'adherenceScore';
 				$scope.range = 'all';
@@ -233,9 +233,9 @@ angular.module('hillromvestApp')
 		};
 
 		$scope.getGraphData = function(){
-			if($state.current.name === 'adminBenchmarking' || $state.current.name === 'rcadminBenchmarking' || $state.current.name === 'associatesBenchmarking'){
+			if($state.current.name === 'adminBenchmarking' || $state.current.name === 'rcadminBenchmarking' || $state.current.name === 'associatesBenchmarking' || $state.current.name === 'customerserviceBenchmarking'){
 				$scope.getBenchmarkingReport($scope.serverFromDate, $scope.serverToDate, $scope.xaxis, $scope.type, $scope.benchmarkType, $scope.range, $scope.state, $scope.city);	
-			}else if($state.current.name === 'adminClinicDiseaseBenchmarking' || $state.current.name === 'rcadminClinicDiseaseBenchmarking' || $state.current.name === 'associatesClinicDiseaseBenchmarking'){
+			}else if($state.current.name === 'adminClinicDiseaseBenchmarking' || $state.current.name === 'rcadminClinicDiseaseBenchmarking' || $state.current.name === 'associatesClinicDiseaseBenchmarking' || $state.current.name === 'customerserviceClinicDiseaseBenchmarking'){
 				if($scope.isIgnoreXaxis){
 					$scope.getClinicDiseaseReportIgnoreXaxis();
 				}else{
@@ -684,6 +684,13 @@ angular.module('hillromvestApp')
 						$state.go('associatesBenchmarking');
 					}else if(state === 'clinicDisease'){
 						$state.go('associatesClinicDiseaseBenchmarking');
+					}
+				break;
+				case loginConstants.role.customerservices: 
+					if(state === 'parameter'){
+						$state.go('customerserviceBenchmarking');
+					}else if(state === 'clinicDisease'){
+						$state.go('customerserviceClinicDiseaseBenchmarking');
 					}
 				break;
 			}
