@@ -1,0 +1,152 @@
+<ng-include src="'scripts/components/navbar/navbarcsr.html'"></ng-include>
+<clinic-navbar></clinic-navbar>
+
+<div class="container admin-user">
+  <div class="col-md-16 admin-views">
+    <span class="admin-views--title">
+      {{clinic.name}}
+    </span>
+  </div>
+
+  <div class="col-md-16 col-sm-16 user-detail-info" style="padding-right:5px !important; padding-left:20px !important;">
+    <div class="col-md-4 col-sm-4 user-detail-info__data word-ellipsis">
+      <span class="user-detail-info__data--key" translate="clinic.hillRom-id"></span>
+      <span class="user-detail-info__data--key">:</span>
+      <span class="user-detail-info__data--value">{{clinic.hillromId}}</span>
+    </div>
+    <div class="col-md-4 col-sm-4 user-detail-info__data">
+      <span class="user-detail-info__data--key" translate="clinic.type"></span>
+      <span class="user-detail-info__data--key">:</span>
+      <span class="user-detail-info__data--value" ng-if="clinic.parent" translate="clinic.clinicType.parent"></span>
+      <span class="user-detail-info__data--value" ng-if="!clinic.parent" translate="clinic.clinicType.satellite"></span>
+    </div>
+    <div class="col-md-4 col-sm-4 user-detail-info__data">
+      <span class="user-detail-info__data--key" translate="clinic.status"></span>
+      <span class="user-detail-info__data--key">:</span>
+      <span class="user-detail-info__data--value">{{clinic.status}}</span>
+    </div>
+
+    <div class="col-md-4 col-sm-4 user-detail-info__data">
+      <span class="user-detail-info__data--key" translate="clinic.phoneNumber"></span>
+      <span class="user-detail-info__data--key">:</span>
+      <span class="user-detail-info__data--value">{{clinic.phoneNumber}}</span>
+    </div>
+    <div class="col-md-4 col-sm-4 user-detail-info__data word-ellipsis">
+      <span class="user-detail-info__data--key" translate="clinic.address"></span>
+      <span class="user-detail-info__data--key">:</span>
+      <span class="user-detail-info__data--value" ng-if="clinic.address && clinic.address2">{{clinic.address}}, {{clinic.address2}}</span>
+      <span class="user-detail-info__data--value" ng-if="!clinic.address && clinic.address2">{{clinic.address2}}</span>
+      <span class="user-detail-info__data--value" ng-if="clinic.address && !clinic.address2">{{clinic.address}}</span>
+    </div>
+    <div class="col-md-4 col-sm-4 user-detail-info__data">
+      <span class="user-detail-info__data--key" translate="clinic.city"></span>
+      <span class="user-detail-info__data--key">:</span>
+      <span class="user-detail-info__data--value">{{clinic.city}}</span>
+    </div>
+    <div class="col-md-4 col-sm-4 user-detail-info__data">
+      <span class="user-detail-info__data--key" translate="clinic.state"></span>
+      <span class="user-detail-info__data--key">:</span>
+      <span class="user-detail-info__data--value">{{clinic.state}}</span>
+    </div>
+  <div class="col-md-4 col-sm-4 user-detail-info__data">
+      <span class="user-detail-info__data--key" translate="clinic.clinic-speciality"></span>
+      <span class="user-detail-info__data--key">:</span>
+      <span class="user-detail-info__data--value">{{clinic.speciality}}</span>
+    </div>
+  </div>
+
+<!--   <div class="col-md-16 col-sm-16 reset-padding margin-top" ng-if="clinic.id">
+    <buton class="hillrom-btn  float-right btn-margin-left btn-secondary" ng-click="deactivateClinicModal(clinic)" ng-if="!clinic.deleted" translate="clinic.clinic-deactivate"></buton>
+  </div> -->
+ <div class="clr"></div>
+<div class="container admin-user margin-top-xl" ng-if="clinic.parent">
+  <div class="col-md-16 reset-padding admin-views--title">
+    <span class="admin-views" translate="clinic.assoc-clinic"></span>
+  </div>
+</div>
+
+  <div class="dashboard dashboard--content" ng-if="clinic.parent">
+    <div class="container dashboard__manage-view margin-top-xl">
+      <div class="dashboard__manage-view--header">
+      <div class="col-md-4 header--type">
+        <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="clinic.clinic-name"></span>
+      </div>
+      <div class="col-md-3 header--type">
+        <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="clinic.address"></span>
+      </div>
+      <div class="col-md-2 header--type">
+        <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="clinic.city"></span>
+      </div>
+      <div class="col-md-1 header--type">
+        <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="clinic.state"></span>
+      </div>
+      <div class="col-md-2 header--type">
+        <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="clinic.phoneNumber"></span>
+      </div>
+      <div class="col-md-1 header--type">
+        <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="clinic.type"></span>
+      </div>
+      <div class="col-md-2 header--type">
+        <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" translate="clinic.hillRom-id"></span>
+      </div>
+      <div class="col-md-1 header--type">
+        <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="clinic.status"></span>
+      </div>
+      <div class="clr"></div>
+    </div>
+    </div>
+  </div>
+
+<div class="container admin-user" ng-class="{'margin-top': childClinics.length}" ng-if="clinic.parent">
+  <div class="col-md-16 detail-list default_active" ng-repeat="childClinic in childClinics" readonly="true" ng-click="selectClinic(childClinic)">
+    <div class="col-md-4 detail-list--title">
+      <span>{{childClinic.name}}</span>
+    </div>
+    <div class="col-md-3 detail-list--desc">
+      <span>{{childClinic.address}}</span>
+    </div>
+    <div class="col-md-2 detail-list--desc">
+      <span>{{childClinic.city}}</span>
+    </div>
+    <div class="col-md-1 detail-list--desc">
+      <span>{{childClinic.state}}</span>
+    </div>
+    <div class="col-md-2 detail-list--desc">
+      <span>{{childClinic.phoneNumber}}</span>
+    </div>
+    <div class="col-md-1 detail-list--desc">
+      <span ng-if="childClinic.parent">Parent</span>
+      <span ng-if="!childClinic.parent">Satellite</span>
+    </div>
+    <div class="col-md-2 detail-list--desc">
+      <span>{{childClinic.hillromId}}</span>
+    </div>
+    <div class="col-md-1 detail-list--desc">
+      <span class="inactive" ng-if="childClinic.deleted" translate="clinic.inactive"></span>
+      <span class="active" ng-if="!childClinic.deleted" translate="clinic.active"></span>
+    </div>
+  </div>
+
+  <div class="col-md-16 empty-list-message" ng-if="!childClinics.length">
+    <span translate="clinic.noClinics"></span>
+  </div>
+</div>
+<div ng-if="showModalClinic" class="modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true">
+  <div class="modal__dialog">
+    <div class="modal__content">
+      <header class="modal__header">
+        <button type="button" class="modal__close" data-dismiss="modal" ng-click="closeModalClinic()">&times;</button>
+         <p translate="clinic.delete.warning"></p>
+      </header>
+      <div class="modal__body">
+         <div class="modal--message" translate="clinic.delete.message"></div>
+         <div class="row modal--custom-btn">
+          <buton class="hillrom-btn btn-submit float-right" ng-click="deactivateClinic(clinicToDeactivate.id)">Yes</buton>
+          <buton class="hillrom-btn btn-submit float-right" data-dismiss="modal" ng-click="closeModalClinic()">No</buton>
+         </div>
+      </div>
+      <footer class="modal__footer">
+      </footer>
+    </div>
+  </div>
+</div>
