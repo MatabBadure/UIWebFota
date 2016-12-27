@@ -77,7 +77,6 @@ angular.module('hillromvestApp')
     };
 
 $scope.activateUserCSR = function(){
-          alert("inside activate()");
           $scope.showActivateModal = false;
           UserService.reactivateUser($scope.user.id).then(function(response){
            notyService.showMessage(response.data.message, 'success');
