@@ -23,7 +23,8 @@ angular.module('hillromvestApp')
      
         $scope.init = function(){
           $scope.nonHillRomUsers = ['PATIENT', 'HCP', 'CLINIC_ADMIN', 'CARE_GIVER'];
-          if($state.current.name === 'hillRomUserEdit' || $state.current.name === 'rcadmin-hillRomUserEdit'){
+          if($state.current.name === 'hillRomUserEdit' || $state.current.name === 'rcadmin-hillRomUserEdit' || $state.current.name === 'customerserviceHillRomUserView'){
+
             $scope.loggedUserId = StorageService.get('logged').userId;
             }
 

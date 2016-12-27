@@ -520,6 +520,14 @@ border:1px solid #ccc;
 .message-thread-container:last-child {
     margin-bottom: 10px;
 }
+
+/* 27-12 */
+
+.newselectrolecontainer .selectrole
+{
+  width:150px !important;
+}
+
 .specific-user .user-header--desc span {
   color: #999 !important;
 }
@@ -554,3 +562,4 @@ border:1px solid #ccc;
           width: 45px;
           line-height:10px;
           }
+
