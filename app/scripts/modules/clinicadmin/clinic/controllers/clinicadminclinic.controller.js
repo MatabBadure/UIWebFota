@@ -97,11 +97,16 @@ $scope.getAdherenceScoreSettingDays = function(){
         }else{
           $scope.clinic.status = 'Active';
         }
+        
         if($scope.clinic.adherenceSetting == 3){
           $scope.selectedNumberOfDays = $scope.clinic.adherenceSetting+" Days(Default)";
         }
-        else
+        else if($scope.clinic.adherenceSetting == 1){
+          $scope.selectedNumberOfDays = $scope.clinic.adherenceSetting+" Day";
+        }
+        else{
           $scope.selectedNumberOfDays = $scope.clinic.adherenceSetting+" Days";
+        }
       }).catch(function(response){
         notyService.showError(response);
       });
@@ -133,7 +138,7 @@ $scope.getAdherenceScoreSettingDays = function(){
       };
       clinicService.updateDaysForCalculation(data,$stateParams.clinicId).then(function(response){
         notyService.showMessage(response.data.message, 'success');
-        $state.go('adherenceSettingPage');
+        $state.go('adherenceSettingPage',{"clinicId": $stateParams.clinicId});
         $scope.showSetDayModal = false;
       }).catch(function(response){
         $scope.showSetDayModal = false;
@@ -150,6 +155,10 @@ $scope.getAdherenceScoreSettingDays = function(){
     };
 
     $scope.switchClinic = function(clinic){
+      if($state.current.name === 'adherenceSettingPage'){
+$state.go('adherenceSettingPage',{"clinicId": clinic.id});
+      }
+      else
       $state.go('clinicadminclinicdashboard', {'clinicId':clinic.id})
     };
 

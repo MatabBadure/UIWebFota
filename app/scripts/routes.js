@@ -4910,6 +4910,8 @@ angular.module('hillromvestApp')
                 }
             })
 	    .state('rcadmin-hillRomUser', {
+
+
                 parent: 'rcadmin',
                 url: '/rcadmin-hillRomUser',
                 data: {
@@ -5617,9 +5619,6 @@ angular.module('hillromvestApp')
                         return $translate.refresh();
                     }]
                 }
-            })
-
-
-            
+            });
 
 }]);

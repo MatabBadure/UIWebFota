@@ -549,10 +549,14 @@ angular.module('hillromvestApp')
           $scope.clinicsOfPatientErrMsg = response.data.message;
         }
         
-        patientService.getAdherenceCalculatedScore($scope.clinics[0].id).then(function(responseforPatient){
-          if(responseforPatient.data.clinic){
-          $scope.adherenceDays = responseforPatient.data.clinic.adherenceSetting;
-          var adherenceInNumber = Number($scope.adherenceDays);
+        patientService.getLatestAdherenceSetting(StorageService.get('logged').patientID).then(function(responseforPatient){
+          if(responseforPatient.data){
+            if(responseforPatient.data.latestadherence){
+          $scope.adherenceDays = responseforPatient.data.latestadherence;
+        }
+        else
+          $scope.adherenceDays = 3;
+          var adherenceInNumber = $scope.adherenceDays;
           if(adherenceInNumber==1)
           {
             $scope.adherenceDaysForPatient = $scope.adherenceDays + " Day";

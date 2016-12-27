@@ -33,6 +33,12 @@
             <span class="link-text" translate="global.tabs.manage-clinics">Manage Clinics</span>
           </a>
         </li>
+        <li class="icon-border">
+          <a ng-class="{ active: isActive('rcadmin-hillRomUser')}" ng-href="#/rcadmin/rcadmin-hillRomUser">
+            <span class="icons hillrom-icon icon-user"></span>
+            <span class="link-text" translate="global.tabs.manage-users">Manage Users</span>
+          </a>
+        </li>
         <li class="header-popover dropdown">
           <a ng-href="" data-target="#" class="dropdown-toggle" ng-class="{ active: isActive('admin/profile') || isActive('admin/updatepassword')}" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
             <span class='icon-logged-in-user'></span>

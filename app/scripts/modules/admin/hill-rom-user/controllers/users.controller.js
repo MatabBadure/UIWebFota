@@ -13,6 +13,7 @@ angular.module('hillromvestApp')
 
     $scope.init = function() {
       var currentRoute = $state.current.name;
+
       if ($state.current.name === 'hillRomUserEdit' || $state.current.name === 'associateHillRomUserView' || $state.current.name === 'rcadmin-hillRomUserEdit' || $state.current.name === 'customerserviceHillRomUserView') {
         $scope.getUserDetails($stateParams.userId, $scope.setEditMode);
       } else if ($state.current.name === 'hillRomUserNew' || $state.current.name === 'rcadmin-hillRomUserNew') {

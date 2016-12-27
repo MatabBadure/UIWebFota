@@ -577,7 +577,7 @@ angular.module('hillromvestApp')
     };
 
     $scope.SelectOthers = function(option){
-      if(option == 'Others')
+      if(option == 'Other')
       {
         $scope.ShowOther = true;
       }

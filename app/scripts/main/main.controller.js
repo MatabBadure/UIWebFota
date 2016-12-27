@@ -166,10 +166,10 @@ else {
         $state.go('hcpUserProfile');
       }else if($rootScope.userRole === loginConstants.role.acctservices){
         $state.go('adminProfileRc');
-      } else if($rootScope.userRole === "CLINIC_ADMIN" || $rootScope.userRole === "CLINIC ADMIN"){
+      } /*else if($rootScope.userRole === "CLINIC_ADMIN" || $rootScope.userRole === "CLINIC ADMIN"){
       	var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : $stateParams.clinicId;
     		$state.go("clinicadminUserProfile",{'clinicId': clinicId});
-      }else if($rootScope.userRole === "HCP"){
+      }*/else if($rootScope.userRole === "HCP"){
       	var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : $stateParams.clinicId;
     		$state.go("hcpUserProfile",{'clinicId': clinicId});
       }else if($rootScope.userRole === loginConstants.role.associates){
@@ -178,6 +178,11 @@ else {
       else if($rootScope.userRole === loginConstants.role.customerservices){
       	$state.go('customerserviceProfile');
       }
+    };
+    $scope.profileCA = function(clinicid){
+      	var clinicId = ($stateParams.clinicId) ? $stateParams.clinicId : clinicid;
+    		$state.go("clinicadminUserProfile",{'clinicId': clinicId});
+      
     };
 
 

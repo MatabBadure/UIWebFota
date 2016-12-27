@@ -413,9 +413,9 @@
     "search-filter" : {
         "active" : "Active",
         "inactive" : "InActive", "no-event" : "No Transmission Recorded",
-        "setting-deviation" : "Consecutive Frequency Deviation Day",
-        "hmr-non-compliant" : "HMR Non-Adherence",
-         "missed-therapy" :"Consecutive Missed Day",
+        "setting-deviation" : "Below Frequency Setting",
+        "hmr-non-compliant" : "Below Treatment Minutes",
+         "missed-therapy" :"Missed Therapy Days",
         "pending": "Pending"
     },
 

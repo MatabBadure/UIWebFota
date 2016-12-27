@@ -195,18 +195,7 @@
               </div>  
             </div>
           </div>
-          <div  ng-if = "ShowOther" class="col-md-7 col-sm-7 col-sm-offset-0 col-md-offset-2 reset-padding marginLeftForDevices">
-            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
-              <span class="" translate="patient.reset-adherence.others">Others</span>
-              <span class="">*</span>
-            </div>
-            <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding">
-              <textarea name="oth" class="" style="box-shadow:none !important;" ng-model = "othersContent" required></textarea>
-              <div ng-show="(form.oth.$dirty && form.oth.$invalid) || resetsubmitted">
-                <span class="has-error" ng-show="form.oth.$error.required" translate="error.others.required"></span>
-              </div>   
-            </div>
-          </div>
+        
         </div>
 
         <div class="col-md-16 col-sm-16 margin-top reset-padding">
@@ -226,6 +215,20 @@
             </div>
           </div>
         </div>
+         <div ng-if = "ShowOther" class="col-md-16 col-sm-16 margin-top reset-padding">
+          <div   class="col-md-7 col-sm-7  reset-padding ">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+              <span class="" translate="patient.reset-adherence.others">Others</span>
+              <span class="">*</span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding" >
+              <textarea name="oth" class="" style="box-shadow:none !important;"  ng-model = "othersContent" required></textarea>
+              <div ng-show="(form.oth.$dirty && form.oth.$invalid) || resetsubmitted">
+                <span class="has-error" ng-show="form.oth.$error.required" translate="error.others.required"></span>
+              </div>   
+            </div>
+          </div>
+          </div>
 
         <div class="col-md-16 col-sm-16 reset-padding" >
         <div class="col-md-8 col-sm-8 clinic-link">
