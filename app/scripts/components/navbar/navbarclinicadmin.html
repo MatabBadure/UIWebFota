@@ -47,6 +47,13 @@
             <span class="link-text" translate="global.tabs.manage-clinic" ></span>
           </a>
         </li>
+       <li class="icon-border">
+          <a ng-class="{ active: isActive('/clinicadmin-announcements')}" href="" ng-click="goToPatientDashboard('clinicadminannouncements');" >
+            <span  class="icons messages"> <i class="fa fa-flag" id="announcementflag" aria-hidden="true"></i>
+            </span>
+            <span class="link-text" translate="global.tabs.announcements" ></span>
+          </a>
+        </li> 
         <li class="header-popover dropdown">
           <a ng-href="" data-target="#" class="dropdown-toggle" ng-class="{ active: isActive('profile')}" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
             <span class='icon-logged-in-user'></span>

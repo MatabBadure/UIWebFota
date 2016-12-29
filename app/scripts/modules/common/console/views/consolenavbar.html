@@ -3,11 +3,6 @@
     <div class="collapse navbar-collapse patient-user__navbar" id="navbar-collapse">
       <ul class="nav navbar-nav admin_profile">
         <li>
-          <a ng-class="{active: isActive('Announcements')}" ng-href="" ng-click="announcements()">
-            <span class=""> Announcements</span>
-          </a>
-        </li>
-        <li>
           <a ng-class="{active: isActive('survey')}" ng-href="" ng-click="console()">
             <span class=""> Survey</span>
           </a>
@@ -20,6 +15,11 @@
         <li>
           <a ng-class="{ active: isActive('analytics')}" ng-href="" ng-click="loginAnalyitcs()">
             <span class=""> Login Analytics</span>
+          </a>
+        </li>
+        <li>
+          <a ng-class="{active: isActive('announcements')}" ng-if="(userRole === 'ADMIN') || (userRole === 'ACCT_SERVICES')"  ng-href="" ng-click="announcement()">
+            <span class=""> Announcements</span>
           </a>
         </li>
       </ul>

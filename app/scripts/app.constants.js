@@ -131,5 +131,14 @@ angular.module('hillromvestApp')
 	'getUnreadCountCA' : 'api/messages/ID/readunredCount?isClinic=BOOL&clinicId=CLINICID',
 	'getMessageBody' : 'api/messageDetails/MESSAGEID',
 	'getSentItemsCA' : 'api/messagesSent/ID?isClinic=ISCLINIC&clinicId=CLINICID&page=PAGE&per_page=PER_PAGE&sort_by=SORT_OPTION',
-	'getThreaddata':'api/messagesReceivedThreads/ID/ROOTID?userId=USERID&clinicId=CLINICID'
+	'getThreaddata':'api/messagesReceivedThreads/ID/ROOTID?userId=USERID&clinicId=CLINICID',
+	'uploadfile' : 'api/announcement/uploadFile',
+	'createAnnouncement' : 'api/announcement/create',
+	'listAllAnnouncements' : 'api/announcements/getAll?page=PAGE&per_page=PER_PAGE&sort_by=SORT_OPTION&userType=USER_TYPE',
+	'editAnnouncement' : 'api/announcement/ID/details',
+	'deleteAnnouncement' : 'api/announcement/ID/delete',
+	'listAnnouncements':'api/announcements/getAll?page=PAGE&per_page=PER_PAGE&sort_by=name&userType=USER_TYPE&USERID',
+	'downloadPdf' : 'api/announcement/files/FILE_NAME',
+	'updateAnnouncements' : 'api/announcement/update',
+	'getPatientType' : 'api/codeValues/announcement_patient_type', 
 });

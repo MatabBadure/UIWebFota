@@ -4417,6 +4417,146 @@ angular.module('hillromvestApp')
                   ]
               }
             })
+.state('rcadminAnnouncementsEdit', {
+              parent: 'console',
+              url: '/rcadmin/announcements-edit/{Id}',
+              data: {
+                  roles: ['ACCT_SERVICES'],
+                  pageTitle: 'console.page-title.login-analytics'
+              },
+              views: {
+                  'content@': {
+                      templateUrl: 'scripts/modules/common/console/announcements/views/rcadmin/edit.html',
+                      controller: 'announcementsController'
+                  }
+              },
+              resolve: {
+                /*loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('LoginAnalyticsModule');
+                    }],*/
+                  translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                      $translatePartialLoader.addPart('console');
+                      return $translate.refresh();
+                  }],
+                  authorize: ['Auth',
+                      function(Auth) {
+                          return Auth.authorize(false);
+                      }
+                  ]
+              }
+            })
+.state('rcadminAnnouncementsNew', {
+              parent: 'console',
+              url: '/rcadmin/announcements-new',
+              data: {
+                  roles: ['ACCT_SERVICES'],
+                  pageTitle: 'console.page-title.login-analytics'
+              },
+              views: {
+                  'content@': {
+                      templateUrl: 'scripts/modules/common/console/announcements/views/rcadmin/new.html',
+                      controller: 'announcementsController'
+                  }
+              },
+              resolve: {
+                /*loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('LoginAnalyticsModule');
+                    }],*/
+                  translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                      $translatePartialLoader.addPart('console');
+                      return $translate.refresh();
+                  }],
+                  authorize: ['Auth',
+                      function(Auth) {
+                          return Auth.authorize(false);
+                      }
+                  ]
+              }
+            })
+.state('adminAnnouncements', {
+              parent: 'console',
+              url: '/admin/announcements',
+              data: {
+                  roles: ['ADMIN'],
+                  pageTitle: 'console.page-title.login-analytics'
+              },
+              views: {
+                  'content@': {
+                      templateUrl: 'scripts/modules/common/console/announcements/views/rcadmin/view.html',
+                      controller: 'announcementsController'
+                  }
+              },
+              resolve: {
+                /*loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('LoginAnalyticsModule');
+                    }],*/
+                  translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                      $translatePartialLoader.addPart('console');
+                      return $translate.refresh();
+                  }],
+                  authorize: ['Auth',
+                      function(Auth) {
+                          return Auth.authorize(false);
+                      }
+                  ]
+              }
+            })
+.state('adminAnnouncementsEdit', {
+              parent: 'console',
+              url: '/admin/announcements-edit/{Id}',
+              data: {
+                  roles: ['ADMIN'],
+                  pageTitle: 'console.page-title.login-analytics'
+              },
+              views: {
+                  'content@': {
+                      templateUrl: 'scripts/modules/common/console/announcements/views/rcadmin/edit.html',
+                      controller: 'announcementsController'
+                  }
+              },
+              resolve: {
+                /*loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('LoginAnalyticsModule');
+                    }],*/
+                  translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                      $translatePartialLoader.addPart('console');
+                      return $translate.refresh();
+                  }],
+                  authorize: ['Auth',
+                      function(Auth) {
+                          return Auth.authorize(false);
+                      }
+                  ]
+              }
+            })
+.state('adminAnnouncementsNew', {
+              parent: 'console',
+              url: '/admin/announcements-new',
+              data: {
+                  roles: ['ADMIN'],
+                  pageTitle: 'console.page-title.login-analytics'
+              },
+              views: {
+                  'content@': {
+                      templateUrl: 'scripts/modules/common/console/announcements/views/rcadmin/new.html',
+                      controller: 'announcementsController'
+                  }
+              },
+              resolve: {
+                /*loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('LoginAnalyticsModule');
+                    }],*/
+                  translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                      $translatePartialLoader.addPart('console');
+                      return $translate.refresh();
+                  }],
+                  authorize: ['Auth',
+                      function(Auth) {
+                          return Auth.authorize(false);
+                      }
+                  ]
+              }
+            })
 /*
             .state('patientBenchmarking', {
                 parent: 'patient-dashboard',
@@ -4931,5 +5071,80 @@ angular.module('hillromvestApp')
                         }
                     ]
                 }
-            });
+            })
+.state('clinicadminannouncements', {
+                parent: 'clinicadmin-dashboard',
+                url: '/{clinicId}/clinicadmin-announcements',
+                data: {
+                    roles: ['CLINIC_ADMIN'],
+                    pageTitle: 'clinic.page-title.clinics'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/clinicadmin/announcements/views/announcements.html',
+                        controller: 'clinicadminannouncementsController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('clinic');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+.state('hcpannouncements', {
+                parent: 'hcp-dashboard',
+                url: '/{clinicId}/hcp-announcements',
+                data: {
+                    roles: ['HCP'],
+                    pageTitle: 'clinic.page-title.clinics'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/hcp/announcements/views/announcements.html',
+                        controller: 'clinicadminannouncementsController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('clinic');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+.state('patientannouncements', {
+                parent: 'patient-dashboard',
+                url: '/patient-announcements',
+                data: {
+                    roles: ['PATIENT'],
+                    pageTitle: 'clinic.page-title.clinics'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/patient/announcements/views/announcements.html',
+                        controller: 'patientsannouncementsController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('clinic');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            }); 
 }]);
