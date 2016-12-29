@@ -58,7 +58,7 @@ angular.module('hillromvestApp')
         $scope.initPatientDeviceProtocol();
       }else if(currentRoute === 'patientdashboardClinicHCP'){
         $scope.initPatientClinicHCPs();
-      } else if(currentRoute === 'patientOverview' || currentRoute === 'hcppatientOverview' || currentRoute === 'clinicadminpatientOverview' || currentRoute === 'patientOverviewRcadmin' || currentRoute === 'associatepatientOverview') {
+      } else if(currentRoute === 'patientOverview' || currentRoute === 'hcppatientOverview' || currentRoute === 'clinicadminpatientOverview' || currentRoute === 'patientOverviewRcadmin' || currentRoute === 'associatepatientOverview' || currentRoute === 'customerservicepatientOverview') {
         $scope.getAssociatedClinics($stateParams.patientId);
         $scope.getPatientDevices($stateParams.patientId);
         $scope.patientId = parseInt($stateParams.patientId);
@@ -313,6 +313,9 @@ angular.module('hillromvestApp')
         $state.go(status+loginConstants.role.Rcadmin, {'patientId': $stateParams.patientId});
       }else if($scope.role === loginConstants.role.associates){
         $state.go('associate' + status, {'patientId': $stateParams.patientId});
+      }
+      else if($scope.role === loginConstants.role.customerservices){
+        $state.go('customerservice' + status, {'patientId': $stateParams.patientId});
       }else {
         $state.go(status, {'patientId': $stateParams.patientId});
       }
@@ -370,6 +373,8 @@ angular.module('hillromvestApp')
         case 'CLINIC_ADMIN':$state.go('clinicadminpatientdashboard',{'clinicId':$stateParams.clinicId});
         break;
         case 'ACCT_SERVICES':$state.go('rcadminPatients');
+        break;
+        case 'CUSTOMER_SERVICES':$state.go('customerservicePatientUser');
         break;
       }
     };
@@ -544,10 +549,14 @@ angular.module('hillromvestApp')
           $scope.clinicsOfPatientErrMsg = response.data.message;
         }
         
-        patientService.getAdherenceCalculatedScore($scope.clinics[0].id).then(function(responseforPatient){
-          if(responseforPatient.data.clinic){
-          $scope.adherenceDays = responseforPatient.data.clinic.adherenceSetting;
-          var adherenceInNumber = Number($scope.adherenceDays);
+        patientService.getLatestAdherenceSetting(StorageService.get('logged').patientID).then(function(responseforPatient){
+          if(responseforPatient.data){
+            if(responseforPatient.data.latestadherence){
+          $scope.adherenceDays = responseforPatient.data.latestadherence;
+        }
+        else
+          $scope.adherenceDays = 3;
+          var adherenceInNumber = $scope.adherenceDays;
           if(adherenceInNumber==1)
           {
             $scope.adherenceDaysForPatient = $scope.adherenceDays + " Day";

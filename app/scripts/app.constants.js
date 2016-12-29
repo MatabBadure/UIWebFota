@@ -141,4 +141,6 @@ angular.module('hillromvestApp')
 	'downloadPdf' : 'api/announcement/files/FILE_NAME',
 	'updateAnnouncements' : 'api/announcement/update',
 	'getPatientType' : 'api/codeValues/announcement_patient_type', 
+	'getlatestAdherenceWindow' : 'api/patient/USERID/clinics'
+
 });

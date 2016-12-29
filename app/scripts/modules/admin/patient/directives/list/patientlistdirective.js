@@ -45,7 +45,7 @@ angular.module('hillromvestApp')
         };
 
         $scope.searchPatientsOnQueryChange = function(){
-          if(($state.current.name === "patientUser" || $state.current.name === "rcadminPatients" || $state.current.name === "associatePatientUser") && !$stateParams.clinicIds && !searchOnLoad){
+          if(($state.current.name === "patientUser" || $state.current.name === "rcadminPatients" || $state.current.name === "associatePatientUser" || $state.current.name === "customerservicePatientUser") && !$stateParams.clinicIds && !searchOnLoad){
             $scope.searchPatients();
           }
         };
@@ -61,6 +61,11 @@ angular.module('hillromvestApp')
             });
           }else if($scope.userRole === loginConstants.role.associates){
             $state.go('associatepatientOverview', {
+              'patientId': patient.id
+            });
+          }
+             else if($scope.userRole === loginConstants.role.customerservices){
+            $state.go('customerservicepatientOverview', {
               'patientId': patient.id
             });
           }

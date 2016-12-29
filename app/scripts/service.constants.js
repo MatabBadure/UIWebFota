@@ -106,11 +106,13 @@ var sortConstant = {
     sentSubject: "messages.messageSubject",
     sentDate: "messages.messageDatetime",
     sentToCA: "user.lastName",
+
     announcementName: "name",
     announcementSubject: "subject",
     announcementStartDate: "startDate",
     announcementEndDate: "endDate",
-    announcementModifiedDate : "modifiedDate"
+    announcementModifiedDate : "modifiedDate",
+    fromCA: "messages.fromClinic.name"
 }
 
 var stringConstants = {

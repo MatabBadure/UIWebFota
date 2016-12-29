@@ -166,15 +166,23 @@ else {
         $state.go('hcpUserProfile');
       }else if($rootScope.userRole === loginConstants.role.acctservices){
         $state.go('adminProfileRc');
-      } else if($rootScope.userRole === "CLINIC_ADMIN" || $rootScope.userRole === "CLINIC ADMIN"){
+      } /*else if($rootScope.userRole === "CLINIC_ADMIN" || $rootScope.userRole === "CLINIC ADMIN"){
       	var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : $stateParams.clinicId;
     		$state.go("clinicadminUserProfile",{'clinicId': clinicId});
-      }else if($rootScope.userRole === "HCP"){
+      }*/else if($rootScope.userRole === "HCP"){
       	var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : $stateParams.clinicId;
     		$state.go("hcpUserProfile",{'clinicId': clinicId});
       }else if($rootScope.userRole === loginConstants.role.associates){
       	$state.go('associateProfile');
       }
+      else if($rootScope.userRole === loginConstants.role.customerservices){
+      	$state.go('customerserviceProfile');
+      }
+    };
+    $scope.profileCA = function(clinicid){
+      	var clinicId = ($stateParams.clinicId) ? $stateParams.clinicId : clinicid;
+    		$state.go("clinicadminUserProfile",{'clinicId': clinicId});
+      
     };
 
 
@@ -400,6 +408,9 @@ else {
 	    } else if($rootScope.userRole === loginConstants.role.associates){
 	      $state.go('associateSurveyReport');
 	    }
+	    else if($rootScope.userRole === loginConstants.role.customerservices){
+	      $state.go('customerserviceSurveyReport');
+	    }
 	    else if($rootScope.userRole === loginConstants.role.hcp ){
 	      $state.go('hcpBenchmarking');
 	    }
@@ -422,6 +433,9 @@ else {
 	    } else if($rootScope.userRole === loginConstants.role.associates){
 	      $state.go('associatesLoginAnalytics');
 	    }
+	    else if($rootScope.userRole === loginConstants.role.customerservices){
+	      $state.go('customerserviceLoginAnalytics');
+	    }
     };
 
     $scope.benchMarking = function(){
@@ -431,6 +445,9 @@ else {
       	$state.go('rcadminBenchmarking');
       }else if($rootScope.userRole === loginConstants.role.associates){
       	$state.go('associatesBenchmarking');
+      }
+      else if($rootScope.userRole === loginConstants.role.customerservices){
+      	$state.go('customerserviceBenchmarking');
       }
     };
 

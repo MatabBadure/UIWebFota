@@ -43,6 +43,9 @@ angular.module('hillromvestApp')
       }else if($scope.patientStatus.role === loginConstants.role.associates){
         $state.go('associate'+ status, {'patientId': $stateParams.patientId});
       }
+      else if($scope.patientStatus.role === loginConstants.role.customerservices){
+        $state.go('customerservice'+ status, {'patientId': $stateParams.patientId});
+      }
     };
 
     $scope.setOverviewMode = function(patient){
@@ -192,7 +195,7 @@ angular.module('hillromvestApp')
       $scope.patientTab = currentRoute;
       if(currentRoute === 'patientOverview' || currentRoute === 'patientOverviewRcadmin'){
         $scope.initPatientOverview();
-      }else if(currentRoute === 'patientDemographic' || currentRoute === 'patientDemographicRcadmin' || currentRoute === 'associatepatientDemographic'){
+      }else if(currentRoute === 'patientDemographic' || currentRoute === 'patientDemographicRcadmin' || currentRoute === 'associatepatientDemographic' || currentRoute === 'customerservicepatientDemographic'){
         $scope.initpatientDemographic();
       }else if (currentRoute === 'patientEdit') {
         $scope.getPatiendDetails($stateParams.patientId, $scope.setEditMode);
@@ -200,11 +203,11 @@ angular.module('hillromvestApp')
         $scope.createPatient();
       }else if($state.current.name === 'patientEditClinics'){
         $scope.initPatientClinics($stateParams.patientId);
-      }else if(currentRoute === 'patientClinics' || currentRoute === 'patientClinicsRcadmin' || currentRoute === 'associatepatientClinics'){
+      }else if(currentRoute === 'patientClinics' || currentRoute === 'patientClinicsRcadmin' || currentRoute === 'associatepatientClinics' || currentRoute === 'customerservicepatientClinics'){
         $scope.initPatientClinicsInfo($stateParams.patientId);
-      }else if(currentRoute === 'patientCraegiver' || currentRoute === 'patientCraegiverRcadmin' || currentRoute === 'associatepatientCraegiver' ){
+      }else if(currentRoute === 'patientCraegiver' || currentRoute === 'patientCraegiverRcadmin' || currentRoute === 'associatepatientCraegiver' || currentRoute === 'customerservicepatientCraegiver' ){
         $scope.initpatientCraegiver($stateParams.patientId);
-      } else if($state.current.name === 'patientProtocol' || $state.current.name === 'patientProtocolRcadmin' || $state.current.name === 'associatepatientProtocol'){
+      } else if($state.current.name === 'patientProtocol' || $state.current.name === 'patientProtocolRcadmin' || $state.current.name === 'associatepatientProtocol' || $state.current.name === 'customerservicepatientProtocol'){
         $scope.initProtocolDevice($stateParams.patientId);
       }else if(currentRoute === 'patientCraegiverAdd' || currentRoute === 'patientCraegiverAddRcadmin'){
         $scope.initpatientCraegiverAdd($stateParams.patientId);
@@ -574,7 +577,7 @@ angular.module('hillromvestApp')
     };
 
     $scope.SelectOthers = function(option){
-      if(option == 'Others')
+      if(option == 'Other')
       {
         $scope.ShowOther = true;
       }
@@ -969,6 +972,8 @@ angular.module('hillromvestApp')
         $scope.associatedClinics =[];
         if(response.data.clinics){ 
           $scope.associatedClinics = response.data.clinics;
+          console.log("associated clinics");
+          console.log(associatedClinics);
         }else if(response.data.message){
           $scope.associatedClinicsErrMsg = response.data.message;
         }
@@ -1085,6 +1090,8 @@ angular.module('hillromvestApp')
         });
       }else if($scope.patientStatus.role === loginConstants.role.associates){
         $state.go('hcpProfileAssociates', {'doctorId': doctor.id});
+      }else if($scope.patientStatus.role === loginConstants.role.customerservices){
+        $state.go('hcpProfileCustomerService', {'doctorId': doctor.id});
       }else {
         $state.go('hcpProfile',{
           'doctorId': doctor.id
@@ -1099,7 +1106,10 @@ angular.module('hillromvestApp')
         });
       }else if($scope.patientStatus.role === loginConstants.role.associates){
         $state.go('clinicProfileAssociate', {'clinicId': clinic.id});
-      }else {
+      }else if($scope.patientStatus.role === loginConstants.role.customerservices){
+        $state.go('clinicProfileCustomerService', {'clinicId': clinic.id});
+      }
+      else {
         $state.go('clinicProfile', {
           'clinicId': clinic.id
         });

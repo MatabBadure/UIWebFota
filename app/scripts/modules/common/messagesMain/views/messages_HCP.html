@@ -102,7 +102,7 @@
                   <div class="col-xs-1">  <input type="checkbox" ng-model="InboxMessage.selected" ng-change="optionToggled()"></div> 
                   <div class="col-xs-15 main-msg"> <a href=""  ng-click = "getMessageBody(InboxMessage)" style=" color:#999; text-decoration:none;">
                      <div class="col-xs-4 hcp-msg-subject" style="overflow: hidden; text-overflow: ellipsis;">
-                   <span style="white-space: nowrap;"> {{InboxMessage[8]}} </span> <span><i style="color:red;" class="fa fa-flag hcp-msg-flag" ng-if="InboxMessage[2] != true" aria-hidden="true"></i><i style="color:green;" class="fa fa-check hcp-msg-tick" ng-if="InboxMessage[2] == true" aria-hidden="true"></i></span> </div> 
+                   <span style="white-space: nowrap;"> {{InboxMessage[8]}},{{InboxMessage[9]}} </span> <span><i style="color:red;" class="fa fa-flag hcp-msg-flag" ng-if="InboxMessage[2] != true" aria-hidden="true"></i><i style="color:green;" class="fa fa-check hcp-msg-tick" ng-if="InboxMessage[2] == true" aria-hidden="true"></i></span> </div> 
                    <div class="col-xs-9 hcp-msg-desc" style="  overflow: hidden;
     text-overflow: ellipsis;"><span style="white-space: nowrap;">{{InboxMessage[5]}}</span></div>
      <div class="col-xs-2 hcp-msg-date">
@@ -179,7 +179,7 @@
                   <div class="col-xs-15 main-msg">
                    <a href="" ng-click="getMessageBody(ArchiveMessage)" style=" color:#999; text-decoration:none;">
                     <div class="col-xs-4 hcp-msg-subject1" style="overflow: hidden; text-overflow: ellipsis;">
-                   <span style="white-space: nowrap;"> {{ArchiveMessage[8]}} </span> <span><i style="color:red;" class="fa fa-flag hcp-msg-flag" ng-if="ArchiveMessage[2] != true" aria-hidden="true"></i><i style="color:green;" class="fa fa-check hcp-msg-tick" ng-if="ArchiveMessage[2] == true" aria-hidden="true"></i></span> </div>
+                   <span style="white-space: nowrap;"> {{ArchiveMessage[8]}},{{ArchiveMessage[9]}} </span> <span><i style="color:red;" class="fa fa-flag hcp-msg-flag" ng-if="ArchiveMessage[2] != true" aria-hidden="true"></i><i style="color:green;" class="fa fa-check hcp-msg-tick" ng-if="ArchiveMessage[2] == true" aria-hidden="true"></i></span> </div>
                    <div class="col-xs-9 hcp-msg-desc" style=" overflow: hidden;
     text-overflow: ellipsis;"><span style="white-space: nowrap;">{{ArchiveMessage[5]}}</span></div>
     <div class="col-xs-2 hcp-msg-date"><span style="white-space:nowrap;">{{ArchiveMessage[4]}}</span>

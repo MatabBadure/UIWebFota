@@ -4343,7 +4343,7 @@ angular.module('hillromvestApp')
                   ]
               }
             })
-			.state('clinicAdminUpdateProtocol', {
+            .state('clinicAdminUpdateProtocol', {
                 parent: 'clinicadminpatientProtocol',
                 url: '/{protocolId}/editProtocol',
                 data: {
@@ -4369,7 +4369,7 @@ angular.module('hillromvestApp')
                 }
             })
 
-			.state('clinicadminGenerateProtocol', {
+            .state('clinicadminGenerateProtocol', {
                 parent: 'clinicadminpatientProtocol',
                 url: '/{protocolId}/protocoldetail',
                 data: {
@@ -4383,7 +4383,7 @@ angular.module('hillromvestApp')
                     }
                 },
                 resolve: {
-                	translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('patient-user');
                         return $translate.refresh();
                     }],
@@ -5077,9 +5077,8 @@ angular.module('hillromvestApp')
                     ]
                 }
             })
-.state('rcadmin-hillRomUser', {
 
-
+	    .state('rcadmin-hillRomUser', {
                 parent: 'rcadmin',
                 url: '/rcadmin-hillRomUser',
                 data: {
@@ -5863,3 +5862,4 @@ angular.module('hillromvestApp')
                 }
             }); 
 }]);
+
