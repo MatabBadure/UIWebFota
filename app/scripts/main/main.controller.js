@@ -227,6 +227,9 @@ else {
 	      $state.go("patientdashboard");
       }
 	  };
+	   $scope.goToAnnouncements = function(){
+ $state.go("patientannouncements");
+	  }; 
 
 	  $scope.isFooter = function(){
       var url = $location.path();
@@ -415,7 +418,13 @@ else {
 	      $state.go('clinicAdminBenchmarking');
 	    }
     };
-      	
+      $scope.announcement = function(){
+	    if($rootScope.userRole === "ADMIN"){
+	      $state.go('adminAnnouncements');
+	    }else if($rootScope.userRole === "ACCT_SERVICES"){ 
+	      $state.go('rcadminAnnouncements');
+	    }
+	    };	
     $scope.loginAnalyitcs = function(){
 	    if($rootScope.userRole === "ADMIN"){
 	      $state.go('adminLoginAnalytics');

@@ -113,4 +113,12 @@ angular.module('hillromvestApp')
             sortMessageList.to = sortIcons;
             return sortMessageList;
         };
+        this.getSortOptionsForAnnouncements = function(){
+            var sortMessageList = {};
+            sortMessageList.nameOfannouncement = sortIcons;
+            sortMessageList.announcementsubject =  sortIcons;
+            sortMessageList.announcementStartdate = sortIcons;
+            sortMessageList.announcementEnddate = sortIcons;
+            return sortMessageList;
+        };
     }]);
