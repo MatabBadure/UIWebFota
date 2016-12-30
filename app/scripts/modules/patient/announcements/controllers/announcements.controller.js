@@ -25,7 +25,6 @@ patientDashBoardService.getHMRrunAndScoreRate(StorageService.get('logged').patie
       console.log("compliancewala");
   console.log(response.data.id);
   $scope.userId ='patientId='+response.data.patient.id;
-  alert($scope.userId);
   $scope.searchUsers();
       }).catch(function(response) {});
 
