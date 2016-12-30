@@ -57,7 +57,8 @@
               <span class="">*</span>
             </div>
             <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding">
-             <input type="text"   class="datepickerNew" ng-model="announcement.endDate" name = "endDate" data-provide="datepicker" data-date-autoclose="true" data-date-start-date="0d"   id="dp2" required data-date-format="mm/dd/yyyy"  ng-pattern="/^\d{2}\/\d{2}\/\d{4}$/" readonly="readonly"/>
+             <input type="text"   class="datepickerNew" ng-model="announcement.endDate" name = "endDate" data-provide="datepicker" data-date-autoclose="true" data-date-start-date="0d"   id="dp2" required data-date-format="mm/dd/yyyy"  ng-pattern="/^\d{2}\/\d{2}\/\d{4}$/" ng-change="endDateCheck()" readonly="readonly"/>
+             <div ng-if="dateFlag == true "><span class="has-error">End Date should be greater than start date </span></div>
              <div ng-show="(form.endDate.$dirty && form.endDate.$invalid) || resetsubmitted">
                 <span class="has-error" ng-show="form.endDate.$error.required" translate="error.endDate.required"></span>
                 <span class="has-error" ng-show="form.endDate.$error.pattern && !form.endDate.$error.required" translate="error.endDate.invalid"></span>

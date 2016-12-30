@@ -35,9 +35,7 @@ $scope.init = function(){
       }).catch(function(response){});
    announcementservice.getPatientType().then(function(response){
          $scope.patientTypes =  response.data.typeCode;
-         console.log("response");
-         console.log(response);
-         console.log($scope.patientTypes);
+     
       }).catch(function(response){});
 if($state.current.name === 'rcadminAnnouncements' || $state.current.name === 'adminAnnouncements'){
 $scope.sortType('latest');
@@ -116,17 +114,13 @@ $scope.getAllAnnouncements();
   };
       $scope.getAllAnnouncements = function(){
         var usertype = 'ADMIN';
-        console.log("sortOption");
-        console.log($scope.sortOption);
+       
 announcementservice.ListAllAnnouncement($scope.pageNumber,$scope.perPage,$scope.sortOption,usertype).then(function(response){
-      console.log("success from service list");
-      console.log(response);
-       console.log(response.data.Announcement_List.content);
+     
        $scope.totalPages = response.data.Announcement_List.totalPages;
       $scope.totalElements = response.data.Announcement_List.totalElements;
       $scope.announcementsList = response.data.Announcement_List.content;
-      console.log("list");
-      console.log($scope.announcementsList);
+     
       if($scope.announcementsList.length == 0){
         $scope.nodatadiv = true;
       }
@@ -148,14 +142,11 @@ announcementservice.ListAllAnnouncement($scope.pageNumber,$scope.perPage,$scope.
             $scope.currentPageIndex = 1;
           } 
           announcementservice.ListAllAnnouncement($scope.currentPageIndex,$scope.perPage,$scope.sortOption,usertype).then(function(response){
-      console.log("success from service list");
-      console.log(response);
-       console.log(response.data.Announcement_List.content);
+    
        $scope.totalPages = response.data.Announcement_List.totalPages;
       $scope.totalElements = response.data.Announcement_List.totalElements;
       $scope.announcementsList = response.data.Announcement_List.content;
-      console.log("list");
-      console.log($scope.announcementsList);
+    
       if($scope.announcementsList.length == 0){
         $scope.nodatadiv = true;
       }
@@ -166,19 +157,16 @@ announcementservice.ListAllAnnouncement($scope.pageNumber,$scope.perPage,$scope.
 $scope.editAnnouncement = function()
 {
 announcementservice.editAnnouncement().then(function(response){
-      console.log("success from service");
+     
     }).catch(function(response){
       notyService.showError(response);
     });
 };
 $scope.geteditAnnouncement = function(){
   announcementservice.geteditdetails($scope.announcementId).then(function(response){
-      console.log("success from service");
-      console.log(response);
+
       $scope.announcementFileTempName = response.data.Announcement.pdfFilePath;
       $scope.announcementFileName = $scope.announcementFileTempName.split("/").pop();
-      console.log("my console");
-      console.log($scope.announcementFileName);
       $scope.announcement = response.data.Announcement;
        if($scope.announcement.sendTo == 'Patient'){
        $scope.checkedtwo = false;
@@ -235,20 +223,17 @@ $scope.checkedtwo = true;
       if($scope.announcement.patientType){
         $scope.checkedone = true;
       }
-       console.log("announcement");
-       console.log($scope.announcement);
+      
        $scope.filePath = $scope.announcementFileTempName;
-       alert($scope.filePath);
     }).catch(function(response){
       notyService.showError(response);
     });
-  console.log("final announcement");
-  console.log($scope.announcement);
+
 };
 $scope.deleteAnnouncement = function(){
-  console.log("ID:"+$scope.deleteID);
+ 
 announcementservice.deleteAnnouncement($scope.deleteID).then(function(response){
-      console.log("success from service");
+      
       notyService.showMessage(response.data.announcementMsg, 'success'); 
       $scope.DeleteModal = false;
       $scope.getAllAnnouncements();
@@ -272,8 +257,6 @@ $scope.Handlechange = function(element)
    $scope.fileinput = document.getElementById("browse");
     var textinput = document.getElementById("filename");
     textinput.value = $scope.fileinput.value;
-    console.log($scope.fileinput);
-    console.log('files:', element.files);
     $scope.files = element.files;
     $scope.uploadFile();
 };
@@ -307,19 +290,28 @@ $scope.vm.myClick = function($event) {
         $scope.checkedtwo = $event;
        
     };
+
+
+    $scope.endDateCheck = function()
+{
+  $scope.startdatecheck = $scope.announcement.startDate;
+  $scope.enddatecheck = $scope.announcement.endDate;
+  if(new Date ($scope.enddatecheck) < new Date($scope.startdatecheck))
+  {
+     $scope.dateFlag = true;
+  }
+  else
+  {
+    $scope.dateFlag = false;
+  }
+  
+  }
+
+
+
 $scope.showPatientUpdateModal = function(form){
-  console.log("patienttype:"+$scope.announcement.patientType);
-   console.log("CLINICtype:"+$scope.announcement.clinic);
-    console.log("CLINICspec:"+$scope.announcement.clinicType);
-    console.log("checkedonw:"+$scope.checkedone);
-    console.log("checked:"+$scope.checkedtwo);
-    console.log("form:");
-    console.log(form.$invalid);
-    console.log("cond 1:" + ($scope.checkedone == false && $scope.checkedtwo == false));
-    console.log("cond 2:" + ($scope.checkedone == true && $scope.announcement.patientType == undefined));
-    console.log("cond 3:" +($scope.checkedtwo == true && $scope.announcement.clinic == undefined));
-    console.log("cond 4:"+ ($scope.checkedtwo == true && $scope.announcement.clinic == 'Speciality' && $scope.announcement.clinicType == undefined));
-   if((form.$invalid )||($scope.checkedone == false && $scope.checkedtwo == false) || ($scope.checkedtwo == true && $scope.announcement.clinic == undefined) || ($scope.checkedtwo == true && $scope.announcement.clinic == 'Speciality' && $scope.announcement.clinicType == undefined) || ($scope.checkedone == true && $scope.announcement.patientType == undefined) || ($scope.files.length == 0)){
+  
+   if((form.$invalid )||($scope.checkedone == false && $scope.checkedtwo == false) || ($scope.checkedtwo == true && $scope.announcement.clinic == undefined) || ($scope.checkedtwo == true && $scope.announcement.clinic == 'Speciality' && $scope.announcement.clinicType == undefined) || ($scope.checkedone == true && $scope.announcement.patientType == undefined) || ($scope.files.length == 0) || ($scope.dateFlag == true)){
         $scope.resetsubmitted = true;
         return false;
         $scope.showModal = false;
@@ -330,18 +322,8 @@ $scope.resetsubmitted = false;
 }
 };
 $scope.showannouncementUpdateModal = function(form){
-  console.log("patienttype:"+$scope.announcement.patientType);
-   console.log("CLINICtype:"+$scope.announcement.clinic);
-    console.log("CLINICspec:"+$scope.announcement.clinicType);
-    console.log("checkedonw:"+$scope.checkedone);
-    console.log("checked:"+$scope.checkedtwo);
-    console.log("form:");
-    console.log(form.$invalid);
-    console.log("cond 1:" + ($scope.checkedone == false && $scope.checkedtwo == false));
-    console.log("cond 2:" + ($scope.checkedone == true && $scope.announcement.patientType == undefined));
-    console.log("cond 3:" +($scope.checkedtwo == true && $scope.announcement.clinic == undefined));
-    console.log("cond 4:"+ ($scope.checkedtwo == true && $scope.announcement.clinic == 'Speciality' && $scope.announcement.clinicType == undefined));
-   if((form.$invalid )||($scope.checkedone == false && $scope.checkedtwo == false) || ($scope.checkedtwo == true && $scope.announcement.clinic == undefined) || ($scope.checkedtwo == true && $scope.announcement.clinic == 'Speciality' && $scope.announcement.clinicType == undefined) || ($scope.checkedone == true && $scope.announcement.patientType == undefined)){
+
+   if((form.$invalid )||($scope.checkedone == false && $scope.checkedtwo == false) || ($scope.checkedtwo == true && $scope.announcement.clinic == undefined) || ($scope.checkedtwo == true && $scope.announcement.clinic == 'Speciality' && $scope.announcement.clinicType == undefined) || ($scope.checkedone == true && $scope.announcement.patientType == undefined) || ($scope.dateFlag == true)){
         $scope.resetsubmitted = true;
         return false;
         $scope.showModalUpdate = false;
@@ -364,22 +346,21 @@ $scope.DeleteModal = false;
 };
 $scope.closeoverwrite = function(){
 $scope.showModalOverwrite = false;
+$scope.showModal = false;
+$scope.showModalUpdate = false;
 $scope.filePath = $scope.announcementFileTempName;
-alert($scope.filePath);
 };
 $scope.showDeleteModal = function(announcementID){
   $scope.deleteID = announcementID;
-  console.log("ID:"+$scope.deleteID);
+  
 $scope.DeleteModal = true;
 };
 $scope.uploadFile = function(){
-  console.log("files in upload()");
-  console.log($scope.files);
+  
 announcementservice.uploadfile($scope.files).then(function(response){
-  console.log("response");
-  console.log(response);
+
   $scope.filePath = response.data.filepath;
-      console.log("success from service");
+      
       $scope.showModalOverwrite = false;
     }).catch(function(response){
        $scope.showModalOverwrite = false;
@@ -388,8 +369,7 @@ announcementservice.uploadfile($scope.files).then(function(response){
 };
 $scope.edit = function(id){
 $scope.announcementId = id;
-console.log("id");
-console.log($scope.announcementId)
+
 if(StorageService.get('logged').role == 'ACCT_SERVICES'){
 $state.go('rcadminAnnouncementsEdit',{'Id':id});
 }
@@ -418,10 +398,7 @@ clinictype = "All";
   else{
   clinictype = $scope.announcement.clinicType; 
   }
-  console.log("type code");
-console.log($scope.announcement.patientType);
-  console.log("pdf:");
-  console.log($scope.filePath);
+
   var startDate = "";
   var endDate = "";
 
@@ -475,8 +452,7 @@ clinictype = "All";
   else{
   clinictype = $scope.announcement.clinicType; 
   }
-  console.log("pdf:");
-  console.log($scope.filePath);
+ 
   var startDate = "";
   var endDate = "";
 
@@ -485,11 +461,7 @@ clinictype = "All";
 
    resEnd = $scope.announcement.endDate.toString().split("/");
   endDate = resEnd[2]+"-"+resEnd[0]+"-"+resEnd[1];
-  console.log("dates:");
-  console.log(startDate);
-  console.log(endDate);
-   console.log("type code");
-console.log($scope.announcement.patientType);
+
   var data ={ 
     "id" : $stateParams.Id, 
   "name" :  $scope.announcement.name,
@@ -501,8 +473,7 @@ console.log($scope.announcement.patientType);
      "clicicType":clinictype,
   "pdfFilePath":$scope.filePath
 };
-console.log("data::");
-console.log(data);
+
 /*var data = {
   "name" : $scope.announcement.name, 
   "subject":$scope.announcement.subject, 
@@ -527,5 +498,6 @@ announcementservice.updateAnnouncement(data).then(function(response){
       $scope.showModalUpdate = false;
     });
 };
+
 $scope.init();
 	}]);
