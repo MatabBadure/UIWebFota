@@ -33,7 +33,6 @@ deleteAnnouncement : function(id){
         });
       },
       uploadfile : function(file){
-        alert("in upload file service");
           var fd = new FormData();
           var url = URL.uploadfile;
           angular.forEach(file,function(fil){
