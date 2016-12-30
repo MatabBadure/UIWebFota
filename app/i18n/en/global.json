@@ -86,7 +86,8 @@
             "dashboard": "Dashboard",
             "patients": "Patients",
             "messages":"Messages",
-            "compose-message":"Write a New Message"
+            "compose-message":"Write a New Message",
+            "announcements": "Announcements"
         },
         "form": {
             "username": "Login",
@@ -126,6 +127,30 @@
                     "maxlength": "Your e-mail cannot be longer than 50 characters."
                 }
             }
+        },
+        "announcement": {
+            "label": {
+                "name-of-announcment": "Name of Announcement",
+                "subject": "Subject",
+                "starts-on": "Starts on",
+                "ends-on": "Ends on",
+                "send-to": "Send To",
+                "upload-pdf-file": "Upload PDF File",
+                "cancel": "Cancel",
+                "post-announcement": "Post Announcement",
+                "add-announcement":"Add Announcements"
+            },
+             "modal": {
+                "delete-heading": "Delete  announcement",
+                "add-heading": "Add  announcement",
+                "update-heading": "Update  announcement",
+                "delete": "Are you sure you want to delete the announcement?",
+                "add": "Are you sure you want to add the announcement?",
+                "update": "Are you sure you want to update the announcement?",
+                "overwrite-heading": "Overwrite File",
+                "overwrite" : "Are you sure you want to overwrite the last uploaded file?"
+            }
+            
         },
         "role":{
             "super-admin": "Super Admin",
@@ -174,6 +199,33 @@
         }
     },
     "error":{ 
+             "startDate":{
+              "required": "Announcement start date is required."
+            },
+            "endDate":{
+            "required": "Announcement end date is required."
+            },
+            "announcementName":{
+             "required": "Announcement name is required."
+            },
+            "announcementDesc":{
+             "required": "Announcement description is required."
+            },
+            "patientType":{
+            "required": "Patient type required."
+            },
+            "clinicSpeciality":{
+            "required": "Clinic Speciality required."
+            },
+            "selectclinic":{
+            "required": "Type of clinic required."
+            },
+            "SendTo":{
+            "required": "Send To required."
+            }, 
+            "file":{
+            "required": "File required."
+            },     
         "adherenceStartDate":{
             "required": "Adherence score start date is required.",
             "future": "Adherence score start date cannot be future.",
@@ -425,7 +477,8 @@
         "create-new-hcp": "Create New HCP +",
         "manage-hcp": "Manage HCPs",
         "adherence-setting": "Adherence Settings",
-        "clinic-info": "Clinic Info"
+        "clinic-info": "Clinic Info",
+        "announcement": "Announcements"
     },
     "place-holder":{
         "mobile-number": "Mobile Number",

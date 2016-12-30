@@ -77,7 +77,6 @@ angular.module('hillromvestApp')
     };
 
 $scope.activateUserCSR = function(){
-          alert("inside activate()");
           $scope.showActivateModal = false;
           UserService.reactivateUser($scope.user.id).then(function(response){
            notyService.showMessage(response.data.message, 'success');
@@ -96,13 +95,20 @@ $scope.activateUserCSR = function(){
           $scope.showActivateModal = true;
         }
         };
+        $scope.close = function () {
+       $scope.showModal = false;
+        };
          $scope.deleteUserCSR = function () {
           UserService.deleteUser($scope.user.id).then(function (response) {
             $scope.showModal = false;
             $scope.userStatus.isMessage = true;
             $scope.userStatus.message = response.data.message;
             notyService.showMessage($scope.userStatus.message, 'success');
-            $scope.reset();
+            //$scope.reset();
+            if(StorageService.get('logged').role === 'CUSTOMER_SERVICES'){
+            $state.go('customerserviceHillRomUser');
+           }
+            
           }).catch(function (response) {
             $scope.showModal = false;
             $scope.userStatus.isMessage = true;
