@@ -5786,6 +5786,7 @@ angular.module('hillromvestApp')
                         return $translate.refresh();
                     }]
                 }
+                 })
 .state('clinicadminannouncements', {
                 parent: 'clinicadmin-dashboard',
                 url: '/{clinicId}/clinicadmin-announcements',

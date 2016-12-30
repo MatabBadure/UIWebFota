@@ -98,8 +98,8 @@
             <div ng-if="announcement.clinic == 'Specialty'">
             <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding "></div>
              <div class="col-md-10 col-sm-10 dashboard__form__input reset-padding selected-box-container hideshowoptions">
-              <div class="custom-dropdown">
-                <span style="visibility:hidden;">
+              <div class="custom-dropdown secondselectbox">
+                <span style="display:none;">
                 <label class="addmargin">
                   <input type="checkbox" >
                   Clinic
@@ -148,7 +148,7 @@
                 <span class="has-error" ng-show="files.length == 0" translate="error.file.required"></span>
               </div>  --> 
         </div>
-          <div class="col-md-10"><input type="text" ng-model="pdfSelected" id="filename" class="noboder" readonly="true"/></div>
+          <div class="col-md-10"><input type="text" ng-model="pdfSelected" id="filename" class="noboder" disabled="disabled" readonly="true"/></div>
           <!-- code  -->  
           <br><br> 
           <div class="col-md-16 reset-padding">

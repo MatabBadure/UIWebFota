@@ -180,13 +180,13 @@ $scope.geteditAnnouncement = function(){
       console.log("my console");
       console.log($scope.announcementFileName);
       $scope.announcement = response.data.Announcement;
-       if($scope.announcement.sendTo == 'patient'){
+       if($scope.announcement.sendTo == 'Patient'){
        $scope.checkedtwo = false;
          $scope.checkedone = true;
        $scope.announcement.clinic = undefined;
        $scope.announcement.clinicType == undefined;
        }
-       if($scope.announcement.sendTo == 'clinic'){
+       if($scope.announcement.sendTo == 'Clinic'){
        $scope.checkedone = false;
      $scope.checkedtwo = true;
        $scope.announcement.patientType == undefined;
@@ -201,9 +201,36 @@ $scope.geteditAnnouncement = function(){
 $scope.announcement.clinic = 'All';
 $scope.checkedtwo = true;
       }
-      else{
-$scope.announcement.clinic = 'Specialty';
-$scope.checkedtwo = true;
+      else {
+      $scope.announcement.clinic = 'Specialty';
+      $scope.checkedtwo = true;
+      }
+    /* if($scope.announcement.patientType == 'All'){
+        $scope.checkedone = true;
+        $scope.checkedtwo = false;
+       $scope.announcement.clinic = undefined;
+       $scope.announcement.clinicType == undefined;
+        
+      }*/
+      if(($scope.announcement.sendTo == 'Patient') && ($scope.announcement.patientType == 'All')){
+        $scope.checkedone = true;
+        $scope.checkedtwo = false;
+       $scope.announcement.clinic = undefined;
+       $scope.announcement.clinicType == undefined;
+        
+      }
+      if(($scope.announcement.sendTo == 'Patient') && ($scope.announcement.patientType != 'All')){
+        $scope.checkedone = true;
+        $scope.checkedtwo = false;
+       $scope.announcement.clinic = undefined;
+       $scope.announcement.clinicType == undefined;
+        
+      }
+       if($scope.announcement.patientType == 'All' && $scope.announcement.clinicType == 'All'){
+        $scope.checkedone = true;
+        $scope.checkedtwo = true;
+        $scope.announcement.clinic = 'All';
+
       }
       if($scope.announcement.patientType){
         $scope.checkedone = true;
