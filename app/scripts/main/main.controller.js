@@ -424,6 +424,12 @@ else {
 	    }else if($rootScope.userRole === "ACCT_SERVICES"){ 
 	      $state.go('rcadminAnnouncements');
 	    }
+	    else if($rootScope.userRole === "ASSOCIATES"){ 
+	      $state.go('associateAnnouncements');
+	    }
+	    else if($rootScope.userRole === "CUSTOMER_SERVICES"){ 
+	      $state.go('customerserviceAnnouncements');
+	    }
 	    };	
     $scope.loginAnalyitcs = function(){
 	    if($rootScope.userRole === "ADMIN"){
