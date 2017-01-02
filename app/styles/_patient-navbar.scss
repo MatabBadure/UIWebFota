@@ -531,6 +531,7 @@ border:1px solid #ccc;
 .noboder
 {
   border:0px !important;
+  margin-bottom: 5px;
 }
 .addmargin input {
   margin-right: 8px;
@@ -655,4 +656,13 @@ content: "\f024" !important;
 .announcement-list-header [class*="sort"] {
   line-height: 29px;
 }
-
+.fa-file-pdf-o-new::before {
+  content: url(../images/onlypdf.png);
+}
+.nobackground{
+  background:none;
+  border:0px !important;
+}
+.nonPDFclass{
+  padding-left: 10px !important;
+}

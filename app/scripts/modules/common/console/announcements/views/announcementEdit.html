@@ -151,19 +151,26 @@
            <div class="col-md-6 reset-padding"> <input type="file" accept=
 "application/pdf" id="browse" name="fileupload" style="display: none" onchange="angular.element(this).scope().Handlechange(this)"/>
           <input type="button" class="hillrom-btn btn-secondary  browsebtn noboder" value="Choose a File" id="fakeBrowse" ng-click="showModalOverwriteCall();" required/>  
+          <span  class="icons user-required"> Only PDF<i class="fa fa-file-pdf-o-new" aria-hidden="true"></i>
+            </span>
+          
          <!--  <div ng-show="files.length == 0 && resetsubmitted">
                 <span class="has-error" ng-show="files.length == 0" translate="error.file.required"></span>
               </div>  --> 
         </div>
-          <div class="col-md-10"><input type="text" ng-model="pdfSelected" id="filename" class="noboder" disabled="disabled" readonly="true"/></div>
-          <!-- code  -->  
+
+          <div class="col-md-10"><input type="text" ng-model="pdfSelected" id="filename" class="nobackground" disabled="disabled" readonly="true"/>
+            <div ng-if="nonPDF == true " ><span class="has-error nonPDFclass" style="">File must be PDF only</span></div>
+         </div>
+
+          <!-- code  -->
           <br><br> 
           <div class="col-md-16 reset-padding">
           <div class="col-md-7 reset-padding">Last Uploaded File</div>
           <div class="col-md-7">{{announcementFileName}}</div>
             </div>
           </div>
-          <div ng-if="nonPDF == true " style=""><span class="has-error">File must be PDF only</span></div>
+         
             <div ng-show="fileinput.length">
         <div ng-repeat="file in fileinput.slice(0)">
             <span>{{file.webkitRelativePath || file.name}}</span>
