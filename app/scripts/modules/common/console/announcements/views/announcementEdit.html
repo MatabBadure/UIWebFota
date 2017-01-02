@@ -1,8 +1,13 @@
 <div class="container edit-announcment margin-top reset-padding">
+  
 <div class="dashboard dashboard--content padding-bottom-ls">
+
   <form name="form" novalidate autocomplete="off">
     <div class="container dashboard__form">
       <div>
+         <div class="col-md-4 reset-padding user-required pull-right" style="">
+            <span translate="" >* Required Fields</span>
+          </div>
         <div class="col-md-16 col-sm-16 margin-top reset-padding">
           <div class="col-md-7 col-sm-7 reset-padding">
             <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
@@ -143,7 +148,8 @@
               <span class="">*</span>
             </div>
             <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding">
-           <div class="col-md-6 reset-padding"> <input type="file" id="browse" name="fileupload" style="display: none" onchange="angular.element(this).scope().Handlechange(this)"/>
+           <div class="col-md-6 reset-padding"> <input type="file" accept=
+"application/pdf" id="browse" name="fileupload" style="display: none" onchange="angular.element(this).scope().Handlechange(this)"/>
           <input type="button" class="hillrom-btn btn-secondary  browsebtn noboder" value="Choose a File" id="fakeBrowse" ng-click="showModalOverwriteCall();" required/>  
          <!--  <div ng-show="files.length == 0 && resetsubmitted">
                 <span class="has-error" ng-show="files.length == 0" translate="error.file.required"></span>
@@ -157,6 +163,7 @@
           <div class="col-md-7">{{announcementFileName}}</div>
             </div>
           </div>
+          <div ng-if="nonPDF == true " style=""><span class="has-error">File must be PDF only</span></div>
             <div ng-show="fileinput.length">
         <div ng-repeat="file in fileinput.slice(0)">
             <span>{{file.webkitRelativePath || file.name}}</span>
@@ -181,7 +188,7 @@
 
     <div class="col-md-16 col-sm-16 margin-top reset-padding">
       <div class="">
-        <buton type="submit" class="hillrom-btn btn-primary float-right btn-margin-left" ng-click="showannouncementUpdateModal(form)" translate="global.announcement.label.post-announcement">Update</buton>
+        <buton type="submit" class="hillrom-btn btn-primary float-right btn-margin-left" ng-click="showannouncementUpdateModal(form)" translate="global.announcement.label.update-announcement">Update</buton>
         <buton type="submit" class="hillrom-btn btn-secondary float-right" ng-click="redirectBack()" translate="global.announcement.label.cancel">cancel</buton>
         <div class="clr"></div>
       </div>
