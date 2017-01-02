@@ -105,7 +105,8 @@ var sortConstant = {
     sentTo: "toClinic.name",
     sentSubject: "messages.messageSubject",
     sentDate: "messages.messageDatetime",
-    sentToCA: "user.lastName"
+    sentToCA: "user.lastName",
+    fromCA: "messages.fromClinic.name"
 }
 
 var stringConstants = {
