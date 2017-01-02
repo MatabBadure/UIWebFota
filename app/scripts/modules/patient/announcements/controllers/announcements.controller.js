@@ -3,7 +3,7 @@ angular.module('hillromvestApp')
   function($scope, $location,$state, announcementservice, notyService, $stateParams, clinicService, UserService, StorageService, commonsUserService,patientDashBoardService) {
     
     $scope.currentPageIndex = 1;
-    $scope.perPageCount = 3;
+    $scope.perPageCount = 5;
     $scope.pageCount = 0;
     $scope.total = 0;
     $scope.totalPages = 0;
@@ -53,7 +53,7 @@ patientDashBoardService.getHMRrunAndScoreRate(StorageService.get('logged').patie
        else {
         $scope.userId = 'userTypeId='+StorageService.get('logged').userId;
        }*/
-      announcementservice.ListAnnouncement($scope.currentPageIndex, $scope.perPageCount, $scope.userRole,$scope.userId).then(function(response) {
+      announcementservice.ListAnnouncementPatient($scope.currentPageIndex, $scope.perPageCount, $scope.userRole,$scope.userId).then(function(response) {
           $scope.announcement = response.data.Announcement_List.content;
           $scope.total = response.data.Announcement_List.totalElements;
           $scope.totalPages = response.data.Announcement_List.totalPages;

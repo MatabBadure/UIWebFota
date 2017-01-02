@@ -15,7 +15,7 @@
               <span class="">*</span>
             </div>
             <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding">
-              <input class="" name="announcementName" type="text" ng-model="announcement.name" validate-on-blur ng-minlength=1 ng-maxlength=50 required>
+              <input class="" name="announcementName" type="text" ng-model="announcement.name" validate-on-blur maxlength="250" required>
              <div ng-show="(form.announcementName.$dirty && form.announcementName.$invalid) || resetsubmitted">
                 <span class="has-error" ng-show="form.announcementName.$error.required" translate="error.announcementName.required"></span>
               </div>
@@ -46,7 +46,7 @@
               <span class="">*</span>
             </div>
             <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding">
-              <input type="text"   class="datepickerNew" ng-model="announcement.startDate" name = "startDate" data-provide="datepicker" data-date-autoclose="true" data-date-start-date="0d"   id="dp1" required data-date-format="mm/dd/yyyy"  ng-pattern="/^\d{2}\/\d{2}\/\d{4}$/" readonly="readonly"/>
+              <input type="text"   class="datepickerNew" ng-model="announcement.startDate" name = "startDate" data-provide="datepicker" data-date-autoclose="true" data-date-start-date="0d"   id="dp1" required data-date-format="mm/dd/yyyy" ng-change="endDateCheck()" ng-pattern="/^\d{2}\/\d{2}\/\d{4}$/" readonly="readonly"/>
               <div ng-show="(form.startDate.$dirty && form.startDate.$invalid) || resetsubmitted">
                 <span class="has-error" ng-show="form.startDate.$error.required" translate="error.startDate.required"></span>
                 <span class="has-error" ng-show="form.startDate.$error.pattern && !form.startDate.$error.required" translate="error.startDate.invalid"></span>
