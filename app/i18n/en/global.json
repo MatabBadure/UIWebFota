@@ -210,7 +210,7 @@
              "required": "Announcement name is required."
             },
             "announcementDesc":{
-             "required": "Announcement description is required."
+             "required": "Announcement subject is required."
             },
             "patientType":{
             "required": "Patient type required."
@@ -219,7 +219,7 @@
             "required": "Clinic Speciality required."
             },
             "selectclinic":{
-            "required": "Type of clinic required."
+            "required": "Clinic type required."
             },
             "SendTo":{
             "required": "Send To required."
