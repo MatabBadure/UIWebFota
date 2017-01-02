@@ -28,6 +28,7 @@ $scope.announcement.clinicType = "";
 $scope.deleteID = "";
  $scope.nodatadiv = false;
  $scope.files =[];
+ $scope.nonPDF = false;
 $scope.sortAnnouncementList = sortOptionsService.getSortOptionsForAnnouncements();   
 $scope.init = function(){	
    clinicService.getClinicSpeciality().then(function(response){
@@ -257,8 +258,18 @@ $scope.Handlechange = function(element)
    $scope.fileinput = document.getElementById("browse");
     var textinput = document.getElementById("filename");
     textinput.value = $scope.fileinput.value;
-    $scope.files = element.files;
-    $scope.uploadFile();
+     $scope.files = element.files;
+    var ext = $scope.files[0].name.split('.');
+    for(var i =0;i<ext.length;i++){
+      if(ext[i]=="pdf"){
+$scope.uploadFile();
+$scope.nonPDF = false;
+ break;
+}
+else{
+  $scope.nonPDF = true;
+}
+    }  
 };
 /*scope.setFiles = function(element) {
     scope.$apply(function(scope) {
@@ -311,7 +322,7 @@ $scope.vm.myClick = function($event) {
 
 $scope.showPatientUpdateModal = function(form){
   
-   if((form.$invalid )||($scope.checkedone == false && $scope.checkedtwo == false) || ($scope.checkedtwo == true && $scope.announcement.clinic == undefined) || ($scope.checkedtwo == true && $scope.announcement.clinic == 'Speciality' && $scope.announcement.clinicType == undefined) || ($scope.checkedone == true && $scope.announcement.patientType == undefined) || ($scope.files.length == 0) || ($scope.dateFlag == true)){
+   if((form.$invalid )||($scope.checkedone == false && $scope.checkedtwo == false) || ($scope.checkedtwo == true && $scope.announcement.clinic == undefined) || ($scope.checkedtwo == true && $scope.announcement.clinic == 'Speciality' && $scope.announcement.clinicType == undefined) || ($scope.checkedone == true && $scope.announcement.patientType == undefined) || ($scope.files.length == 0) || ($scope.dateFlag == true) || ($scope.nonPDF == true)){
         $scope.resetsubmitted = true;
         return false;
         $scope.showModal = false;
@@ -323,7 +334,7 @@ $scope.resetsubmitted = false;
 };
 $scope.showannouncementUpdateModal = function(form){
 
-   if((form.$invalid )||($scope.checkedone == false && $scope.checkedtwo == false) || ($scope.checkedtwo == true && $scope.announcement.clinic == undefined) || ($scope.checkedtwo == true && $scope.announcement.clinic == 'Speciality' && $scope.announcement.clinicType == undefined) || ($scope.checkedone == true && $scope.announcement.patientType == undefined) || ($scope.dateFlag == true)){
+   if((form.$invalid )||($scope.checkedone == false && $scope.checkedtwo == false) || ($scope.checkedtwo == true && $scope.announcement.clinic == undefined) || ($scope.checkedtwo == true && $scope.announcement.clinic == 'Speciality' && $scope.announcement.clinicType == undefined) || ($scope.checkedone == true && $scope.announcement.patientType == undefined) || ($scope.dateFlag == true) || ($scope.nonPDF == true)){
         $scope.resetsubmitted = true;
         return false;
         $scope.showModalUpdate = false;
