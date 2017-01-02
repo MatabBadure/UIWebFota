@@ -29,7 +29,8 @@ $scope.initCount($stateParams.clinicId);
        else {
         $scope.userId = 'userTypeId='+StorageService.get('logged').userId;
        }
-      announcementservice.ListAnnouncement($scope.currentPageIndex, $scope.perPageCount, $scope.userRole,$scope.userId).then(function(response) {
+       var sortOption = sortConstant.announcementModifiedDate+'&asc=false';
+      announcementservice.ListAnnouncement($scope.currentPageIndex, $scope.perPageCount,sortOption, $scope.userRole,$scope.userId).then(function(response) {
           $scope.announcement = response.data.Announcement_List.content;
           $scope.total = response.data.Announcement_List.totalElements;
           $scope.totalPages = response.data.Announcement_List.totalPages;
@@ -37,7 +38,7 @@ $scope.initCount($stateParams.clinicId);
             $scope.nodatadiv = true;
           }
          // $scope.pageCount = Math.ceil($scope.total / 5);
-          console.log(JSON.stringify($scope.announcement));
+          //console.log(JSON.stringify($scope.announcement));
       }).catch(function(response) {});
     };
     

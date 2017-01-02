@@ -4,12 +4,12 @@
       <div class="col-md-16 col-sm-16 col-xs-16 reset-padding pull-left-mob width120">
     	<div class="announcement-list-header"> 
       
-        <div class="col-md-3 col-sm-3 col-xs-3 sent-to">
+        <div class="col-md-4 col-sm-4 col-xs-4 sent-to">
            <span ng-class="{'sort-icon--default' : sortAnnouncementList.nameOfannouncement.isDefault, 'sort-icon-down': sortAnnouncementList.nameOfannouncement.isDown, 'sort-icon-up':sortAnnouncementList.nameOfannouncement.isUp}" ng-click="sortType('name')" >Name</span> </div>
            <!--  <span class="main-prim-info">Name of Announcement</span> -->
            
        
-          <div class="col-md-5 col-sm-5 col-xs-5 reset-padding pull-left-mob width120">
+          <div class="col-md-6 col-sm-6 col-xs-6 reset-padding pull-left-mob width120">
             <span ng-class="{'sort-icon--default' : sortAnnouncementList.announcementsubject.isDefault, 'sort-icon-down': sortAnnouncementList.announcementsubject.isDown, 'sort-icon-up':sortAnnouncementList.announcementsubject.isUp}" ng-click="sortType('subject')" >Subject</span> </div>
             <!-- <span class="impo-highlight">Subject</span> -->
          
@@ -22,20 +22,20 @@
             <!-- <span class="short-info">Ends on</span> -->
          
 
-         <div class="col-md-2 col-sm-3 col-xs-3 reset-padding pull-left-mob width120">
+         <div class="col-md-1 col-sm-1 col-xs-1 reset-padding pull-left-mob width120">
             <span class="short-info"></span>
           </div>
-          <div class="col-md-2 col-sm-3 col-xs-3 reset-padding pull-left-mob width120">
+          <div class="col-md-1 col-sm-1 col-xs-1 reset-padding pull-left-mob width120">
             <span class="short-info"></span>
           </div>
     </div>
 
     <div class="announcement-list" ng-if = "!nodatadiv" ng-readonly="true" ng-repeat="announcement in announcementsList">
-          <div class="col-md-3 col-sm-3 col-xs-3 reset-padding pull-left-mob width120 padding-left-first-col overflow-ellipsis">
+          <div class="col-md-4 col-sm-4 col-xs-4  pull-left-mob width120  overflow-ellipsis">
             <span class="main-prim-info">{{announcement.name}}</span>
            
           </div>
-          <div class="col-md-5 col-sm-5 col-xs-5 reset-padding pull-left-mob width120 overflow-ellipsis">
+          <div class="col-md-6 col-sm-6 col-xs-6 padding-left-sec-col pull-left-mob width120 overflow-ellipsis">
             <span class="impo-highlight">{{announcement.subject | limitTo:120}} <span ng-if="announcement.subject.length > 120">...</span></span>
           </div>
           <div class="col-md-2 col-sm-3 col-xs-3 reset-padding pull-left-mob width120">
@@ -44,14 +44,19 @@
           <div class="col-md-2 col-sm-3 col-xs-3 reset-padding pull-left-mob width120">
             <span class="short-info">{{announcement.endDate}}</span>
           </div>
-
-         <div class="col-md-2 col-sm-3 col-xs-3 reset-padding pull-left-mob width120" ng-click="edit(announcement.id)">
+   <div class="col-md-1 col-sm-1 text-center pull-left-mob cursor-pointer">
+      <span class="icon-edit-icon" ng-click="edit(announcement.id)"></span>
+    </div>
+    <div class="col-md-1 col-sm-1 text-center pull-left-mob cursor-pointer">
+      <span class="icon-delete-icon" ng-click="showDeleteModal(announcement.id)"></span>
+    </div>
+<!--          <div class="col-md-2 col-sm-3 col-xs-3 reset-padding pull-left-mob width120" ng-click="edit(announcement.id)">
             <span class="short-info cursor-pointer"><i class="fa fa-pencil" aria-hidden="true"></i>
             </span>
           </div>
           <div class="col-md-2 col-sm-3 col-xs-3 reset-padding pull-left-mob width120" ng-click="showDeleteModal(announcement.id)">
             <span class="icon-delete-icon cursor-pointer" ng-click="alert('Hii')"></span>
-          </div>
+          </div> -->
           <div class="clr"></div>
        </div>
        <div id = "NodataDiv" class="graph_nodata" ng-if = "nodatadiv">
