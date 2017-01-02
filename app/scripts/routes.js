@@ -5861,6 +5861,61 @@ angular.module('hillromvestApp')
                         }
                     ]
                 }
+            })
+            .state('associateAnnouncements', {
+              parent: 'console',
+              url: '/associates/announcements',
+              data: {
+                  roles: ['ASSOCIATES'],
+                  pageTitle: 'console.page-title.login-analytics'
+              },
+              views: {
+                  'content@': {
+                      templateUrl: 'scripts/modules/common/console/announcements/views/associate/view.html',
+                      controller: 'announcementsController'
+                  }
+              },
+              resolve: {
+                /*loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('LoginAnalyticsModule');
+                    }],*/
+                  translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                      $translatePartialLoader.addPart('console');
+                      return $translate.refresh();
+                  }],
+                  authorize: ['Auth',
+                      function(Auth) {
+                          return Auth.authorize(false);
+                      }
+                  ]
+              }
+            }).state('customerserviceAnnouncements', {
+              parent: 'console',
+              url: '/customerservice/announcements',
+              data: {
+                  roles: ['CUSTOMER_SERVICES'],
+                  pageTitle: 'console.page-title.login-analytics'
+              },
+              views: {
+                  'content@': {
+                      templateUrl: 'scripts/modules/common/console/announcements/views/customerservice/view.html',
+                      controller: 'announcementsController'
+                  }
+              },
+              resolve: {
+                /*loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('LoginAnalyticsModule');
+                    }],*/
+                  translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                      $translatePartialLoader.addPart('console');
+                      return $translate.refresh();
+                  }],
+                  authorize: ['Auth',
+                      function(Auth) {
+                          return Auth.authorize(false);
+                      }
+                  ]
+              }
             }); 
 }]);
 

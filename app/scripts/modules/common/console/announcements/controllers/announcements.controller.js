@@ -38,7 +38,7 @@ $scope.init = function(){
          $scope.patientTypes =  response.data.typeCode;
      
       }).catch(function(response){});
-if($state.current.name === 'rcadminAnnouncements' || $state.current.name === 'adminAnnouncements'){
+if($state.current.name === 'rcadminAnnouncements' || $state.current.name === 'adminAnnouncements' || $state.current.name === 'associateAnnouncements' || $state.current.name === 'customerserviceAnnouncements'){
 $scope.sortType('latest');
 }
 else if($state.current.name === 'rcadminAnnouncementsEdit' || $state.current.name === 'adminAnnouncementsEdit'){

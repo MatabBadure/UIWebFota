@@ -22,10 +22,7 @@ deleteAnnouncement : function(id){
         });
       },
   updateAnnouncement : function(data){
-    console.log("before url");
-    var url = URL.updateAnnouncements;
-        console.log("after url");
-        console.log(url);
+   var url = URL.updateAnnouncements;
           return $http.post(url, data, {
            headers: headerService.getHeader()
         }).success(function(response) {
@@ -79,8 +76,8 @@ return $http.get(url, {
           return response;
         });
       }, 
-      ListAnnouncementPatient: function(pageNumber,perPage,usertype,userId){
-           var url = URL.listAnnouncementsPatient.replace('PAGE',pageNumber).replace('PER_PAGE',perPage).replace('USER_TYPE',usertype).replace('USERID',userId);
+      ListAnnouncementPatient: function(pageNumber,perPage,sortOption,usertype,userId){
+           var url = URL.listAnnouncementsPatient.replace('PAGE',pageNumber).replace('PER_PAGE',perPage).replace('SORT_OPTION',sortOption).replace('USER_TYPE',usertype).replace('USERID',userId);
         console.log(url);
         return $http.get(url, {
           headers: headerService.getHeader()
