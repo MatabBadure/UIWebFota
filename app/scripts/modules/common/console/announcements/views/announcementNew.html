@@ -3,6 +3,9 @@
   <form name="form" novalidate autocomplete="off">
     <div class="container dashboard__form">
       <div>
+        <div class="col-md-4 reset-padding user-required pull-right" style="">
+            <span translate="" >* Required Fields</span>
+          </div>
         <div class="col-md-16 col-sm-16 margin-top reset-padding">
           <div class="col-md-7 col-sm-7 reset-padding">
             <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
@@ -10,7 +13,7 @@
               <span class="">*</span>
             </div>
             <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding">
-              <input class="" name="announcementName" type="text" ng-model="announcement.name" validate-on-blur ng-minlength=1 ng-maxlength=50 required>
+              <input class="" name="announcementName" type="text" ng-model="announcement.name" validate-on-blur maxlength="250"  required>
              <div ng-show="(form.announcementName.$dirty && form.announcementName.$invalid) || resetsubmitted">
                 <span class="has-error" ng-show="form.announcementName.$error.required" translate="error.announcementName.required"></span>
               </div>
@@ -41,7 +44,7 @@
               <span class="">*</span>
             </div>
             <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding">
-              <input type="text"   class="datepickerNew" ng-model="announcement.startDate" name = "startDate" data-provide="datepicker" data-date-autoclose="true" data-date-start-date="0d"   id="dp1" required data-date-format="mm/dd/yyyy"  ng-pattern="/^\d{2}\/\d{2}\/\d{4}$/" readonly="readonly"/>
+              <input type="text"   class="datepickerNew" ng-model="announcement.startDate" name = "startDate" data-provide="datepicker" data-date-autoclose="true" data-date-start-date="0d"   id="dp1" required data-date-format="mm/dd/yyyy" ng-change="endDateCheck()"  ng-pattern="/^\d{2}\/\d{2}\/\d{4}$/" readonly="readonly"/>
               <div ng-show="(form.startDate.$dirty && form.startDate.$invalid) || resetsubmitted">
                 <span class="has-error" ng-show="form.startDate.$error.required" translate="error.startDate.required"></span>
                 <span class="has-error" ng-show="form.startDate.$error.pattern && !form.startDate.$error.required" translate="error.startDate.invalid"></span>
@@ -124,7 +127,7 @@
                   Patient
                 </label>
                 <select name="type" ng-disabled="!checkedone" ng-model="announcement.patientType"  ng-options="item.type_code as item.type_code_value for item in patientTypes"/>
-                <div ng-show="checkedone == true && announcement.patientType == undefined">
+                <div ng-show="checkedone == true && announcement.patientType == undefined && resetsubmitted ">
                 <span class="has-error"  translate="error.patientType.required"></span>
               </div> 
                 
@@ -143,14 +146,24 @@
               <span class="">*</span>
             </div>
             <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding">
-           <div class="col-md-6 reset-padding"> <input type="file" id="browse" name="fileupload" style="display: none" onchange="angular.element(this).scope().Handlechange(this)"/>
-          <input type="button" class="hillrom-btn btn-secondary  browsebtn noboder" value="Choose a File" id="fakeBrowse" ng-click="HandleBrowseClick();" required/>  
+           <div class="col-md-6 reset-padding"> <input type="file" accept=
+"application/pdf" id="browse" name="fileupload" style="display: none" onchange="angular.element(this).scope().Handlechange(this)"/>
+          <input type="button" class="hillrom-btn btn-secondary  browsebtn noboder" value="Choose a File" id="fakeBrowse" ng-click="HandleBrowseClick();" required/> 
+           <span  class="icons user-required"> Only PDF<i class="fa fa-file-pdf-o-new" aria-hidden="true"></i>
+            </span> 
           <div ng-show="files.length == 0 && resetsubmitted">
                 <span class="has-error" ng-show="files.length == 0" translate="error.file.required"></span>
               </div>  
         </div>
-          <div class="col-md-10"><input type="text" id="filename" disabled="disabled" class="noboder" readonly="true"/></div>
+          <div class="col-md-10">
+            <input type="text" id="filename" disabled="disabled" class="nobackground" readonly="true"/>
+         
+           <div ng-if="nonPDF == true " ><span class="has-error nonPDFclass" style="">File must be PDF only</span></div>
+     
+         </div>
+       </div>
             </div>
+           
             <div ng-show="fileinput.length">
         <div ng-repeat="file in fileinput.slice(0)">
             <span>{{file.webkitRelativePath || file.name}}</span>

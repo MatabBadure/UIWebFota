@@ -1,8 +1,13 @@
 <div class="container edit-announcment margin-top reset-padding">
+  
 <div class="dashboard dashboard--content padding-bottom-ls">
+
   <form name="form" novalidate autocomplete="off">
     <div class="container dashboard__form">
       <div>
+         <div class="col-md-4 reset-padding user-required pull-right" style="">
+            <span translate="" >* Required Fields</span>
+          </div>
         <div class="col-md-16 col-sm-16 margin-top reset-padding">
           <div class="col-md-7 col-sm-7 reset-padding">
             <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
@@ -10,7 +15,7 @@
               <span class="">*</span>
             </div>
             <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding">
-              <input class="" name="announcementName" type="text" ng-model="announcement.name" validate-on-blur ng-minlength=1 ng-maxlength=50 required>
+              <input class="" name="announcementName" type="text" ng-model="announcement.name" validate-on-blur maxlength="250" required>
              <div ng-show="(form.announcementName.$dirty && form.announcementName.$invalid) || resetsubmitted">
                 <span class="has-error" ng-show="form.announcementName.$error.required" translate="error.announcementName.required"></span>
               </div>
@@ -41,7 +46,7 @@
               <span class="">*</span>
             </div>
             <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding">
-              <input type="text"   class="datepickerNew" ng-model="announcement.startDate" name = "startDate" data-provide="datepicker" data-date-autoclose="true" data-date-start-date="0d"   id="dp1" required data-date-format="mm/dd/yyyy"  ng-pattern="/^\d{2}\/\d{2}\/\d{4}$/" readonly="readonly"/>
+              <input type="text"   class="datepickerNew" ng-model="announcement.startDate" name = "startDate" data-provide="datepicker" data-date-autoclose="true" data-date-start-date="0d"   id="dp1" required data-date-format="mm/dd/yyyy" ng-change="endDateCheck()" ng-pattern="/^\d{2}\/\d{2}\/\d{4}$/" readonly="readonly"/>
               <div ng-show="(form.startDate.$dirty && form.startDate.$invalid) || resetsubmitted">
                 <span class="has-error" ng-show="form.startDate.$error.required" translate="error.startDate.required"></span>
                 <span class="has-error" ng-show="form.startDate.$error.pattern && !form.startDate.$error.required" translate="error.startDate.invalid"></span>
@@ -143,20 +148,29 @@
               <span class="">*</span>
             </div>
             <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding">
-           <div class="col-md-6 reset-padding"> <input type="file" id="browse" name="fileupload" style="display: none" onchange="angular.element(this).scope().Handlechange(this)"/>
+           <div class="col-md-6 reset-padding"> <input type="file" accept=
+"application/pdf" id="browse" name="fileupload" style="display: none" onchange="angular.element(this).scope().Handlechange(this)"/>
           <input type="button" class="hillrom-btn btn-secondary  browsebtn noboder" value="Choose a File" id="fakeBrowse" ng-click="showModalOverwriteCall();" required/>  
+          <span  class="icons user-required"> Only PDF<i class="fa fa-file-pdf-o-new" aria-hidden="true"></i>
+            </span>
+          
          <!--  <div ng-show="files.length == 0 && resetsubmitted">
                 <span class="has-error" ng-show="files.length == 0" translate="error.file.required"></span>
               </div>  --> 
         </div>
-          <div class="col-md-10"><input type="text" ng-model="pdfSelected" id="filename" class="noboder" disabled="disabled" readonly="true"/></div>
-          <!-- code  -->  
+
+          <div class="col-md-10"><input type="text" ng-model="pdfSelected" id="filename" class="nobackground" disabled="disabled" readonly="true"/>
+            <div ng-if="nonPDF == true " ><span class="has-error nonPDFclass" style="">File must be PDF only</span></div>
+         </div>
+
+          <!-- code  -->
           <br><br> 
           <div class="col-md-16 reset-padding">
           <div class="col-md-7 reset-padding">Last Uploaded File</div>
           <div class="col-md-7">{{announcementFileName}}</div>
             </div>
           </div>
+         
             <div ng-show="fileinput.length">
         <div ng-repeat="file in fileinput.slice(0)">
             <span>{{file.webkitRelativePath || file.name}}</span>
@@ -181,7 +195,7 @@
 
     <div class="col-md-16 col-sm-16 margin-top reset-padding">
       <div class="">
-        <buton type="submit" class="hillrom-btn btn-primary float-right btn-margin-left" ng-click="showannouncementUpdateModal(form)" translate="global.announcement.label.post-announcement">Update</buton>
+        <buton type="submit" class="hillrom-btn btn-primary float-right btn-margin-left" ng-click="showannouncementUpdateModal(form)" translate="global.announcement.label.update-announcement">Update</buton>
         <buton type="submit" class="hillrom-btn btn-secondary float-right" ng-click="redirectBack()" translate="global.announcement.label.cancel">cancel</buton>
         <div class="clr"></div>
       </div>

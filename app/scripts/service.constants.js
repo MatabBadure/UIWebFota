@@ -112,6 +112,7 @@ var sortConstant = {
     announcementStartDate: "startDate",
     announcementEndDate: "endDate",
     announcementModifiedDate : "modifiedDate",
+    announcementModifiedDatePatient : "modified_date",
     fromCA: "messages.fromClinic.name"
 }
 

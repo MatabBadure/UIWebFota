@@ -3,7 +3,7 @@ angular.module('hillromvestApp')
   function($scope, $location,$state, announcementservice, notyService, $stateParams, clinicService, UserService, StorageService, commonsUserService,patientDashBoardService) {
     
     $scope.currentPageIndex = 1;
-    $scope.perPageCount = 3;
+    $scope.perPageCount = 5;
     $scope.pageCount = 0;
     $scope.total = 0;
     $scope.totalPages = 0;
@@ -21,9 +21,6 @@ $scope.userId ='patientId='+response.data.deviceList[0].patient.id;
  angular.element(document).ready(function () {
         if($scope.userRole === 'PATIENT'){
 patientDashBoardService.getHMRrunAndScoreRate(StorageService.get('logged').patientID, $scope.toTimeStamp).then(function(response){
-  
-      console.log("compliancewala");
-  console.log(response.data.id);
   $scope.userId ='patientId='+response.data.patient.id;
   $scope.searchUsers();
       }).catch(function(response) {});
@@ -53,7 +50,8 @@ patientDashBoardService.getHMRrunAndScoreRate(StorageService.get('logged').patie
        else {
         $scope.userId = 'userTypeId='+StorageService.get('logged').userId;
        }*/
-      announcementservice.ListAnnouncement($scope.currentPageIndex, $scope.perPageCount, $scope.userRole,$scope.userId).then(function(response) {
+        var sortOption = sortConstant.announcementModifiedDatePatient+'&asc=false';
+      announcementservice.ListAnnouncementPatient($scope.currentPageIndex, $scope.perPageCount, sortOption,$scope.userRole,$scope.userId).then(function(response) {
           $scope.announcement = response.data.Announcement_List.content;
           $scope.total = response.data.Announcement_List.totalElements;
           $scope.totalPages = response.data.Announcement_List.totalPages;
@@ -61,7 +59,7 @@ patientDashBoardService.getHMRrunAndScoreRate(StorageService.get('logged').patie
             $scope.nodatadiv = true;
           }
          // $scope.pageCount = Math.ceil($scope.total / 5);
-          console.log(JSON.stringify($scope.announcement));
+          //console.log(JSON.stringify($scope.announcement));
       }).catch(function(response) {});
     };
     
@@ -69,8 +67,4 @@ patientDashBoardService.getHMRrunAndScoreRate(StorageService.get('logged').patie
       var filename = pdfName.split('/').pop().split('.');
       announcementservice.DownloadAsPDF(filename[0]);
     }
-
- 
-
-
   }]);
