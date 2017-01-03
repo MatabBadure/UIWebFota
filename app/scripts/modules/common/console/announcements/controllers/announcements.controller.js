@@ -62,10 +62,12 @@ $scope.redirectBack = function(){
  };
       $scope.sortType = function(option){
 var toggledSortOptions = {};
- var toggleSortOptiondefault = {}; 
-        toggleSortOptiondefault.isDefault = true;
-            toggleSortOptiondefault.isDown = false;
-            toggleSortOptiondefault.isUp = false;
+var toggleSortOptiondefault = {}; 
+toggleSortOptiondefault.isDefault = true;
+toggleSortOptiondefault.isDown = false;
+toggleSortOptiondefault.isUp = false;
+$scope.currentPageIndex = 1;
+$scope.pageNumber = 1;
 $scope.sortOption = "";
 if(option === 'latest'){                        
       $scope.sortOption = sortConstant.announcementModifiedDate + "&asc=false";

@@ -94,13 +94,23 @@ return $http.get(url, {
           //var fileName = "test.pdf";
           //var a = document.createElement("a");
           //document.body.appendChild(a);
-          var URL = window.URL || window.webkitURL;
+/*          
           var file = new Blob([response], {type: 'application/pdf'});
           var fileURL = URL.createObjectURL(file);
-          window.open(fileURL);
+          window.open(fileURL);*/
           //a.href = fileURL;
          //a.download = fileName;
          //a.click();
+         var URL = window.URL || window.webkitURL;
+                var byteArray = new Uint8Array(response);
+                var blob = new Blob([byteArray], { type: 'application/pdf' });
+                if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+                    window.navigator.msSaveOrOpenBlob(blob);
+                }
+                else {
+                    var objectUrl = URL.createObjectURL(blob);
+                    window.open(objectUrl);
+                }
         });
       } 
       
