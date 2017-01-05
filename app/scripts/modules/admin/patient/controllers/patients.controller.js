@@ -416,7 +416,6 @@ angular.module('hillromvestApp')
       var resetDate = $scope.resetStartDate;
       var res = resetDate.split("/");
       var resetDateFinal = res[2]+"-"+res[0]+"-"+res[1];
-      console.log(resetDateFinal);
       var resetTo = $scope.scoreToReset;
       if($scope.ShowOther)
       {
@@ -972,8 +971,6 @@ angular.module('hillromvestApp')
         $scope.associatedClinics =[];
         if(response.data.clinics){ 
           $scope.associatedClinics = response.data.clinics;
-          console.log("associated clinics");
-          console.log(associatedClinics);
         }else if(response.data.message){
           $scope.associatedClinicsErrMsg = response.data.message;
         }
