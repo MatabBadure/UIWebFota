@@ -54,3 +54,14 @@ text-overflow: ellipsis;
 #announcementflag:before{
 content: "\f024" !important;
 }
+/* 09/01   */
+
+.announce-list p, .announce-list h2, .announce-list button, .announce-list_editable {
+    max-width: 100%;
+    overflow-wrap: break-word;
+    white-space: pre-wrap;
+}
+/* IE6 and below */
+* html .announce-list p, .announce-list h2, .announce-list button, .announce-list_editable { white-space: pre  }
+/* IE7 */
+*:first-child+html .announce-list p, .announce-list h2, .announce-list button, .announce-list_editable { white-space: pre  }
