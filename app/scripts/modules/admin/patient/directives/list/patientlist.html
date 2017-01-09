@@ -5,7 +5,7 @@
         <span class="dashbord-nav__primary--title" translate="patient.home.manageLabel">Manage Patient</span>
       </div>
 
-      <div ng-if="userRole !== 'ASSOCIATES'" class="dashbord-nav__secondary create-user navbar-right cursor-pointer" ng-click="createPatient()">
+      <div ng-if="((userRole !== 'ASSOCIATES') && (userRole !== 'CUSTOMER_SERVICES'))" class="dashbord-nav__secondary create-user navbar-right cursor-pointer" ng-click="createPatient()">
         <span class="" translate="patient.home.createNewLabel"></span>
         <span class="icon-plus-icon add-new"></span>
       </div>

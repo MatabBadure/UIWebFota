@@ -188,14 +188,17 @@ $scope.sortOption = "";
 if(option === 'From'){                        
       toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortMessageList.from);
       $scope.sortMessageList.from = toggledSortOptions;
-    //  $scope.sortOption = sortConstant.from + sortOptionsService.getSortByASCString(toggledSortOptions);
+
+     // $scope.sortOption = sortConstant.from + sortOptionsService.getSortByASCString(toggledSortOptions);
+
     //  $scope.sortOption = $scope.sortOption + "&sort_by=messages.messageDatetime&asc=false";
      if(StorageService.get('logged').role === 'PATIENT'){
       $scope.sortOption = sortConstant.fromCA + sortOptionsService.getSortByASCString(toggledSortOptions);
       }
-       else if(StorageService.get('logged').role === 'CLINIC_ADMIN' || StorageService.get('logged').role === 'HCP'){
-       $scope.sortOption = sortConstant.from + sortOptionsService.getSortByASCString(toggledSortOptions);
-     }
+
+      else if(StorageService.get('logged').role === 'CLINIC_ADMIN' || StorageService.get('logged').role === 'HCP'){
+      $scope.sortOption = sortConstant.from + sortOptionsService.getSortByASCString(toggledSortOptions);
+    }
       $scope.sortMessageList.subject = toggleSortOptiondefault;
       $scope.sortMessageList.date = toggleSortOptiondefault;
       $scope.Inbox();
@@ -276,10 +279,11 @@ if(option === 'From'){
     //  $scope.archivesortOption = sortConstant.from + sortOptionsService.getSortByASCString(toggledSortOptions);
     // $scope.archivesortOption = $scope.archivesortOption + "&sort_by=messages.messageDatetime&asc=false";
     if(StorageService.get('logged').role === 'PATIENT'){
-       $scope.archivesortOption = sortConstant.fromCA + sortOptionsService.getSortByASCString(toggledSortOptions);
-       }
-       else if(StorageService.get('logged').role === 'CLINIC_ADMIN' || StorageService.get('logged').role === 'HCP'){
-       $scope.archivesortOption = sortConstant.from + sortOptionsService.getSortByASCString(toggledSortOptions);
+
+      $scope.archivesortOption = sortConstant.fromCA + sortOptionsService.getSortByASCString(toggledSortOptions);
+      }
+      else if(StorageService.get('logged').role === 'CLINIC_ADMIN' || StorageService.get('logged').role === 'HCP'){
+      $scope.archivesortOption = sortConstant.from + sortOptionsService.getSortByASCString(toggledSortOptions);
     }
       $scope.sortArchiveMessageList.date = toggleSortOptiondefault;
        $scope.sortArchiveMessageList.subject = toggleSortOptiondefault;

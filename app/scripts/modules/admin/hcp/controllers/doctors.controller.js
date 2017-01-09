@@ -15,7 +15,7 @@ angular.module('hillromvestApp')
 
     $scope.init = function(){
       var currentRoute = $state.current.name;
-      if (currentRoute === 'hcpProfile' || currentRoute === 'hcpProfileRcadmin' || currentRoute === 'hcpProfileAssociates') {
+      if (currentRoute === 'hcpProfile' || currentRoute === 'hcpProfileRcadmin' || currentRoute === 'hcpProfileAssociates' || currentRoute === 'hcpProfileCustomerService') {
         $scope.currentPageIndex = 1;
         $scope.perPageCount = 10;
         $scope.pageCount = 0;
@@ -28,7 +28,7 @@ angular.module('hillromvestApp')
         $scope.getDoctorDetails($stateParams.doctorId, $scope.setEditMode);        
       } else if (currentRoute === 'hcpNew' || currentRoute === 'hcpNewRcadmin') {
         $scope.createDoctor();
-      } else if(currentRoute === 'associatedClinic' || currentRoute === 'associatedClinicRcadmin' || currentRoute === 'associatedClinicAssociates'){
+      } else if(currentRoute === 'associatedClinic' || currentRoute === 'associatedClinicRcadmin' || currentRoute === 'associatedClinicAssociates' || currentRoute === 'associatedClinicCustomerService'){
         $scope.getAvailableclinics($stateParams.doctorId);       
         $scope.getDoctorById($stateParams.doctorId);
       }
@@ -129,6 +129,8 @@ angular.module('hillromvestApp')
         $state.go(status+loginConstants.role.Rcadmin, {'doctorId': $stateParams.doctorId});
       }else if($scope.doctorStatus.role === loginConstants.role.associates){
         $state.go(status+'Associates', {'doctorId': $stateParams.doctorId});
+      }else if($scope.doctorStatus.role === loginConstants.role.customerservices){
+        $state.go(status+'CustomerService', {'doctorId': $stateParams.doctorId});
       }else {
         $state.go(status, {'doctorId': $stateParams.doctorId});
       }
@@ -267,6 +269,10 @@ angular.module('hillromvestApp')
         $state.go('associatepatientOverview', {
           'patientId': patient.id
         });
+      }else if($scope.doctorStatus.role === loginConstants.role.customerservices){
+        $state.go('customerservicepatientOverview', {
+          'patientId': patient.id
+        });
       }else {
         $state.go('patientOverview', {
           'patientId': patient.id
@@ -284,6 +290,10 @@ angular.module('hillromvestApp')
         $state.go('clinicProfileAssociate', {
           'clinicId': clinic.id
         });
+      }else if($scope.doctorStatus.role === loginConstants.role.customerservices){
+        $state.go('clinicProfileCustomerService', {
+          'clinicId': clinic.id
+        });
       }else{
         $state.go('clinicProfile', {
           'clinicId': clinic.id
@@ -292,7 +302,7 @@ angular.module('hillromvestApp')
     };
     
     $scope.searchPatientsOnQueryChange = function(){
-      if(($state.current.name === 'hcpProfile' || $state.current.name === 'hcpProfileRcadmin' || $state.current.name === 'hcpProfileAssociates') && !searchOnLoad){
+      if(($state.current.name === 'hcpProfile' || $state.current.name === 'hcpProfileRcadmin' || $state.current.name === 'hcpProfileAssociates' || $state.current.name === 'hcpProfileCustomerService') && !searchOnLoad){
         $scope.searchPatientsForHCP();
       }
     };
