@@ -953,7 +953,7 @@ min-height: 135px;
 	}
 
 	#replybox .write-message {
-    width: 96% !important;
+    width: 96% !important; 
 }
 }
 .dt-flag
@@ -961,4 +961,15 @@ min-height: 135px;
 	position: absolute;
     top: 1%;
     right: -2%;
+}
+
+/* menu fixes  */
+
+
+@media only screen and (min-width :668px) and (max-width : 888px){
+#extratab {
+  margin-top: -60px !important;
+  position: relative !important;
+   margin-bottom: 0px;
+}
 }

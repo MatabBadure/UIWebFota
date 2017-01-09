@@ -8,46 +8,56 @@
     </span>
   </div>
 
-  <div class="col-md-16 user-detail-info">
-    <div class="col-md-4 user-detail-info__data word-ellipsis">
+  <div class="col-md-16 col-sm-16 user-detail-info" style="padding-right:5px !important; padding-left:20px !important;">
+    <div class="col-md-4 col-sm-4 user-detail-info__data word-ellipsis">
       <span class="user-detail-info__data--key" translate="clinic.hillRom-id"></span>
       <span class="user-detail-info__data--key">:</span>
       <span class="user-detail-info__data--value">{{clinic.hillromId}}</span>
     </div>
-    <div class="col-md-4 user-detail-info__data">
+    <div class="col-md-4 col-sm-4 user-detail-info__data">
       <span class="user-detail-info__data--key" translate="clinic.type"></span>
       <span class="user-detail-info__data--key">:</span>
       <span class="user-detail-info__data--value" ng-if="clinic.parent" translate="clinic.clinicType.parent"></span>
       <span class="user-detail-info__data--value" ng-if="!clinic.parent" translate="clinic.clinicType.satellite"></span>
     </div>
-    <div class="col-md-4 user-detail-info__data">
+    <div class="col-md-4 col-sm-4 user-detail-info__data">
       <span class="user-detail-info__data--key" translate="clinic.status"></span>
       <span class="user-detail-info__data--key">:</span>
       <span class="user-detail-info__data--value">{{clinic.status}}</span>
     </div>
 
-    <div class="col-md-4 user-detail-info__data">
+    <div class="col-md-4 col-sm-4 user-detail-info__data">
       <span class="user-detail-info__data--key" translate="clinic.phoneNumber"></span>
       <span class="user-detail-info__data--key">:</span>
       <span class="user-detail-info__data--value">{{clinic.phoneNumber}}</span>
     </div>
-    <div class="col-md-4 user-detail-info__data word-ellipsis">
+    <div class="col-md-4 col-sm-4 user-detail-info__data word-ellipsis">
       <span class="user-detail-info__data--key" translate="clinic.address"></span>
       <span class="user-detail-info__data--key">:</span>
       <span class="user-detail-info__data--value" ng-if="clinic.address && clinic.address2">{{clinic.address}}, {{clinic.address2}}</span>
       <span class="user-detail-info__data--value" ng-if="!clinic.address && clinic.address2">{{clinic.address2}}</span>
       <span class="user-detail-info__data--value" ng-if="clinic.address && !clinic.address2">{{clinic.address}}</span>
     </div>
-    <div class="col-md-4 user-detail-info__data">
+    <div class="col-md-4 col-sm-4 user-detail-info__data">
       <span class="user-detail-info__data--key" translate="clinic.city"></span>
       <span class="user-detail-info__data--key">:</span>
       <span class="user-detail-info__data--value">{{clinic.city}}</span>
     </div>
-    <div class="col-md-4 user-detail-info__data">
+    <div class="col-md-4 col-sm-4 user-detail-info__data">
       <span class="user-detail-info__data--key" translate="clinic.state"></span>
       <span class="user-detail-info__data--key">:</span>
       <span class="user-detail-info__data--value">{{clinic.state}}</span>
     </div>
+  <div class="col-md-4 col-sm-4 user-detail-info__data">
+      <span class="user-detail-info__data--key" translate="clinic.clinic-speciality"></span>
+      <span class="user-detail-info__data--key">:</span>
+      <span class="user-detail-info__data--value">{{clinic.speciality}}</span>
+    </div>
+  </div>
+
+  <div class="col-md-16 col-sm-16 reset-padding margin-top" ng-if="clinic.id">
+    <buton class="hillrom-btn btn-primary float-right btn-margin-left" ng-click="switchTab('clinicEdit')" translate="clinic.clinic-edit"></buton>
+    <buton class="hillrom-btn  float-right btn-margin-left btn-secondary" ng-click="deactivateClinicModal(clinic)" ng-if="!clinic.deleted" translate="clinic.clinic-deactivate"></buton>
   </div>
 </div>
 

@@ -19,6 +19,23 @@ angular.module('hillromvestApp')
             'x-auth-token': token
           };
         return header;
+      },
+     getHeaderForPdf: function() {
+        var token = StorageService.get('logged').token,
+          header = {
+            'Content-Type': 'application/pdf',
+            'x-auth-token': token
+          };
+        return header;
+      }, 
+      getHeaderforUpload: function(){
+        var token = StorageService.get('logged').token,
+          header = {
+            'x-auth-token': token,
+            'Content-Type': undefined,
+            'name':'uploadfile'
+          };
+        return header;
       }
     };
   }]);

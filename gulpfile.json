@@ -175,7 +175,12 @@
             "app/scripts/modules/common/clinicadmin-hcp/patient-diagnostics/controllers/patientDiagnosticController.js",
             "app/scripts/modules/common/clinicadmin-hcp/patient-diagnostics/services/patientdiagnostic.service.js",
             "app/scripts/modules/common/messagesMain/controller/messagecontroller.js",
-            "app/scripts/modules/common/messagesMain/services/message.service.js"
+            "app/scripts/modules/common/messagesMain/services/message.service.js",
+            "app/scripts/modules/common/console/announcements/controllers/announcements.controller.js",
+            "app/scripts/modules/common/console/announcements/services/announcement.service.js",
+            "app/scripts/modules/clinicadmin/announcements/controllers/announcementsCA.controller.js",
+            "app/scripts/modules/common/console/announcements/directives/announcement.directive.js",
+            "app/scripts/modules/patient/announcements/controllers/announcements.controller.js"
         ],
         "scripts_min_path":[
             "app/bower_components/canvg-gabelerner/rgbcolor.min.js",
@@ -335,7 +340,12 @@
             "app/scripts/modules/admin/profile/controller/chargercontroller.min.js",
             "app/scripts/modules/admin/profile/chargerTab/chargerTab.directive.min.js",
             "app/scripts/modules/common/messagesMain/controller/messagecontroller.min.js",
-            "app/scripts/modules/common/messagesMain/services/message.service.min.js"
+            "app/scripts/modules/common/messagesMain/services/message.service.min.js",
+            "app/scripts/modules/common/console/announcements/controllers/announcements.controller.min.js",
+            "app/scripts/modules/common/console/announcements/services/announcement.service.min.js",
+            "app/scripts/modules/clinicadmin/announcements/controllers/announcementsCA.controller.min.js",
+            "app/scripts/modules/common/console/announcements/directives/announcement.directive.min.js",
+            "app/scripts/modules/patient/announcements/controllers/announcements.controller.js"
         ],
         "clean": [
             "app/build/",
