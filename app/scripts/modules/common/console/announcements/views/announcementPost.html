@@ -36,7 +36,7 @@
            
           </div>
           <div class="col-md-6 col-sm-6 col-xs-6 padding-left-sec-col pull-left-mob width120 overflow-ellipsis">
-            <span class="impo-highlight">{{announcement.subject | limitTo:120}} <span ng-if="announcement.subject.length > 120">...</span></span>
+            <span class="impo-highlight announce-list_editable">{{announcement.subject | limitTo:50}} <span ng-if="announcement.subject.length > 50">...</span></span>
           </div>
           <div class="col-md-2 col-sm-3 col-xs-3 reset-padding pull-left-mob width120">
             <span class="impo-highlight">{{announcement.startDate}}</span>
