@@ -5,7 +5,7 @@
 		<div class="row">
 			<div class="col-md-16">
 				<div class="stats_chart_section">
-					<div class="stats_header">
+					<div class="stats_header badgefiltercontainer">
 						<div class="pull-left col-md-4">
 						<div class="col-md-16 col-sm-16">
 							<h4 translate="doctor.dashboard.totalPatients"></h4>
@@ -14,9 +14,11 @@
 
 						</div>
 						<div class="pull-right left col-md-9">
-						<div class="col-md-7 col-sm-7 reset-padding col-md-offset-1">
+						<div class="col-md-7 col-sm-7 reset-padding col-md-offset-1 daterangecolor">
 							<h4 translate="doctor.dashboard.todayStatistics"></h4>
-							<span class="sub_txt">{{fromdatedisplay}}</span> <span ng-if="!isYesterday">-
+							<span ng-if="isYesterday"><span class="sub_txt">{{badgestatistics.date}}</span></span>
+							<span ng-if="!isYesterday">
+							<span class="sub_txt">{{fromdatedisplay}}</span> -
 							<span class="sub_txt">{{todatedisplay}}</span></span>
 							</div>
 				<div class="col-md-8 col-sm-8 reset-padding right_header_barchart">
@@ -73,7 +75,7 @@
 		</div>
 	</div>
 	<loading loaded="isGraphLoaded"></loading>		
-	<div class="col-md-16 padding0" ng-class="{'pointer-no-event': !isGraphLoaded, 'pointer-fill-event': isGraphLoaded}">
+	<div class="col-md-16 padding0 mobilefix" ng-class="{'pointer-no-event': !isGraphLoaded, 'pointer-fill-event': isGraphLoaded}">
 		<div class="bar_graph_header">
 			<div class="col-md-5 col-sm-9 left_header_barchart padding0">
 				<div class="row">

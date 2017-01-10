@@ -647,6 +647,12 @@ font-size:12px;
 {
 	margin-right:10px;
 }
+.badgefiltercontainer .col-md-4 {
+  width: 100%;
+}
+.badgefiltercontainer .col-md-9 {
+  width: 100%;
+}
 
 }
 @media only screen and (min-width : 700px) and (max-width : 1024px) and (orientation : landscape) { 
@@ -684,6 +690,12 @@ font-size:12px;
 {
 	margin-right:10px;
 }
+.badgefiltercontainer .col-md-4 {
+  width: 30%;
+}
+.badgefiltercontainer .col-md-9 {
+  width: 70%;
+}
 }
 @media only screen and (min-width : 1290px) and (max-width :1366px ) and (orientation : landscape) { 
 /******To remove static border bottom******/
@@ -718,6 +730,20 @@ font-size:12px;
   max-height: 100%;
   min-height: 100%;
 }
+.mobilefix
+{
+    clear: both;
+}
+.badgefiltercontainer .col-md-16 {
+  padding: 0;
+}
+.badgefiltercontainer .col-md-4 {
+  width: 100%;
+}
+.badgefiltercontainer .col-md-9 {
+  width: 100%;
+}
+
 }
 @media screen and (min-width: 320px) and (max-width: 667px)
 {
@@ -729,4 +755,5 @@ font-size:12px;
 {
 	margin-right:10px;
 }
+
 } 
