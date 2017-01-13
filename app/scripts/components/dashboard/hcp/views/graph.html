@@ -4,49 +4,73 @@
 	<div class="col-md-16 col-xs-16">
 		<div class="row">
 			<div class="col-md-16">
-				<div class="stats_chart_section">
-					<div class="stats_header">
-						<div class="pull-left">
-							<h4 translate="doctor.dashboard.todayStatistics"></h4>
-							<span class="sub_txt">{{statistics.date}}</span>
+				<div class="stats_chart_section  stats_chart_section_new">
+				<div class="stats_header badgefiltercontainer stats_header_new">
+						<div class="pull-left col-md-4">
+								</div>
+						<div class="pull-right left col-md-9">
+						
+				<div class="col-md-8 col-sm-8 reset-padding right_header_barchart pull-right">
+				<ul class="nav nav-pills badgefilterlist badgefilterright">
+				    <li role="presentation" class=""><a ng-class="{active: selectedDateOptionBadge === 'YESTERDAY'}" href="" ng-click="yesterdayBadge()" translate="doctor.dashboard.yesterday"></a></li>
+					<li role="presentation" class=""><a ng-class="{active: selectedDateOptionBadge === 'WEEK'}" href="" ng-click="weekBadge()" translate="doctor.dashboard.week"></a></li>
+					<li role="presentation" class=""><a href="" ng-class="{active: selectedDateOptionBadge === 'MONTH'}" ng-click="monthBadge()" translate="doctor.dashboard.month"></a></li>
+					<li role="presentation" class=""><a href="" ng-class="{active: selectedDateOptionBadge === 'YEAR'}" ng-click="yearBadge()" translate="doctor.dashboard.year"></a></li>
+					<li role="presentation" class="" id="dp1"><a href="" date-range-picker class="date-picker" ng-model="badgedates" parentEl="#dp1" options="badgeopts" ><span class="icon-calendar"></span></a></li>
+				</ul>
+			</div>
 						</div>
-						<div class="pull-right left">
+					</div>
+					<div class="stats_header badgefiltercontainer">
+						<div class="pull-left col-md-6">
+						<div class="col-md-16 col-sm-16">
 							<h4 translate="doctor.dashboard.totalPatients"></h4>
-							<span class="sub_txt">{{statistics.totalPatientCount}}</span>
+							<span class="sub_txt">{{statistics.totalPatientCountRange}}</span>
+							</div>
+
+						</div>
+						<div class="pull-right left col-md-9 statdateipad reset-padding" id="statdateipad">
+						<div class="col-md-7 col-sm-7 reset-padding pull-right daterangecolor">
+							<h4 translate="doctor.dashboard.todayStatistics" id="filterdatetxt"></h4>
+							<span ng-if="isYesterday"><span class="sub_txt">{{badgestatistics.date}}</span></span>
+							<span ng-if="!isYesterday">
+							<span class="sub_txt">{{fromdatedisplay}}</span> -
+							<span class="sub_txt">{{todatedisplay}}</span></span>
+							</div>
 						</div>
 					</div>
 					<div class="stats_chart_container">
-						<div class="col-3" ng-click="gotoPatients('missed_therapy')">
+						<div class="col-3" ng-click="(!(selectedDateOptionBadge === 'WEEK') && !(selectedDateOptionBadge === 'YEAR') && !(selectedDateOptionBadge === 'CUSTOM') && !(selectedDateOptionBadge === 'MONTH')) && gotoPatients('missed_therapy')">
 							<div class="pie_chart"  easypiechart options="missedtherapy" percent="percentStatistics.patientsWithMissedTherapy"></div>
 							<div class="stats_chart_content missed">
-								<h4 class="percent" ng-bind="statistics.patientsWithMissedTherapy"></h4>
+								<h4 class="percent" ng-bind="statistics.patientsWithMissedTherapyRange"></h4>
 								<span class="patients_txt" translate="doctor.dashboard.patients"></span>
 								<p class="descrip" translate="doctor.dashboard.consecutiveMissedDays"></p>
 							</div>
 							<div class="chart_inner_icon icon-lungs"></div>
 						</div>
-						<div class="col-3" ng-click="gotoPatients('non_hmr_compliance')">
+						<div class="col-3" ng-click="(!(selectedDateOptionBadge === 'WEEK') && !(selectedDateOptionBadge === 'YEAR') && !(selectedDateOptionBadge === 'CUSTOM') && !(selectedDateOptionBadge === 'MONTH')) && gotoPatients('non_hmr_compliance')">
 							<div class="pie_chart"  easypiechart options="hmr" percent="percentStatistics.patientsWithHmrNonCompliance"></div>
 							<div class="stats_chart_content hmr">
-								<h4 class="percent"  ng-bind="statistics.patientsWithHmrNonCompliance"></h4>
+								<h4 class="percent"  ng-bind="statistics.patientsWithHmrNonComplianceRange"></h4>
 								<span class="patients_txt" translate="doctor.dashboard.patients"></span>
 								<p class="descrip" translate="doctor.dashboard.hmrNonCompliance"></p>
 							</div>
 							<div class="chart_inner_icon icon-man-running"></div>
 						</div>
-						<div class="col-3" ng-click="gotoPatients('setting_deviation')">
+						<div class="col-3" ng-click="(!(selectedDateOptionBadge === 'WEEK') && !(selectedDateOptionBadge === 'YEAR') && !(selectedDateOptionBadge === 'CUSTOM') && !(selectedDateOptionBadge === 'MONTH')) && gotoPatients('setting_deviation')">
 							<div class="pie_chart" easypiechart options="deviation" percent="percentStatistics.patientsWithSettingDeviation"></div>
 							<div class="stats_chart_content deviation">
-								<h4 class="percent" ng-bind="statistics.patientsWithSettingDeviation"></h4>
+								<h4 class="percent" ng-bind="statistics.patientsWithSettingDeviationRange"></h4>
 								<span class="patients_txt" translate="doctor.dashboard.patients"></span>
 								<p class="descrip" translate="doctor.dashboard.consecutiveFrequencyDeviationDays"></p>
 							</div>
 							<div class="chart_inner_icon icon-settings"></div>
 						</div>
-						<div class="col-3" ng-click="gotoPatients('noevents')">
+						<div class="col-3" ng-click="(!(selectedDateOptionBadge === 'WEEK') && !(selectedDateOptionBadge === 'YEAR') && !(selectedDateOptionBadge === 'CUSTOM') && !(selectedDateOptionBadge === 'MONTH')) && gotoPatients('noevents')">
 							<div class="pie_chart"  easypiechart options="noevent" percent="percentStatistics.patientsWithNoEventRecorded"></div>
 							<div class="stats_chart_content noevent">
-								<h4 class="percent" ng-bind="statistics.patientsWithNoEventRecorded">{{statistics.patientsWithNoEventRecorded}}</h4>
+								<h4 class="percent" ng-bind="statistics.patientsWithNoEventRecordedRange">{{statistics.patientsWithNoEventRecorded}}</h4>
 								<span class="patients_txt" translate="doctor.dashboard.patients"></span>
 								<p class="descrip" translate="doctor.dashboard.noEventsRecorded"></p>
 							</div>
@@ -58,7 +82,7 @@
 		</div>
 	</div>
 	<loading loaded="isGraphLoaded"></loading>		
-	<div class="col-md-16 padding0" ng-class="{'pointer-no-event': !isGraphLoaded, 'pointer-fill-event': isGraphLoaded}">
+	<div class="col-md-16 padding0 mobilefix" ng-class="{'pointer-no-event': !isGraphLoaded, 'pointer-fill-event': isGraphLoaded}">
 		<div class="bar_graph_header">
 			<div class="col-md-5 col-sm-9 left_header_barchart padding0">
 				<div class="row">

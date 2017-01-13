@@ -34,7 +34,8 @@ var patientDashboard = {
 	"maxDaysForWeeklyGraph" : 6,
 	"hmrDayGraph" : "HMRBAR_GRAPH",
 	"hmrNonDayGraph" : "HMRLINE_GRAPH",
-	"complianceGraph" : "COMPLIANCE_GRAPH"
+	"complianceGraph" : "COMPLIANCE_GRAPH",
+	"defaultDaysForBadges" : 1,
 }
 
 var profile = {
