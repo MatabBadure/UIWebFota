@@ -906,7 +906,7 @@ angular.module('hillromvestApp')
 	  	$scope.isYesterday = false;
 			  $scope.calculateBadgeDateFromPicker(picker);
 		$scope.getStatistics($scope.selectedClinic.id, StorageService.get('logged').userId);
-			  $scope.selectedDateOptionBadge = '';
+			   $scope.selectedDateOptionBadge = 'CUSTOM';
 			}
 		},
 		opens: 'left'
