@@ -17,6 +17,7 @@ angular.module('hillromvestApp')
     $scope.initProfile = function(adminId){
       UserService.getUser(adminId).then(function(response){
         $scope.user = response.data.user;
+       
       }).catch(function(response){});
       AuthServerProvider.getSecurityQuestions().then(function(response){
         $scope.questions = response.data
@@ -24,7 +25,7 @@ angular.module('hillromvestApp')
     };
 
     $scope.init = function(){
-      if($state.current.name === 'adminProfile' || $state.current.name === 'editAdminProfile' || $state.current.name === 'adminProfileRc' || $state.current.name === 'editAdminProfileRc' || $state.current.name === 'associateProfile' || $state.current.name === 'editAssociateProfile'){
+      if($state.current.name === 'adminProfile' || $state.current.name === 'editAdminProfile' || $state.current.name === 'adminProfileRc' || $state.current.name === 'editAdminProfileRc' || $state.current.name === 'associateProfile' || $state.current.name === 'editAssociateProfile' || $state.current.name === 'customerserviceProfile' || $state.current.name === 'editcustomerserviceProfile'){
         $scope.initProfile(StorageService.get('logged').userId);
       }
     };
@@ -34,7 +35,11 @@ angular.module('hillromvestApp')
         $state.go('editAdminProfileRc');
       }else if($scope.role === loginConstants.role.associates){
         $state.go('editAssociateProfile');
-      }else {
+      }
+      else if($scope.role === loginConstants.role.customerservices){
+        $state.go('editcustomerserviceProfile');
+      }
+      else {
         $state.go('editAdminProfile');
       }
     };
@@ -43,6 +48,9 @@ angular.module('hillromvestApp')
       if($scope.role === loginConstants.role.acctservices){
         $state.go(status+loginConstants.role.Rc);
       }else if($scope.role === loginConstants.role.associates){
+        $state.go(status);
+      }
+      else if($scope.role === loginConstants.role.customerservices){
         $state.go(status);
       }else{
         $state.go(status);
@@ -80,7 +88,11 @@ angular.module('hillromvestApp')
             $state.go('adminProfileRc');
           }else if($scope.role === loginConstants.role.associates){
             $state.go('associateProfile');
-          }else{
+          }
+           else if($scope.role === loginConstants.role.customerservices){
+            $state.go('customerserviceProfile');
+          }
+          else{
             $state.go('adminProfile');
           }
         }else{
@@ -126,6 +138,9 @@ angular.module('hillromvestApp')
         $state.go('adminProfileRc');
       }else if($scope.role === loginConstants.role.associates){
         $state.go('associateProfile');
+      }
+      else if($scope.role === loginConstants.role.customerservices){
+        $state.go('customerserviceProfile');
       }else {
         $state.go('adminProfile');
       }

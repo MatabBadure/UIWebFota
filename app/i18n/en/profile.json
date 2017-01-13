@@ -39,6 +39,7 @@
       "super-admin": "Super Admin",
       "account-services": "Account Services",
       "associates":"Associates",
+      "customerservices" : "Customer Services",
       "default" : "Select a role"
     },
     "update-button-text": "Update",
