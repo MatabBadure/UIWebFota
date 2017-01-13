@@ -22,6 +22,7 @@ angular.module('hillromvestApp')
     };
 	$scope.init = function() {
 		$scope.cumulativeStatitics = {};
+		$scope.badgestatistics = {};
 		$scope.cumulativeStatitics.isMissedTherapyDays = true;
 		$scope.cumulativeStatitics.isNoTransmissionRecorded = true;
 		$scope.cumulativeStatitics.isSettingDeviation = true;
@@ -35,7 +36,7 @@ angular.module('hillromvestApp')
 		$scope.selectedDateOptionBadge = 'YESTERDAY';
 		$scope.toTimeStamp = new Date().getTime();
 		$scope.treatment = {};
-    $scope.percentStatistics = {};
+   		$scope.percentStatistics = {};
 		$scope.treatment.treatmentPerDay = true;
 		$scope.treatment.treatmentLength = true;
 		$scope.showTreatmentLegends = false;
@@ -44,6 +45,7 @@ angular.module('hillromvestApp')
 		$scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,hcpDashboardConstants.USdateFormat,'/');	
 		$scope.badgetoTimeStamp = new Date().getTime();
 		$scope.badgefromTimeStamp = new Date().getTime();
+		$scope.badgestatistics.date = "";
 		$scope.getBadgeDateFormat();
 		$scope.prescribeDevice = false;
 		$scope.isYesterday = true;
@@ -158,11 +160,13 @@ angular.module('hillromvestApp')
 				clinicadminService.getBadgeStatistics(clinicId, userId, $scope.badgefromDate,$scope.badgetoDate).then(function(response){
 
 		  $scope.statistics = response.data.statitics;
-		  $scope.statistics.date = $scope.getYesterday();
-		  $scope.toDate = dateService.getDateFromTimeStamp(new Date($scope.statistics.date),hcpDashboardConstants.USdateFormat,'/');
+		  var todate = $scope.badgestatistics.date = $scope.getYesterday();
+		  $scope.badgetoDate = dateService.convertDateToYyyyMmDdFormat(new Date(dateService.convertToTimestamp(todate)));
+
 		  $scope.getPercentageStatistics($scope.statistics);
 		}).catch(function(response){
-		 $scope.toDate = $scope.statistics.date = $scope.getYesterday();
+			var todate = $scope.badgestatistics.date = $scope.getYesterday();
+		  	$scope.badgetoDate = dateService.convertDateToYyyyMmDdFormat(new Date(dateService.convertToTimestamp(todate))); 
 		  notyService.showError(response);
 		});
 		} else if($state.current.name === 'clinicadmindashboard'){
@@ -172,11 +176,14 @@ angular.module('hillromvestApp')
 
 		  $scope.statistics = response.data.statitics;
 
-		  $scope.statistics.date = $scope.getYesterday();
-		  $scope.toDate = dateService.getDateFromTimeStamp(new Date($scope.statistics.date),hcpDashboardConstants.USdateFormat,'/');
+		 var todate = $scope.badgestatistics.date = $scope.getYesterday();
+		  $scope.badgetoDate = dateService.convertDateToYyyyMmDdFormat(new Date(dateService.convertToTimestamp(todate)));
+
 		  $scope.getPercentageStatistics($scope.statistics);
 		}).catch(function(response){
-		 $scope.toDate = $scope.statistics.date = $scope.getYesterday();
+		 var todate = $scope.badgestatistics.date = $scope.getYesterday();
+		 $scope.badgetoDate = dateService.convertDateToYyyyMmDdFormat(new Date(dateService.convertToTimestamp(todate))); 
+
 		  notyService.showError(response);
 		});
 
@@ -195,11 +202,13 @@ angular.module('hillromvestApp')
 		  
 		  $scope.statistics = response.data.statitics;
 	
-		  $scope.statistics.date = $scope.getYesterday();
-		  $scope.toDate = dateService.getDateFromTimeStamp(new Date($scope.statistics.date),hcpDashboardConstants.USdateFormat,'/');
+		  var todate = $scope.badgestatistics.date = $scope.getYesterday();
+		  $scope.badgetoDate = dateService.convertDateToYyyyMmDdFormat(new Date(dateService.convertToTimestamp(todate)));
+
 		  $scope.getPercentageStatistics($scope.statistics);
 		}).catch(function(response){
-		 $scope.toDate = $scope.statistics.date = $scope.getYesterday();
+		 var todate = $scope.badgestatistics.date = $scope.getYesterday();
+		 $scope.badgetoDate = dateService.convertDateToYyyyMmDdFormat(new Date(dateService.convertToTimestamp(todate))); 
 		  notyService.showError(response);
 		});
 
@@ -531,7 +540,13 @@ angular.module('hillromvestApp')
 		$scope.badgefromDate = dateService.convertDateToYyyyMmDdFormat(new Date(dateService.convertToTimestamp(fromdate)));
 		$scope.badgetoDate = dateService.convertDateToYyyyMmDdFormat(new Date(dateService.convertToTimestamp(todate)));
 
+
 };
+	$scope.getYesterday = function(){
+		var d = new Date();	
+		return dateService.getDateFromTimeStamp((d.setDate(d.getDate() - 1)),hcpDashboardConstants.USdateFormat,'/');	
+	};
+
 	$scope.init();
 
 	$scope.gotoPatients = function(value){
@@ -569,15 +584,10 @@ angular.module('hillromvestApp')
 		if($scope.selectedClinic){
 			$scope.getStatistics($scope.selectedClinic.id, userId);
 		}else{					
-			$scope.toDate = $scope.statistics.date = $scope.getYesterday();
+			$scope.badgetoDate = $scope.badgestatistics.date = $scope.getYesterday();
 			$scope.getPercentageStatistics($scope.statistics);
 		}
 		
-	};
-
-	$scope.getYesterday = function(){
-		var d = new Date();	
-		return dateService.getDateFromTimeStamp((d.setDate(d.getDate() - 1)),hcpDashboardConstants.USdateFormat,'/');	
 	};
 
 	$scope.treatmentChart = function(divId, chartData){
@@ -896,7 +906,7 @@ angular.module('hillromvestApp')
 	  	$scope.isYesterday = false;
 			  $scope.calculateBadgeDateFromPicker(picker);
 		$scope.getStatistics($scope.selectedClinic.id, StorageService.get('logged').userId);
-			  $scope.selectedDateOptionBadge = '';
+			   $scope.selectedDateOptionBadge = 'CUSTOM';
 			}
 		},
 		opens: 'left'
