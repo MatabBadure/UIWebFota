@@ -18,6 +18,7 @@ angular.module('hillromvestApp')
     $scope.newProtocolPoint = 1;
     $scope.patientActivateModal = false;
     $scope.captchaValid = false;
+       $scope.associatedClinics =[];
     $scope.patientStatus = {
       'role': StorageService.get('logged').role,
       'editMode': false,
