@@ -69,7 +69,6 @@ return $http.get(url, {
       },
       ListAnnouncement : function(pageNumber,perPage,sortOption,usertype,userId){
            var url = URL.listAnnouncements.replace('PAGE',pageNumber).replace('PER_PAGE',perPage).replace('SORT_OPTION',sortOption).replace('USER_TYPE',usertype).replace('USERID',userId);
-        console.log(url);
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -78,7 +77,6 @@ return $http.get(url, {
       }, 
       ListAnnouncementPatient: function(pageNumber,perPage,sortOption,usertype,userId){
            var url = URL.listAnnouncementsPatient.replace('PAGE',pageNumber).replace('PER_PAGE',perPage).replace('SORT_OPTION',sortOption).replace('USER_TYPE',usertype).replace('USERID',userId);
-        console.log(url);
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {

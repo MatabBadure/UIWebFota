@@ -2172,7 +2172,7 @@ angular.module('hillromvestApp')
 
             .state('caregiverDashboard', {
                 parent: 'caregiver-dashboard',
-                url: '/caregiver-dashboard',
+                url: '/caregiver-dashboard/{patientId}',
                 data: {
                     roles: ['CARE_GIVER'],
                     pageTitle: 'caregiver.title'
@@ -2203,7 +2203,7 @@ angular.module('hillromvestApp')
 
             .state('caregiverDashboardClinicHCP', {
                 parent: 'caregiver-dashboard',
-                url: '/clinic-hcp',
+                url: '/clinic-hcp/{patientId}',
                 data: {
                     roles: ['CARE_GIVER'],
                     pageTitle: 'patient.title'
@@ -2234,7 +2234,7 @@ angular.module('hillromvestApp')
 
             .state('caregiverDashboardDeviceProtocol', {
                 parent: 'caregiver-dashboard',
-                url: '/device-protocol',
+                url: '/device-protocol/{patientId}',
                 data: {
                     roles: ['CARE_GIVER'],
                     pageTitle: 'patient.title'
@@ -2260,7 +2260,7 @@ angular.module('hillromvestApp')
 
             .state('patientDashboardPatientInfo', {
                 parent: 'caregiver-dashboard',
-                url: '/patient-info',
+                url: '/patient-info/{patientId}',
                 data: {
                     roles: ['CARE_GIVER'],
                     pageTitle: 'patient.title'
@@ -2286,7 +2286,7 @@ angular.module('hillromvestApp')
 
             .state('patientDashboardNotification', {
                 parent: 'caregiver-dashboard',
-                url: '/notification-settings',
+                url: '/notification-settings/{patientId}',
                 data: {
                     roles: ['CARE_GIVER'],
                     pageTitle: 'patient.title'
@@ -2312,7 +2312,7 @@ angular.module('hillromvestApp')
 
             .state('caregiverProfile', {
                 parent: 'caregiver-dashboard-profile',
-                url: '/profile',
+                url: '/profile/:patientId',
                 data: {
                     roles: ['CARE_GIVER'],
                     pageTitle: 'patient.title'
@@ -2338,7 +2338,7 @@ angular.module('hillromvestApp')
 
             .state('caregiverProfileEdit', {
                 parent: 'caregiver-dashboard-profile',
-                url: '/profile-edit',
+                url: '/profile-edit/:patientId',
                 data: {
                     roles: ['CARE_GIVER'],
                     pageTitle: 'patient.title'
@@ -2365,7 +2365,7 @@ angular.module('hillromvestApp')
 
             .state('caregiverChangePassword', {
                 parent: 'caregiver-dashboard-profile',
-                url: '/change-password',
+                url: '/change-password/:patientId',
                 data: {
                     roles: ['CARE_GIVER'],
                     pageTitle: 'patient.title'
@@ -5916,6 +5916,66 @@ angular.module('hillromvestApp')
                       }
                   ]
               }
-            }); 
+            }) 
+.state('caregiverdashboardCaregiver', {
+                parent: 'caregiver-dashboard',
+                url: '/caregiver-list/{patientId}',
+                data: {
+                    roles: ['CARE_GIVER'],
+                    pageTitle: 'patient.page-title.caregivers'
+                },
+                views: {
+                    'caregiver-view': {
+                        templateUrl: 'scripts/modules/caregiver/graph/views/caregiverlist.html',
+                        controller: 'graphController'
+                    }
+                },
+                resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('PatientGraphModule');
+                    }],
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+.state('caregiverpatientDiagnostic', {
+                parent: 'caregiver-dashboard',
+                url: '/patientDiagnostic/{patientId}',
+                data: {
+                    roles: ['CARE_GIVER'],
+                    pageTitle: 'profile.page-title.benchmarking'
+                },
+                views: {
+                    'caregiver-view': {
+                        templateUrl: 'scripts/modules/caregiver/graph/views/patientDiagnostic.html',
+                        controller: 'patientDiagnosticController'
+                    }
+                },
+                resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('PatientDiagnosticModule');
+                    }],
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            });
 }]);
 

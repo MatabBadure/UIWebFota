@@ -1034,7 +1034,6 @@ $scope.patientnames = [];
   };
   $scope.selectpatient = function(){
  $scope.SelectedPatientsID = [];
- console.log($scope.selectedPatients);
  for(var j=0;j<$scope.selectedPatients.length;j++){
     for(var i=0;i<$scope.patients.length;i++){
 if($scope.selectedPatients[j].name == ($scope.patients[i].lastName + ' , ' + $scope.patients[i].firstName)){

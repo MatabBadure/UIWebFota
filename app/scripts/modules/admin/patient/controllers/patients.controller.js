@@ -18,6 +18,7 @@ angular.module('hillromvestApp')
     $scope.newProtocolPoint = 1;
     $scope.patientActivateModal = false;
     $scope.captchaValid = false;
+       $scope.associatedClinics =[];
     $scope.patientStatus = {
       'role': StorageService.get('logged').role,
       'editMode': false,
@@ -972,8 +973,6 @@ angular.module('hillromvestApp')
         $scope.associatedClinics =[];
         if(response.data.clinics){ 
           $scope.associatedClinics = response.data.clinics;
-          console.log("associated clinics");
-          console.log(associatedClinics);
         }else if(response.data.message){
           $scope.associatedClinicsErrMsg = response.data.message;
         }

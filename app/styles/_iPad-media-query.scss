@@ -491,6 +491,9 @@ LoginContentHeightForDevices{
 	.hide-tab{
 		display:none !important;
 	}
+	.hide-tab-caregiver-latest{
+		display:none !important;
+	}
 	.show-tab{
 		display:block !important;
 	}
@@ -730,3 +733,9 @@ font-size:12px;
 	margin-right:10px;
 }
 } 
+@media only screen and (min-width : 767px) and (max-width : 769px) and (orientation : portrait) { 
+	 .activefixmobile > li > a 
+  {
+    padding: 20px 27px 20px 3px !important;
+  }
+}
