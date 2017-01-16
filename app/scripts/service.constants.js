@@ -107,6 +107,7 @@ var sortConstant = {
     sentDate: "messages.messageDatetime",
     sentToCA: "user.lastName",
 
+
     announcementName: "name",
     announcementSubject: "subject",
     announcementStartDate: "startDate",
