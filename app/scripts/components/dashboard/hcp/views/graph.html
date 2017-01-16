@@ -39,7 +39,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="stats_chart_container">
+					<div class="stats_chart_container withFilterBadgeFilter">
 						<div class="col-3" ng-click="(!(selectedDateOptionBadge === 'WEEK') && !(selectedDateOptionBadge === 'YEAR') && !(selectedDateOptionBadge === 'CUSTOM') && !(selectedDateOptionBadge === 'MONTH')) && gotoPatients('missed_therapy')">
 							<div class="pie_chart"  easypiechart options="missedtherapy" percent="percentStatistics.patientsWithMissedTherapy"></div>
 							<div class="stats_chart_content missed">
