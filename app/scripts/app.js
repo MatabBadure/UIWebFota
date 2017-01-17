@@ -20,7 +20,6 @@ angular.module('hillromvestApp',
    'toastr',
    'oc.lazyLoad',
    'ng.deviceDetector'
-
    ])
 .run(['$rootScope', '$location', '$window', '$http', '$state', '$translate', 'Language', 'Auth', 'Principal', 'ENV', 'VERSION', function($rootScope, $location, $window, $http, $state, $translate, Language, Auth, Principal, ENV, VERSION) {
     $rootScope.ENV = ENV;
