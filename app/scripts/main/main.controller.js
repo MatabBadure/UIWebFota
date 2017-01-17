@@ -156,7 +156,6 @@ else {
         });
       }
     };
-
     $scope.profile = function(){
       if($rootScope.userRole === "ADMIN"){
         $state.go('adminProfile');
@@ -217,7 +216,7 @@ else {
     };
 
 	  $scope.goToCaregiverDashboard = function(){
-	    $state.go("caregiverDashboard");
+	    $state.go("caregiverDashboard",{"patientId":$stateParams.patientId});
 	  };
 	  
 	  $scope.goToPatientDashboard = function(value){
@@ -457,6 +456,10 @@ else {
       }
     };
 
+    $scope.redirectCaregiver = function(value){
+		$state.go(value,{'patientId':$stateParams.patientId});
+    };
+
     $scope.userSurvey = function(){
 	    if($rootScope.userRole === "PATIENT"){
 	      $state.go('patientSurvey');
@@ -471,6 +474,8 @@ else {
   			$state.go("CADiagnostic", {'patientId': $stateParams.patientId});
   		}else if($rootScope.userRole === "HCP"){
   			$state.go("HCPDiagnostic", {'patientId': $stateParams.patientId});
+  		}else if($rootScope.userRole === "CARE_GIVER"){
+  			$state.go("caregiverpatientDiagnostic");
   		}
     };
 

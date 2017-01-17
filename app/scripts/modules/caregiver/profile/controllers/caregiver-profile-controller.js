@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hillromvestApp')
-  .controller('caregiverProfileController',['$scope', '$state', '$location', 'notyService', 'UserService', 'Password', 'Auth', 'AuthServerProvider', 'StorageService', 'commonsUserService', '$rootScope', function ($scope, $state, $location, notyService, UserService, Password, Auth, AuthServerProvider, StorageService, commonsUserService, $rootScope) {
+  .controller('caregiverProfileController',['$scope', '$state', '$location', 'notyService', 'UserService', 'Password', 'Auth', 'AuthServerProvider', 'StorageService', 'commonsUserService', '$rootScope', '$stateParams', function ($scope, $state, $location, notyService, UserService, Password, Auth, AuthServerProvider, StorageService, commonsUserService, $rootScope, $stateParams) {
 
 
     $scope.isActive = function(tab) {
@@ -28,6 +28,7 @@ angular.module('hillromvestApp')
     };
 
     $scope.init = function(){
+      //$scope.$emit('getSelectedPatient', $stateParams.patientId);
       if($state.current.name === 'caregiverProfile' || $state.current.name === 'caregiverProfileEdit' ){
         $scope.initProfile(StorageService.get('logged').userId);
       } else if($state.current.name === 'caregiverChangePassword'){
@@ -39,14 +40,14 @@ angular.module('hillromvestApp')
     };
 
     $scope.editMode = function(){
-      $state.go('caregiverProfileEdit');
+      $state.go('caregiverProfileEdit', {'patientId':$stateParams.patientId});
     };
 
     $scope.updateCaregiver = function(careGiver){
       careGiver.role = 'CARE_GIVER';
       UserService.editUser(careGiver).then(function(response){
         notyService.showMessage(response.data.message, 'success');
-        $state.go('caregiverProfile');
+        $state.go('caregiverProfile', {'patientId':$stateParams.patientId});
       }).catch(function(response){
         notyService.showMessage(response.data.message, 'warning');
       });
@@ -120,7 +121,7 @@ angular.module('hillromvestApp')
     };
 
     $scope.cancel = function(){
-      $state.go('caregiverProfile');
+      $state.go('caregiverProfile', {'patientId':$stateParams.patientId});
     };
 
     $scope.showPasswordUpdateModal = function(){
@@ -132,6 +133,11 @@ angular.module('hillromvestApp')
         $scope.passwordUpdateModal = true;
       }
     };
+/*    $scope.switchCaregiverTab = function(status){
+      alert($stateParams.patientId);
+      $state.go(status, {'patientId':$stateParams.patientId});  
+    };*/
+
 
     $scope.init();
   }]);
