@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('hillromvestApp')
-.controller('patientDiagnosticController', ['$scope', '$state', '$rootScope', 'StorageService', 'UserService', 'patientDiagnosticService', 'notyService', 'dateService', '$stateParams', 'commonsUserService', '$parse',
-function ($scope, $state, $rootScope, StorageService, UserService, patientDiagnosticService, notyService, dateService, $stateParams, commonsUserService, $parse) {
+.controller('patientDiagnosticController', ['$scope', '$state', '$rootScope', 'StorageService', 'UserService', 'patientDiagnosticService', 'notyService', 'dateService', '$stateParams', 'commonsUserService', '$parse', 'caregiverDashBoardService',
+function ($scope, $state, $rootScope, StorageService, UserService, patientDiagnosticService, notyService, dateService, $stateParams, commonsUserService, $parse,caregiverDashBoardService) {
   $scope.isAddDiagnostic = false; 
   $scope.defaultTestResultDate = dateService.getDateFromTimeStamp(new Date().getTime(), patientDashboard.dateFormat, "/"); 
 	$scope.calculateDateFromPicker = function(picker) {
@@ -90,7 +90,13 @@ function ($scope, $state, $rootScope, StorageService, UserService, patientDiagno
       $scope.isPatinetLogin = true;
       $scope.viewType = 'grid';
       $scope.diagnosticPatientId = StorageService.get('logged').patientID;		  
-		}else if($state.current.name === "CADiagnostic" ){			
+		}else if($state.current.name === "caregiverpatientDiagnostic"){
+      var loginID = StorageService.get('logged').userId;
+      $scope.isPatinetLogin = false;
+      $scope.viewType = 'grid';
+      $scope.getPatientListForCaregiver(loginID);
+      $scope.diagnosticPatientId = ($stateParams.patientId)?$stateParams.patientId:$scope.selectedPatient.user.id;
+    }else if($state.current.name === "CADiagnostic" ){			
       $scope.diagnosticPatientId =  $stateParams.patientId;
 		}else if($state.current.name === "HCPDiagnostic"){			
       $scope.diagnosticPatientId =  $stateParams.patientId;
@@ -201,6 +207,35 @@ function ($scope, $state, $rootScope, StorageService, UserService, patientDiagno
       $parse(applicableVarname).assign($scope,null);
     }
   };
+      $scope.getPatientListForCaregiver = function(caregiverID){
+      caregiverDashBoardService.getPatients(caregiverID).then(function(response){
+        $scope.patients = response.data.patients;
+        $scope.$emit('getPatients', $scope.patients);
+        console.log($stateParams.patientId);
+       if($stateParams.patientId){
+          for(var i=0;i<response.data.patients.length;i++){
+            if($stateParams.patientId == response.data.patients[i].userId){
+              console.log(response.data.patients[i]);
+          $scope.selectedPatient = response.data.patients[i];
+          $scope.patientId = $scope.selectedPatient.userId;
+          console.log("selected pat"); 
+          console.log($scope.selectedPatient);
+          break;
+        }
+        }
+        } else{
+          $scope.selectedPatient = response.data.patients[0];
+
+          $scope.patientId = $scope.selectedPatient.user.id;
+          var logged = StorageService.get('logged');
+          logged.patientID = $scope.patientId
+          StorageService.save('logged', logged);
+        }
+         $scope.$emit('getSelectedPatient', $scope.selectedPatient);
+         }).catch(function(response){
+        notyService.showError(response);
+      });
+    };
 
 	$scope.init();
 
