@@ -8,7 +8,7 @@
           <a ng-href="" data-target="#" id="dropdownMenu11" data-toggle="dropdown">
             <span class="">{{selectedPatient.user.lastName}} {{selectedPatient.user.firstName}}<span class="hillrom-icon icon-arrow-down"></span></span>
           </a>
-          <ul class="dropdown-menu bgcolor" role="menu" aria-labelledby="dropdownMenu11" id="min-width-for-small-devices">
+          <ul class="dropdown-menu bgcolor pull-right" role="menu" aria-labelledby="dropdownMenu11" id="min-width-for-small-devices">
               <li role="menuitem" ng-repeat='patient in patients' ng-click="switchPatient(patient)"><a>{{patient.user.lastName}} {{patient.user.firstName}}</a></li>
           </ul>
         </li>
