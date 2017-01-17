@@ -324,7 +324,7 @@
     "adherence-score": "Adherence Score",
     "hmr-runrate": "HMR Runrate",
     "averageSessionMinutes": "Average Session Time",
-    "consecutiveMissedDays":"Consecutive Missed days",
+    "consecutiveMissedDays":"Consecutive Missed Therapy days",
     "consecutiveFrequencyDeviationDays":"Consecutive Frequency Deviation Days",
     "missed-therapy-days": "Missed Therapy Days",
     "setting-deviation-days": "Setting Deviation Days",
