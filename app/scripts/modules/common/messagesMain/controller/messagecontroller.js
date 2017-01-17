@@ -188,11 +188,14 @@ $scope.sortOption = "";
 if(option === 'From'){                        
       toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortMessageList.from);
       $scope.sortMessageList.from = toggledSortOptions;
+
      // $scope.sortOption = sortConstant.from + sortOptionsService.getSortByASCString(toggledSortOptions);
+
     //  $scope.sortOption = $scope.sortOption + "&sort_by=messages.messageDatetime&asc=false";
      if(StorageService.get('logged').role === 'PATIENT'){
       $scope.sortOption = sortConstant.fromCA + sortOptionsService.getSortByASCString(toggledSortOptions);
       }
+
       else if(StorageService.get('logged').role === 'CLINIC_ADMIN' || StorageService.get('logged').role === 'HCP'){
       $scope.sortOption = sortConstant.from + sortOptionsService.getSortByASCString(toggledSortOptions);
     }
@@ -276,6 +279,7 @@ if(option === 'From'){
     //  $scope.archivesortOption = sortConstant.from + sortOptionsService.getSortByASCString(toggledSortOptions);
     // $scope.archivesortOption = $scope.archivesortOption + "&sort_by=messages.messageDatetime&asc=false";
     if(StorageService.get('logged').role === 'PATIENT'){
+
       $scope.archivesortOption = sortConstant.fromCA + sortOptionsService.getSortByASCString(toggledSortOptions);
       }
       else if(StorageService.get('logged').role === 'CLINIC_ADMIN' || StorageService.get('logged').role === 'HCP'){
@@ -1034,7 +1038,6 @@ $scope.patientnames = [];
   };
   $scope.selectpatient = function(){
  $scope.SelectedPatientsID = [];
- console.log($scope.selectedPatients);
  for(var j=0;j<$scope.selectedPatients.length;j++){
     for(var i=0;i<$scope.patients.length;i++){
 if($scope.selectedPatients[j].name == ($scope.patients[i].lastName + ' , ' + $scope.patients[i].firstName)){
