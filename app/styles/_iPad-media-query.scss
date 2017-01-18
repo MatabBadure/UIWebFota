@@ -1,4 +1,7 @@
 @media only screen and (min-width : 768px) and (max-width : 1024px) and (orientation : landscape) { 
+.col-3.ipadHeightBalance {
+    min-height: 210px;
+}
 //******To remove static border bottom******/
 .minheight{
 	min-height:600px !important;
@@ -270,6 +273,9 @@ LoginContentHeightForDevices{
 }
 
 @media only screen and (min-width : 768px) and (max-width : 1024px) and (orientation : portrait) {
+.col-3.ipadHeightBalance {
+    min-height: 199px;
+}
 /******Archive option responsiveness ******/
 .arc-read {
     width: 20%;
@@ -319,11 +325,7 @@ LoginContentHeightForDevices{
 	min-height:900px !important;
 }
 /******End of remove static border bottom******/
-/******Balancing badge height for Below treatment minutes******/
-.ipadHeightBalance{
-	height:200px;
-}
-/******End of Balancing badge height for Below treatment minutes******/
+
 /******Wrap text for bigger text on smaller devices******/
 .wrapTextForSmallScreens{
 	word-wrap: break-word;
