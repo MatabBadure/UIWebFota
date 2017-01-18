@@ -86,6 +86,11 @@ return $http.get(url, {
         });
       }, 
       DownloadAsPDF : function(filename){
+        var windowReference = "";
+        var userAgent = window.navigator.userAgent;
+        if (userAgent.match(/iPad/i) || userAgent.match(/iPhone/i) || userAgent.indexOf("Safari")!=-1) {
+        windowReference = window.open();
+      }
         var url = URL.downloadPdf.replace('FILE_NAME',filename);
         return $http.get(url, {
           headers: headerService.getHeaderForPdf(),
@@ -101,17 +106,30 @@ return $http.get(url, {
           //a.href = fileURL;
          //a.download = fileName;
          //a.click();
+
+  
          var URL = window.URL || window.webkitURL;
                 var byteArray = new Uint8Array(response);
                 var blob = new Blob([byteArray], { type: 'application/pdf' });
-                if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+                if ((window.navigator && window.navigator.msSaveOrOpenBlob) || (userAgent.indexOf("android") > -1)){
                     window.navigator.msSaveOrOpenBlob(blob);
                 }
+                else if (userAgent.match(/iPad/i) || userAgent.match(/iPhone/i) || userAgent.indexOf("Safari")!=-1) {
+                 //Safari & Opera iOS
+
+                
+                  var objectUrl = URL.createObjectURL(blob);
+
+                     windowReference.location = objectUrl; 
+                }
                 else {
+
                     var objectUrl = URL.createObjectURL(blob);
                     window.open(objectUrl);
+                    /* windowReference.location = objectUrl; */
                 }
         });
+    
       } 
       
         };
