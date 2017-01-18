@@ -701,3 +701,10 @@ content: "\f024" !important;
 {
    font-size:23px !important;
 }
+.overflow-ellipsis-dropdown{
+    max-width: 205px;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    float:left;
+}
