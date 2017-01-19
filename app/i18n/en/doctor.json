@@ -163,7 +163,7 @@
             "noEventsRecorded": "No Transmission Recorded",
             "todayStatistics": "Statistics Date -",
             "patients": "Patients",
-            "totalPatients":"Total Number of Patients -",
+            "totalPatients":"Total Number of Active Patients -",
             "cumulativeStatistics":"Cumulative Statistics",
             "treatmentStatistics":"Treatment Statistics",
             "nonCompliance": "Non-Compliance",

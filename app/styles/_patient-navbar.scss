@@ -683,3 +683,32 @@ content: "\f024" !important;
 .daterangecolor .sub_txt {
   color: #333333 !important;
 }
+
+/* 13-1  */
+.stats_header_new {
+  border: 0 none !important;
+}
+.stats_chart_section_new {
+  margin-top: 10px !important;
+}
+#filterdatetxt
+{
+  margin: 0px 5px 0px 8px !important;
+}
+
+/* 16-01  */
+.withFilterBadgeFilter .percent
+{
+   font-size:23px !important;
+}
+
+.overflow-ellipsis-dropdown{
+    max-width: 205px;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    float:left;
+}
+.col-3.ipadHeightBalance {
+    min-height: 133px;
+}
