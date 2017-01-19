@@ -69,7 +69,7 @@ return $http.get(url, {
       },
       ListAnnouncement : function(pageNumber,perPage,sortOption,usertype,userId,clinicid){
            var url = URL.listAnnouncements.replace('PAGE',pageNumber).replace('PER_PAGE',perPage).replace('SORT_OPTION',sortOption).replace('USER_TYPE',usertype).replace('USERID',userId).replace('CLINICID',clinicid);
-        return $http.get(url, {
+      return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
           return response;
