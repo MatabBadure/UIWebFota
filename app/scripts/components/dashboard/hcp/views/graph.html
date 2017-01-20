@@ -40,7 +40,7 @@
 						</div>
 					</div>
 					<div class="stats_chart_container withFilterBadgeFilter">
-						<div class="col-3" ng-click="(!(selectedDateOptionBadge === 'WEEK') && !(selectedDateOptionBadge === 'YEAR') && !(selectedDateOptionBadge === 'CUSTOM') && !(selectedDateOptionBadge === 'MONTH')) && gotoPatients('missed_therapy')">
+						<div class="col-3" ng-class="{noclick: selectedDateOptionBadge.indexOf('YESTERDAY') == -1}" ng-click="(!(selectedDateOptionBadge === 'WEEK') && !(selectedDateOptionBadge === 'YEAR') && !(selectedDateOptionBadge === 'CUSTOM') && !(selectedDateOptionBadge === 'MONTH')) && gotoPatients('missed_therapy')">
 							<div class="pie_chart"  easypiechart options="missedtherapy" percent="percentStatistics.patientsWithMissedTherapy"></div>
 							<div class="stats_chart_content missed">
 								<h4 class="percent" ng-bind="statistics.patientsWithMissedTherapyRange"></h4>
@@ -49,7 +49,7 @@
 							</div>
 							<div class="chart_inner_icon icon-lungs"></div>
 						</div>
-						<div class="col-3" ng-click="(!(selectedDateOptionBadge === 'WEEK') && !(selectedDateOptionBadge === 'YEAR') && !(selectedDateOptionBadge === 'CUSTOM') && !(selectedDateOptionBadge === 'MONTH')) && gotoPatients('non_hmr_compliance')">
+						<div class="col-3" ng-class="{noclick: selectedDateOptionBadge.indexOf('YESTERDAY') == -1}" ng-click="(!(selectedDateOptionBadge === 'WEEK') && !(selectedDateOptionBadge === 'YEAR') && !(selectedDateOptionBadge === 'CUSTOM') && !(selectedDateOptionBadge === 'MONTH')) && gotoPatients('non_hmr_compliance')">
 							<div class="pie_chart"  easypiechart options="hmr" percent="percentStatistics.patientsWithHmrNonCompliance"></div>
 							<div class="stats_chart_content hmr">
 								<h4 class="percent"  ng-bind="statistics.patientsWithHmrNonComplianceRange"></h4>
@@ -58,7 +58,7 @@
 							</div>
 							<div class="chart_inner_icon icon-man-running"></div>
 						</div>
-						<div class="col-3" ng-click="(!(selectedDateOptionBadge === 'WEEK') && !(selectedDateOptionBadge === 'YEAR') && !(selectedDateOptionBadge === 'CUSTOM') && !(selectedDateOptionBadge === 'MONTH')) && gotoPatients('setting_deviation')">
+						<div class="col-3" ng-class="{noclick: selectedDateOptionBadge.indexOf('YESTERDAY') == -1}" ng-click="(!(selectedDateOptionBadge === 'WEEK') && !(selectedDateOptionBadge === 'YEAR') && !(selectedDateOptionBadge === 'CUSTOM') && !(selectedDateOptionBadge === 'MONTH')) && gotoPatients('setting_deviation')">
 							<div class="pie_chart" easypiechart options="deviation" percent="percentStatistics.patientsWithSettingDeviation"></div>
 							<div class="stats_chart_content deviation">
 								<h4 class="percent" ng-bind="statistics.patientsWithSettingDeviationRange"></h4>
@@ -67,7 +67,7 @@
 							</div>
 							<div class="chart_inner_icon icon-settings"></div>
 						</div>
-						<div class="col-3" ng-click="(!(selectedDateOptionBadge === 'WEEK') && !(selectedDateOptionBadge === 'YEAR') && !(selectedDateOptionBadge === 'CUSTOM') && !(selectedDateOptionBadge === 'MONTH')) && gotoPatients('noevents')">
+						<div class="col-3" ng-class="{noclick: selectedDateOptionBadge.indexOf('YESTERDAY') == -1}" ng-click="(!(selectedDateOptionBadge === 'WEEK') && !(selectedDateOptionBadge === 'YEAR') && !(selectedDateOptionBadge === 'CUSTOM') && !(selectedDateOptionBadge === 'MONTH')) && gotoPatients('noevents')">
 							<div class="pie_chart"  easypiechart options="noevent" percent="percentStatistics.patientsWithNoEventRecorded"></div>
 							<div class="stats_chart_content noevent">
 								<h4 class="percent" ng-bind="statistics.patientsWithNoEventRecordedRange">{{statistics.patientsWithNoEventRecorded}}</h4>

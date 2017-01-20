@@ -138,7 +138,7 @@ angular.module('hillromvestApp')
 	'editAnnouncement' : 'api/announcement/ID/details',
 	'deleteAnnouncement' : 'api/announcement/ID/delete',
 	'listAnnouncementsPatient':'api/announcements/getAll?page=PAGE&per_page=PER_PAGE&sort_by=SORT_OPTION&userType=USER_TYPE&USERID',
-	'listAnnouncements':'api/announcements/getAll?page=PAGE&per_page=PER_PAGE&sort_by=SORT_OPTION&userType=USER_TYPE&USERID',
+	'listAnnouncements':'api/announcements/getAll?page=PAGE&per_page=PER_PAGE&sort_by=SORT_OPTION&userType=USER_TYPE&USERID&filterClinicId=CLINICID',
 	'downloadPdf' : 'api/announcement/files/FILE_NAME',
 	'updateAnnouncements' : 'api/announcement/update',
 	'getPatientType' : 'api/codeValues/announcement_patient_type', 
