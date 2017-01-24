@@ -42,6 +42,9 @@ if($scope.userRole === 'HCP'){
        var sortOption = sortConstant.announcementModifiedDate+'&asc=false';
       announcementservice.ListAnnouncement($scope.currentPageIndex, $scope.perPageCount,sortOption, $scope.userRole,$scope.userId,$scope.selectedClinic.id).then(function(response) {
           $scope.announcement = response.data.Announcement_List.content;
+           $scope.totalPages = response.data.Announcement_List.totalPages;
+         $scope.numberOfElements = response.data.Announcement_List.numberOfElements;
+         $scope.totalElements = response.data.Announcement_List.totalElements;
           $scope.total = response.data.Announcement_List.totalElements;
           $scope.totalPages = response.data.Announcement_List.totalPages;
           if(response.data.Announcement_List.content.length == 0){

@@ -194,7 +194,7 @@ angular.module('hillromvestApp')
                   x.text = "Associates";                
                   break;
                 case 'CUSTOMER_SERVICES':
-                  x.text = "Customer Services";                
+                  x.text = "Customer Service";                
                   break;
               } 
               $scope.userRoleList.push(x);                         
