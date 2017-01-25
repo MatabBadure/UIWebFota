@@ -15,7 +15,7 @@
       	<div class="navbar-right" ng-if="(!nodatadiv)" ng-show="totalPages == 1 && numberOfElements==1 && totalElements == 1">
            <span class="record-found"> {{1}} Announcements Found &nbsp </span>
       	</div>
-	    <div class="navbar-right" ng-if="!nodatadiv" ng-show="totalPages >= 1 && numberOfElements > 1 && totalElements > 1">
+	    <div class="navbar-right" ng-if="!nodatadiv" ng-show="totalPages >= 1 && numberOfElements >= 1 && totalElements > 1">
 	      <span class="record-found"><span class="count" ng-bind="total"></span>
 	      <span class="record-found">Announcements Found</span>
 	      <span  ng-show="totalPages > 1">
