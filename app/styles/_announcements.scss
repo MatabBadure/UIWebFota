@@ -65,3 +65,12 @@ content: "\f024" !important;
 * html .announce-list p, .announce-list h2, .announce-list button, .announce-list_editable { white-space: pre  }
 /* IE7 */
 *:first-child+html .announce-list p, .announce-list h2, .announce-list button, .announce-list_editable { white-space: pre  }
+
+.noclick {
+    cursor: default !important;
+
+}
+.noclick:hover {
+    border: 0px !important;
+    
+}

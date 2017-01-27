@@ -146,17 +146,9 @@ angular.module('hillromvestApp')
     }
     return count;
   };
-
-	$scope.getStatistics = function(clinicId, userId){		
+/****Code commented for date range selection of clinic dashboard badges which has to be taken up in upcoming sprints ****/
+	/*$scope.getStatistics = function(clinicId, userId){		
 		if($state.current.name === 'hcpdashboard'){
-	/*		hcpDashBoardService.getStatistics(clinicId, userId).then(function(response){
-				  $scope.statistics = response.data.statitics;
-				  $scope.statistics.date = $scope.getYesterday();				  
-				  $scope.toDate = dateService.getDateFromTimeStamp(new Date($scope.statistics.date),hcpDashboardConstants.USdateFormat,'/');
-				  $scope.getPercentageStatistics($scope.statistics);
-				}).catch(function(response){
-				  notyService.showError(response);
-				});*/
 				clinicadminService.getBadgeStatistics(clinicId, userId, $scope.badgefromDate,$scope.badgetoDate).then(function(response){
 
 		  $scope.statistics = response.data.statitics;
@@ -189,15 +181,7 @@ angular.module('hillromvestApp')
 
 		}
 		else if($state.current.name === 'clinicDashboard' || $state.current.name === 'clinicDashboardAssociate' || $state.current.name === 'clinicDashboardRcadmin' || $state.current.name === 'clinicDashboardCustomerService'){
-		  /*clinicadminService.getStatistics(clinicId, userId).then(function(response){
-		  $scope.statistics = response.data.statitics;
-		  $scope.statistics.date = $scope.getYesterday();
-		  $scope.toDate = dateService.getDateFromTimeStamp(new Date($scope.statistics.date),hcpDashboardConstants.USdateFormat,'/');
-		  $scope.getPercentageStatistics($scope.statistics);
-		}).catch(function(response){
-		 $scope.toDate = $scope.statistics.date = $scope.getYesterday();
-		  notyService.showError(response);
-		});*/
+
 		clinicadminService.getBadgeStatistics(clinicId, userId, $scope.badgefromDate,$scope.badgetoDate).then(function(response){
 		  
 		  $scope.statistics = response.data.statitics;
@@ -209,6 +193,42 @@ angular.module('hillromvestApp')
 		}).catch(function(response){
 		 var todate = $scope.badgestatistics.date = $scope.getYesterday();
 		 $scope.badgetoDate = dateService.convertDateToYyyyMmDdFormat(new Date(dateService.convertToTimestamp(todate))); 
+		  notyService.showError(response);
+		});
+
+		}
+   };*/
+   $scope.getStatistics = function(clinicId, userId){		
+		if($state.current.name === 'hcpdashboard'){
+			hcpDashBoardService.getStatistics(clinicId, userId).then(function(response){
+				  $scope.statistics = response.data.statitics;
+				  $scope.statistics.date = $scope.getYesterday();				  
+				  $scope.toDate = dateService.getDateFromTimeStamp(new Date($scope.statistics.date),hcpDashboardConstants.USdateFormat,'/');
+				  $scope.getPercentageStatistics($scope.statistics);
+				}).catch(function(response){
+				  notyService.showError(response);
+				});
+		} else if($state.current.name === 'clinicadmindashboard'){
+			$scope.prescribeDevice = true;
+		  clinicadminService.getStatistics(clinicId, userId).then(function(response){
+		  $scope.statistics = response.data.statitics;
+		  $scope.statistics.date = $scope.getYesterday();
+		  $scope.toDate = dateService.getDateFromTimeStamp(new Date($scope.statistics.date),hcpDashboardConstants.USdateFormat,'/');
+		  $scope.getPercentageStatistics($scope.statistics);
+		}).catch(function(response){
+		 $scope.toDate = $scope.statistics.date = $scope.getYesterday();
+		  notyService.showError(response);
+		});
+
+		}
+		else if($state.current.name === 'clinicDashboard' || $state.current.name === 'clinicDashboardAssociate' || $state.current.name === 'clinicDashboardRcadmin' || $state.current.name === 'clinicDashboardCustomerService'){
+		  clinicadminService.getStatistics(clinicId, userId).then(function(response){
+		  $scope.statistics = response.data.statitics;
+		  $scope.statistics.date = $scope.getYesterday();
+		  $scope.toDate = dateService.getDateFromTimeStamp(new Date($scope.statistics.date),hcpDashboardConstants.USdateFormat,'/');
+		  $scope.getPercentageStatistics($scope.statistics);
+		}).catch(function(response){
+		 $scope.toDate = $scope.statistics.date = $scope.getYesterday();
 		  notyService.showError(response);
 		});
 
