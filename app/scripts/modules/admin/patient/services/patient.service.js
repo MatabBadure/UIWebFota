@@ -48,6 +48,25 @@ angular.module('hillromvestApp')
         });
       },
 
+      getAdherenceCalculatedScore: function(id) {
+        var url = URL.clinicBaseURL + '/' + id;
+        return $http.get(url, {
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });
+      },
+
+
+      getJustification: function() {
+        var url = URL.getReasonForJustification;
+        return $http.get(url, {
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });
+      },
+
       /**
        * @ngdoc method
        * @name associateHCPToPatient
@@ -236,6 +255,16 @@ angular.module('hillromvestApp')
         });
       },
 
+      addAdherenceScore: function(data) {
+        var url = URL.resetAdherenceScore;
+        return $http.post(url, data, {
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });
+      },
+
+
       addDevice: function(id, data) {
         var url = URL.addDevice.replace('PATIENTID', id);
         return $http.put(url, data, {
@@ -359,6 +388,12 @@ angular.module('hillromvestApp')
 
       getPatientBenchmarking: function(patientId, parameterType, benchmarkingType, fromDate, toDate, clinicId){
         var url = URL.getPateintBenchmarking.replace('PATIENTID', patientId).replace('PARAMETERTYPE', parameterType).replace('BENCHMARKTYPE', benchmarkingType).replace('FROM', fromDate).replace('TO', toDate).replace('CLINICID', clinicId);
+        return $http.get(url, {
+          headers: headerService.getHeader()
+        });
+      },
+      getLatestAdherenceSetting: function(patientId){
+         var url = URL.getlatestAdherenceWindow.replace('USERID', patientId);
         return $http.get(url, {
           headers: headerService.getHeader()
         });

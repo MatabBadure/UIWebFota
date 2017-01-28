@@ -1,4 +1,4 @@
- <nav class="navbar navbar-default navbar-fixed-top" role="navigation" data-spy="affix">
+ <nav class="navbar navbar-default navbar-fixed-top" id="extratab" role="navigation" data-spy="affix">
   <div class="container" ng-switch="$root.isAuthenticated">
     <div class="navbar-header navbar-primary">
       <button data-target="#navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">
@@ -22,9 +22,24 @@
           </a>
         </li>
         <li class="icon-border">
+          <a ng-class="{ active: isActive('hcp/messages')}" href="" ng-click="goToPatientDashboard('Messages_HCP');" >
+            <span class="icons messages"> <i class="fa fa-envelope" aria-hidden="true"></i>
+            </span>
+            <span class="link-text" translate="global.tabs.messages" ></span>
+            <span class="msg_count">{{$root.UnreadMessages}}</span> 
+          </a>
+        </li>
+        <li class="icon-border">
           <a ng-class="{ active: isActive('hcp-patient')}" href="" ng-click="goToPatientDashboard('hcppatientdashboard');" >
             <span class="icons hillrom-icon icon-patient"></span>
             <span class="link-text" translate="global.tabs.manage-patients" ></span>
+          </a>
+        </li>  
+         <li class="icon-border">
+          <a ng-class="{ active: isActive('/hcp-announcements')}" href="" ng-click="goToPatientDashboard('hcpannouncements');" >
+            <span  class="icons messages"> <i class="fa fa-flag" id="announcementflag" aria-hidden="true"></i>
+            </span>
+            <span class="link-text" translate="global.tabs.announcements" ></span>
           </a>
         </li>    
         <li class="header-popover dropdown">

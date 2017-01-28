@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hillromvestApp')
-  .controller('caregiverNavbarController',['$scope', '$state', '$location', '$stateParams', function ($scope, $state, $location, $stateParams) {
+  .controller('caregiverNavbarController',['$scope','$http', '$stateParams', '$state', '$location',  function ($scope, $http, $stateParams, $state, $location) {
 
 
     $scope.isActive = function(tab) {
@@ -24,12 +24,23 @@ angular.module('hillromvestApp')
       $scope.$broadcast('switchPatientCareGiver',patient);
     };
 
-    $scope.switchCaregiverTab = function(state){
+  /*  $scope.switchCaregiverTab = function(state){
       $scope.$broadcast('switchCaregiverTab',state);
+    };*/
+        $scope.switchCaregiverTab = function(status){
+         var id = $location.path();
+        var res = id.split('/');
+         var idnumber = parseFloat(res[res.length-1]);
+        //var id = ($stateParams.patientId)?($stateParams.patientId):($scope.selectedPatient.userId);  
+        $state.go(status, {'patientId':idnumber});  
     };
 
     $scope.account = function(){
-      $state.go('caregiverProfile', {'caregiverId': $stateParams.caregiverId});
+      //var id = ($stateParams.patientId)?($stateParams.patientId):($scope.selectedPatient.userId);
+       var id = $location.path();
+        var res = id.split('/');
+        var idnumber = parseFloat(res[res.length-1]);
+      $state.go('caregiverProfile', {'patientId': idnumber});
     };
     
   }]);

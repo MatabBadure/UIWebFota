@@ -20,7 +20,6 @@ angular.module('hillromvestApp',
    'toastr',
    'oc.lazyLoad',
    'ng.deviceDetector'
-
    ])
 .run(['$rootScope', '$location', '$window', '$http', '$state', '$translate', 'Language', 'Auth', 'Principal', 'ENV', 'VERSION', function($rootScope, $location, $window, $http, $state, $translate, Language, Auth, Principal, ENV, VERSION) {
     $rootScope.ENV = ENV;
@@ -143,9 +142,10 @@ angular.module('hillromvestApp',
                 'scripts/third_party_library/angular.easypiechart.js',
                 'bower_components/angular-daterangepicker/js/angular-daterangepicker.js',
                 'bower_components/canvg-gabelerner/rgbcolor.js',
+                'bower_components/isteven-angular-multiselect/isteven-multi-select.js',
                 'bower_components/canvg-gabelerner/StackBlur.js',
                 'bower_components/canvg-gabelerner/canvg.js',  
-                'https://code.highcharts.com/highcharts.js'
+                'https://code.highcharts.com/5.0.6/highcharts.js'
                 ]
       },{
         name: 'HCPGraphModule',
@@ -156,11 +156,12 @@ angular.module('hillromvestApp',
                 'bower_components/canvg-gabelerner/rgbcolor.js',
                 'bower_components/canvg-gabelerner/StackBlur.js',
                 'bower_components/canvg-gabelerner/canvg.js',  
-                'https://code.highcharts.com/highcharts.js'
+                'https://code.highcharts.com/5.0.6/highcharts.js'
                 ]
       },{
         name: 'PatientProfileModule',
-        files: ['scripts/modules/patient/profile/controllers/patientprofile.controller.js']
+        files: ['scripts/modules/patient/profile/controllers/patientprofile.controller.js',
+                'bower_components/isteven-angular-multiselect/isteven-multi-select.js']
       },{
         name: 'AdminProfileModule',
         files: ['scripts/modules/admin/profile/controller/admin-profile.controller.js',
@@ -183,7 +184,7 @@ angular.module('hillromvestApp',
                 'bower_components/canvg-gabelerner/rgbcolor.js',
                 'bower_components/canvg-gabelerner/StackBlur.js',
                 'bower_components/canvg-gabelerner/canvg.js',            
-                'https://code.highcharts.com/highcharts.js']
+                'https://code.highcharts.com/5.0.6/highcharts.js']
       },
       {
         name: 'surveyModule',
@@ -191,7 +192,7 @@ angular.module('hillromvestApp',
           'bower_components/canvg-gabelerner/rgbcolor.js',
           'bower_components/canvg-gabelerner/StackBlur.js',
           'bower_components/canvg-gabelerner/canvg.js',
-          'https://code.highcharts.com/highcharts.js',
+          'https://code.highcharts.com/5.0.6/highcharts.js',
           'bower_components/angular-daterangepicker/js/angular-daterangepicker.js'
           ]
       },
@@ -203,7 +204,7 @@ angular.module('hillromvestApp',
           'bower_components/canvg-gabelerner/canvg.js',
           'bower_components/isteven-angular-multiselect/isteven-multi-select.js',
           'bower_components/angular-daterangepicker/js/angular-daterangepicker.js',
-          'https://code.highcharts.com/highcharts.js'
+          'https://code.highcharts.com/5.0.6/highcharts.js'
         ]
       },{
         name: 'PatientBenchmarkingModule',
@@ -213,7 +214,7 @@ angular.module('hillromvestApp',
           'bower_components/canvg-gabelerner/canvg.js',
           'bower_components/isteven-angular-multiselect/isteven-multi-select.js',
           'bower_components/angular-daterangepicker/js/angular-daterangepicker.js',
-          'https://code.highcharts.com/highcharts.js'
+          'https://code.highcharts.com/5.0.6/highcharts.js'
         ]
       },{
         name: 'HCPCABenchmarkingModule',
@@ -223,12 +224,28 @@ angular.module('hillromvestApp',
           'bower_components/canvg-gabelerner/canvg.js',
           'bower_components/isteven-angular-multiselect/isteven-multi-select.js',
           'bower_components/angular-daterangepicker/js/angular-daterangepicker.js',
-          'https://code.highcharts.com/highcharts.js'
+          'https://code.highcharts.com/5.0.6/highcharts.js'
         ]
       },{
         name: 'PatientDiagnosticModule',
         files:[          
           'bower_components/angular-daterangepicker/js/angular-daterangepicker.js'
+        ]
+      },
+      {
+        name: 'MessagesModule',
+        files:[          
+          'bower_components/angular-daterangepicker/js/angular-daterangepicker.js',
+          'scripts/modules/patient/graph/controller/graphs.controller.js',
+          'scripts/modules/common/messagesMain/controller/messagecontroller.js',
+          'scripts/modules/common/messagesMain/services/message.service.js',
+                'scripts/third_party_library/angular.easypiechart.js',
+                'bower_components/angular-daterangepicker/js/angular-daterangepicker.js',
+                'bower_components/canvg-gabelerner/rgbcolor.js',
+                'bower_components/isteven-angular-multiselect/isteven-multi-select.js',
+                'bower_components/canvg-gabelerner/StackBlur.js',
+                'bower_components/canvg-gabelerner/canvg.js',  
+                'https://code.highcharts.com/5.0.6/highcharts.js'
         ]
       }]
     });

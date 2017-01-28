@@ -1,0 +1,29 @@
+<!-- Clinicadmin DashBoard Navbar -->
+<div class="navbar patient-user patient-user--nav">
+  <div class="container">
+    <div class="collapse navbar-collapse patient-user__navbar" id="navbar-collapse">
+      <ul class="nav navbar-nav patient-dashboard">
+        <li >
+          <a ng-href="" class="nav_bar_title">
+            <span class="" translate="navbar.announcement"></span>
+          </a>
+        </li>
+      </ul>
+
+      <ul class="nav navbar-nav pull-right right" ng-show="clinics.length > 0">
+        <li class="hcp_hsp_name_a" dropdown>
+          <a ng-href=""  data-target="#" ng-class="{active: isActive('patient/clinic-hcp')}" id="dropdownMenu1" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            <span class="">{{selectedClinic.name}} <span class="nav_drop_arrow hillrom-icon icon-arrow-down"></span></span>
+          </a>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+              <li role="menuitem" ng-repeat='clinic in clinics' ng-click="switchClinic(clinic)"><a>{{clinic.name}}</a></li>
+          </ul>
+        </li>
+      </ul>
+      
+    </div>
+  </div>
+</div>
+
+
+

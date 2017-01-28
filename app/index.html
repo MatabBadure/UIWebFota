@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js">
+<html class="no-js" >
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -15,12 +15,14 @@
     <link rel="stylesheet" href="bower_components/nvd3/src/nv.d3.css" />
     <link rel="stylesheet" href="bower_components/angular-toastr/dist/angular-toastr.min.css"/>
     <link rel="stylesheet" href="bower_components/isteven-angular-multiselect/isteven-multi-select.css"/>
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css"/>
+
     <link rel="stylesheet" href="styles/styles.css">
     <!-- endbuild -->
 
 </head>
  
-<body ng-app="hillromvestApp">
+<body ng-app="hillromvestApp"  >
 <!--  <span us-spinner> </span> -->
   <span us-spinner="{radius:15, width:6, length:10, color: '#7ca3dc', position: 'fixed'}"></span>
     <div noty-container></div>
@@ -28,11 +30,11 @@
         <ng-include src="'scripts/components/navbar/navbarmain.html'"></ng-include>
         <div id="top-shadow"></div>
 
-        <div class="content-body" ui-view="content"></div>
+        <div class="content-body remove-static-padding minheight" ui-view="content"   ></div>
 
-        <footer class="footer navbar-fixed-bottom">
+        <footer ng-class="FooterLoginZindex()" class="footer navbar-fixed-bottom">
 
-<div class="col-md-16 footer_container ">
+<div class="col-md-16 footer_container" style="border-top: 1px solid #C1C1C1 !important;">
     <div class="container">
         <div class="col-md-10 footer_left">
             <ul class="footer_left_ul">
@@ -209,7 +211,13 @@
 <script src="scripts/modules/admin/profile/service/charger.service.js"></script>
 <script src="scripts/modules/admin/profile/chargerTab/chargerTab.directive.js"></script>
 <script src="scripts/modules/admin/profile/chargerTab/chargerTab.directive.min.js"></script>
-
+<script src="scripts/modules/common/messagesMain/controller/messagecontroller.js"></script>
+<script src="scripts/modules/common/messagesMain/services/message.service.js"></script>
+<script src="scripts/modules/common/console/announcements/controllers/announcements.controller.js"></script>
+<script src="scripts/modules/common/console/announcements/services/announcement.service.js"></script>
+<script src="scripts/modules/clinicadmin/announcements/controllers/announcementsCA.controller.js"></script>
+<script src="scripts/modules/common/console/announcements/directives/announcement.directive.js"></script>
+<script src="scripts/modules/patient/announcements/controllers/announcements.controller.js"></script>
 <!-- endbuild -->
 
 </body>

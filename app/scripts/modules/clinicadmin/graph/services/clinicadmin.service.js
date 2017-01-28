@@ -9,6 +9,12 @@ angular.module('hillromvestApp')
           headers: headerService.getHeader()
         });
       },
+        getBadgeStatistics: function(clinicId, userId,fromdate,todate){
+        var url = URL.getBadgeStatistics.replace('USERID', userId).replace('CLINICID', clinicId).replace('FROM_DATE', fromdate).replace('TO_DATE', todate);
+        return $http.get(url, {
+          headers: headerService.getHeader()
+        });
+      },
       getClinicsAssociated: function(userId){
         var url = URL.getClinicsAssociatedToCliniadmin.replace('USERID', userId);
         return $http.get(url, {

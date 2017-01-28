@@ -52,7 +52,8 @@
             "hcp": "HCP",
             "clinic-admin": "Clinic Admin",
             "caregiver": "Caregiver",
-            "associates": "Associates"
+            "associates": "Associates",
+            "customerservices" : "Customer Service"
         },
         "placeholder": {
             "search": "Search with Name, Hill-Rom ID or Email"

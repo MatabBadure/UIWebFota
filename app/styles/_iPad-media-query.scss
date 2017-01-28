@@ -1,4 +1,56 @@
 @media only screen and (min-width : 768px) and (max-width : 1024px) and (orientation : landscape) { 
+.col-3.ipadHeightBalance {
+    min-height: 210px;
+}
+//******To remove static border bottom******/
+.minheight{
+	min-height:600px !important;
+}
+/******End of remove static border bottom******/
+.compose-message-container > .row
+{
+	border: 0.5px solid #7ca3dc;
+}
+/******Activation page footer alignment ******/
+FooterAlignmentForDevices{
+	margin-top:13% !important;
+	float:none !important;
+}
+LoginContentHeightForDevices{
+	max-height:none !important;
+}
+/****** End of Activation page footer alignment ******/
+/******Adherence Setting Tab ******/
+.ipadMargin-right{
+	margin-right:240px !important;
+}
+/******End ofAdherence Setting Tab ******/
+.inb-date span,.arc-date span,.sent-date span,.hcp-msg-date span,.inb-date1 span
+{
+	white-space: pre-line !important;
+}
+.inb-flag,.inb-tick
+{
+	position: absolute;
+    top: 25%;
+    right: 0%;
+}
+.message-thread-container > .row
+{
+	margin-right:10px;
+}
+.messageList-container .msgcontainer .row {
+    height: auto;
+}
+.unselectclass, .selectclass
+{
+	padding-left:4px;
+	font-size:0.75em;
+}
+.paginationcontainer
+{
+	width:50%;
+}
 	/*HCP dashboard Style device-*/
  	.stats_chart_container{ 
 		.pie_chart{
@@ -206,6 +258,10 @@
 	  display: -webkit-flex;
 	  flex-flow: -webkit-row column;
 	}
+	.after-head-container
+{
+	    border: 0.5px solid #d0cbcb;
+}
 	
 	@media screen and (-webkit-min-device-pixel-ratio:0) {
 		.hideOverflow{
@@ -216,7 +272,81 @@
 
 }
 
-@media only screen and (min-width : 768px) and (max-width : 1024px) and (orientation : portrait) { 
+@media only screen and (min-width : 768px) and (max-width : 1024px) and (orientation : portrait) {
+.col-3.ipadHeightBalance {
+    min-height: 199px;
+}
+/******Archive option responsiveness ******/
+.arc-read {
+    width: 20%;
+} 
+/******Archive option responsiveness ******/
+/******Adherence Setting Tab ******/
+.ipadMargin-right{
+	margin-right:240px !important;
+}
+/******End ofAdherence Setting Tab ******/
+.compose-message-container > .row
+{
+	border: 0.5px solid #7ca3dc;
+}
+.inb-date span,.arc-date span,.sent-date span,.hcp-msg-date span,.inb-date1 span
+{
+	    white-space: pre-line !important;
+}
+.message-thread-container > .row
+{
+	margin-right:10px;
+}
+.messageList-container .msgcontainer .row {
+    height: auto;
+}
+.unselectclass, .selectclass
+{
+	padding-left:4px;
+	font-size:0.75em;
+}
+.inb-flag,.inb-tick
+{
+	position: absolute;
+    top: 25%;
+    right: 0%;
+}
+.after-head-container
+{
+	    border: 0.5px solid #d0cbcb;
+}
+.paginationcontainer
+{
+	width:50%;
+}
+/******To remove static border bottom******/
+.minheight{
+	min-height:900px !important;
+}
+/******End of remove static border bottom******/
+
+/******Wrap text for bigger text on smaller devices******/
+.wrapTextForSmallScreens{
+	word-wrap: break-word;
+} 
+/******End of Wrap text for bigger text on smaller devices******/
+/****** For spacing between list and search box in devices like ipad  ******/
+.marginBottomforDevices
+{
+	margin-bottom:10px;
+}
+/****** End of spacing between list and search box in devices like ipad  ******/
+/******Activation page footer alignment ******/
+LoginContentHeightForDevices{
+	max-height:none;
+}
+/****** End of Activation page footer alignment ******/
+/****** ResetAdherence score alignment for ipad ******/
+.marginLeftForDevices{
+	margin-left:4% !important;
+}
+/******End of ResetAdherence score alignment for ipad ******/
 	/*HCP dashboard Style*/
 	.stats_chart_container{ 
 		.pie_chart{
@@ -515,9 +645,25 @@ font-size:12px;
 	#Message_Text{
 	width:50% !important;
 	}
+	.message-thread-container > .row
+{
+	margin-right:10px;
+}
+.badgefiltercontainer .col-md-4 {
+  width: 100%;
+}
+.badgefiltercontainer .col-md-9 {
+  width: 100%;
+}
 
 }
-@media only screen and (min-width : 700px) and (max-width : 1024px) and (orientation : landscape) { 
+@media only screen and (min-width : 700px) and (max-width : 1024px) and (orientation : landscape) {
+.statdateipad {
+    width: auto !important;
+	}
+	.statdateipad .col-md-7 {
+	  width: 100%;
+	} 
 .incompatible_browser_message{
   background-color:rgba(255, 255, 255, 0.7);
 padding:5px 5px;
@@ -548,7 +694,108 @@ font-size:12px;
 	#Message_Text{
 	width:50% !important;
 	}
+	.message-thread-container > .row
+{
+	margin-right:10px;
+}
+.badgefiltercontainer .col-md-4 {
+  width: 30%;
+}
+.badgefiltercontainer .col-md-9 {
+  width: 70%;
+}
+}
+@media only screen and (min-width : 1290px) and (max-width :1366px ) and (orientation : landscape) { 
+
+.statdateipad {
+    width: auto !important;
+	}
+	.statdateipad .col-md-7 {
+	  width: 100%;
+	}
+/******To remove static border bottom******/
+.minheight{
+	min-height:600px !important;
+}
+/******End of remove static border bottom******/
+}
+
+@media screen and (min-width: 320px) and (max-width: 768px)
+ { 
+   .statdateipad {
+    width: auto !important;
+	}
+	.statdateipad .col-md-7 {
+	  width: 100%;
+	}
+ .super-head {
+  border-radius: 0;
+  max-height: 100%;
+}
+.after-head-container:first-child .optionSection {
+  max-height: 100%;
+}
+.custom-dropdown .multiSelect > button {
+  /* max-width: 100% !important; */
+  width: 105% !important;
+  padding-right: 30%;
+}
+.inb-date span,.arc-date span,.sent-date span,.hcp-msg-date span,.inb-date1 span
+{
+	    white-space: pre-line !important;
+}
+.after-head-container {
+  min-height: 100%;
+}
+.compose-message-container {
+  max-height: 100%;
+  min-height: 100%;
+}
+.mobilefix
+{
+    clear: both;
+}
+.badgefiltercontainer .col-md-16 {
+  padding: 0;
+}
+.badgefiltercontainer .col-md-4 {
+  width: 100%;
+}
+.badgefiltercontainer .col-md-9 {
+  width: 100%;
+}
+
+}
+@media screen and (min-width: 320px) and (max-width: 667px)
+{
+.super-head .col-sm-3, .super-head .col-xs-4 {
+  margin-bottom: 10px;
+  width: 100%;
+}
+.message-thread-container > .row
+{
+	margin-right:10px;
 }
 
 
+} 
 
+@media only screen and (min-width : 767px) and (max-width : 769px) and (orientation : portrait) { 
+	 .activefixmobile > li > a 
+  {
+    padding: 20px 27px 20px 3px !important;
+  }
+}
+@media only screen and (max-width: 1024px) and (min-width: 768px) and (orientation: landscape) { 
+	 .activefixmobile > li > a 
+  {
+    padding: 20px 27px 20px 3px !important;
+  }
+}
+@media screen and (min-width: 540px) and (max-width: 767px)
+{
+	#statdateipad {
+	  float: right !important;
+	}	
+
+}

@@ -43,8 +43,8 @@
       </div>
 
       <div class="col-md-1 col-sm-2 caregiver-list__delete text-right-mob">
-        <span class="icon-edit-icon" ng-click="goToCaregiverEdit(caregiver.user.id)"></span>
-        <span class="icon-delete-icon" ng-click="openModalCaregiver(caregiver.user.id, $index)"></span>
+        <span class="icon-edit-icon" ng-if="!(caregiverID)" ng-click="goToCaregiverEdit(caregiver.user.id)"></span>
+        <span class="icon-delete-icon" ng-if="!(caregiverID)" ng-click="openModalCaregiver(caregiver.user.id, $index)"></span>
       </div>
     </div>
     
@@ -53,7 +53,7 @@
   <div class="col-md-16 col-sm-16 empty-list-message" ng-if="!caregivers.length">
       <span translate="patient.empty-caregiver-list-message"></span>
     </div>
-    <div class="col-md-16 col-sm-16 reset-padding caregiver-link">
+    <div class="col-md-16 col-sm-16 reset-padding caregiver-link" ng-if="!(caregiverID)">
       <buton class="hillrom-btn btn-primary float-right" ng-click="linkCaregiver()" translate="patient.link-caregiver"></buton>
     </div>
   </div>

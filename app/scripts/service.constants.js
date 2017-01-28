@@ -98,7 +98,23 @@ var sortConstant = {
     pHillromId: "phillrom_id",
     patientDoB: "patientDoB",
     comma: ",",
-    isActivated: "isActivated"
+    isActivated: "isActivated",
+    from: "messages.user.lastName",
+    subject: "messages.messageSubject",
+    date: "messages.messageDatetime",
+    sentTo: "toClinic.name",
+    sentSubject: "messages.messageSubject",
+    sentDate: "messages.messageDatetime",
+    sentToCA: "user.lastName",
+
+
+    announcementName: "name",
+    announcementSubject: "subject",
+    announcementStartDate: "startDate",
+    announcementEndDate: "endDate",
+    announcementModifiedDate : "modifiedDate",
+    announcementModifiedDatePatient : "modified_date",
+    fromCA: "messages.fromClinic.name"
 }
 
 var stringConstants = {
@@ -160,7 +176,9 @@ angular.module('hillromvestApp').constant('pdfServiceConstants', {
         survey: "Survey",
         benchmarking:"Benchmarking",
         complianceStatistics: "Statistics",
+        protocolGraph: "Protocol Graph",
         hmrStatistics: "HMR",
+        adherenceTrend: "Adherence Trend",
         survey: "Survey",
         cumulativeStatistics: "Cumulative Statistics",
         treatmentsStatistics: "Treatments Statistics",
@@ -170,6 +188,7 @@ angular.module('hillromvestApp').constant('pdfServiceConstants', {
         patientbenchmarkingStatistcs: " My Average Adherence Score Vs. Clinic Average Adherence Score",
         patientBMPageHeader : "Visi-View Respiratory Care",
         pdfpageHeader: "Hill-Rom Respiratory Care",
+        noHMRGraphContentForPDF : "Protocol and HMR Graph is Not Available because of No Data",
         signatureContent : "Electronically signed by "
     },
     style:{

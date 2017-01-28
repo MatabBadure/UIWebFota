@@ -40,6 +40,33 @@
             },
             "language": "Language"
         },
+          "messaging": {
+        "title":"Messages",
+        "new-message":"New Message",
+        "sent-items":"Sent Items",
+        "inbox":"Inbox",
+        "archive":"Archive",
+        "total-message":"Total Messages",
+        "total-archive":"Total Archived",
+        "from":"From",
+        "subject-of-message": "Subject of Message",
+        "date": "Date",
+        "compose-message":"Compose a New Message",
+        "subject": "Subject",
+        "message": "Message",
+        "send-message": "Send Message",
+        "cancel": "Cancel",
+        "to": "To",
+        "more-threads":"More Threads",
+        "mark-as-read": "Mark as Read",
+        "mark-as-unread": "Mark as Unread",
+        "reply" : "Reply",
+        "confirmsendmessage" : "Do you want to send the message?",
+        "sendmessageWarning" : "Compose Message",
+        "NomessageWarning" : "Do you want to send a blank message?",
+        "NoSubjectWarning" : "Do you want to send this message without a Subject?",
+        "Reply": "Reply"
+    },
         "logo-text": {
             "visi-view": "VisiView",
             "tm-sup": "TM",
@@ -57,7 +84,10 @@
             "manage-users": "Users",
             "notifications": "Notifications",
             "dashboard": "Dashboard",
-            "patients": "Patients"
+            "patients": "Patients",
+            "messages":"Messages",
+            "compose-message":"Write a New Message",
+            "announcements": "Announcements"
         },
         "form": {
             "username": "Login",
@@ -98,6 +128,31 @@
                 }
             }
         },
+        "announcement": {
+            "label": {
+                "name-of-announcment": "Name of Announcement",
+                "subject": "Subject",
+                "starts-on": "Starts on",
+                "ends-on": "Ends on",
+                "send-to": "Send To",
+                "upload-pdf-file": "Upload PDF File",
+                "cancel": "Cancel",
+                "post-announcement": "Post Announcement",
+                "update-announcement": "Update Announcement",
+                "add-announcement":"Add Announcements"
+            },
+             "modal": {
+                "delete-heading": "Delete  announcement",
+                "add-heading": "Add  announcement",
+                "update-heading": "Update  announcement",
+                "delete": "Are you sure you want to delete the announcement?",
+                "add": "Are you sure you want to add the announcement?",
+                "update": "Are you sure you want to update the announcement?",
+                "overwrite-heading": "Overwrite File",
+                "overwrite" : "Are you sure you want to overwrite the last uploaded file?"
+            }
+            
+        },
         "role":{
             "super-admin": "Super Admin",
             "account-services": "RC Admin",
@@ -105,7 +160,8 @@
             "caregiver": "Caregiver",
             "clinic-admin": "Clinic Admin",
             "hcp": "HCP",
-            "patient": "Patient"
+            "patient": "Patient",
+            "customerservices" : "Customer Service"
         },
         "not-applicable": "NA",
         "notification":{
@@ -143,7 +199,50 @@
             "datetimelocal": "This field should be a date and time."
         }
     },
-    "error":{
+    "error":{ 
+             "startDate":{
+              "required": "Announcement start date is required."
+            },
+            "endDate":{
+            "required": "Announcement end date is required."
+            },
+            "announcementName":{
+             "required": "Announcement name is required."
+            },
+            "announcementDesc":{
+             "required": "Announcement subject is required."
+            },
+            "patientType":{
+            "required": "Patient type required."
+            },
+            "clinicSpeciality":{
+            "required": "Clinic Speciality required."
+            },
+            "selectclinic":{
+            "required": "Clinic type required."
+            },
+            "SendTo":{
+            "required": "Send To required."
+            }, 
+            "file":{
+            "required": "File required."
+            },     
+        "adherenceStartDate":{
+            "required": "Adherence score start date is required.",
+            "future": "Adherence score start date cannot be future.",
+            "invalid":"Adherence score start date is required."  
+        },
+        "others":{
+            "required": "Other justification is required."  
+        },
+        "ResetTo":{
+            "required": "Reset to is required.",
+            "maxlength": "Reset to is Invalid.",
+            "invalid":"Invalid Reset number, Please enter between 1 to 100 without decimals."
+        },
+        "justification":{
+            "required": "Justification is required."
+        },
         "firstName":{
             "required": "First Name is required.",
             "minlength": "First Name is required to be at least 1 character.",
@@ -367,9 +466,9 @@
     "search-filter" : {
         "active" : "Active",
         "inactive" : "InActive", "no-event" : "No Transmission Recorded",
-        "setting-deviation" : "Consecutive Frequency Deviation Day",
-        "hmr-non-compliant" : "HMR Non-Adherence",
-        "missed-therapy" :"Consecutive Missed Day",
+        "setting-deviation" : "Below Frequency Setting",
+        "hmr-non-compliant" : "Below Treatment Minutes",
+         "missed-therapy" :"Missed Therapy Days",
         "pending": "Pending"
     },
 
@@ -378,7 +477,9 @@
         "my-dashboard": "Dashboard",
         "create-new-hcp": "Create New HCP +",
         "manage-hcp": "Manage HCPs",
-        "clinic-info": "Clinic Info"
+        "adherence-setting": "Adherence Settings",
+        "clinic-info": "Clinic Info",
+        "announcement": "Announcements"
     },
     "place-holder":{
         "mobile-number": "Mobile Number",
@@ -395,5 +496,20 @@
         "5-days-header": "Hill-Rom 5 Days Survey",
         "30-days-header": "Hill-Rom 30 Days Survey",
         "90-days-header": "Hill-Rom 90 Days Survey"
-    }
+    },
+    "noti_patient": {
+      "miss-therapy-days" : "Missed Therapy Days",
+      "hmr-non-adher": "HMR Non-Adherence",
+      "setting-deviation": "Setting Deviation",
+      "below-treatment":"Below Treatment Minutes",
+      "miss-therapy-days-desc": "You will get Notification email if you missed therapy for three or more days.",
+      "miss-therapy-new":"You will receive a notification if you missed a day of therapy.",
+      "hmr-non-adher-desc": "You will get Notification email if your HMR Non-Adherence is below protocol for three or more days.",
+      "hmr-non-adher-new":"You will receive a notification if you did not complete the therapy time in your protocol.",
+      "setting-deviation-desc": "You will get Notification email if your frequency is 15% below protocol for three or more days.",
+      "setting-dev-new":"You will receive a notification if your frequency setting was 15% below protocol.",
+      "messages":"Messages",
+      "message-new":"You will receive a notification if you have one or more messages in your inbox."
+    },
+        "noti-verbiage":"Turn On or Off the notification by clicking the toggle switch."
 }

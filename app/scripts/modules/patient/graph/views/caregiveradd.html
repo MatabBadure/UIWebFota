@@ -152,7 +152,7 @@
               <span class=""> * </span>
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
-              <input type="email" class="form-control" validate-on-blur name="email"  ng-readonly="validateADMINorASP()" ng-model="associateCareGiver.email" ng-maxlength=100 ng-pattern="/^[a-zA-Z][a-zA-Z0-9_\+-]+(\.[a-zA-Z0-9_\+-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.([a-zA-Z]{2,4})$/" required>
+              <input type="email" class="form-control" validate-on-blur name="email"  ng-readonly="validateADMINorASP()" ng-model="associateCareGiver.email" ng-maxlength=100 ng-pattern="/^[a-zA-Z][\.a-zA-Z0-9_\+-]+(\.[a-zA-Z0-9_\+-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.([a-zA-Z]{2,4})$/" required>
               <div ng-show="(form.email.$showValidationMessage && form.email.$invalid) || submitted">
                 <span class="has-error" ng-show="form.email.$error.required" translate="patient.errMSG.email-required">   </span>
                 <span class="has-error" ng-show="form.email.$error.maxlength" translate="patient.errMSG.email-max-length">
@@ -194,10 +194,14 @@
         </div>
       </div>
 
-     <div class = "agree-main">
+     <div class = "col-md-16 agree-main">
       <span class = "agree-content" translate="patient.AgreementNote"></span><br><br>
-      <div class="form-group">
-        <span class="sec-quest agree-desc" translate="patient.Agreement">
+      <div class="form-group sec-quest agree-desc ">
+        <span translate="patient.Agreement"></span><br><br>
+        <span translate="patient.AgreementSecond"></span><br><br>
+        <span translate="patient.AgreementThird"></span><br><br>
+        <span translate="patient.AgreementFourth"></span><br><br>
+        <span translate="patient.AgreementFifth">
         </span><br><br>
         <input type="checkbox" name="tnc" ng-model="user.tnc" required>
         <span class="sec-quest agree-check" translate="patient.AgreementApprovalNote"></span>

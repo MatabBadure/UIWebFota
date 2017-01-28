@@ -21,6 +21,15 @@ angular.module('hillromvestApp')
         });
       },
 
+      updateDaysForCalculation: function(data,clinicId) {
+        var url = URL.clinicBaseURL + '/' + clinicId;
+        return $http.put(url, data, {
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });
+      },
+
       deleteClinic: function(id) {
         var url = URL.clinicBaseURL + '/' + id;
         return $http.delete(url, {
@@ -221,6 +230,16 @@ angular.module('hillromvestApp')
           return response;
         });
       },
+
+      getAdherenceScoreDays : function(){
+        var url = URL.getAdherenceDays;
+        return $http.get(url, {
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });
+      },
+
 	  getClinicSpeciality : function(){
         var url = URL.getClinicSpeciality;
         return $http.get(url, {

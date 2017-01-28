@@ -35,27 +35,24 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
   $scope.getPatientListForCaregiver = function(caregiverID){
     caregiverDashBoardService.getPatients(caregiverID).then(function(response){
       $scope.patients = response.data.patients;
-      if(StorageService.get('logged') && StorageService.get('logged').patientID !== undefined){
-          angular.forEach($scope.patients, function(value){
-            if(value.userId === parseInt(StorageService.get('logged').patientID)){
-              $scope.$emit('getSelectedPatient', value);
-              $scope.selectedPatient = value;
-              $scope.patientId = StorageService.get('logged').patientID;
-            }
-          });
-      } else{
-          $scope.selectedPatient = response.data.patients[0];
-          $scope.$emit('getSelectedPatient', $scope.selectedPatient);
-          $scope.patientId = $scope.selectedPatient.userId;
-          var logged = StorageService.get('logged');
-          logged.patientID = $scope.patientId;
-          StorageService.save('logged',logged);
-      }
       $scope.$emit('getPatients', $scope.patients);
+ if($stateParams.patientId){   
+          for(var i=0;i<response.data.patients.length;i++){
+            if($stateParams.patientId == response.data.patients[i].userId){
+          $scope.selectedPatient = response.data.patients[i];
+          $scope.patientId = $scope.selectedPatient.userId;
+          break;
+        }
+        }
+        } else{
+
+          $scope.selectedPatient = response.data.patients[0];
+          $scope.patientId = $scope.selectedPatient.userId;
+        }
       if($state.current.name === 'patientDashboardPatientInfo'){
-        $scope.initProfileView();    
+        $scope.initProfileViewCaregiver();    
       } else if($state.current.name === 'patientDashboardNotification'){
-        $scope.initPatientSettings();
+        $scope.initPatientSettingsCaregiver();
       }
     }).catch(function(response){
       notyService.showError(response);
@@ -71,21 +68,12 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
     $scope.switchCaregiverTab(state);
   });
 
-  $scope.switchPatient = function(patient){
-    if($scope.selectedPatient.userId !== patient.userId){
-      $scope.selectedPatient = patient;
-      $scope.patientId = $scope.selectedPatient.userId;
-      $scope.$emit('getSelectedPatient', $scope.selectedPatient);
-      var logged = StorageService.get('logged');
-      logged.patientID = $scope.patientId;
-      StorageService.save('logged',logged);
-      if($state.current.name === 'patientDashboardPatientInfo'){
-        $scope.initProfileView();    
-      } else if($state.current.name === 'patientDashboardNotification'){
-        $scope.initPatientSettings();
-      }
-    }
-  };
+      $scope.switchPatient = function(patient){
+        $scope.selectedPatient = patient;
+        $scope.patientId = $scope.selectedPatient.userId;
+         var currentname = $state.current.name;
+        $state.go(currentname,{'patientId':$scope.patientId});
+    };
 
   $scope.switchCaregiverTab = function(status){
     $scope.caregiverTab = status;
@@ -130,6 +118,17 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
       notyService.showError(response);
     });
 	};
+    $scope.initProfileViewCaregiver = function(){
+    UserService.getUser($scope.selectedPatient.userId).then(function(response){
+      $scope.patientView = response.data.user;
+      $scope.patientView.zipcode = commonsUserService.formatZipcode($scope.patientView.zipcode);
+    }).catch(function(response){});
+    AuthServerProvider.getSecurityQuestions().then(function(response){
+      $scope.questions = response.data
+    }).catch(function(response){
+      notyService.showError(response);
+    });
+  };
 
 	$scope.initProfileEdit = function(){
 		UserService.getUser(StorageService.get('logged').patientID).then(function(response){
@@ -273,9 +272,17 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
 		   notyService.showError(response);
 		});
   };
+    $scope.initPatientSettingsCaregiver = function(){  
+    UserService.getPatientUserNotification($scope.selectedPatient.userId).then(function(response){
+      $scope.patientUser = response.data.user;
+    }).catch(function(){
+       notyService.showError(response);
+    });
+  };
 
   $scope.toggleNotification = function(notification){
-    var data = {"isMissedTherapyNotification" : $scope.patientUser.missedTherapyNotification, "isNonHMRNotification": $scope.patientUser.nonHMRNotification, "isSettingDeviationNotification": $scope.patientUser.settingDeviationNotification };
+    var data = {"isMissedTherapyNotification" : $scope.patientUser.missedTherapyNotification, "isNonHMRNotification": $scope.patientUser.nonHMRNotification, "isSettingDeviationNotification": $scope.patientUser.settingDeviationNotification,"isMessageNotification": $scope.patientUser.messageNotification};
+   var id = ($scope.selectedPatient)? ($scope.selectedPatient.userId): (StorageService.get('logged').patientID);
     if(notification === 'missedTherapyNotification'){
     	data.isMissedTherapyNotification = !$scope.patientUser.missedTherapyNotification;
     }
@@ -285,7 +292,11 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
     if(notification === 'settingDeviationNotification'){
     	data.isSettingDeviationNotification = !$scope.patientUser.settingDeviationNotification;
     }
-    UserService.updatePatientUserNotification(StorageService.get('logged').patientID, data).then(function(response){
+     if(notification === 'messageNotification')
+      {
+        data.isMessageNotification = !$scope.patientUser.messageNotification;
+      }
+    UserService.updatePatientUserNotification(id, data).then(function(response){
 			$scope.patientUser = response.data.user;    
 		}).catch(function(response){
       notyService.showError(response);

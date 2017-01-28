@@ -168,7 +168,20 @@
           </div>
         </div>
       </div>
-
+<div class="col-md-16 col-sm-16 margin-top reset-padding">
+   <div class="col-md-7 col-sm-7 reset-padding">
+    <div class=" col-md-6 col-sm-6  dashboard__form--label reset-padding">
+          <span  translate="patient.demo-graph.patient-notes" ></span>
+        </div>
+        
+        <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding" >
+         <!-- <div style="border:0.5px solid black;">
+        {{::patient.clinicMRNId.memoNote}} </div> -->
+          <textarea  class="patientInfo_patient_Notes" wrap = "hard" readonly="readonly"> {{::patient.clinicMRNId.memoNote}}</textarea>
+        </div>
+        </div>
+      
+      </div>
       <div class="col-md-16 col-sm-16 margin-top reset-padding">
         <div class="fropile_update_btn_group">
           <buton class="hillrom-btn btn-primary float-right btn-margin-left" ng-click="openEditDetail()" translate="patient.btn.edit">Edit</buton>

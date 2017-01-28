@@ -1,12 +1,20 @@
 'use strict';
 
 angular.module('hillromvestApp')
-  .controller('MainController',['$scope', 'Principal', 'Auth', '$state', 'Account', '$location', '$stateParams', '$rootScope', 'loginConstants', 'StorageService', 'UserService', '$window', 
-  function ($scope, Principal,Auth, $state, Account, $location,$stateParams, $rootScope,loginConstants,StorageService, UserService, $window) {
+  .controller('MainController', 
+  	['$scope', 'Principal', 'Auth','notyService', 'DoctorService','$state', 'Account', '$location', '$stateParams', '$rootScope', 'loginConstants', 'StorageService', 'UserService', '$window', 'patientService', 'messageService',
+  function ($scope, Principal,Auth,notyService,DoctorService, $state, Account, $location,$stateParams, $rootScope,loginConstants,StorageService, UserService, $window, patientService,messageService) {
     Principal.identity().then(function(account) {
       $scope.account = account;
       $scope.isAuthenticated = Principal.isAuthenticated;
     });
+	$rootScope.initCount = function(clinicid){
+	if($rootScope.userRole === 'PATIENT' || $rootScope.userRole === 'CLINIC_ADMIN' || $rootScope.userRole === 'HCP'){
+				$rootScope.UnreadMessages ="";
+				$scope.getunreadcount(clinicid);
+			}	
+	}
+	
 
     $scope.mainInit = function(){    		
     		$rootScope.isAddDiagnostics = false;
@@ -21,9 +29,85 @@ angular.module('hillromvestApp')
 			}
 			if($rootScope.userRole === 'PATIENT'){
 				$scope.getNotifications();
+				
 			}
+			
+		
     };
-	      
+	 /*****Get unread messages *****/
+   $scope.getunreadcount = function(clinicid){
+  if(StorageService.get('logged').role === 'PATIENT'){
+  messageService.getUnreadMessagesCount(StorageService.get('logged').patientID,0).then(function(response){
+  if(response.data.length){
+if(response.data[0][0] == false){
+  $rootScope.UnreadMessages = response.data[0][1];
+}
+else{
+  $rootScope.UnreadMessages = 0;
+}
+}
+else {
+  $rootScope.UnreadMessages = 0;
+}
+   }).catch(function(response){
+    if(response.message == 'No message available'){
+    $rootScope.UnreadMessages = 0;
+  }
+    });
+
+}
+else if(StorageService.get('logged').role === 'CLINIC_ADMIN'){
+  messageService.getUnreadMessagesCountCA(StorageService.get('logged').userId,1,clinicid).then(function(response){
+if(response.data.length){
+if(response.data[0][0] == false){
+  $rootScope.UnreadMessages = response.data[0][1];
+}
+else{
+  $rootScope.UnreadMessages = 0;
+}
+}
+else {
+  $rootScope.UnreadMessages = 0;
+}
+   }).catch(function(response){
+    if(response.message == 'No message available'){
+    $rootScope.UnreadMessages = 0;  
+  }
+    });
+
+}
+else if(StorageService.get('logged').role === 'HCP'){
+  messageService.getUnreadMessagesCountCA(StorageService.get('logged').userId,1,clinicid).then(function(response){
+if(response.data.length){
+if(response.data[0][0] == false){
+  $rootScope.UnreadMessages = response.data[0][1];
+}
+else{
+  $rootScope.UnreadMessages = 0;
+}
+}
+else {
+  $rootScope.UnreadMessages = 0;
+}
+   }).catch(function(response){
+    if(response.message == 'No message available'){
+    $rootScope.UnreadMessages = 0;  
+  }
+    });
+
+}
+
+};
+//$scope.getunreadcount();
+
+    $scope.FooterLoginZindex = function(){
+    	if($state.current.name === "login" || $state.current.name === "home" ){
+		    return "remove-static-loginPage";
+			}
+    	else {
+    		return "remove-static";
+    	}
+    };	      
     $scope.isActive = function(tab) {
       var path = $location.path();
       if (path.indexOf(tab) !== -1) {
@@ -72,7 +156,6 @@ angular.module('hillromvestApp')
         });
       }
     };
-
     $scope.profile = function(){
       if($rootScope.userRole === "ADMIN"){
         $state.go('adminProfile');
@@ -82,15 +165,23 @@ angular.module('hillromvestApp')
         $state.go('hcpUserProfile');
       }else if($rootScope.userRole === loginConstants.role.acctservices){
         $state.go('adminProfileRc');
-      } else if($rootScope.userRole === "CLINIC_ADMIN" || $rootScope.userRole === "CLINIC ADMIN"){
+      } /*else if($rootScope.userRole === "CLINIC_ADMIN" || $rootScope.userRole === "CLINIC ADMIN"){
       	var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : $stateParams.clinicId;
     		$state.go("clinicadminUserProfile",{'clinicId': clinicId});
-      }else if($rootScope.userRole === "HCP"){
+      }*/else if($rootScope.userRole === "HCP"){
       	var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : $stateParams.clinicId;
     		$state.go("hcpUserProfile",{'clinicId': clinicId});
       }else if($rootScope.userRole === loginConstants.role.associates){
       	$state.go('associateProfile');
       }
+      else if($rootScope.userRole === loginConstants.role.customerservices){
+      	$state.go('customerserviceProfile');
+      }
+    };
+    $scope.profileCA = function(clinicid){
+      	var clinicId = ($stateParams.clinicId) ? $stateParams.clinicId : clinicid;
+    		$state.go("clinicadminUserProfile",{'clinicId': clinicId});
+      
     };
 
 
@@ -125,7 +216,7 @@ angular.module('hillromvestApp')
     };
 
 	  $scope.goToCaregiverDashboard = function(){
-	    $state.go("caregiverDashboard");
+	    $state.go("caregiverDashboard",{"patientId":$stateParams.patientId});
 	  };
 	  
 	  $scope.goToPatientDashboard = function(value){
@@ -135,6 +226,9 @@ angular.module('hillromvestApp')
 	      $state.go("patientdashboard");
       }
 	  };
+	   $scope.goToAnnouncements = function(){
+ $state.go("patientannouncements");
+	  }; 
 
 	  $scope.isFooter = function(){
       var url = $location.path();
@@ -148,6 +242,13 @@ angular.module('hillromvestApp')
 
 	  $scope.isFooter();
 
+	/*  $scope.goToPatientDashboard = function(value){
+	    if(value){
+	      $state.go(value, {"clinicId": $stateParams.clinicId});
+	    }else{
+	      $state.go("patientdashboard");
+	    }
+	  };
 	  $scope.goToPatientDashboard = function(value){
 	    if(value){
 	      $state.go(value, {"clinicId": $stateParams.clinicId});
@@ -155,7 +256,7 @@ angular.module('hillromvestApp')
 	      $state.go("patientdashboard");
 	    }
 	  };
-
+*/
 	  $scope.getNotifications = function(){
 	    UserService.getPatientNotification(StorageService.get("logged").patientID, new Date().getTime()).then(function(response){
 				$scope.notifications = response.data;
@@ -180,13 +281,21 @@ angular.module('hillromvestApp')
 	  };
 
 	  $scope.getPatientNotifications = function(notifications){
-	   	if(notifications.length === 0){            
+	  		$scope.getNumberofDays();
+		   	if(notifications.length === 0){            
 		  	var noNotification = {
 		      'notificationType' : 'NO_NOTIFICATION'
 		    }
 		    $scope.notifications.push(noNotification);
 			}
 	  };
+	  /******Written to fix Hill-2002. Calling clinics API to get number of days(adherenceSetting) ******/
+	    $scope.getNumberofDays = function(){
+	  patientService.getClinicsLinkedToPatient(StorageService.get('logged').patientID).then(function(response){
+          $scope.notificationData = response.data.clinics[0].adherenceSetting;
+       });
+	};
+	 /******End of Calling clinics API to get number of days(adherenceSetting) ******/
 
 		$scope.mainInit();
 		$scope.isUserChanged = function(){
@@ -298,6 +407,9 @@ angular.module('hillromvestApp')
 	    } else if($rootScope.userRole === loginConstants.role.associates){
 	      $state.go('associateSurveyReport');
 	    }
+	    else if($rootScope.userRole === loginConstants.role.customerservices){
+	      $state.go('customerserviceSurveyReport');
+	    }
 	    else if($rootScope.userRole === loginConstants.role.hcp ){
 	      $state.go('hcpBenchmarking');
 	    }
@@ -305,7 +417,19 @@ angular.module('hillromvestApp')
 	      $state.go('clinicAdminBenchmarking');
 	    }
     };
-      	
+      $scope.announcement = function(){
+	    if($rootScope.userRole === "ADMIN"){
+	      $state.go('adminAnnouncements');
+	    }else if($rootScope.userRole === "ACCT_SERVICES"){ 
+	      $state.go('rcadminAnnouncements');
+	    }
+	    else if($rootScope.userRole === "ASSOCIATES"){ 
+	      $state.go('associateAnnouncements');
+	    }
+	    else if($rootScope.userRole === "CUSTOMER_SERVICES"){ 
+	      $state.go('customerserviceAnnouncements');
+	    }
+	    };	
     $scope.loginAnalyitcs = function(){
 	    if($rootScope.userRole === "ADMIN"){
 	      $state.go('adminLoginAnalytics');
@@ -313,6 +437,9 @@ angular.module('hillromvestApp')
 	      $state.go('rcadminLoginAnalytics');
 	    } else if($rootScope.userRole === loginConstants.role.associates){
 	      $state.go('associatesLoginAnalytics');
+	    }
+	    else if($rootScope.userRole === loginConstants.role.customerservices){
+	      $state.go('customerserviceLoginAnalytics');
 	    }
     };
 
@@ -324,6 +451,13 @@ angular.module('hillromvestApp')
       }else if($rootScope.userRole === loginConstants.role.associates){
       	$state.go('associatesBenchmarking');
       }
+      else if($rootScope.userRole === loginConstants.role.customerservices){
+      	$state.go('customerserviceBenchmarking');
+      }
+    };
+
+    $scope.redirectCaregiver = function(value){
+		$state.go(value,{'patientId':$stateParams.patientId});
     };
 
     $scope.userSurvey = function(){
@@ -335,14 +469,13 @@ angular.module('hillromvestApp')
     $rootScope.patientDiagnostics = function(){
 	    if($rootScope.userRole === "PATIENT"){
   			var patientID = StorageService.get('logged').patientID;
-  			console.log("patientDiagnostic", patientID);
   			$state.go("patientDiagnostic");
   		}else if($rootScope.userRole === "CLINIC_ADMIN"){
-  			console.log("clinic admin", $stateParams.patientId);
   			$state.go("CADiagnostic", {'patientId': $stateParams.patientId});
   		}else if($rootScope.userRole === "HCP"){
-  			console.log("hcp", $stateParams.patientId);
   			$state.go("HCPDiagnostic", {'patientId': $stateParams.patientId});
+  		}else if($rootScope.userRole === "CARE_GIVER"){
+  			$state.go("caregiverpatientDiagnostic");
   		}
     };
 
@@ -372,6 +505,9 @@ angular.module('hillromvestApp')
 
   	$rootScope.goToChangePrescriptionTermsConditions = function(){		
   		$window.open('#/prescription-terms', '_blank');
-  	}
+  	};
+  	 $scope.GoToMessages = function(){ 	 	
+		$state.go('Messages');
+    };
 
   }]);

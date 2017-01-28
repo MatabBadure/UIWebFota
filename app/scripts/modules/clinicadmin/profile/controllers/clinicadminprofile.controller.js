@@ -66,7 +66,8 @@ angular.module('hillromvestApp')
     };
 
     $scope.switchProfileTab = function(status){
-      $state.go(status);
+      $state.go(status,{'clinicId': $stateParams.clinicId});
+      //$state.go(status);
     };
 
 
@@ -138,12 +139,12 @@ angular.module('hillromvestApp')
     };
 
     $scope.goToPatientDashboard = function(value){
-      var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : (($scope.clinics && $scope.clinics.length > 0) ? $scope.clinics[0].id : $stateParams.clinicId);
+      var clinicId = $stateParams.clinicId;
       $state.go(value, {'clinicId': clinicId });
     };
 
     $scope.toggleNotification = function(notification){
-      var data = {"isMissedTherapyNotification" : $scope.user.missedTherapyNotification, "isNonHMRNotification": $scope.user.nonHMRNotification, "isSettingDeviationNotification": $scope.user.settingDeviationNotification };
+      var data = {"isMissedTherapyNotification" : $scope.user.missedTherapyNotification, "isNonHMRNotification": $scope.user.nonHMRNotification, "isSettingDeviationNotification": $scope.user.settingDeviationNotification , "isMessageNotification": $scope.user.messageNotification};
       if(notification === 'missedTherapyNotification'){
         data.isMissedTherapyNotification = !$scope.user.missedTherapyNotification;
       }
@@ -152,6 +153,10 @@ angular.module('hillromvestApp')
       }
       if(notification === 'settingDeviationNotification'){
         data.isSettingDeviationNotification = !$scope.user.settingDeviationNotification;
+      }
+      if(notification === 'messageNotification')
+      {
+        data.isMessageNotification = !$scope.user.messageNotification;
       }
       UserService.updatePatientUserNotification(StorageService.get('logged').userId, data).then(function(response){
         $scope.user = response.data.user;    

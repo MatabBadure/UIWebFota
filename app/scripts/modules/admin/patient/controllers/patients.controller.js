@@ -18,6 +18,7 @@ angular.module('hillromvestApp')
     $scope.newProtocolPoint = 1;
     $scope.patientActivateModal = false;
     $scope.captchaValid = false;
+       $scope.associatedClinics =[];
     $scope.patientStatus = {
       'role': StorageService.get('logged').role,
       'editMode': false,
@@ -42,6 +43,9 @@ angular.module('hillromvestApp')
         $state.go(status+loginConstants.role.Rcadmin, {'patientId': $stateParams.patientId});
       }else if($scope.patientStatus.role === loginConstants.role.associates){
         $state.go('associate'+ status, {'patientId': $stateParams.patientId});
+      }
+      else if($scope.patientStatus.role === loginConstants.role.customerservices){
+        $state.go('customerservice'+ status, {'patientId': $stateParams.patientId});
       }
     };
 
@@ -73,6 +77,18 @@ angular.module('hillromvestApp')
         notyService.showError(response);
       });
     };
+
+     $scope.handleChange = function()
+     {
+      if(Number($scope.scoreToReset) >100 || Number($scope.scoreToReset) ==0)
+      {
+        $scope.maxNumberReached = true;
+      }
+      else
+      {
+        $scope.maxNumberReached = false;
+      }
+     };
 
     $scope.initPatientOverview = function(){
       $scope.patientTab = "patientEdit";
@@ -129,6 +145,30 @@ angular.module('hillromvestApp')
       $scope.getPatientById(patientId);
       $scope.getDevices(patientId);
       $scope.getProtocols(patientId);
+      $scope.getTodayDateForReset();
+      $scope.scoreToReset = 100;
+      //$scope.resetStartDate = null;
+      $scope.ShowOther = false;
+        patientService.getJustification().then(function(response){
+         $scope.justificationlist =  response.data.typeCode;
+      }).catch(function(response){});
+    };
+
+    $scope.getTodayDateForReset = function()
+    {
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth()+1; //January is 0!
+
+        var yyyy = today.getFullYear().toString();
+        if(dd<10){
+            dd='0'+dd
+        } 
+        if(mm<10){
+            mm='0'+mm
+        } 
+        var today = mm+'/'+dd+'/'+yyyy;
+        $scope.todayDate = today;
     };
 
     $scope.initPatientAddProtocol = function(){
@@ -156,7 +196,7 @@ angular.module('hillromvestApp')
       $scope.patientTab = currentRoute;
       if(currentRoute === 'patientOverview' || currentRoute === 'patientOverviewRcadmin'){
         $scope.initPatientOverview();
-      }else if(currentRoute === 'patientDemographic' || currentRoute === 'patientDemographicRcadmin' || currentRoute === 'associatepatientDemographic'){
+      }else if(currentRoute === 'patientDemographic' || currentRoute === 'patientDemographicRcadmin' || currentRoute === 'associatepatientDemographic' || currentRoute === 'customerservicepatientDemographic'){
         $scope.initpatientDemographic();
       }else if (currentRoute === 'patientEdit') {
         $scope.getPatiendDetails($stateParams.patientId, $scope.setEditMode);
@@ -164,11 +204,11 @@ angular.module('hillromvestApp')
         $scope.createPatient();
       }else if($state.current.name === 'patientEditClinics'){
         $scope.initPatientClinics($stateParams.patientId);
-      }else if(currentRoute === 'patientClinics' || currentRoute === 'patientClinicsRcadmin' || currentRoute === 'associatepatientClinics'){
+      }else if(currentRoute === 'patientClinics' || currentRoute === 'patientClinicsRcadmin' || currentRoute === 'associatepatientClinics' || currentRoute === 'customerservicepatientClinics'){
         $scope.initPatientClinicsInfo($stateParams.patientId);
-      }else if(currentRoute === 'patientCraegiver' || currentRoute === 'patientCraegiverRcadmin' || currentRoute === 'associatepatientCraegiver' ){
+      }else if(currentRoute === 'patientCraegiver' || currentRoute === 'patientCraegiverRcadmin' || currentRoute === 'associatepatientCraegiver' || currentRoute === 'customerservicepatientCraegiver' ){
         $scope.initpatientCraegiver($stateParams.patientId);
-      } else if($state.current.name === 'patientProtocol' || $state.current.name === 'patientProtocolRcadmin' || $state.current.name === 'associatepatientProtocol'){
+      } else if($state.current.name === 'patientProtocol' || $state.current.name === 'patientProtocolRcadmin' || $state.current.name === 'associatepatientProtocol' || $state.current.name === 'customerservicepatientProtocol'){
         $scope.initProtocolDevice($stateParams.patientId);
       }else if(currentRoute === 'patientCraegiverAdd' || currentRoute === 'patientCraegiverAddRcadmin'){
         $scope.initpatientCraegiverAdd($stateParams.patientId);
@@ -367,6 +407,64 @@ angular.module('hillromvestApp')
       });
     };
 
+    $scope.resetScore = function()
+    {
+      
+      //$scope.resetsubmitted = true;
+      var createdById = StorageService.get('logged').userId;
+      var userID = $stateParams.patientId;
+      var patientHillromId = $scope.patientInformation;
+      var resetDate = $scope.resetStartDate;
+      var res = resetDate.split("/");
+      var resetDateFinal = res[2]+"-"+res[0]+"-"+res[1];
+      var resetTo = $scope.scoreToReset;
+      if($scope.ShowOther)
+      {
+        var reason = $scope.othersContent;
+      }
+      else(!$scope.ShowOther)
+      {
+        var reason = $scope.justification;
+      }
+
+      $scope.patientAdherenceInfo = {
+      'createdBy': createdById,
+      'userId': userID,
+      'patientId': patientHillromId,
+      'resetStartDate': resetDateFinal,
+      'resetScore': resetTo,
+      'justification': reason
+      };
+
+      patientService.addAdherenceScore($scope.patientAdherenceInfo).then(function(response){
+        notyService.showMessage(response.data.message, 'success');
+        $scope.form.$setPristine();
+        $scope.showUpdateModalReset = false;
+        /*$scope.resetStartDate = null;
+        $scope.justification = "";
+        $scope.scoreToReset = 100;
+        $scope.othersContent = "";
+        $scope.ShowOther = false;*/
+        $scope.resetsubmitted = false ; 
+        if($scope.patientStatus.role === loginConstants.role.acctservices){
+        $state.go('patientProtocolRcadmin', {'patientId': $stateParams.patientId});
+      }else{
+        $state.go('patientProtocol');
+      }
+      }).catch(function(response){
+        notyService.showError(response);
+        $scope.form.$setPristine();
+        $scope.showUpdateModalReset = false;
+       /* $scope.resetStartDate = null;
+        $scope.justification = "";
+        $scope.scoreToReset = 100;
+        $scope.othersContent = "";
+        $scope.ShowOther = false;*/
+        $scope.resetsubmitted = false ; 
+      });
+
+    };
+
     $scope.showAssociateHcpModal = function(hcp){
       $scope.selectedHCP = hcp;
       $scope.associatedHCPModal = true;
@@ -459,6 +557,35 @@ angular.module('hillromvestApp')
 
     $scope.cancelProtocolModel = function(){
       $scope.showModalProtocol = false;
+    };
+
+    $scope.showUpdateReset = function()
+    {
+      if($scope.form.$invalid){
+        $scope.resetsubmitted = true;
+       
+        return false;
+      }else if($scope.maxNumberReached)
+      {
+         $scope.maxNumberReached= true;
+         return false;
+      }
+      else{
+         $scope.showUpdateModalReset = true;
+      }
+     
+    };
+
+    $scope.SelectOthers = function(option){
+      if(option == 'Other')
+      {
+        $scope.ShowOther = true;
+      }
+      else
+      {
+        $scope.ShowOther = false;
+      }
+
     };
 
     $scope.cancelHCPModel = function(){
@@ -793,6 +920,7 @@ angular.module('hillromvestApp')
     $scope.getPatientById = function(patientid){
       patientService.getPatientInfo(patientid).then(function(response){
         $scope.slectedPatient = response.data;
+        $scope.patientInformation = $scope.slectedPatient.hillromId;
       }).catch(function(response){
         notyService.showError(response);
       });
@@ -960,6 +1088,8 @@ angular.module('hillromvestApp')
         });
       }else if($scope.patientStatus.role === loginConstants.role.associates){
         $state.go('hcpProfileAssociates', {'doctorId': doctor.id});
+      }else if($scope.patientStatus.role === loginConstants.role.customerservices){
+        $state.go('hcpProfileCustomerService', {'doctorId': doctor.id});
       }else {
         $state.go('hcpProfile',{
           'doctorId': doctor.id
@@ -974,7 +1104,10 @@ angular.module('hillromvestApp')
         });
       }else if($scope.patientStatus.role === loginConstants.role.associates){
         $state.go('clinicProfileAssociate', {'clinicId': clinic.id});
-      }else {
+      }else if($scope.patientStatus.role === loginConstants.role.customerservices){
+        $state.go('clinicProfileCustomerService', {'clinicId': clinic.id});
+      }
+      else {
         $state.go('clinicProfile', {
           'clinicId': clinic.id
         });

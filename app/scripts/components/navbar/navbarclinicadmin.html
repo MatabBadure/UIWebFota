@@ -1,4 +1,4 @@
- <nav class="navbar navbar-default navbar-fixed-top" role="navigation" data-spy="affix">
+ <nav class="navbar navbar-default navbar-fixed-top " id="extratab" role="navigation" data-spy="affix">
   <div class="container" ng-switch="$root.isAuthenticated">
     <div class="navbar-header navbar-primary">
       <button data-target="#navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">
@@ -13,12 +13,20 @@
         <span class="navbar-brand__desc--text-secondary" translate="global.logo-text.health-portal"></span>
       </div>
     </div>
-    <div class="collapse navbar-collapse navbar-secondary" id="navbar-collapse" ng-switch-when=true>
-      <ul class="nav navbar-nav navbar-right">
+    <div class="collapse navbar-collapse navbar-secondary header-nav" id="navbar-collapse"  ng-switch-when=true>
+      <ul class="nav navbar-nav navbar-right header-nav-content">
         <li class="icon-border">
           <a ng-class="{ active: isActive('clinicadmin/clinicadmin-dashboard')}" href="" ng-click="goToPatientDashboard('clinicadmindashboard');" >
             <span class="icons hillrom-icon icon-dashboard"></span>
             <span class="link-text" translate="global.tabs.dashboard" ></span>
+          </a>
+        </li>
+         <li class="icon-border">
+          <a ng-class="{ active: isActive('clinicadmin/messages_CA')}" href="" ng-click="goToPatientDashboard('Messages_CA');" >
+            <span class="icons messages"> <i class="fa fa-envelope" aria-hidden="true"></i>
+            </span>
+            <span class="link-text" translate="global.tabs.messages" ></span>
+           <span class="msg_count">{{$root.UnreadMessages}}</span> 
           </a>
         </li>
         <li class="icon-border">
@@ -39,6 +47,13 @@
             <span class="link-text" translate="global.tabs.manage-clinic" ></span>
           </a>
         </li>
+       <li class="icon-border">
+          <a ng-class="{ active: isActive('/clinicadmin-announcements')}" href="" ng-click="goToPatientDashboard('clinicadminannouncements');" >
+            <span  class="icons messages"> <i class="fa fa-flag" id="announcementflag" aria-hidden="true"></i>
+            </span>
+            <span class="link-text" translate="global.tabs.announcements" ></span>
+          </a>
+        </li> 
         <li class="header-popover dropdown">
           <a ng-href="" data-target="#" class="dropdown-toggle" ng-class="{ active: isActive('profile')}" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
             <span class='icon-logged-in-user'></span>
@@ -48,7 +63,7 @@
               <span class="hillrom-icon icon-console"> </span>
               <p translate="global.console">Console</p>
             </li> -->
-            <li id='account' ng-click='profile()'>
+            <li id='account' ng-click='profileCA(selectedClinic.id)'>
               <span class='hillrom-icon icon-user-account'></span>
               <p translate="global.my-dashboard">My Profile</p>
             </li>
