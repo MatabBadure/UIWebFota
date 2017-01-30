@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hillromvestApp')
-  .factory('announcementservice',['$http', 'headerService', 'URL', function ($http, headerService, URL) {
+  .factory('announcementservice',['$http', 'headerService', 'URL', 'deviceDetector', function ($http, headerService, URL, deviceDetector) {
     return {
 
 deleteAnnouncement : function(id){
@@ -67,9 +67,9 @@ return $http.get(url, {
           return response;
         });
       },
-      ListAnnouncement : function(pageNumber,perPage,sortOption,usertype,userId){
-           var url = URL.listAnnouncements.replace('PAGE',pageNumber).replace('PER_PAGE',perPage).replace('SORT_OPTION',sortOption).replace('USER_TYPE',usertype).replace('USERID',userId);
-        return $http.get(url, {
+      ListAnnouncement : function(pageNumber,perPage,sortOption,usertype,userId,clinicid){
+           var url = URL.listAnnouncements.replace('PAGE',pageNumber).replace('PER_PAGE',perPage).replace('SORT_OPTION',sortOption).replace('USER_TYPE',usertype).replace('USERID',userId).replace('CLINICID',clinicid);
+      return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
           return response;
@@ -83,34 +83,41 @@ return $http.get(url, {
           return response;
         });
       }, 
+
       DownloadAsPDF : function(filename){
+        var windowReference = "";
+        var userAgent = window.navigator.userAgent;
+        if (userAgent.match(/iPad/i) || userAgent.match(/iPhone/i) || deviceDetector.browser == 'safari') {
+        windowReference = window.open();
+      }
         var url = URL.downloadPdf.replace('FILE_NAME',filename);
         return $http.get(url, {
           headers: headerService.getHeaderForPdf(),
           responseType: 'arraybuffer'
         }).success(function(response) {
-          //var fileName = "test.pdf";
-          //var a = document.createElement("a");
-          //document.body.appendChild(a);
-/*          
-          var file = new Blob([response], {type: 'application/pdf'});
-          var fileURL = URL.createObjectURL(file);
-          window.open(fileURL);*/
-          //a.href = fileURL;
-         //a.download = fileName;
-         //a.click();
          var URL = window.URL || window.webkitURL;
                 var byteArray = new Uint8Array(response);
                 var blob = new Blob([byteArray], { type: 'application/pdf' });
-                if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+                if ((window.navigator && window.navigator.msSaveOrOpenBlob) || (userAgent.indexOf("android") > -1)){
                     window.navigator.msSaveOrOpenBlob(blob);
                 }
+                else if (userAgent.match(/iPad/i) || userAgent.match(/iPhone/i) || deviceDetector.browser == 'safari') {
+                 //Safari & Opera iOS
+                  var objectUrl = URL.createObjectURL(blob);
+
+                     windowReference.location = objectUrl; 
+                }
+
                 else {
                     var objectUrl = URL.createObjectURL(blob);
                     window.open(objectUrl);
+                    /* windowReference.location = objectUrl; */
                 }
+    
         });
+    
       } 
+
       
         };
 }]);

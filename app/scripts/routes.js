@@ -4399,7 +4399,7 @@ angular.module('hillromvestApp')
               url: '/rcadmin/announcements',
               data: {
                   roles: ['ACCT_SERVICES'],
-                  pageTitle: 'console.page-title.login-analytics'
+                  pageTitle: 'console.page-title.announcements'
               },
               views: {
                   'content@': {
@@ -4427,7 +4427,7 @@ angular.module('hillromvestApp')
               url: '/rcadmin/announcements-edit/{Id}',
               data: {
                   roles: ['ACCT_SERVICES'],
-                  pageTitle: 'console.page-title.login-analytics'
+                  pageTitle: 'console.page-title.announcements'
               },
               views: {
                   'content@': {
@@ -4455,7 +4455,7 @@ angular.module('hillromvestApp')
               url: '/rcadmin/announcements-new',
               data: {
                   roles: ['ACCT_SERVICES'],
-                  pageTitle: 'console.page-title.login-analytics'
+                  pageTitle: 'console.page-title.announcements'
               },
               views: {
                   'content@': {
@@ -4483,11 +4483,11 @@ angular.module('hillromvestApp')
               url: '/admin/announcements',
               data: {
                   roles: ['ADMIN'],
-                  pageTitle: 'console.page-title.login-analytics'
+                  pageTitle: 'console.page-title.announcements'
               },
               views: {
                   'content@': {
-                      templateUrl: 'scripts/modules/common/console/announcements/views/rcadmin/view.html',
+                      templateUrl: 'scripts/modules/common/console/announcements/views/admin/view.html',
                       controller: 'announcementsController'
                   }
               },
@@ -4511,7 +4511,7 @@ angular.module('hillromvestApp')
               url: '/admin/announcements-edit/{Id}',
               data: {
                   roles: ['ADMIN'],
-                  pageTitle: 'console.page-title.login-analytics'
+                  pageTitle: 'console.page-title.announcements'
               },
               views: {
                   'content@': {
@@ -4539,7 +4539,7 @@ angular.module('hillromvestApp')
               url: '/admin/announcements-new',
               data: {
                   roles: ['ADMIN'],
-                  pageTitle: 'console.page-title.login-analytics'
+                  pageTitle: 'console.page-title.announcements'
               },
               views: {
                   'content@': {
@@ -5792,7 +5792,7 @@ angular.module('hillromvestApp')
                 url: '/{clinicId}/clinicadmin-announcements',
                 data: {
                     roles: ['CLINIC_ADMIN'],
-                    pageTitle: 'clinic.page-title.clinics'
+                    pageTitle: 'console.page-title.announcements'
                 },
                 views: {
                     'content@': {
@@ -5817,7 +5817,7 @@ angular.module('hillromvestApp')
                 url: '/{clinicId}/hcp-announcements',
                 data: {
                     roles: ['HCP'],
-                    pageTitle: 'clinic.page-title.clinics'
+                    pageTitle: 'console.page-title.announcements'
                 },
                 views: {
                     'content@': {
@@ -5842,7 +5842,7 @@ angular.module('hillromvestApp')
                 url: '/patient-announcements',
                 data: {
                     roles: ['PATIENT'],
-                    pageTitle: 'clinic.page-title.clinics'
+                    pageTitle: 'console.page-title.announcements'
                 },
                 views: {
                     'content@': {
@@ -5867,7 +5867,7 @@ angular.module('hillromvestApp')
               url: '/associates/announcements',
               data: {
                   roles: ['ASSOCIATES'],
-                  pageTitle: 'console.page-title.login-analytics'
+                  pageTitle: 'console.page-title.announcements'
               },
               views: {
                   'content@': {
@@ -5894,7 +5894,7 @@ angular.module('hillromvestApp')
               url: '/customerservice/announcements',
               data: {
                   roles: ['CUSTOMER_SERVICES'],
-                  pageTitle: 'console.page-title.login-analytics'
+                  pageTitle: 'console.page-title.announcements'
               },
               views: {
                   'content@': {
