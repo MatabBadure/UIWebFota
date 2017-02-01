@@ -37,6 +37,9 @@ $scope.messageBodyObject = {};
   $scope.archivemessageBodyObject = {};
   $scope.toID = [];
   $rootScope.UnreadMessages = "";
+  $scope.dummytext = "";
+  $scope.dummyflag = false;
+  $scope.dummytextvalue = "";
   /* console.log("clinic ID");
    console.log(StorageService.get('logged').userId);*/
  
@@ -1618,5 +1621,15 @@ $scope.goToBack = function(flag)
      $scope.archivemessagebodyflag = false;
   }
 } 
+$scope.dummyfunction = function(){
+if($scope.dummytext){
+  $scope.dummyflag = true;
+  $scope.dummytextvalue = $scope.dummytext;
+}
+else{
+   $scope.dummyflag = false;
+}
+$scope.dummytext = "";
+};
 $scope.init();
   }]);
