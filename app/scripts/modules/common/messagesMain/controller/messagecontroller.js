@@ -1621,6 +1621,9 @@ $scope.goToBack = function(flag)
      $scope.archivemessagebodyflag = false;
   }
 } 
+$scope.dummyfunctionroute = function(){
+$state.go('dummyroute');
+};
 $scope.dummyfunction = function(){
 if($scope.dummytext){
   $scope.dummyflag = true;

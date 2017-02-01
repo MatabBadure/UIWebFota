@@ -5947,6 +5947,34 @@ angular.module('hillromvestApp')
                     ]
                 }
             })
+.state('dummyroute', {
+                parent: 'patient-dashboard',
+                url: '/dummyroute',
+                data: {
+                    roles: ['PATIENT'],
+                    pageTitle: 'patient.page-title.messages'
+                },
+                views: {
+                    'content@': {
+                    templateUrl:'scripts/modules/dummyfolder/dummyfile.html',
+                controller: 'messagecontroller'
+                    }
+                },
+               resolve: {
+                loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('MessagesModule');
+                    }],
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient');$translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
 .state('caregiverpatientDiagnostic', {
                 parent: 'caregiver-dashboard',
                 url: '/patientDiagnostic/{patientId}',
