@@ -3,11 +3,11 @@
         "patientInfo" : {
             "home": {
                 "title": "PatientInfos",
-                "createLabel": "Créer un nouveau PatientInfo",
-                "createOrEditLabel": "Créer ou éditer un PatientInfo"
+                "createLabel": "Create a new PatientInfo",
+                "createOrEditLabel": "Create or edit a PatientInfo"
             },
             "delete": {
-                "question": "Etes-vous certain de vouloir supprimer le PatientInfo {{ id }} ?"
+                "question": "Are you sure you want to delete PatientInfo {{ id }}?"
             },
             "detail": {
                 "title": "PatientInfo"
@@ -29,4 +29,3 @@
         }
     }
 }
-
