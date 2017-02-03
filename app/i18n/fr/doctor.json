@@ -1,0 +1,177 @@
+{
+    "doctor" : {
+        "myDashboard": "My Dashboard",
+        "required-field":"* Required Fields",
+
+        "page-title": {
+          "hcps": "HillRom | HCPs",
+          "hcp-profile" : "HillRom | HCP Profile",
+          "hcp-update": "HillRom | HCP Update",
+          "associated-clinics": "HillRom | Associated Clinics",
+          "my-dashboard": "HillRom | My Dashboard"
+        },
+
+        "home": {
+            "createLabel": "Create HCP",
+            "createNewLabel": "Create New HCP",
+            "createOrEditLabel": "Create or edit a Doctor",
+            "manageLabel": "Manage HCPs",
+            "updateLabel": "Update HCP"
+        },
+
+        "detail": {
+            "title": "Doctor"
+        },
+        "hcp-details": "HCP Details",
+        "noClinics": "No Clinic Associated",
+        "noPatient": "No Patient Associated.",
+        "general-details":  "General Details",
+        "personal-details": "Personal Details",
+        "health-details":   "Health Details",
+        "clinic": "Clinic",
+        "speciality": "Speciality",
+        "doctor": "Doctor",
+        "add-clinic": "Add Another Clinic",
+        "create-caregiver": "Yes",
+        "clinic-name":  "Clinic Name",
+        "hcp-name": "HCP Name",
+        "emr-id":   "EMR-ID",
+        "mrn-id": "MRN-ID",
+        "hcp-text": "HCPs",
+        "found-text": "Found",
+        "previous-text": "Previous",
+        "next-text": "Next",
+        "date-of-birth": "Date of Birth",
+        "role":"Role",
+        "title": {
+                    "name": "Title",
+                    "mr":   "Mr.",
+                    "mrs": "Mrs.",
+                    "ms": "Ms."
+        },
+        "gender": {
+                    "name": "Gender",
+                    "male":   "M",
+                    "female": "F",
+                    "others": "O"
+        },
+        "placeholder": {
+            "search": "Search with HCP Name or Email",
+            "searchPatient":"Search with Patient Name or Email",
+            "link-clinic": "Search Clinic here"
+        },
+        "npi-number": "NPI Number",
+        "first-name": "First Name",
+        "patient-name": "Patient Name",
+        "middle-name": "Middle Name",
+        "last-name": "Last Name",
+        "specialty": "Specialty",
+        "credentials": "Credentials",
+        "transmission": "Transmission",
+        "adherence": "Adherence",
+        "hill-rom-id":  "Hill-Rom ID",
+        "address": "Address",
+        "city-state": "City/State",
+        "city": "City",
+        "zipcode": "Zip",
+        "email": "Email",
+        "state": "State",
+        "status": "Status",
+        "primary-phone": "Primary Phone",
+        "mobile-number": "Mobile Number",
+        "fax-number": "Fax Number",
+        "hillromId": "HillromId",
+        "parentClinicId": "ParentClinicId",
+        "npiNumber": "NPI Number",
+        "user": "user",
+        "doctors": "Doctors",
+        "parent": "parent",
+        "submit-button-text": "submit",
+        "cancel-button-text": "cancel",
+        "deactivate-button-text": "Deactivate",
+        "activate-button-text": "Activate",
+        "disassociate-button-text": "Disassociate",
+        "update-button-text": "Update",
+        "back-button-text": "Back",
+        "edit-button-text": "Edit",
+        "reactivate-button-text":"Resend Activation Link",
+        "type": "Type",
+        "hillRom-id": "Hill-Rom ID",
+        "phoneNumber": "Phone number",
+        "link-clinic": "Link Clinic",
+        "mrnid": "MRN ID",
+        "delete": {
+            "question": "Are you sure you want to delete Doctor {{ id }}?",
+            "warning": "Deactivate HCP",
+            "message": "You are deactivating HCP from the system and HCP user will no longer be able to access Hill-Rom application. Are you sure to continue?"
+        },
+        "disassociate":{
+            "warning": "HCP Dashboard - Disassociate HCP",
+            "message": "Do you want to Disassociate HCP from Clinic?"
+        },
+        "re-activate": {
+            "warning": "Are you sure you want to reactivate the HCP?",
+            "message": "If you reactivate the HCP,&nbsp you will able to view the information."
+        },
+        "update": {
+            "warning": "HCP - Details",
+            "message": "You have made changes/updates for HCP details. Are you sure to make updates?"
+        },
+        "clinic-disassociate":{
+            "warning": "HCP Dashboard - Disassociate Clinic",
+            "message": "Do you want to Disassociate Clinic from HCP?"
+        },
+        "clinic-associate":{
+            "warning": "HCP Dashboard - Associate Clinic",
+            "message": "Do you want to associate Clinic to HCP?"
+        },
+        "tab": {
+            "hcp-overview": "HCP Profile",
+            "associated-clinic": "Associated Clinics"
+        },
+        "patient-assoc": "Patient Association",
+        "patient-associated": "Patient Associated",
+        "clinic-title": "Clinic Association",
+        "filter": {
+            "all": "All",
+            "active": "Active",
+            "inactive": "Inactive",
+            "expired": "Expired",
+            "pending": "Pending"
+        },
+        "status-type": {
+            "active": "Active",
+            "inactive": "Inactive",
+            "pending": "Pending",
+            "expired": "Expired"
+        },
+        "no-clinic-found": "No clinic associated.",
+        "no-hcp-found": "No hcp associated.",
+        "clinicType":{
+            "parent": "Parent",
+            "child": "Child",
+            "satellite": "Satellite"
+        },
+        "dashboard":{
+            "missedTherapy": "Missed Therapy Days",
+            "averageTreatmentsPerDay": "Average Treatments Per Day",
+            "hmrNonCompliance": "Below Treatment Minutes",
+            "settingDeviation": "Setting Deviation",
+            "averageSessionMinutes": " Average Session Minutes",
+            "consecutiveMissedDays":"With Missed Therapy Day(s)",
+            "consecutiveFrequencyDeviationDays":"Below Frequency Setting",
+            "noEventsRecorded": "No Transmission Recorded",
+            "todayStatistics": "Statistics Date -",
+            "patients": "Patients",
+            "totalPatients":"Total Number of Active Patients -",
+            "cumulativeStatistics":"Cumulative Statistics",
+            "treatmentStatistics":"Treatment Statistics",
+            "nonCompliance": "Non-Compliance",
+            "noEvents":"No Transmission",
+            "yesterday": "Yesterday",
+            "week":"Week",
+            "month":"Month",
+            "year":"Year"
+        }
+    }
+}
