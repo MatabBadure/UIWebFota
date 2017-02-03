@@ -1,0 +1,462 @@
+{
+  "patient" : {
+    "page-title":{
+      "patient": "HillRom | Patient",
+      "clinic-info" : "HillRom | Clinic Info",
+      "patient-info": "HillRom | Patient Info",
+      "overview": "HillRom | Overview",
+      "caregiver-info": "HillRom | Caregiver Info",
+      "careplan-device": "HillRom | Care Plan and Device",
+      "my-dashboard": "HillRom | My Dashboard",
+      "caregivers": "HillRom | Caregivers",
+      "clinics-hcps": "HillRom | Clinics and HCPs",
+      "add-caregiver": "HillRom | Add Caregiver",
+      "patient-benchmarking": "Hillrom | Benchmarking",
+       "messages": "Hillrom | Messages"
+    },
+    "home": {
+        "title": "Patient"
+    },
+    "tab": {
+      "patient-overview": "Overview",
+      "patient-demographics": "Patient Info",
+      "clinic-info": "Clinic Info",
+      "protocol-device": "Care Plan and Device",
+      "caregiver-info": "Caregiver Info"
+    },
+    "caregiver-caption": {
+      "caregiver-name": "Caregiver Name",
+      "address": "Address",
+      "mobile-number": "Mobile",
+      "phone-number": "Phone",
+      "contact-details": "Contact Details",
+      "relationship": "Relationship",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "clinic-caption": {
+      "clinic-name": "Clinic Name",
+      "address": "Address",
+      "phone-number": "Phone Number",
+      "hr-id": "Hill-rom ID",
+      "type": "Type",
+      "city": "City",
+      "state": "State"
+    },
+    "hcp-caption": {
+      "hcp-name": "HCP Name",
+      "phone-number": "Phone Number",
+      "npi-id": "NPI Number",
+      "credentials": "Credentials",
+      "fax-number": "Fax Number",
+      "clinic-name": "Clinic Name",
+      "city": "City",
+      "state": "State"
+    },
+    "protocol-caption": {
+      "type": "Type",
+      "treatment-day": "Treatment per Day",
+      "create-date": "Created Date",
+      "modified-date": "Modified Date",
+      "treatments-per-day": "Treatments Per Day",
+      "minutes-per-treatment": "Minutes Per Treatment",
+      "pressure-per-treatment": "Pressure Per Treatment",
+      "frequency-per-treatment": "Frequency Per Treatment"
+    },
+    "device-caption": {
+      "serial-no": "Serial Number",
+      "blutooth-id": "Bluetooth ID",
+      "status": "Status",
+      "created-date": "Created Date",
+      "device": "Device",
+      "modified-date": "Modified Date",
+      "active-or-inactive-date": "Active or Inactive Date"
+    },
+    "clinic-title": "Clinics",
+    "caregiver-title": "Caregivers",
+    "device-title": "Device Information",
+    "protocol-title": "Protocol",
+    "hcp-title": "HCPs",
+    "phone": "Phone:",
+    "mobile": "Mobile:",
+    "fax": "Fax:",
+    "hr-id": "ID:",
+    "AgreementApprovalNote":"I agree to the terms of services for this site",
+     "AgreementNote":"Please read the following important information before continuing.",
+    "Agreement" : "I request that Hill-Rom grant access to my medical information contained in my VisiView Portal (the “Portal”) to the above named individual (the “Recipient”).",
+    "AgreementSecond" : "Health information to be disclosed: All information contained in the Portal.",
+    "AgreementThird":"Purpose of the disclosure: To allow the Recipient to view my medical information.",
+    "AgreementFourth":"I authorize the release of my medical information contained in the Portal to the Recipient(s). This Authorization does not authorize the release of my medical information by other means, methods, or forms. ",
+    "AgreementFifth":"I understand that once information has been disclosed, it may potentially be re-disclosed by the Recipient and the disclosed information may not be covered by state or federal privacy protections. I understand that authorizing Hill-Rom to disclose my medical information to the Recipient via the Portal is completely voluntary. I understand that Hill-Rom will not condition healthcare treatment or payment for treatment upon my signing this Authorization.I understand that unless earlier revoked by me in writing, this Authorization is valid until I discontinue my use of the Portal. I may submit a written revocation request at any time. Written revocation requests should be mailed to Hill-Rom at 1020 West County Road F St. Paul, MN 55126. I understand that a revocation is not effective for uses and disclosures of my medical information that have already been made or other actions that have been taken in reliance on this Authorization or as required by law.",
+    "link-clinic": "Link Clinic",
+    "link-caregiver": "Add Caregiver",
+    "link-device": "Add Device",
+    "link-protocol": "Add Protocol",
+    "link-hcp": "Link HCP",
+    "notes": "Notes",
+    "add-new-point":"Add New Point",
+    "empty-protocol-list-message": "No Protocol Associated",
+    "empty-device-list-message": "No Device Associated",
+    "empty-caregiver-list-message": "No Caregiver Associated",
+    "reset-adherence": {
+      "reset-date-set": "Adherence score Start date",
+      "reset-date": "Reset Date",
+      "reset": "Reset To",
+      "others": "Other",
+      "justification": "Justification",
+      "reset-button": "Reset"
+    },
+    "placeholder": {
+      "clinic-link": "Search Clinic here",
+      "device-link": "Search Device here",
+      "protocol-link": "Search Protocol here",
+      "hcp-link": "Search HCP here"
+    },
+    "device": {
+      "gen-details": "Add Device",
+      "serial-no": "Serial No.",
+      "bluetoothId": "Bluetooth ID",
+      "hubId": "Hub ID",
+      "active-status": "Active",
+      "inactive-status": "Inactive"
+    },
+    "protocol": {
+      "tm-per-day": "Treatment per Day",
+      "min-minutes-per-tm": "Min Minutes/Treatment",
+      "max-minutes-per-tm": "Max Minutes/Treatment",
+      "min-frequency": "Min Frequency",
+      "max-frequency": "Max Frequency",
+      "min-pressure": "Min Pressure",
+      "max-pressure": "Max Pressure",
+      "gen-details": "Add Protocol",
+      "min-minutes": "Min Minutes",
+      "minutes": "Minutes",
+      "frequency": "Frequency",
+      "pressure": "Pressure"
+    },
+    "overview": {
+      "hr-id": "Hillrom ID:",
+      "mrn": "MRN:",
+      "hcp": "HCP:",
+      "dob": "DOB:",
+      "email": "Email:",
+      "location": "Location:"
+    },
+    "disassociate-patient": "Disassociate",
+    "edit-patient": "Edit",
+    "demo-graph": {
+      "identifier": "Patient Identifiers",
+      "personal-details": "Personal Details",
+      "patient-notes": "Patient Notes"
+    },
+    "btn": {
+      "update": "Update",
+      "cancel": "Cancel",
+      "save": "Save",
+      "edit": "Edit",
+      "deactivate": "Deactivate",
+      "activate": "Activate",
+      "reactivate-button-text":"Resend Activation Link"
+    },
+    "caregiver": {
+      "gen-details": "Caregiver Details",
+      "title-name": "Title",
+      "first-name": "First Name",
+      "middle-name":"Middle Name",
+      "last-name": "Last Name",
+      "relationship": "Relationship",
+      "address": "Address",
+      "city": "City",
+      "state": "State",
+      "zipcode": "Zip",
+      "email": "Email",
+      "phone-no": "Phone No.",
+      "mobile-no": "Mobile No.",
+      "update":{
+        "warning": "Caregiver Info - Details",
+        "message": "You have made changes/updates for Caregiver details. Are you sure to make updates?"
+      }
+    },
+    "sum": {
+      "titlename": "Summary",
+      "ather-level": "Adherence level",
+      "avr-dur-cough-pause": "Average duration of cough pause",
+      "avr-no-cough-pause-trt": "Average number of cough pauses per treatment",
+      "avr-trt-day": "Average treatment/day",
+      "avr-cough-pause-day": "Average cough pause per day",
+      "avr-pressure-trt": "Average pressure/treatment",
+      "last-3-days-hmr": "Last 3 days HMR run rate",
+      "avr-freq-trt": "Average frequency/treatment"
+    },
+    "delete-protocol": {
+      "warning": "Delete Protocol",
+      "message": "If you delete the protocol, you will no longer be able to view the information. Are you sure to delete?"
+    },
+    "reset-score": {
+      "warning": "Reset Adherence Score",
+      "message": "Are you sure you want to reset the score of ",
+      "to": "to",
+      "from": "from the date"
+    },
+    "update-protocol":{
+      "warning": "Protocol Update",
+      "message": "Do you want to make updates in the Protocol?"
+    },
+    "update-device":{
+      "warning": "Patient Device - Update",
+      "message": "You have made changes/updates for Device. Are you sure to make updates?"
+    },
+    "delete-device": {
+      "warning": "Delete Device",
+      "message": "If you delete the Device, you will no longer be able to view the information. Are you sure to delete?"
+    },
+    "delete-clinic-info": {
+      "warning": "Patient Dashboard - Disassociate the Clinic",
+      "message": "Do you want to Disassociate Clinic from the Patient?"
+    },
+    "delete-hcp-info": {
+      "warning": "Patient Dashboard - Disassociate HCP",
+      "message": "Do you want to Disassociate HCP from Patient?"
+    },
+    "associate-clinic-info":{
+      "warning":"Patient Dashboard - Associate the Clinic",
+      "message":"Do you want to Associate Clinic to the Patient?"
+    },
+    "associate-hcp-info":{
+      "warning":" Patient Dashboard - Associate HCP",
+      "message":"Do you want to Associate HCP to Patient?"
+    },
+    "delete-caregiver":{
+      "warning": "Patient Dashboard - Delete Caregiver",
+      "message": "Do you want to delete Caregiver from the Patient Dashboard?"
+    },
+    "delete-note":{
+      "warning":"Are you sure you want to delete the Note?",
+      "message":"If you delete the Note, you will no longer be able to view the Note."
+    },
+    "authorizeProtocol":{
+      "buttonLabel":"Authorize Updated Prescription",
+      "warning":"Update Prescription",
+      "message":"You must authorize an update to the prescription before the protocol can be updated in VisiView.",
+      "prescription-message": "You will need the prescriber to electronically sign the updated prescription."
+    },
+    "profile": {
+      "tabs": {
+        "mydashboard": "Dashboard",
+        "caregiver": "Caregiver",
+        "device-protocol": "Care Plan and Device",
+        "clinic-hcp": "Clinic and HCP",
+        "patient-demographics": "Patient Demographics",
+        "patient-benchmarking": "Benchmarking",
+        "patient-test-results": "Test Results"
+      }
+    },
+    "errMSG":{
+      "address-max-length": "Address cannot be longer than 100 characters. ",
+      "city-max-length": "City cannot be longer than 15 characters.",
+      "zip-code-invalid": "Zip Code is invalid.",
+      "mobile-phone-invalid": "Mobile number is invalid.",
+      "primary-phone-invalid": "Home phone number is invalid.",
+      "primary-phone-required": "Home phone number is required.",
+      "email-invalid": "E-mail is invalid.",
+      "email-max-length": "E-mail cannot be longer than 100 characters.",
+      "email-required": "E-mail is required."
+    },
+    "device-already-linked":"This device is already linked to",
+    "with":"with"
+  },
+  "clinic" : {
+    "name": "Name",
+    "hillromid": "Hill-rom ID",
+    "clinic-name": "Clinic Name",
+    "hr-id": "HR-ID",
+    "personal-details": "Clinic Details",
+    "address": "Address",
+    "zipcode": "Zip",
+    "city": "City",
+    "state": "State",
+    "phoneNumber": "Phone Number",
+    "fax-number": "Clinic Fax Number",
+    "clinic-phone": "Clinic Phone Number",
+    "hillromId": "Hillrom ID",
+    "parentClinicId": "ParentClinicId",
+    "npiNumber": "NpiNumber",
+    "user": "user",
+    "patients": "patients",
+    "parent": "Parent",
+    "type": "Type",
+    "status": "Status",
+    "satellite": "Satellite",
+    "active": "Active",
+    "inactive": "Inactive",
+    "no-clinic-found": "No clinic associated."
+  },
+  "hcp":{
+    "name": "Name",
+    "credentials": "Credentials",
+    "clinic-name": "Clinic name",
+    "npinumber": "NPI number",
+    "city": "City",
+    "state": "State",
+    "status": "Status",
+    "active": "Active",
+    "inactive": "Inactive",
+    "pending": "Pending",
+    "no-hcp-found": "No HCP associated."
+  },
+  "select-relationship": "Select relationship.",
+  "toggle-navigation": "Toggle navigation",
+  "visi-view": "VisiView",
+  "tm-sup": "TM",
+  "health-portal": "Health Portal",
+  "graph" : {
+    "add-note" : "Add Note",
+    "save": "save",
+    "delete" : "Delete",
+    "edit": "Edit",
+    "can-do": "You can add / view/edit / delete a note",
+    "note": "Note",
+    "export-data": "Export Data",
+    "duration": "Duration",
+    "frequency": "Frequency",
+    "pressure": "Pressure",
+    "statistics": "Statistics",
+    "adherence-score": "Adherence Score",
+    "hmr-runrate": "HMR Runrate",
+    "averageSessionMinutes": "Average Treatment Minutes",
+    "consecutiveMissedDays":"Consecutive Missed Therapy days",
+    "consecutiveFrequencyDeviationDays":"Consecutive Frequency Deviation Days",
+    "missed-therapy-days": "Missed Therapy Days",
+    "setting-deviation-days": "Setting Deviation Days",
+    "notification": "Notification",
+    "more": "more",
+    "hmr-data": "HMR Data",
+    "adherenceTrend":"Adherence Trend",
+    "protocolGraph":"Protocol Graph",
+    "compliance": "Compliance",
+    "day": "Day",
+    "year": "Year",
+    "month": "Month",
+    "next": "Next",
+    "previous": "Previous",
+    "found": "Found",
+    "notes": "Notes",
+    "no-data-found": "No data found.",
+    "please-deselect-one-item": "Please deselect one parameter.",
+    "min-legend-required": "At least one parameter should be selected.",
+    "no-notifications": "Doing great. Have a good day !",
+    "export-as-pdf": "PDF",
+    "export-as-csv": "CSV",
+    "export-raw-data": "Therapy Data (XLS)",
+    "export-processed-data": "Processed Data (CSV)",
+    "download": "Download",
+    "adherence": "Adherence",
+    "adherence-score-table":{
+      "title":"Adherence Score History",
+      "date": "Date",
+      "notification": "Notification",
+      "change" :"Change",  
+      "updated-score": "Updated Score",
+      "protocol": "Protocol"
+    }
+  },
+  "no-clinic-found": "No clinic associated.",
+  "no-hcp-found": "No hcp associated.",
+  "no-protocol-found": "No protocol associated.",
+  "no-device-found": "No device associated.",
+  "profile" : {
+    "home": {
+      "title": "Profile"
+    },
+    "tabs": {
+      "profile-details": "Profile Details",
+      "update-password": "Update Password",
+      "setting": "Notification Settings"
+    },
+    "update":{
+      "warning":"Update Profile",
+      "message":"You have made changes/updates for your profile. Are you sure to make updates?"
+    },
+    "userId":"User ID",
+    "title-name": "Title",
+    "first-name": "First Name",
+    "middle-name": "Middle Name",
+    "last-name": "Last Name",
+    "employee-id": "Employee ID",
+    "faxNumber": "Fax Number",
+    "credentials": "Credentials",
+    "speciality": "Speciality",
+    "zipcode": "Zipcode",
+    "city": "City",
+    "primaryPhone":"Primary Phone",
+    "mobilePhone": "Mobile Phone",
+    "address": "Address",
+    "state": "State",
+    "hr-id": "HR ID",
+    "email": "Email",
+    "role-text":"Select Role",
+    "view-role-text":"Role",
+    "role": {
+      "super-admin": "Super Admin",
+      "caregiver": "Caregiver",
+      "account-services": "Account Services",
+      "associates":"Associates",
+      "default" : "Select a role"
+    },
+    "update-button-text": "Update",
+    "cancel-button-text": "Cancel",
+    "edit-button-text": "Edit",
+    "security-ques": "Security Question",
+    "cur-pswd": "Current Password",
+    "new-pswd": "New Password",
+    "confirm-pswd": "Confirm Password",
+    "mobile-no": "Mobile",
+    "phone-no": "Phone No.",
+    "zip": "zip",
+    "security-ans": "Answer",
+    "notification": "Notifications",
+    "noti-desc": "The Notification will be sent to your registered email address. You can Switch On/Off",
+    "noti": {
+      "miss-therapy-days" : "Miss Therapy Days",
+      "hmr-non-adher": "HMR Non-Adherence",
+      "setting-deviation": "Setting Deviation",
+      "miss-therapy-days-desc": "You will get Notification email if you missed therapy for three or more days.",
+      "hmr-non-adher-desc": "You will get Notification email if your HMR Non-Adherence is below protocol for three or more days.",
+      "setting-deviation-desc": "You will get Notification email if your frequency is 15% below protocol for three or more days."
+    },
+    "select-secutity-question": "-- select a security question --",
+    "clinic":{
+      "clinic-name":"Clinic Name",
+      "address":"Address",
+      "city":"City",
+      "state":"State",
+      "city-state": "City/State",
+      "phoneNumber":"Phone Number",
+      "type":"Type",
+      "hillRom-id":"Hillrom ID",
+      "status":"Status",
+      "clinicType":{
+        "parent": "Parent",
+        "satellite": "Satellite"
+      },
+      "status-type":{
+        "active":"Active",
+        "inactive":"Inactive"
+      },
+      "clinic-title" : "Clinic"
+    }
+  },
+  "patient-benchmarking":{
+    "week": "Week",
+    "day": "Day",
+    "year": "Year",
+    "month": "Month",
+    "benchmark": "Benchmark",
+    "parameter": "Parameter",
+    "compareWith": "Compare with",
+    "average" :"Average",
+    "adherenceScore": "Adherence Score"
+  }
+ 
+
+}
