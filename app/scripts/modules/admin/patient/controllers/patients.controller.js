@@ -418,11 +418,13 @@ angular.module('hillromvestApp')
       var res = resetDate.split("/");
       var resetDateFinal = res[2]+"-"+res[0]+"-"+res[1];
       var resetTo = $scope.scoreToReset;
-      if($scope.ShowOther)
-      {
+      var tempJustification = $scope.justification;
+      if(tempJustification=="Other")
+      { 
         var reason = $scope.othersContent;
+
       }
-      else(!$scope.ShowOther)
+      else
       {
         var reason = $scope.justification;
       }
@@ -435,6 +437,7 @@ angular.module('hillromvestApp')
       'resetScore': resetTo,
       'justification': reason
       };
+     
 
       patientService.addAdherenceScore($scope.patientAdherenceInfo).then(function(response){
         notyService.showMessage(response.data.message, 'success');
