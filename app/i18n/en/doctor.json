@@ -155,7 +155,7 @@
         "dashboard":{
             "missedTherapy": "Missed Therapy Days",
             "averageTreatmentsPerDay": "Average Treatments Per Day",
-            "hmrNonCompliance": "Below Treatment Minutes",
+            "hmrNonCompliance": "Below Therapy Minutes",
             "settingDeviation": "Setting Deviation",
             "averageSessionMinutes": " Average Session Minutes",
             "consecutiveMissedDays":"With Missed Therapy Day(s)",
