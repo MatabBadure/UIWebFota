@@ -1,0 +1,110 @@
+{
+    "user" : {
+
+        "page-title":{
+          "users":"HillRom | Users",
+          "user": "HillRom | User"
+        },
+        "home": {
+            "createLabel": "Create Hill-Rom User",
+            "createOrEditLabel": "Create or edit a user",
+            "updateLabel":"Update Hill-Rom User",
+            "hillRomUser" : "Hill-Rom User",
+            "manageLabel": "Manage Hill-Rom Users"
+        },
+        "delete": {
+            "question": "Are you sure you want to delete user {{ id }}?"
+        },
+        "detail": {
+            "title": "Hill-Rom User"
+        },
+        "general-details":  "General Details",
+        "personal-details": "Personal Details",
+        "health-details":   "Health Details",
+        "clinic": "Clinic",
+        "user": "Hill-Rom User",
+        "add-clinic": "Add Another Clinic",
+        "create-caregiver": "Yes",
+        "user-name": "User Name",
+        "clinic-name":  "Clinic Name",
+        "user-id": "User ID",
+        "title": {
+                    "name": "Title",
+                    "dr":   "Dr", 
+                    "mr":   "Mr.",
+                    "mrs": "Mrs.",
+                    "miss": "Miss"
+        },
+        "gender": {
+                    "name": "Gender",
+                    "male":   "M",
+                    "female": "F",
+                    "others": "O"
+        },
+        "role-text":"Select Role",
+        "role-field": "Role",
+        "role": {
+            "super-admin": "Super Admin",
+            "account-services": "RC Admin",
+            "associates":"Associates",
+            "default" : "Select a role",
+            "patient": "Patient",
+            "hcp": "HCP",
+            "clinic-admin": "Clinic Admin",
+            "caregiver": "Caregiver",
+            "associates": "Associates",
+            "customerservices" : "Customer Service"
+        },
+        "placeholder": {
+            "search": "Search with Name, Hill-Rom ID or Email"
+        },
+        "filter": {
+            "all": "All",
+            "active": "Active",
+            "inactive": "Inactive",
+            "expired": "Expired"
+        },
+        "status-type": {
+            "active": "Active",
+            "inactive": "Inactive",
+            "pending": "Pending"
+        },
+        "status": "Status",
+        "first-name": "First Name",
+        "middle-name": "Middle Name",
+        "last-name": "Last Name",
+        "employee-id": "Employee ID",
+        "hrId": "HR ID",
+        "address": "Address",
+        "city": "City",
+        "zipcode": "Zip",
+        "email": "Email",
+        "state": "State",
+        "primary-phone": "Primary Phone",
+        "mobile-number": "Mobile Number",
+        "fax-number": "Fax Number",
+        "hillromId": "Hill-Rom ID",
+        "parentClinicId": "ParentClinicId",
+        "npiNumber": "NpiNumber",
+        "parent": "parent",
+        "submit-button-text": "submit",
+        "reactivate-button-text":"Resend Activation Link",
+        "cancel-button-text": "cancel",
+        "deactivate-button-text": "Deactivate",
+        "activate-button-text":"Activate",
+        "update-button-text": "Update",
+        "required-field": "* Required Fields",
+        "delete": {
+            "warning": "Deactivate Clinic",
+            "message": "You are deactivating User from the system and User will no longer be able to access Hill-Rom application. Are you sure to continue?"
+        },
+        "activate":{
+            "warning": "Are you sure you want to Activate the User?",
+            "message": "If you activate the hillrom user, you will be able to view the information."
+        },
+        "update":{
+            "warning": "Hill-Rom User - Details",
+            "message": "You have made changes/updates for Hill-Rom User. Are you sure to make updates?"
+        }
+    }
+}

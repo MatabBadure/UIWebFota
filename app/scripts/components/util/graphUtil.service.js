@@ -160,7 +160,7 @@ angular.module('hillromvestApp')
         var max = arrayMax(hmrSet);
         var min = arrayMin(hmrSet);
         var unit = 60; //hmr values are in minutes
-        var ylabel = "HMR";
+        var ylabel = "Total Therapy Hours";
 
         max = Math.floor(max/unit);
         min = Math.floor(min/unit);
