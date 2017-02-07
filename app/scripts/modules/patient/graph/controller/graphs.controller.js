@@ -2322,7 +2322,7 @@ $scope.adherencetrendData.push(new Object({"adherenceTrends": [] , "protocols": 
              MTDdates = MTDdates + ", "+date;
            }
           }
-         }
+         } 
           else if(notificationPoints.indexOf('Below Treatment Minutes') > -1 && notificationPoints.indexOf('Setting Deviation') > -1){
              //for HMR Non-Adherence and Frequency Deviation
              HNACounter++;
