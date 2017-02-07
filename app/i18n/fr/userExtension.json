@@ -3,11 +3,11 @@
         "userExtension" : {
             "home": {
                 "title": "UserExtensions",
-                "createLabel": "Créer un nouveau UserExtension",
-                "createOrEditLabel": "Créer ou éditer un UserExtension"
+                "createLabel": "Create a new UserExtension",
+                "createOrEditLabel": "Create or edit a UserExtension"
             },
             "delete": {
-                "question": "Etes-vous certain de vouloir supprimer le UserExtension {{ id }} ?"
+                "question": "Are you sure you want to delete UserExtension {{ id }}?"
             },
             "detail": {
                 "title": "UserExtension"
@@ -18,4 +18,3 @@
         }
     }
 }
-

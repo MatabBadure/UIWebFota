@@ -1,19 +1,40 @@
 {
     "login": {
-        "title": "Authentification",
+        "title": "HillRom | Login",
+        "page-title":{
+            "contact-us": "HillRom | Contact Us",
+            "privacy-policy": "HillRom | Privacy Policy",
+            "terms-use" : "HillRom | Terms and Conditions",
+            "privacy-practices":"HillRom | Notice Of Privacy Practices",
+            "care-site": "HillRom | Respiratory Care Site"
+        },
         "form": {
-            "password": "Mot de passe",
-            "password.placeholder": "Votre mot de passe",
-            "rememberme": "Garder la session ouverte",
-            "button": "Connexion"
+            "password": "Password",
+            "password.placeholder": "password",
+            "rememberme": "Automatic Login",
+            "button": "Sign In"
         },
         "messages": {
             "error": {
-                "authentication": "<strong>Erreur d'authentification!</strong> Veuillez vérifier vos identifiants de connexion."
+                "authentication": "<strong>Authentication failed!</strong> Please check your credentials and try again."
             }
         },
         "password" : {
-            "forgot": "Avez-vous oublié votre mot de passe?"
-        }
+            "forgot": "forgot password?",
+            "error": "password should have at least 8 characters, contains atleast 1 number, 1 special character, 1 letter in caps.",
+            "maxlength": "password can't have more than 50 characters.",
+            "required" : "Password is required.",
+            "customError": "Your password is not as per policy."
+        },
+        "placeholder": {
+            "password": "New Password",
+            "confirm-password": "Re-Enter New Password",
+            "security-answer": "Enter Your Answer"
+        },
+        "confirm-password": {
+            "error": "passwords do not match",
+            "maxlength": "password can't have more than 50 characters."
+        },
+        "instruction": "Password should have atleast 8 characters, contains atleast 1 number, 1 special character, 1 letter in caps."
     }
 }
