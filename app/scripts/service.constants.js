@@ -42,7 +42,10 @@ var searchFilters = {
     isActivated: "isActivated",
     authority: "authority",
     all: "All",
-    activeInactive: "all"
+    activeInactive: "all",
+    VisiVest: "VEST",
+    Monarch: "MONARCH",
+    devicetype : "deviceType="
 }
 
 var sortConstant = {
