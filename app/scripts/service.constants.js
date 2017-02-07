@@ -42,7 +42,10 @@ var searchFilters = {
     isActivated: "isActivated",
     authority: "authority",
     all: "All",
-    activeInactive: "all"
+    activeInactive: "all",
+    VisiVest: "VEST",
+    Monarch: "MONARCH",
+    devicetype : "deviceType="
 }
 
 var sortConstant = {
@@ -141,7 +144,7 @@ var stringConstants = {
     signatureLabel: "Signature",
     space: " ",
     notAvailable: "N/A",
-    deviceType : "The Vest System",
+    deviceType : "The VisiVest™ System",
     emptyString: "",
     comma: ", ",
     runrate: "HMR Runrate",
@@ -177,7 +180,7 @@ angular.module('hillromvestApp').constant('pdfServiceConstants', {
         benchmarking:"Benchmarking",
         complianceStatistics: "Statistics",
         protocolGraph: "Protocol Graph",
-        hmrStatistics: "HMR",
+        hmrStatistics: "Total Therapy Hours",
         adherenceTrend: "Adherence Trend",
         survey: "Survey",
         cumulativeStatistics: "Cumulative Statistics",

@@ -467,9 +467,11 @@
         "active" : "Active",
         "inactive" : "InActive", "no-event" : "No Transmission Recorded",
         "setting-deviation" : "Below Frequency Setting",
-        "hmr-non-compliant" : "Below Treatment Minutes",
+        "hmr-non-compliant" : "Below Therapy Minutes",
          "missed-therapy" :"Missed Therapy Days",
-        "pending": "Pending"
+        "pending": "Pending",
+        "visivest":"VisiVest",
+        "monarch":"Monarch"
     },
 
     "user-not-found" : "No user associated.",

@@ -1,0 +1,27 @@
+{
+    "authenticate": {
+        "title": "Authentication",
+        "messages": {
+            "success": "<strong>Your user has been activated.</strong> Please <a href=\"#/login\">authenticate</a>.",
+            "error": "<strong>Your user could not be activated.</strong> Please use the registration form to sign up."
+        },
+        "forgot-pwd-link": "Forgot Password?",
+        "placeholder": {
+            "password": "New Password",
+            "confirm-password": "Re-Enter New Password",
+            "security-answer": "Enter Your Answer"
+        },
+        "password": {
+            "error": "password should have at least 8 characters, contains atleast 1 number, 1 special character, 1 letter in caps",
+            "maxlength": "password can't have more than 50 characters.",
+            "required":"Password is required.",
+            "customError": "Your password is not as per policy."
+        },
+        "confirm-password": {
+            "error": "passwords do not match",
+            "maxlength": "password can't have more than 50 characters."
+        },
+        "instruction": "Password should have atleast 8 characters, contains atleast 1 number, 1 special character, 1 letter in caps."
+
+    }
+}
