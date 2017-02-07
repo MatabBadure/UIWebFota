@@ -26,12 +26,14 @@ angular.module('hillromvestApp')
               }
             }else{
               searchFilter.isActive = true;
-              searchFilter.isInActive = false;
-              searchFilter.isNoEvent = false;
-              searchFilter.isSettingsDeviated = false;
-              searchFilter.isHMRNonCompliant = false;
-              searchFilter.isMissedTherapy = false;
-              searchFilter.isPending = false;
+              searchFilter.isInActive = true;
+              searchFilter.isNoEvent = true;
+              searchFilter.isSettingsDeviated = true;
+              searchFilter.isHMRNonCompliant = true;
+              searchFilter.isMissedTherapy = true;
+              searchFilter.isPending = true;
+              searchFilter.VisiVest = true;
+              searchFilter.Monarch = true;
             }
             searchFilter.userList = searchFilters.patientList;
             return searchFilter;
@@ -72,6 +74,17 @@ angular.module('hillromvestApp')
            }
            if(filter.isNoEvent){
             filterString += searchFilters.isNoEvent + searchFilters.colon + 1 + searchFilters.semicolon; 
+           }
+            if(filter.VisiVest && filter.Monarch){
+            // the following commented code is for later use when on selection of both devices All should be passed- incomplete from Back-end as of now
+           // filterString += searchFilters.deviceType + searchFilters.all + searchFilters.colon + 1 + searchFilters.semicolon;
+            filterString += searchFilters.amp + searchFilters.devicetype + searchFilters.VisiVest ;
+           }
+             else if(filter.VisiVest && !filter.Monarch){
+            filterString += searchFilters.amp + searchFilters.devicetype + searchFilters.VisiVest ; 
+           }
+           else if(filter.Monarch && !filter.VisiVest){
+            filterString += searchFilters.amp + searchFilters.devicetype + searchFilters.Monarch ; 
            }
            return filterString;
         }
