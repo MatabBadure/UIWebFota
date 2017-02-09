@@ -145,6 +145,7 @@ var stringConstants = {
     space: " ",
     notAvailable: "N/A",
     deviceType : "The VisiVest™ System",
+    deviceTypeMonarch : "The Monarch™ System",
     emptyString: "",
     comma: ", ",
     runrate: "HMR Runrate",
