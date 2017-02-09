@@ -86,8 +86,8 @@ angular.module('hillromvestApp')
            else if(filter.Monarch && !filter.VisiVest){
             filterString += searchFilters.amp + searchFilters.devicetype + searchFilters.Monarch ; 
            }
-           else if(!filter.VisiVest && !filter.Monarch){
-             // the following commented code is for later use when on selection of both devices All should be passed- incomplete from Back-end as of now
+            else if(!filter.VisiVest && !filter.Monarch){
+            // the following commented code is for later use when on selection of both devices All should be passed- incomplete from Back-end as of now
            // filterString += searchFilters.deviceType + searchFilters.all + searchFilters.colon + 1 + searchFilters.semicolon;
             filterString += searchFilters.amp + searchFilters.devicetype + searchFilters.VisiVest ;
            }
