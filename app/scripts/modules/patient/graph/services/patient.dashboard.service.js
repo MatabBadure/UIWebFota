@@ -23,7 +23,7 @@ angular.module('hillromvestApp')
         } else if(date !== undefined){
           url = url + '?date=' + date;
         }
-         url = url +'&deviceType='+$rootScope.deviceType; 
+         url = url +'&deviceType='+localStorage.getItem('deviceType'); 
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -39,7 +39,7 @@ angular.module('hillromvestApp')
         } else if(date !== undefined){
           url = url + '?date=' + date;
         }
-         url = url +'&deviceType='+$rootScope.deviceType; 
+         url = url +'&deviceType='+localStorage.getItem('deviceType'); 
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -51,7 +51,7 @@ angular.module('hillromvestApp')
         var url = patient.graph.baseURL;
         url  = url + '/' + id + '/therapyData';
         url = url + '?from=' + date + '&to=' + date ;
-          url = url +'&deviceType='+$rootScope.deviceType; 
+          url = url +'&deviceType='+localStorage.getItem('deviceType'); 
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -103,7 +103,7 @@ angular.module('hillromvestApp')
       getHMRrunAndScoreRate: function(id, timeStamp) {
         var url = patient.graph.baseURL;
         url  = url + '/' + id + '/compliance?date=' + timeStamp;
-        url = url +'&deviceType='+$rootScope.deviceType;
+        url = url +'&deviceType='+localStorage.getItem('deviceType');
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -177,7 +177,6 @@ angular.module('hillromvestApp')
 
 
       getcomplianceGraphData: function(id, fromTimeStamp, toTimeStamp, duration, date){
-         console.log("devicetypehere::"+$rootScope.deviceType);
         var url = patient.graph.baseURL;
         url  = url + '/' + id + '/complianceGraphData';
       
@@ -186,7 +185,7 @@ angular.module('hillromvestApp')
         } else if(date !== undefined){
           url = url + '?date=' + date;
         } 
-        url = url +'&deviceType='+$rootScope.deviceType;    
+        url = url +'&deviceType='+localStorage.getItem('deviceType');    
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {

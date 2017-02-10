@@ -225,7 +225,13 @@
 	</div>
 	<div class="clr"></div>
 	<div class="col-md-16" class="all_graph_wrapper" ng-init="getWeekChart()" style="min-height: 300px;">
-	<div id = "NodataDiv" class="graph_nodata" ng-if = "(hmrChartData.length == 0) && noDataStatus">
+	<div id = "NodataDiv" class="graph_nodata" ng-if = "(hmrChartData.length == 0) && noDataStatus && isHMR">
+		<span class="noData_text"> No Data Available!</span>
+	</div>
+		<div id = "NodataDiv" class="graph_nodata" ng-if = "(hmrChartData.length == 0) && noDataStatus && isCompliance">
+		<span class="noData_text"> No Data Available!</span>
+	</div>
+		<div id = "NodataDiv" class="graph_nodata" ng-if = "isAdherenceTrend && noDataAvailableForAdherence">
 		<span class="noData_text"> No Data Available!</span>
 	</div>
 
@@ -548,5 +554,3 @@
 		</div>
 	</div>
 </div>
-
-
