@@ -49,13 +49,11 @@ angular.module('hillromvestApp')
       var res = resetDate.split("/");
       var resetDateFinal = res[2]+"-"+res[0]+"-"+res[1];
       var resetTo = $scope.scoreToReset;
-      var tempJustification = $scope.justification;
-      if(tempJustification=="Other")
-      { 
+      if($scope.ShowOther)
+      {
         var reason = $scope.othersContent;
-
       }
-      else
+      else(!$scope.ShowOther)
       {
         var reason = $scope.justification;
       }
@@ -289,6 +287,7 @@ angular.module('hillromvestApp')
 
   $scope.selectPatient = function(patient){
     var clinicId = ($scope.selectedClinic && $scope.selectedClinic.id) ? $scope.selectedClinic.id : ($stateParams.clinicId ? $stateParams.clinicId : null);
+   $scope.deviceType = patient.deviceType;
     $state.go('clinicadminpatientOverview',{'patientId': patient.id, 'clinicId': clinicId});
   };
 
@@ -354,7 +353,6 @@ angular.module('hillromvestApp')
      var temp = $scope.patientNotesMemo;
     
       UserService.editUserNotes(temp).then(function (response) {
-        console.log("Notes Updated");
         UserService.editUser(data).then(function (response) {
         notyService.showMessage(response.data.message, 'success');
          $state.go('clinicadminpatientDemographic', {'patientId': $stateParams.patientId});

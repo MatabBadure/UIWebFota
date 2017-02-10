@@ -21,7 +21,7 @@ angular.module('hillromvestApp')
       $scope.nextDate= new Date();
       $scope.disableDatesInDatePicker();   
       $scope.role = StorageService.get('logged').role;
-            $scope.hmrRunRate = 0;
+      $scope.hmrRunRate = 0;
       $scope.adherenceScore = 0;
       $scope.missedtherapyDays = 0;
       $scope.settingsDeviatedDaysCount = 0;            
@@ -136,9 +136,7 @@ angular.module('hillromvestApp')
             StorageService.save('logged', logged);
 
                        $scope.$emit('getSelectedPatient', $scope.selectedPatient);
-                           break;
-
-        
+                           break;   
                 }
            
                 }
@@ -776,7 +774,7 @@ angular.module('hillromvestApp')
       return ( (parseInt(noOfDataPoints/pInterval) > 0) && noOfDataPoints%pInterval > remainder) ? parseInt(noOfDataPoints/sInterval) : ((parseInt(noOfDataPoints/pInterval) > 0)? parseInt(noOfDataPoints/pInterval): 1) ; 
     };
 
-    $scope.getComplianceGraph = function(){      
+    $scope.getComplianceGraph = function(){ 
       patientDashBoardService.getcomplianceGraphData($scope.patientId, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.durationRange).then(function(response){
         var responseData = response.data;              
         var xData = [];
@@ -820,7 +818,11 @@ angular.module('hillromvestApp')
             if(responseData.series[key1].name === "Pressure"){
               responseData.series[key1].unit = ""; 
               responseData.series[key1].color = patientGraphsConstants.colors.pressure;
-            }else if(responseData.series[key1].name === "Frequency"){
+            }else if(responseData.series[key1].name === "Intensity"){
+              responseData.series[key1].unit = ""; 
+              responseData.series[key1].color = patientGraphsConstants.colors.pressure;
+            }
+            else if(responseData.series[key1].name === "Frequency"){
               responseData.series[key1].unit = patientGraphsConstants.units.frequency; 
               responseData.series[key1].color = patientGraphsConstants.colors.frequency;
             }else if(responseData.series[key1].name === "Duration"){
@@ -1089,7 +1091,7 @@ angular.module('hillromvestApp')
     
     $scope.getHMRGraph = function(){
       patientDashBoardService.getHMRGraphPoints($scope.patientId, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.durationRange).then(function(response){
-        $scope.hmrChartData = response.data;      
+        $scope.hmrChartData = response.data;  
         $scope.noDataAvailableForHMR  = false;       
         if($scope.hmrChartData && typeof($scope.hmrChartData) === "object"){ 
           $scope.noDataAvailableForHMR = false;      
@@ -1132,6 +1134,10 @@ angular.module('hillromvestApp')
               if($scope.hmrChartData.series[key1].data[key2].toolText.missedTherapy){
                 $scope.hmrChartData.series[key1].data[key2].color = "red";
               }
+              if(!$scope.hmrChartData.series[key1].data[key2].toolText.missedTherapy && localStorage.getItem('deviceType') == 'MONARCH'){
+                $scope.hmrChartData.series[key1].data[key2].color = "#ff9829";
+              }
+
             });            
             
           }); 
@@ -1215,17 +1221,24 @@ angular.module('hillromvestApp')
           $scope.noDataAvailableForAdherence = true;
           $scope.removeAllCharts();
         }
+      }).catch(function(){
+        $scope.noDataAvailableForAdherence = true;
+          $scope.removeAllCharts();
       });
     };
 
     $scope.HMRAreaChart = function(divId){ 
       var noOfDataPoints = ($scope.hmrChartData && $scope.hmrChartData.xAxis.categories)?$scope.hmrChartData.xAxis.categories.length: 0;      
       var daysInterval = getDaysIntervalInChart($scope.hmrXAxisLabelCount);           
-      Highcharts.setOptions({
+   /*   Highcharts.setOptions({
           global: {
               useUTC: false
           }
-      });      
+      }); */
+      var fillcolor = '#7cb5ee'; 
+      if(localStorage.getItem('deviceType')  == 'MONARCH'){
+        var fillcolor = '#ff9829';
+      }     
       divId = (divId)? divId : "HMRGraph";
       $('#'+divId).empty();
       $('#'+divId).highcharts({
@@ -1303,7 +1316,23 @@ angular.module('hillromvestApp')
                       dateTextLabel += ' ( ' + Highcharts.dateFormat("%I:%M %p",this.x) + ' )';
                     }
                   }
+                  if(localStorage.getItem('deviceType')  == 'MONARCH'){
                   var pointDetails = '<div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left"> Session No </div> ' 
+                    + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.sessionNo  + '</b></div>';                 
+                    pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left"> ' + this.point.series.name + '</div> ' 
+                    + '<div style="padding:5px;width:10%"><b>' + this.point.y + '</b></div>';
+                    pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left">Intensity</div> ' 
+                    + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.intensity + '</b></div>';
+                    pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left">Frequency</div> ' 
+                    + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.frequency + '</b></div>';
+                    pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left">Duration</div> ' 
+                    + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.duration + '</b></div>'; 
+                    pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left">Cough Pauses</div> ' 
+                    + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.coughPauses + '</b></div>';
+                
+                    }
+                    else{
+                    var pointDetails = '<div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left"> Session No </div> ' 
                     + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.sessionNo  + '</b></div>';                 
                     pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left"> ' + this.point.series.name + '</div> ' 
                     + '<div style="padding:5px;width:10%"><b>' + this.point.y + '</b></div>';
@@ -1315,6 +1344,8 @@ angular.module('hillromvestApp')
                     + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.duration + '</b></div>'; 
                     pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left">Cough Pauses</div> ' 
                     + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.coughPauses + '</b></div>';
+                
+                    }
                   if(this.point.toolText.noteText){
                     s = '<div style="font-size:10px; font-weight: bold; width:100%;display-inline:block;">' 
                     s = '<div style="font-size:12x;font-weight: bold; padding-bottom: 3px; padding-right: 50px; float: left; width: 58%">'+  dateTextLabel +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>';
@@ -1340,6 +1371,7 @@ angular.module('hillromvestApp')
           plotOptions: {
             series: {
                 //allowPointSelect: true,
+               fillColor : fillcolor,
                 marker: {
                       enabled: true,
                        radius: $scope.markerRadius
@@ -1375,7 +1407,11 @@ angular.module('hillromvestApp')
           global: {
               useUTC: false
           }
-      });      
+      });  
+      var fillcolor = '#7cb5ee';
+      if(localStorage.getItem('deviceType')  == 'MONARCH'){
+        fillcolor = '#ff9829';
+      }   
       divId = (divId)? divId : "HMRGraph";
       $('#'+divId).empty();
       $('#'+divId).highcharts({
@@ -1437,8 +1473,25 @@ angular.module('hillromvestApp')
                     if(parseInt(splitSession[1]) > 0){                      
                       dateTextLabel += ' ( ' + Highcharts.dateFormat("%I:%M %p",dateX) + ' )';                      
                     }
-                  }                 
+                  }
+                  if(localStorage.getItem('deviceType') == 'MONARCH'){                 
                   var s = '<div style="font-size:12x;font-weight: bold; padding-bottom: 3px;">'+  dateTextLabel +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div>';
+                  s += '<div style="font-size:10px; font-weight: bold; width:100%"><div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left"> Session No </div> ' 
+                  + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.sessionNo  + '</b></div></div>';                 
+                  s += '<div style="font-size:10px; font-weight: bold; width:100%"><div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left"> ' + this.point.series.name + '</div> ' 
+                  + '<div style="padding:5px;width:10%"><b>' + this.point.y + '</b></div></div>';
+                  s += '<div style="font-size:10px; font-weight: bold; width:100%"><div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left">Intensity</div> ' 
+                  + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.intensity + '</b></div></div>';
+                  s += '<div style="font-size:10px; font-weight: bold; width:100%"><div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left">Frequency</div> ' 
+                  + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.frequency + '</b></div></div>';
+                  s += '<div style="font-size:10px; font-weight: bold; width:100%"><div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left">Duration</div> ' 
+                  + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.duration + '</b></div></div>';
+                  s += '<div style="font-size:10px; font-weight: bold; width:100%"><div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left">Cough Pauses</div> ' 
+                  + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.coughPauses + '</b></div></div>';
+                  s += '</div>';
+                  }
+                  else{
+                   var s = '<div style="font-size:12x;font-weight: bold; padding-bottom: 3px;">'+  dateTextLabel +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div>';
                   s += '<div style="font-size:10px; font-weight: bold; width:100%"><div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left"> Session No </div> ' 
                   + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.sessionNo  + '</b></div></div>';                 
                   s += '<div style="font-size:10px; font-weight: bold; width:100%"><div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left"> ' + this.point.series.name + '</div> ' 
@@ -1451,7 +1504,8 @@ angular.module('hillromvestApp')
                   + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.duration + '</b></div></div>';
                   s += '<div style="font-size:10px; font-weight: bold; width:100%"><div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left">Cough Pauses</div> ' 
                   + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.coughPauses + '</b></div></div>';
-                  s += '</div>';
+                  s += '</div>'; 
+                  }
                   return s;
                 }, 
                 hideDelay: 0,
@@ -1460,6 +1514,7 @@ angular.module('hillromvestApp')
           plotOptions: {
             series: {
                 pointWidth: 50,
+                fillColor : fillcolor,
                 marker: {
                       enabled: true,
                       radius: $scope.markerRadius
@@ -1580,8 +1635,6 @@ angular.module('hillromvestApp')
                   var s = '<div style="font-size:12x;font-weight: bold; padding-bottom: 3px;">'+  dateTextLabel +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div>';
                   s += '<div style="font-size:10px; font-weight: bold; width:100%"><div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left"> Adherence Score</div> ' 
                   + '<div style="padding:5px;width:10%"><b>' + this.point.y  + '</b></div></div>';                 
-                  return s;
-                   
                   return s;
                 }
                

@@ -42,7 +42,10 @@ var searchFilters = {
     isActivated: "isActivated",
     authority: "authority",
     all: "All",
-    activeInactive: "all"
+    activeInactive: "all",
+    VisiVest: "VEST",
+    Monarch: "MONARCH",
+    devicetype : "deviceType="
 }
 
 var sortConstant = {
@@ -142,6 +145,7 @@ var stringConstants = {
     space: " ",
     notAvailable: "N/A",
     deviceType : "The VisiVest™ System",
+    deviceTypeMonarch : "The Monarch™ System",
     emptyString: "",
     comma: ", ",
     runrate: "HMR Runrate",
