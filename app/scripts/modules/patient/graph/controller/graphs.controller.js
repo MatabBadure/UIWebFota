@@ -1090,9 +1090,8 @@ angular.module('hillromvestApp')
 
     
     $scope.getHMRGraph = function(){
-     // alert($rootScope.deviceType);
       patientDashBoardService.getHMRGraphPoints($scope.patientId, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.durationRange).then(function(response){
-        $scope.hmrChartData = response.data;      
+        $scope.hmrChartData = response.data;  
         $scope.noDataAvailableForHMR  = false;       
         if($scope.hmrChartData && typeof($scope.hmrChartData) === "object"){ 
           $scope.noDataAvailableForHMR = false;      
@@ -1135,7 +1134,7 @@ angular.module('hillromvestApp')
               if($scope.hmrChartData.series[key1].data[key2].toolText.missedTherapy){
                 $scope.hmrChartData.series[key1].data[key2].color = "red";
               }
-              if(!$scope.hmrChartData.series[key1].data[key2].toolText.missedTherapy && $rootScope.deviceType == 'MONARCH'){
+              if(!$scope.hmrChartData.series[key1].data[key2].toolText.missedTherapy && localStorage.getItem('deviceType') == 'MONARCH'){
                 $scope.hmrChartData.series[key1].data[key2].color = "#ff9829";
               }
 
@@ -1222,19 +1221,22 @@ angular.module('hillromvestApp')
           $scope.noDataAvailableForAdherence = true;
           $scope.removeAllCharts();
         }
+      }).catch(function(){
+        $scope.noDataAvailableForAdherence = true;
+          $scope.removeAllCharts();
       });
     };
 
     $scope.HMRAreaChart = function(divId){ 
       var noOfDataPoints = ($scope.hmrChartData && $scope.hmrChartData.xAxis.categories)?$scope.hmrChartData.xAxis.categories.length: 0;      
       var daysInterval = getDaysIntervalInChart($scope.hmrXAxisLabelCount);           
-      Highcharts.setOptions({
+   /*   Highcharts.setOptions({
           global: {
               useUTC: false
           }
-      }); 
+      }); */
       var fillcolor = '#7cb5ee'; 
-      if($rootScope.deviceType == 'MONARCH'){
+      if(localStorage.getItem('deviceType')  == 'MONARCH'){
         var fillcolor = '#ff9829';
       }     
       divId = (divId)? divId : "HMRGraph";
@@ -1314,7 +1316,7 @@ angular.module('hillromvestApp')
                       dateTextLabel += ' ( ' + Highcharts.dateFormat("%I:%M %p",this.x) + ' )';
                     }
                   }
-                  if($rootScope.deviceType == 'MONARCH'){
+                  if(localStorage.getItem('deviceType')  == 'MONARCH'){
                   var pointDetails = '<div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left"> Session No </div> ' 
                     + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.sessionNo  + '</b></div>';                 
                     pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left"> ' + this.point.series.name + '</div> ' 
@@ -1407,7 +1409,7 @@ angular.module('hillromvestApp')
           }
       });  
       var fillcolor = '#7cb5ee';
-      if($rootScope.deviceType == 'MONARCH'){
+      if(localStorage.getItem('deviceType')  == 'MONARCH'){
         fillcolor = '#ff9829';
       }   
       divId = (divId)? divId : "HMRGraph";
@@ -1472,7 +1474,7 @@ angular.module('hillromvestApp')
                       dateTextLabel += ' ( ' + Highcharts.dateFormat("%I:%M %p",dateX) + ' )';                      
                     }
                   }
-                  if($rootScope.deviceType == 'MONARCH'){                 
+                  if(localStorage.getItem('deviceType') == 'MONARCH'){                 
                   var s = '<div style="font-size:12x;font-weight: bold; padding-bottom: 3px;">'+  dateTextLabel +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div>';
                   s += '<div style="font-size:10px; font-weight: bold; width:100%"><div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left"> Session No </div> ' 
                   + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.sessionNo  + '</b></div></div>';                 

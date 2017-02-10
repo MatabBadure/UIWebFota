@@ -536,7 +536,7 @@ angular.module('hillromvestApp')
     completePatientAddress = (patientDetails !== null && patientDetails.zipcode) ? ((completePatientAddress.length > 1) ? (completePatientAddress+stringConstants.comma+patientDetails.zipcode) : patientDetails.zipcode) : completePatientAddress;      
     var patientPhone = (patientDetails !== null && patientDetails.mobilePhone)? patientDetails.mobilePhone : stringConstants.notAvailable;
     var patientDOB = (patientDetails !== null && patientDetails.dob)? dateService.getDateFromTimeStamp(patientDetails.dob,patientDashboard.dateFormat,'/') : stringConstants.notAvailable;    
-    if($rootScope.deviceType == 'MONARCH'){
+    if(localStorage.getItem('deviceType') == 'MONARCH'){
     var patientDeviceType = stringConstants.deviceTypeMonarch;
     }
     else{
