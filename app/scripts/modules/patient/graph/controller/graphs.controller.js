@@ -2323,7 +2323,7 @@ $scope.adherencetrendData.push(new Object({"adherenceTrends": [] , "protocols": 
            }
           }
          }
-          else if(notificationPoints.indexOf('HMR Non-Adherence') > -1 && notificationPoints.indexOf('Frequency Deviation') > -1){
+          else if(notificationPoints.indexOf('Below Treatment Minutes') > -1 && notificationPoints.indexOf('Setting Deviation') > -1){
              //for HMR Non-Adherence and Frequency Deviation
              HNACounter++;
              MTDdates= "";
@@ -2341,7 +2341,7 @@ $scope.adherencetrendData.push(new Object({"adherenceTrends": [] , "protocols": 
              FDdates = FDdates +", "+ date;
            }
          }
-         else if(notificationPoints.indexOf('HMR Non-Adherence')>-1 && notificationPoints.indexOf('Frequency Deviation') < 0){
+         else if(notificationPoints.indexOf('Below Treatment Minutes')>-1 && notificationPoints.indexOf('Setting Deviation') < 0){
              //for HMR Non-Adherence
               HNACounter++;
              MTDdates= "";
@@ -2354,7 +2354,7 @@ $scope.adherencetrendData.push(new Object({"adherenceTrends": [] , "protocols": 
              HNAdates = HNAdates +", "+ date;
            }
          }
-           else if(notificationPoints.indexOf('Frequency Deviation')>-1 && notificationPoints.indexOf('HMR Non-Adherence') < 0){
+           else if(notificationPoints.indexOf('Setting Deviation')>-1 && notificationPoints.indexOf('Below Treatment Minutes') < 0){
             //for Frequency Deviation
              HNACounter++;
              HNAdates = "";
@@ -2410,10 +2410,10 @@ $scope.adherencetrendData.push(new Object({"adherenceTrends": [] , "protocols": 
          if(key == 'Missed Therapy Days'){
          $scope.myPopoverData=key+' on ('+MTDdates+' )';
              }
-          else if(key == 'HMR Non-Adherence'){
+          else if(key == 'Below Treatment Minutes'){
          $scope.myPopoverData=key+' on ('+HNAdates+' )';
           }
-          else if(key == 'Frequency Deviation'){
+          else if(key == 'Setting Deviation'){
             $scope.myPopoverData=key+' on ('+FDdates+' )';
           }
           else if(key == 'Adherence Score Reset')

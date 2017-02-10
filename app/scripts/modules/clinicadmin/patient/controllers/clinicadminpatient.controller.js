@@ -48,13 +48,14 @@ angular.module('hillromvestApp')
       var resetDate = $scope.resetStartDate;
       var res = resetDate.split("/");
       var resetDateFinal = res[2]+"-"+res[0]+"-"+res[1];
-      console.log(resetDateFinal);
       var resetTo = $scope.scoreToReset;
-      if($scope.ShowOther)
-      {
+      var tempJustification = $scope.justification;
+      if(tempJustification=="Other")
+      { 
         var reason = $scope.othersContent;
+
       }
-      else(!$scope.ShowOther)
+      else
       {
         var reason = $scope.justification;
       }

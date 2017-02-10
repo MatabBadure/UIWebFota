@@ -1,0 +1,114 @@
+{
+    "patient" : {
+        "page-title":{
+          "patients": "HillRom | Patients"
+        },
+        "home": {
+            "createLabel": "Create Patient",
+            "createNewLabel": "Create New Patient",
+            "createOrEditLabel": "Create or edit a Patient",
+            "manageLabel": "Manage Patients",
+            "updateLabel":"Update Patient"
+        },
+        "delete": {
+            "question": "Are you sure you want to delete Patient {{ id }}?"
+        },
+        "detail": {
+            "title": "Patient"
+        },
+        "required-field" : "* Required Field",
+        "general-details":  "Patient Identifiers",
+        "personal-details": "Personal Details",
+        "health-details":   "Health Details",
+        "clinic": "Clinic",
+        "doctor": "Doctor",
+        "add-caregiver": "Add Caregiver",
+        "create-caregiver": "Yes",
+        "hill-rom-id":  "Hill-Rom ID",
+        "emr-id":   "EMR-ID",
+        "mrn-id": "MRN ID",
+        "clinic-level-status":"Clinic level Status",
+        "adherence": "Adherence",
+        "title": {
+                    "name": "Title",
+                    "mr":   "Mr.",
+                    "mrs": "Mrs.",
+                    "miss": "Miss"
+        },
+        "gender": {
+                    "name": "Gender",
+                    "male":   "M",
+                    "female": "F",
+                    "others": "O"
+        },
+        "search": {
+            "new": "Newly Created"
+        },
+        "placeholder": {
+            "search": "Search with Name, Hill-Rom ID or Email"
+        },
+        "patient-name": "Patient Name",
+        "primary-language": "Primary Language",
+        "first-name": "First Name",
+        "middle-name": "Middle Name",
+        "last-name": "Last Name",
+        "date-of-birth": "Date of Birth",
+        "city-state": "City/State",
+        "address": "Address",
+        "city": "City",
+        "zipcode": "Zip",
+        "email": "Email",
+        "state": "State",
+        "transmission": "Transmission",
+        "status": "Status",
+        "clinic-name": "Clinic Name",
+        "hcp-name": "HCP Name",
+        "phone-number": "Phone No",
+        "mobile-number": "Mobile No.",
+        "home-phone-number": "Home Phone No.",
+        "faxNumber": "FaxNumber",
+        "hillromId": "HillromId",
+        "parentClinicId": "ParentClinicId",
+        "npiNumber": "NpiNumber",
+        "npi": "NPI: ",
+        "user": "user",
+        "patients": "patients",
+        "parent": "parent",
+        "submit-button-text": "submit",
+        "cancel-button-text": "cancel",
+        "deactivate-button-text": "Deactivate",
+        "update-button-text": "Update",
+        "back-button-text": "Back",
+        "filter": {
+            "all": "All",
+            "active": "Active",
+            "inactive": "Inactive",
+            "expired": "Expired"
+        },
+        "status-type": {
+            "active": "Active",
+            "inactive": "Inactive",
+            "expired": "Expired",
+            "pending": "Pending"
+        },
+        "hcp-dash-filter": {
+            "missed-therapy": "Missed Therapy",
+            "non-hmr-compliance": "Non HMR Compliance",
+            "sertting-deviations": "Sertting Deviations",
+            "no-events": "No Transmission"
+        },
+        "delete": {
+            "warning": "Deactivate Patient",
+            "message": "You are deactivating Patient from the system and patient user will no longer be able to access Hill-Rom application. Are you sure to continue?"
+        },
+        "activate":{
+            "warning": "Are you sure you want to Activate the Patient?",
+            "message": "If you activate the patient, patient will be able to access the system."
+        },
+        "update": {
+            "warning": "Patient Info - Details",
+            "message": "You have made changes/updates in Patient Info. Are you sure to make updates?"
+        },
+        "no-patient-found": "No patient associated."
+    }
+}
