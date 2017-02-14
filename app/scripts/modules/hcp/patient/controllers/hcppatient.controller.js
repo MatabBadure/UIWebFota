@@ -2,7 +2,7 @@ angular.module('hillromvestApp')
 .controller('hcpPatientController',['$scope', '$state', '$stateParams', 'hcpPatientService', 'patientService', 'notyService', 'DoctorService', 'clinicadminPatientService', 'dateService', 'clinicService', '$timeout', 'searchFilterService', 'StorageService', 'sortOptionsService','$filter', 'commonsUserService',
   function($scope, $state, $stateParams, hcpPatientService, patientService, notyService, DoctorService, clinicadminPatientService, dateService, clinicService, $timeout, searchFilterService, StorageService, sortOptionsService, $filter,commonsUserService) {   
   var searchOnLoad = true;    
-	$scope.init = function(){     
+  $scope.init = function(){     
     if($state.current.name === 'hcppatientDemographic'){
       $scope.getPatientInfo($stateParams.patientId, $scope.setEditMode);
     }else if($state.current.name === 'hcppatientdemographicEdit'){
@@ -26,7 +26,7 @@ angular.module('hillromvestApp')
       $scope.getClinicsAssociatedToHCP();  
       $scope.initCount($stateParams.clinicId);               
     }
-	};
+  };
 
 
   $scope.getClinicsAssociatedToHCP = function(){
@@ -66,6 +66,40 @@ angular.module('hillromvestApp')
     clinicadminPatientService.getPatientInfo(patinetId, $stateParams.clinicId,StorageService.get('logged').userId).then(function(response){
       $scope.patient = response.data.patientUser;
       $scope.patient.zipcode = commonsUserService.formatZipcode($scope.patient.zipcode);
+      $scope.langKey = $scope.patient.langKey;
+        $scope.fullNameLangKey = "";
+        if($scope.langKey== "en")
+        {
+          $scope.fullNameLangKey = "English";
+        }
+        else if($scope.langKey== "fr")
+        {
+          $scope.fullNameLangKey = "French";
+        }
+        else if($scope.langKey== "de")
+        {
+          $scope.fullNameLangKey = "German";
+        }
+         else if($scope.langKey== "hi")
+        {
+          $scope.fullNameLangKey = "Hindi";
+        }
+         else if($scope.langKey== "it")
+        {
+          $scope.fullNameLangKey = "Italian";
+        }
+         else if($scope.langKey== "ja")
+        {
+          $scope.fullNameLangKey = "Japanese";
+        }
+         else if($scope.langKey== "es")
+        {
+          $scope.fullNameLangKey = "Spanish";
+        }
+         else if($scope.langKey== "zh")
+        {
+          $scope.fullNameLangKey = "Chinese";
+        }
       if(callback){
         callback($scope.patient);
       }
@@ -94,16 +128,16 @@ angular.module('hillromvestApp')
     });
   };
 
-	$scope.getPatientsWithNoEvents = function(filter, clinicId, pageNo, offset){
+  $scope.getPatientsWithNoEvents = function(filter, clinicId, pageNo, offset){
     var userId = StorageService.get('logged').userId;
-		hcpPatientService.getAssociatedPatientsWithNoEvents(filter, clinicId, userId, pageNo, offset).then(function(response){
+    hcpPatientService.getAssociatedPatientsWithNoEvents(filter, clinicId, userId, pageNo, offset).then(function(response){
       $scope.patients = response.data.patientUsers;
       $scope.total = (response.headers()['x-total-count']) ? response.headers()['x-total-count'] : $scope.patients.length;
       $scope.pageCount = Math.ceil($scope.total / 10);
     }).catch(function(response){
       notyService.showError(response);
     });
-	};
+  };
 
   $scope.getPatientById = function(patientId){
     patientService.getPatientInfo(patientId).then(function(response){
@@ -162,23 +196,23 @@ angular.module('hillromvestApp')
     });
   };
 
-	$scope.selectPatient = function(patient){
+  $scope.selectPatient = function(patient){
     $state.go('hcppatientOverview',{'patientId': patient.id, 'clinicId': $scope.selectedClinic.id});
-	};
+  };
 
-	$scope.switchPatientTab = function(value){     
-		value = 'hcp' + value;
-		$state.go(value, {'patientId':$stateParams.patientId, 'clinicId': $stateParams.clinicId});
-	};
+  $scope.switchPatientTab = function(value){     
+    value = 'hcp' + value;
+    $state.go(value, {'patientId':$stateParams.patientId, 'clinicId': $stateParams.clinicId});
+  };
 
-	$scope.goToPatientDashboard = function(value){
+  $scope.goToPatientDashboard = function(value){
       var clinicId =  ($scope.selectedClinic && $scope.selectedClinic.id) ? $scope.selectedClinic.id : ($stateParams.clinicId ? $stateParams.clinicId : null);
       $state.go(value, {'clinicId': clinicId});
-	};
+  };
 
 
 
-	$scope.searchPatients = function(track){
+  $scope.searchPatients = function(track){
     if (track !== undefined) {
       if (track === "PREV" && $scope.currentPageIndex > 1) {
         $scope.currentPageIndex--;
@@ -207,7 +241,7 @@ angular.module('hillromvestApp')
     }).catch(function (response) {
       notyService.showError(response);
     });           
-	};
+  };
 
   $scope.switchClinic = function(clinic){
     if($scope.selectedClinic.id !== clinic.id){
@@ -260,7 +294,7 @@ angular.module('hillromvestApp')
   $scope.searchOnFilters = function(){    
     $scope.searchPatients();
   }; 
-	
+  
   $scope.sortType = function(sortParam){ 
     var toggledSortOptions = {};
     $scope.sortOption = "";
