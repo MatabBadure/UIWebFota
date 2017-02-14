@@ -66,6 +66,40 @@ angular.module('hillromvestApp')
     clinicadminPatientService.getPatientInfo(patinetId, $stateParams.clinicId,StorageService.get('logged').userId).then(function(response){
       $scope.patient = response.data.patientUser;
       $scope.patient.zipcode = commonsUserService.formatZipcode($scope.patient.zipcode);
+      $scope.langKey = $scope.patient.langKey;
+        $scope.fullNameLangKey = "";
+        if($scope.langKey== "en")
+        {
+          $scope.fullNameLangKey = "English";
+        }
+        else if($scope.langKey== "fr")
+        {
+          $scope.fullNameLangKey = "French";
+        }
+        else if($scope.langKey== "de")
+        {
+          $scope.fullNameLangKey = "German";
+        }
+         else if($scope.langKey== "hi")
+        {
+          $scope.fullNameLangKey = "Hindi";
+        }
+         else if($scope.langKey== "it")
+        {
+          $scope.fullNameLangKey = "Italian";
+        }
+         else if($scope.langKey== "ja")
+        {
+          $scope.fullNameLangKey = "Japanese";
+        }
+         else if($scope.langKey== "es")
+        {
+          $scope.fullNameLangKey = "Spanish";
+        }
+         else if($scope.langKey== "zh")
+        {
+          $scope.fullNameLangKey = "Chinese";
+        }
       if(callback){
         callback($scope.patient);
       }
