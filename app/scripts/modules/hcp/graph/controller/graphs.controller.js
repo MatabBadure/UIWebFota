@@ -21,6 +21,9 @@ angular.module('hillromvestApp')
       return ( (parseInt(noOfDataPoints/pInterval) > 0) && noOfDataPoints%pInterval > remainder) ? parseInt(noOfDataPoints/sInterval) : ((parseInt(noOfDataPoints/pInterval) > 0)? parseInt(noOfDataPoints/pInterval): 1) ; 
     };
 	$scope.init = function() {
+		$scope.VisiVest = true;
+	    $scope.Monarch = true;
+	    $scope.ClinicDashboardDeviceType = searchFilters.VisiVest; //By default and when both the checkboxes are selected/unselected devicetype is set to Vest
 		$scope.cumulativeStatitics = {};
 		$scope.badgestatistics = {};
 		$scope.cumulativeStatitics.isMissedTherapyDays = true;
@@ -74,9 +77,48 @@ angular.module('hillromvestApp')
 		else if($state.current.name === 'clinicDashboard' || $state.current.name === 'clinicDashboardAssociate' || $state.current.name === 'clinicDashboardRcadmin' || $state.current.name === 'clinicDashboardCustomerService'){
 			$scope.getclinicAdminID($scope.toStateParams.clinicId);
 		}
-		    
+		 $scope.setActivePatients();   
 	};
-
+    	$scope.setActivePatients = function(){
+	//the visivest/monarch patients number API will come here
+	$scope.numberofVisiVestPatients = 10;
+	    $scope.numberofMonarchPatients = 2;
+	    $scope.totalnumberofActivePatients = $scope.numberofVisiVestPatients + $scope.numberofMonarchPatients;	
+	}
+     // for patient list based on device selection starts from here
+     $scope.getclinicDashboardDataBasedonDevice = function(check){
+     	if ($scope.VisiVest==true && $scope.Monarch!=true)
+     	{
+          $scope.ClinicDashboardDeviceType = searchFilters.VisiVest;
+          $scope.totalnumberofActivePatients = $scope.numberofVisiVestPatients;
+         // alert(searchFilters.VisiVest);
+          
+     	}
+     	else if ($scope.Monarch==true && $scope.VisiVest!=true)
+     	{
+          $scope.ClinicDashboardDeviceType = searchFilters.Monarch;
+          //alert($scope.ClinicDashboardDeviceType);
+          $scope.totalnumberofActivePatients = $scope.numberofMonarchPatients;
+          
+     	}
+     	else if ($scope.Monarch==true && $scope.VisiVest==true)
+     	{
+          $scope.ClinicDashboardDeviceType = searchFilters.VisiVest;
+          $scope.totalnumberofActivePatients = $scope.numberofVisiVestPatients + $scope.numberofMonarchPatients;
+         // alert($scope.ClinicDashboardDeviceType);
+          
+     	}
+     	else if ($scope.Monarch!=true && $scope.VisiVest!=true)
+     	{
+          $scope.ClinicDashboardDeviceType = searchFilters.VisiVest;
+          $scope.totalnumberofActivePatients = $scope.numberofVisiVestPatients + $scope.numberofMonarchPatients;
+         // alert($scope.ClinicDashboardDeviceType);
+          
+     	}
+     	var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : $stateParams.clinicId;
+     	$scope.getclinicAdminID(clinicId);
+       };
+    // for patient list based on device selection ends from here 
 	$scope.getclinicAdminID = function(clinicId){
       clinicService.getClinicAdmins(clinicId).then(function(response){
         $scope.clinicAdmins = response.data.clinicAdmin;
@@ -200,7 +242,7 @@ angular.module('hillromvestApp')
    };*/
    $scope.getStatistics = function(clinicId, userId){		
 		if($state.current.name === 'hcpdashboard'){
-			hcpDashBoardService.getStatistics(clinicId, userId).then(function(response){
+			hcpDashBoardService.getStatistics(clinicId, userId, $scope.ClinicDashboardDeviceType).then(function(response){
 				  $scope.statistics = response.data.statitics;
 				  $scope.statistics.date = $scope.getYesterday();				  
 				  $scope.toDate = dateService.getDateFromTimeStamp(new Date($scope.statistics.date),hcpDashboardConstants.USdateFormat,'/');
@@ -210,7 +252,7 @@ angular.module('hillromvestApp')
 				});
 		} else if($state.current.name === 'clinicadmindashboard'){
 			$scope.prescribeDevice = true;
-		  clinicadminService.getStatistics(clinicId, userId).then(function(response){
+		  clinicadminService.getStatistics(clinicId, userId, $scope.ClinicDashboardDeviceType).then(function(response){
 		  $scope.statistics = response.data.statitics;
 		  $scope.statistics.date = $scope.getYesterday();
 		  $scope.toDate = dateService.getDateFromTimeStamp(new Date($scope.statistics.date),hcpDashboardConstants.USdateFormat,'/');
@@ -222,7 +264,7 @@ angular.module('hillromvestApp')
 
 		}
 		else if($state.current.name === 'clinicDashboard' || $state.current.name === 'clinicDashboardAssociate' || $state.current.name === 'clinicDashboardRcadmin' || $state.current.name === 'clinicDashboardCustomerService'){
-		  clinicadminService.getStatistics(clinicId, userId).then(function(response){
+		  clinicadminService.getStatistics(clinicId, userId, $scope.ClinicDashboardDeviceType).then(function(response){
 		  $scope.statistics = response.data.statitics;
 		  $scope.statistics.date = $scope.getYesterday();
 		  $scope.toDate = dateService.getDateFromTimeStamp(new Date($scope.statistics.date),hcpDashboardConstants.USdateFormat,'/');
@@ -387,7 +429,7 @@ angular.module('hillromvestApp')
 	$scope.getCumulativeGraphData = function() {
 		$scope.noDataAvailable = false;						
 		if($scope.selectedClinic){					
-			hcpDashBoardService.getCumulativeGraphPoints($scope.hcpId, $scope.selectedClinic.id, dateService.getDateFromTimeStamp($scope.fromTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), $scope.groupBy).then(function(response){
+			hcpDashBoardService.getCumulativeGraphPoints($scope.hcpId, $scope.selectedClinic.id, dateService.getDateFromTimeStamp($scope.fromTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), $scope.groupBy, $scope.ClinicDashboardDeviceType).then(function(response){
 				$scope.cumulativeChartData = response.data;	
 				if($scope.cumulativeChartData && typeof($scope.cumulativeChartData) === "object"){ 
 					angular.forEach($scope.cumulativeChartData.xAxis.categories, function(x, key){
@@ -437,7 +479,7 @@ angular.module('hillromvestApp')
 	
 	$scope.getTreatmentGraphData = function() {
 		if($scope.selectedClinic){
-			hcpDashBoardService.getTreatmentGraphPoints($scope.hcpId, $scope.selectedClinic.id, dateService.getDateFromTimeStamp($scope.fromTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), $scope.groupBy).then(function(response){			
+			hcpDashBoardService.getTreatmentGraphPoints($scope.hcpId, $scope.selectedClinic.id, dateService.getDateFromTimeStamp($scope.fromTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), $scope.groupBy, $scope.ClinicDashboardDeviceType).then(function(response){			
 				$scope.treatmentChartData = response.data;
 				if($scope.treatmentChartData && typeof($scope.treatmentChartData) === "object"){ 
 					$scope.noDataAvailable = false;
