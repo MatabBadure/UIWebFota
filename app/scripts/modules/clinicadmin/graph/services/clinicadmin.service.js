@@ -3,8 +3,8 @@
 angular.module('hillromvestApp')
   .factory('clinicadminService',['$http', 'headerService', 'URL', function ($http, headerService, URL) {
     return {
-      getStatistics: function(clinicId, userId){
-        var url = URL.getStatistics.replace('USERID', userId).replace('CLINICID', clinicId);
+      getStatistics: function(clinicId, userId, deviceType){
+        var url = URL.getStatistics.replace('USERID', userId).replace('CLINICID', clinicId).replace('DEVICETYPE', deviceType);
         return $http.get(url, {
           headers: headerService.getHeader()
         });

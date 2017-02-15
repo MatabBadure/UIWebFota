@@ -23,7 +23,7 @@ angular.module('hillromvestApp')
 	'getAdherenceDays' : 'api/codeValues/adherence_setting',
 	'searchHcpUser': 'api/user/hcp/search?searchString=',
 	'addPatientNotes':'api/memoNotes',
-	'getStatistics':'/api/users/USERID/clinics/CLINICID/statistics',
+	'getStatistics':'/api/users/USERID/clinics/CLINICID/statistics?deviceType=DEVICETYPE',
 	'getAssociatedPatientsByFilter':'/api/users/USERID/clinics/CLINICID/patients?filterBy=FILTER&page=PAGENO&per_page=OFFSET',
 	'getAssociatedPatientsWithNoEvents':'/api/users/USERID/clinics/CLINICID/patients/FILTER?&page=PAGENO&per_page=OFFSET',
 	'getClinicsAssociatedToCliniadmin' : '/api/user/USERID/clinics',
