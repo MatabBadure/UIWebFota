@@ -326,8 +326,8 @@ $scope.showPatientUpdateModal = function(form){
   
    if((form.$invalid )||($scope.checkedone == false && $scope.checkedtwo == false) || ($scope.checkedtwo == true && $scope.announcement.clinic == undefined) || ($scope.checkedtwo == true && $scope.announcement.clinic == 'Speciality' && $scope.announcement.clinicType == undefined) || ($scope.checkedone == true && $scope.announcement.patientType == undefined) || ($scope.files.length == 0) || ($scope.dateFlag == true) || ($scope.nonPDF == true)){
         $scope.resetsubmitted = true;
-        return false;
         $scope.showModal = false;
+        return false;
       }
       else{
 $scope.showModal = true;
@@ -338,8 +338,8 @@ $scope.showannouncementUpdateModal = function(form){
 
    if((form.$invalid )||($scope.checkedone == false && $scope.checkedtwo == false) || ($scope.checkedtwo == true && $scope.announcement.clinic == undefined) || ($scope.checkedtwo == true && $scope.announcement.clinic == 'Speciality' && $scope.announcement.clinicType == undefined) || ($scope.checkedone == true && $scope.announcement.patientType == undefined) || ($scope.dateFlag == true) || ($scope.nonPDF == true)){
         $scope.resetsubmitted = true;
-        return false;
         $scope.showModalUpdate = false;
+        return false;
       }
       else{
 $scope.showModalUpdate = true;

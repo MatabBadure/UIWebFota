@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('hillromvestApp')
-.service('exportutilService', ['dateService', 'pdfServiceConstants', 
-  function (dateService, pdfServiceConstants) {  
+.service('exportutilService', ['dateService', 'pdfServiceConstants', '$rootScope',
+  function (dateService, pdfServiceConstants,$rootScope) {  
   var g_pdfMetaData = {
       rTitle: 'HillRom'
       ,rTitle1: 'VisiView™ Health Portal'               
@@ -536,7 +536,12 @@ angular.module('hillromvestApp')
     completePatientAddress = (patientDetails !== null && patientDetails.zipcode) ? ((completePatientAddress.length > 1) ? (completePatientAddress+stringConstants.comma+patientDetails.zipcode) : patientDetails.zipcode) : completePatientAddress;      
     var patientPhone = (patientDetails !== null && patientDetails.mobilePhone)? patientDetails.mobilePhone : stringConstants.notAvailable;
     var patientDOB = (patientDetails !== null && patientDetails.dob)? dateService.getDateFromTimeStamp(patientDetails.dob,patientDashboard.dateFormat,'/') : stringConstants.notAvailable;    
+    if(localStorage.getItem('deviceType') == 'MONARCH'){
+    var patientDeviceType = stringConstants.deviceTypeMonarch;
+    }
+    else{
     var patientDeviceType = stringConstants.deviceType;
+  }
     var patientDeviceSlNo = (patientInfo.patientDevices && patientInfo.patientDevices[0] && patientInfo.patientDevices[0].serialNumber) ? patientInfo.patientDevices[0].serialNumber: stringConstants.notAvailable;
     var pdfMissedTherapyDays = (patientInfo.missedtherapyDays !== null && patientInfo.missedtherapyDays >= 0) ? patientInfo.missedtherapyDays : stringConstants.notAvailable;
     var pdfHMRNonAdherenceScore = (patientInfo.adherenceScore !== null && patientInfo.adherenceScore >= 0) ? patientInfo.adherenceScore : 0;

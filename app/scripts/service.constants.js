@@ -42,7 +42,10 @@ var searchFilters = {
     isActivated: "isActivated",
     authority: "authority",
     all: "All",
-    activeInactive: "all"
+    activeInactive: "all",
+    VisiVest: "VEST",
+    Monarch: "MONARCH",
+    devicetype : "deviceType="
 }
 
 var sortConstant = {
@@ -142,11 +145,12 @@ var stringConstants = {
     space: " ",
     notAvailable: "N/A",
     deviceType : "The VisiVest™ System",
+    deviceTypeMonarch : "The Monarch™ System",
     emptyString: "",
     comma: ", ",
-    runrate: "HMR Runrate",
-    averageSessionMinutes: "Average Session Minutes",
-    consecutiveMissedDays: " Consecutive Missed Days",
+   runrate: "Total Therapy Hours Runrate",
+    averageSessionMinutes: "Average Treatment Minutes",
+    consecutiveMissedDays: "Consecutive Missed Therapy days",
     consecutiveFrequencyDeviationDays : "Consecutive Frequency Deviation Days"
 
 }
@@ -188,7 +192,7 @@ angular.module('hillromvestApp').constant('pdfServiceConstants', {
         patientbenchmarkingStatistcs: " My Average Adherence Score Vs. Clinic Average Adherence Score",
         patientBMPageHeader : "Visi-View Respiratory Care",
         pdfpageHeader: "Hill-Rom Respiratory Care",
-        noHMRGraphContentForPDF : "Protocol and HMR Graph is Not Available because of No Data",
+        noHMRGraphContentForPDF : "Protocol and Total Therapy Hours Graph is Not Available because of No Data",
         signatureContent : "Electronically signed by "
     },
     style:{
