@@ -14,6 +14,9 @@ angular.module('hillromvestApp')
 				$scope.getunreadcount(clinicid);
 			}	
 	}
+	$rootScope.getDeviceType = function(){
+	return (localStorage.getItem('deviceType'));	
+	}
 	
 
     $scope.mainInit = function(){    		
