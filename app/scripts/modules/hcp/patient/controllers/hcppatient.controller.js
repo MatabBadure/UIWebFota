@@ -197,6 +197,7 @@ angular.module('hillromvestApp')
   };
 
 	$scope.selectPatient = function(patient){
+        localStorage.setItem('deviceType', patient.deviceType);
     $state.go('hcppatientOverview',{'patientId': patient.id, 'clinicId': $scope.selectedClinic.id});
 	};
 
