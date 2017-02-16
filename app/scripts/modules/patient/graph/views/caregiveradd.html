@@ -2,8 +2,10 @@
 <div class="container admin-user">
   <div class="col-md-16 margin-top reset-padding">
    <div class="user-gen-details">
+   <span ng-class="{'monarchIcon': (getDeviceType() =='MONARCH'), 'visivestIcon': (getDeviceType() =='VEST')}">
      <span class="user-gen-details--name">{{slectedPatient.firstName}} {{slectedPatient.lastName}}</span>
      <span class="user-gen-details--hr-id">{{slectedPatient.hillromId}}</span>
+     </span>
    </div>
   </div>
 </div>
