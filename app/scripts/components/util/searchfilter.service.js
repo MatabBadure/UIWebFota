@@ -78,7 +78,7 @@ angular.module('hillromvestApp')
             if(filter.VisiVest && filter.Monarch){
             // the following commented code is for later use when on selection of both devices All should be passed- incomplete from Back-end as of now
            // filterString += searchFilters.deviceType + searchFilters.all + searchFilters.colon + 1 + searchFilters.semicolon;
-            filterString += searchFilters.amp + searchFilters.devicetype + searchFilters.VisiVest ;
+            filterString += searchFilters.amp + searchFilters.devicetype + searchFilters.allCaps ;
            }
              else if(filter.VisiVest && !filter.Monarch){
             filterString += searchFilters.amp + searchFilters.devicetype + searchFilters.VisiVest ; 
@@ -89,7 +89,7 @@ angular.module('hillromvestApp')
             else if(!filter.VisiVest && !filter.Monarch){
             // the following commented code is for later use when on selection of both devices All should be passed- incomplete from Back-end as of now
            // filterString += searchFilters.deviceType + searchFilters.all + searchFilters.colon + 1 + searchFilters.semicolon;
-            filterString += searchFilters.amp + searchFilters.devicetype + searchFilters.VisiVest ;
+            filterString += searchFilters.amp + searchFilters.devicetype + searchFilters.allCaps ;
            }
            return filterString;
         }
