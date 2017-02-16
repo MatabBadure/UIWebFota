@@ -205,7 +205,7 @@ angular.module('hillromvestApp')
        *
        */
       getDevices: function(id) {
-        var url = URL.deviceAssociatedToPatient.replace('PATIENTID', id);
+        var url = URL.deviceAssociatedToPatient.replace('PATIENTID', id).replace('DEVICETYPE',localStorage.getItem('deviceType'));
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -350,7 +350,7 @@ angular.module('hillromvestApp')
       },
 
       getDeviceDataAsCSV: function(patientId, startDateTimestamp, endDateTimestamp){
-        var url = URL.deviceDataAsCSV.replace('PATIENTID', patientId).replace('STARTDATE', startDateTimestamp).replace('ENDDATE', endDateTimestamp);
+        var url = URL.deviceDataAsCSV.replace('PATIENTID', patientId).replace('STARTDATE', startDateTimestamp).replace('ENDDATE', endDateTimestamp).replace('DEVICETYPE', localStorage.getItem('deviceType'));
         return $http.get(url, {
           headers: headerService.getHeaderForXls(),responseType: "arraybuffer"
         });
