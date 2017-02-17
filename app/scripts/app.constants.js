@@ -143,5 +143,6 @@ angular.module('hillromvestApp')
 	'updateAnnouncements' : 'api/announcement/update',
 	'getPatientType' : 'api/codeValues/announcement_patient_type', 
 	'getlatestAdherenceWindow' : 'api/patient/USERID/clinics',
-	'getBadgeStatistics':'/api/users/USERID/clinics/CLINICID/badgestatistics?from=FROM_DATE&to=TO_DATE'
+	'getBadgeStatistics':'/api/users/USERID/clinics/CLINICID/badgestatistics?from=FROM_DATE&to=TO_DATE',
+	'getActivePatients':'api/activePatCountForDevice/CLINICID'
 });
