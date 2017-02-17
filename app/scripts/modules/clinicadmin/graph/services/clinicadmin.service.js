@@ -20,6 +20,15 @@ angular.module('hillromvestApp')
         return $http.get(url, {
           headers: headerService.getHeader()
         });
+      },
+      getActivePatientsCount: function(clinicId){
+        var url = URL.getActivePatients.replace('CLINICID', clinicId);
+      return $http.get(url, {
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });
+        
       }
-    };
+    }
 }]);
