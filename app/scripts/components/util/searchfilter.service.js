@@ -8,7 +8,8 @@ angular.module('hillromvestApp')
               searchFilter.isActive = true;
             }
             if(filter){
-              switch(filter){
+              for(var i=0;i<filter.length;i++){
+                switch(filter[i]){
                 case 'isActive':searchFilter.isActive = true;
                 break;
                 case 'isInActive':searchFilter.isInActive = true;
@@ -23,7 +24,15 @@ angular.module('hillromvestApp')
                 break;
                 case 'isPending':searchFilter.isPending = true;
                 break;
+                case 'VisiVest':searchFilter.VisiVest = true;
+                break;
+                case 'Monarch':searchFilter.Monarch = true;
+                break;
+                case 'All': searchFilter.VisiVest = true;
+                            searchFilter.Monarch = true;
+                break;
               }
+            }
             }else{
               searchFilter.isActive = true;
               searchFilter.isInActive = false;
