@@ -19,7 +19,8 @@ angular.module('hillromvestApp')
     }else if($state.current.name === 'hcppatientdashboard'){
       $scope.sortOption = "";
       $scope.sortPatientList = sortOptionsService.getSortOptionsForPatientList();
-      $scope.searchFilter = searchFilterService.initSearchFiltersForPatient($stateParams.filter, true);
+        var filter = ($stateParams.filter).split("+");
+      $scope.searchFilter = searchFilterService.initSearchFiltersForPatient(filter, true);
       $scope.currentPageIndex = 1;
       $scope.perPageCount = 10;
       $scope.pageCount = 0;
