@@ -28,8 +28,9 @@ angular.module('hillromvestApp')
       } else if (currentRoute === 'clinicProfile' || currentRoute === 'clinicProfileRcadmin' || currentRoute === 'clinicProfileAssociate' || currentRoute === 'clinicProfileCustomerService'){
         $scope.initClinicProfile($stateParams.clinicId);
       } else if(currentRoute === 'clinicAssociatedPatients' || currentRoute === 'clinicAssociatedPatientsRcadmin' || currentRoute === 'clinicAssociatedPatientsAssociate' || currentRoute === 'clinicAssociatedPatientsCustomerService'){
-        $scope.searchFilter = {};    
-        $scope.searchFilter = searchFilterService.initSearchFiltersForPatient($stateParams.filter, true);
+        $scope.searchFilter = {}; 
+              var filter = ($stateParams.filter).split("+");  
+        $scope.searchFilter = searchFilterService.initSearchFiltersForPatient(filter, true);
         $scope.initPaginationVars();
         $scope.initClinicAssoctPatients($stateParams.clinicId);
       } else if(currentRoute === 'clinicAssociatedHCP' || currentRoute === 'clinicAssociatedHCPRcadmin' || currentRoute === 'clinicAssociatedHCPAssociate' || currentRoute === 'clinicAssociatedHCPCustomerService'){
