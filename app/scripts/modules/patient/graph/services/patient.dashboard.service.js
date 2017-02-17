@@ -167,7 +167,7 @@ angular.module('hillromvestApp')
 
 
       getAdeherenceData : function(userId, startDate, endDate){
-        var url = URL.getAdeherenceData.replace('USERID', userId).replace('FROMDATE', startDate).replace('TODATE', endDate)
+        var url = URL.getAdeherenceData.replace('USERID', userId).replace('FROMDATE', startDate).replace('TODATE', endDate).replace('DEVICETYPE',localStorage.getItem('deviceType'));
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {

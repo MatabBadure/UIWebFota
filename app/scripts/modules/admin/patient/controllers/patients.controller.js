@@ -445,6 +445,7 @@ angular.module('hillromvestApp')
     {
       
       //$scope.resetsubmitted = true;
+      var deviceType = localStorage.getItem('deviceType');
       var createdById = StorageService.get('logged').userId;
       var userID = $stateParams.patientId;
       var patientHillromId = $scope.patientInformation;
@@ -469,7 +470,8 @@ angular.module('hillromvestApp')
       'patientId': patientHillromId,
       'resetStartDate': resetDateFinal,
       'resetScore': resetTo,
-      'justification': reason
+      'justification': reason,
+      'deviceType' : deviceType
       };
      
 

@@ -42,6 +42,7 @@ angular.module('hillromvestApp')
     {
       
       //$scope.resetsubmitted = true;
+      var deviceType = localStorage.getItem('deviceType');
       var createdById = StorageService.get('logged').userId;
       var userID = $stateParams.patientId;
       var patientHillromId = $scope.patientInformation;
@@ -49,11 +50,13 @@ angular.module('hillromvestApp')
       var res = resetDate.split("/");
       var resetDateFinal = res[2]+"-"+res[0]+"-"+res[1];
       var resetTo = $scope.scoreToReset;
-      if($scope.ShowOther)
-      {
+      var tempJustification = $scope.justification;
+      if(tempJustification=="Other")
+      { 
         var reason = $scope.othersContent;
+
       }
-      else(!$scope.ShowOther)
+      else
       {
         var reason = $scope.justification;
       }
@@ -64,7 +67,8 @@ angular.module('hillromvestApp')
       'patientId': patientHillromId,
       'resetStartDate': resetDateFinal,
       'resetScore': resetTo,
-      'justification': reason
+      'justification': reason,
+      'deviceType' : deviceType
       };
 
       patientService.addAdherenceScore($scope.patientAdherenceInfo).then(function(response){
@@ -320,6 +324,7 @@ angular.module('hillromvestApp')
   };
 
   $scope.selectPatient = function(patient){
+    localStorage.setItem('deviceType', patient.deviceType);
     var clinicId = ($scope.selectedClinic && $scope.selectedClinic.id) ? $scope.selectedClinic.id : ($stateParams.clinicId ? $stateParams.clinicId : null);
    $scope.deviceType = patient.deviceType;
     $state.go('clinicadminpatientOverview',{'patientId': patient.id, 'clinicId': clinicId});
