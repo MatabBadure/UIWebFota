@@ -79,19 +79,6 @@ angular.module('hillromvestApp')
 		}
 	  
 	};
-  /*  	$scope.setActivePatients = function(clinicId){
-	//the visivest/monarch patients number API will come here
-	var res = clinicadminService.getActivePatientsCount(clinicId);
-	
-	console.log("response");
-	console.log(res);
-	$scope.numberofVisiVestPatients = res.VEST;
-	    $scope.numberofMonarchPatients = res.MONARCH;
-	    var onlyActivePatients = true; //to call only active patients but not the getclinicadminid()
-	    $scope.getclinicDashboardDataBasedonDevice(onlyActivePatients);
-	    /*$scope.totalnumberofActivePatients = $scope.numberofVisiVestPatients + $scope.numberofMonarchPatients;*/	
-	
-	//};*/
 
 	$scope.setActivePatients = function(clinicId){
 	//the visivest/monarch patients number API will come here
