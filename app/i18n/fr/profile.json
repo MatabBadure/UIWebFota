@@ -1,0 +1,156 @@
+{
+  "profile" : {
+    "page-title":{
+      "my-profile":"HillRom | My Profile",
+      "update-password": "HillRom | Update Password",
+      "notification-settings": "HillRom | Notification Settings",
+      "profile-update": "HillRom | Profile Update",
+      "profile-settings": "HillRom | Profile Settings",
+      "benchmarking": "Hillrom | Benchmarking"
+    },
+    "tabs": {
+      "profile-details": "Profile Details",
+      "update-password": "Update Password",
+      "setting": "Notification Settings",
+      "profile-setting": "Profile Settings",
+      "benchmarking": "Benchmarking"
+    },
+    "userId":"User ID",
+    "title-name": "Title",
+    "first-name": "First Name",
+    "middle-name": "Middle Name",
+    "last-name": "Last Name",
+    "employee-id": "Employee ID",
+    "faxNumber": "Fax Number",
+    "credentials": "Credentials",
+    "speciality": "Speciality",
+    "zipcode": "Zipcode",
+    "city": "City",
+    "primaryPhone":"Primary Phone",
+    "mobilePhone": "Mobile Phone",
+    "address": "Address",
+    "state": "State",
+    "phone": "Mobile Number",
+    "hr-id": "HR ID",
+    "email": "Email",
+    "role-text":"Select Role",
+    "view-role-text":"Role",
+    "role": {
+      "super-admin": "Super Admin",
+      "account-services": "Account Services",
+      "associates":"Associates",
+      "customerservices" : "Customer Service",
+      "default" : "Select a role"
+    },
+    "update-button-text": "Update",
+    "cancel-button-text": "Cancel",
+    "reset-button-text": "Reset",
+    "edit-button-text": "Edit",
+    "security-ques": "Security Question",
+    "cur-pswd": "Current Password",
+    "new-pswd": "New Password",
+    "confirm-pswd": "Confirm Password",
+    "mobile-no": "Mobile",
+    "security-ans": "Answer",
+    "notification": "Notifications",
+    "noti-desc": "The Notification will be sent to your registered email address. You can Switch On/Off",
+    "noti-verbiage_old":"You can switch the notification on or off by clicking on the pill icon. Green indicates it is turned on while grey indicates it is turned off.",
+    "noti-verbiage":"Turn On or Off the notification by clicking the toggle switch.",
+
+    "noti": {
+      "miss-therapy-days" : "Missed Therapy Days",
+      "hmr-non-adher": "HMR Non-Adherence",
+      "setting-deviation": "Setting Deviation",
+      "below-treatment":"Below Treatment Minutes",
+      "miss-therapy-days-desc": "You will get Notification email if you missed therapy for three or more days.",
+      "miss-therapy-new":"You will receive a notification if one or more of your patients missed a day of therapy.",
+      "hmr-non-adher-desc": "You will get Notification email if your HMR Non-Adherence is below protocol for three or more days.",
+      "hmr-non-adher-new":"You will receive a notification if one or more of your patients did not complete the therapy time in their protocol.",
+      "setting-deviation-desc": "You will get Notification email if your frequency is 15% below protocol for three or more days.",
+      "setting-dev-new":"You will receive a notification if one or more of your patients frequency setting was 15% below protocol.",
+      "messages":"Messages",
+      "message-new":"You will receive a notification if you have one or more messages in your clinic's inbox."
+    },
+    "noti_patient": {
+      "miss-therapy-days" : "Missed Therapy Days",
+      "hmr-non-adher": "HMR Non-Adherence",
+      "setting-deviation": "Setting Deviation",
+      "below-treatment":"Below Treatment Minutes",
+      "miss-therapy-days-desc": "You will get Notification email if you missed therapy for three or more days.",
+      "miss-therapy-new":"You will receive a notification if you missed a day of therapy.",
+      "hmr-non-adher-desc": "You will get Notification email if your HMR Non-Adherence is below protocol for three or more days.",
+      "hmr-non-adher-new":"You will receive a notification if you did not complete the therapy time in your protocol.",
+      "setting-deviation-desc": "You will get Notification email if your frequency is 15% below protocol for three or more days.",
+      "setting-dev-new":"You will receive a notification if your frequency setting was 15% below protocol.",
+      "messages":"Messages",
+      "message-new":"You will receive a notification if you have one or more messages in your inbox."
+    },
+    "noti_hcp": {
+      "miss-therapy-days" : "Missed Therapy Days",
+      "hmr-non-adher": "HMR Non-Adherence",
+      "setting-deviation": "Setting Deviation",
+      "miss-therapy-days-desc": "You will receive a notification if one or more of your patients missed a day of therapy.",
+      "hmr-non-adher-desc": "You will receive a notification if one or more of your patients did not complete the therapy time in their protocol.",
+      "setting-deviation-desc": "You will receive a notification if one or more of your patients frequency setting was 15% below protocol.",
+      "messages":"Messages",
+      "message-new":"You will receive a notification if you have one or more messages in your clinic's inbox."
+    },
+    "select-secutity-question": "-- select a security question --",
+    "clinic":{
+      "clinic-name":"Clinic Name",
+      "address":"Address",
+      "city":"City",
+      "state":"State",
+      "city-state": "City/State",
+      "phoneNumber":"Phone Number",
+      "type":"Type",
+      "hillRom-id":"Hillrom ID",
+      "status":"Status",
+      "clinicType":{
+        "parent": "Parent",
+        "satellite": "Satellite"
+      },
+      "status-type":{
+        "active":"Active",
+        "inactive":"Inactive"
+      },
+      "clinic-title" : "Clinic"
+    },
+
+    "hcp-profile-update":{
+      "warning": "HCP Profile - Details",
+      "message": "You have made changes/updates for HCP Profile. Are you sure to make updates?"
+    },
+
+    "clinicadmin-profile-update":{
+      "warning": "Clinic Profile - Details",
+      "message": "You have made changes/updates for Clinic Profile. Are you sure to make updates?"
+    },
+    "update":{
+      "warning" : "Update Profile",
+      "message" : "You have made changes/updates for your profile. Are you sure to make updates?"
+    },
+    "passwordUpdate":{
+      "warning" : "Update Password",
+      "message" : "You are updating your password and will no longer be able to access using this password again. Are you sure to continue?"
+    },
+    "emailUpdate":{
+      "warning" : "Update Email",
+      "message" : "You are updating your email and will no longer be able to access using this email again. Are you sure to continue?"
+    },
+    "securityQuestion":{
+      "warning" : "Update Security Q & A",
+      "message" : "Are you sure to update your Security Question and Answer?"
+    }
+  },
+  "benchmarking":{
+    "day": "Day",
+    "week": "Week",
+    "month": "Month",
+    "year": "Year",
+    "benchmark": "Benchmark",
+    "parameter": "Parameter",
+    "comparewith": "Compare With",
+    "geography": "Geography"
+  }
+}

@@ -18,8 +18,8 @@ angular.module('hillromvestApp')
         })
       }
       },
-      controller: ['$scope', '$timeout', 'patientService', '$state', '$stateParams', 'notyService','searchFilterService', 'sortOptionsService', 'StorageService', 'loginConstants',
-      function($scope, $timeout, patientService, $state, $stateParams, notyService, searchFilterService, sortOptionsService, StorageService,loginConstants) {
+      controller: ['$scope', '$timeout', 'patientService', '$state', '$stateParams', 'notyService','searchFilterService', 'sortOptionsService', 'StorageService', 'loginConstants', '$rootScope',
+      function($scope, $timeout, patientService, $state, $stateParams, notyService, searchFilterService, sortOptionsService, StorageService,loginConstants,$rootScope) {
         var searchOnLoad = true;
         $scope.sortPatientList = sortOptionsService.getSortOptionsForPatientList();
         $scope.init = function() {
@@ -51,6 +51,7 @@ angular.module('hillromvestApp')
         };
 
         $scope.selectPatient = function(patient) {
+          localStorage.setItem('deviceType', patient.deviceType);
           if($scope.userRole === loginConstants.role.admin){
             $state.go('patientOverview', {
               'patientId': patient.id
@@ -63,8 +64,7 @@ angular.module('hillromvestApp')
             $state.go('associatepatientOverview', {
               'patientId': patient.id
             });
-          }
-             else if($scope.userRole === loginConstants.role.customerservices){
+          }else if($scope.userRole === loginConstants.role.customerservices){
             $state.go('customerservicepatientOverview', {
               'patientId': patient.id
             });

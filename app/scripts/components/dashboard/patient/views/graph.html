@@ -1,8 +1,10 @@
 <div class="container admin-user">
 	<div class="col-md-16 col-sm-16 margin-top reset-padding mob_no_margin">
 		<div class="user-gen-details">
+		<span ng-class="{'monarchIcon': (getDeviceType() =='MONARCH'), 'visivestIcon': (getDeviceType() =='VEST')}">
 			<span class="user-gen-details--name">{{slectedPatient.firstName}} {{slectedPatient.lastName}}</span>
 			<span class="user-gen-details--hr-id">{{slectedPatient.hillromId}}</span>
+			</span>
 		</div>
 	</div>
 </div>
@@ -225,7 +227,13 @@
 	</div>
 	<div class="clr"></div>
 	<div class="col-md-16" class="all_graph_wrapper" ng-init="getWeekChart()" style="min-height: 300px;">
-	<div id = "NodataDiv" class="graph_nodata" ng-if = "(hmrChartData.length == 0) && noDataStatus">
+	<div id = "NodataDiv" class="graph_nodata" ng-if = "(hmrChartData.length == 0) && noDataStatus && isHMR">
+		<span class="noData_text"> No Data Available!</span>
+	</div>
+		<div id = "NodataDiv" class="graph_nodata" ng-if = "(hmrChartData.length == 0) && noDataStatus && isCompliance">
+		<span class="noData_text"> No Data Available!</span>
+	</div>
+		<div id = "NodataDiv" class="graph_nodata" ng-if = "isAdherenceTrend && noDataAvailableForAdherence">
 		<span class="noData_text"> No Data Available!</span>
 	</div>
 
@@ -548,5 +556,3 @@
 		</div>
 	</div>
 </div>
-
-

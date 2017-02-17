@@ -42,19 +42,21 @@ angular.module('hillromvestApp')
     {
       
       //$scope.resetsubmitted = true;
+      var deviceType = localStorage.getItem('deviceType');
       var createdById = StorageService.get('logged').userId;
       var userID = $stateParams.patientId;
       var patientHillromId = $scope.patientInformation;
       var resetDate = $scope.resetStartDate;
       var res = resetDate.split("/");
       var resetDateFinal = res[2]+"-"+res[0]+"-"+res[1];
-      console.log(resetDateFinal);
       var resetTo = $scope.scoreToReset;
-      if($scope.ShowOther)
-      {
+      var tempJustification = $scope.justification;
+      if(tempJustification=="Other")
+      { 
         var reason = $scope.othersContent;
+
       }
-      else(!$scope.ShowOther)
+      else
       {
         var reason = $scope.justification;
       }
@@ -65,7 +67,8 @@ angular.module('hillromvestApp')
       'patientId': patientHillromId,
       'resetStartDate': resetDateFinal,
       'resetScore': resetTo,
-      'justification': reason
+      'justification': reason,
+      'deviceType' : deviceType
       };
 
       patientService.addAdherenceScore($scope.patientAdherenceInfo).then(function(response){
@@ -199,6 +202,40 @@ angular.module('hillromvestApp')
       if($scope.patient.zipcode){
         $scope.patient.zipcode = commonsUserService.formatZipcode($scope.patient.zipcode);
       }
+      $scope.langKey = $scope.patient.langKey;
+        $scope.fullNameLangKey = "";
+        if($scope.langKey== "en")
+        {
+          $scope.fullNameLangKey = "English";
+        }
+        else if($scope.langKey== "fr")
+        {
+          $scope.fullNameLangKey = "French";
+        }
+        else if($scope.langKey== "de")
+        {
+          $scope.fullNameLangKey = "German";
+        }
+         else if($scope.langKey== "hi")
+        {
+          $scope.fullNameLangKey = "Hindi";
+        }
+         else if($scope.langKey== "it")
+        {
+          $scope.fullNameLangKey = "Italian";
+        }
+         else if($scope.langKey== "ja")
+        {
+          $scope.fullNameLangKey = "Japanese";
+        }
+         else if($scope.langKey== "es")
+        {
+          $scope.fullNameLangKey = "Spanish";
+        }
+         else if($scope.langKey== "zh")
+        {
+          $scope.fullNameLangKey = "Chinese";
+        }
       if (typeof callback === 'function') {
         callback($scope.patient);
       }
@@ -287,7 +324,9 @@ angular.module('hillromvestApp')
   };
 
   $scope.selectPatient = function(patient){
+    localStorage.setItem('deviceType', patient.deviceType);
     var clinicId = ($scope.selectedClinic && $scope.selectedClinic.id) ? $scope.selectedClinic.id : ($stateParams.clinicId ? $stateParams.clinicId : null);
+   $scope.deviceType = patient.deviceType;
     $state.go('clinicadminpatientOverview',{'patientId': patient.id, 'clinicId': clinicId});
   };
 
@@ -353,7 +392,6 @@ angular.module('hillromvestApp')
      var temp = $scope.patientNotesMemo;
     
       UserService.editUserNotes(temp).then(function (response) {
-        console.log("Notes Updated");
         UserService.editUser(data).then(function (response) {
         notyService.showMessage(response.data.message, 'success');
          $state.go('clinicadminpatientDemographic', {'patientId': $stateParams.patientId});

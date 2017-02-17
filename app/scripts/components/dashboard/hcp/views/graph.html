@@ -22,23 +22,36 @@
 						</div>
 					</div>
 					<div class="stats_header badgefiltercontainer">
-						<div class="pull-left col-md-6">
+                    <div class="pull-left col-md-6">
+					<div class="col-md-16 col-sm-16 lebel-indent">
+					<label class ="none" >
+			       <input type="checkbox" ng-model="$parent.VisiVest" ng-change="getclinicDashboardDataBasedonDevice(VisiVest)" > 
+			      <span translate="search-filter.visivest"></span>
+			      <span >Patients <!--({{ numberofVisiVestPatients }})!--></span>
+		        </label>
+				<label class ="none" >
+			      <input type="checkbox" ng-model="$parent.Monarch" ng-change="getclinicDashboardDataBasedonDevice(Monarch)" > 
+			      <span translate="search-filter.monarch"></span>
+			      <span >Patients <!--({{ numberofMonarchPatients }})!--></span>
+		          </label>
+						</div>
 						<div class="col-md-16 col-sm-16">
 							<h4 translate="doctor.dashboard.totalPatients"></h4>
+							<span class="sub_txt"><!--{{ totalnumberofActivePatients }}!--></span>
 							<span class="sub_txt">{{statistics.totalPatientCount}}</span>
 							</div>
 
 						</div>
 						<!--Commented meanwhile, will be uncommented when date range will be needed in upcoming sprints -->
-						<!-- <div class="pull-right left col-md-9 statdateipad reset-padding" id="statdateipad">
+						 <div class="pull-right left col-md-9 statdateipad reset-padding" id="statdateipad">
 						<div class="col-md-7 col-sm-7 reset-padding pull-right daterangecolor">
 							<h4 translate="doctor.dashboard.todayStatistics" id="filterdatetxt"></h4>
-							<span ng-if="isYesterday"><span class="sub_txt">{{badgestatistics.date}}</span></span>
-							<span ng-if="!isYesterday">
+							<span ng-if="isYesterday"><span class="sub_txt">{{statistics.date}}</span></span>
+							<!-- <span ng-if="!isYesterday">
 							<span class="sub_txt">{{fromdatedisplay}}</span> -
-							<span class="sub_txt">{{todatedisplay}}</span></span>
+							<span class="sub_txt">{{todatedisplay}}</span></span> -->
 							</div>
-						</div> -->
+						</div> 
 					</div>
 					<div class="stats_chart_container withFilterBadgeFilter">
 						<div class="col-3" ng-class="{noclick: selectedDateOptionBadge.indexOf('YESTERDAY') == -1}" ng-click="(!(selectedDateOptionBadge === 'WEEK') && !(selectedDateOptionBadge === 'YEAR') && !(selectedDateOptionBadge === 'CUSTOM') && !(selectedDateOptionBadge === 'MONTH')) && gotoPatients('missed_therapy')">

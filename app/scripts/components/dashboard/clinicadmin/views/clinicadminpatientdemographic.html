@@ -1,8 +1,10 @@
 <div class="container admin-user">
   <div class="col-md-16 col-sm-16 margin-top reset-padding">
    <div class="user-gen-details">
+   <span ng-class="{'monarchIcon': (getDeviceType() =='MONARCH'), 'visivestIcon': (getDeviceType() =='VEST')}">
      <span class="user-gen-details--name">{{::patient.firstName}} {{::patient.lastName}}</span>
      <span class="user-gen-details--hr-id">{{::patient.hillromId}}</span>
+     </span>
    </div>
   </div>
 </div>
@@ -61,7 +63,7 @@
             <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding" translate="patient.primary-language">
             </div>
             <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding">
-              {{::patient.langKey}}
+              {{::fullNameLangKey}}
             </div>
           </div>
         </div>

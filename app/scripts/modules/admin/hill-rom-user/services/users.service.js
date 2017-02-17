@@ -124,6 +124,7 @@ angular.module('hillromvestApp')
       },
       getNotesOfUserInInterval: function(id, fromDate, toDate, pageNo, offset) { 
         var url = admin.hillRomUser.notes + '?from=' + fromDate + '&to=' + toDate + '&userId='+id +'&page='+pageNo+'&per_page='+offset;    
+        url = url +'&deviceType='+localStorage.getItem('deviceType');
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -133,6 +134,7 @@ angular.module('hillromvestApp')
 
       getNotesOfUser: function(id, date) {
         var url = admin.hillRomUser.users + '/' + id +'/notes?date='+date; 
+        url = url +'&deviceType='+localStorage.getItem('deviceType');
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {

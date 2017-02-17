@@ -6,7 +6,7 @@
  *
  */
 angular.module('hillromvestApp')
-  .factory('patientDashBoardService',['$http', 'headerService','URL', function ($http, headerService, URL) {
+  .factory('patientDashBoardService',['$http', 'headerService','URL','$rootScope', function ($http, headerService, URL,$rootScope) {
     return {
 
       /**
@@ -23,6 +23,7 @@ angular.module('hillromvestApp')
         } else if(date !== undefined){
           url = url + '?date=' + date;
         }
+         url = url +'&deviceType='+localStorage.getItem('deviceType'); 
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -38,6 +39,7 @@ angular.module('hillromvestApp')
         } else if(date !== undefined){
           url = url + '?date=' + date;
         }
+         url = url +'&deviceType='+localStorage.getItem('deviceType'); 
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -49,6 +51,7 @@ angular.module('hillromvestApp')
         var url = patient.graph.baseURL;
         url  = url + '/' + id + '/therapyData';
         url = url + '?from=' + date + '&to=' + date ;
+          url = url +'&deviceType='+localStorage.getItem('deviceType'); 
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -100,6 +103,7 @@ angular.module('hillromvestApp')
       getHMRrunAndScoreRate: function(id, timeStamp) {
         var url = patient.graph.baseURL;
         url  = url + '/' + id + '/compliance?date=' + timeStamp;
+        url = url +'&deviceType='+localStorage.getItem('deviceType');
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -163,7 +167,7 @@ angular.module('hillromvestApp')
 
 
       getAdeherenceData : function(userId, startDate, endDate){
-        var url = URL.getAdeherenceData.replace('USERID', userId).replace('FROMDATE', startDate).replace('TODATE', endDate)
+        var url = URL.getAdeherenceData.replace('USERID', userId).replace('FROMDATE', startDate).replace('TODATE', endDate).replace('DEVICETYPE',localStorage.getItem('deviceType'));
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -175,11 +179,13 @@ angular.module('hillromvestApp')
       getcomplianceGraphData: function(id, fromTimeStamp, toTimeStamp, duration, date){
         var url = patient.graph.baseURL;
         url  = url + '/' + id + '/complianceGraphData';
+      
         if ( fromTimeStamp !== undefined && toTimeStamp !== undefined && duration !== undefined) {
           url = url + '?from=' + fromTimeStamp + '&to=' + toTimeStamp + '&duration=' + duration;
         } else if(date !== undefined){
           url = url + '?date=' + date;
-        }        
+        } 
+        url = url +'&deviceType='+localStorage.getItem('deviceType');    
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {

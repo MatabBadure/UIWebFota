@@ -3,8 +3,10 @@
 <div class="container admin-user">
   <div class="col-md-16 col-sm-16 margin-top reset-padding">
    <div class="user-gen-details">
+   <span ng-class="{'monarchIcon': (getDeviceType() =='MONARCH'), 'visivestIcon': (getDeviceType() =='VEST')}">
      <span class="user-gen-details--name">{{slectedPatient.firstName}} {{slectedPatient.lastName}}</span>
      <span class="user-gen-details--hr-id">{{slectedPatient.hillromId}}</span>
+     </span>
    </div>
   </div>
 </div>
@@ -74,8 +76,14 @@
               <div class="custom-dropdown">
                 <select name="language" ng-readonly="validateADMINorASP()" ng-model="patient.langKey">
                   <option value="" selected="selected">Select a language</option>
-                  <option value="en">English</option>
-                  <option value="fr">French</option>
+                 <option value="zh">Chinese</option>
+                 <option value="en">English</option>
+                 <option value="fr">French</option>
+                 <option value="de">German</option>
+                 <option value="hi">Hindi </option>
+                 <option value="it">Italian</option>
+                 <option value="ja">Japanese</option>
+                 <option value="es">Spanish</option> 
                 </select>
               </div>
             </div>

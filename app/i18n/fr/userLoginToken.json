@@ -3,11 +3,11 @@
         "userLoginToken" : {
             "home": {
                 "title": "UserLoginTokens",
-                "createLabel": "Créer un nouveau UserLoginToken",
-                "createOrEditLabel": "Créer ou éditer un UserLoginToken"
+                "createLabel": "Create a new UserLoginToken",
+                "createOrEditLabel": "Create or edit a UserLoginToken"
             },
             "delete": {
-                "question": "Etes-vous certain de vouloir supprimer le UserLoginToken {{ id }} ?"
+                "question": "Are you sure you want to delete UserLoginToken {{ id }}?"
             },
             "detail": {
                 "title": "UserLoginToken"
@@ -17,4 +17,3 @@
         }
     }
 }
-

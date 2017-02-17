@@ -3,11 +3,11 @@
         "securityQuestion" : {
             "home": {
                 "title": "SecurityQuestions",
-                "createLabel": "Créer un nouveau SecurityQuestion",
-                "createOrEditLabel": "Créer ou éditer un SecurityQuestion"
+                "createLabel": "Create a new SecurityQuestion",
+                "createOrEditLabel": "Create or edit a SecurityQuestion"
             },
             "delete": {
-                "question": "Etes-vous certain de vouloir supprimer le SecurityQuestion {{ id }} ?"
+                "question": "Are you sure you want to delete SecurityQuestion {{ id }}?"
             },
             "detail": {
                 "title": "SecurityQuestion"
@@ -18,4 +18,3 @@
         }
     }
 }
-
