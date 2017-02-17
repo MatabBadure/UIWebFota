@@ -280,7 +280,6 @@ angular.module('hillromvestApp')
         {
           $scope.fullNameLangKey = "Chinese";
         }
-
         if (typeof callback === 'function') {
           callback($scope.patient);
         }
