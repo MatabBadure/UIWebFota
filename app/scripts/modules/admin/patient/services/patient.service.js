@@ -284,7 +284,7 @@ angular.module('hillromvestApp')
       },
 
       getProtocol: function(id) {
-        var url = URL.addEditProtocol.replace('PATIENTID', id);
+        var url = URL.getProtocol.replace('PATIENTID', id).replace('DEVICETYPE',localStorage.getItem('deviceType'));
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -292,8 +292,13 @@ angular.module('hillromvestApp')
         });
       },
 
-      addProtocol: function(id, data) {
-        var url = URL.addEditProtocol.replace('PATIENTID', id);
+      addProtocol: function(id, data, deviceType) {
+        if(deviceType == 'VEST'){
+          var url = URL.addEditProtocol.replace('PATIENTID', id).replace('DEVICETYPE','vestdevice');
+        }
+        else if(deviceType == 'MONARCH'){
+          var url = URL.addEditProtocol.replace('PATIENTID', id).replace('DEVICETYPE','monarchdevice');
+        }
         return $http.post(url, data, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -301,8 +306,13 @@ angular.module('hillromvestApp')
         });
       },
 
-      editProtocol: function(id, data) {
-        var url = URL.addEditProtocol.replace('PATIENTID', id);
+      editProtocol: function(id, data, deviceType) {
+        if(deviceType == 'VEST'){
+         var url = URL.addEditProtocol.replace('PATIENTID', id).replace('DEVICETYPE','vestdevice');
+        }
+        else if(deviceType == 'MONARCH'){
+          var url = URL.addEditProtocol.replace('PATIENTID', id).replace('DEVICETYPE','monarchdevice');
+        }
         return $http.put(url, data, {
           headers: headerService.getHeader()
         }).success(function(response) {
