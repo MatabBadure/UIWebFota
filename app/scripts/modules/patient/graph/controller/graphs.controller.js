@@ -675,6 +675,7 @@ angular.module('hillromvestApp')
       if(editedNoteText && editedNoteText.length > 0  && (editedNoteText.trim()).length > 0){
         var data = {};
         data.noteText = editedNoteText;
+        data.deviceType = localStorage.getItem('deviceType');
         UserService.updateNote(noteId, new Date(dateCreatedOn).getTime(), data).then(function(response){
           $scope.showAllNotes();
           makeAllNotesReadable();
@@ -697,6 +698,7 @@ angular.module('hillromvestApp')
             data.noteText = $scope.textNote.text;
             data.userId = StorageService.get('logged').patientID;
             data.date = editDate;
+            data.deviceType = localStorage.getItem('deviceType');
             UserService.createNote(StorageService.get('logged').patientID, data).then(function(response){
               $scope.addNote = false;
               $scope.textNote.edit_date = dateService.convertDateToYyyyMmDdFormat(new Date());
