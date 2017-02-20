@@ -39,6 +39,22 @@
     <div class="container dashboard__form">
       <div>
         <div class="col-md-16 reset-padding margin-top">
+           <div class="col-md-7 reset-padding">
+              <div class="col-md-6 dashboard__form--label reset-padding">
+              <span class="" translate="patient.protocol.select-device"></span>
+              <span class="">*</span>
+            </div>
+                <div class="col-md-10 dashboard__form__input reset-padding"> 
+              <div class="custom-dropdown">
+               <select name="type" ng-model="deviceTypeSelectedProtocol" ng-init="deviceTypeSelectedProtocol = getDeviceType()" ng-dropdown disabled ng-change="selectedDevice()" >
+            <option  value="VEST">VisiVest</option>
+            <option  value="MONARCH" >Monarch</option> 
+              </select>
+              </div>
+               </div> 
+               </div>
+        </div>
+        <div class="col-md-16 reset-padding margin-top">
           <div class="col-md-7 reset-padding">
             <div class="col-md-6 dashboard__form--label reset-padding">
               <span class="" translate="patient.protocol.tm-per-day"></span>

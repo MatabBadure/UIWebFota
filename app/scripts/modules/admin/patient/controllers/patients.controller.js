@@ -170,7 +170,9 @@ angular.module('hillromvestApp')
         var today = mm+'/'+dd+'/'+yyyy;
         $scope.todayDate = today;
     };
+$scope.getdevice = function(){
 
+};
     $scope.initPatientAddProtocol = function(){
       $scope.getPatientById($stateParams.patientId);
       $scope.protocol = $stateParams.protocol;
@@ -178,10 +180,12 @@ angular.module('hillromvestApp')
         $scope.protocol = {};
         $scope.protocol.type = 'Normal';
         $scope.protocol.protocolEntries = [{}];
+        $scope.deviceTypeSelectedProtocol = localStorage.getItem('devicetype');
       } else {
         $scope.protocol.type = $scope.protocol.protocol[0].type;
         $scope.protocol.treatmentsPerDay = $scope.protocol.protocol[0].treatmentsPerDay;
         $scope.protocol.protocolEntries = $scope.protocol.protocol;
+        $scope.deviceTypeSelectedProtocol = localStorage.getItem('devicetype');
       }
     };
 
@@ -193,6 +197,7 @@ angular.module('hillromvestApp')
     $scope.init = function() {
       var currentRoute = $state.current.name;
       //in case the route is changed from other thatn switching tabs
+     // $scope.devicetype = localStorage.getItem('deviceType');
       $scope.patientTab = currentRoute;
       if(currentRoute === 'patientOverview' || currentRoute === 'patientOverviewRcadmin'){
         $scope.initPatientOverview();
@@ -775,7 +780,7 @@ angular.module('hillromvestApp')
           protocol.treatmentLabel = 'point'+ (index + 1);
         })
       }
-      patientService.addProtocol($stateParams.patientId, $scope.protocol).then(function(response){
+      patientService.addProtocol($stateParams.patientId, $scope.protocol, $scope.deviceTypeSelectedProtocol).then(function(response){
         if($scope.patientStatus.role === loginConstants.role.acctservices){
           $state.go('patientProtocolRcadmin', {'patientId': $stateParams.patientId});
         }else{
@@ -944,7 +949,7 @@ angular.module('hillromvestApp')
         data[0].treatmentsPerDay = $scope.protocol.treatmentsPerDay;
       }
       
-      patientService.editProtocol($stateParams.patientId, data).then(function(response){
+      patientService.editProtocol($stateParams.patientId, data, $scope.deviceTypeSelectedProtocol).then(function(response){
         $scope.isVerificationModal = false;
         notyService.showMessage(response.data.message, 'success');
         if($scope.patientStatus.role === loginConstants.role.acctservices){
@@ -1109,10 +1114,12 @@ angular.module('hillromvestApp')
           $scope.protocol = {};
           $scope.protocol.type = 'Normal';
           $scope.protocol.protocolEntries = [{}];
+          $scope.deviceTypeSelectedProtocol = localStorage.getItem('deviceType');
         } else {
           $scope.protocol.type = $scope.protocol.protocol[0].type;
           $scope.protocol.treatmentsPerDay = $scope.protocol.protocol[0].treatmentsPerDay;
           $scope.protocol.protocolEntries = $scope.protocol.protocol;
+          $scope.deviceTypeSelectedProtocol = localStorage.getItem('deviceType');
         }
         $scope.prevProtocolType = $scope.protocol.type;
         $scope.prevProtocol = angular.copy($scope.protocol);        
