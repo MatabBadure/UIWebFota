@@ -61,11 +61,12 @@
       "treatments-per-day": "Treatments Per Day",
       "minutes-per-treatment": "Minutes Per Treatment",
       "pressure-per-treatment": "Pressure Per Treatment",
-      "frequency-per-treatment": "Frequency Per Treatment"
+      "frequency-per-treatment": "Frequency Per Treatment",
+      "device-type": "Device"
     },
     "device-caption": {
       "serial-no": "Serial Number",
-      "blutooth-id": "Bluetooth ID",
+      "blutooth-id": "Connectivity ID",
       "status": "Status",
       "created-date": "Created Date",
       "device": "Device",
@@ -132,7 +133,9 @@
       "min-minutes": "Min Minutes",
       "minutes": "Minutes",
       "frequency": "Frequency",
-      "pressure": "Pressure"
+      "pressure": "Pressure",
+      "device": "Device",
+      "select-device": "Select Device"
     },
     "overview": {
       "hr-id": "Hillrom ID:",
