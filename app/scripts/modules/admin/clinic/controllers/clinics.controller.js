@@ -827,7 +827,13 @@ angular.module('hillromvestApp')
     };
 
     $scope.selectAssociatedPatient = function(patient){
-      localStorage.setItem('deviceType', patient.deviceType); 
+     // localStorage.setItem('deviceType', patient.deviceType); 
+      if(patient.deviceType == 'ALL'){
+          localStorage.setItem('deviceType', 'VEST');
+            }
+            else{
+            localStorage.setItem('deviceType', patient.deviceType);
+          }
       if($state.current.name === 'clinicAssociatedPatients'){
         $state.go('patientOverview', {
           'patientId': patient.id
