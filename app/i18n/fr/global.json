@@ -1,11 +1,15 @@
 {
     "global": {
         "title": "HillRomVest",
-        "browsehappy": "Vous utilisez un <strong>ancien</strong> navigateur. Veuillez <a href=\"http://browsehappy.com/?locale=fr\">mettre à jour votre navigateur</a> pour une meilleure expérience.",
+        "browsehappy": "You are using an <strong>outdated</strong> browser. Please <a href=\"http://browsehappy.com/?locale=en\">upgrade your browser</a> to improve your experience.",
         "menu": {
-            "home": "Accueil",
+            "home": "Home",
+            "about-us": "About Us",
+            "services": "Services",
+            "product": "Product",
+            "contact-us": "Contact Us",
             "entities": {
-                "main": "Entités",
+                "main": "Entities",
                 "patientVestDeviceRawLog": "PatientVestDeviceRawLog",
                 "patientInfo": "PatientInfo",
                 "userLoginToken": "UserLoginToken",
@@ -15,92 +19,497 @@
                 "additionalEntity": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {
-                "main": "Compte",
-                "settings": "Profil",
-                "password": "Mot de passe",
+                "main": "Account",
+                "settings": "Settings",
+                "password": "Password",
                 "sessions": "Sessions",
-                "login": "S'authentifier",
-                "logout": "Déconnexion",
-                "register": "Créer un compte"
+                "login": "Authenticate",
+                "logout": "Log out",
+                "register": "Register"
             },
             "admin": {
                 "main": "Administration",
-                "tracker": "Suivi des utilisateurs",
-                "metrics": "Métriques",
-                "health": "Diagnostics",
+                "tracker": "User tracker",
+                "metrics": "Metrics",
+                "health": "Health",
                 "configuration": "Configuration",
                 "logs": "Logs",
                 "audits": "Audits",
                 "apidocs": "API",
-                "database": "Base de données"
+                "database": "Database"
             },
-            "language": "Langue"
+            "language": "Language"
+        },
+          "messaging": {
+        "title":"Messages",
+        "new-message":"New Message",
+        "sent-items":"Sent Items",
+        "inbox":"Inbox",
+        "archive":"Archive",
+        "total-message":"Total Messages",
+        "total-archive":"Total Archived",
+        "from":"From",
+        "subject-of-message": "Subject of Message",
+        "date": "Date",
+        "compose-message":"Compose a New Message",
+        "subject": "Subject",
+        "message": "Message",
+        "send-message": "Send Message",
+        "cancel": "Cancel",
+        "to": "To",
+        "more-threads":"More Threads",
+        "mark-as-read": "Mark as Read",
+        "mark-as-unread": "Mark as Unread",
+        "reply" : "Reply",
+        "confirmsendmessage" : "Do you want to send the message?",
+        "sendmessageWarning" : "Compose Message",
+        "NomessageWarning" : "Do you want to send a blank message?",
+        "NoSubjectWarning" : "Do you want to send this message without a Subject?",
+        "Reply": "Reply"
+    },
+        "logo-text": {
+            "visi-view": "VisiView",
+            "tm-sup": "TM",
+            "health-portal": "Health Portal"
+        },
+        "my-dashboard": "My Profile",
+        "charger": "Charger Device",
+        "logout": "Logout",
+        "console": "Console",
+        "tabs": {
+            "manage-patients": "Patients",
+            "manage-hcps": "HCPs",
+            "manage-clinics": "Clinics",
+            "manage-clinic": "Clinic",
+            "manage-users": "Users",
+            "notifications": "Notifications",
+            "dashboard": "Dashboard",
+            "patients": "Patients",
+            "messages":"Messages",
+            "compose-message":"Write a New Message",
+            "announcements": "Announcements"
         },
         "form": {
-            "username": "Nom d'utilisateur",
-            "username.placeholder": "Votre nom d'utilisateur",
-            "newpassword": "Nouveau mot de passe",
-            "newpassword.placeholder": "Nouveau mot de passe",
-            "confirmpassword": "Confirmation du nouveau mot de passe",
-            "confirmpassword.placeholder": "Confirmation du nouveau mot de passe",
-            "email": "Email",
-            "email.placeholder": "Votre email"
+            "username": "Login",
+            "username.placeholder": "Enter your Hill-Rom ID or Email ID",
+            "password.placeholder": "Password",
+            "newpassword": "New password",
+            "newpassword.placeholder": "New password",
+            "confirmpassword": "New password confirmation",
+            "confirmpassword.placeholder": "Confirm the new password",
+            "email": "E-mail",
+            "email.placeholder": "Enter Your e-mail Id"
         },
         "messages": {
             "info": {
-                "authenticated": "Si vous voulez vous <a href=\"#/login\">connecter</a>, vous pouvez utiliser les comptes par défaut : <br/> - Administrateur (nom d'utilisateur=\"admin\" et mot de passe =\"admin\") <br/> - Utilisateur (nom d'utilisateur=\"user\" et mot de passe =\"user\").",
-                "register": "Vous n'avez pas encore de compte ? <a href=\"#/register\">Créer un compte</a>"
+                "authenticated": "If you want to <a href=\"#/login\">authenticate</a>, you can try the default accounts:<br/>- Administrator (login=\"admin\" and password=\"admin\") <br/>- User (login=\"user\" and password=\"user\").",
+                "register": "You don't have an account yet? <a href=\"#/register\">Register a new account</a>"
             },
             "error": {
-                "dontmatch": "Le nouveau mot de passe et sa confirmation ne sont pas égaux!"
+                "dontmatch" : "The password and its confirmation do not match!"
             },
             "validate": {
                 "newpassword": {
-                    "required": "Votre mot de passe est requis.",
-                    "minlength": "Votre mot de passe doit comporter au moins 5 caractères",
-                    "maxlength": "Votre mot de passe ne doit pas comporter plus de 50 caractères",
-                    "strength": "Robustesse du mot de passe:"
+                    "required": "Your password is required.",
+                    "minlength": "Your password is required to be at least 8 characters.",
+                    "maxlength": "Your password cannot be longer than 50 characters.",
+                    "strength": "Password strength:"
                 },
                 "confirmpassword": {
-                    "required": "Votre confirmation du mot de passe est requis.",
-                    "minlength": "Votre confirmation du mot de passe doit comporter au moins 5 caractères",
-                    "maxlength": "Votre confirmation du mot de passe ne doit pas comporter plus de 50 caractères"
+                    "required": "Your confirmation password is required.",
+                    "minlength": "Your confirmation password is required to be at least 8 characters.",
+                    "maxlength": "Your confirmation password cannot be longer than 50 characters."
                 },
                 "email": {
-                    "required": "Votre email est requis.",
-                    "minlength": "Votre email doit comporter au moins 5 caractères",
-                    "maxlength": "Votre email ne doit pas comporter plus de 50 caractères",
-                    "invalid": "Votre email n'est pas valide."
+                    "required": "Your e-mail is required.",
+                    "invalid": "Your e-mail is invalid.",
+                    "minlength": "Your e-mail is required to be at least 5 characters.",
+                    "maxlength": "Your e-mail cannot be longer than 50 characters."
                 }
             }
+        },
+        "announcement": {
+            "label": {
+                "name-of-announcment": "Name of Announcement",
+                "subject": "Subject",
+                "starts-on": "Starts on",
+                "ends-on": "Ends on",
+                "send-to": "Send To",
+                "upload-pdf-file": "Upload PDF File",
+                "cancel": "Cancel",
+                "post-announcement": "Post Announcement",
+                "update-announcement": "Update Announcement",
+                "add-announcement":"Add Announcements"
+            },
+             "modal": {
+                "delete-heading": "Delete  announcement",
+                "add-heading": "Add  announcement",
+                "update-heading": "Update  announcement",
+                "delete": "Are you sure you want to delete the announcement?",
+                "add": "Are you sure you want to add the announcement?",
+                "update": "Are you sure you want to update the announcement?",
+                "overwrite-heading": "Overwrite File",
+                "overwrite" : "Are you sure you want to overwrite the last uploaded file?"
+            }
+            
+        },
+        "role":{
+            "super-admin": "Super Admin",
+            "account-services": "RC Admin",
+            "associates":"Associates",
+            "caregiver": "Caregiver",
+            "clinic-admin": "Clinic Admin",
+            "hcp": "HCP",
+            "patient": "Patient",
+            "customerservices" : "Customer Service"
+        },
+        "not-applicable": "NA",
+        "notification":{
+            "no-notification":"No Notifications for the day",
+            "missed-therapy": "Your recommended therapy is missed by three days.",
+            "setting-deviation": "You are not adherence to frequency defined in protocol.",
+            "hmr-non-compliant": "You are not HMR Compliant.",
+            "hmr-non-compliant-setting-deviation":"Your expected compliant therapy is low as per recommendation"
         }
     },
     "entity": {
         "action": {
-            "back": "Retour",
-            "cancel": "Annuler",
-            "edit": "Editer",
-            "delete": "Supprimer",
-            "save": "Sauvegarder",
-            "view": "Voir"
+            "back": "Back",
+            "cancel": "Cancel",
+            "delete": "Delete",
+            "edit": "Edit",
+            "save": "Save",
+            "view": "View"
         },
         "detail": {
-            "field": "Champs",
-            "value": "Valeur"
+            "field": "Field",
+            "value": "Value"
         },
         "delete": {
-            "title": "Confirmation de suppression"
+            "title": "Confirm delete operation"
         },
         "validation": {
-            "required": "Ce champs est obligatoire.",
-            "minlength": "Ce champs doit faire au minimum {{min}} caractères.",
-            "maxlength": "Ce champs doit faire moins de {{max}} caractères.",
-            "min": "Ce champs doit être inférieur à {{min}}.",
-            "max": "Ce champs doit être supérieur à {{max}}.",
-            "pattern": "Ce champs doit suivre l'expression régluière {{pattern}}.",
-            "number": "Ce champs doit être un nombre.",
-            "datetimelocal": "Ce champs doit être une date et une heure."
+            "required": "This field is required.",
+            "minlength": "This field is required to be at least {{min}} characters.",
+            "maxlength": "This field cannot be longer than {{max}} characters.",
+            "min": "This field should be more than {{min}}.",
+            "max": "This field cannot be more than {{max}}.",
+            "pattern": "This field should follow pattern {{pattern}}.",
+            "number": "This field should be a number.",
+            "datetimelocal": "This field should be a date and time."
         }
     },
-    "footer": "Ceci est votre pied de page"
+    "error":{ 
+             "startDate":{
+              "required": "Announcement start date is required."
+            },
+            "endDate":{
+            "required": "Announcement end date is required."
+            },
+            "announcementName":{
+             "required": "Announcement name is required."
+            },
+            "announcementDesc":{
+             "required": "Announcement subject is required."
+            },
+            "patientType":{
+            "required": "Patient type required."
+            },
+            "clinicSpeciality":{
+            "required": "Clinic Speciality required."
+            },
+            "selectclinic":{
+            "required": "Clinic type required."
+            },
+            "SendTo":{
+            "required": "Send To required."
+            }, 
+            "file":{
+            "required": "File required."
+            },     
+        "adherenceStartDate":{
+            "required": "Adherence score start date is required.",
+            "future": "Adherence score start date cannot be future.",
+            "invalid":"Adherence score start date is required."  
+        },
+        "others":{
+            "required": "Other justification is required."  
+        },
+        "ResetTo":{
+            "required": "Reset to is required.",
+            "maxlength": "Reset to is Invalid.",
+            "invalid":"Invalid Reset number, Please enter between 1 to 100 without decimals."
+        },
+        "justification":{
+            "required": "Justification is required."
+        },
+        "firstName":{
+            "required": "First Name is required.",
+            "minlength": "First Name is required to be at least 1 character.",
+            "maxlength": "First Name cannot be longer than 50 characters."
+        },
+        "lastName":{
+            "required": "Last Name is required.",
+            "minlength": "Last Name is required to be at least 1 character.",
+            "maxlength": "Last Name cannot be longer than 50 characters."
+        },
+        "middleName":{
+            "required": "Middle Name is required.",
+            "minlength": "Middle Name is required to be at least 1 character.",
+            "maxlength": "Middle Name cannot be longer than 50 characters."
+        },
+        "email":{
+            "invalid": "E-mail is invalid.",
+            "required": "E-mail is required.",
+            "maxlength": "E-mail cannot be longer than 100 characters."
+        },
+        "dob":{
+            "required": "Date of Birth is required.",
+            "future": "Date of Birth cannot be future.",
+            "invalid":"Invalid Date of Birth"
+        },
+        "address":{
+            "maxlength": "Address cannot be longer than 100 characters."
+        },
+        "city": {
+            "maxlength": "City cannot be longer than 15 characters."
+        },
+        "zipcode": {
+            "required": "Zipcode is required.",
+            "invalid": "Zipcode is invalid",
+            "pattern": "Zipcode is invalid",
+            "zipcode-not-found": "Zipcode is not found"
+        },
+        "primaryPhone": {
+            "required":"Home phone number is required.",
+            "pattern": "Home phone number is invalid.",
+            "maxlength": "Home phone number is invalid.",
+            "mask": "Home phone number is invalid."
+        },
+        "mobilePhone":{
+            "pattern": "Mobile number is invalid.",
+            "maxlength": "Mobile number is invalid.",
+            "mask": "Mobile number is invalid.",
+            "required": "Mobile number is required"
+        },
+        "phoneNumber":{
+            "pattern": "Phone number is invalid.",
+            "maxlength": "Phone number is invalid.",
+            "mask": "Phone number is invalid.",
+            "required": "Phone number is required"
+        },
+        "faxNumber":{
+            "mask": "Fax Number is invalid."
+        },
+        "hrId": {
+            "required": "JDE/HR ID is required."
+        },
+        "relationship":{
+            "required": "Select relationship."
+        },
+        "deviceSerialNumber":{
+            "required": "Device Serial Number Required"
+        },
+        "deviceBluetoothId":{
+            "required": "Device Bluetooth ID Required"
+        },
+        "protocol":{
+            "treatmentPerDay": {
+                "required": "Protocol Treatment per Day Required",
+                "min": "Protocol Treatment per Day should be 1 to 9",
+                "max": "Protocol Treatment per Day should be 1 to 9",
+                "invalid": "Protocol Treatment per Day is invalid"
+            },
+            "minMinutesPerTreatment": {
+                "required":"Minimum Minutes per Treatment Required",
+                "min":"Minimum Minutes per Treatment should be 1 to 99",
+                "max":"Minimum Minutes per Treatment should be 1 to 99",
+                "invalid": "Minimum Minutes per Treatment is invalid",
+                "custom-invalid": "Minutes per Treatment is invalid",
+                "custom-required": "Minutes per Treatment is Required",
+                "custom-max-min": "Minutes per Treatment should be between 1 to 99"
+            },
+            "maxMinutesPerTreatment": {
+                "required": "Maximum Minutes per Treatment Required",
+                "min":"Maximum Minutes per Treatment should be 1 to 99",
+                "max": "Maximum Minutes per Treatment should be 1 to 99",
+                "invalid": "Maximum Minutes per Treatment is invalid"
+            },
+            "minFrequency": {
+                "required": "Minimum Frequency Required",
+                "min": "Minimum Frequency should be between 5 to 19",
+                "max": "Minimum Frequency should be between 5 to 19",
+                "invalid": "Minimum Frequency is invalid",
+                "custom-invalid": "Frequency is invalid",
+                "custom-required": "Frequency is Required",
+                "custom-max-min": "Frequency should be between 5 to 20"
+            },
+            "maxFrequency": {
+                "required": "Maximum Frequency Required",
+                "min": "Maximum Frequency should be between 6 to 20",
+                "max": "Maximum Frequency should be between 6 to 20",
+                "invalid": "Maximum Frequency is invalid"
+            },
+            "minPressure": {
+                "required": "Minimum Pressure Required",
+                "min": "Minimum Pressure should be between 1 to 9",
+                "max": "Minimum Pressure should be between 1 to 9",
+                "invalid": "Minimum Pressure is invalid",
+                "custom-invalid": "Pressure is invalid",
+                "custom-required": "Pressure is Required",
+                "custom-max-min": "Pressure should be between 1 to 10"
+            },
+            "maxPressure": {
+                "required": "Maximum Pressure Required",
+                "min": "Maximum Pressure should be between 2 to 10",
+                "max": "Maximum Pressure should be between 2 to 10",
+                "invalid": "Maximum Pressure is invalid"
+            }
+        },
+        "diagnostics":{
+            "fvcL":{
+                "required": "FVC (L) is required",
+                "min-max-range": "FVC (L) should be 0 to 9",                
+                "invalid": "FVC (L) is invalid"
+            },
+            "fvcP":{
+                "required": "FVC ( Predicted ) is required",
+                "min-max-range": "FVC ( Predicted ) should be 0 to 9",               
+                "invalid": "FVC ( Predicted ) is invalid"
+            },
+            "fev1L":{
+                "required": "FEV1 (L) is required",
+                "min-max-range": "FEV1 (L)  should be 0 to 9",               
+                "invalid": "FEV1 (L) is invalid"
+            },
+            "fev1P":{
+                "required": "FEV1 ( Predicted ) is required",
+                "min-max-range": "FEV1 ( Predicted ) should be 0 to 9",               
+                "invalid": "FEV1 ( Predicted ) is invalid"
+            },
+            "pefLMin":{
+                "required": "PEF (L/Min) is required.",
+                "min-max-range": "PEF (L/Min) should be 0 to 9",                
+                "invalid": "PEF (L/Min) is invalid"
+            },
+            "pefP":{
+                "required": "PEF ( Predicted ) is required.",
+                "min-max-range": "PEF ( Predicted ) should be 0 to 9",                
+                "invalid": "PEF ( Predicted ) is invalid"
+            },
+            "fev1TOFVCRATIO":{
+                "required": "FEV1/FVC (Predicted) is required.",
+                "min-max-range": "FEV1/FVC (Predicted) should be 0 to 9",                
+                "invalid": "FEV1/FVC (Predicted) is invalid"
+            }
+        },
+        "npiNumber":{
+            "pattern": "NPI Number is invalid.",
+            "maxlength": "NPI Number cannot be more than 15 characters."
+        },
+        "credential": {
+            "required": "Credential is required."
+        },
+        "parentClinicName": {
+            "required": "Parent Clinic is required.",
+            "match": "Parent Clinic doesn't exist."
+        },
+        "clinicName": {
+            "required": "Clinic Name is required.",
+            "maxlength": "Clinic Name cannot be longer than 50 characters."
+        },
+        "role":{
+            "required": "Role is required."
+        },
+        "answer": {
+            "required": "Answer is required.",
+            "maxlength": "Answer cannot be longer than 100 characters."
+        },
+        "password": {
+            "required": "Password is required.",
+            "minlength": "Password is required to be at least 8 character.",
+            "maxlength": "Password cannot be longer than 50 characters.",
+            "pattern": "Password is required to be at least 8 characters. Password should have atleast one special character, one upper case letter and one number."
+        },
+        "currentPassword": {
+            "required": "Current password is required.",
+            "minlength": "Current password is required to be at least 8 character.",
+            "maxlength": "Current password cannot be longer than 50 characters.",
+            "pattern": "Current password should have atleast one special character, one upper case letter and one number."
+        },
+        "newPassword": {
+            "required": "New password is required.",
+            "minlength": "New password is required to be at least 8 character.",
+            "maxlength": "New password cannot be longer than 50 characters.",
+            "pattern": "New Password should have atleast one special character, one upper case letter and one number."
+        },
+        "confirmPassword":{
+            "required": "Confirm password is required.",
+            "minlength": "Confirm password is required to be at least 8 character.",
+            "maxlength": "Confirm password cannot be longer than 50 characters.",
+            "pattern": "Confirm password should have atleast one special character, one upper case letter and one number.",
+            "match": "Password Mismatch."
+        },
+        "securityQuestion":{
+            "required": "Security question is required."
+        }
+    },
+    "footer": {
+        "copyright":"Copyright @ Hill-Rom 2016. All Rights Reserved",
+        "enhancingoutcomes":"Enhancing outcomes for patients and their caregivers",
+        "contactus":"Contact Us",
+        "privacypolicy":"Privacy Policy",
+        "termsofuse":"Terms of Use",
+        "hippanotice": "HIPAA Notice of Privacy Practices",
+        "hillromrespiratorycare": "Hill-Rom Respiratory Care Site"
+    },
+    "search-filter" : {
+        "active" : "Active",
+        "inactive" : "InActive", "no-event" : "No Transmission Recorded",
+        "setting-deviation" : "Below Frequency Setting",
+        "hmr-non-compliant" : "Below Therapy Minutes",
+         "missed-therapy" :"Missed Therapy Days",
+        "pending": "Pending"
+    },
+
+    "user-not-found" : "No user associated.",
+    "navbar": {
+        "my-dashboard": "Dashboard",
+        "create-new-hcp": "Create New HCP +",
+        "manage-hcp": "Manage HCPs",
+        "adherence-setting": "Adherence Settings",
+        "clinic-info": "Clinic Info",
+        "announcement": "Announcements"
+    },
+    "place-holder":{
+        "mobile-number": "Mobile Number",
+        "phone-number": "Phone Number"
+    },
+    "reset-password":{
+        "set-password": "Set Password"
+    },
+    "validationkey" : {
+        "invalidactivationlink" : "This activation link is no longer valid. Our records say that you have been sent a new Activation Link. Kindly check your latest email for the details.",
+        "contactmessage" : " Please contact Hill-Rom Respiratory Care Customer Support at 800-426-4224 or email HCCSWEB@Hill-Rom to resend a valid activation link."
+    },
+    "survey":{
+        "5-days-header": "Hill-Rom 5 Days Survey",
+        "30-days-header": "Hill-Rom 30 Days Survey",
+        "90-days-header": "Hill-Rom 90 Days Survey"
+    },
+    "noti_patient": {
+      "miss-therapy-days" : "Missed Therapy Days",
+      "hmr-non-adher": "HMR Non-Adherence",
+      "setting-deviation": "Setting Deviation",
+      "below-treatment":"Below Treatment Minutes",
+      "miss-therapy-days-desc": "You will get Notification email if you missed therapy for three or more days.",
+      "miss-therapy-new":"You will receive a notification if you missed a day of therapy.",
+      "hmr-non-adher-desc": "You will get Notification email if your HMR Non-Adherence is below protocol for three or more days.",
+      "hmr-non-adher-new":"You will receive a notification if you did not complete the therapy time in your protocol.",
+      "setting-deviation-desc": "You will get Notification email if your frequency is 15% below protocol for three or more days.",
+      "setting-dev-new":"You will receive a notification if your frequency setting was 15% below protocol.",
+      "messages":"Messages",
+      "message-new":"You will receive a notification if you have one or more messages in your inbox."
+    },
+        "noti-verbiage":"Turn On or Off the notification by clicking the toggle switch."
 }

@@ -5,8 +5,9 @@ angular.module('hillromvestApp')
         return {
             getCurrent: function () {
                 var deferred = $q.defer();
+                // The following commented code is for multi-language support
                 var language = $translate.storage().get('NG_TRANSLATE_LANG_KEY');
-
+                  //  var language = 'en'; //This line is added to make english default language should be removed and above line should be un-commented to support more languages 
                 if (angular.isUndefined(language)) {
                     language = 'en';
                 }

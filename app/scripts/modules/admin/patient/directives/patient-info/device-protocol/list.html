@@ -222,7 +222,7 @@
               <span class="">*</span>
             </div>
             <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding" >
-              <textarea name="oth" class="" style="box-shadow:none !important;"  ng-model = "othersContent" required></textarea>
+              <textarea name="oth" class="" style="box-shadow:none !important;"  ng-model = "$parent.othersContent" required></textarea>
               <div ng-show="(form.oth.$dirty && form.oth.$invalid) || resetsubmitted">
                 <span class="has-error" ng-show="form.oth.$error.required" translate="error.others.required"></span>
               </div>   

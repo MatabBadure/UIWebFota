@@ -3,11 +3,11 @@
         "patientVestDeviceRawLog" : {
             "home": {
                 "title": "PatientVestDeviceRawLogs",
-                "createLabel": "Créer un nouveau PatientVestDeviceRawLog",
-                "createOrEditLabel": "Créer ou éditer un PatientVestDeviceRawLog"
+                "createLabel": "Create a new PatientVestDeviceRawLog",
+                "createOrEditLabel": "Create or edit a PatientVestDeviceRawLog"
             },
             "delete": {
-                "question": "Etes-vous certain de vouloir supprimer le PatientVestDeviceRawLog {{ id }} ?"
+                "question": "Are you sure you want to delete PatientVestDeviceRawLog {{ id }}?"
             },
             "detail": {
                 "title": "PatientVestDeviceRawLog"
@@ -31,4 +31,3 @@
         }
     }
 }
-

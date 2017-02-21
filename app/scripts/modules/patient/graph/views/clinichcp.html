@@ -122,11 +122,22 @@
 <div class="col-md-16 reset-padding margin-top">
           <div class="col-md-7 reset-padding">
             <div class="col-md-6 dashboard__form--label reset-padding">
-              <span class="admin-views--title" translate="">Adherence Settings</span>
+              <span class="admin-views--title" translate="">Adherence Window </span>
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
               <input class="" ng-model = "adherenceDaysForPatient" type="text" style = "width :150px" ng-disabled = "true">
             </div>
           </div>
         </div>
+        <div class="col-md-16 reset-padding  infocontainer" style="margin-bottom:20px;">
+
+         <div class=""><span class="infoicon"><i class="fa fa-info-circle" aria-hidden="true"></i></span><span class="adhtxt">How does the Adherence Window affect the Adherence Score?</span></div>
+
+        <div class="addesc">Each patient's score is based upon the following three factors; consecutive missed therapy days, treatment minutes, and frequency average within a selected window of time. The adherence window looks back at the previous day(s) and compares the prescribed usage protocol to the patient’s actual device usage.  
+        <div><div>Example: 3-Day Adherence Window </div>
+        On Wednesday the adherence window would include data from Sunday, Monday, and Tuesday.</div>
+        </div>
+
+
+          </div>
 </div>

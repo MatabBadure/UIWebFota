@@ -28,6 +28,16 @@
 			<input type="checkbox" ng-model="searchFilter.isMissedTherapy" ng-click="searchOnFilters()"> 
 			<span translate="search-filter.missed-therapy"></span>
 		</label>
+<!-- Commented to hide Monarch changes from Prod release
+ -->			
+ 	<!-- <label class ="none" ng-if="searchFilter.userList === 'patientList'">
+			<input type="checkbox" ng-model="searchFilter.VisiVest" ng-click="searchOnFilters()"> 
+			<span translate="search-filter.visivest"></span>
+		</label>
+				<label class ="none" ng-if="searchFilter.userList === 'patientList'">
+			<input type="checkbox" ng-model="searchFilter.Monarch" ng-click="searchOnFilters()"> 
+			<span translate="search-filter.monarch"></span>
+		</label> -->
 		<div class="col-md-3 col-sm-5 col-xs-6 pull-right dashboard__form__input reset-padding selected-box-container newselectrolecontainer" ng-if="isUsersTab">
 		<label> Select Role</label>
           <div class="custom-dropdown">

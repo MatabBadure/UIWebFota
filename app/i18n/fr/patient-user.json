@@ -65,7 +65,7 @@
     },
     "device-caption": {
       "serial-no": "Serial Number",
-      "blutooth-id": "Connectivity ID",
+      "blutooth-id": "Bluetooth ID",
       "status": "Status",
       "created-date": "Created Date",
       "device": "Device",
