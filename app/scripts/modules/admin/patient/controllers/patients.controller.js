@@ -133,6 +133,7 @@ angular.module('hillromvestApp')
           $scope.totalHmr = $scope.totalHmr + device.hmr;
           device.createdDate = dateService.getDateByTimestamp(device.createdDate);
           device.lastModifiedDate = dateService.getDateByTimestamp(device.lastModifiedDate);
+          $scope.deviceTypeSelected = localStorage.getItem('devicetype'); //later to be changed when devicetype is passed in response
         });
         $scope.devices = response.data.deviceList;
         $scope.isDevicesLoaded = true;
@@ -191,10 +192,17 @@ $scope.getdevice = function(){
 
     $scope.initPatientAddDevice = function(){
       $scope.getPatientById($stateParams.patientId);
-      $scope.device = $stateParams.device;
+      if($stateParams.device){
+      $scope.device = $stateParams.device; //  for passing to edit mode
+      $scope.device.wifiId = $stateParams.device.bluetoothId;
+   }
+      $scope.deviceTypeSelected = localStorage.getItem('devicetype');
     };
 
     $scope.init = function() {
+        /*      $scope.deviceTypeVest = true;   
+      $scope.deviceTypeMonarch = false;*/   
+       $scope.selectedDevice();
       var currentRoute = $state.current.name;
       //in case the route is changed from other thatn switching tabs
      // $scope.devicetype = localStorage.getItem('deviceType');
@@ -748,7 +756,7 @@ $scope.getdevice = function(){
       if($scope.addDeviceForm.$invalid){
         return false;
       }
-      patientService.addDevice( $stateParams.patientId, $scope.device).then(function(response){
+      patientService.addDevice( $stateParams.patientId, $scope.device, $scope.deviceTypeSelected).then(function(response){
         if($scope.patientStatus.role === loginConstants.role.acctservices){
           $state.go('patientProtocolRcadmin', {'patientId': $stateParams.patientId});
         }else{
@@ -793,7 +801,7 @@ $scope.getdevice = function(){
 
     $scope.deleteDevice = function(){
       $scope.showModalDevice = false;
-      patientService.deleteDevice($stateParams.patientId, $scope.deviceToDelete).then(function(response){
+      patientService.deleteDevice($stateParams.patientId, $scope.deviceToDelete, localStorage.getItem('deviceType')).then(function(response){
         $scope.deviceToDelete.active = false;
         notyService.showMessage(response.data.message, 'success');
       }).catch(function(response){
@@ -973,7 +981,7 @@ $scope.getdevice = function(){
 
     $scope.updateDevice = function(){
       $scope.deviceUpdateModal =true;
-      patientService.addDevice($stateParams.patientId, $scope.device).then(function(response){
+      patientService.addDevice($stateParams.patientId, $scope.device, $scope.deviceTypeSelected).then(function(response){
         if($scope.patientStatus.role === loginConstants.role.acctservices){
           $state.go('patientProtocolRcadmin', {'patientId': $stateParams.patientId});
         }else{
@@ -1234,7 +1242,33 @@ $scope.getdevice = function(){
     $scope.getClinicToLinkToPatient = function($viewValue){
       return searchFilterService.getMatchingClinic($viewValue, $scope.clinics);
     };
-
+     
+  $scope.selectedDevice = function() {   
+    $scope.selectedDeviceType = $scope.getDeviceType();   
+    if($scope.selectedDeviceType== "VEST")    
+    {   
+        $scope.deviceTypeVest = true;   
+         $scope.deviceTypeMonarch = false;    
+    }   
+    if($scope.selectedDeviceType== "MONARCH")   
+    {   
+        $scope.deviceTypeMonarch = true;    
+        $scope.deviceTypeVest = false;    
+    }   
+  };    
+  $scope.onChangeSelectedDevice = function() {    
+    $scope.selectedDeviceType = $scope.deviceTypeSelected;   
+    if($scope.selectedDeviceType== "VEST")    
+    {   
+        $scope.deviceTypeVest = true;   
+         $scope.deviceTypeMonarch = false;    
+    }   
+    if($scope.selectedDeviceType== "MONARCH")   
+    {   
+        $scope.deviceTypeMonarch = true;    
+        $scope.deviceTypeVest = false;    
+    }   
+  };
     $scope.getCityStateByZip = function(){
       delete $scope.serviceError;
       $scope.isServiceError = false;

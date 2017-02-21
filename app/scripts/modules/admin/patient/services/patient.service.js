@@ -265,8 +265,10 @@ angular.module('hillromvestApp')
       },
 
 
-      addDevice: function(id, data) {
-        var url = URL.addDevice.replace('PATIENTID', id);
+      addDevice: function(id, data, deviceType) {
+       
+          var url = URL.addDevice.replace('PATIENTID', id).replace('DEVICETYPE',deviceType);
+    
         return $http.put(url, data, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -274,8 +276,8 @@ angular.module('hillromvestApp')
         });
       },
 
-      deleteDevice: function(id, device) {
-        var url = URL.deactivateDevice.replace('PATIENTID', id).replace('SERIALNUMBER', device.serialNumber);
+      deleteDevice: function(id, device, deviceType) {
+         var url = URL.deactivateDevice.replace('PATIENTID', id).replace('SERIALNUMBER', device.serialNumber).replace('DEVICETYPE', deviceType);
         return $http.delete(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
