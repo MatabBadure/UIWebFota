@@ -71,7 +71,8 @@
       "created-date": "Created Date",
       "device": "Device",
       "modified-date": "Modified Date",
-      "active-or-inactive-date": "Active or Inactive Date"
+      "active-or-inactive-date": "Active or Inactive Date",
+      "device-type": "Device Type"
     },
     "clinic-title": "Clinics",
     "caregiver-title": "Caregivers",

@@ -128,6 +128,7 @@ angular.module('hillromvestApp')
                   for(var i=0;i<response.data.patients.length;i++){
                     if($stateParams.patientId == response.data.patients[i].userId){
                   $scope.selectedPatient = response.data.patients[i];
+                  localStorage.setItem('deviceType',response.data.patients[i].deviceType);
                   $scope.patientId = $stateParams.patientId;
                   var logged = StorageService.get('logged');                   
                  
@@ -143,6 +144,7 @@ angular.module('hillromvestApp')
 
                 } else{
                  $scope.selectedPatient = response.data.patients[0];
+                  localStorage.setItem('deviceType',response.data.patients[0].deviceType);
                   $scope.patientId = $scope.selectedPatient.userId;
                      $scope.$emit('getSelectedPatient', $scope.selectedPatient);
                      var logged = StorageService.get('logged');                    

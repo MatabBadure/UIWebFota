@@ -72,7 +72,7 @@ angular.module('hillromvestApp')
 	'deviceAssociatedToPatient' : 'api/patient/PATIENTID/vestdevice?deviceType=DEVICETYPE',
 	'caregiverAssociatedToPatient' : 'api/patient/PATIENTID/caregiver',
 	'disassociateCaregiversFromPatient' : 'api/patient/PATIENTID/caregiver/CAREGIVERID',
-	'protocolById' : 'api/patient/PATIENTID/protocol/PROTOCOLID',
+	'protocolById' : 'api/patient/PATIENTID/protocol/PROTOCOLID?deviceType=DEVICETYPE',
 	'getProtocol' : 'api/patient/PATIENTID/protocol?deviceType=DEVICETYPE',
 	'addEditProtocol' : 'api/patient/PATIENTID/protocol/DEVICETYPE',	
 	'caregiverById' : 'api/patient/PATIENTID/caregiver/CAREGIVERID',
