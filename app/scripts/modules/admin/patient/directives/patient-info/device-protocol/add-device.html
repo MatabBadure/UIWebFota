@@ -24,7 +24,28 @@
         <div class="col-md-16 reset-padding">
           <span class="dashboard__form--type" translate="patient.device.gen-details"></span>
         </div>
+        <!-- Device selection starts here !-->
+         <div class="col-md-16 reset-padding margin-top">
+          <div class="col-md-7 reset-padding">
+            <div class="col-md-6 dashboard__form--label reset-padding">
+              <span class="" translate="patient.device.device-type"></span>
+              <span class="">*</span>
+            </div>
+            <div class="col-md-10 dashboard__form__input reset-padding">
+            <div class="custom-dropdown">
+               <select name="type" ng-model="deviceTypeSelected" ng-dropdown required ng-change="onChangeSelectedDevice()"  ng-init="deviceTypeSelected=getDeviceType()" ng-disabled="true">
+            <option  value="VEST" >VisiVest</option>
+            <option  value="MONARCH" >Monarch</option> 
+         </select>
+         </div>
+              <div ng-show="(addDeviceForm.device.type.$dirty)  || submitted">
+                <span class="has-error" ng-show="addDeviceForm.device.type.$error.required" translate="error.device.type.required"></span>
+              </div>
+            </div>
+          </div>
+        </div>
 
+        <!-- Device selection ends here !-->
         <div class="col-md-16 reset-padding margin-top">
           <div class="col-md-7 reset-padding">
             <div class="col-md-6 dashboard__form--label reset-padding">
@@ -32,14 +53,14 @@
               <span class="">*</span>
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
-              <input class="" type="text" name="serialNumber" ng-model="device.serialNumber" required>
+              <input class="" type="text" name="serialNumber" ng-model="device.serialNumber" required  maxlength="254">
               <div ng-show="(addDeviceForm.serialNumber.$dirty && addDeviceForm.serialNumber.$showValidationMessage && addDeviceForm.serialNumber.$invalid) || submitted">
                 <span class="has-error" ng-show="addDeviceForm.serialNumber.$error.required" translate="error.deviceSerialNumber.required"></span>
               </div>
             </div>
           </div>
         </div>
-
+        <div ng-if="deviceTypeVest">
         <div class="col-md-16 reset-padding margin-top">
           <div class="col-md-7 reset-padding">
             <div class="col-md-6 dashboard__form--label reset-padding">
@@ -47,7 +68,7 @@
               <span class="">*</span>
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
-              <input class="" type="text" name="bluetoothId" ng-model="device.bluetoothId" required>
+              <input class="" type="text" name="bluetoothId" ng-model="device.bluetoothId" required maxlength="254">
               <div ng-show="(addDeviceForm.bluetoothId.$dirty && addDeviceForm.bluetoothId.$showValidationMessage && addDeviceForm.bluetoothId.$invalid) || submitted">
                 <span class="has-error" ng-show="addDeviceForm.bluetoothId.$error.required" translate="error.deviceBluetoothId.required"></span>
               </div>
@@ -61,9 +82,27 @@
               <span class="" translate="patient.device.hubId"></span>
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
-              <input class="" type="text" ng-model="device.hubId">
+              <input class="" type="text" ng-model="device.hubId" maxlength="254">
             </div>
           </div>
+        </div>
+        </div>
+
+        <div ng-if="deviceTypeMonarch">
+        <div class="col-md-16 reset-padding margin-top">
+          <div class="col-md-7 reset-padding">
+            <div class="col-md-6 dashboard__form--label reset-padding">
+              <span class="" translate="patient.device.wifi/LTE-serial-no"></span>
+              <span class="">*</span>
+            </div>
+            <div class="col-md-10 dashboard__form--input reset-padding">
+              <input class="" type="text" name="wifiId" ng-model="device.wifiId" required maxlength="254">
+              <div ng-show="(addDeviceForm.wifiId.$dirty && addDeviceForm.wifiId.$showValidationMessage && addDeviceForm.wifiId.$invalid) || submitted">
+                <span class="has-error" ng-show="addDeviceForm.wifiId.$error.required" translate="error.wifiId.required"></span>
+              </div>
+            </div>
+          </div>
+        </div>
         </div>
 
       <div class="clr"></div>
@@ -95,7 +134,7 @@
       <div class="modal__body">
          <div class="modal--message" translate="patient.update-device.message"></div>
          <div class="row modal--custom-btn">
-          <buton class="hillrom-btn btn-submit float-right" ng-click="updateDevice()">Yes</buton>
+          <buton class="hillrom-btn btn-submit float-right" ng-click="updateDevice(); $parent.deviceUpdateModal= false" >Yes</buton>
           <buton class="hillrom-btn btn-secondary btn-submit float-right" data-dismiss="modal" ng-click="$parent.deviceUpdateModal= false">No</buton>
          </div>
       </div>

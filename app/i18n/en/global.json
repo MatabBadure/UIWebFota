@@ -313,6 +313,9 @@
         "deviceBluetoothId":{
             "required": "Device Bluetooth ID Required"
         },
+        "wifiId":{      
+            "required": "Device WiFi/LTE ID Required"       
+        },
         "protocol":{
             "treatmentPerDay": {
                 "required": "Protocol Treatment per Day Required",
