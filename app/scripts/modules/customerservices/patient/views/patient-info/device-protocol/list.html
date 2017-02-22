@@ -1,4 +1,4 @@
-<ng-include src="'scripts/components/navbar/navbarassociate.html'"></ng-include>
+<ng-include src="'scripts/components/navbar/navbarcsr.html'"></ng-include>
 <admin-patient-navbar></admin-patient-navbar>
 <div class="container admin-user">
   <div class="col-md-16 margin-top">
@@ -93,7 +93,7 @@
       <div class="col-md-2 col-sm-2 header--type text-align-left">
             <span translate="patient.device-caption.device-type"></span>
           </div>
-        <div class="col-md-4 header--type">
+        <div class="col-md-3 header--type">
           <span translate="patient.device-caption.serial-no"></span>
         </div>
         <div class="col-md-3 header--type">
@@ -111,10 +111,10 @@
 </div>
 
   <div class="col-md-16 device-list" ng-repeat="device in devices  | orderBy:'active':true" ng-class="{'list-inactive': !device.active}">
-    <div id="deviceicon" class="col-md-2 col-sm-2 device-list__serial">
+    <div id="deviceInfoicon" class="col-md-2 col-sm-2 device-list__serial">
       <span class="icon_height_width" ng-class="{'monarchIcon': (getDeviceType() =='MONARCH'), 'visivestIcon': (getDeviceType() =='VEST')}">
     </div>
-    <div class="col-md-4 device-list__serial">
+    <div class="col-md-3 device-list__serial">
       <span>{{device.serialNumber}}</span>
     </div>
     <div class="col-md-3 device-list__bt-id">

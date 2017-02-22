@@ -111,7 +111,7 @@
 </div>
 
   <div class="col-md-16 device-list" ng-repeat="device in devices  | orderBy:'active':true" ng-class="{'list-inactive': !device.active}">
-    <div id="deviceicon" class="col-md-2 col-sm-2 device-list__serial">
+    <div id="deviceInfoicon" class="col-md-1 col-sm-1 device-list__serial">
       <span class="icon_height_width" ng-class="{'monarchIcon': (getDeviceType() =='MONARCH'), 'visivestIcon': (getDeviceType() =='VEST')}">
     </div>
     <div class="col-md-4 device-list__serial">
