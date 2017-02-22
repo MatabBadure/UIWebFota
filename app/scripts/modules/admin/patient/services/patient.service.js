@@ -321,7 +321,7 @@ angular.module('hillromvestApp')
       },
 
       deleteProtocol: function(id, protocolId) {
-        var url = URL.protocolById.replace('PATIENTID', id).replace('PROTOCOLID', protocolId);
+        var url = URL.protocolById.replace('PATIENTID', id).replace('PROTOCOLID', protocolId).replace('DEVICETYPE', localStorage.getItem('deviceType'));
         return $http.delete(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -345,7 +345,7 @@ angular.module('hillromvestApp')
         });
       },
       getProtocolById: function(patientId, protocolId) {
-        var url = URL.protocolById.replace('PATIENTID', patientId).replace('PROTOCOLID', protocolId);
+        var url = URL.protocolById.replace('PATIENTID', patientId).replace('PROTOCOLID', protocolId).replace('DEVICETYPE', localStorage.getItem('deviceType'));
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {

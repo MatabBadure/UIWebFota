@@ -148,7 +148,12 @@ angular.module('hillromvestApp')
           if(response.data.user.authorities[0].name === loginConstants.role.patient){
           Account.get().$promise
           .then(function (account) {
+            if(account.data.deviceType == 'ALL'){
+          localStorage.setItem('deviceType', 'VEST');
+            }
+            else{
             localStorage.setItem('deviceType', account.data.deviceType);
+          }
            });
             logged.patientID = response.data.user.id;
             patientsurveyService.isSurvey(response.data.user.id).then(function(response) {
