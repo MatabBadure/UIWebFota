@@ -39,12 +39,12 @@
     </div>
   </div>
 <div class="col-md-16 col-sm-16 border-top protocol_list_container" ng-class="{'no_border' : !protocols}">
-  <div class="col-md-1 col-sm-1" ng-if="protocols">
-    <div id="deviceicon" class="col-md-16 col-sm-16 protocol-list__treatment-day protocol-list no_border text-align-left">
+  <div class="col-md-1 col-sm-1 treatments_per_day_count" ng-if="protocols">
+    <div id="deviceicon" class="col-md-16 col-sm-16 protocol-list__treatment-day  no_border text-align-left">
      <span class="icon_height_width" ng-class="{'monarchIcon': (getDeviceType() =='MONARCH'), 'visivestIcon': (getDeviceType() =='VEST')}">
     </div>
   </div>
-  <div class="col-md-2 col-sm-2">
+  <div class="col-md-2 col-sm-2 col-lg-offset-1 col-md-offset-1 col-sm-offset-1 col-xs-offset-1">
     <div class="col-md-16 col-sm-16 protocol-list__treatment-day protocol-list no_border text-align-left" ng-repeat="protocol in protocols" ng-class="{'list-inactive':protocol.deleted, 'last' : $last}">
       <span class="protocol-list--value"> {{protocol.type}} {{protocol.treatmentLabel}}</span>
     </div>
@@ -93,7 +93,7 @@
       <div class="col-md-2 col-sm-2 header--type text-align-left">
             <span translate="patient.device-caption.device-type"></span>
           </div>
-        <div class="col-md-4 header--type">
+        <div class="col-md-3 header--type">
           <span translate="patient.device-caption.serial-no"></span>
         </div>
         <div class="col-md-3 header--type">
@@ -111,10 +111,10 @@
 </div>
 
   <div class="col-md-16 device-list" ng-repeat="device in devices  | orderBy:'active':true" ng-class="{'list-inactive': !device.active}">
-    <div id="deviceInfoicon" class="col-md-1 col-sm-1 device-list__serial">
-      <span class="icon_height_width" ng-class="{'monarchIcon': (getDeviceType() =='MONARCH'), 'visivestIcon': (getDeviceType() =='VEST')}">
+    <div id="deviceInfoicon" class="col-md-2 col-sm-2 device-list__serial">
+      <span class="icon_height_width" ng-class="{'monarchIcon': (getDeviceType() =='MONARCH'), 'visivestIcon': (getDeviceType() =='VEST')}"></span>
     </div>
-    <div class="col-md-4 device-list__serial">
+    <div class="col-md-3 device-list__serial">
       <span>{{device.serialNumber}}</span>
     </div>
     <div class="col-md-3 device-list__bt-id">
