@@ -44,7 +44,7 @@
 <div class="col-md-16 col-sm-16 border-top protocol_list_container" ng-class="{'no_border' : !protocols}">
   <div class="col-md-1 col-sm-1" ng-if="protocols">
     <div id="deviceicon" class="col-md-16 col-sm-16 protocol-list__treatment-day protocol-list no_border text-align-left">
-     <span class="icon_height_width" ng-class="{'monarchIcon': (getDeviceType() =='MONARCH'), 'visivestIcon': (getDeviceType() =='VEST')}">
+     <span class="icon_height_width" ng-class="{'monarchIcon': (getDeviceType() =='MONARCH'), 'visivestIcon': (getDeviceType() =='VEST')}"></span>
     </div>
   </div>
   <div class="col-md-2 col-sm-2">
@@ -96,7 +96,7 @@
         <div class="col-md-3 col-sm-3 header--type">
           <span translate="patient.device-caption.blutooth-id"></span>
         </div>
-        <div class="col-md-4 col-sm-4 header--type">
+        <div class="col-md-1 col-sm-1 header--type">
           <span translate="patient.device-caption.status"></span>
         </div>
         <div class="col-md-4 col-sm-4 header--type">
@@ -109,7 +109,7 @@
 
   <div class="col-md-16 col-sm-16 device-list" ng-repeat="device in devices  | orderBy:'active':true" ng-class="{'list-inactive': !device.active}">
     <div id="deviceInfoicon" class="col-md-2 col-sm-2 device-list__serial">
-      <span class="icon_height_width" ng-class="{'monarchIcon': (getDeviceType() =='MONARCH'), 'visivestIcon': (getDeviceType() =='VEST')}">
+      <span class="icon_height_width" ng-class="{'monarchIcon': (getDeviceType() =='MONARCH'), 'visivestIcon': (getDeviceType() =='VEST')}"></span>
     </div>
     <div class="col-md-3 col-sm-3 device-list__serial">
       <span>{{::device.serialNumber}}</span>
@@ -117,11 +117,11 @@
     <div class="col-md-3 col-sm-3 device-list__bt-id">
       <span>{{::device.bluetoothId}}</span>
     </div>
-    <div class="col-md-4 col-sm-4 device-list__status">
+    <div class="col-md-1 col-sm-1 device-list__status">
       <span ng-if="device.active" class="device--list__status--text" translate="patient.device.active-status">Active</span>
       <span ng-if="!device.active" class="device--list__status--text" translate="patient.device.inactive-status"></span>
     </div>
-    <div class="col-md-4 col-sm-4 device-list__date">
+    <div class="col-md-2 col-sm-2 device-list__date">
       <span>{{::device.lastModifiedDate}}</span>
     </div>
   </div>
