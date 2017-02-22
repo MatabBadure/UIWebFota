@@ -19,7 +19,10 @@ angular.module('hillromvestApp')
     }else if($state.current.name === 'hcppatientdashboard'){
       $scope.sortOption = "";
       $scope.sortPatientList = sortOptionsService.getSortOptionsForPatientList();
+      if($stateParams.filter){
         var filter = ($stateParams.filter).split("+");
+      }
+      else var filter = "";
       $scope.searchFilter = searchFilterService.initSearchFiltersForPatient(filter, true);
       $scope.currentPageIndex = 1;
       $scope.perPageCount = 10;
@@ -198,7 +201,13 @@ angular.module('hillromvestApp')
   };
 
 	$scope.selectPatient = function(patient){
-        localStorage.setItem('deviceType', patient.deviceType);
+        //localStorage.setItem('deviceType', patient.deviceType);
+        if(patient.deviceType == 'ALL'){
+          localStorage.setItem('deviceType', 'VEST');
+            }
+            else{
+            localStorage.setItem('deviceType', patient.deviceType);
+          }
     $state.go('hcppatientOverview',{'patientId': patient.id, 'clinicId': $scope.selectedClinic.id});
 	};
 

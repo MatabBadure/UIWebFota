@@ -71,7 +71,8 @@
       "created-date": "Created Date",
       "device": "Device",
       "modified-date": "Modified Date",
-      "active-or-inactive-date": "Active or Inactive Date"
+      "active-or-inactive-date": "Active or Inactive Date",
+      "device-type": "Device Type"
     },
     "clinic-title": "Clinics",
     "caregiver-title": "Caregivers",
@@ -119,7 +120,9 @@
       "bluetoothId": "Bluetooth ID",
       "hubId": "Hub ID",
       "active-status": "Active",
-      "inactive-status": "Inactive"
+      "inactive-status": "Inactive", 
+      "device-type": "Select Device",   
+      "wifi/LTE-serial-no": "Wifi/LTE SN"
     },
     "protocol": {
       "tm-per-day": "Treatment per Day",

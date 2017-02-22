@@ -29,7 +29,12 @@ angular.module('hillromvestApp')
         $scope.initClinicProfile($stateParams.clinicId);
       } else if(currentRoute === 'clinicAssociatedPatients' || currentRoute === 'clinicAssociatedPatientsRcadmin' || currentRoute === 'clinicAssociatedPatientsAssociate' || currentRoute === 'clinicAssociatedPatientsCustomerService'){
         $scope.searchFilter = {}; 
-              var filter = ($stateParams.filter).split("+");  
+        if($stateParams.filter){
+              var filter = ($stateParams.filter).split("+"); 
+              }
+              else{
+                var filter = "";
+              }
         $scope.searchFilter = searchFilterService.initSearchFiltersForPatient(filter, true);
         $scope.initPaginationVars();
         $scope.initClinicAssoctPatients($stateParams.clinicId);
@@ -827,7 +832,13 @@ angular.module('hillromvestApp')
     };
 
     $scope.selectAssociatedPatient = function(patient){
-      localStorage.setItem('deviceType', patient.deviceType); 
+     // localStorage.setItem('deviceType', patient.deviceType); 
+      if(patient.deviceType == 'ALL'){
+          localStorage.setItem('deviceType', 'VEST');
+            }
+            else{
+            localStorage.setItem('deviceType', patient.deviceType);
+          }
       if($state.current.name === 'clinicAssociatedPatients'){
         $state.go('patientOverview', {
           'patientId': patient.id

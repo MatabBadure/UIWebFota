@@ -23,7 +23,7 @@ angular.module('hillromvestApp')
 	$scope.init = function() {
 		$scope.VisiVest = true;
 	    $scope.Monarch = true;
-	    $scope.ClinicDashboardDeviceType = searchFilters.VisiVest; //By default and when both the checkboxes are selected/unselected devicetype is set to Vest
+	    $scope.ClinicDashboardDeviceType = searchFilters.allCaps; //By default and when both the checkboxes are selected/unselected devicetype is set to Vest
 		$scope.cumulativeStatitics = {};
 		$scope.badgestatistics = {};
 		$scope.cumulativeStatitics.isMissedTherapyDays = true;
@@ -110,14 +110,14 @@ angular.module('hillromvestApp')
      	}
      	else if ($scope.Monarch==true && $scope.VisiVest==true)
      	{
-          $scope.ClinicDashboardDeviceType = searchFilters.VisiVest;
+          $scope.ClinicDashboardDeviceType = searchFilters.allCaps;
           $scope.totalnumberofActivePatients = $scope.numberofVisiVestPatients + $scope.numberofMonarchPatients;
          // alert($scope.ClinicDashboardDeviceType);
           
      	}
      	else if ($scope.Monarch!=true && $scope.VisiVest!=true)
      	{
-          $scope.ClinicDashboardDeviceType = searchFilters.VisiVest;
+          $scope.ClinicDashboardDeviceType = searchFilters.allCaps;
           $scope.totalnumberofActivePatients = $scope.numberofVisiVestPatients + $scope.numberofMonarchPatients;
          // alert($scope.ClinicDashboardDeviceType);
           

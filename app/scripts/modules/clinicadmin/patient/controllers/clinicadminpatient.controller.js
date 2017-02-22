@@ -26,7 +26,12 @@ angular.module('hillromvestApp')
       $scope.getCaregiversAssociatedWithPatient($stateParams.patientId);
     }else if($state.current.name === 'clinicadminpatientdashboard'){
       $scope.searchItem = "";
+      if($stateParams.filter){
        var filter = ($stateParams.filter).split("+");
+     }
+    else{
+      var filter = "";
+    }
       $scope.searchFilter = searchFilterService.initSearchFiltersForPatient(filter, true);
       $scope.sortPatientList = sortOptionsService.getSortOptionsForPatientList();
       $scope.currentPageIndex = 1;
@@ -325,7 +330,13 @@ angular.module('hillromvestApp')
   };
 
   $scope.selectPatient = function(patient){
-    localStorage.setItem('deviceType', patient.deviceType);
+   // localStorage.setItem('deviceType', patient.deviceType);
+    if(patient.deviceType == 'ALL'){
+          localStorage.setItem('deviceType', 'VEST');
+            }
+            else{
+            localStorage.setItem('deviceType', patient.deviceType);
+          }
     var clinicId = ($scope.selectedClinic && $scope.selectedClinic.id) ? $scope.selectedClinic.id : ($stateParams.clinicId ? $stateParams.clinicId : null);
    $scope.deviceType = patient.deviceType;
     $state.go('clinicadminpatientOverview',{'patientId': patient.id, 'clinicId': clinicId});
