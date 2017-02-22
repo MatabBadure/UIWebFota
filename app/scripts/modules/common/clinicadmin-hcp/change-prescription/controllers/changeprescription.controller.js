@@ -179,7 +179,7 @@ function($scope, $state, clinicadminPatientService, notyService, $stateParams, c
             protocol.type = $rootScope.protocols[0].type;
           }
         });
-        patientService.editProtocol($stateParams.patientId, $rootScope.protocols).then(function(response){
+        patientService.editProtocol($stateParams.patientId, $rootScope.protocols, localStorage.getItem('deviceType')).then(function(response){
           $scope.isVerificationModal = false;
           var userFullName = $rootScope.username + ' ' + $rootScope.userLastName;
           exportutilService.exportChangePrescPDF($scope.patient, userFullName, $scope.currentDate, $rootScope.protocols);

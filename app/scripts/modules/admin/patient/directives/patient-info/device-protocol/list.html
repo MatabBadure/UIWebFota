@@ -39,10 +39,9 @@
     </div>
   </div>
 <div class="col-md-16 col-sm-16 border-top protocol_list_container" ng-class="{'no_border' : !protocols}">
-  <div class="col-md-1 col-sm-1">
-    <div class="col-md-16 col-sm-16 protocol-list__treatment-day protocol-list no_border text-align-left" ng-repeat="protocol in protocols" ng-class="{'list-inactive':protocol.deleted, 'last' : $last}">
-     <!--  <span class="protocol-list--value">{{protocols[0].treatmentsPerDay}}</span> -->
-     <span class="icon_height_width" ng-class="{'monarchIcon': (getDeviceType() =='MONARCH'), 'visivestIcon': (getDeviceType() =='VEST')}">
+  <div class="col-md-1 col-sm-1" ng-if="protocols">
+    <div id="deviceicon" ng-repeat="protocol in protocols" class="col-md-16 col-sm-16 protocol-list__treatment-day protocol-list no_border text-align-left">
+     <span class="icon_height_width" ng-class="{'monarchIcon': (getDeviceType() =='MONARCH'), 'visivestIcon': (getDeviceType() =='VEST')}"></span>
     </div>
   </div>
   <div class="col-md-2 col-sm-2">
@@ -101,19 +100,22 @@
 <div class="dashboard dashboard--content">
   <div class="dashboard__manage-view margin-top">
     <div class="dashboard__manage-view--header">
+       <div class="col-md-2 col-sm-2 header--type text-align-left">
+            <span translate="patient.device-caption.device-type"></span>
+          </div>
         <div class="col-md-3 col-sm-3 header--type">
           <span translate="patient.device-caption.serial-no"></span>
         </div>
         <div class="col-md-3 col-sm-3 header--type">
           <span translate="patient.device-caption.blutooth-id"></span>
         </div>
-        <div class="col-md-3 col-sm-2 header--type">
+        <div class="col-md-2 col-sm-2 header--type">
           <span translate="patient.device-caption.status"></span>
         </div>
-        <div class="col-md-3 col-sm-3 header--type">
+        <div class="col-md-2 col-sm-2 header--type">
           <span translate="">Total HMR (mins)</span>
         </div>
-        <div class="col-md-3 col-sm-3 header--type">
+        <div class="col-md-2 col-sm-2 header--type">
           <span translate="patient.device-caption.active-or-inactive-date"></span>
         </div>
         <div class="clr"></div>
@@ -122,23 +124,27 @@
 </div>
 
   <div class="col-md-16 col-sm-16 device-list" ng-repeat="device in devices  | orderBy:'active':true" ng-class="{'list-inactive': !device.active}">
+     <div id="deviceInfoicon" class="col-md-2 col-sm-2 device-list__serial">
+      <span class="icon_height_width" ng-class="{'monarchIcon': (getDeviceType() =='MONARCH'), 'visivestIcon': (getDeviceType() =='VEST')}"></span>
+    </div>
     <div class="col-md-3 col-sm-3 device-list__serial">
       <span>{{device.serialNumber}}</span>
     </div>
     <div class="col-md-3 col-sm-3 device-list__bt-id">
       <span>{{device.bluetoothId}}</span>
     </div>
-    <div class="col-md-3 col-sm-2 device-list__status">
+
+    <div class="col-md-2 col-sm-2 device-list__status">
       <span ng-if="device.active" class="device--list__status--text" translate="patient.device.active-status">Active</span>
       <span ng-if="!device.active" class="device--list__status--text" translate="patient.device.inactive-status"></span>
     </div>
-    <div class="col-md-3 col-sm-3">
+    <div class="col-md-2 col-sm-2">
       <span>{{device.hmr}}</span>
     </div>
-    <div class="col-md-3 col-sm-3 device-list__date">
+    <div class="col-md-2 col-sm-2 device-list__date">
       <span>{{device.lastModifiedDate}}</span>
     </div>
-    <div class="col-md-1 col-sm-2 device-list__edit text-center">
+    <div class="col-md-2 col-sm-2 device-list__edit text-center">
       <span ng-if="device.active" class="icon-edit-icon cursor-pointer" ng-click="openEditDevice(device)"></span>
       <span ng-if="device.active" class="icon-delete-icon cursor-pointer" ng-click="deleteDeviceModel(device)"></span>
     </div>
@@ -269,7 +275,7 @@
          </div>
          <div class="row modal--custom-btn">
           <buton class="hillrom-btn btn-submit float-right" ng-click="resetScore()">Yes</buton>
-          <buton class="hillrom-btn btn-submit float-right" data-dismiss="modal" ng-click="$parent.showUpdateModalReset = false"">No</buton>          
+          <buton class="hillrom-btn btn-submit float-right" data-dismiss="modal" ng-click="$parent.showUpdateModalReset = false">No</buton>          
          </div>
       </div>
       <footer class="modal__footer">

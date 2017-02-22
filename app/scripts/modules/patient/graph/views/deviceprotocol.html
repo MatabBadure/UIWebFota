@@ -6,10 +6,13 @@
   <div class="dashboard dashboard--content pull-left-mob  col-xs-16 padding0">
     <div class="dashboard__manage-view margin-top col-xs-16 padding0">
       <div class="dashboard__manage-view--header hidden-xs col-md-16 col-sm-16">
-          <div class="col-md-3 col-sm-3 header--type text-align-left">
+        <div class="col-md-1 col-sm-1 header--type text-align-left">
+            <span translate="patient.protocol-caption.device-type"></span>
+          </div>
+          <div class="col-md-2 col-sm-2 header--type text-align-left">
             <span translate="patient.protocol-caption.type"></span>
           </div>
-          <div class="col-md-3 col-sm-3 header--type text-align-left">
+          <div class="col-md-2 col-sm-2 header--type text-align-left">
             <span translate="patient.protocol-caption.treatments-per-day"></span>
           </div>
           <div class="col-md-3 col-sm-3 header--type text-align-left">
@@ -25,6 +28,9 @@
         </div>
 
       <div class="dashboard__manage-view--header col-xs-16 hidden-md hidden-sm hidden-lg">
+        <div class="col-xs-2 header--type">
+            <span translate="">Device</span>
+          </div>
           <div class="col-xs-3 header--type">
             <span translate="">Type</span>
           </div>
@@ -47,7 +53,12 @@
 
 
 <div class="col-md-16 col-sm-16 col-xs-16 no_border protocol_list_container" ng-class="{'no_border' : protocols.length == 0}">
-  <div class="col-md-3 col-sm-3 hidden-xs">
+   <div class="col-md-1 col-sm-1" ng-if="protocols">
+    <div id="deviceicon" class="col-md-16 col-sm-16 protocol-list__treatment-day protocol-list no_border text-align-left">
+     <span class="icon_height_width" ng-class="{'monarchIcon': (getDeviceType() =='MONARCH'), 'visivestIcon': (getDeviceType() =='VEST')}">
+    </div>
+  </div>
+  <div class="col-md-2 col-sm-2 hidden-xs">
     <div class="col-md-16 col-sm-16 col-xs-16 protocol-list__treatment-day protocol-list no_border text-align-left" ng-repeat="protocol in protocols" ng-class="{'list-inactive':protocol.deleted, 'last' : $last}">
       <span class="protocol-list--value"> {{protocol.type}} {{protocol.treatmentLabel}}</span>
     </div>
@@ -98,10 +109,13 @@
   <div class="dashboard dashboard--content">
     <div class="dashboard__manage-view margin-top">
       <div class="dashboard__manage-view--header">
+        <div class="col-md-2 col-sm-2 header--type text-align-left">
+            <span translate="patient.device-caption.device-type"></span>
+          </div>
           <div class="col-md-3 col-sm-3 header--type pull-left-mob">
             <span translate="patient.device-caption.serial-no"></span>
           </div>
-          <div class="col-md-4 col-sm-4 header--type none">
+          <div class="col-md-3 col-sm-3 header--type none">
             <span translate="patient.device-caption.blutooth-id"></span>
           </div>
           <div class="col-md-4 col-sm-4 header--type pull-right-mob">
@@ -116,10 +130,13 @@
   </div>
 
   <div class="col-md-16 col-sm-16 device-list vertical-align" ng-repeat="device in devices  | orderBy:'active':true" ng-class="{'list-inactive': !device.active}">
+     <div id="deviceInfoicon" class="col-md-2 col-sm-2 device-list__serial">
+      <span class="icon_height_width" ng-class="{'monarchIcon': (getDeviceType() =='MONARCH'), 'visivestIcon': (getDeviceType() =='VEST')}">
+    </div>
     <div class="col-md-3 col-sm-3 device-list__serial pull-left-mob">
       <span>{{device.serialNumber}}</span>
     </div>
-    <div class="col-md-4 col-sm-4 device-list__bt-id none">
+    <div class="col-md-3 col-sm-3 device-list__bt-id none">
       <span>{{device.bluetoothId}}</span>
     </div>
     <div class="col-md-4 col-sm-4 device-list__status pull-right-mob">
