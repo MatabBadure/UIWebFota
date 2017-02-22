@@ -1,0 +1,38 @@
+
+	<div class="row lebel-indent col-md-16 margin-bottom15">
+		<label ng-if="!searchFilter.isHideStatusFilter">
+			<input type="checkbox" ng-model="searchFilter.isActive" ng-click="searchOnFilters()"> 
+			<span translate="search-filter.active"></span> 
+		</label>
+		<label ng-if="!searchFilter.isHideStatusFilter">
+			<input type="checkbox" ng-model="searchFilter.isInActive" ng-click="searchOnFilters()"> 
+			<span translate="search-filter.inactive"></span>
+		</label>		
+		<label ng-if="isUsersTab">
+			<input type="checkbox" ng-model="searchFilter.isPending" ng-click="searchOnFilters()"> 
+			<span translate="search-filter.pending"></span>
+		</label>
+		<label class ="none" ng-if="searchFilter.userList === 'patientList'">
+			<input type="checkbox" ng-model="searchFilter.isNoEvent" ng-click="searchOnFilters()"> 
+			<span translate="search-filter.no-event"></span>
+		</label>
+		<label class ="none" ng-if="searchFilter.userList === 'patientList'">
+			<input type="checkbox" ng-model="searchFilter.isSettingsDeviated" ng-click="searchOnFilters()"> 
+			<span translate="search-filter.setting-deviation"></span>
+		</label>
+		<label class ="none" ng-if="searchFilter.userList === 'patientList'">
+			<input type="checkbox" ng-model="searchFilter.isHMRNonCompliant" ng-click="searchOnFilters()"> 
+			<span translate="search-filter.hmr-non-compliant"></span>
+		</label>
+		<label class ="none" ng-if="searchFilter.userList === 'patientList'">
+			<input type="checkbox" ng-model="searchFilter.isMissedTherapy" ng-click="searchOnFilters()"> 
+			<span translate="search-filter.missed-therapy"></span>
+		</label>
+		<div class="col-md-3 col-sm-5 col-xs-6 pull-right dashboard__form__input reset-padding selected-box-container newselectrolecontainer" ng-if="isUsersTab">
+		<label> Select Role</label>
+          <div class="custom-dropdown">
+          <select name="selectRole" id="selectRole" class="selectrole" ng-options="option.text for option in roleData.userRoles track by option.value" ng-model="roleData.roleSelected" ng-click="searchUsers()"  style="padding:6px"></select>            
+          </div>
+        </div>		
+	</div>
+	
