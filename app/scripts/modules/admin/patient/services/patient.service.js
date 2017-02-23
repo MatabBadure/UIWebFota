@@ -369,7 +369,7 @@ angular.module('hillromvestApp')
       },
 
       getTransmissionDate: function(patientId){
-        var url = URL.getTransmissionDate.replace('PATIENTID', patientId);
+        var url = URL.getTransmissionDate.replace('PATIENTID', patientId).replace('DEVICETYPE',localStorage.getItem('deviceType'));
         return $http.get(url, {
           headers: headerService.getHeader()
         });
