@@ -62,6 +62,7 @@
       "minutes-per-treatment": "Minutes Per Treatment",
       "pressure-per-treatment": "Pressure Per Treatment",
       "frequency-per-treatment": "Frequency Per Treatment",
+      "intensity-per-treatment": "Intensity Per Treatment",
       "device-type": "Device"
     },
     "device-caption": {
@@ -132,11 +133,14 @@
       "max-frequency": "Max Frequency",
       "min-pressure": "Min Pressure",
       "max-pressure": "Max Pressure",
+      "min-intensity": "Min Intensity",
+      "max-intensity": "Max Intensity",
       "gen-details": "Add Protocol",
       "min-minutes": "Min Minutes",
       "minutes": "Minutes",
       "frequency": "Frequency",
       "pressure": "Pressure",
+      "intensity": "Intensity",
       "device": "Device",
       "select-device": "Select Device"
     },
