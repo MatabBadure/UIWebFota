@@ -908,8 +908,13 @@ angular.module('hillromvestApp')
         } else {
           $scope.hasNoPatient = false;
         } 
-        angular.forEach(response.data, function(patientList, index){          
+        angular.forEach(response.data, function(patientList, index){ 
+        if(patientList.dob){   
           patientList.dob = dateService.getDateFromTimeStamp(patientList.dob, patientDashboard.dateFormat,'/');
+          }
+          else{
+            patientList.dob = "";
+          }
           patientList.lastTransmissionDate = (patientList.lastTransmissionDate) ? dateService.getDateFromYYYYMMDD(patientList.lastTransmissionDate, '/') : patientList.lastTransmissionDate;
           $scope.associatedPatients.push({"patient": patientList});         
           $scope.total = (response.headers()['x-total-count']) ? response.headers()['x-total-count'] :  response.data.length;
