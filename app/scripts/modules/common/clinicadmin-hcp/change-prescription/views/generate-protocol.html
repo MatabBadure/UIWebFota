@@ -108,12 +108,12 @@
       <div class="admin-user">
 
 		    <div class="col-md-16 col-sm-16 col-xs-16 border-top protocol_list_container" ng-class="{'no_border' : !protocols}">
-          <div class="col-md-1 col-sm-1" ng-if="protocols">
-    <div id="deviceInfoicon" style="padding-left:25% !important" class="col-md-16 col-sm-16 protocol-list__treatment-day protocol-list no_border text-align-left">
+          <div class="col-md-1 col-sm-1 treatments_per_day_count" ng-if="protocols">
+    <div id="deviceInfoicon" style="padding-left:25% !important" class="col-md-16 col-sm-16 protocol-list__treatment-day  no_border text-align-left">
      <span class="icon_height_width" ng-class="{'monarchIcon': (getDeviceType() =='MONARCH'), 'visivestIcon': (getDeviceType() =='VEST')}">
     </div>
   </div>
-          <div class="col-md-3 col-sm-3 hidden-xs">
+          <div class="col-md-3 col-sm-3 hidden-xs col-lg-offset-1 col-md-offset-1 col-sm-offset-1 col-xs-offset-1">
             <div class="col-md-16 col-sm-16 protocol-list__treatment-day protocol-list no_border text-align-l" ng-repeat="protocol in protocols" ng-class="{'list-inactive':protocol.deleted, 'last' : $last}">
               <span class="protocol-list--value"> {{protocol.type}} {{protocol.treatmentLabel}}</span>
             </div>
