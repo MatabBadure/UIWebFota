@@ -399,7 +399,12 @@ angular.module('hillromvestApp')
     pdf.text(200, 190,'Treatment Per Day');
     pdf.text(290, 190,'Minutes Per Treatment');
     pdf.text(390, 190,'Frequency Per Treatment');
+    if(deviceType == 'VEST'){
     pdf.text(490, 190,'Pressure Per Treatment');
+  }
+  else{
+    pdf.text(490, 190,'Intensity Per Treatment');
+  }
 
     pdf.setDrawColor(0);
     pdf.setFillColor(114, 111, 111);
@@ -417,7 +422,12 @@ angular.module('hillromvestApp')
         x = x + 90;
         pdf.text(x, y, protocol.minFrequency+'-'+protocol.maxFrequency);
         x = x + 90;
+        if(deviceType == 'VEST'){
         pdf.text(x, y, protocol.minPressure+'-'+protocol.maxPressure);
+      }
+      else{
+         pdf.text(x, y, protocol.minIntensity+'-'+protocol.maxIntensity);
+      }
       }else{
         
         x = x + 70;
@@ -431,7 +441,12 @@ angular.module('hillromvestApp')
         x = x + 90;
         pdf.text(x, y, protocol.minFrequency.toString());
         x = x + 90;
+        if(deviceType == 'VEST'){
         pdf.text(x, y, protocol.minPressure.toString());
+      }
+      else{
+        pdf.text(x, y, protocol.minIntensity.toString());
+      }
       }
       y = y + 20;
     });
