@@ -152,7 +152,7 @@ angular.module('hillromvestApp')
       },
 
       deleteNote: function(noteId){
-        var url = admin.hillRomUser.notes+'/'+noteId;
+        var url = admin.hillRomUser.notes+'/'+noteId+'?&deviceType='+localStorage.getItem('deviceType');
         return $http.delete(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
