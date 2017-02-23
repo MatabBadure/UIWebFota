@@ -32,7 +32,7 @@ angular.module('hillromvestApp')
 	'getAssociatedHCP' : '/api/patient/PATIENTID/filteredhcp?filterByClinic=CLINICID',
 	'searchAssociatedPatientsToClinic' : '/api/user/clinic/CLINICID/patient/search?searchString=SEARCHSTRING&page=PAGENO&per_page=OFFSET&filter=FILTER&sort_by=SORTBY',
 	'nonAssociatedPatientForClinic':'/api/clinics/CLINICID/notAssociatedPatients?searchString=&filter=isDeleted:0;',
-	'getTransmissionDate':'/api/patient/PATIENTID/firsttrasmissiondate',
+	'getTransmissionDate':'/api/patient/PATIENTID/firsttrasmissiondate?&deviceType=DEVICETYPE',
 	'getHCPsToLinkToPatient':'/api/patient/PATIENTID/hcpbypatientclinics/search?searchString=SEARCHSTRING&page=PAGENO&per_page=OFFSET',
 	'searchAssociatedHcpsToClinic':'/api/user/clinicadmin/CLINICADMINID/hcp/search?searchString=SEARCHSTRING&clinicId=CLINICID&page=PAGE&per_page=PERPAGECOUNT&filter=FILTER&sort_by=SORTBY',
 	'getHCPsWithClinicName': 'api/user/hcp/search?searchString=&page=1&per_page=&sort_by=lastName&asc=true&filter=isDeleted:0',

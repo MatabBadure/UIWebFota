@@ -124,7 +124,16 @@ angular.module('hillromvestApp')
      	}
      	var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : $stateParams.clinicId;
      	if(!onlyActivePatients){
+     				if($state.current.name === 'clinicadmindashboard'){
+     	$scope.getClinicsForClinicAdmin($scope.hcpId);
+     }
+     else if($state.current.name === 'hcpdashboard'){
+$scope.getClinicsForHCP($scope.hcpId);
+     }
+     else{
      	$scope.getclinicAdminID(clinicId);
+     }
+     	
      }
        };
     // for patient list based on device selection ends from here 
