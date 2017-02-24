@@ -7,11 +7,11 @@
             "app/bower_components/bootstrap-daterangepicker/daterangepicker-bs3.css",
             "app/bower_components/isteven-angular-multiselect/isteven-multi-select.css",
             "app/bower_components/nvd3/src/nv.d3.css",
-            "app/build/css/styles.css",
-            "app/bower_components/font-awesome/css/font-awesome.css"
+            "app/build/css/styles.css"
         ],
         "sass": [
-            "app/styles/*.scss"
+            "app/styles/*.scss",
+            "app/bower_components/font-awesome/css/font-awesome.css"
         ],
         "images": [
             "app/images/"
