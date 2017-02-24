@@ -205,7 +205,7 @@ angular.module('hillromvestApp')
        *
        */
       getDevices: function(id) {
-        var url = URL.deviceAssociatedToPatient.replace('PATIENTID', id);
+        var url = URL.deviceAssociatedToPatient.replace('PATIENTID', id).replace('DEVICETYPE',localStorage.getItem('deviceType'));
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -265,8 +265,10 @@ angular.module('hillromvestApp')
       },
 
 
-      addDevice: function(id, data) {
-        var url = URL.addDevice.replace('PATIENTID', id);
+      addDevice: function(id, data, deviceType) {
+       
+          var url = URL.addDevice.replace('PATIENTID', id).replace('DEVICETYPE',deviceType);
+    
         return $http.put(url, data, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -274,8 +276,8 @@ angular.module('hillromvestApp')
         });
       },
 
-      deleteDevice: function(id, device) {
-        var url = URL.deactivateDevice.replace('PATIENTID', id).replace('SERIALNUMBER', device.serialNumber);
+      deleteDevice: function(id, device, deviceType) {
+         var url = URL.deactivateDevice.replace('PATIENTID', id).replace('SERIALNUMBER', device.serialNumber).replace('DEVICETYPE', deviceType);
         return $http.delete(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -284,7 +286,7 @@ angular.module('hillromvestApp')
       },
 
       getProtocol: function(id) {
-        var url = URL.addEditProtocol.replace('PATIENTID', id);
+        var url = URL.getProtocol.replace('PATIENTID', id).replace('DEVICETYPE',localStorage.getItem('deviceType'));
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -292,8 +294,13 @@ angular.module('hillromvestApp')
         });
       },
 
-      addProtocol: function(id, data) {
-        var url = URL.addEditProtocol.replace('PATIENTID', id);
+      addProtocol: function(id, data, deviceType) {
+        if(deviceType == 'VEST'){
+          var url = URL.addEditProtocol.replace('PATIENTID', id).replace('DEVICETYPE','vestdevice');
+        }
+        else if(deviceType == 'MONARCH'){
+          var url = URL.addEditProtocol.replace('PATIENTID', id).replace('DEVICETYPE','monarchdevice');
+        }
         return $http.post(url, data, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -301,8 +308,13 @@ angular.module('hillromvestApp')
         });
       },
 
-      editProtocol: function(id, data) {
-        var url = URL.addEditProtocol.replace('PATIENTID', id);
+      editProtocol: function(id, data, deviceType) {
+        if(deviceType == 'VEST'){
+         var url = URL.addEditProtocol.replace('PATIENTID', id).replace('DEVICETYPE','vestdevice');
+        }
+        else if(deviceType == 'MONARCH'){
+          var url = URL.addEditProtocol.replace('PATIENTID', id).replace('DEVICETYPE','monarchdevice');
+        }
         return $http.put(url, data, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -311,7 +323,7 @@ angular.module('hillromvestApp')
       },
 
       deleteProtocol: function(id, protocolId) {
-        var url = URL.protocolById.replace('PATIENTID', id).replace('PROTOCOLID', protocolId);
+        var url = URL.protocolById.replace('PATIENTID', id).replace('PROTOCOLID', protocolId).replace('DEVICETYPE', localStorage.getItem('deviceType'));
         return $http.delete(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -335,7 +347,7 @@ angular.module('hillromvestApp')
         });
       },
       getProtocolById: function(patientId, protocolId) {
-        var url = URL.protocolById.replace('PATIENTID', patientId).replace('PROTOCOLID', protocolId);
+        var url = URL.protocolById.replace('PATIENTID', patientId).replace('PROTOCOLID', protocolId).replace('DEVICETYPE', localStorage.getItem('deviceType'));
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -350,14 +362,14 @@ angular.module('hillromvestApp')
       },
 
       getDeviceDataAsCSV: function(patientId, startDateTimestamp, endDateTimestamp){
-        var url = URL.deviceDataAsCSV.replace('PATIENTID', patientId).replace('STARTDATE', startDateTimestamp).replace('ENDDATE', endDateTimestamp);
+        var url = URL.deviceDataAsCSV.replace('PATIENTID', patientId).replace('STARTDATE', startDateTimestamp).replace('ENDDATE', endDateTimestamp).replace('DEVICETYPE', localStorage.getItem('deviceType'));
         return $http.get(url, {
           headers: headerService.getHeaderForXls(),responseType: "arraybuffer"
         });
       },
 
       getTransmissionDate: function(patientId){
-        var url = URL.getTransmissionDate.replace('PATIENTID', patientId);
+        var url = URL.getTransmissionDate.replace('PATIENTID', patientId).replace('DEVICETYPE',localStorage.getItem('deviceType'));
         return $http.get(url, {
           headers: headerService.getHeader()
         });

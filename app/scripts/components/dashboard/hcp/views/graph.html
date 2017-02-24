@@ -22,10 +22,23 @@
 						</div>
 					</div>
 					<div class="stats_header badgefiltercontainer">
-						<div class="pull-left col-md-6">
+                    <div class="pull-left col-md-6">
+					<div class="col-md-16 col-sm-16 lebel-indent">
+					<label class ="none" >
+			       <input type="checkbox" ng-model="$parent.VisiVest" ng-change="getclinicDashboardDataBasedonDevice(false)" > 
+			      <span translate="search-filter.visivest"></span>
+			      <span >Patients ({{ numberofVisiVestPatients }})</span>
+		        </label>
+				<label class ="none" >
+			      <input type="checkbox" ng-model="$parent.Monarch" ng-change="getclinicDashboardDataBasedonDevice(false)" > 
+			      <span translate="search-filter.monarch"></span>
+			      <span >Patients ({{ numberofMonarchPatients }})</span>
+		          </label>
+						</div>
 						<div class="col-md-16 col-sm-16">
 							<h4 translate="doctor.dashboard.totalPatients"></h4>
-							<span class="sub_txt">{{statistics.totalPatientCount}}</span>
+							<span class="sub_txt">{{ totalnumberofActivePatients }}</span>
+						
 							</div>
 
 						</div>

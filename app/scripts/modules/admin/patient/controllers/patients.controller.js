@@ -133,6 +133,7 @@ angular.module('hillromvestApp')
           $scope.totalHmr = $scope.totalHmr + device.hmr;
           device.createdDate = dateService.getDateByTimestamp(device.createdDate);
           device.lastModifiedDate = dateService.getDateByTimestamp(device.lastModifiedDate);
+          $scope.deviceTypeSelected = localStorage.getItem('devicetype'); //later to be changed when devicetype is passed in response
         });
         $scope.devices = response.data.deviceList;
         $scope.isDevicesLoaded = true;
@@ -170,7 +171,9 @@ angular.module('hillromvestApp')
         var today = mm+'/'+dd+'/'+yyyy;
         $scope.todayDate = today;
     };
+$scope.getdevice = function(){
 
+};
     $scope.initPatientAddProtocol = function(){
       $scope.getPatientById($stateParams.patientId);
       $scope.protocol = $stateParams.protocol;
@@ -178,21 +181,31 @@ angular.module('hillromvestApp')
         $scope.protocol = {};
         $scope.protocol.type = 'Normal';
         $scope.protocol.protocolEntries = [{}];
+        $scope.deviceTypeSelectedProtocol = localStorage.getItem('devicetype');
       } else {
         $scope.protocol.type = $scope.protocol.protocol[0].type;
         $scope.protocol.treatmentsPerDay = $scope.protocol.protocol[0].treatmentsPerDay;
         $scope.protocol.protocolEntries = $scope.protocol.protocol;
+        $scope.deviceTypeSelectedProtocol = localStorage.getItem('devicetype');
       }
     };
 
     $scope.initPatientAddDevice = function(){
       $scope.getPatientById($stateParams.patientId);
-      $scope.device = $stateParams.device;
+      if($stateParams.device){
+      $scope.device = $stateParams.device; //  for passing to edit mode
+      $scope.device.wifiId = $stateParams.device.bluetoothId;
+   }
+      $scope.deviceTypeSelected = localStorage.getItem('devicetype');
     };
 
     $scope.init = function() {
+        /*      $scope.deviceTypeVest = true;   
+      $scope.deviceTypeMonarch = false;*/   
+       $scope.selectedDevice();
       var currentRoute = $state.current.name;
       //in case the route is changed from other thatn switching tabs
+     // $scope.devicetype = localStorage.getItem('deviceType');
       $scope.patientTab = currentRoute;
       if(currentRoute === 'patientOverview' || currentRoute === 'patientOverviewRcadmin'){
         $scope.initPatientOverview();
@@ -445,6 +458,7 @@ angular.module('hillromvestApp')
     {
       
       //$scope.resetsubmitted = true;
+      var deviceType = localStorage.getItem('deviceType');
       var createdById = StorageService.get('logged').userId;
       var userID = $stateParams.patientId;
       var patientHillromId = $scope.patientInformation;
@@ -469,7 +483,8 @@ angular.module('hillromvestApp')
       'patientId': patientHillromId,
       'resetStartDate': resetDateFinal,
       'resetScore': resetTo,
-      'justification': reason
+      'justification': reason,
+      'deviceType' : deviceType
       };
      
 
@@ -740,7 +755,7 @@ angular.module('hillromvestApp')
       if($scope.addDeviceForm.$invalid){
         return false;
       }
-      patientService.addDevice( $stateParams.patientId, $scope.device).then(function(response){
+      patientService.addDevice( $stateParams.patientId, $scope.device, $scope.deviceTypeSelected).then(function(response){
         if($scope.patientStatus.role === loginConstants.role.acctservices){
           $state.go('patientProtocolRcadmin', {'patientId': $stateParams.patientId});
         }else{
@@ -772,7 +787,7 @@ angular.module('hillromvestApp')
           protocol.treatmentLabel = 'point'+ (index + 1);
         })
       }
-      patientService.addProtocol($stateParams.patientId, $scope.protocol).then(function(response){
+      patientService.addProtocol($stateParams.patientId, $scope.protocol, $scope.deviceTypeSelectedProtocol).then(function(response){
         if($scope.patientStatus.role === loginConstants.role.acctservices){
           $state.go('patientProtocolRcadmin', {'patientId': $stateParams.patientId});
         }else{
@@ -785,7 +800,7 @@ angular.module('hillromvestApp')
 
     $scope.deleteDevice = function(){
       $scope.showModalDevice = false;
-      patientService.deleteDevice($stateParams.patientId, $scope.deviceToDelete).then(function(response){
+      patientService.deleteDevice($stateParams.patientId, $scope.deviceToDelete, localStorage.getItem('deviceType')).then(function(response){
         $scope.deviceToDelete.active = false;
         notyService.showMessage(response.data.message, 'success');
       }).catch(function(response){
@@ -941,7 +956,7 @@ angular.module('hillromvestApp')
         data[0].treatmentsPerDay = $scope.protocol.treatmentsPerDay;
       }
       
-      patientService.editProtocol($stateParams.patientId, data).then(function(response){
+      patientService.editProtocol($stateParams.patientId, data, $scope.deviceTypeSelectedProtocol).then(function(response){
         $scope.isVerificationModal = false;
         notyService.showMessage(response.data.message, 'success');
         if($scope.patientStatus.role === loginConstants.role.acctservices){
@@ -965,7 +980,7 @@ angular.module('hillromvestApp')
 
     $scope.updateDevice = function(){
       $scope.deviceUpdateModal =true;
-      patientService.addDevice($stateParams.patientId, $scope.device).then(function(response){
+      patientService.addDevice($stateParams.patientId, $scope.device, $scope.deviceTypeSelected).then(function(response){
         if($scope.patientStatus.role === loginConstants.role.acctservices){
           $state.go('patientProtocolRcadmin', {'patientId': $stateParams.patientId});
         }else{
@@ -1106,10 +1121,12 @@ angular.module('hillromvestApp')
           $scope.protocol = {};
           $scope.protocol.type = 'Normal';
           $scope.protocol.protocolEntries = [{}];
+          $scope.deviceTypeSelectedProtocol = localStorage.getItem('deviceType');
         } else {
           $scope.protocol.type = $scope.protocol.protocol[0].type;
           $scope.protocol.treatmentsPerDay = $scope.protocol.protocol[0].treatmentsPerDay;
           $scope.protocol.protocolEntries = $scope.protocol.protocol;
+          $scope.deviceTypeSelectedProtocol = localStorage.getItem('deviceType');
         }
         $scope.prevProtocolType = $scope.protocol.type;
         $scope.prevProtocol = angular.copy($scope.protocol);        
@@ -1224,7 +1241,33 @@ angular.module('hillromvestApp')
     $scope.getClinicToLinkToPatient = function($viewValue){
       return searchFilterService.getMatchingClinic($viewValue, $scope.clinics);
     };
-
+     
+  $scope.selectedDevice = function() {   
+    $scope.selectedDeviceType = $scope.getDeviceType();   
+    if($scope.selectedDeviceType== "VEST")    
+    {   
+        $scope.deviceTypeVest = true;   
+         $scope.deviceTypeMonarch = false;    
+    }   
+    if($scope.selectedDeviceType== "MONARCH")   
+    {   
+        $scope.deviceTypeMonarch = true;    
+        $scope.deviceTypeVest = false;    
+    }   
+  };    
+  $scope.onChangeSelectedDevice = function() {    
+    $scope.selectedDeviceType = $scope.deviceTypeSelected;   
+    if($scope.selectedDeviceType== "VEST")    
+    {   
+        $scope.deviceTypeVest = true;   
+         $scope.deviceTypeMonarch = false;    
+    }   
+    if($scope.selectedDeviceType== "MONARCH")   
+    {   
+        $scope.deviceTypeMonarch = true;    
+        $scope.deviceTypeVest = false;    
+    }   
+  };
     $scope.getCityStateByZip = function(){
       delete $scope.serviceError;
       $scope.isServiceError = false;

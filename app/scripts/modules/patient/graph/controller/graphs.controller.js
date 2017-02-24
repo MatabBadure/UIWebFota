@@ -128,6 +128,13 @@ angular.module('hillromvestApp')
                   for(var i=0;i<response.data.patients.length;i++){
                     if($stateParams.patientId == response.data.patients[i].userId){
                   $scope.selectedPatient = response.data.patients[i];
+                 // localStorage.setItem('deviceType',response.data.patients[i].deviceType);
+                 if(response.data.patients[i].deviceType == 'ALL'){
+          localStorage.setItem('deviceType', 'VEST');
+            }
+            else{
+            localStorage.setItem('deviceType', response.data.patients[i].deviceType);
+          }
                   $scope.patientId = $stateParams.patientId;
                   var logged = StorageService.get('logged');                   
                  
@@ -143,6 +150,13 @@ angular.module('hillromvestApp')
 
                 } else{
                  $scope.selectedPatient = response.data.patients[0];
+                  //localStorage.setItem('deviceType',response.data.patients[0].deviceType);
+         if(response.data.patients[0].deviceType == 'ALL'){
+          localStorage.setItem('deviceType', 'VEST');
+            }
+            else{
+            localStorage.setItem('deviceType', response.data.patients[0].deviceType);
+          }          
                   $scope.patientId = $scope.selectedPatient.userId;
                      $scope.$emit('getSelectedPatient', $scope.selectedPatient);
                      var logged = StorageService.get('logged');                    
@@ -675,6 +689,7 @@ angular.module('hillromvestApp')
       if(editedNoteText && editedNoteText.length > 0  && (editedNoteText.trim()).length > 0){
         var data = {};
         data.noteText = editedNoteText;
+        data.deviceType = localStorage.getItem('deviceType');
         UserService.updateNote(noteId, new Date(dateCreatedOn).getTime(), data).then(function(response){
           $scope.showAllNotes();
           makeAllNotesReadable();
@@ -697,6 +712,7 @@ angular.module('hillromvestApp')
             data.noteText = $scope.textNote.text;
             data.userId = StorageService.get('logged').patientID;
             data.date = editDate;
+            data.deviceType = localStorage.getItem('deviceType');
             UserService.createNote(StorageService.get('logged').patientID, data).then(function(response){
               $scope.addNote = false;
               $scope.textNote.edit_date = dateService.convertDateToYyyyMmDdFormat(new Date());

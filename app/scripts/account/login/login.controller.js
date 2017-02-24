@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('hillromvestApp')
-  .controller('LoginController',['$scope','$state','deviceDetector', '$timeout', 'Auth', 'vcRecaptchaService', 'globalConfig', '$rootScope', 'loginConstants', 'Principal', 'StorageService', 'patientsurveyService',
-    function($scope, $state,deviceDetector, $timeout, Auth, vcRecaptchaService, globalConfig, $rootScope, loginConstants, Principal, StorageService, patientsurveyService) {
+  .controller('LoginController',['$scope','$state','deviceDetector', '$timeout', 'Auth', 'vcRecaptchaService', 'globalConfig', '$rootScope', 'loginConstants', 'Principal', 'StorageService', 'patientsurveyService', 'Account',
+    function($scope, $state,deviceDetector, $timeout, Auth, vcRecaptchaService, globalConfig, $rootScope, loginConstants, Principal, StorageService, patientsurveyService, Account) {
     $scope.showLogin = true;
     $scope.isEmailExist = true;
     $scope.isFirstLogin = false;
@@ -146,6 +146,15 @@ angular.module('hillromvestApp')
           $rootScope.userEmail = response.data.user.email;
           
           if(response.data.user.authorities[0].name === loginConstants.role.patient){
+          Account.get().$promise
+          .then(function (account) {
+            if(account.data.deviceType == 'ALL'){
+          localStorage.setItem('deviceType', 'VEST');
+            }
+            else{
+            localStorage.setItem('deviceType', account.data.deviceType);
+          }
+           });
             logged.patientID = response.data.user.id;
             patientsurveyService.isSurvey(response.data.user.id).then(function(response) {
               $rootScope.surveyId = response.data.id;
