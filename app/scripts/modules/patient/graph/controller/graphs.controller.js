@@ -1112,12 +1112,12 @@ angular.module('hillromvestApp')
         if($scope.hmrChartData && typeof($scope.hmrChartData) === "object"){ 
           $scope.noDataAvailableForHMR = false;      
           $scope.hmrChartData.xAxis.xLabels=[]; 
-          $scope.isSameDay = true;
+          $scope.isSameDayHMRGraph = true;
           var startDay = ($scope.hmrChartData.xAxis && $scope.hmrChartData.xAxis.categories.length > 0) ? $scope.hmrChartData.xAxis.categories[0].split(" "): null;  
             $scope.hmrXAxisLabelCount = 0;
             angular.forEach($scope.hmrChartData.xAxis.categories, function(x, key){ 
               var curDay = $scope.hmrChartData.xAxis.categories[key].split(" ");
-              $scope.isSameDay = ($scope.isSameDay && (curDay[0] === startDay[0]) )? true : false;  
+              $scope.isSameDayHMRGraph = ($scope.isSameDayHMRGraph && (curDay[0] === startDay[0]) )? true : false;  
               if(curDay[0] !== startDay[0]){
                 startDay[0] = curDay[0];
                 $scope.hmrXAxisLabelCount++;
@@ -1126,7 +1126,7 @@ angular.module('hillromvestApp')
             angular.forEach($scope.hmrChartData.xAxis.categories, function(x, key){              
               // this is for year view or custom view having datapoints more than 7
               // x-axis will be plotted accordingly, chart type will be datetime
-              if($scope.durationRange !== "Day" && !$scope.isSameDay){
+              if($scope.durationRange !== "Day" && !$scope.isSameDayHMRGraph){
                 $scope.hmrChartData.xAxis.xLabels.push(dateService.convertToTimestamp(x));
                 $scope.hmrChartData.xAxis.categories[key] = dateService.convertToTimestamp(x);               
               }else{
@@ -1141,7 +1141,7 @@ angular.module('hillromvestApp')
             angular.forEach(s.data, function(d, key2){
               var tooltipDateText = $scope.hmrChartData.series[key1].data[key2].x ;
               $scope.hmrChartData.series[key1].data[key2].marker = marker;
-              if($scope.durationRange === "Day" || $scope.isSameDay){
+              if($scope.durationRange === "Day" || $scope.isSameDayHMRGraph){
                 delete $scope.hmrChartData.series[key1].data[key2].x;
               }else{
                 $scope.hmrChartData.series[key1].data[key2].x = $scope.hmrChartData.xAxis.categories[key2];
@@ -1158,7 +1158,7 @@ angular.module('hillromvestApp')
             
           }); 
           setTimeout(function(){
-            if($scope.durationRange === "Day" || $scope.isSameDay){          
+            if($scope.durationRange === "Day" || $scope.isSameDayHMRGraph){          
               $scope.HMRCategoryChart();
             }else{
               $scope.HMRAreaChart();
@@ -1176,18 +1176,17 @@ angular.module('hillromvestApp')
     {
       patientDashBoardService.getAdherenceTrendGraphPoints($scope.patientId, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.durationRange).then(function(response){
       $scope.adherenceTrendData = response.data;
-
       $scope.noDataAvailableForAdherence= false;       
         if($scope.adherenceTrendData && typeof($scope.adherenceTrendData) === "object"){ 
          $scope.noDataAvailableForAdherence = false;      
           $scope.adherenceTrendData.xAxis.xLabels=[]; 
-          $scope.isSameDay = true;
+          $scope.isSameDayAdherenceTrend = true;
           var startDay = ($scope.adherenceTrendData.xAxis && $scope.adherenceTrendData.xAxis.categories.length > 0) ? $scope.adherenceTrendData.xAxis.categories[0].split(" "): null;  
             $scope.adherenceTrendXAxisLabelCount = 0;
             angular.forEach($scope.adherenceTrendData.xAxis.categories, function(x, key){ 
               var curDay = $scope.adherenceTrendData.xAxis.categories[key].split(" ");
-              $scope.isSameDay = ($scope.isSameDay && (curDay[0] === startDay[0]) )? true : false;  
-              if(curDay[0] !== startDay[0]){
+              $scope.isSameDayAdherenceTrend = ($scope.isSameDayAdherenceTrend && (curDay[0] == startDay[0]) )? true : false;  
+                 if(curDay[0] !== startDay[0]){
                 startDay[0] = curDay[0];
                 $scope.adherenceTrendXAxisLabelCount++;
               }
@@ -1195,14 +1194,14 @@ angular.module('hillromvestApp')
             angular.forEach($scope.adherenceTrendData.xAxis.categories, function(x, key){              
               // this is for year view or custom view having datapoints more than 7
               // x-axis will be plotted accordingly, chart type will be datetime
-              if($scope.durationRange !== "Day" && !$scope.isSameDay){
+              if($scope.durationRange !== "Day" && !$scope.isSameDayAdherenceTrend){
                 $scope.adherenceTrendData.xAxis.xLabels.push(dateService.convertToTimestamp(x));
                 $scope.adherenceTrendData.xAxis.categories[key] = dateService.convertToTimestamp(x);               
               }else{
                 $scope.adherenceTrendData.xAxis.xLabels.push(x);
                 $scope.adherenceTrendData.xAxis.categories[key] = Highcharts.dateFormat("%I:%M %p",dateService.convertToTimestamp(x)) ;
               }
-            });         
+            });
           angular.forEach($scope.adherenceTrendData.series, function(s, key1){
             var marker = {};
             marker.radius = (s.data && s.data.length < 50)? 2 : 0.5;
@@ -1210,7 +1209,7 @@ angular.module('hillromvestApp')
             angular.forEach(s.data, function(d, key2){
               var tooltipDateText = $scope.adherenceTrendData.series[key1].data[key2].x ;
               $scope.adherenceTrendData.series[key1].data[key2].marker = marker;
-              if($scope.durationRange === "Day" || $scope.isSameDay){
+              if($scope.durationRange === "Day" || $scope.isSameDayAdherenceTrend){
                 delete $scope.adherenceTrendData.series[key1].data[key2].x;
               }else{
                 $scope.adherenceTrendData.series[key1].data[key2].x = $scope.adherenceTrendData.xAxis.categories[key2];
@@ -1226,11 +1225,11 @@ angular.module('hillromvestApp')
             });            
             
           }); 
-          setTimeout(function(){
-            if($scope.durationRange === "Day" || $scope.isSameDay){          
+          setTimeout(function(){ 
+            if($scope.durationRange === "Day" || $scope.isSameDayAdherenceTrend){           
               $scope.AdherenceTrendCategoryChart();
             }else{
-              $scope.AdherenceTrendAreaChart();
+           $scope.AdherenceTrendAreaChart();
             }            
           }, 100);          
         } else{
