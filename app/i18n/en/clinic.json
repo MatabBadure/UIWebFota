@@ -179,6 +179,10 @@
             "next": "Next",
             "hcps": "HCPs",
             "found": "Found"
+        },
+         "adherence": {
+            "warning": "Adherence Settings",
+            "message": "You have made changes/updates for Adherence Settings. Are you sure to make updates?"
         }
     }
 }
