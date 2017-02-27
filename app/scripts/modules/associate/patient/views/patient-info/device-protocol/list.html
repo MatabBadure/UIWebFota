@@ -42,10 +42,8 @@
     </div>
   </div>
 <div class="col-md-16 col-sm-16 border-top protocol_list_container" ng-class="{'no_border' : !protocols}">
-
-  <div class="col-md-1 col-sm-1" ng-if="!(protocols.length == 0)">
-    <div id="deviceicon" class="col-md-16 col-sm-16 protocol-list__treatment-day protocol-list no_border text-align-left">
-
+  <div class="col-md-1 col-sm-1 treatments_per_day_count" ng-if="(protocols)">
+    <div id="deviceicon" class="col-md-16 col-sm-16 protocol-list__treatment-day  no_border text-align-left">
      <span class="icon_height_width" ng-class="{'monarchIcon': (getDeviceType() =='MONARCH'), 'visivestIcon': (getDeviceType() =='VEST')}">
     </div>
   </div>
@@ -54,7 +52,7 @@
       <span class="protocol-list--value"> {{protocol.type}} {{protocol.treatmentLabel}}</span>
     </div>
   </div>
-  <div class="col-md-3 col-sm-3 treatments_per_day_count col-sm-offset-3 col-md-offset-3">
+  <div class="col-md-2 col-sm-2 treatments_per_day_count col-sm-offset-3 col-md-offset-3">
       <span class="v_middle">{{protocols[0].treatmentsPerDay}}</span>
   </div>
   <div class="col-md-9 col-sm-9 col-sm-offset-2 col-md-offset-2">

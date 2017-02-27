@@ -493,8 +493,11 @@
 							<div class="col-md-3 col-sm-3 header--type text-align-left">
 								<span translate="patient.protocol-caption.frequency-per-treatment"></span>
 							</div>
-							<div class="col-md-3 col-sm-3 header--type text-align-left">
+							<div class="col-md-3 col-sm-3 header--type text-align-left"  ng-if="(getDeviceType() =='VEST')">
 								<span translate="patient.protocol-caption.pressure-per-treatment"></span>
+							</div>
+							<div class="col-md-3 col-sm-3 header--type text-align-left"  ng-if="(getDeviceType() =='MONARCH')">
+								<span translate="patient.protocol-caption.intensity-per-treatment"></span>
 							</div>
 							<div class="clr"></div>
 						</div>
@@ -512,8 +515,11 @@
 						<div class="col-xs-3 header--type">
 							<span translate="">Freq.</span>
 						</div>
-						<div class="col-xs-3 header--type">
+						<div class="col-xs-3 header--type" ng-if="(getDeviceType() =='VEST')">
 							<span translate="">Press.</span>
+						</div>
+						<div class="col-xs-3 header--type" ng-if="(getDeviceType() =='MONARCH')">
+							<span translate="">Inten.</span>
 						</div>
 						<div class="clr"></div>
 						</div>
@@ -544,9 +550,13 @@
 								<span ng-if="protocol.type === 'Custom'" class="protocol-list--value"> {{protocol.minFrequency}}</span>
 								<span ng-if="protocol.type === 'Normal'" class="protocol-list--value"> {{protocol.minFrequency}}-{{protocol.maxFrequency}}</span>
 							</div>
-							<div class="col-md-4 col-xs-5 col-sm-5 text-align_c  padding0 protocol-list__end-date">
+							<div class="col-md-4 col-xs-5 col-sm-5 text-align_c  padding0 protocol-list__end-date" ng-if="(getDeviceType() =='VEST')">
 								<span ng-if="protocol.type === 'Custom'" class="protocol-list--value"> {{protocol.minPressure}}</span>
 								<span ng-if="protocol.type === 'Normal'" class="protocol-list--value"> {{protocol.minPressure}}-{{protocol.maxPressure}}</span>
+							</div>
+							<div class="col-md-4 col-xs-5 col-sm-5 text-align_c  padding0 protocol-list__end-date" ng-if="(getDeviceType() =='MONARCH')">
+								<span ng-if="protocol.type === 'Custom'" class="protocol-list--value"> {{protocol.minIntensity}}</span>
+								<span ng-if="protocol.type === 'Normal'" class="protocol-list--value"> {{protocol.minIntensity}}-{{protocol.maxIntensity}}</span>
 							</div>
 						</div>
 					</div>
