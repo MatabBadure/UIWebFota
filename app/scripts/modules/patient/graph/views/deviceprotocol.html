@@ -142,7 +142,7 @@
   </div>
 
   <div class="col-md-16 col-sm-16 device-list vertical-align" ng-repeat="device in devices  | orderBy:'active':true" ng-class="{'list-inactive': !device.active}">
-     <div id="deviceInfoicon" class="col-md-2 col-sm-2 col-xs-2 device-list__serial">
+     <div id="deviceInfoicon" class="col-md-2 col-sm-2 col-xs-3 device-list__serial">
       <span class="icon_height_width" ng-class="{'monarchIcon': (getDeviceType() =='MONARCH'), 'visivestIcon': (getDeviceType() =='VEST')}">
     </div>
     <div class="col-md-3 col-sm-3 device-list__serial pull-left-mob">
