@@ -166,7 +166,8 @@
       <span>{{device.serialNumber}}</span>
     </div>
     <div class="col-md-3 col-sm-3 device-list__bt-id none">
-      <span>{{device.bluetoothId}}</span>
+      <span ng-if="getDeviceType() =='VEST'">{{device.bluetoothId}}</span>
+      <span ng-if="getDeviceType() =='MONARCH'">{{device.wifiId}}</span>
     </div>
     <div class="col-md-2 col-sm-2 device-list__status pull-right-mob width120">
       <span ng-if="device.active" class="device--list__status--text" translate="patient.device.active-status">Active</span>
