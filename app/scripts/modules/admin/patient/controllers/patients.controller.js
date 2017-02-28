@@ -194,7 +194,7 @@ $scope.getdevice = function(){
       $scope.getPatientById($stateParams.patientId);
       if($stateParams.device){
       $scope.device = $stateParams.device; //  for passing to edit mode
-      $scope.device.wifiId = $stateParams.device.bluetoothId;
+      $scope.device.wifiId = $stateParams.device.wifiId;
    }
       $scope.deviceTypeSelected = localStorage.getItem('devicetype');
     };
