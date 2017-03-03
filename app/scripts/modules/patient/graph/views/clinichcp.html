@@ -8,7 +8,7 @@
 <div class="dashboard dashboard--content">
     <div class="dashboard__manage-view margin-top">
       <div class="dashboard__manage-view--header">
-          <div class="col-md-3 col-sm-3 header--type pull-left-mob">
+          <div class="col-md-3 col-sm-3 header--type pull-left-mob ">
             <span translate="patient.clinic-caption.clinic-name"></span>
           </div>
           <div class="col-md-2 col-sm-2 header--type pull-right-mob">
@@ -35,7 +35,7 @@
 </div>
 <div class="col-md-16 col-sm-16 clinic-list" ng-repeat="clinic in clinics" ng-class="{'inactive': clinic.deleted}">
     <div class="col-md-3 col-sm-3 clinic-list__detail pull-left-mob">
-      <span class="clinic-list__detail--name" ng-bind="clinic.name"></span>
+      <span class="clinic-list__detail--name brakword" ng-bind="clinic.name"></span>
     </div>
     <div class="col-md-2 col-sm-2 clinic-list__phone pull-right-mob">
       <span class="clinic-list__phone--number" ng-bind="clinic.parent ? 'Parent' : 'Satellite'"></span>
