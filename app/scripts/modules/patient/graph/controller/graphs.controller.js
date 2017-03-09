@@ -1151,7 +1151,7 @@ angular.module('hillromvestApp')
                 $scope.hmrChartData.series[key1].data[key2].color = "red";
               }
               if(!$scope.hmrChartData.series[key1].data[key2].toolText.missedTherapy && localStorage.getItem('deviceType') == 'MONARCH'){
-                $scope.hmrChartData.series[key1].data[key2].color = "#ff9829";
+                $scope.hmrChartData.series[key1].data[key2].color = "#7cb5ee";
               }
 
             });            
@@ -1252,7 +1252,7 @@ angular.module('hillromvestApp')
       }); */
       var fillcolor = '#7cb5ee'; 
       if(localStorage.getItem('deviceType')  == 'MONARCH'){
-        var fillcolor = '#ff9829';
+        var fillcolor = '#d95900';
       }     
       divId = (divId)? divId : "HMRGraph";
       $('#'+divId).empty();
@@ -1425,7 +1425,7 @@ angular.module('hillromvestApp')
       });  
       var fillcolor = '#7cb5ee';
       if(localStorage.getItem('deviceType')  == 'MONARCH'){
-        fillcolor = '#ff9829';
+        fillcolor = '#d95900';
       }   
       divId = (divId)? divId : "HMRGraph";
       $('#'+divId).empty();

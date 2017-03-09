@@ -105,7 +105,7 @@ angular.module('hillromvestApp')
               var patientCount = $scope.patients.length;
               for (var i = 0 ; i < patientCount ; i++) {                
                 $scope.patients[i].dob = $scope.getDateFromTimestamp($scope.patients[i].dob);
-                $scope.patients[i].lastTransmissionDate = $scope.getDateFromTimestamp($scope.patients[i].lastTransmissionDate);
+                $scope.patients[i].lastTransmissionDate = $scope.getDateFromTimestampforTransmissiondate($scope.patients[i].lastTransmissionDate);
               }
               $scope.total = response.headers()['x-total-count'];
               $scope.pageCount = Math.ceil($scope.total / 10);
@@ -114,7 +114,23 @@ angular.module('hillromvestApp')
               $scope.noMatchFound = true;
             });
         };
-
+        
+        $scope.getDateFromTimestampforTransmissiondate = function(timestamp){
+          if(!timestamp){
+            return searchFilters.emptyString;
+          }
+          var timeZoneOffset = new Date(timestamp).getTimezoneOffset()*60*1000;
+          var qualcommOffset = 6*60*60*1000;
+          var timestamp = timestamp + timeZoneOffset - qualcommOffset;
+          var _date = new Date(timestamp);
+          var _month = (_date.getMonth()+1).toString();
+          _month = _month.length > 1 ? _month : '0' + _month;
+          var _day = (_date.getDate()).toString();
+          _day = _day.length > 1 ? _day : '0' + _day;
+          var _year = (_date.getFullYear()).toString();
+          return _month+"/"+_day+"/"+_year;
+        };
+        
         $scope.getDateFromTimestamp = function(timestamp){
           if(!timestamp){
             return searchFilters.emptyString;

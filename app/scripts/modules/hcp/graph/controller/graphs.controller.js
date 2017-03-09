@@ -529,7 +529,7 @@ $scope.getClinicsForHCP($scope.hcpId);
 		            	if($scope.treatmentChartData.series[key1].name.toLowerCase() === "average length of treatment"){
 							$scope.treatmentChartData.series[key1].yAxis = 1;
 							$scope.secondaryAxisIndex = key1;
-							$scope.treatmentChartData.series[key1].color = "#ff9829";
+							$scope.treatmentChartData.series[key1].color = "#d95900";
 		            	}else{
 		            		$scope.primaryAxisIndex = key1;
 		            		$scope.treatmentChartData.series[key1].color = "#4e95c4";
