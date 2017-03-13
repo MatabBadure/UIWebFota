@@ -2310,7 +2310,8 @@ $scope.adherencetrendData.push(new Object({"adherenceTrends": [] , "protocols": 
       $scope.getAssociatedClinics($scope.patientId);
       $scope.getPatientDevices($scope.patientId);      
       $scope.initGraph();
-      $scope.getPatientById($scope.patientId);     
+      $scope.getPatientById($scope.patientId);
+      $scope.getWeekChart();    
     };
 
 
