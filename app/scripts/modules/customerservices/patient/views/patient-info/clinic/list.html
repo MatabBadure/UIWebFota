@@ -45,7 +45,7 @@
   <div class="col-md-16 col-sm-16 clinic-list default_active" ng-repeat="aClinic in associatedClinics track by $index" ng-if="associatedClinics.length > 0" readonly="true">
     <span  ng-click="selectClinic(aClinic)">
     <div class="col-md-2 col-sm-2 clinic-list__detail">
-      <span class="clinic-list__detail--name" ng-bind="aClinic.name"></span>
+      <span class="clinic-list__detail--name brakword" ng-bind="aClinic.name"></span>
     </div>
     <div class="col-md-2 col-sm-2 clinic-list__phone">
       <span class="clinic-list__phone--number" ng-bind="aClinic.parent ? 'Parent' : 'Satellite'"></span>
