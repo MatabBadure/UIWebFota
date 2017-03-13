@@ -1332,32 +1332,32 @@ angular.module('hillromvestApp')
                     }
                   }
                   if(localStorage.getItem('deviceType')  == 'MONARCH'){
-                  var pointDetails = '<div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left"> Session No </div> ' 
+                  var pointDetails = '<div style="color:'+ this.point.color +';padding:5px 0;width:70%;float:left"> Session No </div> ' 
                     + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.sessionNo  + '</b></div>';                 
-                    pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left"> ' + this.point.series.name + '</div> ' 
+                    pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:70%;float:left"> ' + this.point.series.name + '</div> ' 
                     + '<div style="padding:5px;width:10%"><b>' + this.point.y + '</b></div>';
-                    pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left">Intensity</div> ' 
+                    pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:70%;float:left">Intensity</div> ' 
                     + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.intensity + '</b></div>';
-                    pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left">Frequency</div> ' 
+                    pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:70%;float:left">Frequency</div> ' 
                     + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.frequency + '</b></div>';
-                    pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left">Duration</div> ' 
+                    pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:70%;float:left">Duration</div> ' 
                     + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.duration + '</b></div>'; 
-                    pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left">Cough Pauses</div> ' 
+                    pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:70%;float:left">Cough Pauses</div> ' 
                     + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.coughPauses + '</b></div>';
                 
                     }
                     else{
-                    var pointDetails = '<div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left"> Session No </div> ' 
+                    var pointDetails = '<div style="color:'+ this.point.color +';padding:5px 0;width:70%;float:left"> Session No </div> ' 
                     + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.sessionNo  + '</b></div>';                 
-                    pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left"> ' + this.point.series.name + '</div> ' 
+                    pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:70%;float:left"> ' + this.point.series.name + '</div> ' 
                     + '<div style="padding:5px;width:10%"><b>' + this.point.y + '</b></div>';
-                    pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left">Pressure</div> ' 
+                    pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:70%;float:left">Pressure</div> ' 
                     + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.pressure + '</b></div>';
-                    pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left">Frequency</div> ' 
+                    pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:70%;float:left">Frequency</div> ' 
                     + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.frequency + '</b></div>';
-                    pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left">Duration</div> ' 
+                    pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:70%;float:left">Duration</div> ' 
                     + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.duration + '</b></div>'; 
-                    pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left">Cough Pauses</div> ' 
+                    pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:70%;float:left">Cough Pauses</div> ' 
                     + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.coughPauses + '</b></div>';
                 
                     }

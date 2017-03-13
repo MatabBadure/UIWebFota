@@ -347,10 +347,10 @@ angular.module('hillromvestApp')
   this.addBody = function(pdf, slectedPatient, userFullName, currentDate, protocols, deviceType){
     var dob = (slectedPatient && slectedPatient.dob) ? slectedPatient.dob : "";
     if(deviceType == 'VEST'){
-      var deviceName = 'VisiVest™';
+      var deviceName = pdf.splitTextToSize('VisiVest™ System', 50);
     }
     else{
-      var deviceName = 'Monarch™';
+      var deviceName = pdf.splitTextToSize('Monarch™ System', 50);
     }
     pdf.setFont(pdfServiceConstants.style.font.helvetica);
     pdf.setFontSize(8);
@@ -448,14 +448,14 @@ angular.module('hillromvestApp')
         pdf.text(x, y, protocol.minIntensity.toString());
       }
       }
-      y = y + 20;
+      y = y + 30;
     });
     var treatmentsPerDay = protocols[0].treatmentsPerDay.toString();
     if(protocols[0].type === 'Normal'){
       pdf.text( 225, 210, treatmentsPerDay);
     }else{
-      pdf.text( 225, (210 + y - 20)/2, treatmentsPerDay);
-      pdf.text(30, (210 + y - 20)/2, deviceName);
+      pdf.text( 225, (210 + y - 30)/2, treatmentsPerDay);
+      pdf.text(40, (210 + y - 30)/2, deviceName);
     }
 
     var splittedDate = (new Date()).toString().split(":");
