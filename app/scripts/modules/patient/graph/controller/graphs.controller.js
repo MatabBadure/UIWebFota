@@ -831,17 +831,17 @@ angular.module('hillromvestApp')
                 responseData.series[key1].data[key2].color = "red";
               }
             });
-            if(responseData.series[key1].name === "Pressure"){
+            if(responseData.series[key1].name === "Avg Pressure/Intensity"){
               responseData.series[key1].unit = ""; 
               responseData.series[key1].color = patientGraphsConstants.colors.pressure;
-            }else if(responseData.series[key1].name === "Intensity"){
+            }else if(responseData.series[key1].name === "Avg Pressure/Intensity"){
               responseData.series[key1].unit = ""; 
               responseData.series[key1].color = patientGraphsConstants.colors.pressure;
             }
-            else if(responseData.series[key1].name === "Frequency"){
+            else if(responseData.series[key1].name === "Avg Frequency"){
               responseData.series[key1].unit = patientGraphsConstants.units.frequency; 
               responseData.series[key1].color = patientGraphsConstants.colors.frequency;
-            }else if(responseData.series[key1].name === "Duration"){
+            }else if(responseData.series[key1].name === "Avg Duration"){
               responseData.series[key1].unit = patientGraphsConstants.units.duration; 
               responseData.series[key1].color = patientGraphsConstants.colors.duration;
             }
