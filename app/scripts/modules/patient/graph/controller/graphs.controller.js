@@ -1792,27 +1792,31 @@ angular.module('hillromvestApp')
     $scope.getYearChart = function(){
       $scope.durationRange = "Year";
       $scope.calculateTimeDuration(365,'NotAdherenceScoreHistory');
-      $scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
+     // $scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
+      $scope.getFirstTransmissionDate();
       $scope.drawHMRCChart();
     };
 
     $scope.getMonthChart = function(){
       $scope.durationRange = "Month";
       $scope.calculateTimeDuration(30,'NotAdherenceScoreHistory');
-      $scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
+      //$scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
+      $scope.getFirstTransmissionDate();
       $scope.drawHMRCChart();
     };
 
     $scope.getWeekChart = function(){
       $scope.durationRange = "Week";
       $scope.calculateTimeDuration(6,'NotAdherenceScoreHistory');
-      $scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
+      //$scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
+      $scope.getFirstTransmissionDate();
       $scope.drawHMRCChart();
     };
 
     $scope.getCustomDateRangeChart = function(){  
       $scope.durationRange = "Custom";    
-      $scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
+     // $scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
+      $scope.getFirstTransmissionDate();
       $scope.drawHMRCChart();
     };
 
@@ -1835,7 +1839,9 @@ angular.module('hillromvestApp')
       $scope.isHMR = false;
       $scope.isCompliance = true;
       $scope.isAdherenceTrend = false;
-      //$scope.getWeekChart();
+     
+      $scope.getTransmissionDateForPatient($scope.patientId);
+      
     };
 
     $scope.initPatientDashboard = function(){
@@ -2034,10 +2040,29 @@ angular.module('hillromvestApp')
         if(response.data && response.data.firstTransmissionDate){
           $scope.hasTransmissionDate = true;
           var formattedTransmissionDate = dateService.getDateTimeFromTimeStamp(dateService.convertYyyyMmDdToTimestamp(response.data.firstTransmissionDate),patientDashboard.dateFormat,'/');
-          $scope.transmissionDate = (formattedTransmissionDate && formattedTransmissionDate.indexOf(" "))? formattedTransmissionDate.split(" ")[0] : null;          
+          $scope.transmissionDate = (formattedTransmissionDate && formattedTransmissionDate.indexOf(" "))? formattedTransmissionDate.split(" ")[0] : null; 
+          $scope.hasTransmissionDateforCostomrange = dateService.getDateFromTimeStamp(response.data.firstTransmissionDate,patientDashboard.dateFormat,'/'); 
+          //alert($scope.hasTransmissionDateforCostomrange); 
+          $scope.opts = {
+          minDate: $scope.hasTransmissionDateforCostomrange
+        };
+        $scope.dateOpts = {
+          minDate: $scope.hasTransmissionDateforCostomrange
+          };      
         }
       });
     };
+    $scope.getFirstTransmissionDate = function(){
+       if(new Date ($scope.fromDate) < new Date ($scope.hasTransmissionDateforCostomrange)){
+       
+        $scope.dates = {startDate: $scope.hasTransmissionDateforCostomrange, endDate: $scope.toDate};
+
+       }
+      else {
+
+        $scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
+        }
+       };
 
     $scope.init();
 
@@ -2242,8 +2267,21 @@ $scope.adherencetrendData.push(new Object({"adherenceTrends": [] , "protocols": 
         $scope.noHistoryAvailable = true;
        // notyService.showError(response);
       });
+      $scope.getFirstTransmissionDateforHistory();
     };
+
   /******End of Adherence History Grid view Date selection-Hill-1848 ******/  
+  $scope.getFirstTransmissionDateforHistory = function(){
+       if(new Date ($scope.fromDateHistory) < new Date ($scope.hasTransmissionDateforCostomrange)){
+       
+        $scope.customdates = {startDate: $scope.hasTransmissionDateforCostomrange, endDate: $scope.toDateHistory};
+
+       }
+      else {
+
+        $scope.customdates = {startDate: $scope.fromDateHistory, endDate: $scope.toDateHistory};
+        }
+       };
     $scope.takeSurveyNow = function(){          
         $state.go("patientSurvey", {'surveyId': $rootScope.surveyId});
     };
