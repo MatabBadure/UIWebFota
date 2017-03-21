@@ -30,6 +30,15 @@ angular.module('hillromvestApp')
         });
       },
 
+      adherenceResetProgress: function(clinicId){
+        var url = URL.adherenceResetProgress.replace('CLINICID', clinicId);
+        return $http.get(url, {
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });
+      },
+
       deleteClinic: function(id) {
         var url = URL.clinicBaseURL + '/' + id;
         return $http.delete(url, {

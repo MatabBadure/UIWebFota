@@ -1,4 +1,4 @@
-<ng-include src="'scripts/components/navbar/navbarclinicadmin.html'"></ng-include>
+<ng-include ng-disabled="waitforcalculation" ng-class="{'navbardisabled': waitforcalculation}" src="'scripts/components/navbar/navbarclinicadmin.html'"></ng-include>
 <div class="navbar patient-user patient-user--nav">
   <div class="container">
     <div class="collapse navbar-collapse patient-user__navbar" id="navbar-collapse">
@@ -87,6 +87,27 @@
       </div>
       <footer class="modal__footer">
       </footer>
+    </div>
+  </div>
+</div>
+<div ng-if="waitforcalculation" class="modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true">
+  <div class="modal__dialog " id="waitmodal">
+    <div class="modal__content">
+      <header class="modal__header">
+        <p translate="wait-for-calculation-header">Adherence re-calculation may take upto few minutes...</p>
+      </header> 
+      <div class="modal__body">
+        <div class="modal--message" id="waitpopup"> 
+  <uib-progressbar max="totalPatientsforAdherenceCal" value="processedPatientsforAdherenceCal"><span class="waittextinsidebar" style="color:#646568; white-space:nowrap; font-weight:bold;">{{processedPatientsforAdherenceCal}} / {{totalPatientsforAdherenceCal}} Patients</span></uib-progressbar>
+
+    <p translate="wait-for-calculation-text" class="waittext">Please wait while the system is re-calculating...</p>
+        </div>
+       <!--  <div class="row modal--custom-btn">
+          <buton class="hillrom-btn btn-submit float-right" ng-click="setDays()">Yes</buton>
+          <buton class="hillrom-btn btn-submit float-right" data-dismiss="modal" ng-click="$parent.showSetDayModal = false">No</buton>
+        </div> -->
+      </div>
+ 
     </div>
   </div>
 </div>
