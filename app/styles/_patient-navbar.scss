@@ -756,7 +756,27 @@ content: "\f024" !important;
 
 /* 09-3 -17 */
 
-.highcharts-tooltip>span {
+.complianceGraphPrim_wrapper .highcharts-tooltip>span {
 
-width:180px;
+   min-width:180px;
 }
+
+/* 16-03-17 */
+
+.navbardisabled {
+    opacity: 0.5;
+     pointer-events: none;
+   }
+
+   #waitpopup .progress-bar {
+  background-color: #7ca3dc;
+  }
+
+   .waittextinsidebar
+   {
+     
+     color:#646568;
+      white-space:nowrap; 
+      font-weight:bold;
+
+   }
