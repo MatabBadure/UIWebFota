@@ -46,8 +46,9 @@
 
 <div class="col-md-16 col-sm-16 border-top protocol_list_container" ng-class="{'no_border' : !protocols}">
 
-  <div class="col-md-1 col-sm-1" ng-if="!(protocols.length == 0)">
-    <div id="deviceicon" class="col-md-16 col-sm-16 protocol-list__treatment-day protocol-list no_border text-align-left">
+  <div class="col-md-1 col-sm-1 treatments_per_day_count" ng-if="(protocols)">
+    <div id="deviceicon" class="col-md-16 col-sm-16 protocol-list__treatment-day  no_border text-align-left">
+
      <span class="icon_height_width" ng-class="{'monarchIcon': (getDeviceType() =='MONARCH'), 'visivestIcon': (getDeviceType() =='VEST')}"></span>
 
     </div>
@@ -124,7 +125,8 @@
       <span>{{::device.serialNumber}}</span>
     </div>
     <div class="col-md-3 col-sm-3 device-list__bt-id">
-      <span>{{::device.bluetoothId}}</span>
+      <span ng-if="getDeviceType() =='VEST'">{{device.bluetoothId}}</span>
+      <span ng-if="getDeviceType() =='MONARCH'">{{device.wifiId}}</span>
     </div>
     <div class="col-md-1 col-sm-1 device-list__status">
       <span ng-if="device.active" class="device--list__status--text" translate="patient.device.active-status">Active</span>

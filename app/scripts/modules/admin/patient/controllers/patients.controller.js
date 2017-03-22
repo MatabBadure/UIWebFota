@@ -194,7 +194,7 @@ $scope.getdevice = function(){
       $scope.getPatientById($stateParams.patientId);
       if($stateParams.device){
       $scope.device = $stateParams.device; //  for passing to edit mode
-      $scope.device.wifiId = $stateParams.device.bluetoothId;
+      $scope.device.wifiId = $stateParams.device.wifiId;
    }
       $scope.deviceTypeSelected = localStorage.getItem('devicetype');
     };
@@ -998,8 +998,8 @@ $scope.getdevice = function(){
     };
 
     $scope.switchtoNormal = function(){
-      $scope.submitted = false;  
-      $scope.protocol.protocolEntries.splice(1);                
+      $scope.submitted = false;
+      $scope.protocol.protocolEntries.splice(1);
       if($scope.protocol.edit && $scope.prevProtocolType && $scope.prevProtocolType.indexOf("Normal") !== -1){                  
         $scope.protocol = angular.copy($scope.prevProtocol);                        
       } else{
@@ -1107,6 +1107,7 @@ $scope.getdevice = function(){
         protocolEntry.maxFrequency = null;
         protocolEntry.minPressure = null;
         protocolEntry.maxPressure = null;
+        protocolEntry.minIntensity= null;
       });
       $scope.addProtocolForm.$setPristine();
     };

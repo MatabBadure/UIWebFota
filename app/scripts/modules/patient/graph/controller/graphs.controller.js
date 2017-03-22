@@ -831,17 +831,17 @@ angular.module('hillromvestApp')
                 responseData.series[key1].data[key2].color = "red";
               }
             });
-            if(responseData.series[key1].name === "Pressure"){
+            if(responseData.series[key1].name === "Avg Pressure/Intensity"){
               responseData.series[key1].unit = ""; 
               responseData.series[key1].color = patientGraphsConstants.colors.pressure;
-            }else if(responseData.series[key1].name === "Intensity"){
+            }else if(responseData.series[key1].name === "Avg Pressure/Intensity"){
               responseData.series[key1].unit = ""; 
               responseData.series[key1].color = patientGraphsConstants.colors.pressure;
             }
-            else if(responseData.series[key1].name === "Frequency"){
+            else if(responseData.series[key1].name === "Avg Frequency"){
               responseData.series[key1].unit = patientGraphsConstants.units.frequency; 
               responseData.series[key1].color = patientGraphsConstants.colors.frequency;
-            }else if(responseData.series[key1].name === "Duration"){
+            }else if(responseData.series[key1].name === "Avg Duration"){
               responseData.series[key1].unit = patientGraphsConstants.units.duration; 
               responseData.series[key1].color = patientGraphsConstants.colors.duration;
             }
@@ -1151,7 +1151,7 @@ angular.module('hillromvestApp')
                 $scope.hmrChartData.series[key1].data[key2].color = "red";
               }
               if(!$scope.hmrChartData.series[key1].data[key2].toolText.missedTherapy && localStorage.getItem('deviceType') == 'MONARCH'){
-                $scope.hmrChartData.series[key1].data[key2].color = "#ff9829";
+                $scope.hmrChartData.series[key1].data[key2].color = "#7cb5ee";
               }
 
             });            
@@ -1252,7 +1252,7 @@ angular.module('hillromvestApp')
       }); */
       var fillcolor = '#7cb5ee'; 
       if(localStorage.getItem('deviceType')  == 'MONARCH'){
-        var fillcolor = '#ff9829';
+        var fillcolor = '#d95900';
       }     
       divId = (divId)? divId : "HMRGraph";
       $('#'+divId).empty();
@@ -1332,32 +1332,32 @@ angular.module('hillromvestApp')
                     }
                   }
                   if(localStorage.getItem('deviceType')  == 'MONARCH'){
-                  var pointDetails = '<div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left"> Session No </div> ' 
+                  var pointDetails = '<div style="color:'+ this.point.color +';padding:5px 0;width:70%;float:left"> Session No </div> ' 
                     + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.sessionNo  + '</b></div>';                 
-                    pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left"> ' + this.point.series.name + '</div> ' 
+                    pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:70%;float:left"> ' + this.point.series.name + '</div> ' 
                     + '<div style="padding:5px;width:10%"><b>' + this.point.y + '</b></div>';
-                    pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left">Intensity</div> ' 
+                    pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:70%;float:left">Intensity</div> ' 
                     + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.intensity + '</b></div>';
-                    pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left">Frequency</div> ' 
+                    pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:70%;float:left">Frequency</div> ' 
                     + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.frequency + '</b></div>';
-                    pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left">Duration</div> ' 
+                    pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:70%;float:left">Duration</div> ' 
                     + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.duration + '</b></div>'; 
-                    pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left">Cough Pauses</div> ' 
+                    pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:70%;float:left">Cough Pauses</div> ' 
                     + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.coughPauses + '</b></div>';
                 
                     }
                     else{
-                    var pointDetails = '<div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left"> Session No </div> ' 
+                    var pointDetails = '<div style="color:'+ this.point.color +';padding:5px 0;width:70%;float:left"> Session No </div> ' 
                     + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.sessionNo  + '</b></div>';                 
-                    pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left"> ' + this.point.series.name + '</div> ' 
+                    pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:70%;float:left"> ' + this.point.series.name + '</div> ' 
                     + '<div style="padding:5px;width:10%"><b>' + this.point.y + '</b></div>';
-                    pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left">Pressure</div> ' 
+                    pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:70%;float:left">Pressure</div> ' 
                     + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.pressure + '</b></div>';
-                    pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left">Frequency</div> ' 
+                    pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:70%;float:left">Frequency</div> ' 
                     + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.frequency + '</b></div>';
-                    pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left">Duration</div> ' 
+                    pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:70%;float:left">Duration</div> ' 
                     + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.duration + '</b></div>'; 
-                    pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left">Cough Pauses</div> ' 
+                    pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:70%;float:left">Cough Pauses</div> ' 
                     + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.coughPauses + '</b></div>';
                 
                     }
@@ -1425,7 +1425,7 @@ angular.module('hillromvestApp')
       });  
       var fillcolor = '#7cb5ee';
       if(localStorage.getItem('deviceType')  == 'MONARCH'){
-        fillcolor = '#ff9829';
+        fillcolor = '#d95900';
       }   
       divId = (divId)? divId : "HMRGraph";
       $('#'+divId).empty();
@@ -1792,27 +1792,31 @@ angular.module('hillromvestApp')
     $scope.getYearChart = function(){
       $scope.durationRange = "Year";
       $scope.calculateTimeDuration(365,'NotAdherenceScoreHistory');
-      $scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
+     // $scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
+      $scope.getFirstTransmissionDate();
       $scope.drawHMRCChart();
     };
 
     $scope.getMonthChart = function(){
       $scope.durationRange = "Month";
       $scope.calculateTimeDuration(30,'NotAdherenceScoreHistory');
-      $scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
+      //$scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
+      $scope.getFirstTransmissionDate();
       $scope.drawHMRCChart();
     };
 
     $scope.getWeekChart = function(){
       $scope.durationRange = "Week";
       $scope.calculateTimeDuration(6,'NotAdherenceScoreHistory');
-      $scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
+      //$scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
+      $scope.getFirstTransmissionDate();
       $scope.drawHMRCChart();
     };
 
     $scope.getCustomDateRangeChart = function(){  
       $scope.durationRange = "Custom";    
-      $scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
+     // $scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
+      $scope.getFirstTransmissionDate();
       $scope.drawHMRCChart();
     };
 
@@ -1835,7 +1839,9 @@ angular.module('hillromvestApp')
       $scope.isHMR = false;
       $scope.isCompliance = true;
       $scope.isAdherenceTrend = false;
-      //$scope.getWeekChart();
+     
+      $scope.getTransmissionDateForPatient($scope.patientId);
+      
     };
 
     $scope.initPatientDashboard = function(){
@@ -2034,10 +2040,29 @@ angular.module('hillromvestApp')
         if(response.data && response.data.firstTransmissionDate){
           $scope.hasTransmissionDate = true;
           var formattedTransmissionDate = dateService.getDateTimeFromTimeStamp(dateService.convertYyyyMmDdToTimestamp(response.data.firstTransmissionDate),patientDashboard.dateFormat,'/');
-          $scope.transmissionDate = (formattedTransmissionDate && formattedTransmissionDate.indexOf(" "))? formattedTransmissionDate.split(" ")[0] : null;          
+          $scope.transmissionDate = (formattedTransmissionDate && formattedTransmissionDate.indexOf(" "))? formattedTransmissionDate.split(" ")[0] : null; 
+          $scope.hasTransmissionDateforCostomrange = dateService.getDateFromTimeStamp(response.data.firstTransmissionDate,patientDashboard.dateFormat,'/'); 
+          //alert($scope.hasTransmissionDateforCostomrange); 
+          $scope.opts = {
+          minDate: $scope.hasTransmissionDateforCostomrange
+        };
+        $scope.dateOpts = {
+          minDate: $scope.hasTransmissionDateforCostomrange
+          };      
         }
       });
     };
+    $scope.getFirstTransmissionDate = function(){
+       if(new Date ($scope.fromDate) < new Date ($scope.hasTransmissionDateforCostomrange)){
+       
+        $scope.dates = {startDate: $scope.hasTransmissionDateforCostomrange, endDate: $scope.toDate};
+
+       }
+      else {
+
+        $scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
+        }
+       };
 
     $scope.init();
 
@@ -2242,8 +2267,21 @@ $scope.adherencetrendData.push(new Object({"adherenceTrends": [] , "protocols": 
         $scope.noHistoryAvailable = true;
        // notyService.showError(response);
       });
+      $scope.getFirstTransmissionDateforHistory();
     };
+
   /******End of Adherence History Grid view Date selection-Hill-1848 ******/  
+  $scope.getFirstTransmissionDateforHistory = function(){
+       if(new Date ($scope.fromDateHistory) < new Date ($scope.hasTransmissionDateforCostomrange)){
+       
+        $scope.customdates = {startDate: $scope.hasTransmissionDateforCostomrange, endDate: $scope.toDateHistory};
+
+       }
+      else {
+
+        $scope.customdates = {startDate: $scope.fromDateHistory, endDate: $scope.toDateHistory};
+        }
+       };
     $scope.takeSurveyNow = function(){          
         $state.go("patientSurvey", {'surveyId': $rootScope.surveyId});
     };
@@ -2310,7 +2348,8 @@ $scope.adherencetrendData.push(new Object({"adherenceTrends": [] , "protocols": 
       $scope.getAssociatedClinics($scope.patientId);
       $scope.getPatientDevices($scope.patientId);      
       $scope.initGraph();
-      $scope.getPatientById($scope.patientId);     
+      $scope.getPatientById($scope.patientId);
+      $scope.getWeekChart();    
     };
 
 
