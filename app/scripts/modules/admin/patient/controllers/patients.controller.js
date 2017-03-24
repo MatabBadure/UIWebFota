@@ -899,6 +899,7 @@ $scope.getdevice = function(){
       if(!protocol){
         return false;
       }
+      protocol.edit = true;
       if($scope.patientStatus.role === loginConstants.role.acctservices){
         $state.go('patientEditProtocolRcadmin', {
           'patientId': $stateParams.patientId,
@@ -1264,6 +1265,20 @@ $scope.getdevice = function(){
          $scope.deviceTypeMonarch = false;    
     }   
     if($scope.selectedDeviceType== "MONARCH")   
+    {   
+        $scope.deviceTypeMonarch = true;    
+        $scope.deviceTypeVest = false;    
+    }   
+  };
+
+  $scope.onChangeSelectedDeviceProtocol = function() {    
+    $scope.selectedDeviceTypeProtocol = $scope.deviceTypeSelectedProtocol;   
+    if($scope.selectedDeviceTypeProtocol== "VEST")    
+    {   
+        $scope.deviceTypeVest = true;   
+         $scope.deviceTypeMonarch = false;    
+    }   
+    if($scope.selectedDeviceTypeProtocol== "MONARCH")   
     {   
         $scope.deviceTypeMonarch = true;    
         $scope.deviceTypeVest = false;    
