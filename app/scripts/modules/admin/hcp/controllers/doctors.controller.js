@@ -327,6 +327,7 @@ angular.module('hillromvestApp')
           $scope.patients = [];
           angular.forEach(response.data, function(patient){
             patient.dob = dateService.getDateFromTimeStamp(patient.dob, patientDashboard.dateFormat,'/');
+            patient.lastTransmissionDate = dateService.getDateFromTimeStamp(patient.lastTransmissionDate, patientDashboard.dateFormat,'/');
             $scope.patients.push({"patientUser": patient});
           });          
           $scope.total = (response.headers()['x-total-count']) ? response.headers()['x-total-count'] :$scope.patients.length; 
