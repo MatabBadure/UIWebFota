@@ -33,7 +33,7 @@
             </div>
             <div class="col-md-10 dashboard__form__input reset-padding">
             <div class="custom-dropdown">
-               <select name="type" ng-model="deviceTypeSelected" ng-dropdown required ng-change="onChangeSelectedDevice()"  ng-init="deviceTypeSelected=getDeviceType()" ng-disabled="true">
+               <select name="type" ng-model="deviceTypeSelected" ng-dropdown required ng-change="onChangeSelectedDevice()"  ng-init="deviceTypeSelected=getDeviceType()" ng-disabled="device.edit">
             <option  value="VEST" >VisiVest</option>
             <option  value="MONARCH" >Monarch</option> 
          </select>
