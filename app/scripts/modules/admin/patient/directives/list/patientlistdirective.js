@@ -114,7 +114,7 @@ angular.module('hillromvestApp')
               $scope.noMatchFound = true;
             });
         };
-        
+
         $scope.getDateFromTimestampforTransmissiondate = function(timestamp){
           if(!timestamp){
             return searchFilters.emptyString;
@@ -130,7 +130,7 @@ angular.module('hillromvestApp')
           var _year = (_date.getFullYear()).toString();
           return _month+"/"+_day+"/"+_year;
         };
-        
+
         $scope.getDateFromTimestamp = function(timestamp){
           if(!timestamp){
             return searchFilters.emptyString;
