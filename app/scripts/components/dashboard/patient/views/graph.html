@@ -218,19 +218,53 @@
 				</ul>
 			</div>
 		</div>
+		<div class="col-md-7 col-sm-10 left_header_barchart padding0">
+		       <div class="devicetyperadio" ng-show="isHMR && getDeviceTypeforGraphRadio()=='ALL'" ng-init="$parent.deviceTypeforGraphSelected='VEST'">
+		       <span class="radio-inline no-padding devicetyperadiolabl">Show Graph For</span>
+		      <span class="radio-inline">
+		        <label class="no-padding">
+		          <input type="radio" name="deviceTypeforGraph" ng-model="$parent.deviceTypeforGraphSelected" value="VEST" ng-change="switchtoDevice()">
+		          <span class="radio-box-text">VisiVest</span>
+		        </label>
+		      </span>
+		      <span class="radio-inline">
+		        <label>
+		          <input type="radio" name="deviceTypeforGraph" ng-model="$parent.deviceTypeforGraphSelected" value="MONARCH" ng-change="switchtoDevice()">
+		          <span class="radio-box-text">Monarch</span>
+		        </label>
+		      </span>
+		    </div>
+		    <div class="devicetyperadio" ng-show="isCompliance && getDeviceTypeforGraphRadio()=='ALL'" ng-init="$parent.deviceTypeforGraphSelectedProtocol='VEST'">
+		       <span class="radio-inline no-padding devicetyperadiolabl">Show Graph For</span>
+		      <span class="radio-inline">
+		        <label class="no-padding">
+		          <input type="radio" name="deviceTypeforGraphProtocol" ng-model="$parent.deviceTypeforGraphSelectedProtocol" value="VEST" ng-change="switchtoDeviceProtocol()">
+		          <span class="radio-box-text">VisiVest</span>
+		        </label>
+		      </span>
+		      <span class="radio-inline">
+		        <label>
+		          <input type="radio" name="deviceTypeforGraphProtocol" ng-model="$parent.deviceTypeforGraphSelectedProtocol" value="MONARCH" ng-change="switchtoDeviceProtocol()">
+		          <span class="radio-box-text">Monarch</span>
+		        </label>
+		      </span>
+		    </div>
+		</div>
+		<div class="col-md-9 col-sm-6 right_header_barchart">
 		<div class="pull-right week_date_container">
 			<span ng-if="fromDate !== toDate">
 					<span class="date">{{fromDate}}</span> - <span class="date">{{toDate}}</span>
 			</span>
-			<span ng-if="fromDate === toDate" class="date">{{fromDate}}<span>
+			<span ng-if="fromDate === toDate" class="date">{{fromDate}}</span>
 		</div>
+      </div>
 	</div>
 	<div class="clr"></div>
 	<div class="col-md-16" class="all_graph_wrapper" ng-init="getWeekChart()" style="min-height: 300px;">
 	<div id = "NodataDiv" class="graph_nodata" ng-if = "(hmrChartData.length == 0) && noDataStatus && isHMR">
 		<span class="noData_text"> No Therapy Transmission Received for This Day!</span>
 	</div>
-		<div id = "NodataDiv" class="graph_nodata" ng-if = "(hmrChartData.length == 0) && noDataStatus && isCompliance">
+		<div id = "NodataDiv" class="graph_nodata" ng-if = "(compilencechartData.length ==0)  && noDataStatus && isCompliance">
 		<span class="noData_text"> No Therapy Transmission Received for This Day!</span>
 	</div>
 		<div id = "NodataDiv" class="graph_nodata" ng-if = "isAdherenceTrend && noDataAvailableForAdherence">
