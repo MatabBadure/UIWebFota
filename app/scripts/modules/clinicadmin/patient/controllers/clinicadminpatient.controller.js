@@ -334,10 +334,13 @@ angular.module('hillromvestApp')
     if(patient.deviceType == 'ALL'){
           localStorage.setItem('deviceType', 'VEST');
           localStorage.setItem('deviceTypeforGraph', 'ALL');
+          localStorage.setItem('deviceTypeforBothIcon', 'ALL');
             }
             else{
             localStorage.setItem('deviceType', patient.deviceType);
             localStorage.setItem('deviceTypeforGraph', '');
+            localStorage.setItem('deviceTypeforBothIcon', patient.deviceType);
+
           }
     var clinicId = ($scope.selectedClinic && $scope.selectedClinic.id) ? $scope.selectedClinic.id : ($stateParams.clinicId ? $stateParams.clinicId : null);
    $scope.deviceType = patient.deviceType;

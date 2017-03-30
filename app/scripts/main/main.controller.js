@@ -20,7 +20,9 @@ angular.module('hillromvestApp')
 	$rootScope.getDeviceTypeforGraphRadio = function(){
 	return (localStorage.getItem('deviceTypeforGraph'));	
 	}
-	
+	$rootScope.getDeviceTypeforBothIcon = function(){
+	return (localStorage.getItem('deviceTypeforBothIcon'));	
+	}
 
     $scope.mainInit = function(){    		
     		$rootScope.isAddDiagnostics = false;
