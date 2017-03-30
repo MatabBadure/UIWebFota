@@ -91,7 +91,13 @@ angular.module('hillromvestApp')
           $scope.getPatientById($scope.patientId);
         }
         $scope.initGraph();        
-      }                    
+      }
+
+       $scope.deviceTypeforGraph = localStorage.getItem('deviceType');
+       $scope.deviceTypeforGraphProtocol = localStorage.getItem('deviceType');
+       $scope.deviceTypeforGraphTrend = localStorage.getItem('deviceType'); 
+
+                  
 
     };
 
@@ -131,9 +137,13 @@ angular.module('hillromvestApp')
                  // localStorage.setItem('deviceType',response.data.patients[i].deviceType);
                  if(response.data.patients[i].deviceType == 'ALL'){
           localStorage.setItem('deviceType', 'VEST');
+          localStorage.setItem('deviceTypeforGraph', 'ALL');
+
+
             }
             else{
             localStorage.setItem('deviceType', response.data.patients[i].deviceType);
+            localStorage.setItem('deviceTypeforGraph', '');
           }
                   $scope.patientId = $stateParams.patientId;
                   var logged = StorageService.get('logged');                   
@@ -153,9 +163,11 @@ angular.module('hillromvestApp')
                   //localStorage.setItem('deviceType',response.data.patients[0].deviceType);
          if(response.data.patients[0].deviceType == 'ALL'){
           localStorage.setItem('deviceType', 'VEST');
+          localStorage.setItem('deviceTypeforGraph', 'ALL');
             }
             else{
             localStorage.setItem('deviceType', response.data.patients[0].deviceType);
+            localStorage.setItem('deviceTypeforGraph', '');
           }          
                   $scope.patientId = $scope.selectedPatient.userId;
                      $scope.$emit('getSelectedPatient', $scope.selectedPatient);
@@ -789,13 +801,46 @@ angular.module('hillromvestApp')
       }
       return ( (parseInt(noOfDataPoints/pInterval) > 0) && noOfDataPoints%pInterval > remainder) ? parseInt(noOfDataPoints/sInterval) : ((parseInt(noOfDataPoints/pInterval) > 0)? parseInt(noOfDataPoints/pInterval): 1) ; 
     };
+   
+     $scope.switchtoDevice = function() {    
+    $scope.selectedDeviceTypeforGraph = $scope.deviceTypeforGraphSelected;   
+    if($scope.selectedDeviceTypeforGraph == "VEST")    
+    {   
+        $scope.deviceTypeforGraph = "VEST";  
+        $scope.getHMR() ;
+             
+    }   
+    if($scope.selectedDeviceTypeforGraph == "MONARCH")   
+    {   
+        $scope.deviceTypeforGraph = "MONARCH";  
+        $scope.getHMR() ;  
+    }   
+  };
+
+   $scope.switchtoDeviceProtocol = function() {    
+    $scope.selectedDeviceTypeforGraphProtocol = $scope.deviceTypeforGraphSelectedProtocol; 
+     
+    if($scope.selectedDeviceTypeforGraphProtocol == "VEST")    
+    {   
+        $scope.deviceTypeforGraphProtocol = "VEST";  
+        $scope.getCompliance() ;
+             
+    }   
+    if($scope.selectedDeviceTypeforGraphProtocol == "MONARCH")   
+    {   
+        $scope.deviceTypeforGraphProtocol = "MONARCH";  
+        $scope.getCompliance() ;  
+    }   
+  };
 
     $scope.getComplianceGraph = function(){ 
-      patientDashBoardService.getcomplianceGraphData($scope.patientId, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.durationRange).then(function(response){
+      patientDashBoardService.getcomplianceGraphData($scope.patientId, $scope.deviceTypeforGraphProtocol, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.durationRange).then(function(response){
+        $scope.compilencechartData = response.data;
         var responseData = response.data;              
         var xData = [];
         $scope.chartData = {};
         $scope.chartData.datasets = [];
+        $scope.noDataAvailable = false;
         if(responseData){ 
           $scope.noDataAvailable = false;        
           xData = responseData.xAxis.categories; 
@@ -1106,7 +1151,7 @@ angular.module('hillromvestApp')
 
     
     $scope.getHMRGraph = function(){
-      patientDashBoardService.getHMRGraphPoints($scope.patientId, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.durationRange).then(function(response){
+      patientDashBoardService.getHMRGraphPoints($scope.patientId, $scope.deviceTypeforGraph, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.durationRange).then(function(response){
         $scope.hmrChartData = response.data;  
         $scope.noDataAvailableForHMR  = false;       
         if($scope.hmrChartData && typeof($scope.hmrChartData) === "object"){ 
@@ -1174,7 +1219,7 @@ angular.module('hillromvestApp')
 
     $scope.getAdhereneTrendGraph = function()
     {
-      patientDashBoardService.getAdherenceTrendGraphPoints($scope.patientId, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.durationRange).then(function(response){
+      patientDashBoardService.getAdherenceTrendGraphPoints($scope.patientId, $scope.deviceTypeforGraphTrend, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.durationRange).then(function(response){
       $scope.adherenceTrendData = response.data;
       $scope.noDataAvailableForAdherence= false;       
         if($scope.adherenceTrendData && typeof($scope.adherenceTrendData) === "object"){ 
@@ -2333,6 +2378,7 @@ $scope.adherencetrendData.push(new Object({"adherenceTrends": [] , "protocols": 
       $scope.isAdherenceTrend = false;
       $scope.noDataStatus = true;
       $scope.selectChart($scope.fromDate);
+
     };
 
     $scope.getCompliance = function(){

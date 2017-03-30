@@ -150,9 +150,11 @@ angular.module('hillromvestApp')
           .then(function (account) {
             if(account.data.deviceType == 'ALL'){
           localStorage.setItem('deviceType', 'VEST');
+          localStorage.setItem('deviceTypeforGraph', 'ALL');
             }
             else{
             localStorage.setItem('deviceType', account.data.deviceType);
+            localStorage.setItem('deviceTypeforGraph', '');
           }
            });
             logged.patientID = response.data.user.id;

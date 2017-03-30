@@ -835,9 +835,11 @@ angular.module('hillromvestApp')
      // localStorage.setItem('deviceType', patient.deviceType); 
       if(patient.deviceType == 'ALL'){
           localStorage.setItem('deviceType', 'VEST');
+          localStorage.setItem('deviceTypeforGraph', 'ALL');
             }
             else{
             localStorage.setItem('deviceType', patient.deviceType);
+            localStorage.setItem('deviceTypeforGraph', '');
           }
       if($state.current.name === 'clinicAssociatedPatients'){
         $state.go('patientOverview', {
