@@ -1,8 +1,10 @@
 <div class="container admin-user ng-scope">
   <div class="col-md-16 col-sm-16 margin-top reset-padding">
    <div class="user-gen-details">
+   <span ng-class="{'monarchIcon': (getDeviceTypeforBothIcon() =='MONARCH'), 'visivestIcon': (getDeviceTypeforBothIcon() =='VEST'), 'bothdeviceIcon': (getDeviceTypeforBothIcon() =='ALL')}">
      <span class="user-gen-details--name ng-binding">{{patient.firstName}} {{patient.lastName}}</span>
      <span class="user-gen-details--hr-id ng-binding">{{patient.hillromId}}</span>
+     </span>
    </div>
   </div>
 </div>
@@ -220,7 +222,7 @@
             </div>
           </div>
           <div class="row modal--custom-btn">
-            <input type="submit"class="hillrom-btn btn-submit float-right" value="Confirm and Generate">
+            <input type="submit" class="hillrom-btn btn-submit float-right" value="Confirm and Generate">
           </div>
         </form>
       </div>
