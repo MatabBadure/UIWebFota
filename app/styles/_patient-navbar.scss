@@ -780,3 +780,29 @@ content: "\f024" !important;
       font-weight:bold;
 
    }
+
+   /* 27 march */
+
+   .devicetyperadio label {
+    margin-bottom: 0 !important;
+    }
+
+   .bothdeviceIcon
+  {
+     background-image: url('../images/bothdevice.png');
+    background-repeat: no-repeat;
+    padding-left: 55px;
+    display: inline-block;  
+  }
+
+  /* 3rd april   */
+
+  .adherenceresethistorypaginationcontner
+  {
+     margin-bottom:20px;
+  }
+  
+  .resethistorylist tr:last-child td
+  {
+      border-bottom: 1px solid #ddd;
+  }

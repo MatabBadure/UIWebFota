@@ -2,6 +2,11 @@ angular.module('hillromvestApp')
 .controller('clinicadminPatientController',['$scope', '$state', '$stateParams', 'clinicadminPatientService', 'patientService', 'notyService', 'DoctorService', 'clinicadminService', 'clinicService', 'dateService', 'UserService', 'searchFilterService', '$timeout', 'StorageService', 'sortOptionsService','$filter', 'commonsUserService', '$q', 'addressService', '$rootScope', 'exportutilService',
   function($scope, $state, $stateParams, clinicadminPatientService, patientService, notyService, DoctorService, clinicadminService, clinicService, dateService, UserService, searchFilterService, $timeout, StorageService, sortOptionsService,$filter, commonsUserService, $q, addressService, $rootScope, exportutilService) { 
   var searchOnLoad = true;
+  $scope.currentPageIndex = 1;
+  $scope.pageCount = 0;
+  $scope.perPageCount = 5;
+  $scope.PageNumber=1;
+  $scope.nodataflag = false;
   $scope.init = function(){
     if($state.current.name === 'clinicadminpatientDemographic'  || $state.current.name === 'clinicadmminpatientDemographicEdit'){
       $scope.getPatientInfo($stateParams.patientId, $scope.setEditMode);
@@ -15,6 +20,7 @@ angular.module('hillromvestApp')
       $scope.getPatientInfo($stateParams.patientId);
       $scope.getPatientDevicesandProtocols($stateParams.patientId);
        $scope.getTodayDateForReset();
+       $scope.getAdherenceScoreResetHistory($stateParams.patientId);
       $scope.scoreToReset = 100;
       //$scope.resetStartDate = null;
       $scope.ShowOther = false;
@@ -105,6 +111,44 @@ angular.module('hillromvestApp')
       });
 
     };
+
+
+    // getAdherenceScoreResetHistory history strats here 
+
+    $scope.getAdherenceScoreResetHistory = function(patientId){
+
+      patientService.getAdherenceScoreResetHistory(patientId,$scope.PageNumber,$scope.perPageCount).then(function(response){
+     
+        $scope.resetHistoryData = response.data.Adherence_Reset_History.content;  
+      $scope.totalPages = response.data.Adherence_Reset_History.totalPages;
+      $scope.totalElements = response.data.Adherence_Reset_History.totalElements;
+
+        if($scope.totalElements == 0){
+         $scope.nodataflag = true;
+          }
+
+      }).catch(function(){});
+    };
+       $scope.getAdherenceScoreResetHistoryPagination = function(track){
+     if (track !== undefined) {
+        if (track === 'PREV' && $scope.currentPageIndex > 1) {
+          $scope.PageNumber--;
+          $scope.currentPageIndex--;
+        }
+        else if (track === 'NEXT' && $scope.currentPageIndex < $scope.totalPages){
+            $scope.PageNumber++;
+            $scope.currentPageIndex++;
+        }
+        else{
+            return false;
+        }
+      }else {
+          $scope.PageNumber = 1;
+      }
+ $scope.getAdherenceScoreResetHistory($stateParams.patientId);
+    };
+
+    // getAdherenceScoreResetHistory ends here 
 
     $scope.handleChange = function()
      {
@@ -333,9 +377,14 @@ angular.module('hillromvestApp')
    // localStorage.setItem('deviceType', patient.deviceType);
     if(patient.deviceType == 'ALL'){
           localStorage.setItem('deviceType', 'VEST');
+          localStorage.setItem('deviceTypeforGraph', 'ALL');
+          localStorage.setItem('deviceTypeforBothIcon', 'ALL');
             }
             else{
             localStorage.setItem('deviceType', patient.deviceType);
+            localStorage.setItem('deviceTypeforGraph', patient.deviceType);
+            localStorage.setItem('deviceTypeforBothIcon', patient.deviceType);
+
           }
     var clinicId = ($scope.selectedClinic && $scope.selectedClinic.id) ? $scope.selectedClinic.id : ($stateParams.clinicId ? $stateParams.clinicId : null);
    $scope.deviceType = patient.deviceType;
