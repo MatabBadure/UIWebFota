@@ -264,7 +264,18 @@ angular.module('hillromvestApp')
         });
       },
 
+ // get reset adhrence history starts here
 
+      getAdherenceScoreResetHistory: function(id,pageNumber,perPage) {
+        var url = URL.getAdherenceScoreResetHistory.replace('ID',id).replace('PAGE',pageNumber).replace('PER_PAGE',perPage).replace('DEVICETYPE',localStorage.getItem('deviceTypeforBothIcon'));
+        return $http.get(url, {
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });
+      },
+     
+     // get reset adhrence history ends here
       addDevice: function(id, data, deviceType) {
        
           var url = URL.addDevice.replace('PATIENTID', id).replace('DEVICETYPE',deviceType);
