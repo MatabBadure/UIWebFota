@@ -209,7 +209,7 @@ angular.module('hillromvestApp')
             }
             else{
             localStorage.setItem('deviceType', patient.deviceType);
-            localStorage.setItem('deviceTypeforGraph', '');
+            localStorage.setItem('deviceTypeforGraph', patient.deviceType);
             localStorage.setItem('deviceTypeforBothIcon', patient.deviceType);
           }
     $state.go('hcppatientOverview',{'patientId': patient.id, 'clinicId': $scope.selectedClinic.id});

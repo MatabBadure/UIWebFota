@@ -144,7 +144,7 @@ angular.module('hillromvestApp')
             }
             else{
             localStorage.setItem('deviceType', response.data.patients[i].deviceType);
-            localStorage.setItem('deviceTypeforGraph', '');
+            localStorage.setItem('deviceTypeforGraph', response.data.patients[i].deviceType);
             localStorage.setItem('deviceTypeforBothIcon', response.data.patients[i].deviceType);
           }
                   $scope.patientId = $stateParams.patientId;
@@ -169,7 +169,7 @@ angular.module('hillromvestApp')
             }
             else{
             localStorage.setItem('deviceType', response.data.patients[0].deviceType);
-            localStorage.setItem('deviceTypeforGraph', '');
+            localStorage.setItem('deviceTypeforGraph', response.data.patients[0].deviceType);
           }          
                   $scope.patientId = $scope.selectedPatient.userId;
                      $scope.$emit('getSelectedPatient', $scope.selectedPatient);

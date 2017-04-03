@@ -59,7 +59,7 @@ angular.module('hillromvestApp')
             }
             else{
             localStorage.setItem('deviceType', patient.deviceType);
-            localStorage.setItem('deviceTypeforGraph', '');
+            localStorage.setItem('deviceTypeforGraph', patient.deviceType);
             localStorage.setItem('deviceTypeforBothIcon', patient.deviceType);
           }
 
