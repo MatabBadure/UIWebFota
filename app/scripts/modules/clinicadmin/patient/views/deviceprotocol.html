@@ -3,7 +3,7 @@
 <div class="container admin-user">
   <div class="col-md-16 col-sm-16 margin-top">
    <div class="user-gen-details">
-   <span ng-class="{'monarchIcon': (getDeviceType() =='MONARCH'), 'visivestIcon': (getDeviceType() =='VEST')}">
+   <span ng-class="{'monarchIcon': (getDeviceTypeforBothIcon() =='MONARCH'), 'visivestIcon': (getDeviceTypeforBothIcon() =='VEST'), 'bothdeviceIcon': (getDeviceTypeforBothIcon() =='ALL')}">
      <span class="user-gen-details--name">{{::patient.firstName}} {{::patient.lastName}}</span>
      <span class="user-gen-details--hr-id">{{::patient.hillromId}}</span>
      </span>
@@ -230,6 +230,48 @@
         </div>
       </div>
       </form>
+
+                 <!-- Adding reset history starts from here -->
+      <div class="col-md-16 col-sm-16 patient-protocol">
+    <span class="patient-protocol--title">Adherence Score Reset History</span>
+  </div>
+  <div class="col-md-16 col-sm-16 reset-padding resethistory">
+   <div class="table-responsive">          
+  <table class="table table-hover resethistorylist">
+    <thead>
+      <tr class="header--type">
+        <th style="width:20%">Start Date</th>
+        <th style="width:20%">Reset Date</th>
+        <th style="width:20%">Reset  Time</th>
+        <th style="width:20%">Justification</th>
+        <th style="width:20%">Comments</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="resetHistory in resetHistoryData">
+     <td style="width:20%">{{ resetHistory.resetStartDate }}</td>
+     <td style="width:20%">{{ resetHistory.resetDate }}</td>
+     <td style="width:20%">{{ resetHistory.resetTime }}</td>
+     <td style="width:20%">{{ resetHistory.justification }}</td>
+     <td style="width:20%">{{ resetHistory.comments }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div  class="graph_nodata" ng-if = "nodataflag">
+    <span class="noData_text"> No Reset History Available!</span>
+  </div>
+  <div class="col-md-16 reset-padding adherenceresethistorypaginationcontner" >
+    <div class="col-sm-5 paginationcontainer ">
+           <span style="color:#7ca3dc;"> {{totalElements}} Reset History Records Found &nbsp </span>
+           <span ng-show="totalPages > 1">
+            <span class="navigaion-link cursor-pointer activeColor" ng-class="{ 'inactiveColor': !(currentPageIndex > 1) }" ng-click="getAdherenceScoreResetHistoryPagination('PREV')">Previous</span>
+            <span class="navigaion-no ng-binding">{{currentPageIndex}}/{{totalPages}}</span>  <span class="navigaion-link cursor-pointer activeColor"  ng-class="{ 'inactiveColor': !(totalPages > currentPageIndex) }" ng-click="getAdherenceScoreResetHistoryPagination('NEXT')">Next</span>
+          </span>
+          </div>
+        </div>
+  </div>
+
+  </div>
 </div>
 
 <div ng-if="showUpdateModalReset" class="modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true">
