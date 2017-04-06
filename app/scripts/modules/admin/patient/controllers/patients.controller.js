@@ -12,6 +12,11 @@ angular.module('hillromvestApp')
 })
 .controller('patientsController',['$scope','$rootScope', '$state', '$stateParams', 'patientService', 'dateService', 'notyService', 'UserService', 'DoctorService', 'clinicService', '$q', 'StorageService', 'loginConstants', 'commonsUserService', 'searchFilterService', 'addressService','exportutilService',
   function($scope, $rootScope, $state, $stateParams, patientService, dateService, notyService, UserService, DoctorService, clinicService, $q, StorageService, loginConstants, commonsUserService, searchFilterService, addressService, exportutilService) {
+    $scope.currentPageIndex = 1;
+    $scope.pageCount = 0;
+    $scope.perPageCount = 5;
+    $scope.PageNumber=1;
+    $scope.nodataflag = false;
     var isFormLoaded = false;
     $scope.patient = {};
     $scope.patientTab = "";
@@ -200,8 +205,8 @@ $scope.getdevice = function(){
     };
 
     $scope.init = function() {
-        /*      $scope.deviceTypeVest = true;   
-      $scope.deviceTypeMonarch = false;*/   
+      $scope.deviceTypeVest = false;   
+      $scope.deviceTypeMonarch = false;  
        $scope.selectedDevice();
       var currentRoute = $state.current.name;
       //in case the route is changed from other thatn switching tabs
@@ -223,6 +228,7 @@ $scope.getdevice = function(){
         $scope.initpatientCraegiver($stateParams.patientId);
       } else if($state.current.name === 'patientProtocol' || $state.current.name === 'patientProtocolRcadmin' || $state.current.name === 'associatepatientProtocol' || $state.current.name === 'customerservicepatientProtocol'){
         $scope.initProtocolDevice($stateParams.patientId);
+        $scope.getAdherenceScoreResetHistory($stateParams.patientId);
       }else if(currentRoute === 'patientCraegiverAdd' || currentRoute === 'patientCraegiverAddRcadmin'){
         $scope.initpatientCraegiverAdd($stateParams.patientId);
       }else if(currentRoute === 'patientCraegiverEdit' || currentRoute === 'patientCraegiverEditRcadmin'){
@@ -517,6 +523,42 @@ $scope.getdevice = function(){
 
     };
 
+        // getAdherenceScoreResetHistory history strats here 
+
+    $scope.getAdherenceScoreResetHistory = function(patientId){
+      patientService.getAdherenceScoreResetHistory(patientId,$scope.PageNumber,$scope.perPageCount).then(function(response){
+     
+        $scope.resetHistoryData = response.data.Adherence_Reset_History.content;  
+      $scope.totalPages = response.data.Adherence_Reset_History.totalPages;
+      $scope.totalElements = response.data.Adherence_Reset_History.totalElements;
+        
+        if($scope.totalElements == 0){
+         $scope.nodataflag = true;
+          }
+
+      }).catch(function(){});
+    };
+       $scope.getAdherenceScoreResetHistoryPagination = function(track){
+     if (track !== undefined) {
+        if (track === 'PREV' && $scope.currentPageIndex > 1) {
+          $scope.PageNumber--;
+          $scope.currentPageIndex--;
+        }
+        else if (track === 'NEXT' && $scope.currentPageIndex < $scope.totalPages){
+            $scope.PageNumber++;
+            $scope.currentPageIndex++;
+        }
+        else{
+            return false;
+        }
+      }else {
+          $scope.PageNumber = 1;
+      }
+ $scope.getAdherenceScoreResetHistory($stateParams.patientId);
+    };
+
+    // getAdherenceScoreResetHistory ends here 
+
     $scope.showAssociateHcpModal = function(hcp){
       $scope.selectedHCP = hcp;
       $scope.associatedHCPModal = true;
@@ -743,6 +785,7 @@ $scope.getdevice = function(){
     };
 
     $scope.linkDevice = function(){
+      
       if($scope.patientStatus.role === loginConstants.role.acctservices){
         $state.go('patientAddDeviceRcadmin',{patientId: $stateParams.patientId});
       }else{
@@ -1245,7 +1288,7 @@ $scope.getdevice = function(){
     };
      
   $scope.selectedDevice = function() {   
-    $scope.selectedDeviceType = $scope.getDeviceType();   
+    $scope.selectedDeviceType = $scope.getDeviceTypeforBothIcon();   
     if($scope.selectedDeviceType== "VEST")    
     {   
         $scope.deviceTypeVest = true;   
@@ -1269,7 +1312,7 @@ $scope.getdevice = function(){
         $scope.deviceTypeMonarch = true;    
         $scope.deviceTypeVest = false;    
     }   
-  };
+  };    
 
   $scope.onChangeSelectedDeviceProtocol = function() {    
     $scope.selectedDeviceTypeProtocol = $scope.deviceTypeSelectedProtocol;   

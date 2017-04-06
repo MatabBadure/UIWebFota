@@ -101,8 +101,8 @@
     <div class="col-md-8 col-sm-8 clinic-link">
     </div>
     <div class="col-md-8 col-sm-8 clinic-link">
-      <buton ng-show="isAddProtocol" class="hillrom-btn btn-primary float-right" ng-click="linkProtocol()" translate="patient.link-protocol"></buton>
-      <buton ng-show="!isAddProtocol" class="hillrom-btn btn-inactive float-right" translate="patient.link-protocol"></buton>
+      <buton ng-show="isAddProtocol || getDeviceTypeforBothIcon()=='ALL' " class="hillrom-btn btn-primary float-right" ng-click="linkProtocol()" translate="patient.link-protocol"></buton>
+      <buton ng-show="!isAddProtocol && getDeviceTypeforBothIcon()!='ALL'" class="hillrom-btn btn-inactive float-right" translate="patient.link-protocol"></buton>
     </div>
   </div>
 
@@ -138,14 +138,25 @@
 
   <div class="col-md-16 col-sm-16 device-list" ng-repeat="device in devices  | orderBy:'active':true" ng-class="{'list-inactive': !device.active}">
      <div id="deviceInfoicon" class="col-md-2 col-sm-2 device-list__serial">
+       <span ng-if ="getDeviceTypeforBothIcon() !='ALL'">
       <span class="icon_height_width" ng-class="{'monarchIcon': (getDeviceType() =='MONARCH'), 'visivestIcon': (getDeviceType() =='VEST')}"></span>
+      </span>
+
+      <span ng-if ="getDeviceTypeforBothIcon() =='ALL'">    
+  <span ng-if="device.deviceType == 'MONARCH'">
+      <span class="icon_height_width monarchIcon"></span>
+      </span>
+      <span ng-if="device.deviceType == 'VEST'">
+      <span class="icon_height_width visivestIcon"></span>
+      </span>
+    </span>
+
     </div>
     <div class="col-md-3 col-sm-3 device-list__serial">
       <span>{{device.serialNumber}}</span>
     </div>
     <div class="col-md-3 col-sm-3 device-list__bt-id">
-      <span ng-if="getDeviceType() =='VEST'">{{device.bluetoothId}}</span>
-      <span ng-if="getDeviceType() =='MONARCH'">{{device.wifiId}}</span>
+      <span >{{device.bluetoothId}}{{device.wifiId}}</span>
     </div>
 
     <div class="col-md-2 col-sm-2 device-list__status">
@@ -268,6 +279,49 @@
         </div>
       </div>
       </form>
+       <!-- Adding reset history starts from here -->
+      <div class="col-md-16 col-sm-16 patient-protocol">
+    <span class="patient-protocol--title">Adherence Score Reset History</span>
+  </div>
+  <div class="col-md-16 col-sm-16 reset-padding resethistory">
+   <div class="table-responsive">          
+  <table class="table table-hover resethistorylist">
+    <thead>
+      <tr class="header--type">
+        <th style="width:20%">Start Date</th>
+        <th style="width:20%">Reset Date</th>
+        <th style="width:20%">Reset  Time</th>
+        <th style="width:20%">Justification</th>
+        <th style="width:20%">Comments</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="resetHistory in resetHistoryData">
+     <td style="width:20%">{{ resetHistory.resetStartDate }}</td>
+     <td style="width:20%">{{ resetHistory.resetDate }}</td>
+     <td style="width:20%">{{ resetHistory.resetTime }}</td>
+     <td style="width:20%">{{ resetHistory.justification }}</td>
+     <td style="width:20%">{{ resetHistory.comments }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div  class="graph_nodata" ng-if = "nodataflag">
+    <span class="noData_text"> No Reset History Available!</span>
+  </div>
+  <div class="col-md-16 reset-padding adherenceresethistorypaginationcontner" >
+    <div class="col-sm-5 paginationcontainer ">
+           <span style="color:#7ca3dc;"> {{totalElements}} Reset History Records Found &nbsp </span>
+           <span ng-show="totalPages > 1">
+            <span class="navigaion-link cursor-pointer activeColor" ng-class="{ 'inactiveColor': !(currentPageIndex > 1) }" ng-click="getAdherenceScoreResetHistoryPagination('PREV')">Previous</span>
+            <span class="navigaion-no ng-binding">{{currentPageIndex}}/{{totalPages}}</span>  <span class="navigaion-link cursor-pointer activeColor"  ng-class="{ 'inactiveColor': !(totalPages > currentPageIndex) }" ng-click="getAdherenceScoreResetHistoryPagination('NEXT')">Next</span>
+          </span>
+          </div>
+        </div>
+  </div>
+
+  </div>
+
+  <!-- Adding reset history ends from here -->
 </div>
 
 
