@@ -295,7 +295,15 @@ angular.module('hillromvestApp')
           return response;
         });
       },
-
+  
+   deleteDeviceboth: function(id, device, deviceType) {
+         var url = URL.deactivateDevice.replace('PATIENTID', id).replace('SERIALNUMBER', device.serialNumber).replace('DEVICETYPE', deviceType);
+        return $http.delete(url, {
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });
+      },
       getProtocol: function(id) {
         var url = URL.getProtocol.replace('PATIENTID', id).replace('DEVICETYPE',localStorage.getItem('deviceTypeforBothIcon'));
         return $http.get(url, {

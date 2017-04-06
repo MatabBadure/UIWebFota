@@ -382,7 +382,8 @@
       <div class="modal__body">
          <div class="modal--message" translate="patient.delete-device.message"></div>
          <div class="row modal--custom-btn">
-          <buton class="hillrom-btn btn-submit float-right" ng-click="deleteDevice()">Yes</buton>
+          <buton ng-if ="getDeviceTypeforBothIcon() !='ALL'" class="hillrom-btn btn-submit float-right" ng-click="deleteDevice()">Yes</buton>
+          <buton ng-if ="getDeviceTypeforBothIcon() =='ALL'" class="hillrom-btn btn-submit float-right" ng-click="deleteDeviceboth()">Yes</buton>
           <buton class="hillrom-btn btn-submit float-right" data-dismiss="modal" ng-click="cancelDeviceModel()">No</buton>         
          </div>
       </div>
