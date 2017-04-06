@@ -205,8 +205,8 @@ $scope.getdevice = function(){
     };
 
     $scope.init = function() {
-        /*      $scope.deviceTypeVest = true;   
-      $scope.deviceTypeMonarch = false;*/   
+      $scope.deviceTypeVest = false;   
+      $scope.deviceTypeMonarch = false;  
        $scope.selectedDevice();
       var currentRoute = $state.current.name;
       //in case the route is changed from other thatn switching tabs
@@ -785,6 +785,7 @@ $scope.getdevice = function(){
     };
 
     $scope.linkDevice = function(){
+      
       if($scope.patientStatus.role === loginConstants.role.acctservices){
         $state.go('patientAddDeviceRcadmin',{patientId: $stateParams.patientId});
       }else{
@@ -1287,7 +1288,7 @@ $scope.getdevice = function(){
     };
      
   $scope.selectedDevice = function() {   
-    $scope.selectedDeviceType = $scope.getDeviceType();   
+    $scope.selectedDeviceType = $scope.getDeviceTypeforBothIcon();   
     if($scope.selectedDeviceType== "VEST")    
     {   
         $scope.deviceTypeVest = true;   
@@ -1311,7 +1312,7 @@ $scope.getdevice = function(){
         $scope.deviceTypeMonarch = true;    
         $scope.deviceTypeVest = false;    
     }   
-  };
+  };    
 
   $scope.onChangeSelectedDeviceProtocol = function() {    
     $scope.selectedDeviceTypeProtocol = $scope.deviceTypeSelectedProtocol;   

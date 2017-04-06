@@ -205,7 +205,7 @@ angular.module('hillromvestApp')
        *
        */
       getDevices: function(id) {
-        var url = URL.deviceAssociatedToPatient.replace('PATIENTID', id).replace('DEVICETYPE',localStorage.getItem('deviceType'));
+        var url = URL.deviceAssociatedToPatient.replace('PATIENTID', id).replace('DEVICETYPE',localStorage.getItem('deviceTypeforBothIcon'));
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -297,7 +297,7 @@ angular.module('hillromvestApp')
       },
 
       getProtocol: function(id) {
-        var url = URL.getProtocol.replace('PATIENTID', id).replace('DEVICETYPE',localStorage.getItem('deviceType'));
+        var url = URL.getProtocol.replace('PATIENTID', id).replace('DEVICETYPE',localStorage.getItem('deviceTypeforBothIcon'));
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
