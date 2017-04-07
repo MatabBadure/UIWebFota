@@ -205,8 +205,8 @@ $scope.getdevice = function(){
     };
 
     $scope.init = function() {
-        /*      $scope.deviceTypeVest = true;   
-      $scope.deviceTypeMonarch = false;*/   
+      $scope.deviceTypeVest = false;   
+      $scope.deviceTypeMonarch = false;  
        $scope.selectedDevice();
       var currentRoute = $state.current.name;
       //in case the route is changed from other thatn switching tabs
@@ -498,6 +498,7 @@ $scope.getdevice = function(){
         notyService.showMessage(response.data.message, 'success');
         $scope.form.$setPristine();
         $scope.showUpdateModalReset = false;
+        $scope.getAdherenceScoreResetHistory($stateParams.patientId);
         /*$scope.resetStartDate = null;
         $scope.justification = "";
         $scope.scoreToReset = 100;
@@ -785,6 +786,7 @@ $scope.getdevice = function(){
     };
 
     $scope.linkDevice = function(){
+      
       if($scope.patientStatus.role === loginConstants.role.acctservices){
         $state.go('patientAddDeviceRcadmin',{patientId: $stateParams.patientId});
       }else{
@@ -849,7 +851,8 @@ $scope.getdevice = function(){
         notyService.showError(response);
       });
     };
-
+    
+     
     $scope.deleteProtocolModel = function(protocolId){
       $scope.toDeleteProtocolId = protocolId;
       $scope.showModalProtocol = true;
@@ -859,7 +862,17 @@ $scope.getdevice = function(){
       $scope.deviceToDelete = device;
       $scope.showModalDevice = true;
     };
+    
+    $scope.deleteDeviceboth = function(){ 
 
+      $scope.showModalDevice = false;
+      patientService.deleteDeviceboth($stateParams.patientId, $scope.deviceToDelete, $scope.deviceToDelete.deviceType).then(function(response){
+        $scope.deviceToDelete.active = false;
+        notyService.showMessage(response.data.message, 'success');
+      }).catch(function(response){
+        notyService.showError(response);
+      });
+    };
     $scope.deleteClinicModel = function(clinic){
       $scope.clinicToDelete = clinic;
       $scope.showModalClinic = true;
@@ -1287,7 +1300,7 @@ $scope.getdevice = function(){
     };
      
   $scope.selectedDevice = function() {   
-    $scope.selectedDeviceType = $scope.getDeviceType();   
+    $scope.selectedDeviceType = $scope.getDeviceTypeforBothIcon();   
     if($scope.selectedDeviceType== "VEST")    
     {   
         $scope.deviceTypeVest = true;   
@@ -1311,7 +1324,7 @@ $scope.getdevice = function(){
         $scope.deviceTypeMonarch = true;    
         $scope.deviceTypeVest = false;    
     }   
-  };
+  };    
 
   $scope.onChangeSelectedDeviceProtocol = function() {    
     $scope.selectedDeviceTypeProtocol = $scope.deviceTypeSelectedProtocol;   
