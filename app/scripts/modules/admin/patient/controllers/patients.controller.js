@@ -850,7 +850,8 @@ $scope.getdevice = function(){
         notyService.showError(response);
       });
     };
-
+    
+     
     $scope.deleteProtocolModel = function(protocolId){
       $scope.toDeleteProtocolId = protocolId;
       $scope.showModalProtocol = true;
@@ -860,7 +861,17 @@ $scope.getdevice = function(){
       $scope.deviceToDelete = device;
       $scope.showModalDevice = true;
     };
+    
+    $scope.deleteDeviceboth = function(){ 
 
+      $scope.showModalDevice = false;
+      patientService.deleteDeviceboth($stateParams.patientId, $scope.deviceToDelete, $scope.deviceToDelete.deviceType).then(function(response){
+        $scope.deviceToDelete.active = false;
+        notyService.showMessage(response.data.message, 'success');
+      }).catch(function(response){
+        notyService.showError(response);
+      });
+    };
     $scope.deleteClinicModel = function(clinic){
       $scope.clinicToDelete = clinic;
       $scope.showModalClinic = true;
