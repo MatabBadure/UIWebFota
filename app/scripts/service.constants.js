@@ -147,6 +147,7 @@ var stringConstants = {
     notAvailable: "N/A",
     deviceType : "The VisiVest™ System",
     deviceTypeMonarch : "The Monarch™ System",
+    deviceTypeBoth: "The VisiVest™ System , The Monarch™ System",
     emptyString: "",
     comma: ", ",
     runrate: "Total Therapy Hours Runrate",
