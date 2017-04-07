@@ -119,14 +119,24 @@
 
   <div class="col-md-16 col-sm-16 device-list" ng-repeat="device in devices  | orderBy:'active':true" ng-class="{'list-inactive': !device.active}">
     <div id="deviceInfoicon" class="col-md-2 col-sm-2 device-list__serial">
+        <span ng-if ="getDeviceTypeforBothIcon() !='ALL'">
       <span class="icon_height_width" ng-class="{'monarchIcon': (getDeviceType() =='MONARCH'), 'visivestIcon': (getDeviceType() =='VEST')}"></span>
+      </span>
+
+      <span ng-if ="getDeviceTypeforBothIcon() =='ALL'">    
+  <span ng-if="device.deviceType == 'MONARCH'">
+      <span class="icon_height_width monarchIcon"></span>
+      </span>
+      <span ng-if="device.deviceType == 'VEST'">
+      <span class="icon_height_width visivestIcon"></span>
+      </span>
+    </span>
     </div>
     <div class="col-md-3 col-sm-3 device-list__serial">
       <span>{{::device.serialNumber}}</span>
     </div>
     <div class="col-md-3 col-sm-3 device-list__bt-id">
-      <span ng-if="getDeviceType() =='VEST'">{{device.bluetoothId}}</span>
-      <span ng-if="getDeviceType() =='MONARCH'">{{device.wifiId}}</span>
+      <span >{{device.bluetoothId}}{{device.wifiId}}</span>
     </div>
     <div class="col-md-1 col-sm-1 device-list__status">
       <span ng-if="device.active" class="device--list__status--text" translate="patient.device.active-status">Active</span>
