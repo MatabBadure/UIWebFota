@@ -498,6 +498,7 @@ $scope.getdevice = function(){
         notyService.showMessage(response.data.message, 'success');
         $scope.form.$setPristine();
         $scope.showUpdateModalReset = false;
+        $scope.getAdherenceScoreResetHistory($stateParams.patientId);
         /*$scope.resetStartDate = null;
         $scope.justification = "";
         $scope.scoreToReset = 100;

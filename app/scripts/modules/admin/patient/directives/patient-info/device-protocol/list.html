@@ -263,7 +263,7 @@
               <span class="">*</span>
             </div>
             <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding" >
-              <textarea name="oth" class="" style="box-shadow:none !important;"  ng-model = "$parent.othersContent" required></textarea>
+              <textarea name="oth" class="" style="box-shadow:none !important;"  ng-model = "$parent.othersContent" required  maxlength="150"></textarea>
               <div ng-show="(form.oth.$dirty && form.oth.$invalid) || resetsubmitted">
                 <span class="has-error" ng-show="form.oth.$error.required" translate="error.others.required"></span>
               </div>   
@@ -301,7 +301,7 @@
      <td style="width:20%">{{ resetHistory.resetDate }}</td>
      <td style="width:20%">{{ resetHistory.resetTime }}</td>
      <td style="width:20%">{{ resetHistory.justification }}</td>
-     <td style="width:20%">{{ resetHistory.comments }}</td>
+     <td style="width:20%" class="othercommenttxt">{{ resetHistory.comments }}</td>
       </tr>
     </tbody>
   </table>
