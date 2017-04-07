@@ -205,7 +205,7 @@ angular.module('hillromvestApp')
        *
        */
       getDevices: function(id) {
-        var url = URL.deviceAssociatedToPatient.replace('PATIENTID', id).replace('DEVICETYPE',localStorage.getItem('deviceType'));
+        var url = URL.deviceAssociatedToPatient.replace('PATIENTID', id).replace('DEVICETYPE',localStorage.getItem('deviceTypeforBothIcon'));
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -264,7 +264,18 @@ angular.module('hillromvestApp')
         });
       },
 
+ // get reset adhrence history starts here
 
+      getAdherenceScoreResetHistory: function(id,pageNumber,perPage) {
+        var url = URL.getAdherenceScoreResetHistory.replace('ID',id).replace('PAGE',pageNumber).replace('PER_PAGE',perPage).replace('DEVICETYPE',localStorage.getItem('deviceTypeforBothIcon'));
+        return $http.get(url, {
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });
+      },
+     
+     // get reset adhrence history ends here
       addDevice: function(id, data, deviceType) {
        
           var url = URL.addDevice.replace('PATIENTID', id).replace('DEVICETYPE',deviceType);
@@ -284,9 +295,17 @@ angular.module('hillromvestApp')
           return response;
         });
       },
-
+  
+   deleteDeviceboth: function(id, device, deviceType) {
+         var url = URL.deactivateDevice.replace('PATIENTID', id).replace('SERIALNUMBER', device.serialNumber).replace('DEVICETYPE', deviceType);
+        return $http.delete(url, {
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });
+      },
       getProtocol: function(id) {
-        var url = URL.getProtocol.replace('PATIENTID', id).replace('DEVICETYPE',localStorage.getItem('deviceType'));
+        var url = URL.getProtocol.replace('PATIENTID', id).replace('DEVICETYPE',localStorage.getItem('deviceTypeforBothIcon'));
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
