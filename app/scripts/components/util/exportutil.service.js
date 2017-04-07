@@ -563,13 +563,43 @@ angular.module('hillromvestApp')
     completePatientAddress = (patientDetails !== null && patientDetails.zipcode) ? ((completePatientAddress.length > 1) ? (completePatientAddress+stringConstants.comma+patientDetails.zipcode) : patientDetails.zipcode) : completePatientAddress;      
     var patientPhone = (patientDetails !== null && patientDetails.mobilePhone)? patientDetails.mobilePhone : stringConstants.notAvailable;
     var patientDOB = (patientDetails !== null && patientDetails.dob)? dateService.getDateFromTimeStamp(patientDetails.dob,patientDashboard.dateFormat,'/') : stringConstants.notAvailable;    
-    if(localStorage.getItem('deviceType') == 'MONARCH'){
-    var patientDeviceType = stringConstants.deviceTypeMonarch;
+    var patientDeviceType ='';
+    var patientDeviceSlNo ='';
+    var patientDeviceSlNoVest='';
+    var patientDeviceSlNoMonarch='';
+
+    if(localStorage.getItem('deviceTypeforBothIcon') == 'MONARCH'){
+        patientDeviceType = stringConstants.deviceTypeMonarch;
+      for(var  i=0 ; i<patientInfo.patientDevices.length ; i++){
+        if(patientInfo.patientDevices[i].active==true){
+            patientDeviceSlNo = (patientInfo.patientDevices && patientInfo.patientDevices[i] && patientInfo.patientDevices[i].serialNumber) ? patientInfo.patientDevices[i].serialNumber: stringConstants.notAvailable;
+       }
+     }
     }
-    else{
-    var patientDeviceType = stringConstants.deviceType;
-  }
-    var patientDeviceSlNo = (patientInfo.patientDevices && patientInfo.patientDevices[0] && patientInfo.patientDevices[0].serialNumber) ? patientInfo.patientDevices[0].serialNumber: stringConstants.notAvailable;
+    else if(localStorage.getItem('deviceTypeforBothIcon') == 'VEST'){
+     patientDeviceType = stringConstants.deviceType;
+      for(var  i=0 ; i<patientInfo.patientDevices.length ; i++){
+        if(patientInfo.patientDevices[i].active==true){
+            patientDeviceSlNo = (patientInfo.patientDevices && patientInfo.patientDevices[i] && patientInfo.patientDevices[i].serialNumber) ? patientInfo.patientDevices[i].serialNumber: stringConstants.notAvailable;
+        }
+      }
+    }
+  else {
+     patientDeviceType = stringConstants.deviceTypeBoth;
+    var count=0; 
+    for(var  i=0 ; i<patientInfo.patientDevices.length ; i++){       
+            if(patientInfo.patientDevices[i].active==true){                
+                 count=count+1;  
+                 if(count==1){
+                   patientDeviceSlNoVest=(patientInfo.patientDevices && patientInfo.patientDevices[i] && patientInfo.patientDevices[i].serialNumber) ? patientInfo.patientDevices[i].serialNumber: stringConstants.notAvailable;
+                 }else if(count==2){
+                   patientDeviceSlNoMonarch =(patientInfo.patientDevices && patientInfo.patientDevices[i] && patientInfo.patientDevices[i].serialNumber) ? patientInfo.patientDevices[i].serialNumber: stringConstants.notAvailable;
+                 }
+            }
+          patientDeviceSlNo =  patientDeviceSlNoVest  +' '+','+' '+patientDeviceSlNoMonarch ;
+          }
+     }
+ 
     var pdfMissedTherapyDays = (patientInfo.missedtherapyDays !== null && patientInfo.missedtherapyDays >= 0) ? patientInfo.missedtherapyDays : stringConstants.notAvailable;
     var pdfHMRNonAdherenceScore = (patientInfo.adherenceScore !== null && patientInfo.adherenceScore >= 0) ? patientInfo.adherenceScore : 0;
     var pdfSettingDeviation = (patientInfo.settingsDeviatedDaysCount !== null && patientInfo.settingsDeviatedDaysCount >= 0) ? patientInfo.settingsDeviatedDaysCount : stringConstants.notAvailable;
