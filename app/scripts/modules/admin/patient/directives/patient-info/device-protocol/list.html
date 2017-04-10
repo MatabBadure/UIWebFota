@@ -138,11 +138,12 @@
 
   <div class="col-md-16 col-sm-16 device-list" ng-repeat="device in devices  | orderBy:'active':true" ng-class="{'list-inactive': !device.active}">
      <div id="deviceInfoicon" class="col-md-2 col-sm-2 device-list__serial">
-       <span ng-if ="getDeviceTypeforBothIcon() !='ALL'">
+     <!--   <span ng-if ="getDeviceTypeforBothIcon() !='ALL'">
       <span class="icon_height_width" ng-class="{'monarchIcon': (getDeviceType() =='MONARCH'), 'visivestIcon': (getDeviceType() =='VEST')}"></span>
-      </span>
+      </span> -->
 
-      <span ng-if ="getDeviceTypeforBothIcon() =='ALL'">    
+      <!-- <span ng-if ="getDeviceTypeforBothIcon() =='ALL'"> -->
+       <span>    
   <span ng-if="device.deviceType == 'MONARCH'">
       <span class="icon_height_width monarchIcon"></span>
       </span>
@@ -382,8 +383,9 @@
       <div class="modal__body">
          <div class="modal--message" translate="patient.delete-device.message"></div>
          <div class="row modal--custom-btn">
-          <buton ng-if ="getDeviceTypeforBothIcon() !='ALL'" class="hillrom-btn btn-submit float-right" ng-click="deleteDevice()">Yes</buton>
-          <buton ng-if ="getDeviceTypeforBothIcon() =='ALL'" class="hillrom-btn btn-submit float-right" ng-click="deleteDeviceboth()">Yes</buton>
+          <!-- <buton ng-if ="getDeviceTypeforBothIcon() !='ALL'" class="hillrom-btn btn-submit float-right" ng-click="deleteDevice()">Yes</buton> -->
+         <!--  <buton ng-if ="getDeviceTypeforBothIcon() =='ALL'" class="hillrom-btn btn-submit float-right" ng-click="deleteDeviceboth()">Yes</buton> -->
+          <buton  class="hillrom-btn btn-submit float-right" ng-click="deleteDeviceboth()">Yes</buton>
           <buton class="hillrom-btn btn-submit float-right" data-dismiss="modal" ng-click="cancelDeviceModel()">No</buton>         
          </div>
       </div>
