@@ -278,7 +278,7 @@ angular.module('hillromvestApp')
      // get reset adhrence history ends here
       addDevice: function(id, data, deviceType) {
        
-          var url = URL.addDevice.replace('PATIENTID', id).replace('DEVICETYPE',deviceType);
+          var url = URL.addDevice.replace('PATIENTID', id).replace('DEVICETYPE',localStorage.getItem('deviceTypeforBothIcon')).replace('DEVICEVALUE',deviceType);
     
         return $http.put(url, data, {
           headers: headerService.getHeader()
