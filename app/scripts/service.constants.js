@@ -46,7 +46,8 @@ var searchFilters = {
     VisiVest: "VEST",
     Monarch: "MONARCH",
     devicetype : "deviceType=",
-    allCaps : "ALL"
+    allCaps : "ALL",
+    Both:"BOTH"
 }
 
 var sortConstant = {
