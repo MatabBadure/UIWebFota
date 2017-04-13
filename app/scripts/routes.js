@@ -2541,7 +2541,7 @@ angular.module('hillromvestApp')
 
             .state('patientEditProtocol', {
                 parent: 'patientProtocol',
-                url: '/{protocolId}/editProtocol',
+                url: '/{protocolId}/{protocolDevice}/editProtocol',
                 data: {
                     roles: ['ADMIN'],
                     pageTitle: 'patient.title'
@@ -2936,7 +2936,7 @@ angular.module('hillromvestApp')
             })
             .state('patientEditProtocolRcadmin', {
                 parent: 'rcadmin',
-                url: '/{patientId}/{protocolId}/patients-editProtocol',
+                url: '/{patientId}/{protocolId}/{protocolDevice}/patients-editProtocol',
                 data: {
                     roles: ['ACCT_SERVICES'],
                     pageTitle: 'patient.title'
@@ -4345,7 +4345,7 @@ angular.module('hillromvestApp')
             })
             .state('clinicAdminUpdateProtocol', {
                 parent: 'clinicadminpatientProtocol',
-                url: '/{protocolId}/editProtocol',
+                url: '/{protocolId}/{protocolDevice}/editProtocol',
                 data: {
                     roles: ['CLINIC_ADMIN'],
                     pageTitle: 'patient.title'
@@ -4595,7 +4595,7 @@ angular.module('hillromvestApp')
 
             .state('hcpUpdateProtocol', {
                 parent: 'hcppatientProtocol',
-                url: '/{protocolId}/editProtocol',
+                url: '/{protocolId}/{protocolDevice}/editProtocol',
                 data: {
                     roles: ['HCP'],
                     pageTitle: 'patient.title'
