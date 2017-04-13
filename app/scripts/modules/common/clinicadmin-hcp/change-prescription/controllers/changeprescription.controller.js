@@ -12,7 +12,8 @@ function($scope, $state, clinicadminPatientService, notyService, $stateParams, c
 
 	$scope.initUpdateProtocol = function(){
     $scope.getPatientInfo($stateParams.patientId);
-    $scope.getProtocolById($stateParams.patientId, $stateParams.protocolId);
+    alert($stateParams.protocolDevice);
+    $scope.getProtocolById($stateParams.patientId, $stateParams.protocolId, $stateParams.protocolDevice);
   };
 
   $scope.initGenerateProtocol = function(){
@@ -56,8 +57,8 @@ function($scope, $state, clinicadminPatientService, notyService, $stateParams, c
     });
   };
 
-  $scope.getProtocolById = function(patientId, protocolId){
-    patientService.getProtocolById(patientId, protocolId).then(function(response){
+  $scope.getProtocolById = function(patientId, protocolId, devicetype){
+    patientService.getProtocolById(patientId, protocolId, devicetype).then(function(response){
       $scope.protocol = response.data;
       $scope.protocol.edit = true;
       $scope.newProtocolPoint = ($scope.protocol.protocol) ? $scope.protocol.protocol.length : 1;

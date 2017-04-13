@@ -368,7 +368,7 @@ angular.module('hillromvestApp')
     if(!protocol){
       return false;
     }
-    $state.go('hcpUpdateProtocol', {'protocolId': protocol.id});
+    $state.go('hcpUpdateProtocol', {'protocolId': protocol.id , 'protocolDevice' : protocol.deviceType});
   };
   $scope.openEditDetail = function(){
         $state.go('hcppatientdemographicEdit', {'patientId': $stateParams.patientId});  

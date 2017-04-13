@@ -690,7 +690,7 @@ angular.module('hillromvestApp')
     if(!protocol){
       return false;
     }
-    $state.go('clinicAdminUpdateProtocol', {'protocolId': protocol.id});
+    $state.go('clinicAdminUpdateProtocol', {'protocolId': protocol.id , 'protocolDevice' : protocol.deviceType});
   };
 
   $scope.init();
