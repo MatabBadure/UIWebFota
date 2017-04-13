@@ -95,7 +95,7 @@
   <div ng-if="getDeviceTypeforBothIcon() =='ALL'" ng-repeat="protocol in protocols ">
 <div class="col-md-16 col-sm-16 border-top protocol_list_container" ng-class="{'no_border' : !protocols}">
 
-  <div class="col-md-1 col-sm-1 treatments_per_day_count" ng-if="(protocols)">
+  <div class="col-md-1 col-sm-1 treatments_per_day_count" ng-if="protocolDeviceIconFilter(protocol)">
     <div id="deviceicon" class="col-md-16 col-sm-16 protocol-list__treatment-day no_border text-align-left">
 
      
@@ -103,7 +103,7 @@
     </div>
   </div>
   <div class="col-md-2 col-sm-2 col-lg-offset-1 col-md-offset-1 col-sm-offset-1 col-xs-offset-1">
-    <div class="col-md-16 col-sm-16 protocol-list__treatment-day protocol-list no_border text-align-left"  ng-class="{'list-inactive':protocol.deleted, 'last' : $last}">
+    <div class="col-md-16 col-sm-16 protocol-list__treatment-day protocol-list no_border text-align-left"  ng-class="{'list-inactive':protocol.deleted, 'last' : $last}" ng-if="displayFlag">
       <span class="protocol-list--value"> {{protocol.type}} {{protocol.treatmentLabel}}</span>
     </div>
   </div>
@@ -122,12 +122,12 @@
         <span ng-if="protocol.type === 'Custom'" class="protocol-list--value"> {{protocol.minFrequency}}</span>
         <span ng-if="protocol.type === 'Normal'" class="protocol-list--value"> {{protocol.minFrequency}}-{{protocol.maxFrequency}}</span>
       </div>
-      <div class="col-md-4 col-sm-4 protocol-list__end-date" >
+      <div class="col-md-4 col-sm-4 protocol-list__end-date" ng-if="protocol.deviceType =='VEST'">
         <span ng-if="protocol.type === 'Custom'" class="protocol-list--value"> {{protocol.minPressure}}</span>
         <span ng-if="protocol.type === 'Normal'" class="protocol-list--value"> {{protocol.minPressure}}-{{protocol.maxPressure}}</span>
       </div>
 
-<div class="col-md-4 col-sm-4 protocol-list__end-date" >
+<div class="col-md-4 col-sm-4 protocol-list__end-date" ng-if="protocol.deviceType =='MONARCH'">
         <span ng-if="protocol.type === 'Custom'" class="protocol-list--value"> {{protocol.minIntensity}}</span>
         <span ng-if="protocol.type === 'Normal'" class="protocol-list--value"> {{protocol.minIntensity}}-{{protocol.maxIntensity}}</span>
       </div>
@@ -137,7 +137,7 @@
 
   <div class="col-md-2 col-sm-2 comon_action_div" ng-if="protocols">
     <div class="col-md-8 col-sm-8 protocol-list__edit icons text-center">
-      <span ng-if="!protocol.deleted" class="icon-edit-icon" ng-click="openEditProtocol(protocol)"></span>
+      <span ng-if="!protocol.deleted" class="icon-edit-icon" ng-click="openEditProtocol(protocol)" ng-if="displayFlag"></span>
     </div>
   </div>
 

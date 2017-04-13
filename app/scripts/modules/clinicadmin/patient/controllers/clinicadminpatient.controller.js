@@ -7,6 +7,10 @@ angular.module('hillromvestApp')
   $scope.perPageCount = 5;
   $scope.PageNumber=1;
   $scope.nodataflag = false;
+      $scope.DisableAddProtocol = false; 
+    $scope.displayFlag = true;
+          $scope.customPointsChecker = 0;
+          $scope.lastdeviceType = "";
   $scope.init = function(){
     if($state.current.name === 'clinicadminpatientDemographic'  || $state.current.name === 'clinicadmminpatientDemographicEdit'){
       $scope.getPatientInfo($stateParams.patientId, $scope.setEditMode);
@@ -347,8 +351,30 @@ angular.module('hillromvestApp')
   };
 
   $scope.getProtocols = function(patientId){
+    $scope.DisableAddProtocol = false;
     patientService.getProtocol(patientId).then(function(response){
       $scope.protocols = response.data.protocol;
+              var vestFlag = false;
+        var monarchFlag = false;
+        $scope.lastdeviceType = $scope.protocols[0].deviceType;
+        angular.forEach($scope.protocols, function(protocol){
+          if(protocol.deviceType === searchFilters.VisiVest){
+            vestFlag = true;
+           
+          }
+          if(protocol.deviceType === searchFilters.Monarch){
+            monarchFlag = true;
+           
+          }
+        });
+          if(vestFlag && monarchFlag){
+          $scope.DisableAddProtocol = true;
+        
+        }
+        else{
+          $scope.DisableAddProtocol = false;
+         
+        }
     }).catch(function(response){
       notyService.showError(response);
     });
@@ -376,6 +402,7 @@ angular.module('hillromvestApp')
 
   $scope.selectPatient = function(patient){
    // localStorage.setItem('deviceType', patient.deviceType);
+
     if(patient.deviceType == 'ALL'){
           localStorage.setItem('deviceType', 'VEST');
           localStorage.setItem('deviceTypeforGraph', 'ALL');
@@ -385,7 +412,6 @@ angular.module('hillromvestApp')
             localStorage.setItem('deviceType', patient.deviceType);
             localStorage.setItem('deviceTypeforGraph', patient.deviceType);
             localStorage.setItem('deviceTypeforBothIcon', patient.deviceType);
-
           }
     var clinicId = ($scope.selectedClinic && $scope.selectedClinic.id) ? $scope.selectedClinic.id : ($stateParams.clinicId ? $stateParams.clinicId : null);
    $scope.deviceType = patient.deviceType;
@@ -411,7 +437,7 @@ angular.module('hillromvestApp')
   };
 
   $scope.changeSortOption = function(){
-    console.log('Todo :Check Box changes', $scope.sortOn);
+   
   };
 
   $scope.openEditDetail = function(){
@@ -692,6 +718,40 @@ angular.module('hillromvestApp')
     }
     $state.go('clinicAdminUpdateProtocol', {'protocolId': protocol.id , 'protocolDevice' : protocol.deviceType});
   };
+     $scope.protocolDeviceIconFilter = function(protocol){
+      if(localStorage.getItem('deviceType') === searchFilters.allCaps){
+      
+      
+      if(protocol.type === 'Normal'){
+        $scope.customPointsChecker = 0;
+        
+        $scope.lastdeviceType = protocol.deviceType;
+        $scope.displayFlag = true;
+        return true;
+      }
+      else if(protocol.type === 'Custom'){
+      if($scope.lastdeviceType != protocol.deviceType){
+         $scope.customPointsChecker = 0;
+      }
+      $scope.customPointsChecker++;
+      if($scope.customPointsChecker == 1){
+       
+         $scope.lastdeviceType = protocol.deviceType;
+         $scope.displayFlag = true;
+        return true;
+      }
+      else{
+       
+         $scope.lastdeviceType = protocol.deviceType;
+         $scope.displayFlag = false;
+        return false;
+      }
+        }
+      }
+      else{
+        return true;
+      }
+    };
 
   $scope.init();
 

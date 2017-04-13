@@ -104,19 +104,17 @@
   <div ng-if="getDeviceTypeforBothIcon() =='ALL'" ng-repeat="protocol in protocols ">
 <div class="col-md-16 col-sm-16 border-top protocol_list_container" ng-class="{'no_border' : !protocols}">
 
-  <div class="col-md-1 col-sm-1 treatments_per_day_count" ng-if="(protocols)" ng-class="{'monarchdevicefound': (protocol.deviceType =='MONARCH'), 'vestdevicefound': (protocol.deviceType =='VEST')}">
+  <div class="col-md-1 col-sm-1 treatments_per_day_count" ng-if="protocolDeviceIconFilter(protocol)" >
     <div id="deviceicon" class="col-md-16 col-sm-16 protocol-list__treatment-day no_border text-align-left">
-
-     
      <span class="icon_height_width" ng-class="{'monarchIcon': (protocol.deviceType =='MONARCH'), 'visivestIcon': (protocol.deviceType =='VEST')}"></span>
     </div>
   </div>
-  <div class="col-md-2 col-sm-2 col-lg-offset-1 col-md-offset-1 col-sm-offset-1 col-xs-offset-1">
-    <div class="col-md-16 col-sm-16 protocol-list__treatment-day protocol-list no_border text-align-left"  ng-class="{'list-inactive':protocol.deleted, 'last' : $last}">
+  <div class="col-md-2 col-sm-2 col-lg-offset-1 col-md-offset-1 col-sm-offset-1 col-xs-offset-1" >
+    <div class="col-md-16 col-sm-16 protocol-list__treatment-day protocol-list no_border text-align-left"  ng-class="{'list-inactive':protocol.deleted, 'last' : $last}" ng-if="displayFlag">
       <span class="protocol-list--value"> {{protocol.type}} {{protocol.treatmentLabel}}</span>
     </div>
   </div>
-  <div class="col-md-2 col-sm-2 treatments_per_day_count col-sm-offset-3 col-md-offset-3">
+  <div class="col-md-2 col-sm-2 treatments_per_day_count col-sm-offset-3 col-md-offset-3" ng-if="displayFlag">
       <span class="v_middle">{{protocol.treatmentsPerDay}}</span>
   </div>
   <div class="col-md-9 col-sm-9 col-sm-offset-2 col-md-offset-2">
@@ -131,12 +129,12 @@
         <span ng-if="protocol.type === 'Custom'" class="protocol-list--value"> {{protocol.minFrequency}}</span>
         <span ng-if="protocol.type === 'Normal'" class="protocol-list--value"> {{protocol.minFrequency}}-{{protocol.maxFrequency}}</span>
       </div>
-      <div class="col-md-4 col-sm-4 protocol-list__end-date" >
+      <div class="col-md-4 col-sm-4 protocol-list__end-date" ng-if="protocol.deviceType =='VEST'">
         <span ng-if="protocol.type === 'Custom'" class="protocol-list--value"> {{protocol.minPressure}}</span>
         <span ng-if="protocol.type === 'Normal'" class="protocol-list--value"> {{protocol.minPressure}}-{{protocol.maxPressure}}</span>
       </div>
 
-<div class="col-md-4 col-sm-4 protocol-list__end-date" >
+<div class="col-md-4 col-sm-4 protocol-list__end-date" ng-if="protocol.deviceType =='MONARCH'">
         <span ng-if="protocol.type === 'Custom'" class="protocol-list--value"> {{protocol.minIntensity}}</span>
         <span ng-if="protocol.type === 'Normal'" class="protocol-list--value"> {{protocol.minIntensity}}-{{protocol.maxIntensity}}</span>
       </div>
@@ -145,10 +143,10 @@
   </div>
 
   <div class="col-md-2 col-sm-2 comon_action_div" ng-if="protocols">
-    <div class="col-md-8 col-sm-8 protocol-list__edit icons text-center">
+    <div class="col-md-8 col-sm-8 protocol-list__edit icons text-center" ng-if="displayFlag">
       <span ng-if="!protocol.deleted" class="icon-edit-icon" ng-click="openEditProtocol(protocol)"></span>
     </div>
-    <div class="col-md-8 col-sm-8 protocol-list__edit icons text-center">
+    <div class="col-md-8 col-sm-8 protocol-list__edit icons text-center" ng-if="displayFlag">
       <span ng-if="(!protocol.deleted)&& (getDeviceTypeforBothIcon() !='ALL')" class="icon-delete-icon" ng-click="deleteProtocolModel(protocol.id)"></span>
       <span ng-if="(!protocol.deleted)&& (getDeviceTypeforBothIcon() =='ALL')" class="icon-delete-icon" ng-click="deleteProtocolModelforBoth(protocol.id, protocol.deviceType)"></span>
     </div>
@@ -165,7 +163,7 @@
     <div class="col-md-8 col-sm-8 clinic-link">
     </div>
     <div class="col-md-8 col-sm-8 clinic-link">
-      <buton ng-show="isAddProtocol || getDeviceTypeforBothIcon()=='ALL' " class="hillrom-btn btn-primary float-right" ng-click="linkProtocol()" translate="patient.link-protocol"></buton>
+      <buton ng-show="isAddProtocol || getDeviceTypeforBothIcon()=='ALL'" class="hillrom-btn btn-primary float-right" ng-click="linkProtocol()" translate="patient.link-protocol"></buton>
       <buton ng-show="!isAddProtocol && getDeviceTypeforBothIcon()!='ALL'" class="hillrom-btn btn-inactive float-right" translate="patient.link-protocol"></buton>
     </div>
   </div>

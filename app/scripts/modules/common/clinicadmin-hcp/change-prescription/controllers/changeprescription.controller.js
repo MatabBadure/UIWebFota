@@ -12,7 +12,7 @@ function($scope, $state, clinicadminPatientService, notyService, $stateParams, c
 
 	$scope.initUpdateProtocol = function(){
     $scope.getPatientInfo($stateParams.patientId);
-    alert($stateParams.protocolDevice);
+    
     $scope.getProtocolById($stateParams.patientId, $stateParams.protocolId, $stateParams.protocolDevice);
   };
 
