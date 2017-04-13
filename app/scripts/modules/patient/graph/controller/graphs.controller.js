@@ -96,6 +96,16 @@ angular.module('hillromvestApp')
        $scope.deviceTypeforGraph = localStorage.getItem('deviceType');
        $scope.deviceTypeforGraphProtocol = localStorage.getItem('deviceType');
        $scope.deviceTypeforGraphTrend = localStorage.getItem('deviceType'); 
+       
+        if($scope.deviceTypeforGraph == "ALL")
+       {
+          $scope.deviceTypeforGraph = "VEST";
+       }
+      
+      if($scope.deviceTypeforGraphProtocol == "ALL")
+       {
+          $scope.deviceTypeforGraphProtocol = "VEST";
+       }
 
                   
 
