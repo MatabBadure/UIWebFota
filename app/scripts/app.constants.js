@@ -76,7 +76,7 @@ angular.module('hillromvestApp')
 	'getProtocol' : 'api/patient/PATIENTID/protocol?deviceType=DEVICETYPE',
 	'addEditProtocol' : 'api/patient/PATIENTID/protocol/DEVICETYPE',	
 	'caregiverById' : 'api/patient/PATIENTID/caregiver/CAREGIVERID',
-	'addDevice' : 'api/patient/PATIENTID/linkdevice?deviceType=DEVICETYPE',
+	'addDevice' : 'api/patient/PATIENTID/linkdevice?deviceType=DEVICETYPE&deviceValue=DEVICEVALUE',
 	'deactivateDevice' : 'api/patient/PATIENTID/deactivatedevice/SERIALNUMBER?deviceType=DEVICETYPE',
 	'patientSearch' : 'api/user/patient/search?searchString=',
 	'patientById' : '/api/user/PATIENTID/patient',

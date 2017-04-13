@@ -85,6 +85,8 @@ angular.module('hillromvestApp')
 	var res = clinicadminService.getActivePatientsCount(clinicId).then(function(response){
 	$scope.numberofVisiVestPatients = response.data.VEST;
 	    $scope.numberofMonarchPatients = response.data.MONARCH;
+	    $scope.numberofbothPatients=response.data.ALL;
+         // alert(searchFilters.VisiVest);
 	    var onlyActivePatients = true; //to call only active patients but not the getclinicadminid()
 	    $scope.getclinicDashboardDataBasedonDevice(onlyActivePatients);
 	    /*$scope.totalnumberofActivePatients = $scope.numberofVisiVestPatients + $scope.numberofMonarchPatients;*/	
@@ -93,35 +95,74 @@ angular.module('hillromvestApp')
 		});
 	};
      // for patient list based on device selection starts from here
-     $scope.getclinicDashboardDataBasedonDevice = function(onlyActivePatients){
-     	if ($scope.VisiVest==true && $scope.Monarch!=true)
+   $scope.getclinicDashboardDataBasedonDevice = function(onlyActivePatients){
+     	
+
+     		if ($scope.VisiVest==true && $scope.Monarch!=true && $scope.both!=true)
      	{
           $scope.ClinicDashboardDeviceType = searchFilters.VisiVest;
           $scope.totalnumberofActivePatients = $scope.numberofVisiVestPatients;
          // alert(searchFilters.VisiVest);
           
      	}
-     	else if ($scope.Monarch==true && $scope.VisiVest!=true)
+     	else if ($scope.VisiVest==true && $scope.Monarch!=true && $scope.both==true)
+     	{
+          $scope.ClinicDashboardDeviceType = searchFilters.allCaps;
+          $scope.totalnumberofActivePatients = $scope.numberofVisiVestPatients+$scope.numberofbothPatients;
+         // alert(searchFilters.VisiVest);
+          
+     	}
+
+
+     	else if ($scope.Monarch==true && $scope.VisiVest!=true && $scope.both!=true)
      	{
           $scope.ClinicDashboardDeviceType = searchFilters.Monarch;
           //alert($scope.ClinicDashboardDeviceType);
           $scope.totalnumberofActivePatients = $scope.numberofMonarchPatients;
           
      	}
-     	else if ($scope.Monarch==true && $scope.VisiVest==true)
+     	else if ($scope.Monarch==true && $scope.VisiVest!=true && $scope.both==true)
+     	{
+          $scope.ClinicDashboardDeviceType = searchFilters.allCaps;
+          $scope.totalnumberofActivePatients = $scope.numberofMonarchPatients+$scope.numberofbothPatients;
+     	}
+
+
+     	else if ($scope.Monarch==true && $scope.VisiVest==true && $scope.both!=true)
      	{
           $scope.ClinicDashboardDeviceType = searchFilters.allCaps;
           $scope.totalnumberofActivePatients = $scope.numberofVisiVestPatients + $scope.numberofMonarchPatients;
          // alert($scope.ClinicDashboardDeviceType);
           
      	}
-     	else if ($scope.Monarch!=true && $scope.VisiVest!=true)
+     	else if ($scope.Monarch!=true && $scope.VisiVest!=true && $scope.both==true  )
+     	{
+          $scope.ClinicDashboardDeviceType = searchFilters.Both;
+          $scope.totalnumberofActivePatients =$scope.numberofbothPatients;
+         // alert($scope.ClinicDashboardDeviceType);
+     	}
+
+
+        else if ($scope.Monarch==true && $scope.VisiVest==true && $scope.both==true  )
      	{
           $scope.ClinicDashboardDeviceType = searchFilters.allCaps;
-          $scope.totalnumberofActivePatients = $scope.numberofVisiVestPatients + $scope.numberofMonarchPatients;
+          $scope.totalnumberofActivePatients = $scope.numberofVisiVestPatients + $scope.numberofMonarchPatients+$scope.numberofbothPatients;
+         // alert($scope.ClinicDashboardDeviceType);
+     	}
+     	else if ($scope.Monarch!=true && $scope.VisiVest!=true && $scope.both!=true  )
+     	{
+          $scope.ClinicDashboardDeviceType = searchFilters.allCaps;
+          $scope.totalnumberofActivePatients = $scope.numberofVisiVestPatients + $scope.numberofMonarchPatients+$scope.numberofbothPatients;
+          
+          
+
          // alert($scope.ClinicDashboardDeviceType);
           
      	}
+
+
+
+
      	var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : $stateParams.clinicId;
      	if(!onlyActivePatients){
      				if($state.current.name === 'clinicadmindashboard'){
