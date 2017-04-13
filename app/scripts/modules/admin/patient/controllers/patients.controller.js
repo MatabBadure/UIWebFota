@@ -23,6 +23,10 @@ angular.module('hillromvestApp')
     $scope.newProtocolPoint = 1;
     $scope.patientActivateModal = false;
     $scope.captchaValid = false;
+    $scope.DisableAddProtocol = false; 
+    $scope.displayFlag = true;
+          $scope.customPointsChecker = 0;
+          $scope.lastdeviceType = "";
        $scope.associatedClinics =[];
     $scope.patientStatus = {
       'role': StorageService.get('logged').role,
@@ -118,16 +122,37 @@ angular.module('hillromvestApp')
 
     $scope.getProtocols = function(patientId){
       patientService.getProtocol(patientId).then(function(response){
+        console.log("protocol response:",response);
         $scope.protocols = response.data.protocol;
         $scope.isAddProtocol = true;
         $scope.isProtocolLoaded = true;
+        $scope.DisableAddProtocol = false;
+        var vestFlag = false;
+        var monarchFlag = false;
+        $scope.lastdeviceType = $scope.protocols[0].deviceType;
         angular.forEach($scope.protocols, function(protocol){
           protocol.createdDate = dateService.getDateByTimestamp(protocol.createdDate);
           protocol.lastModifiedDate = dateService.getDateByTimestamp(protocol.lastModifiedDate);
           if(!protocol.deleted){
             $scope.isAddProtocol = false;
           }
+          if(protocol.deviceType === searchFilters.VisiVest){
+            vestFlag = true;
+           // alert("vestFlag = true");
+          }
+          if(protocol.deviceType === searchFilters.Monarch){
+            monarchFlag = true;
+           // alert("monarchFlag = true");
+          }
         });
+        if(vestFlag && monarchFlag){
+          $scope.DisableAddProtocol = true;
+        //  alert($scope.DisableAddProtocol);
+        }
+        else{
+          $scope.DisableAddProtocol = false;
+          // alert($scope.DisableAddProtocol);
+        }
       }).catch(function(){});
     };
 
@@ -236,7 +261,8 @@ $scope.getdevice = function(){
 
     $scope.init = function() {
       $scope.deviceTypeVest = false;   
-      $scope.deviceTypeMonarch = false;  
+      $scope.deviceTypeMonarch = false; 
+      
        $scope.selectedDevice();
       var currentRoute = $state.current.name;
       //in case the route is changed from other thatn switching tabs
@@ -1429,6 +1455,39 @@ $scope.getdevice = function(){
         }
       }
     };
-
+    $scope.protocolDeviceIconFilter = function(protocol){
+      if(localStorage.getItem('deviceType') === searchFilters.allCaps){
+      console.log("Now the protocol is:",protocol.type);
+      console.log("and device type is:",protocol.deviceType);
+      if(protocol.type === 'Normal'){
+        $scope.customPointsChecker = 0;
+        console.log("protocol is normal, we want device symbol so i am returning true");
+        $scope.lastdeviceType = protocol.deviceType;
+        $scope.displayFlag = true;
+        return true;
+      }
+      else if(protocol.type === 'Custom'){
+      if($scope.lastdeviceType != protocol.deviceType){
+         $scope.customPointsChecker = 0;
+      }
+      $scope.customPointsChecker++;
+      if($scope.customPointsChecker == 1){
+        console.log("protocol is custom, we want device symbol so i am returning true");
+         $scope.lastdeviceType = protocol.deviceType;
+         $scope.displayFlag = true;
+        return true;
+      }
+      else{
+        console.log("protocol is custom,but we dont want device symbol so i am returning false");
+         $scope.lastdeviceType = protocol.deviceType;
+         $scope.displayFlag = false;
+        return false;
+      }
+        }
+      }
+      else{
+        return true;
+      }
+    };
     $scope.init();
   }]);
