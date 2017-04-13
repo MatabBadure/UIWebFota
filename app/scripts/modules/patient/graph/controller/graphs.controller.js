@@ -7,6 +7,10 @@ angular.module('hillromvestApp')
       $scope.loading = false;
     $scope.isGraphLoaded = false;    
     $scope.expandedSign = "+";
+    $scope.DisableAddProtocol = false; 
+    $scope.displayFlag = true;
+          $scope.customPointsChecker = 0;
+          $scope.lastdeviceType = "";   
     $scope.isIE = function(){        
       if(window.navigator.userAgent.indexOf("MSIE") !== -1){
         return true
@@ -96,6 +100,16 @@ angular.module('hillromvestApp')
        $scope.deviceTypeforGraph = localStorage.getItem('deviceType');
        $scope.deviceTypeforGraphProtocol = localStorage.getItem('deviceType');
        $scope.deviceTypeforGraphTrend = localStorage.getItem('deviceType'); 
+       
+        if($scope.deviceTypeforGraph == "ALL")
+       {
+          $scope.deviceTypeforGraph = "VEST";
+       }
+      
+      if($scope.deviceTypeforGraphProtocol == "ALL")
+       {
+          $scope.deviceTypeforGraphProtocol = "VEST";
+       }
 
                   
 
@@ -594,6 +608,11 @@ angular.module('hillromvestApp')
         }else if(response.data.message){
           $scope.protocolsErrMsg = response.data.message;
         }
+         $scope.DisableAddProtocol = false;
+        var vestFlag = false;
+        var monarchFlag = false;
+        $scope.lastdeviceType = $scope.protocols[0].deviceType;
+
         $scope.addProtocol = true;
         angular.forEach($scope.protocols, function(protocol){
           protocol.createdDate = dateService.getDateByTimestamp(protocol.createdDate);
@@ -601,7 +620,23 @@ angular.module('hillromvestApp')
           if(!protocol.deleted){
             $scope.addProtocol = false;
           }
+          if(protocol.deviceType === searchFilters.VisiVest){
+            vestFlag = true;
+           // alert("vestFlag = true");
+          }
+          if(protocol.deviceType === searchFilters.Monarch){
+            monarchFlag = true;
+           // alert("monarchFlag = true");
+          }
         });
+         if(vestFlag && monarchFlag){
+          $scope.DisableAddProtocol = true;
+        //  alert($scope.DisableAddProtocol);
+        }
+        else{
+          $scope.DisableAddProtocol = false;
+          // alert($scope.DisableAddProtocol);
+        }
       });
     };
 
@@ -2692,5 +2727,39 @@ $scope.nextDate = res[1]+"/"+res[2]+"/"+res[0];
     return (new Date(year,month,day));
    };
     /******End of Function to get n days before or after a given date******/
+
+        $scope.protocolDeviceIconFilter = function(protocol){
+      if(localStorage.getItem('deviceType') === searchFilters.allCaps){
+      
+      if(protocol.type === 'Normal'){
+        $scope.customPointsChecker = 0;
+        console.log("protocol is normal, we want device symbol so i am returning true");
+        $scope.lastdeviceType = protocol.deviceType;
+        $scope.displayFlag = true;
+        return true;
+      }
+      else if(protocol.type === 'Custom'){
+      if($scope.lastdeviceType != protocol.deviceType){
+         $scope.customPointsChecker = 0;
+      }
+      $scope.customPointsChecker++;
+      if($scope.customPointsChecker == 1){
+        console.log("protocol is custom, we want device symbol so i am returning true");
+         $scope.lastdeviceType = protocol.deviceType;
+         $scope.displayFlag = true;
+        return true;
+      }
+      else{
+        console.log("protocol is custom,but we dont want device symbol so i am returning false");
+         $scope.lastdeviceType = protocol.deviceType;
+         $scope.displayFlag = false;
+        return false;
+      }
+        }
+      }
+      else{
+        return true;
+      }
+    };
 }]);
 

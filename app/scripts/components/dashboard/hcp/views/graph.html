@@ -22,7 +22,7 @@
 						</div>
 					</div>
 					<div class="stats_header badgefiltercontainer">
-                    <div class="pull-left col-md-6">
+                    <div class="pull-left col-md-9">
 					<div class="col-md-16 col-sm-16 lebel-indent">
 					<label>
 			       <input type="checkbox" ng-model="$parent.VisiVest" ng-change="getclinicDashboardDataBasedonDevice(false)" > 
@@ -34,6 +34,12 @@
 			      <span translate="search-filter.monarch"></span>
 			      <span >Patients ({{ numberofMonarchPatients }})</span>
 		          </label>
+                  <label>
+			      <input type="checkbox" ng-model="$parent.both" ng-change="getclinicDashboardDataBasedonDevice(false)" > 
+			      <span translate="Both"></span>
+			      <span >Patients ({{ numberofbothPatients}})</span>
+		          </label>
+
 						</div>
 						<div class="col-md-16 col-sm-16">
 							<h4 translate="doctor.dashboard.totalPatients"></h4>
@@ -43,8 +49,8 @@
 
 						</div>
 						<!--Commented meanwhile, will be uncommented when date range will be needed in upcoming sprints -->
-						 <div class="pull-right left col-md-9 statdateipad reset-padding" id="statdateipad">
-						<div class="col-md-7 col-sm-7 reset-padding pull-right daterangecolor">
+						 <div class="pull-right left col-md-6 statdateipad reset-padding" id="statdateipad">
+						<div class="col-md-8 col-sm-8 reset-padding pull-right daterangecolor">
 							<h4 translate="doctor.dashboard.todayStatistics" id="filterdatetxt"></h4>
 							<span ng-if="isYesterday"><span class="sub_txt">{{statistics.date}}</span></span>
 							<!-- <span ng-if="!isYesterday">

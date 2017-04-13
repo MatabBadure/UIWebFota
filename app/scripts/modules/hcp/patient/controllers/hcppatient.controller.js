@@ -1,7 +1,11 @@
 angular.module('hillromvestApp')
 .controller('hcpPatientController',['$scope', '$state', '$stateParams', 'hcpPatientService', 'patientService', 'notyService', 'DoctorService', 'clinicadminPatientService', 'dateService', 'clinicService', '$timeout', 'searchFilterService', 'StorageService', 'sortOptionsService','$filter', 'commonsUserService',
   function($scope, $state, $stateParams, hcpPatientService, patientService, notyService, DoctorService, clinicadminPatientService, dateService, clinicService, $timeout, searchFilterService, StorageService, sortOptionsService, $filter,commonsUserService) {   
-  var searchOnLoad = true;    
+  var searchOnLoad = true; 
+   $scope.DisableAddProtocol = false; 
+    $scope.displayFlag = true;
+          $scope.customPointsChecker = 0;
+          $scope.lastdeviceType = "";   
 	$scope.init = function(){     
     if($state.current.name === 'hcppatientDemographic'){
       $scope.getPatientInfo($stateParams.patientId, $scope.setEditMode);
@@ -175,6 +179,29 @@ angular.module('hillromvestApp')
   $scope.getProtocols = function(patientId){
     patientService.getProtocol(patientId).then(function(response){
       $scope.protocols = response.data.protocol;
+       $scope.DisableAddProtocol = false;
+        var vestFlag = false;
+        var monarchFlag = false;
+        $scope.lastdeviceType = $scope.protocols[0].deviceType;
+
+         angular.forEach($scope.protocols, function(protocol){
+          if(protocol.deviceType === searchFilters.VisiVest){
+            vestFlag = true;
+           // alert("vestFlag = true");
+          }
+          if(protocol.deviceType === searchFilters.Monarch){
+            monarchFlag = true;
+           // alert("monarchFlag = true");
+          }
+        });
+        if(vestFlag && monarchFlag){
+          $scope.DisableAddProtocol = true;
+        //  alert($scope.DisableAddProtocol);
+        }
+        else{
+          $scope.DisableAddProtocol = false;
+          // alert($scope.DisableAddProtocol);
+        }
     }).catch(function(response){
       notyService.showError(response);
     });
@@ -368,7 +395,7 @@ angular.module('hillromvestApp')
     if(!protocol){
       return false;
     }
-    $state.go('hcpUpdateProtocol', {'protocolId': protocol.id});
+    $state.go('hcpUpdateProtocol', {'protocolId': protocol.id , 'protocolDevice' : protocol.deviceType});
   };
   $scope.openEditDetail = function(){
         $state.go('hcppatientdemographicEdit', {'patientId': $stateParams.patientId});  
@@ -390,6 +417,40 @@ angular.module('hillromvestApp')
 
      $scope.setModelValue = function(){
           $scope.updateModel = false;
+    };
+    $scope.protocolDeviceIconFilter = function(protocol){
+      if(localStorage.getItem('deviceType') === searchFilters.allCaps){
+      
+      
+      if(protocol.type === 'Normal'){
+        $scope.customPointsChecker = 0;
+        console.log("protocol is normal, we want device symbol so i am returning true");
+        $scope.lastdeviceType = protocol.deviceType;
+        $scope.displayFlag = true;
+        return true;
+      }
+      else if(protocol.type === 'Custom'){
+      if($scope.lastdeviceType != protocol.deviceType){
+         $scope.customPointsChecker = 0;
+      }
+      $scope.customPointsChecker++;
+      if($scope.customPointsChecker == 1){
+        console.log("protocol is custom, we want device symbol so i am returning true");
+         $scope.lastdeviceType = protocol.deviceType;
+         $scope.displayFlag = true;
+        return true;
+      }
+      else{
+        console.log("protocol is custom,but we dont want device symbol so i am returning false");
+         $scope.lastdeviceType = protocol.deviceType;
+         $scope.displayFlag = false;
+        return false;
+      }
+        }
+      }
+      else{
+        return true;
+      }
     };
 
     $scope.editPatientNotes = function(notes){
