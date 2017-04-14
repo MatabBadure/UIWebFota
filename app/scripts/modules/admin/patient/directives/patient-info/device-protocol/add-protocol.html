@@ -46,7 +46,7 @@
             </div>
                 <div class="col-md-10 dashboard__form__input reset-padding"> 
               <div class="custom-dropdown">
-               <select name="type" ng-model="deviceTypeSelectedProtocol" ng-init="deviceTypeSelectedProtocol = (protocol.edit != null ) ? protocol.deviceType : getDeviceType()" ng-dropdown  ng-change="onChangeSelectedDeviceProtocol()" ng-disabled="protocol.edit">
+               <select name="type" ng-model="deviceTypeSelectedProtocol" ng-init="deviceTypeSelectedProtocol = (protocol.edit != null ) ? protocol.deviceType : getDeviceType()" ng-dropdown  ng-change="onChangeSelectedDeviceProtocol()" ng-disabled="(getDeviceTypeforBothIcon() !='ALL'||protocol.edit) ? true  : false">
             <option  value="VEST">VisiVest</option>
             <option  value="MONARCH" >Monarch</option> 
               </select>
