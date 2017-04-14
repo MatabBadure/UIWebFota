@@ -773,6 +773,52 @@ angular.module('hillromvestApp')
     },1000); 
   }
 
+  this.exportHMRCGraphAsPDFForAdherenceTrendForAll = function(divId,divId1,canvasId, fromDate, toDate, patientInfo, clinicDetails,hmrChartData1){
+    var pdf = this.getPdf();
+    var pageHeight = pdf.internal.pageSize.height;
+    var pageWidth = pdf.internal.pageSize.width;
+    if(clinicDetails && clinicDetails !== null){
+      this.setHeaderAsClinic(pdf, fromDate, toDate, clinicDetails);
+    }else{
+      pdf = this.setHeader(pdf, fromDate, toDate, pdfServiceConstants.text.pdfpageHeader);
+    }
+
+    pdf = this.addPatientInfoToHMRCReport(pdf, patientInfo, fromDate, toDate); 
+
+    pdf = this.addAllSvgsToPDF(pdf, canvasId, divId, 30, 350, 540, 200, pdfServiceConstants.text.protocolGraph);
+
+    pdf = this.setFooter(pdf, pdf.internal.pageSize.height-80);
+    pdf = this.setPageNumber(pdf, "1", "3");  
+    pdf.addPage(); 
+    pdf = this.setTopHeader(pdf, fromDate, toDate);
+    pdf = this.addSvgToPDF(pdf, canvasId, "HMRGraph", 30, 150, 540, 200, pdfServiceConstants.text.hmrStatistics); 
+    pdf = this.addSvgToPDF(pdf, canvasId, "AdherenceTrendGraph", 30, 420, 540, 200, pdfServiceConstants.text.adherenceTrend); 
+    pdf = this.setFooter(pdf, pdf.internal.pageSize.height-80);
+    pdf = this.setPageNumber(pdf, "2", "3");
+    pdf.addPage(); 
+    pdf = this.setTextForMonarch(pdf);
+
+
+   if(hmrChartData1==undefined )
+        {
+          pdf = this.setTextForNoGraphForAll(pdf);
+        }else{
+        pdf = this.addAllSvgsToPDF(pdf, canvasId, divId1, 30, 130, 540, 250, pdfServiceConstants.text.protocolGraph);
+        pdf = this.addSvgToPDF(pdf, canvasId, "HMRGraph1", 30, 490, 540, 200, pdfServiceConstants.text.hmrStatistics);
+        }
+    
+
+
+    pdf = this.setFooter(pdf, pdf.internal.pageSize.height-80, true);
+    pdf = this.setPageNumber(pdf, "3", "3");
+    setTimeout(function(){     
+      pdf.save('VisiView™.pdf'); 
+    },1000); 
+  }
+
+
+
+
   /*
   For Adherence Trend when HMR and Adherence Trend graph is not there
   */
@@ -804,6 +850,28 @@ angular.module('hillromvestApp')
     pdf.text((pdf.internal.pageSize.width/2)-((66*3.5)/2), 630, pdfServiceConstants.text.noHMRGraphContentForPDF);
     return pdf;
   }
+  
+   this.setTextForNoGraphForAll = function(pdf)
+  {
+    pdf.setFont(pdfServiceConstants.style.font.helvetica);   
+    pdf.setFontType(pdfServiceConstants.style.font.bold);
+    pdf.setFontSize(8);
+    pdf.setTextColor(0,0,0);
+    pdf.text((pdf.internal.pageSize.width/2)-((66*3.5)/2), 330, pdfServiceConstants.text.noHMRGraphContentForPDF);
+    return pdf;
+  }
+
+  this.setTextForMonarch = function(pdf)
+  {
+    pdf.setFont(pdfServiceConstants.style.font.helvetica);   
+    pdf.setFontType(pdfServiceConstants.style.font.bold);
+    pdf.setFontSize(12);
+    pdf.setTextColor(0,0,0);
+    pdf.text((pdf.internal.pageSize.width/2)-((10*3.5)/2), 80, pdfServiceConstants.text.monarch);
+    return pdf;
+  }
+
+
 
   this.exportHCPCharts = function(cdivId, tdivId, canvasId, fromDate, toDate){
     var pdf = this.getPdf();
