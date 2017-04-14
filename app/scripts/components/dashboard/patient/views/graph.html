@@ -271,24 +271,41 @@
 		<span class="noData_text"> No Therapy Transmission Received for This Day!</span>
 	</div>
 
-	<div class="complianceGraphPrim_wrapper" ng-show="!noDataAvailableForHMR" id="lineGraphWrapper" >
-		<div id="HMRGraph" ng-class="{ 'hide-chart': !isHMR, 'show-chart': isHMR}" >
+     <div class="complianceGraphPrim_wrapper" ng-show="!noDataAvailableForHMR" id="lineGraphWrapper" >
+		<div id="HMRGraph" ng-class="{ 'hide-chart': !isHMR, 'show-chart': isHMR}"  ng-show="forhidingVestHmrGraph">
 		</div>
 	</div><!-- ng-show="!noDataAvailable && !isHMR"-->
 	
+
+	<div class="complianceGraphPrim_wrapper" ng-show="!noDataAvailableForHMR" id="lineGraphWrapper1" >
+		<div id="HMRGraph1" ng-class="{ 'hide-chart': !isHMR, 'show-chart': isHMR}"  ng-show="forhidingMonarchHmrGraph">
+		</div>
+	</div>
+	
+	
+
 	<div class="complianceGraphPrim_wrapper" ng-show="!noDataAvailableForAdherence" id="lineGraphWrapper1" >
 		<div id="AdherenceTrendGraph" ng-class="{ 'hide-chart': !isAdherenceTrend, 'show-chart': isAdherenceTrend}" >
 		</div>
 	
 	</div>
 
-	<div id="complianceGraphWrapper" >
+	
+    <div id="complianceGraphWrapper" >
 		<div id="complianceGraphPrim" ng-show="!noDataAvailable" class="complianceGraphPrim_wrapper" >
-			<div id="synchronizedChart" class="col-md-16" ng-class="{ 'hide-chart': !isCompliance, 'show-chart': isCompliance}">
+			<div id="synchronizedChart" class="col-md-16" ng-class="{ 'hide-chart': !isCompliance, 'show-chart': isCompliance}" ng-show="forhidingVestProtocolGraph">
 			</div>
 		</div>
 	</div>
+   
+	<div id="complianceGraphPrim" ng-show="!noDataAvailable" class="complianceGraphPrim_wrapper" >
+		<div id="synchronizedChart1" class="col-md-16" ng-class="{ 'hide-chart': !isCompliance, 'show-chart': isCompliance}" ng-show="forhidingMonarchProtocolGraph">
+		</div>
 	</div>
+	
+	</div>
+
+	
 
 	<!-- ending new section of graphs -->
 
