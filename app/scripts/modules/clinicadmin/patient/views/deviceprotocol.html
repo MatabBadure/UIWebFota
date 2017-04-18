@@ -148,7 +148,7 @@
   <!-- Both protocol ends here  -->
 
 
-<div class="col-md-16 col-sm-16 empty-list-message" ng-if="!protocols"><span translate="patient.empty-protocol-list-message"></span></div>
+<div class="col-md-16 col-sm-16 empty-list-message" ng-if="!protocols" ng-class="{'border-top': (getDeviceTypeforBothIcon() =='ALL')}"><span translate="patient.empty-protocol-list-message"></span></div>
 
   <div class="col-md-16 col-sm-16 patient-device margin-top-xl">
     <span class="patient-device--title" translate="patient.device-title"></span>

@@ -45,7 +45,7 @@
   <div ng-if="getDeviceTypeforBothIcon() !='ALL'">
 <div class="col-md-16 col-sm-16 border-top protocol_list_container" ng-class="{'no_border' : !protocols}">
 
-  <div class="col-md-1 col-sm-1 treatments_per_day_count" ng-if="protocolDeviceIconFilter(protocol)">
+  <div class="col-md-1 col-sm-1 treatments_per_day_count" ng-if="(protocols)">
     <div id="deviceicon" class="col-md-16 col-sm-16 protocol-list__treatment-day  no_border text-align-left">
 
      <span class="icon_height_width" ng-class="{'monarchIcon': (getDeviceType() =='MONARCH'), 'visivestIcon': (getDeviceType() =='VEST')}">
@@ -145,7 +145,7 @@
 </div>
 
   <!-- Both protocol ends here  -->
-  <div class="col-md-16 empty-list-message" ng-if="isProtocolLoaded && !protocols"><span translate="patient.empty-protocol-list-message"></span></div>
+  <div class="col-md-16 empty-list-message" ng-if="isProtocolLoaded && !protocols" ng-class="{'border-top': (getDeviceTypeforBothIcon() =='ALL')}"><span translate="patient.empty-protocol-list-message"></span></div>
 
  <!--  <div class="col-md-16 reset-padding">
     <div class="col-md-8 clinic-link">

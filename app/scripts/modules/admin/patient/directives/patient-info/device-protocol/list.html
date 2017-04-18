@@ -157,7 +157,7 @@
 </div>
 
   <!-- Both protocol ends here  -->
-  <div class="col-md-16 col-sm-16 empty-list-message border-top" ng-if="isProtocolLoaded && !protocols"><span translate="patient.empty-protocol-list-message"></span></div>
+  <div class="col-md-16 col-sm-16 empty-list-message " ng-if="isProtocolLoaded && !protocols" ng-class="{'border-top': (getDeviceTypeforBothIcon() =='ALL')}"><span translate="patient.empty-protocol-list-message"></span></div>
 
   <div class="col-md-16 col-sm-16 reset-padding" ng-if="isProtocolLoaded && !slectedPatient.isDeleted">
     <div class="col-md-8 col-sm-8 clinic-link">
