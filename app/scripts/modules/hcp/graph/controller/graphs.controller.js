@@ -23,6 +23,7 @@ angular.module('hillromvestApp')
 	$scope.init = function() {
 		$scope.VisiVest = true;
 	    $scope.Monarch = true;
+	    $scope.both = true;
 	    $scope.totalnumberofActivePatients = 0;
 	    $scope.numberofVisiVestPatients = 0;
         $scope.numberofbothPatients = 0;
