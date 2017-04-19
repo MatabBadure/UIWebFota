@@ -34,7 +34,8 @@
             <div class="col-md-10 dashboard__form__input reset-padding">
             <div class="custom-dropdown">
                <!-- <select name="type" ng-model="deviceTypeSelected" ng-dropdown required ng-change="onChangeSelectedDevice()"  ng-init="deviceTypeSelected = (getDeviceTypeforBothIcon() == 'ALL' ) ? device.deviceType : getDeviceType() " ng-disabled="device.edit" > -->
-               <select name="type" ng-model="deviceTypeSelected" ng-dropdown required ng-change="onChangeSelectedDevice()"  ng-init="deviceTypeSelected = (device.edit != null ) ? device.deviceType : getDeviceType() == 'ALL' ? 'VEST':getDeviceType() " ng-disabled="device.edit" >
+               <select name="type" ng-model="deviceTypeSelected" ng-dropdown required ng-change="onChangeSelectedDevice()"  ng-init="deviceTypeSelected = (device.edit != null ) ? device.deviceType : getDeviceType() == 'ALL' ? 'Select':getDeviceType() " ng-disabled="device.edit" >
+               <option  value="Select" ng-if="(getDeviceType() == 'ALL') && (device.edit == null)">Select device</option>
             <option  value="VEST" >VisiVest</option>
             <option  value="MONARCH" >Monarch</option> 
          </select>
