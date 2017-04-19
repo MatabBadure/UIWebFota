@@ -249,8 +249,8 @@ $scope.getdevice = function(){
          $scope.deviceTypeMonarch = true;  
         }
         else{
-          $scope.deviceTypeVest = true;   
-         $scope.deviceTypeMonarch = false;
+         /* $scope.deviceTypeVest = true;   
+         $scope.deviceTypeMonarch = false;*/
         }
       if($stateParams.device){
       $scope.device = $stateParams.device; //  for passing to edit mode
