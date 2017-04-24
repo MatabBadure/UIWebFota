@@ -46,7 +46,8 @@ var searchFilters = {
     VisiVest: "VEST",
     Monarch: "MONARCH",
     devicetype : "deviceType=",
-    allCaps : "ALL"
+    allCaps : "ALL",
+    Both:"BOTH"
 }
 
 var sortConstant = {
@@ -195,7 +196,8 @@ angular.module('hillromvestApp').constant('pdfServiceConstants', {
         patientBMPageHeader : "Visi-View Respiratory Care",
         pdfpageHeader: "Hill-Rom Respiratory Care",
         noHMRGraphContentForPDF : "Protocol and Total Therapy Hours Graph is Not Available because of No Data",
-        signatureContent : "Electronically signed by "
+        signatureContent : "Electronically signed by ",
+        monarch:"Monarch"
     },
     style:{
         font:{
