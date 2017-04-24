@@ -2979,7 +2979,9 @@ $scope.getComplianceGraph = function(){
               chart: {
                 marginLeft: 40, 
                 //spacingTop: 30,
-                spacingBottom: 30,                
+                spacingBottom: 30,  
+                 width:1080,
+                height:250,               
                 backgroundColor:  "#e6f1f4"
               },
               title: {
@@ -3917,7 +3919,9 @@ $scope.synchronizedChart1 = function(divId){
               chart: {
                 marginLeft: 40, 
                 //spacingTop: 30,
-                spacingBottom: 30,                
+                spacingBottom: 30,   
+                 width:1080,
+                height:250,              
                 backgroundColor:  "#e6f1f4"
               },
               title: {
@@ -4176,8 +4180,8 @@ $scope.getComplianceGraph1 = function(){
               if($scope.hmrChartData1.series[key1].data[key2].toolText.missedTherapy){
                 $scope.hmrChartData1.series[key1].data[key2].color = "red";
               }
-              if(!$scope.hmrChartData1.series[key1].data[key2].toolText.missedTherapy && localStorage.getItem('deviceType') == 'MONARCH'){
-                $scope.hmrChartData1.series[key1].data[key2].color = "#7cb5ee";
+              if(!$scope.hmrChartData1.series[key1].data[key2].toolText.missedTherapy && $scope.deviceTypeforGraph=="MONARCH" ){
+                $scope.hmrChartData1.series[key1].data[key2].color = "#d95900";
               }
 
             });            
@@ -4290,7 +4294,7 @@ $scope.getComplianceGraph1 = function(){
                       dateTextLabel += ' ( ' + Highcharts.dateFormat("%I:%M %p",this.x) + ' )';
                     }
                   }
-                  if($scope.deviceTypeforGraph  == 'MONARCH'){
+                  if($scope.deviceTypeforGraph=="MONARCH"){
                   var pointDetails = '<div style="color:'+ this.point.color +';padding:5px 0;width:70%;float:left"> Session No </div> ' 
                     + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.sessionNo  + '</b></div>';                 
                     pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:70%;float:left"> ' + this.point.series.name + '</div> ' 
@@ -4447,7 +4451,7 @@ $scope.getComplianceGraph1 = function(){
                       dateTextLabel += ' ( ' + Highcharts.dateFormat("%I:%M %p",dateX) + ' )';                      
                     }
                   }
-                  if(localStorage.getItem('deviceType') == 'MONARCH'){                 
+                  if($scope.deviceTypeforGraph=="MONARCH"){                 
                   var s = '<div style="font-size:12x;font-weight: bold; padding-bottom: 3px;">'+  dateTextLabel +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div>';
                   s += '<div style="font-size:10px; font-weight: bold; width:100%"><div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left"> Session No </div> ' 
                   + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.sessionNo  + '</b></div></div>';                 
