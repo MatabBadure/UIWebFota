@@ -719,7 +719,7 @@ angular.module('hillromvestApp')
     $state.go('clinicAdminUpdateProtocol', {'protocolId': protocol.id , 'protocolDevice' : protocol.deviceType});
   };
      $scope.protocolDeviceIconFilter = function(protocol){
-      if(localStorage.getItem('deviceType') === searchFilters.allCaps){
+      if(localStorage.getItem('deviceTypeforBothIcon') === searchFilters.allCaps){
       
       
       if(protocol.type === 'Normal'){

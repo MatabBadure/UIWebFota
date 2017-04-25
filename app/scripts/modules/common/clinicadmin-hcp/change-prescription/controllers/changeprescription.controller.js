@@ -2,15 +2,18 @@ angular.module('hillromvestApp')
 .controller('changePrescriptionController',['$scope', '$state', 'clinicadminPatientService', 'notyService', '$stateParams', 'commonsUserService', 'patientService', '$rootScope', 'UserService', 'StorageService', 'exportutilService',
 function($scope, $state, clinicadminPatientService, notyService, $stateParams, commonsUserService, patientService, $rootScope, UserService, StorageService, exportutilService) {
 
-	$scope.init = function(){
-		if($state.current.name === 'clinicAdminUpdateProtocol'|| $state.current.name === 'hcpUpdateProtocol'){
+  $scope.init = function(){
+   // $scope.lastdeviceType = "";
+ $scope.displayFlag = true;
+ $scope.customPointsChecker = 0;
+    if($state.current.name === 'clinicAdminUpdateProtocol'|| $state.current.name === 'hcpUpdateProtocol'){
       $scope.initUpdateProtocol();
     }else if($state.current.name === 'clinicadminGenerateProtocol' || $state.current.name === 'hcpGenerateProtocol'){
       $scope.initGenerateProtocol();
     }
-	};
+  };
 
-	$scope.initUpdateProtocol = function(){
+  $scope.initUpdateProtocol = function(){
     $scope.getPatientInfo($stateParams.patientId);
     
     $scope.getProtocolById($stateParams.patientId, $stateParams.protocolId, $stateParams.protocolDevice);
@@ -18,11 +21,11 @@ function($scope, $state, clinicadminPatientService, notyService, $stateParams, c
 
   $scope.initGenerateProtocol = function(){
     if(!$rootScope.protocols){
-    	if(StorageService.get('logged').role === 'HCP'){
-    		$state.go('hcppatientProtocol', {'patientId': $stateParams.patientId});
-    	}else if(StorageService.get('logged').role  === 'CLINIC_ADMIN'){
-    		$state.go('clinicadminpatientProtocol', {'patientId': $stateParams.patientId});
-    	}
+      if(StorageService.get('logged').role === 'HCP'){
+        $state.go('hcppatientProtocol', {'patientId': $stateParams.patientId});
+      }else if(StorageService.get('logged').role  === 'CLINIC_ADMIN'){
+        $state.go('clinicadminpatientProtocol', {'patientId': $stateParams.patientId});
+      }
     }else{
       var date = new Date();
       var dd = date.getDate();
@@ -50,9 +53,9 @@ function($scope, $state, clinicadminPatientService, notyService, $stateParams, c
     }).catch(function(response){
       notyService.showError(response);
       if(StorageService.get('logged').role === 'HCP'){
-      	$state.go('hcppatientdashboard',{'clinicId':$stateParams.clinicId});
+        $state.go('hcppatientdashboard',{'clinicId':$stateParams.clinicId});
       }else if(StorageService.get('logged').role  === 'CLINIC_ADMIN'){
-      	$state.go('clinicadminpatientdashboard',{'clinicId':$stateParams.clinicId});
+        $state.go('clinicadminpatientdashboard',{'clinicId':$stateParams.clinicId});
       }
     });
   };
@@ -60,16 +63,31 @@ function($scope, $state, clinicadminPatientService, notyService, $stateParams, c
   $scope.getProtocolById = function(patientId, protocolId, devicetype){
     patientService.getProtocolById(patientId, protocolId, devicetype).then(function(response){
       $scope.protocol = response.data;
+      
+       $scope.lastdeviceType = $scope.protocol.protocol[0].deviceType;
+       
+       if($stateParams.protocolDevice === searchFilters.VisiVest){
+          
+           $scope.deviceTypeVest = true;   
+         $scope.deviceTypeMonarch = false;  
+        }
+        else if($stateParams.protocolDevice === searchFilters.Monarch){
+        
+           $scope.deviceTypeVest = false;   
+         $scope.deviceTypeMonarch = true;  
+        }
       $scope.protocol.edit = true;
       $scope.newProtocolPoint = ($scope.protocol.protocol) ? $scope.protocol.protocol.length : 1;
       if(!$scope.protocol){
         $scope.protocol = {};
         $scope.protocol.type = 'Normal';
         $scope.protocol.protocolEntries = [{}];
+        $scope.deviceTypeSelectedProtocol = $stateParams.protocolDevice;
       } else {
         $scope.protocol.type = $scope.protocol.protocol[0].type;
         $scope.protocol.treatmentsPerDay = $scope.protocol.protocol[0].treatmentsPerDay;
         $scope.protocol.protocolEntries = $scope.protocol.protocol;
+        $scope.deviceTypeSelectedProtocol = $stateParams.protocolDevice;
       }
       $scope.tempProtocol = {};
       angular.copy($scope.protocol, $scope.tempProtocol);
@@ -137,16 +155,27 @@ function($scope, $state, clinicadminPatientService, notyService, $stateParams, c
   };
 
   $scope.closeAlert = function(){
-  	$scope.isNoChange = false;
-  	$scope.isAuthorizeProtocolModal = false;
+    $scope.isNoChange = false;
+    $scope.isAuthorizeProtocolModal = false;
   };
 
   $scope.openProtocolDetailPage = function(){
-  	if(StorageService.get('logged').role === 'HCP'){
-    	$state.go('hcpGenerateProtocol', {'protocolId': $stateParams.protocolId});
-  	}else if(StorageService.get('logged').role  === 'CLINIC_ADMIN'){
-  		$state.go('clinicadminGenerateProtocol', {'protocolId': $stateParams.protocolId});
-  	}
+    $rootScope.selectedProtocol = [];
+    if($rootScope.protocols && $stateParams.protocolId){
+      console.log("$rootScope.protocols",$rootScope.protocols);
+        for(var i=0;i<$rootScope.protocols.length;i++){
+          if($stateParams.protocolId === $rootScope.protocols[i].protocolKey){
+            $rootScope.selectedProtocol.push($rootScope.protocols[i]);
+          }
+        }
+    }
+    console.log("$rootScope.selectedProtocol",$rootScope.selectedProtocol);
+  
+    if(StorageService.get('logged').role === 'HCP'){
+      $state.go('hcpGenerateProtocol', {'protocolId': $stateParams.protocolId});
+    }else if(StorageService.get('logged').role  === 'CLINIC_ADMIN'){
+      $state.go('clinicadminGenerateProtocol', {'protocolId': $stateParams.protocolId});
+    }
   };
 
   $scope.openVerificationModal = function(){
@@ -180,6 +209,7 @@ function($scope, $state, clinicadminPatientService, notyService, $stateParams, c
             protocol.type = $rootScope.protocols[0].type;
           }
         });
+if(localStorage.getItem('deviceTypeforBothIcon') != searchFilters.allCaps){
         patientService.editProtocol($stateParams.patientId, $rootScope.protocols, localStorage.getItem('deviceType')).then(function(response){
           $scope.isVerificationModal = false;
           var userFullName = $rootScope.username + ' ' + $rootScope.userLastName;
@@ -193,6 +223,22 @@ function($scope, $state, clinicadminPatientService, notyService, $stateParams, c
         }).catch(function(response){
           notyService.showError(response);
         });
+}
+else{
+     patientService.editProtocol($stateParams.patientId, $rootScope.selectedProtocol, $rootScope.selectedProtocol[0].deviceType).then(function(response){
+          $scope.isVerificationModal = false;
+          var userFullName = $rootScope.username + ' ' + $rootScope.userLastName;
+          exportutilService.exportChangePrescPDF($scope.patient, userFullName, $scope.currentDate, $rootScope.selectedProtocol, $rootScope.selectedProtocol[0].deviceType);
+          notyService.showMessage(response.data.message, 'success');
+          if(StorageService.get('logged').role === 'HCP'){
+           $state.go('hcppatientProtocol', {'patientId': $stateParams.patientId});
+          }else if(StorageService.get('logged').role  === 'CLINIC_ADMIN'){
+           $state.go('clinicadminpatientProtocol', {'patientId': $stateParams.patientId});
+          }
+        }).catch(function(response){
+          notyService.showError(response);
+        }); 
+}
       }).catch(function(response){
         notyService.showError(response);
         $scope.password = '';
@@ -208,12 +254,56 @@ function($scope, $state, clinicadminPatientService, notyService, $stateParams, c
   };
 
   $scope.cancelProtocolUpdate = function() {
-  	if(StorageService.get('logged').role === 'HCP'){
-  		$state.go('hcppatientProtocol', {'patientId': $stateParams.patientId});	
-  	}else if(StorageService.get('logged').role  === 'CLINIC_ADMIN'){
-  		$state.go('clinicadminpatientProtocol', {'patientId': $stateParams.patientId});	
-  	}
+    if(StorageService.get('logged').role === 'HCP'){
+      $state.go('hcppatientProtocol', {'patientId': $stateParams.patientId}); 
+    }else if(StorageService.get('logged').role  === 'CLINIC_ADMIN'){
+      $state.go('clinicadminpatientProtocol', {'patientId': $stateParams.patientId}); 
+    }
   };
+
+    $scope.protocolDeviceIconFilter = function(protocol){
+      
+      if(localStorage.getItem('deviceTypeforBothIcon') === searchFilters.allCaps){
+      
+      
+      if(protocol.type === 'Normal'){
+        $scope.customPointsChecker = 0;
+        
+         $scope.lastdeviceType = protocol.deviceType;
+        $scope.displayFlag = true;
+        return true;
+      }
+
+
+
+
+      else if(protocol.type === 'Custom'){
+        
+      if( $scope.lastdeviceType != protocol.deviceType){
+         $scope.customPointsChecker = 0;
+      }
+
+
+      $scope.customPointsChecker++;
+      if($scope.customPointsChecker == 1){
+       
+         $scope.lastdeviceType = protocol.deviceType;
+         $scope.displayFlag = true;
+         
+        return true;
+      }
+      else{
+       
+          $scope.lastdeviceType = protocol.deviceType;
+         $scope.displayFlag = false;
+        return false;
+      }
+      }
+    }
+      else{
+        return true;
+      }
+    };
 
   $scope.switchProtocolType = function(){
     $scope.submitted = false;
@@ -232,5 +322,5 @@ function($scope, $state, clinicadminPatientService, notyService, $stateParams, c
     }
   };
 
-	$scope.init();
+  $scope.init();
 }]);
