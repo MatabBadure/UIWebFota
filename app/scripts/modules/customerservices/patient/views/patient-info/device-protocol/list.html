@@ -3,8 +3,9 @@
 <div class="container admin-user">
   <div class="col-md-16 margin-top">
    <div class="user-gen-details">
+   <span ng-class="{'monarchIcon': (getDeviceTypeforBothIcon() =='MONARCH'), 'visivestIcon': (getDeviceTypeforBothIcon() =='VEST'), 'bothdeviceIcon': (getDeviceTypeforBothIcon() =='ALL')}">
      <span class="user-gen-details--name">{{::slectedPatient.firstName}} {{::slectedPatient.lastName}}</span>
-     <span class="user-gen-details--hr-id">{{::slectedPatient.hillromId}}</span>
+     <span class="user-gen-details--hr-id">{{::slectedPatient.hillromId}}</span></span>
    </div>
   </div>
 
@@ -12,49 +13,70 @@
     <span class="patient-protocol--title" translate="patient.protocol-title"></span>
   </div>
 
-  <div class="dashboard dashboard--content col-md-16">
+   <div class="dashboard dashboard--content col-md-14 col-sm-14">
     <div class="dashboard__manage-view margin-top">
-      <div class="dashboard__manage-view--header no_border">
-          <div class="col-md-3 header--type text-align-left">
+      <div class="dashboard__manage-view--header no_border care_plan_and_device">
+        <div class="col-md-1 col-sm-1 header--type text-align-left">
+            <span translate="patient.protocol-caption.device-type"></span>
+          </div>
+          <div class="col-md-2 col-sm-2 header--type text-align-left">
             <span translate="patient.protocol-caption.type"></span>
           </div>
-          <div class="col-md-3 header--type text-align-left">
+          <div class="col-md-3 col-sm-3 header--type text-align-center">
             <span translate="patient.protocol-caption.treatments-per-day"></span>
           </div>
-          <div class="col-md-3 header--type text-align-left">
+          <div class="col-md-3 col-sm-3 header--type text-align-center">
             <span translate="patient.protocol-caption.minutes-per-treatment"></span>
           </div>
-          <div class="col-md-3 header--type text-align-left">
+          <div class="col-md-3 col-sm-3 header--type text-align-center">
             <span translate="patient.protocol-caption.frequency-per-treatment"></span>
           </div>
-          <div class="col-md-3 header--type text-align-center">
+          <div class="col-md-3 col-sm-3 header--type text-align-center" ng-if="getDeviceType() =='VEST'">
             <span translate="patient.protocol-caption.pressure-per-treatment"></span>
+          </div>
+           <div class="col-md-3 col-sm-3 header--type text-align-center" ng-if="getDeviceType() =='MONARCH'">
+            <span translate="patient.protocol-caption.intensity-per-treatment"></span>
           </div>
           <div class="clr"></div>
         </div>
     </div>
   </div>
-<div class="col-md-16 border-top protocol_list_container" ng-class="{'no_border' : !protocols}">
-  <div class="col-md-3 ">
-    <div class="col-md-16 protocol-list__treatment-day protocol-list no_border text-align-left" ng-repeat="protocol in protocols" ng-class="{'list-inactive':protocol.deleted, 'last' : $last}">
+<div class="col-md-16 col-sm-16 border-top protocol_list_container" ng-class="{'no_border' : !protocols}">
+
+
+  <div class="col-md-1 col-sm-1 treatments_per_day_count" ng-if="(protocols)">
+    <div id="deviceicon" class="col-md-16 col-sm-16 protocol-list__treatment-day  no_border text-align-left">
+
+     <span class="icon_height_width" ng-class="{'monarchIcon': (getDeviceType() =='MONARCH'), 'visivestIcon': (getDeviceType() =='VEST')}"></span>
+    </div>
+  </div>
+  <div class="col-md-2 col-sm-2 col-lg-offset-1 col-md-offset-1 col-sm-offset-1 col-xs-offset-1">
+    <div class="col-md-16 col-sm-16 protocol-list__treatment-day protocol-list no_border text-align-left" ng-repeat="protocol in protocols" ng-class="{'list-inactive':protocol.deleted, 'last' : $last}">
       <span class="protocol-list--value"> {{protocol.type}} {{protocol.treatmentLabel}}</span>
     </div>
   </div>
-  <div class="col-md-2 treatments_per_day_count col-md-offset-3">
+  <div class="col-md-2 col-sm-2 treatments_per_day_count col-sm-offset-3 col-md-offset-3">
       <span class="v_middle">{{protocols[0].treatmentsPerDay}}</span>
   </div>
-  <div class="col-md-11 col-md-offset-2">
-    <div class="col-md-16 protocol-list no_border" ng-repeat="protocol in protocols" ng-class="{'list-inactive':protocol.deleted, 'last' : $last}">
-      <div class="col-md-5 protocol-list__strt-date">
+  <div class="col-md-9 col-sm-9 col-sm-offset-2 col-md-offset-2">
+    <div class="col-md-16 col-sm-16 protocol-list no_border" ng-repeat="protocol in protocols" ng-class="{'list-inactive':protocol.deleted, 'last' : $last}">
+      <!-- <div class="col-md-3 protocol-list__treatment-day">
+        <span class="protocol-list--value"> {{protocol.treatmentsPerDay}}</span>
+      </div> -->
+      <div class="col-md-5 col-sm-5 protocol-list__strt-date">
         <span class="protocol-list--value"> {{protocol.minMinutesPerTreatment}}</span>      
       </div>
-      <div class="col-md-5 protocol-list__end-date">
+      <div class="col-md-5 col-sm-5 protocol-list__end-date">
         <span ng-if="protocol.type === 'Custom'" class="protocol-list--value"> {{protocol.minFrequency}}</span>
         <span ng-if="protocol.type === 'Normal'" class="protocol-list--value"> {{protocol.minFrequency}}-{{protocol.maxFrequency}}</span>
       </div>
-      <div class="col-md-5 protocol-list__end-date">
+      <div class="col-md-4 col-sm-4 protocol-list__end-date" ng-if="getDeviceType() =='VEST'">
         <span ng-if="protocol.type === 'Custom'" class="protocol-list--value"> {{protocol.minPressure}}</span>
         <span ng-if="protocol.type === 'Normal'" class="protocol-list--value"> {{protocol.minPressure}}-{{protocol.maxPressure}}</span>
+      </div>
+      <div class="col-md-4 col-sm-4 protocol-list__end-date" ng-if="getDeviceType() =='MONARCH'">
+        <span ng-if="protocol.type === 'Custom'" class="protocol-list--value"> {{protocol.minIntensity}}</span>
+        <span ng-if="protocol.type === 'Normal'" class="protocol-list--value"> {{protocol.minIntensity}}-{{protocol.maxIntensity}}</span>
       </div>
     </div>
   </div>
@@ -78,7 +100,11 @@
 <div class="dashboard dashboard--content">
   <div class="dashboard__manage-view margin-top">
     <div class="dashboard__manage-view--header">
-        <div class="col-md-4 header--type">
+      <div class="col-md-2 col-sm-2 header--type text-align-left">
+            <span translate="patient.device-caption.device-type"></span>
+          </div>
+
+        <div class="col-md-3 header--type">
           <span translate="patient.device-caption.serial-no"></span>
         </div>
         <div class="col-md-3 header--type">
@@ -96,11 +122,27 @@
 </div>
 
   <div class="col-md-16 device-list" ng-repeat="device in devices  | orderBy:'active':true" ng-class="{'list-inactive': !device.active}">
-    <div class="col-md-4 device-list__serial">
+
+    <div id="deviceInfoicon" class="col-md-2 col-sm-2 device-list__serial">
+         <span ng-if ="getDeviceTypeforBothIcon() !='ALL'">
+      <span class="icon_height_width" ng-class="{'monarchIcon': (getDeviceType() =='MONARCH'), 'visivestIcon': (getDeviceType() =='VEST')}"></span>
+      </span>
+
+      <span ng-if ="getDeviceTypeforBothIcon() =='ALL'">    
+  <span ng-if="device.deviceType == 'MONARCH'">
+      <span class="icon_height_width monarchIcon"></span>
+      </span>
+      <span ng-if="device.deviceType == 'VEST'">
+      <span class="icon_height_width visivestIcon"></span>
+      </span>
+    </span>
+    </div>
+    <div class="col-md-3 device-list__serial">
+
       <span>{{device.serialNumber}}</span>
     </div>
     <div class="col-md-3 device-list__bt-id">
-      <span>{{device.bluetoothId}}</span>
+  <span >{{device.bluetoothId}}{{device.wifiId}}</span>
     </div>
     <div class="col-md-4 device-list__status">
       <span ng-if="device.active" class="device--list__status--text" translate="patient.device.active-status">Active</span>
@@ -124,3 +166,5 @@
     </div>
   </div> -->
 </div>
+
+</br></br>

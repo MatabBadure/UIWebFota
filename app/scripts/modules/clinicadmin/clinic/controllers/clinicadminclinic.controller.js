@@ -1,9 +1,12 @@
 angular.module('hillromvestApp')
-.controller('clinicadminclinicController',['$scope', '$location','$state', 'clinicadminService', 'notyService', '$stateParams', 'clinicService', 'UserService', 'StorageService', 'commonsUserService',
-  function($scope, $location,$state, clinicadminService, notyService, $stateParams, clinicService, UserService, StorageService, commonsUserService) {
+.controller('clinicadminclinicController',['$scope', '$location','$state', 'clinicadminService', 'notyService', '$stateParams', 'clinicService', 'UserService', 'StorageService', '$timeout' ,'commonsUserService',
+  function($scope, $location,$state, clinicadminService, notyService, $stateParams, clinicService, UserService, StorageService, $timeout , commonsUserService) {
 
     $scope.init = function(){
+      $scope.totalPatientsforAdherenceCal = 0;
+      $scope.processedPatientsforAdherenceCal = 0;
       $scope.statusForColor = false;
+      $scope.waitforcalculation = false;
       clinicService.getClinicSpeciality().then(function(response){
          $scope.specialities =  response.data.typeCode;
       }).catch(function(response){
@@ -136,12 +139,52 @@ $scope.getAdherenceScoreSettingDays = function(){
         'adherenceSetting':dayValue,
         'adherenceSettingFlag':'true'
       };
+      $scope.showSetDayModal = false;
+      $scope.waitforcalculation = true;
       clinicService.updateDaysForCalculation(data,$stateParams.clinicId).then(function(response){
-        notyService.showMessage(response.data.message, 'success');
+       
+
+        $scope.showProgressBar = function(){
+        
+        var myEl = angular.element( document.querySelector( '.spinner' ) );
+       myEl.css('display','none');
+
+       clinicService.adherenceResetProgress($stateParams.clinicId).then(function(response){ 
+         
+         $scope.adherenceResetProgressData = response.data;
+         $scope.adherenceResetProgressStatus = response.data.sta;
+         $scope.processedPatientsforAdherenceCal = response.data.cur;
+         $scope.totalPatientsforAdherenceCal = response.data.tot;
+       
+        if($scope.adherenceResetProgressStatus == "inprogress"){
+          
+        $timeout($scope.showProgressBar, 1000);
+        }
+        else
+        {
+          if($scope.adherenceResetProgressStatus == "completed")
+          {
+            $scope.waitforcalculation = false;
+
+        notyService.showMessage("Adherence re-calculation sucessfully completed.", 'success');
         $state.go('adherenceSettingPage',{"clinicId": $stateParams.clinicId});
         $scope.showSetDayModal = false;
+          }
+        }
+     }).catch(function(response){
+        /*$scope.showSetDayModal = false;
+        $scope.waitforcalculation = false;
+        notyService.showError(response);*/
+      });
+    };
+     $scope.showProgressBar();
+
+
+     ///////////////   
+        
       }).catch(function(response){
         $scope.showSetDayModal = false;
+        $scope.waitforcalculation = false;
         notyService.showError(response);
       });
     };
@@ -169,7 +212,7 @@ $state.go('adherenceSettingPage',{"clinicId": clinic.id});
         $scope.showSetDayModal= true;
       }
     };
-
+    
     $scope.showUpdateClinicModal = function(){
       if($scope.form.$invalid){
         return false;

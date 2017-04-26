@@ -313,6 +313,9 @@
         "deviceBluetoothId":{
             "required": "Device Bluetooth ID Required"
         },
+        "wifiId":{      
+            "required": "Device WiFi/LTE ID Required"       
+        },
         "protocol":{
             "treatmentPerDay": {
                 "required": "Protocol Treatment per Day Required",
@@ -359,11 +362,26 @@
                 "custom-required": "Pressure is Required",
                 "custom-max-min": "Pressure should be between 1 to 10"
             },
+            "minIntensity": {
+                "required": "Minimum Intensity Required",
+                "min": "Minimum Intensity should be between 1 to 9",
+                "max": "Minimum Intensity should be between 1 to 9",
+                "invalid": "Minimum Intensity is invalid",
+                "custom-invalid": "Intensity is invalid",
+                "custom-required": "Intensity is Required",
+                "custom-max-min": "Intensity should be between 1 to 10"
+            },
             "maxPressure": {
                 "required": "Maximum Pressure Required",
                 "min": "Maximum Pressure should be between 2 to 10",
                 "max": "Maximum Pressure should be between 2 to 10",
                 "invalid": "Maximum Pressure is invalid"
+            },
+            "maxIntensity": {
+                "required": "Maximum Intensity Required",
+                "min": "Maximum Intensity should be between 2 to 10",
+                "max": "Maximum Intensity should be between 2 to 10",
+                "invalid": "Maximum Intensity is invalid"
             }
         },
         "diagnostics":{
@@ -469,7 +487,9 @@
         "setting-deviation" : "Below Frequency Setting",
         "hmr-non-compliant" : "Below Therapy Minutes",
          "missed-therapy" :"Missed Therapy Days",
-        "pending": "Pending"
+        "pending": "Pending",
+        "visivest":"VisiVest",
+        "monarch":"Monarch"
     },
 
     "user-not-found" : "No user associated.",
@@ -511,5 +531,7 @@
       "messages":"Messages",
       "message-new":"You will receive a notification if you have one or more messages in your inbox."
     },
-        "noti-verbiage":"Turn On or Off the notification by clicking the toggle switch."
+        "noti-verbiage":"Turn On or Off the notification by clicking the toggle switch.",
+        "wait-for-calculation-header":"Adherence re-calculation may take upto few minutes...",
+        "wait-for-calculation-text":"Please wait while the system is re-calculating..."
 }

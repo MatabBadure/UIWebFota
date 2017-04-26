@@ -15,10 +15,11 @@ angular.module('hillromvestApp')
       * @description To get array of data points for cumulative statistics graph.
       *
       */
-      getCumulativeGraphPoints: function(hcpID, clinicID, fromTimeStamp, toTimeStamp, groupBy) {
+      getCumulativeGraphPoints: function(hcpID, clinicID, fromTimeStamp, toTimeStamp, groupBy, deviceType) {
         var url = hcpServiceConstants.graph.baseURL;
         url  = url + '/' + hcpID + '/clinics/' + clinicID + '/cumulativeStatistics';
         url = url + '?from=' + fromTimeStamp + '&to=' + toTimeStamp + '&groupBy=' + groupBy;
+        url = url + '&deviceType=' + deviceType;
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -33,8 +34,8 @@ angular.module('hillromvestApp')
       * @description To get statistics for a hcp based on ID.
       *
       */
-      getStatistics: function(clinicId, userId){
-        var url = URL.getStatistics.replace('USERID', userId).replace('CLINICID', clinicId);
+      getStatistics: function(clinicId, userId, deviceType){
+        var url = URL.getStatistics.replace('USERID', userId).replace('CLINICID', clinicId).replace('DEVICETYPE', deviceType);
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function (response) {
@@ -50,10 +51,11 @@ angular.module('hillromvestApp')
       * @description To get array of data points for treatment statistics  graph.
       *
       */
-      getTreatmentGraphPoints: function(hcpID, clinicID, fromTimeStamp, toTimeStamp, groupBy) {
+      getTreatmentGraphPoints: function(hcpID, clinicID, fromTimeStamp, toTimeStamp, groupBy, deviceType) {
         var url = hcpServiceConstants.graph.baseURL;
         url  = url + '/' + hcpID + '/clinics/' + clinicID + '/treatmentStatistics';
         url = url + '?from=' + fromTimeStamp + '&to=' + toTimeStamp + '&groupBy=' + groupBy;
+        url = url + '&deviceType=' + deviceType;
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {

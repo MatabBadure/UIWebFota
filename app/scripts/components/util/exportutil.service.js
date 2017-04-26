@@ -344,8 +344,14 @@ angular.module('hillromvestApp')
     return pdf;
   }
 
-  this.addBody = function(pdf, slectedPatient, userFullName, currentDate, protocols){
+  this.addBody = function(pdf, slectedPatient, userFullName, currentDate, protocols, deviceType){
     var dob = (slectedPatient && slectedPatient.dob) ? slectedPatient.dob : "";
+    if(deviceType == 'VEST'){
+      var deviceName = pdf.splitTextToSize('VisiVest™ System', 50);
+    }
+    else{
+      var deviceName = pdf.splitTextToSize('Monarch™ System', 50);
+    }
     pdf.setFont(pdfServiceConstants.style.font.helvetica);
     pdf.setFontSize(8);
     pdf.setTextColor(100, 101, 104);
@@ -388,11 +394,17 @@ angular.module('hillromvestApp')
     pdf.text(15, 170, 'Protocol');
     pdf.setFontSize(8);
 
-    pdf.text(50, 190,'Type');
-    pdf.text(100, 190,'Treatment Per Day');
-    pdf.text(200, 190,'Minutes Per Treatment');
-    pdf.text(330, 190,'Frequency Per Treatment');
-    pdf.text(470, 190,'Pressure Per Treatment');
+    pdf.text(30, 190,'Device');
+    pdf.text(100, 190,'Type');
+    pdf.text(200, 190,'Treatment Per Day');
+    pdf.text(290, 190,'Minutes Per Treatment');
+    pdf.text(390, 190,'Frequency Per Treatment');
+    if(deviceType == 'VEST'){
+    pdf.text(490, 190,'Pressure Per Treatment');
+  }
+  else{
+    pdf.text(490, 190,'Intensity Per Treatment');
+  }
 
     pdf.setDrawColor(0);
     pdf.setFillColor(114, 111, 111);
@@ -402,33 +414,48 @@ angular.module('hillromvestApp')
     angular.forEach(protocols, function(protocol, key){
       x = 30;
       if(protocol.type === 'Normal'){
+        pdf.text(x, y, deviceName);
+        x = x + 70;
         pdf.text(x, y, protocol.type);
-        x = x + 200;
+        x = x + 240;
         pdf.text(x, y, protocol.minMinutesPerTreatment.toString());
-        x = x + 140;
+        x = x + 90;
         pdf.text(x, y, protocol.minFrequency+'-'+protocol.maxFrequency);
-        x = x + 140;
+        x = x + 90;
+        if(deviceType == 'VEST'){
         pdf.text(x, y, protocol.minPressure+'-'+protocol.maxPressure);
+      }
+      else{
+         pdf.text(x, y, protocol.minIntensity+'-'+protocol.maxIntensity);
+      }
       }else{
+        
+        x = x + 70;
         pdf.text(x, y, protocol.type+' '+protocol.treatmentLabel);
-        x = x + 200;
+        x = x + 240;
         if(key !== protocols.length-1){
-          pdf.rect(margins.left, y+5, x-150, .5, pdfServiceConstants.pdfDraw.line.f);
-          pdf.rect(x-50, y+5, margins.width-168, .5, pdfServiceConstants.pdfDraw.line.f);
+          pdf.rect(100, y+5, x-250, .5, pdfServiceConstants.pdfDraw.line.f);//pdf.rect(horizontal startpoint in x terms,vertical start point in y terms, length of the line, width of line,function to draw line )
+          pdf.rect(x-50, y+5, margins.width-230, .5, pdfServiceConstants.pdfDraw.line.f);
         }
         pdf.text(x, y, protocol.minMinutesPerTreatment.toString());
-        x = x + 140;
+        x = x + 90;
         pdf.text(x, y, protocol.minFrequency.toString());
-        x = x + 140;
+        x = x + 90;
+        if(deviceType == 'VEST'){
         pdf.text(x, y, protocol.minPressure.toString());
       }
-      y = y + 20;
+      else{
+        pdf.text(x, y, protocol.minIntensity.toString());
+      }
+      }
+      y = y + 30;
     });
     var treatmentsPerDay = protocols[0].treatmentsPerDay.toString();
     if(protocols[0].type === 'Normal'){
-      pdf.text( 125, 210, treatmentsPerDay);
+      pdf.text( 225, 210, treatmentsPerDay);
     }else{
-      pdf.text( 125, (210 + y - 20)/2, treatmentsPerDay);
+      pdf.text( 225, (210 + y - 30)/2, treatmentsPerDay);
+      pdf.text(40, (210 + y - 30)/2, deviceName);
     }
 
     var splittedDate = (new Date()).toString().split(":");
@@ -450,12 +477,12 @@ angular.module('hillromvestApp')
     return pdf;
   }
 
-  this.exportChangePrescPDF = function(slectedPatient, userFullName, currentDate, protocols) {
+  this.exportChangePrescPDF = function(slectedPatient, userFullName, currentDate, protocols, deviceType) {
     var pdf = this.getPdf();
     var pageHeight = pdf.internal.pageSize.height;
     var pageWidth = pdf.internal.pageSize.width;
     pdf = this.setHeader(pdf);
-    pdf = this.addBody(pdf, slectedPatient, userFullName, currentDate, protocols);
+    pdf = this.addBody(pdf, slectedPatient, userFullName, currentDate, protocols, deviceType);
     pdf = this.setFooter(pdf, pdf.internal.pageSize.height-80);
     pdf = this.setPageNumber(pdf, "1", "1");
     setTimeout(function(){
@@ -536,13 +563,43 @@ angular.module('hillromvestApp')
     completePatientAddress = (patientDetails !== null && patientDetails.zipcode) ? ((completePatientAddress.length > 1) ? (completePatientAddress+stringConstants.comma+patientDetails.zipcode) : patientDetails.zipcode) : completePatientAddress;      
     var patientPhone = (patientDetails !== null && patientDetails.mobilePhone)? patientDetails.mobilePhone : stringConstants.notAvailable;
     var patientDOB = (patientDetails !== null && patientDetails.dob)? dateService.getDateFromTimeStamp(patientDetails.dob,patientDashboard.dateFormat,'/') : stringConstants.notAvailable;    
-    if(localStorage.getItem('deviceType') == 'MONARCH'){
-    var patientDeviceType = stringConstants.deviceTypeMonarch;
+    var patientDeviceType ='';
+    var patientDeviceSlNo ='';
+    var patientDeviceSlNoVest='';
+    var patientDeviceSlNoMonarch='';
+
+    if(localStorage.getItem('deviceTypeforBothIcon') == 'MONARCH'){
+        patientDeviceType = stringConstants.deviceTypeMonarch;
+      for(var  i=0 ; i<patientInfo.patientDevices.length ; i++){
+        if(patientInfo.patientDevices[i].active==true){
+            patientDeviceSlNo = (patientInfo.patientDevices && patientInfo.patientDevices[i] && patientInfo.patientDevices[i].serialNumber) ? patientInfo.patientDevices[i].serialNumber: stringConstants.notAvailable;
+       }
+     }
     }
-    else{
-    var patientDeviceType = stringConstants.deviceType;
-  }
-    var patientDeviceSlNo = (patientInfo.patientDevices && patientInfo.patientDevices[0] && patientInfo.patientDevices[0].serialNumber) ? patientInfo.patientDevices[0].serialNumber: stringConstants.notAvailable;
+    else if(localStorage.getItem('deviceTypeforBothIcon') == 'VEST'){
+     patientDeviceType = stringConstants.deviceType;
+      for(var  i=0 ; i<patientInfo.patientDevices.length ; i++){
+        if(patientInfo.patientDevices[i].active==true){
+            patientDeviceSlNo = (patientInfo.patientDevices && patientInfo.patientDevices[i] && patientInfo.patientDevices[i].serialNumber) ? patientInfo.patientDevices[i].serialNumber: stringConstants.notAvailable;
+        }
+      }
+    }
+  else {
+     patientDeviceType = stringConstants.deviceTypeBoth;
+    var count=0; 
+    for(var  i=0 ; i<patientInfo.patientDevices.length ; i++){       
+            if(patientInfo.patientDevices[i].active==true){                
+                 count=count+1;  
+                 if(count==1){
+                   patientDeviceSlNoVest=(patientInfo.patientDevices && patientInfo.patientDevices[i] && patientInfo.patientDevices[i].serialNumber) ? patientInfo.patientDevices[i].serialNumber: stringConstants.notAvailable;
+                 }else if(count==2){
+                   patientDeviceSlNoMonarch =(patientInfo.patientDevices && patientInfo.patientDevices[i] && patientInfo.patientDevices[i].serialNumber) ? patientInfo.patientDevices[i].serialNumber: stringConstants.notAvailable;
+                 }
+            }
+          patientDeviceSlNo =  patientDeviceSlNoVest  +' '+','+' '+patientDeviceSlNoMonarch ;
+          }
+     }
+ 
     var pdfMissedTherapyDays = (patientInfo.missedtherapyDays !== null && patientInfo.missedtherapyDays >= 0) ? patientInfo.missedtherapyDays : stringConstants.notAvailable;
     var pdfHMRNonAdherenceScore = (patientInfo.adherenceScore !== null && patientInfo.adherenceScore >= 0) ? patientInfo.adherenceScore : 0;
     var pdfSettingDeviation = (patientInfo.settingsDeviatedDaysCount !== null && patientInfo.settingsDeviatedDaysCount >= 0) ? patientInfo.settingsDeviatedDaysCount : stringConstants.notAvailable;

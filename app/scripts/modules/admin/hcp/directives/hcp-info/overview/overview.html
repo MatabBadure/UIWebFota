@@ -91,7 +91,7 @@
 <div class="dashboard dashboard--content">
   <div class="container dashboard__manage-view margin-top">
   <div class="col-md-16 col-sm-16">
-    <ng-include src="'scripts/components/navbar/searchfilter.html'"></ng-include>
+    <ng-include src="'scripts/components/navbar/searchfilterHCP.html'"></ng-include>
   </div>
     <div class="dashboard__manage-view--header">
         <div class="col-md-3 col-sm-3 header--type">
@@ -140,11 +140,11 @@
       </div>
 
       <div class="col-md-2 reset-padding centered col-hide-iPad">
-        <span class="short-info">{{patient.patientUser.transmission}}</span>
+        <span class="short-info">{{patient.patientUser.lastTransmissionDate}}</span>
       </div>
 
       <div class="col-md-3 col-sm-4 reset-padding centered">
-        <span class="short-info">{{patient.patientUser.clinicName}}</span>
+        <span class="short-info">{{patient.patientUser.clinicNamesCSV}}</span>
       </div>
 
       <!-- <div class="col-md-2 col-sm-3 reset-padding centered">

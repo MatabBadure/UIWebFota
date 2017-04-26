@@ -28,8 +28,14 @@ angular.module('hillromvestApp')
       } else if (currentRoute === 'clinicProfile' || currentRoute === 'clinicProfileRcadmin' || currentRoute === 'clinicProfileAssociate' || currentRoute === 'clinicProfileCustomerService'){
         $scope.initClinicProfile($stateParams.clinicId);
       } else if(currentRoute === 'clinicAssociatedPatients' || currentRoute === 'clinicAssociatedPatientsRcadmin' || currentRoute === 'clinicAssociatedPatientsAssociate' || currentRoute === 'clinicAssociatedPatientsCustomerService'){
-        $scope.searchFilter = {};    
-        $scope.searchFilter = searchFilterService.initSearchFiltersForPatient($stateParams.filter, true);
+        $scope.searchFilter = {}; 
+        if($stateParams.filter){
+              var filter = ($stateParams.filter).split("+"); 
+              }
+              else{
+                var filter = "";
+              }
+        $scope.searchFilter = searchFilterService.initSearchFiltersForPatient(filter, true);
         $scope.initPaginationVars();
         $scope.initClinicAssoctPatients($stateParams.clinicId);
       } else if(currentRoute === 'clinicAssociatedHCP' || currentRoute === 'clinicAssociatedHCPRcadmin' || currentRoute === 'clinicAssociatedHCPAssociate' || currentRoute === 'clinicAssociatedHCPCustomerService'){
@@ -826,6 +832,17 @@ angular.module('hillromvestApp')
     };
 
     $scope.selectAssociatedPatient = function(patient){
+     // localStorage.setItem('deviceType', patient.deviceType); 
+      if(patient.deviceType == 'ALL'){
+          localStorage.setItem('deviceType', 'VEST');
+          localStorage.setItem('deviceTypeforGraph', 'ALL');
+          localStorage.setItem('deviceTypeforBothIcon', 'ALL');
+            }
+            else{
+            localStorage.setItem('deviceType', patient.deviceType);
+            localStorage.setItem('deviceTypeforGraph', patient.deviceType);
+            localStorage.setItem('deviceTypeforBothIcon', patient.deviceType);
+          }
       if($state.current.name === 'clinicAssociatedPatients'){
         $state.go('patientOverview', {
           'patientId': patient.id
@@ -895,8 +912,13 @@ angular.module('hillromvestApp')
         } else {
           $scope.hasNoPatient = false;
         } 
-        angular.forEach(response.data, function(patientList, index){          
+        angular.forEach(response.data, function(patientList, index){ 
+        if(patientList.dob){   
           patientList.dob = dateService.getDateFromTimeStamp(patientList.dob, patientDashboard.dateFormat,'/');
+          }
+          else{
+            patientList.dob = "";
+          }
           patientList.lastTransmissionDate = (patientList.lastTransmissionDate) ? dateService.getDateFromYYYYMMDD(patientList.lastTransmissionDate, '/') : patientList.lastTransmissionDate;
           $scope.associatedPatients.push({"patient": patientList});         
           $scope.total = (response.headers()['x-total-count']) ? response.headers()['x-total-count'] :  response.data.length;

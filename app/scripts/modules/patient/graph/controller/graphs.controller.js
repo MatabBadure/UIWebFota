@@ -91,7 +91,13 @@ angular.module('hillromvestApp')
           $scope.getPatientById($scope.patientId);
         }
         $scope.initGraph();        
-      }                    
+      }
+
+       $scope.deviceTypeforGraph = localStorage.getItem('deviceType');
+       $scope.deviceTypeforGraphProtocol = localStorage.getItem('deviceType');
+       $scope.deviceTypeforGraphTrend = localStorage.getItem('deviceType'); 
+
+                  
 
     };
 
@@ -128,6 +134,19 @@ angular.module('hillromvestApp')
                   for(var i=0;i<response.data.patients.length;i++){
                     if($stateParams.patientId == response.data.patients[i].userId){
                   $scope.selectedPatient = response.data.patients[i];
+                 // localStorage.setItem('deviceType',response.data.patients[i].deviceType);
+                 if(response.data.patients[i].deviceType == 'ALL'){
+          localStorage.setItem('deviceType', 'VEST');
+          localStorage.setItem('deviceTypeforGraph', 'ALL');
+          localStorage.setItem('deviceTypeforBothIcon', 'ALL');
+
+
+            }
+            else{
+            localStorage.setItem('deviceType', response.data.patients[i].deviceType);
+            localStorage.setItem('deviceTypeforGraph', response.data.patients[i].deviceType);
+            localStorage.setItem('deviceTypeforBothIcon', response.data.patients[i].deviceType);
+          }
                   $scope.patientId = $stateParams.patientId;
                   var logged = StorageService.get('logged');                   
                  
@@ -143,6 +162,15 @@ angular.module('hillromvestApp')
 
                 } else{
                  $scope.selectedPatient = response.data.patients[0];
+                  //localStorage.setItem('deviceType',response.data.patients[0].deviceType);
+         if(response.data.patients[0].deviceType == 'ALL'){
+          localStorage.setItem('deviceType', 'VEST');
+          localStorage.setItem('deviceTypeforGraph', 'ALL');
+            }
+            else{
+            localStorage.setItem('deviceType', response.data.patients[0].deviceType);
+            localStorage.setItem('deviceTypeforGraph', response.data.patients[0].deviceType);
+          }          
                   $scope.patientId = $scope.selectedPatient.userId;
                      $scope.$emit('getSelectedPatient', $scope.selectedPatient);
                      var logged = StorageService.get('logged');                    
@@ -675,6 +703,7 @@ angular.module('hillromvestApp')
       if(editedNoteText && editedNoteText.length > 0  && (editedNoteText.trim()).length > 0){
         var data = {};
         data.noteText = editedNoteText;
+        data.deviceType = localStorage.getItem('deviceType');
         UserService.updateNote(noteId, new Date(dateCreatedOn).getTime(), data).then(function(response){
           $scope.showAllNotes();
           makeAllNotesReadable();
@@ -697,6 +726,7 @@ angular.module('hillromvestApp')
             data.noteText = $scope.textNote.text;
             data.userId = StorageService.get('logged').patientID;
             data.date = editDate;
+            data.deviceType = localStorage.getItem('deviceType');
             UserService.createNote(StorageService.get('logged').patientID, data).then(function(response){
               $scope.addNote = false;
               $scope.textNote.edit_date = dateService.convertDateToYyyyMmDdFormat(new Date());
@@ -773,13 +803,46 @@ angular.module('hillromvestApp')
       }
       return ( (parseInt(noOfDataPoints/pInterval) > 0) && noOfDataPoints%pInterval > remainder) ? parseInt(noOfDataPoints/sInterval) : ((parseInt(noOfDataPoints/pInterval) > 0)? parseInt(noOfDataPoints/pInterval): 1) ; 
     };
+   
+     $scope.switchtoDevice = function() {    
+    $scope.selectedDeviceTypeforGraph = $scope.deviceTypeforGraphSelected;   
+    if($scope.selectedDeviceTypeforGraph == "VEST")    
+    {   
+        $scope.deviceTypeforGraph = "VEST";  
+        $scope.getHMR() ;
+             
+    }   
+    if($scope.selectedDeviceTypeforGraph == "MONARCH")   
+    {   
+        $scope.deviceTypeforGraph = "MONARCH";  
+        $scope.getHMR() ;  
+    }   
+  };
+
+   $scope.switchtoDeviceProtocol = function() {    
+    $scope.selectedDeviceTypeforGraphProtocol = $scope.deviceTypeforGraphSelectedProtocol; 
+     
+    if($scope.selectedDeviceTypeforGraphProtocol == "VEST")    
+    {   
+        $scope.deviceTypeforGraphProtocol = "VEST";  
+        $scope.getCompliance() ;
+             
+    }   
+    if($scope.selectedDeviceTypeforGraphProtocol == "MONARCH")   
+    {   
+        $scope.deviceTypeforGraphProtocol = "MONARCH";  
+        $scope.getCompliance() ;  
+    }   
+  };
 
     $scope.getComplianceGraph = function(){ 
-      patientDashBoardService.getcomplianceGraphData($scope.patientId, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.durationRange).then(function(response){
+      patientDashBoardService.getcomplianceGraphData($scope.patientId, $scope.deviceTypeforGraphProtocol, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.durationRange).then(function(response){
+        $scope.compilencechartData = response.data;
         var responseData = response.data;              
         var xData = [];
         $scope.chartData = {};
         $scope.chartData.datasets = [];
+        $scope.noDataAvailable = false;
         if(responseData){ 
           $scope.noDataAvailable = false;        
           xData = responseData.xAxis.categories; 
@@ -815,17 +878,17 @@ angular.module('hillromvestApp')
                 responseData.series[key1].data[key2].color = "red";
               }
             });
-            if(responseData.series[key1].name === "Pressure"){
+            if(responseData.series[key1].name === "Avg Pressure/Intensity"){
               responseData.series[key1].unit = ""; 
               responseData.series[key1].color = patientGraphsConstants.colors.pressure;
-            }else if(responseData.series[key1].name === "Intensity"){
+            }else if(responseData.series[key1].name === "Avg Pressure/Intensity"){
               responseData.series[key1].unit = ""; 
               responseData.series[key1].color = patientGraphsConstants.colors.pressure;
             }
-            else if(responseData.series[key1].name === "Frequency"){
+            else if(responseData.series[key1].name === "Avg Frequency"){
               responseData.series[key1].unit = patientGraphsConstants.units.frequency; 
               responseData.series[key1].color = patientGraphsConstants.colors.frequency;
-            }else if(responseData.series[key1].name === "Duration"){
+            }else if(responseData.series[key1].name === "Avg Duration"){
               responseData.series[key1].unit = patientGraphsConstants.units.duration; 
               responseData.series[key1].color = patientGraphsConstants.colors.duration;
             }
@@ -1090,18 +1153,18 @@ angular.module('hillromvestApp')
 
     
     $scope.getHMRGraph = function(){
-      patientDashBoardService.getHMRGraphPoints($scope.patientId, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.durationRange).then(function(response){
+      patientDashBoardService.getHMRGraphPoints($scope.patientId, $scope.deviceTypeforGraph, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.durationRange).then(function(response){
         $scope.hmrChartData = response.data;  
         $scope.noDataAvailableForHMR  = false;       
         if($scope.hmrChartData && typeof($scope.hmrChartData) === "object"){ 
           $scope.noDataAvailableForHMR = false;      
           $scope.hmrChartData.xAxis.xLabels=[]; 
-          $scope.isSameDay = true;
+          $scope.isSameDayHMRGraph = true;
           var startDay = ($scope.hmrChartData.xAxis && $scope.hmrChartData.xAxis.categories.length > 0) ? $scope.hmrChartData.xAxis.categories[0].split(" "): null;  
             $scope.hmrXAxisLabelCount = 0;
             angular.forEach($scope.hmrChartData.xAxis.categories, function(x, key){ 
               var curDay = $scope.hmrChartData.xAxis.categories[key].split(" ");
-              $scope.isSameDay = ($scope.isSameDay && (curDay[0] === startDay[0]) )? true : false;  
+              $scope.isSameDayHMRGraph = ($scope.isSameDayHMRGraph && (curDay[0] === startDay[0]) )? true : false;  
               if(curDay[0] !== startDay[0]){
                 startDay[0] = curDay[0];
                 $scope.hmrXAxisLabelCount++;
@@ -1110,7 +1173,7 @@ angular.module('hillromvestApp')
             angular.forEach($scope.hmrChartData.xAxis.categories, function(x, key){              
               // this is for year view or custom view having datapoints more than 7
               // x-axis will be plotted accordingly, chart type will be datetime
-              if($scope.durationRange !== "Day" && !$scope.isSameDay){
+              if($scope.durationRange !== "Day" && !$scope.isSameDayHMRGraph){
                 $scope.hmrChartData.xAxis.xLabels.push(dateService.convertToTimestamp(x));
                 $scope.hmrChartData.xAxis.categories[key] = dateService.convertToTimestamp(x);               
               }else{
@@ -1125,7 +1188,7 @@ angular.module('hillromvestApp')
             angular.forEach(s.data, function(d, key2){
               var tooltipDateText = $scope.hmrChartData.series[key1].data[key2].x ;
               $scope.hmrChartData.series[key1].data[key2].marker = marker;
-              if($scope.durationRange === "Day" || $scope.isSameDay){
+              if($scope.durationRange === "Day" || $scope.isSameDayHMRGraph){
                 delete $scope.hmrChartData.series[key1].data[key2].x;
               }else{
                 $scope.hmrChartData.series[key1].data[key2].x = $scope.hmrChartData.xAxis.categories[key2];
@@ -1135,14 +1198,14 @@ angular.module('hillromvestApp')
                 $scope.hmrChartData.series[key1].data[key2].color = "red";
               }
               if(!$scope.hmrChartData.series[key1].data[key2].toolText.missedTherapy && localStorage.getItem('deviceType') == 'MONARCH'){
-                $scope.hmrChartData.series[key1].data[key2].color = "#ff9829";
+                $scope.hmrChartData.series[key1].data[key2].color = "#7cb5ee";
               }
 
             });            
             
           }); 
           setTimeout(function(){
-            if($scope.durationRange === "Day" || $scope.isSameDay){          
+            if($scope.durationRange === "Day" || $scope.isSameDayHMRGraph){          
               $scope.HMRCategoryChart();
             }else{
               $scope.HMRAreaChart();
@@ -1158,20 +1221,19 @@ angular.module('hillromvestApp')
 
     $scope.getAdhereneTrendGraph = function()
     {
-      patientDashBoardService.getAdherenceTrendGraphPoints($scope.patientId, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.durationRange).then(function(response){
+      patientDashBoardService.getAdherenceTrendGraphPoints($scope.patientId, $scope.deviceTypeforGraphTrend, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.durationRange).then(function(response){
       $scope.adherenceTrendData = response.data;
-
       $scope.noDataAvailableForAdherence= false;       
         if($scope.adherenceTrendData && typeof($scope.adherenceTrendData) === "object"){ 
          $scope.noDataAvailableForAdherence = false;      
           $scope.adherenceTrendData.xAxis.xLabels=[]; 
-          $scope.isSameDay = true;
+          $scope.isSameDayAdherenceTrend = true;
           var startDay = ($scope.adherenceTrendData.xAxis && $scope.adherenceTrendData.xAxis.categories.length > 0) ? $scope.adherenceTrendData.xAxis.categories[0].split(" "): null;  
             $scope.adherenceTrendXAxisLabelCount = 0;
             angular.forEach($scope.adherenceTrendData.xAxis.categories, function(x, key){ 
               var curDay = $scope.adherenceTrendData.xAxis.categories[key].split(" ");
-              $scope.isSameDay = ($scope.isSameDay && (curDay[0] === startDay[0]) )? true : false;  
-              if(curDay[0] !== startDay[0]){
+              $scope.isSameDayAdherenceTrend = ($scope.isSameDayAdherenceTrend && (curDay[0] == startDay[0]) )? true : false;  
+                 if(curDay[0] !== startDay[0]){
                 startDay[0] = curDay[0];
                 $scope.adherenceTrendXAxisLabelCount++;
               }
@@ -1179,14 +1241,14 @@ angular.module('hillromvestApp')
             angular.forEach($scope.adherenceTrendData.xAxis.categories, function(x, key){              
               // this is for year view or custom view having datapoints more than 7
               // x-axis will be plotted accordingly, chart type will be datetime
-              if($scope.durationRange !== "Day" && !$scope.isSameDay){
+              if($scope.durationRange !== "Day" && !$scope.isSameDayAdherenceTrend){
                 $scope.adherenceTrendData.xAxis.xLabels.push(dateService.convertToTimestamp(x));
                 $scope.adherenceTrendData.xAxis.categories[key] = dateService.convertToTimestamp(x);               
               }else{
                 $scope.adherenceTrendData.xAxis.xLabels.push(x);
                 $scope.adherenceTrendData.xAxis.categories[key] = Highcharts.dateFormat("%I:%M %p",dateService.convertToTimestamp(x)) ;
               }
-            });         
+            });
           angular.forEach($scope.adherenceTrendData.series, function(s, key1){
             var marker = {};
             marker.radius = (s.data && s.data.length < 50)? 2 : 0.5;
@@ -1194,7 +1256,7 @@ angular.module('hillromvestApp')
             angular.forEach(s.data, function(d, key2){
               var tooltipDateText = $scope.adherenceTrendData.series[key1].data[key2].x ;
               $scope.adherenceTrendData.series[key1].data[key2].marker = marker;
-              if($scope.durationRange === "Day" || $scope.isSameDay){
+              if($scope.durationRange === "Day" || $scope.isSameDayAdherenceTrend){
                 delete $scope.adherenceTrendData.series[key1].data[key2].x;
               }else{
                 $scope.adherenceTrendData.series[key1].data[key2].x = $scope.adherenceTrendData.xAxis.categories[key2];
@@ -1210,11 +1272,11 @@ angular.module('hillromvestApp')
             });            
             
           }); 
-          setTimeout(function(){
-            if($scope.durationRange === "Day" || $scope.isSameDay){          
+          setTimeout(function(){ 
+            if($scope.durationRange === "Day" || $scope.isSameDayAdherenceTrend){           
               $scope.AdherenceTrendCategoryChart();
             }else{
-              $scope.AdherenceTrendAreaChart();
+           $scope.AdherenceTrendAreaChart();
             }            
           }, 100);          
         } else{
@@ -1237,7 +1299,7 @@ angular.module('hillromvestApp')
       }); */
       var fillcolor = '#7cb5ee'; 
       if(localStorage.getItem('deviceType')  == 'MONARCH'){
-        var fillcolor = '#ff9829';
+        var fillcolor = '#d95900';
       }     
       divId = (divId)? divId : "HMRGraph";
       $('#'+divId).empty();
@@ -1317,32 +1379,32 @@ angular.module('hillromvestApp')
                     }
                   }
                   if(localStorage.getItem('deviceType')  == 'MONARCH'){
-                  var pointDetails = '<div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left"> Session No </div> ' 
+                  var pointDetails = '<div style="color:'+ this.point.color +';padding:5px 0;width:70%;float:left"> Session No </div> ' 
                     + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.sessionNo  + '</b></div>';                 
-                    pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left"> ' + this.point.series.name + '</div> ' 
+                    pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:70%;float:left"> ' + this.point.series.name + '</div> ' 
                     + '<div style="padding:5px;width:10%"><b>' + this.point.y + '</b></div>';
-                    pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left">Intensity</div> ' 
+                    pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:70%;float:left">Intensity</div> ' 
                     + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.intensity + '</b></div>';
-                    pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left">Frequency</div> ' 
+                    pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:70%;float:left">Frequency</div> ' 
                     + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.frequency + '</b></div>';
-                    pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left">Duration</div> ' 
+                    pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:70%;float:left">Duration</div> ' 
                     + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.duration + '</b></div>'; 
-                    pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left">Cough Pauses</div> ' 
+                    pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:70%;float:left">Cough Pauses</div> ' 
                     + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.coughPauses + '</b></div>';
                 
                     }
                     else{
-                    var pointDetails = '<div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left"> Session No </div> ' 
+                    var pointDetails = '<div style="color:'+ this.point.color +';padding:5px 0;width:70%;float:left"> Session No </div> ' 
                     + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.sessionNo  + '</b></div>';                 
-                    pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left"> ' + this.point.series.name + '</div> ' 
+                    pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:70%;float:left"> ' + this.point.series.name + '</div> ' 
                     + '<div style="padding:5px;width:10%"><b>' + this.point.y + '</b></div>';
-                    pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left">Pressure</div> ' 
+                    pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:70%;float:left">Pressure</div> ' 
                     + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.pressure + '</b></div>';
-                    pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left">Frequency</div> ' 
+                    pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:70%;float:left">Frequency</div> ' 
                     + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.frequency + '</b></div>';
-                    pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left">Duration</div> ' 
+                    pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:70%;float:left">Duration</div> ' 
                     + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.duration + '</b></div>'; 
-                    pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left">Cough Pauses</div> ' 
+                    pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:70%;float:left">Cough Pauses</div> ' 
                     + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.coughPauses + '</b></div>';
                 
                     }
@@ -1410,7 +1472,7 @@ angular.module('hillromvestApp')
       });  
       var fillcolor = '#7cb5ee';
       if(localStorage.getItem('deviceType')  == 'MONARCH'){
-        fillcolor = '#ff9829';
+        fillcolor = '#d95900';
       }   
       divId = (divId)? divId : "HMRGraph";
       $('#'+divId).empty();
@@ -1777,27 +1839,31 @@ angular.module('hillromvestApp')
     $scope.getYearChart = function(){
       $scope.durationRange = "Year";
       $scope.calculateTimeDuration(365,'NotAdherenceScoreHistory');
-      $scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
+     // $scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
+      $scope.getFirstTransmissionDate();
       $scope.drawHMRCChart();
     };
 
     $scope.getMonthChart = function(){
       $scope.durationRange = "Month";
       $scope.calculateTimeDuration(30,'NotAdherenceScoreHistory');
-      $scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
+      //$scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
+      $scope.getFirstTransmissionDate();
       $scope.drawHMRCChart();
     };
 
     $scope.getWeekChart = function(){
       $scope.durationRange = "Week";
       $scope.calculateTimeDuration(6,'NotAdherenceScoreHistory');
-      $scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
+      //$scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
+      $scope.getFirstTransmissionDate();
       $scope.drawHMRCChart();
     };
 
     $scope.getCustomDateRangeChart = function(){  
       $scope.durationRange = "Custom";    
-      $scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
+     // $scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
+      $scope.getFirstTransmissionDate();
       $scope.drawHMRCChart();
     };
 
@@ -1820,7 +1886,9 @@ angular.module('hillromvestApp')
       $scope.isHMR = false;
       $scope.isCompliance = true;
       $scope.isAdherenceTrend = false;
-      //$scope.getWeekChart();
+     
+      $scope.getTransmissionDateForPatient($scope.patientId);
+      
     };
 
     $scope.initPatientDashboard = function(){
@@ -2019,10 +2087,29 @@ angular.module('hillromvestApp')
         if(response.data && response.data.firstTransmissionDate){
           $scope.hasTransmissionDate = true;
           var formattedTransmissionDate = dateService.getDateTimeFromTimeStamp(dateService.convertYyyyMmDdToTimestamp(response.data.firstTransmissionDate),patientDashboard.dateFormat,'/');
-          $scope.transmissionDate = (formattedTransmissionDate && formattedTransmissionDate.indexOf(" "))? formattedTransmissionDate.split(" ")[0] : null;          
+          $scope.transmissionDate = (formattedTransmissionDate && formattedTransmissionDate.indexOf(" "))? formattedTransmissionDate.split(" ")[0] : null; 
+          $scope.hasTransmissionDateforCostomrange = dateService.getDateFromTimeStamp(response.data.firstTransmissionDate,patientDashboard.dateFormat,'/'); 
+          //alert($scope.hasTransmissionDateforCostomrange); 
+          $scope.opts = {
+          minDate: $scope.hasTransmissionDateforCostomrange
+        };
+        $scope.dateOpts = {
+          minDate: $scope.hasTransmissionDateforCostomrange
+          };      
         }
       });
     };
+    $scope.getFirstTransmissionDate = function(){
+       if(new Date ($scope.fromDate) < new Date ($scope.hasTransmissionDateforCostomrange)){
+       
+        $scope.dates = {startDate: $scope.hasTransmissionDateforCostomrange, endDate: $scope.toDate};
+
+       }
+      else {
+
+        $scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
+        }
+       };
 
     $scope.init();
 
@@ -2227,8 +2314,21 @@ $scope.adherencetrendData.push(new Object({"adherenceTrends": [] , "protocols": 
         $scope.noHistoryAvailable = true;
        // notyService.showError(response);
       });
+      $scope.getFirstTransmissionDateforHistory();
     };
+
   /******End of Adherence History Grid view Date selection-Hill-1848 ******/  
+  $scope.getFirstTransmissionDateforHistory = function(){
+       if(new Date ($scope.fromDateHistory) < new Date ($scope.hasTransmissionDateforCostomrange)){
+       
+        $scope.customdates = {startDate: $scope.hasTransmissionDateforCostomrange, endDate: $scope.toDateHistory};
+
+       }
+      else {
+
+        $scope.customdates = {startDate: $scope.fromDateHistory, endDate: $scope.toDateHistory};
+        }
+       };
     $scope.takeSurveyNow = function(){          
         $state.go("patientSurvey", {'surveyId': $rootScope.surveyId});
     };
@@ -2280,6 +2380,7 @@ $scope.adherencetrendData.push(new Object({"adherenceTrends": [] , "protocols": 
       $scope.isAdherenceTrend = false;
       $scope.noDataStatus = true;
       $scope.selectChart($scope.fromDate);
+
     };
 
     $scope.getCompliance = function(){
@@ -2295,7 +2396,8 @@ $scope.adherencetrendData.push(new Object({"adherenceTrends": [] , "protocols": 
       $scope.getAssociatedClinics($scope.patientId);
       $scope.getPatientDevices($scope.patientId);      
       $scope.initGraph();
-      $scope.getPatientById($scope.patientId);     
+      $scope.getPatientById($scope.patientId);
+      $scope.getWeekChart();    
     };
 
 

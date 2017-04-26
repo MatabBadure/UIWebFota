@@ -3,8 +3,10 @@
 <div class="container admin-user">
   <div class="col-md-16 col-sm-16 margin-top">
    <div class="user-gen-details">
+   <span ng-class="{'monarchIcon': (getDeviceTypeforBothIcon() =='MONARCH'), 'visivestIcon': (getDeviceTypeforBothIcon() =='VEST'), 'bothdeviceIcon': (getDeviceTypeforBothIcon() =='ALL')}">
      <span class="user-gen-details--name">{{::patient.firstName}} {{::patient.lastName}}</span>
      <span class="user-gen-details--hr-id">{{::patient.hillromId}}</span>
+     </span>
    </div>
   </div>
 

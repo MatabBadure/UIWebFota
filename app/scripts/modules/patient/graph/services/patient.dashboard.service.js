@@ -15,7 +15,7 @@ angular.module('hillromvestApp')
       * @description To get array of data points for HMR data graph.
       *
       */
-      getHMRGraphPoints: function(id, fromTimeStamp, toTimeStamp, duration, date) {
+      getHMRGraphPoints: function(id, deviceTypeforGraph, fromTimeStamp, toTimeStamp, duration, date) {
         var url = patient.graph.baseURL;
         url  = url + '/' + id + '/therapyData';
         if ( fromTimeStamp !== undefined && toTimeStamp !== undefined && duration !== undefined) {
@@ -23,7 +23,9 @@ angular.module('hillromvestApp')
         } else if(date !== undefined){
           url = url + '?date=' + date;
         }
-         url = url +'&deviceType='+localStorage.getItem('deviceType'); 
+
+         url = url +'&deviceType='+ deviceTypeforGraph; 
+         //url = url +'&deviceType='+localStorage.getItem('deviceType'); 
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -31,7 +33,7 @@ angular.module('hillromvestApp')
         });
       },
 
-      getAdherenceTrendGraphPoints: function(id, fromTimeStamp, toTimeStamp, duration, date) {
+      getAdherenceTrendGraphPoints: function(id, deviceTypeforGraph, fromTimeStamp, toTimeStamp, duration, date) {
         var url = patient.graph.baseURL;
         url  = url + '/' + id + '/adherenceTrendGraphData';
         if ( fromTimeStamp !== undefined && toTimeStamp !== undefined && duration !== undefined) {
@@ -39,7 +41,9 @@ angular.module('hillromvestApp')
         } else if(date !== undefined){
           url = url + '?date=' + date;
         }
-         url = url +'&deviceType='+localStorage.getItem('deviceType'); 
+
+        url = url +'&deviceType='+ deviceTypeforGraph; 
+        // url = url +'&deviceType='+localStorage.getItem('deviceType'); 
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -167,7 +171,7 @@ angular.module('hillromvestApp')
 
 
       getAdeherenceData : function(userId, startDate, endDate){
-        var url = URL.getAdeherenceData.replace('USERID', userId).replace('FROMDATE', startDate).replace('TODATE', endDate)
+        var url = URL.getAdeherenceData.replace('USERID', userId).replace('FROMDATE', startDate).replace('TODATE', endDate).replace('DEVICETYPE',localStorage.getItem('deviceType'));
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -176,7 +180,7 @@ angular.module('hillromvestApp')
       }, 
 
 
-      getcomplianceGraphData: function(id, fromTimeStamp, toTimeStamp, duration, date){
+      getcomplianceGraphData: function(id, deviceTypeforGraph, fromTimeStamp, toTimeStamp, duration, date){
         var url = patient.graph.baseURL;
         url  = url + '/' + id + '/complianceGraphData';
       
@@ -185,7 +189,9 @@ angular.module('hillromvestApp')
         } else if(date !== undefined){
           url = url + '?date=' + date;
         } 
-        url = url +'&deviceType='+localStorage.getItem('deviceType');    
+
+        url = url +'&deviceType='+ deviceTypeforGraph; 
+       // url = url +'&deviceType='+localStorage.getItem('deviceType');    
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {

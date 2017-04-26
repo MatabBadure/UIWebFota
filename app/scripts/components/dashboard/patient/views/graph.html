@@ -1,8 +1,10 @@
 <div class="container admin-user">
 	<div class="col-md-16 col-sm-16 margin-top reset-padding mob_no_margin">
 		<div class="user-gen-details">
+		<span ng-class="{'monarchIcon': (getDeviceTypeforBothIcon() =='MONARCH'), 'visivestIcon': (getDeviceTypeforBothIcon() =='VEST'), 'bothdeviceIcon': (getDeviceTypeforBothIcon() =='ALL')}">
 			<span class="user-gen-details--name">{{slectedPatient.firstName}} {{slectedPatient.lastName}}</span>
 			<span class="user-gen-details--hr-id">{{slectedPatient.hillromId}}</span>
+			</span>
 		</div>
 	</div>
 </div>
@@ -152,7 +154,7 @@
 									</tbody>
 								</table> -->
 	<div id = "NodataDiv" class="historyNoData first-row" ng-if = "noHistoryAvailable">
-		<span class="noData_text"> No Data Available!</span>
+		<span class="noData_text"> No Therapy Transmission Received for This Day!</span>
 	</div>
 								<div ng-if="!noHistoryAvailable && !loading" class="col-md-16 col-sm-16 col-xs-16 padding0 reset-padding vertical_align border-bottom border-lt border-rt" ng-repeat="adherenceScore in adherencetrendData">
 									<div class="col-md-14 col-sm-14 col-xs-16 padding0 reset-padding">
@@ -216,23 +218,57 @@
 				</ul>
 			</div>
 		</div>
+		<div class="col-md-7 col-sm-10 left_header_barchart padding0">
+		       <div class="devicetyperadio" ng-show="isHMR && getDeviceTypeforGraphRadio()=='ALL'" ng-init="$parent.deviceTypeforGraphSelected='VEST'">
+		       <span class="radio-inline no-padding devicetyperadiolabl">Show Graph For</span>
+		      <span class="radio-inline">
+		        <label class="no-padding">
+		          <input type="radio" name="deviceTypeforGraph" ng-model="$parent.deviceTypeforGraphSelected" value="VEST" ng-change="switchtoDevice()">
+		          <span class="radio-box-text">VisiVest</span>
+		        </label>
+		      </span>
+		      <span class="radio-inline">
+		        <label>
+		          <input type="radio" name="deviceTypeforGraph" ng-model="$parent.deviceTypeforGraphSelected" value="MONARCH" ng-change="switchtoDevice()">
+		          <span class="radio-box-text">Monarch</span>
+		        </label>
+		      </span>
+		    </div>
+		    <div class="devicetyperadio" ng-show="isCompliance && getDeviceTypeforGraphRadio()=='ALL'" ng-init="$parent.deviceTypeforGraphSelectedProtocol='VEST'">
+		       <span class="radio-inline no-padding devicetyperadiolabl">Show Graph For</span>
+		      <span class="radio-inline">
+		        <label class="no-padding">
+		          <input type="radio" name="deviceTypeforGraphProtocol" ng-model="$parent.deviceTypeforGraphSelectedProtocol" value="VEST" ng-change="switchtoDeviceProtocol()">
+		          <span class="radio-box-text">VisiVest</span>
+		        </label>
+		      </span>
+		      <span class="radio-inline">
+		        <label>
+		          <input type="radio" name="deviceTypeforGraphProtocol" ng-model="$parent.deviceTypeforGraphSelectedProtocol" value="MONARCH" ng-change="switchtoDeviceProtocol()">
+		          <span class="radio-box-text">Monarch</span>
+		        </label>
+		      </span>
+		    </div>
+		</div>
+		<div class="col-md-9 col-sm-6 right_header_barchart">
 		<div class="pull-right week_date_container">
 			<span ng-if="fromDate !== toDate">
 					<span class="date">{{fromDate}}</span> - <span class="date">{{toDate}}</span>
 			</span>
-			<span ng-if="fromDate === toDate" class="date">{{fromDate}}<span>
+			<span ng-if="fromDate === toDate" class="date">{{fromDate}}</span>
 		</div>
+      </div>
 	</div>
 	<div class="clr"></div>
 	<div class="col-md-16" class="all_graph_wrapper" ng-init="getWeekChart()" style="min-height: 300px;">
 	<div id = "NodataDiv" class="graph_nodata" ng-if = "(hmrChartData.length == 0) && noDataStatus && isHMR">
-		<span class="noData_text"> No Data Available!</span>
+		<span class="noData_text"> No Therapy Transmission Received for This Day!</span>
 	</div>
-		<div id = "NodataDiv" class="graph_nodata" ng-if = "(hmrChartData.length == 0) && noDataStatus && isCompliance">
-		<span class="noData_text"> No Data Available!</span>
+		<div id = "NodataDiv" class="graph_nodata" ng-if = "(compilencechartData.length ==0)  && noDataStatus && isCompliance">
+		<span class="noData_text"> No Therapy Transmission Received for This Day!</span>
 	</div>
 		<div id = "NodataDiv" class="graph_nodata" ng-if = "isAdherenceTrend && noDataAvailableForAdherence">
-		<span class="noData_text"> No Data Available!</span>
+		<span class="noData_text"> No Therapy Transmission Received for This Day!</span>
 	</div>
 
 	<div class="complianceGraphPrim_wrapper" ng-show="!noDataAvailableForHMR" id="lineGraphWrapper" >
@@ -491,8 +527,11 @@
 							<div class="col-md-3 col-sm-3 header--type text-align-left">
 								<span translate="patient.protocol-caption.frequency-per-treatment"></span>
 							</div>
-							<div class="col-md-3 col-sm-3 header--type text-align-left">
+							<div class="col-md-3 col-sm-3 header--type text-align-left"  ng-if="(getDeviceType() =='VEST')">
 								<span translate="patient.protocol-caption.pressure-per-treatment"></span>
+							</div>
+							<div class="col-md-3 col-sm-3 header--type text-align-left"  ng-if="(getDeviceType() =='MONARCH')">
+								<span translate="patient.protocol-caption.intensity-per-treatment"></span>
 							</div>
 							<div class="clr"></div>
 						</div>
@@ -510,8 +549,11 @@
 						<div class="col-xs-3 header--type">
 							<span translate="">Freq.</span>
 						</div>
-						<div class="col-xs-3 header--type">
+						<div class="col-xs-3 header--type" ng-if="(getDeviceType() =='VEST')">
 							<span translate="">Press.</span>
+						</div>
+						<div class="col-xs-3 header--type" ng-if="(getDeviceType() =='MONARCH')">
+							<span translate="">Inten.</span>
 						</div>
 						<div class="clr"></div>
 						</div>
@@ -542,9 +584,13 @@
 								<span ng-if="protocol.type === 'Custom'" class="protocol-list--value"> {{protocol.minFrequency}}</span>
 								<span ng-if="protocol.type === 'Normal'" class="protocol-list--value"> {{protocol.minFrequency}}-{{protocol.maxFrequency}}</span>
 							</div>
-							<div class="col-md-4 col-xs-5 col-sm-5 text-align_c  padding0 protocol-list__end-date">
+							<div class="col-md-4 col-xs-5 col-sm-5 text-align_c  padding0 protocol-list__end-date" ng-if="(getDeviceType() =='VEST')">
 								<span ng-if="protocol.type === 'Custom'" class="protocol-list--value"> {{protocol.minPressure}}</span>
 								<span ng-if="protocol.type === 'Normal'" class="protocol-list--value"> {{protocol.minPressure}}-{{protocol.maxPressure}}</span>
+							</div>
+							<div class="col-md-4 col-xs-5 col-sm-5 text-align_c  padding0 protocol-list__end-date" ng-if="(getDeviceType() =='MONARCH')">
+								<span ng-if="protocol.type === 'Custom'" class="protocol-list--value"> {{protocol.minIntensity}}</span>
+								<span ng-if="protocol.type === 'Normal'" class="protocol-list--value"> {{protocol.minIntensity}}-{{protocol.maxIntensity}}</span>
 							</div>
 						</div>
 					</div>

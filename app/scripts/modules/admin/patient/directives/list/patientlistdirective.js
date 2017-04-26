@@ -51,7 +51,18 @@ angular.module('hillromvestApp')
         };
 
         $scope.selectPatient = function(patient) {
-          localStorage.setItem('deviceType', patient.deviceType);
+        //  localStorage.setItem('deviceType', patient.deviceType);
+           if(patient.deviceType == 'ALL'){
+          localStorage.setItem('deviceType', 'VEST');
+          localStorage.setItem('deviceTypeforGraph', 'ALL');
+          localStorage.setItem('deviceTypeforBothIcon', 'ALL');
+            }
+            else{
+            localStorage.setItem('deviceType', patient.deviceType);
+            localStorage.setItem('deviceTypeforGraph', patient.deviceType);
+            localStorage.setItem('deviceTypeforBothIcon', patient.deviceType);
+          }
+
           if($scope.userRole === loginConstants.role.admin){
             $state.go('patientOverview', {
               'patientId': patient.id
@@ -108,21 +119,21 @@ angular.module('hillromvestApp')
             });
         };
 
-        $scope.getDateFromTimestampforTransmissiondate = function(timestamp){ 
-           if(!timestamp){ 
-             return searchFilters.emptyString; 
-           } 
-           var timeZoneOffset = new Date(timestamp).getTimezoneOffset()*60*1000; 
-           var qualcommOffset = 6*60*60*1000; 
-           var timestamp = timestamp + timeZoneOffset - qualcommOffset; 
-           var _date = new Date(timestamp); 
-           var _month = (_date.getMonth()+1).toString(); 
-           _month = _month.length > 1 ? _month : '0' + _month; 
-           var _day = (_date.getDate()).toString(); 
-           _day = _day.length > 1 ? _day : '0' + _day; 
-           var _year = (_date.getFullYear()).toString(); 
-           return _month+"/"+_day+"/"+_year; 
-        }; 
+        $scope.getDateFromTimestampforTransmissiondate = function(timestamp){
+          if(!timestamp){
+            return searchFilters.emptyString;
+          }
+          var timeZoneOffset = new Date(timestamp).getTimezoneOffset()*60*1000;
+          var qualcommOffset = 6*60*60*1000;
+          var timestamp = timestamp + timeZoneOffset - qualcommOffset;
+          var _date = new Date(timestamp);
+          var _month = (_date.getMonth()+1).toString();
+          _month = _month.length > 1 ? _month : '0' + _month;
+          var _day = (_date.getDate()).toString();
+          _day = _day.length > 1 ? _day : '0' + _day;
+          var _year = (_date.getFullYear()).toString();
+          return _month+"/"+_day+"/"+_year;
+        };
 
         $scope.getDateFromTimestamp = function(timestamp){
           if(!timestamp){

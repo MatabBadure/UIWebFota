@@ -719,3 +719,103 @@ content: "\f024" !important;
     font-weight: 500;
     font-size: 18px;
   }
+/*  9 feb */
+  .monarchIcon
+  {
+    background-image: url('../images/monarch.png');
+    background-repeat: no-repeat;
+    padding-left: 30px; 
+    display: inline-block; 
+     
+  }
+  .visivestIcon
+  {
+     background-image: url('../images/visivest.png');
+    background-repeat: no-repeat;
+    padding-left: 30px;
+    display: inline-block;  
+  }
+
+
+/* 3-03-17 */
+
+.brakword
+{
+    overflow: initial !important;
+    text-overflow: initial !important;
+    white-space: normal !important;
+    line-height: 16px !important;
+    height:auto  !important;
+}
+
+/* 08-03-17  */
+
+.graph_nodata {
+  width: 250px !important;
+}
+
+/* 09-3 -17 */
+
+.complianceGraphPrim_wrapper .highcharts-tooltip>span {
+
+   min-width:180px;
+}
+
+/* 16-03-17 */
+
+.navbardisabled {
+    opacity: 0.5;
+     pointer-events: none;
+   }
+
+   #waitpopup .progress-bar {
+  background-color: #7ca3dc;
+  }
+
+   .waittextinsidebar
+   {
+     
+     color:#646568;
+      white-space:nowrap; 
+      font-weight:bold;
+
+   }
+
+   /* 27 march */
+
+   .devicetyperadio label {
+    margin-bottom: 0 !important;
+    }
+
+   .bothdeviceIcon
+  {
+     background-image: url('../images/bothdevice.png');
+    background-repeat: no-repeat;
+    padding-left: 55px;
+    display: inline-block;  
+  }
+
+  /* 3rd april   */
+
+  .adherenceresethistorypaginationcontner
+  {
+     margin-bottom:20px;
+  }
+  
+  .resethistorylist tr:last-child td
+  {
+      border-bottom: 1px solid #ddd;
+  }
+
+  .resethistorylist th {
+    color: #276092;
+    font-size: 12px;
+    font-weight: normal;
+    
+  }
+
+  .othercommenttxt
+  {
+    max-width: 150px;
+    word-wrap: break-word;
+  }

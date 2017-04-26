@@ -117,7 +117,7 @@
         "hillRom-id": "Hill-Rom ID",
         "type": "Type",
         "status": "Status",
-        "adherence": "Adherence",
+         "adherence": "Adherence",
         "view-assoc-patients": "View Associate Patients",
         "view-assoc-hcps": "View Associate HCPs",
         "phoneNumber": "Phone number",
@@ -179,6 +179,10 @@
             "next": "Next",
             "hcps": "HCPs",
             "found": "Found"
+        },
+         "adherence": {
+            "warning": "Adherence Settings",
+            "message": "You have made changes/updates for Adherence Settings. Are you sure to make updates?"
         }
     }
 }

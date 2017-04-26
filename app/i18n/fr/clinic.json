@@ -117,7 +117,7 @@
         "hillRom-id": "Hill-Rom ID",
         "type": "Type",
         "status": "Status",
-        "adherence": "Adherence",
+         "adherence": "Adherence",
         "view-assoc-patients": "View Associate Patients",
         "view-assoc-hcps": "View Associate HCPs",
         "phoneNumber": "Phone number",

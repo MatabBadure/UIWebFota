@@ -45,7 +45,8 @@ var searchFilters = {
     activeInactive: "all",
     VisiVest: "VEST",
     Monarch: "MONARCH",
-    devicetype : "deviceType="
+    devicetype : "deviceType=",
+    allCaps : "ALL"
 }
 
 var sortConstant = {
@@ -146,9 +147,10 @@ var stringConstants = {
     notAvailable: "N/A",
     deviceType : "The VisiVest™ System",
     deviceTypeMonarch : "The Monarch™ System",
+    deviceTypeBoth: "The VisiVest™ System , The Monarch™ System",
     emptyString: "",
     comma: ", ",
-   runrate: "Total Therapy Hours Runrate",
+    runrate: "Total Therapy Hours Runrate",
     averageSessionMinutes: "Average Treatment Minutes",
     consecutiveMissedDays: "Consecutive Missed Therapy days",
     consecutiveFrequencyDeviationDays : "Consecutive Frequency Deviation Days"
