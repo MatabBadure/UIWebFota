@@ -278,7 +278,7 @@ angular.module('hillromvestApp')
      // get reset adhrence history ends here
       addDevice: function(id, data, deviceType) {
        
-          var url = URL.addDevice.replace('PATIENTID', id).replace('DEVICETYPE',deviceType);
+          var url = URL.addDevice.replace('PATIENTID', id).replace('DEVICETYPE',localStorage.getItem('deviceTypeforBothIcon')).replace('DEVICEVALUE',deviceType);
     
         return $http.put(url, data, {
           headers: headerService.getHeader()
@@ -349,6 +349,14 @@ angular.module('hillromvestApp')
           return response;
         });
       },
+      deleteProtocolforBoth: function(id, protocolId, protocolDeviceType) {
+        var url = URL.protocolById.replace('PATIENTID', id).replace('PROTOCOLID', protocolId).replace('DEVICETYPE', protocolDeviceType);
+        return $http.delete(url, {
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });
+      },
       updateCaregiver: function(patientId, caregiverId, data) {
         var url = URL.caregiverById.replace('PATIENTID', patientId).replace('CAREGIVERID', caregiverId);
         return $http.put(url, data, {
@@ -365,8 +373,8 @@ angular.module('hillromvestApp')
           return response;
         });
       },
-      getProtocolById: function(patientId, protocolId) {
-        var url = URL.protocolById.replace('PATIENTID', patientId).replace('PROTOCOLID', protocolId).replace('DEVICETYPE', localStorage.getItem('deviceType'));
+      getProtocolById: function(patientId, protocolId, protocolDevice) {
+        var url = URL.protocolById.replace('PATIENTID', patientId).replace('PROTOCOLID', protocolId).replace('DEVICETYPE', protocolDevice);
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
