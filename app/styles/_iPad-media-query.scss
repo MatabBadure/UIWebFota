@@ -785,6 +785,9 @@ font-size:12px;
   {
     padding: 20px 27px 20px 3px !important;
   }
+  .custom-dropdown .multiSelect > button {
+    width: 400px !important;
+}
 }
 @media only screen and (max-width: 1024px) and (min-width: 768px) and (orientation: landscape) { 
 	 .activefixmobile > li > a 

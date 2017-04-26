@@ -57,7 +57,8 @@
     </div>
   </div>
 
-
+<!--Single protocol -->
+<div ng-if="getDeviceTypeforBothIcon() !='ALL'">
 <div class="col-md-16 col-sm-16 col-xs-16 no_border protocol_list_container" ng-class="{'no_border' : protocols.length == 0}">
 
 
@@ -65,7 +66,7 @@
     <div id="deviceicon" class="col-md-16 col-sm-16 protocol-list__treatment-day  no_border  text-align-left">
 
 
-     <span class="icon_height_width" ng-class="{'monarchIcon': (getDeviceType() =='MONARCH'), 'visivestIcon': (getDeviceType() =='VEST')}">
+     <span class="icon_height_width" ng-class="{'monarchIcon': (getDeviceType() =='MONARCH'), 'visivestIcon': (getDeviceType() =='VEST')}"></span>
     </div>
   </div>
   <div class="col-md-2 col-sm-2 hidden-xs col-lg-offset-1 col-md-offset-1 col-sm-offset-1 col-xs-offset-1">
@@ -104,8 +105,58 @@
     </div>
   </div>
 </div>
+</div>
+<!--Two devices -->
+<div ng-if="getDeviceTypeforBothIcon() =='ALL'" ng-repeat="protocol in protocols ">
+<div class="col-md-16 col-sm-16 col-xs-16  protocol_list_container" ng-class="{'no_border' : protocols.length == 0}">
 
-  <div class="col-md-16 col-sm-16 col-xs-16 empty-list-message" ng-if="protocolsErrMsg">
+
+   <div class="col-md-1 col-sm-1 col-xs-1 treatments_per_day_count"  ng-if="protocolDeviceIconFilter(protocol)">
+    <div id="deviceicon" class="col-md-16 col-sm-16 protocol-list__treatment-day  no_border  text-align-left">
+
+
+     <span class="icon_height_width" ng-class="{'monarchIcon': (protocol.deviceType =='MONARCH'), 'visivestIcon': (protocol.deviceType =='VEST')}"></span>
+    </div>
+  </div>
+  <div class="col-md-2 col-sm-2 hidden-xs col-lg-offset-1 col-md-offset-1 col-sm-offset-1 col-xs-offset-1">
+    <div class="col-md-16 col-sm-16 col-xs-16 protocol-list__treatment-day protocol-list no_border text-align-left" ng-class="{'list-inactive':protocol.deleted, 'last' : $last}">
+      <span class="protocol-list--value"> {{protocol.type}} {{protocol.treatmentLabel}}</span>
+    </div>
+  </div>
+
+  <div class="col-xs-2 hidden-sm hidden-md hidden-lg col-xs-offset-2">
+    <div class="col-md-16 col-sm-16 col-xs-16 protocol-list__treatment-day protocol-list no_border text-align-left" ng-class="{'list-inactive':protocol.deleted, 'last' : $last}" ng-if="displayFlag">
+      <span class="protocol-list--value uppercase">{{protocol.treatmentLabel}}</span>
+    </div>
+  </div>
+
+  <div class="col-md-2 col-sm-2 col-xs-2 col-xs-offset-4  col-sm-offset-3 treatments_per_day_count col-md-offset-3">
+      <span class="v_middle">{{protocol.treatmentsPerDay}}</span>
+  </div>
+  <div class="col-md-11 col-sm-11 col-xs-10 col-xs-offset-2 col-sm-offset-2 col-md-offset-2">
+    <div class="col-md-16 col-sm-16 col-xs-16 protocol-list no_border"  ng-class="{'list-inactive':protocol.deleted, 'last' : $last}">
+      
+      <div class="col-md-4 col-sm-4 col-xs-4 text-right-mob protocol-list__strt-date">
+        <span class="protocol-list--value"> {{protocol.minMinutesPerTreatment}}</span>      
+      </div>
+      <div class="col-md-4 col-sm-4 col-xs-4 text-right-mob protocol-list__end-date">
+        <span ng-if="protocol.type === 'Custom'" class="protocol-list--value"> {{protocol.minFrequency}}</span>
+        <span ng-if="protocol.type === 'Normal'" class="protocol-list--value"> {{protocol.minFrequency}}-{{protocol.maxFrequency}}</span>
+      </div>
+      <div class="col-md-3 col-sm-3 col-xs-5 text-right-mob protocol-list__end-date" ng-if="protocol.deviceType =='VEST'">
+        <span ng-if="protocol.type === 'Custom'" class="protocol-list--value"> {{protocol.minPressure}}</span>
+        <span ng-if="protocol.type === 'Normal'" class="protocol-list--value"> {{protocol.minPressure}}-{{protocol.maxPressure}}</span>
+      </div>
+      <div class="col-md-3 col-sm-3 col-xs-5 text-right-mob protocol-list__end-date" ng-if="protocol.deviceType =='MONARCH'">
+        <span ng-if="protocol.type === 'Custom'" class="protocol-list--value"> {{protocol.minIntensity}}</span>
+        <span ng-if="protocol.type === 'Normal'" class="protocol-list--value"> {{protocol.minIntensity}}-{{protocol.maxIntensity}}</span>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+  <div class="col-md-16 col-sm-16 col-xs-16 empty-list-message" ng-if="protocolsErrMsg" ng-class="{'border-top': (getDeviceTypeforBothIcon() =='ALL')}">
     <span translate="no-protocol-found"></span>
   </div>
 
