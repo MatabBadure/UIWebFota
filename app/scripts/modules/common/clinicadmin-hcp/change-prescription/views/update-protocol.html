@@ -10,11 +10,11 @@
 </div>
 
 <div class="container admin-user">
-	<div class="container dashboard__form">
-	  <div class="col-md-16 reset-padding">
-	    <span class="dashboard__form--type" translate="patient.protocol.gen-details"></span>
-	  </div>
-	</div>
+  <div class="container dashboard__form">
+    <div class="col-md-16 reset-padding">
+      <span class="dashboard__form--type" translate="patient.protocol.gen-details"></span>
+    </div>
+  </div>
   <div class="col-md-16 protocol-radio reset-padding">
     <div class="form-group">
       <span>
@@ -36,7 +36,9 @@
 <div class="dashboard dashboard--content padding-bottom-ls">
   <form name="$parent.updateProtocolForm" novalidate autocomplete="off" ng-submit="showPrtocolUpdateModal()">
     <div class="container dashboard__form">
+     
       <div>
+       
         <div class="col-md-16 reset-padding margin-top">
            <div class="col-md-7 reset-padding">
               <div class="col-md-6 dashboard__form--label reset-padding">
@@ -45,7 +47,7 @@
             </div>
                 <div class="col-md-10 dashboard__form__input reset-padding"> 
               <div class="custom-dropdown">
-               <select name="type" ng-model="deviceTypeSelectedProtocol" ng-init="deviceTypeSelectedProtocol = getDeviceType()" ng-dropdown disabled ng-change="selectedDevice()" >
+               <select name="type" ng-model="deviceTypeSelectedProtocol"  ng-dropdown disabled ng-change="selectedDevice()" >
             <option  value="VEST">VisiVest</option>
             <option  value="MONARCH" >Monarch</option> 
               </select>
@@ -53,6 +55,7 @@
                </div> 
                </div>
         </div>
+        
         <div class="col-md-16 reset-padding margin-top">
           <div class="col-md-7 reset-padding">
             <div class="col-md-6 dashboard__form--label reset-padding">
@@ -74,8 +77,11 @@
             </div>
           </div>
         </div>
+        
         <div class="clr"></div>
+
       </div>
+
       <div class="protocol-point" ng-repeat="proto in protocol.protocolEntries track by $index">
         <div class="col-md-16 reset-padding">
           <span ng-if="protocol.type === 'Custom'" class="dashboard__form--type">Point {{$index + 1}}</span>
@@ -113,15 +119,18 @@
         </div>
 
         <div class="col-md-16 reset-padding margin-top">
+
           <div class="col-md-7 reset-padding">
             <div class="col-md-6 dashboard__form--label reset-padding">
               <span class="" translate="patient.protocol.min-frequency" ng-if="protocol.type === 'Normal'"></span>
               <span class="" translate="patient.protocol.frequency" ng-if="protocol.type === 'Custom'"></span>
               <span class="">*</span>
             </div>
+            
             <div class="col-md-10 dashboard__form--input reset-padding">
               <input class="" type="number" name="minFrequency" ng-model="proto.minFrequency" required min="5" max="19"  ng-if="protocol.type === 'Normal'">
               <input class="" type="number" name="minFrequency" ng-model="proto.minFrequency" required min="5" max="20"  ng-if="protocol.type === 'Custom'">
+              
               <div ng-show="(point.minFrequency.$dirty && point.minFrequency.$invalid) || submitted">
                 <span class="has-error" ng-show="point.minFrequency.$error.required && protocol.type === 'Normal'" translate="error.protocol.minFrequency.required">
                 </span>
@@ -138,10 +147,11 @@
                 </span>
                 <span class="has-error" ng-show="point.minFrequency.$error.required && protocol.type === 'Custom'" translate="error.protocol.minFrequency.custom-required">
                 </span>
-
               </div>
             </div>
+          
           </div>
+          
           <div class="col-md-7 reset-padding col-md-offset-2" ng-if="protocol.type === 'Normal'">
             <div class="col-md-6 dashboard__form--label reset-padding">
               <span class="" translate="patient.protocol.max-frequency"></span>
@@ -149,8 +159,7 @@
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
               <input class="" type="number" name="maxFrequency" ng-model="proto.maxFrequency" required min="{{proto.minFrequency+1}}" max="20">
-
-              
+           
               <span class="has-error" ng-show="point.maxFrequency.$dirty && proto.maxFrequency < 6" translate="error.protocol.maxFrequency.min"></span>
               <div ng-show="(point.maxFrequency.$dirty && point.maxFrequency.$invalid) || submitted">
                 <span class="has-error" ng-show="point.maxFrequency.$error.required" translate="error.protocol.maxFrequency.required">
@@ -166,10 +175,14 @@
               </div>
             </div>
           </div>
+       
         </div>
 
+
+
         <div class="col-md-16 reset-padding margin-top">
-          <div class="col-md-7 reset-padding" ng-if="getDeviceType() =='VEST'">
+
+          <div class="col-md-7 reset-padding" ng-if="deviceTypeSelectedProtocol =='VEST'">
             <div class="col-md-6 dashboard__form--label reset-padding">
               <span class="" translate="patient.protocol.min-pressure" ng-if="protocol.type === 'Normal'"></span>
               <span class="" translate="patient.protocol.pressure" ng-if="protocol.type === 'Custom'"></span>
@@ -197,9 +210,7 @@
             </div>
           </div>
 
-
-
-<div class="col-md-7 reset-padding" ng-if="getDeviceType() =='MONARCH'">
+          <div class="col-md-7 reset-padding" ng-if="deviceTypeSelectedProtocol =='MONARCH'">
             <div class="col-md-6 dashboard__form--label reset-padding">
               <span class="" translate="patient.protocol.min-intensity" ng-if="protocol.type === 'Normal'"></span>
               <span class="" translate="patient.protocol.intensity" ng-if="protocol.type === 'Custom'"></span>
@@ -227,10 +238,7 @@
             </div>
           </div>
 
-
-
-
-          <div class="col-md-7 reset-padding col-md-offset-2" ng-if="protocol.type === 'Normal' && getDeviceType() =='MONARCH'">
+          <div class="col-md-7 reset-padding col-md-offset-2" ng-if="protocol.type === 'Normal' && deviceTypeSelectedProtocol=='MONARCH'">
             <div class="col-md-6 dashboard__form--label reset-padding">
               <span class="" translate="patient.protocol.max-intensity"></span>
               <span class="">*</span>
@@ -253,8 +261,7 @@
             </div>
           </div>
 
-
-          <div class="col-md-7 reset-padding col-md-offset-2" ng-if="protocol.type === 'Normal' && getDeviceType() =='VEST'">
+          <div class="col-md-7 reset-padding col-md-offset-2" ng-if="protocol.type === 'Normal' && deviceTypeSelectedProtocol =='VEST'">
             <div class="col-md-6 dashboard__form--label reset-padding">
               <span class="" translate="patient.protocol.max-pressure"></span>
               <span class="">*</span>
@@ -276,7 +283,9 @@
               </div>
             </div>
           </div>
+
         </div>
+
         </ng-form>
       <div class="clr"></div>
     </div>
