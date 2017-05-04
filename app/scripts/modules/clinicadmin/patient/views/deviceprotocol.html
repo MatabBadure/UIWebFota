@@ -202,9 +202,13 @@
       <span ng-if="device.active" class="device--list__status--text" translate="patient.device.active-status">Active</span>
       <span ng-if="!device.active" class="device--list__status--text" translate="patient.device.inactive-status"></span>
     </div>
-    <div class="col-md-2 col-sm-2 device-list__date">
-      <span>{{::device.lastModifiedDate}}</span>
+     <div class="col-md-2 col-sm-2 device-list__date" ng-if="device.active">
+       <span>{{device.createdDate}}</span>
     </div>
+    <div class="col-md-2 col-sm-2 device-list__date" ng-if="!device.active">
+      <span>{{device.lastModifiedDate}}</span>
+    </div>
+   
   </div>
   <div class="col-md-16 col-sm-16 empty-list-message" ng-if="!devices"><span translate="patient.empty-device-list-message"></span></div>
 
