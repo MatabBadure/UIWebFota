@@ -1247,9 +1247,9 @@ angular.module('hillromvestApp')
               if($scope.hmrChartData.series[key1].data[key2].toolText.missedTherapy){
                 $scope.hmrChartData.series[key1].data[key2].color = "red";
               }
-              if(!$scope.hmrChartData.series[key1].data[key2].toolText.missedTherapy && localStorage.getItem('deviceType') == 'MONARCH'){
+             /* if(!$scope.hmrChartData.series[key1].data[key2].toolText.missedTherapy && localStorage.getItem('deviceType') == 'MONARCH'){
                 $scope.hmrChartData.series[key1].data[key2].color = "#7cb5ee";
-              }
+              }*/
 
             });            
             
@@ -4180,9 +4180,9 @@ $scope.getComplianceGraph1 = function(){
               if($scope.hmrChartData1.series[key1].data[key2].toolText.missedTherapy){
                 $scope.hmrChartData1.series[key1].data[key2].color = "red";
               }
-              if(!$scope.hmrChartData1.series[key1].data[key2].toolText.missedTherapy && $scope.deviceTypeforGraph=="MONARCH" ){
+/*              if(!$scope.hmrChartData1.series[key1].data[key2].toolText.missedTherapy && $scope.deviceTypeforGraph=="MONARCH" ){
                 $scope.hmrChartData1.series[key1].data[key2].color = "#d95900";
-              }
+              }*/
 
             });            
             
@@ -4211,10 +4211,10 @@ $scope.getComplianceGraph1 = function(){
       }); */
       var fillcolor = '#7cb5ee'; 
       if(localStorage.getItem('deviceType')  == 'MONARCH'){
-        var fillcolor = '#d95900';
+       fillcolor = '#d95900';
       } 
        if($scope.deviceTypeforGraph == 'MONARCH'){
-        var fillcolor = '#d95900';
+         fillcolor = '#d95900';
       } 
           
       divId = (divId)? divId : "HMRGraph1";

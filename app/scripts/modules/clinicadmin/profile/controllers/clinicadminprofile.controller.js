@@ -54,6 +54,7 @@ angular.module('hillromvestApp')
     };
 
     $scope.init = function(){
+      $scope.initCount($stateParams.clinicId);
       if($state.current.name === 'clinicadminUserProfile' || $state.current.name === 'editClinicadminProfile' || $state.current.name === 'clinicadminUpdatePassword'){
         $scope.initProfile(StorageService.get('logged').userId);
       }else if($state.current.name === 'clinicadminSettings'){
@@ -62,7 +63,7 @@ angular.module('hillromvestApp')
     };
 
     $scope.editMode = function(){
-      $state.go('editClinicadminProfile');
+      $state.go('editClinicadminProfile',{'clinicId': $stateParams.clinicId});
     };
 
     $scope.switchProfileTab = function(status){
