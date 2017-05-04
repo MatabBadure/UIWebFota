@@ -385,6 +385,7 @@ angular.module('hillromvestApp')
       angular.forEach(response.data.deviceList, function(device){
         device.createdDate = dateService.getDateByTimestamp(device.createdDate);
         device.lastModifiedDate = dateService.getDateByTimestamp(device.lastModifiedDate);
+         device.createdDate = dateService.getDateByTimestamp(device.createdDate);
       });
       $scope.devices = response.data.deviceList;
     }).catch(function(response){
