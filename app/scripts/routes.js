@@ -1647,7 +1647,7 @@ angular.module('hillromvestApp')
             
             .state('hcpUserProfile', {
                 parent: 'hcp-user-profile',
-                url: '/profile',
+                url: '/{clinicId}/profile',
                 data: {
                     roles: ['HCP'],
                     pageTitle: 'profile.page-title.my-profile'
@@ -1673,7 +1673,7 @@ angular.module('hillromvestApp')
 
             .state('hcpUpdatePassword', {
                 parent: 'hcp-user-profile',
-                url: '/updatepassword',
+                url: '/{clinicId}/updatepassword',
                 data: {
                     roles: ['HCP'],
                     pageTitle: 'profile.page-title.update-password'
@@ -1694,7 +1694,7 @@ angular.module('hillromvestApp')
 
             .state('editHCPProfile', {
                 parent: 'hcp-user-profile',
-                url: '/update',
+                url: '{clinicId}/update',
                 data: {
                     roles: ['HCP'],
                     pageTitle: 'profile.page-title.profile-update'
@@ -2515,7 +2515,7 @@ angular.module('hillromvestApp')
 
             .state('hcpSettings', {
                 parent: 'hcp-user-profile',
-                url: '/notification-settings',
+                url: '/{clinicId}/notification-settings',
                 data: {
                     roles: ['HCP'],
                     pageTitle: 'profile.page-title.notification-settings'

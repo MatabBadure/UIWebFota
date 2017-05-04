@@ -6,6 +6,7 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
    $scope.isEmailUpdated = false;
   $scope.init = function(){
 		var currentRoute = $state.current.name;
+     $scope.initCount("");
 		$scope.profileTab = currentRoute;	
 		$scope.userRole = StorageService.get('logged').role;
     $scope.role = StorageService.get('logged').role;
