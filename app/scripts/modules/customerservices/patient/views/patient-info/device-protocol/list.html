@@ -213,8 +213,11 @@
       <span ng-if="device.active" class="device--list__status--text" translate="patient.device.active-status">Active</span>
       <span ng-if="!device.active" class="device--list__status--text" translate="patient.device.inactive-status"></span>
     </div>
-    <div class="col-md-4 device-list__date">
+     <div class="col-md-4 device-list__date" ng-if="!device.active">
       <span>{{device.lastModifiedDate}}</span>
+    </div>
+    <div class="col-md-4 device-list__date" ng-if="device.active">
+       <span>{{device.createdDate}}</span>
     </div>
     <div class="col-md-1 device-list__edit text-center">
       <!-- <span ng-if="device.active" class="icon-edit-icon cursor-pointer" ng-click="openEditDevice(device)"></span>
