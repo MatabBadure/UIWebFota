@@ -47,6 +47,15 @@ angular.module('hillromvestApp')
 
       $scope.initCount("");
             var currentRoute = $state.current.name;
+
+            if($scope.getDeviceTypeforBothIcon() === searchFilters.allCaps){
+                $scope.deviceTypeforGraphSelected = searchFilters.VisiVest;
+                $scope.deviceTypeforGraphProtocol = searchFilters.VisiVest;
+            }
+            else{
+              $scope.deviceTypeforGraphSelected = $scope.getDeviceType();
+               $scope.deviceTypeforGraphProtocol = $scope.getDeviceType();
+            }
 /*      if( $scope.role === loginConstants.role.caregiver){
         $scope.getPatientListForCaregiver($scope.caregiverID);
       }*/
@@ -846,11 +855,13 @@ angular.module('hillromvestApp')
     };
    
      $scope.switchtoDevice = function() {    
-    $scope.selectedDeviceTypeforGraph = $scope.deviceTypeforGraphSelected;   
+    $scope.selectedDeviceTypeforGraph = $scope.deviceTypeforGraphSelected;
+    $scope.deviceTypeforGraphSelectedProtocol = searchFilters.VisiVest;
     if($scope.selectedDeviceTypeforGraph == "VEST")    
     {   
         $scope.deviceTypeforGraph = "VEST";  
-        $scope.getHMR() ;
+        $scope.getTransmissionDateForPatient($scope.patientId);
+        $scope.getHMR();
         $scope.forhidingMonarchHmrGraph = false;
         $scope.forhidingVestHmrGraph = true;
              
@@ -858,8 +869,9 @@ angular.module('hillromvestApp')
     }   
     if($scope.selectedDeviceTypeforGraph == "MONARCH")   
     {   
-        $scope.deviceTypeforGraph = "MONARCH";  
-        $scope.getHMR() ; 
+        $scope.deviceTypeforGraph = "MONARCH"; 
+        $scope.getTransmissionDateForPatient($scope.patientId); 
+        $scope.getHMR(); 
         $scope.forhidingMonarchHmrGraph = true;
         $scope.forhidingVestHmrGraph = false;  
     }   
@@ -867,10 +879,11 @@ angular.module('hillromvestApp')
 
    $scope.switchtoDeviceProtocol = function() {    
     $scope.selectedDeviceTypeforGraphProtocol = $scope.deviceTypeforGraphSelectedProtocol; 
-     
+     $scope.deviceTypeforGraphSelected = searchFilters.VisiVest;
     if($scope.selectedDeviceTypeforGraphProtocol == "VEST")    
     {   
         $scope.deviceTypeforGraphProtocol = "VEST";  
+        $scope.getTransmissionDateForPatient($scope.patientId);
         $scope.getCompliance() ;
          $scope.forhidingMonarchProtocolGraph = false;
         $scope.forhidingVestProtocolGraph = true;
@@ -879,6 +892,7 @@ angular.module('hillromvestApp')
     if($scope.selectedDeviceTypeforGraphProtocol == "MONARCH")   
     {   
         $scope.deviceTypeforGraphProtocol = "MONARCH";  
+        $scope.getTransmissionDateForPatient($scope.patientId);
         $scope.getCompliance() ;  
          $scope.forhidingMonarchProtocolGraph = true;
         $scope.forhidingVestProtocolGraph = false;
@@ -2137,8 +2151,22 @@ angular.module('hillromvestApp')
     };
 
     $scope.getTransmissionDateForPatient = function(patientId){
- 
-      patientService.getTransmissionDate(patientId).then(function(response) {
+       var deviceType = '';
+       if($scope.getDeviceTypeforBothIcon() === searchFilters.allCaps){
+                if($scope.isHMR){
+                  deviceType = $scope.deviceTypeforGraphSelected;
+                }
+                else if( $scope.isCompliance){
+                  deviceType = $scope.deviceTypeforGraphProtocol;
+                }
+                else{
+                  deviceType = searchFilters.VisiVest;
+                }
+        }
+     else{
+        deviceType = $scope.getDeviceType();
+         }
+      patientService.getTransmissionDate(patientId,deviceType).then(function(response) {
         if(response.data && response.data.firstTransmissionDate){
           $scope.hasTransmissionDate = true;
           var formattedTransmissionDate = dateService.getDateTimeFromTimeStamp(dateService.convertYyyyMmDdToTimestamp(response.data.firstTransmissionDate),patientDashboard.dateFormat,'/');
@@ -2441,6 +2469,7 @@ $scope.adherencetrendData.push(new Object({"adherenceTrends": [] , "protocols": 
       $scope.isCompliance = false;
       $scope.isAdherenceTrend = false;
       $scope.noDataStatus = true;
+      $scope.getTransmissionDateForPatient($scope.patientId);
       $scope.selectChart($scope.fromDate);
 
     };
@@ -2450,6 +2479,7 @@ $scope.adherencetrendData.push(new Object({"adherenceTrends": [] , "protocols": 
       $scope.isCompliance = true;
       $scope.isAdherenceTrend = false;
       $scope.noDataStatus = true;
+        $scope.getTransmissionDateForPatient($scope.patientId);
       $scope.selectChart($scope.fromDate);
     };
 

@@ -186,7 +186,12 @@ $scope.getClinicsForHCP($scope.hcpId);
 	$scope.getclinicAdminID = function(clinicId){
       clinicService.getClinicAdmins(clinicId).then(function(response){
         $scope.clinicAdmins = response.data.clinicAdmin;
-        $scope.getClinicsForClinicAdmin(new Number($scope.clinicAdmins[0].id));
+ if($scope.clinicAdmins.length){
+         $scope.getClinicsForClinicAdmin(new Number($scope.clinicAdmins[0].id));
+               }
+               else{
+                      $scope.noDataAvailable = true;
+               }
       }).catch(function(response){});
     };
 
