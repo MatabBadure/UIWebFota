@@ -395,8 +395,8 @@ angular.module('hillromvestApp')
         });
       },
 
-      getTransmissionDate: function(patientId){
-        var url = URL.getTransmissionDate.replace('PATIENTID', patientId).replace('DEVICETYPE',localStorage.getItem('deviceType'));
+      getTransmissionDate: function(patientId,deviceType){
+        var url = URL.getTransmissionDate.replace('PATIENTID', patientId).replace('DEVICETYPE',deviceType);
         return $http.get(url, {
           headers: headerService.getHeader()
         });
