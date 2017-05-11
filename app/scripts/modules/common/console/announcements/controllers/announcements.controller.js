@@ -189,8 +189,8 @@ $scope.geteditAnnouncement = function(){
          $scope.announcement.patientType = 'All';
       }*/
       if($scope.announcement.clinicType == 'All'){
-$scope.announcement.clinic = 'All';
-$scope.checkedtwo = true;
+        $scope.announcement.clinic = 'All';
+        $scope.checkedtwo = true;
       }
       else {
       $scope.announcement.clinic = 'Specialty';
@@ -259,9 +259,11 @@ $scope.Handlechange = function(element)
 {
    $scope.fileinput = document.getElementById("browse");
     var textinput = document.getElementById("filename");
-    textinput.value = $scope.fileinput.value;
+    //textinput.value = $scope.fileinput.value;
      $scope.files = element.files;
-    var ext = $scope.files[0].name.split('.');
+     var res = $scope.fileinput.value.split('\\');
+      textinput.value = "...\\" + res[res.length-1];
+  var ext = $scope.files[0].name.split('.');
     for(var i =0;i<ext.length;i++){
       if(ext[i]=="pdf"){
 $scope.uploadFile();
