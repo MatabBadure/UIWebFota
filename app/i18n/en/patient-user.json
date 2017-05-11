@@ -63,7 +63,8 @@
       "pressure-per-treatment": "Pressure Per Treatment",
       "frequency-per-treatment": "Frequency Per Treatment",
       "intensity-per-treatment": "Intensity Per Treatment",
-      "device-type": "Device"
+      "device-type": "Device",
+      "intensity-pressure": "Pressure/Intensity Per Treatment"
     },
     "device-caption": {
       "serial-no": "Serial Number",

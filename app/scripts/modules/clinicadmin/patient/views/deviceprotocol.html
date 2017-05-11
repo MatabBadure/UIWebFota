@@ -32,11 +32,8 @@
           <div class="col-md-3 col-sm-3 header--type text-align-center">
             <span translate="patient.protocol-caption.frequency-per-treatment"></span>
           </div>
-          <div class="col-md-3 col-sm-3 header--type text-align-center" ng-if="getDeviceType() =='VEST'">
-            <span translate="patient.protocol-caption.pressure-per-treatment"></span>
-          </div>
-           <div class="col-md-3 col-sm-3 header--type text-align-center" ng-if="getDeviceType() =='MONARCH'">
-            <span translate="patient.protocol-caption.intensity-per-treatment"></span>
+          <div class="col-md-3 col-sm-3 header--type text-align-center">
+            <span translate="patient.protocol-caption.intensity-pressure"></span>
           </div>
           <div class="clr"></div>
         </div>
@@ -202,9 +199,13 @@
       <span ng-if="device.active" class="device--list__status--text" translate="patient.device.active-status">Active</span>
       <span ng-if="!device.active" class="device--list__status--text" translate="patient.device.inactive-status"></span>
     </div>
-    <div class="col-md-2 col-sm-2 device-list__date">
-      <span>{{::device.lastModifiedDate}}</span>
+     <div class="col-md-2 col-sm-2 device-list__date" ng-if="device.active">
+       <span>{{device.createdDate}}</span>
     </div>
+    <div class="col-md-2 col-sm-2 device-list__date" ng-if="!device.active">
+      <span>{{device.lastModifiedDate}}</span>
+    </div>
+   
   </div>
   <div class="col-md-16 col-sm-16 empty-list-message" ng-if="!devices"><span translate="patient.empty-device-list-message"></span></div>
 
