@@ -150,12 +150,12 @@
     </div>
   
     <div class="col-xs-2 hidden-sm hidden-md hidden-lg col-xs-offset-2" ng-if="protocols[0].type === 'Custom'">
-      <div class="col-md-16 col-xs-16 protocol-list__treatment-day protocol-list no_border text-align-left" ng-repeat="protocol in protocols" ng-class="{'list-inactive':protocol.deleted, 'last' : $last}" ng-if="displayFlag">
+      <div class="col-md-16 col-xs-16 protocol-list__treatment-day protocol-list no_border text-align-left" ng-repeat="protocol in protocols" ng-class="{'list-inactive':protocol.deleted, 'last' : $last}" >
         <span class="protocol-list--value uppercase"> {{protocol.treatmentLabel}} </span>
       </div>
     </div>
 
-  <div class="col-md-2 col-sm-2 col-xs-3 col-xs-offset-3 col-sm-offset-2 treatments_per_day_count col-md-offset-2  text-right margin-top_10">
+  <div class="col-md-2 col-sm-2 col-xs-3 col-xs-offset-3 col-sm-offset-2 treatments_per_day_count col-md-offset-2  text-right margin-top_10" ng-if="displayFlag">
       <span class="v_middle">{{protocol.treatmentsPerDay}}</span>
   </div>
   <div class="col-md-9 col-sm-9 col-xs-8 col-sm-offset-2 col-xs-offset-3 col-md-offset-2">
@@ -182,7 +182,7 @@
   </div>
   <div class="col-md-2 col-sm-2 col-xs-1 comon_action_div" ng-if="protocols">
     <div class="col-md-16 col-sm-16 col-xs-16 protocol-list__edit icons text-center" ng-if="displayFlag">
-      <span ng-if="!protocol.deleted" class="icon-edit-icon" ng-click="openEditProtocol(protocols[0])"></span>
+      <span ng-if="!protocol.deleted" class="icon-edit-icon" ng-click="openEditProtocol(protocol)"></span>
     </div>
   </div>
 </div>
