@@ -857,6 +857,16 @@ $scope.getdevice = function(){
         return false;
       }
       patientService.addDevice( $stateParams.patientId, $scope.device, $scope.deviceTypeSelected).then(function(response){
+      if(response.data.changedDevType == 'ALL'){
+          localStorage.setItem('deviceType', 'VEST');
+          localStorage.setItem('deviceTypeforGraph', 'ALL');
+          localStorage.setItem('deviceTypeforBothIcon', 'ALL');
+            }
+            else{
+            localStorage.setItem('deviceType', response.data.changedDevType);
+            localStorage.setItem('deviceTypeforGraph', response.data.changedDevType);
+            localStorage.setItem('deviceTypeforBothIcon', response.data.changedDevType);
+          }
         if($scope.patientStatus.role === loginConstants.role.acctservices){
           $state.go('patientProtocolRcadmin', {'patientId': $stateParams.patientId});
         }else{
@@ -1457,9 +1467,7 @@ $scope.getdevice = function(){
       }
     };
     $scope.protocolDeviceIconFilter = function(protocol){
-      if(localStorage.getItem('deviceType') === searchFilters.allCaps){
-      console.log("Now the protocol is:",protocol.type);
-      console.log("and device type is:",protocol.deviceType);
+      if(localStorage.getItem('deviceTypeforBothIcon') === searchFilters.allCaps){
       if(protocol.type === 'Normal'){
         $scope.customPointsChecker = 0;
         console.log("protocol is normal, we want device symbol so i am returning true");
