@@ -163,6 +163,7 @@ angular.module('hillromvestApp')
           $scope.totalHmr = $scope.totalHmr + device.hmr;
           device.createdDate = dateService.getDateByTimestamp(device.createdDate);
           device.lastModifiedDate = dateService.getDateByTimestamp(device.lastModifiedDate);
+           device.createdDate = dateService.getDateByTimestamp(device.createdDate);
           $scope.deviceTypeSelected = localStorage.getItem('devicetype'); //later to be changed when devicetype is passed in response
         });
         $scope.devices = response.data.deviceList;

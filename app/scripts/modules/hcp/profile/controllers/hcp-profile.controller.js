@@ -49,6 +49,7 @@ angular.module('hillromvestApp')
     };
 
     $scope.init = function(){
+       $scope.initCount($stateParams.clinicId);
       if($state.current.name === 'hcpUserProfile' || $state.current.name === 'editHCPProfile' ){
         $scope.initProfile(StorageService.get('logged').userId);
       }else if($state.current.name === 'hcpSettings'){
@@ -70,11 +71,13 @@ angular.module('hillromvestApp')
         };
         
     $scope.editMode = function(){
-      $state.go('editHCPProfile');
+       var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : (($scope.clinics && $scope.clinics.length > 0) ? $scope.clinics[0].id : $stateParams.clinicId);      
+      $state.go('editHCPProfile', {'clinicId': clinicId});
     };
 
     $scope.switchProfileTab = function(status){
-      $state.go(status);
+       var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : (($scope.clinics && $scope.clinics.length > 0) ? $scope.clinics[0].id : $stateParams.clinicId);      
+      $state.go(status, {'clinicId': clinicId});
     };
 
     $scope.updateProfile = function(){
@@ -93,10 +96,11 @@ angular.module('hillromvestApp')
         });
       }
       $scope.user.role = $scope.user.authorities[0].name;
+       var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : (($scope.clinics && $scope.clinics.length > 0) ? $scope.clinics[0].id : $stateParams.clinicId);
       UserService.editUser($scope.user).then(function(response){        
         if(StorageService.get('logged').userEmail === $scope.user.email){
           notyService.showMessage(response.data.message, 'success');
-          $state.go('hcpUserProfile');
+          $state.go('hcpUserProfile', {'clinicId': clinicId});
         }else{
           notyService.showMessage(profile.EMAIL_UPDATED_SUCCESSFULLY, 'success');
           Auth.logout();
@@ -151,7 +155,8 @@ angular.module('hillromvestApp')
     };
 
     $scope.cancel = function(){
-      $state.go('hcpUserProfile');
+            var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : (($scope.clinics && $scope.clinics.length > 0) ? $scope.clinics[0].id : $stateParams.clinicId);
+      $state.go('hcpUserProfile', {'clinicId': clinicId});
     };
 
     $scope.goToPatientDashboard = function(value){
