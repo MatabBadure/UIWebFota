@@ -208,21 +208,48 @@ $scope.getdevice = function(){
     $scope.initPatientAddProtocol = function(){
       $scope.getPatientById($stateParams.patientId);
       $scope.protocol = $stateParams.protocol;
-      var device = localStorage.getItem('deviceTypeforBothIcon');
-      if(device === searchFilters.VisiVest){
-       
-           $scope.deviceTypeVest = true;   
-         $scope.deviceTypeMonarch = false;  
-        }
-        else if(device === searchFilters.Monarch){
-          
-           $scope.deviceTypeVest = false;   
-         $scope.deviceTypeMonarch = true;  
-        }
-        else{
-          $scope.deviceTypeVest = true;   
-         $scope.deviceTypeMonarch = false;
-        }
+      var notProtocolDevType = $stateParams.protocolDevType;
+      if($stateParams.protocolDevType){
+        $scope.disableDropdown = true; // If protocol for one device is already present , disable the dropdown
+      }
+      else{
+        $scope.disableDropdown = false;
+      }
+      if(notProtocolDevType){
+           if(notProtocolDevType === searchFilters.VisiVest){
+              $scope.deviceTypeSelectedProtocol = searchFilters.Monarch;
+              $scope.deviceTypeVest = false;   
+               $scope.deviceTypeMonarch = true;  
+               $scope.ProtocolDevType = searchFilters.Monarch;
+            }
+            else if(notProtocolDevType === searchFilters.Monarch){
+             $scope.ProtocolDevType = $scope.deviceTypeSelectedProtocol = searchFilters.VisiVest;
+             $scope.deviceTypeVest = true;   
+               $scope.deviceTypeMonarch = false;  
+            }
+            else{
+             $scope.ProtocolDevType = $scope.deviceTypeSelectedProtocol = searchFilters.VisiVest;
+            }
+     }
+     else{
+       $scope.ProtocolDevType = $scope.deviceTypeSelectedProtocol = searchFilters.VisiVest;
+            var device = localStorage.getItem('deviceTypeforBothIcon');
+            if(device === searchFilters.VisiVest){
+             
+                 $scope.deviceTypeVest = true;   
+               $scope.deviceTypeMonarch = false;  
+              }
+              else if(device === searchFilters.Monarch){
+                
+                 $scope.deviceTypeVest = false;   
+               $scope.deviceTypeMonarch = true;  
+              }
+              else{
+                $scope.deviceTypeVest = true;   
+               $scope.deviceTypeMonarch = false;
+              }
+      }
+        
       if(!$scope.protocol){
         $scope.protocol = {};
         $scope.protocol.type = 'Normal';
@@ -263,7 +290,10 @@ $scope.getdevice = function(){
     $scope.init = function() {
       $scope.deviceTypeVest = false;   
       $scope.deviceTypeMonarch = false; 
-      
+      $scope.disableDropdown = false;
+      $scope.displayFlag = true;
+          $scope.customPointsChecker = 0;
+          $scope.lastdeviceType = "";
        $scope.selectedDevice();
       var currentRoute = $state.current.name;
       //in case the route is changed from other thatn switching tabs
@@ -881,10 +911,12 @@ $scope.getdevice = function(){
     };
 
     $scope.linkProtocol = function(){
+      console.log("$scope.protocols in linkprototocl:",$scope.protocols);
+      var protocolDevType = ($scope.protocols)?$scope.protocols[0].deviceType:null;
       if($scope.patientStatus.role === loginConstants.role.acctservices){
-        $state.go('patientAddProtocolRcadmin', {'patientId': $stateParams.patientId});
+        $state.go('patientAddProtocolRcadmin', {'patientId': $stateParams.patientId , 'protocolDevType': protocolDevType});
       }else{
-        $state.go('patientAddProtocol');
+        $state.go('patientAddProtocol' , {'protocolDevType': protocolDevType});
       }
     };
 
