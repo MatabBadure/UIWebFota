@@ -581,7 +581,7 @@ angular.module('hillromvestApp')
             })
             .state('patientAddProtocol', {
                 parent: 'patientProtocol',
-                url: '/addProtocol',
+                url: '/{protocolDevType}/addProtocol',
                 params: {protocol: null},
                 data: {
                     roles: ['ADMIN'],
@@ -2884,7 +2884,7 @@ angular.module('hillromvestApp')
             })
             .state('patientAddProtocolRcadmin', {
                 parent: 'rcadmin',
-                url: '/{patientId}/patients-addProtocol',
+                url: '/{patientId}/{protocolDevType}/patients-addProtocol',
                 params: {protocol: null},
                 data: {
                     roles: ['ACCT_SERVICES'],
