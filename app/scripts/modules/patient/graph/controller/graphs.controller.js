@@ -1217,6 +1217,7 @@ angular.module('hillromvestApp')
 
     
     $scope.getHMRGraph = function(){
+      console.log("checkeing for hmr graph, line no:3161:",$scope.deviceTypeforGraph);
       patientDashBoardService.getHMRGraphPoints($scope.patientId, $scope.deviceTypeforGraph, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.durationRange).then(function(response){
         $scope.hmrChartData = response.data;  
         $scope.noDataAvailableForHMR  = false;       
@@ -3933,11 +3934,11 @@ $scope.synchronizedChart1 = function(divId){
           }
         }
         
-        $.each($scope.chartData.datasets, function(i, dataset) {         
+        $.each($scope.chartData1.datasets, function(i, dataset) {         
           var  minRange = (dataset.plotLines.max) ? dataset.plotLines.max : dataset.plotLines.min;
           var yMaxPlotLine = dataset.plotLines.max;
           var yMinPlotLine = dataset.plotLines.min;
-          var noOfDataPoints = ($scope.chartData.xData)? $scope.chartData.xData.length: 0;
+          var noOfDataPoints = ($scope.chartData1.xData)? $scope.chartData1.xData.length: 0;
           var daysInterval = getDaysIntervalInChart($scope.complianceXAxisLabelCount);         
           
           $('<div class="chart">')
@@ -4094,13 +4095,13 @@ $scope.synchronizedChart1 = function(divId){
     };
 
 $scope.getComplianceGraph1 = function(){ 
-      $scope.deviceTypeforGraphProtocol="MONARCH"
+      $scope.deviceTypeforGraphProtocol="MONARCH";
       patientDashBoardService.getcomplianceGraphData($scope.patientId, $scope.deviceTypeforGraphProtocol, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.durationRange).then(function(response){
-        $scope.compilencechartData = response.data;
+        $scope.compilencechartData1 = response.data;
         var responseData = response.data;              
         var xData = [];
-        $scope.chartData = {};
-        $scope.chartData.datasets = [];
+        $scope.chartData1 = {};
+        $scope.chartData1.datasets = [];
         $scope.noDataAvailable = false;
         if(responseData){ 
           $scope.noDataAvailable = false;        
@@ -4151,9 +4152,9 @@ $scope.getComplianceGraph1 = function(){
               responseData.series[key1].unit = patientGraphsConstants.units.duration; 
               responseData.series[key1].color = patientGraphsConstants.colors.duration;
             }
-            $scope.chartData.datasets.push(responseData.series[key1]);
+            $scope.chartData1.datasets.push(responseData.series[key1]);
           });
-          $scope.chartData.xData = xData;
+          $scope.chartData1.xData = xData;
           setTimeout(function(){            
               $scope.synchronizedChart1();           
           }, 100);          

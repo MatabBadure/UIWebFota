@@ -27,6 +27,7 @@ function($scope, $state, clinicadminPatientService, notyService, $stateParams, c
         $state.go('clinicadminpatientProtocol', {'patientId': $stateParams.patientId});
       }
     }else{
+      console.log("$rootScope.protocols",$rootScope.protocols);
       var date = new Date();
       var dd = date.getDate();
       var mm = date.getMonth() + 1;
@@ -122,6 +123,9 @@ function($scope, $state, clinicadminPatientService, notyService, $stateParams, c
           } 
           if(!value.protocolKey){
             value.protocolKey = $scope.protocol.protocol[0].protocolKey;
+          }
+          if(!value.deviceType){
+            value.deviceType = $scope.protocol.protocol[0].deviceType;
           }          
         });        
       }else{
@@ -131,7 +135,10 @@ function($scope, $state, clinicadminPatientService, notyService, $stateParams, c
          }       
         if(!data[0].type){
           data[0].type = 'Normal';
-        }         
+        } 
+        if(!data[0].deviceType){
+          data[0].deviceType = $scope.protocol.protocol[0].deviceType;
+        }        
       }
 
       if(data && data[0]){
