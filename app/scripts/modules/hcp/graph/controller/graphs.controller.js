@@ -113,7 +113,7 @@ angular.module('hillromvestApp')
      	else if ($scope.VisiVest==true && $scope.Monarch!=true && $scope.both==true)
      	{
           $scope.ClinicDashboardDeviceType = searchFilters.VisiVest;
-          $scope.totalnumberofActivePatients = $scope.numberofVisiVestPatients+$scope.numberofbothPatients;
+          $scope.totalnumberofActivePatients = $scope.numberofVisiVestPatients;
          // alert(searchFilters.VisiVest);
           
      	}
@@ -129,14 +129,14 @@ angular.module('hillromvestApp')
      	else if ($scope.Monarch==true && $scope.VisiVest!=true && $scope.both==true)
      	{
           $scope.ClinicDashboardDeviceType = searchFilters.Monarch;
-          $scope.totalnumberofActivePatients = $scope.numberofMonarchPatients+$scope.numberofbothPatients;
+          $scope.totalnumberofActivePatients = $scope.numberofMonarchPatients;
      	}
 
 
      	else if ($scope.Monarch==true && $scope.VisiVest==true && $scope.both!=true)
      	{
           $scope.ClinicDashboardDeviceType = searchFilters.allCaps;
-          $scope.totalnumberofActivePatients = $scope.numberofVisiVestPatients + $scope.numberofMonarchPatients;
+          $scope.totalnumberofActivePatients = $scope.numberofVisiVestPatients + $scope.numberofMonarchPatients - $scope.numberofbothPatients;
          // alert($scope.ClinicDashboardDeviceType);
           
      	}
@@ -151,13 +151,13 @@ angular.module('hillromvestApp')
         else if ($scope.Monarch==true && $scope.VisiVest==true && $scope.both==true  )
      	{
           $scope.ClinicDashboardDeviceType = searchFilters.allCaps;
-          $scope.totalnumberofActivePatients = $scope.numberofVisiVestPatients + $scope.numberofMonarchPatients+$scope.numberofbothPatients;
+          $scope.totalnumberofActivePatients = $scope.numberofVisiVestPatients + $scope.numberofMonarchPatients - $scope.numberofbothPatients;
          // alert($scope.ClinicDashboardDeviceType);
      	}
      	else if ($scope.Monarch!=true && $scope.VisiVest!=true && $scope.both!=true  )
      	{
           $scope.ClinicDashboardDeviceType = searchFilters.allCaps;
-          $scope.totalnumberofActivePatients = $scope.numberofVisiVestPatients + $scope.numberofMonarchPatients+$scope.numberofbothPatients;
+          $scope.totalnumberofActivePatients = $scope.numberofVisiVestPatients + $scope.numberofMonarchPatients - $scope.numberofbothPatients;
           
           
 
