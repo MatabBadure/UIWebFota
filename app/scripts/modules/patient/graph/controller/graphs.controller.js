@@ -2182,7 +2182,7 @@ angular.module('hillromvestApp')
         $scope.dateOpts = {
           minDate: $scope.hasTransmissionDateforCostomrange
           };         
-          }, 100);     
+          }, 1000);     
         }
       });
     };
