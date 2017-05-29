@@ -112,15 +112,20 @@ angular.module('hillromvestApp')
               $scope.noMatchFound = true;
             });
         };
-
-        $scope.getDateFromTimestampforTransmissiondate = function(timestamp){
+         $scope.getDateFromTimestampforTransmissiondate = function(timestamp){
           if(!timestamp){
             return searchFilters.emptyString;
           }
-          var timeZoneOffset = new Date(timestamp).getTimezoneOffset()*60*1000;
+
+          var offset = -5.0;
+          var clientDate = new Date(timestamp);
+          var  utc = clientDate.getTime() + (clientDate.getTimezoneOffset() * 60000);
+          var _date = new Date(utc + (3600000*offset));
+
+         /* var timeZoneOffset = new Date(timestamp).getTimezoneOffset()*60*1000;
           var qualcommOffset = 6*60*60*1000;
-          var timestamp = timestamp + timeZoneOffset - qualcommOffset;
-          var _date = new Date(timestamp);
+          var timestamp = timestamp + timeZoneOffset - qualcommOffset;*/
+         /* var _date = new Date(timestamp);*/
           var _month = (_date.getMonth()+1).toString();
           _month = _month.length > 1 ? _month : '0' + _month;
           var _day = (_date.getDate()).toString();
@@ -128,6 +133,7 @@ angular.module('hillromvestApp')
           var _year = (_date.getFullYear()).toString();
           return _month+"/"+_day+"/"+_year;
         };
+
 
         $scope.getDateFromTimestamp = function(timestamp){
           if(!timestamp){
