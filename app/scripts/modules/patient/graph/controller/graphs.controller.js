@@ -2174,12 +2174,14 @@ angular.module('hillromvestApp')
           $scope.transmissionDate = (formattedTransmissionDate && formattedTransmissionDate.indexOf(" "))? formattedTransmissionDate.split(" ")[0] : null; 
           $scope.hasTransmissionDateforCostomrange = dateService.getDateFromTimeStamp(response.data.firstTransmissionDate,patientDashboard.dateFormat,'/'); 
           //alert($scope.hasTransmissionDateforCostomrange); 
-          $scope.opts = {
+        setTimeout(function(){ 
+              $scope.opts = {
           minDate: $scope.hasTransmissionDateforCostomrange
         };
         $scope.dateOpts = {
           minDate: $scope.hasTransmissionDateforCostomrange
-          };      
+          };         
+          }, 100);     
         }
       });
     };
