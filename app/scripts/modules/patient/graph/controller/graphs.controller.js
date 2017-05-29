@@ -2178,6 +2178,7 @@ angular.module('hillromvestApp')
               $scope.opts = {
           minDate: $scope.hasTransmissionDateforCostomrange
         };
+        alert("$scope.opts");
         $scope.dateOpts = {
           minDate: $scope.hasTransmissionDateforCostomrange
           };         
