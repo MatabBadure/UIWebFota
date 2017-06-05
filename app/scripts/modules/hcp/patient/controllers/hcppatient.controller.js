@@ -420,7 +420,7 @@ angular.module('hillromvestApp')
           $scope.updateModel = false;
     };
     $scope.protocolDeviceIconFilter = function(protocol){
-      if(localStorage.getItem('deviceType') === searchFilters.allCaps){
+      if(localStorage.getItem('deviceTypeforBothIcon') === searchFilters.allCaps){
       
       
       if(protocol.type === 'Normal'){
