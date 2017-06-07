@@ -1258,7 +1258,7 @@ $scope.getdevice = function(){
     };
 
     angular.element('#dp2').datepicker({
-          endDate: '+0d',
+          endDate: '-1d',
           startDate: '-100y',
           autoclose: true});
 
@@ -1500,12 +1500,19 @@ $scope.getdevice = function(){
     };
     $scope.protocolDeviceIconFilter = function(protocol){
       if(localStorage.getItem('deviceTypeforBothIcon') === searchFilters.allCaps){
+        if($scope.customPointsChecker == $scope.protocols.length){
+          $scope.customPointsChecker = 0;
+          $scope.lastdeviceType = $scope.protocols[0].deviceType;
+        }
+        var returnvalue = "";
       if(protocol.type === 'Normal'){
         $scope.customPointsChecker = 0;
         console.log("protocol is normal, we want device symbol so i am returning true");
         $scope.lastdeviceType = protocol.deviceType;
-        $scope.displayFlag = true;
-        return true;
+       
+         returnvalue = true;
+          $scope.displayFlag = returnvalue;
+        return returnvalue;
       }
       else if(protocol.type === 'Custom'){
       if($scope.lastdeviceType != protocol.deviceType){
@@ -1513,21 +1520,26 @@ $scope.getdevice = function(){
       }
       $scope.customPointsChecker++;
       if($scope.customPointsChecker == 1){
-        console.log("protocol is custom, we want device symbol so i am returning true");
+      
          $scope.lastdeviceType = protocol.deviceType;
-         $scope.displayFlag = true;
-        return true;
+          returnvalue = true;
+         $scope.displayFlag = returnvalue;
+        console.log("protocol is custom, we want device symbol so i am returning ",returnvalue);
+        return returnvalue;
       }
       else{
-        console.log("protocol is custom,but we dont want device symbol so i am returning false");
+       
          $scope.lastdeviceType = protocol.deviceType;
-         $scope.displayFlag = false;
-        return false;
+          returnvalue = false;
+         $scope.displayFlag = returnvalue;
+         console.log("protocol is custom,but we dont want device symbol so i am returning ",returnvalue);
+        return returnvalue;
       }
         }
       }
       else{
-        return true;
+         returnvalue = true;
+        return returnvalue;
       }
     };
     $scope.init();
