@@ -421,7 +421,10 @@ angular.module('hillromvestApp')
     };
     $scope.protocolDeviceIconFilter = function(protocol){
       if(localStorage.getItem('deviceTypeforBothIcon') === searchFilters.allCaps){
-      
+       if($scope.customPointsChecker == $scope.protocols.length){
+          $scope.customPointsChecker = 0;
+          $scope.lastdeviceType = $scope.protocols[0].deviceType;
+        }
       
       if(protocol.type === 'Normal'){
         $scope.customPointsChecker = 0;

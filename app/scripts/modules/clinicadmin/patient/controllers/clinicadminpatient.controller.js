@@ -709,7 +709,7 @@ angular.module('hillromvestApp')
   };
 
  angular.element('#dp2').datepicker({
-  endDate: '+0d',
+  endDate: '-1d',
   startDate: '-100y',
   autoclose: true});
 
@@ -720,10 +720,15 @@ angular.module('hillromvestApp')
     $state.go('clinicAdminUpdateProtocol', {'protocolId': protocol.id , 'protocolDevice' : protocol.deviceType});
   };
      $scope.protocolDeviceIconFilter = function(protocol){
-      if(localStorage.getItem('deviceTypeforBothIcon') === searchFilters.allCaps){
-      
-      
+      console.log("protocol:",protocol);
+      if($scope.getDeviceTypeforBothIcon() === searchFilters.allCaps){
+         if($scope.customPointsChecker == $scope.protocols.length){
+          $scope.customPointsChecker = 0;
+          $scope.lastdeviceType = $scope.protocols[0].deviceType;
+        }
+     
       if(protocol.type === 'Normal'){
+         console.log("i am normal");
         $scope.customPointsChecker = 0;
         
         $scope.lastdeviceType = protocol.deviceType;
@@ -731,22 +736,27 @@ angular.module('hillromvestApp')
         return true;
       }
       else if(protocol.type === 'Custom'){
-      if($scope.lastdeviceType != protocol.deviceType){
-         $scope.customPointsChecker = 0;
-      }
-      $scope.customPointsChecker++;
-      if($scope.customPointsChecker == 1){
-       
-         $scope.lastdeviceType = protocol.deviceType;
-         $scope.displayFlag = true;
-        return true;
-      }
-      else{
-       
-         $scope.lastdeviceType = protocol.deviceType;
-         $scope.displayFlag = false;
-        return false;
-      }
+        console.log("i am custom");
+            if($scope.lastdeviceType != protocol.deviceType){
+               $scope.customPointsChecker = 0;
+            }
+            $scope.customPointsChecker++;
+            if($scope.customPointsChecker == 1){
+             
+               $scope.lastdeviceType = protocol.deviceType;
+               $scope.displayFlag = true;
+               
+               // setTimeout(function(){  
+                console.log("i am in custom and first time so returning true");   
+              //  }, 1000);
+              return true;
+            }
+              else{
+                 console.log("its in else now");
+                 $scope.lastdeviceType = protocol.deviceType;
+                 $scope.displayFlag = false;
+                return false;
+              }
         }
       }
       else{
