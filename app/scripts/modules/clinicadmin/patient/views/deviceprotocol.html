@@ -91,11 +91,8 @@
 
   <div ng-if="getDeviceTypeforBothIcon() =='ALL'" ng-repeat="protocol in protocols ">
 <div class="col-md-16 col-sm-16 border-top protocol_list_container" ng-class="{'no_border' : !protocols}">
-
   <div class="col-md-1 col-sm-1 treatments_per_day_count" ng-if="protocolDeviceIconFilter(protocol)">
     <div id="deviceicon" class="col-md-16 col-sm-16 protocol-list__treatment-day no_border text-align-left">
-
-     
      <span class="icon_height_width" ng-class="{'monarchIcon': (protocol.deviceType =='MONARCH'), 'visivestIcon': (protocol.deviceType =='VEST')}"></span>
     </div>
   </div>
