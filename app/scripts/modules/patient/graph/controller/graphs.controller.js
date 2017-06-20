@@ -119,7 +119,7 @@ angular.module('hillromvestApp')
 
        $scope.deviceTypeforGraph = localStorage.getItem('deviceType');
        $scope.deviceTypeforGraphProtocol = localStorage.getItem('deviceType');
-       $scope.deviceTypeforGraphTrend = localStorage.getItem('deviceType'); 
+       $scope.deviceTypeforGraphTrend = localStorage.getItem('deviceTypeforBothIcon'); 
        
         if($scope.deviceTypeforGraph == "ALL")
        {
@@ -2179,12 +2179,14 @@ angular.module('hillromvestApp')
           $scope.transmissionDate = (formattedTransmissionDate && formattedTransmissionDate.indexOf(" "))? formattedTransmissionDate.split(" ")[0] : null; 
           $scope.hasTransmissionDateforCostomrange = dateService.getDateFromTimeStamp(response.data.firstTransmissionDate,patientDashboard.dateFormat,'/'); 
           //alert($scope.hasTransmissionDateforCostomrange); 
+          setTimeout(function(){
           $scope.opts = {
           minDate: $scope.hasTransmissionDateforCostomrange
         };
         $scope.dateOpts = {
           minDate: $scope.hasTransmissionDateforCostomrange
-          };      
+          }; 
+           }, 1000);     
         }
       });
     };
@@ -3231,7 +3233,7 @@ $scope.getComplianceGraph = function(){
 
     $scope.getAdhereneTrendGraph = function()
     {
-      $scope.deviceTypeforGraphTrend="VEST";
+    //  $scope.deviceTypeforGraphTrend="VEST";
       patientDashBoardService.getAdherenceTrendGraphPoints($scope.patientId, $scope.deviceTypeforGraphTrend, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.durationRange).then(function(response){
       $scope.adherenceTrendData = response.data;
       $scope.noDataAvailableForAdherence= false;       
