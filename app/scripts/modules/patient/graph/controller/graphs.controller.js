@@ -10,7 +10,7 @@ angular.module('hillromvestApp')
     $scope.DisableAddProtocol = false; 
     $scope.displayFlag = true;
           $scope.customPointsChecker = 0;
-          $scope.lastdeviceType = "";   
+          $scope.lastdeviceType = "";      
     $scope.isIE = function(){        
       if(window.navigator.userAgent.indexOf("MSIE") !== -1){
         return true
@@ -24,7 +24,6 @@ angular.module('hillromvestApp')
       $scope.pageCount = 0;
       $scope.nextDate= new Date();
       $scope.disableDatesInDatePicker();   
-      $scope.role = StorageService.get('logged').role;
       $scope.hmrRunRate = 0;
       $scope.adherenceScore = 0;
       $scope.missedtherapyDays = 0;
@@ -39,13 +38,12 @@ angular.module('hillromvestApp')
       $scope.noDataAvailableForHMR = false;  
       $scope.noDataAvailableForAdherence = false;  
       $scope.noDataStatus = true;
-     
       $scope.forhidingVestHmrGraph = true;
       $scope.forhidingVestProtocolGraph = true
       $scope.forhidingMonarchProtocolGraph = false;
       $scope.forhidingMonarchHmrGraph = false;
 
-      $scope.initCount("");
+      //$scope.initCount("");
             var currentRoute = $state.current.name;
 
             if($scope.getDeviceTypeforBothIcon() === searchFilters.allCaps){
@@ -59,6 +57,12 @@ angular.module('hillromvestApp')
 /*      if( $scope.role === loginConstants.role.caregiver){
         $scope.getPatientListForCaregiver($scope.caregiverID);
       }*/
+      if(StorageService.get('logged').role === loginConstants.role.admin || StorageService.get('logged').role === loginConstants.role.acctservices || StorageService.get('logged').role === loginConstants.role.associates || StorageService.get('logged').role === loginConstants.role.customerservices){
+     $scope.isHillRomUser = true;   
+      }
+      else{
+        $scope.isHillRomUser = false;    
+      }
        var server_error_msg = "Some internal error occurred. Please try after sometime.";
       $scope.showNotes = false;      
       $scope.toTimeStamp = new Date().getTime(); 
@@ -114,7 +118,7 @@ angular.module('hillromvestApp')
 
        $scope.deviceTypeforGraph = localStorage.getItem('deviceType');
        $scope.deviceTypeforGraphProtocol = localStorage.getItem('deviceType');
-       $scope.deviceTypeforGraphTrend = localStorage.getItem('deviceTypeforBothIcon'); 
+       $scope.deviceTypeforGraphTrend = localStorage.getItem('deviceType'); 
        
         if($scope.deviceTypeforGraph == "ALL")
        {
@@ -2174,15 +2178,12 @@ angular.module('hillromvestApp')
           $scope.transmissionDate = (formattedTransmissionDate && formattedTransmissionDate.indexOf(" "))? formattedTransmissionDate.split(" ")[0] : null; 
           $scope.hasTransmissionDateforCostomrange = dateService.getDateFromTimeStamp(response.data.firstTransmissionDate,patientDashboard.dateFormat,'/'); 
           //alert($scope.hasTransmissionDateforCostomrange); 
-        setTimeout(function(){ 
-              $scope.opts = {
+          $scope.opts = {
           minDate: $scope.hasTransmissionDateforCostomrange
         };
-       // alert("$scope.opts");
         $scope.dateOpts = {
           minDate: $scope.hasTransmissionDateforCostomrange
-          };         
-          }, 1000);     
+          };      
         }
       });
     };
@@ -3162,6 +3163,7 @@ $scope.getComplianceGraph = function(){
       $scope.deviceTypeforGraph="VEST";
       patientDashBoardService.getHMRGraphPoints($scope.patientId, $scope.deviceTypeforGraph, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.durationRange).then(function(response){
         $scope.hmrChartData = response.data;  
+        console.log(" $scope.hmrChartData1", $scope.hmrChartData);
         $scope.noDataAvailableForHMR  = false;       
         if($scope.hmrChartData && typeof($scope.hmrChartData) === "object"){ 
           $scope.noDataAvailableForHMR = false;      
@@ -3228,7 +3230,7 @@ $scope.getComplianceGraph = function(){
 
     $scope.getAdhereneTrendGraph = function()
     {
-      //$scope.deviceTypeforGraphTrend="VEST";
+      $scope.deviceTypeforGraphTrend="VEST";
       patientDashBoardService.getAdherenceTrendGraphPoints($scope.patientId, $scope.deviceTypeforGraphTrend, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.durationRange).then(function(response){
       $scope.adherenceTrendData = response.data;
       $scope.noDataAvailableForAdherence= false;       
@@ -3546,6 +3548,44 @@ $scope.getComplianceGraph = function(){
                   }
                   if(localStorage.getItem('deviceType') == 'MONARCH'){                 
                   var s = '<div style="font-size:12x;font-weight: bold; padding-bottom: 3px;">'+  dateTextLabel +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div>';
+                      //Only for Hill-Rom Users
+                     if($scope.isHillRomUser){   
+                  if((!this.point.toolText.startBatteryLevel && !this.point.toolText.endBatteryLevel) || (this.point.toolText.powerChangeEvents.length)){
+                  s += '<div style="font-size:11px; font-weight: bold; width:100%;" ><div style="padding:2px 0;" > <span class="acicon">Powered by AC</span> </div> ' 
+                  + '</div>'; 
+                }
+                 if((this.point.toolText.startBatteryLevel && this.point.toolText.endBatteryLevel)){
+
+                  s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="padding:3px 0;width:50%;float:left;"> Start Battery Level</div> ' 
+                  + '<div style="padding:3px;width:50%;">End Battery Level</div></div>';
+
+                  s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="width:50%;float:left;" > <span class="dcstarticon">95%</span></div> ' 
+                  + '<div style="width:50%;" ><span class="dcendicon"> 5% </span></div></div>';
+                  }
+                    if(this.point.toolText.btChangeEvents.length){
+                  s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="padding:2px 0;"> <span class="mobileicon">Mobile Control </span><span class="mobileicon">Pendant Control </span></div> ' 
+                  + '</div>'; 
+                  }
+                  else{
+                     s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="padding:2px 0;"><span class="mobileicon">Pendant Control </span></div> ' 
+                  + '</div>'; 
+                  }
+                  if(this.point.toolText.errorCodes.length){
+                  s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="padding:2px 0;"><span class="erroricon">' 
+                 angular.forEach(this.point.toolText.errorCodes, function(errorCodeValue, errorCodeKey){
+                 var hexString = errorCodeValue.toString(16);
+                 errorCodeValue = parseInt(hexString, 16);
+                  s += '0x' + errorCodeValue;
+                  if(errorCodeKey != lengthofErrorCodes-1){
+                    s += ',';
+                  }
+                 });
+                  s +=' </span></div> ' 
+                  + '</div>'; 
+                }
+              }
+            
+                //End Only for Hill-Rom Users 
                   s += '<div style="font-size:10px; font-weight: bold; width:100%"><div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left"> Session No </div> ' 
                   + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.sessionNo  + '</b></div></div>';                 
                   s += '<div style="font-size:10px; font-weight: bold; width:100%"><div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left"> ' + this.point.series.name + '</div> ' 
@@ -3562,6 +3602,7 @@ $scope.getComplianceGraph = function(){
                   }
                   else{
                    var s = '<div style="font-size:12x;font-weight: bold; padding-bottom: 3px;">'+  dateTextLabel +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div>';
+                  
                   s += '<div style="font-size:10px; font-weight: bold; width:100%"><div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left"> Session No </div> ' 
                   + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.sessionNo  + '</b></div></div>';                 
                   s += '<div style="font-size:10px; font-weight: bold; width:100%"><div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left"> ' + this.point.series.name + '</div> ' 
@@ -4172,6 +4213,7 @@ $scope.getComplianceGraph1 = function(){
     $scope.deviceTypeforGraph="MONARCH";
       patientDashBoardService.getHMRGraphPoints($scope.patientId, $scope.deviceTypeforGraph, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.durationRange).then(function(response){
         $scope.hmrChartData1 = response.data;  
+        console.log(" $scope.hmrChartData1", $scope.hmrChartData1);
         $scope.noDataAvailableForHMR  = false;       
         if($scope.hmrChartData1 && typeof($scope.hmrChartData1) === "object"){ 
           $scope.noDataAvailableForHMR = false;      
@@ -4485,8 +4527,47 @@ $scope.getComplianceGraph1 = function(){
                       dateTextLabel += ' ( ' + Highcharts.dateFormat("%I:%M %p",dateX) + ' )';                      
                     }
                   }
+             var lengthofErrorCodes = this.point.toolText.errorCodes.length;
                   if($scope.deviceTypeforGraph=="MONARCH"){                 
                   var s = '<div style="font-size:12x;font-weight: bold; padding-bottom: 3px;">'+  dateTextLabel +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div>';
+                 //Only for Hill-Rom Users
+                  if($scope.isHillRomUser){
+                  if((!this.point.toolText.startBatteryLevel && !this.point.toolText.endBatteryLevel) || (this.point.toolText.powerChangeEvents.length)){
+                  s += '<div style="font-size:11px; font-weight: bold; width:100%;" ><div style="padding:2px 0;" > <span class="acicon">Powered by AC</span> </div> ' 
+                  + '</div>'; 
+                }
+                 if((this.point.toolText.startBatteryLevel && this.point.toolText.endBatteryLevel)){
+
+                  s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="padding:3px 0;width:50%;float:left;"> Start Battery Level</div> ' 
+                  + '<div style="padding:3px;width:50%;">End Battery Level</div></div>';
+
+                  s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="width:50%;float:left;" > <span class="dcstarticon">'+this.point.toolText.startBatteryLevel +'</span></div> ' 
+                  + '<div style="width:50%;" ><span class="dcendicon">'+this.point.toolText.endBatteryLevel+'</span></div></div>';
+                  }
+                    if(this.point.toolText.btChangeEvents.length){
+                  s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="padding:2px 0;"> <span class="mobileicon">Mobile Control</span><span class="mobileicon" style="padding-left:2px;">Pendant Control </span></div> ' 
+                  + '</div>'; 
+                  }
+                  else{
+                     s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="padding:2px 0;"><span class="mobileicon">Pendant Control </span></div> ' 
+                  + '</div>'; 
+                  }
+                  if(this.point.toolText.errorCodes.length){
+                  s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="padding:2px 0;"><span class="erroricon">' 
+                 angular.forEach(this.point.toolText.errorCodes, function(errorCodeValue, errorCodeKey){
+                 var hexString = errorCodeValue.toString(16);
+                 errorCodeValue = parseInt(hexString, 16);
+                  s += '0x' + errorCodeValue;
+                  if(errorCodeKey != lengthofErrorCodes-1){
+                    s += ',';
+                  }
+                 });
+                  s +=' </span></div> ' 
+                  + '</div>'; 
+                }
+              }
+            
+                //End Only for Hill-Rom Users
                   s += '<div style="font-size:10px; font-weight: bold; width:100%"><div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left"> Session No </div> ' 
                   + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.sessionNo  + '</b></div></div>';                 
                   s += '<div style="font-size:10px; font-weight: bold; width:100%"><div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left"> ' + this.point.series.name + '</div> ' 
