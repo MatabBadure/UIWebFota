@@ -23,7 +23,8 @@ angular.module('hillromvestApp')
       $scope.currentPageIndex = 1;
       $scope.pageCount = 0;
       $scope.nextDate= new Date();
-      $scope.disableDatesInDatePicker();   
+      $scope.disableDatesInDatePicker();  
+       $scope.role = StorageService.get('logged').role; 
       $scope.hmrRunRate = 0;
       $scope.adherenceScore = 0;
       $scope.missedtherapyDays = 0;
@@ -43,7 +44,7 @@ angular.module('hillromvestApp')
       $scope.forhidingMonarchProtocolGraph = false;
       $scope.forhidingMonarchHmrGraph = false;
 
-      //$scope.initCount("");
+      $scope.initCount("");
             var currentRoute = $state.current.name;
 
             if($scope.getDeviceTypeforBothIcon() === searchFilters.allCaps){
