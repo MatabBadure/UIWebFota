@@ -1641,8 +1641,22 @@ angular.module('hillromvestApp')
                   s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="padding:3px 0;width:50%;float:left;"> Start Battery Level</div> ' 
                   + '<div style="padding:3px;width:50%;">End Battery Level</div></div>';
 
-                  s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="width:50%;float:left;" > <span class="dcstarticon">95%</span></div> ' 
-                  + '<div style="width:50%;" ><span class="dcendicon"> 5% </span></div></div>';
+                  s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="width:50%;float:left;" > <span class="dcstarticon">'+this.point.toolText.startBatteryLevel+' %</span></div> ' 
+                  + '<div style="width:50%;" ><span class="dcendicon">'+this.point.toolText.endBatteryLevel+' %</span></div></div>';
+                  }
+                   if((this.point.toolText.startBatteryLevel && this.point.toolText.endBatteryLevel === 0)){
+                      s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="padding:3px 0;width:50%;float:left;"> Start Battery Level</div> ' 
+                  + '<div style="padding:3px;width:50%;">End Battery Level</div></div>';
+
+                   s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="width:50%;float:left;" > <span class="dcstarticon">'+this.point.toolText.startBatteryLevel+' %</span></div> ' 
+                  + '<div style="width:50%;" ><span class="dcendicon">'+this.point.toolText.endBatteryLevel+' %</span></div></div>';
+                  }
+                   if((this.point.toolText.startBatteryLevel === 0 && this.point.toolText.endBatteryLevel)){
+                      s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="padding:3px 0;width:50%;float:left;"> Start Battery Level</div> ' 
+                  + '<div style="padding:3px;width:50%;">End Battery Level</div></div>';
+
+                   s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="width:50%;float:left;" > <span class="dcstarticon">'+this.point.toolText.startBatteryLevel+' %</span></div> ' 
+                  + '<div style="width:50%;" ><span class="dcendicon">'+this.point.toolText.endBatteryLevel+' %</span></div></div>';
                   }
                     if(lengthofbtChangeEvents){
                   s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="padding:2px 0;"> <span class="mobileicon">Mobile Control </span><span class="pendanticon">Pendant Control </span></div> ' 
@@ -3642,8 +3656,22 @@ $scope.getComplianceGraph = function(){
                   s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="padding:3px 0;width:50%;float:left;"> Start Battery Level</div> ' 
                   + '<div style="padding:3px;width:50%;">End Battery Level</div></div>';
 
-                  s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="width:50%;float:left;" > <span class="dcstarticon">95%</span></div> ' 
-                  + '<div style="width:50%;" ><span class="dcendicon"> 5% </span></div></div>';
+                  s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="width:50%;float:left;" > <span class="dcstarticon">'+this.point.toolText.startBatteryLevel+' %</span></div> ' 
+                  + '<div style="width:50%;" ><span class="dcendicon">'+this.point.toolText.endBatteryLevel+' %</span></div></div>';
+                  }
+                  if((this.point.toolText.startBatteryLevel && this.point.toolText.endBatteryLevel === 0)){
+                      s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="padding:3px 0;width:50%;float:left;"> Start Battery Level</div> ' 
+                  + '<div style="padding:3px;width:50%;">End Battery Level</div></div>';
+
+                   s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="width:50%;float:left;" > <span class="dcstarticon">'+this.point.toolText.startBatteryLevel+' %</span></div> ' 
+                  + '<div style="width:50%;" ><span class="dcendicon">'+this.point.toolText.endBatteryLevel+' %</span></div></div>';
+                  }
+                   if((this.point.toolText.startBatteryLevel === 0 && this.point.toolText.endBatteryLevel)){
+                      s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="padding:3px 0;width:50%;float:left;"> Start Battery Level</div> ' 
+                  + '<div style="padding:3px;width:50%;">End Battery Level</div></div>';
+
+                   s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="width:50%;float:left;" > <span class="dcstarticon">'+this.point.toolText.startBatteryLevel+' %</span></div> ' 
+                  + '<div style="width:50%;" ><span class="dcendicon">'+this.point.toolText.endBatteryLevel+' %</span></div></div>';
                   }
                     if(lengthofbtChangeEvents){
                   s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="padding:2px 0;"> <span class="mobileicon">Mobile Control </span><span class="pendanticon">Pendant Control </span></div> ' 
@@ -4643,8 +4671,22 @@ $scope.getComplianceGraph1 = function(){
                   s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="padding:3px 0;width:50%;float:left;"> Start Battery Level</div> ' 
                   + '<div style="padding:3px;width:50%;">End Battery Level</div></div>';
 
-                  s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="width:50%;float:left;" > <span class="dcstarticon">'+this.point.toolText.startBatteryLevel +'</span></div> ' 
-                  + '<div style="width:50%;" ><span class="dcendicon">'+this.point.toolText.endBatteryLevel+'</span></div></div>';
+                  s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="width:50%;float:left;" > <span class="dcstarticon">'+this.point.toolText.startBatteryLevel +' %</span></div> ' 
+                  + '<div style="width:50%;" ><span class="dcendicon">'+this.point.toolText.endBatteryLevel+' %</span></div></div>';
+                  }
+                    if((this.point.toolText.startBatteryLevel && this.point.toolText.endBatteryLevel === 0)){
+                      s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="padding:3px 0;width:50%;float:left;"> Start Battery Level</div> ' 
+                  + '<div style="padding:3px;width:50%;">End Battery Level</div></div>';
+
+                   s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="width:50%;float:left;" > <span class="dcstarticon">'+this.point.toolText.startBatteryLevel+' %</span></div> ' 
+                  + '<div style="width:50%;" ><span class="dcendicon">'+this.point.toolText.endBatteryLevel+' %</span></div></div>';
+                  }
+                   if((this.point.toolText.startBatteryLevel === 0 && this.point.toolText.endBatteryLevel)){
+                      s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="padding:3px 0;width:50%;float:left;"> Start Battery Level</div> ' 
+                  + '<div style="padding:3px;width:50%;">End Battery Level</div></div>';
+
+                   s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="width:50%;float:left;" > <span class="dcstarticon">'+this.point.toolText.startBatteryLevel+' %</span></div> ' 
+                  + '<div style="width:50%;" ><span class="dcendicon">'+this.point.toolText.endBatteryLevel+' %</span></div></div>';
                   }
                     if(lengthofbtChangeEvents){
                   s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="padding:2px 0;"><span class="mobileicon">Mobile Control</span><span class="pendanticon">Pendant Control </span></div> ' 
