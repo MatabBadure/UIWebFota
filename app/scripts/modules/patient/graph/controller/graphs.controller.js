@@ -1224,7 +1224,7 @@ angular.module('hillromvestApp')
     $scope.getHMRGraph = function(){
       console.log("checkeing for hmr graph, line no:3161:",$scope.deviceTypeforGraph);
       patientDashBoardService.getHMRGraphPoints($scope.patientId, $scope.deviceTypeforGraph, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.durationRange).then(function(response){
-        $scope.hmrChartData = response.data;  
+        $scope.hmrChartData = response.data;
         $scope.noDataAvailableForHMR  = false;       
         if($scope.hmrChartData && typeof($scope.hmrChartData) === "object"){ 
           $scope.noDataAvailableForHMR = false;      
@@ -3165,8 +3165,7 @@ $scope.getComplianceGraph = function(){
     $scope.getHMRGraph = function(){
       $scope.deviceTypeforGraph="VEST";
       patientDashBoardService.getHMRGraphPoints($scope.patientId, $scope.deviceTypeforGraph, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.durationRange).then(function(response){
-        $scope.hmrChartData = response.data;  
-        console.log(" $scope.hmrChartData1", $scope.hmrChartData);
+        $scope.hmrChartData = response.data;
         $scope.noDataAvailableForHMR  = false;       
         if($scope.hmrChartData && typeof($scope.hmrChartData) === "object"){ 
           $scope.noDataAvailableForHMR = false;      
@@ -3566,7 +3565,7 @@ $scope.getComplianceGraph = function(){
                   + '<div style="width:50%;" ><span class="dcendicon"> 5% </span></div></div>';
                   }
                     if(this.point.toolText.btChangeEvents.length){
-                  s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="padding:2px 0;"> <span class="mobileicon">Mobile Control </span><span class="mobileicon">Pendant Control </span></div> ' 
+                  s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="padding:2px 0;"> <span class="mobileicon">Mobile Control </span><span class="pendanticon">Pendant Control </span></div> ' 
                   + '</div>'; 
                   }
                   else{
@@ -4215,8 +4214,7 @@ $scope.getComplianceGraph1 = function(){
     $scope.getHMRGraph1 = function(){
     $scope.deviceTypeforGraph="MONARCH";
       patientDashBoardService.getHMRGraphPoints($scope.patientId, $scope.deviceTypeforGraph, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.durationRange).then(function(response){
-        $scope.hmrChartData1 = response.data;  
-        console.log(" $scope.hmrChartData1", $scope.hmrChartData1);
+        $scope.hmrChartData1 = response.data;
         $scope.noDataAvailableForHMR  = false;       
         if($scope.hmrChartData1 && typeof($scope.hmrChartData1) === "object"){ 
           $scope.noDataAvailableForHMR = false;      
@@ -4531,7 +4529,7 @@ $scope.getComplianceGraph1 = function(){
                     }
                   }
              var lengthofErrorCodes = this.point.toolText.errorCodes.length;
-                  if($scope.deviceTypeforGraph=="MONARCH"){                 
+                  if($scope.deviceTypeforGraph=="MONARCH"){   
                   var s = '<div style="font-size:12x;font-weight: bold; padding-bottom: 3px;">'+  dateTextLabel +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div>';
                  //Only for Hill-Rom Users
                   if($scope.isHillRomUser){
@@ -4548,7 +4546,7 @@ $scope.getComplianceGraph1 = function(){
                   + '<div style="width:50%;" ><span class="dcendicon">'+this.point.toolText.endBatteryLevel+'</span></div></div>';
                   }
                     if(this.point.toolText.btChangeEvents.length){
-                  s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="padding:2px 0;"> <span class="mobileicon">Mobile Control</span><span class="mobileicon" style="padding-left:2px;">Pendant Control </span></div> ' 
+                  s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="padding:2px 0;"><span class="mobileicon">Mobile Control</span><span class="pendanticon">Pendant Control </span></div> ' 
                   + '</div>'; 
                   }
                   else{
@@ -4559,8 +4557,9 @@ $scope.getComplianceGraph1 = function(){
                   s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="padding:2px 0;"><span class="erroricon">' 
                  angular.forEach(this.point.toolText.errorCodes, function(errorCodeValue, errorCodeKey){
                  var hexString = errorCodeValue.toString(16);
-                 errorCodeValue = parseInt(hexString, 16);
-                  s += '0x' + errorCodeValue;
+                 console.log("hexstring",hexString);
+                 //errorCodeValue = parseInt(hexString, 16);
+                  s += '0x' + hexString;
                   if(errorCodeKey != lengthofErrorCodes-1){
                     s += ',';
                   }

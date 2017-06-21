@@ -853,7 +853,8 @@ content: "\f024" !important;
   {
       background-image: url("../images/mobile.png");
       background-repeat: no-repeat;
-      padding-left: 30px;
+      padding-left: 20px;
+      padding-right:10px;
      
   }
   .erroricon
@@ -862,4 +863,9 @@ content: "\f024" !important;
       background-repeat: no-repeat;
       padding-left: 30px;
      
+  }
+  .pendanticon{
+      background-image: url("../images/pendant.png");
+      background-repeat: no-repeat;
+      padding-left: 20px;
   }
