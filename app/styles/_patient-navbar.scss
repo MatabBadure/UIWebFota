@@ -819,3 +819,58 @@ content: "\f024" !important;
     max-width: 150px;
     word-wrap: break-word;
   }
+
+  /*    14jun  */ 
+
+  .acicon
+  {
+      background-image: url("../images/ac.png");
+      background-repeat: no-repeat;
+      padding-left: 30px;
+      /* background-position: left;*/
+  }
+ .dcstarticon
+  {
+      background-image: url("../images/dcstart.png");
+      background-repeat: no-repeat;
+      background-position: center !important; 
+      background-size: 20px 20px;
+      padding-left: 50px;
+      font-size:10px;
+
+      
+  }
+  .dcendicon
+  {
+      background-image: url("../images/dcend.png");
+      background-repeat: no-repeat;
+     background-position: center !important; 
+      background-size: 20px 20px;
+     font-size:10px;
+     padding-left: 50px;
+  }
+  .mobileicon
+  {
+      background-image: url("../images/mobile.png");
+      background-repeat: no-repeat;
+      padding-left: 20px;
+      padding-right:10px;
+     
+  }
+  .erroricon
+  {
+      background-image: url("../images/error.png");
+      background-repeat: no-repeat;
+      padding-left: 30px;
+     
+  }
+  .pendanticon{
+      background-image: url("../images/pendant.png");
+      background-repeat: no-repeat;
+      padding-left: 20px;
+  }
+  .pendanticondefault{
+  background-image: url("../images/pendant.png");
+      background-repeat: no-repeat;
+      padding-left: 30px;
+  }
