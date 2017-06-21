@@ -1606,6 +1606,12 @@ angular.module('hillromvestApp')
                       dateTextLabel += ' ( ' + Highcharts.dateFormat("%I:%M %p",dateX) + ' )';                      
                     }
                   }
+                   if(this.point.toolText.errorCodes){
+             var lengthofErrorCodes = this.point.toolText.errorCodes.length;
+           }
+           else{
+            var lengthofErrorCodes = 0;
+           }
                   if(localStorage.getItem('deviceType') == 'MONARCH'){   
 
                   var s = '<div style="font-size:12x;font-weight: bold; padding-bottom: 3px;">'+  dateTextLabel +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div>';
@@ -1635,8 +1641,8 @@ angular.module('hillromvestApp')
                   s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="padding:2px 0;"><span class="erroricon">' 
                  angular.forEach(this.point.toolText.errorCodes, function(errorCodeValue, errorCodeKey){
                  var hexString = errorCodeValue.toString(16);
-                 errorCodeValue = parseInt(hexString, 16);
-                  s += '0x' + errorCodeValue;
+               //  errorCodeValue = parseInt(hexString, 16);
+                  s += '0x' + hexString;
                   if(errorCodeKey != lengthofErrorCodes-1){
                     s += ',';
                   }
@@ -3587,6 +3593,12 @@ $scope.getComplianceGraph = function(){
                       dateTextLabel += ' ( ' + Highcharts.dateFormat("%I:%M %p",dateX) + ' )';                      
                     }
                   }
+                   if(this.point.toolText.errorCodes){
+             var lengthofErrorCodes = this.point.toolText.errorCodes.length;
+           }
+           else{
+            var lengthofErrorCodes = 0;
+           }
                   if(localStorage.getItem('deviceType') == 'MONARCH'){    
                   var s = '<div style="font-size:12x;font-weight: bold; padding-bottom: 3px;">'+  dateTextLabel +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div>';
                       //Only for Hill-Rom Users
@@ -3615,8 +3627,8 @@ $scope.getComplianceGraph = function(){
                   s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="padding:2px 0;"><span class="erroricon">' 
                  angular.forEach(this.point.toolText.errorCodes, function(errorCodeValue, errorCodeKey){
                  var hexString = errorCodeValue.toString(16);
-                 errorCodeValue = parseInt(hexString, 16);
-                  s += '0x' + errorCodeValue;
+               //  errorCodeValue = parseInt(hexString, 16);
+                  s += '0x' + hexString;
                   if(errorCodeKey != lengthofErrorCodes-1){
                     s += ',';
                   }
@@ -4567,7 +4579,12 @@ $scope.getComplianceGraph1 = function(){
                       dateTextLabel += ' ( ' + Highcharts.dateFormat("%I:%M %p",dateX) + ' )';                      
                     }
                   }
+                  if(this.point.toolText.errorCodes){
              var lengthofErrorCodes = this.point.toolText.errorCodes.length;
+           }
+           else{
+            var lengthofErrorCodes = 0;
+           }
                   if($scope.deviceTypeforGraph=="MONARCH"){   
                   var s = '<div style="font-size:12x;font-weight: bold; padding-bottom: 3px;">'+  dateTextLabel +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div>';
                  //Only for Hill-Rom Users
