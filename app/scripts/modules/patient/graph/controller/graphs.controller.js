@@ -4550,7 +4550,7 @@ $scope.getComplianceGraph1 = function(){
                   + '</div>'; 
                   }
                   else{
-                     s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="padding:2px 0;"><span class="mobileicon">Pendant Control </span></div> ' 
+                     s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="padding:2px 0;"><span class="pendanticon">Pendant Control </span></div> ' 
                   + '</div>'; 
                   }
                   if(this.point.toolText.errorCodes.length){
