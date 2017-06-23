@@ -11,8 +11,8 @@ angular.module('hillromvestApp')
         patientStatus: '=patientStatus'
       },
 
-      controller: ['$scope', '$state', 'notyService', 'dateService', 'UserService', 'StorageService', 'loginConstants', 'commonsUserService', 'addressService',
-      function ($scope, $state, notyService, dateService, UserService, StorageService, loginConstants, commonsUserService, addressService) {
+      controller: ['$scope', '$state', 'notyService', 'dateService', 'UserService', 'StorageService', 'loginConstants', 'commonsUserService', 'addressService', 'patientService',
+      function ($scope, $state, notyService, dateService, UserService, StorageService, loginConstants, commonsUserService, addressService, patientService) {
 
         $scope.open = function () {
           $scope.showModal = true;
@@ -39,8 +39,30 @@ angular.module('hillromvestApp')
           UserService.getState().then(function (response) {
             $scope.states = response.data.states;
           });
+          $scope.getGarmentValues();
         };
-
+        $scope.getGarmentValues = function(){
+          patientService.getGarmentSizeCodeValues().then(function(response){
+        $scope.garmentSizeResponse = response.data;
+         $scope.garmentSize = $scope.garmentSizeResponse.typeCode;
+      }).catch(function(response){
+        notyService.showError(response);
+      });
+          patientService.getGarmentColorCodeValues().then(function(response){
+        $scope.garmentColorResponse = response.data;
+        $scope.garmentColor = $scope.garmentColorResponse.typeCode;
+      }).catch(function(response){
+        notyService.showError(response);
+      });
+       
+        patientService.getGarmentTypeCodeValues().then(function(response){
+        $scope.garmentTypeResponse = response.data;
+          $scope.garmentType = $scope.garmentTypeResponse.typeCode;
+      }).catch(function(response){
+        notyService.showError(response);
+      });
+        console.log("$scope.garmentSizeResponse",$scope.garmentSizeResponse);     
+        };
         $scope.init();
 
         $scope.createPatient = function () {
@@ -56,6 +78,7 @@ angular.module('hillromvestApp')
           addressService.getCityStateByZip($scope.patient.zipcode).then(function(response){
             $scope.patient.city = response.data[0].city;
             $scope.patient.state = response.data[0].state;
+            console.log("$scope.patient",$scope.patient);
             if($scope.patientStatus.editMode){
               var data = $scope.patient;
               data.role = 'PATIENT';
@@ -101,6 +124,7 @@ angular.module('hillromvestApp')
         };
 
         $scope.editUSer = function(data) {
+          console.log("data",data);
           UserService.editUser(data).then(function (response) {
             if(response.status === 200) {
               $scope.patientStatus.isMessage = true;
