@@ -1224,7 +1224,7 @@ angular.module('hillromvestApp')
     $scope.getHMRGraph = function(){
       console.log("checkeing for hmr graph, line no:3161:",$scope.deviceTypeforGraph);
       patientDashBoardService.getHMRGraphPoints($scope.patientId, $scope.deviceTypeforGraph, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.durationRange).then(function(response){
-        $scope.hmrChartData = response.data;  
+        $scope.hmrChartData = response.data;
         $scope.noDataAvailableForHMR  = false;       
         if($scope.hmrChartData && typeof($scope.hmrChartData) === "object"){ 
           $scope.noDataAvailableForHMR = false;      
@@ -1606,8 +1606,82 @@ angular.module('hillromvestApp')
                       dateTextLabel += ' ( ' + Highcharts.dateFormat("%I:%M %p",dateX) + ' )';                      
                     }
                   }
-                  if(localStorage.getItem('deviceType') == 'MONARCH'){                 
+                   if(this.point.toolText.errorCodes){
+                     var lengthofErrorCodes = this.point.toolText.errorCodes.length;
+                   }
+                   else{
+                    var lengthofErrorCodes = 0;
+                   }
+                   //
+                    if(this.point.toolText.btChangeEvents){
+                     var lengthofbtChangeEvents = this.point.toolText.btChangeEvents.length;
+                   }
+                   else{
+                    var lengthofbtChangeEvents = 0;
+                   }
+                   //
+                    if(this.point.toolText.powerChangeEvents){
+                     var lengthofpowerChangeEvents = this.point.toolText.powerChangeEvents.length;
+                   }
+                   else{
+                    var lengthofpowerChangeEvents = 0;
+                   }
+                   //
+                  if(localStorage.getItem('deviceType') == 'MONARCH'){   
+
                   var s = '<div style="font-size:12x;font-weight: bold; padding-bottom: 3px;">'+  dateTextLabel +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div>';
+                   //Only for Hill-Rom Users
+                     if($scope.isHillRomUser){   
+                  if((!this.point.toolText.startBatteryLevel && !this.point.toolText.endBatteryLevel) || (lengthofpowerChangeEvents)){
+                  s += '<div style="font-size:11px; font-weight: bold; width:100%;" ><div style="padding:2px 0;" > <span class="acicon">Powered by AC</span> </div> ' 
+                  + '</div>'; 
+                }
+                 if((this.point.toolText.startBatteryLevel && this.point.toolText.endBatteryLevel)){
+
+                  s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="padding:3px 0;width:50%;float:left;"> Start Battery Level</div> ' 
+                  + '<div style="padding:3px;width:50%;">End Battery Level</div></div>';
+
+                  s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="width:50%;float:left;" > <span class="dcstarticon">'+this.point.toolText.startBatteryLevel+' %</span></div> ' 
+                  + '<div style="width:50%;" ><span class="dcendicon">'+this.point.toolText.endBatteryLevel+' %</span></div></div>';
+                  }
+                   if((this.point.toolText.startBatteryLevel && this.point.toolText.endBatteryLevel === 0)){
+                      s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="padding:3px 0;width:50%;float:left;"> Start Battery Level</div> ' 
+                  + '<div style="padding:3px;width:50%;">End Battery Level</div></div>';
+
+                   s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="width:50%;float:left;" > <span class="dcstarticon">'+this.point.toolText.startBatteryLevel+' %</span></div> ' 
+                  + '<div style="width:50%;" ><span class="dcendicon">'+this.point.toolText.endBatteryLevel+' %</span></div></div>';
+                  }
+                   if((this.point.toolText.startBatteryLevel === 0 && this.point.toolText.endBatteryLevel)){
+                      s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="padding:3px 0;width:50%;float:left;"> Start Battery Level</div> ' 
+                  + '<div style="padding:3px;width:50%;">End Battery Level</div></div>';
+
+                   s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="width:50%;float:left;" > <span class="dcstarticon">'+this.point.toolText.startBatteryLevel+' %</span></div> ' 
+                  + '<div style="width:50%;" ><span class="dcendicon">'+this.point.toolText.endBatteryLevel+' %</span></div></div>';
+                  }
+                    if(lengthofbtChangeEvents){
+                  s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="padding:2px 0;"> <span class="mobileicon">Mobile Control </span><span class="pendanticon">Pendant Control </span></div> ' 
+                  + '</div>'; 
+                  }
+                  else{
+                     s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="padding:2px 0;"><span class="pendanticondefault">Pendant Control </span></div> ' 
+                  + '</div>'; 
+                  }
+                  if(lengthofErrorCodes){
+                  s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="padding:2px 0;"><span class="erroricon">' 
+                 angular.forEach(this.point.toolText.errorCodes, function(errorCodeValue, errorCodeKey){
+                 var hexString = errorCodeValue.toString(16);
+               //  errorCodeValue = parseInt(hexString, 16);
+                  s += '0x' + hexString;
+                  if(errorCodeKey != lengthofErrorCodes-1){
+                    s += ',';
+                  }
+                 });
+                  s +=' </span></div> ' 
+                  + '</div>'; 
+                }
+              }
+            
+                //End Only for Hill-Rom Users 
                   s += '<div style="font-size:10px; font-weight: bold; width:100%"><div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left"> Session No </div> ' 
                   + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.sessionNo  + '</b></div></div>';                 
                   s += '<div style="font-size:10px; font-weight: bold; width:100%"><div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left"> ' + this.point.series.name + '</div> ' 
@@ -3165,8 +3239,7 @@ $scope.getComplianceGraph = function(){
     $scope.getHMRGraph = function(){
       $scope.deviceTypeforGraph="VEST";
       patientDashBoardService.getHMRGraphPoints($scope.patientId, $scope.deviceTypeforGraph, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.durationRange).then(function(response){
-        $scope.hmrChartData = response.data;  
-        console.log(" $scope.hmrChartData1", $scope.hmrChartData);
+        $scope.hmrChartData = response.data;
         $scope.noDataAvailableForHMR  = false;       
         if($scope.hmrChartData && typeof($scope.hmrChartData) === "object"){ 
           $scope.noDataAvailableForHMR = false;      
@@ -3549,11 +3622,32 @@ $scope.getComplianceGraph = function(){
                       dateTextLabel += ' ( ' + Highcharts.dateFormat("%I:%M %p",dateX) + ' )';                      
                     }
                   }
-                  if(localStorage.getItem('deviceType') == 'MONARCH'){                 
+                   if(this.point.toolText.errorCodes){
+             var lengthofErrorCodes = this.point.toolText.errorCodes.length;
+           }
+           else{
+            var lengthofErrorCodes = 0;
+           }
+            //
+                    if(this.point.toolText.btChangeEvents){
+                     var lengthofbtChangeEvents = this.point.toolText.btChangeEvents.length;
+                   }
+                   else{
+                    var lengthofbtChangeEvents = 0;
+                   }
+                   //
+                    if(this.point.toolText.powerChangeEvents){
+                     var lengthofpowerChangeEvents = this.point.toolText.powerChangeEvents.length;
+                   }
+                   else{
+                    var lengthofpowerChangeEvents = 0;
+                   }
+                   //
+                  if(localStorage.getItem('deviceType') == 'MONARCH'){    
                   var s = '<div style="font-size:12x;font-weight: bold; padding-bottom: 3px;">'+  dateTextLabel +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div>';
                       //Only for Hill-Rom Users
                      if($scope.isHillRomUser){   
-                  if((!this.point.toolText.startBatteryLevel && !this.point.toolText.endBatteryLevel) || (this.point.toolText.powerChangeEvents.length)){
+                  if((!this.point.toolText.startBatteryLevel && !this.point.toolText.endBatteryLevel) || (lengthofpowerChangeEvents)){
                   s += '<div style="font-size:11px; font-weight: bold; width:100%;" ><div style="padding:2px 0;" > <span class="acicon">Powered by AC</span> </div> ' 
                   + '</div>'; 
                 }
@@ -3562,23 +3656,37 @@ $scope.getComplianceGraph = function(){
                   s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="padding:3px 0;width:50%;float:left;"> Start Battery Level</div> ' 
                   + '<div style="padding:3px;width:50%;">End Battery Level</div></div>';
 
-                  s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="width:50%;float:left;" > <span class="dcstarticon">95%</span></div> ' 
-                  + '<div style="width:50%;" ><span class="dcendicon"> 5% </span></div></div>';
+                  s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="width:50%;float:left;" > <span class="dcstarticon">'+this.point.toolText.startBatteryLevel+' %</span></div> ' 
+                  + '<div style="width:50%;" ><span class="dcendicon">'+this.point.toolText.endBatteryLevel+' %</span></div></div>';
                   }
-                    if(this.point.toolText.btChangeEvents.length){
-                  s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="padding:2px 0;"> <span class="mobileicon">Mobile Control </span><span class="mobileicon">Pendant Control </span></div> ' 
+                  if((this.point.toolText.startBatteryLevel && this.point.toolText.endBatteryLevel === 0)){
+                      s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="padding:3px 0;width:50%;float:left;"> Start Battery Level</div> ' 
+                  + '<div style="padding:3px;width:50%;">End Battery Level</div></div>';
+
+                   s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="width:50%;float:left;" > <span class="dcstarticon">'+this.point.toolText.startBatteryLevel+' %</span></div> ' 
+                  + '<div style="width:50%;" ><span class="dcendicon">'+this.point.toolText.endBatteryLevel+' %</span></div></div>';
+                  }
+                   if((this.point.toolText.startBatteryLevel === 0 && this.point.toolText.endBatteryLevel)){
+                      s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="padding:3px 0;width:50%;float:left;"> Start Battery Level</div> ' 
+                  + '<div style="padding:3px;width:50%;">End Battery Level</div></div>';
+
+                   s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="width:50%;float:left;" > <span class="dcstarticon">'+this.point.toolText.startBatteryLevel+' %</span></div> ' 
+                  + '<div style="width:50%;" ><span class="dcendicon">'+this.point.toolText.endBatteryLevel+' %</span></div></div>';
+                  }
+                    if(lengthofbtChangeEvents){
+                  s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="padding:2px 0;"> <span class="mobileicon">Mobile Control </span><span class="pendanticon">Pendant Control </span></div> ' 
                   + '</div>'; 
                   }
                   else{
-                     s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="padding:2px 0;"><span class="mobileicon">Pendant Control </span></div> ' 
+                     s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="padding:2px 0;"><span class="pendanticondefault">Pendant Control </span></div> ' 
                   + '</div>'; 
                   }
-                  if(this.point.toolText.errorCodes.length){
+                  if(lengthofErrorCodes){
                   s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="padding:2px 0;"><span class="erroricon">' 
                  angular.forEach(this.point.toolText.errorCodes, function(errorCodeValue, errorCodeKey){
                  var hexString = errorCodeValue.toString(16);
-                 errorCodeValue = parseInt(hexString, 16);
-                  s += '0x' + errorCodeValue;
+               //  errorCodeValue = parseInt(hexString, 16);
+                  s += '0x' + hexString;
                   if(errorCodeKey != lengthofErrorCodes-1){
                     s += ',';
                   }
@@ -4215,8 +4323,7 @@ $scope.getComplianceGraph1 = function(){
     $scope.getHMRGraph1 = function(){
     $scope.deviceTypeforGraph="MONARCH";
       patientDashBoardService.getHMRGraphPoints($scope.patientId, $scope.deviceTypeforGraph, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.durationRange).then(function(response){
-        $scope.hmrChartData1 = response.data;  
-        console.log(" $scope.hmrChartData1", $scope.hmrChartData1);
+        $scope.hmrChartData1 = response.data;
         $scope.noDataAvailableForHMR  = false;       
         if($scope.hmrChartData1 && typeof($scope.hmrChartData1) === "object"){ 
           $scope.noDataAvailableForHMR = false;      
@@ -4530,12 +4637,32 @@ $scope.getComplianceGraph1 = function(){
                       dateTextLabel += ' ( ' + Highcharts.dateFormat("%I:%M %p",dateX) + ' )';                      
                     }
                   }
+                  if(this.point.toolText.errorCodes){
              var lengthofErrorCodes = this.point.toolText.errorCodes.length;
-                  if($scope.deviceTypeforGraph=="MONARCH"){                 
+           }
+           else{
+            var lengthofErrorCodes = 0;
+           }
+           //
+           if(this.point.toolText.btChangeEvents){
+                     var lengthofbtChangeEvents = this.point.toolText.btChangeEvents.length;
+                   }
+                   else{
+                    var lengthofbtChangeEvents = 0;
+                   }
+                   //
+                    if(this.point.toolText.powerChangeEvents){
+                     var lengthofpowerChangeEvents = this.point.toolText.powerChangeEvents.length;
+                   }
+                   else{
+                    var lengthofpowerChangeEvents = 0;
+                   }
+                   //
+                  if($scope.deviceTypeforGraph=="MONARCH"){   
                   var s = '<div style="font-size:12x;font-weight: bold; padding-bottom: 3px;">'+  dateTextLabel +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div>';
                  //Only for Hill-Rom Users
                   if($scope.isHillRomUser){
-                  if((!this.point.toolText.startBatteryLevel && !this.point.toolText.endBatteryLevel) || (this.point.toolText.powerChangeEvents.length)){
+                  if((!this.point.toolText.startBatteryLevel && !this.point.toolText.endBatteryLevel) || (lengthofpowerChangeEvents)){
                   s += '<div style="font-size:11px; font-weight: bold; width:100%;" ><div style="padding:2px 0;" > <span class="acicon">Powered by AC</span> </div> ' 
                   + '</div>'; 
                 }
@@ -4544,23 +4671,38 @@ $scope.getComplianceGraph1 = function(){
                   s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="padding:3px 0;width:50%;float:left;"> Start Battery Level</div> ' 
                   + '<div style="padding:3px;width:50%;">End Battery Level</div></div>';
 
-                  s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="width:50%;float:left;" > <span class="dcstarticon">'+this.point.toolText.startBatteryLevel +'</span></div> ' 
-                  + '<div style="width:50%;" ><span class="dcendicon">'+this.point.toolText.endBatteryLevel+'</span></div></div>';
+                  s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="width:50%;float:left;" > <span class="dcstarticon">'+this.point.toolText.startBatteryLevel +' %</span></div> ' 
+                  + '<div style="width:50%;" ><span class="dcendicon">'+this.point.toolText.endBatteryLevel+' %</span></div></div>';
                   }
-                    if(this.point.toolText.btChangeEvents.length){
-                  s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="padding:2px 0;"> <span class="mobileicon">Mobile Control</span><span class="mobileicon" style="padding-left:2px;">Pendant Control </span></div> ' 
+                    if((this.point.toolText.startBatteryLevel && this.point.toolText.endBatteryLevel === 0)){
+                      s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="padding:3px 0;width:50%;float:left;"> Start Battery Level</div> ' 
+                  + '<div style="padding:3px;width:50%;">End Battery Level</div></div>';
+
+                   s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="width:50%;float:left;" > <span class="dcstarticon">'+this.point.toolText.startBatteryLevel+' %</span></div> ' 
+                  + '<div style="width:50%;" ><span class="dcendicon">'+this.point.toolText.endBatteryLevel+' %</span></div></div>';
+                  }
+                   if((this.point.toolText.startBatteryLevel === 0 && this.point.toolText.endBatteryLevel)){
+                      s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="padding:3px 0;width:50%;float:left;"> Start Battery Level</div> ' 
+                  + '<div style="padding:3px;width:50%;">End Battery Level</div></div>';
+
+                   s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="width:50%;float:left;" > <span class="dcstarticon">'+this.point.toolText.startBatteryLevel+' %</span></div> ' 
+                  + '<div style="width:50%;" ><span class="dcendicon">'+this.point.toolText.endBatteryLevel+' %</span></div></div>';
+                  }
+                    if(lengthofbtChangeEvents){
+                  s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="padding:2px 0;"><span class="mobileicon">Mobile Control</span><span class="pendanticon">Pendant Control </span></div> ' 
                   + '</div>'; 
                   }
                   else{
-                     s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="padding:2px 0;"><span class="mobileicon">Pendant Control </span></div> ' 
+                     s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="padding:2px 0;"><span class="pendanticondefault">Pendant Control </span></div> ' 
                   + '</div>'; 
                   }
-                  if(this.point.toolText.errorCodes.length){
+                  if(lengthofErrorCodes){
                   s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="padding:2px 0;"><span class="erroricon">' 
                  angular.forEach(this.point.toolText.errorCodes, function(errorCodeValue, errorCodeKey){
                  var hexString = errorCodeValue.toString(16);
-                 errorCodeValue = parseInt(hexString, 16);
-                  s += '0x' + errorCodeValue;
+                 console.log("hexstring",hexString);
+                 //errorCodeValue = parseInt(hexString, 16);
+                  s += '0x' + hexString;
                   if(errorCodeKey != lengthofErrorCodes-1){
                     s += ',';
                   }
