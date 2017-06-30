@@ -173,34 +173,66 @@
           </div>
         </div>
       </div>
-        <div class="col-md-16 col-sm-16 reset-padding margin-top">
+       <div ng-if="getDeviceTypeforBothIcon() === 'ALL' || getDeviceTypeforBothIcon() === 'VEST'">
+         <div class="col-md-16 col-sm-16 reset-padding margin-top">
           <div class="col-md-7 col-sm-7 reset-padding">
             <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
               <span class="" translate="patient.garment-type"></span>
             </div>
             <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding">
-              <span>{{patient.garmentType}}</span>
+              <span>{{patient.vestGarmentType}}</span>
             </div>
         </div>
-        <div class="col-md-7 col-sm-7 col-sm-offset-0 reset-padding col-md-offset-2">
-          <div class="col-md-6 dashboard__form--label reset-padding">
+        <div class="col-md-7 col-sm-7 reset-padding col-sm-offset-0 col-md-offset-2">
+          <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
             <span class="" translate="patient.garment-color"></span>
           </div>
           <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding">
-            <span>{{patient.garmentColor}}</span>
+            <span>{{patient.vestGarmentColor}}</span>
           </div>
         </div>
       </div>
-       <div class="col-md-16 col-sm-16 reset-padding margin-top">
+      <div class="col-md-16 col-sm-16 reset-padding margin-top">
           <div class="col-md-7 col-sm-7 reset-padding">
             <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
               <span class="" translate="patient.garment-size"></span>
             </div>
             <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding">
-              <span>{{patient.garmentSize}}</span>
+              <span>{{patient.vestGarmentSize}}</span>
             </div>
         </div>
       </div>
+    </div>
+      <div ng-if="getDeviceTypeforBothIcon() === 'ALL' || getDeviceTypeforBothIcon() === 'MONARCH'">
+        <div class="col-md-16 col-sm-16 reset-padding margin-top">
+          <div class="col-md-7 col-sm-7 reset-padding">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+              <span class="" translate="patient.garment-type-monarch"></span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding">
+              <span>{{patient.monarchGarmentType}}</span>
+            </div>
+        </div>
+        <div class="col-md-7 col-sm-7 reset-padding col-sm-offset-0 col-md-offset-2">
+          <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+            <span class="" translate="patient.garment-color-monarch"></span>
+          </div>
+          <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding">
+            <span>{{patient.monarchGarmentColor}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-16 col-sm-16 reset-padding margin-top">
+          <div class="col-md-7 col-sm-7 reset-padding">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+              <span class="" translate="patient.garment-size-monarch"></span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding">
+              <span>{{patient.monarchGarmentSize}}</span>
+            </div>
+        </div>
+      </div>
+    </div>
       <div class="col-md-16 col-sm-16 margin-top reset-padding">
    <div class="col-md-7 col-sm-7 reset-padding">
     <div class=" col-md-6 col-sm-6  dashboard__form--label reset-padding">
