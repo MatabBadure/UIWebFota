@@ -105,13 +105,37 @@ angular.module('hillromvestApp')
     };
 
     $scope.initpatientDemographic = function(){
+       $scope.getGarmentValues();
       $scope.getPatientById($stateParams.patientId);
       UserService.getState().then(function(response) {
        $scope.states = response.data.states;
       }).catch(function(response) {});
       $scope.getPatiendDetails($stateParams.patientId, $scope.setEditMode);
     };
+ $scope.getGarmentValues = function(){
+          patientService.getGarmentSizeCodeValues().then(function(response){
+        $scope.garmentSizeResponse = response.data;
+         $scope.garmentSize = $scope.garmentSizeResponse.typeCode;
+      }).catch(function(response){
+        notyService.showError(response);
+      });
+          patientService.getGarmentColorCodeValues().then(function(response){
+        $scope.garmentColorResponse = response.data;
+        $scope.garmentColor = $scope.garmentColorResponse.typeCode;
+      }).catch(function(response){
+        notyService.showError(response);
+      });
+       
+        patientService.getGarmentTypeCodeValues().then(function(response){
+        $scope.garmentTypeResponse = response.data;
+          $scope.garmentType = $scope.garmentTypeResponse.typeCode;
+      }).catch(function(response){
+        notyService.showError(response);
+      });
+        console.log("$scope.garmentSizeResponse",$scope.garmentSizeResponse);     
+        };
 
+        
     $scope.openEditDetail = function(){
       if($scope.patientStatus.role === loginConstants.role.acctservices){
         $state.go('patientDemographicEditRcadmin', {'patientId': $stateParams.patientId});
@@ -689,6 +713,7 @@ $scope.getdevice = function(){
       var data = $scope.patient;
       data.role = 'PATIENT';
       $scope.showModal = false;
+      console.log("$scope.patient",$scope.patient)
       UserService.editUser(data).then(function (response) {
         if(response.status === 200) {
           $scope.patientStatus.isMessage = true;
