@@ -1,0 +1,108 @@
+ <ng-include src="'scripts/components/navbar/navbar.html'"></ng-include>
+<div class="navbar patient-user patient-user--nav">
+<!-- Demo data-intro="Navigation Ribbon" data-position="bottom"-->
+  <div class="container">
+
+
+
+    <div class="collapse navbar-collapse patient-dashboard" id="navbar-collapse">
+      <ul class="nav navbar-nav tims-ribbon">
+        <li style=padding-right:50px;>
+          <a class="timsLogHead active"ng-class="{active: isActive('log-information')}" ng-href="" ng-click='timsLog()'>
+            <span class="" translate="global.log-information"></span>
+          </a>
+        </li>
+        <li>
+          <a class="timsexecuteHead"ng-class="{active: isActive('log-information')}" ng-href="" ng-click='timsExecute()'>
+            <span class="" translate="global.execute-job"></span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+
+        <div class="row lebel-indent col-md-16 margin-bottom15 tims-check-box">
+           <label ng-if="!searchFilter.isHideStatusFilter">
+              <input type="checkbox" > 
+              <span translate="tims.success"></span> 
+            </label>
+            
+    <label ng-if="!searchFilter.isHideStatusFilter">
+        <input type="checkbox" ng-model="searchFilter.isDeleted" ng-click="searchOnFilters()"> 
+        <span translate="tims.fail"></span>
+    </label>
+
+    
+        <!-- <li  class="tims_calender" id="dp3"><a href="" date-range-picker class="date-picker" ng-model="dates"   ><span class="icon-calendar"></span></a></li> -->
+        <!-- <li role="presentation" class="tims_calender" id="dp3"><a href="" date-range-picker class="date-picker" ng-model="dates" parentEl="#dp3" options="opts" ><span class="icon-calendar"></span></a></li> -->
+        <div id="reportrange" class="tims_calender" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 30%">
+    <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;
+    <span></span> <b class="caret"></b>
+           <script type="text/javascript">
+$(function() {
+
+    var start = moment().subtract(29, 'days');
+    var end = moment();
+
+    function cb(start, end) {
+        $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+    }
+
+    $('#reportrange').daterangepicker({
+        startDate: start,
+        endDate: end,
+        
+    }, cb);
+
+    cb(start, end);
+    
+});
+</script>   
+</div>
+    
+    </div>
+    
+       <div class="pull-right week_date_container" data-intro="Select date for Customized Report" data-position="bottom">
+    <span ng-if="fromDate !== toDate"> 
+      <span class="date">{{fromDate}}</span> - <span class="date">{{toDate}}</span>
+    </span>
+    <span ng-if="fromDate === toDate" class="date">{{fromDate}}<span>
+  </div>  
+        
+          
+          
+        
+      
+       
+
+
+    <div >
+        <div class="col-md-3 col-sm-4 header--type pull-left-mob width120">
+          <span ng-class="{'sort-icon--default' : sortPatientList.lastName.isDefault, 'sort-icon-down': sortPatientList.lastName.isDown, 'sort-icon-up':sortPatientList.lastName.isUp}" class="ng-scope sort-icon--default" ng-click="sortType('lastName')" translate="global.date-tims">Date</span>
+        </div>
+        <div class="col-md-3 col-sm-3 header--type pull-left-mob width120">
+          <span ng-class="{'sort-icon--default' : sortPatientList.mrnId.isDefault, 'sort-icon-down': sortPatientList.mrnId.isDown, 'sort-icon-up':sortPatientList.mrnId.isUp}" class="ng-scope sort-icon--default" ng-click="sortType('mrnId')" translate="global.time-tims">MRN ID</span>
+        </div>
+        <div class="col-md-3 col-sm-3 header--type none hidden-sm">
+          <span ng-class="{'sort-icon--default' : sortPatientList.dob.isDefault, 'sort-icon-down': sortPatientList.dob.isDown, 'sort-icon-up':sortPatientList.dob.isUp}" class="ng-scope sort-icon--default" ng-click="sortType('dob')" translate="global.logstatus-tims">DOB</span>
+        </div>
+        <div class="col-md-3 col-sm-3 header--type none">
+          <span ng-class="{'sort-icon--default' : sortPatientList.city.isDefault, 'sort-icon-down': sortPatientList.city.isDown, 'sort-icon-up':sortPatientList.city.isUp}"  class="ng-scope sort-icon--default" ng-click="sortType('city')" translate="global.loglink-tims">City/State</span>
+        </div>
+      </div>
+      <div class="clr"></div>
+
+      <div class="dashboard__manage-view--list" ng-repeat="patient in patients" ng-click="selectPatient(patient)" ng-readonly="true">
+          <div class="col-md-2 col-sm-4 header--type pull-left-mob width120">
+          <span ng-class="{'sort-icon--default' : sortPatientList.lastName.isDefault, 'sort-icon-down': sortPatientList.lastName.isDown, 'sort-icon-up':sortPatientList.lastName.isUp}" ng-click="sortType('lastName')" translate="patient.patient-name">Patient Name</span>
+        </div>
+        <div class="col-md-2 col-sm-3 header--type pull-left-mob width120">
+          <span ng-class="{'sort-icon--default' : sortPatientList.mrnId.isDefault, 'sort-icon-down': sortPatientList.mrnId.isDown, 'sort-icon-up':sortPatientList.mrnId.isUp}" ng-click="sortType('mrnId')" translate="patient.mrn-id">MRN ID</span>
+        </div>
+        <div class="col-md-2 col-sm-3 header--type none hidden-sm">
+          <span ng-class="{'sort-icon--default' : sortPatientList.dob.isDefault, 'sort-icon-down': sortPatientList.dob.isDown, 'sort-icon-up':sortPatientList.dob.isUp}" ng-click="sortType('dob')" translate="patient.date-of-birth">DOB</span>
+        </div>
+
+      </div>
+  </div>
+</div>

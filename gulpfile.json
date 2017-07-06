@@ -347,7 +347,9 @@
             "app/scripts/modules/common/console/announcements/services/announcement.service.min.js",
             "app/scripts/modules/clinicadmin/announcements/controllers/announcementsCA.controller.min.js",
             "app/scripts/modules/common/console/announcements/directives/announcement.directive.min.js",
-            "app/scripts/modules/patient/announcements/controllers/announcements.controller.js"
+            "app/scripts/modules/patient/announcements/controllers/announcements.controller.js",
+            "app/scripts/modules/tims/controller/tims.controller.js",
+            "app/scripts/modules/tims/services/tims.service.js"
         ],
         "clean": [
             "app/build/",

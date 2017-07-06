@@ -5947,6 +5947,88 @@ angular.module('hillromvestApp')
                     ]
                 }
             })
+.state('timslog', {
+
+                parent: 'admin',
+                url: '/tims',
+                data: {
+                     roles: ['ADMIN'],
+                    pageTitle: 'profile.page-title.tims'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/tims/views/log_info.html',
+                        controller: 'timsController'
+                    }
+                },
+                 loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('AdminProfileModule');
+                    }],
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('profile');
+                        return $translate.refresh();
+                    }],
+                 authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+
+
+                            })
+  // .state('timslist', {
+  //               parent: 'admin',
+  //               url: '/log_info',
+               
+  //               views: {
+  //                   'content@': {
+  //                       templateUrl: 'scripts/modules/tims/views/log_info.html',
+  //                       controller: 'timsController'
+  //                   }
+  //               },
+                
+  //                           })
+  // .state('timsList', {
+            
+  //               parent: 'admin',
+  //               url: '/log_deatils',
+               
+  //               views: {
+  //                   'content@': {
+  //                       templateUrl: 'scripts/modules/tims/views/log_deatils.html',
+  //                       //controller: 'tims-detailsController'
+  //                   }
+  //               },
+                
+  //                           })
+  .state('executeJob', {
+                parent: 'admin',
+                url: '/execute_job',
+                data: {
+                     roles: ['ADMIN'],
+                    pageTitle: 'profile.page-title.tims'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/tims/views/execute_job.html',
+                        controller: 'timsController'
+                    }
+                },
+                 loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('AdminProfileModule');
+                    }],
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('profile');
+                        return $translate.refresh();
+                    }],
+                 authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                
+                            })
+
 .state('caregiverpatientDiagnostic', {
                 parent: 'caregiver-dashboard',
                 url: '/patientDiagnostic/{patientId}',
