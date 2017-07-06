@@ -150,5 +150,6 @@ angular.module('hillromvestApp')
 	'getAdherenceScoreResetHistory' : 'api/user/ID/AdherenceResetHistoryForPatient?&page=PAGE&per_page=PER_PAGE&deviceType=DEVICETYPE',
 	'getgarmentTypeCodeValues' : 'api/codeValues/garment_type',
 	'getgarmentSizeCodeValues' : 'api/codeValues/garment_size',
-	'getgarmentColorCodeValues' : 'api/codeValues/garment_color'
+	'getgarmentColorCodeValues' : 'api/codeValues/garment_color',
+	'executeTimsJob' : 'api/executeTIMSJob'
 });

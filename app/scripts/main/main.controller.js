@@ -524,5 +524,21 @@ else {
   	 $scope.GoToMessages = function(){ 	 	
 		$state.go('Messages');
     };
+    $scope.tims = function(){
+    	
+    	$state.go('timslog');
+    }
+    $scope.timsLog = function(){
+    	
+    	$state.go('timslog');
+    }
+    $scope.timsExecute = function(){
+    	
+    	$state.go('executeJob');
+    }
+    $scope.timsDetails = function(){
+    	
+    	$state.go('timsList');
+    }
 
   }]);
