@@ -107,7 +107,7 @@ angular.module('hillromvestApp')
       getHMRrunAndScoreRate: function(id, timeStamp) {
         var url = patient.graph.baseURL;
         url  = url + '/' + id + '/compliance?date=' + timeStamp;
-        url = url +'&deviceType='+localStorage.getItem('deviceType');
+        url = url +'&deviceType='+localStorage.getItem('deviceTypeforBothIcon');
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
