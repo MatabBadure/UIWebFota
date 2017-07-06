@@ -6,14 +6,12 @@
  *
  */
 angular.module('hillromvestApp')
-  .factory('TimService',['$http', 'headerService', 'URL', function($http, headerService, URL) {
+  .factory('TimService',['$http', 'headerService', 'URL','StorageService', function($http, headerService, URL,StorageService) {
     return {
     	 executeTimsJob: function() {
          var url  = URL.executeTimsJob;
-         console.log("executeTimsJob url:",url);
-                 console.log("StorageService.get('logged').token",StorageService.get('logged').token);
-
-        return $http.post(url, {
+         var data="";
+        return $http.post(url,data, {
           headers: headerService.getHeader()
         }).success(function(response) {
           return response;
