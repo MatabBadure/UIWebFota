@@ -170,6 +170,62 @@
           </div>
         </div>
       </div>
+      <div ng-if="getDeviceTypeforBothIcon() === 'ALL' || getDeviceTypeforBothIcon() === 'VEST'">
+       <div class="col-md-16 col-sm-16 reset-padding margin-top">
+          <div class="col-md-7 col-sm-7 reset-padding">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding" translate="patient.garment-type">
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding">
+              {{::patient.vestGarmentType}}
+            </div>
+        </div>
+        <div class="col-md-7 col-sm-7 reset-padding col-md-offset-2">
+          <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding" translate="patient.garment-color">
+          </div>
+          <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding">
+            {{::patient.vestGarmentColor}}
+          </div>
+        </div>
+      </div>
+       <div class="col-md-16 col-sm-16 reset-padding margin-top">
+          <div class="col-md-7 col-sm-7 reset-padding">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+              <span class="" translate="patient.garment-size"></span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding">
+              <span>{{patient.vestGarmentSize}}</span>
+            </div>
+        </div>
+      </div>
+    </div>
+      <div ng-if="getDeviceTypeforBothIcon() === 'ALL' || getDeviceTypeforBothIcon() === 'MONARCH'">
+           <div class="col-md-16 col-sm-16 reset-padding margin-top">
+          <div class="col-md-7 col-sm-7 reset-padding">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding" translate="patient.garment-type-monarch">
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding">
+              {{::patient.monarchGarmentType}}
+            </div>
+        </div>
+        <div class="col-md-7 col-sm-7 reset-padding col-md-offset-2">
+          <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding" translate="patient.garment-color-monarch">
+          </div>
+          <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding">
+            {{::patient.monarchGarmentColor}}
+          </div>
+        </div>
+      </div>
+       <div class="col-md-16 col-sm-16 reset-padding margin-top">
+          <div class="col-md-7 col-sm-7 reset-padding">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+              <span class="" translate="patient.garment-size-monarch"></span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding">
+              <span>{{patient.monarchGarmentSize}}</span>
+            </div>
+        </div>
+      </div>
+    </div>
 <div class="col-md-16 col-sm-16 margin-top reset-padding">
    <div class="col-md-7 col-sm-7 reset-padding">
     <div class=" col-md-6 col-sm-6  dashboard__form--label reset-padding">

@@ -147,5 +147,8 @@ angular.module('hillromvestApp')
 	'getBadgeStatistics':'/api/users/USERID/clinics/CLINICID/badgestatistics?from=FROM_DATE&to=TO_DATE',
 	'getActivePatients':'api/activePatCountForDevice/CLINICID',
 	'adherenceResetProgress': '/api/adherenceResetProgress/CLINICID',
-	'getAdherenceScoreResetHistory' : 'api/user/ID/AdherenceResetHistoryForPatient?&page=PAGE&per_page=PER_PAGE&deviceType=DEVICETYPE'
+	'getAdherenceScoreResetHistory' : 'api/user/ID/AdherenceResetHistoryForPatient?&page=PAGE&per_page=PER_PAGE&deviceType=DEVICETYPE',
+	'getgarmentTypeCodeValues' : 'api/codeValues/garment_type',
+	'getgarmentSizeCodeValues' : 'api/codeValues/garment_size',
+	'getgarmentColorCodeValues' : 'api/codeValues/garment_color'
 });

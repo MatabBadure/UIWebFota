@@ -47,6 +47,30 @@ angular.module('hillromvestApp')
           return response;
         });
       },
+      getGarmentTypeCodeValues: function(){
+          var url = URL.getgarmentTypeCodeValues;
+        return $http.get(url, {
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });
+      },
+      getGarmentColorCodeValues: function(){
+        var url = URL.getgarmentColorCodeValues;
+        return $http.get(url, {
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });
+      },
+       getGarmentSizeCodeValues: function(){
+        var url = URL.getgarmentSizeCodeValues;
+        return $http.get(url, {
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });
+      },
 
       getAdherenceCalculatedScore: function(id) {
         var url = URL.clinicBaseURL + '/' + id;
