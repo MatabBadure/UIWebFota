@@ -11,10 +11,33 @@ angular.module('hillromvestApp')
     $scope.displayFlag = true;
           $scope.customPointsChecker = 0;
           $scope.lastdeviceType = "";
+          $scope.getGarmentValues = function(){
+          patientService.getGarmentSizeCodeValues().then(function(response){
+        $scope.garmentSizeResponse = response.data;
+         $scope.garmentSize = $scope.garmentSizeResponse.typeCode;
+      }).catch(function(response){
+        notyService.showError(response);
+      });
+          patientService.getGarmentColorCodeValues().then(function(response){
+        $scope.garmentColorResponse = response.data;
+        $scope.garmentColor = $scope.garmentColorResponse.typeCode;
+      }).catch(function(response){
+        notyService.showError(response);
+      });
+       
+        patientService.getGarmentTypeCodeValues().then(function(response){
+        $scope.garmentTypeResponse = response.data;
+          $scope.garmentType = $scope.garmentTypeResponse.typeCode;
+      }).catch(function(response){
+        notyService.showError(response);
+      });
+        console.log("$scope.garmentSizeResponse",$scope.garmentSizeResponse);     
+        };
   $scope.init = function(){
     if($state.current.name === 'clinicadminpatientDemographic'  || $state.current.name === 'clinicadmminpatientDemographicEdit'){
       $scope.getPatientInfo($stateParams.patientId, $scope.setEditMode);
       if($state.current.name === 'clinicadmminpatientDemographicEdit'){
+         $scope.getGarmentValues();
         $scope.getStates();
       }
     }else if($state.current.name === 'clinicadminpatientClinics'){

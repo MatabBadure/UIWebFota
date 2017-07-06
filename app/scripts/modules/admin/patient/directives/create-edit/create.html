@@ -250,6 +250,92 @@
             </div>
           </div>
         </div>
+          <!-- Garment fields for Vest by default-->
+      
+       <div class="col-md-16 col-sm-16 reset-padding margin-top">
+          <div class="col-md-7 col-sm-7 reset-padding">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+              <span class="" translate="patient.garment-type"></span>
+              <span class=""></span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form__input--option reset-padding selected-box-container">
+              <div class="custom-dropdown">
+                 <select name="type" ng-model="patient.vestGarmentType"  ng-options="item.type_code_value as item.type_code_value for item in garmentType">
+                </select>
+              </div>
+            </div>
+        </div>
+        <div class="col-md-7 col-sm-7 reset-padding col-md-offset-2">
+          <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+            <span class="" translate="patient.garment-color"></span>
+            <span class=""></span>
+          </div>
+          <div class="col-md-10 col-sm-10 dashboard__form__input--option reset-padding selected-box-container">
+              <div class="custom-dropdown">
+                 <select name="type" ng-model="patient.vestGarmentColor"  ng-options="item.type_code_value as item.type_code_value for item in garmentColor">
+                </select>
+              </div>
+            </div>
+        </div>
+      </div>
+      <div class="col-md-16 col-sm-16 margin-top reset-padding">
+      <div class="col-md-7 col-sm-7 reset-padding">
+    <div class=" col-md-6 col-sm-6  dashboard__form--label reset-padding">
+          <span  translate="patient.garment-size" ></span>
+        </div>
+
+         <div class="col-md-10 col-sm-10 dashboard__form__input--option reset-padding selected-box-container">
+              <div class="custom-dropdown">
+                 <select name="type" ng-model="patient.vestGarmentSize"  ng-options="item.type_code_value as item.type_code_value for item in garmentSize">
+                </select>
+              </div>
+            </div>
+        </div>
+      </div>
+  
+       <!-- Garment fields for Monarch-->
+      
+  <!--     <div class="col-md-16 col-sm-16 reset-padding margin-top">
+          <div class="col-md-7 col-sm-7 reset-padding">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+              <span class="" translate="patient.garment-type-monarch"></span>
+              <span class=""></span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form__input--option reset-padding selected-box-container">
+              <div class="custom-dropdown">
+                 <select name="type" ng-model="patient.monarchGarmentType"  ng-options="item.type_code_value as item.type_code_value for item in garmentType">
+                </select>
+              </div>
+            </div>
+        </div>
+        <div class="col-md-7 col-sm-7 reset-padding col-md-offset-2">
+          <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+            <span class="" translate="patient.garment-color-monarch"></span>
+            <span class=""></span>
+          </div>
+          <div class="col-md-10 col-sm-10 dashboard__form__input--option reset-padding selected-box-container">
+              <div class="custom-dropdown">
+                 <select name="type" ng-model="patient.monarchGarmentColor"  ng-options="item.type_code_value as item.type_code_value for item in garmentColor">
+                </select>
+              </div>
+            </div>
+        </div>
+      </div>
+      <div class="col-md-16 col-sm-16 margin-top reset-padding">
+      <div class="col-md-7 col-sm-7 reset-padding">
+    <div class=" col-md-6 col-sm-6  dashboard__form--label reset-padding">
+          <span  translate="patient.garment-size-monarch" ></span>
+        </div>
+
+         <div class="col-md-10 col-sm-10 dashboard__form__input--option reset-padding selected-box-container">
+              <div class="custom-dropdown">
+                 <select name="type" ng-model="patient.monarchGarmentSize"  ng-options="item.type_code_value as item.type_code_value for item in garmentSize">
+                </select>
+              </div>
+            </div>
+        </div>
+      </div> -->
+   
         <div class="clr"></div>
       </div>
       <div class="col-md-16 margin-top reset-padding">
