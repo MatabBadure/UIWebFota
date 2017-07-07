@@ -176,31 +176,80 @@ angular.module('hillromvestApp')
     $scope.getDevices(patientId);
   };
 
-  $scope.getProtocols = function(patientId){
+ $scope.getProtocols = function(patientId){
+      $scope.normalProtocol = new Array(new Array());
+         $scope.normalProtocol[0] = [];
+          $scope.normalProtocol[1] = [];
+        $scope.customProtocol = new Array(new Array());
+         $scope.customProtocol[0] = [];
+          $scope.customProtocol[1] = [];
+    $scope.DisableAddProtocol = false;
     patientService.getProtocol(patientId).then(function(response){
       $scope.protocols = response.data.protocol;
-       $scope.DisableAddProtocol = false;
-        var vestFlag = false;
+       if($scope.getDeviceTypeforBothIcon() === searchFilters.allCaps){
+         console.log("$scope.protocols",$scope.protocols)
+        angular.forEach($scope.protocols, function(protocol, key){
+          var protocolkey = protocol.protocolKey;
+          var protocolobject = {}
+            if(protocol.type === 'Normal'){
+              console.log("$scope.normalProtocol in if",$scope.normalProtocol);
+              if($scope.normalProtocol[0].length){
+              if($scope.normalProtocol[0][0].protocolKey === protocolkey){
+            protocolobject = protocol;
+              $scope.normalProtocol[0].push(protocolobject);
+             }
+             else{
+            protocolobject = protocol;
+              $scope.normalProtocol[1].push(protocolobject);
+             }
+           }
+       else{
+             protocolobject = protocol;
+              $scope.normalProtocol[0].push(protocolobject);
+            }
+      }
+            else if(protocol.type === 'Custom'){
+              console.log("$scope.customProtocol in if",$scope.customProtocol);
+              if($scope.customProtocol[0].length){
+              if($scope.customProtocol[0][0].protocolKey === protocolkey){
+            protocolobject = protocol;
+              $scope.customProtocol[0].push(protocolobject);
+             }
+             else{
+            protocolobject = protocol;
+              $scope.customProtocol[1].push(protocolobject);
+             }
+           }
+           else{
+            protocolobject = protocol;
+              $scope.customProtocol[0].push(protocolobject);
+           }
+            }
+          });
+        }
+        console.log("$scope.normalProtocol",$scope.normalProtocol);
+        
+  console.log("$scope.customProtocol",$scope.customProtocol);
+              var vestFlag = false;
         var monarchFlag = false;
         $scope.lastdeviceType = $scope.protocols[0].deviceType;
-
-         angular.forEach($scope.protocols, function(protocol){
+        angular.forEach($scope.protocols, function(protocol){
           if(protocol.deviceType === searchFilters.VisiVest){
             vestFlag = true;
-           // alert("vestFlag = true");
+           
           }
           if(protocol.deviceType === searchFilters.Monarch){
             monarchFlag = true;
-           // alert("monarchFlag = true");
+           
           }
         });
-        if(vestFlag && monarchFlag){
+          if(vestFlag && monarchFlag){
           $scope.DisableAddProtocol = true;
-        //  alert($scope.DisableAddProtocol);
+        
         }
         else{
           $scope.DisableAddProtocol = false;
-          // alert($scope.DisableAddProtocol);
+         
         }
     }).catch(function(response){
       notyService.showError(response);

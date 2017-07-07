@@ -1,0 +1,65 @@
+  /* tims */
+  .tims_calender
+{
+ 
+    width: 20% !important;
+    position: absolute;
+    
+    left: 15%;
+}
+.execute-jobs
+{
+  display: inline-flex;
+}
+.timsLogHead,.timsexecuteHead
+{
+  color:#fff;
+}
+.timsLogHead:active,.timsexecuteHead:active
+{
+  /*border-bottom: 3px solid #34455C;
+  background-color: #428bca !important;
+  padding:10px 0px!important;*/
+
+  background-color: #7ca3dc;
+    color: white;
+    outline: 0;
+    box-shadow: 0 -3px 0 0 #003594 inset;
+    border-radius: 0;
+    padding-bottom: 9px;
+}
+.timsLogHead,.timsexecuteHead
+{
+  padding:10px 10px!important; 
+}
+.tims-check-box
+{
+      margin-top: 4%;
+    margin-left: 1%;
+}
+.timsLogHead span,.timsexecuteHead span
+{
+  color:#fff;
+}
+.timsLogHead:hover,.timsexecuteHead:hover,
+.timsLogHead:active,.timsexecuteHead:active
+{
+  background-color: #7ca3dc !important;
+  box-shadow: 0 -3px 0 0 #003594 inset;
+}
+
+.timsText
+{
+      font-weight: 100;
+    font-size: 1.1em;
+}
+.timsContainer
+{
+    width: 500px;
+    margin: 0 auto;
+    margin-top: 14%;
+}
+.logTims-head
+{
+  margin:3% 0%;
+}
