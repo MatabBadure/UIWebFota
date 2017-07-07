@@ -144,7 +144,14 @@ angular.module('hillromvestApp')
       }
     };
 
-    $scope.getProtocols = function(patientId){
+      $scope.getProtocols = function(patientId){
+       $scope.normalProtocol = new Array(new Array());
+         $scope.normalProtocol[0] = [];
+          $scope.normalProtocol[1] = [];
+        $scope.customProtocol = new Array(new Array());
+         $scope.customProtocol[0] = [];
+          $scope.customProtocol[1] = [];
+        // $scope.customProtocol.push(new Object());
       patientService.getProtocol(patientId).then(function(response){
         console.log("protocol response:",response);
         $scope.protocols = response.data.protocol;
@@ -153,7 +160,54 @@ angular.module('hillromvestApp')
         $scope.DisableAddProtocol = false;
         var vestFlag = false;
         var monarchFlag = false;
-        $scope.lastdeviceType = $scope.protocols[0].deviceType;
+        if($scope.getDeviceTypeforBothIcon() === searchFilters.allCaps){
+         console.log("$scope.protocols",$scope.protocols)
+        angular.forEach($scope.protocols, function(protocol, key){
+          var protocolkey = protocol.protocolKey;
+          var protocolobject = {}
+            if(protocol.type === 'Normal'){
+              console.log("$scope.normalProtocol in if",$scope.normalProtocol);
+              if($scope.normalProtocol[0].length){
+              if($scope.normalProtocol[0][0].protocolKey === protocolkey){
+            protocolobject = protocol;
+              $scope.normalProtocol[0].push(protocolobject);
+             }
+             else{
+            protocolobject = protocol;
+              $scope.normalProtocol[1].push(protocolobject);
+             }
+           }
+       else{
+             protocolobject = protocol;
+              $scope.normalProtocol[0].push(protocolobject);
+            }
+      }
+            else if(protocol.type === 'Custom'){
+              console.log("$scope.customProtocol in if",$scope.customProtocol);
+              if($scope.customProtocol[0].length){
+              if($scope.customProtocol[0][0].protocolKey === protocolkey){
+            protocolobject = protocol;
+              $scope.customProtocol[0].push(protocolobject);
+             }
+             else{
+            protocolobject = protocol;
+              $scope.customProtocol[1].push(protocolobject);
+             }
+           }
+           else{
+            protocolobject = protocol;
+              $scope.customProtocol[0].push(protocolobject);
+           }
+            }
+          });
+        }
+        console.log("$scope.normalProtocol",$scope.normalProtocol);
+        
+  console.log("$scope.customProtocol",$scope.customProtocol);
+  if($scope.protocols){
+            $scope.lastdeviceType = $scope.protocols[0].deviceType;
+
+  }
         angular.forEach($scope.protocols, function(protocol){
           protocol.createdDate = dateService.getDateByTimestamp(protocol.createdDate);
           protocol.lastModifiedDate = dateService.getDateByTimestamp(protocol.lastModifiedDate);
@@ -179,7 +233,6 @@ angular.module('hillromvestApp')
         }
       }).catch(function(){});
     };
-
     $scope.getDevices = function(patientId){
       $scope.totalHmr = 0;
       patientService.getDevices(patientId).then(function(response){
