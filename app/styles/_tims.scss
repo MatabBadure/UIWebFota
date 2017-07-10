@@ -2,9 +2,9 @@
   .tims_calender
 {
  
-    width: 20% !important;
+    width: 25% !important;
     position: absolute;
-    
+    top:10%;
     left: 15%;
 }
 .execute-jobs
@@ -34,8 +34,7 @@
 }
 .tims-check-box
 {
-      margin-top: 4%;
-    margin-left: 1%;
+    margin:4% 1%;
 }
 .timsLogHead span,.timsexecuteHead span
 {
@@ -62,4 +61,42 @@
 .logTims-head
 {
   margin:3% 0%;
+}
+.textareaBorder
+{
+  border: 1px solid #cccccc;
+  width:50%;
+  padding: 4%;
+}
+.logList
+{
+  width:100%;
+}
+.timsContainer-success
+{
+  margin: 15% 0% 3% 20%;
+}
+.logStatusWidth
+{
+  width:10%;
+}
+.logLinkWidth
+{
+  width:60%;
+}
+.tims_header span
+{
+  color: #276092;
+}
+.logLinkWidth a{
+      color: #34455C;
+}
+.tims__manage-view--list{
+  border-bottom: 1px solid $silver-approx;
+  padding-top: 10px;
+  padding-bottom: 30px;
+  cursor: pointer;
+  &:hover {
+    background-color: $seashell;
+  }
 }

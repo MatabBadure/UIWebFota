@@ -5,15 +5,15 @@
 
 
 
-    <div class="collapse navbar-collapse patient-dashboard" id="navbar-collapse">
-      <ul class="nav navbar-nav tims-ribbon">
+    <div class="collapse navbar-collapse patient-user__navbar" id="navbar-collapse">
+      <ul class="nav navbar-nav patient-dashboard">
         <li style=padding-right:50px;>
-          <a class="timsLogHead active"ng-class="{active: isActive('log-information')}" ng-href="" ng-click='timsLog()'>
+          <a class="timsLogHead active" ng-class="{active: isActive('log-information')}" ng-href="" ng-click='timsLog()'>
             <span class="" translate="global.log-information"></span>
           </a>
         </li>
         <li>
-          <a class="timsexecuteHead"ng-class="{active: isActive('log-information')}" ng-href="" ng-click='timsExecute()'>
+          <a class="timsexecuteHead" ng-class="{active: isActive('log-information')}" ng-href="" ng-click='timsExecute()'>
             <span class="" translate="global.execute-job"></span>
           </a>
         </li>
@@ -22,15 +22,10 @@
 
 
         <div class="row lebel-indent col-md-16 margin-bottom15 tims-check-box">
-           <label ng-if="!searchFilter.isHideStatusFilter">
-              <input type="checkbox" > 
-              <span translate="tims.success"></span> 
-            </label>
-            
-    <label ng-if="!searchFilter.isHideStatusFilter">
-        <input type="checkbox" ng-model="searchFilter.isDeleted" ng-click="searchOnFilters()"> 
-        <span translate="tims.fail"></span>
-    </label>
+              <input type="checkbox" ng-model="timsFilter.isSuccess" ng-click="timsOnFilters()"> 
+              <span translate="search-filter.success"></span> 
+              <input type="checkbox" ng-model="timsFilter.isFail" ng-click="timsOnFilters()"> 
+              <span translate="search-filter.fail"></span>
 
     
         <!-- <li  class="tims_calender" id="dp3"><a href="" date-range-picker class="date-picker" ng-model="dates"   ><span class="icon-calendar"></span></a></li> -->
@@ -76,33 +71,50 @@ $(function() {
        
 
 
-    <div >
-        <div class="col-md-3 col-sm-4 header--type pull-left-mob width120">
+    <div class="tims_header">
+        <div class="col-md-3 col-sm-3 header--type pull-left-mob width120">
           <span ng-class="{'sort-icon--default' : sortPatientList.lastName.isDefault, 'sort-icon-down': sortPatientList.lastName.isDown, 'sort-icon-up':sortPatientList.lastName.isUp}" class="ng-scope sort-icon--default" ng-click="sortType('lastName')" translate="global.date-tims">Date</span>
         </div>
-        <div class="col-md-3 col-sm-3 header--type pull-left-mob width120">
-          <span ng-class="{'sort-icon--default' : sortPatientList.mrnId.isDefault, 'sort-icon-down': sortPatientList.mrnId.isDown, 'sort-icon-up':sortPatientList.mrnId.isUp}" class="ng-scope sort-icon--default" ng-click="sortType('mrnId')" translate="global.time-tims">MRN ID</span>
+        
+        <div class="col-md-3 col-sm-1 header--type none hidden-sm logStatusWidth">
+          <span  ng-click="sortType('dob')" translate="global.logstatus-tims">Status</span>
         </div>
-        <div class="col-md-3 col-sm-3 header--type none hidden-sm">
-          <span ng-class="{'sort-icon--default' : sortPatientList.dob.isDefault, 'sort-icon-down': sortPatientList.dob.isDown, 'sort-icon-up':sortPatientList.dob.isUp}" class="ng-scope sort-icon--default" ng-click="sortType('dob')" translate="global.logstatus-tims">DOB</span>
-        </div>
-        <div class="col-md-3 col-sm-3 header--type none">
-          <span ng-class="{'sort-icon--default' : sortPatientList.city.isDefault, 'sort-icon-down': sortPatientList.city.isDown, 'sort-icon-up':sortPatientList.city.isUp}"  class="ng-scope sort-icon--default" ng-click="sortType('city')" translate="global.loglink-tims">City/State</span>
+        <div class="col-md-3 col-sm-8 header--type none logLinkWidth">
+          <span ng-class="{'sort-icon--default' : sortPatientList.city.isDefault, 'sort-icon-down': sortPatientList.city.isDown, 'sort-icon-up':sortPatientList.city.isUp}"  class="ng-scope sort-icon--default" ng-click="sortType('city')" translate="global.loglink-tims">Link</span>
         </div>
       </div>
       <div class="clr"></div>
 
-      <div class="dashboard__manage-view--list" ng-repeat="patient in patients" ng-click="selectPatient(patient)" ng-readonly="true">
-          <div class="col-md-2 col-sm-4 header--type pull-left-mob width120">
-          <span ng-class="{'sort-icon--default' : sortPatientList.lastName.isDefault, 'sort-icon-down': sortPatientList.lastName.isDown, 'sort-icon-up':sortPatientList.lastName.isUp}" ng-click="sortType('lastName')" translate="patient.patient-name">Patient Name</span>
-        </div>
-        <div class="col-md-2 col-sm-3 header--type pull-left-mob width120">
-          <span ng-class="{'sort-icon--default' : sortPatientList.mrnId.isDefault, 'sort-icon-down': sortPatientList.mrnId.isDown, 'sort-icon-up':sortPatientList.mrnId.isUp}" ng-click="sortType('mrnId')" translate="patient.mrn-id">MRN ID</span>
-        </div>
-        <div class="col-md-2 col-sm-3 header--type none hidden-sm">
-          <span ng-class="{'sort-icon--default' : sortPatientList.dob.isDefault, 'sort-icon-down': sortPatientList.dob.isDown, 'sort-icon-up':sortPatientList.dob.isUp}" ng-click="sortType('dob')" translate="patient.date-of-birth">DOB</span>
-        </div>
+      
+      <div class="tims__manage-view--list" ng-repeat="file in loglist.fileDtls" ng-click="timslog()" ng-readonly="true">
+          <div class="col-md-3 col-sm-4 reset-padding pull-left-mob width120">
+            <span class="tims-date">{{file.lastMod}}</span>
+            
+          </div>
+          
+          <div class="col-md-3 col-sm-1 logStatusWidth">
+            <span class="tims-status">{{file.status}}</span>
+          </div>
 
+          <div class="col-md-3 col-sm-8 logLinkWidth">
+            <a class="tims-link" ng-click="redirectToLogDetails(file.file)">{{file.file}} </a>
+            
+          </div>
       </div>
-  </div>
+
+
+      <div class="dashboard__manage-view--pagination">
+        <div class="col-md-16 reset-padding-right">
+          <div class="navbar-right">
+            <span class="record-found" ng-if="loglist.fileDtls.length > 0">{{total}} Log Records</span>
+            <span class="record-found" ng-if="loglist.fileDtls.length > 0">Found</span>
+            <span ng-show="pageCount > 1">
+              <span class="navigaion-link cursor-pointer" ng-class="{ 'inactive': !(currentPageIndex > 1) }" ng-click="timslog('PREV')">Previous</span>
+              <span class="navigaion-no">{{currentPageIndex}}</span>
+              <span class="navigaion-link cursor-pointer" ng-class="{ 'inactive': !(pageCount > currentPageIndex) }" ng-click="timslog('NEXT')">Next</span>
+            </span>
+          </div>
+          <div class="clr"></div>
+        </div>
+      </div>
 </div>
