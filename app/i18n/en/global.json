@@ -492,13 +492,16 @@
     },
     "search-filter" : {
         "active" : "Active",
-        "inactive" : "InActive", "no-event" : "No Transmission Recorded",
+        "inactive" : "InActive", 
+        "no-event" : "No Transmission Recorded",
         "setting-deviation" : "Below Frequency Setting",
         "hmr-non-compliant" : "Below Therapy Minutes",
          "missed-therapy" :"Missed Therapy Days",
         "pending": "Pending",
         "visivest":"VisiVest",
-        "monarch":"Monarch"
+        "monarch":"Monarch",
+        "success":"Success",
+        "fail":"Fail"
     },
     "tims" : {
         "success" : "Success",

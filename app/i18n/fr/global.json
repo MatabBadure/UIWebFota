@@ -1,6 +1,15 @@
 {
     "global": {
         "title": "HillRomVest",
+        "log-information":"Log Information",
+        "execute-job":"Execute Job",
+        "tim-script":"Tim Script",
+        "date-tims":"Date",
+        "time-tims":"Time",
+        "warning": "Tim Script Execution",
+        "message": "Are you sure you want to execute the Job process of the Tim Script?",
+        "logstatus-tims":"Log Status",
+        "loglink-tims":"Log Link",
         "browsehappy": "You are using an <strong>outdated</strong> browser. Please <a href=\"http://browsehappy.com/?locale=en\">upgrade your browser</a> to improve your experience.",
         "menu": {
             "home": "Home",
@@ -483,15 +492,22 @@
     },
     "search-filter" : {
         "active" : "Active",
-        "inactive" : "InActive", "no-event" : "No Transmission Recorded",
+        "inactive" : "InActive", 
+        "no-event" : "No Transmission Recorded",
         "setting-deviation" : "Below Frequency Setting",
         "hmr-non-compliant" : "Below Therapy Minutes",
          "missed-therapy" :"Missed Therapy Days",
         "pending": "Pending",
         "visivest":"VisiVest",
-        "monarch":"Monarch"
+        "monarch":"Monarch",
+        "success":"Success",
+        "fail":"Fail"
     },
-
+    "tims" : {
+        "success" : "Success",
+        "fail" : "Fail"
+        
+    },
     "user-not-found" : "No user associated.",
     "navbar": {
         "my-dashboard": "Dashboard",

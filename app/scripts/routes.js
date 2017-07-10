@@ -5917,7 +5917,7 @@ angular.module('hillromvestApp')
                   ]
               }
             }) 
-.state('caregiverdashboardCaregiver', {
+            .state('caregiverdashboardCaregiver', {
                 parent: 'caregiver-dashboard',
                 url: '/caregiver-list/{patientId}',
                 data: {
@@ -5947,7 +5947,7 @@ angular.module('hillromvestApp')
                     ]
                 }
             })
-.state('timslog', {
+                .state('timslog', {
 
                 parent: 'admin',
                 url: '/tims',
@@ -5961,11 +5961,9 @@ angular.module('hillromvestApp')
                         controller: 'timsController'
                     }
                 },
-                 loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
-                        return $ocLazyLoad.load('AdminProfileModule');
-                    }],
+                 
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
-                        $translatePartialLoader.addPart('profile');
+                        $translatePartialLoader.addPart('global');
                         return $translate.refresh();
                     }],
                  authorize: ['Auth',
@@ -6001,7 +5999,9 @@ angular.module('hillromvestApp')
   //               },
                 
   //                           })
-  .state('executeJob', {
+
+
+   .state('executeJob', {
                 parent: 'admin',
                 url: '/execute_job',
                 data: {
@@ -6011,6 +6011,33 @@ angular.module('hillromvestApp')
                 views: {
                     'content@': {
                         templateUrl: 'scripts/modules/tims/views/execute_job.html',
+                        controller: 'timsController'
+                    }
+                },
+                 loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('AdminProfileModule');
+                    }],
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('profile');
+                        return $translate.refresh();
+                    }],
+                 authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                
+                            })
+ .state('executedLog', {
+                parent: 'clinic-admin-user-profile',
+                url: '/executedLog/{fileurl}',
+                data: {
+                     roles: ['ADMIN'],
+                    pageTitle: 'profile.page-title.tims'
+                },
+                views: {
+                    'content@': {
+                         templateUrl: 'scripts/modules/tims/views/executedLog.html',
                         controller: 'timsController'
                     }
                 },
