@@ -20,7 +20,7 @@
             "entities": {
                 "main": "Entities",
                 "patientVestDeviceRawLog": "PatientVestDeviceRawLog",
-                "patientInfrapho": "PatientInfo",
+                "patientInfo": "PatientInfo",
                 "userLoginToken": "UserLoginToken",
                 "userExtension": "UserExtension",
                 "clinic": "Clinic",
