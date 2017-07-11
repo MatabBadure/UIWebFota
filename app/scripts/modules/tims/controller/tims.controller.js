@@ -50,7 +50,7 @@ angular.module('hillromvestApp')
        $scope.loglist = response.data;
         
        $scope.tims = response.data;
-      //  $scope.total = response.headers()['x-total-count'];
+        $scope.totalElements = response.data.totalElements;
         $scope.pageCount = Math.ceil(60 / $scope.perPageCount);
  
               }).catch(function(response){
