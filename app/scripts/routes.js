@@ -5961,7 +5961,10 @@ angular.module('hillromvestApp')
                         controller: 'timsController'
                     }
                 },
-                 
+                  resolve: {
+                 loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('AdminProfileModule');
+                    }],
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('global');
                         return $translate.refresh();
@@ -5971,35 +5974,9 @@ angular.module('hillromvestApp')
                             return Auth.authorize(false);
                         }
                     ]
+                }
 
-
-                            })
-  // .state('timslist', {
-  //               parent: 'admin',
-  //               url: '/log_info',
-               
-  //               views: {
-  //                   'content@': {
-  //                       templateUrl: 'scripts/modules/tims/views/log_info.html',
-  //                       controller: 'timsController'
-  //                   }
-  //               },
-                
-  //                           })
-  // .state('timsList', {
-            
-  //               parent: 'admin',
-  //               url: '/log_deatils',
-               
-  //               views: {
-  //                   'content@': {
-  //                       templateUrl: 'scripts/modules/tims/views/log_deatils.html',
-  //                       //controller: 'tims-detailsController'
-  //                   }
-  //               },
-                
-  //                           })
-
+  })
 
    .state('executeJob', {
                 parent: 'admin',
@@ -6014,11 +5991,12 @@ angular.module('hillromvestApp')
                         controller: 'timsController'
                     }
                 },
+                  resolve: {
                  loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
                         return $ocLazyLoad.load('AdminProfileModule');
                     }],
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
-                        $translatePartialLoader.addPart('profile');
+                         $translatePartialLoader.addPart('global');
                         return $translate.refresh();
                     }],
                  authorize: ['Auth',
@@ -6026,9 +6004,10 @@ angular.module('hillromvestApp')
                             return Auth.authorize(false);
                         }
                     ]
+                }
                 
-                            })
- .state('executedLog', {
+              })
+                .state('executedLog', {
                 parent: 'clinic-admin-user-profile',
                 url: '/executedLog/{fileurl}',
                 data: {
@@ -6041,11 +6020,12 @@ angular.module('hillromvestApp')
                         controller: 'timsController'
                     }
                 },
+                  resolve: {
                  loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
                         return $ocLazyLoad.load('AdminProfileModule');
                     }],
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
-                        $translatePartialLoader.addPart('profile');
+                         $translatePartialLoader.addPart('global');
                         return $translate.refresh();
                     }],
                  authorize: ['Auth',
@@ -6053,10 +6033,11 @@ angular.module('hillromvestApp')
                             return Auth.authorize(false);
                         }
                     ]
+                }
                 
-                            })
+            })
 
-.state('caregiverpatientDiagnostic', {
+                .state('caregiverpatientDiagnostic', {
                 parent: 'caregiver-dashboard',
                 url: '/patientDiagnostic/{patientId}',
                 data: {
