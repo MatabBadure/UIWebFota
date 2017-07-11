@@ -59,6 +59,9 @@ angular.module('hillromvestApp')
 //call service
     };
 
+
+
+
      $scope.timLoading = function () {
         TimService.executeTimsJob().then(function(response){
        $scope.timsScriptFileData = response;
@@ -71,6 +74,8 @@ angular.module('hillromvestApp')
               $scope.IsVisible = $scope.IsVisible ? false :true;
               $scope.visible = $scope.IsVisible ? false :true;
           }
+
+
          $scope.dateOpts = {
       maxDate: new Date(),
       format: patientDashboard.dateFormat,
@@ -122,6 +127,10 @@ angular.module('hillromvestApp')
               console.log("stateParams.fileurl:",data);
               TimService.getTimsLogDetails(data).then(function(response){
                  $scope.timsLogDetails = response.data;
+                 //$scope.timsLogDetails = $scope.timsLogDetails.logFileContent.replace(/(\r\n|\n|\r)/gm,"");
+                 //alert("$scope.timsLogDetails", $scope.timsLogDetails.logFileContent);
+                  $scope.timsLogDetailsText = $scope.timsLogDetails.logFileContent.replace("\n","\\n");
+                  //console.log("$scope.timsLogDetailsText",$scope.timsLogDetailsText);
                   }).catch(function(response){
                     notyService.showError(response);
                   });
