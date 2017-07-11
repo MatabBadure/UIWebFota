@@ -9,7 +9,8 @@ var admin = {
 		users : 'api/users',
 		notes : 'api/notes',
 		patients : 'api/patients'
-	}
+	},
+    timsFilePathConstant : '/usr/tomcat/apache-tomcat-8.0.28/TIMS/logs/'
 }
 
 var patient = {
@@ -47,7 +48,9 @@ var searchFilters = {
     Monarch: "MONARCH",
     devicetype : "deviceType=",
     allCaps : "ALL",
-    Both:"BOTH"
+    Both:"BOTH",
+    isSuccess:"isSuccess",
+    isFail:"isFail"
 }
 
 var sortConstant = {

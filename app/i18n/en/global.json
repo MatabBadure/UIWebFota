@@ -1,15 +1,7 @@
 {
     "global": {
         "title": "HillRomVest",
-        "log-information":"Log Information",
-        "execute-job":"Execute Job",
-        "tim-script":"Tim Script",
-        "date-tims":"Date",
-        "time-tims":"Time",
-        "warning": "Tim Script Execution",
-        "message": "Are you sure you want to execute the Job process of the Tim Script?",
-        "logstatus-tims":"Log Status",
-        "loglink-tims":"Log Link",
+         "tim-script":"Tim Script",
         "browsehappy": "You are using an <strong>outdated</strong> browser. Please <a href=\"http://browsehappy.com/?locale=en\">upgrade your browser</a> to improve your experience.",
         "menu": {
             "home": "Home",
@@ -75,6 +67,17 @@
         "NomessageWarning" : "Do you want to send a blank message?",
         "NoSubjectWarning" : "Do you want to send this message without a Subject?",
         "Reply": "Reply"
+    },
+    "tims":{
+         "log-information":"Log Information",
+        "execute-job":"Execute Job",
+        "tim-script":"Tim Script",
+        "date-tims":"Date",
+        "time-tims":"Time",
+        "warning": "Tim Script Execution",
+        "message": "Are you sure you want to execute the Job process of the Tim Script?",
+        "logstatus-tims":"Log Status",
+        "loglink-tims":"Log Link"
     },
         "logo-text": {
             "visi-view": "VisiView",
@@ -492,13 +495,16 @@
     },
     "search-filter" : {
         "active" : "Active",
-        "inactive" : "InActive", "no-event" : "No Transmission Recorded",
+        "inactive" : "InActive", 
+        "no-event" : "No Transmission Recorded",
         "setting-deviation" : "Below Frequency Setting",
         "hmr-non-compliant" : "Below Therapy Minutes",
          "missed-therapy" :"Missed Therapy Days",
         "pending": "Pending",
         "visivest":"VisiVest",
-        "monarch":"Monarch"
+        "monarch":"Monarch",
+        "success":"Success",
+        "fail":"Fail"
     },
     "tims" : {
         "success" : "Success",

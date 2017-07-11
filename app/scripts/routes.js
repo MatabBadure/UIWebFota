@@ -5917,7 +5917,7 @@ angular.module('hillromvestApp')
                   ]
               }
             }) 
-.state('caregiverdashboardCaregiver', {
+            .state('caregiverdashboardCaregiver', {
                 parent: 'caregiver-dashboard',
                 url: '/caregiver-list/{patientId}',
                 data: {
@@ -5947,7 +5947,7 @@ angular.module('hillromvestApp')
                     ]
                 }
             })
-.state('timslog', {
+                .state('timslog', {
 
                 parent: 'admin',
                 url: '/tims',
@@ -5961,11 +5961,12 @@ angular.module('hillromvestApp')
                         controller: 'timsController'
                     }
                 },
+                  resolve: {
                  loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
                         return $ocLazyLoad.load('AdminProfileModule');
                     }],
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
-                        $translatePartialLoader.addPart('profile');
+                        $translatePartialLoader.addPart('global');
                         return $translate.refresh();
                     }],
                  authorize: ['Auth',
@@ -5973,35 +5974,11 @@ angular.module('hillromvestApp')
                             return Auth.authorize(false);
                         }
                     ]
+                }
 
+  })
 
-                            })
-  // .state('timslist', {
-  //               parent: 'admin',
-  //               url: '/log_info',
-               
-  //               views: {
-  //                   'content@': {
-  //                       templateUrl: 'scripts/modules/tims/views/log_info.html',
-  //                       controller: 'timsController'
-  //                   }
-  //               },
-                
-  //                           })
-  // .state('timsList', {
-            
-  //               parent: 'admin',
-  //               url: '/log_deatils',
-               
-  //               views: {
-  //                   'content@': {
-  //                       templateUrl: 'scripts/modules/tims/views/log_deatils.html',
-  //                       //controller: 'tims-detailsController'
-  //                   }
-  //               },
-                
-  //                           })
-  .state('executeJob', {
+   .state('executeJob', {
                 parent: 'admin',
                 url: '/execute_job',
                 data: {
@@ -6014,11 +5991,12 @@ angular.module('hillromvestApp')
                         controller: 'timsController'
                     }
                 },
+                  resolve: {
                  loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
                         return $ocLazyLoad.load('AdminProfileModule');
                     }],
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
-                        $translatePartialLoader.addPart('profile');
+                         $translatePartialLoader.addPart('global');
                         return $translate.refresh();
                     }],
                  authorize: ['Auth',
@@ -6026,10 +6004,40 @@ angular.module('hillromvestApp')
                             return Auth.authorize(false);
                         }
                     ]
+                }
                 
-                            })
+              })
+                .state('executedLog', {
+                parent: 'clinic-admin-user-profile',
+                url: '/executedLog/{fileurl}',
+                data: {
+                     roles: ['ADMIN'],
+                    pageTitle: 'profile.page-title.tims'
+                },
+                views: {
+                    'content@': {
+                         templateUrl: 'scripts/modules/tims/views/executedLog.html',
+                        controller: 'timsController'
+                    }
+                },
+                  resolve: {
+                 loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('AdminProfileModule');
+                    }],
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                         $translatePartialLoader.addPart('global');
+                        return $translate.refresh();
+                    }],
+                 authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+                
+            })
 
-.state('caregiverpatientDiagnostic', {
+                .state('caregiverpatientDiagnostic', {
                 parent: 'caregiver-dashboard',
                 url: '/patientDiagnostic/{patientId}',
                 data: {

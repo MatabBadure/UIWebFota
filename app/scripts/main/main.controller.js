@@ -538,7 +538,7 @@ else {
     }
     $scope.timsDetails = function(){
     	
-    	$state.go('timsList');
+    	$state.go('executedLog');
     }
 
   }]);
