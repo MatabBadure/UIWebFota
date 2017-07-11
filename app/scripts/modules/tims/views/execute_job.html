@@ -23,12 +23,12 @@
       <ul class="nav navbar-nav patient-dashboard">
         <li style="padding-right:50px;">
           <a  ng-class="{active: isActive('log-information')}" ng-href="" ng-click='timsLog()'>
-            <span class="" translate="global.log-information"></span>
+            <span class="" translate="global.tims.log-information"></span>
           </a>
         </li>
         <li>
           <a class="active" ng-class="{active: isActive('log-information')}" ng-href="" ng-click='timsExecute()'>
-            <span class="" translate="global.execute-job"></span>
+            <span class="" translate="global.tims.execute-job"></span>
           </a>
         </li>
       </ul>
@@ -46,10 +46,13 @@
   <div class="timsContainer-success" ng-show="IsVisible">
     <div class="infocontainer  timsText">
         <div class="execute-jobs"><span class="database"><i class="fa fa-database" aria-hidden="true"></i></span><span class="execute-msg">
-        <p class="timsText">The  job has been executed succesfully.Click here the <br>
-        below link to view the access Log details</p></span>
+        <!-- <p class="timsText">The  job has been executed succesfully.Click here the <br>
+        below link to view the access Log details</p></span> -->
+        <p class="timsText">The  job has been executing .Click the <br>
+         link to view the access Log list.</p></span>
         </div>
-        <a ng-href="" ng-click='timsDetails()' data-intro="To view PDF Push Announcements from Hill-Rom" data-position="bottom">TIMS_Script_file-name</a>
+        <!-- <a ng-href="" ng-click='tims()' data-intro="To view PDF Push Announcements from Hill-Rom" data-position="bottom">TIMS_Script_file-name</a> -->
+        <a ng-href="" ng-click='tims()' data-intro="To view PDF Push Announcements from Hill-Rom" data-position="bottom">Check Log Details</a>
     </div>
   </div>
   </div>
@@ -72,10 +75,10 @@
     <div class="modal__content">
       <header class="modal__header">
         <button type="button" class="modal__close" data-dismiss="modal" ng-click="$parent.showModal = false">&times;</button>
-        <p translate="global.warning"></p>
+        <p translate="global.tims.warning"></p>
       </header>
       <div class="modal__body">
-        <div class="modal--message" translate="global.message"></div>
+        <div class="modal--message" translate="global.tims.message"></div>
         <div class="row modal--custom-btn">
           <buton class="hillrom-btn btn-submit float-right" ng-click="timLoading()">Yes</buton>
           <buton class="hillrom-btn btn-submit float-right" data-dismiss="modal" ng-click="$parent.showModal = false">No</buton>
