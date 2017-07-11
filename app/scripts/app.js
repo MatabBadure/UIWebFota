@@ -165,7 +165,8 @@ angular.module('hillromvestApp',
       },{
         name: 'AdminProfileModule',
         files: ['scripts/modules/admin/profile/controller/admin-profile.controller.js',
-                'scripts/modules/admin/profile/controller/chargercontroller.js']
+                'scripts/modules/admin/profile/controller/chargercontroller.js',
+                'scripts/modules/tims/controller/tims.controller.js']
       },
       {
         name: 'ClinicAdminProfileModule',
