@@ -18,10 +18,10 @@ angular.module('hillromvestApp')
           return response;
         });
       },
-      getLogList: function(pagenumber,perpagecount,filter) {
+      getLogList: function(pagenumber,perpagecount,filter,fromDate,toDate) {
          var url  = URL.loglist;
-         console.log("filter",filter);
-         url = url.replace('PAGE',pagenumber).replace('PER_PAGE',perpagecount);
+         //console.log("filter",filter);
+         url = url.replace('PAGE',pagenumber).replace('PER_PAGE',perpagecount).replace('FILTER',filter).replace('FROM_DATE',fromDate).replace('TO_DATE',toDate);
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
