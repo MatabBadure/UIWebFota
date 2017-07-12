@@ -90,6 +90,10 @@
 .logLinkWidth a{
       color: #34455C;
 }
+.textareaBorder textarea
+{
+  white-space:normal;
+}
 .tims__manage-view--list{
   border-bottom: 1px solid $silver-approx;
   padding-top: 10px;
