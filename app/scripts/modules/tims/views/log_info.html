@@ -19,59 +19,36 @@
         </li>
       </ul>
     </div>
-
-
-        <div class="row lebel-indent col-md-16 margin-bottom15 tims-check-box">
-              <input type="checkbox" ng-model="timsFilter.isSuccess" ng-click="timsOnFilters()"> 
+    <div class="col-md-16">
+        <div class="row lebel-indent col-md-5 margin-bottom15 tims-check-box">
+              <input type="checkbox" ng-model="timsFilter.isSuccess" ng-click="timsOnFilters()"/> 
               <span class= "successLabel" translate="search-filter.success"></span> 
-              <input type="checkbox" ng-model="timsFilter.isFail" ng-click="timsOnFilters()"> 
+              <input type="checkbox" ng-model="timsFilter.isFail" ng-click="timsOnFilters()"/> 
               <span translate="search-filter.fail"></span>
 
+          </div>
+
+             <!--  <input type="text"   class="datepickerNew" ng-model="announcement.startDate" name = "startDate" data-provide="datepicker" data-date-autoclose="true" data-date-start-date="0d"   id="dp1" required data-date-format="mm/dd/yyyy" ng-change="endDateCheck()" ng-pattern="/^\d{2}\/\d{2}\/\d{4}$/" readonly="readonly"/> -->
+          <div class="timsDateContainer col-md-11">
+              <ul class="nav1 nav-pills timsCalender ">
+             <li role="presentation" id="dp7" class=""><a href=""  date-range-picker class="date-picker" ng-model="customdates1" options="dateOpts1" ><span class="icon-calendar"></span></a></li>  
+             </ul>
+
+             <div class="pull-right week_date_container timsDatesRange" data-intro="Select date for Customized Report" data-position="bottom">
+          <span ng-if="fromDate !== toDate"> 
+          <span class="date">{{fromDate}}</span> - <span class="date">{{toDate}}</span>
+          </span>
+          <span ng-if="fromDate === toDate" class="date">{{fromDate}}</span>
+            </div> 
+        </div>
     
-        <!-- <li  class="tims_calender" id="dp3"><a href="" date-range-picker class="date-picker" ng-model="dates"   ><span class="icon-calendar"></span></a></li> -->
-        <!-- <li role="presentation" class="tims_calender" id="dp3"><a href="" date-range-picker class="date-picker" ng-model="dates" parentEl="#dp3" options="opts" ><span class="icon-calendar"></span></a></li> -->
-        <div id="reportrange" class="tims_calender" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 30%">
-    <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;
-    <span></span> <b class="caret"></b>
-           <script type="text/javascript">
-$(function() {
 
-    var start = moment().subtract(29, 'days');
-    var end = moment();
+  </div>
 
-    function cb(start, end) {
-        $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-    }
-
-    $('#reportrange').daterangepicker({
-        startDate: start,
-        endDate: end,
+    
         
-    }, cb);
-
-    cb(start, end);
-    
-});
-</script>   
-</div>
-    
-    </div>
-    
-       <div class="pull-right week_date_container" data-intro="Select date for Customized Report" data-position="bottom">
-    <span ng-if="fromDate !== toDate"> 
-      <span class="date">{{fromDate}}</span> - <span class="date">{{toDate}}</span>
-    </span>
-    <span ng-if="fromDate === toDate" class="date">{{fromDate}}<span>
-  </div>  
-        
-          
-          
-        
-      
-       
-
-
-    <div class="tims_header">
+ 
+    <div class="tims_header col-md-16">
         <div class="col-md-3 col-sm-3 header--type pull-left-mob width120">
           <span ng-class="{'sort-icon--default' : sortPatientList.lastName.isDefault, 'sort-icon-down': sortPatientList.lastName.isDown, 'sort-icon-up':sortPatientList.lastName.isUp}" class="ng-scope sort-icon--default" ng-click="sortType('lastName')" translate="global.tims.date-tims">Date</span>
         </div>
@@ -106,7 +83,7 @@ $(function() {
       <div class="dashboard__manage-view--pagination">
         <div class="col-md-16 reset-padding-right">
           <div class="navbar-right">
-            <span class="record-found" ng-if="loglist.content.length > 0">{{total}} Log Records</span>
+            <span class="record-found" ng-if="loglist.content.length > 0">{{totalElements}} Log Records</span>
             <span class="record-found" ng-if="loglist.content.length > 0">Found</span>
             <span ng-show="pageCount > 1">
               <span class="navigaion-link cursor-pointer" ng-class="{ 'inactive': !(currentPageIndex > 1) }" ng-click="timslog('PREV')">Previous</span>

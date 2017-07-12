@@ -183,18 +183,19 @@ angular.module('hillromvestApp')
         this.initSearchFiltersForTims = function() {
             var timsFilter = {};
             timsFilter.isSuccess = true;
-            timsFilter.isFail = false;
+            timsFilter.isFail = true;
             return timsFilter;
         }
         this.getFilterStringForLog = function(timsFilter) {
+          var status= {};
            var filterString = timsFilter.emptyString;
                  if(timsFilter.isSuccess && !timsFilter.isFail){
-                    filterString = searchFilters.isSuccess + searchFilters.colon + 0 + searchFilters.semicolon;
+                    filterString = searchFilters.success;
                  }else if(!timsFilter.isSuccess && timsFilter.isFail){
-                    filterString = searchFilters.isFail + searchFilters.colon + 1 + searchFilters.semicolon;
+                    filterString = searchFilters.failure;
                  
                }else if(timsFilter.isSuccess && timsFilter.isFail){
-                    filterString = searchFilters.isSuccess + searchFilters.colon + 1 + searchFilters.semicolon + searchFilters.isFail + searchFilters.colon + 1 + searchFilters.semicolon;
+                    filterString = searchFilters.all;
                  }else if(!timsFilter.isSuccess && !timsFilter.isFail){
                     filterString = "";
                  }

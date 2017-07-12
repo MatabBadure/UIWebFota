@@ -166,6 +166,7 @@ angular.module('hillromvestApp',
         name: 'AdminProfileModule',
         files: ['scripts/modules/admin/profile/controller/admin-profile.controller.js',
                 'scripts/modules/admin/profile/controller/chargercontroller.js',
+                'bower_components/angular-daterangepicker/js/angular-daterangepicker.js',
                 'scripts/modules/tims/controller/tims.controller.js']
       },
       {

@@ -46,29 +46,16 @@
   <div class="timsContainer-success" ng-show="IsVisible">
     <div class="infocontainer  timsText">
         <div class="execute-jobs"><span class="database"><i class="fa fa-database" aria-hidden="true"></i></span><span class="execute-msg">
-        <!-- <p class="timsText">The  job has been executed succesfully.Click here the <br>
-        below link to view the access Log details</p></span> -->
-        <p class="timsText">The  job has been executing .Click the <br>
-         link to view the access Log list.</p></span>
+       
+        <p class="timsText">The  job has been executing .Click <a ng-href="" ng-click='tims()' data-intro="To view PDF Push Announcements from Hill-Rom" data-position="bottom">here</a>
+          <br/> to view the access Log list.</p></span>
         </div>
-        <!-- <a ng-href="" ng-click='tims()' data-intro="To view PDF Push Announcements from Hill-Rom" data-position="bottom">TIMS_Script_file-name</a> -->
-        <a ng-href="" ng-click='tims()' data-intro="To view PDF Push Announcements from Hill-Rom" data-position="bottom">Check Log Details</a>
+       
     </div>
   </div>
   </div>
 </div>
-<!-- <div class="listContainer"  ng-show="IsVisible">
-<h3>Tim Script Log-Details</h3>
-      <textarea class="logList" rows="5">
-       Anitha    
-       Savitha 
-       Anupama
-       Anitha    
-       Savitha 
-       Anupama
 
-      </textarea>
-</div> -->
 
 <div ng-if="showModal" class="modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true" ng-show="visible">
   <div class="modal__dialog">
