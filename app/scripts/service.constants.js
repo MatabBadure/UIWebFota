@@ -48,9 +48,11 @@ var searchFilters = {
     Monarch: "MONARCH",
     devicetype : "deviceType=",
     allCaps : "ALL",
-    Both:"BOTH",
-    isSuccess:"isSuccess",
-    isFail:"isFail"
+    Both: "BOTH",
+    isSuccess: "isSuccess",
+    isFail: "isFail",
+    success: "Success",
+    failure: "Failure"
 }
 
 var sortConstant = {

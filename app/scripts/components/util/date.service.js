@@ -60,6 +60,7 @@ angular.module('hillromvestApp')
         return this.getMonthName(date) + ' ' + this.getDay(date.getDate()) + ', ' + this.getYear(date.getFullYear(date))
       },
       getDateFromTimeStamp: function(timeStamp,dateFormat,dateSeperator){
+        console.log("timestamp:",timeStamp);
         var date = new Date(timeStamp);
         switch(dateFormat) {
           case patientDashboard.serverDateFormat:
