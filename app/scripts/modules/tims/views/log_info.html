@@ -24,7 +24,7 @@
               <input type="checkbox" ng-model="timsFilter.isSuccess" ng-click="timsOnFilters()"/> 
               <span class= "successLabel" translate="search-filter.success"></span> 
               <input type="checkbox" ng-model="timsFilter.isFail" ng-click="timsOnFilters()"/> 
-              <span translate="search-filter.fail"></span>
+              <span class="failLabel" translate="search-filter.fail"></span>
 
           </div>
 
@@ -48,7 +48,7 @@
     
         
  
-    <div class="tims_header col-md-16">
+    <div class="tims_header dashboard__manage-view--header col-md-16">
         <div class="col-md-3 col-sm-3 header--type pull-left-mob width120">
           <span ng-class="{'sort-icon--default' : sortPatientList.lastName.isDefault, 'sort-icon-down': sortPatientList.lastName.isDown, 'sort-icon-up':sortPatientList.lastName.isUp}" class="ng-scope sort-icon--default" ng-click="sortType('lastName')" translate="global.tims.date-tims">Date</span>
         </div>
