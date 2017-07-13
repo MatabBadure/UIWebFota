@@ -1,0 +1,52 @@
+<ng-include src="'scripts/components/navbar/navbar.html'"></ng-include>
+<div class="navbar patient-user patient-user--nav">
+<!-- Demo data-intro="Navigation Ribbon" data-position="bottom"-->
+  <div class="container">
+
+
+
+    
+    <div class="collapse navbar-collapse patient-user__navbar" id="navbar-collapse">
+      <ul class="nav navbar-nav patient-dashboard">
+        <li style="padding-right:50px;">
+          <a class="active" ng-class="{active: isActive('log-information')}" ng-href="" ng-click='timsLog()'>
+            <span class="" translate="global.tims.log-information"></span>
+          </a>
+        </li>
+        <li>
+          <a  ng-class="{active: isActive('log-information')}" ng-href="" ng-click='timsExecute()'>
+            <span class="" translate="global.tims.execute-job"></span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="listContainer">
+      <h3>Tim Script Log-Details</h3>
+      <div class = "textareaBorder">
+      <textarea readonly class="logList" rows="15" >
+     {{timsLogDetailsText}}
+      </textarea>
+      </div>
+    </div>
+
+
+  </div>
+
+</div>
+<!-- <div ng-if="showModal" class="modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true" ng-show="visible">
+  <div class="modal__dialog">
+    <div class="modal__content">
+      <header class="modal__header">
+        <button type="button" class="modal__close" data-dismiss="modal" ng-click="$parent.showModal = false">&times;</button>
+        <p translate="global.warning"></p>
+      </header>
+      <div class="modal__body">
+        <p>Log files display here</p>
+        
+      </div>
+      <footer class="modal__footer">
+      </footer>
+    </div>
+  </div>
+</div> -->
