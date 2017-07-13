@@ -29,9 +29,14 @@
 .timsDatesRange
 {
     position: relative;
-    margin-top: 2%;
+    margin-top: 0%;
     right: 13%;
+    font-weight: 500;
     
+}
+.timsText a
+{
+  cursor: pointer;
 }
 .timsLogHead,.timsexecuteHead
 {
@@ -61,6 +66,11 @@
 .tims-check-box input,.tims-check-box span
 {
   float:left !important;
+  cursor: pointer;
+}
+.tims-check-box input
+{
+  margin-right:7px;
 }
 .timsLogHead span,.timsexecuteHead span
 {
@@ -116,7 +126,19 @@
 .logLinkWidth a{
       color: #34455C;
 }
-
+.successLabel, .failLabel
+{
+  font-weight: 500;
+}
+.navbar-secondary .navbar-right .header-popover ul li:nth-child(4):after
+{
+      height: 35px;
+    border-right: 1px solid #C1C1C1;
+    content: '';
+    position: absolute;
+    top: 11px;
+    right: 0;
+}
 .tims__manage-view--list{
   border-bottom: 1px solid $silver-approx;
   padding-top: 10px;
