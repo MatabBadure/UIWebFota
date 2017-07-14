@@ -34,9 +34,11 @@ angular.module('hillromvestApp')
       $scope.notePageCount = 0;
       $scope.totalNotes = 0;
       $scope.isHMR = false; 
-      $scope.noDataAvailable = false;   
+      $scope.noDataAvailable = false;
+      $scope.noDataAvailable1 = false;   
       $scope.noHistoryAvailable = false;     
-      $scope.noDataAvailableForHMR = false;  
+      $scope.noDataAvailableForHMR = false; 
+      $scope.noDataAvailableForHMR1 = false; 
       $scope.noDataAvailableForAdherence = false;  
       $scope.noDataStatus = true;
       $scope.forhidingVestHmrGraph = true;
@@ -254,6 +256,17 @@ angular.module('hillromvestApp')
       }    
     };
     $scope.switchPatient = function(patient){
+      if(patient.deviceType == 'ALL'){
+          localStorage.setItem('deviceType', 'VEST');
+          localStorage.setItem('deviceTypeforGraph', 'ALL');
+          localStorage.setItem('deviceTypeforBothIcon', 'ALL');
+       }
+           else{
+            localStorage.setItem('deviceType', patient.deviceType);
+            localStorage.setItem('deviceTypeforGraph', patient.deviceType);
+            localStorage.setItem('deviceTypeforBothIcon', patient.deviceType);
+          }
+
         $scope.selectedPatient = patient;
         $scope.patientId = $scope.selectedPatient.userId;
          var currentname = $state.current.name;
@@ -1019,8 +1032,10 @@ angular.module('hillromvestApp')
           }, 100);          
         } else{
           $scope.noDataAvailable = true;
-          $scope.removeAllCharts();
+         // $scope.removeAllCharts();
         }       
+      }).catch(function(){
+        $scope.noDataAvailable = true;
       });
     };
 
@@ -1333,8 +1348,10 @@ angular.module('hillromvestApp')
           }, 100);          
         } else{
           $scope.noDataAvailableForHMR = true;
-          $scope.removeAllCharts();
+          //$scope.removeAllCharts();
         }
+      }).catch(function(){
+        $scope.noDataAvailableForHMR = true;
       });
     };
 
@@ -1401,11 +1418,11 @@ angular.module('hillromvestApp')
           }, 100);          
         } else{
           $scope.noDataAvailableForAdherence = true;
-          $scope.removeAllCharts();
+          //$scope.removeAllCharts();
         }
       }).catch(function(){
         $scope.noDataAvailableForAdherence = true;
-          $scope.removeAllCharts();
+         // $scope.removeAllCharts();
       });
     };
 
@@ -2627,14 +2644,18 @@ $scope.adherencetrendData.push(new Object({"adherenceTrends": [] , "protocols": 
 
     $scope.initHMR = function(){
       $scope.isHMR = true;
-      $scope.noDataAvailable = false;    
+      $scope.noDataAvailable = false; 
+      $scope.noDataAvailable1 = false;    
     };
 
     $scope.removeAllCharts = function(){
      $("#HMRGraph").empty();
-       $("#HMRGraph1").empty();
       $("#synchronizedChart").empty(); 
-       $("#synchronizedChart1").empty(); 
+      $("#AdherenceTrendGraph").empty();    
+    };
+    $scope.removeAllCharts1 = function(){
+     $("#HMRGraph1").empty();
+      $("#synchronizedChart1").empty(); 
       $("#AdherenceTrendGraph").empty();    
     };
 
@@ -3032,8 +3053,10 @@ $scope.getComplianceGraph = function(){
           }, 100);          
         } else{
           $scope.noDataAvailable = true;
-          $scope.removeAllCharts();
+         // $scope.removeAllCharts();
         }       
+      }).catch(function(){
+        $scope.noDataAvailable = true;
       });
     };
 
@@ -3348,8 +3371,10 @@ $scope.getComplianceGraph = function(){
           }, 100);          
         } else{
           $scope.noDataAvailableForHMR = true;
-          $scope.removeAllCharts();
+          //$scope.removeAllCharts();
         }
+      }).catch(function(){
+        $scope.noDataAvailableForHMR = true;
       });
     };
 
@@ -3417,11 +3442,11 @@ $scope.getComplianceGraph = function(){
           }, 100);          
         } else{
           $scope.noDataAvailableForAdherence = true;
-          $scope.removeAllCharts();
+         // $scope.removeAllCharts();
         }
       }).catch(function(){
         $scope.noDataAvailableForAdherence = true;
-          $scope.removeAllCharts();
+         // $scope.removeAllCharts();
       });
     };
 
@@ -4307,9 +4332,9 @@ $scope.getComplianceGraph1 = function(){
         var xData = [];
         $scope.chartData1 = {};
         $scope.chartData1.datasets = [];
-        $scope.noDataAvailable = false;
+        $scope.noDataAvailable1 = false;
         if(responseData){ 
-          $scope.noDataAvailable = false;        
+          $scope.noDataAvailable1 = false;        
           xData = responseData.xAxis.categories; 
           responseData.xAxis.xLabels = []; 
           var startDay = (responseData.xAxis && responseData.xAxis.categories.length > 0) ? responseData.xAxis.categories[0].split(" "): null;  
@@ -4364,9 +4389,11 @@ $scope.getComplianceGraph1 = function(){
               $scope.synchronizedChart1();           
           }, 100);          
         } else{
-          $scope.noDataAvailable = true;
-          $scope.removeAllCharts();
+          $scope.noDataAvailable1 = true;
+         // $scope.removeAllCharts();
         }       
+      }).catch(function(){
+        $scope.noDataAvailable1 = true;
       });
     };
 
@@ -4374,9 +4401,9 @@ $scope.getComplianceGraph1 = function(){
     $scope.deviceTypeforGraph="MONARCH";
       patientDashBoardService.getHMRGraphPoints($scope.patientId, $scope.deviceTypeforGraph, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.durationRange).then(function(response){
         $scope.hmrChartData1 = response.data;
-        $scope.noDataAvailableForHMR  = false;       
+        $scope.noDataAvailableForHMR1  = false;       
         if($scope.hmrChartData1 && typeof($scope.hmrChartData1) === "object"){ 
-          $scope.noDataAvailableForHMR = false;      
+          $scope.noDataAvailableForHMR1 = false;      
           $scope.hmrChartData1.xAxis.xLabels=[]; 
           $scope.isSameDayHMRGraph = true;
           var startDay = ($scope.hmrChartData1.xAxis && $scope.hmrChartData1.xAxis.categories.length > 0) ? $scope.hmrChartData1.xAxis.categories[0].split(" "): null;  
@@ -4431,9 +4458,11 @@ $scope.getComplianceGraph1 = function(){
             }            
           }, 100);          
         } else{
-          $scope.noDataAvailableForHMR = true;
-          $scope.removeAllCharts();
+          $scope.noDataAvailableForHMR1 = true;
+         // $scope.removeAllCharts();
         }
+      }).catch(function(){
+      $scope.noDataAvailableForHMR1 = true;
       });
     };
 
@@ -4833,7 +4862,7 @@ $scope.getComplianceGraph1 = function(){
 
  
     $scope.drawHMRCChart1 =function(){ 
-        $scope.removeAllCharts();    
+        $scope.removeAllCharts1();    
         $scope.getHMRGraph1();
         $scope.getComplianceGraph1();
     };
