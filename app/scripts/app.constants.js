@@ -152,6 +152,6 @@ angular.module('hillromvestApp')
 	'getgarmentSizeCodeValues' : 'api/codeValues/garment_size',
 	'getgarmentColorCodeValues' : 'api/codeValues/garment_color',
 	'executeTimsJob' : 'api/executeTIMSJob',
-	'loglist' : 'api/listLogDirectory?page=PAGE&per_page=PER_PAGE&status=FILTER&fromDate=FROM_DATE&toDate=TO_DATE',
+	'loglist' : 'api/listLogDirectory?page=PAGE&per_page=PER_PAGE&sort_by=SORT_OPTION&status=FILTER&fromDate=FROM_DATE&toDate=TO_DATE',
 	'timsScriptLogDetails' : 'api/retrieveLogData/logs'
 });

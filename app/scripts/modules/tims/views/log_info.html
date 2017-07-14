@@ -50,14 +50,14 @@
  
     <div class="tims_header dashboard__manage-view--header col-md-16">
         <div class="col-md-3 col-sm-3 header--type pull-left-mob width120">
-          <span ng-class="{'sort-icon--default' : sortPatientList.lastName.isDefault, 'sort-icon-down': sortPatientList.lastName.isDown, 'sort-icon-up':sortPatientList.lastName.isUp}" class="ng-scope sort-icon--default" ng-click="sortType('lastName')" translate="global.tims.date-tims">Date</span>
+          <span ng-class="{'sort-icon--default' : sortTimsLogList.dateTims.isDefault, 'sort-icon-down': sortTimsLogList.dateTims.isDown, 'sort-icon-up':sortTimsLogList.dateTims.isUp}" class="ng-scope sort-icon--default" ng-click="sortType('date')" translate="global.tims.date-tims">Date</span>
         </div>
         
         <div class="col-md-3 col-sm-1 header--type none hidden-sm logStatusWidth">
           <span  ng-click="sortType('dob')" translate="global.tims.logstatus-tims">Status</span>
         </div>
         <div class="col-md-3 col-sm-8 header--type none logLinkWidth">
-          <span ng-class="{'sort-icon--default' : sortPatientList.city.isDefault, 'sort-icon-down': sortPatientList.city.isDown, 'sort-icon-up':sortPatientList.city.isUp}"  class="ng-scope sort-icon--default" ng-click="sortType('city')" translate="global.tims.loglink-tims">Link</span>
+          <span   class="ng-scope" ng-click="" translate="global.tims.loglink-tims">Link</span>
         </div>
       </div>
       <div class="clr"></div>

@@ -30,6 +30,12 @@ angular.module('hillromvestApp')
             sortPatientList.hillromId = sortIcons;
     		return sortPatientList;
     	};
+         this.getSortOptionsForTimsLogList =  function(){
+            var sortTimsLogList = {};
+            sortTimsLogList.dateTims = sortIcons;
+            sortTimsLogList.loglinkTims = sortIcons;
+            return sortTimsLogList;
+        }
 
     	this.toggleSortParam = function(sortOption){
     	  var toggleSortOption = {};    		
