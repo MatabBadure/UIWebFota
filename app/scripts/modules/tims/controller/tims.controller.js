@@ -8,7 +8,7 @@ angular.module('hillromvestApp')
 		$scope.visible = true;
     $scope.currentPageIndex = 1;
     $scope.pageCount = 1;
-    $scope.perPageCount = 5;
+    $scope.perPageCount = 10;
     $scope.PageNumber = 1;
     $scope.totalElements = 0;
     $scope.rangeFlag = 'week';
