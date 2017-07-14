@@ -254,6 +254,16 @@ angular.module('hillromvestApp')
       }    
     };
     $scope.switchPatient = function(patient){
+       if(patient.deviceType == 'ALL'){
+          localStorage.setItem('deviceType', 'VEST');
+          localStorage.setItem('deviceTypeforGraph', 'ALL');
+          localStorage.setItem('deviceTypeforBothIcon', 'ALL');
+       }
+            else{
+            localStorage.setItem('deviceType', patient.deviceType);
+            localStorage.setItem('deviceTypeforGraph', patient.deviceType);
+            localStorage.setItem('deviceTypeforBothIcon', patient.deviceType);
+          }
         $scope.selectedPatient = patient;
         $scope.patientId = $scope.selectedPatient.userId;
          var currentname = $state.current.name;
