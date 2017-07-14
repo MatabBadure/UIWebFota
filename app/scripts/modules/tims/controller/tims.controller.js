@@ -2,10 +2,10 @@
 
 
 angular.module('hillromvestApp')
-.controller('timsController',['$scope', '$location','$state', 'clinicadminService', 'notyService', '$stateParams', 'clinicService', 'UserService', 'StorageService','$timeout', 'commonsUserService', 'TimService','searchFilterService','dateService',
-  function($scope, $location,$state, clinicadminService, notyService, $stateParams, clinicService, UserService, StorageService, $timeout, commonsUserService,TimService,searchFilterService,dateService) {
-		$scope.IsVisible = false;
-		$scope.visible = true;
+.controller('timsController',['$scope', '$location','$state', 'clinicadminService', 'notyService', '$stateParams', 'clinicService', 'UserService', 'StorageService','$timeout', 'commonsUserService', 'TimService','searchFilterService','dateService','sortOptionsService',
+  function($scope, $location,$state, clinicadminService, notyService, $stateParams, clinicService, UserService, StorageService, $timeout, commonsUserService,TimService,searchFilterService,dateService,sortOptionsService) {
+    $scope.IsVisible = false;
+    $scope.visible = true;
     $scope.currentPageIndex = 1;
     $scope.pageCount = 1;
     $scope.perPageCount = 10;
@@ -27,20 +27,19 @@ angular.module('hillromvestApp')
       $scope.badgefromTimeStamp = new Date().getTime();
      $scope.badgestatistics = {};
       $scope.badgestatistics.date = "";
-  	$scope.timsFilter = searchFilterService.initSearchFiltersForTims();
+    $scope.timsFilter = searchFilterService.initSearchFiltersForTims();
     $scope.timsLogDetails = "";
     
 
-    // console.log("$scope.timsFilter",$scope.timsFilter);
-    // console.log("$scope.fromDate",$scope.fromDate);
-    // console.log("$scope.toDate",$scope.toDate);
+    
+    $scope.sortTimsLogList = sortOptionsService.getSortOptionsForTimsLogList();
+
     
      $scope.dateOpts1 = {
       maxDate: new Date(),
       format: patientDashboard.dateFormat,
       eventHandlers: {'apply.daterangepicker': function(ev, picker) {
           $scope.calculateDateFromPicker(picker);
-          console.log("dateopts apply");
           $scope.timslog();
         }
       },
@@ -57,7 +56,7 @@ angular.module('hillromvestApp')
       if ($scope.fromDate === $scope.toDate ) {
         $scope.fromTimeStamp = $scope.toTimeStamp;
       }
-    console.log("$scope.fromDate in calculateblah blah ",$scope.fromDate);
+    
     };
       $scope.init = function(){
         if($state.current.name === 'timslog'){
@@ -67,7 +66,7 @@ angular.module('hillromvestApp')
           $scope.getTimsLogDetails();
         }
       }
-        	$scope.showExecteTimsDetail = function(){	
+          $scope.showExecteTimsDetail = function(){ 
       $scope.showModal = true;
     };
 
@@ -86,19 +85,19 @@ angular.module('hillromvestApp')
           $scope.currentPageIndex = 1;
       }
       var filter = searchFilterService.getFilterStringForLog($scope.timsFilter);
-      //console.log("filter in controller:",filter);
+      
       TimService.getLogList($scope.currentPageIndex, $scope.perPageCount, filter, $scope.fromDate, $scope.toDate).then(function(response){
        
        $scope.loglist = response.data;
         
         if($scope.loglist){
-          console.log("inside if $scope.loglist..=",$scope.loglist);
+          
                  for (var i = 0 ; i < $scope.loglist.content.length ; i++) { 
-                  console.log("inside for",$scope.loglist.content[i].lastMod);               
+                               
                 $scope.loglist.content[i].lastMod =dateService.getDateFromTimeStamp(Number($scope.loglist.content[i].lastMod),patientDashboard.dateFormat,'/');
               }
         }
-        console.log("$scope.loglist..=",$scope.loglist);
+      
        $scope.tims = response.data;
         $scope.totalElements = response.data.totalElements;
         $scope.pageCount = Math.ceil($scope.totalElements / $scope.perPageCount);
@@ -112,9 +111,9 @@ angular.module('hillromvestApp')
             return searchFilters.emptyString;
           }
           timestamp = "1388379600000";
-          console.log("timstamp",timestamp)
+          
           var _date = new Date(timestamp);
-          console.log("date...=",_date);
+         
           var _month = (_date.getMonth()+1).toString();
           _month = _month.length > 1 ? _month : '0' + _month;
           var _day = (_date.getDate()).toString();
@@ -127,12 +126,13 @@ angular.module('hillromvestApp')
     $scope.timLoading = function () {
         TimService.executeTimsJob().then(function(response){
        $scope.timsScriptFileData = response;
-       console.log("$scope.timsScriptFileData",$scope.timsScriptFileData);
+        console.log("response.data.timsMsg",response.data.timsMsg);
+        notyService.showMessage(response.data.timsMsg);
       }).catch(function(response){
-        notyService.showError(response);
+       console.log("response.data.timsMsg",response.data.timsMsg);
+                 notyService.showError(response);
       });
-                //If DIV is visible it will be hidden and vice versa.
-                //alert("Hi")
+               
               $scope.IsVisible = $scope.IsVisible ? false :true;
               $scope.visible = $scope.IsVisible ? false :true;
           }
@@ -142,7 +142,7 @@ angular.module('hillromvestApp')
              };
 
              $scope.redirectToLogDetails = function(fileurl){
-              console.log("in redirectToLogDetails",fileurl);
+             
               $state.go('executedLog', {
           'fileurl': fileurl
         });
@@ -154,18 +154,44 @@ angular.module('hillromvestApp')
                   fileurl = $stateParams.fileurl;
               }
               var data = {"logfilePath" : admin.timsFilePathConstant + fileurl};
-             // data.logfilePath = admin.timsFilePathConstant + fileurl;
-              console.log("stateParams.fileurl:",data);
+             
+              
               TimService.getTimsLogDetails(data).then(function(response){
                  $scope.timsLogDetails = response.data;
-                 //$scope.timsLogDetails = $scope.timsLogDetails.logFileContent.replace(/(\r\n|\n|\r)/gm,"");
-                 //alert("$scope.timsLogDetails", $scope.timsLogDetails.logFileContent);
+                 
                   $scope.timsLogDetailsText = $scope.timsLogDetails.logFileContent.replace("\n","\\n");
-                  //console.log("$scope.timsLogDetailsText",$scope.timsLogDetailsText);
+                  
                   }).catch(function(response){
-                    //notyService.showError(response);
+                    notyService.showError(response);
                   });
              }  
+
+        $scope.sortType = function(sortParam){ 
+
+          var toggledSortOptions = {};
+          $scope.sortOption = "";
+          if(sortParam === sortConstant.date){
+            //console.log("sortParam",sortParam);
+            toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortTimsLogList.dateTims);
+            console.log("toggledSortOptions",toggledSortOptions);
+            $scope.sortTimsLogList = sortOptionsService.getSortOptionsForTimsLogList();
+            console.log("sortTimsLogList",$scope.sortTimsLogList);
+            $scope.sortTimsLogList.dateTims = toggledSortOptions;
+             console.log("sortOption date",$scope.sortTimsLogList.dateTims);
+            $scope.sortOption = sortConstant.date + sortOptionsService.getSortByASCString(toggledSortOptions);
+            console.log("sortOption",$scope.sortOption);
+            $scope.timslog();
+          }
+          else if(sortParam === sortConstant.loglink){
+            toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortTimsLogList.loglink);
+            $scope.sortTimsLogList = sortOptionsService.getSortOptionsForTimsLogList();
+            $scope.sortTimsLogList.loglink = toggledSortOptions;
+            $scope.sortOption = sortConstant.loglink + sortOptionsService.getSortByASCString(toggledSortOptions);
+            $scope.timslog();
+          }
+
+        }
+        
               
 
                $scope.init();  
