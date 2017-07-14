@@ -169,6 +169,9 @@ angular.module('hillromvestApp')
             $state.go('hcpdashboard');
           } else if(response.data.user.authorities[0].name === 'CARE_GIVER'){
             logged.userId = response.data.user.id;
+            //the following module added for ticket Hill-2411
+            $scope.getPatientListForCaregiver(logged.userId);
+            //Endof:the following module added for ticket Hill-2411
             $state.go('caregiverDashboard');
           } else if(response.data.user.authorities[0].name === 'CLINIC_ADMIN'){
             logged.userId = response.data.user.id;
