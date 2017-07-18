@@ -58,6 +58,7 @@ angular.module('hillromvestApp')
         };
 
         this.getSortByASCString = function(sortOption){
+            
         	if(sortOption.isDown){
         		return searchFilters.amp +searchFilters.asc +searchFilters.equal + false; 
         	}else if(sortOption.isUp){
