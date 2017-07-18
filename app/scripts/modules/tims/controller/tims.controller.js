@@ -25,10 +25,12 @@ angular.module('hillromvestApp')
       $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');
       $scope.badgetoTimeStamp = new Date().getTime();
       $scope.badgefromTimeStamp = new Date().getTime();
+      $scope.sortOption ="date&asc=false";
      $scope.badgestatistics = {};
       $scope.badgestatistics.date = "";
     $scope.timsFilter = searchFilterService.initSearchFiltersForTims();
     $scope.timsLogDetails = "";
+
     
 
     
@@ -86,7 +88,7 @@ angular.module('hillromvestApp')
       }
       var filter = searchFilterService.getFilterStringForLog($scope.timsFilter);
       
-      TimService.getLogList($scope.currentPageIndex, $scope.perPageCount, filter, $scope.fromDate, $scope.toDate).then(function(response){
+      TimService.getLogList($scope.currentPageIndex, $scope.perPageCount, filter, $scope.fromDate, $scope.toDate, $scope.sortOption).then(function(response){
        
        $scope.loglist = response.data;
         
@@ -171,13 +173,14 @@ angular.module('hillromvestApp')
           var toggledSortOptions = {};
           $scope.sortOption = "";
           if(sortParam === sortConstant.date){
-            //console.log("sortParam",sortParam);
+            console.log("sortParam",sortParam);
             toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortTimsLogList.dateTims);
             console.log("toggledSortOptions",toggledSortOptions);
             $scope.sortTimsLogList = sortOptionsService.getSortOptionsForTimsLogList();
             console.log("sortTimsLogList",$scope.sortTimsLogList);
             $scope.sortTimsLogList.dateTims = toggledSortOptions;
              console.log("sortOption date",$scope.sortTimsLogList.dateTims);
+             console.log("testingLT1",toggledSortOptions);
             $scope.sortOption = sortConstant.date + sortOptionsService.getSortByASCString(toggledSortOptions);
             console.log("sortOption",$scope.sortOption);
             $scope.timslog();
