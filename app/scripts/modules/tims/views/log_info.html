@@ -1,11 +1,12 @@
- <ng-include src="'scripts/components/navbar/navbar.html'"></ng-include>
-<div class="navbar patient-user patient-user--nav">
-<!-- Demo data-intro="Navigation Ribbon" data-position="bottom"-->
-  <div class="container">
+<ng-include src="'scripts/components/navbar/navbar.html'"></ng-include>
+<div class="dashboard dashboard--content">
 
 
 
-    <div class="collapse navbar-collapse patient-user__navbar" id="navbar-collapse">
+    
+     
+      <div class="navbar patient-user patient-user--nav ng-scope" id="navbar-collapse">
+      <div class="container">
       <ul class="nav navbar-nav patient-dashboard">
         <li style=padding-right:50px;>
           <a class="timsLogHead active" ng-class="{active: isActive('log-information')}" ng-href="" ng-click='timsLog()'>
@@ -19,7 +20,10 @@
         </li>
       </ul>
     </div>
-    <div class="col-md-16">
+    </div>
+
+
+    <div class=" container chkBox col-md-16">
         <div class="row lebel-indent col-md-5 margin-bottom15 tims-check-box">
               <input type="checkbox" ng-model="timsFilter.isSuccess" ng-click="timsOnFilters()"/> 
               <span class= "successLabel" translate="search-filter.success"></span> 
@@ -28,7 +32,7 @@
 
           </div>
 
-             <!--  <input type="text"   class="datepickerNew" ng-model="announcement.startDate" name = "startDate" data-provide="datepicker" data-date-autoclose="true" data-date-start-date="0d"   id="dp1" required data-date-format="mm/dd/yyyy" ng-change="endDateCheck()" ng-pattern="/^\d{2}\/\d{2}\/\d{4}$/" readonly="readonly"/> -->
+            
           <div class="timsDateContainer col-md-11">
               <ul class="nav1 nav-pills timsCalender ">
              <li role="presentation" id="dp7" class=""><a href=""  date-range-picker class="date-picker" ng-model="customdates1" options="dateOpts1" ><span class="icon-calendar"></span></a></li>  
@@ -43,27 +47,24 @@
         </div>
     
 
-  </div>
+    </div>
 
-    
-        
- 
-    <div class="tims_header dashboard__manage-view--header col-md-16">
+
+      <div class="container dashboard__manage-view--header"> 
         <div class="col-md-3 col-sm-3 header--type pull-left-mob width120">
           <span ng-class="{'sort-icon--default' : sortTimsLogList.dateTims.isDefault, 'sort-icon-down': sortTimsLogList.dateTims.isDown, 'sort-icon-up':sortTimsLogList.dateTims.isUp}" class="ng-scope sort-icon--default" ng-click="sortType('date')" translate="global.tims.date-tims">Date</span>
         </div>
-        
         <div class="col-md-3 col-sm-1 header--type none hidden-sm logStatusWidth">
           <span  ng-click="sortType('dob')" translate="global.tims.logstatus-tims">Status</span>
         </div>
         <div class="col-md-3 col-sm-8 header--type none logLinkWidth">
           <span   class="ng-scope" ng-click="" translate="global.tims.loglink-tims">Link</span>
         </div>
+        
+        <div class="clr"></div>
       </div>
-      <div class="clr"></div>
 
-      
-      <div class="tims__manage-view--list" ng-repeat="file in loglist.content" ng-click="timslog()" ng-readonly="true">
+      <div class="container dashboard__manage-view--list" ng-repeat="file in loglist.content" ng-click="timslog()" ng-readonly="true">
           <div class="col-md-3 col-sm-4 reset-padding pull-left-mob width120">
             <span class="tims-date">{{file.lastMod}}</span>
             
@@ -77,12 +78,15 @@
             <a class="tims-link" ng-click="redirectToLogDetails(file.file)">{{file.file}} </a>
             
           </div>
-      </div>
 
 
-      <div class="dashboard__manage-view--pagination">
+          <div class="clr"></div>
+       </div>
+
+       
+     <div class="dashboard__manage-view--pagination">
         <div class="col-md-16 reset-padding-right">
-          <div class="navbar-right">
+          <div class="navbar-right tims-pagination">
             <span class="record-found" ng-if="loglist.content.length > 0">{{totalElements}} Log Records</span>
             <span class="record-found" ng-if="loglist.content.length > 0">Found</span>
             <span ng-show="pageCount > 1">
@@ -94,4 +98,6 @@
           <div class="clr"></div>
         </div>
       </div>
+    </div>
+  </div>
 </div>
