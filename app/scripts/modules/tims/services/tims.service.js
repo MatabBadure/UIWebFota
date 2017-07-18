@@ -18,10 +18,12 @@ angular.module('hillromvestApp')
           return response;
         });
       },
-      getLogList: function(pagenumber,perpagecount,filter,fromDate,toDate) {
+      getLogList: function(pagenumber,perpagecount,filter,fromDate,toDate,sortOption) {
          var url  = URL.loglist;
-         //console.log("filter",filter);
-         url = url.replace('PAGE',pagenumber).replace('PER_PAGE',perpagecount).replace('FILTER',filter).replace('FROM_DATE',fromDate).replace('TO_DATE',toDate);
+         console.log("sortOption",sortOption);
+         url = url.replace('PAGE',pagenumber).replace('PER_PAGE',perpagecount).replace('FILTER',filter).replace('FROM_DATE',fromDate).replace('TO_DATE',toDate).replace('SORT_OPTION',sortOption);
+
+         console.log("url-anitha",url);
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
