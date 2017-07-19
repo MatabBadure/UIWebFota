@@ -802,3 +802,22 @@ font-size:12px;
 	}	
 
 }
+  @media screen and (max-width: 1190px) and (min-width: 520px) {
+    .timsDateContainer
+    {
+      border: none !important;
+      width: auto;
+    }
+    .timsDatesRange
+    {
+      margin-top: 6% !important;
+    }
+    .chkBox
+    {
+    	margin-left: 10% !important;
+    }
+    .timsCalender li {
+    margin-top: -28px;
+    margin-left: 9%;
+	}
+}
