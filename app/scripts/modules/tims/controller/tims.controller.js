@@ -25,7 +25,8 @@ angular.module('hillromvestApp')
       $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');
       $scope.badgetoTimeStamp = new Date().getTime();
       $scope.badgefromTimeStamp = new Date().getTime();
-      $scope.sortOption ="date&asc=false";
+     // $scope.sortOption ="date&asc=false";
+     $scope.sortOption = "";
      $scope.badgestatistics = {};
       $scope.badgestatistics.date = "";
     $scope.timsFilter = searchFilterService.initSearchFiltersForTims();
@@ -172,17 +173,11 @@ angular.module('hillromvestApp')
 
           var toggledSortOptions = {};
           $scope.sortOption = "";
-          if(sortParam === sortConstant.date){
-            
+          if(sortParam === sortConstant.timsdate){
             toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortTimsLogList.dateTims);
-            
             $scope.sortTimsLogList = sortOptionsService.getSortOptionsForTimsLogList();
-            
             $scope.sortTimsLogList.dateTims = toggledSortOptions;
-            
-             
-            $scope.sortOption = sortConstant.date + sortOptionsService.getSortByASCString(toggledSortOptions);
-            
+            $scope.sortOption = sortConstant.timsdate + sortOptionsService.getSortByASCString(toggledSortOptions);
             $scope.timslog();
           }
           else if(sortParam === sortConstant.loglink){
@@ -194,6 +189,7 @@ angular.module('hillromvestApp')
           }
 
         }
+            $scope.sortType('date');
         
               
 
