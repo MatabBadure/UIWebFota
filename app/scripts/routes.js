@@ -22,6 +22,11 @@ angular.module('hillromvestApp')
                 url: '/customerservice',
                 abstract: true,
             })
+              .state('RnDadmin', {
+                parent: 'entity',
+                url: '/RnDadmin',
+                abstract: true,
+            })
             // creating this base route and view to setup nested views for Patients
             .state('patient-dashboard', {
                // parent: 'entity',
@@ -5976,7 +5981,7 @@ angular.module('hillromvestApp')
                     ]
                 }
 
-  })
+                 })
 
    .state('executeJob', {
                 parent: 'admin',
@@ -6058,6 +6063,65 @@ angular.module('hillromvestApp')
                     }],
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+                .state('fotaHome', {
+                parent: 'RnDadmin',
+                url: '/fota',
+                data: {
+                     roles: ['R&D_ADMIN','CUSTOMER_SERVICES'],
+                    pageTitle: 'profile.page-title.fota'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/RnDadmin/FotaHome/views/fotahome.html',
+                        controller: 'fotaController'
+                    }
+                },
+                  resolve: {
+                 loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('AdminProfileModule');
+                    }],
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('global');
+                        return $translate.refresh();
+                    }],
+                 authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+
+                 })
+                .state('RnDadminProfile', {
+                parent: 'RnDadmin',
+                url: '/profile',
+                data: {
+                    roles: ['R&D_ADMIN','CUSTOMER_SERVICES'],
+                    pageTitle: 'profile.page-title.my-profile'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/RnDadmin/FotaHome/views/my-profile.html',
+                        controller: 'adminProfileController'
+                    }
+                },
+                resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('AdminProfileModule');
+                    }],
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('profile');
                         return $translate.refresh();
                     }],
                     authorize: ['Auth',
