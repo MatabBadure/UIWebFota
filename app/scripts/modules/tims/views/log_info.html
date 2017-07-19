@@ -5,25 +5,27 @@
 
     
      
-      <div class="navbar patient-user patient-user--nav ng-scope" id="navbar-collapse">
-      <div class="container">
-      <ul class="nav navbar-nav patient-dashboard">
-        <li style=padding-right:50px;>
-          <a class="timsLogHead active" ng-class="{active: isActive('log-information')}" ng-href="" ng-click='timsLog()'>
-            <span class="" translate="global.tims.log-information"></span>
-          </a>
-        </li>
-        <li>
-          <a class="timsexecuteHead" ng-class="{active: isActive('log-information')}" ng-href="" ng-click='timsExecute()'>
-            <span class="" translate="global.tims.execute-job"></span>
-          </a>
-        </li>
-      </ul>
-    </div>
-    </div>
+      <div class="navbar patient-user patient-user--nav">
+        <div class="container">
+          <div class="collapse navbar-collapse patient-user__navbar" id="navbar-collapse">
+            <ul class="nav navbar-nav admin_profile">
+              <li style=padding-right:50px;>
+                <a class="timsLogHead active" ng-class="{active: isActive('log-information')}" ng-href="" ng-click='timsLog()'>
+                  <span class="" translate="global.tims.log-information"></span>
+                </a>
+              </li>
+              <li>
+                <a class="timsexecuteHead" ng-class="{active: isActive('log-information')}" ng-href="" ng-click='timsExecute()'>
+                  <span class="" translate="global.tims.execute-job"></span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
 
 
-    <div class=" container chkBox col-md-16">
+    <div class=" row margin-bottom15 container chkBox row lebel-indent col-md-16 ">
         <div class="row lebel-indent col-md-5 margin-bottom15 tims-check-box">
               <input type="checkbox" ng-model="timsFilter.isSuccess" ng-click="timsOnFilters()"/> 
               <span class= "successLabel" translate="search-filter.success"></span> 

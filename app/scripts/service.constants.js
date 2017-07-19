@@ -126,7 +126,7 @@ var sortConstant = {
     announcementModifiedDatePatient : "modified_date",
     fromCA: "messages.fromClinic.name",
     loglink: "loglink",
-    date: "date"
+    timsdate: "date"
 }
 
 var stringConstants = {
