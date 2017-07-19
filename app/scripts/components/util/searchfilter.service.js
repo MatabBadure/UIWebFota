@@ -197,7 +197,7 @@ angular.module('hillromvestApp')
                }else if(timsFilter.isSuccess && timsFilter.isFail){
                     filterString = searchFilters.all;
                  }else if(!timsFilter.isSuccess && !timsFilter.isFail){
-                    filterString = "";
+                    filterString = searchFilters.all;
                  }
                  /*else if(!timsFilter.isSuccess && !timsFilter.isFail){
                     filterString = searchFilters.isSuccess + searchFilters.colon + 0 + searchFilters.semicolon + searchFilters.isFail + searchFilters.colon + 0 + searchFilters.semicolon;
