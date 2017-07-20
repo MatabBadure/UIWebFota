@@ -23,14 +23,13 @@
 }
 .timsCalender li
 {
-    margin-top: -33px;
+    margin-top: -13%;
     margin-left: 9%;
 }
 .timsDatesRange
 {
     position: relative;
     margin-top: 0%;
-    right: 13%;
     font-weight: 500;
     
 }
@@ -48,14 +47,10 @@
 }
 .tims-check-box
 {
-    margin:4% 1%;
+    margin:4% 0%;
     width:13%;
 }
-.tims-pagination
-{
-  position: absolute;
-  right: 4%;
-}
+
 .timsDateContainer
 {
   width: 22%;
@@ -135,10 +130,7 @@
 .logLinkWidth a{
       color: #34455C;
 }
-.chkBox
-{
-  margin-left:3%;
-}
+
 .tims_header 
 {
   border-bottom:1px solid transparent;
@@ -156,9 +148,13 @@
     top: 11px;
     right: 0;
 }
-.dashboard,.dashboard--content
+.tims-dashboard
 {
   background-color: transparent;
+}
+.tims-navbar
+{
+  margin-top:0px;
 }
 .tims__manage-view--list{
   border-bottom: 1px solid $silver-approx;
