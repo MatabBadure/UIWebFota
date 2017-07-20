@@ -1,5 +1,5 @@
 <ng-include src="'scripts/components/navbar/navbar.html'"></ng-include>
-<div class="dashboard dashboard--content">
+<div class="tims-dashboard dashboard dashboard--content">
 
 
 
@@ -25,7 +25,7 @@
       </div>
 
 
-    <div class=" row margin-bottom15 container chkBox row lebel-indent col-md-16 ">
+    <div class="container chkBox ">
         <div class="row lebel-indent col-md-5 margin-bottom15 tims-check-box">
               <input type="checkbox" ng-model="timsFilter.isSuccess" ng-click="timsOnFilters()"/> 
               <span class= "successLabel" translate="search-filter.success"></span> 
@@ -86,7 +86,7 @@
        </div>
 
        
-     <div class="dashboard__manage-view--pagination">
+     <div class=" container dashboard__manage-view--pagination">
         <div class="col-md-16 reset-padding-right">
           <div class="navbar-right tims-pagination">
             <span class="record-found" ng-if="loglist.content.length > 0">{{totalElements}} Log Records</span>
