@@ -211,6 +211,18 @@ function ($scope, $state, $rootScope, StorageService, UserService, patientDiagno
       caregiverDashBoardService.getPatients(caregiverID).then(function(response){
         $scope.patients = response.data.patients;
         $scope.$emit('getPatients', $scope.patients);
+         if(response.data.patients[0].deviceType == 'ALL'){
+          localStorage.setItem('deviceType', 'VEST');
+          localStorage.setItem('deviceTypeforGraph', 'ALL');
+          localStorage.setItem('deviceTypeforBothIcon', 'ALL');
+
+
+            }
+            else{
+            localStorage.setItem('deviceType', response.data.patients[0].deviceType);
+            localStorage.setItem('deviceTypeforGraph', response.data.patients[0].deviceType);
+            localStorage.setItem('deviceTypeforBothIcon', response.data.patients[0].deviceType);
+          }
         console.log($stateParams.patientId);
        if($stateParams.patientId){
           for(var i=0;i<response.data.patients.length;i++){

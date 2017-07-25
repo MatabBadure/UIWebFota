@@ -5917,7 +5917,7 @@ angular.module('hillromvestApp')
                   ]
               }
             }) 
-.state('caregiverdashboardCaregiver', {
+            .state('caregiverdashboardCaregiver', {
                 parent: 'caregiver-dashboard',
                 url: '/caregiver-list/{patientId}',
                 data: {
@@ -5947,7 +5947,97 @@ angular.module('hillromvestApp')
                     ]
                 }
             })
-.state('caregiverpatientDiagnostic', {
+                .state('timslog', {
+
+                parent: 'admin',
+                url: '/tims',
+                data: {
+                     roles: ['ADMIN'],
+                    pageTitle: 'profile.page-title.tims'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/tims/views/log_info.html',
+                        controller: 'timsController'
+                    }
+                },
+                  resolve: {
+                 loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('AdminProfileModule');
+                    }],
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('global');
+                        return $translate.refresh();
+                    }],
+                 authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+
+  })
+
+   .state('executeJob', {
+                parent: 'admin',
+                url: '/execute_job',
+                data: {
+                     roles: ['ADMIN'],
+                    pageTitle: 'profile.page-title.tims'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/tims/views/execute_job.html',
+                        controller: 'timsController'
+                    }
+                },
+                  resolve: {
+                 loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('AdminProfileModule');
+                    }],
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                         $translatePartialLoader.addPart('global');
+                        return $translate.refresh();
+                    }],
+                 authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+                
+              })
+                .state('executedLog', {
+                parent: 'clinic-admin-user-profile',
+                url: '/executedLog/{fileurl}',
+                data: {
+                     roles: ['ADMIN'],
+                    pageTitle: 'profile.page-title.tims'
+                },
+                views: {
+                    'content@': {
+                         templateUrl: 'scripts/modules/tims/views/executedLog.html',
+                        controller: 'timsController'
+                    }
+                },
+                  resolve: {
+                 loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('AdminProfileModule');
+                    }],
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                         $translatePartialLoader.addPart('global');
+                        return $translate.refresh();
+                    }],
+                 authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+                
+            })
+
+                .state('caregiverpatientDiagnostic', {
                 parent: 'caregiver-dashboard',
                 url: '/patientDiagnostic/{patientId}',
                 data: {
