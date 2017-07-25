@@ -169,7 +169,7 @@ angular.module('hillromvestApp')
       $scope.clinic.type = 'parent';
       $scope.clinicStatus.editMode = false;
       $scope.clinicStatus.isCreate = true;
-	  clinicService.getClinicSpeciality().then(function(response){
+      clinicService.getClinicSpeciality().then(function(response){
          $scope.specialities =  response.data.typeCode;
       }).catch(function(response){});
       UserService.getState().then(function(response) {
@@ -190,7 +190,7 @@ angular.module('hillromvestApp')
       $scope.states = [];
       $scope.clinicStatus.editMode = true;
       $scope.clinicStatus.isCreate = false;
-	  clinicService.getClinicSpeciality().then(function(response){
+      clinicService.getClinicSpeciality().then(function(response){
          $scope.specialities =  response.data.typeCode;
       }).catch(function(response){});
       UserService.getState().then(function(response) {
@@ -417,6 +417,11 @@ angular.module('hillromvestApp')
       $scope.showModalClinic = true;
     };
 
+$scope.activateClinicModal = function(clininc){
+      $scope.clinicToDeactivate = clininc;
+      $scope.showActivateModal = true;
+    };
+    
     $scope.closeModalClinic = function(){
       delete $scope.clinicToDeactivate;
       $scope.showModalClinic = false;
@@ -425,6 +430,22 @@ angular.module('hillromvestApp')
     $scope.deactivateClinic = function(clinicId){
       $scope.closeModalClinic();
       clinicService.deleteClinic(clinicId).then(function(response){
+        $scope.goToClinicUser();
+        notyService.showMessage(response.data.message,'success');
+      }).catch(function(response){
+        if(response.data.message){
+          notyService.showMessage(response.data.message,'warning');
+        } else if(response.data.ERROR){
+          notyService.showMessage(response.data.ERROR,'warning');
+        }
+      });
+    };
+    
+    $scope.activateClinic = function(clinicId){
+      $scope.closeModalClinic();
+      var data = {};
+      data.deleted = false;
+      clinicService.activateClinic(data,clinicId).then(function(response){
         $scope.goToClinicUser();
         notyService.showMessage(response.data.message,'success');
       }).catch(function(response){

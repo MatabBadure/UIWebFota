@@ -256,6 +256,14 @@ angular.module('hillromvestApp')
         }).success(function(response) {
           return response;
         });
+      },
+      activateClinic: function(data,clinicId) {
+        var url = URL.clinicBaseURL + '/' + clinicId;
+        return $http.put(url, data, {
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });
       }
     };
   }]);
