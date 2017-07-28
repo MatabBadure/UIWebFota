@@ -48,7 +48,7 @@
       <span class="user-detail-info__data--key">:</span>
       <span class="user-detail-info__data--value">{{clinic.state}}</span>
     </div>
-	<div class="col-md-4 col-sm-4 user-detail-info__data">
+  <div class="col-md-4 col-sm-4 user-detail-info__data">
       <span class="user-detail-info__data--key" translate="clinic.clinic-speciality"></span>
       <span class="user-detail-info__data--key">:</span>
       <span class="user-detail-info__data--value">{{clinic.speciality}}</span>
@@ -58,6 +58,7 @@
   <div class="col-md-16 col-sm-16 reset-padding margin-top" ng-if="clinic.id">
     <buton class="hillrom-btn btn-primary float-right btn-margin-left" ng-click="switchTab('clinicEdit')" translate="clinic.clinic-edit"></buton>
     <buton class="hillrom-btn  float-right btn-margin-left btn-secondary" ng-click="deactivateClinicModal(clinic)" ng-if="!clinic.deleted" translate="clinic.clinic-deactivate"></buton>
+   <button type="button" class="hillrom-btn btn-secondary float-right" ng-if="clinic.deleted" ng-click="activateClinicModal(clinic)" translate="clinic.activate-button-text">Activate</button>
   </div>
 </div>
 
@@ -150,6 +151,25 @@
          <div class="row modal--custom-btn">
           <buton class="hillrom-btn btn-submit float-right" ng-click="deactivateClinic(clinicToDeactivate.id)">Yes</buton>
           <buton class="hillrom-btn btn-submit float-right" data-dismiss="modal" ng-click="closeModalClinic()">No</buton>
+         </div>
+      </div>
+      <footer class="modal__footer">
+      </footer>
+    </div>
+  </div>
+</div>
+<div ng-if="showActivateModal" class="modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true">
+  <div class="modal__dialog">
+    <div class="modal__content">
+      <header class="modal__header">
+        <button type="button" class="modal__close" data-dismiss="modal" ng-click="$parent.showActivateModal= false">&times;</button>
+         <p translate="clinic.activate.warning"></p>
+      </header>
+      <div class="modal__body">
+         <div class="modal--message" translate="clinic.activate.message"></div>
+         <div class="row modal--custom-btn">
+          <buton class="hillrom-btn btn-submit float-right" ng-click="activateClinic(clinicToDeactivate.id)">Yes</buton>
+          <buton class="hillrom-btn btn-secondary btn-submit float-right" data-dismiss="modal" ng-click="$parent.showActivateModal= false">No</buton>
          </div>
       </div>
       <footer class="modal__footer">
