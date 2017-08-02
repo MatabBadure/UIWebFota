@@ -256,6 +256,16 @@ angular.module('hillromvestApp')
       }    
     };
     $scope.switchPatient = function(patient){
+       if(patient.deviceType == 'ALL'){
+          localStorage.setItem('deviceType', 'VEST');
+          localStorage.setItem('deviceTypeforGraph', 'ALL');
+          localStorage.setItem('deviceTypeforBothIcon', 'ALL');
+       }
+           else{
+            localStorage.setItem('deviceType', patient.deviceType);
+            localStorage.setItem('deviceTypeforGraph', patient.deviceType);
+            localStorage.setItem('deviceTypeforBothIcon', patient.deviceType);
+          }
         $scope.selectedPatient = patient;
         $scope.patientId = $scope.selectedPatient.userId;
          var currentname = $state.current.name;
@@ -624,11 +634,59 @@ angular.module('hillromvestApp')
       $scope.protocols = []; $scope.protocols.length = 0;
       $scope.protocolsErrMsg = null;
       $scope.devicesErrMsg = null;
+       $scope.normalProtocol = new Array(new Array());
+         $scope.normalProtocol[0] = [];
+          $scope.normalProtocol[1] = [];
+        $scope.customProtocol = new Array(new Array());
+         $scope.customProtocol[0] = [];
+          $scope.customProtocol[1] = [];
+    $scope.DisableAddProtocol = false;
       patientService.getProtocol(patientId).then(function(response){
         if(response.data.protocol){
           $scope.protocols = response.data.protocol;
         }else if(response.data.message){
           $scope.protocolsErrMsg = response.data.message;
+        }
+        if($scope.getDeviceTypeforBothIcon() === searchFilters.allCaps){
+         console.log("$scope.protocols",$scope.protocols)
+        angular.forEach($scope.protocols, function(protocol, key){
+          var protocolkey = protocol.protocolKey;
+          var protocolobject = {}
+            if(protocol.type === 'Normal'){
+              console.log("$scope.normalProtocol in if",$scope.normalProtocol);
+              if($scope.normalProtocol[0].length){
+              if($scope.normalProtocol[0][0].protocolKey === protocolkey){
+            protocolobject = protocol;
+              $scope.normalProtocol[0].push(protocolobject);
+             }
+             else{
+            protocolobject = protocol;
+              $scope.normalProtocol[1].push(protocolobject);
+             }
+           }
+       else{
+             protocolobject = protocol;
+              $scope.normalProtocol[0].push(protocolobject);
+            }
+      }
+            else if(protocol.type === 'Custom'){
+              console.log("$scope.customProtocol in if",$scope.customProtocol);
+              if($scope.customProtocol[0].length){
+              if($scope.customProtocol[0][0].protocolKey === protocolkey){
+            protocolobject = protocol;
+              $scope.customProtocol[0].push(protocolobject);
+             }
+             else{
+            protocolobject = protocol;
+              $scope.customProtocol[1].push(protocolobject);
+             }
+           }
+           else{
+            protocolobject = protocol;
+              $scope.customProtocol[0].push(protocolobject);
+           }
+            }
+          });
         }
          $scope.DisableAddProtocol = false;
         var vestFlag = false;
@@ -636,6 +694,8 @@ angular.module('hillromvestApp')
         $scope.lastdeviceType = $scope.protocols[0].deviceType;
 
         $scope.addProtocol = true;
+           var vestFlag = false;
+        var monarchFlag = false;
         angular.forEach($scope.protocols, function(protocol){
           protocol.createdDate = dateService.getDateByTimestamp(protocol.createdDate);
           protocol.lastModifiedDate = dateService.getDateByTimestamp(protocol.lastModifiedDate);
@@ -2593,8 +2653,10 @@ $scope.adherencetrendData.push(new Object({"adherenceTrends": [] , "protocols": 
       $("#AdherenceTrendGraph").empty();    
     };
     $scope.removeAllCharts1 = function(){
-     $("#HMRGraph").empty();
-      $("#synchronizedChart").empty(); 
+
+     $("#HMRGraph1").empty();
+      $("#synchronizedChart1").empty(); 
+
       $("#AdherenceTrendGraph").empty();    
     };
 

@@ -11,10 +11,33 @@ angular.module('hillromvestApp')
     $scope.displayFlag = true;
           $scope.customPointsChecker = 0;
           $scope.lastdeviceType = "";
+          $scope.getGarmentValues = function(){
+          patientService.getGarmentSizeCodeValues().then(function(response){
+        $scope.garmentSizeResponse = response.data;
+         $scope.garmentSize = $scope.garmentSizeResponse.typeCode;
+      }).catch(function(response){
+        notyService.showError(response);
+      });
+          patientService.getGarmentColorCodeValues().then(function(response){
+        $scope.garmentColorResponse = response.data;
+        $scope.garmentColor = $scope.garmentColorResponse.typeCode;
+      }).catch(function(response){
+        notyService.showError(response);
+      });
+       
+        patientService.getGarmentTypeCodeValues().then(function(response){
+        $scope.garmentTypeResponse = response.data;
+          $scope.garmentType = $scope.garmentTypeResponse.typeCode;
+      }).catch(function(response){
+        notyService.showError(response);
+      });
+        console.log("$scope.garmentSizeResponse",$scope.garmentSizeResponse);     
+        };
   $scope.init = function(){
     if($state.current.name === 'clinicadminpatientDemographic'  || $state.current.name === 'clinicadmminpatientDemographicEdit'){
       $scope.getPatientInfo($stateParams.patientId, $scope.setEditMode);
       if($state.current.name === 'clinicadmminpatientDemographicEdit'){
+         $scope.getGarmentValues();
         $scope.getStates();
       }
     }else if($state.current.name === 'clinicadminpatientClinics'){
@@ -351,9 +374,59 @@ angular.module('hillromvestApp')
   };
 
   $scope.getProtocols = function(patientId){
+      $scope.normalProtocol = new Array(new Array());
+         $scope.normalProtocol[0] = [];
+          $scope.normalProtocol[1] = [];
+        $scope.customProtocol = new Array(new Array());
+         $scope.customProtocol[0] = [];
+          $scope.customProtocol[1] = [];
     $scope.DisableAddProtocol = false;
     patientService.getProtocol(patientId).then(function(response){
       $scope.protocols = response.data.protocol;
+       if($scope.getDeviceTypeforBothIcon() === searchFilters.allCaps){
+         console.log("$scope.protocols",$scope.protocols)
+        angular.forEach($scope.protocols, function(protocol, key){
+          var protocolkey = protocol.protocolKey;
+          var protocolobject = {}
+            if(protocol.type === 'Normal'){
+              console.log("$scope.normalProtocol in if",$scope.normalProtocol);
+              if($scope.normalProtocol[0].length){
+              if($scope.normalProtocol[0][0].protocolKey === protocolkey){
+            protocolobject = protocol;
+              $scope.normalProtocol[0].push(protocolobject);
+             }
+             else{
+            protocolobject = protocol;
+              $scope.normalProtocol[1].push(protocolobject);
+             }
+           }
+       else{
+             protocolobject = protocol;
+              $scope.normalProtocol[0].push(protocolobject);
+            }
+      }
+            else if(protocol.type === 'Custom'){
+              console.log("$scope.customProtocol in if",$scope.customProtocol);
+              if($scope.customProtocol[0].length){
+              if($scope.customProtocol[0][0].protocolKey === protocolkey){
+            protocolobject = protocol;
+              $scope.customProtocol[0].push(protocolobject);
+             }
+             else{
+            protocolobject = protocol;
+              $scope.customProtocol[1].push(protocolobject);
+             }
+           }
+           else{
+            protocolobject = protocol;
+              $scope.customProtocol[0].push(protocolobject);
+           }
+            }
+          });
+        }
+        console.log("$scope.normalProtocol",$scope.normalProtocol);
+        
+  console.log("$scope.customProtocol",$scope.customProtocol);
               var vestFlag = false;
         var monarchFlag = false;
         $scope.lastdeviceType = $scope.protocols[0].deviceType;
