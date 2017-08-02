@@ -2653,8 +2653,10 @@ $scope.adherencetrendData.push(new Object({"adherenceTrends": [] , "protocols": 
       $("#AdherenceTrendGraph").empty();    
     };
     $scope.removeAllCharts1 = function(){
+
      $("#HMRGraph1").empty();
       $("#synchronizedChart1").empty(); 
+
       $("#AdherenceTrendGraph").empty();    
     };
 
