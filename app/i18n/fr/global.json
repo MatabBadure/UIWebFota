@@ -1,7 +1,7 @@
 {
     "global": {
         "title": "HillRomVest",
-        "tim-script":"Tim Script",
+         "tim-script":"Tim Script",
         "browsehappy": "You are using an <strong>outdated</strong> browser. Please <a href=\"http://browsehappy.com/?locale=en\">upgrade your browser</a> to improve your experience.",
         "menu": {
             "home": "Home",
@@ -68,13 +68,26 @@
         "NoSubjectWarning" : "Do you want to send this message without a Subject?",
         "Reply": "Reply"
     },
+    "tims":{
+         "log-information":"Log Information",
+        "execute-job":"Execute Job",
+        "tim-script":"TIMs Script",
+        "date-tims":"Date",
+        "time-tims":"Time",
+        "warning": "TIMs Script Execution",
+        "message": "Are you sure you want to execute the Job process of the TIMs Script?",
+        "logstatus-tims":"Log Status",
+        "loglink-tims":"Log Link"
+    },
         "logo-text": {
             "visi-view": "VisiView",
             "tm-sup": "TM",
             "health-portal": "Health Portal"
         },
         "my-dashboard": "My Profile",
-        "charger": "Charger Device",
+        "charger": "Charger",
+        "optimus" : "Optimus",
+        "sandbox" : "Sandbox",
         "logout": "Logout",
         "console": "Console",
         "tabs": {
@@ -499,16 +512,6 @@
         "success" : "Success",
         "fail" : "Fail"
         
-   
-        "log-information":"Log Information",
-        "execute-job":"Execute Job",
-        "tim-script":"TIMs Script",
-        "date-tims":"Date",
-        "time-tims":"Time",
-        "warning": "TIMs Script Execution",
-        "message": "Are you sure you want to execute the Job process of the TIMs Script?",
-        "logstatus-tims":"Log Status",
-        "loglink-tims":"Log Link"
     },
     "user-not-found" : "No user associated.",
     "navbar": {
