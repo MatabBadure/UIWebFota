@@ -1,0 +1,61 @@
+<!-- <style type="text/css">
+.selected{
+	background-color:lavender;
+}
+</style>-->
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-type" content="text/html; charset=UTF-8">
+</head>
+<ng-include src="'scripts/components/navbar/navbar.html'"></ng-include>
+<ng-include src="'scripts/modules/admin/profile/navbar/sandboxNavbar.html'"></ng-include>
+<div class="dashboard dashboard--content padding-bottom-ls" style="padding-top:100px; padding-left:40px; color:black !important" ng-init = "init()">
+	 <div style=" float:left; " class="Charger_Device">
+   <div id = "viewtxtoptimus" class="Charger_Data_Box" style="">
+<!--      <textarea id = "viewtxt" style="width:600px;height:150px;" wrap = "hard" readonly="readonly"></textarea></br>
+ -->   
+ 
+</div>
+ <div style="padding-left:120px; float:left; " >
+    <input class="hillrom-btn btn-submit" type="button" ng-click="refreshData('optimus')" value = "Refresh">
+     <input class="hillrom-btn btn-submit" type="button" ng-click="clearData('optimus')" value = "Clear">
+</div>
+</div> 
+ 	<div class="col-sm-8 col-md-8" style="float:right;">
+ 		<div class="col-sm-8 col-md-8">
+ 			<span>
+ 				Date & Time
+ 			</span>
+ 		</div>
+ 		<div class="col-sm-8 col-md-8">
+ 			<span>
+ 				Serial No.
+ 			</span>
+ 		</div>
+ 
+ <div class="col-sm-16 col-md-16" ng-repeat = "listValue in listDataOptimus">
+ 	<div class=" dashboard__manage-view--list" style="padding-bottom:20px " ng-class="{selected: listValue.device_data.content[$index][0] === selctedItem}" ng-repeat = "listArrayIndex in listValue.device_data.content" ng-if = "listValue.device_data.content[$index][1]!=null" ng-click="sample(listValue.device_data.content[$index][0],'optimus')">
+ 			<div class="col-sm-8 col-md-8"> 
+ 			 <span class="main-prim-info">{{dateArray[$index]}}</span>
+ 			</div>
+ 			 <div class="col-sm-8 col-md-8">
+ 			 <span class="main-prim-info">{{listArrayIndex[2]}}</span>
+ 			</div>
+          </div>
+ 	</div>
+
+
+ <div class="dashboard__manage-view--pagination">
+        <div class="col-md-16 reset-padding-right">
+          <div class="navbar-right">
+            <span class="record-found" ng-if="listValueForDateOptimus.device_data.content.length > 0">{{maxOptimusRecords}} Records</span>
+            <span class="record-found" ng-if="listValueForDateOptimus.device_data.content.length > 0">Found</span>
+            <span ng-show="pageCountOptimus > 1">
+              <span class="navigaion-link cursor-pointer" ng-class="{ 'inactive': !(currentPageIndexOptimus > 1) }" ng-click="searchOptimusRecords('PREV')">Previous</span>
+              <span class="navigaion-no">{{currentPageIndexOptimus}}/{{pageCountOptimus}}</span>
+              <span class="navigaion-link cursor-pointer" ng-class="{ 'inactive': !(pageCountOptimus > currentPageIndexOptimus) }" ng-click="searchOptimusRecords('NEXT')">Next</span>
+            </span>
+          </div>
+          <div class="clr"></div>
+        </div>
+      </div>

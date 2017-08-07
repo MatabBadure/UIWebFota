@@ -85,7 +85,9 @@
             "health-portal": "Health Portal"
         },
         "my-dashboard": "My Profile",
-        "charger": "Charger Device",
+        "charger": "Charger",
+        "optimus" : "Optimus",
+        "sandbox" : "Sandbox",
         "logout": "Logout",
         "console": "Console",
         "tabs": {
