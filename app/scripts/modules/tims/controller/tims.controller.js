@@ -144,7 +144,7 @@ angular.module('hillromvestApp')
              // $scope.showFreezeModal = false;  
                notyService.showMessage(response.data.timsMsg);
          $state.go('timslog');    
-            }, 1000); 
+            }, 5000); 
             
          //  $timeout(function(){}, 1000);    
       }).catch(function(response){
