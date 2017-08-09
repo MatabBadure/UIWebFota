@@ -76,6 +76,7 @@
         "time-tims":"Time",
         "warning": "TIMs Script Execution",
         "message": "Are you sure you want to execute the Job process of the TIMs Script?",
+        "exmessage": "TIMS job is executing",
         "logstatus-tims":"Log Status",
         "loglink-tims":"Log Link"
     },
