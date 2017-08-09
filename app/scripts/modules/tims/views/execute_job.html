@@ -1,4 +1,5 @@
-<ng-include src="'scripts/components/navbar/navbar.html'"></ng-include>
+<ng-include ng-disabled="showTimsModal" ng-class="{'navbardisabled': showTimsModal}" src="'scripts/components/navbar/navbar.html'"></ng-include>
+<!-- <ng-include src="'scripts/components/navbar/navbar.html'"></ng-include> -->
 <div class="navbar patient-user patient-user--nav">
 <!-- Demo data-intro="Navigation Ribbon" data-position="bottom"-->
   <div class="container tims-ribbon">
@@ -28,10 +29,10 @@
     <div class="timsContainer" ng-show="visible">
     <div class="infocontainer  timsText">
         <div class="execute-jobs"><span class="database"><i class="fa fa-database" aria-hidden="true"></i></span><span class="execute-msg">
-        <p class="timsText">Executing the Job Manually<br>
-        [Do you want to kick-off the job Manually]</p></span>
+        <p class="timsText">Click continue to execute TIMS job manually.<br>
+        </p></span>
         </div>
-        <button class="float-right hillrom-btn btn-submit margin-right13" ng-click="showExecteTimsDetail()" data-intro="To view PDF Push Announcements from Hill-Rom" data-position="bottom">Continue</button>
+        <button class="float-right hillrom-btn btn-submit " ng-click="showExecteTimsDetail()" data-intro="To view PDF Push Announcements from Hill-Rom" data-position="bottom">Continue</button>
     </div>
   </div>
 
@@ -39,7 +40,7 @@
     <div class="infocontainer  timsText">
         <div class="execute-jobs"><span class="database"><i class="fa fa-database" aria-hidden="true"></i></span><span class="execute-msg">
        
-        <p class="timsText">The  job has been executing .Click <a ng-href="" ng-click='timsLog()' data-intro="To view PDF Push Announcements from Hill-Rom" data-position="bottom">here</a>
+        <p class="timsText">The  job is been executing .Click <a ng-href="" ng-click='timsLog()' data-intro="To view PDF Push Announcements from Hill-Rom" data-position="bottom">here</a>
           <br/> to view the access Log list.</p></span>
         </div>
        
@@ -62,6 +63,27 @@
           <buton class="hillrom-btn btn-submit float-right" ng-click="timLoading()">Yes</buton>
           <buton class="hillrom-btn btn-submit float-right" data-dismiss="modal" ng-click="$parent.showModal = false">No</buton>
         </div>
+      </div>
+      <footer class="modal__footer">
+      </footer>
+    </div>
+  </div>
+</div>
+
+
+<div ng-if="showFreezeModal" class="modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true" >
+  <div class="modal__dialog">
+    <div class="modal__content">
+      <header class="modal__header">
+        <!-- <button type="button" class="modal__close" data-dismiss="modal" ng-click="$parent.showTimsModal = false">&times;</button> -->
+        <p translate="global.tims.warning"></p>
+      </header>
+      <div class="modal__body">
+        <div class="modal--message" translate="global.tims.exmessage"></div>
+        <!-- <div class="row modal--custom-btn">
+          <buton class="hillrom-btn btn-submit float-right" ng-click="timLoading()">Yes</buton>
+          <buton class="hillrom-btn btn-submit float-right" data-dismiss="modal" ng-click="$parent.showTimsModal = false">No</buton>
+        </div> -->
       </div>
       <footer class="modal__footer">
       </footer>
