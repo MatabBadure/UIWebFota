@@ -1288,7 +1288,13 @@ angular.module('hillromvestApp')
     $scope.getHMRGraph = function(){
       console.log("checkeing for hmr graph, line no:3161:",$scope.deviceTypeforGraph);
       patientDashBoardService.getHMRGraphPoints($scope.patientId, $scope.deviceTypeforGraph, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.durationRange).then(function(response){
-        $scope.hmrChartData = response.data;
+        $scope.hmrChartDataRaw = response.data;
+        $scope.hmrChartData = $scope.hmrChartDataRaw;
+        angular.forEach($scope.hmrChartData.series[0].data,function(item,index,object){
+          if(item.y == 0 || (item.toolText.duration == 0 && item.toolText.missedTherapy == false)){
+            object.splice(index,1);
+          }
+        });
         $scope.noDataAvailableForHMR  = false;       
         if($scope.hmrChartData && typeof($scope.hmrChartData) === "object"){ 
           $scope.noDataAvailableForHMR = false;      
@@ -3313,7 +3319,13 @@ $scope.getComplianceGraph = function(){
     $scope.getHMRGraph = function(){
       $scope.deviceTypeforGraph="VEST";
       patientDashBoardService.getHMRGraphPoints($scope.patientId, $scope.deviceTypeforGraph, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.durationRange).then(function(response){
-        $scope.hmrChartData = response.data;
+        $scope.hmrChartDataRaw = response.data;
+        $scope.hmrChartData = $scope.hmrChartDataRaw;
+        angular.forEach($scope.hmrChartData.series[0].data,function(item,index,object){
+          if(item.y == 0 || (item.toolText.duration == 0 && item.toolText.missedTherapy == false)){
+            object.splice(index,1);
+          }
+        });
         $scope.noDataAvailableForHMR  = false;       
         if($scope.hmrChartData && typeof($scope.hmrChartData) === "object"){ 
           $scope.noDataAvailableForHMR = false;      
@@ -4401,7 +4413,13 @@ $scope.getComplianceGraph1 = function(){
     $scope.getHMRGraph1 = function(){
     $scope.deviceTypeforGraph="MONARCH";
       patientDashBoardService.getHMRGraphPoints($scope.patientId, $scope.deviceTypeforGraph, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.durationRange).then(function(response){
-        $scope.hmrChartData1 = response.data;
+        $scope.hmrChartData1Raw = response.data;
+        $scope.hmrChartData1 = $scope.hmrChartData1Raw;
+        angular.forEach($scope.hmrChartData1.series[0].data,function(item,index,object){
+          if(item.y == 0 || (item.toolText.duration == 0 && item.toolText.missedTherapy == false)){
+            object.splice(index,1);
+          }
+        });
         $scope.noDataAvailableForHMR1  = false;       
         if($scope.hmrChartData1 && typeof($scope.hmrChartData1) === "object"){ 
           $scope.noDataAvailableForHMR1 = false;      
