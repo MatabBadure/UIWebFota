@@ -9,7 +9,7 @@ angular.module('hillromvestApp')
           toastr.success(message);
         }
       },
-
+      
       showError: function(response) {
         if(response.data){
           if(response.data.ERROR){
@@ -17,6 +17,9 @@ angular.module('hillromvestApp')
           }else if(response.data.message){
             toastr.error(response.data.message);
           }
+        }
+        else{
+          toastr.error(response);
         }
       }
     };
