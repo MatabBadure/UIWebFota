@@ -29,7 +29,7 @@
     <div class="timsContainer" ng-show="visible">
     <div class="infocontainer  timsText">
         <div class="execute-jobs"><span class="database"><i class="fa fa-database" aria-hidden="true"></i></span><span class="execute-msg">
-        <p class="timsText">Click continue to execute TIMS job manually.<br>
+        <p class="timsText">Click continue to execute TIMs job manually.<br>
         </p></span>
         </div>
         <button class="float-right hillrom-btn btn-submit " ng-click="showExecteTimsDetail()" data-intro="To view PDF Push Announcements from Hill-Rom" data-position="bottom">Continue</button>
@@ -58,7 +58,7 @@
         <p translate="global.tims.warning"></p>
       </header>
       <div class="modal__body">
-        <div class="modal--message" translate="global.tims.message"></div>
+        <div class="modal--message timsMessage" translate="global.tims.message"></div>
         <div class="row modal--custom-btn">
           <buton class="hillrom-btn btn-submit float-right" ng-click="timLoading()">Yes</buton>
           <buton class="hillrom-btn btn-submit float-right" data-dismiss="modal" ng-click="$parent.showModal = false">No</buton>
@@ -71,7 +71,7 @@
 </div>
 
 
-<div ng-if="showFreezeModal" class="modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true" >
+<div ng-if="showFreezeModal" class="modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true" ng-show="visible">
   <div class="modal__dialog">
     <div class="modal__content">
       <header class="modal__header">
@@ -80,6 +80,7 @@
       </header>
       <div class="modal__body">
         <div class="modal--message" translate="global.tims.exmessage"></div>
+        <span us-spinner></span>
         <!-- <div class="row modal--custom-btn">
           <buton class="hillrom-btn btn-submit float-right" ng-click="timLoading()">Yes</buton>
           <buton class="hillrom-btn btn-submit float-right" data-dismiss="modal" ng-click="$parent.showTimsModal = false">No</buton>
