@@ -1284,17 +1284,29 @@ angular.module('hillromvestApp')
         });
     };
 
+      $scope.discardLessHMRData = function(object){
+         for(var i = 0; i < object.series[0].data.length; i++) {
+                var obj = object.series[0].data[i];
+                if(obj.y == 0){
+                   object.series[0].data.splice(i, 1);
+                   i--;
+                }
+                 else if((obj.toolText.duration == 0 && !obj.toolText.missedTherapy)){
+                  object.series[0].data.splice(i, 1);
+                  i--;
+                }
+            }
+            return object;
+      };
     
     $scope.getHMRGraph = function(){
       console.log("checkeing for hmr graph, line no:3161:",$scope.deviceTypeforGraph);
       patientDashBoardService.getHMRGraphPoints($scope.patientId, $scope.deviceTypeforGraph, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.durationRange).then(function(response){
         $scope.hmrChartDataRaw = response.data;
-        $scope.hmrChartData = $scope.hmrChartDataRaw;
-        angular.forEach($scope.hmrChartData.series[0].data,function(item,index,object){
-          if(item.y == 0 || (item.toolText.duration == 0 && item.toolText.missedTherapy == false)){
-            object.splice(index,1);
+        if($scope.hmrChartDataRaw){
+         $scope.hmrChartDataRaw = $scope.discardLessHMRData($scope.hmrChartDataRaw);
           }
-        });
+          $scope.hmrChartData = $scope.hmrChartDataRaw;
         $scope.noDataAvailableForHMR  = false;       
         if($scope.hmrChartData && typeof($scope.hmrChartData) === "object"){ 
           $scope.noDataAvailableForHMR = false;      
@@ -1344,6 +1356,7 @@ angular.module('hillromvestApp')
             });            
             
           }); 
+
           setTimeout(function(){
             if($scope.durationRange === "Day" || $scope.isSameDayHMRGraph){          
               $scope.HMRCategoryChart();
@@ -3318,12 +3331,10 @@ $scope.getComplianceGraph = function(){
       $scope.deviceTypeforGraph="VEST";
       patientDashBoardService.getHMRGraphPoints($scope.patientId, $scope.deviceTypeforGraph, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.durationRange).then(function(response){
         $scope.hmrChartDataRaw = response.data;
-        $scope.hmrChartData = $scope.hmrChartDataRaw;
-        angular.forEach($scope.hmrChartData.series[0].data,function(item,index,object){
-          if(item.y == 0 || (item.toolText.duration == 0 && item.toolText.missedTherapy == false)){
-            object.splice(index,1);
+       if($scope.hmrChartDataRaw){
+         $scope.hmrChartDataRaw = $scope.discardLessHMRData($scope.hmrChartDataRaw);
           }
-        });
+          $scope.hmrChartData = $scope.hmrChartDataRaw;
         $scope.noDataAvailableForHMR  = false;       
         if($scope.hmrChartData && typeof($scope.hmrChartData) === "object"){ 
           $scope.noDataAvailableForHMR = false;      
@@ -4412,12 +4423,10 @@ $scope.getComplianceGraph1 = function(){
     $scope.deviceTypeforGraph="MONARCH";
       patientDashBoardService.getHMRGraphPoints($scope.patientId, $scope.deviceTypeforGraph, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.durationRange).then(function(response){
         $scope.hmrChartData1Raw = response.data;
-        $scope.hmrChartData1 = $scope.hmrChartData1Raw;
-        angular.forEach($scope.hmrChartData1.series[0].data,function(item,index,object){
-          if(item.y == 0 || (item.toolText.duration == 0 && item.toolText.missedTherapy == false)){
-            object.splice(index,1);
+       if($scope.hmrChartData1Raw){
+         $scope.hmrChartData1Raw = $scope.discardLessHMRData($scope.hmrChartData1Raw);
           }
-        });
+          $scope.hmrChartData1 = $scope.hmrChartData1Raw;
         $scope.noDataAvailableForHMR1  = false;       
         if($scope.hmrChartData1 && typeof($scope.hmrChartData1) === "object"){ 
           $scope.noDataAvailableForHMR1 = false;      

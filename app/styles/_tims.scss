@@ -168,14 +168,26 @@
   &:hover {
     background-color: $seashell;
   }
+  }
 .infocontainer.timsText
 {
-    width:80%;
+    width:75%;
 }
-.execute-jobs.btn-submit
+.continue-tims
 {
-  float:left;
+  float:left !important;
 }
-
-
+.dialogMsg
+{
+  font-weight: 100 !important; 
+  font-size: 1.1em !important;
+  
+}
+.warningModalDialog
+{
+  margin-top:-2%;
+}
+.timsModal
+{
+  height:65px;
 }
