@@ -1303,7 +1303,10 @@ angular.module('hillromvestApp')
       console.log("checkeing for hmr graph, line no:3161:",$scope.deviceTypeforGraph);
       patientDashBoardService.getHMRGraphPoints($scope.patientId, $scope.deviceTypeforGraph, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.durationRange).then(function(response){
         $scope.hmrChartDataRaw = response.data;
-        $scope.hmrChartData = $scope.discardLessHMRData($scope.hmrChartDataRaw);
+        if($scope.hmrChartDataRaw){
+         $scope.hmrChartDataRaw = $scope.discardLessHMRData($scope.hmrChartDataRaw);
+          }
+          $scope.hmrChartData = $scope.hmrChartDataRaw;
         $scope.noDataAvailableForHMR  = false;       
         if($scope.hmrChartData && typeof($scope.hmrChartData) === "object"){ 
           $scope.noDataAvailableForHMR = false;      
@@ -3328,7 +3331,10 @@ $scope.getComplianceGraph = function(){
       $scope.deviceTypeforGraph="VEST";
       patientDashBoardService.getHMRGraphPoints($scope.patientId, $scope.deviceTypeforGraph, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.durationRange).then(function(response){
         $scope.hmrChartDataRaw = response.data;
-        $scope.hmrChartData =  $scope.discardLessHMRData($scope.hmrChartDataRaw);
+       if($scope.hmrChartDataRaw){
+         $scope.hmrChartDataRaw = $scope.discardLessHMRData($scope.hmrChartDataRaw);
+          }
+          $scope.hmrChartData = $scope.hmrChartDataRaw;
         $scope.noDataAvailableForHMR  = false;       
         if($scope.hmrChartData && typeof($scope.hmrChartData) === "object"){ 
           $scope.noDataAvailableForHMR = false;      
@@ -4417,7 +4423,10 @@ $scope.getComplianceGraph1 = function(){
     $scope.deviceTypeforGraph="MONARCH";
       patientDashBoardService.getHMRGraphPoints($scope.patientId, $scope.deviceTypeforGraph, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.durationRange).then(function(response){
         $scope.hmrChartData1Raw = response.data;
-        $scope.hmrChartData1 =  $scope.discardLessHMRData($scope.hmrChartData1Raw);
+       if($scope.hmrChartData1Raw){
+         $scope.hmrChartData1Raw = $scope.discardLessHMRData($scope.hmrChartData1Raw);
+          }
+          $scope.hmrChartData1 = $scope.hmrChartData1Raw;
         $scope.noDataAvailableForHMR1  = false;       
         if($scope.hmrChartData1 && typeof($scope.hmrChartData1) === "object"){ 
           $scope.noDataAvailableForHMR1 = false;      
