@@ -167,7 +167,7 @@ angular.module('hillromvestApp')
           var x = {};
           x.text = "All"; x.value = "All";
           $scope.userRoleList.push(x);
-          var roles = ['ADMIN', 'ACCT_SERVICES', 'ASSOCIATES', 'CUSTOMER_SERVICES', 'PATIENT', 'HCP', 'CARE_GIVER', 'CLINIC_ADMIN'];
+          var roles = ['ADMIN', 'ACCT_SERVICES', 'ASSOCIATES', 'CUSTOMER_SERVICES', 'PATIENT', 'HCP', 'CARE_GIVER', 'CLINIC_ADMIN', 'RND_USER'];
           angular.forEach(roles, function(role){
               x = {};
               x.value = role;              
@@ -195,6 +195,9 @@ angular.module('hillromvestApp')
                   break;
                 case 'CUSTOMER_SERVICES':
                   x.text = "Customer Service";                
+                  break;
+                  case 'RND_USER':
+                  x.text = "R&D Admin";                
                   break;
               } 
               $scope.userRoleList.push(x);                         
