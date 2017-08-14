@@ -183,9 +183,14 @@ angular.module('hillromvestApp')
             logged.userId = response.data.user.id;
             $state.go('associatePatientUser');
           } 
-           else if(response.data.user.authorities[0].name === loginConstants.role.customerservices){
+          else if(response.data.user.authorities[0].name === loginConstants.role.customerservices){
             logged.userId = response.data.user.id;
             $state.go('customerservicePatientUser');
+          // $state.go('fotaHome');
+          }
+          else if(response.data.user.authorities[0].name === loginConstants.role.RnDadmin){
+              logged.userId = response.data.user.id;
+            $state.go('fotaHome');
           }
           else{
             logged.userId = response.data.user.id;
