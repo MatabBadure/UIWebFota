@@ -76,6 +76,7 @@
         "time-tims":"Time",
         "warning": "TIMs Script Execution",
         "message": "Are you sure you want to execute the Job process of the TIMs Script?",
+        "exmessage": "TIMs job is executing",
         "logstatus-tims":"Log Status",
         "loglink-tims":"Log Link"
     },
@@ -85,7 +86,9 @@
             "health-portal": "Health Portal"
         },
         "my-dashboard": "My Profile",
-        "charger": "Charger Device",
+        "charger": "Charger",
+        "optimus" : "Optimus",
+        "sandbox" : "Sandbox",
         "logout": "Logout",
         "console": "Console",
         "tabs": {
@@ -173,7 +176,8 @@
             "clinic-admin": "Clinic Admin",
             "hcp": "HCP",
             "patient": "Patient",
-            "customerservices" : "Customer Service"
+            "customerservices" : "Customer Service",
+            "RnDAdmin" : "R&D Admin"
         },
         "not-applicable": "NA",
         "notification":{

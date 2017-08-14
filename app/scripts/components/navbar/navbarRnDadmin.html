@@ -1,4 +1,5 @@
-<nav class="navbar navbar-default navbar-fixed-top" role="navigation"  ng-init="mainInit()" data-spy="affix" ng-show="userRole === 'ADMIN'">
+<!-- <nav class="navbar navbar-default navbar-fixed-top" role="navigation"  ng-init="mainInit()" data-spy="affix" ng-show="userRole === 'ADMIN'"> -->
+  <nav class="navbar navbar-default navbar-fixed-top" role="navigation"  ng-init="mainInit()" data-spy="affix">
   <div class="container" ng-switch="$root.isAuthenticated">
     <div class="navbar-header navbar-primary">
       <button data-target="#navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">
@@ -16,53 +17,14 @@
     <div>
     <div class="collapse navbar-collapse rm_max_height navbar-secondary header-nav menu_content_left" id="navbar-collapse"  ng-switch-when=true>
       <ul class="nav navbar-nav navbar-right header-nav-content"> 
-        <li class="icon-border">
-          <a ng-class="{ active: isActiveMainBar('admin/patients')}" ng-href="#/admin/patients">
-            <span class="icons hillrom-icon icon-patient"></span>
-            <span class="link-text" translate="global.tabs.manage-patients">Manage Patients</span>
-          </a>
-        </li>
-        <li class="icon-border">
-          <a ng-class="{ active: isActive('admin/hcpUsers')}" ng-href="#/admin/hcpUsers">
-            <span class="icons hillrom-icon icon-doctor"></span>
-            <span class="link-text" translate="global.tabs.manage-hcps">Manage HCPs</span>
-          </a>
-        </li>
-        <li class="icon-border">
-          <a ng-class="{ active: isActive('admin/clinics')}" ng-href="#/admin/clinics">
-            <span class="icons hillrom-icon icon-clinic"></span>
-            <span class="link-text" translate="global.tabs.manage-clinics">Manage Clinics</span>
-          </a>
-        </li>
-        <li class="icon-border">
-          <a ng-class="{ active: isActive('admin/hillRomUsers')}" ng-href="#/admin/hillRomUsers">
-            <span class="icons hillrom-icon icon-user"></span>
-            <span class="link-text" translate="global.tabs.manage-users">Manage Users</span>
-          </a>
-        </li>
+       
         <li class="header-popover dropdown">
           <a ng-href="" data-target="#" class="dropdown-toggle" ng-class="{ active: isActive('admin/profile') || isActive('admin/updatepassword')}" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
             <span class='icon-logged-in-user'></span>
             <span class='user-name'>{{username}}</span></a>
           <ul class="dropdown-menu logout-dropdown">
 
-          <li  ng-click='tims()'>
-
-              <span class='fa fa-file-code-o'></span>
-              <p translate="global.tims.tim-script">Tim Script</p>
-            </li>
-            <li id='' ng-click='console()'>
-              <span class="hillrom-icon icon-console"> </span>
-              <p translate="global.console">Console</p>
-            </li>
-
             <!--below code for charger dummy data (Suggested by raghu)-->
-             <li ng-click='chargerdummydata()'>
-              <span class='hillrom-icon icon-user-account'></span>
-              <p translate="global.sandbox">Sandbox</p>
-            </li>
-
-
             <li id='account' ng-click='profile()'>
               <span class='hillrom-icon icon-user-account'></span>
               <p translate="global.my-dashboard">My Profile</p>

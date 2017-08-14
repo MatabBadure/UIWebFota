@@ -168,7 +168,26 @@
   &:hover {
     background-color: $seashell;
   }
-
-
-
+  }
+.infocontainer.timsText
+{
+    width:75%;
+}
+.continue-tims
+{
+  float:left !important;
+}
+.dialogMsg
+{
+  font-weight: 100 !important; 
+  font-size: 1.1em !important;
+  
+}
+.warningModalDialog
+{
+  margin-top:-2%;
+}
+.timsModal
+{
+  height:65px;
 }
