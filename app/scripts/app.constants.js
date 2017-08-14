@@ -153,5 +153,8 @@ angular.module('hillromvestApp')
 	'getgarmentColorCodeValues' : 'api/codeValues/garment_color',
 	'executeTimsJob' : 'api/executeTIMSJob',
 	'loglist' : 'api/listLogDirectory?page=PAGE&per_page=PER_PAGE&sort_by=SORT_OPTION&status=FILTER&fromDate=FROM_DATE&toDate=TO_DATE',
-	'timsScriptLogDetails' : 'api/retrieveLogData/logs'
+	'timsScriptLogDetails' : 'api/retrieveLogData/logs',
+	'optimusdevicedatalist' : 'api/optimusdevicedatalist?page=PAGE&per_page=PER_PAGE',
+	'optimusDeviceData' : 'api/optimusDeviceData/ID',
+	'optimusdevicedata' : 'api/optimusdevicedata'
 });
