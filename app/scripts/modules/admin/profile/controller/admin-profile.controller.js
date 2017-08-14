@@ -28,6 +28,9 @@ angular.module('hillromvestApp')
       if($state.current.name === 'adminProfile' || $state.current.name === 'editAdminProfile' || $state.current.name === 'adminProfileRc' || $state.current.name === 'editAdminProfileRc' || $state.current.name === 'associateProfile' || $state.current.name === 'editAssociateProfile' || $state.current.name === 'customerserviceProfile' || $state.current.name === 'editcustomerserviceProfile'){
         $scope.initProfile(StorageService.get('logged').userId);
       }
+      else if($state.current.name === 'RnDadminProfile'){
+        //Do nothing for now
+      }
     };
 
     $scope.editMode = function(){

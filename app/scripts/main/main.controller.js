@@ -208,6 +208,10 @@ else {
       }
       else if($rootScope.userRole === loginConstants.role.customerservices){
       	$state.go('customerserviceProfile');
+     // $state.go('RnDadminProfile');
+      }
+      else if($rootScope.userRole === loginConstants.role.RnDadmin){
+      	$state.go('RnDadminProfile');
       }
     };
     $scope.profileCA = function(clinicid){
@@ -245,6 +249,12 @@ else {
         $state.go("caregiverDashboard");
       }else if($rootScope.userRole === loginConstants.role.acctservices){
         $state.go("rcadminPatients");
+      }
+      else if($rootScope.userRole === loginConstants.role.customerservices){
+        $state.go("customerservicePatientUser");
+      }
+      else if($rootScope.userRole === loginConstants.role.RnDadmin){
+        $state.go("fotaHome");
       }
     };
 

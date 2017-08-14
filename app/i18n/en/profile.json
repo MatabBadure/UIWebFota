@@ -7,7 +7,8 @@
       "profile-update": "HillRom | Profile Update",
       "profile-settings": "HillRom | Profile Settings",
       "benchmarking": "Hillrom | Benchmarking",
-      "tims": "Hillrom | TIMS"
+      "tims": "Hillrom | TIMS",
+      "fota": "Hillrom | FOTA"
     },
     "tabs": {
       "profile-details": "Profile Details",
@@ -41,6 +42,7 @@
       "account-services": "Account Services",
       "associates":"Associates",
       "customerservices" : "Customer Service",
+      "RnDAdmin" : "R&D Admin",
       "default" : "Select a role"
     },
     "update-button-text": "Update",

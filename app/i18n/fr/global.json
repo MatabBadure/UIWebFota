@@ -71,11 +71,13 @@
     "tims":{
          "log-information":"Log Information",
         "execute-job":"Execute Job",
+
         "tim-script":"TIMs Script",
         "date-tims":"Date",
         "time-tims":"Time",
         "warning": "TIMs Script Execution",
         "message": "Are you sure you want to execute the Job process of the TIMs Script?",
+
         "logstatus-tims":"Log Status",
         "loglink-tims":"Log Link"
     },
@@ -175,7 +177,8 @@
             "clinic-admin": "Clinic Admin",
             "hcp": "HCP",
             "patient": "Patient",
-            "customerservices" : "Customer Service"
+            "customerservices" : "Customer Service",
+            "RnDAdmin" : "R&D Admin"
         },
         "not-applicable": "NA",
         "notification":{
