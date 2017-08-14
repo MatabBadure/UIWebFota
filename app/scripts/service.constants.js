@@ -48,9 +48,11 @@ var searchFilters = {
     Monarch: "MONARCH",
     devicetype : "deviceType=",
     allCaps : "ALL",
-    Both:"BOTH",
-    isSuccess:"isSuccess",
-    isFail:"isFail"
+    Both: "BOTH",
+    isSuccess: "isSuccess",
+    isFail: "isFail",
+    success: "Success",
+    failure: "Failure"
 }
 
 var sortConstant = {
@@ -122,7 +124,9 @@ var sortConstant = {
     announcementEndDate: "endDate",
     announcementModifiedDate : "modifiedDate",
     announcementModifiedDatePatient : "modified_date",
-    fromCA: "messages.fromClinic.name"
+    fromCA: "messages.fromClinic.name",
+    loglink: "loglink",
+    timsdate: "date"
 }
 
 var stringConstants = {

@@ -1328,7 +1328,7 @@ angular.module('hillromvestApp')
         */
             .state('charger', {
                 parent: 'admin',
-                url: '/charger',
+                url: '/sandbox/charger',
                 data: {
                     roles: ['ADMIN'],
                     pageTitle: 'profile.page-title.charger'
@@ -1336,6 +1336,36 @@ angular.module('hillromvestApp')
                 views: {
                     'content@': {
                         templateUrl: 'scripts/modules/admin/profile/profile-tabs/charger.html',
+                        controller: 'chargercontroller'
+                    }
+                },
+                resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('AdminProfileModule');
+                    }],
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('profile');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+            .state('optimus', {
+                parent: 'admin',
+                url: '/sandbox/optimus',
+                data: {
+                    roles: ['ADMIN'],
+                    pageTitle: 'profile.page-title.charger'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/admin/profile/profile-tabs/optimus.html',
                         controller: 'chargercontroller'
                     }
                 },

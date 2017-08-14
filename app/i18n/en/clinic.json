@@ -64,6 +64,7 @@
         "submit-button-text": "Submit",
         "cancel-button-text": "cancel",
         "deactivate-button-text": "Deactivate",
+        "activate-button-text": "Activate",
         "update-button-text": "Update",
         "create-button-text": "Create",
         "add-clinic-admin": "Add Clinic Admin",
@@ -90,6 +91,11 @@
             "warning": "Clinic - Details",
             "message": "You have made changes/updates for Clinic details. Are you sure to make updates?"
         },
+         "activate": {
+            "warning": "Activate Clinic",
+            "message": "Are you sure you want to activate the Clinic?"
+        },
+
         "adherence": {
             "warning": "Adherence Settings",
             "message": "You have made changes/updates for Adherence Settings. Are you sure to make updates?"

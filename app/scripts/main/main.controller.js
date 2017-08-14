@@ -2,8 +2,8 @@
 
 angular.module('hillromvestApp')
   .controller('MainController', 
-  	['$scope', 'Principal', 'Auth','notyService', 'DoctorService','$state', 'Account', '$location', '$stateParams', '$rootScope', 'loginConstants', 'StorageService', 'UserService', '$window', 'patientService', 'messageService',
-  function ($scope, Principal,Auth,notyService,DoctorService, $state, Account, $location,$stateParams, $rootScope,loginConstants,StorageService, UserService, $window, patientService,messageService) {
+  	['$scope', 'Principal', 'Auth','notyService', 'DoctorService','$state', 'Account', '$location', '$stateParams', '$rootScope', 'loginConstants', 'StorageService', 'UserService', '$window', 'patientService', 'messageService', 'caregiverDashBoardService',
+  function ($scope, Principal,Auth,notyService,DoctorService, $state, Account, $location,$stateParams, $rootScope,loginConstants,StorageService, UserService, $window, patientService,messageService,caregiverDashBoardService) {
     Principal.identity().then(function(account) {
       $scope.account = account;
       $scope.isAuthenticated = Principal.isAuthenticated;
@@ -23,7 +23,29 @@ angular.module('hillromvestApp')
 	$rootScope.getDeviceTypeforBothIcon = function(){
 	return (localStorage.getItem('deviceTypeforBothIcon'));	
 	}
+	//the following module added for ticket Hill-2411
+	$rootScope.getPatientListForCaregiver = function(caregiverID){
+      var currentname = $state.current.name;  
+      caregiverDashBoardService.getPatients(caregiverID).then(function(response){
+                $scope.patients = response.data.patients;
+                 // localStorage.setItem('deviceType',response.data.patients[i].deviceType);
+                 if(response.data.patients[0].deviceType == 'ALL'){
+          localStorage.setItem('deviceType', 'VEST');
+          localStorage.setItem('deviceTypeforGraph', 'ALL');
+          localStorage.setItem('deviceTypeforBothIcon', 'ALL');
 
+            }
+            else{
+            localStorage.setItem('deviceType', response.data.patients[0].deviceType);
+            localStorage.setItem('deviceTypeforGraph', response.data.patients[0].deviceType);
+            localStorage.setItem('deviceTypeforBothIcon', response.data.patients[0].deviceType);
+          }
+
+      }).catch(function(response){
+                  notyService.showError(response);
+      });
+    };
+    //EnfOf:the following module added for ticket Hill-2411
     $scope.mainInit = function(){    		
     		$rootScope.isAddDiagnostics = false;
 			$rootScope.userRole = null;
