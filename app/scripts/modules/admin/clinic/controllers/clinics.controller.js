@@ -309,12 +309,15 @@ angular.module('hillromvestApp')
       };
 
       $scope.selectClinic = function(clinic) {
-      if($scope.clinicStatus.role === 'ADMIN')
-      {
-        $state.go('clinicDashboard', {
-          'clinicId': clinic.id
-        });
-      }
+        if(clinic){
+        localStorage.setItem('clinicname',clinic.name);
+        }
+        if($scope.clinicStatus.role === 'ADMIN')
+        {
+          $state.go('clinicDashboard', {
+            'clinicId': clinic.id
+          });
+        }
         else if($scope.clinicStatus.role === loginConstants.role.acctservices){
           $state.go('clinicDashboardRcadmin', {
             'clinicId': clinic.id

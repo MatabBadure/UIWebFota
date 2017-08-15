@@ -53,7 +53,8 @@
             "clinic-admin": "Clinic Admin",
             "caregiver": "Caregiver",
             "associates": "Associates",
-            "customerservices" : "Customer Service"
+            "customerservices" : "Customer Service",
+            "RnDAdmin" : "R&D Admin"
         },
         "placeholder": {
             "search": "Search with Name, Hill-Rom ID or Email"
