@@ -310,7 +310,13 @@ angular.module('hillromvestApp')
 
       $scope.selectClinic = function(clinic) {
         if(clinic){
-        localStorage.setItem('clinicname',clinic.name);
+        localStorage.setItem('clinicname_'+clinic.id,clinic.name);
+        if(clinic.hillromId){
+        localStorage.setItem('clinicHillRomID_'+clinic.id,clinic.hillromId);
+      }
+      else{
+        localStorage.setItem('clinicHillRomID_'+clinic.id," ");
+      }
         }
         if($scope.clinicStatus.role === 'ADMIN')
         {
