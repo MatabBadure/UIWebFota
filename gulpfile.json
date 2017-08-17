@@ -184,7 +184,8 @@
             "app/scripts/modules/patient/announcements/controllers/announcements.controller.js",
             "app/scripts/modules/tims/controller/tims.controller.js",
             "app/scripts/modules/tims/services/tims.service.js",
-            "app/scripts/modules/RnDadmin/FotaHome/controllers/fota.controller.js"
+            "app/scripts/modules/RnDadmin/FotaHome/controllers/fota.controller.js",
+            "app/scripts/modules/RnDadmin/FotaHome/services/fota.service.js"
         ],
         "scripts_min_path":[
             "app/bower_components/canvg-gabelerner/rgbcolor.min.js",
@@ -353,7 +354,8 @@
             "app/scripts/modules/patient/announcements/controllers/announcements.controller.min.js",
             "app/scripts/modules/tims/controller/tims.controller.min.js",
             "app/scripts/modules/tims/services/tims.service.min.js",
-            "app/scripts/modules/RnDadmin/FotaHome/controllers/fota.controller.min.js"
+            "app/scripts/modules/RnDadmin/FotaHome/controllers/fota.controller.min.js",
+            "app/scripts/modules/RnDadmin/FotaHome/services/fota.service.min.js"
         ],
         "clean": [
             "app/build/",
