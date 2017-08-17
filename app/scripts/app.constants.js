@@ -153,5 +153,9 @@ angular.module('hillromvestApp')
 	'getgarmentColorCodeValues' : 'api/codeValues/garment_color',
 	'executeTimsJob' : 'api/executeTIMSJob',
 	'loglist' : 'api/listLogDirectory?page=PAGE&per_page=PER_PAGE&sort_by=SORT_OPTION&filterBy=FILTER',
-	'timsScriptLogDetails' : 'api/retrieveLogData/logs'
+	'timsScriptLogDetails' : 'api/retrieveLogData/logs',
+	'fotaVerify' : 'api/FOTA/create',
+	'uploadfileFota' : 'api/FOTA/uploadFile',
+	'getFotaVerion' : 'api/FOTA/getSoftVersion/partNoV/isOldFileV',
+	'softDelete' : 'api/FOTA/softDeleteFOTA/partNoD/isOldFileD'
 });

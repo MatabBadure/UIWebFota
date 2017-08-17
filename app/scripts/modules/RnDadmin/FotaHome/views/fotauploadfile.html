@@ -1,0 +1,178 @@
+<div class="navbar patient-user patient-user--nav">
+  <div class="container">
+    <div class="collapse navbar-collapse patient-user__navbar" id="navbar-collapse">
+      <ul class="nav navbar-nav admin_profile">
+       
+        <li>
+          <a ng-class="{active: isActive('upload')}"  ng-href="" ng-click="uploadFota()">
+            <span class="">FOTA UPLOAD</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="container edit-announcment margin-top reset-padding">
+<div class="dashboard dashboard--content padding-bottom-ls">
+  <form name="form" novalidate autocomplete="off">
+    <div class="container dashboard__form">
+      <div>
+        <div class="col-md-4 reset-padding user-required pull-right" style="">
+            <span translate="" >* Required Fields</span>
+          </div>
+        <div class="col-md-16 col-sm-16 margin-top reset-padding">
+          <div class="col-md-7 col-sm-7 reset-padding">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+              <span class="" translate="global.part-number"></span>
+              <span class="">*</span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding">
+              <input class="" name="partNumber" type="text" ng-model="fota.partNumber" validate-on-blur maxlength="16"  required>
+             <!-- <div ng-show="(form.partNumber.$dirty && form.partNumber.$invalid) || resetsubmitted">
+                <span class="has-error" ng-show="form.partNumber.$error.required" translate="global.fota.error.announcementName.required"></span>
+              </div> -->
+            </div>
+          </div>
+          
+        </div>
+          <div class="col-md-16 col-sm-16 margin-top reset-padding">
+          <div class="col-md-7 col-sm-7 reset-padding">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+              <span class="" translate="global.software-version"></span>
+              <span class="">*</span>
+            </div>
+             <div class="input-group">
+              <input class="col-md-2" name="softwareMVersion1" type="text" ng-model="fota.softwareMVersion1" validate-on-blur maxlength="2"  required/>
+              <input class="col-md-2" name="softwareMVersion2" type="text" ng-model="fota.softwareMVersion2" validate-on-blur maxlength="2"  required>
+              <input class="col-md-2" name="softwareMiVersion1" type="text" ng-model="fota.softwareMiVersion1" validate-on-blur maxlength="2"  required/>
+              <input class="col-md-2" name="softwareMiVersion2" type="text" ng-model="fota.softwareMiVersion2" validate-on-blur maxlength="2"  required/>
+          </div>
+          
+        </div>
+            <div class="col-md-16 col-sm-16 margin-top reset-padding">
+          <div class="col-md-7 col-sm-7 reset-padding">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+              <span class="" translate="global.release-date"></span>
+              <span class="">*</span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding">
+              <input type="text"    ng-model="fota.releaseDate" name = "releaseDate" data-provide="datepicker" data-date-autoclose="true"    id="dp1" required data-date-format="mm/dd/yyyy"  ng-pattern="/^\d{2}\/\d{2}\/\d{4}$/" readonly="readonly"/>
+              <div ng-show="(form.startDate.$dirty && form.startDate.$invalid) || resetsubmitted">
+                <span class="has-error" ng-show="form.startDate.$error.required" translate="error.startDate.required"></span>
+                <span class="has-error" ng-show="form.startDate.$error.pattern && !form.startDate.$error.required" translate="error.startDate.invalid"></span>
+              </div>  
+            </div>
+          </div>
+          
+        </div>
+
+        <div class="col-md-16 col-sm-16 margin-top reset-padding">
+          <div class="col-md-7 col-sm-7 reset-padding">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+              <span class="" translate="global.effective-date"></span>
+              <span class="">*</span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding">
+              <input type="text"  ng-model="fota.effectiveDate" name = "effectiveDate" data-provide="datepicker" data-date-autoclose="true"    id="dp1" required data-date-format="mm/dd/yyyy"  ng-pattern="/^\d{2}\/\d{2}\/\d{4}$/" readonly="readonly"/>
+              <div ng-show="(form.startDate.$dirty && form.startDate.$invalid) || resetsubmitted">
+                <span class="has-error" ng-show="form.startDate.$error.required" translate="error.startDate.required"></span>
+                <span class="has-error" ng-show="form.startDate.$error.pattern && !form.startDate.$error.required" translate="error.startDate.invalid"></span>
+              </div>  
+            </div>
+          </div>
+          
+        </div>
+
+        <div class="clr"></div>
+      </div>
+
+
+      <div class="">
+       <!-- 
+        <div ng-show="!checkedone && !checkedtwo && resetsubmitted">
+                <span class="has-error" ng-show="!checkedone && !checkedtwo" translate="error.SendTo.required"></span>
+              </div>   -->
+      <div class="clr"></div>
+       <div class="col-md-16 col-sm-16 margin-top reset-padding">
+          <div class="col-md-7 col-sm-7 reset-padding">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+              <span class="" translate="global.upload-hex-file"></span>
+              <span class="">*</span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding">
+           <div class="col-md-6 reset-padding"> <input type="file" accept=
+"application/hex" id="browse" name="fileupload" style="display: none" onchange="angular.element(this).scope().Handlechange(this)"/>
+          <input type="button" class="hillrom-btn btn-secondary  browsebtn noboder" value="Choose a File" id="fakeBrowse" ng-click="HandleBrowseClick();" required/> 
+           <span  class="icons user-required"> Only Hex File<i class="" aria-hidden="false"></i>
+            </span> 
+         <!--  <div ng-show="files.length == 0 && resetsubmitted">
+                <span class="has-error" ng-show="files.length == 0" translate="error.file.required"></span>
+              </div>   -->
+        </div>
+          <div class="col-md-10">
+            <input type="text" id="filename" disabled="disabled" class="nobackground" readonly="true"/>
+         
+           <div ng-if="nonPDF == true " ><span class="has-error nonPDFclass" style="">File must be Hex only</span></div>
+     
+         </div>
+       </div>
+            </div>
+           
+            <div ng-show="fileinput.length">
+        <div ng-repeat="file in fileinput.slice(0)">
+            <span>{{file.webkitRelativePath || file.name}}</span>
+            (<span ng-switch="file.size > 1024*1024">
+                <span ng-switch-when="true">{{file.size / 1024 / 1024 | number:2}} MB</span>
+                <span ng-switch-default>{{file.size / 1024 | number:2}} kB</span>
+            </span>)
+        </div>
+        <input type="button" ng-click="uploadFile()" value="Upload" />
+        <div ng-show="progressVisible">
+            <div class="percent">{{progress}}%</div>
+            <div class="progress-bar">
+                <div class="uploaded" ng-style="{'width': progress+'%'}"></div>
+            </div>
+        </div>
+    </div>
+          </div>
+          
+        </div>
+    </div>
+
+
+    <div class="col-md-16 col-sm-16 margin-top reset-padding">
+      <div class="">
+        <buton type="submit" class="hillrom-btn btn-primary float-right btn-margin-left" ng-click="fotaUploadModule(form)" translate="global.verify-input">Verify</buton>
+        <buton type="submit" class="hillrom-btn btn-secondary float-right" ng-click="redirectBack()" translate="global.announcement.label.cancel">cancel</buton>
+        <div class="clr"></div>
+      </div>
+    </div>
+    </div>
+  </form>
+</div>
+<div ng-if="showModal" class="modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true">
+  <div class="modal__dialog">
+    <div class="modal__content">
+      <header class="modal__header">
+        <button type="button" class="modal__close" data-dismiss="modal" ng-click="close()">&times;</button>
+        <p translate="global.upload-fota"></p>
+      </header>
+      <div class="modal__body">
+        <div class="modal--message" ng-if="matched" translate="global.verify-success"></div>
+        <div class="modal--message" ng-if="unmatched" translate="global.verify-failure"></div>
+        <div class="modal--message" ng-show="overrideMesg" translate="global.verify-override"></div>
+        <div class="row modal--custom-btn">
+          <buton ng-show="myvalue" class="hillrom-btn btn-submit float-right"  ng-click ="verifyDetails()">Upload</buton>
+           <buton ng-show="overrideBtn" class="hillrom-btn btn-submit float-right"  ng-click ="override()">override</buton>
+          <buton class="hillrom-btn btn-submit float-right" data-dismiss="modal" ng-click="close()">Cancel</buton>
+        </div>
+      </div>
+      <footer class="modal__footer">
+      </footer>
+    </div>
+  </div>
+</div>
+</div>
+
+
