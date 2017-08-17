@@ -194,7 +194,9 @@ angular.module('hillromvestApp')
                       $scope.noDataAvailable = true;
                       $scope.getClinicsForClinicAdmin();
                }
-	      }).catch(function(response){});
+	      }).catch(function(response){
+	      	$scope.getClinicsForClinicAdmin();
+	      });
 	    };
 
      $scope.switchTab = function(state){
@@ -377,14 +379,14 @@ angular.module('hillromvestApp')
 			}
 			if(!isClinic){
 				$scope.selectedClinic = $scope.clinics[0];
+				}
 			}
 		}
-	}
-	else{
-		 $scope.selectedClinic.id = $scope.selectedClinic.hillromId = $stateParams.clinicId;
-          $scope.selectedClinic.name  = localStorage.getItem('clinicname');
-
-	}
+			else{
+		    	$scope.selectedClinic.name  = localStorage.getItem('clinicname_'+$stateParams.clinicId);
+         		$scope.selectedClinic.hillromId =  localStorage.getItem('clinicHillRomID_'+$stateParams.clinicId);
+				$scope.selectedClinic.id = $stateParams.clinicId;
+				}
 			$scope.initCount($scope.selectedClinic.id);
 		if(userId){
 		$scope.weeklyChart();
