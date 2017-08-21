@@ -177,7 +177,7 @@ angular.module('hillromvestApp')
               TimService.getTimsLogDetails(data).then(function(response){
                  $scope.timsLogDetails = response.data;
                  
-                  $scope.timsLogDetailsText = $scope.timsLogDetails.logFileContent.replace("\n","\\n");
+                  $scope.timsLogDetailsText = $scope.timsLogDetails.logFileContent.replace("/\n/g","\\n");
                   
                   }).catch(function(response){
                     notyService.showError(response);

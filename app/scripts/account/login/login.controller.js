@@ -144,19 +144,19 @@ angular.module('hillromvestApp')
           $rootScope.userFullName = response.data.user.lastName + ' ' +response.data.user.firstName;
           $rootScope.userLastName = response.data.user.lastName;
           $rootScope.userEmail = response.data.user.email;
+          $rootScope.userId = response.data.user.id;
+
           
           if(response.data.user.authorities[0].name === loginConstants.role.patient){
           Account.get().$promise
           .then(function (account) {
             if(account.data.deviceType == 'ALL'){
-          localStorage.setItem('deviceType', 'VEST');
-          localStorage.setItem('deviceTypeforGraph', 'ALL');
-          localStorage.setItem('deviceTypeforBothIcon', 'ALL');
+          localStorage.setItem('deviceType_'+response.data.user.id, 'VEST');
+          localStorage.setItem('deviceTypeforBothIcon_'+response.data.user.id, 'ALL');
             }
             else{
-            localStorage.setItem('deviceType', account.data.deviceType);
-            localStorage.setItem('deviceTypeforGraph', account.data.deviceType);
-            localStorage.setItem('deviceTypeforBothIcon', account.data.deviceType);
+            localStorage.setItem('deviceType_'+response.data.user.id, account.data.deviceType);
+            localStorage.setItem('deviceTypeforBothIcon_'+response.data.user.id, account.data.deviceType);
           }
            });
             logged.patientID = response.data.user.id;

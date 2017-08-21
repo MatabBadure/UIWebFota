@@ -6,7 +6,7 @@
  *
  */
 angular.module('hillromvestApp')
-  .factory('patientDashBoardService',['$http', 'headerService','URL','$rootScope', function ($http, headerService, URL,$rootScope) {
+  .factory('patientDashBoardService',['$http', 'headerService','URL',function ($http, headerService, URL) {
     return {
 
       /**
@@ -55,7 +55,7 @@ angular.module('hillromvestApp')
         var url = patient.graph.baseURL;
         url  = url + '/' + id + '/therapyData';
         url = url + '?from=' + date + '&to=' + date ;
-          url = url +'&deviceType='+localStorage.getItem('deviceType'); 
+        //  url = url +'&deviceType='+localStorage.getItem('deviceType'); 
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -104,10 +104,10 @@ angular.module('hillromvestApp')
       *
       */
       //The service will be changed based on the url and parameters
-      getHMRrunAndScoreRate: function(id, timeStamp) {
+      getHMRrunAndScoreRate: function(id, timeStamp, deviceType) {
         var url = patient.graph.baseURL;
         url  = url + '/' + id + '/compliance?date=' + timeStamp;
-        url = url +'&deviceType='+localStorage.getItem('deviceTypeforBothIcon');
+        url = url +'&deviceType='+deviceType;
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -170,8 +170,8 @@ angular.module('hillromvestApp')
       },
 
 
-      getAdeherenceData : function(userId, startDate, endDate){
-        var url = URL.getAdeherenceData.replace('USERID', userId).replace('FROMDATE', startDate).replace('TODATE', endDate).replace('DEVICETYPE',localStorage.getItem('deviceType'));
+      getAdeherenceData : function(userId, startDate, endDate,deviceType){
+        var url = URL.getAdeherenceData.replace('USERID', userId).replace('FROMDATE', startDate).replace('TODATE', endDate).replace('DEVICETYPE',deviceType);
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {

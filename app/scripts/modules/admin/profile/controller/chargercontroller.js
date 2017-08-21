@@ -77,7 +77,6 @@ angular.module('hillromvestApp')
         }
         $scope.clickedDataOptimus = function(id,div){
             chargerservice.getClickedDataForOptimus(id).then(function(response){
-                console.log("clicked opti:",response);
                 $scope.clickedMessage = response;
                 $scope.selctedItem = id;
                 var i = (Number(max)) - id;
@@ -126,7 +125,6 @@ angular.module('hillromvestApp')
             };
              $scope.getOptimusData = function(isrefresh){
             chargerservice.getListDataForOptimus(($scope.currentPageIndexOptimus-1),$scope.perPageOptimus).then(function(response){
-                console.log("list opti:",response);
                 $scope.listDataOptimus = response;
                 $scope.listValueForDateOptimus = response.data;
                 $scope.maxOptimusRecords = $scope.listValueForDateOptimus.device_data.totalElements;
@@ -162,7 +160,7 @@ angular.module('hillromvestApp')
             $scope.currentPageIndex = 1;
           } 
           chargerservice.getListDataForOptimus(($scope.currentPageIndexOptimus-1),$scope.perPageOptimus).then(function(response){
-                console.log("list opti:",response);
+
                 $scope.listDataOptimus = response;
                 $scope.listValueForDateOptimus = response.data;
                 $scope.maxOptimusRecords = $scope.listValueForDateOptimus.device_data.totalElements;

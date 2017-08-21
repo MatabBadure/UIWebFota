@@ -61,7 +61,6 @@ angular.module('hillromvestApp')
       }).catch(function(response){
         notyService.showError(response);
       });
-        console.log("$scope.garmentSizeResponse",$scope.garmentSizeResponse);     
         };
         $scope.init();
 
@@ -78,7 +77,6 @@ angular.module('hillromvestApp')
           addressService.getCityStateByZip($scope.patient.zipcode).then(function(response){
             $scope.patient.city = response.data[0].city;
             $scope.patient.state = response.data[0].state;
-            console.log("$scope.patient",$scope.patient);
             if($scope.patientStatus.editMode){
               var data = $scope.patient;
               data.role = 'PATIENT';
@@ -124,7 +122,6 @@ angular.module('hillromvestApp')
         };
 
         $scope.editUSer = function(data) {
-          console.log("data",data);
           UserService.editUser(data).then(function (response) {
             if(response.status === 200) {
               $scope.patientStatus.isMessage = true;

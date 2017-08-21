@@ -51,11 +51,8 @@ angular.module('hillromvestApp')
         };
 
         $scope.selectPatient = function(patient) {
-        //  localStorage.setItem('deviceType', patient.deviceType);
-
-            localStorage.setItem('deviceType', patient.deviceType);
-            localStorage.setItem('deviceTypeforGraph', patient.deviceType);
-            localStorage.setItem('deviceTypeforBothIcon', patient.deviceType);
+            localStorage.setItem('deviceType_'+patient.id, patient.deviceType);
+            localStorage.setItem('deviceTypeforBothIcon_'+patient.id, patient.deviceType);
  
           if($scope.userRole === loginConstants.role.admin){
             $state.go('patientOverview', {
