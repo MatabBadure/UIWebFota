@@ -40,10 +40,6 @@ angular.module('hillromvestApp')
         $scope.submitted = false;
         $scope.formSubmit = function () {
           $scope.submitted = true;
-          console.log("the parameters");
-          console.log($scope.user.firstName);
-          console.log($scope.user.lastName);
-          console.log($scope.user.email);
         };
 
         $scope.validateSuperAdmin = function () {
@@ -63,7 +59,6 @@ angular.module('hillromvestApp')
         $scope.createUser = function () {
           $scope.showUpdateModal = false;
           if ($scope.form.$invalid) {
-            console.log("I am in incvalid");
             return false;
           }
           if ($scope.userStatus.editMode) {
