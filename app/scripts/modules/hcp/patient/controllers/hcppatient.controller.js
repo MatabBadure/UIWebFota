@@ -184,15 +184,13 @@ angular.module('hillromvestApp')
          $scope.customProtocol[0] = [];
           $scope.customProtocol[1] = [];
     $scope.DisableAddProtocol = false;
-    patientService.getProtocol(patientId).then(function(response){
+    patientService.getProtocol(patientId,$scope.getDeviceTypeforBothIcon()).then(function(response){
       $scope.protocols = response.data.protocol;
        if($scope.getDeviceTypeforBothIcon() === searchFilters.allCaps){
-         console.log("$scope.protocols",$scope.protocols)
         angular.forEach($scope.protocols, function(protocol, key){
           var protocolkey = protocol.protocolKey;
           var protocolobject = {}
             if(protocol.type === 'Normal'){
-              console.log("$scope.normalProtocol in if",$scope.normalProtocol);
               if($scope.normalProtocol[0].length){
               if($scope.normalProtocol[0][0].protocolKey === protocolkey){
             protocolobject = protocol;
@@ -209,7 +207,6 @@ angular.module('hillromvestApp')
             }
       }
             else if(protocol.type === 'Custom'){
-              console.log("$scope.customProtocol in if",$scope.customProtocol);
               if($scope.customProtocol[0].length){
               if($scope.customProtocol[0][0].protocolKey === protocolkey){
             protocolobject = protocol;
@@ -227,9 +224,6 @@ angular.module('hillromvestApp')
             }
           });
         }
-        console.log("$scope.normalProtocol",$scope.normalProtocol);
-        
-  console.log("$scope.customProtocol",$scope.customProtocol);
               var vestFlag = false;
         var monarchFlag = false;
         $scope.lastdeviceType = $scope.protocols[0].deviceType;
@@ -280,14 +274,14 @@ angular.module('hillromvestApp')
 	$scope.selectPatient = function(patient){
         //localStorage.setItem('deviceType', patient.deviceType);
         if(patient.deviceType == 'ALL'){
-          localStorage.setItem('deviceType', 'VEST');
-          localStorage.setItem('deviceTypeforGraph', 'ALL');
-          localStorage.setItem('deviceTypeforBothIcon', 'ALL');
+          localStorage.setItem('deviceType_'+patient.id, 'VEST');
+        //  localStorage.setItem('deviceTypeforGraph', 'ALL');
+          localStorage.setItem('deviceTypeforBothIcon_'+patient.id, 'ALL');
             }
             else{
-            localStorage.setItem('deviceType', patient.deviceType);
-            localStorage.setItem('deviceTypeforGraph', patient.deviceType);
-            localStorage.setItem('deviceTypeforBothIcon', patient.deviceType);
+            localStorage.setItem('deviceType_'+patient.id, patient.deviceType);
+           // localStorage.setItem('deviceTypeforGraph', patient.deviceType);
+            localStorage.setItem('deviceTypeforBothIcon_'+patient.id, patient.deviceType);
           }
     $state.go('hcppatientOverview',{'patientId': patient.id, 'clinicId': $scope.selectedClinic.id});
 	};
@@ -469,7 +463,7 @@ angular.module('hillromvestApp')
           $scope.updateModel = false;
     };
     $scope.protocolDeviceIconFilter = function(protocol){
-      if(localStorage.getItem('deviceTypeforBothIcon') === searchFilters.allCaps){
+      if($scope.getDeviceTypeforBothIcon() === searchFilters.allCaps){
        if($scope.customPointsChecker == $scope.protocols.length){
           $scope.customPointsChecker = 0;
           $scope.lastdeviceType = $scope.protocols[0].deviceType;
@@ -477,7 +471,6 @@ angular.module('hillromvestApp')
       
       if(protocol.type === 'Normal'){
         $scope.customPointsChecker = 0;
-        console.log("protocol is normal, we want device symbol so i am returning true");
         $scope.lastdeviceType = protocol.deviceType;
         $scope.displayFlag = true;
         return true;
@@ -488,13 +481,11 @@ angular.module('hillromvestApp')
       }
       $scope.customPointsChecker++;
       if($scope.customPointsChecker == 1){
-        console.log("protocol is custom, we want device symbol so i am returning true");
          $scope.lastdeviceType = protocol.deviceType;
          $scope.displayFlag = true;
         return true;
       }
       else{
-        console.log("protocol is custom,but we dont want device symbol so i am returning false");
          $scope.lastdeviceType = protocol.deviceType;
          $scope.displayFlag = false;
         return false;
