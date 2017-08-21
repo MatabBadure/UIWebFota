@@ -310,12 +310,12 @@ angular.module('hillromvestApp')
 
       $scope.selectClinic = function(clinic) {
         if(clinic){
-        localStorage.setItem('clinicname_'+clinic.id,clinic.name);
+        localStorage.setItem('clinicname_',clinic.name);
         if(clinic.hillromId){
-        localStorage.setItem('clinicHillRomID_'+clinic.id,clinic.hillromId);
+        localStorage.setItem('clinicHillRomID_',clinic.hillromId);
       }
       else{
-        localStorage.setItem('clinicHillRomID_'+clinic.id," ");
+        localStorage.setItem('clinicHillRomID_'," ");
       }
         }
         if($scope.clinicStatus.role === 'ADMIN')
@@ -864,14 +864,14 @@ $scope.activateClinicModal = function(clininc){
     $scope.selectAssociatedPatient = function(patient){
      // localStorage.setItem('deviceType', patient.deviceType); 
       if(patient.deviceType == 'ALL'){
-          localStorage.setItem('deviceType', 'VEST');
-          localStorage.setItem('deviceTypeforGraph', 'ALL');
-          localStorage.setItem('deviceTypeforBothIcon', 'ALL');
+          localStorage.setItem('deviceType_'+patient.id, 'VEST');
+          //localStorage.setItem('deviceTypeforGraph', 'ALL');
+          localStorage.setItem('deviceTypeforBothIcon_'+patient.id, 'ALL');
             }
             else{
-            localStorage.setItem('deviceType', patient.deviceType);
-            localStorage.setItem('deviceTypeforGraph', patient.deviceType);
-            localStorage.setItem('deviceTypeforBothIcon', patient.deviceType);
+            localStorage.setItem('deviceType_'+patient.id, patient.deviceType);
+           // localStorage.setItem('deviceTypeforGraph', patient.deviceType);
+            localStorage.setItem('deviceTypeforBothIcon_'+patient.id, patient.deviceType);
           }
       if($state.current.name === 'clinicAssociatedPatients'){
         $state.go('patientOverview', {

@@ -20,7 +20,7 @@ $scope.userId ='patientId='+response.data.deviceList[0].patient.id;
 
  angular.element(document).ready(function () {
         if($scope.userRole === 'PATIENT'){
-patientDashBoardService.getHMRrunAndScoreRate(StorageService.get('logged').patientID, $scope.toTimeStamp).then(function(response){
+patientDashBoardService.getHMRrunAndScoreRate(StorageService.get('logged').patientID, $scope.toTimeStamp, $scope.getDeviceTypeforBothIcon()).then(function(response){
   $scope.userId ='patientId='+response.data.patient.id;
   $scope.searchUsers();
       }).catch(function(response) {});
