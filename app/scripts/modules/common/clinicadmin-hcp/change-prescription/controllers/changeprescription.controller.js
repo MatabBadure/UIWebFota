@@ -216,11 +216,11 @@ function($scope, $state, clinicadminPatientService, notyService, $stateParams, c
             protocol.type = $rootScope.protocols[0].type;
           }
         });
-if(localStorage.getItem('deviceTypeforBothIcon') != searchFilters.allCaps){
-        patientService.editProtocol($stateParams.patientId, $rootScope.protocols, localStorage.getItem('deviceType')).then(function(response){
+if($scope.getDeviceTypeforBothIcon() != searchFilters.allCaps){
+        patientService.editProtocol($stateParams.patientId, $rootScope.protocols, $scope.getDeviceType()).then(function(response){
           $scope.isVerificationModal = false;
           var userFullName = $rootScope.username + ' ' + $rootScope.userLastName;
-          exportutilService.exportChangePrescPDF($scope.patient, userFullName, $scope.currentDate, $rootScope.protocols, localStorage.getItem('deviceType'));
+          exportutilService.exportChangePrescPDF($scope.patient, userFullName, $scope.currentDate, $rootScope.protocols, $scope.getDeviceType());
           notyService.showMessage(response.data.message, 'success');
           if(StorageService.get('logged').role === 'HCP'){
            $state.go('hcppatientProtocol', {'patientId': $stateParams.patientId});
@@ -270,7 +270,7 @@ else{
 
     $scope.protocolDeviceIconFilter = function(protocol){
       
-      if(localStorage.getItem('deviceTypeforBothIcon') === searchFilters.allCaps){
+      if($scope.getDeviceTypeforBothIcon() === searchFilters.allCaps){
       
       
       if(protocol.type === 'Normal'){
