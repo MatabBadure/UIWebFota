@@ -31,7 +31,7 @@ angular.module('hillromvestApp')
       $scope.badgestatistics.date = "";
     $scope.timsFilter = searchFilterService.initSearchFiltersForTims();
     $scope.timsLogDetails = "";
-
+    $scope.showFreezeModal = false;
     
 
     
@@ -125,20 +125,35 @@ angular.module('hillromvestApp')
           return _month+"/"+_day+"/"+_year;
         };
 
-
+        
     $scope.timLoading = function () {
+        $scope.showModal = false;
+         //$scope.showTimsModal = false;
+        //$timeout($scope.showTimsModal, 1000);
+       
+        //alert("Hi");
+        //setTimeout(function() {('showTimsModal').modal('hide');}, 4000);
         TimService.executeTimsJob().then(function(response){
-       $scope.timsScriptFileData = response;
-        console.log("response.data.timsMsg",response.data.timsMsg);
-        notyService.showMessage(response.data.timsMsg);
+           $scope.showFreezeModal = true;
+          setTimeout(function(){  
+             console.log("in settimeout");
+             $scope.showFreezeModal = false; 
+              $scope.timsScriptFileData = response;  
+              console.log("$scope.showFreezeModal",$scope.showFreezeModal);
+          console.log("response.data.timsMsg",response.data.timsMsg);
+             // $scope.showFreezeModal = false;  
+               notyService.showMessage(response.data.timsMsg);
+         $state.go('timslog');    
+            }, 5000); 
+            
+         //  $timeout(function(){}, 1000);    
       }).catch(function(response){
-       console.log("response.data.timsMsg",response.data.timsMsg);
-                 notyService.showError(response);
+                console.log("response.data.timsMsg",response.data.timsMsg);
+                notyService.showError(response.data.timsMsg);               
       });
                
-              $scope.IsVisible = $scope.IsVisible ? false :true;
-              $scope.visible = $scope.IsVisible ? false :true;
-          }
+              
+    }
     
              $scope.timsOnFilters = function(){
              $scope.timslog();
@@ -162,7 +177,7 @@ angular.module('hillromvestApp')
               TimService.getTimsLogDetails(data).then(function(response){
                  $scope.timsLogDetails = response.data;
                  
-                  $scope.timsLogDetailsText = $scope.timsLogDetails.logFileContent.replace("\n","\\n");
+                  $scope.timsLogDetailsText = $scope.timsLogDetails.logFileContent.replace("/\n/g","\\n");
                   
                   }).catch(function(response){
                     notyService.showError(response);

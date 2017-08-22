@@ -15,35 +15,67 @@ angular.module('hillromvestApp')
 			}	
 	}
 	$rootScope.getDeviceType = function(){
-	return (localStorage.getItem('deviceType'));	
+		var patientId = "";
+		$rootScope.userRole = StorageService.get('logged').role;
+		if($rootScope.userRole === 'PATIENT'){
+			patientId = $rootScope.userId;
+		}
+		else if($rootScope.userRole === 'CARE_GIVER'){
+			if($stateParams.patientId){
+				patientId = $stateParams.patientId;
+			}
+			else{
+			patientId = StorageService.get('logged').patientID;
+				}
+			}
+		else{
+			patientId = $stateParams.patientId;
+		}
+	return (localStorage.getItem('deviceType_'+patientId));	
 	}
-	$rootScope.getDeviceTypeforGraphRadio = function(){
-	return (localStorage.getItem('deviceTypeforGraph'));	
-	}
+
 	$rootScope.getDeviceTypeforBothIcon = function(){
-	return (localStorage.getItem('deviceTypeforBothIcon'));	
+		var patientId = "";
+		$rootScope.userRole = StorageService.get('logged').role;
+		if($rootScope.userRole === 'PATIENT'){
+			patientId = $rootScope.userId;
+			console.log("patientId in main",patientId)
+		}
+		else if($rootScope.userRole === 'CARE_GIVER'){
+			if($stateParams.patientId){
+				patientId = $stateParams.patientId;
+			}
+			else{
+			patientId = StorageService.get('logged').patientID;
+				}
+			}
+		else{
+			patientId = $stateParams.patientId;
+		}
+	return (localStorage.getItem('deviceTypeforBothIcon_'+patientId));	
 	}
 	//the following module added for ticket Hill-2411
 	$rootScope.getPatientListForCaregiver = function(caregiverID){
       var currentname = $state.current.name;  
       caregiverDashBoardService.getPatients(caregiverID).then(function(response){
                 $scope.patients = response.data.patients;
-                 // localStorage.setItem('deviceType',response.data.patients[i].deviceType);
+                var logged = StorageService.get('logged');                    
+            logged.patientID = $stateParams.patientId ? $stateParams.patientId : response.data.patients[0].user.id;               
+            StorageService.save('logged', logged);
                  if(response.data.patients[0].deviceType == 'ALL'){
-          localStorage.setItem('deviceType', 'VEST');
-          localStorage.setItem('deviceTypeforGraph', 'ALL');
-          localStorage.setItem('deviceTypeforBothIcon', 'ALL');
+          localStorage.setItem('deviceType_'+response.data.patients[0].user.id, 'VEST');
+          localStorage.setItem('deviceTypeforBothIcon_'+response.data.patients[0].user.id, 'ALL');
 
             }
             else{
-            localStorage.setItem('deviceType', response.data.patients[0].deviceType);
-            localStorage.setItem('deviceTypeforGraph', response.data.patients[0].deviceType);
-            localStorage.setItem('deviceTypeforBothIcon', response.data.patients[0].deviceType);
+            localStorage.setItem('deviceType_'+response.data.patients[0].user.id, response.data.patients[0].deviceType);
+            localStorage.setItem('deviceTypeforBothIcon_'+response.data.patients[0].user.id, response.data.patients[0].deviceType);
           }
 
       }).catch(function(response){
                   notyService.showError(response);
       });
+      return $scope.patients;
     };
     //EnfOf:the following module added for ticket Hill-2411
     $scope.mainInit = function(){    		
@@ -180,6 +212,7 @@ else {
      	Auth.signOut().then(function(data) {
           Auth.logout();
           StorageService.clearAll();
+          localStorage.clear();
           $rootScope.userRole = null;
           $scope.signOut();
         }).catch(function(err) {
@@ -208,6 +241,10 @@ else {
       }
       else if($rootScope.userRole === loginConstants.role.customerservices){
       	$state.go('customerserviceProfile');
+     // $state.go('RnDadminProfile');
+      }
+      else if($rootScope.userRole === loginConstants.role.RnDadmin){
+      	$state.go('RnDadminProfile');
       }
     };
     $scope.profileCA = function(clinicid){
@@ -245,6 +282,12 @@ else {
         $state.go("caregiverDashboard");
       }else if($rootScope.userRole === loginConstants.role.acctservices){
         $state.go("rcadminPatients");
+      }
+      else if($rootScope.userRole === loginConstants.role.customerservices){
+        $state.go("customerservicePatientUser");
+      }
+      else if($rootScope.userRole === loginConstants.role.RnDadmin){
+        $state.go("fotaHome");
       }
     };
 

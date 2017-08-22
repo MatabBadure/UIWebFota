@@ -9,8 +9,8 @@ angular.module('hillromvestApp')
     $scope.expandedSign = "+";
     $scope.DisableAddProtocol = false; 
     $scope.displayFlag = true;
-          $scope.customPointsChecker = 0;
-          $scope.lastdeviceType = "";      
+    $scope.customPointsChecker = 0;
+    $scope.lastdeviceType = "";      
     $scope.isIE = function(){        
       if(window.navigator.userAgent.indexOf("MSIE") !== -1){
         return true
@@ -46,9 +46,28 @@ angular.module('hillromvestApp')
       $scope.forhidingMonarchProtocolGraph = false;
       $scope.forhidingMonarchHmrGraph = false;
 
+
       $scope.initCount("");
             var currentRoute = $state.current.name;
-
+             $scope.caregiverID = parseInt(StorageService.get('logged').userId);
+ 
+          if($scope.role === 'PATIENT'){
+            $scope.patientId = parseInt(StorageService.get('logged').patientID);
+            console.log("StorageService.get('logged').deviceType",StorageService.get('logged').patientID)
+             /* if(!$scope.getDeviceTypeforBothIcon() && !$scope.getDeviceType()){
+                   if(StorageService.get('logged').deviceType == 'ALL'){
+                  localStorage.setItem('deviceType_'+$scope.patientId, 'VEST');
+                  localStorage.setItem('deviceTypeforBothIcon_'+$scope.patientId, 'ALL');
+                    }
+                    else{
+                    localStorage.setItem('deviceType_'+$scope.patientId, StorageService.get('logged').deviceType);
+                    localStorage.setItem('deviceTypeforBothIcon+'+$scope.patientId, StorageService.get('logged').deviceType);
+                  }
+            }*/
+      }
+      else if($scope.role === 'CARE_GIVER'){
+            $scope.getPatientListForCaregiver($scope.caregiverID);
+      }
             if($scope.getDeviceTypeforBothIcon() === searchFilters.allCaps){
                 $scope.deviceTypeforGraphSelected = searchFilters.VisiVest;
                 $scope.deviceTypeforGraphProtocol = searchFilters.VisiVest;
@@ -81,17 +100,8 @@ angular.module('hillromvestApp')
       $scope.curNotePageIndex = 1;
       $scope.perPageCount = 4;
       $scope.patientTab = currentRoute;
-      $scope.caregiverID = parseInt(StorageService.get('logged').userId);
- 
-          if($scope.role === 'PATIENT'){
-          $scope.patientId = parseInt(StorageService.get('logged').patientID);
-      }
-      else if($scope.role === 'CARE_GIVER'){
-            $scope.getPatientListForCaregiver($scope.caregiverID);
-      }
 
       if ($state.current.name === 'patientdashboard') {
-  
         $rootScope.surveyTaken = false;
         $scope.hasTransmissionDate = false;
         $scope.initPatientDashboard();        
@@ -119,9 +129,9 @@ angular.module('hillromvestApp')
         $scope.initGraph();        
       }
 
-       $scope.deviceTypeforGraph = localStorage.getItem('deviceType');
-       $scope.deviceTypeforGraphProtocol = localStorage.getItem('deviceType');
-       $scope.deviceTypeforGraphTrend = localStorage.getItem('deviceTypeforBothIcon'); 
+       $scope.deviceTypeforGraph = $scope.getDeviceType();
+       $scope.deviceTypeforGraphProtocol = $scope.getDeviceType();
+       $scope.deviceTypeforGraphTrend = $scope.getDeviceTypeforBothIcon(); 
        
         if($scope.deviceTypeforGraph == "ALL")
        {
@@ -159,6 +169,16 @@ angular.module('hillromvestApp')
           $scope.$digest();
         });
 
+  $scope.initCaregiverDashboard = function(){
+      $scope.getTransmissionDateForPatient($scope.patientId);
+      $scope.getAssociatedClinics($scope.patientId);
+      $scope.getPatientDevices($scope.patientId);      
+      $scope.initGraph();
+      $scope.getPatientById($scope.patientId);
+      $scope.getWeekChart();    
+    };
+
+
     /*caregiver code*/
     $scope.getPatientListForCaregiver = function(caregiverID){
       var currentname = $state.current.name;
@@ -170,25 +190,20 @@ angular.module('hillromvestApp')
                   for(var i=0;i<response.data.patients.length;i++){
                     if($stateParams.patientId == response.data.patients[i].userId){
                   $scope.selectedPatient = response.data.patients[i];
-                 // localStorage.setItem('deviceType',response.data.patients[i].deviceType);
-                 if(response.data.patients[i].deviceType == 'ALL'){
-          localStorage.setItem('deviceType', 'VEST');
-          localStorage.setItem('deviceTypeforGraph', 'ALL');
-          localStorage.setItem('deviceTypeforBothIcon', 'ALL');
-
-
-            }
-            else{
-            localStorage.setItem('deviceType', response.data.patients[i].deviceType);
-            localStorage.setItem('deviceTypeforGraph', response.data.patients[i].deviceType);
-            localStorage.setItem('deviceTypeforBothIcon', response.data.patients[i].deviceType);
-          }
-                  $scope.patientId = $stateParams.patientId;
-                  var logged = StorageService.get('logged');                   
-                 
-            logged.patientID = $scope.patientId               
-                
-            StorageService.save('logged', logged);
+   /*              if(!$scope.getDeviceTypeforBothIcon()){             
+                           if(response.data.patients[i].deviceType == 'ALL'){
+                    localStorage.setItem('deviceType_'+response.data.patients[i].id, 'VEST');
+                    localStorage.setItem('deviceTypeforBothIcon_'+response.data.patients[i].id, 'ALL');
+                 }
+                      else{
+                      localStorage.setItem('deviceType_'+response.data.patients[i].id, response.data.patients[i].deviceType);
+                      localStorage.setItem('deviceTypeforBothIcon_'+response.data.patients[i].id, response.data.patients[i].deviceType);
+                    }
+                  }*/
+                    $scope.patientId = $stateParams.patientId;
+                    var logged = StorageService.get('logged');                   
+                    logged.patientID = $scope.patientId                        
+                    StorageService.save('logged', logged);
 
                        $scope.$emit('getSelectedPatient', $scope.selectedPatient);
                            break;   
@@ -198,16 +213,15 @@ angular.module('hillromvestApp')
 
                 } else{
                  $scope.selectedPatient = response.data.patients[0];
-                  //localStorage.setItem('deviceType',response.data.patients[0].deviceType);
-         if(response.data.patients[0].deviceType == 'ALL'){
-          localStorage.setItem('deviceType', 'VEST');
-          localStorage.setItem('deviceTypeforGraph', 'ALL');
+        /* if(response.data.patients[0].deviceType == 'ALL'){
+          localStorage.setItem('deviceType_'+response.data.patients[0].id, 'VEST');
+         // localStorage.setItem('deviceTypeforGraph_'+response.data.patients[0].id, 'ALL');
             }
             else{
-            localStorage.setItem('deviceType', response.data.patients[0].deviceType);
-            localStorage.setItem('deviceTypeforGraph', response.data.patients[0].deviceType);
+            localStorage.setItem('deviceType_'+response.data.patients[0].id, response.data.patients[0].deviceType);
+           // localStorage.setItem('deviceTypeforGraph', response.data.patients[0].deviceType);
           }          
-                  $scope.patientId = $scope.selectedPatient.userId;
+              */    $scope.patientId = $scope.selectedPatient.userId;
                      $scope.$emit('getSelectedPatient', $scope.selectedPatient);
                      var logged = StorageService.get('logged');                    
             logged.patientID = $scope.patientId               
@@ -225,7 +239,7 @@ angular.module('hillromvestApp')
       }
    
       }).catch(function(response){
-                  notyService.showError(response);
+         notyService.showError(response);
       });
     };
 
@@ -257,14 +271,14 @@ angular.module('hillromvestApp')
     };
     $scope.switchPatient = function(patient){
        if(patient.deviceType == 'ALL'){
-          localStorage.setItem('deviceType', 'VEST');
-          localStorage.setItem('deviceTypeforGraph', 'ALL');
-          localStorage.setItem('deviceTypeforBothIcon', 'ALL');
+          localStorage.setItem('deviceType_'+patient.user.id, 'VEST');
+         // localStorage.setItem('deviceTypeforGraph', 'ALL');
+          localStorage.setItem('deviceTypeforBothIcon_'+patient.user.id, 'ALL');
        }
            else{
-            localStorage.setItem('deviceType', patient.deviceType);
-            localStorage.setItem('deviceTypeforGraph', patient.deviceType);
-            localStorage.setItem('deviceTypeforBothIcon', patient.deviceType);
+            localStorage.setItem('deviceType_'+patient.user.id, patient.deviceType);
+          //  localStorage.setItem('deviceTypeforGraph', patient.deviceType);
+            localStorage.setItem('deviceTypeforBothIcon_'+patient.user.id, patient.deviceType);
           }
         $scope.selectedPatient = patient;
         $scope.patientId = $scope.selectedPatient.userId;
@@ -331,7 +345,7 @@ angular.module('hillromvestApp')
     $scope.dates = {startDate: null, endDate: null};
 
     $scope.getHmrRunRateAndScore = function() {
-      patientDashBoardService.getHMRrunAndScoreRate($scope.patientId, $scope.toTimeStamp).then(function(response){
+      patientDashBoardService.getHMRrunAndScoreRate($scope.patientId, $scope.toTimeStamp, $scope.getDeviceTypeforBothIcon()).then(function(response){
         if(response.status === 200 ){
           $scope.missedtherapyDays = response.data.missedTherapyCount;
           $scope.settingsDeviatedDaysCount = response.data.settingsDeviatedDaysCount;
@@ -597,7 +611,7 @@ angular.module('hillromvestApp')
       $scope.devicesErrMsg = null;
       $scope.protocolsErrMsg = null;
       $scope.devices = []; $scope.devices.length = 0;
-      patientService.getDevices(StorageService.get('logged').patientID || $scope.patientId).then(function(response){
+      patientService.getDevices((StorageService.get('logged').patientID || $scope.patientId), $scope.getDeviceTypeforBothIcon()).then(function(response){
         angular.forEach(response.data.deviceList, function(device){
           device.createdDate = dateService.getDateByTimestamp(device.createdDate);
           device.lastModifiedDate = dateService.getDateByTimestamp(device.lastModifiedDate);
@@ -615,7 +629,7 @@ angular.module('hillromvestApp')
       $scope.devicesErrMsg = null;
       $scope.protocolsErrMsg = null;
       $scope.devices = []; $scope.devices.length = 0;
-      patientService.getDevices($scope.selectedPatient.userId).then(function(response){
+      patientService.getDevices($scope.selectedPatient.userId,$scope.getDeviceTypeforBothIcon()).then(function(response){
         angular.forEach(response.data.deviceList, function(device){
           device.createdDate = dateService.getDateByTimestamp(device.createdDate);
           device.lastModifiedDate = dateService.getDateByTimestamp(device.lastModifiedDate);
@@ -641,19 +655,17 @@ angular.module('hillromvestApp')
          $scope.customProtocol[0] = [];
           $scope.customProtocol[1] = [];
     $scope.DisableAddProtocol = false;
-      patientService.getProtocol(patientId).then(function(response){
+      patientService.getProtocol(patientId,$scope.getDeviceTypeforBothIcon()).then(function(response){
         if(response.data.protocol){
           $scope.protocols = response.data.protocol;
         }else if(response.data.message){
           $scope.protocolsErrMsg = response.data.message;
         }
         if($scope.getDeviceTypeforBothIcon() === searchFilters.allCaps){
-         console.log("$scope.protocols",$scope.protocols)
         angular.forEach($scope.protocols, function(protocol, key){
           var protocolkey = protocol.protocolKey;
           var protocolobject = {}
             if(protocol.type === 'Normal'){
-              console.log("$scope.normalProtocol in if",$scope.normalProtocol);
               if($scope.normalProtocol[0].length){
               if($scope.normalProtocol[0][0].protocolKey === protocolkey){
             protocolobject = protocol;
@@ -670,7 +682,6 @@ angular.module('hillromvestApp')
             }
       }
             else if(protocol.type === 'Custom'){
-              console.log("$scope.customProtocol in if",$scope.customProtocol);
               if($scope.customProtocol[0].length){
               if($scope.customProtocol[0][0].protocolKey === protocolkey){
             protocolobject = protocol;
@@ -820,7 +831,7 @@ angular.module('hillromvestApp')
       if(editedNoteText && editedNoteText.length > 0  && (editedNoteText.trim()).length > 0){
         var data = {};
         data.noteText = editedNoteText;
-        data.deviceType = localStorage.getItem('deviceType');
+        data.deviceType = $scope.getDeviceType();
         UserService.updateNote(noteId, new Date(dateCreatedOn).getTime(), data).then(function(response){
           $scope.showAllNotes();
           makeAllNotesReadable();
@@ -843,7 +854,7 @@ angular.module('hillromvestApp')
             data.noteText = $scope.textNote.text;
             data.userId = StorageService.get('logged').patientID;
             data.date = editDate;
-            data.deviceType = localStorage.getItem('deviceType');
+            data.deviceType = $scope.getDeviceType();
             UserService.createNote(StorageService.get('logged').patientID, data).then(function(response){
               $scope.addNote = false;
               $scope.textNote.edit_date = dateService.convertDateToYyyyMmDdFormat(new Date());
@@ -865,7 +876,7 @@ angular.module('hillromvestApp')
     };
 
     $scope.deleteNote = function(noteId){
-      UserService.deleteNote(noteId).then(function(response){
+      UserService.deleteNote(noteId,$scope.getDeviceType()).then(function(response){
       $scope.showAllNotes();
       }).catch(function(){
         notyService.showMessage(server_error_msg,'warning' );
@@ -1284,11 +1295,28 @@ angular.module('hillromvestApp')
         });
     };
 
+      $scope.discardLessHMRData = function(object){
+         for(var i = 0; i < object.series[0].data.length; i++) {
+                var obj = object.series[0].data[i];
+                if(obj.y == 0){
+                   object.series[0].data.splice(i, 1);
+                   i--;
+                }
+                 else if((obj.toolText.duration == 0 && !obj.toolText.missedTherapy)){
+                  object.series[0].data.splice(i, 1);
+                  i--;
+                }
+            }
+            return object;
+      };
     
     $scope.getHMRGraph = function(){
-      console.log("checkeing for hmr graph, line no:3161:",$scope.deviceTypeforGraph);
       patientDashBoardService.getHMRGraphPoints($scope.patientId, $scope.deviceTypeforGraph, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.durationRange).then(function(response){
-        $scope.hmrChartData = response.data;
+        $scope.hmrChartDataRaw = response.data;
+        if($scope.hmrChartDataRaw){
+         $scope.hmrChartDataRaw = $scope.discardLessHMRData($scope.hmrChartDataRaw);
+          }
+          $scope.hmrChartData = $scope.hmrChartDataRaw;
         $scope.noDataAvailableForHMR  = false;       
         if($scope.hmrChartData && typeof($scope.hmrChartData) === "object"){ 
           $scope.noDataAvailableForHMR = false;      
@@ -1338,6 +1366,7 @@ angular.module('hillromvestApp')
             });            
             
           }); 
+
           setTimeout(function(){
             if($scope.durationRange === "Day" || $scope.isSameDayHMRGraph){          
               $scope.HMRCategoryChart();
@@ -1434,7 +1463,7 @@ angular.module('hillromvestApp')
           }
       }); */
       var fillcolor = '#7cb5ee'; 
-      if(localStorage.getItem('deviceType')  == 'MONARCH'){
+      if($scope.getDeviceType()  == 'MONARCH'){
         var fillcolor = '#d95900';
       }     
       divId = (divId)? divId : "HMRGraph";
@@ -1607,7 +1636,7 @@ angular.module('hillromvestApp')
           }
       });  
       var fillcolor = '#7cb5ee';
-      if(localStorage.getItem('deviceType')  == 'MONARCH'){
+      if($scope.getDeviceType()  == 'MONARCH'){
         fillcolor = '#d95900';
       }   
       divId = (divId)? divId : "HMRGraph";
@@ -1693,7 +1722,7 @@ angular.module('hillromvestApp')
                     var lengthofpowerChangeEvents = 0;
                    }
                    //
-                  if(localStorage.getItem('deviceType') == 'MONARCH'){   
+                  if($scope.getDeviceType() == 'MONARCH'){   
 
                   var s = '<div style="font-size:12x;font-weight: bold; padding-bottom: 3px;">'+  dateTextLabel +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div>';
                    //Only for Hill-Rom Users
@@ -2260,7 +2289,7 @@ angular.module('hillromvestApp')
       }
       var fromDate = dateService.convertDateToYyyyMmDdFormat(fromTimeStamp);
       var toDate = dateService.convertDateToYyyyMmDdFormat(toTimeStamp);
-      UserService.getNotesOfUserInInterval(patientId, fromDate, toDate, $scope.curNotePageIndex, $scope.perPageCount ).then(function(response){
+      UserService.getNotesOfUserInInterval(patientId, fromDate, toDate, $scope.curNotePageIndex, $scope.perPageCount, $scope.getDeviceType()).then(function(response){
         $scope.showNotes = true;
         $scope.notes = response.data;
         $scope.totalNotes = response.headers()['x-total-count'];
@@ -2284,7 +2313,7 @@ angular.module('hillromvestApp')
       $("#note_edit_container").addClass("hide_content");
     };
     $scope.getPatientDevices = function(patientId){
-      patientService.getDevices(patientId).then(function(response){
+      patientService.getDevices(patientId,$scope.getDeviceTypeforBothIcon()).then(function(response){
         $scope.patientDevices = response.data.deviceList;
       });
     };
@@ -2384,13 +2413,14 @@ angular.module('hillromvestApp')
       $scope.patientInfo.missedtherapyDays = $scope.missedtherapyDays;
       $scope.patientInfo.adherenceScore = $scope.adherenceScore;
       $scope.patientInfo.settingsDeviatedDaysCount = $scope.settingsDeviatedDaysCount;
-      $scope.patientInfo.hmrRunRate = $scope.hmrRunRate;  
+      $scope.patientInfo.hmrRunRate = $scope.hmrRunRate;
+      $scope.patientInfo.deviceType = $scope.getDeviceTypeforBothIcon();
       var clinicDetail = ($scope.patientInfo.clinics && $scope.patientInfo.clinics.length === 1) ? $scope.patientInfo.clinics[0]: null ; 
       //exportutilService.exportHMRCGraphAsPDF("synchronizedChart", "HMRCCanvas", $scope.fromDate, $scope.toDate, $scope.patientInfo, clinicDetail);
           var myObject =$scope.hmrChartData;
          var hmrChartDataLength = Object.keys(myObject).length;
       
-       if((localStorage.getItem('deviceTypeforBothIcon') == 'MONARCH')|| (localStorage.getItem('deviceTypeforBothIcon') == 'VEST')){
+       if(($scope.getDeviceTypeforBothIcon() == 'MONARCH')|| ($scope.getDeviceTypeforBothIcon() == 'VEST')){
 
         if($scope.hmrChartData.length===0) {
           exportutilService.exportHMRCGraphAsPDFForAdherenceTrendHavingNoHMR("synchronizedChart", "HMRCCanvas", $scope.fromDate, $scope.toDate, $scope.patientInfo, clinicDetail);
@@ -2399,7 +2429,7 @@ angular.module('hillromvestApp')
           exportutilService.exportHMRCGraphAsPDFForAdherenceTrend("synchronizedChart", "HMRCCanvas", $scope.fromDate, $scope.toDate, $scope.patientInfo, clinicDetail);
         }
 
-      }else if((localStorage.getItem('deviceTypeforBothIcon') == 'ALL')){
+      }else if(($scope.getDeviceTypeforBothIcon() == 'ALL')){
          exportutilService.exportHMRCGraphAsPDFForAdherenceTrendForAll("synchronizedChart","synchronizedChart1", "HMRCCanvas", $scope.fromDate, $scope.toDate, $scope.patientInfo, clinicDetail,$scope.hmrChartData1);
       }    
     };
@@ -2413,7 +2443,7 @@ angular.module('hillromvestApp')
     }
 
     $scope.downloadRawDataAsCsv = function(){      
-      patientService.getDeviceDataAsCSV($scope.patientId, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-')).then(function(response){
+      patientService.getDeviceDataAsCSV($scope.patientId, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'),$scope.getDeviceType()).then(function(response){
         if(response && response.status === 204){
           //showpopup
           $("#no-xls-modal").css("display", "block");
@@ -2496,7 +2526,7 @@ angular.module('hillromvestApp')
     $scope.customdates = {startDate: $scope.fromDateHistory, endDate: $scope.toDateHistory};
      var fromDate = dateService.convertDateToYyyyMmDdFormat($scope.fromDateHistory);
       var toDate = dateService.convertDateToYyyyMmDdFormat($scope.toDateHistory);
-      patientDashBoardService.getAdeherenceData(patientId, fromDate, toDate).then(function(response){
+      patientDashBoardService.getAdeherenceData(patientId, fromDate, toDate, $scope.getDeviceType()).then(function(response){
 
         $scope.adherenceScores = response.data;
         $scope.adherenceHistoryAllData = response.data;
@@ -2630,16 +2660,6 @@ $scope.adherencetrendData.push(new Object({"adherenceTrends": [] , "protocols": 
         $scope.getTransmissionDateForPatient($scope.patientId);
       $scope.selectChart($scope.fromDate);
     };
-
-    $scope.initCaregiverDashboard = function(){
-      $scope.getTransmissionDateForPatient($scope.patientId);
-      $scope.getAssociatedClinics($scope.patientId);
-      $scope.getPatientDevices($scope.patientId);      
-      $scope.initGraph();
-      $scope.getPatientById($scope.patientId);
-      $scope.getWeekChart();    
-    };
-
 
     $scope.initHMR = function(){
       $scope.isHMR = true;
@@ -2875,7 +2895,7 @@ $scope.adherencetrendData.push(new Object({"adherenceTrends": [] , "protocols": 
           //call the API with from and to date
     
            $scope.loading = true;
-        patientDashBoardService.getAdeherenceData(patientId,fromDate,toDate).then(function(response){
+        patientDashBoardService.getAdeherenceData(patientId,fromDate,toDate,$scope.getDeviceType()).then(function(response){
   
         $scope.adherenceScores = response.data;
         $scope.lengthTrack=0;
@@ -2940,11 +2960,10 @@ $scope.nextDate = res[1]+"/"+res[2]+"/"+res[0];
     /******End of Function to get n days before or after a given date******/
 
         $scope.protocolDeviceIconFilter = function(protocol){
-      if(localStorage.getItem('deviceType') === searchFilters.allCaps){
+      if($scope.getDeviceType() === searchFilters.allCaps){
       
       if(protocol.type === 'Normal'){
         $scope.customPointsChecker = 0;
-        console.log("protocol is normal, we want device symbol so i am returning true");
         $scope.lastdeviceType = protocol.deviceType;
         $scope.displayFlag = true;
         return true;
@@ -2955,13 +2974,11 @@ $scope.nextDate = res[1]+"/"+res[2]+"/"+res[0];
       }
       $scope.customPointsChecker++;
       if($scope.customPointsChecker == 1){
-        console.log("protocol is custom, we want device symbol so i am returning true");
          $scope.lastdeviceType = protocol.deviceType;
          $scope.displayFlag = true;
         return true;
       }
       else{
-        console.log("protocol is custom,but we dont want device symbol so i am returning false");
          $scope.lastdeviceType = protocol.deviceType;
          $scope.displayFlag = false;
         return false;
@@ -2983,7 +3000,7 @@ $scope.nextDate = res[1]+"/"+res[2]+"/"+res[0];
 
 
 
-    if((localStorage.getItem('deviceTypeforBothIcon') == 'ALL')){
+    if(($scope.getDeviceTypeforBothIcon() == 'ALL')){
 
 
 $scope.getComplianceGraph = function(){ 
@@ -3311,7 +3328,11 @@ $scope.getComplianceGraph = function(){
     $scope.getHMRGraph = function(){
       $scope.deviceTypeforGraph="VEST";
       patientDashBoardService.getHMRGraphPoints($scope.patientId, $scope.deviceTypeforGraph, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.durationRange).then(function(response){
-        $scope.hmrChartData = response.data;
+        $scope.hmrChartDataRaw = response.data;
+       if($scope.hmrChartDataRaw){
+         $scope.hmrChartDataRaw = $scope.discardLessHMRData($scope.hmrChartDataRaw);
+          }
+          $scope.hmrChartData = $scope.hmrChartDataRaw;
         $scope.noDataAvailableForHMR  = false;       
         if($scope.hmrChartData && typeof($scope.hmrChartData) === "object"){ 
           $scope.noDataAvailableForHMR = false;      
@@ -3354,7 +3375,7 @@ $scope.getComplianceGraph = function(){
               if($scope.hmrChartData.series[key1].data[key2].toolText.missedTherapy){
                 $scope.hmrChartData.series[key1].data[key2].color = "red";
               }
-              if(!$scope.hmrChartData.series[key1].data[key2].toolText.missedTherapy && localStorage.getItem('deviceType') == 'MONARCH'){
+              if(!$scope.hmrChartData.series[key1].data[key2].toolText.missedTherapy && $scope.getDeviceType() == 'MONARCH'){
                 $scope.hmrChartData.series[key1].data[key2].color = "#7cb5ee";
               }
 
@@ -3458,7 +3479,7 @@ $scope.getComplianceGraph = function(){
           }
       }); */
       var fillcolor = '#7cb5ee'; 
-      if(localStorage.getItem('deviceType')  == 'MONARCH'){
+      if($scope.getDeviceType()  == 'MONARCH'){
         var fillcolor = '#d95900';
       }     
       divId = (divId)? divId : "HMRGraph";
@@ -3538,7 +3559,7 @@ $scope.getComplianceGraph = function(){
                       dateTextLabel += ' ( ' + Highcharts.dateFormat("%I:%M %p",this.x) + ' )';
                     }
                   }
-                  if(localStorage.getItem('deviceType')  == 'MONARCH'){
+                  if($scope.getDeviceType()  == 'MONARCH'){
                   var pointDetails = '<div style="color:'+ this.point.color +';padding:5px 0;width:70%;float:left"> Session No </div> ' 
                     + '<div style="padding:5px;width:10%"><b>' + this.point.toolText.sessionNo  + '</b></div>';                 
                     pointDetails += '<div style="color:'+ this.point.color +';padding:5px 0;width:70%;float:left"> ' + this.point.series.name + '</div> ' 
@@ -3631,7 +3652,7 @@ $scope.getComplianceGraph = function(){
           }
       });  
       var fillcolor = '#7cb5ee';
-      if(localStorage.getItem('deviceType')  == 'MONARCH'){
+      if($scope.getDeviceType()  == 'MONARCH'){
         fillcolor = '#d95900';
       }   
       divId = (divId)? divId : "HMRGraph";
@@ -3717,7 +3738,7 @@ $scope.getComplianceGraph = function(){
                     var lengthofpowerChangeEvents = 0;
                    }
                    //
-                  if(localStorage.getItem('deviceType') == 'MONARCH'){    
+                  if($scope.getDeviceType() == 'MONARCH'){    
                   var s = '<div style="font-size:12x;font-weight: bold; padding-bottom: 3px;">'+  dateTextLabel +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div>';
                       //Only for Hill-Rom Users
                      if($scope.isHillRomUser){   
@@ -4399,7 +4420,11 @@ $scope.getComplianceGraph1 = function(){
     $scope.getHMRGraph1 = function(){
     $scope.deviceTypeforGraph="MONARCH";
       patientDashBoardService.getHMRGraphPoints($scope.patientId, $scope.deviceTypeforGraph, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.durationRange).then(function(response){
-        $scope.hmrChartData1 = response.data;
+        $scope.hmrChartData1Raw = response.data;
+       if($scope.hmrChartData1Raw){
+         $scope.hmrChartData1Raw = $scope.discardLessHMRData($scope.hmrChartData1Raw);
+          }
+          $scope.hmrChartData1 = $scope.hmrChartData1Raw;
         $scope.noDataAvailableForHMR1  = false;       
         if($scope.hmrChartData1 && typeof($scope.hmrChartData1) === "object"){ 
           $scope.noDataAvailableForHMR1 = false;      
@@ -4474,7 +4499,7 @@ $scope.getComplianceGraph1 = function(){
           }
       }); */
       var fillcolor = '#7cb5ee'; 
-      if(localStorage.getItem('deviceType')  == 'MONARCH'){
+      if($scope.getDeviceType()  == 'MONARCH'){
        fillcolor = '#d95900';
       } 
        if($scope.deviceTypeforGraph == 'MONARCH'){
@@ -4650,7 +4675,7 @@ $scope.getComplianceGraph1 = function(){
           }
       });  
       var fillcolor = '#7cb5ee';
-      if(localStorage.getItem('deviceType')  == 'MONARCH'){
+      if($scope.getDeviceType()  == 'MONARCH'){
         fillcolor = '#d95900';
       }   
       divId = (divId)? divId : "HMRGraph1";
@@ -4778,7 +4803,6 @@ $scope.getComplianceGraph1 = function(){
                   s += '<div style="font-size:11px; font-weight: bold; width:100%"><div style="padding:2px 0;"><span class="erroricon">' 
                  angular.forEach(this.point.toolText.errorCodes, function(errorCodeValue, errorCodeKey){
                  var hexString = errorCodeValue.toString(16);
-                 console.log("hexstring",hexString);
                  //errorCodeValue = parseInt(hexString, 16);
                   s += '0x' + hexString;
                   if(errorCodeKey != lengthofErrorCodes-1){
