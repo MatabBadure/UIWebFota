@@ -12,7 +12,7 @@ angular.module('hillromvestApp')
     $scope.response = null;
     $scope.widgetId = null;
     $scope.captchaError = false;
-    $scope.siteKey ='6LdXAi4UAAAAANmuHKtaEFqkCE_XLRE_qS4jgGxJ';
+    $scope.siteKey ='6LcXjQkTAAAAAMZ7kb5v9YZ8vrYKFJmDcg2oE-SH';
     $scope.submitted = false;
         
     $timeout(function (){angular.element('[ng-model="resetAccount.email"]').focus();});
