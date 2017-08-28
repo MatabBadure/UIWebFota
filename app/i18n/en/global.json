@@ -7,13 +7,20 @@
          "part-number":"Part Number",
          "software-version":"Software Version",
          "release-date":"Release Date",
-         "effective-date":"Effective Date",
+         "product-name":"Product Name",
          "upload-hex-file": "Upload File",
          "verify-input": "Verify",
          "upload-fota": "Upload FOTA",
          "verify-success": "All Parameters are successfully matched",
          "verify-failure": "All Parameters are Not Matched",
          "verify-override": "Do you want to override with Existing file ",
+         "region-one": "Region 1",
+         "region-two": "Region 2",
+         "start-addr": "Start Address",
+         "end-addr": "End Address",
+         "crc-location": "CRC Location",
+         "crc32-invalid": "CRC32 polynomial Invalid",
+
 
         "browsehappy": "You are using an <strong>outdated</strong> browser. Please <a href=\"http://browsehappy.com/?locale=en\">upgrade your browser</a> to improve your experience.",
         "menu": {

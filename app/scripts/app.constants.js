@@ -156,6 +156,7 @@ angular.module('hillromvestApp')
 	'timsScriptLogDetails' : 'api/retrieveLogData/logs',
 	'fotaVerify' : 'api/FOTA/create',
 	'uploadfileFota' : 'api/FOTA/uploadFile',
-	'getFotaVerion' : 'api/FOTA/getSoftVersion/partNoV/isOldFileV',
-	'softDelete' : 'api/FOTA/softDeleteFOTA/partNoD/isOldFileD'
+	//'getOldVersion' : 'api/FOTA/getOldVersion/partNoV',
+	'softDelete' : 'api/FOTA/softDeleteFOTA/partNoD/isOldFileD',
+	'fotaCRC32Calculation' : 'api/FOTA/CRC32Calculation'
 });

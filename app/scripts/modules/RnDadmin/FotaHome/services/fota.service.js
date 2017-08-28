@@ -9,7 +9,7 @@ angular.module('hillromvestApp')
   .factory('fotaService',['$http', 'headerService', 'URL','StorageService', function($http, headerService, URL,StorageService) {
     return {
       
-       verify: function(data) {
+       create: function(data) {
         // add fotaVerify URL in app.constants.js
          var url  = URL.fotaVerify;
         return $http.post(url,data, {
@@ -32,15 +32,15 @@ angular.module('hillromvestApp')
           return response;
         });
       },
-      getExistingVersion : function(partNoV,isOldFileV){
+     /* checkExistingRecord : function(partNoV){
            // add uploadfileFota URL in app.constants.js
-          var url = URL.getFotaVerion.replace('partNoV',partNoV).replace('isOldFileV',isOldFileV);
+          var url = URL.getOldVersion.replace('partNoV',partNoV);
            return $http.post(url,{
           headers: headerService.getHeader()
         }).success(function(response) {
           return response;
         });
-      },
+      },*/
       softDelete : function(partNoD,isOldFileD){
         // add uploadfileFota URL in app.constants.js
           var url = URL.softDelete.replace('partNoD',partNoD).replace('isOldFileD',isOldFileD);
@@ -49,6 +49,16 @@ angular.module('hillromvestApp')
         }).success(function(response) {
           return response;
         });
+      },
+      CRC32Calculation : function(data){
+        // add Calculate CRC 32 URL in app.constants.js
+         var url  = URL.fotaCRC32Calculation;
+        return $http.post(url,data, {
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });
+
       }
   };
   }]);

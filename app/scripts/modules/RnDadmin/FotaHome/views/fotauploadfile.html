@@ -2,7 +2,6 @@
   <div class="container">
     <div class="collapse navbar-collapse patient-user__navbar" id="navbar-collapse">
       <ul class="nav navbar-nav admin_profile">
-       
         <li>
           <a ng-class="{active: isActive('upload')}"  ng-href="" ng-click="uploadFota()">
             <span class="">FOTA UPLOAD</span>
@@ -36,6 +35,25 @@
           </div>
           
         </div>
+
+        <div class="col-md-16 col-sm-16 margin-top reset-padding">
+          <div class="col-md-7 col-sm-7 reset-padding">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+              <span class="" translate="global.product-name"></span>
+              <span class="">*</span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding">
+              <input class="" name="productName" type="text" ng-model="fota.productName" validate-on-blur maxlength="255"  required>
+             <!-- <div ng-show="(form.partNumber.$dirty && form.partNumber.$invalid) || resetsubmitted">
+                <span class="has-error" ng-show="form.partNumber.$error.required" translate="global.fota.error.announcementName.required"></span>
+              </div> -->
+            </div>
+          </div>
+          
+        </div>
+
+
+
           <div class="col-md-16 col-sm-16 margin-top reset-padding">
           <div class="col-md-7 col-sm-7 reset-padding">
             <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
@@ -43,10 +61,10 @@
               <span class="">*</span>
             </div>
              <div class="input-group">
-              <input class="col-md-2" name="softwareMVersion1" type="text" ng-model="fota.softwareMVersion1" validate-on-blur maxlength="2"  required/>
-              <input class="col-md-2" name="softwareMVersion2" type="text" ng-model="fota.softwareMVersion2" validate-on-blur maxlength="2"  required>
-              <input class="col-md-2" name="softwareMiVersion1" type="text" ng-model="fota.softwareMiVersion1" validate-on-blur maxlength="2"  required/>
-              <input class="col-md-2" name="softwareMiVersion2" type="text" ng-model="fota.softwareMiVersion2" validate-on-blur maxlength="2"  required/>
+              <input class="col-md-2 col-sm-1" style="margin-right:2px" name="softwareMVersion1" type="text" ng-model="fota.softwareMVersion1" validate-on-blur maxlength="2"  required/>
+              <input class="col-md-2 col-sm-1" style="margin-right:2px" name="softwareMVersion2" type="text" ng-model="fota.softwareMVersion2" validate-on-blur maxlength="2"  required>
+              <input class="col-md-2 col-sm-1" style="margin-right:2px" name="softwareMiVersion1" type="text" ng-model="fota.softwareMiVersion1" validate-on-blur maxlength="2"  required/>
+              <input class="col-md-2 col-sm-1" style="margin-right:2px" name="softwareMiVersion2" type="text" ng-model="fota.softwareMiVersion2" validate-on-blur maxlength="2"  required/>
           </div>
           
         </div>
@@ -57,7 +75,7 @@
               <span class="">*</span>
             </div>
             <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding">
-              <input type="text"    ng-model="fota.releaseDate" name = "releaseDate" data-provide="datepicker" data-date-autoclose="true"    id="dp1" required data-date-format="mm/dd/yyyy"  ng-pattern="/^\d{2}\/\d{2}\/\d{4}$/" readonly="readonly"/>
+              <input type="text"    ng-model="fota.releaseDate" name = "releaseDate" data-provide="datepicker" data-date-autoclose="true" id="dp1" required data-date-format="mm/dd/yyyy"  ng-pattern="/^\d{2}\/\d{2}\/\d{4}$/" readonly="readonly"/>
               <div ng-show="(form.startDate.$dirty && form.startDate.$invalid) || resetsubmitted">
                 <span class="has-error" ng-show="form.startDate.$error.required" translate="error.startDate.required"></span>
                 <span class="has-error" ng-show="form.startDate.$error.pattern && !form.startDate.$error.required" translate="error.startDate.invalid"></span>
@@ -67,10 +85,10 @@
           
         </div>
 
-        <div class="col-md-16 col-sm-16 margin-top reset-padding">
+        <!-- <div class="col-md-16 col-sm-16 margin-top reset-padding">
           <div class="col-md-7 col-sm-7 reset-padding">
             <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
-              <span class="" translate="global.effective-date"></span>
+              <span class="" translate="global.product-type"></span>
               <span class="">*</span>
             </div>
             <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding">
@@ -82,9 +100,71 @@
             </div>
           </div>
           
+        </div> -->
+
+        <div class="col-md-16 col-sm-16 margin-top reset-padding">
+          <div class="col-md-7 col-sm-7 reset-padding">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+              <span class="" translate="global.region-one"></span>
+              <span class="">*</span>
+            </div>
+            <div class="col-md-3 col-sm-1 dashboard__form--input reset-padding " style="margin-right:2px">
+              <span class="" translate="global.start-addr">:</span>
+              <input class=""  name="startAddr" type="text" ng-model="fota.startAddr" validate-on-blur maxlength="8" style="margin-right:2px;" required>
+             <!-- <div ng-show="(form.partNumber.$dirty && form.partNumber.$invalid) || resetsubmitted">
+                <span class="has-error" ng-show="form.partNumber.$error.required" translate="global.fota.error.announcementName.required"></span>
+              </div> -->
+            </div>
+            <div class="col-md-3 col-sm-1 dashboard__form--input reset-padding" style="margin-right:2px">
+              <span class="" translate="global.end-addr">:</span>
+              <input class="" name="endAddr" type="text" ng-model="fota.endAddr" validate-on-blur maxlength="8"  required>
+             <!-- <div ng-show="(form.partNumber.$dirty && form.partNumber.$invalid) || resetsubmitted">
+                <span class="has-error" ng-show="form.partNumber.$error.required" translate="global.fota.error.announcementName.required"></span>
+              </div> -->
+            </div>
+            <div class="col-md-3 col-sm-1 dashboard__form--input reset-padding">
+              <span class="" translate="global.crc-location">:</span>
+              <input class="" style="margin-right:2px" name="CRCLocation" type="text" ng-model="fota.CRCLocation" validate-on-blur maxlength="8"  required>
+             <!-- <div ng-show="(form.partNumber.$dirty && form.partNumber.$invalid) || resetsubmitted">
+                <span class="has-error" ng-show="form.partNumber.$error.required" translate="global.fota.error.announcementName.required"></span>
+              </div> -->
+            </div>
+          </div>
+          
         </div>
 
-        <div class="clr"></div>
+        <div class="col-md-16 col-sm-16 margin-top reset-padding">
+          <div class="col-md-7 col-sm-7 reset-padding">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+              <span class="" translate="global.region-two"></span>
+              <span class="">optional</span>
+            </div>
+            <div class="col-md-3 col-sm-1 dashboard__form--input reset-padding " style="margin-right:2px">
+              <span class="" translate="global.start-addr">:</span>
+              <input class=""  name="startAddr2" type="text" ng-model="fota.startAddr2" validate-on-blur maxlength="8" style="margin-right:2px;" required>
+             <!-- <div ng-show="(form.partNumber.$dirty && form.partNumber.$invalid) || resetsubmitted">
+                <span class="has-error" ng-show="form.partNumber.$error.required" translate="global.fota.error.announcementName.required"></span>
+              </div> -->
+            </div>
+            <div class="col-md-3 col-sm-1 dashboard__form--input reset-padding" style="margin-right:2px">
+              <span class="" translate="global.end-addr">:</span>
+              <input class="" name="endAddr2" type="text" ng-model="fota.endAddr2" validate-on-blur maxlength="8"  required>
+             <!-- <div ng-show="(form.partNumber.$dirty && form.partNumber.$invalid) || resetsubmitted">
+                <span class="has-error" ng-show="form.partNumber.$error.required" translate="global.fota.error.announcementName.required"></span>
+              </div> -->
+            </div>
+            <div class="col-md-3 col-sm-1 dashboard__form--input reset-padding">
+              <span class="" translate="global.crc-location">:</span>
+              <input class="" style="margin-right:2px" name="CRC2Location" type="text" ng-model="fota.CRC2Location" validate-on-blur maxlength="8"  required>
+             <!-- <div ng-show="(form.partNumber.$dirty && form.partNumber.$invalid) || resetsubmitted">
+                <span class="has-error" ng-show="form.partNumber.$error.required" translate="global.fota.error.announcementName.required"></span>
+              </div> -->
+            </div>
+          </div>
+          
+        </div>
+
+       <div class="clr"></div>
       </div>
 
 
@@ -162,6 +242,7 @@
         <div class="modal--message" ng-if="matched" translate="global.verify-success"></div>
         <div class="modal--message" ng-if="unmatched" translate="global.verify-failure"></div>
         <div class="modal--message" ng-show="overrideMesg" translate="global.verify-override"></div>
+        <div class="modal--message" ng-show="cr32Invalid" translate="global.crc32-invalid"></div>
         <div class="row modal--custom-btn">
           <buton ng-show="myvalue" class="hillrom-btn btn-submit float-right"  ng-click ="verifyDetails()">Upload</buton>
            <buton ng-show="overrideBtn" class="hillrom-btn btn-submit float-right"  ng-click ="override()">override</buton>
