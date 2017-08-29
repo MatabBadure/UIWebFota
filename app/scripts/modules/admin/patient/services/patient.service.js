@@ -6,7 +6,7 @@
  *
  */
 angular.module('hillromvestApp')
-  .factory('patientService',['$http', 'headerService', 'URL', function ($http, headerService,URL) {
+  .factory('patientService',['$http', 'headerService', 'URL',  function ($http, headerService,URL) {
     return {
 
       /**
@@ -228,8 +228,8 @@ angular.module('hillromvestApp')
        * @description To get devices associated to patient.
        *
        */
-      getDevices: function(id) {
-        var url = URL.deviceAssociatedToPatient.replace('PATIENTID', id).replace('DEVICETYPE',localStorage.getItem('deviceTypeforBothIcon'));
+      getDevices: function(id,deviceType) {
+        var url = URL.deviceAssociatedToPatient.replace('PATIENTID', id).replace('DEVICETYPE',deviceType);
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -290,8 +290,8 @@ angular.module('hillromvestApp')
 
  // get reset adhrence history starts here
 
-      getAdherenceScoreResetHistory: function(id,pageNumber,perPage) {
-        var url = URL.getAdherenceScoreResetHistory.replace('ID',id).replace('PAGE',pageNumber).replace('PER_PAGE',perPage).replace('DEVICETYPE',localStorage.getItem('deviceTypeforBothIcon'));
+      getAdherenceScoreResetHistory: function(id,pageNumber,perPage, deviceType) {
+        var url = URL.getAdherenceScoreResetHistory.replace('ID',id).replace('PAGE',pageNumber).replace('PER_PAGE',perPage).replace('DEVICETYPE',deviceType);
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -300,9 +300,9 @@ angular.module('hillromvestApp')
       },
      
      // get reset adhrence history ends here
-      addDevice: function(id, data, deviceType) {
+      addDevice: function(id, data, deviceTypeSelected, deviceType) {
        
-          var url = URL.addDevice.replace('PATIENTID', id).replace('DEVICETYPE',localStorage.getItem('deviceTypeforBothIcon')).replace('DEVICEVALUE',deviceType);
+          var url = URL.addDevice.replace('PATIENTID', id).replace('DEVICETYPE',deviceType).replace('DEVICEVALUE',deviceTypeSelected);
     
         return $http.put(url, data, {
           headers: headerService.getHeader()
@@ -328,8 +328,8 @@ angular.module('hillromvestApp')
           return response;
         });
       },
-      getProtocol: function(id) {
-        var url = URL.getProtocol.replace('PATIENTID', id).replace('DEVICETYPE',localStorage.getItem('deviceTypeforBothIcon'));
+      getProtocol: function(id,deviceType) {
+        var url = URL.getProtocol.replace('PATIENTID', id).replace('DEVICETYPE',deviceType);
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -365,8 +365,8 @@ angular.module('hillromvestApp')
         });
       },
 
-      deleteProtocol: function(id, protocolId) {
-        var url = URL.protocolById.replace('PATIENTID', id).replace('PROTOCOLID', protocolId).replace('DEVICETYPE', localStorage.getItem('deviceType'));
+      deleteProtocol: function(id, protocolId, deviceType) {
+        var url = URL.protocolById.replace('PATIENTID', id).replace('PROTOCOLID', protocolId).replace('DEVICETYPE', deviceType);
         return $http.delete(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -412,8 +412,8 @@ angular.module('hillromvestApp')
         });
       },
 
-      getDeviceDataAsCSV: function(patientId, startDateTimestamp, endDateTimestamp){
-        var url = URL.deviceDataAsCSV.replace('PATIENTID', patientId).replace('STARTDATE', startDateTimestamp).replace('ENDDATE', endDateTimestamp).replace('DEVICETYPE', localStorage.getItem('deviceType'));
+      getDeviceDataAsCSV: function(patientId, startDateTimestamp, endDateTimestamp, deviceType){
+        var url = URL.deviceDataAsCSV.replace('PATIENTID', patientId).replace('STARTDATE', startDateTimestamp).replace('ENDDATE', endDateTimestamp).replace('DEVICETYPE', deviceType);
         return $http.get(url, {
           headers: headerService.getHeaderForXls(),responseType: "arraybuffer"
         });
