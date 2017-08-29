@@ -376,7 +376,7 @@
                 "invalid": "Minimum Pressure is invalid",
                 "custom-invalid": "Pressure is invalid",
                 "custom-required": "Pressure is Required",
-                "custom-max-min": "Pressure should be between 1 to 10"
+                "custom-max-min": "Pressure should be between 1 to 9"
             },
             "minIntensity": {
                 "required": "Minimum Intensity Required",
@@ -385,7 +385,7 @@
                 "invalid": "Minimum Intensity is invalid",
                 "custom-invalid": "Intensity is invalid",
                 "custom-required": "Intensity is Required",
-                "custom-max-min": "Intensity should be between 1 to 10"
+                "custom-max-min": "Intensity should be between 1 to 9"
             },
             "maxPressure": {
                 "required": "Maximum Pressure Required",
