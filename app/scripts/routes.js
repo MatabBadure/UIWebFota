@@ -1331,7 +1331,7 @@ angular.module('hillromvestApp')
                 url: '/sandbox/charger',
                 data: {
                     roles: ['ADMIN'],
-                    pageTitle: 'profile.page-title.charger'
+                    pageTitle: 'profile.page-title.sandbox'
                 },
                 views: {
                     'content@': {
@@ -1361,7 +1361,7 @@ angular.module('hillromvestApp')
                 url: '/sandbox/optimus',
                 data: {
                     roles: ['ADMIN'],
-                    pageTitle: 'profile.page-title.charger'
+                    pageTitle: 'profile.page-title.sandbox'
                 },
                 views: {
                     'content@': {
