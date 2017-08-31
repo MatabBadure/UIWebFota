@@ -249,10 +249,35 @@
               </div>
             </div>
           </div>
+         <div class="col-md-7 col-md-offset-2 reset-padding">
+            <div class="col-md-6 dashboard__form--label reset-padding">
+              <span class="" translate="patient.device-type-name"></span>
+              <span class="">*</span>
+            </div>
+            <div class="col-md-10 dashboard__form__input--option reset-padding selected-box-container">
+
+            
+              <div class="custom-dropdown" ng-readonly="validateADMINorASP()">
+                <select name="deviceType"  ng-model="patient.deviceType" required ng-options="option for option in ['VisiVest', 'Monarch', 'Both']" ng-selected="{{option === patient.deviceType}}">
+                 <!--  <option selected value="Vest" >Vest</option>
+                 <option value="Monarch">Monarch</option>
+                 <option value="Both">Both</option> -->
+                 
+                </select>
+                <div ng-show="(patient.deviceType.$dirty && patient.deviceType.$showValidationMessage && patient.deviceType.$invalid) ||submitted">
+                <span class="has-error" ng-show="form.firstName.$error.required" translate="error.deviceType.required"></span>
+                
+              </div>
+              </div>
+            </div>
+
+          </div>
+
+
         </div>
           <!-- Garment fields for Vest by default-->
       
-       <div class="col-md-16 col-sm-16 reset-padding margin-top">
+       <div class="col-md-16 col-sm-16 reset-padding margin-top" ng-hide="patient.deviceType!='VisiVest' && patient.deviceType!='Both'">
           <div class="col-md-7 col-sm-7 reset-padding">
             <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
               <span class="" translate="patient.garment-type"></span>
@@ -277,7 +302,7 @@
               </div>
             </div>
         </div>
-      </div>
+      
       <div class="col-md-16 col-sm-16 margin-top reset-padding">
       <div class="col-md-7 col-sm-7 reset-padding">
     <div class=" col-md-6 col-sm-6  dashboard__form--label reset-padding">
@@ -292,10 +317,10 @@
             </div>
         </div>
       </div>
-  
+  </div>
        <!-- Garment fields for Monarch-->
       
-  <!--     <div class="col-md-16 col-sm-16 reset-padding margin-top">
+     <div class="col-md-16 col-sm-16 reset-padding margin-top" ng-hide="patient.deviceType!='Monarch' && patient.deviceType!='Both'">
           <div class="col-md-7 col-sm-7 reset-padding">
             <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
               <span class="" translate="patient.garment-type-monarch"></span>
@@ -320,7 +345,7 @@
               </div>
             </div>
         </div>
-      </div>
+      
       <div class="col-md-16 col-sm-16 margin-top reset-padding">
       <div class="col-md-7 col-sm-7 reset-padding">
     <div class=" col-md-6 col-sm-6  dashboard__form--label reset-padding">
@@ -334,8 +359,8 @@
               </div>
             </div>
         </div>
-      </div> -->
-   
+      </div> 
+   </div>
         <div class="clr"></div>
       </div>
       <div class="col-md-16 margin-top reset-padding">
