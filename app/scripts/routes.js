@@ -6160,6 +6160,31 @@ angular.module('hillromvestApp')
                         }
                     ]
                 }
-            });
+            })
+        .state('caregiverannouncements', {
+                parent: 'caregiver-dashboard',
+                url: '/{patientId}/patient-announcements',
+                data: {
+                    roles: ['CARE_GIVER'],
+                    pageTitle: 'console.page-title.announcements'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/patient/announcements/views/announcements.html',
+                        controller: 'patientsannouncementsController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
 }]);
 
