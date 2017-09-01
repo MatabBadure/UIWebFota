@@ -1,5 +1,6 @@
 {
     "patient" : {
+        "device-type-name":"Device Type",
         "page-title":{
           "patients": "HillRom | Patients"
         },
@@ -110,6 +111,11 @@
         "activate":{
             "warning": "Are you sure you want to Activate the Patient?",
             "message": "If you activate the patient, patient will be able to access the system."
+        },
+        "device-type":{
+            "vest":"VisiVest",
+            "monarch":"Monarch",
+            "both": "Both"
         },
         "update": {
             "warning": "Patient Info - Details",

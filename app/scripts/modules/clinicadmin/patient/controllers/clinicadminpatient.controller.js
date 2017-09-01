@@ -281,38 +281,7 @@ angular.module('hillromvestApp')
       }
       $scope.langKey = $scope.patient.langKey;
         $scope.fullNameLangKey = "";
-        if($scope.langKey== "en")
-        {
-          $scope.fullNameLangKey = "English";
-        }
-        else if($scope.langKey== "fr")
-        {
-          $scope.fullNameLangKey = "French";
-        }
-        else if($scope.langKey== "de")
-        {
-          $scope.fullNameLangKey = "German";
-        }
-         else if($scope.langKey== "hi")
-        {
-          $scope.fullNameLangKey = "Hindi";
-        }
-         else if($scope.langKey== "it")
-        {
-          $scope.fullNameLangKey = "Italian";
-        }
-         else if($scope.langKey== "ja")
-        {
-          $scope.fullNameLangKey = "Japanese";
-        }
-         else if($scope.langKey== "es")
-        {
-          $scope.fullNameLangKey = "Spanish";
-        }
-         else if($scope.langKey== "zh")
-        {
-          $scope.fullNameLangKey = "Chinese";
-        }
+        $scope.fullNameLangKey = patientService.getLanguageName($scope.langKey);
       if (typeof callback === 'function') {
         callback($scope.patient);
       }

@@ -460,6 +460,54 @@ angular.module('hillromvestApp')
         return $http.get(url, {
           headers: headerService.getHeader()
         });
+      },
+      getDeviceTypeName: function(deviceType){
+        if(deviceType == 'VEST'){
+          return('VisiVest');
+        }
+        else if(deviceType == 'MONARCH'){
+          return('Monarch');
+        }
+        else if(deviceType == 'BOTH'){
+          return('Both');
+        }
+        else{
+           return('VisiVest');
+        }
+      },
+      getLanguageName: function(language){
+         if(language== "en")
+        {
+          return('English');
+        }
+        else if(language== "fr")
+        {
+          return('French');
+        }
+        else if(language== "de")
+        {
+          return('German');
+        }
+         else if(language== "hi")
+        {
+          return('Hindi');
+        }
+         else if(language== "it")
+        {
+         return('Italian');
+        }
+         else if(language== "ja")
+        {
+          return('Japanese');
+        }
+         else if(language== "es")
+        {
+          return('Spanish');
+        }
+         else if(language== "zh")
+        {
+         return('Chinese');
+        }
       }
 
       
