@@ -136,11 +136,9 @@ angular.module('hillromvestApp')
         TimService.executeTimsJob().then(function(response){
            $scope.showFreezeModal = true;
           setTimeout(function(){  
-             console.log("in settimeout");
              $scope.showFreezeModal = false; 
               $scope.timsScriptFileData = response;  
               console.log("$scope.showFreezeModal",$scope.showFreezeModal);
-          console.log("response.data.timsMsg",response.data.timsMsg);
              // $scope.showFreezeModal = false;  
                notyService.showMessage(response.data.timsMsg);
          $state.go('timslog');    
@@ -148,8 +146,8 @@ angular.module('hillromvestApp')
             
          //  $timeout(function(){}, 1000);    
       }).catch(function(response){
-                console.log("response.data.timsMsg",response.data.timsMsg);
-                notyService.showError(response.data.timsMsg);               
+                notyService.showError(response.data.timsMsg);  
+                $state.go('timslog');             
       });
                
               

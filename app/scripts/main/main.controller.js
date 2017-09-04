@@ -606,5 +606,12 @@ else {
     	
     	$state.go('executedLog');
     }
+        $scope.caregiverProfile = function(){
+      //var id = ($stateParams.patientId)?($stateParams.patientId):($scope.selectedPatient.userId);
+       var id = $location.path();
+        var res = id.split('/');
+        var idnumber = parseFloat(res[res.length-1]);
+      $state.go('caregiverProfile', {'patientId': idnumber});
+    };
 
   }]);
