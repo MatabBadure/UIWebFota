@@ -6163,7 +6163,7 @@ angular.module('hillromvestApp')
             })
         .state('caregiverannouncements', {
                 parent: 'caregiver-dashboard',
-                url: '/{patientId}/patient-announcements',
+                url: '/caregiver-patient-announcements/{patientId}',
                 data: {
                     roles: ['CARE_GIVER'],
                     pageTitle: 'console.page-title.announcements'
