@@ -5,11 +5,41 @@ angular.module('hillromvestApp')
   $scope.fota = {};
   $scope.fota.releaseDate = "";
   $scope.fota.effectiveDate = "";
-
+  $scope.deviceListsearchItem = "";
+  $scope.searchFilterdevicelist = {};
+  $scope.devicelistperpage = 10;
+  $scope.devicelistCurrentPageIndex = 1;
   $scope.init = function()
   {
-    console.log("hello fota admin");
+     $scope.searchFilterdevicelist.type = "ActivePublished";
+        if($state.current.name === 'fotaHome'){
+         
+            $scope.getFirmwareList();
+        }
+        else if($state.current.name === 'deviceList'){
+           
+            $scope.getFotaDeviceList();
+        }
+        else{
+
+        }
+        if ($stateParams.id !== undefined) {
+         $scope.getFirmwareById($stateParams.id);
+      } 
+      if($stateParams.crcValue !== undefined){
+        $scope.crcValueCheck = $stateParams.crcValue;
+      }
+      
+       if($stateParams.fotaId !== undefined){
+        $scope.fotaIdValue = $stateParams.fotaId;
+      }
   };
+  $scope.isActiveTab = function(tabname){
+    if($state.current.name === tabname){
+      return true;
+    }
+    else return false;
+  }
                 
   $scope.HandleBrowseClick = function(){   
     $scope.showModalOverwrite = false;
@@ -43,9 +73,7 @@ angular.module('hillromvestApp')
   {
     $scope.fileinput = document.getElementById("browse");
     var textinput = document.getElementById("filename");
-    //textinput.value = $scope.fileinput.value;
     $scope.files = element.files;
-    console.log(" elementfiles",$scope.fileinput.files[0]);
     var fileToLoad = $scope.fileinput.files[0];
     var fileReader = new FileReader();
     fileReader.onload = function(fileLoadedEvent){
@@ -199,17 +227,19 @@ angular.module('hillromvestApp')
     $scope.unmatched = false;
     $scope.overrideMesg = false;
     $scope.cr32Invalid = false;
+    $scope.uploadMsg = false;
+    $scope.btnok = false;
     $scope.matched = true;
     $scope.myvalue = true; 
-    $scope.effectiveDate = true;
     $scope.showModal = true;
 
     } else {
       //alert("Mismatched");
     $scope.overrideMesg = false;
+    $scope.uploadMsg = false;
     $scope.myvalue = false;
     $scope.matched = false; 
-    $scope.effectiveDate = false; 
+    $scope.btnok = false;
     $scope.unmatched = true;
     $scope.showModal = true;  
       }
@@ -218,8 +248,7 @@ angular.module('hillromvestApp')
     $scope.showModal = false;
     $scope.overrideMesg = false;
     $scope.overrideBtn = false;
-    $scope.isOldFileV = true;
-   
+    
     var logged = StorageService.get('logged'); 
     $scope.uploadUser = logged.userFullName;
     console.log("Logged:",logged);
@@ -249,6 +278,8 @@ angular.module('hillromvestApp')
       if($scope.oldRecord === true){
         $scope.matched = false; 
         $scope.myvalue = false;
+        $scope.uploadMsg = false;
+        $scope.btnok = false;
         $scope.overrideMesg = true;
         $scope.overrideBtn = true;
         $scope.showModal = true;
@@ -284,17 +315,28 @@ angular.module('hillromvestApp')
     }
       fotaService.create(data).then(function(response){
       console.log("Response:",response.data); 
+      $scope.matched = false; 
+      $scope.myvalue = false;
+      $scope.overrideMesg = false;
+      $scope.overrideBtn = false;
+      $scope.btnUpCancel = false;
+      $scope.uploadMsg = true;
+      $scope.showModal = true;
+      $scope.btnok = true;
+
     }).catch(function(response){
         notyService.showError(response);
         });
       }
 
       }else{
-          alert("Invalid CrC32");
           $scope.matched = false; 
           $scope.myvalue = false;
           $scope.overrideMesg = false;
           $scope.overrideBtn = false;
+          $scope.uploadMsg = false;
+          $scope.btnok = false;
+          $scope.btnUpCancel = true;
           $scope.cr32Invalid = true;
           $scope.showModal = true;
 
@@ -340,6 +382,14 @@ angular.module('hillromvestApp')
     }
       fotaService.create(data).then(function(response){
       console.log("Response:",response.data); 
+      $scope.matched = false; 
+      $scope.myvalue = false;
+      $scope.overrideMesg = false;
+      $scope.overrideBtn = false;
+       $scope.btnUpCancel = false;
+      $scope.uploadMsg = true;
+      $scope.showModal = true;
+      $scope.btnok = true;
 
     }).catch(function(response){
         notyService.showError(response);
@@ -383,10 +433,247 @@ angular.module('hillromvestApp')
         notyService.showError(response);
         });
 
+    };
+
+    $scope.navigateTabsFota = function(tabname){
+    
+        $state.go(tabname);
+     };
+      /*$scope.navigateTabsWithValueFota = function(tabname,selectedFirmware){
+        var value = "";
+    if(selectedFirmware){
+      if(selectedFirmware.region1CRCLocation && selectedFirmware.region2CRCLocation){
+      value = 'both';
+      }
+      else if(selectedFirmware.region1CRCLocation && !selectedFirmware.region2CRCLocation){
+        //if only 1st one
+        value = 'one';
+      }
+      
     }
+        $state.go(tabname,{'fotaId': selectedFirmware.id,'crcValue': value});
+     };*/
+
+     $scope.validateApprCRC = function(form){
+
+      $scope.showModal = false;
+      $scope.publishedUser = "";
+      var logged = StorageService.get('logged'); 
+      $scope.publishedUser = logged.userFullName;
+      console.log("Logged:",logged);
+
+      var data = 
+      {
+        "fotaId": $scope.selectedFirmware.id,
+        "region1CRC": $scope.fota.region1CRC,
+        "region2CRC": $scope.fota.region2CRC,
+        "publishedUser": $scope.publishedUser
+      }
+      fotaService.approverCRC32(data).then(function(response){
+      console.log("approverCRC32 success response",response.data);
+      if(response.data.apvrCRC32 === true){
+        $scope.isValideCRC32 = false;
+        $scope.isValideCRC32 = response.data.apvrCRC32;
+        $scope.cr32Invalid = false;
+        $scope.btncancel = false;
+        $scope.approveMsg = false;
+        $scope.deleteMsg = false;
+        $scope.deleteMsgReq = false;
+        $scope.deleteAprMsg = false;
+        $scope.btnok = false;
+        $scope.btnApr = true;
+        $scope.btncancel = true;
+        $scope.showModal = true;
+        $scope.cr32Valid = true;
+      }else{
+        $scope.cr32Valid = false;
+        $scope.approveMsg = false;
+        $scope.deleteMsg = false;
+        $scope.deleteMsgReq = false;
+        $scope.deleteAprMsg = false;
+        $scope.btnok = false;
+        $scope.btnApr = false;
+        $scope.btncancel = true;
+        $scope.showModal = true;
+        $scope.cr32Invalid = true;
+        console.log("Invalid approver CRC32",response.data.apvrCRC32);
+      }
+      
+    }).catch(function(response){
+        notyService.showError(response);
+    });
+}
+    
     $scope.close = function () {
        $scope.showModal = false;
     };
 
+    $scope.getFirmwareList = function(track){
+     if (track !== undefined) {
+            if (track === "PREV" && $scope.devicelistCurrentPageIndex > 1) {
+              $scope.devicelistCurrentPageIndex--;
+            } else if (track === "NEXT" && $scope.devicelistCurrentPageIndex < $scope.devicelistPageCount) {
+              $scope.devicelistCurrentPageIndex++;
+            } else {
+              return false;
+            }
+          } else {
+            $scope.devicelistCurrentPageIndex = 1;
+          }
+      fotaService.getFirmwareList(($scope.devicelistCurrentPageIndex-1),$scope.devicelistperpage,$scope.searchFilterdevicelist.type,$scope.deviceListsearchItem).then(function(response){
+      $scope.FirmwareList = response.data;
+      $scope.FirmwareListPageCount = $scope.FirmwareList.totalPages;
+
+      if($scope.FirmwareList.content){
+       for (var i = 0 ; i < $scope.FirmwareList.content.length ; i++) {                
+                $scope.FirmwareList.content[i].releaseConvertedDate = dateService.getDateFromTimeStamp($scope.FirmwareList.content[i].releaseDate,patientDashboard.dateFormat,'-')
+                $scope.FirmwareList.content[i].uploadConvertedDate = dateService.getDateFromTimeStamp($scope.FirmwareList.content[i].uploadDatetime,patientDashboard.dateFormat,'-')
+              console.log("dateService.",dateService.getDateFromTimeStamp($scope.FirmwareList.content[i].releaseDate,patientDashboard.dateFormat,'-'));
+              console.log("dateService.",dateService.getDateFromTimeStamp($scope.FirmwareList.content[i].uploadDatetime,patientDashboard.dateFormat,'-'));
+
+              }
+            }
+    });
+  }
+
+    $scope.selectFirmware = function(firmware) {
+           $state.go('firmwareView', {
+              'id': firmware.id
+            });
+    };
+
+    $scope.getFirmwareById = function(id){
+      fotaService.getFirmwareInfo(id).then(function(response){
+      $scope.selectedFirmware = response.data.fotaInfo;
+      //  $scope. = dateService.getDateFromTimeStamp($scope.FirmwareList.content[i].releaseDate,patientDashboard.dateFormat,'-')
+      }).catch(function(response){
+        notyService.showError(response);
+      });
+    };
+
+
+  $scope.approverCRC32 = function(){
+      $scope.showModal = false;
+      $scope.publishedUser = "";
+      var logged = StorageService.get('logged'); 
+      $scope.publishedUser = logged.userFullName;
+      console.log("Logged:",logged);
+
+      var data = 
+      {
+        "fotaId": $scope.selectedFirmware.id,
+        "region1CRC": $scope.fota.region1CRC,
+        "region2CRC": $scope.fota.region2CRC,
+        "publishedUser": $scope.publishedUser,
+        "isValideCRC32" : $scope.isValideCRC32
+      }
+      fotaService.approverCRC32(data).then(function(response){
+      console.log("approverCRC32 success response",response.data);
+      if(response.data.apvrCRC32 === true){
+        console.log("Published",response.data.apvrCRC32);
+        $scope.cr32Invalid = false;
+        $scope.cr32Valid = false;
+        $scope.btnApr = false;
+        $scope.deleteMsg = false;
+        $scope.deleteMsgReq = false;
+        $scope.deleteAprMsg = false;
+        $scope.approveMsg = true;
+        $scope.btncancel = false;
+        $scope.btnok = true;
+        $scope.showModal = true;
+        
+        }
+      }).catch(function(response){
+        notyService.showError(response);
+      });
+
+    }
+
+  $scope.deleteFirmware = function(id){
+      $scope.showModal = false;
+      $scope.userRole = "";
+      var logged = StorageService.get('logged'); 
+      console.log("logged:",logged);
+      $scope.userRole = logged.role;
+      console.log("Role:",$scope.userRole );
+      fotaService.firmwareSoftDelete(id,$scope.userRole).then(function(response){
+      $scope.softDeleateObj = response.data.fotaInfo;
+      console.log("softDeleateObj",response.data.fotaInfo);
+      if($scope.userRole === "FOTA_ADMIN"){
+        $scope.cr32Invalid = false;
+        $scope.cr32Valid = false;
+        $scope.btnApr = false;
+        $scope.approveMsg = false;
+        $scope.btncancel = false;
+        $scope.deleteMsg = false;
+        $scope.deleteAprMsg = false;
+        $scope.deleteMsgReq = true;
+        $scope.btnok = true;
+        $scope.showModal = true;
+      }else if($scope.userRole === "FOTA_APPROVER"){
+        if($scope.softDeleateObj === true){
+        $scope.cr32Invalid = false;
+        $scope.cr32Valid = false;
+        $scope.btnApr = false;
+        $scope.approveMsg = false;
+        $scope.btncancel = false;
+        $scope.deleteMsgReq = false;
+        $scope.deleteMsg = false;
+        $scope.deleteAprMsg = true;
+        $scope.btnok = true;
+        $scope.showModal = true;
+        }else{
+        $scope.cr32Invalid = false;
+        $scope.cr32Valid = false;
+        $scope.btnApr = false;
+        $scope.approveMsg = false;
+        $scope.btncancel = false;
+        $scope.deleteMsgReq = false;
+        $scope.deleteAprMsg = false;
+        $scope.deleteMsg = true;
+        $scope.btnok = true;
+        $scope.showModal = true;
+        }
+        
+      }
+      
+      }).catch(function(response){
+        notyService.showError(response);
+      });
+
+  }
+
+  $scope.getFotaDeviceList = function(track){
+     if (track !== undefined) {
+            if (track === "PREV" && $scope.devicelistCurrentPageIndex > 1) {
+              $scope.devicelistCurrentPageIndex--;
+            } else if (track === "NEXT" && $scope.devicelistCurrentPageIndex < $scope.devicelistPageCount) {
+              $scope.devicelistCurrentPageIndex++;
+            } else {
+              return false;
+            }
+          } else {
+            $scope.devicelistCurrentPageIndex = 1;
+          }
+    fotaService.getDeviceList(($scope.devicelistCurrentPageIndex-1),$scope.devicelistperpage,$scope.searchFilterdevicelist.type,$scope.deviceListsearchItem).then(function(response){
+      $scope.Fotadeviceslist = response.data;
+      $scope.devicelistPageCount = $scope.Fotadeviceslist.totalPages;
+      if($scope.Fotadeviceslist.content){
+       for (var i = 0 ; i < $scope.Fotadeviceslist.content.length ; i++) {                
+                $scope.Fotadeviceslist.content[i].currentConvertedDate = dateService.getDateFromTimeStamp($scope.Fotadeviceslist.content[i].currentDate,patientDashboard.dateFormat,'-')
+              console.log("dateService.",dateService.getDateFromTimeStamp($scope.Fotadeviceslist.content[i].currentDate,patientDashboard.dateFormat,'-'));
+              }
+            }
+    });
+  }
+  $scope.redirectBack = function(){
+      $state.go('fotaHome');
+ };
+ $scope.redirectBackToView = function(){
+      $state.go('firmwareView', {
+              'id': $scope.fotaIdValue
+            });
+ };
+
     $scope.init();  
-   }]);
+}]);

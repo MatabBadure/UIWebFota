@@ -188,9 +188,9 @@ else {
       	$state.go('customerserviceProfile');
      // $state.go('RnDadminProfile');
       }
-      else if($rootScope.userRole === loginConstants.role.RnDadmin){
+      else if($rootScope.userRole === loginConstants.role.FOTAAdmin || $rootScope.userRole === loginConstants.role.FOTAApprover){
       	$state.go('RnDadminProfile');
-      }
+      } 
     };
     $scope.profileCA = function(clinicid){
       	var clinicId = ($stateParams.clinicId) ? $stateParams.clinicId : clinicid;
@@ -231,7 +231,7 @@ else {
       else if($rootScope.userRole === loginConstants.role.customerservices){
         $state.go("customerservicePatientUser");
       }
-      else if($rootScope.userRole === loginConstants.role.RnDadmin){
+      else if($rootScope.userRole === loginConstants.role.FOTAAdmin || $rootScope.userRole === loginConstants.role.FOTAApprover){
         $state.go("fotaHome");
       }
     };

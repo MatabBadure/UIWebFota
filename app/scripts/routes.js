@@ -22,9 +22,9 @@ angular.module('hillromvestApp')
                 url: '/customerservice',
                 abstract: true,
             })
-              .state('RnDadmin', {
+              .state('FOTAUsers', {
                 parent: 'entity',
-                url: '/RnDadmin',
+                url: '/FOTAUsers',
                 abstract: true,
             })
             // creating this base route and view to setup nested views for Patients
@@ -5083,7 +5083,7 @@ angular.module('hillromvestApp')
                 }
             })
 
-	    .state('rcadmin-hillRomUser', {
+        .state('rcadmin-hillRomUser', {
                 parent: 'rcadmin',
                 url: '/rcadmin-hillRomUser',
                 data: {
@@ -6073,21 +6073,21 @@ angular.module('hillromvestApp')
                 }
             })
                 .state('fotaHome', {
-                parent: 'RnDadmin',
+                parent: 'FOTAUsers',
                 url: '/fota',
                 data: {
-                     roles: ['R&D_ADMIN','CUSTOMER_SERVICES'],
+                     roles: ['FOTA_ADMIN','FOTA_APPROVER'],
                     pageTitle: 'profile.page-title.fota'
                 },
                 views: {
                     'content@': {
-                        templateUrl: 'scripts/modules/RnDadmin/FotaHome/views/fotahome.html',
+                        templateUrl: 'scripts/modules/RnDadmin/FotaHome/views/fotaList.html',
                         controller: 'fotaController'
                     }
                 },
                   resolve: {
                  loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
-                        return $ocLazyLoad.load('AdminProfileModule');
+                        return $ocLazyLoad.load('FOTAAdminProfileModule');
                     }],
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('global');
@@ -6103,10 +6103,10 @@ angular.module('hillromvestApp')
 
                  })
                 .state('RnDadminProfile', {
-                parent: 'RnDadmin',
+                parent: 'FOTAUsers',
                 url: '/profile',
                 data: {
-                    roles: ['R&D_ADMIN','CUSTOMER_SERVICES'],
+                    roles: ['FOTA_ADMIN','FOTA_APPROVER','CUSTOMER_SERVICES'],
                     pageTitle: 'profile.page-title.my-profile'
                 },
                 views: {
@@ -6119,7 +6119,7 @@ angular.module('hillromvestApp')
                     //Lazy loading of controllers and external dependencies so boost intial load
                     //time
                     loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
-                        return $ocLazyLoad.load('AdminProfileModule');
+                        return $ocLazyLoad.load('FOTAAdminProfileModule');
                     }],
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('profile');
@@ -6131,6 +6131,127 @@ angular.module('hillromvestApp')
                         }
                     ]
                 }
+            })
+        .state('deviceList', {
+                parent: 'FOTAUsers',
+                url: '/fotaDeviceList',
+                data: {
+                     roles: ['FOTA_ADMIN','FOTA_APPROVER'],
+                    pageTitle: 'profile.page-title.fota'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/RnDadmin/FotaHome/views/devicelist.html',
+                        controller: 'fotaController'
+                    }
+                },
+                  resolve: {
+                 loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('FOTAAdminProfileModule');
+                    }],
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('global');
+                        $translatePartialLoader.addPart('patient');
+                        return $translate.refresh();
+                    }],
+                 authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+        .state('FOTAUpload', {
+                parent: 'FOTAUsers',
+                url: '/fotaDeviceUpload',
+                data: {
+                     roles: ['FOTA_ADMIN','FOTA_APPROVER'],
+                    pageTitle: 'profile.page-title.fota'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/RnDadmin/FotaHome/views/fotauploadfile.html',
+                        controller: 'fotaController'
+                    }
+                },
+                  resolve: {
+                 loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('FOTAAdminProfileModule');
+                    }],
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('global');
+                        $translatePartialLoader.addPart('patient');
+                        return $translate.refresh();
+                    }],
+                 authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+
+        
+        .state('crcValidate', {
+                parent: 'FOTAUsers',
+                url: '/{fotaId}/{crcValue}/fotaValidatCrc',
+                data: {
+                     roles: ['FOTA_APPROVER'],
+                    pageTitle: 'profile.page-title.fota'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/RnDadmin/FotaHome/views/fotaValidate.html',
+                        controller: 'fotaController'
+                    }
+                },
+                  resolve: {
+                 loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('FOTAAdminProfileModule');
+                    }],
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('global');
+                        $translatePartialLoader.addPart('patient');
+                        return $translate.refresh();
+                    }],
+                 authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+
+
+        .state('firmwareView', {
+                parent: 'FOTAUsers',
+                url: '/{id}/firmwareView',
+                data: {
+                     roles: ['FOTA_ADMIN','FOTA_APPROVER'],
+                    pageTitle: 'profile.page-title.fota'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/RnDadmin/FotaHome/views/firmwareView.html',
+                        controller: 'fotaController'
+                    }
+                },
+                  resolve: {
+                 loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('FOTAAdminProfileModule');
+                    }],
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('global');
+                        $translatePartialLoader.addPart('patient');
+                        return $translate.refresh();
+                    }],
+                 authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
             });
+
 }]);
 

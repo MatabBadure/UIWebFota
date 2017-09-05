@@ -1,10 +1,11 @@
+<ng-include src="'scripts/components/navbar/navbarRnDadmin.html'"></ng-include>
 <div class="navbar patient-user patient-user--nav">
   <div class="container">
     <div class="collapse navbar-collapse patient-user__navbar" id="navbar-collapse">
       <ul class="nav navbar-nav admin_profile">
         <li>
           <a ng-class="{active: isActive('upload')}"  ng-href="" ng-click="uploadFota()">
-            <span class="">FOTA UPLOAD</span>
+            <span class="">Firmware Upload</span>
           </a>
         </li>
       </ul>
@@ -223,7 +224,7 @@
 
     <div class="col-md-16 col-sm-16 margin-top reset-padding">
       <div class="">
-        <buton type="submit" class="hillrom-btn btn-primary float-right btn-margin-left" ng-click="fotaUploadModule(form)" translate="global.verify-input">Verify</buton>
+        <buton type="submit" class="hillrom-btn btn-primary float-right btn-margin-left" ng-click="fotaUploadModule(form)" translate="global.upload">Verify/Upload</buton>
         <buton type="submit" class="hillrom-btn btn-secondary float-right" ng-click="redirectBack()" translate="global.announcement.label.cancel">cancel</buton>
         <div class="clr"></div>
       </div>
@@ -243,10 +244,12 @@
         <div class="modal--message" ng-if="unmatched" translate="global.verify-failure"></div>
         <div class="modal--message" ng-show="overrideMesg" translate="global.verify-override"></div>
         <div class="modal--message" ng-show="cr32Invalid" translate="global.crc32-invalid"></div>
+        <div class="modal--message" ng-show="uploadMsg" translate="global.uploadMsg"></div>
         <div class="row modal--custom-btn">
           <buton ng-show="myvalue" class="hillrom-btn btn-submit float-right"  ng-click ="verifyDetails()">Upload</buton>
-           <buton ng-show="overrideBtn" class="hillrom-btn btn-submit float-right"  ng-click ="override()">override</buton>
-          <buton class="hillrom-btn btn-submit float-right" data-dismiss="modal" ng-click="close()">Cancel</buton>
+           <buton ng-show="overrideBtn" class="hillrom-btn btn-submit float-right"  ng-click ="override()">Override</buton>
+           <buton class="hillrom-btn btn-submit float-right" data-dismiss="modal" ng-show="btnok" ng-click="redirectBack()">OK</buton>
+          <buton class="hillrom-btn btn-submit float-right" data-dismiss="modal" ng-show="btnUpCancel" ng-click="close()">Cancel</buton>
         </div>
       </div>
       <footer class="modal__footer">

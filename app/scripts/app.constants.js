@@ -156,7 +156,11 @@ angular.module('hillromvestApp')
 	'timsScriptLogDetails' : 'api/retrieveLogData/logs',
 	'fotaVerify' : 'api/FOTA/create',
 	'uploadfileFota' : 'api/FOTA/uploadFile',
-	//'getOldVersion' : 'api/FOTA/getOldVersion/partNoV',
 	'softDelete' : 'api/FOTA/softDeleteFOTA/partNoD/isOldFileD',
-	'fotaCRC32Calculation' : 'api/FOTA/CRC32Calculation'
+	'fotaCRC32Calculation' : 'api/FOTA/CRC32Calculation',
+	'fotaDeviceList' : 'api/FOTADeviceList?status=STATUS&page=PAGE&per_page=PER_PAGE&searchString=SEARCHSTRING',
+	'getFirmwareList' : 'api/FOTAList?page=PAGE&per_page=PER_PAGE&status=STATUS&searchString=SEARCHSTRING',
+	'getFirmwareInfo': 'api/FOTA/ID/getFirmware',
+	'approverCRC32':'api/FOTA/validateApproverCRC32',
+	'firmwareSoftDelete':'api/FOTA/ID/userRole/firmwareDelete'
 });

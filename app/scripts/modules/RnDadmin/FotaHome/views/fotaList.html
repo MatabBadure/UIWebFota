@@ -1,0 +1,98 @@
+<ng-include src="'scripts/components/navbar/navbarRnDadmin.html'"></ng-include>
+<ng-include src="'scripts/modules/RnDadmin/FotaHome/views/navbar.html'"></ng-include>
+
+      <!-- Search filter -->
+      <div class="container">
+      <div class="dashboard__manage-view--search fota-search">
+        <div class="fuid-search-box reset-padding-right">
+          <input type="text" class="form-control" id="searchListParam" name="userName" ng-model="firmwareSearchItem" ng-model-options="{ debounce: 1000 }" ng-change="getFirmwareList();" autocomplete="off" placeholder="{{'global.placeholder.search' | translate}}">
+          <span class="search-icon hillrom-icon icon-search-icon"></span>
+        </div>
+        <div class="fixed-filter-box reset-padding-left">          
+        </div>
+      </div>
+
+    <div class="col-md-16">
+        <ng-include src="'scripts/modules/RnDadmin/FotaHome/views/firmwareListSearch.html'"></ng-include>
+      </div>
+
+    <!-- List start here -->
+    <div class="dashboard__manage-view--header" style="padding:30px 0">
+        <div class="col-md-2 col-sm-2 header--type pull-left-mob "  translate="global.product-name">
+          <span class ="">Product Name</span>
+        </div> 
+        <div class="col-md-2 col-sm-2 header--type none hidden-sm" style="margin-left:-20px !important" translate="global.part-number">
+          <span class = "" >Part Number</span>
+        </div>
+        <div class="col-md-2 col-sm-2 header--type none " style="margin-left:-20px !important" translate="global.soft-version">
+          <span class = "" >Software version</span>
+        </div>
+        <div class="col-md-2 col-sm-2 header--type none " style="margin-left:-20px !important" translate="global.soft-date">
+          <span class = "" >Software Date</span>
+        </div>
+        <div class="col-md-2 col-sm-2 header--type none " style="margin-left:-20px !important" translate="global.upload-by">
+          <span class = "" > Upload By</span>
+        </div>
+        <div class="col-md-2 col-sm-2 header--type none " style="margin-left:-20px !important" translate="global.upload-date">
+          <span class = "" >Upload Date</span>
+        </div>
+        <div class="col-md-2 col-sm-2 header--type none " style="margin-left:-20px !important" translate="global.published-by">
+          <span class = "" >Published By</span>
+        </div>
+        <div class="col-md-2 col-sm-2 header--type none " style="margin-left:-20px !important" translate="global.published-date">
+          <span class = "" >Published Date</span>
+        </div>
+        <div class="col-md-2 col-sm-2 header--type none " style="margin-left:-20px !important" translate="global.status">
+          <span class = "" >Status</span>
+        </div>
+     </div>
+    <div class="clr"></div>
+
+
+      <div class="dashboard__manage-view--list" ng-click="selectFirmware(firmware)" ng-repeat="firmware in FirmwareList.content" ng-readonly="true" style="padding-bottom: 22px !important" >
+          <div class="col-md-2 col-sm-2 header--type pull-left-mob ">
+          <span class = "">{{firmware.productType}}</span>
+        </div>
+        <div class="col-md-2 col-sm-2 header--type none hidden-sm " style="margin-left:-20px !important">
+          <span class = "foat-part-name">{{firmware.devicePartNumber}}</span>
+        </div>
+        <div class="col-md-2 col-sm-2 header--type none " style="margin-left:-20px !important">
+          <span class = "fota-upload-on">{{firmware.softVersion}} </span>
+        </div>
+        <div class="col-md-2 col-sm-2 header--type none " style="margin-left:-20px !important">
+          <span class = "fota-publish-on"> {{firmware.releaseConvertedDate}}</span>
+        </div>
+        <div class="col-md-2 col-sm-2 header--type none " style="margin-left:-20px !important">
+          <span class = "fota-publish-by"> {{firmware.uploadUser}}</span>
+        </div>
+        <div class="col-md-2 col-sm-2 header--type none " style="margin-left:-20px !important">
+          <span class = "fota-publish-by"> {{firmware.uploadConvertedDate}}</span>
+        </div>
+        <div class="col-md-2 col-sm-2 header--type none " style="margin-left:-20px !important">
+          <span class = "fota-publish-by"> {{firmware.publishedUser}}</span>
+        </div>
+        <div class="col-md-2 col-sm-2 header--type none " style="margin-left:-20px !important">
+          <span class = "fota-publish-by"> {{firmware.publishedDateTime}}</span>
+        </div>
+        <div class="col-md-2 col-sm-2 header--type none " style="margin-left:-20px !important">
+          <span class = "fota-publish
+          -by"> {{firmware.fotastatus}}</span>
+        </div>
+      </div>
+
+
+       <div class="dashboard__manage-view--pagination">
+        <div class="col-md-16 reset-padding-right">
+          <div class="navbar-right">
+            <span class="record-found" ng-if="FirmwareList.content.length > 0">{{FirmwareList.totalElements}} Firmware</span>
+            <span class="record-found" ng-if="FirmwareList.content.length > 0">Found</span>
+            <span ng-show="devicelistPageCount > 1">
+              <span class="navigaion-link cursor-pointer" ng-class="{ 'inactive': !(devicelistCurrentPageIndex > 1) }" ng-click="getFirmwareList('PREV')">Previous</span>
+              <span class="navigaion-no">{{devicelistCurrentPageIndex}}</span>
+              <span class="navigaion-link cursor-pointer" ng-class="{ 'inactive': !(devicelistPageCount > devicelistCurrentPageIndex) }" ng-click="getFirmwareList('NEXT')">Next</span>
+            </span>
+          </div>
+          <div class="clr"></div>
+        </div>
+      </div>
+     </div>    

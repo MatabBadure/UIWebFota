@@ -19,9 +19,58 @@
          "start-addr": "Start Address",
          "end-addr": "End Address",
          "crc-location": "CRC Location",
-         "crc32-invalid": "CRC32 polynomial Invalid",
+         "crc32-invalid": "CRC32 polynomial is Invalid, please enter correct CRC",
+         "crc32-valid": "CRC32 polynomial is valid",
+         "upload": "Upload",
+         "approve-msg":"Approved successfully",
+         "uploadMsg" : "File Uploaded successfully",
+         "delete-msg" : "Deleted successfully",
+         "delete-msgReq":"Delete Requested",
 
-
+         "firmware-list":"Firmware List",
+         "product-name":"Product Name",
+         "part-number":"Part Number",
+         "soft-version":"Software Version",
+         "soft-date":"Software Date",
+         "upload-by":"Upload By",
+         "upload-date":"Upload Date",
+         "published-by":"Published By",
+         "published-date":"Published Date",
+         "status":"Status",
+         "creat-new-file":"Upload New Firmware",
+         "placeholder": {
+            "search": "Search with Part Number or Product Name"
+        },
+        "firmware-info":"Firmware Info",
+        "model-id":"Model Id",
+        "board-id":"Board Id",
+        "bed-id":"Bed Id",
+        "boot-comp-ver":"Boot Comp Version",
+        "fill-pattern":"Fill Pattern",
+        "mcu-size":"MCU Size",
+        "region1-strt-add":"Region1 Start Address",
+        "region1-end-add":"Region1 End Address",
+        "region1-crc-location":"Region1 CRC Location",
+        "region2-strt-add":"Region2 Start Address",
+        "region2-end-add":"Region2 End Address",
+        "region2-crc-location":"Region2 Start Location",
+        "delete":"Delete",
+        "approve":"Approve",
+        "validate":"Validate",
+        "crc32-header":"Request Status",
+        "region1-crc":"Region1 CRC",
+        "region2-crc":"Region2 CRC",
+        "back":"Back",
+         "fotaDeviceList": {
+            "deviceSerialNo": "Device Serial Number",
+            "firmwareDownloadTime": "Firmware Download Time",
+            "currentDate": "Current Date",
+            "status": "Status",
+             "placeholder": {
+            "search": "Search by Part Number"
+                }
+            },
+        
         "browsehappy": "You are using an <strong>outdated</strong> browser. Please <a href=\"http://browsehappy.com/?locale=en\">upgrade your browser</a> to improve your experience.",
         "menu": {
             "home": "Home",
@@ -194,7 +243,8 @@
             "hcp": "HCP",
             "patient": "Patient",
             "customerservices" : "Customer Service",
-            "RnDAdmin" : "R&D Admin"
+            "FOTAAdmin" : "FOTA ADMIN",
+            "FOTAApprover" : "FOTA APPROVER"
         },
         "not-applicable": "NA",
         "notification":{
@@ -525,7 +575,10 @@
         "visivest":"VisiVest",
         "monarch":"Monarch",
         "success":"Success",
-        "fail":"Fail"
+        "fail":"Fail",
+        "active-published":"Active Published",
+        "active-pending":"Active Pending",
+        "all":"All"
     },
     "tims" : {
         "success" : "Success",

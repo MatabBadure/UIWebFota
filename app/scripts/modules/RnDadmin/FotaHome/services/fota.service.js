@@ -59,6 +59,48 @@ angular.module('hillromvestApp')
           return response;
         });
 
+      },
+      approverCRC32 : function(data){
+        // add Calculate CRC 32 URL in app.constants.js
+         var url  = URL.approverCRC32;
+        return $http.post(url,data, {
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });
+
+      },
+      getFirmwareList: function(page,perpage,filter,searchItem){
+          var url = URL.getFirmwareList.replace('PAGE',page).replace('PER_PAGE',perpage).replace('STATUS',filter).replace('SEARCHSTRING',searchItem);
+           return $http.get(url,{
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });        
+      },
+      getFirmwareInfo: function(id){
+          var url = URL.getFirmwareInfo.replace('ID',id);
+           return $http.get(url,{
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });        
+      },
+       firmwareSoftDelete: function(id,userRole){
+          var url = URL.firmwareSoftDelete.replace('ID',id).replace('userRole',userRole);
+           return $http.delete(url,{
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });        
+      },
+       getDeviceList: function(page,perpage,filter,searchItem){
+          var url = URL.fotaDeviceList.replace('PAGE',page).replace('PER_PAGE',perpage).replace('STATUS',filter).replace('SEARCHSTRING',searchItem);
+           return $http.get(url,{
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });        
       }
   };
   }]);

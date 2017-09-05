@@ -141,7 +141,8 @@ angular.module('hillromvestApp').constant('hcpDashboardConstants', {
 		"Rc": "Rc",
 		"associates" : "ASSOCIATES",
 		"customerservices" : "CUSTOMER_SERVICES",
-		"RnDadmin" : "RND_USER"
+		"FOTAAdmin" : "FOTA_ADMIN",
+		"FOTAApprover" : "FOTA_APPROVER"
 
 	}
 })
