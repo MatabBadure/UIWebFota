@@ -577,7 +577,7 @@
         "success":"Success",
         "fail":"Fail",
         "active-published":"Active Published",
-        "active-pending":"Active Pending",
+        "active-pending":"Pending Approval",
         "all":"All"
     },
     "tims" : {
