@@ -71,13 +71,12 @@
     "tims":{
          "log-information":"Log Information",
         "execute-job":"Execute Job",
-
         "tim-script":"TIMs Script",
         "date-tims":"Date",
         "time-tims":"Time",
         "warning": "TIMs Script Execution",
         "message": "Are you sure you want to execute the Job process of the TIMs Script?",
-
+        "exmessage": "TIMs job is executing",
         "logstatus-tims":"Log Status",
         "loglink-tims":"Log Link"
     },
@@ -217,6 +216,9 @@
         }
     },
     "error":{ 
+            "deviceType":{
+                "required" : "Select the device type."
+            },
              "startDate":{
               "required": "Announcement start date is required."
             },
@@ -377,7 +379,7 @@
                 "invalid": "Minimum Pressure is invalid",
                 "custom-invalid": "Pressure is invalid",
                 "custom-required": "Pressure is Required",
-                "custom-max-min": "Pressure should be between 1 to 10"
+                "custom-max-min": "Pressure should be between 1 to 9"
             },
             "minIntensity": {
                 "required": "Minimum Intensity Required",
@@ -386,7 +388,7 @@
                 "invalid": "Minimum Intensity is invalid",
                 "custom-invalid": "Intensity is invalid",
                 "custom-required": "Intensity is Required",
-                "custom-max-min": "Intensity should be between 1 to 10"
+                "custom-max-min": "Intensity should be between 1 to 9"
             },
             "maxPressure": {
                 "required": "Maximum Pressure Required",

@@ -1,5 +1,14 @@
-<ng-include src="'scripts/components/navbar/navbarpatientuser.html'"></ng-include>
+<div ng-show="userRole === 'PATIENT'">
+<ng-include  src="'scripts/components/navbar/navbarpatientuser.html'"></ng-include>
 <ng-include src="'scripts/modules/clinicadmin/announcements/views/navbar.html'"></ng-include>
+</div>
+<div ng-show="userRole === 'CARE_GIVER'">
+<ng-include  src="'scripts/components/navbar/navbarCaregiverUser.html'"></ng-include>
+<ng-include src="'scripts/components/dashboard/caregiver/views/caregiver-announcements-navbar.html'"></ng-include>
+</div>
+
+
+
 <div class="container">
 	<div class="col-xs-16 announce-list" ng-repeat="announce in announcement track by $index">
 		<h2>{{announce.name}}</h2>
@@ -12,9 +21,9 @@
 	      <span class="record-found"><span class="count" ng-bind="total"></span>
 	      <span class="record-found">Announcements Found</span>
 	      <span  ng-show="totalPages > 1">
-	        <span class="navigaion-link cursor-pointer" ng-class="{ 'inactive': !(currentPageIndex > 1) }" ng-click="searchUsers('PREV')">Previous</span>
+	        <span class="navigaion-link cursor-pointer" ng-class="{ 'inactive': !(currentPageIndex > 1) }" ng-click="searchAnnouncements('PREV')">Previous</span>
 	        <span class="navigaion-no">{{currentPageIndex}}/{{totalPages}}</span>
-	        <span class="navigaion-link cursor-pointer" ng-class="{ 'inactive': !(totalPages > currentPageIndex) }" ng-click="searchUsers('NEXT')">Next</span>
+	        <span class="navigaion-link cursor-pointer" ng-class="{ 'inactive': !(totalPages > currentPageIndex) }" ng-click="searchAnnouncements('NEXT')">Next</span>
 	      </span>
 	    </div>
 	    <div class="clr"></div>

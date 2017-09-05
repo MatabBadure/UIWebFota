@@ -20,13 +20,21 @@
             <span class="icons hillrom-icon icon-dashboard"></span>
             <span class="link-text" translate="global.tabs.dashboard" ></span>
           </a>
-        </li>       
+        </li> 
+         <li class="icon-border">
+          <a ng-class="{ active: isActive('/caregiver-patient-announcements')}" href="" ng-click="navigateWithPatientID('caregiverannouncements');" >
+            <span  class="icons messages"> <i class="fa fa-flag" id="announcementflag" aria-hidden="true"></i>
+            </span>
+            <span class="link-text" translate="global.tabs.announcements" ></span>
+          </a>
+        </li>
+      
         <li class="header-popover dropdown">
           <a ng-href="" data-target="#" class="dropdown-toggle" ng-class="{ active: isActive('profile') || isActive('change-password')}" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
             <span class='icon-logged-in-user'></span>
             <span class='user-name'>{{username}}</span></a>
           <ul class="dropdown-menu">
-            <li id='account' ng-click='account()'>
+            <li id='account' ng-click='caregiverProfile()'>
               <span class='hillrom-icon icon-user-account'></span>
               <p translate="global.my-dashboard">My Profile</p>
             </li>

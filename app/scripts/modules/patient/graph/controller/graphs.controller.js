@@ -239,7 +239,7 @@ angular.module('hillromvestApp')
       }
    
       }).catch(function(response){
-         notyService.showError(response);
+       //  notyService.showError(response);
       });
     };
 
