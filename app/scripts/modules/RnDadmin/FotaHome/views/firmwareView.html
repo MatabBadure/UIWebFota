@@ -246,14 +246,14 @@
       <div class="fropile_update_btn_group">
         <!-- <buton class="hillrom-btn btn-primary float-right btn-margin-left"  ng-show="selectedFirmware.fotastatus === 'Active Pending'" ng-click="navigateTabsWithValueFota('crcValidate',selectedFirmware)" translate="global.validate">Validate</buton> -->
         <buton class="hillrom-btn btn-primary float-right btn-margin-left"  ng-show="selectedFirmware.fotastatus === 'Active Pending'" ng-click="validateApprCRC(form)" translate="global.validate">Validate</buton>
-        <buton class="hillrom-btn btn-primary float-right btn-margin-left"  ng-show="selectedFirmware.fotastatus === 'Active Pending' || selectedFirmware.fotastatus === 'Active Published'" ng-click="deleteFirmware(selectedFirmware.id)" translate="global.delete">Delete</buton>
+        <buton class="hillrom-btn btn-primary float-right btn-margin-left"  ng-show="selectedFirmware.fotastatus === 'Active Pending'  || selectedFirmware.fotastatus === 'Active Published'" ng-click="deleteFirmware(selectedFirmware.id)" translate="global.delete">Delete</buton>
         <buton class="hillrom-btn btn-submit float-right" data-dismiss="modal" ng-show=" selectedFirmware.fotastatus === 'Delete Requested'" ng-click="deleteFirmware(selectedFirmware.id)">Approve</buton>
          <buton class="hillrom-btn btn-primary float-right btn-margin-left" ng-click="redirectBack()" translate="global.back">Back</buton>
       </div>
     </div>
     <div class="col-md-16 col-sm-16 margin-top reset-padding" ng-show="userRole === 'FOTA_ADMIN'">
       <div class="fropile_update_btn_group">
-        <buton class="hillrom-btn btn-primary float-right btn-margin-left"   ng-show="userRole === 'FOTA_ADMIN'" ng-click="deleteFirmware(selectedFirmware.id)" translate="global.delete">Delete</buton>
+        <buton class="hillrom-btn btn-primary float-right btn-margin-left"   ng-show="userRole === 'FOTA_ADMIN' && selectedFirmware.fotastatus !== 'Delete Requested' && selectedFirmware.fotastatus !== 'Inactive Pending' && selectedFirmware.fotastatus !== 'Inactive Published'" ng-click="deleteFirmware(selectedFirmware.id)" translate="global.delete">Delete</buton>
          <buton class="hillrom-btn btn-primary float-right btn-margin-left" ng-click="redirectBack()" translate="global.back">Back</buton>
       </div>
     </div>
