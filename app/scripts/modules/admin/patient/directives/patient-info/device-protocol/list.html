@@ -303,10 +303,10 @@
   </div>
 
   <div class="col-md-2 col-sm-2 comon_action_div" ng-if="customProtocol[1]">
-    <div class="col-md-8 col-sm-8 protocol-list__edit icons text-center">
+    <div class="col-md-8 col-sm-8 device-list__edit icons text-center">
       <span ng-if="!protocol.deleted" class="icon-edit-icon" ng-click="openEditProtocol(customProtocol[1][0])"></span>
     </div>
-    <div class="col-md-8 col-sm-8 protocol-list__edit icons text-center">
+    <div class="col-md-8 col-sm-8 device-list__edit icons text-center">
       <span ng-if="!protocol.deleted" class="icon-delete-icon" ng-click="deleteProtocolModelforBoth(customProtocol[1][0].id,customProtocol[1][0].deviceType)"></span>
     </div>
   </div>
@@ -428,7 +428,7 @@
               <span class="">*</span>
             </div>
             <div class="col-md-10 col-sm-8 dashboard__form--input reset-padding">
-             <input type="text" ng-model = "resetStartDate" name="adherenceStartDate" validate-on-blur class="datepickerNew"  id= "dp2" required data-date-format="mm/dd/yyyy"  ng-pattern="/^\d{2}\/\d{2}\/\d{4}$/" readonly="readonly"/>
+             <input type="text" ng-model = "resetStartDate" name="adherenceStartDate" validate-on-blur class="datepickerNew"  id= "dp3" required data-date-format="mm/dd/yyyy"  ng-pattern="/^\d{2}\/\d{2}\/\d{4}$/" readonly="readonly"/>
                 <div ng-show="(form.adherenceStartDate.$dirty && form.adherenceStartDate.$invalid) || resetsubmitted">
                 <span class="has-error" ng-show="form.adherenceStartDate.$error.required" translate="error.adherenceStartDate.required"></span>
                 <!-- <span class="has-error" ng-if="!form.adherenceStartDate.$error.required && !form.adherenceStartDate.$error.pattern" translate="error.adherenceStartDate.future"></span> -->
