@@ -22,7 +22,7 @@
           </a>
         </li> 
          <li class="icon-border">
-          <a ng-class="{ active: isActive('/patient-announcements')}" href="" ng-click="navigateWithPatientID('caregiverannouncements');" >
+          <a ng-class="{ active: isActive('/caregiver-patient-announcements')}" href="" ng-click="navigateWithPatientID('caregiverannouncements');" >
             <span  class="icons messages"> <i class="fa fa-flag" id="announcementflag" aria-hidden="true"></i>
             </span>
             <span class="link-text" translate="global.tabs.announcements" ></span>
@@ -34,7 +34,7 @@
             <span class='icon-logged-in-user'></span>
             <span class='user-name'>{{username}}</span></a>
           <ul class="dropdown-menu">
-            <li id='account' ng-click='account()'>
+            <li id='account' ng-click='caregiverProfile()'>
               <span class='hillrom-icon icon-user-account'></span>
               <p translate="global.my-dashboard">My Profile</p>
             </li>
