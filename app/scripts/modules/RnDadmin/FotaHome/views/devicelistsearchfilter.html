@@ -6,8 +6,12 @@
 		</label>
 		<label>
 			<input type="radio" ng-model="searchFilterdevicelist.type" value="Failure" ng-change="getFotaDeviceList()"> 
-			<span translate="search-filter.fail"></span>
-		</label>		
+			<span translate="search-filter.fota-Fail"></span>
+		</label>	
+		<label>
+			<input type="radio" ng-model="searchFilterdevicelist.type" value="Aborted" ng-change="getFotaDeviceList()"> 
+			<span translate="search-filter.fota-aborted"></span>
+		</label>	
 		<label>
 			<input type="radio" ng-model="searchFilterdevicelist.type" value="All" ng-change="getFotaDeviceList()"> 
 			<span translate="search-filter.all"></span>

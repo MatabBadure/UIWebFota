@@ -15,17 +15,29 @@
         <ng-include src="'scripts/modules/RnDadmin/FotaHome/views/devicelistsearchfilter.html'"></ng-include>
       </div>  
     <div class="dashboard__manage-view--header" style="padding:30px 0">
-        <div class="col-md-2 col-sm-2 header--type pull-left-mob" ng-translate="global.fotaDeviceList.deviceSerialNo">
-          <span class = "">Device Serial Number</span>
+        <div class="col-md-2 col-sm-2 header--type pull-left-mob" ng-translate="global.fotaDeviceList.seerial-no">
+          <span class = "">Serial Number</span>
+        </div>
+        <div class="col-md-3 col-sm-2 header--type none hidden-sm"  style="margin-left:-30px !important" ng-translate="global.fotaDeviceList.part-number" >
+          <span class = "">Part Number</span>
+        </div>
+        <div class="col-md-2 col-sm-2 header--type none" style="margin-left:-30px !important" ng-translate="global.fotaDeviceList.product-name" >
+          <span class = "">Product Name</span>
+        </div>
+        <div class="col-md-2 col-sm-2 header--type none" style="margin-left:-30px !important" ng-translate="global.fotaDeviceList.connection-type" >
+          <span class = "">Connection Type</span>
+        </div>
+        <div class="col-md-2 col-sm-2 header--type none" style="margin-left:-30px !important" ng-translate="global.fotaDeviceList.start-date-time" >
+          <span class = "">Start DateTime</span>
         </div>
         
-        <div class="col-md-3 col-sm-2 header--type none hidden-sm" ng-translate="global.fotaDeviceList.firmwareDownloadTime">
-          <span class = "">Firmware Download Time</span>
+        <div class="col-md-2 col-sm-2 header--type none" style="margin-left:0px !important" ng-translate="global.fotaDeviceList.end-date-time" >
+          <span class = "">End DateTime</span>
         </div>
-        <div class="col-md-3 col-sm-2 header--type none" ng-translate="global.fotaDeviceList.currentDate">
-          <span class = "">Current Date</span>
+        <div class="col-md-2 col-sm-2 header--type none" style="margin-left:-10px !important" ng-translate="global.fotaDeviceList.download-time" >
+          <span class = "">Download Time</span>
         </div>
-        <div class="col-md-3 col-sm-2 header--type none" ng-translate="global.fotaDeviceList.status">
+        <div class="col-md-2 col-sm-2 header--type none" style="margin-left:20px !important" ng-translate="global.fotaDeviceList.firmware-status" >
           <span class = "">Status</span>
         </div>
 
@@ -34,27 +46,40 @@
  <div class="clr"></div>
 
 
- <div class=" " ng-repeat="device in Fotadeviceslist.content" ng-readonly="true">
-          <div class="col-md-2 col-sm-2 header--type pull-left-mob ">
+ <div class="dashboard__manage-view--list" ng-repeat="device in Fotadeviceslist.content" ng-readonly="true" style="padding-bottom: 22px !important">
+        <div class="col-md-2 col-sm-2 header--type pull-left-mob" ng-translate="global.fotaDeviceList.seerial-no">
           <span class = "">{{device.deviceSerialNumber}}</span>
         </div>
+        <div class="col-md-3 col-sm-2 header--type none hidden-sm"  style="margin-left:-30px !important" ng-translate="global.fotaDeviceList.part-number" >
+          <span class = "">{{device.devicePartNumber}}</span>
+        </div>
+        <div class="col-md-2 col-sm-2 header--type none" style="margin-left:-30px !important" ng-translate="global.fotaDeviceList.product-name" >
+          <span class = "">{{device.productType}}</span>
+        </div>
+        <div class="col-md-2 col-sm-2 header--type none" style="margin-left:-30px !important" ng-translate="global.fotaDeviceList.connection-type" >
+          <span class = "">{{device.connectionType}}</span>
+        </div>
+        <div class="col-md-2 col-sm-2 header--type none" style="margin-left:-30px !important" ng-translate="global.fotaDeviceList.start-date-time" >
+          <span class = "">{{device.currentDownloadStartDateTime}}</span>
+        </div>
         
-        <div class="col-md-3 col-sm-2 header--type none hidden-sm ">
+        <div class="col-md-2 col-sm-2 header--type none" style="margin-left:0px !important" ng-translate="global.fotaDeviceList.end-date-time" >
+          <span class = "">{{device.currentDownloadEndDateTime}}</span>
+        </div>
+        <div class="col-md-2 col-sm-2 header--type none" style="margin-left:-10px !important" ng-translate="global.fotaDeviceList.download-time" >
           <span class = "">{{device.downloadTime}}</span>
         </div>
-        <div class="col-md-3 col-sm-2 header--type none ">
-          <span class = "">{{device.currentConvertedDate}} </span>
-        </div>
-        <div class="col-md-3 col-sm-2 header--type none ">
-          <span class = ""> {{device.status}}</span>
-        </div>
+        <div class="col-md-2 col-sm-2 header--type none" style="margin-left:20px !important" ng-translate="global.fotaDeviceList.firmware-status" >
+          <span class = "">{{device.downloadStatus}}</span>
+        </div>        
+        
       </div>
 
       <div class="dashboard__manage-view--pagination">
         <div class="col-md-16 reset-padding-right">
           <div class="navbar-right">
-            <span class="record-found" ng-if="Fotadeviceslist.content.length > 0">{{Fotadeviceslist.totalElements}} Devices</span>
-            <span class="record-found" ng-if="Fotadeviceslist.content.length > 0">Found</span>
+            <span class="record-found" ng-if="Fotadeviceslist.content.length >= 0">{{Fotadeviceslist.totalElements}} Devices</span>
+            <span class="record-found" ng-if="Fotadeviceslist.content.length >= 0">Found</span>
             <span ng-show="devicelistPageCount > 1">
               <span class="navigaion-link cursor-pointer" ng-class="{ 'inactive': !(devicelistCurrentPageIndex > 1) }" ng-click="getFotaDeviceList('PREV')">Previous</span>
               <span class="navigaion-no">{{devicelistCurrentPageIndex}}</span>

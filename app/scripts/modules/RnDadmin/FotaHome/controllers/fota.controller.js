@@ -17,7 +17,7 @@ angular.module('hillromvestApp')
             $scope.getFirmwareList();
         }
         else if($state.current.name === 'deviceList'){
-           
+           $scope.searchFilterdevicelist.type = "Success";
             $scope.getFotaDeviceList();
         }
         else{
@@ -644,6 +644,7 @@ angular.module('hillromvestApp')
   }
 
   $scope.getFotaDeviceList = function(track){
+
      if (track !== undefined) {
             if (track === "PREV" && $scope.devicelistCurrentPageIndex > 1) {
               $scope.devicelistCurrentPageIndex--;
@@ -659,9 +660,12 @@ angular.module('hillromvestApp')
       $scope.Fotadeviceslist = response.data;
       $scope.devicelistPageCount = $scope.Fotadeviceslist.totalPages;
       if($scope.Fotadeviceslist.content){
-       for (var i = 0 ; i < $scope.Fotadeviceslist.content.length ; i++) {                
-                $scope.Fotadeviceslist.content[i].currentConvertedDate = dateService.getDateFromTimeStamp($scope.Fotadeviceslist.content[i].currentDate,patientDashboard.dateFormat,'-')
-              console.log("dateService.",dateService.getDateFromTimeStamp($scope.Fotadeviceslist.content[i].currentDate,patientDashboard.dateFormat,'-'));
+       for (var i = 0 ; i < $scope.Fotadeviceslist.content.length ; i++) { 
+                $scope.Fotadeviceslist.content[i].currentDownloadStartDateTime = dateService.getDateTimeFromTimeStamp($scope.Fotadeviceslist.content[i].downloadStartDateTime,patientDashboard.dateFormat,'-')
+                console.log("dateServiceStrt.",dateService.getDateTimeFromTimeStamp($scope.Fotadeviceslist.content[i].downloadStartDateTime,patientDashboard.dateFormat,'-'));
+                $scope.Fotadeviceslist.content[i].currentDownloadEndDateTime = dateService.getDateTimeFromTimeStamp($scope.Fotadeviceslist.content[i].downloadEndDateTime,patientDashboard.dateFormat,'-')
+                console.log("dateServiceEnd.",dateService.getDateTimeFromTimeStamp($scope.Fotadeviceslist.content[i].downloadEndDateTime,patientDashboard.dateFormat,'-'));          
+              
               }
             }
     });
