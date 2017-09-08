@@ -691,7 +691,20 @@ $scope.validateMatched = function(){
       fotaService.firmwareSoftDelete(id,$scope.userRole).then(function(response){
       $scope.softDeleateObj = response.data.fotaInfo;
       console.log("softDeleateObj",response.data.fotaInfo);
-      if($scope.userRole === "FOTA_ADMIN"){
+      if($scope.userRole === "FOTA_ADMIN" && $scope.softDeleateObj.softDeleteFlag === true && $scope.softDeleateObj.deleteRequestFlag === true ){
+        $scope.cr32Invalid = false;
+        $scope.cr32Valid = false;
+        $scope.btnApr = false;
+        $scope.approveMsg = false;
+        $scope.btncancel = false;
+        $scope.deleteMsg = true;
+        $scope.deleteAprMsg = false;
+        $scope.deleteConfirmMsg = false;
+        $scope.confirmDeleteBtn = false;
+        $scope.deleteMsgReq = false;
+        $scope.btnok = true;
+        $scope.showModal = true;
+      }else if($scope.userRole === "FOTA_ADMIN" && $scope.softDeleateObj.softDeleteFlag === false && $scope.softDeleateObj.activePublishedFlag === true && $scope.softDeleateObj.deleteRequestFlag === true ){
         $scope.cr32Invalid = false;
         $scope.cr32Valid = false;
         $scope.btnApr = false;
@@ -742,8 +755,23 @@ $scope.validateMatched = function(){
 
  }
 
-  $scope.approveDeleteFirmware = function(id){
-        
+  $scope.approveDeleteFirmware = function(){
+
+        $scope.cr32Invalid = false;
+        $scope.cr32Valid = false;
+        $scope.btnApr = false;
+        $scope.approveMsg = false;
+        $scope.deleteMsg = false;
+        $scope.deleteAprMsg = false;
+        $scope.deleteMsgReq = false;
+        $scope.deleteMsgReq = false;
+        $scope.btnok = false;
+        $scope.deleteConfirmMsg = true;
+        $scope.confirmDeleteBtn = true;
+        $scope.btncancel = true;
+        $scope.showModal = true;
+
+        /*
       $scope.showModal = false;
       $scope.userRole = "";
       var logged = StorageService.get('logged'); 
@@ -800,7 +828,7 @@ $scope.validateMatched = function(){
       }).catch(function(response){
         notyService.showError(response);
       });
-
+*/
   }
 
   $scope.getFotaDeviceList = function(track){
