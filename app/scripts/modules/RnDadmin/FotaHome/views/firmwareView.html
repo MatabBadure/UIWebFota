@@ -23,7 +23,7 @@
               <span class="" translate="global.part-number"></span>
             </div>
             <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding">
-              <span>{{selectedFirmware.devicePartNumber}}</span>
+              <span>{{convertDevicePartNo}}</span>
             </div>
           </div>
         </div>
@@ -37,65 +37,26 @@
               <span>{{selectedFirmware.softVersion}}</span>
             </div>
           </div>
-          <div class="col-md-7 col-sm-7 col-sm-offset-0 reset-padding col-md-offset-2">
+        <div class="col-md-7 col-sm-7 reset-padding col-sm-offset-0 col-md-offset-2">
+          <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+            <span class="" translate="global.fill-pattern"></span>
+          </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding">
+              <span>{{selectedFirmware.releaseNumber}}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-16 col-sm-16 reset-padding margin-top">
+          <div class="col-md-7 col-sm-7 reset-padding">
             <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
               <span class="" translate="global.soft-date"></span>
             </div>
             <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding">
-              <span>{{selectedFirmware.releaseDate}}</span>
+              <span>{{releaseConvertedDate}}</span>
             </div>
           </div>
-        </div>
-
-        <div class="col-md-16 col-sm-16 reset-padding margin-top">
-          <div class="col-md-7 col-sm-7 reset-padding">
-            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
-              <span class="" translate="global.upload-by"></span>
-            </div>
-            <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding">
-              <span>{{selectedFirmware.uploadUser}}</span>
-            </div>
-          </div>
-
-          <div class="col-md-7 col-sm-7 reset-padding col-sm-offset-0 col-md-offset-2">
-            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
-              <span class="" translate="global.upload-date"></span>
-            </div>
-            <div class="col-md-6 col-sm-6 dashboard__form--label-val reset-padding">
-              <span>{{selectedFirmware.uploadDatetime}}</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-16 col-sm-16 reset-padding margin-top">
-          <div class="col-md-7 col-sm-7 reset-padding">
-            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
-              <span class="" translate="global.published-by"></span>
-            </div>
-            <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding">
-              <span>{{selectedFirmware.publishedUser}}</span>
-            </div>
-          </div>
-          <div class="col-md-7 col-sm-7 reset-padding col-sm-offset-0 col-md-offset-2">
-            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
-              <span class="" translate="global.published-date"></span>
-            </div>
-            <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding">
-              <span>{{selectedFirmware.publishedDateTime}}</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-16 col-sm-16 reset-padding margin-top">
-          <div class="col-md-7 col-sm-7 reset-padding">
-            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
-              <span class="" translate="global.status"></span>
-            </div>
-            <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding">
-              <span>{{selectedFirmware.fotastatus}}</span>
-            </div>
-        </div>
-        <div class="col-md-7 col-sm-7 col-sm-offset-0 reset-padding col-md-offset-2">
+        <div class="col-md-7 col-sm-7 reset-padding col-sm-offset-0 col-md-offset-2">
           <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
             <span class="" translate="global.model-id"></span>
           </div>
@@ -134,83 +95,58 @@
             </div>
         </div>
         <div class="col-md-7 col-sm-7 reset-padding col-sm-offset-0 col-md-offset-2">
-          <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
-            <span class="" translate="global.fill-pattern"></span>
-          </div>
-          <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding">
-            <span>{{selectedFirmware.fillPattern}}</span>
-          </div>
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+              <span class="" translate="global.status"></span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding">
+              <span>{{selectedFirmware.fotastatus}}</span>
+            </div>
         </div>
       </div>
       <div class="col-md-16 col-sm-16 reset-padding margin-top">
           <div class="col-md-7 col-sm-7 reset-padding">
             <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
-              <span class="" translate="global.mcu-size"></span>
+              <span class="" translate="global.upload-by"></span>
             </div>
             <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding">
-              <span>{{selectedFirmware.mcusize}}</span>
+              <span>{{selectedFirmware.uploadUser}}</span>
             </div>
-        </div>
-        <div class="col-md-7 col-sm-7 reset-padding col-sm-offset-0 col-md-offset-2">
-          <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
-            <span class="" translate="global.region1-strt-add"></span>
           </div>
-          <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding">
-            <span>{{selectedFirmware.region1StartAddress}}</span>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-16 col-sm-16 reset-padding margin-top">
-          <div class="col-md-7 col-sm-7 reset-padding">
-            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
-              <span class="" translate="global.region1-end-add"></span>
-            </div>
-            <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding">
-              <span>{{selectedFirmware.region1EndAddress}}</span>
-            </div>
-        </div>
+
           <div class="col-md-7 col-sm-7 reset-padding col-sm-offset-0 col-md-offset-2">
             <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
-              <span class="" translate="global.region1-crc-location"></span>
+              <span class="" translate="global.upload-date"></span>
             </div>
-            <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding">
-              <span>{{selectedFirmware.region1CRCLocation}}</span>
+            <div class="col-md-6 col-sm-6 dashboard__form--label-val reset-padding">
+              <span>{{uploadConvertedDate}}</span>
             </div>
-        </div>
-        </div>
-        <div class="col-md-16 col-sm-16 reset-padding margin-top">
-        <div class="col-md-7 col-sm-7 reset-padding" ng-show="selectedFirmware.region2StartAddress !== '' && selectedFirmware.region2StartAddress !== null">
-          <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
-            <span class="" translate="global.region2-strt-add"></span>
-          </div>
-          <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding">
-            <span>{{selectedFirmware.region2StartAddress}}</span>
           </div>
         </div>
-          <div class="col-md-7 col-sm-7 reset-padding col-sm-offset-0 col-md-offset-2" ng-show="selectedFirmware.region2EndAddress !== '' && selectedFirmware.region2EndAddress !== null">
-            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
-              <span class="" translate="global.region2-end-add"></span>
-            </div>
-            <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding">
-              <span>{{selectedFirmware.region2EndAddress}}</span>
-            </div>
-        </div>
-      </div>
 
-       <div class="col-md-16 col-sm-16 reset-padding margin-top" ng-show="selectedFirmware.region2CRCLocation !== '' && selectedFirmware.region2CRCLocation !== null">
+        <div ng-show="selectedFirmware.publishedDateTime !== null" class="col-md-16 col-sm-16 reset-padding margin-top" >
           <div class="col-md-7 col-sm-7 reset-padding">
             <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
-              <span class="" translate="global.region2-crc-location"></span>
+              <span class="" translate="global.published-by"></span>
             </div>
             <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding">
-              <span>{{selectedFirmware.region2CRCLocation}}</span>
+              <span>{{selectedFirmware.publishedUser}}</span>
             </div>
+          </div>
+          <div class="col-md-7 col-sm-7 reset-padding col-sm-offset-0 col-md-offset-2">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+              <span class="" translate="global.published-date"></span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding">
+              <span>{{publishedConvertedDate}}</span>
+            </div>
+          </div>
         </div>
-      <div class="clr"></div>
-    </div>
+
       <div ng-show="selectedFirmware.region1StartAddress !== '' && selectedFirmware.region1StartAddress !== null && userRole === 'FOTA_APPROVER'  && selectedFirmware.fotastatus === 'Active Pending'">
         <div class="col-md-16 col-sm-16 margin-top reset-padding">
           <div class="col-md-7 col-sm-7 reset-padding">
+            <div><b><span class="" translate="global.crc-label"></span></b></div>
+            <div><b><span class="" translate="global.crc-label1"></b></span></div>
             <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
               <span class="" translate="global.region1-crc"></span>
               <span class="">*</span>
@@ -227,6 +163,7 @@
       <div ng-show="selectedFirmware.region2StartAddress !== '' && selectedFirmware.region2StartAddress !== null && userRole === 'FOTA_APPROVER' && selectedFirmware.fotastatus === 'Active Pending'">
         <div class="col-md-16 col-sm-16 margin-top reset-padding">
           <div class="col-md-7 col-sm-7 reset-padding">
+
             <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
               <span class="" translate="global.region2-crc"></span>
               <span class="">*</span>
@@ -246,14 +183,14 @@
       <div class="fropile_update_btn_group">
         <!-- <buton class="hillrom-btn btn-primary float-right btn-margin-left"  ng-show="selectedFirmware.fotastatus === 'Active Pending'" ng-click="navigateTabsWithValueFota('crcValidate',selectedFirmware)" translate="global.validate">Validate</buton> -->
         <buton class="hillrom-btn btn-primary float-right btn-margin-left"  ng-show="selectedFirmware.fotastatus === 'Active Pending'" ng-click="validateApprCRC(form)" translate="global.validate">Validate</buton>
-        <buton class="hillrom-btn btn-primary float-right btn-margin-left"  ng-show="selectedFirmware.fotastatus === 'Active Pending'  || selectedFirmware.fotastatus === 'Active Published'" ng-click="deleteFirmware(selectedFirmware.id)" translate="global.delete">Delete</buton>
-        <buton class="hillrom-btn btn-submit float-right" data-dismiss="modal" ng-show=" selectedFirmware.fotastatus === 'Delete Requested'" ng-click="deleteFirmware(selectedFirmware.id)">Approve</buton>
+        <buton class="hillrom-btn btn-primary float-right btn-margin-left"  ng-show="selectedFirmware.fotastatus === 'Active Pending'  || selectedFirmware.fotastatus === 'Active Published'" ng-click="deleteFirmware()" translate="global.delete">Delete</buton>
+        <buton class="hillrom-btn btn-submit float-right" data-dismiss="modal" ng-show=" selectedFirmware.fotastatus === 'Delete Requested'" ng-click="approveDeleteFirmware(selectedFirmware.id)">Approve</buton>
          <buton class="hillrom-btn btn-primary float-right btn-margin-left" ng-click="redirectBack()" translate="global.back">Back</buton>
       </div>
     </div>
     <div class="col-md-16 col-sm-16 margin-top reset-padding" ng-show="userRole === 'FOTA_ADMIN'">
       <div class="fropile_update_btn_group">
-        <buton class="hillrom-btn btn-primary float-right btn-margin-left"   ng-show="userRole === 'FOTA_ADMIN' && selectedFirmware.fotastatus !== 'Delete Requested' && selectedFirmware.fotastatus !== 'Inactive Pending' && selectedFirmware.fotastatus !== 'Inactive Published'" ng-click="deleteFirmware(selectedFirmware.id)" translate="global.delete">Delete</buton>
+        <buton class="hillrom-btn btn-primary float-right btn-margin-left"   ng-show="userRole === 'FOTA_ADMIN' && selectedFirmware.fotastatus !== 'Delete Requested' && selectedFirmware.fotastatus !== 'Inactive Pending' && selectedFirmware.fotastatus !== 'Inactive Published'" ng-click="deleteFirmware()" translate="global.delete">Delete</buton>
          <buton class="hillrom-btn btn-primary float-right btn-margin-left" ng-click="redirectBack()" translate="global.back">Back</buton>
       </div>
     </div>
@@ -274,8 +211,10 @@
         <div class="modal--message" ng-show="approveMsg" translate="global.approve-msg"></div>
         <div class="modal--message" ng-show="deleteMsg" translate="global.delete-msg"></div>
         <div class="modal--message" ng-show="deleteMsgReq" translate="global.delete-msgReq"></div>
+        <div class="modal--message" ng-show="deleteConfirmMsg" translate="global.delete-msgConf"></div>
           <div class="row modal--custom-btn" >
             <buton class="hillrom-btn btn-submit float-right" data-dismiss="modal" ng-show="btnApr" ng-click="approverCRC32()">Approve</buton>
+            <buton class="hillrom-btn btn-submit float-right" data-dismiss="modal" ng-show="confirmDeleteBtn" ng-click="deleteFirmwareConfirm(selectedFirmware.id)">Confirm Delete</buton>
             <buton class="hillrom-btn btn-submit float-right" data-dismiss="modal" ng-show="btnok" ng-click="redirectBack()">OK</buton>
             <buton class="hillrom-btn btn-submit float-right" data-dismiss="modal"  ng-show="btncancel" ng-click="close()">Cancel</buton>
           </div>

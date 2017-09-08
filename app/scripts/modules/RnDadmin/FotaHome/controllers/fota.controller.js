@@ -181,50 +181,104 @@ angular.module('hillromvestApp')
   $scope.fotaUploadModule = function(form){ 
    $scope.overrideMesg = false;
    $scope.overrideBtn = false;
-   $scope.date = $scope.fota.releaseDate.split('/'); 
-   $scope.formatedDate = $scope.date[0]+$scope.date[1]+$scope.date[2];
-    //Efeec
-   $scope.effectiveDate = $scope.fota.effectiveDate.split('/');
-   $scope.formatedEffectiveDate = $scope.effectiveDate[0]+$scope.effectiveDate[1]+$scope.effectiveDate[2];
-   $scope.hexDate = "";
-   for (var i=0; i < $scope.formatedDate.length; i++) {
+   if($scope.fota.releaseDate !== undefined){
+    $scope.date = $scope.fota.releaseDate.split('/'); 
+    $scope.formatedDate = $scope.date[0]+$scope.date[1]+$scope.date[2];
+    
+    $scope.hexDate = "";
+    for (var i=0; i < $scope.formatedDate.length; i++) {
         $scope.hexDate += $scope.formatedDate.charCodeAt(i).toString(16);
       }
-   $scope.fota.partNumber = ("0000000000000000"+$scope.fota.partNumber).slice($scope.fota.partNumber.length);
 
-   $scope.hexDevicePartNumber = "";
-   for (var i=0; i < $scope.fota.partNumber.length; i++) {
+   }
+   
+    if($scope.fota.partNumber !== undefined){
+      $scope.fota.partNumber = ("0000000000000000"+$scope.fota.partNumber).slice($scope.fota.partNumber.length);   
+      $scope.hexDevicePartNumber = "";
+    for (var i=0; i < $scope.fota.partNumber.length; i++) {
         $scope.hexDevicePartNumber += $scope.fota.partNumber.charCodeAt(i).toString(16);
       }
-   $scope.softwareMVersion1 = $scope.fota.softwareMVersion1;
-  
-   $scope.softwareMVersion2 = $scope.fota.softwareMVersion2;
-   
-   $scope.softwareMiVersion1 = $scope.fota.softwareMiVersion1;
-    
-   $scope.softwareMiVersion2 = $scope.fota.softwareMiVersion2;
-    
-   if($scope.softwareMVersion1.length<2){
-     $scope.softwareMVersion1 = "0"+$scope.softwareMVersion1;
     }
-   if($scope.softwareMVersion2.length<2){
+    
+   if($scope.fota.softwareMVersion1 !== undefined || $scope.fota.softwareMVersion2 !== undefined || $scope.fota.softwareMiVersion1 !== undefined || $scope.fota.softwareMiVersion1 !== undefined){
+      $scope.softwareMVersion1 = $scope.fota.softwareMVersion1;
+      if($scope.softwareMVersion1.length<2){
+      $scope.softwareMVersion1 = "0"+$scope.softwareMVersion1;
+    }
+    $scope.softwareMVersion2 = $scope.fota.softwareMVersion2;
+      if($scope.softwareMVersion2.length<2){
      $scope.softwareMVersion2 = "0"+$scope.softwareMVersion2;
     }
-   if($scope.softwareMiVersion1.length<2){
+     $scope.softwareMiVersion1 = $scope.fota.softwareMiVersion1;
+     if($scope.softwareMiVersion1.length<2){
      $scope.softwareMiVersion1 = "0"+$scope.softwareMiVersion1;
     }
+    $scope.softwareMiVersion2 = $scope.fota.softwareMiVersion2;
     if($scope.softwareMiVersion2.length<2){
      $scope.softwareMiVersion2 = "0"+$scope.softwareMiVersion2;
     }
+     $scope.userSoftwareVer = $scope.softwareMVersion1+$scope.softwareMVersion2+$scope.softwareMiVersion1+$scope.softwareMiVersion2;
 
-    $scope.userSoftwareVer = $scope.softwareMVersion1+$scope.softwareMVersion2+$scope.softwareMiVersion1+$scope.softwareMiVersion2;
-    
+   }
+   
+  if($scope.fileSoftwareVersion !== undefined){
     $scope.splitValue = $scope.fileSoftwareVersion.match(/.{1,2}/g);
-    $scope.softVersion = $scope.splitValue[3]+$scope.splitValue[2]+$scope.splitValue[1]+$scope.splitValue[0];
-    
-    if( $scope.hexDate === $scope.fileReleaseDate && $scope.softVersion === $scope.userSoftwareVer && $scope.hexDevicePartNumber === $scope.fileDevicePartNumber){
-      //alert("verified")
-    $scope.unmatched = false;
+    $scope.softVersion = $scope.splitValue[3]+$scope.splitValue[2]+$scope.splitValue[1]+$scope.splitValue[0]; 
+  }
+  
+   if($scope.hexDevicePartNumber !== $scope.fileDevicePartNumber){
+    $scope.validatePartNumber();
+   }else if( $scope.hexDate !== $scope.fileReleaseDate){
+    $scope.validateRelease();
+   } else if($scope.softVersion !== $scope.userSoftwareVer){
+      $scope.validateSoftVersion();
+    }else {
+      $scope.validateMatched();
+  }
+ };
+$scope.validatePartNumber = function(){
+    $scope.overrideMesg = false;
+    $scope.uploadMsg = false;
+    $scope.myvalue = false;
+    $scope.matched = false; 
+    $scope.btnok = false;
+    $scope.unmatchedPartNo = true;
+    $scope.unmatchedDate = false;
+    $scope.unmatchedVersion = false;
+    $scope.btnUpCancel = true;
+    $scope.showModal = true;  
+}
+
+$scope.validateRelease = function(){
+    $scope.overrideMesg = false;
+    $scope.uploadMsg = false;
+    $scope.myvalue = false;
+    $scope.matched = false; 
+    $scope.btnok = false;
+    $scope.unmatchedPartNo = false;
+    $scope.unmatchedDate = true;
+    $scope.unmatchedVersion = false;
+    $scope.btnUpCancel = true;
+    $scope.showModal = true;
+}
+
+$scope.validateSoftVersion = function(){
+    $scope.overrideMesg = false;
+    $scope.uploadMsg = false;
+    $scope.myvalue = false;
+    $scope.matched = false; 
+    $scope.btnok = false;
+    $scope.unmatchedPartNo = false;
+    $scope.unmatchedDate = false;
+    $scope.unmatchedVersion = true;
+    $scope.btnUpCancel = true;
+    $scope.showModal = true;
+
+  }
+$scope.validateMatched = function(){
+    $scope.unmatchedPartNo = false;
+    $scope.unmatchedDate = false;
+    $scope.unmatchedVersion = false;
     $scope.overrideMesg = false;
     $scope.cr32Invalid = false;
     $scope.uploadMsg = false;
@@ -232,18 +286,9 @@ angular.module('hillromvestApp')
     $scope.matched = true;
     $scope.myvalue = true; 
     $scope.showModal = true;
+}
 
-    } else {
-      //alert("Mismatched");
-    $scope.overrideMesg = false;
-    $scope.uploadMsg = false;
-    $scope.myvalue = false;
-    $scope.matched = false; 
-    $scope.btnok = false;
-    $scope.unmatched = true;
-    $scope.showModal = true;  
-      }
-    };
+
   $scope.verifyDetails = function(){
     $scope.showModal = false;
     $scope.overrideMesg = false;
@@ -280,6 +325,9 @@ angular.module('hillromvestApp')
         $scope.myvalue = false;
         $scope.uploadMsg = false;
         $scope.btnok = false;
+        $scope.unmatchedPartNo = false;
+        $scope.unmatchedDate = false;
+        $scope.unmatchedVersion = false;
         $scope.overrideMesg = true;
         $scope.overrideBtn = true;
         $scope.showModal = true;
@@ -320,6 +368,11 @@ angular.module('hillromvestApp')
       $scope.overrideMesg = false;
       $scope.overrideBtn = false;
       $scope.btnUpCancel = false;
+
+      $scope.unmatchedPartNo = false;
+      $scope.unmatchedDate = false;
+      $scope.unmatchedVersion = false;
+
       $scope.uploadMsg = true;
       $scope.showModal = true;
       $scope.btnok = true;
@@ -336,6 +389,11 @@ angular.module('hillromvestApp')
           $scope.overrideBtn = false;
           $scope.uploadMsg = false;
           $scope.btnok = false;
+
+          $scope.unmatchedPartNo = false;
+          $scope.unmatchedDate = false;
+          $scope.unmatchedVersion = false;
+
           $scope.btnUpCancel = true;
           $scope.cr32Invalid = true;
           $scope.showModal = true;
@@ -386,7 +444,12 @@ angular.module('hillromvestApp')
       $scope.myvalue = false;
       $scope.overrideMesg = false;
       $scope.overrideBtn = false;
-       $scope.btnUpCancel = false;
+      $scope.btnUpCancel = false;
+
+      $scope.unmatchedPartNo = false;
+      $scope.unmatchedDate = false;
+      $scope.unmatchedVersion = false;
+
       $scope.uploadMsg = true;
       $scope.showModal = true;
       $scope.btnok = true;
@@ -481,6 +544,8 @@ angular.module('hillromvestApp')
         $scope.deleteMsgReq = false;
         $scope.deleteAprMsg = false;
         $scope.btnok = false;
+        $scope.deleteConfirmMsg = false;
+        $scope.confirmDeleteBtn = false;
         $scope.btnApr = true;
         $scope.btncancel = true;
         $scope.showModal = true;
@@ -493,6 +558,8 @@ angular.module('hillromvestApp')
         $scope.deleteAprMsg = false;
         $scope.btnok = false;
         $scope.btnApr = false;
+        $scope.deleteConfirmMsg = false;
+        $scope.confirmDeleteBtn = false;
         $scope.btncancel = true;
         $scope.showModal = true;
         $scope.cr32Invalid = true;
@@ -525,13 +592,15 @@ angular.module('hillromvestApp')
       $scope.FirmwareListPageCount = $scope.FirmwareList.totalPages;
 
       if($scope.FirmwareList.content){
-       for (var i = 0 ; i < $scope.FirmwareList.content.length ; i++) {                
-                $scope.FirmwareList.content[i].releaseConvertedDate = dateService.getDateFromTimeStamp($scope.FirmwareList.content[i].releaseDate,patientDashboard.dateFormat,'-')
-                $scope.FirmwareList.content[i].uploadConvertedDate = dateService.getDateFromTimeStamp($scope.FirmwareList.content[i].uploadDatetime,patientDashboard.dateFormat,'-')
-              console.log("dateService.",dateService.getDateFromTimeStamp($scope.FirmwareList.content[i].releaseDate,patientDashboard.dateFormat,'-'));
-              console.log("dateService.",dateService.getDateFromTimeStamp($scope.FirmwareList.content[i].uploadDatetime,patientDashboard.dateFormat,'-'));
-
+       for (var i = 0 ; i < $scope.FirmwareList.content.length ; i++) { 
+              $scope.FirmwareList.content[i].releaseConvertedDate = dateService.getDateFromTimeStamp($scope.FirmwareList.content[i].releaseDate,patientDashboard.dateFormat,'-')
+              $scope.FirmwareList.content[i].uploadConvertedDate = dateService.getDateFromTimeStamp($scope.FirmwareList.content[i].uploadDatetime,patientDashboard.dateFormat,'-')
+              
+              if($scope.FirmwareList.content[i].publishedDateTime !== null){
+                $scope.FirmwareList.content[i].publishedConvertedDate = dateService.getDateFromTimeStamp($scope.FirmwareList.content[i].publishedDateTime,patientDashboard.dateFormat,'-');
               }
+              $scope.FirmwareList.content[i].convertDevicePartNo = Number($scope.FirmwareList.content[i].devicePartNumber);               
+             }
             }
     });
   }
@@ -545,14 +614,19 @@ angular.module('hillromvestApp')
     $scope.getFirmwareById = function(id){
       fotaService.getFirmwareInfo(id).then(function(response){
       $scope.selectedFirmware = response.data.fotaInfo;
-      //  $scope. = dateService.getDateFromTimeStamp($scope.FirmwareList.content[i].releaseDate,patientDashboard.dateFormat,'-')
+      $scope.releaseConvertedDate = dateService.getDateTimeFromTimeStamp($scope.selectedFirmware.releaseDate,patientDashboard.dateFormat,'-')
+      $scope.uploadConvertedDate = dateService.getDateTimeFromTimeStamp($scope.selectedFirmware.uploadDatetime,patientDashboard.dateFormat,'-')
+     if($scope.selectedFirmware.publishedDateTime !== null){
+           $scope.publishedConvertedDate = dateService.getDateTimeFromTimeStamp($scope.selectedFirmware.publishedDateTime,patientDashboard.dateFormat,'-')
+      }
+      $scope.convertDevicePartNo = Number($scope.selectedFirmware.devicePartNumber);
       }).catch(function(response){
         notyService.showError(response);
       });
     };
 
 
-  $scope.approverCRC32 = function(){
+    $scope.approverCRC32 = function(){
       $scope.showModal = false;
       $scope.publishedUser = "";
       var logged = StorageService.get('logged'); 
@@ -579,6 +653,8 @@ angular.module('hillromvestApp')
         $scope.deleteAprMsg = false;
         $scope.approveMsg = true;
         $scope.btncancel = false;
+        $scope.deleteConfirmMsg = false;
+        $scope.confirmDeleteBtn = false;
         $scope.btnok = true;
         $scope.showModal = true;
         
@@ -589,7 +665,23 @@ angular.module('hillromvestApp')
 
     }
 
-  $scope.deleteFirmware = function(id){
+  $scope.deleteFirmware = function(){
+        $scope.cr32Invalid = false;
+        $scope.cr32Valid = false;
+        $scope.btnApr = false;
+        $scope.approveMsg = false;
+        $scope.deleteMsg = false;
+        $scope.deleteAprMsg = false;
+        $scope.deleteMsgReq = false;
+        $scope.deleteMsgReq = false;
+        $scope.btnok = false;
+        $scope.deleteConfirmMsg = true;
+        $scope.confirmDeleteBtn = true;
+        $scope.btncancel = true;
+        $scope.showModal = true;
+  }
+
+ $scope.deleteFirmwareConfirm = function(id){ 
       $scope.showModal = false;
       $scope.userRole = "";
       var logged = StorageService.get('logged'); 
@@ -607,6 +699,8 @@ angular.module('hillromvestApp')
         $scope.btncancel = false;
         $scope.deleteMsg = false;
         $scope.deleteAprMsg = false;
+        $scope.deleteConfirmMsg = false;
+        $scope.confirmDeleteBtn = false;
         $scope.deleteMsgReq = true;
         $scope.btnok = true;
         $scope.showModal = true;
@@ -619,6 +713,8 @@ angular.module('hillromvestApp')
         $scope.btncancel = false;
         $scope.deleteMsgReq = false;
         $scope.deleteMsg = false;
+        $scope.deleteConfirmMsg = false;
+        $scope.confirmDeleteBtn = false;
         $scope.deleteAprMsg = true;
         $scope.btnok = true;
         $scope.showModal = true;
@@ -630,6 +726,70 @@ angular.module('hillromvestApp')
         $scope.btncancel = false;
         $scope.deleteMsgReq = false;
         $scope.deleteAprMsg = false;
+        $scope.deleteConfirmMsg = false;
+        $scope.confirmDeleteBtn = false;
+        $scope.deleteMsg = true;
+        $scope.btnok = true;
+        $scope.showModal = true;
+        }
+        
+      }
+      
+      }).catch(function(response){
+        notyService.showError(response);
+      });
+
+
+ }
+
+  $scope.approveDeleteFirmware = function(id){
+        
+      $scope.showModal = false;
+      $scope.userRole = "";
+      var logged = StorageService.get('logged'); 
+      console.log("logged:",logged);
+      $scope.userRole = logged.role;
+      console.log("Role:",$scope.userRole );
+      fotaService.firmwareSoftDelete(id,$scope.userRole).then(function(response){
+      $scope.softDeleateObj = response.data.fotaInfo;
+      console.log("softDeleateObj",response.data.fotaInfo);
+      if($scope.userRole === "FOTA_ADMIN"){
+        $scope.cr32Invalid = false;
+        $scope.cr32Valid = false;
+        $scope.btnApr = false;
+        $scope.approveMsg = false;
+        $scope.btncancel = false;
+        $scope.deleteMsg = false;
+        $scope.deleteAprMsg = false;
+        $scope.deleteConfirmMsg = false;
+        $scope.confirmDeleteBtn = false;
+        $scope.deleteMsgReq = true;
+        $scope.btnok = true;
+        $scope.showModal = true;
+      }else if($scope.userRole === "FOTA_APPROVER"){
+        if($scope.softDeleateObj === true){
+        $scope.cr32Invalid = false;
+        $scope.cr32Valid = false;
+        $scope.btnApr = false;
+        $scope.approveMsg = false;
+        $scope.btncancel = false;
+        $scope.deleteMsgReq = false;
+        $scope.deleteMsg = false;
+        $scope.deleteConfirmMsg = false;
+        $scope.confirmDeleteBtn = false;
+        $scope.deleteAprMsg = true;
+        $scope.btnok = true;
+        $scope.showModal = true;
+        }else{
+        $scope.cr32Invalid = false;
+        $scope.cr32Valid = false;
+        $scope.btnApr = false;
+        $scope.approveMsg = false;
+        $scope.btncancel = false;
+        $scope.deleteMsgReq = false;
+        $scope.deleteAprMsg = false;
+        $scope.deleteConfirmMsg = false;
+        $scope.confirmDeleteBtn = false;
         $scope.deleteMsg = true;
         $scope.btnok = true;
         $scope.showModal = true;
@@ -656,7 +816,7 @@ angular.module('hillromvestApp')
           } else {
             $scope.devicelistCurrentPageIndex = 1;
           }
-    fotaService.getDeviceList(($scope.devicelistCurrentPageIndex-1),$scope.devicelistperpage,$scope.searchFilterdevicelist.type,$scope.deviceListsearchItem).then(function(response){
+     fotaService.getDeviceList(($scope.devicelistCurrentPageIndex-1),$scope.devicelistperpage,$scope.searchFilterdevicelist.type,$scope.deviceListsearchItem).then(function(response){
       $scope.Fotadeviceslist = response.data;
       $scope.devicelistPageCount = $scope.Fotadeviceslist.totalPages;
       if($scope.Fotadeviceslist.content){
