@@ -330,6 +330,7 @@ $scope.validateMatched = function(){
         $scope.unmatchedVersion = false;
         $scope.overrideMesg = true;
         $scope.overrideBtn = true;
+            $scope.btnUpCancel = true;
         $scope.showModal = true;
       }else{
       $scope.startAddr = $scope.fota.startAddr;
