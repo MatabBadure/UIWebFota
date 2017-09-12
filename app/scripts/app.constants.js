@@ -162,5 +162,6 @@ angular.module('hillromvestApp')
 	'getFirmwareList' : 'api/FOTAList?page=PAGE&per_page=PER_PAGE&status=STATUS&searchString=SEARCHSTRING',
 	'getFirmwareInfo': 'api/FOTA/ID/getFirmware',
 	'approverCRC32':'api/FOTA/validateApproverCRC32',
-	'firmwareSoftDelete':'api/FOTA/ID/userRole/firmwareDelete'
+	'firmwareSoftDelete':'api/FOTA/ID/userRole/firmwareDelete',
+	'firmwareDownload':'api/FOTA/ID/download'
 });

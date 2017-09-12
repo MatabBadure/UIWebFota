@@ -6,9 +6,13 @@ angular.module('hillromvestApp')
   $scope.fota.releaseDate = "";
   $scope.fota.effectiveDate = "";
   $scope.deviceListsearchItem = "";
+  $scope.firmwareSearchItem = "";
   $scope.searchFilterdevicelist = {};
+  $scope.searchFilterFirmwarelist = {};
   $scope.devicelistperpage = 10;
+  $scope.firmwarelistperpage = 10;
   $scope.devicelistCurrentPageIndex = 1;
+   $scope.firmwarelistCurrentPageIndex = 1;
   $scope.init = function()
   {
      $scope.searchFilterdevicelist.type = "ActivePublished";
@@ -577,18 +581,20 @@ $scope.validateMatched = function(){
     };
 
     $scope.getFirmwareList = function(track){
+//alert("Hi");
+
      if (track !== undefined) {
-            if (track === "PREV" && $scope.devicelistCurrentPageIndex > 1) {
-              $scope.devicelistCurrentPageIndex--;
-            } else if (track === "NEXT" && $scope.devicelistCurrentPageIndex < $scope.devicelistPageCount) {
-              $scope.devicelistCurrentPageIndex++;
+            if (track === "PREV" && $scope.firmwarelistCurrentPageIndex > 1) {
+              $scope.firmwarelistCurrentPageIndex--;
+            } else if (track === "NEXT" && $scope.firmwarelistCurrentPageIndex < $scope.FirmwareListPageCount) {
+              $scope.firmwarelistCurrentPageIndex++;
             } else {
               return false;
             }
           } else {
-            $scope.devicelistCurrentPageIndex = 1;
+            $scope.firmwarelistCurrentPageIndex = 1;
           }
-      fotaService.getFirmwareList(($scope.devicelistCurrentPageIndex-1),$scope.devicelistperpage,$scope.searchFilterdevicelist.type,$scope.deviceListsearchItem).then(function(response){
+      fotaService.getFirmwareList(($scope.firmwarelistCurrentPageIndex),$scope.firmwarelistperpage,$scope.searchFilterdevicelist.type,$scope.firmwareSearchItem).then(function(response){
       $scope.FirmwareList = response.data;
       $scope.FirmwareListPageCount = $scope.FirmwareList.totalPages;
 
@@ -772,64 +778,6 @@ $scope.validateMatched = function(){
         $scope.btncancel = true;
         $scope.showModal = true;
 
-        /*
-      $scope.showModal = false;
-      $scope.userRole = "";
-      var logged = StorageService.get('logged'); 
-      console.log("logged:",logged);
-      $scope.userRole = logged.role;
-      console.log("Role:",$scope.userRole );
-      fotaService.firmwareSoftDelete(id,$scope.userRole).then(function(response){
-      $scope.softDeleateObj = response.data.fotaInfo;
-      console.log("softDeleateObj",response.data.fotaInfo);
-      if($scope.userRole === "FOTA_ADMIN"){
-        $scope.cr32Invalid = false;
-        $scope.cr32Valid = false;
-        $scope.btnApr = false;
-        $scope.approveMsg = false;
-        $scope.btncancel = false;
-        $scope.deleteMsg = false;
-        $scope.deleteAprMsg = false;
-        $scope.deleteConfirmMsg = false;
-        $scope.confirmDeleteBtn = false;
-        $scope.deleteMsgReq = true;
-        $scope.btnok = true;
-        $scope.showModal = true;
-      }else if($scope.userRole === "FOTA_APPROVER"){
-        if($scope.softDeleateObj === true){
-        $scope.cr32Invalid = false;
-        $scope.cr32Valid = false;
-        $scope.btnApr = false;
-        $scope.approveMsg = false;
-        $scope.btncancel = false;
-        $scope.deleteMsgReq = false;
-        $scope.deleteMsg = false;
-        $scope.deleteConfirmMsg = false;
-        $scope.confirmDeleteBtn = false;
-        $scope.deleteAprMsg = true;
-        $scope.btnok = true;
-        $scope.showModal = true;
-        }else{
-        $scope.cr32Invalid = false;
-        $scope.cr32Valid = false;
-        $scope.btnApr = false;
-        $scope.approveMsg = false;
-        $scope.btncancel = false;
-        $scope.deleteMsgReq = false;
-        $scope.deleteAprMsg = false;
-        $scope.deleteConfirmMsg = false;
-        $scope.confirmDeleteBtn = false;
-        $scope.deleteMsg = true;
-        $scope.btnok = true;
-        $scope.showModal = true;
-        }
-        
-      }
-      
-      }).catch(function(response){
-        notyService.showError(response);
-      });
-*/
   }
 
   $scope.getFotaDeviceList = function(track){
@@ -845,16 +793,15 @@ $scope.validateMatched = function(){
           } else {
             $scope.devicelistCurrentPageIndex = 1;
           }
-     fotaService.getDeviceList(($scope.devicelistCurrentPageIndex-1),$scope.devicelistperpage,$scope.searchFilterdevicelist.type,$scope.deviceListsearchItem).then(function(response){
+      fotaService.getDeviceList(($scope.devicelistCurrentPageIndex-1),$scope.devicelistperpage,$scope.searchFilterdevicelist.type,$scope.deviceListsearchItem).then(function(response){
       $scope.Fotadeviceslist = response.data;
       $scope.devicelistPageCount = $scope.Fotadeviceslist.totalPages;
       if($scope.Fotadeviceslist.content){
-       for (var i = 0 ; i < $scope.Fotadeviceslist.content.length ; i++) { 
+       for (var i = 0 ; i < $scope.Fotadeviceslist.content.length; i++) { 
                 $scope.Fotadeviceslist.content[i].currentDownloadStartDateTime = dateService.getDateTimeFromTimeStamp($scope.Fotadeviceslist.content[i].downloadStartDateTime,patientDashboard.dateFormat,'-')
                 console.log("dateServiceStrt.",dateService.getDateTimeFromTimeStamp($scope.Fotadeviceslist.content[i].downloadStartDateTime,patientDashboard.dateFormat,'-'));
                 $scope.Fotadeviceslist.content[i].currentDownloadEndDateTime = dateService.getDateTimeFromTimeStamp($scope.Fotadeviceslist.content[i].downloadEndDateTime,patientDashboard.dateFormat,'-')
                 console.log("dateServiceEnd.",dateService.getDateTimeFromTimeStamp($scope.Fotadeviceslist.content[i].downloadEndDateTime,patientDashboard.dateFormat,'-'));          
-              
               }
             }
     });
@@ -868,5 +815,15 @@ $scope.validateMatched = function(){
             });
  };
 
+$scope.downloadHexFile = function(firmware){
+    fotaService.getDownloadFirmware(firmware.id).then(function(response){
+        if(response && response.status === 204){
+          //showpopup
+          $("#no-xls-modal").css("display", "block");
+        }else{
+          saveAs(new Blob([response.data],{type:"application/hex"}), "Firmware.hex");          
+        }
+      });
+}
     $scope.init();  
 }]);

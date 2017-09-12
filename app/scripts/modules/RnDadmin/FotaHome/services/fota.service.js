@@ -86,6 +86,13 @@ angular.module('hillromvestApp')
           return response;
         });        
       },
+     getDownloadFirmware:function(id){
+          var url = URL.firmwareDownload.replace('ID',id);
+           return $http.get(url, {
+          headers: headerService.getHeaderforUpload(),responseType: "arraybuffer"
+        });   
+      },
+
        firmwareSoftDelete: function(id,userRole){
           var url = URL.firmwareSoftDelete.replace('ID',id).replace('userRole',userRole);
            return $http.delete(url,{
