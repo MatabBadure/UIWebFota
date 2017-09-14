@@ -30,7 +30,7 @@
               <span class="">*</span>
             </div>
             <div class="col-md-9 col-sm-10 dashboard__form--input reset-padding">
-              <input class="" name="partNumber" type="text" ng-model="fota.partNumber" validate-on-blur maxlength="16"  required>
+              <input class="" name="partNumber" type="number" ng-model="fota.partNumber" validate-on-blur maxlength="16"  required>
              <!-- <div ng-show="(form.partNumber.$dirty && form.partNumber.$invalid) || resetsubmitted">
                 <span class="has-error" ng-show="form.partNumber.$error.required" translate="global.fota.error.announcementName.required"></span>
               </div> -->
@@ -95,7 +95,7 @@
               <span class="">*</span>
             </div>
              <div class="col-md-9 col-sm-10  reset-padding" >
-              <input class="col-md-3 col-sm-10" style="margin-right:5px" name="softwareMVersion1" type="text" ng-model="fota.softwareMVersion1" validate-on-blur maxlength="2"  required/>
+              <input class="col-md-3 col-sm-10" style="margin-right:5px" name="softwareMVersion1" type="text" pattern="/^[0-9]$/" ng-model="fota.softwareMVersion1" validate-on-blur maxlength="2"  required/>
               <input class="col-md-3 col-sm-1" style="margin-right:5px" name="softwareMVersion2" type="text" ng-model="fota.softwareMVersion2" validate-on-blur maxlength="2"  required>
               <input class="col-md-3 col-sm-1" style="margin-right:5px" name="softwareMiVersion1" type="text" ng-model="fota.softwareMiVersion1" validate-on-blur maxlength="2"  required/>
               <input class="col-md-3 col-sm-1" style="margin-right:5px" name="softwareMiVersion2" type="text" ng-model="fota.softwareMiVersion2" validate-on-blur maxlength="2"  required/>

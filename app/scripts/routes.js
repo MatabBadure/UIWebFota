@@ -6132,6 +6132,100 @@ angular.module('hillromvestApp')
                     ]
                 }
             })
+                /*anitha */
+
+                .state('fotaadminUpdatePassword', {
+                parent: 'FOTAUsers',
+                url: '/updatepassword',
+                data: {
+                    roles: ['FOTA_ADMIN','FOTA_APPROVER','CUSTOMER_SERVICES'],
+                    pageTitle: 'profile.page-title.update-password'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/RnDadmin/FotaHome/views/updatePassword.html',
+                        controller: 'fotaController'
+                    }
+                },
+                resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('FOTAAdminProfileModule');
+                    }],
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('profile');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+                .state('editFotaAdminProfile', {
+                parent: 'FOTAUsers',
+                url: '/editProfile',
+                data: {
+                    roles: ['FOTA_ADMIN','FOTA_APPROVER','CUSTOMER_SERVICES'],
+                    pageTitle: 'profile.page-title.edit-profile'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/RnDadmin/FotaHome/views/profile-edit.html',
+                        controller: 'fotaController'
+                    }
+                },
+                resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('FOTAAdminProfileModule');
+                    }],
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('profile');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+
+                .state('fotaadminedit',{
+                parent: 'FOTAUsers',
+                url: '/edit',
+                data: {
+                    roles: ['FOTA_ADMIN','FOTA_APPROVER','CUSTOMER_SERVICES'],
+                    pageTitle: 'profile.page-title.profile-edit'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/RnDadmin/FotaHome/views/profile-edit.html',
+                        controller: 'fotaController'
+                    }
+                },
+                resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('FOTAAdminProfileModule');
+                    }],
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('profile');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            }
+                    )
         .state('deviceList', {
                 parent: 'FOTAUsers',
                 url: '/fotaDeviceList',

@@ -29,7 +29,7 @@ angular.module('hillromvestApp')
         $scope.initProfile(StorageService.get('logged').userId);
       }
       else if($state.current.name === 'RnDadminProfile'){
-        //Do nothing for now
+         $scope.initProfile(StorageService.get('logged').userId);
       }
     };
 
@@ -41,6 +41,12 @@ angular.module('hillromvestApp')
       }
       else if($scope.role === loginConstants.role.customerservices){
         $state.go('editcustomerserviceProfile');
+      }
+      else if($scope.role === loginConstants.role.FOTAAdmin){
+        $state.go('editFotaAdminProfile');
+      }
+      else if($scope.role === loginConstants.role.FOTAAdmin){
+        $state.go(status);
       }
       else {
         $state.go('editAdminProfile');
@@ -55,7 +61,12 @@ angular.module('hillromvestApp')
       }
       else if($scope.role === loginConstants.role.customerservices){
         $state.go(status);
-      }else{
+      }
+      else if($scope.role === loginConstants.role.FOTAAdmin){
+        //console.log("tab");
+        $state.go(status);
+      }
+      else{
         $state.go(status);
       }
     };
