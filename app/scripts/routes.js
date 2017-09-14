@@ -6144,7 +6144,7 @@ angular.module('hillromvestApp')
                 views: {
                     'content@': {
                         templateUrl: 'scripts/modules/RnDadmin/FotaHome/views/updatePassword.html',
-                        controller: 'fotaController'
+                        controller: 'adminProfileController'
                     }
                 },
                 resolve: {
@@ -6174,7 +6174,7 @@ angular.module('hillromvestApp')
                 views: {
                     'content@': {
                         templateUrl: 'scripts/modules/RnDadmin/FotaHome/views/profile-edit.html',
-                        controller: 'fotaController'
+                        controller: 'adminProfileController'
                     }
                 },
                 resolve: {

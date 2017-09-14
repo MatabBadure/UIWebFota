@@ -25,11 +25,8 @@ angular.module('hillromvestApp')
     };
 
     $scope.init = function(){
-      if($state.current.name === 'adminProfile' || $state.current.name === 'editAdminProfile' || $state.current.name === 'adminProfileRc' || $state.current.name === 'editAdminProfileRc' || $state.current.name === 'associateProfile' || $state.current.name === 'editAssociateProfile' || $state.current.name === 'customerserviceProfile' || $state.current.name === 'editcustomerserviceProfile'){
+      if($state.current.name === 'adminProfile' || $state.current.name === 'editAdminProfile' || $state.current.name === 'adminProfileRc' || $state.current.name === 'editAdminProfileRc' || $state.current.name === 'associateProfile' || $state.current.name === 'editAssociateProfile' || $state.current.name === 'customerserviceProfile' || $state.current.name === 'editcustomerserviceProfile' || $state.current.name === 'RnDadminProfile' || $state.current.name === 'editFotaAdminProfile'){
         $scope.initProfile(StorageService.get('logged').userId);
-      }
-      else if($state.current.name === 'RnDadminProfile'){
-         $scope.initProfile(StorageService.get('logged').userId);
       }
     };
 
@@ -45,8 +42,8 @@ angular.module('hillromvestApp')
       else if($scope.role === loginConstants.role.FOTAAdmin){
         $state.go('editFotaAdminProfile');
       }
-      else if($scope.role === loginConstants.role.FOTAAdmin){
-        $state.go(status);
+      else if($scope.role === loginConstants.role.FOTAApprover){
+        $state.go('editFotaAdminProfile');
       }
       else {
         $state.go('editAdminProfile');
@@ -62,7 +59,7 @@ angular.module('hillromvestApp')
       else if($scope.role === loginConstants.role.customerservices){
         $state.go(status);
       }
-      else if($scope.role === loginConstants.role.FOTAAdmin){
+      else if($scope.role === loginConstants.role.FOTAAdmin || $scope.role === loginConstants.role.FOTAApprover){
         //console.log("tab");
         $state.go(status);
       }
@@ -155,6 +152,9 @@ angular.module('hillromvestApp')
       }
       else if($scope.role === loginConstants.role.customerservices){
         $state.go('customerserviceProfile');
+      }
+      else if($scope.role === loginConstants.role.FOTAAdmin || $scope.role === loginConstants.role.FOTAApprover){
+        $state.go('RnDadminProfile');
       }else {
         $state.go('adminProfile');
       }
