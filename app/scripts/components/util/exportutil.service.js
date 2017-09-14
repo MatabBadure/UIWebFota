@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('hillromvestApp')
-.service('exportutilService', ['dateService', 'pdfServiceConstants', '$rootScope',
-  function (dateService, pdfServiceConstants,$rootScope) {  
+.service('exportutilService', ['dateService', 'pdfServiceConstants',
+  function (dateService, pdfServiceConstants) {  
   var g_pdfMetaData = {
       rTitle: 'HillRom'
       ,rTitle1: 'VisiView™ Health Portal'               
@@ -568,7 +568,7 @@ angular.module('hillromvestApp')
     var patientDeviceSlNoVest='';
     var patientDeviceSlNoMonarch='';
 
-    if(localStorage.getItem('deviceTypeforBothIcon') == 'MONARCH'){
+    if(patientInfo.deviceType == 'MONARCH'){
         patientDeviceType = stringConstants.deviceTypeMonarch;
       for(var  i=0 ; i<patientInfo.patientDevices.length ; i++){
         if(patientInfo.patientDevices[i].active==true){
@@ -576,7 +576,7 @@ angular.module('hillromvestApp')
        }
      }
     }
-    else if(localStorage.getItem('deviceTypeforBothIcon') == 'VEST'){
+    else if(patientInfo.deviceType == 'VEST'){
      patientDeviceType = stringConstants.deviceType;
       for(var  i=0 ; i<patientInfo.patientDevices.length ; i++){
         if(patientInfo.patientDevices[i].active==true){

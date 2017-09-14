@@ -180,6 +180,30 @@ angular.module('hillromvestApp')
           }                    
           return filterString;                                
         }
-
+        this.initSearchFiltersForTims = function() {
+            var timsFilter = {};
+            timsFilter.isSuccess = true;
+            timsFilter.isFail = true;
+            return timsFilter;
+        }
+        this.getFilterStringForLog = function(timsFilter) {
+          var status= {};
+           var filterString = timsFilter.emptyString;
+                 if(timsFilter.isSuccess && !timsFilter.isFail){
+                    filterString = searchFilters.success;
+                 }else if(!timsFilter.isSuccess && timsFilter.isFail){
+                    filterString = searchFilters.failure;
+                 
+               }else if(timsFilter.isSuccess && timsFilter.isFail){
+                    filterString = searchFilters.all;
+                 }else if(!timsFilter.isSuccess && !timsFilter.isFail){
+                    filterString = searchFilters.all;
+                 }
+                 /*else if(!timsFilter.isSuccess && !timsFilter.isFail){
+                    filterString = searchFilters.isSuccess + searchFilters.colon + 0 + searchFilters.semicolon + searchFilters.isFail + searchFilters.colon + 0 + searchFilters.semicolon;
+                 }*/
+            console.log("filterString in service :",filterString);
+           return filterString;
+          }
 
     }]);

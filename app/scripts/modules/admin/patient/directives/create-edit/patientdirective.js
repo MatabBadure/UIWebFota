@@ -11,8 +11,8 @@ angular.module('hillromvestApp')
         patientStatus: '=patientStatus'
       },
 
-      controller: ['$scope', '$state', 'notyService', 'dateService', 'UserService', 'StorageService', 'loginConstants', 'commonsUserService', 'addressService',
-      function ($scope, $state, notyService, dateService, UserService, StorageService, loginConstants, commonsUserService, addressService) {
+      controller: ['$scope', '$state', 'notyService', 'dateService', 'UserService', 'StorageService', 'loginConstants', 'commonsUserService', 'addressService', 'patientService',
+      function ($scope, $state, notyService, dateService, UserService, StorageService, loginConstants, commonsUserService, addressService, patientService) {
 
         $scope.open = function () {
           $scope.showModal = true;
@@ -39,8 +39,29 @@ angular.module('hillromvestApp')
           UserService.getState().then(function (response) {
             $scope.states = response.data.states;
           });
+          $scope.getGarmentValues();
         };
-
+        $scope.getGarmentValues = function(){
+          patientService.getGarmentSizeCodeValues().then(function(response){
+        $scope.garmentSizeResponse = response.data;
+         $scope.garmentSize = $scope.garmentSizeResponse.typeCode;
+      }).catch(function(response){
+        notyService.showError(response);
+      });
+          patientService.getGarmentColorCodeValues().then(function(response){
+        $scope.garmentColorResponse = response.data;
+        $scope.garmentColor = $scope.garmentColorResponse.typeCode;
+      }).catch(function(response){
+        notyService.showError(response);
+      });
+       
+        patientService.getGarmentTypeCodeValues().then(function(response){
+        $scope.garmentTypeResponse = response.data;
+          $scope.garmentType = $scope.garmentTypeResponse.typeCode;
+      }).catch(function(response){
+        notyService.showError(response);
+      });
+        };
         $scope.init();
 
         $scope.createPatient = function () {

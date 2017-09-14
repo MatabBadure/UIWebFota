@@ -211,15 +211,23 @@ function ($scope, $state, $rootScope, StorageService, UserService, patientDiagno
       caregiverDashBoardService.getPatients(caregiverID).then(function(response){
         $scope.patients = response.data.patients;
         $scope.$emit('getPatients', $scope.patients);
-        console.log($stateParams.patientId);
+        /* if(response.data.patients[0].deviceType == 'ALL'){
+          localStorage.setItem('deviceType_'+response.data.patients[0].id, 'VEST');
+         // localStorage.setItem('deviceTypeforGraph', 'ALL');
+          localStorage.setItem('deviceTypeforBothIcon_'+response.data.patients[0].id, 'ALL');
+
+
+            }
+            else{
+            localStorage.setItem('deviceType_'+response.data.patients[0].id, response.data.patients[0].deviceType);
+           // localStorage.setItem('deviceTypeforGraph', response.data.patients[0].deviceType);
+            localStorage.setItem('deviceTypeforBothIcon_'+response.data.patients[0].id, response.data.patients[0].deviceType);
+          }*/
        if($stateParams.patientId){
           for(var i=0;i<response.data.patients.length;i++){
             if($stateParams.patientId == response.data.patients[i].userId){
-              console.log(response.data.patients[i]);
           $scope.selectedPatient = response.data.patients[i];
           $scope.patientId = $scope.selectedPatient.userId;
-          console.log("selected pat"); 
-          console.log($scope.selectedPatient);
           break;
         }
         }

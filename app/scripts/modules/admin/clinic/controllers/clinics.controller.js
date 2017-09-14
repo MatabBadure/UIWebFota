@@ -169,7 +169,7 @@ angular.module('hillromvestApp')
       $scope.clinic.type = 'parent';
       $scope.clinicStatus.editMode = false;
       $scope.clinicStatus.isCreate = true;
-	  clinicService.getClinicSpeciality().then(function(response){
+      clinicService.getClinicSpeciality().then(function(response){
          $scope.specialities =  response.data.typeCode;
       }).catch(function(response){});
       UserService.getState().then(function(response) {
@@ -190,7 +190,7 @@ angular.module('hillromvestApp')
       $scope.states = [];
       $scope.clinicStatus.editMode = true;
       $scope.clinicStatus.isCreate = false;
-	  clinicService.getClinicSpeciality().then(function(response){
+      clinicService.getClinicSpeciality().then(function(response){
          $scope.specialities =  response.data.typeCode;
       }).catch(function(response){});
       UserService.getState().then(function(response) {
@@ -309,12 +309,21 @@ angular.module('hillromvestApp')
       };
 
       $scope.selectClinic = function(clinic) {
-      if($scope.clinicStatus.role === 'ADMIN')
-      {
-        $state.go('clinicDashboard', {
-          'clinicId': clinic.id
-        });
+        if(clinic){
+        localStorage.setItem('clinicname_',clinic.name);
+        if(clinic.hillromId){
+        localStorage.setItem('clinicHillRomID_',clinic.hillromId);
       }
+      else{
+        localStorage.setItem('clinicHillRomID_'," ");
+      }
+        }
+        if($scope.clinicStatus.role === 'ADMIN')
+        {
+          $state.go('clinicDashboard', {
+            'clinicId': clinic.id
+          });
+        }
         else if($scope.clinicStatus.role === loginConstants.role.acctservices){
           $state.go('clinicDashboardRcadmin', {
             'clinicId': clinic.id
@@ -417,6 +426,11 @@ angular.module('hillromvestApp')
       $scope.showModalClinic = true;
     };
 
+$scope.activateClinicModal = function(clininc){
+      $scope.clinicToDeactivate = clininc;
+      $scope.showActivateModal = true;
+    };
+    
     $scope.closeModalClinic = function(){
       delete $scope.clinicToDeactivate;
       $scope.showModalClinic = false;
@@ -425,6 +439,22 @@ angular.module('hillromvestApp')
     $scope.deactivateClinic = function(clinicId){
       $scope.closeModalClinic();
       clinicService.deleteClinic(clinicId).then(function(response){
+        $scope.goToClinicUser();
+        notyService.showMessage(response.data.message,'success');
+      }).catch(function(response){
+        if(response.data.message){
+          notyService.showMessage(response.data.message,'warning');
+        } else if(response.data.ERROR){
+          notyService.showMessage(response.data.ERROR,'warning');
+        }
+      });
+    };
+    
+    $scope.activateClinic = function(clinicId){
+      $scope.closeModalClinic();
+      var data = {};
+      data.deleted = false;
+      clinicService.activateClinic(data,clinicId).then(function(response){
         $scope.goToClinicUser();
         notyService.showMessage(response.data.message,'success');
       }).catch(function(response){
@@ -834,14 +864,14 @@ angular.module('hillromvestApp')
     $scope.selectAssociatedPatient = function(patient){
      // localStorage.setItem('deviceType', patient.deviceType); 
       if(patient.deviceType == 'ALL'){
-          localStorage.setItem('deviceType', 'VEST');
-          localStorage.setItem('deviceTypeforGraph', 'ALL');
-          localStorage.setItem('deviceTypeforBothIcon', 'ALL');
+          localStorage.setItem('deviceType_'+patient.id, 'VEST');
+          //localStorage.setItem('deviceTypeforGraph', 'ALL');
+          localStorage.setItem('deviceTypeforBothIcon_'+patient.id, 'ALL');
             }
             else{
-            localStorage.setItem('deviceType', patient.deviceType);
-            localStorage.setItem('deviceTypeforGraph', patient.deviceType);
-            localStorage.setItem('deviceTypeforBothIcon', patient.deviceType);
+            localStorage.setItem('deviceType_'+patient.id, patient.deviceType);
+           // localStorage.setItem('deviceTypeforGraph', patient.deviceType);
+            localStorage.setItem('deviceTypeforBothIcon_'+patient.id, patient.deviceType);
           }
       if($state.current.name === 'clinicAssociatedPatients'){
         $state.go('patientOverview', {

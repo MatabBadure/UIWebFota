@@ -9,7 +9,8 @@ var admin = {
 		users : 'api/users',
 		notes : 'api/notes',
 		patients : 'api/patients'
-	}
+	},
+    timsFilePathConstant : '/usr/tomcat/apache-tomcat-8.0.28/TIMS/logs/'
 }
 
 var patient = {
@@ -47,7 +48,11 @@ var searchFilters = {
     Monarch: "MONARCH",
     devicetype : "deviceType=",
     allCaps : "ALL",
-    Both:"BOTH"
+    Both: "BOTH",
+    isSuccess: "isSuccess",
+    isFail: "isFail",
+    success: "Success",
+    failure: "Failure"
 }
 
 var sortConstant = {
@@ -119,7 +124,9 @@ var sortConstant = {
     announcementEndDate: "endDate",
     announcementModifiedDate : "modifiedDate",
     announcementModifiedDatePatient : "modified_date",
-    fromCA: "messages.fromClinic.name"
+    fromCA: "messages.fromClinic.name",
+    loglink: "loglink",
+    timsdate: "date"
 }
 
 var stringConstants = {
