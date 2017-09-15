@@ -1,7 +1,7 @@
 'use strict';
 angular.module('hillromvestApp')
-.controller('fotaController',['$scope', '$location','$state', 'clinicadminService', 'notyService','$stateParams', 'clinicService', 'UserService', 'StorageService','$timeout', 'commonsUserService', 'TimService','dateService','fotaService','searchFilterService',
-  function($scope, $location,$state, clinicadminService, notyService,$stateParams, clinicService, UserService, StorageService, $timeout, commonsUserService,TimService,dateService,fotaService,searchFilterService) {
+.controller('fotaController',['$scope', '$location','$state', 'clinicadminService', 'notyService','$stateParams', 'clinicService', 'UserService', 'StorageService','$timeout', 'commonsUserService', 'TimService','dateService','fotaService','searchFilterService','sortOptionsService',
+  function($scope, $location,$state, clinicadminService, notyService,$stateParams, clinicService, UserService, StorageService, $timeout, commonsUserService,TimService,dateService,fotaService,searchFilterService,sortOptionsService) {
   $scope.fota = {};
   $scope.fota.releaseDate = "";
   $scope.fota.effectiveDate = "";
@@ -12,15 +12,18 @@ angular.module('hillromvestApp')
   $scope.devicelistperpage = 10;
   $scope.firmwarelistperpage = 10;
   $scope.devicelistCurrentPageIndex = 1;
-   $scope.firmwarelistCurrentPageIndex = 1;
+  $scope.sortOption ="";
+  $scope.sortFirmwareList = sortOptionsService.getSortOptionsForFirmwareList();
+  $scope.sortTypeDeviceList = sortOptionsService.getSortOptionsForDeviceList();
   $scope.init = function()
   {
-     $scope.searchFilterdevicelist.type = "ActivePublished";
+      $scope.searchFilterdevicelist.type = "ActivePublished";
         if($state.current.name === 'fotaHome'){
-         
+           $scope.sortFirmwareList = sortOptionsService.getSortOptionsForFirmwareList(); 
             $scope.getFirmwareList();
         }
         else if($state.current.name === 'deviceList'){
+            $scope.sortTypeDeviceList = sortOptionsService.getSortOptionsForDeviceList();
            $scope.searchFilterdevicelist.type = "Success";
             $scope.getFotaDeviceList();
         }
@@ -594,7 +597,7 @@ $scope.validateMatched = function(){
           } else {
             $scope.firmwarelistCurrentPageIndex = 1;
           }
-      fotaService.getFirmwareList(($scope.firmwarelistCurrentPageIndex),$scope.firmwarelistperpage,$scope.searchFilterdevicelist.type,$scope.firmwareSearchItem).then(function(response){
+      fotaService.getFirmwareList(($scope.firmwarelistCurrentPageIndex),$scope.firmwarelistperpage,$scope.searchFilterdevicelist.type,$scope.firmwareSearchItem,$scope.sortOption).then(function(response){
       $scope.FirmwareList = response.data;
       $scope.FirmwareListPageCount = $scope.FirmwareList.totalPages;
 
@@ -780,6 +783,15 @@ $scope.validateMatched = function(){
 
   }
 
+$scope.setFirmwareRadioOption = function(){
+    $scope.sortFirmwareList = sortOptionsService.getSortOptionsForFirmwareList(); 
+     $scope.getFirmwareList();
+  };
+
+  $scope.setDeviceRadioOption = function(){
+     $scope.sortTypeDeviceList = sortOptionsService.getSortOptionsForDeviceList();
+     $scope.getFotaDeviceList();
+  };
   $scope.getFotaDeviceList = function(track){
 
      if (track !== undefined) {
@@ -787,13 +799,14 @@ $scope.validateMatched = function(){
               $scope.devicelistCurrentPageIndex--;
             } else if (track === "NEXT" && $scope.devicelistCurrentPageIndex < $scope.devicelistPageCount) {
               $scope.devicelistCurrentPageIndex++;
-            } else {
+            }
+             else {
               return false;
             }
           } else {
             $scope.devicelistCurrentPageIndex = 1;
           }
-      fotaService.getDeviceList(($scope.devicelistCurrentPageIndex-1),$scope.devicelistperpage,$scope.searchFilterdevicelist.type,$scope.deviceListsearchItem).then(function(response){
+      fotaService.getDeviceList(($scope.devicelistCurrentPageIndex-1),$scope.devicelistperpage,$scope.searchFilterdevicelist.type,$scope.deviceListsearchItem,$scope.sortOption).then(function(response){
       $scope.Fotadeviceslist = response.data;
       $scope.devicelistPageCount = $scope.Fotadeviceslist.totalPages;
       if($scope.Fotadeviceslist.content){
@@ -825,5 +838,128 @@ $scope.downloadHexFile = function(firmware){
         }
       });
 }
-    $scope.init();  
+ $scope.sortType = function(sortParam){ 
+          var toggledSortOptions = {};
+          $scope.sortOption = "";
+          if(sortParam === sortConstant.productName){                        
+            toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortFirmwareList.productName);
+            $scope.sortFirmwareList = sortOptionsService.getSortOptionsForFirmwareList();
+            $scope.sortFirmwareList.productName = toggledSortOptions;
+            $scope.sortOption = sortConstant.productName + sortOptionsService.getSortByASCString(toggledSortOptions);
+            $scope.getFirmwareList();
+          }else if(sortParam === sortConstant.partNumber){
+            toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortFirmwareList.partNumber);
+            $scope.sortFirmwareList = sortOptionsService.getSortOptionsForFirmwareList();
+            $scope.sortFirmwareList.partNumber = toggledSortOptions;
+            $scope.sortOption = sortConstant.partNumber + sortOptionsService.getSortByASCString(toggledSortOptions);
+            $scope.getFirmwareList();
+          }else if(sortParam === sortConstant.softwareVersion){
+            toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortFirmwareList.softwareVersion);
+            $scope.sortFirmwareList = sortOptionsService.getSortOptionsForFirmwareList();
+            $scope.sortFirmwareList.softwareVersion = toggledSortOptions;
+            $scope.sortOption = sortConstant.softwareVersion + sortOptionsService.getSortByASCString(toggledSortOptions);
+            $scope.getFirmwareList();
+          }else if(sortParam === sortConstant.softwareDate){
+            toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortFirmwareList.softwareDate);
+            $scope.sortFirmwareList = sortOptionsService.getSortOptionsForFirmwareList();
+            $scope.sortFirmwareList.softwareDate = toggledSortOptions;
+            $scope.sortOption = sortConstant.softwareDate + sortOptionsService.getSortByASCString(toggledSortOptions);
+            $scope.getFirmwareList();
+          }
+          else if(sortParam === sortConstant.uploadBy){
+            toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortFirmwareList.uploadBy);
+            $scope.sortFirmwareList = sortOptionsService.getSortOptionsForFirmwareList();
+            $scope.sortFirmwareList.uploadBy = toggledSortOptions;
+            $scope.sortOption = sortConstant.uploadBy + sortOptionsService.getSortByASCString(toggledSortOptions);
+            $scope.getFirmwareList();
+          }
+          else if(sortParam === sortConstant.uploadDate){
+            toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortFirmwareList.uploadDate);
+            $scope.sortFirmwareList = sortOptionsService.getSortOptionsForFirmwareList();
+            $scope.sortFirmwareList.uploadDate = toggledSortOptions;
+            $scope.sortOption = sortConstant.uploadDate + sortOptionsService.getSortByASCString(toggledSortOptions);
+            $scope.getFirmwareList();
+          }
+          else if(sortParam === sortConstant.publishedBy){
+            toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortFirmwareList.publishedBy);
+            $scope.sortFirmwareList = sortOptionsService.getSortOptionsForFirmwareList();
+            $scope.sortFirmwareList.publishedBy = toggledSortOptions;
+            $scope.sortOption = sortConstant.publishedBy + sortOptionsService.getSortByASCString(toggledSortOptions);
+            $scope.getFirmwareList();
+          }
+          else if(sortParam === sortConstant.publishedDate){
+            toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortFirmwareList.publishedDate);
+            $scope.sortFirmwareList = sortOptionsService.getSortOptionsForFirmwareList();
+            $scope.sortFirmwareList.publishedDate = toggledSortOptions;
+            $scope.sortOption = sortConstant.publishedDate + sortOptionsService.getSortByASCString(toggledSortOptions);
+            $scope.getFirmwareList();
+          }
+          else if(sortParam === sortConstant.status){
+            toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortFirmwareList.status);
+            $scope.sortFirmwareList = sortOptionsService.getSortOptionsForFirmwareList();
+            $scope.sortFirmwareList.status = toggledSortOptions;
+            $scope.sortOption = sortConstant.status + sortOptionsService.getSortByASCString(toggledSortOptions);
+            $scope.getFirmwareList();
+          }
+        };
+
+  $scope.sortTypeDeviceListing = function(sortParam){ 
+          var toggledSortOptions = {};
+          $scope.sortOption = "";
+          if(sortParam === sortConstant.serialNumber){                        
+            toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortTypeDeviceList.serialNumber);
+            $scope.sortTypeDeviceList = sortOptionsService.getSortOptionsForDeviceList();
+            $scope.sortTypeDeviceList.serialNumber = toggledSortOptions;
+            $scope.sortOption = sortConstant.serialNumber + sortOptionsService.getSortByASCString(toggledSortOptions);
+            $scope.getFotaDeviceList();
+          }else if(sortParam === sortConstant.partNumber){
+            toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortTypeDeviceList.partNumber);
+            $scope.sortTypeDeviceList = sortOptionsService.getSortOptionsForDeviceList();
+            $scope.sortTypeDeviceList.partNumber = toggledSortOptions;
+            $scope.sortOption = sortConstant.partNumber + sortOptionsService.getSortByASCString(toggledSortOptions);
+            $scope.getFotaDeviceList();
+          }else if(sortParam === sortConstant.productName){
+            toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortTypeDeviceList.productName);
+            $scope.sortTypeDeviceList = sortOptionsService.getSortOptionsForDeviceList();
+            $scope.sortTypeDeviceList.productName = toggledSortOptions;
+            $scope.sortOption = sortConstant.productName + sortOptionsService.getSortByASCString(toggledSortOptions);
+            $scope.getFotaDeviceList();
+          }else if(sortParam === sortConstant.connectionType){
+            toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortTypeDeviceList.connectionType);
+            $scope.sortTypeDeviceList = sortOptionsService.getSortOptionsForDeviceList();
+            $scope.sortTypeDeviceList.connectionType = toggledSortOptions;
+            $scope.sortOption = sortConstant.connectionType + sortOptionsService.getSortByASCString(toggledSortOptions);
+            $scope.getFotaDeviceList();
+          }
+          else if(sortParam === sortConstant.startDatetime){
+            toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortTypeDeviceList.startDatetime);
+            $scope.sortTypeDeviceList = sortOptionsService.getSortOptionsForDeviceList();
+            $scope.sortTypeDeviceList.startDatetime = toggledSortOptions;
+            $scope.sortOption = sortConstant.startDatetime + sortOptionsService.getSortByASCString(toggledSortOptions);
+            $scope.getFotaDeviceList();
+          }else if(sortParam === sortConstant.endDateTime){
+            toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortTypeDeviceList.endDateTime);
+            $scope.sortTypeDeviceList = sortOptionsService.getSortOptionsForDeviceList();
+            $scope.sortTypeDeviceList.endDateTime = toggledSortOptions;
+            $scope.sortOption = sortConstant.endDateTime + sortOptionsService.getSortByASCString(toggledSortOptions);
+            $scope.getFotaDeviceList();
+          }
+          else if(sortParam === sortConstant.downloadTime){
+            toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortTypeDeviceList.downloadTime);
+            $scope.sortTypeDeviceList = sortOptionsService.getSortOptionsForDeviceList();
+            $scope.sortTypeDeviceList.downloadTime = toggledSortOptions;
+            $scope.sortOption = sortConstant.downloadTime + sortOptionsService.getSortByASCString(toggledSortOptions);
+            $scope.getFotaDeviceList();
+          }
+          else if(sortParam === sortConstant.status){
+            toggledSortOptions = sortOptionsService.toggleSortParam($scope.sortTypeDeviceList.status);
+            $scope.sortTypeDeviceList = sortOptionsService.getSortOptionsForDeviceList();
+            $scope.sortTypeDeviceList.status = toggledSortOptions;
+            $scope.sortOption = sortConstant.status + sortOptionsService.getSortByASCString(toggledSortOptions);
+            $scope.getFotaDeviceList();
+          }
+        };
+
+    
+$scope.init();  
 }]);

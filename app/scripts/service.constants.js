@@ -122,7 +122,20 @@ var sortConstant = {
     announcementEndDate: "endDate",
     announcementModifiedDate : "modifiedDate",
     announcementModifiedDatePatient : "modified_date",
-    fromCA: "messages.fromClinic.name"
+    fromCA: "messages.fromClinic.name",
+    productName: "productName",
+    partNumber: "partNumber",
+    softwareVersion: "softwareVersion",
+    softwareDate: "softwareDate",
+    uploadBy: "uploadBy",
+    uploadDate: "uploadDate",
+    publishedBy: "publishedBy",
+    publishedDate: "publishedDate",
+    serialNumber: "serialNumber",
+    connectionType: "connectionType",
+    startDatetime: "startDatetime",
+    endDateTime: "endDateTime",
+    downloadTime: "downloadTime"
 }
 
 var stringConstants = {

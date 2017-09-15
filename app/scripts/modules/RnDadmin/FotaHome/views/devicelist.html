@@ -15,30 +15,30 @@
         <ng-include src="'scripts/modules/RnDadmin/FotaHome/views/devicelistsearchfilter.html'"></ng-include>
       </div>  
     <div class="dashboard__manage-view--header" style="padding:30px 0">
-        <div class="col-md-2 col-sm-2 header--type pull-left-mob" ng-translate="global.fotaDeviceList.seerial-no">
-          <span class = "">Serial Number</span>
+        <div class="col-md-2 col-sm-2 header--type pull-left-mob" >
+           <span ng-class="{'sort-icon--default' : sortTypeDeviceList.serialNumber.isDefault, 'sort-icon-down': sortTypeDeviceList.serialNumber.isDown, 'sort-icon-up':sortTypeDeviceList.serialNumber.isUp}" ng-click="sortTypeDeviceListing('serialNumber')" ng-translate="global.fotaDeviceList.seerial-no">Serial Number</span>
         </div>
-        <div class="col-md-3 col-sm-2 header--type none hidden-sm"  style="margin-left:-30px !important" ng-translate="global.fotaDeviceList.part-number" >
-          <span class = "">Part Number</span>
+        <div class="col-md-3 col-sm-2 header--type none hidden-sm"  style="margin-left:-30px !important">
+          <span ng-class="{'sort-icon--default' : sortTypeDeviceList.partNumber.isDefault, 'sort-icon-down': sortTypeDeviceList.partNumber.isDown, 'sort-icon-up':sortTypeDeviceList.partNumber.isUp}" ng-click="sortTypeDeviceListing('partNumber')" ng-translate="global.fotaDeviceList.part-number">Part Number</span>
         </div>
-        <div class="col-md-2 col-sm-2 header--type none" style="margin-left:-30px !important" ng-translate="global.fotaDeviceList.product-name" >
-          <span class = "">Product Name</span>
+        <div class="col-md-2 col-sm-2 header--type none" style="margin-left:-30px !important">
+          <span ng-class="{'sort-icon--default' : sortTypeDeviceList.productName.isDefault, 'sort-icon-down': sortTypeDeviceList.productName.isDown, 'sort-icon-up':sortTypeDeviceList.productName.isUp}" ng-click="sortTypeDeviceListing('productName')" ng-translate="global.fotaDeviceList.product-name">Product Name</span>
         </div>
-        <div class="col-md-2 col-sm-2 header--type none" style="margin-left:-30px !important" ng-translate="global.fotaDeviceList.connection-type" >
-          <span class = "">Connection Type</span>
+        <div class="col-md-2 col-sm-2 header--type none" style="margin-left:-30px !important">
+          <span ng-class="{'sort-icon--default' : sortTypeDeviceList.connectionType.isDefault, 'sort-icon-down': sortTypeDeviceList.connectionType.isDown, 'sort-icon-up':sortTypeDeviceList.connectionType.isUp}" ng-click="sortTypeDeviceListing('connectionType')" ng-translate="global.fotaDeviceList.connection-type">Connection Type</span>
         </div>
-        <div class="col-md-2 col-sm-2 header--type none" style="margin-left:-30px !important" ng-translate="global.fotaDeviceList.start-date-time" >
-          <span class = "">Start DateTime</span>
+        <div class="col-md-2 col-sm-2 header--type none" style="margin-left:-30px !important">
+          <span ng-class="{'sort-icon--default' : sortTypeDeviceList.startDatetime.isDefault, 'sort-icon-down': sortTypeDeviceList.startDatetime.isDown, 'sort-icon-up':sortTypeDeviceList.startDatetime.isUp}" ng-click="sortTypeDeviceListing('startDatetime')" ng-translate="global.fotaDeviceList.start-date-time">Start DateTime</span>
         </div>
         
-        <div class="col-md-2 col-sm-2 header--type none" style="margin-left:0px !important" ng-translate="global.fotaDeviceList.end-date-time" >
-          <span class = "">End DateTime</span>
+        <div class="col-md-2 col-sm-2 header--type none" style="margin-left:0px !important">
+          <span ng-class="{'sort-icon--default' : sortTypeDeviceList.endDateTime.isDefault, 'sort-icon-down': sortTypeDeviceList.endDateTime.isDown, 'sort-icon-up':sortTypeDeviceList.endDateTime.isUp}" ng-click="sortTypeDeviceListing('endDateTime')" ng-translate="global.fotaDeviceList.end-date-time">End DateTime</span>
         </div>
-        <div class="col-md-3 col-sm-2 header--type none" style="margin-left:15px !important" ng-translate="global.fotaDeviceList.download-time" >
-          <span class = "">Download Time(HH:MM:SS)</span>
+        <div class="col-md-3 col-sm-2 header--type none" style="margin-left:15px !important">
+          <span ng-class="{'sort-icon--default' : sortTypeDeviceList.downloadTime.isDefault, 'sort-icon-down': sortTypeDeviceList.downloadTime.isDown, 'sort-icon-up':sortTypeDeviceList.downloadTime.isUp}" ng-click="sortTypeDeviceListing('downloadTime')" ng-translate="global.fotaDeviceList.download-time">Download Time(HH:MM:SS)</span>
         </div>
-        <div class="col-md-2 col-sm-2 header--type none" style="margin-left:-50px !important" ng-translate="global.fotaDeviceList.firmware-status" >
-          <span class = "">Status</span>
+        <div class="col-md-2 col-sm-2 header--type none" style="margin-left:-50px !important">
+          <span ng-class="{'sort-icon--default' : sortTypeDeviceList.status.isDefault, 'sort-icon-down': sortTypeDeviceList.status.isDown, 'sort-icon-up':sortTypeDeviceList.status.isUp}" ng-click="sortTypeDeviceListing('status')" ng-translate="global.fotaDeviceList.firmware-status">Status</span>
         </div>
 
  </div>

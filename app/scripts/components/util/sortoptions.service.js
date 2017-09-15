@@ -121,4 +121,30 @@ angular.module('hillromvestApp')
             sortMessageList.announcementEnddate = sortIcons;
             return sortMessageList;
         };
+        this.getSortOptionsForFirmwareList = function(){
+            var sortFirmwareList = {};
+            sortFirmwareList.productName = sortIcons;
+            sortFirmwareList.partNumber =  sortIcons;
+            sortFirmwareList.softwareVersion = sortIcons;
+            sortFirmwareList.softwareDate = sortIcons;
+            sortFirmwareList.uploadBy = sortIcons;
+            sortFirmwareList.uploadDate = sortIcons;
+            sortFirmwareList.publishedBy = sortIcons;
+            sortFirmwareList.publishedDate = sortIcons;
+            sortFirmwareList.status = sortIcons;
+            return sortFirmwareList;
+        };
+        this.getSortOptionsForDeviceList = function(){
+            var sortDeviceList = {};
+            sortDeviceList.serialNumber = sortIcons;
+            sortDeviceList.partNumber =  sortIcons;
+            sortDeviceList.productName = sortIcons;
+            sortDeviceList.connectionType = sortIcons;
+            sortDeviceList.startDatetime = sortIcons;
+            sortDeviceList.endDateTime = sortIcons;
+            sortDeviceList.publishedDate = sortIcons;
+            sortDeviceList.downloadTime = sortIcons;
+            sortDeviceList.status = sortIcons;
+            return sortDeviceList;
+        };
     }]);

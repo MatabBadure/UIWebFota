@@ -16,36 +16,35 @@
       </div>
     <!-- List start here -->
     <div class="dashboard__manage-view--header" style="padding:30px 0">
-        <div class="col-md-2 col-sm-2 header--type pull-left-mob "  translate="global.product-name">
-          <span class ="">Product Name</span>
+        <div class="col-md-2 col-sm-2 header--type pull-left-mob ">
+           <span ng-class="{'sort-icon--default' : sortFirmwareList.productName.isDefault, 'sort-icon-down': sortFirmwareList.productName.isDown, 'sort-icon-up':sortFirmwareList.productName.isUp}" ng-click="sortType('productName')" translate="global.product-name">Product Name</span>
         </div> 
-        <div class="col-md-2 col-sm-2 header--type none hidden-sm" style="margin-left:-35px !important" translate="global.part-number">
-          <span class = "" >Part Number</span>
+        <div class="col-md-2 col-sm-2 header--type none hidden-sm" style="margin-left:-35px !important">
+           <span ng-class="{'sort-icon--default' : sortFirmwareList.partNumber.isDefault, 'sort-icon-down': sortFirmwareList.partNumber.isDown, 'sort-icon-up':sortFirmwareList.partNumber.isUp}" ng-click="sortType('partNumber')" translate="global.part-number">Part Number</span>
         </div>
-        <div class="col-md-2 col-sm-2 header--type none " style="margin-left:-35px !important" translate="global.soft-version">
-          <span class = "" >Software version</span>
+        <div class="col-md-2 col-sm-2 header--type none " style="margin-left:-35px !important">
+           <span ng-class="{'sort-icon--default' : sortFirmwareList.softwareVersion.isDefault, 'sort-icon-down': sortFirmwareList.softwareVersion.isDown, 'sort-icon-up':sortFirmwareList.softwareVersion.isUp}" ng-click="sortType('softwareVersion')" translate="global.soft-version">Software version</span>
         </div>
-        <div class="col-md-2 col-sm-2 header--type none " style="margin-left:-30px !important" translate="global.soft-date">
-          <span class = "" >Software Date</span>
+        <div class="col-md-2 col-sm-2 header--type none " style="margin-left:-30px !important">
+           <span ng-class="{'sort-icon--default' : sortFirmwareList.softwareDate.isDefault, 'sort-icon-down': sortFirmwareList.softwareDate.isDown, 'sort-icon-up':sortFirmwareList.softwareDate.isUp}" ng-click="sortType('softwareDate')" translate="global.soft-date">Software Date</span>
         </div>
-        <div class="col-md-2 col-sm-2 header--type none " style="margin-left:-30px !important" translate="global.upload-by">
-          <span class = "" > Upload By</span>
+        <div class="col-md-2 col-sm-2 header--type none " style="margin-left:-30px !important">
+           <span ng-class="{'sort-icon--default' : sortFirmwareList.uploadBy.isDefault, 'sort-icon-down': sortFirmwareList.uploadBy.isDown, 'sort-icon-up':sortFirmwareList.uploadBy.isUp}" ng-click="sortType('uploadBy')" translate="global.upload-by">Upload By</span>
         </div>
-        <div class="col-md-2 col-sm-2 header--type none " style="margin-left:-30px !important" translate="global.upload-date">
-          <span class = "" >Upload Date</span>
+        <div class="col-md-2 col-sm-2 header--type none " style="margin-left:-30px !important">
+           <span ng-class="{'sort-icon--default' : sortFirmwareList.uploadDate.isDefault, 'sort-icon-down': sortFirmwareList.uploadDate.isDown, 'sort-icon-up':sortFirmwareList.uploadDate.isUp}" ng-click="sortType('uploadDate')" translate="global.upload-date">Upload Date</span>
         </div>
-        <div class="col-md-2 col-sm-2 header--type none " style="margin-left:-30px !important" translate="global.published-by">
-          <span class = "" >Published By</span>
+        <div class="col-md-2 col-sm-2 header--type none " style="margin-left:-30px !important">
+           <span ng-class="{'sort-icon--default' : sortFirmwareList.publishedBy.isDefault, 'sort-icon-down': sortFirmwareList.publishedBy.isDown, 'sort-icon-up':sortFirmwareList.publishedBy.isUp}" ng-click="sortType('publishedBy')" translate="global.published-by">Published By</span>
         </div>
-        <div class="col-md-2 col-sm-2 header--type none " style="margin-left:-30px !important" translate="global.published-date">
-          <span class = "" >Published Date</span>
+        <div class="col-md-2 col-sm-2 header--type none " style="margin-left:-30px !important">
+           <span ng-class="{'sort-icon--default' : sortFirmwareList.publishedDate.isDefault, 'sort-icon-down': sortFirmwareList.publishedDate.isDown, 'sort-icon-up':sortFirmwareList.publishedDate.isUp}" ng-click="sortType('publishedDate')" translate="global.published-date">Published Date</span>
         </div>
-        <div class="col-md-2 col-sm-2 header--type none " style="margin-left:-40px !important" translate="global.status">
-          <span class = "" >Status</span>
+        <div class="col-md-2 col-sm-2 header--type none " style="margin-left:-40px !important">
+           <span ng-class="{'sort-icon--default' : sortFirmwareList.status.isDefault, 'sort-icon-down': sortFirmwareList.status.isDown, 'sort-icon-up':sortFirmwareList.status.isUp}" ng-click="sortType('status')" translate="global.status">Status</span>
         </div>
-
-        <div class="col-md-2 col-sm-2 header--type none " style="margin-right:-25px !important" translate="">
-          <span class = "" >Download</span>
+        <div class="header--type none " style="margin-left:-40px !important">
+           Download</span>
         </div>
      </div>
     <div class="clr"></div>
@@ -82,6 +81,7 @@
           -by"> {{firmware.fotastatus}}</span>
         </div>
      
+	 
         <div class="header--type none hidden-sm " ng-click="downloadHexFile(firmware)"style="margin-right:-25px !important">
           <span class = "fa fa-download"></span>
         </div>

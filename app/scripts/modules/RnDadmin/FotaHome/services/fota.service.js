@@ -70,8 +70,8 @@ angular.module('hillromvestApp')
         });
 
       },
-      getFirmwareList: function(page,perpage,filter,searchItem){
-          var url = URL.getFirmwareList.replace('PAGE',page).replace('PER_PAGE',perpage).replace('STATUS',filter).replace('SEARCHSTRING',searchItem);
+      getFirmwareList: function(page,perpage,filter,searchItem,sortOption){
+          var url = URL.getFirmwareList.replace('PAGE',page).replace('PER_PAGE',perpage).replace('STATUS',filter).replace('SEARCHSTRING',searchItem).replace('SORT_OPTION',sortOption);
            return $http.get(url,{
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -101,8 +101,8 @@ angular.module('hillromvestApp')
           return response;
         });        
       },
-       getDeviceList: function(page,perpage,filter,searchItem){
-          var url = URL.fotaDeviceList.replace('PAGE',page).replace('PER_PAGE',perpage).replace('STATUS',filter).replace('SEARCHSTRING',searchItem);
+       getDeviceList: function(page,perpage,filter,searchItem,sortOption){
+          var url = URL.fotaDeviceList.replace('PAGE',page).replace('PER_PAGE',perpage).replace('STATUS',filter).replace('SEARCHSTRING',searchItem).replace('SORT_OPTION',sortOption);
            return $http.get(url,{
           headers: headerService.getHeader()
         }).success(function(response) {
