@@ -25,7 +25,15 @@ angular.module('hillromvestApp')
         $scope.formSubmit = function () {
           $scope.submitted = true;
         };
-
+           $scope.localLang = {
+        selectAll       : "Select all",
+        selectNone      : "Select none",
+        search          : "Type here to search...",
+        nothingSelected : "Please select the Device",
+        allSelected : "All Selected",
+        Cancel : "Cancel",
+        OK:"OK"
+      };
         $scope.init = function () {
           $scope.userRole = StorageService.get('logged').role;
           $scope.states = [];
@@ -36,10 +44,13 @@ angular.module('hillromvestApp')
             "name": "French"
           }];
           $scope.patient.gender = "Male";
+          $scope.showVestGarmentFields = false;
+          $scope.showMonarchGarmentFields = false;
           UserService.getState().then(function (response) {
             $scope.states = response.data.states;
           });
           $scope.getGarmentValues();
+          $scope.getDeviceTypeValues();
         };
         $scope.getGarmentValues = function(){
           patientService.getGarmentSizeCodeValues().then(function(response){
@@ -62,6 +73,74 @@ angular.module('hillromvestApp')
         notyService.showError(response);
       });
         };
+        $scope.getDeviceTypeValues = function(){
+          var deviceTypes = [searchFilters.VisiVest_Full,searchFilters.Monarch_Full];
+            // $scope.processClinics = function(clinics){
+      $scope.deviceTypeNames = [];
+       angular.forEach(deviceTypes, function(deviceType, key){
+        var obj = {
+          'name': deviceType,
+          'ticked': true
+        };
+        $scope.deviceTypeNames.push(obj);
+        console.log('devicetype:',$scope.deviceTypeNames)  
+      });
+   // };
+        };
+
+        $scope.selectDeviceTypes = function(){
+          console.log("$scope.deviceType",$scope.deviceType);
+          $scope.patient.devicetype = "";
+          if($scope.deviceType.length){
+            for(var i=0;i<$scope.deviceType.length;i++){
+              if($scope.deviceType[i].name === searchFilters.VisiVest_Full){
+              $scope.patient.devicetype = $scope.patient.devicetype + searchFilters.VisiVest;
+            }
+            else if($scope.deviceType[i].name === searchFilters.Monarch_Full){
+              $scope.patient.devicetype = $scope.patient.devicetype + searchFilters.Monarch;
+            }
+            else{
+               $scope.patient.devicetype = $scope.patient.devicetype + $scope.deviceType[i].name;
+            }
+            if(i != $scope.deviceType.length-1){
+              $scope.patient.devicetype = $scope.patient.devicetype + ',';
+            }
+            }
+          }
+          if($scope.patient.devicetype == searchFilters.VisiVest){
+          $scope.showVestGarmentFields = true;
+          $scope.showMonarchGarmentFields = false;
+          }
+          else if($scope.patient.devicetype == searchFilters.Monarch){
+            $scope.showVestGarmentFields = false;
+          $scope.showMonarchGarmentFields = true;
+          }
+          else if($scope.patient.devicetype == searchFilters.VisiVest+','+searchFilters.Monarch){
+              $scope.showVestGarmentFields = true;
+          $scope.showMonarchGarmentFields = true;
+          }
+          else{
+            $scope.showVestGarmentFields = false;
+          $scope.showMonarchGarmentFields = false;
+          }
+          console.log("$scope.patient.devicetype",$scope.patient.devicetype);
+        };
+        $scope.checkforgarmentfields = function(device){
+          if(device === searchFilters.VisiVest_Full){
+          if($scope.patient.devicetype == searchFilters.VisiVest || $scope.patient.devicetype == searchFilters.VisiVest+','+searchFilters.Monarch)
+              {
+                return true;
+              }
+              else return false;
+          }
+           else if(device === searchFilters.Monarch_Full){
+           if($scope.patient.devicetype == searchFilters.Monarch || $scope.patient.devicetype == searchFilters.VisiVest+','+searchFilters.Monarch)
+              {
+                return true;
+              }
+              else return false;
+          }
+        };
         $scope.init();
 
         $scope.createPatient = function () {
@@ -74,6 +153,7 @@ angular.module('hillromvestApp')
               $scope.patient[key] = null;
             }
           });
+          console.log("patient",$scope.patient);
           addressService.getCityStateByZip($scope.patient.zipcode).then(function(response){
             $scope.patient.city = response.data[0].city;
             $scope.patient.state = response.data[0].state;
@@ -247,6 +327,10 @@ angular.module('hillromvestApp')
 
         angular.element('#dp2').datepicker({
           endDate: '+0d',
+          startDate: '-100y',
+          autoclose: true});
+         angular.element('#dp3').datepicker({
+          endDate: '-1d',
           startDate: '-100y',
           autoclose: true});
       }]
