@@ -82,9 +82,16 @@ angular.module('hillromvestApp')
       }
       if($scope.patient){
         if($scope.patient.deviceType){
-     $scope.patient.deviceType = patientService.getDeviceTypeName($scope.patient.deviceType);
-    }
-  }
+        $scope.patient.deviceType = patientService.getDeviceTypeName($scope.patient.deviceType);
+        }
+        else{
+          $scope.patient.deviceType = patientService.getDeviceTypeName($scope.getDeviceTypeforBothIcon());
+        }
+            if($scope.patient.monarchGarmentSize){
+              $scope.patient.monarchGarmentSize = searchFilters.oneSize;
+            }
+         }
+
 
     }).catch(function(response){
       notyService.showError(response);

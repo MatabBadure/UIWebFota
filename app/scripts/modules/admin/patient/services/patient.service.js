@@ -47,24 +47,48 @@ angular.module('hillromvestApp')
           return response;
         });
       },
-      getGarmentTypeCodeValues: function(){
-          var url = URL.getgarmentTypeCodeValues;
+          getGarmentTypeCodeValues_Vest: function(){
+          var url = URL.getgarmentTypeCodeValues_Vest;
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
           return response;
         });
       },
-      getGarmentColorCodeValues: function(){
-        var url = URL.getgarmentColorCodeValues;
+      getGarmentColorCodeValues_Vest: function(){
+        var url = URL.getgarmentColorCodeValues_Vest;
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
           return response;
         });
       },
-       getGarmentSizeCodeValues: function(){
-        var url = URL.getgarmentSizeCodeValues;
+       getGarmentSizeCodeValues_Vest: function(){
+        var url = URL.getgarmentSizeCodeValues_Vest;
+        return $http.get(url, {
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });
+      },
+            getGarmentTypeCodeValues_Monarch: function(){
+          var url = URL.getgarmentTypeCodeValues_Monarch;
+        return $http.get(url, {
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });
+      },
+      getGarmentColorCodeValues_Monarch: function(){
+        var url = URL.getgarmentColorCodeValues_Monarch;
+        return $http.get(url, {
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });
+      },
+       getGarmentSizeCodeValues_Monarch: function(){
+        var url = URL.getgarmentSizeCodeValues_Monarch;
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -469,7 +493,10 @@ angular.module('hillromvestApp')
           return('Monarch');
         }
         else if(deviceType == 'BOTH'){
-          return('Both');
+          return('VisiVest,Monarch');
+        }
+        else if(deviceType == 'ALL'){
+          return('VisiVest,Monarch');
         }
         else{
            return('VisiVest');

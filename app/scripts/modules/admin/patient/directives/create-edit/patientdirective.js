@@ -52,23 +52,44 @@ angular.module('hillromvestApp')
           $scope.getGarmentValues();
           $scope.getDeviceTypeValues();
         };
-        $scope.getGarmentValues = function(){
-          patientService.getGarmentSizeCodeValues().then(function(response){
+      $scope.getGarmentValues = function(){
+          patientService.getGarmentSizeCodeValues_Vest().then(function(response){
         $scope.garmentSizeResponse = response.data;
-         $scope.garmentSize = $scope.garmentSizeResponse.typeCode;
+         $scope.garmentSize_Vest = $scope.garmentSizeResponse.typeCode;
       }).catch(function(response){
         notyService.showError(response);
       });
-          patientService.getGarmentColorCodeValues().then(function(response){
+          patientService.getGarmentColorCodeValues_Vest().then(function(response){
         $scope.garmentColorResponse = response.data;
-        $scope.garmentColor = $scope.garmentColorResponse.typeCode;
+        $scope.garmentColor_Vest = $scope.garmentColorResponse.typeCode;
       }).catch(function(response){
         notyService.showError(response);
       });
        
-        patientService.getGarmentTypeCodeValues().then(function(response){
+        patientService.getGarmentTypeCodeValues_Vest().then(function(response){
         $scope.garmentTypeResponse = response.data;
-          $scope.garmentType = $scope.garmentTypeResponse.typeCode;
+          $scope.garmentType_Vest = $scope.garmentTypeResponse.typeCode;
+      }).catch(function(response){
+        notyService.showError(response);
+      });
+      //For monarch
+                patientService.getGarmentSizeCodeValues_Monarch().then(function(response){
+        $scope.garmentSizeResponse = response.data;
+        $scope.garmentSizeResponse.typeCode[0].type_code = searchFilters.oneSize; //change One Size for Monarch to One Size
+         $scope.garmentSize_Monarch = $scope.garmentSizeResponse.typeCode;
+      }).catch(function(response){
+        notyService.showError(response);
+      });
+          patientService.getGarmentColorCodeValues_Monarch().then(function(response){
+        $scope.garmentColorResponse = response.data;
+        $scope.garmentColor_Monarch = $scope.garmentColorResponse.typeCode;
+      }).catch(function(response){
+        notyService.showError(response);
+      });
+       
+        patientService.getGarmentTypeCodeValues_Monarch().then(function(response){
+        $scope.garmentTypeResponse = response.data;
+          $scope.garmentType_Monarch = $scope.garmentTypeResponse.typeCode;
       }).catch(function(response){
         notyService.showError(response);
       });
@@ -90,32 +111,32 @@ angular.module('hillromvestApp')
 
         $scope.selectDeviceTypes = function(){
           console.log("$scope.deviceType",$scope.deviceType);
-          $scope.patient.devicetype = "";
+          $scope.patient.deviceType = "";
           if($scope.deviceType.length){
             for(var i=0;i<$scope.deviceType.length;i++){
               if($scope.deviceType[i].name === searchFilters.VisiVest_Full){
-              $scope.patient.devicetype = $scope.patient.devicetype + searchFilters.VisiVest;
+              $scope.patient.deviceType = $scope.patient.deviceType + searchFilters.VisiVest;
             }
             else if($scope.deviceType[i].name === searchFilters.Monarch_Full){
-              $scope.patient.devicetype = $scope.patient.devicetype + searchFilters.Monarch;
+              $scope.patient.deviceType = $scope.patient.deviceType + searchFilters.Monarch;
             }
             else{
-               $scope.patient.devicetype = $scope.patient.devicetype + $scope.deviceType[i].name;
+               $scope.patient.deviceType = $scope.patient.deviceType + $scope.deviceType[i].name;
             }
             if(i != $scope.deviceType.length-1){
-              $scope.patient.devicetype = $scope.patient.devicetype + ',';
+              $scope.patient.deviceType = $scope.patient.deviceType + ',';
             }
             }
           }
-          if($scope.patient.devicetype == searchFilters.VisiVest){
+          if($scope.patient.deviceType == searchFilters.VisiVest){
           $scope.showVestGarmentFields = true;
           $scope.showMonarchGarmentFields = false;
           }
-          else if($scope.patient.devicetype == searchFilters.Monarch){
+          else if($scope.patient.deviceType == searchFilters.Monarch){
             $scope.showVestGarmentFields = false;
           $scope.showMonarchGarmentFields = true;
           }
-          else if($scope.patient.devicetype == searchFilters.VisiVest+','+searchFilters.Monarch){
+          else if($scope.patient.deviceType == searchFilters.VisiVest+','+searchFilters.Monarch){
               $scope.showVestGarmentFields = true;
           $scope.showMonarchGarmentFields = true;
           }
@@ -123,18 +144,18 @@ angular.module('hillromvestApp')
             $scope.showVestGarmentFields = false;
           $scope.showMonarchGarmentFields = false;
           }
-          console.log("$scope.patient.devicetype",$scope.patient.devicetype);
+          console.log("$scope.patient.devicetype",$scope.patient.deviceType);
         };
         $scope.checkforgarmentfields = function(device){
           if(device === searchFilters.VisiVest_Full){
-          if($scope.patient.devicetype == searchFilters.VisiVest || $scope.patient.devicetype == searchFilters.VisiVest+','+searchFilters.Monarch)
+          if($scope.patient.deviceType == searchFilters.VisiVest || $scope.patient.deviceType == searchFilters.VisiVest+','+searchFilters.Monarch)
               {
                 return true;
               }
               else return false;
           }
            else if(device === searchFilters.Monarch_Full){
-           if($scope.patient.devicetype == searchFilters.Monarch || $scope.patient.devicetype == searchFilters.VisiVest+','+searchFilters.Monarch)
+           if($scope.patient.deviceType == searchFilters.Monarch || $scope.patient.deviceType == searchFilters.VisiVest+','+searchFilters.Monarch)
               {
                 return true;
               }
