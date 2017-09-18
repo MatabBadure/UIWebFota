@@ -2,6 +2,11 @@
 .col-3.ipadHeightBalance {
     min-height: 210px;
 }
+/******For Hill-2397******/
+.createpatient_minheight{
+	min-height:800px !important;
+}
+/******EndOf: For Hill-2397******/
 //******To remove static border bottom******/
 .minheight{
 	min-height:600px !important;
@@ -28,6 +33,17 @@ LoginContentHeightForDevices{
 .inb-date span,.arc-date span,.sent-date span,.hcp-msg-date span,.inb-date1 span
 {
 	white-space: pre-line !important;
+}
+.toFieldmultiselectLessWidth > span > button
+{
+	width:256px !important;
+}
+.toFieldmultiselectLessWidth > span > .checkboxLayer
+{
+	width:256px !important;
+}
+.checkboxLayer  > .checkBoxContainer{ 
+  height: 80px !important;
 }
 .inb-flag,.inb-tick
 {
@@ -276,6 +292,10 @@ LoginContentHeightForDevices{
 .col-3.ipadHeightBalance {
     min-height: 199px;
 }
+/******For Hill-2397******/
+.createpatient_minheight{
+	margin-bottom: 180px;
+}/******EndOf: For Hill-2397******/
 /******Archive option responsiveness ******/
 .arc-read {
     width: 20%;

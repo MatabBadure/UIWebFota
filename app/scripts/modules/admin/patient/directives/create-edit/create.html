@@ -11,7 +11,7 @@
     </div>
   </div>
 </div>
-<div class="dashboard dashboard--content padding-bottom-ls">
+<div class="dashboard dashboard--content padding-bottom-ls createpatient_minheight">
   <form name="form" ng-submit="createPatient()" novalidate autocomplete="off">
     <div class="container dashboard__form">
       <div class="margin-top-xl">
@@ -257,27 +257,50 @@
             <div class="col-md-10 dashboard__form__input--option reset-padding selected-box-container">
 
             
-              <div class="custom-dropdown" ng-readonly="validateADMINorASP()">
+<!--               <div class="custom-dropdown" ng-readonly="validateADMINorASP()">
                 <select name="deviceType"  ng-model="patient.deviceType" required ng-options="option for option in ['VisiVest', 'Monarch', 'Both']" ng-selected="{{option === patient.deviceType}}">
-                 <!--  <option selected value="Vest" >Vest</option>
-                 <option value="Monarch">Monarch</option>
-                 <option value="Both">Both</option> -->
-                 
                 </select>
                 <div ng-show="(patient.deviceType.$dirty && patient.deviceType.$showValidationMessage && patient.deviceType.$invalid) ||submitted">
                 <span class="has-error" ng-show="form.firstName.$error.required" translate="error.deviceType.required"></span>
                 
               </div>
-              </div>
+              </div> -->
+                    <div class="custom-dropdown-device-type cmp-msg">
+  
+          <div
+          isteven-multi-select
+          input-model="deviceTypeNames"
+          output-model="deviceType"
+          button-label="name"
+          item-label="name"
+          tick-property=""
+          max-labels="1"
+          translation="localLang"
+          helper-elements="all filter none"
+          min-search-length="1"
+          search-property="name"
+          max-height="250px"
+          on-open="onOpen()"
+          on-close="selectDeviceTypes()"
+          on-item-click= "onItemclick()"
+          on-select-all="onSelectAll()"
+          on-select-none="onSelectNone()"
+          on-reset="onReset()"
+          on-clear="onClear()"
+          on-search-change="onSearchChange()"
+          class="toFieldmultiselectLessWidth"  
+        ></div> 
+  
+        </div>  
             </div>
 
           </div>
 
 
         </div>
-          <!-- Garment fields for Vest by default-->
+            <!-- Garment fields for Vest by default-->
       
-       <div class="col-md-16 col-sm-16 reset-padding margin-top" ng-hide="patient.deviceType!='VisiVest' && patient.deviceType!='Both'">
+       <div class="col-md-16 col-sm-16 reset-padding margin-top" ng-show="showVestGarmentFields">
           <div class="col-md-7 col-sm-7 reset-padding">
             <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
               <span class="" translate="patient.garment-type"></span>
@@ -285,7 +308,7 @@
             </div>
             <div class="col-md-10 col-sm-10 dashboard__form__input--option reset-padding selected-box-container">
               <div class="custom-dropdown">
-                 <select name="type" ng-model="patient.vestGarmentType"  ng-options="item.type_code_value as item.type_code_value for item in garmentType">
+                 <select name="type" ng-model="patient.vestGarmentType"  ng-options="item.type_code_value as item.type_code_value for item in garmentType_Vest">
                 </select>
               </div>
             </div>
@@ -297,9 +320,10 @@
           </div>
           <div class="col-md-10 col-sm-10 dashboard__form__input--option reset-padding selected-box-container">
               <div class="custom-dropdown">
-                 <select name="type" ng-model="patient.vestGarmentColor"  ng-options="item.type_code_value as item.type_code_value for item in garmentColor">
+                 <select name="type" ng-model="patient.vestGarmentColor"  ng-options="item.type_code_value as item.type_code_value for item in garmentColor_Vest">
                 </select>
               </div>
+             <!--  <input type="text"></input> -->
             </div>
         </div>
       
@@ -311,7 +335,7 @@
 
          <div class="col-md-10 col-sm-10 dashboard__form__input--option reset-padding selected-box-container">
               <div class="custom-dropdown">
-                 <select name="type" ng-model="patient.vestGarmentSize"  ng-options="item.type_code_value as item.type_code_value for item in garmentSize">
+                 <select name="type" ng-model="patient.vestGarmentSize"  ng-options="item.type_code_value as item.type_code_value for item in garmentSize_Vest">
                 </select>
               </div>
             </div>
@@ -320,7 +344,7 @@
   </div>
        <!-- Garment fields for Monarch-->
       
-     <div class="col-md-16 col-sm-16 reset-padding margin-top" ng-hide="patient.deviceType!='Monarch' && patient.deviceType!='Both'">
+     <div class="col-md-16 col-sm-16 reset-padding margin-top" ng-show="showMonarchGarmentFields">
           <div class="col-md-7 col-sm-7 reset-padding">
             <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
               <span class="" translate="patient.garment-type-monarch"></span>
@@ -328,7 +352,7 @@
             </div>
             <div class="col-md-10 col-sm-10 dashboard__form__input--option reset-padding selected-box-container">
               <div class="custom-dropdown">
-                 <select name="type" ng-model="patient.monarchGarmentType"  ng-options="item.type_code_value as item.type_code_value for item in garmentType">
+                 <select name="type" ng-model="patient.monarchGarmentType"  ng-options="item.type_code_value as item.type_code_value for item in garmentType_Monarch">
                 </select>
               </div>
             </div>
@@ -340,7 +364,7 @@
           </div>
           <div class="col-md-10 col-sm-10 dashboard__form__input--option reset-padding selected-box-container">
               <div class="custom-dropdown">
-                 <select name="type" ng-model="patient.monarchGarmentColor"  ng-options="item.type_code_value as item.type_code_value for item in garmentColor">
+                 <select name="type" ng-model="patient.monarchGarmentColor"  ng-options="item.type_code_value as item.type_code_value for item in garmentColor_Monarch">
                 </select>
               </div>
             </div>
@@ -354,7 +378,7 @@
 
          <div class="col-md-10 col-sm-10 dashboard__form__input--option reset-padding selected-box-container">
               <div class="custom-dropdown">
-                 <select name="type" ng-model="patient.monarchGarmentSize"  ng-options="item.type_code_value as item.type_code_value for item in garmentSize">
+                 <select name="type" ng-model="patient.monarchGarmentSize"  ng-options="item.type_code_value as item.type_code for item in garmentSize_Monarch">
                 </select>
               </div>
             </div>
