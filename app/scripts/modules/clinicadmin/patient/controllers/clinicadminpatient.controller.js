@@ -12,30 +12,54 @@ angular.module('hillromvestApp')
           $scope.customPointsChecker = 0;
           $scope.lastdeviceType = "";
           $scope.getGarmentValues = function(){
-          patientService.getGarmentSizeCodeValues().then(function(response){
+          patientService.getGarmentSizeCodeValues_Vest().then(function(response){
         $scope.garmentSizeResponse = response.data;
-         $scope.garmentSize = $scope.garmentSizeResponse.typeCode;
+         $scope.garmentSize_Vest = $scope.garmentSizeResponse.typeCode;
       }).catch(function(response){
         notyService.showError(response);
       });
-          patientService.getGarmentColorCodeValues().then(function(response){
+          patientService.getGarmentColorCodeValues_Vest().then(function(response){
         $scope.garmentColorResponse = response.data;
-        $scope.garmentColor = $scope.garmentColorResponse.typeCode;
+        $scope.garmentColor_Vest = $scope.garmentColorResponse.typeCode;
       }).catch(function(response){
         notyService.showError(response);
       });
        
-        patientService.getGarmentTypeCodeValues().then(function(response){
+        patientService.getGarmentTypeCodeValues_Vest().then(function(response){
         $scope.garmentTypeResponse = response.data;
-          $scope.garmentType = $scope.garmentTypeResponse.typeCode;
+          $scope.garmentType_Vest = $scope.garmentTypeResponse.typeCode;
+      }).catch(function(response){
+        notyService.showError(response);
+      });
+      //For monarch
+                patientService.getGarmentSizeCodeValues_Monarch().then(function(response){
+        $scope.garmentSizeResponse = response.data;
+         $scope.garmentSizeResponse.typeCode[0].type_code = searchFilters.oneSize; //change One Size for Monarch to One Size
+         $scope.garmentSize_Monarch = $scope.garmentSizeResponse.typeCode;
+      }).catch(function(response){
+        notyService.showError(response);
+      });
+          patientService.getGarmentColorCodeValues_Monarch().then(function(response){
+        $scope.garmentColorResponse = response.data;
+        $scope.garmentColor_Monarch = $scope.garmentColorResponse.typeCode;
+      }).catch(function(response){
+        notyService.showError(response);
+      });
+       
+        patientService.getGarmentTypeCodeValues_Monarch().then(function(response){
+        $scope.garmentTypeResponse = response.data;
+          $scope.garmentType_Monarch = $scope.garmentTypeResponse.typeCode;
       }).catch(function(response){
         notyService.showError(response);
       });
         };
   $scope.init = function(){
+    $scope.viewMode = false;
     if($state.current.name === 'clinicadminpatientDemographic'  || $state.current.name === 'clinicadmminpatientDemographicEdit'){
+      $scope.viewMode = true;
       $scope.getPatientInfo($stateParams.patientId, $scope.setEditMode);
       if($state.current.name === 'clinicadmminpatientDemographicEdit'){
+         $scope.viewMode = false;
          $scope.getGarmentValues();
         $scope.getStates();
       }
@@ -285,7 +309,18 @@ angular.module('hillromvestApp')
       if (typeof callback === 'function') {
         callback($scope.patient);
       }
-    }).catch(function(response){
+      if($scope.patient){
+      if($scope.patient.deviceType){
+        $scope.patient.deviceType = patientService.getDeviceTypeName($scope.patient.deviceType);
+        }
+        else{
+          $scope.patient.deviceType = patientService.getDeviceTypeName($scope.getDeviceTypeforBothIcon());
+        }
+            if($scope.patient.monarchGarmentSize && $scope.viewMode){
+          $scope.patient.monarchGarmentSize = searchFilters.oneSize;
+        }
+      } 
+       }).catch(function(response){
       notyService.showError(response);
       $state.go('clinicadminpatientdashboard',{'clinicId':$stateParams.clinicId});
     });
