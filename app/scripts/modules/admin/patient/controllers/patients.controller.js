@@ -112,23 +112,44 @@ angular.module('hillromvestApp')
       }).catch(function(response) {});
       $scope.getPatiendDetails($stateParams.patientId, $scope.setEditMode);
     };
- $scope.getGarmentValues = function(){
-          patientService.getGarmentSizeCodeValues().then(function(response){
+  $scope.getGarmentValues = function(){
+          patientService.getGarmentSizeCodeValues_Vest().then(function(response){
         $scope.garmentSizeResponse = response.data;
-         $scope.garmentSize = $scope.garmentSizeResponse.typeCode;
+         $scope.garmentSize_Vest = $scope.garmentSizeResponse.typeCode;
       }).catch(function(response){
         notyService.showError(response);
       });
-          patientService.getGarmentColorCodeValues().then(function(response){
+          patientService.getGarmentColorCodeValues_Vest().then(function(response){
         $scope.garmentColorResponse = response.data;
-        $scope.garmentColor = $scope.garmentColorResponse.typeCode;
+        $scope.garmentColor_Vest = $scope.garmentColorResponse.typeCode;
       }).catch(function(response){
         notyService.showError(response);
       });
        
-        patientService.getGarmentTypeCodeValues().then(function(response){
+        patientService.getGarmentTypeCodeValues_Vest().then(function(response){
         $scope.garmentTypeResponse = response.data;
-          $scope.garmentType = $scope.garmentTypeResponse.typeCode;
+          $scope.garmentType_Vest = $scope.garmentTypeResponse.typeCode;
+      }).catch(function(response){
+        notyService.showError(response);
+      });
+      //For monarch
+                patientService.getGarmentSizeCodeValues_Monarch().then(function(response){
+        $scope.garmentSizeResponse = response.data;
+         $scope.garmentSizeResponse.typeCode[0].type_code = searchFilters.oneSize; //change One Size for Monarch to One Size
+         $scope.garmentSize_Monarch = $scope.garmentSizeResponse.typeCode;
+      }).catch(function(response){
+        notyService.showError(response);
+      });
+          patientService.getGarmentColorCodeValues_Monarch().then(function(response){
+        $scope.garmentColorResponse = response.data;
+        $scope.garmentColor_Monarch = $scope.garmentColorResponse.typeCode;
+      }).catch(function(response){
+        notyService.showError(response);
+      });
+       
+        patientService.getGarmentTypeCodeValues_Monarch().then(function(response){
+        $scope.garmentTypeResponse = response.data;
+          $scope.garmentType_Monarch = $scope.garmentTypeResponse.typeCode;
       }).catch(function(response){
         notyService.showError(response);
       });
@@ -362,6 +383,7 @@ $scope.getdevice = function(){
       $scope.deviceTypeMonarch = false; 
       $scope.disableDropdown = false;
       $scope.displayFlag = true;
+      $scope.viewMode = false;
           $scope.customPointsChecker = 0;
           $scope.lastdeviceType = "";
        $scope.selectedDevice();
@@ -372,6 +394,7 @@ $scope.getdevice = function(){
       if(currentRoute === 'patientOverview' || currentRoute === 'patientOverviewRcadmin'){
         $scope.initPatientOverview();
       }else if(currentRoute === 'patientDemographic' || currentRoute === 'patientDemographicRcadmin' || currentRoute === 'associatepatientDemographic' || currentRoute === 'customerservicepatientDemographic'){
+         $scope.viewMode = true;
         $scope.initpatientDemographic();
       }else if (currentRoute === 'patientEdit') {
         $scope.getPatiendDetails($stateParams.patientId, $scope.setEditMode);
@@ -395,6 +418,7 @@ $scope.getdevice = function(){
       }else if(currentRoute === 'patientAddDevice' || currentRoute === 'patientAddDeviceRcadmin'){
         $scope.initPatientAddDevice();
       }else if(currentRoute === 'patientDemographicEdit' || currentRoute === 'patientDemographicEditRcadmin'){
+        $scope.viewMode = false;
         $scope.initpatientDemographic();
       }else if(currentRoute === 'patientEditProtocol' || currentRoute === 'patientEditProtocolRcadmin'){
         $scope.initpatientEditProtocol();
@@ -429,8 +453,19 @@ $scope.getdevice = function(){
         if (typeof callback === 'function') {
           callback($scope.patient);
         }
-       
+               if($scope.patient && $scope.viewMode){
+        if($scope.patient.monarchGarmentSize){
+          $scope.patient.monarchGarmentSize = searchFilters.oneSize;
+        }
+      }
+      if($scope.patientInfo){
+        if($scope.patientInfo.deviceType){
         $scope.patientInfo.deviceType = patientService.getDeviceTypeName($scope.patientInfo.deviceType);
+              }
+              else{
+          $scope.patientInfo.deviceType = patientService.getDeviceTypeName($scope.getDeviceTypeforBothIcon());
+        }
+      }
       }).catch(function(response) {});
     };
 
@@ -928,7 +963,7 @@ $scope.getdevice = function(){
       if($scope.addDeviceForm.$invalid){
         return false;
       }
-      patientService.addDevice( $stateParams.patientId, $scope.device, $scope.deviceTypeSelected).then(function(response){
+      patientService.addDevice( $stateParams.patientId, $scope.device, $scope.deviceTypeSelected, $scope.getDeviceTypeforBothIcon()).then(function(response){
       if(response.data.changedDevType == 'ALL'){
           localStorage.setItem('deviceType_'+$stateParams.patientId, 'VEST');
           //localStorage.setItem('deviceTypeforGraph', 'ALL');

@@ -54,7 +54,8 @@ var searchFilters = {
     success: "Success",
     failure: "Failure",
     VisiVest_Full: "VisiVest",
-    Monarch_Full: "Monarch"
+    Monarch_Full: "Monarch",
+    oneSize: "One Size"
 }
 
 var sortConstant = {
