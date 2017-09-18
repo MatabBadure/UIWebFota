@@ -285,7 +285,12 @@ angular.module('hillromvestApp')
       if (typeof callback === 'function') {
         callback($scope.patient);
       }
-    }).catch(function(response){
+      if($scope.patient){
+        if($scope.patient.deviceType){
+        $scope.patient.deviceType = patientService.getDeviceTypeName($scope.patient.deviceType);
+          }
+      }   
+       }).catch(function(response){
       notyService.showError(response);
       $state.go('clinicadminpatientdashboard',{'clinicId':$stateParams.clinicId});
     });
