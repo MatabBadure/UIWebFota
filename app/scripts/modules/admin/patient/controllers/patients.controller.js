@@ -928,7 +928,7 @@ $scope.getdevice = function(){
       if($scope.addDeviceForm.$invalid){
         return false;
       }
-      patientService.addDevice( $stateParams.patientId, $scope.device, $scope.deviceTypeSelected).then(function(response){
+      patientService.addDevice( $stateParams.patientId, $scope.device, $scope.deviceTypeSelected, $scope.getDeviceTypeforBothIcon()).then(function(response){
       if(response.data.changedDevType == 'ALL'){
           localStorage.setItem('deviceType_'+$stateParams.patientId, 'VEST');
           //localStorage.setItem('deviceTypeforGraph', 'ALL');
