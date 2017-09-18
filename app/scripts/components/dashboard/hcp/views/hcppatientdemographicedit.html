@@ -186,8 +186,18 @@
           </div>
         </div>
       </div>
+      <div class="col-md-16 col-sm-16 reset-padding margin-top">
+          <div class="col-md-7 col-sm-7 reset-padding col-xs-16">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding col-xs-8">
+              <span class="" translate="patient.device-type"></span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding col-xs-8">
+              <span>{{::patient.deviceType}}</span>
+            </div>
+        </div>
+      </div>
         
- <div ng-if="getDeviceTypeforBothIcon() === 'ALL' || getDeviceTypeforBothIcon() === 'VEST'">
+ <div ng-if="getDeviceTypeforBothIcon() === 'ALL' || patient.deviceType === 'VisiVest'">
        <div class="col-md-16 col-sm-16 reset-padding margin-top">
           <div class="col-md-7 col-sm-7 reset-padding col-xs-16">
             <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding col-xs-8">
@@ -217,7 +227,7 @@
         </div>
       </div>
     </div>
-       <div ng-if="getDeviceTypeforBothIcon() === 'ALL' || getDeviceTypeforBothIcon() === 'MONARCH'">
+       <div ng-if="getDeviceTypeforBothIcon() === 'ALL' || patient.deviceType === 'Monarch'">
              <div class="col-md-16 col-sm-16 reset-padding margin-top">
           <div class="col-md-7 col-sm-7 reset-padding col-xs-16">
             <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding col-xs-8">
