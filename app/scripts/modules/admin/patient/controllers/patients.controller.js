@@ -1298,6 +1298,10 @@ $scope.getdevice = function(){
     };
 
     angular.element('#dp2').datepicker({
+          endDate: '+0d',
+          startDate: '-100y',
+          autoclose: true});
+        angular.element('#dp3').datepicker({
           endDate: '-1d',
           startDate: '-100y',
           autoclose: true});
