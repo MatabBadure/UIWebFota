@@ -52,7 +52,9 @@ var searchFilters = {
     isSuccess: "isSuccess",
     isFail: "isFail",
     success: "Success",
-    failure: "Failure"
+    failure: "Failure",
+    VisiVest_Full: "VisiVest",
+    Monarch_Full: "Monarch"
 }
 
 var sortConstant = {
