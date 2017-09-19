@@ -47,6 +47,21 @@ angular.module('hillromvestApp')
     }
     else return false;
   }
+  $scope.switchProfileTab = function(status){
+     if($scope.role === loginConstants.role.FOTAAdmin){
+         $state.go(status);
+      }
+      else
+      {
+        $state.go(status);
+      }
+  }
+  
+  $scope.cancel = function(){
+    $state.go("RnDadminProfile");
+  }
+
+
                 
   $scope.HandleBrowseClick = function(){   
     $scope.showModalOverwrite = false;
@@ -337,7 +352,7 @@ $scope.validateMatched = function(){
         $scope.unmatchedVersion = false;
         $scope.overrideMesg = true;
         $scope.overrideBtn = true;
-            $scope.btnUpCancel = true;
+        $scope.btnUpCancel = true;
         $scope.showModal = true;
       }else{
       $scope.startAddr = $scope.fota.startAddr;

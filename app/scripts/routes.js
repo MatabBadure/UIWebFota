@@ -6102,7 +6102,7 @@ angular.module('hillromvestApp')
                 }
 
                  })
-                .state('RnDadminProfile', {
+                .state('FOTAUserProfile', {
                 parent: 'FOTAUsers',
                 url: '/profile',
                 data: {
