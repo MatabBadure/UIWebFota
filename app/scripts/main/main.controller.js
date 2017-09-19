@@ -306,9 +306,6 @@ else {
 	      $state.go("patientdashboard");
       }
 	  };
-	   $scope.goToAnnouncements = function(){
- $state.go("patientannouncements");
-	  }; 
 
 	  $scope.isFooter = function(){
       var url = $location.path();
@@ -586,8 +583,12 @@ else {
   	$rootScope.goToChangePrescriptionTermsConditions = function(){		
   		$window.open('#/prescription-terms', '_blank');
   	};
-  	 $scope.GoToMessages = function(){ 	 	
-		$state.go('Messages');
+
+    $scope.navigateUser = function(tabName){
+    	$state.go(tabName);
+    };
+    $scope.navigateWithPatientID = function(tabName){
+    	$state.go(tabName,{'patientId': StorageService.get('logged').patientID});
     };
     $scope.tims = function(){
     	
@@ -605,5 +606,12 @@ else {
     	
     	$state.go('executedLog');
     }
+        $scope.caregiverProfile = function(){
+      //var id = ($stateParams.patientId)?($stateParams.patientId):($scope.selectedPatient.userId);
+       var id = $location.path();
+        var res = id.split('/');
+        var idnumber = parseFloat(res[res.length-1]);
+      $state.go('caregiverProfile', {'patientId': idnumber});
+    };
 
   }]);

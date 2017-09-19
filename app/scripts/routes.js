@@ -199,6 +199,9 @@ angular.module('hillromvestApp')
                     }
                 },
                 resolve: {
+                     loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('PatientDiagnosticModule');
+                    }],
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('patient');
                         return $translate.refresh();
@@ -1331,7 +1334,7 @@ angular.module('hillromvestApp')
                 url: '/sandbox/charger',
                 data: {
                     roles: ['ADMIN'],
-                    pageTitle: 'profile.page-title.charger'
+                    pageTitle: 'profile.page-title.sandbox'
                 },
                 views: {
                     'content@': {
@@ -1361,7 +1364,7 @@ angular.module('hillromvestApp')
                 url: '/sandbox/optimus',
                 data: {
                     roles: ['ADMIN'],
-                    pageTitle: 'profile.page-title.charger'
+                    pageTitle: 'profile.page-title.sandbox'
                 },
                 views: {
                     'content@': {
@@ -6160,6 +6163,31 @@ angular.module('hillromvestApp')
                         }
                     ]
                 }
-            });
+            })
+        .state('caregiverannouncements', {
+                parent: 'caregiver-dashboard',
+                url: '/caregiver-patient-announcements/{patientId}',
+                data: {
+                    roles: ['CARE_GIVER'],
+                    pageTitle: 'console.page-title.announcements'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/patient/announcements/views/announcements.html',
+                        controller: 'patientsannouncementsController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
 }]);
 

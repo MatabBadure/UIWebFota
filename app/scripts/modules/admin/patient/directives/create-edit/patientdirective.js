@@ -25,7 +25,15 @@ angular.module('hillromvestApp')
         $scope.formSubmit = function () {
           $scope.submitted = true;
         };
-
+           $scope.localLang = {
+        selectAll       : "Select all",
+        selectNone      : "Select none",
+        search          : "Type here to search...",
+        nothingSelected : "Please select the Device",
+        allSelected : "All Selected",
+        Cancel : "Cancel",
+        OK:"OK"
+      };
         $scope.init = function () {
           $scope.userRole = StorageService.get('logged').role;
           $scope.states = [];
@@ -36,31 +44,123 @@ angular.module('hillromvestApp')
             "name": "French"
           }];
           $scope.patient.gender = "Male";
+          $scope.showVestGarmentFields = false;
+          $scope.showMonarchGarmentFields = false;
           UserService.getState().then(function (response) {
             $scope.states = response.data.states;
           });
           $scope.getGarmentValues();
+          $scope.getDeviceTypeValues();
         };
-        $scope.getGarmentValues = function(){
-          patientService.getGarmentSizeCodeValues().then(function(response){
+      $scope.getGarmentValues = function(){
+          patientService.getGarmentSizeCodeValues_Vest().then(function(response){
         $scope.garmentSizeResponse = response.data;
-         $scope.garmentSize = $scope.garmentSizeResponse.typeCode;
+         $scope.garmentSize_Vest = $scope.garmentSizeResponse.typeCode;
       }).catch(function(response){
         notyService.showError(response);
       });
-          patientService.getGarmentColorCodeValues().then(function(response){
+          patientService.getGarmentColorCodeValues_Vest().then(function(response){
         $scope.garmentColorResponse = response.data;
-        $scope.garmentColor = $scope.garmentColorResponse.typeCode;
+        $scope.garmentColor_Vest = $scope.garmentColorResponse.typeCode;
       }).catch(function(response){
         notyService.showError(response);
       });
        
-        patientService.getGarmentTypeCodeValues().then(function(response){
+        patientService.getGarmentTypeCodeValues_Vest().then(function(response){
         $scope.garmentTypeResponse = response.data;
-          $scope.garmentType = $scope.garmentTypeResponse.typeCode;
+          $scope.garmentType_Vest = $scope.garmentTypeResponse.typeCode;
       }).catch(function(response){
         notyService.showError(response);
       });
+      //For monarch
+                patientService.getGarmentSizeCodeValues_Monarch().then(function(response){
+        $scope.garmentSizeResponse = response.data;
+        $scope.garmentSizeResponse.typeCode[0].type_code = searchFilters.oneSize; //change One Size for Monarch to One Size
+         $scope.garmentSize_Monarch = $scope.garmentSizeResponse.typeCode;
+      }).catch(function(response){
+        notyService.showError(response);
+      });
+          patientService.getGarmentColorCodeValues_Monarch().then(function(response){
+        $scope.garmentColorResponse = response.data;
+        $scope.garmentColor_Monarch = $scope.garmentColorResponse.typeCode;
+      }).catch(function(response){
+        notyService.showError(response);
+      });
+       
+        patientService.getGarmentTypeCodeValues_Monarch().then(function(response){
+        $scope.garmentTypeResponse = response.data;
+          $scope.garmentType_Monarch = $scope.garmentTypeResponse.typeCode;
+      }).catch(function(response){
+        notyService.showError(response);
+      });
+        };
+        $scope.getDeviceTypeValues = function(){
+          var deviceTypes = [searchFilters.VisiVest_Full,searchFilters.Monarch_Full];
+            // $scope.processClinics = function(clinics){
+      $scope.deviceTypeNames = [];
+       angular.forEach(deviceTypes, function(deviceType, key){
+        var obj = {
+          'name': deviceType,
+          'ticked': true
+        };
+        $scope.deviceTypeNames.push(obj);
+        console.log('devicetype:',$scope.deviceTypeNames)  
+      });
+   // };
+        };
+
+        $scope.selectDeviceTypes = function(){
+          console.log("$scope.deviceType",$scope.deviceType);
+          $scope.patient.deviceType = "";
+          if($scope.deviceType.length){
+            for(var i=0;i<$scope.deviceType.length;i++){
+              if($scope.deviceType[i].name === searchFilters.VisiVest_Full){
+              $scope.patient.deviceType = $scope.patient.deviceType + searchFilters.VisiVest;
+            }
+            else if($scope.deviceType[i].name === searchFilters.Monarch_Full){
+              $scope.patient.deviceType = $scope.patient.deviceType + searchFilters.Monarch;
+            }
+            else{
+               $scope.patient.deviceType = $scope.patient.deviceType + $scope.deviceType[i].name;
+            }
+            if(i != $scope.deviceType.length-1){
+              $scope.patient.deviceType = $scope.patient.deviceType + ',';
+            }
+            }
+          }
+          if($scope.patient.deviceType == searchFilters.VisiVest){
+          $scope.showVestGarmentFields = true;
+          $scope.showMonarchGarmentFields = false;
+          }
+          else if($scope.patient.deviceType == searchFilters.Monarch){
+            $scope.showVestGarmentFields = false;
+          $scope.showMonarchGarmentFields = true;
+          }
+          else if($scope.patient.deviceType == searchFilters.VisiVest+','+searchFilters.Monarch){
+              $scope.showVestGarmentFields = true;
+          $scope.showMonarchGarmentFields = true;
+          }
+          else{
+            $scope.showVestGarmentFields = false;
+          $scope.showMonarchGarmentFields = false;
+          }
+          console.log("$scope.patient.devicetype",$scope.patient.deviceType);
+        };
+        $scope.checkforgarmentfields = function(device){
+          if(device === searchFilters.VisiVest_Full){
+          if($scope.patient.deviceType == searchFilters.VisiVest || $scope.patient.deviceType == searchFilters.VisiVest+','+searchFilters.Monarch)
+              {
+                return true;
+              }
+              else return false;
+          }
+           else if(device === searchFilters.Monarch_Full){
+           if($scope.patient.deviceType == searchFilters.Monarch || $scope.patient.deviceType == searchFilters.VisiVest+','+searchFilters.Monarch)
+              {
+                return true;
+              }
+              else return false;
+          }
         };
         $scope.init();
 
@@ -74,6 +174,7 @@ angular.module('hillromvestApp')
               $scope.patient[key] = null;
             }
           });
+          console.log("patient",$scope.patient);
           addressService.getCityStateByZip($scope.patient.zipcode).then(function(response){
             $scope.patient.city = response.data[0].city;
             $scope.patient.state = response.data[0].state;
@@ -247,6 +348,10 @@ angular.module('hillromvestApp')
 
         angular.element('#dp2').datepicker({
           endDate: '+0d',
+          startDate: '-100y',
+          autoclose: true});
+         angular.element('#dp3').datepicker({
+          endDate: '-1d',
           startDate: '-100y',
           autoclose: true});
       }]
