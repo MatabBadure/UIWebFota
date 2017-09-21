@@ -186,7 +186,7 @@ angular.module('hillromvestApp')
           }else if(response.data.user.authorities[0].name === loginConstants.role.FOTAAdmin){
             logged.userId = response.data.user.id;
             $state.go('fotaHome');
-          } else if(response.data.user.authorities[0].name === loginConstants.role.FOTAApprover)){
+          } else if(response.data.user.authorities[0].name === loginConstants.role.FOTAApprover){
             logged.userId = response.data.user.id;
             $state.go('fotaHome');
           }else{
