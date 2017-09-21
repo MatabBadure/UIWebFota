@@ -307,7 +307,7 @@
               <span class=""></span>
             </div>
             <div class="col-md-10 col-sm-10 dashboard__form__input--option reset-padding selected-box-container">
-              <div class="custom-dropdown">
+              <div class="custom-dropdown dropup">
                  <select name="type" ng-model="patient.vestGarmentType"  ng-options="item.type_code_value as item.type_code_value for item in garmentType_Vest">
                 </select>
               </div>
@@ -319,7 +319,7 @@
             <span class=""></span>
           </div>
           <div class="col-md-10 col-sm-10 dashboard__form__input--option reset-padding selected-box-container">
-              <div class="custom-dropdown">
+              <div class="custom-dropdown dropup">
                  <select name="type" ng-model="patient.vestGarmentColor"  ng-options="item.type_code_value as item.type_code_value for item in garmentColor_Vest">
                 </select>
               </div>
@@ -334,8 +334,8 @@
         </div>
 
          <div class="col-md-10 col-sm-10 dashboard__form__input--option reset-padding selected-box-container">
-              <div class="custom-dropdown">
-                 <select name="type" ng-model="patient.vestGarmentSize"  ng-options="item.type_code_value as item.type_code_value for item in garmentSize_Vest">
+              <div class="custom-dropdown dropup">
+                 <select name="type" ng-model="patient.vestGarmentSize"  ng-options="item.type_code_value as item.type_code_value for item in garmentSize_Vest | orderBy:'type_code_value'">
                 </select>
               </div>
             </div>
@@ -344,7 +344,7 @@
   </div>
        <!-- Garment fields for Monarch-->
       
-     <div class="col-md-16 col-sm-16 reset-padding margin-top" ng-show="showMonarchGarmentFields">
+<!--      <div class="col-md-16 col-sm-16 reset-padding margin-top" >
           <div class="col-md-7 col-sm-7 reset-padding">
             <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
               <span class="" translate="patient.garment-type-monarch"></span>
@@ -357,21 +357,7 @@
               </div>
             </div>
         </div>
-        <div class="col-md-7 col-sm-7 reset-padding col-md-offset-2">
-          <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
-            <span class="" translate="patient.garment-color-monarch"></span>
-            <span class=""></span>
-          </div>
-          <div class="col-md-10 col-sm-10 dashboard__form__input--option reset-padding selected-box-container">
-              <div class="custom-dropdown">
-                 <select name="type" ng-model="patient.monarchGarmentColor"  ng-options="item.type_code_value as item.type_code_value for item in garmentColor_Monarch">
-                </select>
-              </div>
-            </div>
-        </div>
-      
-      <div class="col-md-16 col-sm-16 margin-top reset-padding">
-      <div class="col-md-7 col-sm-7 reset-padding">
+              <div class="col-md-7 col-sm-7 reset-padding">
     <div class=" col-md-6 col-sm-6  dashboard__form--label reset-padding">
           <span  translate="patient.garment-size-monarch" ></span>
         </div>
@@ -383,8 +369,23 @@
               </div>
             </div>
         </div>
+
+     </div> --> 
+      <div class="col-md-16 col-sm-16 margin-top reset-padding" ng-show="showMonarchGarmentFields">
+        <div class="col-md-7 col-sm-7 reset-padding">
+          <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+            <span class="" translate="patient.garment-color-monarch"></span>
+            <span class=""></span>
+          </div>
+          <div class="col-md-10 col-sm-10 dashboard__form__input--option reset-padding selected-box-container">
+              <div class="custom-dropdown">
+                 <select name="type" ng-model="patient.monarchGarmentColor"  ng-options="item.type_code_value as item.type_code_value for item in garmentColor_Monarch">
+                </select>
+              </div>
+            </div>
+        </div>
       </div> 
-   </div>
+  
         <div class="clr"></div>
       </div>
       <div class="col-md-16 margin-top reset-padding">
