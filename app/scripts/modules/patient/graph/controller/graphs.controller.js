@@ -1345,8 +1345,9 @@ angular.module('hillromvestApp')
             }); 
             if($scope.hmrChartDataRaw.series[0].data.length === 1){
                var curDay = $scope.hmrChartDataRaw.xAxis.categories[0].split(" ");
-               var latestDate = dateService.getDateFromTimeStamp((new Date().getTime() - (1000*60*60*24*1)),patientDashboard.dateFormat,'/')
-              if(curDay[0] == latestDate){
+                var latestDate = dateService.getDateFromTimeStamp((new Date().getTime()),patientDashboard.dateFormat,'/');
+               var yestDate = dateService.getDateFromTimeStamp((new Date().getTime() - (1000*60*60*24*1)),patientDashboard.dateFormat,'/')
+              if(curDay[0] == latestDate || curDay[0] == yestDate){
                 $scope.isSameDayHMRGraph = false;
                 console.log("$scope.isSameDayHMRGraph",$scope.isSameDayHMRGraph);
               }
@@ -3371,8 +3372,9 @@ $scope.getComplianceGraph = function(){
             });
             if($scope.hmrChartDataRaw.series[0].data.length === 1){
                var curDay = $scope.hmrChartDataRaw.xAxis.categories[0].split(" ");
-               var latestDate = dateService.getDateFromTimeStamp((new Date().getTime() - (1000*60*60*24*1)),patientDashboard.dateFormat,'/')
-              if(curDay[0] == latestDate){
+                var latestDate = dateService.getDateFromTimeStamp((new Date().getTime()),patientDashboard.dateFormat,'/');
+               var yestDate = dateService.getDateFromTimeStamp((new Date().getTime() - (1000*60*60*24*1)),patientDashboard.dateFormat,'/')
+              if(curDay[0] == latestDate || curDay[0] == yestDate){
                 $scope.isSameDayHMRGraph = false;
                 console.log("$scope.isSameDayHMRGraph",$scope.isSameDayHMRGraph);
               }
@@ -4472,8 +4474,9 @@ $scope.getComplianceGraph1 = function(){
             });  
             if($scope.hmrChartData1Raw.series[0].data.length === 1){
                var curDay = $scope.hmrChartData1Raw.xAxis.categories[0].split(" ");
-               var latestDate = dateService.getDateFromTimeStamp((new Date().getTime() - (1000*60*60*24*1)),patientDashboard.dateFormat,'/')
-              if(curDay[0] == latestDate){
+               var latestDate = dateService.getDateFromTimeStamp((new Date().getTime()),patientDashboard.dateFormat,'/');
+               var yestDate = dateService.getDateFromTimeStamp((new Date().getTime() - (1000*60*60*24*1)),patientDashboard.dateFormat,'/')
+              if(curDay[0] == latestDate || curDay[0] == yestDate){
                 $scope.isSameDayHMRGraph = false;
                 console.log("$scope.isSameDayHMRGraph",$scope.isSameDayHMRGraph);
               }
