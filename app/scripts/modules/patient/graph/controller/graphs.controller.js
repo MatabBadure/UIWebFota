@@ -1342,7 +1342,8 @@ angular.module('hillromvestApp')
                 startDay[0] = curDay[0];
                 $scope.hmrXAxisLabelCount++;
               }
-            });       
+            }); 
+            $scope.isSameDayHMRGraph = ($scope.hmrChartDataRaw.series[0].data.length === 1) ? false : true;      
             angular.forEach($scope.hmrChartData.xAxis.categories, function(x, key){              
               // this is for year view or custom view having datapoints more than 7
               // x-axis will be plotted accordingly, chart type will be datetime
@@ -3360,7 +3361,8 @@ $scope.getComplianceGraph = function(){
                 startDay[0] = curDay[0];
                 $scope.hmrXAxisLabelCount++;
               }
-            });       
+            });
+            $scope.isSameDayHMRGraph = ($scope.hmrChartDataRaw.series[0].data.length === 1) ? false : true;       
             angular.forEach($scope.hmrChartData.xAxis.categories, function(x, key){              
               // this is for year view or custom view having datapoints more than 7
               // x-axis will be plotted accordingly, chart type will be datetime
@@ -4454,7 +4456,8 @@ $scope.getComplianceGraph1 = function(){
                 startDay[0] = curDay[0];
                 $scope.hmrXAxisLabelCount++;
               }
-            });       
+            });  
+            $scope.isSameDayHMRGraph = ($scope.hmrChartData1Raw.series[0].data.length === 1) ? false : true;     
             angular.forEach($scope.hmrChartData1.xAxis.categories, function(x, key){              
               // this is for year view or custom view having datapoints more than 7
               // x-axis will be plotted accordingly, chart type will be datetime
