@@ -50,6 +50,10 @@ angular.module('hillromvestApp')
       }
     };
 
+    $scope.redirectBack = function(){
+      $state.go('fotaHome');
+    };
+
     $scope.switchProfileTab = function(status){
       if($scope.role === loginConstants.role.acctservices){
         $state.go(status+loginConstants.role.Rc);

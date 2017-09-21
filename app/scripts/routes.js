@@ -6081,7 +6081,7 @@ angular.module('hillromvestApp')
                 },
                 views: {
                     'content@': {
-                        templateUrl: 'scripts/modules/RnDadmin/FotaHome/views/fotaList.html',
+                        templateUrl: 'scripts/modules/FOTA/FotaHome/views/fotaList.html',
                         controller: 'fotaController'
                     }
                 },
@@ -6111,7 +6111,7 @@ angular.module('hillromvestApp')
                 },
                 views: {
                     'content@': {
-                        templateUrl: 'scripts/modules/RnDadmin/FotaHome/views/my-profile.html',
+                        templateUrl: 'scripts/modules/FOTA/FotaHome/views/my-profile.html',
                         controller: 'adminProfileController'
                     }
                 },
@@ -6132,8 +6132,102 @@ angular.module('hillromvestApp')
                     ]
                 }
             })
+               
+                .state('fotaadminUpdatePassword', {
+                parent: 'FOTAUsers',
+                url: '/updatepassword',
+                data: {
+                    roles: ['FOTA_ADMIN','FOTA_APPROVER','CUSTOMER_SERVICES'],
+                    pageTitle: 'profile.page-title.update-password'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/FOTA/FotaHome/views/updatePassword.html',
+                        controller: 'adminProfileController'
+                    }
+                },
+                resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('FOTAAdminProfileModule');
+                    }],
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('profile');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+                .state('editFotaAdminProfile', {
+                parent: 'FOTAUsers',
+                url: '/editProfile',
+                data: {
+                    roles: ['FOTA_ADMIN','FOTA_APPROVER','CUSTOMER_SERVICES'],
+                    pageTitle: 'profile.page-title.edit-profile'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/FOTA/FotaHome/views/profile-edit.html',
+                        controller: 'adminProfileController'
+                    }
+                },
+                resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('FOTAAdminProfileModule');
+                    }],
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('profile');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+
+                .state('fotaadminedit',{
+                parent: 'FOTAUsers',
+                url: '/edit',
+                data: {
+                    roles: ['FOTA_ADMIN','FOTA_APPROVER','CUSTOMER_SERVICES'],
+                    pageTitle: 'profile.page-title.profile-edit'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/FOTA/FotaHome/views/profile-edit.html',
+                        controller: 'fotaController'
+                    }
+                },
+                resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('FOTAAdminProfileModule');
+                    }],
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('profile');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            }
+                    )
         .state('deviceList', {
                 parent: 'FOTAUsers',
+   
                 url: '/fotaDeviceList',
                 data: {
                      roles: ['FOTA_ADMIN','FOTA_APPROVER'],
@@ -6141,7 +6235,7 @@ angular.module('hillromvestApp')
                 },
                 views: {
                     'content@': {
-                        templateUrl: 'scripts/modules/RnDadmin/FotaHome/views/devicelist.html',
+                        templateUrl: 'scripts/modules/FOTA/FotaHome/views/devicelist.html',
                         controller: 'fotaController'
                     }
                 },
@@ -6170,7 +6264,7 @@ angular.module('hillromvestApp')
                 },
                 views: {
                     'content@': {
-                        templateUrl: 'scripts/modules/RnDadmin/FotaHome/views/fotauploadfile.html',
+                        templateUrl: 'scripts/modules/FOTA/FotaHome/views/fotauploadfile.html',
                         controller: 'fotaController'
                     }
                 },
@@ -6201,7 +6295,7 @@ angular.module('hillromvestApp')
                 },
                 views: {
                     'content@': {
-                        templateUrl: 'scripts/modules/RnDadmin/FotaHome/views/fotaValidate.html',
+                        templateUrl: 'scripts/modules/FOTA/FotaHome/views/fotaValidate.html',
                         controller: 'fotaController'
                     }
                 },
@@ -6232,7 +6326,7 @@ angular.module('hillromvestApp')
                 },
                 views: {
                     'content@': {
-                        templateUrl: 'scripts/modules/RnDadmin/FotaHome/views/firmwareView.html',
+                        templateUrl: 'scripts/modules/FOTA/FotaHome/views/firmwareView.html',
                         controller: 'fotaController'
                     }
                 },

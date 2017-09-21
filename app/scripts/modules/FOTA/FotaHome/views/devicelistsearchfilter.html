@@ -1,0 +1,20 @@
+
+	<div class="row lebel-indent col-md-16 margin-bottom15">
+		<label>
+			<input type="radio" ng-model="searchFilterdevicelist.type" value="Success" ng-change="setDeviceRadioOption()" ng-checked="true"> 
+			<span translate="search-filter.success"></span> 
+		</label>
+		<label>
+			<input type="radio" ng-model="searchFilterdevicelist.type" value="Failure" ng-change="setDeviceRadioOption()"> 
+			<span translate="search-filter.fota-Fail"></span>
+		</label>	
+		<label>
+			<input type="radio" ng-model="searchFilterdevicelist.type" value="Aborted" ng-change="setDeviceRadioOption()"> 
+			<span translate="search-filter.fota-aborted"></span>
+		</label>	
+		<label>
+			<input type="radio" ng-model="searchFilterdevicelist.type" value="All" ng-change="setDeviceRadioOption()"> 
+			<span translate="search-filter.all"></span>
+		</label>	
+	</div>
+	

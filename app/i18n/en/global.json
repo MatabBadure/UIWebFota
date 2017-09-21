@@ -91,7 +91,55 @@
             "search": "Search by Part Number"
                 }
             },
-        
+            "partNumber": {
+            "required": "Part Number is required.",
+            "invalid": "Part Number is invalid",
+            "pattern": "Part Number is invalid"
+                    },
+            "productName": {
+            "required": "Product Name is required."
+                    },
+            "softwareVer": {
+            "required": "Sofware Version is required.",
+            "invalid": "Sofware Version is invalid",
+            "pattern": "Sofware Version is invalid"
+                    },            
+            "softwareDate": {
+            "required": "Software Date is required.",
+            "invalid": "Software Date is invalid",
+            "pattern": "Software Date is invalid"
+                    },            
+
+              "file": {
+                "required": "File is required."
+                    },       
+
+            "startAddress": {
+            "required": "Start Address is required.",
+            "invalid": "Start Address is invalid",
+            "pattern": "Start Address is invalid"
+                    },
+            "endAddress": {
+            "required": "End Address is required.",
+            "invalid": "End Address is invalid",
+            "pattern": "End Address is invalid"
+                    },
+        "CRCLocation": {
+            "required": "CRC Location is required.",
+            "invalid": "CRC Location is invalid",
+            "pattern": "CRC Location is invalid"
+                    },
+        "region1CRC": {
+            "required": "Rgion1CRC is required.",
+            "invalid": "Rgion1CRC is invalid",
+            "pattern": "Rgion1CRC is invalid"
+                    },
+        "region2CRC": {
+            "required": "Rgion2CRC is required.",
+            "invalid": "Rgion2CRC is invalid",
+            "pattern": "Rgion2CRC is invalid"
+                    },
+
         "browsehappy": "You are using an <strong>outdated</strong> browser. Please <a href=\"http://browsehappy.com/?locale=en\">upgrade your browser</a> to improve your experience.",
         "menu": {
             "home": "Home",

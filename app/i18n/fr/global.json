@@ -173,8 +173,7 @@
             "clinic-admin": "Clinic Admin",
             "hcp": "HCP",
             "patient": "Patient",
-            "customerservices" : "Customer Service",
-            "RnDAdmin" : "R&D Admin"
+            "customerservices" : "Customer Service"
         },
         "not-applicable": "NA",
         "notification":{
