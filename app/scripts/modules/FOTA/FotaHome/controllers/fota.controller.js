@@ -48,6 +48,7 @@ angular.module('hillromvestApp')
     else return false;
   }
   $scope.switchProfileTab = function(status){
+
      if($scope.role === loginConstants.role.FOTAAdmin){
          $state.go(status);
       }
@@ -58,7 +59,7 @@ angular.module('hillromvestApp')
   }
   
   $scope.cancel = function(){
-    $state.go("RnDadminProfile");
+    $state.go("FOTAUserProfile");
   }
 
 
@@ -201,6 +202,7 @@ angular.module('hillromvestApp')
 };
 
   $scope.fotaUploadModule = function(form){ 
+    /*$scope.files.length == 0 = true;*/
    $scope.overrideMesg = false;
    $scope.overrideBtn = false;
    if($scope.fota.releaseDate !== undefined){
@@ -250,11 +252,11 @@ angular.module('hillromvestApp')
   
    if($scope.hexDevicePartNumber !== $scope.fileDevicePartNumber){
     $scope.validatePartNumber();
-   }else if( $scope.hexDate !== $scope.fileReleaseDate){
-    $scope.validateRelease();
    } else if($scope.softVersion !== $scope.userSoftwareVer){
       $scope.validateSoftVersion();
-    }else {
+   }else if( $scope.hexDate !== $scope.fileReleaseDate){
+    $scope.validateRelease();
+   }else {
       $scope.validateMatched();
   }
  };

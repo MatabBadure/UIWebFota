@@ -28,9 +28,6 @@ angular.module('hillromvestApp')
       if($state.current.name === 'adminProfile' || $state.current.name === 'editAdminProfile' || $state.current.name === 'adminProfileRc' || $state.current.name === 'editAdminProfileRc' || $state.current.name === 'associateProfile' || $state.current.name === 'editAssociateProfile' || $state.current.name === 'customerserviceProfile' || $state.current.name === 'editcustomerserviceProfile'){
         $scope.initProfile(StorageService.get('logged').userId);
       }
-      else if($state.current.name === 'RnDadminProfile'){
-        //Do nothing for now
-      }
     };
 
     $scope.editMode = function(){
@@ -42,9 +39,19 @@ angular.module('hillromvestApp')
       else if($scope.role === loginConstants.role.customerservices){
         $state.go('editcustomerserviceProfile');
       }
+      else if($scope.role === loginConstants.role.FOTAAdmin){
+        $state.go('editFotaAdminProfile');
+      }
+      else if($scope.role === loginConstants.role.FOTAApprover){
+        $state.go('editFotaAdminProfile');
+      }
       else {
         $state.go('editAdminProfile');
       }
+    };
+
+    $scope.redirectBack = function(){
+      $state.go('fotaHome');
     };
 
     $scope.switchProfileTab = function(status){
@@ -55,7 +62,12 @@ angular.module('hillromvestApp')
       }
       else if($scope.role === loginConstants.role.customerservices){
         $state.go(status);
-      }else{
+      }
+      else if($scope.role === loginConstants.role.FOTAAdmin || $scope.role === loginConstants.role.FOTAApprover){
+        //console.log("tab");
+        $state.go(status);
+      }
+      else{
         $state.go(status);
       }
     };
@@ -144,6 +156,9 @@ angular.module('hillromvestApp')
       }
       else if($scope.role === loginConstants.role.customerservices){
         $state.go('customerserviceProfile');
+      }
+      else if($scope.role === loginConstants.role.FOTAAdmin || $scope.role === loginConstants.role.FOTAApprover){
+        $state.go('FOTAUserProfile');
       }else {
         $state.go('adminProfile');
       }
