@@ -199,6 +199,9 @@ angular.module('hillromvestApp')
                     }
                 },
                 resolve: {
+                     loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('PatientDiagnosticModule');
+                    }],
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('patient');
                         return $translate.refresh();
@@ -1328,14 +1331,44 @@ angular.module('hillromvestApp')
         */
             .state('charger', {
                 parent: 'admin',
-                url: '/charger',
+                url: '/sandbox/charger',
                 data: {
                     roles: ['ADMIN'],
-                    pageTitle: 'profile.page-title.charger'
+                    pageTitle: 'profile.page-title.sandbox'
                 },
                 views: {
                     'content@': {
                         templateUrl: 'scripts/modules/admin/profile/profile-tabs/charger.html',
+                        controller: 'chargercontroller'
+                    }
+                },
+                resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('AdminProfileModule');
+                    }],
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('profile');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+            .state('optimus', {
+                parent: 'admin',
+                url: '/sandbox/optimus',
+                data: {
+                    roles: ['ADMIN'],
+                    pageTitle: 'profile.page-title.sandbox'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/admin/profile/profile-tabs/optimus.html',
                         controller: 'chargercontroller'
                     }
                 },
@@ -6215,6 +6248,22 @@ angular.module('hillromvestApp')
                     }],
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('profile');
+        .state('caregiverannouncements', {
+                parent: 'caregiver-dashboard',
+                url: '/caregiver-patient-announcements/{patientId}',
+                data: {
+                    roles: ['CARE_GIVER'],
+                    pageTitle: 'console.page-title.announcements'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/modules/patient/announcements/views/announcements.html',
+                        controller: 'patientsannouncementsController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient-user');
                         return $translate.refresh();
                     }],
                     authorize: ['Auth',
@@ -6223,6 +6272,7 @@ angular.module('hillromvestApp')
                         }
                     ]
                 }
+
             }
                     )
         .state('deviceList', {

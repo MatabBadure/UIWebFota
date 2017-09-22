@@ -2,8 +2,8 @@
 
 angular.module('hillromvestApp')
   .controller('MainController', 
-  	['$scope', 'Principal', 'Auth','notyService', 'DoctorService','$state', 'Account', '$location', '$stateParams', '$rootScope', 'loginConstants', 'StorageService', 'UserService', '$window', 'patientService', 'messageService',
-  function ($scope, Principal,Auth,notyService,DoctorService, $state, Account, $location,$stateParams, $rootScope,loginConstants,StorageService, UserService, $window, patientService,messageService) {
+  	['$scope', 'Principal', 'Auth','notyService', 'DoctorService','$state', 'Account', '$location', '$stateParams', '$rootScope', 'loginConstants', 'StorageService', 'UserService', '$window', 'patientService', 'messageService', 'caregiverDashBoardService',
+  function ($scope, Principal,Auth,notyService,DoctorService, $state, Account, $location,$stateParams, $rootScope,loginConstants,StorageService, UserService, $window, patientService,messageService,caregiverDashBoardService) {
     Principal.identity().then(function(account) {
       $scope.account = account;
       $scope.isAuthenticated = Principal.isAuthenticated;
@@ -15,15 +15,69 @@ angular.module('hillromvestApp')
 			}	
 	}
 	$rootScope.getDeviceType = function(){
-	return (localStorage.getItem('deviceType'));	
-	}
-	$rootScope.getDeviceTypeforGraphRadio = function(){
-	return (localStorage.getItem('deviceTypeforGraph'));	
-	}
-	$rootScope.getDeviceTypeforBothIcon = function(){
-	return (localStorage.getItem('deviceTypeforBothIcon'));	
+		var patientId = "";
+		$rootScope.userRole = StorageService.get('logged').role;
+		if($rootScope.userRole === 'PATIENT'){
+			patientId = $rootScope.userId;
+		}
+		else if($rootScope.userRole === 'CARE_GIVER'){
+			if($stateParams.patientId){
+				patientId = $stateParams.patientId;
+			}
+			else{
+			patientId = StorageService.get('logged').patientID;
+				}
+			}
+		else{
+			patientId = $stateParams.patientId;
+		}
+	return (localStorage.getItem('deviceType_'+patientId));	
 	}
 
+	$rootScope.getDeviceTypeforBothIcon = function(){
+		var patientId = "";
+		$rootScope.userRole = StorageService.get('logged').role;
+		if($rootScope.userRole === 'PATIENT'){
+			patientId = $rootScope.userId;
+			console.log("patientId in main",patientId)
+		}
+		else if($rootScope.userRole === 'CARE_GIVER'){
+			if($stateParams.patientId){
+				patientId = $stateParams.patientId;
+			}
+			else{
+			patientId = StorageService.get('logged').patientID;
+				}
+			}
+		else{
+			patientId = $stateParams.patientId;
+		}
+	return (localStorage.getItem('deviceTypeforBothIcon_'+patientId));	
+	}
+	//the following module added for ticket Hill-2411
+	$rootScope.getPatientListForCaregiver = function(caregiverID){
+      var currentname = $state.current.name;  
+      caregiverDashBoardService.getPatients(caregiverID).then(function(response){
+                $scope.patients = response.data.patients;
+                var logged = StorageService.get('logged');                    
+            logged.patientID = $stateParams.patientId ? $stateParams.patientId : response.data.patients[0].user.id;               
+            StorageService.save('logged', logged);
+                 if(response.data.patients[0].deviceType == 'ALL'){
+          localStorage.setItem('deviceType_'+response.data.patients[0].user.id, 'VEST');
+          localStorage.setItem('deviceTypeforBothIcon_'+response.data.patients[0].user.id, 'ALL');
+
+            }
+            else{
+            localStorage.setItem('deviceType_'+response.data.patients[0].user.id, response.data.patients[0].deviceType);
+            localStorage.setItem('deviceTypeforBothIcon_'+response.data.patients[0].user.id, response.data.patients[0].deviceType);
+          }
+
+      }).catch(function(response){
+                  notyService.showError(response);
+      });
+      return $scope.patients;
+    };
+    //EnfOf:the following module added for ticket Hill-2411
     $scope.mainInit = function(){    		
     		$rootScope.isAddDiagnostics = false;
 			$rootScope.userRole = null;
@@ -158,6 +212,7 @@ else {
      	Auth.signOut().then(function(data) {
           Auth.logout();
           StorageService.clearAll();
+          localStorage.clear();
           $rootScope.userRole = null;
           $scope.signOut();
         }).catch(function(err) {
@@ -251,9 +306,6 @@ else {
 	      $state.go("patientdashboard");
       }
 	  };
-	   $scope.goToAnnouncements = function(){
- $state.go("patientannouncements");
-	  }; 
 
 	  $scope.isFooter = function(){
       var url = $location.path();
@@ -531,8 +583,12 @@ else {
   	$rootScope.goToChangePrescriptionTermsConditions = function(){		
   		$window.open('#/prescription-terms', '_blank');
   	};
-  	 $scope.GoToMessages = function(){ 	 	
-		$state.go('Messages');
+
+    $scope.navigateUser = function(tabName){
+    	$state.go(tabName);
+    };
+    $scope.navigateWithPatientID = function(tabName){
+    	$state.go(tabName,{'patientId': StorageService.get('logged').patientID});
     };
     $scope.tims = function(){
     	
@@ -550,5 +606,12 @@ else {
     	
     	$state.go('executedLog');
     }
+        $scope.caregiverProfile = function(){
+      //var id = ($stateParams.patientId)?($stateParams.patientId):($scope.selectedPatient.userId);
+       var id = $location.path();
+        var res = id.split('/');
+        var idnumber = parseFloat(res[res.length-1]);
+      $state.go('caregiverProfile', {'patientId': idnumber});
+    };
 
   }]);

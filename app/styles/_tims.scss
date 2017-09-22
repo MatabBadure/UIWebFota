@@ -1,12 +1,5 @@
   /* tims */
-  .tims_calender
-{
  
-    width: 25% !important;
-    position: absolute;
-    top:10%;
-    left: 15%;
-}
 .execute-jobs
 {
   display: inline-flex;
@@ -28,13 +21,64 @@
     border-radius: 0;
     padding-bottom: 9px;
 }
+.timsCalender li
+{
+    margin-top: -13%;
+    margin-left: 9%;
+}
+.timsDatesRange
+{
+    position: relative;
+    margin-top: 0%;
+    font-weight: 500;
+    
+}
+.date-tims span{
+  margin-left: 5%;
+}
+
+.timsText a
+{
+  cursor: pointer;
+}
 .timsLogHead,.timsexecuteHead
 {
   padding:10px 10px!important; 
 }
 .tims-check-box
 {
-    margin:4% 1%;
+    margin:4% 0%;
+    width:13%;
+}
+.tims-ribbon
+{
+  padding:0px;
+}
+
+.timsDateContainer
+{
+  width: 22%;
+  margin-top: 4%;
+  border: 1px solid #cccccc;
+}
+.successLabel
+{
+  padding-right:10%;
+}
+.timsCalender a
+{
+    position: absolute !important;
+    margin-top: 9%;
+    margin-left: -11%;
+}
+.tims-check-box input,.tims-check-box span
+{
+  float:left !important;
+  cursor: pointer;
+}
+.tims-check-box input
+{
+  margin-right:7px;
 }
 .timsLogHead span,.timsexecuteHead span
 {
@@ -49,7 +93,7 @@
 
 .timsText
 {
-      font-weight: 100;
+    font-weight: 100;
     font-size: 1.1em;
 }
 .timsContainer
@@ -73,7 +117,7 @@
 }
 .timsContainer-success
 {
-  margin: 15% 0% 3% 20%;
+  margin: 15% 0% 3% 35%;
 }
 .logStatusWidth
 {
@@ -90,9 +134,31 @@
 .logLinkWidth a{
       color: #34455C;
 }
-.textareaBorder textarea
+
+.tims_header 
 {
-  white-space:normal;
+  border-bottom:1px solid transparent;
+}
+.successLabel, .failLabel
+{
+  font-weight: 500;
+}
+.navbar-secondary .navbar-right .header-popover ul li:nth-child(4):after
+{
+      height: 35px;
+    border-right: 1px solid #C1C1C1;
+    content: '';
+    position: absolute;
+    top: 11px;
+    right: 0;
+}
+.tims-dashboard
+{
+  background-color: transparent;
+}
+.tims-navbar
+{
+  margin-top:0px;
 }
 .tims__manage-view--list{
   border-bottom: 1px solid $silver-approx;
@@ -102,4 +168,26 @@
   &:hover {
     background-color: $seashell;
   }
+  }
+.infocontainer.timsText
+{
+    width:75%;
+}
+.continue-tims
+{
+  float:left !important;
+}
+.dialogMsg
+{
+  font-weight: 100 !important; 
+  font-size: 1.1em !important;
+  
+}
+.warningModalDialog
+{
+  margin-top:-2%;
+}
+.timsModal
+{
+  height:65px;
 }

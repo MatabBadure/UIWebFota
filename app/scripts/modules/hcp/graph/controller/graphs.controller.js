@@ -57,6 +57,7 @@ angular.module('hillromvestApp')
 		$scope.getBadgeDateFormat();
 		$scope.prescribeDevice = false;
 		$scope.isYesterday = true;
+		$scope.selectedClinic = {};
 		$scope.statistics = {
 			"date":$scope.toDate,
 			"patientsWithSettingDeviation":0,
@@ -174,7 +175,7 @@ angular.module('hillromvestApp')
      	$scope.getClinicsForClinicAdmin($scope.hcpId);
      }
      else if($state.current.name === 'hcpdashboard'){
-$scope.getClinicsForHCP($scope.hcpId);
+		$scope.getClinicsForHCP($scope.hcpId);
      }
      else{
      	$scope.getclinicAdminID(clinicId);
@@ -186,14 +187,17 @@ $scope.getClinicsForHCP($scope.hcpId);
 	$scope.getclinicAdminID = function(clinicId){
       clinicService.getClinicAdmins(clinicId).then(function(response){
         $scope.clinicAdmins = response.data.clinicAdmin;
- if($scope.clinicAdmins.length){
+		 if($scope.clinicAdmins.length){
          $scope.getClinicsForClinicAdmin(new Number($scope.clinicAdmins[0].id));
                }
                else{
                       $scope.noDataAvailable = true;
+                      $scope.getClinicsForClinicAdmin();
                }
-      }).catch(function(response){});
-    };
+	      }).catch(function(response){
+	      	$scope.getClinicsForClinicAdmin();
+	      });
+	    };
 
      $scope.switchTab = function(state){
       if($scope.clinicStatus.role === loginConstants.role.acctservices){
@@ -366,6 +370,7 @@ $scope.getClinicsForHCP($scope.hcpId);
 		  });
 	};
 	$scope.getDashboardForHCPOrPatient = function(response, userId){
+		if(response){
 		if(response.data && response.data.clinics){
 			$scope.clinics = $filter('orderBy')(response.data.clinics, "name");
 			var isClinic = false;
@@ -374,9 +379,16 @@ $scope.getClinicsForHCP($scope.hcpId);
 			}
 			if(!isClinic){
 				$scope.selectedClinic = $scope.clinics[0];
+				}
 			}
 		}
+			else{
+		    	$scope.selectedClinic.name  = localStorage.getItem('clinicname_'+$stateParams.clinicId);
+         		$scope.selectedClinic.hillromId =  localStorage.getItem('clinicHillRomID_'+$stateParams.clinicId);
+				$scope.selectedClinic.id = $stateParams.clinicId;
+				}
 			$scope.initCount($scope.selectedClinic.id);
+		if(userId){
 		$scope.weeklyChart();
 		if($scope.selectedClinic){
 			$scope.getStatistics($scope.selectedClinic.id, userId);
@@ -384,14 +396,20 @@ $scope.getClinicsForHCP($scope.hcpId);
 			$scope.badgetoDate = $scope.badgestatistics.date = $scope.getYesterday();
 			$scope.getPercentageStatistics($scope.statistics);
 		}
+	}
 		
 	};
 	$scope.getClinicsForClinicAdmin = function(userId) {
+		if(userId){
 		clinicadminService.getClinicsAssociated(userId).then(function(response){
 			$scope.getDashboardForHCPOrPatient(response, userId);
 		}).catch(function(response){
 		  notyService.showError(response);
 		});
+	}
+	else{
+		$scope.getDashboardForHCPOrPatient();
+	}
 	};
 
 	//---HCP PieChart JS =============

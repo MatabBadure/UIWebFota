@@ -1,0 +1,27 @@
+<div class="navbar patient-user patient-user--nav">
+  <div class="container">
+    <div class="collapse navbar-collapse patient-user__navbar" id="navbar-collapse">
+      <ul class="nav navbar-nav patient-dashboard">
+        <li >
+          <a ng-href="" class="nav_bar_title">
+            <span class="" translate="navbar.announcement"></span>
+          </a>
+        </li>
+      </ul>
+<ul class="nav navbar-nav pull-right right">
+        
+        <li class="hcp_hsp_name_a" dropdown>
+          <a ng-href="" data-target="#"  id="dropdownMenu11" data-toggle="dropdown">
+            <div class="overflow-ellipsis-dropdown">
+            <span class="">{{selectedPatient.user.lastName}} {{selectedPatient.user.firstName}}</span> </div>
+            <span class="hillrom-icon icon-arrow-down"></span>
+          </a>
+          <ul class="dropdown-menu bgcolor pull-right" role="menu" aria-labelledby="dropdownMenu11" id="min-width-for-small-devices">
+              <li role="menuitem" ng-repeat='patient in patients' ng-click="switchPatient(patient)"><a>{{patient.user.lastName}} {{patient.user.firstName}}</a></li>
+          </ul>
+        </li>
+      </ul>
+      
+    </div>
+  </div>
+</div>

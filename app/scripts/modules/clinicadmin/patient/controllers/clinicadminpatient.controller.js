@@ -12,31 +12,54 @@ angular.module('hillromvestApp')
           $scope.customPointsChecker = 0;
           $scope.lastdeviceType = "";
           $scope.getGarmentValues = function(){
-          patientService.getGarmentSizeCodeValues().then(function(response){
+          patientService.getGarmentSizeCodeValues_Vest().then(function(response){
         $scope.garmentSizeResponse = response.data;
-         $scope.garmentSize = $scope.garmentSizeResponse.typeCode;
+         $scope.garmentSize_Vest = $scope.garmentSizeResponse.typeCode;
       }).catch(function(response){
         notyService.showError(response);
       });
-          patientService.getGarmentColorCodeValues().then(function(response){
+          patientService.getGarmentColorCodeValues_Vest().then(function(response){
         $scope.garmentColorResponse = response.data;
-        $scope.garmentColor = $scope.garmentColorResponse.typeCode;
+        $scope.garmentColor_Vest = $scope.garmentColorResponse.typeCode;
       }).catch(function(response){
         notyService.showError(response);
       });
        
-        patientService.getGarmentTypeCodeValues().then(function(response){
+        patientService.getGarmentTypeCodeValues_Vest().then(function(response){
         $scope.garmentTypeResponse = response.data;
-          $scope.garmentType = $scope.garmentTypeResponse.typeCode;
+          $scope.garmentType_Vest = $scope.garmentTypeResponse.typeCode;
       }).catch(function(response){
         notyService.showError(response);
       });
-        console.log("$scope.garmentSizeResponse",$scope.garmentSizeResponse);     
+      //For monarch
+                patientService.getGarmentSizeCodeValues_Monarch().then(function(response){
+        $scope.garmentSizeResponse = response.data;
+         $scope.garmentSizeResponse.typeCode[0].type_code = searchFilters.oneSize; //change One Size for Monarch to One Size
+         $scope.garmentSize_Monarch = $scope.garmentSizeResponse.typeCode;
+      }).catch(function(response){
+        notyService.showError(response);
+      });
+          patientService.getGarmentColorCodeValues_Monarch().then(function(response){
+        $scope.garmentColorResponse = response.data;
+        $scope.garmentColor_Monarch = $scope.garmentColorResponse.typeCode;
+      }).catch(function(response){
+        notyService.showError(response);
+      });
+       
+        patientService.getGarmentTypeCodeValues_Monarch().then(function(response){
+        $scope.garmentTypeResponse = response.data;
+          $scope.garmentType_Monarch = $scope.garmentTypeResponse.typeCode;
+      }).catch(function(response){
+        notyService.showError(response);
+      });
         };
   $scope.init = function(){
+    $scope.viewMode = false;
     if($state.current.name === 'clinicadminpatientDemographic'  || $state.current.name === 'clinicadmminpatientDemographicEdit'){
+      $scope.viewMode = true;
       $scope.getPatientInfo($stateParams.patientId, $scope.setEditMode);
       if($state.current.name === 'clinicadmminpatientDemographicEdit'){
+         $scope.viewMode = false;
          $scope.getGarmentValues();
         $scope.getStates();
       }
@@ -81,7 +104,7 @@ angular.module('hillromvestApp')
     {
       
       //$scope.resetsubmitted = true;
-      var deviceType = localStorage.getItem('deviceType');
+      var deviceType = $scope.getDeviceType();
       var createdById = StorageService.get('logged').userId;
       var userID = $stateParams.patientId;
       var patientHillromId = $scope.patientInformation;
@@ -145,7 +168,7 @@ angular.module('hillromvestApp')
 
     $scope.getAdherenceScoreResetHistory = function(patientId){
 
-      patientService.getAdherenceScoreResetHistory(patientId,$scope.PageNumber,$scope.perPageCount).then(function(response){
+      patientService.getAdherenceScoreResetHistory(patientId,$scope.PageNumber,$scope.perPageCount,$scope.getDeviceTypeforBothIcon()).then(function(response){
      
         $scope.resetHistoryData = response.data.Adherence_Reset_History.content;  
       $scope.totalPages = response.data.Adherence_Reset_History.totalPages;
@@ -282,42 +305,22 @@ angular.module('hillromvestApp')
       }
       $scope.langKey = $scope.patient.langKey;
         $scope.fullNameLangKey = "";
-        if($scope.langKey== "en")
-        {
-          $scope.fullNameLangKey = "English";
-        }
-        else if($scope.langKey== "fr")
-        {
-          $scope.fullNameLangKey = "French";
-        }
-        else if($scope.langKey== "de")
-        {
-          $scope.fullNameLangKey = "German";
-        }
-         else if($scope.langKey== "hi")
-        {
-          $scope.fullNameLangKey = "Hindi";
-        }
-         else if($scope.langKey== "it")
-        {
-          $scope.fullNameLangKey = "Italian";
-        }
-         else if($scope.langKey== "ja")
-        {
-          $scope.fullNameLangKey = "Japanese";
-        }
-         else if($scope.langKey== "es")
-        {
-          $scope.fullNameLangKey = "Spanish";
-        }
-         else if($scope.langKey== "zh")
-        {
-          $scope.fullNameLangKey = "Chinese";
-        }
+        $scope.fullNameLangKey = patientService.getLanguageName($scope.langKey);
       if (typeof callback === 'function') {
         callback($scope.patient);
       }
-    }).catch(function(response){
+      if($scope.patient){
+      if($scope.patient.deviceType){
+        $scope.patient.deviceType = patientService.getDeviceTypeName($scope.patient.deviceType);
+        }
+        else{
+          $scope.patient.deviceType = patientService.getDeviceTypeName($scope.getDeviceTypeforBothIcon());
+        }
+            if($scope.patient.monarchGarmentSize && $scope.viewMode){
+          $scope.patient.monarchGarmentSize = searchFilters.oneSize;
+        }
+      } 
+       }).catch(function(response){
       notyService.showError(response);
       $state.go('clinicadminpatientdashboard',{'clinicId':$stateParams.clinicId});
     });
@@ -381,15 +384,13 @@ angular.module('hillromvestApp')
          $scope.customProtocol[0] = [];
           $scope.customProtocol[1] = [];
     $scope.DisableAddProtocol = false;
-    patientService.getProtocol(patientId).then(function(response){
+    patientService.getProtocol(patientId,$scope.getDeviceTypeforBothIcon()).then(function(response){
       $scope.protocols = response.data.protocol;
        if($scope.getDeviceTypeforBothIcon() === searchFilters.allCaps){
-         console.log("$scope.protocols",$scope.protocols)
         angular.forEach($scope.protocols, function(protocol, key){
           var protocolkey = protocol.protocolKey;
           var protocolobject = {}
             if(protocol.type === 'Normal'){
-              console.log("$scope.normalProtocol in if",$scope.normalProtocol);
               if($scope.normalProtocol[0].length){
               if($scope.normalProtocol[0][0].protocolKey === protocolkey){
             protocolobject = protocol;
@@ -406,7 +407,6 @@ angular.module('hillromvestApp')
             }
       }
             else if(protocol.type === 'Custom'){
-              console.log("$scope.customProtocol in if",$scope.customProtocol);
               if($scope.customProtocol[0].length){
               if($scope.customProtocol[0][0].protocolKey === protocolkey){
             protocolobject = protocol;
@@ -424,10 +424,7 @@ angular.module('hillromvestApp')
             }
           });
         }
-        console.log("$scope.normalProtocol",$scope.normalProtocol);
-        
-  console.log("$scope.customProtocol",$scope.customProtocol);
-              var vestFlag = false;
+        var vestFlag = false;
         var monarchFlag = false;
         $scope.lastdeviceType = $scope.protocols[0].deviceType;
         angular.forEach($scope.protocols, function(protocol){
@@ -478,14 +475,14 @@ angular.module('hillromvestApp')
    // localStorage.setItem('deviceType', patient.deviceType);
 
     if(patient.deviceType == 'ALL'){
-          localStorage.setItem('deviceType', 'VEST');
-          localStorage.setItem('deviceTypeforGraph', 'ALL');
-          localStorage.setItem('deviceTypeforBothIcon', 'ALL');
+          localStorage.setItem('deviceType_'+patient.id, 'VEST');
+         // localStorage.setItem('deviceTypeforGraph', 'ALL');
+          localStorage.setItem('deviceTypeforBothIcon_'+patient.id, 'ALL');
             }
             else{
-            localStorage.setItem('deviceType', patient.deviceType);
-            localStorage.setItem('deviceTypeforGraph', patient.deviceType);
-            localStorage.setItem('deviceTypeforBothIcon', patient.deviceType);
+            localStorage.setItem('deviceType_'+patient.id, patient.deviceType);
+           // localStorage.setItem('deviceTypeforGraph', patient.deviceType);
+            localStorage.setItem('deviceTypeforBothIcon_'+patient.id, patient.deviceType);
           }
     var clinicId = ($scope.selectedClinic && $scope.selectedClinic.id) ? $scope.selectedClinic.id : ($stateParams.clinicId ? $stateParams.clinicId : null);
    $scope.deviceType = patient.deviceType;
@@ -793,7 +790,6 @@ angular.module('hillromvestApp')
     $state.go('clinicAdminUpdateProtocol', {'protocolId': protocol.id , 'protocolDevice' : protocol.deviceType});
   };
      $scope.protocolDeviceIconFilter = function(protocol){
-      console.log("protocol:",protocol);
       if($scope.getDeviceTypeforBothIcon() === searchFilters.allCaps){
          if($scope.customPointsChecker == $scope.protocols.length){
           $scope.customPointsChecker = 0;
@@ -801,7 +797,6 @@ angular.module('hillromvestApp')
         }
      
       if(protocol.type === 'Normal'){
-         console.log("i am normal");
         $scope.customPointsChecker = 0;
         
         $scope.lastdeviceType = protocol.deviceType;
@@ -809,7 +804,6 @@ angular.module('hillromvestApp')
         return true;
       }
       else if(protocol.type === 'Custom'){
-        console.log("i am custom");
             if($scope.lastdeviceType != protocol.deviceType){
                $scope.customPointsChecker = 0;
             }
@@ -818,14 +812,9 @@ angular.module('hillromvestApp')
              
                $scope.lastdeviceType = protocol.deviceType;
                $scope.displayFlag = true;
-               
-               // setTimeout(function(){  
-                console.log("i am in custom and first time so returning true");   
-              //  }, 1000);
               return true;
             }
               else{
-                 console.log("its in else now");
                  $scope.lastdeviceType = protocol.deviceType;
                  $scope.displayFlag = false;
                 return false;

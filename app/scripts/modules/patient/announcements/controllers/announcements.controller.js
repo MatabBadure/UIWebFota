@@ -1,6 +1,6 @@
 angular.module('hillromvestApp')
-.controller('patientsannouncementsController',['$scope', '$location','$state', 'announcementservice', 'notyService', '$stateParams', 'clinicService', 'UserService', 'StorageService', 'commonsUserService', 'patientDashBoardService',
-  function($scope, $location,$state, announcementservice, notyService, $stateParams, clinicService, UserService, StorageService, commonsUserService,patientDashBoardService) {
+.controller('patientsannouncementsController',['$scope', '$location','$state', 'announcementservice', 'notyService', '$stateParams', 'clinicService', 'UserService', 'StorageService', 'commonsUserService', 'patientDashBoardService', 'caregiverDashBoardService',
+  function($scope, $location,$state, announcementservice, notyService, $stateParams, clinicService, UserService, StorageService, commonsUserService,patientDashBoardService,caregiverDashBoardService) {
     
     $scope.currentPageIndex = 1;
     $scope.perPageCount = 5;
@@ -10,28 +10,10 @@ angular.module('hillromvestApp')
     $scope.userRole = StorageService.get('logged').role;
     $scope.userId = "";
     $scope.nodatadiv = false;
-       $scope.toTimeStamp = new Date().getTime(); 
-$scope.initCount("");
-/*patientService.getDevices(StorageService.get('logged').patientID).then(function(response){
-console.log("vestwala");
-  console.log(response);
-$scope.userId ='patientId='+response.data.deviceList[0].patient.id;
-  }).catch(function(response) {});*/
+    $scope.toTimeStamp = new Date().getTime(); 
+    $scope.initCount("");
 
- angular.element(document).ready(function () {
-        if($scope.userRole === 'PATIENT'){
-patientDashBoardService.getHMRrunAndScoreRate(StorageService.get('logged').patientID, $scope.toTimeStamp).then(function(response){
-  $scope.userId ='patientId='+response.data.patient.id;
-  $scope.searchUsers();
-      }).catch(function(response) {});
-
-}
-    });
-
-
-
-    $scope.searchUsers = function(track) { 
-        
+ $scope.searchAnnouncements = function(track) {      
       if (track !== undefined) {
         if (track === "PREV" && $scope.currentPageIndex > 1) {
           $scope.currentPageIndex--;
@@ -43,13 +25,6 @@ patientDashBoardService.getHMRrunAndScoreRate(StorageService.get('logged').patie
       } else {
         $scope.currentPageIndex = 1;
       }
-
-      /*if($scope.userRole === 'PATIENT'){
-         $scope.userId = 'patientId='+StorageService.get('logged').patientID;
-       }
-       else {
-        $scope.userId = 'userTypeId='+StorageService.get('logged').userId;
-       }*/
         var sortOption = sortConstant.announcementModifiedDatePatient+'&asc=false';
       announcementservice.ListAnnouncementPatient($scope.currentPageIndex, $scope.perPageCount, sortOption,$scope.userRole,$scope.userId).then(function(response) {
           $scope.announcement = response.data.Announcement_List.content;
@@ -58,13 +33,81 @@ patientDashBoardService.getHMRrunAndScoreRate(StorageService.get('logged').patie
           if(response.data.Announcement_List.content.length == 0){
             $scope.nodatadiv = true;
           }
-         // $scope.pageCount = Math.ceil($scope.total / 5);
-          //console.log(JSON.stringify($scope.announcement));
+
       }).catch(function(response) {});
     };
-    
+
+    $scope.init = function(){
+      if($scope.userRole === 'PATIENT'){
+      $scope.getuserIdForAnnouncements(StorageService.get('logged').patientID);
+    }
+    else if($scope.userRole === 'CARE_GIVER'){
+      $scope.getPatientListForCaregiver(StorageService.get('logged').userId);
+    }
+  };
+  $scope.getuserIdForAnnouncements = function(patientId){
+    patientDashBoardService.getHMRrunAndScoreRate(patientId, $scope.toTimeStamp, $scope.getDeviceTypeforBothIcon()).then(function(response){
+      $scope.userId ='patientId='+response.data.patient.id;
+      $scope.searchAnnouncements();
+          }).catch(function(response) {});
+  }
+    $scope.switchPatient = function(patient){
+       if(patient.deviceType == 'ALL'){
+          localStorage.setItem('deviceType_'+patient.user.id, 'VEST');
+          localStorage.setItem('deviceTypeforBothIcon_'+patient.user.id, 'ALL');
+       }
+           else{
+            localStorage.setItem('deviceType_'+patient.user.id, patient.deviceType);
+            localStorage.setItem('deviceTypeforBothIcon_'+patient.user.id, patient.deviceType);
+          }
+        $scope.selectedPatient = patient;
+        $scope.patientId = $scope.selectedPatient.userId;
+         var currentname = $state.current.name;
+        $state.go(currentname,{'patientId':$scope.patientId});
+    };
     $scope.downloadChartsAsPdf = function(pdfName){
+      if(pdfName){
       var filename = pdfName.split('/').pop().split('.');
       announcementservice.DownloadAsPDF(filename[0]);
     }
+    else{
+      notyService.showError('PDF file path is null');
+    }      
+    };
+    $scope.getPatientListForCaregiver = function(caregiverID){
+      var currentname = $state.current.name;
+     
+      caregiverDashBoardService.getPatients(caregiverID).then(function(response){
+                $scope.patients = response.data.patients;
+                if($stateParams.patientId){
+                  for(var i=0;i<response.data.patients.length;i++){
+                    if($stateParams.patientId == response.data.patients[i].userId){
+  
+                    $scope.patientId = $stateParams.patientId;
+                   $scope.userId ='patientId='+response.data.patients[i].patientId;
+                    $scope.selectedPatient = response.data.patients[i];
+                    var logged = StorageService.get('logged');                   
+                    logged.patientID = $scope.patientId ;                      
+                    StorageService.save('logged', logged);
+                    $scope.$emit('getSelectedPatient', $scope.selectedPatient);
+                    break;   
+                    }     
+                }
+                } else{
+                 $scope.selectedPatient = response.data.patients[0];
+                 $scope.patientId = $scope.selectedPatient.userId;
+                 $scope.userId ='patientId='+response.data.patients[0].patientId;
+                 $scope.$emit('getSelectedPatient', $scope.selectedPatient);
+                 var logged = StorageService.get('logged');                    
+                 logged.patientID = $scope.patientId               
+                 StorageService.save('logged', logged);
+                }  
+           $scope.$emit('getPatients', $scope.patients);
+      $scope.searchAnnouncements();
+      }).catch(function(response){
+        // notyService.showError(response);
+      });
+    };
+
+    $scope.init();
   }]);

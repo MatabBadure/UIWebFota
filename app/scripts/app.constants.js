@@ -148,11 +148,13 @@ angular.module('hillromvestApp')
 	'getActivePatients':'api/activePatCountForDevice/CLINICID',
 	'adherenceResetProgress': '/api/adherenceResetProgress/CLINICID',
 	'getAdherenceScoreResetHistory' : 'api/user/ID/AdherenceResetHistoryForPatient?&page=PAGE&per_page=PER_PAGE&deviceType=DEVICETYPE',
-	'getgarmentTypeCodeValues' : 'api/codeValues/garment_type',
-	'getgarmentSizeCodeValues' : 'api/codeValues/garment_size',
-	'getgarmentColorCodeValues' : 'api/codeValues/garment_color',
+	'getgarmentTypeCodeValues_Vest' : 'api/codeValues/garment_type_vest',
+	'getgarmentSizeCodeValues_Vest' : 'api/codeValues/garment_size_vest',
+	'getgarmentColorCodeValues_Vest' : 'api/codeValues/garment_color_vest',
+	'getgarmentTypeCodeValues_Monarch' : 'api/codeValues/garment_type_monarch',
+	'getgarmentSizeCodeValues_Monarch' : 'api/codeValues/garment_size_monarch',
+	'getgarmentColorCodeValues_Monarch' : 'api/codeValues/garment_color_monarch',
 	'executeTimsJob' : 'api/executeTIMSJob',
-	'loglist' : 'api/listLogDirectory?page=PAGE&per_page=PER_PAGE&sort_by=SORT_OPTION&filterBy=FILTER',
 	'timsScriptLogDetails' : 'api/retrieveLogData/logs',
 	'fotaVerify' : 'api/FOTA/create',
 	'uploadfileFota' : 'api/FOTA/uploadFile',
@@ -163,5 +165,10 @@ angular.module('hillromvestApp')
 	'getFirmwareInfo': 'api/FOTA/ID/getFirmware',
 	'approverCRC32':'api/FOTA/validateApproverCRC32',
 	'firmwareSoftDelete':'api/FOTA/ID/userRole/firmwareDelete',
-	'firmwareDownload':'api/FOTA/ID/download'
+	'firmwareDownload':'api/FOTA/ID/download',
+	'loglist' : 'api/listLogDirectory?page=PAGE&per_page=PER_PAGE&sort_by=SORT_OPTION&status=FILTER&fromDate=FROM_DATE&toDate=TO_DATE',
+	'optimusdevicedatalist' : 'api/optimusdevicedatalist?page=PAGE&per_page=PER_PAGE',
+	'optimusDeviceData' : 'api/optimusDeviceData/ID',
+	'optimusdevicedata' : 'api/optimusdevicedata'
+
 });

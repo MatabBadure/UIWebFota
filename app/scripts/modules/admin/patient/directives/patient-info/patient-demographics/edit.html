@@ -259,8 +259,21 @@
           </div>
         </div>
       </div>
-      <!-- Garment fields for Vest-->
-       <div ng-if="getDeviceTypeforBothIcon() === 'ALL' || getDeviceTypeforBothIcon() === 'VEST'">
+
+
+       <div class="col-md-16 col-sm-16 reset-padding margin-top">
+      <div class="col-md-7  reset-padding">
+            <div class="col-md-6 dashboard__form--label reset-padding">
+              <span class="" translate="patient.device-type-name"></span>
+              <span class="">*</span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding">
+               <input  type="text" ng-model="patient.deviceType" name="deviceType" readonly="true" ng-disabled=true >
+            </div>
+          </div>
+        </div>
+     <!-- Garment fields for Vest-->
+       <div ng-if="getDeviceTypeforBothIcon() === 'ALL' || patientInfo.deviceType === 'VisiVest'">
        <div class="col-md-16 col-sm-16 reset-padding margin-top">
           <div class="col-md-7 col-sm-7 reset-padding">
             <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
@@ -269,7 +282,7 @@
             </div>
             <div class="col-md-10 col-sm-10 dashboard__form__input--option reset-padding selected-box-container">
               <div class="custom-dropdown">
-                 <select name="type" ng-model="patient.vestGarmentType"  ng-options="item.type_code_value as item.type_code_value for item in garmentType">
+                 <select name="type" ng-model="patient.vestGarmentType"  ng-options="item.type_code_value as item.type_code_value for item in garmentType_Vest">
                 </select>
               </div>
             </div>
@@ -281,7 +294,7 @@
           </div>
           <div class="col-md-10 col-sm-10 dashboard__form__input--option reset-padding selected-box-container">
               <div class="custom-dropdown">
-                 <select name="type" ng-model="patient.vestGarmentColor"  ng-options="item.type_code_value as item.type_code_value for item in garmentColor">
+                 <select name="type" ng-model="patient.vestGarmentColor"  ng-options="item.type_code_value as item.type_code_value for item in garmentColor_Vest">
                 </select>
               </div>
             </div>
@@ -295,7 +308,7 @@
 
          <div class="col-md-10 col-sm-10 dashboard__form__input--option reset-padding selected-box-container">
               <div class="custom-dropdown">
-                 <select name="type" ng-model="patient.vestGarmentSize"  ng-options="item.type_code_value as item.type_code_value for item in garmentSize">
+                 <select name="type" ng-model="patient.vestGarmentSize"  ng-options="item.type_code_value as item.type_code_value for item in garmentSize_Vest">
                 </select>
               </div>
             </div>
@@ -303,33 +316,33 @@
       </div>
     </div>
        <!-- Garment fields for Monarch-->
-        <div ng-if="getDeviceTypeforBothIcon() === 'ALL' || getDeviceTypeforBothIcon() === 'MONARCH'">
+        <div ng-if="getDeviceTypeforBothIcon() === 'ALL' || patientInfo.deviceType === 'Monarch'" >
       <div class="col-md-16 col-sm-16 reset-padding margin-top">
-          <div class="col-md-7 col-sm-7 reset-padding">
+<!--           <div class="col-md-7 col-sm-7 reset-padding">
             <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
               <span class="" translate="patient.garment-type-monarch"></span>
               <span class=""></span>
             </div>
             <div class="col-md-10 col-sm-10 dashboard__form__input--option reset-padding selected-box-container">
               <div class="custom-dropdown">
-                 <select name="type" ng-model="patient.monarchGarmentType"  ng-options="item.type_code_value as item.type_code_value for item in garmentType">
+                 <select name="type" ng-model="patient.monarchGarmentType"  ng-options="item.type_code_value as item.type_code_value for item in garmentType_Monarch">
                 </select>
               </div>
             </div>
-        </div>
-        <div class="col-md-7 col-sm-7 reset-padding col-md-offset-2">
+        </div> -->
+        <div class="col-md-7 col-sm-7 reset-padding">
           <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
             <span class="" translate="patient.garment-color-monarch"></span>
             <span class=""></span>
           </div>
           <div class="col-md-10 col-sm-10 dashboard__form__input--option reset-padding selected-box-container">
               <div class="custom-dropdown">
-                 <select name="type" ng-model="patient.monarchGarmentColor"  ng-options="item.type_code_value as item.type_code_value for item in garmentColor">
+                 <select name="type" ng-model="patient.monarchGarmentColor"  ng-options="item.type_code_value as item.type_code_value for item in garmentColor_Monarch">
                 </select>
               </div>
             </div>
         </div>
-      </div>
+     <!--  </div>
       <div class="col-md-16 col-sm-16 margin-top reset-padding">
       <div class="col-md-7 col-sm-7 reset-padding">
     <div class=" col-md-6 col-sm-6  dashboard__form--label reset-padding">
@@ -338,12 +351,12 @@
 
          <div class="col-md-10 col-sm-10 dashboard__form__input--option reset-padding selected-box-container">
               <div class="custom-dropdown">
-                 <select name="type" ng-model="patient.monarchGarmentSize"  ng-options="item.type_code_value as item.type_code_value for item in garmentSize">
+                 <select name="type" ng-model="patient.monarchGarmentSize"  ng-options="item.type_code_value as item.type_code for item in garmentSize_Monarch">
                 </select>
               </div>
             </div>
         </div>
-      </div>
+      </div> -->
     </div>
       <div class="col-md-16 col-sm-16 margin-top reset-padding">
    <div class="col-md-7 col-sm-7 reset-padding">

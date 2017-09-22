@@ -112,27 +112,47 @@ angular.module('hillromvestApp')
       }).catch(function(response) {});
       $scope.getPatiendDetails($stateParams.patientId, $scope.setEditMode);
     };
- $scope.getGarmentValues = function(){
-          patientService.getGarmentSizeCodeValues().then(function(response){
+  $scope.getGarmentValues = function(){
+          patientService.getGarmentSizeCodeValues_Vest().then(function(response){
         $scope.garmentSizeResponse = response.data;
-         $scope.garmentSize = $scope.garmentSizeResponse.typeCode;
+         $scope.garmentSize_Vest = $scope.garmentSizeResponse.typeCode;
       }).catch(function(response){
         notyService.showError(response);
       });
-          patientService.getGarmentColorCodeValues().then(function(response){
+          patientService.getGarmentColorCodeValues_Vest().then(function(response){
         $scope.garmentColorResponse = response.data;
-        $scope.garmentColor = $scope.garmentColorResponse.typeCode;
+        $scope.garmentColor_Vest = $scope.garmentColorResponse.typeCode;
       }).catch(function(response){
         notyService.showError(response);
       });
        
-        patientService.getGarmentTypeCodeValues().then(function(response){
+        patientService.getGarmentTypeCodeValues_Vest().then(function(response){
         $scope.garmentTypeResponse = response.data;
-          $scope.garmentType = $scope.garmentTypeResponse.typeCode;
+          $scope.garmentType_Vest = $scope.garmentTypeResponse.typeCode;
       }).catch(function(response){
         notyService.showError(response);
       });
-        console.log("$scope.garmentSizeResponse",$scope.garmentSizeResponse);     
+      //For monarch
+                patientService.getGarmentSizeCodeValues_Monarch().then(function(response){
+        $scope.garmentSizeResponse = response.data;
+         $scope.garmentSizeResponse.typeCode[0].type_code = searchFilters.oneSize; //change One Size for Monarch to One Size
+         $scope.garmentSize_Monarch = $scope.garmentSizeResponse.typeCode;
+      }).catch(function(response){
+        notyService.showError(response);
+      });
+          patientService.getGarmentColorCodeValues_Monarch().then(function(response){
+        $scope.garmentColorResponse = response.data;
+        $scope.garmentColor_Monarch = $scope.garmentColorResponse.typeCode;
+      }).catch(function(response){
+        notyService.showError(response);
+      });
+       
+        patientService.getGarmentTypeCodeValues_Monarch().then(function(response){
+        $scope.garmentTypeResponse = response.data;
+          $scope.garmentType_Monarch = $scope.garmentTypeResponse.typeCode;
+      }).catch(function(response){
+        notyService.showError(response);
+      });
         };
 
         
@@ -152,8 +172,7 @@ angular.module('hillromvestApp')
          $scope.customProtocol[0] = [];
           $scope.customProtocol[1] = [];
         // $scope.customProtocol.push(new Object());
-      patientService.getProtocol(patientId).then(function(response){
-        console.log("protocol response:",response);
+      patientService.getProtocol(patientId,$scope.getDeviceTypeforBothIcon()).then(function(response){
         $scope.protocols = response.data.protocol;
         $scope.isAddProtocol = true;
         $scope.isProtocolLoaded = true;
@@ -161,12 +180,10 @@ angular.module('hillromvestApp')
         var vestFlag = false;
         var monarchFlag = false;
         if($scope.getDeviceTypeforBothIcon() === searchFilters.allCaps){
-         console.log("$scope.protocols",$scope.protocols)
         angular.forEach($scope.protocols, function(protocol, key){
           var protocolkey = protocol.protocolKey;
           var protocolobject = {}
             if(protocol.type === 'Normal'){
-              console.log("$scope.normalProtocol in if",$scope.normalProtocol);
               if($scope.normalProtocol[0].length){
               if($scope.normalProtocol[0][0].protocolKey === protocolkey){
             protocolobject = protocol;
@@ -183,7 +200,6 @@ angular.module('hillromvestApp')
             }
       }
             else if(protocol.type === 'Custom'){
-              console.log("$scope.customProtocol in if",$scope.customProtocol);
               if($scope.customProtocol[0].length){
               if($scope.customProtocol[0][0].protocolKey === protocolkey){
             protocolobject = protocol;
@@ -201,9 +217,7 @@ angular.module('hillromvestApp')
             }
           });
         }
-        console.log("$scope.normalProtocol",$scope.normalProtocol);
         
-  console.log("$scope.customProtocol",$scope.customProtocol);
   if($scope.protocols){
             $scope.lastdeviceType = $scope.protocols[0].deviceType;
 
@@ -235,13 +249,13 @@ angular.module('hillromvestApp')
     };
     $scope.getDevices = function(patientId){
       $scope.totalHmr = 0;
-      patientService.getDevices(patientId).then(function(response){
+      patientService.getDevices(patientId,$scope.getDeviceTypeforBothIcon()).then(function(response){
         angular.forEach(response.data.deviceList, function(device){
           $scope.totalHmr = $scope.totalHmr + device.hmr;
           device.createdDate = dateService.getDateByTimestamp(device.createdDate);
           device.lastModifiedDate = dateService.getDateByTimestamp(device.lastModifiedDate);
            device.createdDate = dateService.getDateByTimestamp(device.createdDate);
-          $scope.deviceTypeSelected = localStorage.getItem('devicetype'); //later to be changed when devicetype is passed in response
+          $scope.deviceTypeSelected = $scope.getDeviceType(); //later to be changed when devicetype is passed in response
         });
         $scope.devices = response.data.deviceList;
         $scope.isDevicesLoaded = true;
@@ -252,7 +266,7 @@ angular.module('hillromvestApp')
 
     $scope.initProtocolDevice = function(patientId){
       $scope.getPatientById(patientId);
-      $scope.getDevices(patientId);
+      $scope.getDevices(patientId,$scope.getDeviceTypeforBothIcon());
       $scope.getProtocols(patientId);
       $scope.getTodayDateForReset();
       $scope.scoreToReset = 100;
@@ -310,7 +324,7 @@ $scope.getdevice = function(){
      }
      else{
        $scope.ProtocolDevType = $scope.deviceTypeSelectedProtocol = searchFilters.VisiVest;
-            var device = localStorage.getItem('deviceTypeforBothIcon');
+            var device = $scope.getDeviceTypeforBothIcon();
             if(device === searchFilters.VisiVest){
              
                  $scope.deviceTypeVest = true;   
@@ -331,18 +345,18 @@ $scope.getdevice = function(){
         $scope.protocol = {};
         $scope.protocol.type = 'Normal';
         $scope.protocol.protocolEntries = [{}];
-        $scope.deviceTypeSelectedProtocol = localStorage.getItem('devicetype');
+        $scope.deviceTypeSelectedProtocol = $scope.getDeviceType();
       } else {
         $scope.protocol.type = $scope.protocol.protocol[0].type;
         $scope.protocol.treatmentsPerDay = $scope.protocol.protocol[0].treatmentsPerDay;
         $scope.protocol.protocolEntries = $scope.protocol.protocol;
-        $scope.deviceTypeSelectedProtocol = localStorage.getItem('devicetype');
+        $scope.deviceTypeSelectedProtocol = $scope.getDeviceType();
       }
     };
 
     $scope.initPatientAddDevice = function(){
       $scope.getPatientById($stateParams.patientId);
-      var device = localStorage.getItem('deviceTypeforBothIcon');
+      var device = $scope.getDeviceTypeforBothIcon();
       if(device === searchFilters.VisiVest){
        
            $scope.deviceTypeVest = true;   
@@ -361,7 +375,7 @@ $scope.getdevice = function(){
       $scope.device = $stateParams.device; //  for passing to edit mode
       $scope.device.wifiId = $stateParams.device.wifiId;
    }
-      $scope.deviceTypeSelected = localStorage.getItem('devicetype');
+      $scope.deviceTypeSelected = $scope.getDeviceType();
     };
 
     $scope.init = function() {
@@ -369,6 +383,7 @@ $scope.getdevice = function(){
       $scope.deviceTypeMonarch = false; 
       $scope.disableDropdown = false;
       $scope.displayFlag = true;
+      $scope.viewMode = false;
           $scope.customPointsChecker = 0;
           $scope.lastdeviceType = "";
        $scope.selectedDevice();
@@ -379,6 +394,7 @@ $scope.getdevice = function(){
       if(currentRoute === 'patientOverview' || currentRoute === 'patientOverviewRcadmin'){
         $scope.initPatientOverview();
       }else if(currentRoute === 'patientDemographic' || currentRoute === 'patientDemographicRcadmin' || currentRoute === 'associatepatientDemographic' || currentRoute === 'customerservicepatientDemographic'){
+         $scope.viewMode = true;
         $scope.initpatientDemographic();
       }else if (currentRoute === 'patientEdit') {
         $scope.getPatiendDetails($stateParams.patientId, $scope.setEditMode);
@@ -402,6 +418,7 @@ $scope.getdevice = function(){
       }else if(currentRoute === 'patientAddDevice' || currentRoute === 'patientAddDeviceRcadmin'){
         $scope.initPatientAddDevice();
       }else if(currentRoute === 'patientDemographicEdit' || currentRoute === 'patientDemographicEditRcadmin'){
+        $scope.viewMode = false;
         $scope.initpatientDemographic();
       }else if(currentRoute === 'patientEditProtocol' || currentRoute === 'patientEditProtocolRcadmin'){
         $scope.initpatientEditProtocol();
@@ -431,41 +448,24 @@ $scope.getdevice = function(){
         $scope.patient = $scope.patientInfo;
         $scope.langKey = $scope.patient.langKey;
         $scope.fullNameLangKey = "";
-        if($scope.langKey== "en")
-        {
-          $scope.fullNameLangKey = "English";
-        }
-        else if($scope.langKey== "fr")
-        {
-          $scope.fullNameLangKey = "French";
-        }
-        else if($scope.langKey== "de")
-        {
-          $scope.fullNameLangKey = "German";
-        }
-         else if($scope.langKey== "hi")
-        {
-          $scope.fullNameLangKey = "Hindi";
-        }
-         else if($scope.langKey== "it")
-        {
-          $scope.fullNameLangKey = "Italian";
-        }
-         else if($scope.langKey== "ja")
-        {
-          $scope.fullNameLangKey = "Japanese";
-        }
-         else if($scope.langKey== "es")
-        {
-          $scope.fullNameLangKey = "Spanish";
-        }
-         else if($scope.langKey== "zh")
-        {
-          $scope.fullNameLangKey = "Chinese";
-        }
+      
+        $scope.fullNameLangKey = patientService.getLanguageName($scope.langKey);
         if (typeof callback === 'function') {
           callback($scope.patient);
         }
+               if($scope.patient && $scope.viewMode){
+        if($scope.patient.monarchGarmentSize){
+          $scope.patient.monarchGarmentSize = searchFilters.oneSize;
+        }
+      }
+      if($scope.patientInfo){
+        if($scope.patientInfo.deviceType){
+        $scope.patientInfo.deviceType = patientService.getDeviceTypeName($scope.patientInfo.deviceType);
+              }
+              else{
+          $scope.patientInfo.deviceType = patientService.getDeviceTypeName($scope.getDeviceTypeforBothIcon());
+        }
+      }
       }).catch(function(response) {});
     };
 
@@ -628,7 +628,7 @@ $scope.getdevice = function(){
     {
       
       //$scope.resetsubmitted = true;
-      var deviceType = localStorage.getItem('deviceType');
+      var deviceType = $scope.getDeviceType();
       var createdById = StorageService.get('logged').userId;
       var userID = $stateParams.patientId;
       var patientHillromId = $scope.patientInformation;
@@ -691,7 +691,7 @@ $scope.getdevice = function(){
         // getAdherenceScoreResetHistory history strats here 
 
     $scope.getAdherenceScoreResetHistory = function(patientId){
-      patientService.getAdherenceScoreResetHistory(patientId,$scope.PageNumber,$scope.perPageCount).then(function(response){
+      patientService.getAdherenceScoreResetHistory(patientId,$scope.PageNumber,$scope.perPageCount, $scope.getDeviceTypeforBothIcon()).then(function(response){
      
         $scope.resetHistoryData = response.data.Adherence_Reset_History.content;  
       $scope.totalPages = response.data.Adherence_Reset_History.totalPages;
@@ -766,7 +766,6 @@ $scope.getdevice = function(){
       var data = $scope.patient;
       data.role = 'PATIENT';
       $scope.showModal = false;
-      console.log("$scope.patient",$scope.patient)
       UserService.editUser(data).then(function (response) {
         if(response.status === 200) {
           $scope.patientStatus.isMessage = true;
@@ -964,16 +963,16 @@ $scope.getdevice = function(){
       if($scope.addDeviceForm.$invalid){
         return false;
       }
-      patientService.addDevice( $stateParams.patientId, $scope.device, $scope.deviceTypeSelected).then(function(response){
+      patientService.addDevice( $stateParams.patientId, $scope.device, $scope.deviceTypeSelected, $scope.getDeviceTypeforBothIcon()).then(function(response){
       if(response.data.changedDevType == 'ALL'){
-          localStorage.setItem('deviceType', 'VEST');
-          localStorage.setItem('deviceTypeforGraph', 'ALL');
-          localStorage.setItem('deviceTypeforBothIcon', 'ALL');
+          localStorage.setItem('deviceType_'+$stateParams.patientId, 'VEST');
+          //localStorage.setItem('deviceTypeforGraph', 'ALL');
+          localStorage.setItem('deviceTypeforBothIcon_'+$stateParams.patientId, 'ALL');
             }
             else{
-            localStorage.setItem('deviceType', response.data.changedDevType);
-            localStorage.setItem('deviceTypeforGraph', response.data.changedDevType);
-            localStorage.setItem('deviceTypeforBothIcon', response.data.changedDevType);
+            localStorage.setItem('deviceType_'+$stateParams.patientId, response.data.changedDevType);
+            //localStorage.setItem('deviceTypeforGraph', response.data.changedDevType);
+            localStorage.setItem('deviceTypeforBothIcon_'+$stateParams.patientId, response.data.changedDevType);
           }
         if($scope.patientStatus.role === loginConstants.role.acctservices){
           $state.go('patientProtocolRcadmin', {'patientId': $stateParams.patientId});
@@ -989,7 +988,6 @@ $scope.getdevice = function(){
     };
 
     $scope.linkProtocol = function(){
-      console.log("$scope.protocols in linkprototocl:",$scope.protocols);
       var protocolDevType = ($scope.protocols)?$scope.protocols[0].deviceType:null;
       if($scope.patientStatus.role === loginConstants.role.acctservices){
         $state.go('patientAddProtocolRcadmin', {'patientId': $stateParams.patientId , 'protocolDevType': protocolDevType});
@@ -1021,7 +1019,7 @@ $scope.getdevice = function(){
 
     $scope.deleteDevice = function(){
       $scope.showModalDevice = false;
-      patientService.deleteDevice($stateParams.patientId, $scope.deviceToDelete, localStorage.getItem('deviceType')).then(function(response){
+      patientService.deleteDevice($stateParams.patientId, $scope.deviceToDelete, $scope.getDeviceType()).then(function(response){
         $scope.deviceToDelete.active = false;
         notyService.showMessage(response.data.message, 'success');
       }).catch(function(response){
@@ -1068,7 +1066,7 @@ $scope.getdevice = function(){
 
     $scope.deleteProtocol = function(id){
       $scope.showModalProtocol = false;
-      patientService.deleteProtocol($stateParams.patientId, $scope.toDeleteProtocolId).then(function(response){
+      patientService.deleteProtocol($stateParams.patientId, $scope.toDeleteProtocolId,$scope.getDeviceType()).then(function(response){
         notyService.showMessage(response.data.message, 'success');
         $scope.getProtocols($stateParams.patientId);
       }).catch(function(response){
@@ -1147,7 +1145,6 @@ $scope.getdevice = function(){
       if(!protocol){
         return false;
       }
-      console.log("protocol",protocol);
       protocol.edit = true;
       if($scope.patientStatus.role === loginConstants.role.acctservices){
         $state.go('patientEditProtocolRcadmin', {
@@ -1232,7 +1229,7 @@ $scope.getdevice = function(){
 
     $scope.updateDevice = function(){
       $scope.deviceUpdateModal =true;
-      patientService.addDevice($stateParams.patientId, $scope.device, $scope.deviceTypeSelected).then(function(response){
+      patientService.addDevice($stateParams.patientId, $scope.device, $scope.deviceTypeSelected, $scope.getDeviceTypeforBothIcon()).then(function(response){
         if($scope.patientStatus.role === loginConstants.role.acctservices){
           $state.go('patientProtocolRcadmin', {'patientId': $stateParams.patientId});
         }else{
@@ -1336,6 +1333,10 @@ $scope.getdevice = function(){
     };
 
     angular.element('#dp2').datepicker({
+          endDate: '+0d',
+          startDate: '-100y',
+          autoclose: true});
+        angular.element('#dp3').datepicker({
           endDate: '-1d',
           startDate: '-100y',
           autoclose: true});
@@ -1577,7 +1578,7 @@ $scope.getdevice = function(){
       }
     };
     $scope.protocolDeviceIconFilter = function(protocol){
-      if(localStorage.getItem('deviceTypeforBothIcon') === searchFilters.allCaps){
+      if($scope.getDeviceTypeforBothIcon() === searchFilters.allCaps){
         if($scope.customPointsChecker == $scope.protocols.length){
           $scope.customPointsChecker = 0;
           $scope.lastdeviceType = $scope.protocols[0].deviceType;
@@ -1585,7 +1586,6 @@ $scope.getdevice = function(){
         var returnvalue = "";
       if(protocol.type === 'Normal'){
         $scope.customPointsChecker = 0;
-        console.log("protocol is normal, we want device symbol so i am returning true");
         $scope.lastdeviceType = protocol.deviceType;
        
          returnvalue = true;
@@ -1602,7 +1602,6 @@ $scope.getdevice = function(){
          $scope.lastdeviceType = protocol.deviceType;
           returnvalue = true;
          $scope.displayFlag = returnvalue;
-        console.log("protocol is custom, we want device symbol so i am returning ",returnvalue);
         return returnvalue;
       }
       else{
@@ -1610,7 +1609,6 @@ $scope.getdevice = function(){
          $scope.lastdeviceType = protocol.deviceType;
           returnvalue = false;
          $scope.displayFlag = returnvalue;
-         console.log("protocol is custom,but we dont want device symbol so i am returning ",returnvalue);
         return returnvalue;
       }
         }

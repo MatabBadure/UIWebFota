@@ -219,7 +219,7 @@
 			</div>
 		</div>
 		<div class="col-md-7 col-sm-10 left_header_barchart padding0">
-		       <div class="devicetyperadio" ng-show="isHMR && getDeviceTypeforGraphRadio()=='ALL'" ng-init="$parent.deviceTypeforGraphSelected='VEST'">
+		       <div class="devicetyperadio" ng-show="isHMR && getDeviceTypeforBothIcon()=='ALL'" ng-init="$parent.deviceTypeforGraphSelected='VEST'">
 		       <span class="radio-inline no-padding devicetyperadiolabl">Show Graph For</span>
 		      <span class="radio-inline">
 		        <label class="no-padding">
@@ -234,7 +234,7 @@
 		        </label>
 		      </span>
 		    </div>
-		    <div class="devicetyperadio" ng-show="isCompliance && getDeviceTypeforGraphRadio()=='ALL'" ng-init="$parent.deviceTypeforGraphSelectedProtocol='VEST'">
+		    <div class="devicetyperadio" ng-show="isCompliance && getDeviceTypeforBothIcon()=='ALL'" ng-init="$parent.deviceTypeforGraphSelectedProtocol='VEST'">
 		       <span class="radio-inline no-padding devicetyperadiolabl">Show Graph For</span>
 		      <span class="radio-inline">
 		        <label class="no-padding">
@@ -261,23 +261,28 @@
 	</div>
 	<div class="clr"></div>
 	<div class="col-md-16" class="all_graph_wrapper" ng-init="getWeekChart()" style="min-height: 300px;">
-	<div id = "NodataDiv" class="graph_nodata" ng-if = "(hmrChartData.length == 0) && noDataStatus && isHMR">
+	<div id = "NodataDiv" class="graph_nodata" ng-if = "((hmrChartData.length == 0) || (noDataAvailableForHMR)) && noDataStatus && isHMR" ng-show="forhidingVestHmrGraph">
 		<span class="noData_text"> No Therapy Transmission Received for This Day!</span>
 	</div>
-		<div id = "NodataDiv" class="graph_nodata" ng-if = "(compilencechartData.length ==0)  && noDataStatus && isCompliance">
+	<div id = "NodataDiv" class="graph_nodata" ng-if = "((hmrChartData1.length == 0) || (noDataAvailableForHMR1)) && noDataStatus && isHMR" ng-show="forhidingMonarchHmrGraph">
+		<span class="noData_text"> No Therapy Transmission Received for This Day!</span>
+	</div>
+		<div id = "NodataDiv" class="graph_nodata" ng-if = "(compilencechartData.length ==0)  && noDataStatus && isCompliance" ng-show="forhidingVestProtocolGraph">
+		<span class="noData_text"> No Therapy Transmission Received for This Day!</span>
+	</div>
+	<div id = "NodataDiv" class="graph_nodata" ng-if = "(compilencechartData1.length ==0)  && noDataStatus && isCompliance" ng-show="forhidingMonarchProtocolGraph">
 		<span class="noData_text"> No Therapy Transmission Received for This Day!</span>
 	</div>
 		<div id = "NodataDiv" class="graph_nodata" ng-if = "isAdherenceTrend && noDataAvailableForAdherence">
 		<span class="noData_text"> No Therapy Transmission Received for This Day!</span>
 	</div>
 
-     <div class="complianceGraphPrim_wrapper" ng-show="!noDataAvailableForHMR" id="lineGraphWrapper" >
+	<div class="complianceGraphPrim_wrapper" ng-show="!noDataAvailableForHMR" id="lineGraphWrapper" >
 		<div id="HMRGraph" ng-class="{ 'hide-chart': !isHMR, 'show-chart': isHMR}"  ng-show="forhidingVestHmrGraph">
 		</div>
 	</div><!-- ng-show="!noDataAvailable && !isHMR"-->
-	
 
-	<div class="complianceGraphPrim_wrapper" ng-show="!noDataAvailableForHMR" id="lineGraphWrapper1" >
+	<div class="complianceGraphPrim_wrapper" ng-show="!noDataAvailableForHMR1" id="lineGraphWrapper1" >
 		<div id="HMRGraph1" ng-class="{ 'hide-chart': !isHMR, 'show-chart': isHMR}"  ng-show="forhidingMonarchHmrGraph">
 		</div>
 	</div>
@@ -298,7 +303,7 @@
 		</div>
 	</div>
    
-	<div id="complianceGraphPrim" ng-show="!noDataAvailable" class="complianceGraphPrim_wrapper" >
+	<div id="complianceGraphPrim" ng-show="!noDataAvailable1" class="complianceGraphPrim_wrapper" >
 		<div id="synchronizedChart1" class="col-md-16" ng-class="{ 'hide-chart': !isCompliance, 'show-chart': isCompliance}" ng-show="forhidingMonarchProtocolGraph">
 		</div>
 	</div>

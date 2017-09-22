@@ -22,7 +22,7 @@
           </a>
         </li>
  <li class="icon-border">
-          <a ng-class="{ active: isActive('patient/messages')}" href="" ng-click="GoToMessages();" >
+          <a ng-class="{ active: isActive('patient/messages')}" href="" ng-click="navigateUser('Messages');" >
             <span class="icons messages"> <i class="fa fa-envelope" aria-hidden="true"></i>
 </span>
             <span class="link-text" translate="global.tabs.messages" ></span>
@@ -68,7 +68,7 @@
           </ul>
         </li> 
  <li class="icon-border">
-          <a ng-class="{ active: isActive('/patient-announcements')}" href="" ng-click="goToAnnouncements();" >
+          <a ng-class="{ active: isActive('/patient-announcements')}" href="" ng-click="navigateUser('patientannouncements');" >
             <span  class="icons messages"> <i class="fa fa-flag" id="announcementflag" aria-hidden="true"></i>
             </span>
             <span class="link-text" translate="global.tabs.announcements" ></span>

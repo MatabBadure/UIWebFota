@@ -48,9 +48,14 @@ var searchFilters = {
     Monarch: "MONARCH",
     devicetype : "deviceType=",
     allCaps : "ALL",
-    Both:"BOTH",
-    isSuccess:"isSuccess",
-    isFail:"isFail"
+    Both: "BOTH",
+    isSuccess: "isSuccess",
+    isFail: "isFail",
+    success: "Success",
+    failure: "Failure",
+    VisiVest_Full: "VisiVest",
+    Monarch_Full: "Monarch",
+    oneSize: "One-Size"
 }
 
 var sortConstant = {
@@ -135,7 +140,9 @@ var sortConstant = {
     connectionType: "connectionType",
     startDatetime: "startDatetime",
     endDateTime: "endDateTime",
-    downloadTime: "downloadTime"
+    downloadTime: "downloadTime",
+    loglink: "loglink",
+    timsdate: "date"
 }
 
 var stringConstants = {

@@ -6,7 +6,7 @@
  *
  */
 angular.module('hillromvestApp')
-  .factory('patientService',['$http', 'headerService', 'URL', function ($http, headerService,URL) {
+  .factory('patientService',['$http', 'headerService', 'URL',  function ($http, headerService,URL) {
     return {
 
       /**
@@ -47,24 +47,48 @@ angular.module('hillromvestApp')
           return response;
         });
       },
-      getGarmentTypeCodeValues: function(){
-          var url = URL.getgarmentTypeCodeValues;
+          getGarmentTypeCodeValues_Vest: function(){
+          var url = URL.getgarmentTypeCodeValues_Vest;
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
           return response;
         });
       },
-      getGarmentColorCodeValues: function(){
-        var url = URL.getgarmentColorCodeValues;
+      getGarmentColorCodeValues_Vest: function(){
+        var url = URL.getgarmentColorCodeValues_Vest;
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
           return response;
         });
       },
-       getGarmentSizeCodeValues: function(){
-        var url = URL.getgarmentSizeCodeValues;
+       getGarmentSizeCodeValues_Vest: function(){
+        var url = URL.getgarmentSizeCodeValues_Vest;
+        return $http.get(url, {
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });
+      },
+            getGarmentTypeCodeValues_Monarch: function(){
+          var url = URL.getgarmentTypeCodeValues_Monarch;
+        return $http.get(url, {
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });
+      },
+      getGarmentColorCodeValues_Monarch: function(){
+        var url = URL.getgarmentColorCodeValues_Monarch;
+        return $http.get(url, {
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });
+      },
+       getGarmentSizeCodeValues_Monarch: function(){
+        var url = URL.getgarmentSizeCodeValues_Monarch;
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -228,8 +252,8 @@ angular.module('hillromvestApp')
        * @description To get devices associated to patient.
        *
        */
-      getDevices: function(id) {
-        var url = URL.deviceAssociatedToPatient.replace('PATIENTID', id).replace('DEVICETYPE',localStorage.getItem('deviceTypeforBothIcon'));
+      getDevices: function(id,deviceType) {
+        var url = URL.deviceAssociatedToPatient.replace('PATIENTID', id).replace('DEVICETYPE',deviceType);
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -290,8 +314,8 @@ angular.module('hillromvestApp')
 
  // get reset adhrence history starts here
 
-      getAdherenceScoreResetHistory: function(id,pageNumber,perPage) {
-        var url = URL.getAdherenceScoreResetHistory.replace('ID',id).replace('PAGE',pageNumber).replace('PER_PAGE',perPage).replace('DEVICETYPE',localStorage.getItem('deviceTypeforBothIcon'));
+      getAdherenceScoreResetHistory: function(id,pageNumber,perPage, deviceType) {
+        var url = URL.getAdherenceScoreResetHistory.replace('ID',id).replace('PAGE',pageNumber).replace('PER_PAGE',perPage).replace('DEVICETYPE',deviceType);
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -300,9 +324,9 @@ angular.module('hillromvestApp')
       },
      
      // get reset adhrence history ends here
-      addDevice: function(id, data, deviceType) {
+      addDevice: function(id, data, deviceTypeSelected, deviceType) {
        
-          var url = URL.addDevice.replace('PATIENTID', id).replace('DEVICETYPE',localStorage.getItem('deviceTypeforBothIcon')).replace('DEVICEVALUE',deviceType);
+          var url = URL.addDevice.replace('PATIENTID', id).replace('DEVICETYPE',deviceType).replace('DEVICEVALUE',deviceTypeSelected);
     
         return $http.put(url, data, {
           headers: headerService.getHeader()
@@ -328,8 +352,8 @@ angular.module('hillromvestApp')
           return response;
         });
       },
-      getProtocol: function(id) {
-        var url = URL.getProtocol.replace('PATIENTID', id).replace('DEVICETYPE',localStorage.getItem('deviceTypeforBothIcon'));
+      getProtocol: function(id,deviceType) {
+        var url = URL.getProtocol.replace('PATIENTID', id).replace('DEVICETYPE',deviceType);
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -365,8 +389,8 @@ angular.module('hillromvestApp')
         });
       },
 
-      deleteProtocol: function(id, protocolId) {
-        var url = URL.protocolById.replace('PATIENTID', id).replace('PROTOCOLID', protocolId).replace('DEVICETYPE', localStorage.getItem('deviceType'));
+      deleteProtocol: function(id, protocolId, deviceType) {
+        var url = URL.protocolById.replace('PATIENTID', id).replace('PROTOCOLID', protocolId).replace('DEVICETYPE', deviceType);
         return $http.delete(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
@@ -412,8 +436,8 @@ angular.module('hillromvestApp')
         });
       },
 
-      getDeviceDataAsCSV: function(patientId, startDateTimestamp, endDateTimestamp){
-        var url = URL.deviceDataAsCSV.replace('PATIENTID', patientId).replace('STARTDATE', startDateTimestamp).replace('ENDDATE', endDateTimestamp).replace('DEVICETYPE', localStorage.getItem('deviceType'));
+      getDeviceDataAsCSV: function(patientId, startDateTimestamp, endDateTimestamp, deviceType){
+        var url = URL.deviceDataAsCSV.replace('PATIENTID', patientId).replace('STARTDATE', startDateTimestamp).replace('ENDDATE', endDateTimestamp).replace('DEVICETYPE', deviceType);
         return $http.get(url, {
           headers: headerService.getHeaderForXls(),responseType: "arraybuffer"
         });
@@ -460,6 +484,57 @@ angular.module('hillromvestApp')
         return $http.get(url, {
           headers: headerService.getHeader()
         });
+      },
+      getDeviceTypeName: function(deviceType){
+        if(deviceType == 'VEST'){
+          return('VisiVest');
+        }
+        else if(deviceType == 'MONARCH'){
+          return('Monarch');
+        }
+        else if(deviceType == 'BOTH'){
+          return('VisiVest,Monarch');
+        }
+        else if(deviceType == 'ALL'){
+          return('VisiVest,Monarch');
+        }
+        else{
+           return('VisiVest');
+        }
+      },
+      getLanguageName: function(language){
+         if(language== "en")
+        {
+          return('English');
+        }
+        else if(language== "fr")
+        {
+          return('French');
+        }
+        else if(language== "de")
+        {
+          return('German');
+        }
+         else if(language== "hi")
+        {
+          return('Hindi');
+        }
+         else if(language== "it")
+        {
+         return('Italian');
+        }
+         else if(language== "ja")
+        {
+          return('Japanese');
+        }
+         else if(language== "es")
+        {
+          return('Spanish');
+        }
+         else if(language== "zh")
+        {
+         return('Chinese');
+        }
       }
 
       

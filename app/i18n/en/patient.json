@@ -1,5 +1,6 @@
 {
     "patient" : {
+        "device-type-name":"Device Type",
         "page-title":{
           "patients": "HillRom | Patients"
         },
@@ -59,11 +60,11 @@
         "zipcode": "Zip",
         "email": "Email",
         "state": "State",
-        "garment-type":"Garment Type for VisiVest",
-        "garment-color":"Garment Color for VisiVest",
-        "garment-size":"Garment Size for VisiVest",
+        "garment-type":"VisiVest Garment",
+        "garment-color":"VisiVest Color",
+        "garment-size":"VisiVest Size",
         "garment-type-monarch":"Garment Type for Monarch",
-        "garment-color-monarch":"Garment Color for Monarch",
+        "garment-color-monarch":"Monarch Color",
         "garment-size-monarch":"Garment Size for Monarch",
         "transmission": "Transmission",
         "status": "Status",
@@ -110,6 +111,11 @@
         "activate":{
             "warning": "Are you sure you want to Activate the Patient?",
             "message": "If you activate the patient, patient will be able to access the system."
+        },
+        "device-type":{
+            "vest":"VisiVest",
+            "monarch":"Monarch",
+            "both": "Both"
         },
         "update": {
             "warning": "Patient Info - Details",
