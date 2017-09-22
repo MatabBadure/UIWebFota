@@ -239,7 +239,7 @@ angular.module('hillromvestApp')
       }
    
       }).catch(function(response){
-         notyService.showError(response);
+       //  notyService.showError(response);
       });
     };
 
@@ -1300,10 +1300,20 @@ angular.module('hillromvestApp')
                 var obj = object.series[0].data[i];
                 if(obj.y == 0){
                    object.series[0].data.splice(i, 1);
+                   if(object.xAxis){
+                    if(object.xAxis.categories){
+                   object.xAxis.categories.splice(i, 1);
+                 }
+                 }
                    i--;
                 }
                  else if((obj.toolText.duration == 0 && !obj.toolText.missedTherapy)){
                   object.series[0].data.splice(i, 1);
+                     if(object.xAxis){
+                    if(object.xAxis.categories){
+                   object.xAxis.categories.splice(i, 1);
+                 }
+                 }
                   i--;
                 }
             }
@@ -1317,8 +1327,9 @@ angular.module('hillromvestApp')
          $scope.hmrChartDataRaw = $scope.discardLessHMRData($scope.hmrChartDataRaw);
           }
           $scope.hmrChartData = $scope.hmrChartDataRaw;
+          console.log("hmrdata line 1330:",$scope.hmrChartDataRaw);
         $scope.noDataAvailableForHMR  = false;       
-        if($scope.hmrChartData && typeof($scope.hmrChartData) === "object"){ 
+        if($scope.hmrChartData && typeof($scope.hmrChartData) === "object" && ($scope.hmrChartDataRaw.xAxis.categories.length > 0 && $scope.hmrChartDataRaw.series[0].data.length > 0)){ 
           $scope.noDataAvailableForHMR = false;      
           $scope.hmrChartData.xAxis.xLabels=[]; 
           $scope.isSameDayHMRGraph = true;
@@ -1375,6 +1386,7 @@ angular.module('hillromvestApp')
             }            
           }, 100);          
         } else{
+          console.log(" $scope.noDataAvailableForHMR");
           $scope.noDataAvailableForHMR = true;
           //$scope.removeAllCharts();
         }
@@ -3335,8 +3347,9 @@ $scope.getComplianceGraph = function(){
          $scope.hmrChartDataRaw = $scope.discardLessHMRData($scope.hmrChartDataRaw);
           }
           $scope.hmrChartData = $scope.hmrChartDataRaw;
+           console.log("hmrdata line 3348:",$scope.hmrChartDataRaw);
         $scope.noDataAvailableForHMR  = false;       
-        if($scope.hmrChartData && typeof($scope.hmrChartData) === "object"){ 
+        if($scope.hmrChartData && typeof($scope.hmrChartData) === "object" && ($scope.hmrChartDataRaw.xAxis.categories.length > 0 && $scope.hmrChartDataRaw.series[0].data.length > 0)){ 
           $scope.noDataAvailableForHMR = false;      
           $scope.hmrChartData.xAxis.xLabels=[]; 
           $scope.isSameDayHMRGraph = true;
@@ -3392,6 +3405,7 @@ $scope.getComplianceGraph = function(){
             }            
           }, 100);          
         } else{
+          console.log(" $scope.noDataAvailableForHMR");
           $scope.noDataAvailableForHMR = true;
           //$scope.removeAllCharts();
         }
@@ -4424,11 +4438,12 @@ $scope.getComplianceGraph1 = function(){
       patientDashBoardService.getHMRGraphPoints($scope.patientId, $scope.deviceTypeforGraph, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.durationRange).then(function(response){
         $scope.hmrChartData1Raw = response.data;
        if($scope.hmrChartData1Raw){
-         $scope.hmrChartData1Raw = $scope.discardLessHMRData($scope.hmrChartData1Raw);
+         $scope.hmrChartData1Raw = $scope.discardLessHMRData($scope.hmrChartData1Raw);    
           }
           $scope.hmrChartData1 = $scope.hmrChartData1Raw;
+           console.log("hmrdata line 4441:",$scope.hmrChartData1Raw);
         $scope.noDataAvailableForHMR1  = false;       
-        if($scope.hmrChartData1 && typeof($scope.hmrChartData1) === "object"){ 
+        if($scope.hmrChartData1 && typeof($scope.hmrChartData1) === "object" && ($scope.hmrChartData1Raw.xAxis.categories.length > 0 && $scope.hmrChartData1Raw.series[0].data.length > 0)){ 
           $scope.noDataAvailableForHMR1 = false;      
           $scope.hmrChartData1.xAxis.xLabels=[]; 
           $scope.isSameDayHMRGraph = true;
@@ -4484,6 +4499,7 @@ $scope.getComplianceGraph1 = function(){
             }            
           }, 100);          
         } else{
+          console.log(" $scope.noDataAvailableForHMR1");
           $scope.noDataAvailableForHMR1 = true;
          // $scope.removeAllCharts();
         }

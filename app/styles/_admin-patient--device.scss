@@ -77,7 +77,7 @@ background-color: #EBEBE4;
 }
 .admin-user .protocol-list,
 .admin-user .device-list,
-.admin-user .crud-list { 
+.admin-user .crud-list,.admin-user .protocol-list__edit{ 
   .icon-edit-icon,
   .icon-delete-icon {
     color: $bombay;

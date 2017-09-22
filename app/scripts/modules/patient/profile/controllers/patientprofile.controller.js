@@ -111,8 +111,19 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
 	$scope.initProfileView = function(){
 		UserService.getUser(StorageService.get('logged').patientID).then(function(response){
 			$scope.patientView = response.data.user;
-      $scope.patientView.zipcode = commonsUserService.formatZipcode($scope.patientView.zipcode);
-		}).catch(function(response){});
+		      if($scope.patientView){
+        $scope.patientView.zipcode = commonsUserService.formatZipcode($scope.patientView.zipcode);
+      if($scope.patientView.deviceType){
+        $scope.patientView.deviceType = patientService.getDeviceTypeName($scope.patientView.deviceType);
+        }
+        else{
+          $scope.patientView.deviceType = patientService.getDeviceTypeName($scope.getDeviceTypeforBothIcon());
+        }
+          if($scope.patientView.monarchGarmentSize){
+          $scope.patientView.monarchGarmentSize = searchFilters.oneSize;
+        }
+      }
+    }).catch(function(response){});
 		AuthServerProvider.getSecurityQuestions().then(function(response){
 			$scope.questions = response.data
 		}).catch(function(response){
@@ -122,7 +133,18 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
     $scope.initProfileViewCaregiver = function(){
     UserService.getUser($scope.selectedPatient.userId).then(function(response){
       $scope.patientView = response.data.user;
-      $scope.patientView.zipcode = commonsUserService.formatZipcode($scope.patientView.zipcode);
+            if($scope.patientView){
+     $scope.patientView.zipcode = commonsUserService.formatZipcode($scope.patientView.zipcode);
+      if($scope.patientView.deviceType){
+        $scope.patientView.deviceType = patientService.getDeviceTypeName($scope.patientView.deviceType);
+        }
+        else{
+          $scope.patientView.deviceType = patientService.getDeviceTypeName($scope.getDeviceTypeforBothIcon());
+        }
+          if($scope.patientView.monarchGarmentSize){
+          $scope.patientView.monarchGarmentSize = searchFilters.oneSize;
+        }
+      }
     }).catch(function(response){});
     AuthServerProvider.getSecurityQuestions().then(function(response){
       $scope.questions = response.data

@@ -439,13 +439,13 @@ angular.module('hillromvestApp')
         }
         pdf.text(x, y, protocol.minMinutesPerTreatment.toString());
         x = x + 90;
-        pdf.text(x, y, protocol.minFrequency.toString());
+        pdf.text(x, y, protocol.minFrequency+'-'+protocol.maxFrequency);
         x = x + 90;
         if(deviceType == 'VEST'){
-        pdf.text(x, y, protocol.minPressure.toString());
+        pdf.text(x, y, protocol.minPressure+'-'+protocol.maxPressure);
       }
       else{
-        pdf.text(x, y, protocol.minIntensity.toString());
+        pdf.text(x, y, protocol.minIntensity+'-'+protocol.maxIntensity);
       }
       }
       y = y + 30;
