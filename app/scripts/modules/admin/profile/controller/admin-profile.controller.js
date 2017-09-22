@@ -41,8 +41,7 @@ angular.module('hillromvestApp')
       }
       else if($scope.role === loginConstants.role.FOTAAdmin){
         $state.go('editFotaAdminProfile');
-      }
-      else if($scope.role === loginConstants.role.FOTAApprover){
+      }else if($scope.role === loginConstants.role.FOTAApprover){
         $state.go('editFotaAdminProfile');
       }
       else {
@@ -63,8 +62,10 @@ angular.module('hillromvestApp')
       else if($scope.role === loginConstants.role.customerservices){
         $state.go(status);
       }
-      else if($scope.role === loginConstants.role.FOTAAdmin || $scope.role === loginConstants.role.FOTAApprover){
-        //console.log("tab");
+      else if($scope.role === loginConstants.role.FOTAAdmin){
+        $state.go(status);
+      } else if($scope.role === loginConstants.role.FOTAApprover){
+        
         $state.go(status);
       }
       else{
@@ -153,11 +154,11 @@ angular.module('hillromvestApp')
         $state.go('adminProfileRc');
       }else if($scope.role === loginConstants.role.associates){
         $state.go('associateProfile');
-      }
-      else if($scope.role === loginConstants.role.customerservices){
+      }else if($scope.role === loginConstants.role.customerservices){
         $state.go('customerserviceProfile');
-      }
-      else if($scope.role === loginConstants.role.FOTAAdmin || $scope.role === loginConstants.role.FOTAApprover){
+      }else if($scope.role === loginConstants.role.FOTAAdmin){
+        $state.go('FOTAUserProfile');
+      }else if($scope.role === loginConstants.role.FOTAApprover){
         $state.go('FOTAUserProfile');
       }else {
         $state.go('adminProfile');

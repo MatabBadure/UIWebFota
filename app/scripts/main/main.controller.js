@@ -231,7 +231,9 @@ else {
       else if($rootScope.userRole === loginConstants.role.customerservices){
         $state.go("customerservicePatientUser");
       }
-      else if($rootScope.userRole === loginConstants.role.FOTAAdmin || $rootScope.userRole === loginConstants.role.FOTAApprover){
+      else if($rootScope.userRole === loginConstants.role.FOTAAdmin){
+      	$state.go("fotaHome");
+      } else if($rootScope.userRole === loginConstants.role.FOTAApprover){
         $state.go("fotaHome");
       }
     };
