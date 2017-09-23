@@ -35,8 +35,7 @@ angular.module('hillromvestApp')
         $state.go('editAdminProfileRc');
       }else if($scope.role === loginConstants.role.associates){
         $state.go('editAssociateProfile');
-      }
-      else if($scope.role === loginConstants.role.customerservices){
+      }else if($scope.role === loginConstants.role.customerservices){
         $state.go('editcustomerserviceProfile');
       }else if($scope.role === loginConstants.role.FOTAAdmin){
         $state.go('editFotaAdminProfile');

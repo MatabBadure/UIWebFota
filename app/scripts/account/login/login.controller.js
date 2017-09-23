@@ -77,6 +77,10 @@ angular.module('hillromvestApp')
         }
         else if($rootScope.userRole === loginConstants.role.customerservices){
           $state.go("customerservicePatientUser");
+        }else if($rootScope.userRole === loginConstants.role.FOTAAdmin){
+          $state.go('fotaHome');
+        } else if($rootScope.userRole === loginConstants.role.FOTAApprover){
+          $state.go('fotaHome');
         }
       }else{        
           $scope.clearLastLogin();
@@ -182,7 +186,6 @@ angular.module('hillromvestApp')
           } else if(response.data.user.authorities[0].name === loginConstants.role.customerservices){
             logged.userId = response.data.user.id;
             $state.go('customerservicePatientUser');
-          // $state.go('fotaHome');
           }else if(response.data.user.authorities[0].name === loginConstants.role.FOTAAdmin){
             logged.userId = response.data.user.id;
             $state.go('fotaHome');
