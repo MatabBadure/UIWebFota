@@ -6248,6 +6248,15 @@ angular.module('hillromvestApp')
                     }],
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('profile');
+                         return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
         .state('caregiverannouncements', {
                 parent: 'caregiver-dashboard',
                 url: '/caregiver-patient-announcements/{patientId}',
