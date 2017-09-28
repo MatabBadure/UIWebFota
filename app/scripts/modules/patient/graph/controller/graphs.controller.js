@@ -1295,7 +1295,7 @@ angular.module('hillromvestApp')
       $scope.discardLessHMRData = function(object){
          for(var i = 0; i < object.series[0].data.length; i++) {
                 var obj = object.series[0].data[i];
-                if(obj.y == 0){
+/*                if(obj.y == 0 ){
                    object.series[0].data.splice(i, 1);
                    if(object.xAxis){
                     if(object.xAxis.categories){
@@ -1304,7 +1304,9 @@ angular.module('hillromvestApp')
                  }
                    i--;
                 }
-                 else if((obj.toolText.duration == 0 && !obj.toolText.missedTherapy)){
+                 else*/
+                  
+                  if((obj.toolText.duration == 0 && !obj.toolText.missedTherapy)){
                   object.series[0].data.splice(i, 1);
                      if(object.xAxis){
                     if(object.xAxis.categories){
