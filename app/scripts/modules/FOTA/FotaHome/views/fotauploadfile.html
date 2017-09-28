@@ -73,9 +73,6 @@
           </div>
           
         </div>
-
-
-
           <div class="col-md-16 col-sm-16 margin-top reset-padding">
           <div class="col-md-7 col-sm-7 reset-padding">
             <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
@@ -83,10 +80,10 @@
               <span class="">*</span>
             </div>
              <div class="col-md-9 col-sm-10  reset-padding" >
-              <input class="col-md-3 col-sm-10" style="margin-right:5px" name="softwareMVersion1" type="text" ng-model="fota.softwareMVersion1" validate-on-blur ng-pattern="/^([A-Fa-f0-9]+)$/" ng-enter="" maxlength="2"  required/>
-              <input class="col-md-3 col-sm-1" style="margin-right:5px" name="softwareMVersion2" type="text" ng-model="fota.softwareMVersion2" validate-on-blur ng-pattern="/^([A-Fa-f0-9]+)$/" ng-enter="" maxlength="2"  required>
-              <input class="col-md-3 col-sm-1" style="margin-right:5px" name="softwareMiVersion1" type="text" ng-model="fota.softwareMiVersion1" validate-on-blur ng-pattern="/^([A-Fa-f0-9]+)$/" ng-enter="" maxlength="2"  required/>
-              <input class="col-md-3 col-sm-1" style="margin-right:5px" name="softwareMiVersion2" type="text" ng-model="fota.softwareMiVersion2" validate-on-blur ng-pattern="/^([A-Fa-f0-9]+)$/" ng-enter="" maxlength="2"  required/>
+              <input class="col-md-3 col-sm-10" style="margin-right:5px" name="softwareMVersion1" type="text" ng-model="fota.softwareMVersion1" validate-on-blur ng-pattern="/^([0-9]+)$/" ng-enter="" maxlength="2"  required/>
+              <input class="col-md-3 col-sm-1" style="margin-right:5px" name="softwareMVersion2" type="text" ng-model="fota.softwareMVersion2" validate-on-blur ng-pattern="/^([0-9]+)$/" ng-enter="" maxlength="2"  required>
+              <input class="col-md-3 col-sm-1" style="margin-right:5px" name="softwareMiVersion1" type="text" ng-model="fota.softwareMiVersion1" validate-on-blur ng-pattern="/^([0-9]+)$/" ng-enter="" maxlength="2"  required/>
+              <input class="col-md-3 col-sm-1" style="margin-right:5px" name="softwareMiVersion2" type="text" ng-model="fota.softwareMiVersion2" validate-on-blur ng-pattern="/^([0-9]+)$/" ng-enter="" maxlength="2"  required/>
           </div>
            <div ng-show="form.softwareMVersion1.$dirty && form.softwareMVersion1.$showValidationMessage && form.softwareMVersion1.$invalid || submitted" class="">
               <span class="has-error" ng-show="form.softwareMVersion1.$error.pattern" translate="global.softwareVer.pattern">
@@ -131,7 +128,6 @@
               <span class="icons user-required" translate="global.software-version-ex"></span>
             </div>
           </div>
-
         </div>
 
         <div class="col-md-16 col-sm-16 margin-top reset-padding">
@@ -197,7 +193,6 @@
               <span class="icons user-required" translate="global.region1-crc-ex"></span>
             </div>
           </div>
-
         </div>
 
         <div class="col-md-16 col-sm-16 margin-top reset-padding">
