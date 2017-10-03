@@ -290,8 +290,12 @@
           on-search-change="onSearchChange()"
           class="toFieldmultiselectLessWidth"  
         ></div> 
-  
+                          <div ng-show="nodeviceType">
+                <span class="has-error" translate="error.deviceType.required"></span>
+                
+              </div>
         </div>  
+
             </div>
 
           </div>

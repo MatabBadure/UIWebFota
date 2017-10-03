@@ -43,7 +43,8 @@
       "account-services": "Account Services",
       "associates":"Associates",
       "customerservices" : "Customer Service",
-      "RnDAdmin" : "R&D Admin",
+      "FOTAAdmin" : "FOTA Admin",
+      "FOTAApprover" : "FOTA Approver",
       "default" : "Select a role"
     },
     "update-button-text": "Update",

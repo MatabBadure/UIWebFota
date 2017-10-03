@@ -43,7 +43,6 @@
       "account-services": "Account Services",
       "associates":"Associates",
       "customerservices" : "Customer Service",
-      "RnDAdmin" : "R&D Admin",
       "default" : "Select a role"
     },
     "update-button-text": "Update",
