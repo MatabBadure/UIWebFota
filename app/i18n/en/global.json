@@ -356,7 +356,7 @@
     },
     "error":{ 
             "deviceType":{
-                "required" : "Select the device type."
+                "required" : "Device Type is required."
             },
              "startDate":{
               "required": "Announcement start date is required."
