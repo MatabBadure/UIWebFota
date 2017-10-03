@@ -23,28 +23,31 @@ angular.module('hillromvestApp')
         $scope.questions = response.data
       }).catch(function(response){});
     };
-
+  //Modified for Fota Admin profile
     $scope.init = function(){
-      if($state.current.name === 'adminProfile' || $state.current.name === 'editAdminProfile' || $state.current.name === 'adminProfileRc' || $state.current.name === 'editAdminProfileRc' || $state.current.name === 'associateProfile' || $state.current.name === 'editAssociateProfile' || $state.current.name === 'customerserviceProfile' || $state.current.name === 'editcustomerserviceProfile'){
+      if($state.current.name === 'adminProfile' || $state.current.name === 'fotaadminedit' || $state.current.name === 'editFotaAdminProfile' || $state.current.name === 'FOTAUserProfile' || $state.current.name === 'editAdminProfile' || $state.current.name === 'adminProfileRc' || $state.current.name === 'editAdminProfileRc' || $state.current.name === 'associateProfile' || $state.current.name === 'editAssociateProfile' || $state.current.name === 'customerserviceProfile' || $state.current.name === 'editcustomerserviceProfile'){
         $scope.initProfile(StorageService.get('logged').userId);
       }
-      else if($state.current.name === 'RnDadminProfile'){
-        //Do nothing for now
-      }
     };
-
+    //Modified for Fota Admin profile
     $scope.editMode = function(){
       if($scope.role === loginConstants.role.acctservices){
         $state.go('editAdminProfileRc');
       }else if($scope.role === loginConstants.role.associates){
         $state.go('editAssociateProfile');
-      }
-      else if($scope.role === loginConstants.role.customerservices){
+      }else if($scope.role === loginConstants.role.customerservices){
         $state.go('editcustomerserviceProfile');
-      }
-      else {
+      }else if($scope.role === loginConstants.role.FOTAAdmin){
+        $state.go('editFotaAdminProfile');
+      }else if($scope.role === loginConstants.role.FOTAApprover){
+        $state.go('editFotaAdminProfile');
+      }else {
         $state.go('editAdminProfile');
       }
+    };
+
+    $scope.redirectBack = function(){
+      $state.go('fotaHome');
     };
 
     $scope.switchProfileTab = function(status){
@@ -55,12 +58,20 @@ angular.module('hillromvestApp')
       }
       else if($scope.role === loginConstants.role.customerservices){
         $state.go(status);
-      }else{
+      }
+      else if($scope.role === loginConstants.role.FOTAAdmin){
+        $state.go(status);
+      } else if($scope.role === loginConstants.role.FOTAApprover){
+        
+        $state.go(status);
+      }
+      else{
         $state.go(status);
       }
     };
-
+    //Modified for Fota Admin profile
     $scope.updateProfile = function(){
+      
       $scope.submitted = true;
       $scope.updateModal = false;
       if($scope.form.$invalid){
@@ -94,8 +105,11 @@ angular.module('hillromvestApp')
           }
            else if($scope.role === loginConstants.role.customerservices){
             $state.go('customerserviceProfile');
-          }
-          else{
+          }else if($scope.role === loginConstants.role.FOTAAdmin){
+            $state.go('FOTAUserProfile');
+          }else if($scope.role === loginConstants.role.FOTAApprover){
+            $state.go('FOTAUserProfile');
+          }else{
             $state.go('adminProfile');
           }
         }else{
@@ -141,9 +155,12 @@ angular.module('hillromvestApp')
         $state.go('adminProfileRc');
       }else if($scope.role === loginConstants.role.associates){
         $state.go('associateProfile');
-      }
-      else if($scope.role === loginConstants.role.customerservices){
+      }else if($scope.role === loginConstants.role.customerservices){
         $state.go('customerserviceProfile');
+      }else if($scope.role === loginConstants.role.FOTAAdmin){
+        $state.go('FOTAUserProfile');
+      }else if($scope.role === loginConstants.role.FOTAApprover){
+        $state.go('FOTAUserProfile');
       }else {
         $state.go('adminProfile');
       }
@@ -159,6 +176,7 @@ angular.module('hillromvestApp')
     };
 
     $scope.showUpdateModal = function(){
+
       if($scope.form.$invalid){
         return false;
       }else{

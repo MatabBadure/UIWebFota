@@ -1,0 +1,232 @@
+
+<ng-include src="'scripts/components/navbar/navbarFOTA.html'"></ng-include>
+<div class="dashboard dashboard--content padding-bottom-ls">
+
+      <div class="margin-top-xl">
+        <form name="form" novalidate autocomplete="off">
+        <div class="col-md-16 col-sm-16">
+          <span class="dashboard__form--type" translate="global.firmware-info" style="padding: 20px;"></span>
+        </div>
+
+        <div class="col-md-16 col-sm-16 margin-top">
+          <div class="col-md-7 col-sm-7 ">
+            <div class="col-md-6 col-sm-6 dashboard__form--label">
+              <span class="" translate="global.product-name"></span>
+            </div>
+            <div class="col-md-10 dashboard__form--label-val">
+              <span>{{selectedFirmware.productType}}</span>
+            </div>
+          </div>
+
+          <div class="col-md-7 col-sm-7 col-sm-offset-0 col-md-offset-2 ">
+            <div class="col-md-6 col-sm-6 dashboard__form--label">
+              <span class="" translate="global.part-number"></span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--label-val ">
+              <span>{{convertDevicePartNo}}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-16 col-sm-16 margin-top">
+          <div class="col-md-7 col-sm-7 ">
+            <div class="col-md-6 col-sm-6 dashboard__form--label">
+              <span class="" translate="global.soft-version"></span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--label-val ">
+              <span>{{selectedFirmware.softVersion}}</span>
+            </div>
+          </div>
+        <div class="col-md-7 col-sm-7  col-sm-offset-0 col-md-offset-2">
+          <div class="col-md-6 col-sm-6 dashboard__form--label ">
+            <span class="" translate="global.fill-pattern"></span>
+          </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--label-val ">
+              <span>{{selectedFirmware.releaseNumber}}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-16 col-sm-16 margin-top">
+          <div class="col-md-7 col-sm-7 ">
+            <div class="col-md-6 col-sm-6 dashboard__form--label ">
+              <span class="" translate="global.soft-date"></span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--label-val">
+              <span>{{releaseConvertedDate}}</span>
+            </div>
+          </div>
+        <div class="col-md-7 col-sm-7  col-sm-offset-0 col-md-offset-2">
+          <div class="col-md-6 col-sm-6 dashboard__form--label">
+            <span class="" translate="global.model-id"></span>
+          </div>
+          <div class="col-md-10 col-sm-10 dashboard__form--label-val">
+            <span>{{selectedFirmware.modelId}}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-16 col-sm-16 margin-top">
+          <div class="col-md-7 col-sm-7 ">
+            <div class="col-md-6 col-sm-6 dashboard__form--label ">
+              <span class="" translate="global.board-id"></span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--label-val ">
+              <span>{{selectedFirmware.boardId}}</span>
+            </div>
+        </div>
+        <div class="col-md-7 col-sm-7  col-sm-offset-0 col-md-offset-2">
+          <div class="col-md-6 col-sm-6 dashboard__form--label ">
+            <span class="" translate="global.bed-id"></span>
+          </div>
+          <div class="col-md-10 col-sm-10 dashboard__form--label-val ">
+            <span>{{selectedFirmware.bedId}}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-16 col-sm-16  margin-top">
+          <div class="col-md-7 col-sm-7 ">
+            <div class="col-md-6 col-sm-6 dashboard__form--label ">
+              <span class="" translate="global.boot-comp-ver"></span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--label-val ">
+              <span>{{selectedFirmware.bootCompVer}}</span>
+            </div>
+        </div>
+        <div class="col-md-7 col-sm-7  col-sm-offset-0 col-md-offset-2">
+            <div class="col-md-6 col-sm-6 dashboard__form--label ">
+              <span class="" translate="global.status"></span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--label-val ">
+              <span>{{selectedFirmware.fotastatus}}</span>
+            </div>
+        </div>
+      </div>
+      <div class="col-md-16 col-sm-16  margin-top">
+          <div class="col-md-7 col-sm-7 ">
+            <div class="col-md-6 col-sm-6 dashboard__form--label ">
+              <span class="" translate="global.upload-by"></span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--label-val ">
+              <span>{{selectedFirmware.uploadUser}}</span>
+            </div>
+          </div>
+
+          <div class="col-md-7 col-sm-7  col-sm-offset-0 col-md-offset-2">
+            <div class="col-md-6 col-sm-6 dashboard__form--label ">
+              <span class="" translate="global.upload-date"></span>
+            </div>
+            <div class="col-md-6 col-sm-6 dashboard__form--label-val ">
+              <span>{{uploadConvertedDate}}</span>
+            </div>
+          </div>
+        </div>
+
+        <div ng-show="selectedFirmware.publishedDateTime !== null" class="col-md-16 col-sm-16  margin-top" >
+          <div class="col-md-7 col-sm-7 ">
+            <div class="col-md-6 col-sm-6 dashboard__form--label ">
+              <span class="" translate="global.published-by"></span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--label-val ">
+              <span>{{selectedFirmware.publishedUser}}</span>
+            </div>
+          </div>
+          <div class="col-md-7 col-sm-7  col-sm-offset-0 col-md-offset-2">
+            <div class="col-md-6 col-sm-6 dashboard__form--label ">
+              <span class="" translate="global.published-date"></span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--label-val ">
+              <span>{{publishedConvertedDate}}</span>
+            </div>
+          </div>
+        </div>
+
+      <div ng-show="selectedFirmware.region1StartAddress !== '' && selectedFirmware.region1StartAddress !== null && userRole === 'FOTA_APPROVER'  && selectedFirmware.fotastatus === 'Active Pending'">
+        <div class="col-md-16 col-sm-16 margin-top ">
+          <div class="col-md-7 col-sm-7 ">
+            <div><b><span class="" translate="global.crc-label"></span></b></div>
+            <div><b><span class="" translate="global.crc-label1"></b></span></div>
+            <div class="col-md-6 col-sm-6 dashboard__form--label ">
+              <span class="" translate="global.region1-crc"></span>
+              <span class="">*</span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--input ">
+              <input class="" name="region1CRC" type="text" ng-model="fota.region1CRC" validate-on-blur ng-pattern="/^([A-Fa-f0-9]+)$/" ng-enter=""  maxlength="8"  required>
+             <div ng-show="form.region1CRC.$dirty && form.region1CRC.$showValidationMessage && form.region1CRC.$invalid || submitted" class="">
+                <span class="has-error" ng-show="form.region1CRC.$error.pattern" translate="global.region1CRC.pattern">
+                </span>
+                <span class="has-error" ng-show="form.region1CRC.$error.required && !form.region1CRC.$error.pattern" translate="global.region1CRC.required"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div ng-show="selectedFirmware.region2StartAddress !== '' && selectedFirmware.region2StartAddress !== null && userRole === 'FOTA_APPROVER' && selectedFirmware.fotastatus === 'Active Pending'">
+        <div class="col-md-16 col-sm-16 margin-top ">
+          <div class="col-md-7 col-sm-7 ">
+
+            <div class="col-md-6 col-sm-6 dashboard__form--label ">
+              <span class="" translate="global.region2-crc"></span>
+              <span class="">*</span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--input " >
+              <input class="" name="region2CRC" type="text" ng-model="fota.region2CRC" validate-on-blur ng-pattern="/^([A-Fa-f0-9]+)$/" ng-enter=""  maxlength="8"  required>
+              <div ng-show="form.region2CRC.$dirty && form.region2CRC.$showValidationMessage && form.region2CRC.$invalid || submitted" class="">
+                <span class="has-error" ng-show="form.region2CRC.$error.pattern" translate="global.region2CRC.pattern">
+                </span>
+                <span class="has-error" ng-show="form.region2CRC.$error.required && !form.region2CRC.$error.pattern" translate="global.region2CRC.required"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+   
+
+    <div class="col-md-16 col-sm-16 margin-top " ng-show="userRole === 'FOTA_APPROVER'" >
+      <div class="fropile_update_btn_group">
+        <!-- <buton class="hillrom-btn btn-primary float-right btn-margin-left"  ng-show="selectedFirmware.fotastatus === 'Active Pending'" ng-click="navigateTabsWithValueFota('crcValidate',selectedFirmware)" translate="global.validate">Validate</buton> -->
+        <buton class="hillrom-btn btn-primary float-right btn-margin-left"  ng-show="selectedFirmware.fotastatus === 'Active Pending'" ng-click="validateApprCRC(form)" translate="global.validate">Validate</buton>
+        <buton class="hillrom-btn btn-primary float-right btn-margin-left"  ng-show="selectedFirmware.fotastatus === 'Active Pending'  || selectedFirmware.fotastatus === 'Active Published'" ng-click="deleteFirmware()" translate="global.delete">Delete</buton>
+        <buton class="hillrom-btn btn-submit float-right" data-dismiss="modal" ng-show=" selectedFirmware.fotastatus === 'Delete Requested'" ng-click="approveDeleteFirmware()">Approve</buton>
+         <buton class="hillrom-btn btn-primary float-right btn-margin-left" ng-click="redirectBack()" translate="global.back">Back</buton>
+      </div>
+    </div>
+    <div class="col-md-16 col-sm-16 margin-top " ng-show="userRole === 'FOTA_ADMIN'">
+      <div class="fropile_update_btn_group">
+        <buton class="hillrom-btn btn-primary float-right btn-margin-left"   ng-show="userRole === 'FOTA_ADMIN' && selectedFirmware.fotastatus !== 'Delete Requested' && selectedFirmware.fotastatus !== 'Inactive Pending' && selectedFirmware.fotastatus !== 'Inactive Published'" ng-click="deleteFirmware()" translate="global.delete">Delete</buton>
+         <buton class="hillrom-btn btn-primary float-right btn-margin-left" ng-click="redirectBack()" translate="global.back">Back</buton>
+      </div>
+    </div>
+  </form>
+</div>
+<div ng-if="showModal" class="modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true">
+  <div class="modal__dialog">
+    <div class="modal__content">
+      <header class="modal__header">
+        <button type="button" class="modal__close" data-dismiss="modal" ng-click="close()">&times;
+        </button>
+        <p translate="global.crc32-header"></p>
+      </header>
+      <div class="modal__body">
+        <div class="modal--message" ng-show="cr32Invalid" translate="global.crc32-invalid"></div>
+
+        <div class="modal--message" ng-show="cr32Valid" translate="global.crc32-valid"></div>
+        <div class="modal--message" ng-show="approveMsg" translate="global.approve-msg"></div>
+        <div class="modal--message" ng-show="deleteMsg" translate="global.delete-msg"></div>
+        <div class="modal--message" ng-show="deleteMsgReq" translate="global.delete-msgReq"></div>
+        <div class="modal--message" ng-show="deleteConfirmMsg" translate="global.delete-msgConf"></div>
+          <div class="row modal--custom-btn" >
+            <buton class="hillrom-btn btn-submit float-right" data-dismiss="modal" ng-show="btnApr" ng-click="approverCRC32()">Approve</buton>
+            <buton class="hillrom-btn btn-submit float-right" data-dismiss="modal" ng-show="confirmDeleteBtn" ng-click="deleteFirmwareConfirm(selectedFirmware.id)">Confirm Delete</buton>
+            <buton class="hillrom-btn btn-submit float-right" data-dismiss="modal" ng-show="btnok" ng-click="redirectBack()">OK</buton>
+            <buton class="hillrom-btn btn-submit float-right" data-dismiss="modal"  ng-show="btncancel" ng-click="close()">Cancel</buton>
+          </div>
+      </div>
+      <footer class="modal__footer">
+      </footer>
+    </div>
+  </div>
+</div>
+
+</div>

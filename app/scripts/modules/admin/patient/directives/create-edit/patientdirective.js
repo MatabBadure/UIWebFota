@@ -38,6 +38,7 @@ angular.module('hillromvestApp')
           $scope.userRole = StorageService.get('logged').role;
           $scope.states = [];
           $scope.isAssociateDoctor = false;
+          $scope.nodeviceType = false;
           $scope.languages = [{
             "name": "English"
           }, {
@@ -113,6 +114,7 @@ angular.module('hillromvestApp')
           console.log("$scope.deviceType",$scope.deviceType);
           $scope.patient.deviceType = "";
           if($scope.deviceType.length){
+            $scope.nodeviceType = false;
             for(var i=0;i<$scope.deviceType.length;i++){
               if($scope.deviceType[i].name === searchFilters.VisiVest_Full){
               $scope.patient.deviceType = $scope.patient.deviceType + searchFilters.VisiVest;
@@ -166,7 +168,13 @@ angular.module('hillromvestApp')
 
         $scope.createPatient = function () {
           $scope.submitted = true;
-          if(!$scope.patient.city || $scope.form.$invalid || $scope.form.dob.$invalid){
+          if(!$scope.deviceType.length){
+            $scope.nodeviceType = true;
+          }
+          else{
+            $scope.nodeviceType = false;
+          }
+          if(!$scope.patient.city || $scope.form.$invalid || $scope.form.dob.$invalid || $scope.nodeviceType){
             return false;
           }
           angular.forEach($scope.patient, function(value, key){
