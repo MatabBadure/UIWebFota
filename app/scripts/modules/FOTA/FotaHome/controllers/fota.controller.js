@@ -823,7 +823,7 @@ $scope.setFirmwareRadioOption = function(){
           } else {
             $scope.devicelistCurrentPageIndex = 1;
           }
-      fotaService.getDeviceList(($scope.devicelistCurrentPageIndex-1),$scope.devicelistperpage,$scope.searchFilterdevicelist.type,$scope.deviceListsearchItem,$scope.sortOption).then(function(response){
+      fotaService.getDeviceList(($scope.devicelistCurrentPageIndex),$scope.devicelistperpage,$scope.searchFilterdevicelist.type,$scope.deviceListsearchItem,$scope.sortOption).then(function(response){
       $scope.Fotadeviceslist = response.data;
       $scope.devicelistPageCount = $scope.Fotadeviceslist.totalPages;
       if($scope.Fotadeviceslist.content){
