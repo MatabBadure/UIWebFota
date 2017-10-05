@@ -145,11 +145,11 @@
             </div>
             <div class="col-md-4 col-sm-4 col-xs-4 protocol-list__end-date">
               <!-- <span ng-if="protocol.type === 'Custom'" class="protocol-list--value"> {{protocol.minFrequency}}</span> -->
-              <span class="protocol-list--value"> {{protocol.minFrequency}}-{{protocol.maxFrequency}}</span>
+              <span class="protocol-list--value"> {{protocol.minFrequency}}<span ng-if="protocol.maxFrequency">-</span>{{protocol.maxFrequency}}</span>
             </div>
             <div class="col-md-6 col-sm-6 col-xs-6 protocol-list__end-date" ng-if="getDeviceType() =='VEST'">
               <!-- <span ng-if="protocol.type === 'Custom'" class="protocol-list--value"> {{protocol.minPressure}}</span> -->
-              <span class="protocol-list--value"> {{protocol.minPressure}}-{{protocol.maxPressure}}</span>
+              <span class="protocol-list--value"> {{protocol.minPressure}}<span ng-if="protocol.maxPressure">-</span>{{protocol.maxPressure}}</span>
             </div>
 
           <div class="col-md-6 col-sm-6 col-xs-6 protocol-list__end-date" ng-if="getDeviceType() =='MONARCH'">
@@ -195,16 +195,16 @@
             </div>
             <div class="col-md-4 col-sm-4 col-xs-4 protocol-list__end-date">
               <!-- <span ng-if="protocol.type === 'Custom'" class="protocol-list--value"> {{protocol.minFrequency}}</span> -->
-              <span class="protocol-list--value"> {{protocol.minFrequency}}-{{protocol.maxFrequency}}</span>
+              <span class="protocol-list--value"> {{protocol.minFrequency}}<span ng-if="protocol.maxFrequency">-</span>{{protocol.maxFrequency}}</span>
             </div>
             <div class="col-md-6 col-sm-6 col-xs-6 protocol-list__end-date" ng-if="protocols[0].deviceType =='VEST'">
               <!-- <span ng-if="protocol.type === 'Custom'" class="protocol-list--value"> {{protocol.minPressure}}</span> -->
-              <span class="protocol-list--value"> {{protocol.minPressure}}-{{protocol.maxPressure}}</span>
+              <span class="protocol-list--value"> {{protocol.minPressure}}<span ng-if="protocol.maxPressure">-</span>{{protocol.maxPressure}}</span>
             </div>
 
           <div class="col-md-6 col-sm-6 col-xs-6 protocol-list__end-date" ng-if="protocols[0].deviceType =='MONARCH'">
               <!-- <span ng-if="protocol.type === 'Custom'" class="protocol-list--value"> {{protocol.minIntensity}}</span> -->
-              <span class="protocol-list--value"> {{protocol.minIntensity}}-{{protocol.maxIntensity}}</span>
+              <span class="protocol-list--value"> {{protocol.minIntensity}}<span ng-if="protocol.maxIntensity">-</span>{{protocol.maxIntensity}}</span>
             </div>
 
 
