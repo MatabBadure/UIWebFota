@@ -144,11 +144,11 @@
             </div>
             <div class="col-md-10 col-sm-10 dashboard__form__input--sec-option reset-padding">
               <div class="custom-dropdown">
-                <select class="security-select" name="question" validate-on-blur required ng-model="resetAccount.question" ng-options="question.question for question in questions">
+                <select class="security-select" name="question" validate-on-blur ng-model="resetAccount.question" ng-options="question.question for question in questions">
                   <option value="">-- Select a security question --</option> 
-                </select> 
-                 <span class="has-error" ng-show="form.question.$error.required">Security question required</span>             
+                </select>              
             </div>
+
             </div>
           </div>
         </div>
