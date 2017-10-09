@@ -45,7 +45,8 @@ angular.module('hillromvestApp')
       $scope.forhidingVestProtocolGraph = true
       $scope.forhidingMonarchProtocolGraph = false;
       $scope.forhidingMonarchHmrGraph = false;
-
+      $scope.oneDayData = true;
+      $scope.oneDayData1 = true;
 
       $scope.initCount("");
             var currentRoute = $state.current.name;
@@ -715,20 +716,16 @@ angular.module('hillromvestApp')
           }
           if(protocol.deviceType === searchFilters.VisiVest){
             vestFlag = true;
-           // alert("vestFlag = true");
           }
           if(protocol.deviceType === searchFilters.Monarch){
             monarchFlag = true;
-           // alert("monarchFlag = true");
           }
         });
          if(vestFlag && monarchFlag){
           $scope.DisableAddProtocol = true;
-        //  alert($scope.DisableAddProtocol);
         }
         else{
           $scope.DisableAddProtocol = false;
-          // alert($scope.DisableAddProtocol);
         }
       });
     };
@@ -1298,14 +1295,28 @@ angular.module('hillromvestApp')
       $scope.discardLessHMRData = function(object){
          for(var i = 0; i < object.series[0].data.length; i++) {
                 var obj = object.series[0].data[i];
-                if(obj.y == 0){
+/*                if(obj.y == 0 ){
                    object.series[0].data.splice(i, 1);
+
+                   if(object.xAxis){
+                    if(object.xAxis.categories){
                    object.xAxis.categories.splice(i, 1);
+                 }
+                 }
+
                    i--;
                 }
-                 else if((obj.toolText.duration == 0 && !obj.toolText.missedTherapy)){
+                 else*/
+                  
+                  if((obj.toolText.duration == 0 && !obj.toolText.missedTherapy)){
                   object.series[0].data.splice(i, 1);
-                  object.xAxis.categories.splice(i, 1);
+
+                     if(object.xAxis){
+                    if(object.xAxis.categories){
+                   object.xAxis.categories.splice(i, 1);
+                 }
+                 }
+
                   i--;
                 }
             }
@@ -1319,8 +1330,9 @@ angular.module('hillromvestApp')
          $scope.hmrChartDataRaw = $scope.discardLessHMRData($scope.hmrChartDataRaw);
           }
           $scope.hmrChartData = $scope.hmrChartDataRaw;
+          console.log("hmrdata line 1330:",$scope.hmrChartDataRaw);
         $scope.noDataAvailableForHMR  = false;       
-        if($scope.hmrChartData && typeof($scope.hmrChartData) === "object"){ 
+        if($scope.hmrChartData && typeof($scope.hmrChartData) === "object" && ($scope.hmrChartDataRaw.xAxis.categories.length > 0 && $scope.hmrChartDataRaw.series[0].data.length > 0)){ 
           $scope.noDataAvailableForHMR = false;      
           $scope.hmrChartData.xAxis.xLabels=[]; 
           $scope.isSameDayHMRGraph = true;
@@ -1333,7 +1345,14 @@ angular.module('hillromvestApp')
                 startDay[0] = curDay[0];
                 $scope.hmrXAxisLabelCount++;
               }
-            });       
+            }); 
+            if($scope.hmrChartDataRaw.series[0].data.length === 1){
+                $scope.oneDayData = false;
+            }
+             else{
+              $scope.oneDayData = true;
+            }    
+            console.log("$scope.oneDayData",$scope.oneDayData) 
             angular.forEach($scope.hmrChartData.xAxis.categories, function(x, key){              
               // this is for year view or custom view having datapoints more than 7
               // x-axis will be plotted accordingly, chart type will be datetime
@@ -1377,6 +1396,7 @@ angular.module('hillromvestApp')
             }            
           }, 100);          
         } else{
+          console.log(" $scope.noDataAvailableForHMR");
           $scope.noDataAvailableForHMR = true;
           //$scope.removeAllCharts();
         }
@@ -1615,7 +1635,7 @@ angular.module('hillromvestApp')
                 point: {
                     events: {
                         click: function () {
-                            if(this.toolText && !this.toolText.missedTherapy){
+                            if(this.toolText && !this.toolText.missedTherapy && $scope.oneDayData){
                               $scope.getDayChart(this.x);
                             }                            
                         }
@@ -1832,7 +1852,7 @@ angular.module('hillromvestApp')
                 point: {
                     events: {
                         click: function () {
-                            if($scope.durationRange !== "Day" && this.toolText && !this.toolText.missedTherapy){                              
+                            if($scope.durationRange !== "Day" && this.toolText && !this.toolText.missedTherapy && $scope.oneDayData){                              
                               $scope.getDayChart(this.category);
                             } 
                         }
@@ -2349,7 +2369,6 @@ angular.module('hillromvestApp')
           var formattedTransmissionDate = dateService.getDateTimeFromTimeStamp(dateService.convertYyyyMmDdToTimestamp(response.data.firstTransmissionDate),patientDashboard.dateFormat,'/');
           $scope.transmissionDate = (formattedTransmissionDate && formattedTransmissionDate.indexOf(" "))? formattedTransmissionDate.split(" ")[0] : null; 
           $scope.hasTransmissionDateforCostomrange = dateService.getDateFromTimeStamp(response.data.firstTransmissionDate,patientDashboard.dateFormat,'/'); 
-          //alert($scope.hasTransmissionDateforCostomrange); 
           setTimeout(function(){
           $scope.opts = {
           minDate: $scope.hasTransmissionDateforCostomrange
@@ -3335,8 +3354,9 @@ $scope.getComplianceGraph = function(){
          $scope.hmrChartDataRaw = $scope.discardLessHMRData($scope.hmrChartDataRaw);
           }
           $scope.hmrChartData = $scope.hmrChartDataRaw;
+           console.log("hmrdata line 3348:",$scope.hmrChartDataRaw);
         $scope.noDataAvailableForHMR  = false;       
-        if($scope.hmrChartData && typeof($scope.hmrChartData) === "object"){ 
+        if($scope.hmrChartData && typeof($scope.hmrChartData) === "object" && ($scope.hmrChartDataRaw.xAxis.categories.length > 0 && $scope.hmrChartDataRaw.series[0].data.length > 0)){ 
           $scope.noDataAvailableForHMR = false;      
           $scope.hmrChartData.xAxis.xLabels=[]; 
           $scope.isSameDayHMRGraph = true;
@@ -3349,7 +3369,14 @@ $scope.getComplianceGraph = function(){
                 startDay[0] = curDay[0];
                 $scope.hmrXAxisLabelCount++;
               }
-            });       
+            });
+            if($scope.hmrChartDataRaw.series[0].data.length === 1){
+               $scope.oneDayData = false;
+            }
+             else{
+              $scope.oneDayData = true;
+            } 
+                   
             angular.forEach($scope.hmrChartData.xAxis.categories, function(x, key){              
               // this is for year view or custom view having datapoints more than 7
               // x-axis will be plotted accordingly, chart type will be datetime
@@ -3392,6 +3419,7 @@ $scope.getComplianceGraph = function(){
             }            
           }, 100);          
         } else{
+          console.log(" $scope.noDataAvailableForHMR");
           $scope.noDataAvailableForHMR = true;
           //$scope.removeAllCharts();
         }
@@ -3631,7 +3659,7 @@ $scope.getComplianceGraph = function(){
                 point: {
                     events: {
                         click: function () {
-                            if(this.toolText && !this.toolText.missedTherapy){
+                            if(this.toolText && !this.toolText.missedTherapy && $scope.oneDayData){
                               $scope.getDayChart(this.x);
                             }                            
                         }
@@ -3848,7 +3876,7 @@ $scope.getComplianceGraph = function(){
                 point: {
                     events: {
                         click: function () {
-                            if($scope.durationRange !== "Day" && this.toolText && !this.toolText.missedTherapy){                              
+                            if($scope.durationRange !== "Day" && this.toolText && !this.toolText.missedTherapy && $scope.oneDayData){                              
                               $scope.getDayChart(this.category);
                             } 
                         }
@@ -4424,11 +4452,12 @@ $scope.getComplianceGraph1 = function(){
       patientDashBoardService.getHMRGraphPoints($scope.patientId, $scope.deviceTypeforGraph, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.durationRange).then(function(response){
         $scope.hmrChartData1Raw = response.data;
        if($scope.hmrChartData1Raw){
-         $scope.hmrChartData1Raw = $scope.discardLessHMRData($scope.hmrChartData1Raw);
+         $scope.hmrChartData1Raw = $scope.discardLessHMRData($scope.hmrChartData1Raw);    
           }
           $scope.hmrChartData1 = $scope.hmrChartData1Raw;
+           console.log("hmrdata line 4441:",$scope.hmrChartData1Raw);
         $scope.noDataAvailableForHMR1  = false;       
-        if($scope.hmrChartData1 && typeof($scope.hmrChartData1) === "object"){ 
+        if($scope.hmrChartData1 && typeof($scope.hmrChartData1) === "object" && ($scope.hmrChartData1Raw.xAxis.categories.length > 0 && $scope.hmrChartData1Raw.series[0].data.length > 0)){ 
           $scope.noDataAvailableForHMR1 = false;      
           $scope.hmrChartData1.xAxis.xLabels=[]; 
           $scope.isSameDayHMRGraph = true;
@@ -4441,7 +4470,13 @@ $scope.getComplianceGraph1 = function(){
                 startDay[0] = curDay[0];
                 $scope.hmrXAxisLabelCount++;
               }
-            });       
+            }); 
+            if($scope.hmrChartData1Raw.series[0].data.length === 1){
+              $scope.oneDayData1 = false;
+            }
+            else{
+              $scope.oneDayData1 = true;
+            }   
             angular.forEach($scope.hmrChartData1.xAxis.categories, function(x, key){              
               // this is for year view or custom view having datapoints more than 7
               // x-axis will be plotted accordingly, chart type will be datetime
@@ -4484,6 +4519,7 @@ $scope.getComplianceGraph1 = function(){
             }            
           }, 100);          
         } else{
+          console.log(" $scope.noDataAvailableForHMR1");
           $scope.noDataAvailableForHMR1 = true;
          // $scope.removeAllCharts();
         }
@@ -4655,7 +4691,7 @@ $scope.getComplianceGraph1 = function(){
                 point: {
                     events: {
                         click: function () {
-                            if(this.toolText && !this.toolText.missedTherapy){
+                            if(this.toolText && !this.toolText.missedTherapy & $scope.oneDayData1){
                               $scope.getDayChart(this.x);
                             }                            
                         }
@@ -4870,7 +4906,7 @@ $scope.getComplianceGraph1 = function(){
                 point: {
                     events: {
                         click: function () {
-                            if($scope.durationRange !== "Day" && this.toolText && !this.toolText.missedTherapy){                              
+                            if($scope.durationRange !== "Day" && this.toolText && !this.toolText.missedTherapy && $scope.oneDayData1){                              
                               $scope.getDayChart(this.category);
                             } 
                         }

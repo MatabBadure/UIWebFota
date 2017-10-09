@@ -261,10 +261,10 @@
 	</div>
 	<div class="clr"></div>
 	<div class="col-md-16" class="all_graph_wrapper" ng-init="getWeekChart()" style="min-height: 300px;">
-	<div id = "NodataDiv" class="graph_nodata" ng-if = "(hmrChartData.length == 0) && noDataStatus && isHMR" ng-show="forhidingVestHmrGraph">
+	<div id = "NodataDiv" class="graph_nodata" ng-if = "((hmrChartData.length == 0) || (noDataAvailableForHMR)) && noDataStatus && isHMR" ng-show="forhidingVestHmrGraph">
 		<span class="noData_text"> No Therapy Transmission Received for This Day!</span>
 	</div>
-	<div id = "NodataDiv" class="graph_nodata" ng-if = "(hmrChartData1.length == 0) && noDataStatus && isHMR" ng-show="forhidingMonarchHmrGraph">
+	<div id = "NodataDiv" class="graph_nodata" ng-if = "((hmrChartData1.length == 0) || (noDataAvailableForHMR1)) && noDataStatus && isHMR" ng-show="forhidingMonarchHmrGraph">
 		<span class="noData_text"> No Therapy Transmission Received for This Day!</span>
 	</div>
 		<div id = "NodataDiv" class="graph_nodata" ng-if = "(compilencechartData.length ==0)  && noDataStatus && isCompliance" ng-show="forhidingVestProtocolGraph">
@@ -603,16 +603,13 @@
 								<span class="protocol-list--value"> {{protocol.minMinutesPerTreatment}}</span>
 							</div>
 							<div class="col-md-5 col-xs-5 col-sm-5 text-align_c padding0 protocol-list__end-date">
-								<span ng-if="protocol.type === 'Custom'" class="protocol-list--value"> {{protocol.minFrequency}}</span>
-								<span ng-if="protocol.type === 'Normal'" class="protocol-list--value"> {{protocol.minFrequency}}-{{protocol.maxFrequency}}</span>
+								<span class="protocol-list--value"> {{protocol.minFrequency}}<span ng-if="protocol.maxFrequency">-</span>{{protocol.maxFrequency}}</span>
 							</div>
 							<div class="col-md-4 col-xs-5 col-sm-5 text-align_c  padding0 protocol-list__end-date" ng-if="(getDeviceType() =='VEST')">
-								<span ng-if="protocol.type === 'Custom'" class="protocol-list--value"> {{protocol.minPressure}}</span>
-								<span ng-if="protocol.type === 'Normal'" class="protocol-list--value"> {{protocol.minPressure}}-{{protocol.maxPressure}}</span>
+								<span class="protocol-list--value"> {{protocol.minPressure}}<span ng-if="protocol.maxPressure">-</span>{{protocol.maxPressure}}</span>
 							</div>
 							<div class="col-md-4 col-xs-5 col-sm-5 text-align_c  padding0 protocol-list__end-date" ng-if="(getDeviceType() =='MONARCH')">
-								<span ng-if="protocol.type === 'Custom'" class="protocol-list--value"> {{protocol.minIntensity}}</span>
-								<span ng-if="protocol.type === 'Normal'" class="protocol-list--value"> {{protocol.minIntensity}}-{{protocol.maxIntensity}}</span>
+								<span class="protocol-list--value"> {{protocol.minIntensity}}<span ng-if="protocol.maxIntensity">-</span>{{protocol.maxIntensity}}</span>
 							</div>
 						</div>
 					</div>

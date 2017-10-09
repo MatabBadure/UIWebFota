@@ -196,8 +196,11 @@ angular.module('hillromvestApp')
                 case 'CUSTOMER_SERVICES':
                   x.text = "Customer Service";                
                   break;
-                  case 'RND_USER':
-                  x.text = "R&D Admin";                
+                  case 'FOTA_ADMIN':
+                  x.text = "FOTA Admin";                
+                  break;
+                  case 'FOTA_APPROVER':
+                  x.text = "FOTA Approver";                
                   break;
               } 
               $scope.userRoleList.push(x);                         

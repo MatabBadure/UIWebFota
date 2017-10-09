@@ -2,6 +2,144 @@
     "global": {
         "title": "HillRomVest",
          "tim-script":"Tim Script",
+         "fota-title":"Firmware Over The Air Upgrade",
+         "sample-label":"Sample Data",
+         "part-number-ex":"193164",
+         "product-name-ex":"Monarch or Optimus",
+         "software-version-ex":"0x00010002 => 0 1 0 2",
+         "release-date-ex":"MM/DD/YYYY",
+         "region1-crc-ex":"08010070,080FFFFF,0801006C",
+         "region2-crc-ex":"60000070, 60FFFFFF,6000006C",
+         "product-defalt":"Select Product Name",
+         "product-optimus":"Optimus",
+         "product-monarch":"Monarch",
+
+         "fota-browse":"Select Fota file",
+         "part-number":"Part Number",
+         "software-version":"Software Version",
+         "release-date":"Release Date",
+         "product-name":"Product Name",
+         "upload-hex-file": "Upload File",
+         "verify-input": "Verify",
+         "upload-fota": "Upload FOTA",
+         "verify-success": "All Parameters are successfully matched",
+         "verify-failure": "All Parameters are Not Matched",
+         "verify-override": "Do you want to override with Existing file ",
+         "region-one": "Region 1",
+         "region-two": "Region 2",
+         "start-addr": "Start Address",
+         "end-addr": "End Address",
+         "crc-location": "CRC Location",
+         "crc32-invalid": "CRC does not Match",
+         "crc32-valid": "CRC is matched",
+         "upload": "Upload",
+         "approve-msg":"Approved successfully",
+         "uploadMsg" : "File Uploaded successfully",
+         "delete-msg" : "Deleted successfully",
+         "delete-msgReq":"Delete Requested",
+         "delete-confirm":"Confirm Delete",
+         "delete-msgConf":"Do you want to delete?",
+         "firmware-list":"Firmware List",
+         "product-name":"Product Name",
+         "part-number":"Part Number",
+         "soft-version":"Software Version",
+         "soft-date":"Software Date",
+         "upload-by":"Upload By",
+         "upload-date":"Upload Date",
+         "published-by":"Published By",
+         "published-date":"Published Date",
+         "status":"Status",
+         "creat-new-file":"Upload New Firmware",
+         "placeholder": {
+            "search": "Search with Part Number or Product Name"
+        },
+        "firmware-info":"Firmware Info",
+        "model-id":"Model Id",
+        "board-id":"Board Id",
+        "bed-id":"Product Type",
+        "boot-comp-ver":"Boot Comp Version",
+        "fill-pattern":"Release Number",
+        "mcu-size":"MCU Size",
+        "region1-strt-add":"Region1 Start Address",
+        "region1-end-add":"Region1 End Address",
+        "region1-crc-location":"Region1 CRC Location",
+        "region2-strt-add":"Region2 Start Address",
+        "region2-end-add":"Region2 End Address",
+        "region2-crc-location":"Region2 Start Location",
+        "delete":"Delete",
+        "approve":"Approve",
+        "validate":"Validate",
+        "crc32-header":"Request Status",
+        "region1-crc":"Region1 CRC",
+        "region2-crc":"Region2 CRC",
+        "back":"Back",
+        "crc-label":"Key in the CRC value by downloading the file from Agile.",
+        "crc-label1":"Ensure that this revision is released in Agile.",
+        "unmatched-partNo":"Part Number does not match",
+        "unmatched-date":"Release Date does not match",
+        "unmatched-version":"Software Version does not match",
+         "fotaDeviceList": {
+            "seerial-no": "Serial Number",
+            "part-number": "Part Number",
+            "product-name": "Product Name",
+            "connection-type": "Connection Type",
+            "start-date-time": "Start DateTime",
+            "end-date-time": "End DateTime",
+            "download-time": "Download Time",
+            "firmware-status": "Status",
+             "placeholder": {
+            "search": "Search by Part Number"
+                }
+            },
+            "partNumber": {
+            "required": "Part Number is required.",
+            "invalid": "Part Number is invalid",
+            "pattern": "Part Number is invalid"
+                    },
+            "productName": {
+            "required": "Product Name is required."
+                    },
+            "softwareVer": {
+            "required": "Sofware Version is required.",
+            "invalid": "Sofware Version is invalid",
+            "pattern": "Sofware Version is invalid"
+                    },            
+            "softwareDate": {
+            "required": "Software Date is required.",
+            "invalid": "Software Date is invalid",
+            "pattern": "Software Date is invalid"
+                    },            
+
+              "file": {
+                "required": "File is required."
+                    },       
+
+            "startAddress": {
+            "required": "Start Address is required.",
+            "invalid": "Start Address is invalid",
+            "pattern": "Start Address is invalid"
+                    },
+            "endAddress": {
+            "required": "End Address is required.",
+            "invalid": "End Address is invalid",
+            "pattern": "End Address is invalid"
+                    },
+        "CRCLocation": {
+            "required": "CRC Location is required.",
+            "invalid": "CRC Location is invalid",
+            "pattern": "CRC Location is invalid"
+                    },
+        "region1CRC": {
+            "required": "Rgion1CRC is required.",
+            "invalid": "Rgion1CRC is invalid",
+            "pattern": "Rgion1CRC is invalid"
+                    },
+        "region2CRC": {
+            "required": "Rgion2CRC is required.",
+            "invalid": "Rgion2CRC is invalid",
+            "pattern": "Rgion2CRC is invalid"
+                    },
+
         "browsehappy": "You are using an <strong>outdated</strong> browser. Please <a href=\"http://browsehappy.com/?locale=en\">upgrade your browser</a> to improve your experience.",
         "menu": {
             "home": "Home",
@@ -177,7 +315,8 @@
             "hcp": "HCP",
             "patient": "Patient",
             "customerservices" : "Customer Service",
-            "RnDAdmin" : "R&D Admin"
+            "FOTAAdmin" : "FOTA ADMIN",
+            "FOTAApprover" : "FOTA APPROVER"
         },
         "not-applicable": "NA",
         "notification":{
@@ -217,7 +356,7 @@
     },
     "error":{ 
             "deviceType":{
-                "required" : "Select the device type."
+                "required" : "Device Type is required."
             },
              "startDate":{
               "required": "Announcement start date is required."
@@ -511,7 +650,13 @@
         "visivest":"VisiVest",
         "monarch":"Monarch",
         "success":"Success",
-        "fail":"Fail"
+        "fail":"Fail",
+        "active-published":"Active Published",
+        "active-pending":"Pending Approval",
+        "fota-aborted":"Aborted",
+        "fota-Fail":"Failure",
+        "all":"All"
+
     },
     "tims" : {
         "success" : "Success",
