@@ -556,6 +556,18 @@ else {
   		}else if($rootScope.userRole === "CARE_GIVER"){
   			$state.go("caregiverpatientDiagnostic");
   		}
+  		else if($rootScope.userRole === "ADMIN"){
+  			$state.go("adminPatientDiagnostic", {'patientId': $stateParams.patientId});
+  		}
+  		else if($rootScope.userRole === "ASSOCIATES"){
+  			$state.go("associatePatientDiagnostic", {'patientId': $stateParams.patientId});
+  		}
+  		else if($rootScope.userRole === "CUSTOMER_SERVICES"){
+  				$state.go("customerservicePatientDiagnostic", {'patientId': $stateParams.patientId});
+  		}
+  		else if($rootScope.userRole === "ACCT_SERVICES"){
+  				$state.go("rcadminPatientDiagnostic", {'patientId': $stateParams.patientId});
+  		}
     };
 
     $rootScope.backToDiagnostics = function(){
