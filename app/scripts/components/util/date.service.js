@@ -364,8 +364,8 @@ angular.module('hillromvestApp')
       }
      },
 
+    //Gimp-18
     minsToHHMMSS: function (totalMins) {
-    
     var mins_num = parseFloat(totalMins, 10); // don't forget the second param
     var hours   = Math.floor(mins_num / 60);
     var minutes = Math.floor((mins_num - ((hours * 3600)) / 60));
@@ -377,6 +377,6 @@ angular.module('hillromvestApp')
     //if (seconds < 10) {seconds = "0"+seconds;}
     return hours+' hours '+minutes +' minutes';
     }
-    
+  //End of Gimp-18  
     };
   }]);
