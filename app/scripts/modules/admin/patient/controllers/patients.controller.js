@@ -257,6 +257,12 @@ angular.module('hillromvestApp')
            device.createdDate = dateService.getDateByTimestamp(device.createdDate);
           $scope.deviceTypeSelected = $scope.getDeviceType(); //later to be changed when devicetype is passed in response
         });
+         if($scope.totalHmr >= 0){
+         $scope.HHMM = dateService.minsToHHMMSS($scope.totalHmr);
+          }
+          else{
+            $scope.HHMM = dateService.minsToHHMMSS(0);
+          }
         $scope.devices = response.data.deviceList;
         $scope.isDevicesLoaded = true;
       }).catch(function(response){

@@ -362,8 +362,21 @@ angular.module('hillromvestApp')
         }
         
       }
-     }
+     },
 
+    minsToHHMMSS: function (totalMins) {
+    
+    var mins_num = parseFloat(totalMins, 10); // don't forget the second param
+    var hours   = Math.floor(mins_num / 60);
+    var minutes = Math.floor((mins_num - ((hours * 3600)) / 60));
+    //var seconds = Math.floor((mins_num * 60) - (hours * 3600) - (minutes * 60));
+
+    // Appends 0 when unit is less than 10
+    if (hours   < 10) {hours   = "0"+hours;}
+    if (minutes < 10) {minutes = "0"+minutes;}
+    //if (seconds < 10) {seconds = "0"+seconds;}
+    return hours+' hours '+minutes +' minutes';
+    }
     
     };
   }]);
