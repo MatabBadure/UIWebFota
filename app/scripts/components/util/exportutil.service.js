@@ -921,7 +921,7 @@ angular.module('hillromvestApp')
     if(clinic.city || clinic.state || clinic.zipcode){
       var addressText = (clinic.city) ? clinic.city : null;
       addressText = (clinic.state) ?  (addressText ? addressText+", "+clinic.state: clinic.state ) : (addressText ? addressText: null) ;
-      addressText = (clinic.zipcode) ?  (addressText ? addressText+", "+clinic.zipcode.toString(): clinic.zipcode.toString() ) : (addressText ? addressText: "") ;
+      addressText = (clinic.zipcode) ?  (addressText ? addressText+", "+clinic.zipcode: clinic.zipcode ) : (addressText ? addressText: "") ;
       pdf.setFont(pdfServiceConstants.style.font.helvetica);   
       pdf.setFontType(pdfServiceConstants.style.font.bold);
       pdf.setFontSize(8);
