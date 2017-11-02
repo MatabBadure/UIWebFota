@@ -151,10 +151,10 @@
             <span>{{testResult.comments}}</span>
           </div>
         </div>
-        <div class="col-md-3 col-sm-3 col-xs-3 word_wrap text-center padding10"> 
+        <div class="col-md-3 col-sm-3 col-xs-3 word_wrap text-center padding10" ng-hide="userRole === 'ADMIN' || userRole === 'ACCT_SERVICES' || userRole === 'ASSOCIATES' || userRole === 'CUSTOMER_SERVICES'"> 
           <div class="col-md-16 col-sm-16 col-xs-16 dashboard__form--label reset-padding pull-right">
             <span ng-bind="testResult.lastUpdatedBy"></span>
-            <div  ng-if="!isPatinetLogin" ng-hide="userRole === 'ADMIN' || userRole === 'ACCT_SERVICES' || userRole === 'ASSOCIATES' || userRole === 'CUSTOMER_SERVICES'">
+            <div  ng-if="!isPatinetLogin">
               <a href="" ng-click="openEditDiagnostics(testResult.id)">Edit</a>
             </div>
           </div>
