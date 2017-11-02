@@ -24,6 +24,7 @@ angular.module('hillromvestApp',
 .run(['$rootScope', '$location', '$window', '$http', '$state', '$translate', 'Language', 'Auth', 'Principal', 'ENV', 'VERSION', function($rootScope, $location, $window, $http, $state, $translate, Language, Auth, Principal, ENV, VERSION) {
     $rootScope.ENV = ENV;
     $rootScope.VERSION = VERSION;
+    $rootScope.versionNumber = Math.floor((Math.random()*6)+1);
     $rootScope.$on('$stateChangeStart', function(event, toState, toStateParams) {
       if($state.current.name === "patientSurvey"){ 
         $rootScope.showSurveyCancelModal = true;       
@@ -94,7 +95,7 @@ angular.module('hillromvestApp',
   .config(['$stateProvider', '$urlRouterProvider', '$httpProvider', '$locationProvider', '$translateProvider', 'tmhDynamicLocaleProvider', 'httpRequestInterceptorCacheBusterProvider','$ocLazyLoadProvider', function($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider, $translateProvider, tmhDynamicLocaleProvider, httpRequestInterceptorCacheBusterProvider, $ocLazyLoadProvider) {
 
     //Cache everything except rest api requests
-    httpRequestInterceptorCacheBusterProvider.setMatchlist([/.*api.*/, /.*protected.*/, /.*.json.*/], true);
+    httpRequestInterceptorCacheBusterProvider.setMatchlist([/.*api.*/, /.*protected.*/, /.*.json.*/, /.*tims.*/], true);
 
     $urlRouterProvider.otherwise('/');
     $stateProvider.state('site', {

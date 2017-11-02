@@ -245,7 +245,7 @@
               <span class="">*</span>
             </div>
             <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding">
-              <input class="" type="text" name="zip" maxlength="5" validate-on-blur ng-pattern="/^(?=.*[1-9].*)[0-9]{5}$/" ng-model="doctor.zipcode" ng-blur="getCityState(doctor.zipcode)" ng-enter="" ng-keyup="clearMessages()" required>
+              <input class="" type="text" name="zip" maxlength="7" validate-on-blur ng-pattern='/^(\d{5}(-\d{4})?|[A-Z]\d[A-Z] *\d[A-Z]\d)$/' ng-model="doctor.zipcode" ng-blur="getCityState(doctor.zipcode)" ng-enter="" ng-keyup="clearMessages()" required>
               <div ng-show=" form.zip.$dirty && form.zip.$showValidationMessage && form.zip.$invalid || submitted" class="">
                 <span class="has-error" ng-show="form.zip.$error.pattern" translate="error.zipcode.pattern">
                 </span>
