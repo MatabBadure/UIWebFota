@@ -155,9 +155,20 @@ angular.module('hillromvestApp')
 	'getgarmentSizeCodeValues_Monarch' : 'api/codeValues/garment_size_monarch',
 	'getgarmentColorCodeValues_Monarch' : 'api/codeValues/garment_color_monarch',
 	'executeTimsJob' : 'api/executeTIMSJob',
-	'loglist' : 'api/listLogDirectory?page=PAGE&per_page=PER_PAGE&sort_by=SORT_OPTION&status=FILTER&fromDate=FROM_DATE&toDate=TO_DATE',
 	'timsScriptLogDetails' : 'api/retrieveLogData/logs',
+	'fotaVerify' : 'api/FOTA/create',
+	'uploadfileFota' : 'api/FOTA/uploadFile',
+	'softDelete' : 'api/FOTA/softDeleteFOTA/partNoD/isOldFileD',
+	'fotaCRC32Calculation' : 'api/FOTA/CRC32Calculation',
+	'fotaDeviceList' : 'api/FOTADeviceList?status=STATUS&page=PAGE&per_page=PER_PAGE&searchString=SEARCHSTRING&sort_by=SORT_OPTION',
+	'getFirmwareList' : 'api/FOTAList?page=PAGE&per_page=PER_PAGE&status=STATUS&searchString=SEARCHSTRING&sort_by=SORT_OPTION',
+	'getFirmwareInfo': 'api/FOTA/ID/getFirmware',
+	'approverCRC32':'api/FOTA/validateApproverCRC32',
+	'firmwareSoftDelete':'api/FOTA/ID/userRole/firmwareDelete',
+	'firmwareDownload':'api/FOTA/ID/download',
+	'loglist' : 'api/listLogDirectory?page=PAGE&per_page=PER_PAGE&sort_by=SORT_OPTION&status=FILTER&fromDate=FROM_DATE&toDate=TO_DATE',
 	'optimusdevicedatalist' : 'api/optimusdevicedatalist?page=PAGE&per_page=PER_PAGE',
 	'optimusDeviceData' : 'api/optimusDeviceData/ID',
 	'optimusdevicedata' : 'api/optimusdevicedata'
+
 });
