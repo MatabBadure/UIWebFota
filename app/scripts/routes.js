@@ -6405,6 +6405,8 @@ angular.module('hillromvestApp')
                     ]
                 }
             })
+
+//Implementation of GIMP-19
 .state('adminPatientDiagnostic', {
                 parent: 'patientUser',
                 url: '/{patientId}/patientDiagnostic',
@@ -6526,6 +6528,7 @@ angular.module('hillromvestApp')
                     ]
                 }
             })
+//End of Implementation of GIMP-19
 
 }]);
 

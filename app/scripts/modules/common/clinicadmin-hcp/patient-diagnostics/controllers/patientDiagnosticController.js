@@ -100,9 +100,12 @@ function ($scope, $state, $rootScope, StorageService, UserService, patientDiagno
       $scope.diagnosticPatientId =  $stateParams.patientId;
 		}else if($state.current.name === "HCPDiagnostic"){			
       $scope.diagnosticPatientId =  $stateParams.patientId;
-		}else if($state.current.name === "adminPatientDiagnostic" || $state.current.name === "rcadminPatientDiagnostic" || $state.current.name === "associatePatientDiagnostic" || $state.current.name === "customerservicePatientDiagnostic"){
+		}
+    //Implementation of GIMP-19
+    else if($state.current.name === "adminPatientDiagnostic" || $state.current.name === "rcadminPatientDiagnostic" || $state.current.name === "associatePatientDiagnostic" || $state.current.name === "customerservicePatientDiagnostic"){
       $scope.diagnosticPatientId =  $stateParams.patientId;
     }
+    //End of Implementation of GIMP-19
     else if($state.current.name === "patientDiagnosticAdd"){      
       $scope.diagnosticPatientId = StorageService.get('logged').patientID;
       $scope.isPatinetLogin = true;           
