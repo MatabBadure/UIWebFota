@@ -185,7 +185,18 @@ function ($scope, $state, $rootScope, StorageService, UserService, patientDiagno
       $state.go(value, {'patientId':$stateParams.patientId, 'clinicId': $stateParams.clinicId});
     } else if($scope.userRole === "CLINIC_ADMIN"){
       $state.go(value, {'patientId':$stateParams.patientId});
-    }  
+    }
+    /* For GIMP 19 */
+    else if($scope.userRole === "ADMIN"){
+      $state.go(value, {'patientId': $stateParams.patientId});
+    } else if($scope.userRole === "ASSOCIATES"){
+      $state.go(value, {'patientId': $stateParams.patientId});
+    } else if($scope.userRole === "CUSTOMER_SERVICES"){
+       $state.go(value, {'patientId': $stateParams.patientId});
+    } else if($scope.userRole === "ACCT_SERVICES"){
+       $state.go(value, {'patientId': $stateParams.patientId});
+    }
+   /* For GIMP 19 */
   };
 
   $scope.setTwoNumberDecimal = function(applicableVarname){          
