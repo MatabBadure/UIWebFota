@@ -21,7 +21,7 @@ angular.module('hillromvestApp')
       },
      
       getCityStateByZip: function(zipcode) {
-        var url = URL.getCityStateByZip.replace('ZIPCODE', zipcode);
+        var url = URL.getCityStateByZip.replace('ZIPCODE', zipcode.replace(' ',''));
           return $http.get(url,{
           headers: headerService.getHeader()
         }).success(function (response) {

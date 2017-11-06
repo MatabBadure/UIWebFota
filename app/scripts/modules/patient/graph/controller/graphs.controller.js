@@ -1297,22 +1297,26 @@ angular.module('hillromvestApp')
                 var obj = object.series[0].data[i];
 /*                if(obj.y == 0 ){
                    object.series[0].data.splice(i, 1);
+
                    if(object.xAxis){
                     if(object.xAxis.categories){
                    object.xAxis.categories.splice(i, 1);
                  }
                  }
+
                    i--;
                 }
                  else*/
                   
                   if((obj.toolText.duration == 0 && !obj.toolText.missedTherapy)){
                   object.series[0].data.splice(i, 1);
+
                      if(object.xAxis){
                     if(object.xAxis.categories){
                    object.xAxis.categories.splice(i, 1);
                  }
                  }
+
                   i--;
                 }
             }
