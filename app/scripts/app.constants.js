@@ -169,6 +169,7 @@ angular.module('hillromvestApp')
 	'loglist' : 'api/listLogDirectory?page=PAGE&per_page=PER_PAGE&sort_by=SORT_OPTION&status=FILTER&fromDate=FROM_DATE&toDate=TO_DATE',
 	'optimusdevicedatalist' : 'api/optimusdevicedatalist?page=PAGE&per_page=PER_PAGE',
 	'optimusDeviceData' : 'api/optimusDeviceData/ID',
-	'optimusdevicedata' : 'api/optimusdevicedata'
+	'optimusdevicedata' : 'api/optimusdevicedata',
+	'clinicAdvancedfilter' : 'api/advancedSearch/clinic?&page=PAGE&per_page=PER_PAGE&sort_by=SORT_OPTION&asc=true'
 
 });

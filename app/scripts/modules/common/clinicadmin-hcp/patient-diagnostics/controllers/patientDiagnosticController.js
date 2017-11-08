@@ -5,7 +5,7 @@ angular.module('hillromvestApp')
 function ($scope, $state, $rootScope, StorageService, UserService, patientDiagnosticService, notyService, dateService, $stateParams, commonsUserService, $parse,caregiverDashBoardService) {
   $scope.isAddDiagnostic = false; 
   $scope.defaultTestResultDate = dateService.getDateFromTimeStamp(new Date().getTime(), patientDashboard.dateFormat, "/"); 
-	$scope.calculateDateFromPicker = function(picker) {
+  $scope.calculateDateFromPicker = function(picker) {
     $scope.fromTimeStamp = new Date(picker.startDate._d).getTime();	      
 	  $scope.toTimeStamp = (new Date().getTime() < new Date(picker.endDate._d).getTime())? new Date().getTime() : new Date(picker.endDate._d).getTime();
     $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
@@ -96,11 +96,17 @@ function ($scope, $state, $rootScope, StorageService, UserService, patientDiagno
       $scope.viewType = 'grid';
       $scope.getPatientListForCaregiver(loginID);
       $scope.diagnosticPatientId = ($stateParams.patientId)?$stateParams.patientId:$scope.selectedPatient.user.id;
-    }else if($state.current.name === "CADiagnostic" ){			
+    }else if($state.current.name === "CADiagnostic"){		
       $scope.diagnosticPatientId =  $stateParams.patientId;
 		}else if($state.current.name === "HCPDiagnostic"){			
       $scope.diagnosticPatientId =  $stateParams.patientId;
-		}else if($state.current.name === "patientDiagnosticAdd"){      
+		}
+    //Implementation of GIMP-19
+    else if($state.current.name === "adminPatientDiagnostic" || $state.current.name === "rcadminPatientDiagnostic" || $state.current.name === "associatePatientDiagnostic" || $state.current.name === "customerservicePatientDiagnostic"){
+      $scope.diagnosticPatientId =  $stateParams.patientId;
+    }
+    //End of Implementation of GIMP-19
+    else if($state.current.name === "patientDiagnosticAdd"){      
       $scope.diagnosticPatientId = StorageService.get('logged').patientID;
       $scope.isPatinetLogin = true;           
       $scope.initAddEditDiagnostics();      
