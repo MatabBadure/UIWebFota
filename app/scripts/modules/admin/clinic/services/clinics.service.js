@@ -264,6 +264,14 @@ angular.module('hillromvestApp')
         }).success(function(response) {
           return response;
         });
-      }
+      },
+      getclinics: function(data,sortOption,pageNumber,perPage){
+      var url = URL.clinicAdvancedfilter.replace('PER_PAGE',perPage).replace('SORT_OPTION',sortOption).replace('PAGE',pageNumber);
+       return $http.post(url, data, {
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });
+    }
     };
   }]);
