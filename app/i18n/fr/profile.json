@@ -43,6 +43,8 @@
       "account-services": "Account Services",
       "associates":"Associates",
       "customerservices" : "Customer Service",
+      "FOTAAdmin" : "FOTA Admin",
+      "FOTAApprover" : "FOTA Approver",
       "default" : "Select a role"
     },
     "update-button-text": "Update",
@@ -53,7 +55,7 @@
     "cur-pswd": "Current Password",
     "new-pswd": "New Password",
     "confirm-pswd": "Confirm Password",
-    "mobile-no": "Mobile",
+    "mobile-no": "Secondary Phone",
     "security-ans": "Answer",
     "notification": "Notifications",
     "noti-desc": "The Notification will be sent to your registered email address. You can Switch On/Off",
