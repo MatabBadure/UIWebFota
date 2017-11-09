@@ -265,7 +265,10 @@ angular.module('hillromvestApp')
           return response;
         });
       },
-      getclinics: function(data,sortOption,pageNumber,perPage){
+      getclinicsByAdvancedFilter: function(data, sortOption, pageNumber, perPage){
+         if (sortOption === "" || sortOption === undefined || sortOption === null) {
+          sortOption = sortConstant.name + searchFilters.amp +searchFilters.asc +searchFilters.equal + true;
+        }
       var url = URL.clinicAdvancedfilter.replace('PER_PAGE',perPage).replace('SORT_OPTION',sortOption).replace('PAGE',pageNumber);
        return $http.post(url, data, {
           headers: headerService.getHeader()

@@ -1159,7 +1159,7 @@ $scope.activateClinicModal = function(clininc){
       clinicService.getClinicSpeciality().then(function(response){
          $scope.specialities =  response.data.typeCode;
       }).catch(function(response){});
-      addressService.getAvailableStates().then(function(response){
+      addressService.getAvailableStatesAdv().then(function(response){
         $scope.rawStates = response.data;
         $scope.states = searchFilterService.processStates($scope.rawStates);
         $scope.cities = searchFilterService.processCities($scope.rawStates);
@@ -1206,7 +1206,6 @@ $scope.activateClinicModal = function(clininc){
           }
         };
         $scope.onCloseState = function(){
-          console.log("onCloseState", $scope.selectedStates);
       if($scope.selectedStates.length > 0){
         var selectedStates = [];
           $scope.cities = [];
@@ -1228,13 +1227,13 @@ $scope.activateClinicModal = function(clininc){
 
           });
         });
-          if($scope.cities.length > 0 ){
+          /*if($scope.cities.length > 0 ){
             var cities = [];
             angular.forEach($scope.cities, function(city){
               cities.push(city.name);
             });
             $scope.city = cities.join();
-          }
+          }*/
         angular.forEach($scope.selectedStates, function(selectedState){
           selectedStates.push(selectedState.name);
         });
@@ -1256,16 +1255,16 @@ $scope.activateClinicModal = function(clininc){
           cities.push(city.name);
           $scope.clinicAdvancedFilter.city.push(city.name);
         });
-        $scope.city = cities.join();
+       // $scope.city = cities.join();
       }else{
         $scope.clinicAdvancedFilter.city = [];
-        if($scope.cities.length > 0){
+/*        if($scope.cities.length > 0){
           var cities = [];
           angular.forEach($scope.cities, function(city){
             cities.push(city.name);
           });
           $scope.city = cities.join();
-        }
+        }*/
       }
     };
       $scope.clearMessages = function(){
@@ -1314,7 +1313,7 @@ $scope.activateClinicModal = function(clininc){
       else{
         $scope.clinicAdvancedFilter.zipcode = "";
       }
-      clinicService.getclinics($scope.clinicAdvancedFilter,$scope.clinicSortOption, $scope.currentPageIndex, $scope.perPageCount).then(function(response){
+      clinicService.getclinicsByAdvancedFilter($scope.clinicAdvancedFilter,$scope.clinicSortOption, $scope.currentPageIndex, $scope.perPageCount).then(function(response){
         $scope.clinics = response.data;
         }).catch(function(response){
           
