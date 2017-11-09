@@ -1151,6 +1151,8 @@ $scope.activateClinicModal = function(clininc){
       $scope.clinicAdvancedFilter.clinicStatus = "All";
       $scope.countries = searchFilterService.processCountries();
       $scope.getAdherenceScoreSettingDays();
+     /* $("#country-dropdown").css("background-color",'#eeeeee');
+      $("#country-dropdown").css("pointer-events","none");*/
       clinicService.getClinicSpeciality().then(function(response){
          $scope.specialities =  response.data.typeCode;
       }).catch(function(response){});
@@ -1237,7 +1239,7 @@ $scope.activateClinicModal = function(clininc){
       if(responseData.length>0){
       $scope.selectedStates = [];
        $scope.isZipcode = true; 
-    }
+            }
           angular.forEach(responseData, function(cityState){
             angular.forEach($scope.states, function(state){
             if(cityState.state === state.name){
@@ -1249,6 +1251,10 @@ $scope.activateClinicModal = function(clininc){
             }
           });
           });
+          $("#state-dropdown").css("background-color", '#eeeeee');
+          $("#state-dropdown").css("pointer-events","none");
+          $("#city-dropdown").css("background-color", '#eeeeee');
+          $("#city-dropdown").css("pointer-events","none");
           $scope.onCloseState();
     };
 
