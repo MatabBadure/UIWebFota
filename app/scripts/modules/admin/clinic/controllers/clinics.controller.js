@@ -1126,16 +1126,19 @@ $scope.activateClinicModal = function(clininc){
       if($scope.expandedSign === true){
         $scope.searchItem = ""; 
         $scope.isAdvancedFilters = true;
-       $("#searchListParam").attr("disabled", true); 
+       $("#searchListParam").attr("disabled", true);
+       $("#searchListParam").css("background-color", 'rgb(235, 235, 228)'); 
       $scope.initPaginationVars();
       }
       else{
          $scope.isAdvancedFilters = false;
-       $("#searchListParam").attr("disabled", false); 
+       $("#searchListParam").attr("disabled", false);
+       $("#searchListParam").css("background-color", 'inherit'); 
       }     
     }
 
     $scope.initClinicAdvancedFilters = function(){
+      $scope.isZipcode = false;
       $scope.clinicAdvancedFilter = {};
       $scope.clinicAdvancedFilter.clinicName = "";
       $scope.clinicAdvancedFilter.clinicType = "";
@@ -1144,8 +1147,8 @@ $scope.activateClinicModal = function(clininc){
       $scope.selectedStates = [];
       $scope.selectedCities = [];
       $scope.clinicAdvancedFilter.country = "US";
-      $scope.clinicAdvancedFilter.state = "";
-      $scope.clinicAdvancedFilter.city = "";
+      $scope.clinicAdvancedFilter.state = [];
+      $scope.clinicAdvancedFilter.city = [];
       $scope.clinicAdvancedFilter.zipcode = "";
       $scope.clinicAdvancedFilter.adherenceWindowSelected = "";
       $scope.clinicAdvancedFilter.clinicStatus = "All";
@@ -1163,9 +1166,14 @@ $scope.activateClinicModal = function(clininc){
       }).catch(function(response){
         notyService.showError(response);
       });
+       $("#state-dropdown").css("background-color", 'inherit');
+       $("#state-dropdown").css("pointer-events","all");
+       $("#city-dropdown").css("background-color", 'inherit');
+       $("#city-dropdown").css("pointer-events","all");
     }
 
         $scope.getCityStateforAdvancedFilters = function(zipcode){ 
+          $scope.isZipcode = true; 
           delete $scope.serviceError;
           $scope.isServiceError = false;
           if(zipcode){
@@ -1184,6 +1192,12 @@ $scope.activateClinicModal = function(clininc){
             $scope.selectedCities = [];
             $scope.states = searchFilterService.processStates($scope.rawStates);
             $scope.cities = searchFilterService.processCities($scope.rawStates);
+            $scope.clinicAdvancedFilter.city = [];
+             $scope.clinicAdvancedFilter.state = [];
+            $("#state-dropdown").css("background-color", 'inherit');
+          $("#state-dropdown").css("pointer-events","all");
+          $("#city-dropdown").css("background-color", 'inherit');
+          $("#city-dropdown").css("pointer-events","all");
             if($scope.form.zip.$dirty && $scope.form.zip.$showValidationMessage && $scope.form.zip.$invalid){
             }else{
               $scope.serviceError = '';  
@@ -1228,6 +1242,9 @@ $scope.activateClinicModal = function(clininc){
       }else{
         delete $scope.city;
         $scope.state = Object.keys($scope.rawStates).join();
+        $scope.cities = searchFilterService.processCities($scope.rawStates);
+        $scope.clinicAdvancedFilter.city = [];
+        $scope.clinicAdvancedFilter.state = [];
       }
     };
 
@@ -1241,6 +1258,7 @@ $scope.activateClinicModal = function(clininc){
         });
         $scope.city = cities.join();
       }else{
+        $scope.clinicAdvancedFilter.city = [];
         if($scope.cities.length > 0){
           var cities = [];
           angular.forEach($scope.cities, function(city){
@@ -1271,9 +1289,9 @@ $scope.activateClinicModal = function(clininc){
             }
           });
           });
-          $("#state-dropdown").css("background-color", '#eeeeee');
+          $("#state-dropdown").css("background-color", 'rgb(235, 235, 228)');
           $("#state-dropdown").css("pointer-events","none");
-          $("#city-dropdown").css("background-color", '#eeeeee');
+          $("#city-dropdown").css("background-color", 'rgb(235, 235, 228)');
           $("#city-dropdown").css("pointer-events","none");
           $scope.onCloseState();
     };
