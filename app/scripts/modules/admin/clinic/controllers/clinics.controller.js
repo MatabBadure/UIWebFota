@@ -1230,6 +1230,26 @@ $scope.activateClinicModal = function(clininc){
         $scope.state = Object.keys($scope.rawStates).join();
       }
     };
+
+   $scope.onCitiesClose = function(){
+      if($scope.selectedCities.length > 0 ){
+        $scope.clinicAdvancedFilter.city = [];
+        var cities = [];
+        angular.forEach($scope.selectedCities, function(city){
+          cities.push(city.name);
+          $scope.clinicAdvancedFilter.city.push(city.name);
+        });
+        $scope.city = cities.join();
+      }else{
+        if($scope.cities.length > 0){
+          var cities = [];
+          angular.forEach($scope.cities, function(city){
+            cities.push(city.name);
+          });
+          $scope.city = cities.join();
+        }
+      }
+    };
       $scope.clearMessages = function(){
           if($scope.clinicAdvancedFilter.zipcode){
             delete $scope.serviceError;
