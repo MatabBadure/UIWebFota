@@ -3,7 +3,7 @@
 angular.module('hillromvestApp')
   .controller('MainController', 
   	['$scope', 'Principal', 'Auth','notyService', 'DoctorService','$state', 'Account', '$location', '$stateParams', '$rootScope', 'loginConstants', 'StorageService', 'UserService', '$window', 'patientService', 'messageService', 'caregiverDashBoardService',
-  function ($scope, Principal,Auth,notyService,DoctorService, $state, Account, $location,$stateParams, $rootScope,loginConstants,StorageService, UserService, $window, patientService,messageService,caregiverDashBoardService) {
+  function ($scope,Principal,Auth,notyService,DoctorService, $state, Account, $location,$stateParams, $rootScope,loginConstants,StorageService, UserService, $window, patientService,messageService,caregiverDashBoardService) {
     Principal.identity().then(function(account) {
       $scope.account = account;
       $scope.isAuthenticated = Principal.isAuthenticated;
