@@ -16,9 +16,21 @@
       </div>
     </div>
 
-    <div class="col-md-16">
+    <!-- <div class="col-md-16">
       <ng-include src="'scripts/components/navbar/searchfilter.html'"></ng-include>
-    </div>
+    </div> -->
+     <div class="row close expanded head_txt" >
+                    <div class="col-md-2 col-sm-2 col-xs-2" ng-click="toggleHeaderAccount()">
+                      <!-- <a class="close expanded" style="float:left">{{expandedSign}}</a> -->
+                      <i class="fa fa-minus-circle" aria-hidden="true" ng-hide="!expandedSign" style="float:left"><p class="head_txt advanced-filters-head" style="float:right;cursor:pointer"> Advanced Search</p></i>
+                      <i class="fa fa-plus-circle" aria-hidden="true" ng-hide="expandedSign" style="float:left;cursor:pointer">
+                      <p class="head_txt advanced-filters-head" style="float:right"> Advanced Search</p></i>     
+                    </div>
+                    
+                  </div>
+                  <div id="collapseTwo">
+<ng-include src="'scripts/components/navbar/clinicAdvancedSearchFilters.html'"></ng-include>
+      </div>
     <div class="dashboard__manage-view--header">
       <div class="col-md-2 col-sm-3 header--type pull-left-mob width120">
         <span ng-class="{'sort-icon--default' : sortClinicList.clinicName.isDefault, 'sort-icon-down': sortClinicList.clinicName.isDown, 'sort-icon-up':sortClinicList.clinicName.isUp}" ng-click="sortType('clinicName')" translate="clinic.clinic-name"></span>
