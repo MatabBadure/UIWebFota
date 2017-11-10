@@ -337,6 +337,7 @@ angular.module('hillromvestApp')
 
       $scope.searchClinicsOnQueryChange = function(){
         if(($state.current.name === 'clinicUser' || $state.current.name === 'clinicUserRcadmin' || $state.current.name === 'associateClinicUser' || $state.current.name === 'customerserviceClinicUser') && !searchOnLoad){
+         $scope.isAdvancedFilters = false;
           $scope.searchClinics();
         }
       };
@@ -354,7 +355,8 @@ angular.module('hillromvestApp')
           }
         }else {
             $scope.currentPageIndex = 1;
-        } 
+        }
+
         if($scope.isAdvancedFilters){
           $scope.advancedSearchClinics();
         }
@@ -1129,13 +1131,13 @@ $scope.activateClinicModal = function(clininc){
       $scope.expandedSign = ($scope.expandedSign === true) ? false : true;  
       if($scope.expandedSign === true){
         $scope.searchItem = ""; 
-        $scope.isAdvancedFilters = true;
+        /*$scope.isAdvancedFilters = true;*/
        $("#searchListParam").attr("disabled", true);
        $("#searchListParam").css("background-color", 'rgb(235, 235, 228)'); 
-      $scope.initPaginationVars();
+     // $scope.initPaginationVars();
       }
       else{
-         $scope.isAdvancedFilters = false;
+         
        $("#searchListParam").attr("disabled", false);
        $("#searchListParam").css("background-color", 'inherit'); 
       }     
@@ -1331,6 +1333,7 @@ $scope.activateClinicModal = function(clininc){
     };
 
     $scope.advancedSearchClinics = function(){
+      $scope.isAdvancedFilters = true;
       if($scope.clinicAdvancedFilter.zipcode){
         //do nothing
       }
