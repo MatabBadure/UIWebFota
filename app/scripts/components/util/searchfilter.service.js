@@ -206,4 +206,40 @@ angular.module('hillromvestApp')
            return filterString;
           }
 
+              this.processStates = function(states){
+                var statesList = [];
+                angular.forEach(states, function(state, key){
+                  var obj = {
+                    'name': key,
+                    'ticked': false
+                  };
+                  statesList.push(obj);
+                });
+                return statesList;
+              };
+              this.processCountries = function(){
+                var countries = [];
+                 var obj = {
+              'name':'USA',
+              'ticked':true 
+            };
+            countries.push(obj)
+            return countries;
+              };
+            this.processCities = function(states){
+              var cities = []
+            angular.forEach(states, function(state, key){
+             for(var i=0;i<state.length;i++){
+                  var obj = {
+                    'name': state[i],
+                    'ticked': false
+                  };
+                  cities.push(obj);
+                   
+                }
+                });
+            return cities;
+              };
+
+
     }]);
