@@ -171,6 +171,8 @@ angular.module('hillromvestApp')
 	'optimusDeviceData' : 'api/optimusDeviceData/ID',
 	'optimusdevicedata' : 'api/optimusdevicedata',
 	'clinicAdvancedfilter' : 'api/clinics/advanced/search?&page=PAGE&per_page=PER_PAGE&sort_by=SORT_OPTION&asc=true',
-	'availableStatesAdv':'/api/availableStatesAdv'
+	'availableStatesAdv':'/api/availableStatesAdv',
+	'cityByCountryAndState':'/api/cityByCountryAndState',
+	'stateByCountryCode':'/api/stateByCountryCode?country=COUNTRY'
 
 });
