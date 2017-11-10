@@ -1118,7 +1118,7 @@ $scope.activateClinicModal = function(clininc){
         delete $scope.serviceError;
       }
     };
-    //Implementation of GIMP-39
+    //Implementation of GIMP-2
         $scope.toggleHeaderAccount = function(){
       $( "#collapseTwo" ).slideToggle( "slow" );
       //$scope.expandedSign = ($scope.expandedSign === "+") ? "-" : "+"; 
@@ -1138,12 +1138,17 @@ $scope.activateClinicModal = function(clininc){
     }
 
     $scope.initClinicAdvancedFilters = function(){
+       $("#city-dropdown").css("background-color", 'rgb(235, 235, 228)');
+       $("#city-dropdown").css("pointer-events","none");
+      $("#state-dropdown").css("background-color", 'inherit');
+       $("#state-dropdown").css("pointer-events","all");
       $scope.isZipcode = false;
       $scope.clinicAdvancedFilter = {};
       $scope.clinicAdvancedFilter.clinicName = "";
       $scope.clinicAdvancedFilter.clinicType = "";
       $scope.clinicAdvancedFilter.clinicSpecialty = "";
-      $scope.selectedCountry = [];
+      $scope.selectedCountry = ["US"];
+      $scope.selectedCountryObj = ["US"];
       $scope.selectedStates = [];
       $scope.selectedCities = [];
       $scope.clinicAdvancedFilter.country = "US";
@@ -1159,17 +1164,13 @@ $scope.activateClinicModal = function(clininc){
       clinicService.getClinicSpeciality().then(function(response){
          $scope.specialities =  response.data.typeCode;
       }).catch(function(response){});
-      addressService.getAvailableStatesAdv().then(function(response){
+      addressService.getAllStatesAdv($scope.selectedCountryObj).then(function(response){
         $scope.rawStates = response.data;
         $scope.states = searchFilterService.processStates($scope.rawStates);
-        $scope.cities = searchFilterService.processCities($scope.rawStates);
+        $scope.cities = searchFilterService.processCities();
       }).catch(function(response){
         notyService.showError(response);
       });
-       $("#state-dropdown").css("background-color", 'inherit');
-       $("#state-dropdown").css("pointer-events","all");
-       $("#city-dropdown").css("background-color", 'inherit');
-       $("#city-dropdown").css("pointer-events","all");
     }
 
         $scope.getCityStateforAdvancedFilters = function(zipcode){ 
@@ -1191,13 +1192,13 @@ $scope.activateClinicModal = function(clininc){
             $scope.selectedStates = [];
             $scope.selectedCities = [];
             $scope.states = searchFilterService.processStates($scope.rawStates);
-            $scope.cities = searchFilterService.processCities($scope.rawStates);
+            $scope.cities = searchFilterService.processCities();
             $scope.clinicAdvancedFilter.city = [];
              $scope.clinicAdvancedFilter.state = [];
             $("#state-dropdown").css("background-color", 'inherit');
-          $("#state-dropdown").css("pointer-events","all");
-          $("#city-dropdown").css("background-color", 'inherit');
-          $("#city-dropdown").css("pointer-events","all");
+            $("#state-dropdown").css("pointer-events","all");
+            $("#city-dropdown").css("background-color", 'rgb(235, 235, 228)');
+            $("#city-dropdown").css("pointer-events","none");
             if($scope.form.zip.$dirty && $scope.form.zip.$showValidationMessage && $scope.form.zip.$invalid){
             }else{
               $scope.serviceError = '';  
@@ -1205,8 +1206,8 @@ $scope.activateClinicModal = function(clininc){
             }
           }
         };
-        $scope.onCloseState = function(){
-      if($scope.selectedStates.length > 0){
+       /* $scope.onCloseState = function(){
+         if($scope.selectedStates.length > 0){
         var selectedStates = [];
           $scope.cities = [];
           $scope.clinicAdvancedFilter.city = [];
@@ -1227,13 +1228,6 @@ $scope.activateClinicModal = function(clininc){
 
           });
         });
-          /*if($scope.cities.length > 0 ){
-            var cities = [];
-            angular.forEach($scope.cities, function(city){
-              cities.push(city.name);
-            });
-            $scope.city = cities.join();
-          }*/
         angular.forEach($scope.selectedStates, function(selectedState){
           selectedStates.push(selectedState.name);
         });
@@ -1245,6 +1239,37 @@ $scope.activateClinicModal = function(clininc){
         $scope.clinicAdvancedFilter.city = [];
         $scope.clinicAdvancedFilter.state = [];
       }
+    };*/
+     $scope.onCloseState = function(){
+         if($scope.selectedStates.length > 0){
+          var selectedStates = [];
+          $scope.cities = [];
+          $scope.clinicAdvancedFilter.city = [];
+          $scope.clinicAdvancedFilter.state = [];
+          angular.forEach($scope.selectedStates, function(state){
+            $scope.clinicAdvancedFilter.state.push(state.name);
+          });
+
+         // addressService.getCityStateZipByState($scope.clinicAdvancedFilter.state).then(function(response){
+         addressService.getCitybyStateAdv($scope.selectedCountryObj,$scope.clinicAdvancedFilter.state).then(function(response){
+          if(!$scope.isZipcode){
+          $("#city-dropdown").css("background-color", 'inherit');
+          $("#city-dropdown").css("pointer-events","all");
+        }
+           $scope.cities = response.data;
+          }).catch(function(){
+
+          });
+
+        }else{
+          delete $scope.city;
+          $scope.state = Object.keys($scope.rawStates).join();
+          $("#city-dropdown").css("background-color", 'rgb(235, 235, 228)');
+          $("#city-dropdown").css("pointer-events","none");
+        //  $scope.cities = searchFilterService.processCities($scope.rawStates);
+          $scope.clinicAdvancedFilter.city = [];
+          $scope.clinicAdvancedFilter.state = [];
+      }
     };
 
    $scope.onCitiesClose = function(){
@@ -1255,16 +1280,8 @@ $scope.activateClinicModal = function(clininc){
           cities.push(city.name);
           $scope.clinicAdvancedFilter.city.push(city.name);
         });
-       // $scope.city = cities.join();
       }else{
         $scope.clinicAdvancedFilter.city = [];
-/*        if($scope.cities.length > 0){
-          var cities = [];
-          angular.forEach($scope.cities, function(city){
-            cities.push(city.name);
-          });
-          $scope.city = cities.join();
-        }*/
       }
     };
       $scope.clearMessages = function(){
@@ -1313,6 +1330,12 @@ $scope.activateClinicModal = function(clininc){
       else{
         $scope.clinicAdvancedFilter.zipcode = "";
       }
+/*      angular.forEach($scope.selectedCities, function(city){
+            $scope.clinicAdvancedFilter.city.push(city.name);
+          });*/
+      for(var i=0;i<$scope.selectedCities.length;i++){
+        $scope.clinicAdvancedFilter.city.push($scope.selectedCities[i].name);
+      }
       clinicService.getclinicsByAdvancedFilter($scope.clinicAdvancedFilter,$scope.clinicSortOption, $scope.currentPageIndex, $scope.perPageCount).then(function(response){
         $scope.clinics = response.data;
         }).catch(function(response){
@@ -1325,5 +1348,6 @@ $scope.activateClinicModal = function(clininc){
       }
       else return "";
     };
+    //End of Implementation of GIMP-2
     $scope.init();
   }]);

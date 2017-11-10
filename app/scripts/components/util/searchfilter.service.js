@@ -202,13 +202,47 @@ angular.module('hillromvestApp')
                  /*else if(!timsFilter.isSuccess && !timsFilter.isFail){
                     filterString = searchFilters.isSuccess + searchFilters.colon + 0 + searchFilters.semicolon + searchFilters.isFail + searchFilters.colon + 0 + searchFilters.semicolon;
                  }*/
-            console.log("filterString in service :",filterString);
            return filterString;
           }
 
-              this.processStates = function(states){
+              this.processStatesOld = function(states){
                 var statesList = [];
                 angular.forEach(states, function(state, key){
+                  var obj = {
+                    'name': key,
+                    'ticked': false
+                  };
+                  statesList.push(obj);
+                });
+                return statesList;
+              };
+              this.processCountriesOld = function(){
+                var countries = [];
+                 var obj = {
+              'name':'USA',
+              'ticked':true 
+            };
+            countries.push(obj)
+            return countries;
+              };
+            this.processCitiesOld = function(states){
+              var cities = []
+            angular.forEach(states, function(state, key){
+             for(var i=0;i<state.length;i++){
+                  var obj = {
+                    'name': state[i],
+                    'ticked': false
+                  };
+                  cities.push(obj);
+                   
+                }
+                });
+            return cities;
+              };
+
+              this.processStates = function(states){
+                var statesList = [];
+                angular.forEach(states, function(key){
                   var obj = {
                     'name': key,
                     'ticked': false
@@ -226,18 +260,10 @@ angular.module('hillromvestApp')
             countries.push(obj)
             return countries;
               };
-            this.processCities = function(states){
+            this.processCities = function(){
               var cities = []
-            angular.forEach(states, function(state, key){
-             for(var i=0;i<state.length;i++){
-                  var obj = {
-                    'name': state[i],
-                    'ticked': false
-                  };
+                  var obj = {};
                   cities.push(obj);
-                   
-                }
-                });
             return cities;
               };
 
