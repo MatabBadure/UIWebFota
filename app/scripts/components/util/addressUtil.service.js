@@ -45,6 +45,15 @@ angular.module('hillromvestApp')
         }).success(function (response) {
             return response;
         });
+      },
+
+      getAvailableStatesAdv: function() {
+        var url = URL.availableStatesAdv;
+        return $http.get(url,{
+          headers: headerService.getHeader()
+        }).success(function (response) {
+            return response;
+        });
       }
       
     };
