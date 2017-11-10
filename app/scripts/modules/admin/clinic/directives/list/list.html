@@ -33,6 +33,7 @@
     <!-- <div class="col-md-16 col-sm-16">
       <ng-include src="'scripts/components/navbar/searchfilter.html'"></ng-include>
     </div> -->
+     <!--Implementation of GIMP-2 -->
      <div class="row close expanded head_txt" >
                     <div class="col-md-2 col-sm-2 col-xs-2" ng-click="toggleHeaderAccount()">
                       <!-- <a class="close expanded" style="float:left">{{expandedSign}}</a> -->
@@ -42,9 +43,10 @@
                     </div>
                     
                   </div>
-                  <div id="collapseTwo">
-<ng-include src="'scripts/components/navbar/clinicAdvancedSearchFilters.html'"></ng-include>
+      <div id="collapseTwo">
+      <ng-include src="'scripts/components/navbar/clinicAdvancedSearchFilters.html'"></ng-include>
       </div>
+       <!--End of Implementation of GIMP-2 -->
     <div class="dashboard__manage-view--header">
       <div class="col-md-2 col-sm-3 header--type pull-left-mob width120">
         <span ng-class="{'sort-icon--default' : sortClinicList.clinicName.isDefault, 'sort-icon-down': sortClinicList.clinicName.isDown, 'sort-icon-up':sortClinicList.clinicName.isUp}" ng-click="sortType('clinicName')" translate="clinic.clinic-name"></span>
