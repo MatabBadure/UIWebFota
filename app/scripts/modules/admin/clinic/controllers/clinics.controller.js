@@ -82,6 +82,7 @@ angular.module('hillromvestApp')
         $scope.searchFilter = searchFilterService.initSearchFiltersForClinic();
         $scope.initClinicAdvancedFilters();
         $scope.initClinicList();
+        $scope.noDataFlag = false;
       } else if (currentRoute === 'clinicProfile' || currentRoute === 'clinicProfileRcadmin' || currentRoute === 'clinicProfileAssociate' || currentRoute === 'clinicProfileCustomerService'){
         $scope.initClinicProfile($stateParams.clinicId);
       } else if(currentRoute === 'clinicAssociatedPatients' || currentRoute === 'clinicAssociatedPatientsRcadmin' || currentRoute === 'clinicAssociatedPatientsAssociate' || currentRoute === 'clinicAssociatedPatientsCustomerService'){
@@ -358,12 +359,15 @@ angular.module('hillromvestApp')
           $scope.advancedSearchClinics();
         }
         else{
+         
         var filter = searchFilterService.getFilterStringForClinics($scope.searchFilter);
         clinicService.getClinics($scope.searchItem, $scope.clinicSortOption, $scope.currentPageIndex, $scope.perPageCount, filter).then(function (response) {
+          $scope.clinics = {};
           $scope.clinics = response.data;
           $scope.total = response.headers()['x-total-count'];
           $scope.pageCount = Math.ceil($scope.total / 10);
           searchOnLoad = false;
+          $scope.noDataFlag = false;
         }).catch(function (response) {
 
         });
@@ -1250,7 +1254,6 @@ $scope.activateClinicModal = function(clininc){
             $scope.clinicAdvancedFilter.state.push(state.name);
           });
 
-         // addressService.getCityStateZipByState($scope.clinicAdvancedFilter.state).then(function(response){
          addressService.getCitybyStateAdv($scope.selectedCountryObj,$scope.clinicAdvancedFilter.state).then(function(response){
           if(!$scope.isZipcode){
           $("#city-dropdown").css("background-color", 'inherit');
@@ -1264,9 +1267,9 @@ $scope.activateClinicModal = function(clininc){
         }else{
           delete $scope.city;
           $scope.state = Object.keys($scope.rawStates).join();
+          $scope.cities = searchFilterService.processCities();
           $("#city-dropdown").css("background-color", 'rgb(235, 235, 228)');
           $("#city-dropdown").css("pointer-events","none");
-        //  $scope.cities = searchFilterService.processCities($scope.rawStates);
           $scope.clinicAdvancedFilter.city = [];
           $scope.clinicAdvancedFilter.state = [];
       }
@@ -1330,14 +1333,17 @@ $scope.activateClinicModal = function(clininc){
       else{
         $scope.clinicAdvancedFilter.zipcode = "";
       }
-/*      angular.forEach($scope.selectedCities, function(city){
+      angular.forEach($scope.selectedCities, function(city){
             $scope.clinicAdvancedFilter.city.push(city.name);
-          });*/
-      for(var i=0;i<$scope.selectedCities.length;i++){
+          });
+/*      for(var i=0;i<$scope.selectedCities.length;i++){
         $scope.clinicAdvancedFilter.city.push($scope.selectedCities[i].name);
-      }
+      }*/
+      
       clinicService.getclinicsByAdvancedFilter($scope.clinicAdvancedFilter,$scope.clinicSortOption, $scope.currentPageIndex, $scope.perPageCount).then(function(response){
+       $scope.clinics = {};
         $scope.clinics = response.data;
+        $scope.noDataFlag = true;
         }).catch(function(response){
           
           });

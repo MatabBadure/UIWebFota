@@ -125,7 +125,7 @@
 
       <div class="clr"></div>
     </div>
-    <div class="col-md-16 col-sm-16 empty-list-message" ng-if="clinics && clinics.length === 0">
+    <div class="col-md-16 col-sm-16 empty-list-message" ng-if="clinics && clinics.length === 0 && (searchItem || noDataFlag)">
       <span translate="clinic.noClinics"></span>
     </div>
 
