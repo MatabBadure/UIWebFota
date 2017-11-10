@@ -1146,6 +1146,10 @@ $scope.activateClinicModal = function(clininc){
        $("#city-dropdown").css("pointer-events","none");
       $("#state-dropdown").css("background-color", 'inherit');
        $("#state-dropdown").css("pointer-events","all");
+        $scope.currentPageIndex = 1;
+      $scope.perPageCount = 10;
+      $scope.pageCount = 0;
+      $scope.total = 0;
       $scope.isZipcode = false;
       $scope.clinicAdvancedFilter = {};
       $scope.clinicAdvancedFilter.clinicName = "";
@@ -1343,6 +1347,8 @@ $scope.activateClinicModal = function(clininc){
       clinicService.getclinicsByAdvancedFilter($scope.clinicAdvancedFilter,$scope.clinicSortOption, $scope.currentPageIndex, $scope.perPageCount).then(function(response){
        $scope.clinics = {};
         $scope.clinics = response.data;
+         $scope.total = response.headers()['x-total-count'];
+        $scope.pageCount = Math.ceil($scope.total / 10);
         $scope.noDataFlag = true;
         }).catch(function(response){
           
