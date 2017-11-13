@@ -343,8 +343,11 @@ angular.module('hillromvestApp')
     $scope.initAdvancedFilters = function(){
       $scope.dateFlag = false;
       $scope.patientAdvancedFilters = {};
-      $scope.patientAdvancedFilters.deviceActiveDateFrom = "";
-      $scope.patientAdvancedFilters.deviceActiveDateTo = "";
+      $scope.patientAdvancedFilters.name = "";
+      $scope.patientAdvancedFilters.hillromId = "";
+      $scope.patientAdvancedFilters.email = "";
+      $scope.patientAdvancedFilters.gender = "";
+      $scope.patientAdvancedFilters.age = "";
       $scope.selectedCountry = ["US"];
       $scope.selectedCountryObj = ["US"];
       $scope.selectedStates = [];
@@ -353,6 +356,17 @@ angular.module('hillromvestApp')
       $scope.patientAdvancedFilters.state = [];
       $scope.patientAdvancedFilters.city = [];
       $scope.patientAdvancedFilters.zipcode = "";
+      $scope.patientAdvancedFilters.clinicLevelStatus = "";
+      $scope.patientAdvancedFilters.diagnosis = "";
+      $scope.patientAdvancedFilters.adherenceScoreRange = "";
+      $scope.patientAdvancedFilters.deviceType = "";
+      $scope.patientAdvancedFilters.deviceStatus = "";
+      $scope.patientAdvancedFilters.deviceActiveDateFrom = "";
+      $scope.patientAdvancedFilters.deviceActiveDateTo = "";
+      $scope.patientAdvancedFilters.serialNo = "";
+      $scope.patientAdvancedFilters.minHMRRange = "";
+      $scope.patientAdvancedFilters.maxHMRRange = "";
+
       $scope.countries = searchFilterService.processCountries();
       addressService.getAllStatesAdv($scope.selectedCountryObj).then(function(response){
         $scope.rawStates = response.data;
@@ -505,6 +519,7 @@ angular.module('hillromvestApp')
       angular.forEach($scope.selectedCities, function(city){
             $scope.patientAdvancedFilters.city.push(city.name);
           });
+      console.log("$scope.patientAdvancedFilters",$scope.patientAdvancedFilters);
     }
     $scope.onCloseAgeRange = function(){
       if($scope.selectedAgeRange){
