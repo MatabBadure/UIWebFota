@@ -124,7 +124,8 @@
           </div>
           <div class="col-md-7 reset-padding col-md-offset-2">
             <div class="col-md-6 dashboard__form--label reset-padding">
-              <span class="" translate="user.mobile-number"></span>
+              <span ng-if="user.role != 'PATIENT'" class="" translate="user.mobile-number"></span>
+              <span ng-if="user.role === 'PATIENT'" class="" translate="user.secondary-phone"></span>
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
               <input class="" type="text" name="mobilePhone" validate-on-blur ng-model="user.mobilePhone" ng-maxlength=100 ng-readonly="validateSuperAdmin()" ng-disabled="isSuperadmin" ui-mask="(999)-999-9999" model-view-value="true" ui-options="{clearOnBlur: false}">
