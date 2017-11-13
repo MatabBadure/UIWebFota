@@ -84,6 +84,7 @@
         "state": "State",
         "primary-phone": "Primary Phone",
         "mobile-number": "Mobile Number",
+        "secondary-phone": "Secondary Phone",
         "fax-number": "Fax Number",
         "hillromId": "Hill-Rom ID",
         "parentClinicId": "ParentClinicId",
