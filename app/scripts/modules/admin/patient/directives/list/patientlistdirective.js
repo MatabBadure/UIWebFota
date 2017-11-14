@@ -475,15 +475,20 @@ angular.module('hillromvestApp')
       $scope.minHmrInvalid = false;
   $scope.maxHmrInvalid = false;
   }
-  if($scope.patientAdvancedFilters.minHMRRange === undefined || $scope.patientAdvancedFilters.maxHMRRange === undefined){
+
+  if(isNaN($scope.patientAdvancedFilters.minHMRRange) || isNaN($scope.patientAdvancedFilters.maxHMRRange)){
     $scope.hmrRangeFlag = false;
-    if($scope.patientAdvancedFilters.minHMRRange === undefined){
+    if(isNaN($scope.patientAdvancedFilters.minHMRRange) && isNaN($scope.patientAdvancedFilters.maxHMRRange)){
       $scope.minHmrInvalid = true;
-      $scope.maxHmrInvalid = false;
+      $scope.maxHmrInvalid = true;
     }
-     if($scope.patientAdvancedFilters.maxHMRRange === undefined){
+     else if(isNaN($scope.patientAdvancedFilters.maxHMRRange) && !isNaN($scope.patientAdvancedFilters.minHMRRange)){
       $scope.minHmrInvalid = false;
       $scope.maxHmrInvalid = true;
+    }
+    else if(!isNaN($scope.patientAdvancedFilters.maxHMRRange) && isNaN($scope.patientAdvancedFilters.minHMRRange)){
+      $scope.minHmrInvalid = true;
+      $scope.maxHmrInvalid = false;
     }
   }
   }

@@ -183,7 +183,7 @@
                        <div class="col-md-4 col-sm-4">
               <span class="advanced-filters" translate="">Diagnosis</span>
             <div class="form__select__input--option reset-padding selected-box-container dynamic-seach-list">
-               <input class="form-control" type="text" ng-model="searchDiagnosis" typeahead="diagnosis as diagnosis.code + ' &nbsp :' + diagnosis.description for diagnosis in getMatchingDiagnosisList($viewValue)" typeahead-on-select="showAssociateHCPModal($item)" placeholder="{{'clinic.placeholder.hcp-search' | translate}}">
+               <input class="form-control" type="text" ng-model="searchDiagnosis" typeahead="diagnosis as diagnosis.code + ' &nbsp :' + diagnosis.description for diagnosis in getMatchingDiagnosisList($viewValue)">
             </div>
             
           </div>
@@ -253,10 +253,6 @@
             </div>
             <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding">
               <input type="text"   class="datepickerNew" ng-model="patientAdvancedFilters.deviceActiveDateFrom" name = "startDate" data-provide="datepicker" data-date-autoclose="true" data-date-start-date="-730d"   id="dp1" required data-date-format="mm/dd/yyyy" ng-change="endDateCheck()"  ng-pattern="/^\d{2}\/\d{2}\/\d{4}$/" readonly="readonly"/>
-              <div ng-show="(form.startDate.$dirty && form.startDate.$invalid) || resetsubmitted">
-                <span class="has-error" ng-show="form.startDate.$error.required" translate="error.startDate.required"></span>
-                <span class="has-error" ng-show="form.startDate.$error.pattern && !form.startDate.$error.required" translate="error.startDate.invalid"></span>
-              </div>  
             </div>
           </div>
           <div class="col-md-7 col-sm-7 reset-padding">
@@ -266,10 +262,6 @@
             <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding">
              <input type="text"   class="datepickerNew" ng-model="patientAdvancedFilters.deviceActiveDateTo" name = "endDate" data-provide="datepicker" data-date-autoclose="true" data-date-start-date="-730d" id="dp2" required data-date-format="mm/dd/yyyy"  ng-pattern="/^\d{2}\/\d{2}\/\d{4}$/" ng-change="endDateCheck()" readonly="readonly"/>
              <div ng-if="dateFlag == true "><span class="has-error">To Date should be greater than From date </span></div>
-             <div ng-show="(form.endDate.$dirty && form.endDate.$invalid) || resetsubmitted">
-                <span class="has-error" ng-show="form.endDate.$error.required" translate="error.endDate.required"></span>
-                <span class="has-error" ng-show="form.endDate.$error.pattern && !form.endDate.$error.required" translate="error.endDate.invalid"></span>
-              </div>  
             </div>
           </div>
                   </div>
@@ -367,7 +359,7 @@
         <div class="col-md-16 margin-top reset-padding">
         <div class="">
           <button type="submit" ng-disabled="hmrRangeFlag || dateFlag" ng-click="advancedSearchPatients()" class="hillrom-btn btn-primary btn-margin-left float-right">Search Clinics</button>
-          <button type="submit" ng-click="initClinicAdvancedFilters()" class="hillrom-btn btn-primary btn-margin-left float-right">Reset Filters</button>
+          <button type="submit" ng-click="initAdvancedFilters()" class="hillrom-btn btn-primary btn-margin-left float-right">Reset Filters</button>
         </div>
       </div>
 </div>
