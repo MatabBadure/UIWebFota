@@ -828,6 +828,8 @@ $scope.setFirmwareRadioOption = function(){
       $scope.devicelistPageCount = $scope.Fotadeviceslist.totalPages;
       if($scope.Fotadeviceslist.content){
        for (var i = 0 ; i < $scope.Fotadeviceslist.content.length; i++) {
+        alert($scope.Fotadeviceslist.content[i]);
+        alert($scope.Fotadeviceslist.content[i].downloadStartDateTime);
           console.log("ResData",$scope.Fotadeviceslist.content[i]);
           console.log("DnStrtTime",$scope.Fotadeviceslist.content[i].downloadStartDateTime);
             if($scope.Fotadeviceslist.content[i].downloadStartDateTime === null || $scope.Fotadeviceslist.content[i].downloadStartDateTime === ""){
