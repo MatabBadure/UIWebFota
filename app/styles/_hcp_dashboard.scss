@@ -1,0 +1,107 @@
+/*Navbar Style*/
+.hcp_hsp_name_arrow{
+	.icon-arrow-down{
+		margin-left: 5px;
+	}
+}
+/*Navbar Style END*/
+
+
+/*HCP Piechart Style*/ 
+.hcp_wrapper{
+	.stats_chart_container{
+		
+		.col-3{
+			width: 24%;
+		    display: inline-block;
+		    float: left;
+		    position: relative;
+		    border-bottom: solid 2px #fff;
+		    cursor: pointer;
+
+		    &:hover{
+		    	
+		    	border-bottom: solid 2px $sunshade;
+		    }
+		    
+		}
+
+
+	}
+	.stats_chart_section{
+		margin-top: 25px;
+	}
+
+	.stats_chart_content{
+	    &.hmr{
+	    	color: #8c6bb1;
+	    }
+	    &.missed{
+	    	color: #ef6548;
+	    }
+	    &.deviation{
+	    	color: #41ae76;
+	    }
+	    &.noevent{
+	    	color: #4eb3d3;
+	    }
+	}
+}
+.hcp_graph_container{
+	margin: 25px 0px 15px;
+	.complianceGraph{
+		padding: 0px 0px;
+	}
+}
+.adherence_details_wrapper{
+	.header_adherence_details{
+		background-color: $cyan-blue-light;
+		color: $body-bg;
+		padding: 3px 10px;
+	}
+	.close{
+		color: $body-bg;
+		padding: 5px 5px;
+		&:hover{
+			text-decoration: none;
+		}
+	}
+	.head_txt{
+		margin: 0px 0px;
+	}
+	.table{
+		border: solid 1px $pre-border-color;
+		thead{
+			background-color: $dropdown-link-hover-bg;
+
+			th{
+				padding: 3px 8px;
+				border-bottom: solid 1px $pre-border-color;
+				color: $gray;
+				font-size: 12px;
+			}
+		}
+		tr{
+			td{
+				font-size: 12px;
+				.adherence-td-data{
+					display: block;
+				}
+			}
+		}
+		.inner_th, .inner_td{
+			display: inline-block;
+			float: left;
+			border-bottom: 0px;
+		}
+		.inner_tr:first-child{
+
+			padding-bottom: 10px;
+		}
+	}
+
+}
+.hover_symbol{
+		cursor: pointer;
+	}
+/*HCP Piechart Style END*/

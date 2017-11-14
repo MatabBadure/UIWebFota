@@ -1,0 +1,29 @@
+<!-- <style type="text/css">
+.selected{
+	background-color:lavender;
+}
+</style>-->
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-type" content="text/html; charset=UTF-8">
+</head>
+<ng-include src="'scripts/components/navbar/navbar.html'"></ng-include>
+<ng-include src="'scripts/modules/admin/profile/navbar/sandboxNavbar.html'"></ng-include>
+<div class="dashboard dashboard--content padding-bottom-ls" style="padding-top:100px; padding-left:40px; color:black !important" ng-init = "init()">
+	 <div style=" float:left; " class="Charger_Device">
+   <div id = "viewtxt" class="Charger_Data_Box" style="">
+<!--      <textarea id = "viewtxt" style="width:600px;height:150px;" wrap = "hard" readonly="readonly"></textarea></br>
+ -->   
+ 
+</div>
+ <div style="padding-left:120px; float:left; " >
+    <input class="hillrom-btn btn-submit" type="button" ng-click="refreshData('charger')" value = "Refresh">
+     <input class="hillrom-btn btn-submit" type="button" ng-click="clearData('charger')" value = "Clear">
+</div>
+</div> 
+ <div  ng-repeat = "listValue in listData"   style="float:right; width:580px; padding-right:400px;" >
+ 	<div class="dashboard__manage-view--list" ng-class="{selected: listValue.device_data.content[$index][0] === selctedItem}" ng-repeat = "listArrayIndex in listValue.device_data.content" ng-if = "listValue.device_data.content[$index][1]!=null" ng-click="sample(listValue.device_data.content[$index][0],'charger')">
+ 			 <span class="main-prim-info">{{dateArray[$index]}}</span>
+          </div>
+ 	</div>
+</div>

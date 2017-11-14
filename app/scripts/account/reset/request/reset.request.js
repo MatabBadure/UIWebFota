@@ -1,13 +1,14 @@
 'use strict';
 
 angular.module('hillromvestApp')
-    .config(function ($stateProvider) {
+    .config(['$stateProvider', function ($stateProvider) {
         $stateProvider
             .state('requestReset', {
                 parent: 'account',
                 url: '/reset/request',
                 data: {
-                    roles: []
+                    roles: [],
+                    pageTitle: 'reset.request.pageTitle'
                 },
                 views: {
                     'content@': {
@@ -17,9 +18,9 @@ angular.module('hillromvestApp')
                 },
                 resolve: {
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
-                        $translatePartialLoader.addPart('reset');
+                    $translatePartialLoader.addPart('reset');
                         return $translate.refresh();
                     }]
                 }
             });
-    });
+    }]);

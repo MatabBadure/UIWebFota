@@ -1,11 +1,65 @@
 $footer--background: $body-bg;
 
 .footer{
-	min-height: 40px;
+	/* min-height: 40px; */
 	background-color: $footer--background;
 	line-height: 40px;
 	font-size: $font-size-small;
 	color: $davys-grey;
-	position: fixed;
-  border-top: 2px solid $alto-solid;
+	/* position: fixed; */
+  /*	border-top: 1px solid $silver-approx; */
+}
+.footer_container{
+	.footer_left_ul{
+		margin-left: 0;
+		padding-left: 0;
+		li{
+			list-style-type: none;
+			float: left;
+			margin-left: 20px;
+			position: relative;
+			a{
+				color: $footer-text-color;
+			}
+			&:before{
+				content: '';
+			    position: absolute;
+			    display: block;
+			    right: -10px;
+			    top: 13px;
+			    height: 12px;
+			    width: 1px;
+			    background-color: $gray-light;
+			}
+			&:last-child{
+				&:before{
+					background-color: transparent;
+				}
+			}
+			&:first-child{
+				margin-left: 0;
+			}
+		}
+	}
+	.copyright_txt{
+		clear: left;
+		line-height: 12px;
+	}
+	.footer_right {
+		position: relative;
+		padding:0;
+		.icon-hill-rom-logo{
+			font-size: 70px;
+			color: $iceberg;
+			right: 0px;
+			position: absolute;
+			top: -3px;
+		}
+	}
+	.footer_right_txt{
+		width: 150px;
+	    line-height: 15px;
+	    text-align: right;
+	    margin: 4.5% 0% 0% 0%;
+	}
 }

@@ -1,0 +1,17 @@
+<div class="modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true" >
+  <div class="modal__dialog">
+    <div class="modal__content">
+      <header class="modal__header">
+        <button type="button" class="modal__close" data-dismiss="modal" ng-click="no()">&times;</button>
+        <p >{{header}}</p>
+      </header>
+      <div class="modal__body">
+        <div class="modal--message">{{message}}</div>
+        <div class="modal--message margin-top">{{message1}}</div>
+        <div class="row modal--custom-btn">
+          <buton class="hillrom-btn btn-submit float-right" ng-click="yes()">{{buttonlabel}}</buton>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

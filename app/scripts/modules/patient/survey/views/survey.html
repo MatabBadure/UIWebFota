@@ -1,0 +1,43 @@
+<ng-include src="'scripts/components/navbar/navbarpatientuser.html'"></ng-include>
+<ng-include src="'scripts/modules/patient/survey/views/navbarsurvey.html'"></ng-include>
+<div ng-show="survey">
+	<form name="surveyForm" ng-submit="!$scope.submitted && saveSurvey()" novalidate autocomplete="off">
+		<div class="container admin-user">
+			<ng-include ng-if="survey.surveyId === 1" src="'scripts/modules/patient/survey/views/fiveDaysSurvey.html'"></ng-include>
+			<ng-include ng-if="survey.surveyId === 2" src="'scripts/modules/patient/survey/views/thirtyDaysSurvey.html'"></ng-include> 
+      <ng-include ng-if="survey.surveyId === 3" src="'scripts/modules/patient/survey/views/ninetyDaysSurvey.html'"></ng-include> 
+			<div class="col-md-16 reset-padding margin-top">
+				<div class="col-md-2 col-sm-2 reset-padding">			
+					<input type="submit"  value="Submit" class="col-md-14  col-sm-16 col-xs-6 pull-right-mob hillrom-btn btn-submit">				
+				</div>
+				<div class="col-md-2 col-sm-2 reset-padding col-sm-offset-1">
+          <input type="button"  value="Cancel" class="col-md-14 col-sm-16 col-xs-6 hillrom-btn btn-submit reset-padding" ng-click="showCancelSurveyPopup()">
+    	   </div>
+			</div>
+		</div>
+   	</form>
+</div>
+<div ng-show="showSurveyCancelModal" class="modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true">
+  <div class="modal__dialog">
+    <div class="modal__content">
+      <header class="modal__header">
+        <button type="button" class="modal__close" data-dismiss="modal" ng-click="cancelConfirm();">&times;</button>
+        <p>Not Completed!</p>
+      </header>
+      <div class="modal__body">
+        <div class="modal--message survey_grey_color">You are not yet done with the Survey. Would you like to Cancel or Proceed</div>
+        <div class="row modal--custom-btn">
+          <buton class="hillrom-btn btn-submit float-right" ng-click="cancelSurvey();">Cancel</buton>
+          <buton class="hillrom-btn btn-submit float-right" data-dismiss="modal" ng-click="cancelConfirm();">Proceed</buton>
+        </div>
+      </div>
+      <footer class="modal__footer">
+      </footer>
+    </div>
+  </div>
+</div>
+<!-- <ng-include src="'scripts/modules/patient/survey/views/thirtyDaysSurvey.html'"></ng-include> -->
+<!-- <ng-include src="'scripts/modules/patient/survey/views/ninetyDaysSurvey.html'"></ng-include> -->
+
+
+

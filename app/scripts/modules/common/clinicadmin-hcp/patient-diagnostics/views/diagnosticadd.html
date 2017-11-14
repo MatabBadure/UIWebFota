@@ -1,0 +1,196 @@
+<div class="container admin-user" ng-controller="patientDiagnosticController">
+  <div class="dashboard dashboard--content margin-top"  ng-show="submitText && testResult.testResultDate">
+    <div class="user-gen-details">
+    <span ng-class="{'monarchIcon': (getDeviceTypeforBothIcon() =='MONARCH'), 'visivestIcon': (getDeviceTypeforBothIcon() =='VEST'), 'bothdeviceIcon': (getDeviceTypeforBothIcon() =='ALL')}">
+      <span class="user-gen-details--name">{{::patient.firstName}} {{::patient.lastName}}</span>
+      <span class="user-gen-details--hr-id">{{::patient.hillromId}}</span>
+      </span>
+    </div>
+
+    <form name="form"  ng-submit="addTestResult()" novalidate autocomplete="off">
+      <div class="grid-view ng-scope">
+        <div class="col-md-16 col-sm-16 col-xs-16 text-center reset-padding flex1 margin-top">
+          <div class="col-md-3 col-sm-3 col-xs-4 cyan-blue-light text-center  border-right">
+            <span ng-if="isEditDiagnostics">Select Date</span>
+            <span ng-if="!isEditDiagnostics">Date</span>
+          </div>
+          <div class="col-md-9 col-sm-9 col-xs-8 cyan-blue-light text-center  border-right">
+            <span>Enter Results</span>
+          </div>
+          <div class="col-md-4 col-sm-4 col-xs-4 cyan-blue-light text-center  border-right">
+            <span>Notes</span>
+          </div>
+        </div>
+          <div class="clr"></div>
+        <div  class="col-md-16 col-sm-16 col-xs-16 reset-padding survey_grey_color flex1 ng-scope">
+          <div class="col-md-3 col-sm-3 col-xs-4 border-right text-center">
+            <div class="col-md-16 col-xs-16 col-xs-16 reset-padding"> 
+               <div class="col-md-13 col-sm-13 col-xs-16 dashboard__form--input reset-padding" ng-show="isEditDiagnostics">             
+                <input class="custom-dob span2" type="text" ng-model="testResult.testResultDate" ng-disabled="true">
+              </div>  
+              <div class="col-md-13 col-sm-13 col-xs-16 dashboard__form--input reset-padding" ng-show="!isEditDiagnostics">              
+                <input class="custom-dob span2" type="text" name="testResultDate" validate-on-blur ng-model="testResult.testResultDate" data-date-format="mm/dd/yyyy" id="dp2" required="" ng-pattern="/^\d{2}\/\d{2}\/\d{4}$/" readonly="readonly" >
+              </div>                
+            </div>
+          </div>
+          <div class="col-md-9 col-sm-9 col-xs-8 padding0 padding10 cyan-blue-light border-right">
+            <div class="col-md-16 col-sm-16 col-xs-16">
+              <div class="col-md-7 col-sm-7 col-xs-15 padding0">
+                <div class="col-md-5 col-sm-6 col-xs-16 dashboard__form--label reset-padding">
+                  <span class="ng-scope">FVC (L)</span>
+                </div>
+                <div class="col-md-8 col-sm-10 col-xs-16 margin-bottom20 dashboard__form--input reset-padding">                
+                 <input type="text" name="fvc_L" max-float="testResult.fvc_L" max-bound="10" ng-model="testResult.fvc_L" class="ng-pristine ng-valid ng-isolate-scope ng-touched ng-untouched" required>
+                  <div ng-show="(form.fvc_L.$dirty && form.fvc_L.$invalid) || submitted">                    
+                    <span class="has-error" ng-show="form.fvc_L.$error.required" translate="error.diagnostics.fvcL.required">
+                    </span>
+                    <span class="has-error" ng-show="form.fvc_L.$error.min || form.fvc_L.$error.max" translate="error.diagnostics.fvcL.min-max-range">
+                    </span>                   
+                    <span class="has-error" ng-show="form.fvc_L.$error.number" translate="error.diagnostics.fvcL.invalid">
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-9 col-sm-9 col-xs-16 padding0">
+                <div class="col-md-1 col-sm-1 col-xs-1 dashboard__form--label reset-padding pull-right" style="padding-left:2%">
+                  <span class="ng-scope">%</span>
+                </div>
+                <div class="col-md-8 col-sm-6 col-xs-15 dashboard__form--input reset-padding pull-right">
+                  <input type="text" name="fvc_P" max-float="testResult.fvc_P" max-limit="100" ng-model="testResult.fvc_P" class="ng-pristine ng-valid ng-isolate-scope ng-touched ng-untouched" required>
+                  <div ng-show="(form.fvc_P.$dirty && form.fvc_P.$invalid) || submitted">
+                    <span class="has-error" ng-show="form.fvc_P.$error.required" translate="error.diagnostics.fvcP.required">
+                    </span>
+                    <span class="has-error" ng-show="form.fvc_P.$error.min || form.fvc_P.$error.max" translate="error.diagnostics.fvcP.min-max-range">
+                    </span>                   
+                    <span class="has-error" ng-show="form.fvc_P.$error.number" translate="error.diagnostics.fvcP.invalid">
+                    </span>
+                  </div>
+                </div>
+                <div class="col-md-6 col-sm-9 col-xs-16 dashboard__form--label reset-padding pull-right">
+                  <span class="ng-scope">FVC ( Predicted )</span>
+                </div>
+                <div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-16 col-sm-16 col-xs-16 margin-top">
+              <div class="col-md-7 col-sm-7 col-xs-16 padding0">
+                <div class="col-md-5 col-sm-6 col-xs-16 dashboard__form--label reset-padding">
+                  <span class="ng-scope">FEV1 (L)</span>
+                </div>
+                <div class="col-md-8 col-sm-10 col-xs-15 margin-bottom20 dashboard__form--input reset-padding">               
+                 <input type="text" name="fev1_L" max-float="testResult.fev1_L" max-bound="10" ng-model="testResult.fev1_L" class="ng-pristine ng-valid ng-isolate-scope ng-touched ng-untouched" required>
+                  <div ng-show="(form.fev1_L.$dirty && form.fev1_L.$invalid) || submitted">
+                    <span class="has-error" ng-show="form.fev1_L.$error.required" translate="error.diagnostics.fev1L.required">
+                    </span>
+                    <span class="has-error" ng-show="form.fev1_L.$error.min || form.fev1_L.$error.max" translate="error.diagnostics.fev1L.min-max-range">
+                    </span>                   
+                    <span class="has-error" ng-show="form.fev1_L.$error.number" translate="error.diagnostics.fev1L.invalid">
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-9 col-sm-9 col-xs-16 padding0">
+                <div class="col-md-1 col-sm-1 col-xs-1 dashboard__form--label reset-padding pull-right" style="padding-left:2%">
+                  <span class="ng-scope">%</span>
+                </div>
+                <div class="col-md-8 col-sm-6 col-xs-15 dashboard__form--input reset-padding pull-right">                  
+                  <input type="text" name="fev1_P" ng-model="testResult.fev1_P" class="ng-pristine ng-valid ng-isolate-scope ng-touched ng-untouched" max-float="testResult.fev1_P" max-limit="100" required>
+                  <div ng-show="(form.fev1_P.$dirty && form.fev1_P.$invalid) || submitted">
+                    <span class="has-error" ng-show="form.fev1_P.$error.required" translate="error.diagnostics.fev1P.required">
+                    </span>
+                    <span class="has-error" ng-show="form.fev1_P.$error.min || form.fev1_P.$error.max" translate="error.diagnostics.fev1P.min-max-range">
+                    </span>                   
+                    <span class="has-error" ng-show="form.fev1_P.$error.number" translate="error.diagnostics.fev1P.invalid">
+                    </span>
+                  </div>
+                </div>
+                <div class="col-md-6 col-sm-9 col-xs-16 dashboard__form--label reset-padding pull-right">
+                  <span class="ng-scope">FEV1 (Predicted)</span>
+                </div>
+                <div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-16 col-sm-16 col-xs-15 margin-top padding0">
+              <div class="col-md-7 col-sm-7 col-xs-16">
+                <div class="col-md-5 col-sm-6 col-xs-16 dashboard__form--label reset-padding">
+                  <span class="ng-scope">PEF (L/Min)</span>
+                </div>
+                <div class="col-md-8 col-sm-10 col-xs-16 margin-bottom20 dashboard__form--input reset-padding">                
+                  <input type="text" name="pef_L_Min" max-float="testResult.pef_L_Min" max-bound="10" ng-model="testResult.pef_L_Min" class="ng-pristine ng-valid ng-isolate-scope ng-touched ng-untouched" required>
+                  <div ng-show="(form.pef_L_Min.$dirty && form.pef_L_Min.$invalid) || submitted">
+                    <span class="has-error" ng-show="form.pef_L_Min.$error.required" translate="error.diagnostics.pefLMin.required">
+                    </span>
+                    <span class="has-error" ng-show="form.pef_L_Min.$error.min || form.pef_L_Min.$error.max" translate="error.diagnostics.pefLMin.min-max-range">
+                    </span>                   
+                    <span class="has-error" ng-show="form.pef_L_Min.$error.number" translate="error.diagnostics.pefLMin.invalid">
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-9 col-sm-9 col-xs-16 padding0">
+                <div class="col-md-1 col-sm-1 col-xs-1 dashboard__form--label reset-padding pull-right" style="padding-left:2%">
+                  <span class="ng-scope">%</span>
+                </div>
+                <div class="col-md-8 col-sm-6 col-xs-14 dashboard__form--input reset-padding pull-right">               
+                  <input type="text" name="pef_P" max-float="testResult.pef_P" max-limit="100" ng-model="testResult.pef_P" class="ng-pristine ng-valid ng-isolate-scope ng-touched ng-untouched" required>
+                  <div ng-show="(form.pef_P.$dirty && form.pef_P.$invalid) || submitted">
+                    <span class="has-error" ng-show="form.pef_P.$error.required" translate="error.diagnostics.pefP.required">
+                    </span>
+                    <span class="has-error" ng-show="form.pef_P.$error.min || form.pef_P.$error.max" translate="error.diagnostics.pefP.min-max-range">
+                    </span>                   
+                    <span class="has-error" ng-show="form.pef_P.$error.number" translate="error.diagnostics.pefP.invalid">
+                    </span>
+                  </div>
+                </div>
+                <div class="col-md-6 col-sm-9 col-xs-15 dashboard__form--label reset-padding pull-right">
+                  <span class="ng-scope">PEF (Predicted)</span>
+                </div>
+                <div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-16 col-sm-16 col-xs-15 padding0 margin-top">
+              <div class="col-md-9 col-sm-9 col-xs-16 col-md-offset-7 padding0">
+                <div class="col-md-1 col-sm-1 col-xs-1 dashboard__form--label reset-padding pull-right" style="padding-left:2%">
+                  <span class="ng-scope">%</span>
+                </div>
+                <div class="col-md-8 col-sm-7 col-xs-14 dashboard__form--input reset-padding pull-right">                
+                 <input type="text" name="fev1_TO_FVC_RATIO" max-float="testResult.fev1_TO_FVC_RATIO" max-limit="100" ng-model="testResult.fev1_TO_FVC_RATIO" class="ng-pristine ng-valid ng-isolate-scope ng-touched ng-untouched" required>
+                  <div ng-show="(form.fev1_TO_FVC_RATIO.$dirty && form.fev1_TO_FVC_RATIO.$invalid) || submitted">
+                    <span class="has-error" ng-show="form.fev1_TO_FVC_RATIO.$error.required" translate="error.diagnostics.fev1TOFVCRATIO.required">
+                    </span>
+                    <span class="has-error" ng-show="form.fev1_TO_FVC_RATIO.$error.min || form.fev1_TO_FVC_RATIO.$error.max" translate="error.diagnostics.fev1TOFVCRATIO.min-max-range">
+                    </span>                   
+                    <span class="has-error" ng-show="form.fev1_TO_FVC_RATIO.$error.number" translate="error.diagnostics.fev1TOFVCRATIO.invalid">
+                    </span>
+                  </div>
+                </div>
+                <div class="col-md-6 col-sm-8 col-xs-15 dashboard__form--label reset-padding pull-right">
+                  <span class="ng-scope">FEV1/FVC (Predicted)</span>
+                </div>
+                <div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 col-sm-4 col-xs-4 text-center padding10">
+            <div class="col-md-16 col-sm-16 dashboard__form--input reset-padding pull-right">
+              <textarea class="form-control custom_textarea" rows="6" ng-model="testResult.comments" maxlength="250"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+         <div class="clr"></div>
+      <div class="col-md-16 reset-padding margin-top">
+        <div class="">
+          <button type="submit" class="hillrom-btn btn-primary float-right btn-margin-left ng-scope" ng-bind="submitText"></button>    
+          <button type="reset" ng-click="cancelDiagnostic();" class="hillrom-btn btn-secondary float-right ng-scope" >Cancel</button>
+          <div class="clr"></div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

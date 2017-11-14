@@ -1,0 +1,73 @@
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation"  ng-init="mainInit()" data-spy="affix" ng-show="userRole === 'ADMIN' || userRole === 'ASSOCIATES'">
+  <div class="container" ng-switch="$root.isAuthenticated">
+    <div class="navbar-header navbar-primary">
+      <button data-target="#navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="" ng-click="goToHomePage();"><span class="logo icon-hill-rom-logo"></span></a>
+      <div class="navbar-brand__desc"> 
+        <span class="navbar-brand__desc--text-primary"><span translate="global.logo-text.visi-view"></span><sup translate="global.logo-text.tm-sup"></sup></span>
+        <span class="navbar-brand__desc--text-secondary" translate="global.logo-text.health-portal"></span>
+      </div>
+    </div> 
+    <div>
+    <div class="collapse navbar-collapse rm_max_height navbar-secondary header-nav menu_content_left" id="navbar-collapse"  ng-switch-when=true>
+      <ul class="nav navbar-nav navbar-right header-nav-content"> 
+        <li class="icon-border">
+          <a ng-class="{ active: isActiveMainBar('associate/patients')}" ng-href="#/associate/patients">
+            <span class="icons hillrom-icon icon-patient"></span>
+            <span class="link-text" translate="global.tabs.manage-patients">Manage Patients</span>
+          </a>
+        </li>
+        <li class="icon-border">
+          <a ng-class="{ active: isActive('associate/hcpUsers')}" ng-href="#/associate/hcpUsers">
+            <span class="icons hillrom-icon icon-doctor"></span>
+            <span class="link-text" translate="global.tabs.manage-hcps">Manage HCPs</span>
+          </a>
+        </li>
+        <li class="icon-border">
+          <a ng-class="{ active: isActive('associate/clinics')}" ng-href="#/associate/clinics">
+            <span class="icons hillrom-icon icon-clinic"></span>
+            <span class="link-text" translate="global.tabs.manage-clinics">Manage Clinics</span>
+          </a>
+        </li>
+        <li class="icon-border">
+          <a ng-class="{ active: isActive('associate/hillRomUsers')}" ng-href="#/associate/hillRomUsers">
+            <span class="icons hillrom-icon icon-user"></span>
+            <span class="link-text" translate="global.tabs.manage-users">Manage Users</span>
+          </a>
+        </li>
+        <li class="header-popover dropdown">
+          <a ng-href="" data-target="#" class="dropdown-toggle" ng-class="{ active: isActive('admin/profile') || isActive('admin/updatepassword')}" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            <span class='icon-logged-in-user'></span>
+            <span class='user-name'>{{username}}</span></a>
+          <ul class="dropdown-menu logout-dropdown">
+            <li id='console' ng-click='console()'>
+              <span class="hillrom-icon icon-console"> </span>
+              <p translate="global.console">Console</p>
+            </li>
+            <li id='account' ng-click='profile()'>
+              <span class='hillrom-icon icon-user-account'></span>
+              <p translate="global.my-dashboard">My Profile</p>
+            </li>
+            <li ng-click='logout()'>
+              <span class='hillrom-icon icon-logout'></span>
+              <p translate="global.logout"></p>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    </div>
+  </div>
+</nav>
+<script>
+$( document ).ready(function() {
+    $(".navbar-toggle").click(function(){
+      $(".header-nav").css("display", "block");
+      });
+});
+</script>

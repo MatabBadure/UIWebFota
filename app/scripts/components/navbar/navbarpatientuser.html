@@ -1,35 +1,104 @@
- <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+ <nav class="navbar navbar-default navbar-fixed-top" id="extratab" role="navigation" data-spy="affix">
   <div class="container" ng-switch="$root.isAuthenticated">
     <div class="navbar-header navbar-primary">
       <button data-target="#navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">
-        <span class="sr-only">Toggle navigation</span>
+        <span class="sr-only" translate="toggle-navigation"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#/login"><img class="hillrom_logo" src="assets/images/logo-HillRom.png" alt="HillRom Logo"></a>
+      <a class="navbar-brand" href="" ng-click="goToHomePage();"><span class="logo icon-hill-rom-logo"></span></a>
       <div class="navbar-brand__desc"> 
-        <span class="navbar-brand__desc--text-primary"> VisiView<sup>TM</sup></span>
-        <span class="navbar-brand__desc--text-secondary">Health Portal</span>
+        <span class="navbar-brand__desc--text-primary"><span translate="global.logo-text.visi-view"></span><sup translate="global.logo-text.tm-sup"></sup></span>
+        <span class="navbar-brand__desc--text-secondary" translate="global.logo-text.health-portal"></span>
       </div>
     </div>
-    <div class="collapse navbar-collapse navbar-secondary" id="navbar-collapse" ng-switch-when=true>
-      <ul class="nav navbar-nav navbar-right">        
-        <li class="header-popover">
-           <a href="javascript:void(0)" class="popover-link cursor-pointer" navbar-popover></a>
+    <div class="collapse navbar-collapse navbar-secondary header-nav" id="navbar-collapse" ng-switch-when=true>
+      <ul class="nav navbar-nav navbar-right header-nav-content">
+        <li class="icon-border">
+          <a ng-class="{ active: isActive('patient/patient-dashboard')}" href="" ng-click="goToPatientDashboard();" >
+            <span class="icons hillrom-icon icon-dashboard"></span>
+            <span class="link-text" translate="global.tabs.dashboard" ></span>
+          </a>
+        </li>
+ <li class="icon-border">
+          <a ng-class="{ active: isActive('patient/messages')}" href="" ng-click="navigateUser('Messages');" >
+            <span class="icons messages"> <i class="fa fa-envelope" aria-hidden="true"></i>
+</span>
+            <span class="link-text" translate="global.tabs.messages" ></span>
+             <span class="msg_count">{{$root.UnreadMessages}}</span> 
+          </a>
+        </li>
+        <li class="icon-border dropdown header-popover" ng-init="getNotifications()">
+          <a ng-href="" data-target="#" class="dropdown-toggle noti_bell" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            <span class="icons hillrom-icon icon-notification-bell"></span>
+            <span class="link-text" translate="global.tabs.notifications"></span>
+            <span class="noti_count">{{no_of_notifications}}</span>
+          </a>
+          <ul class="dropdown-menu notification_drop_container">
+            <div class="dashboard_noti_section">
+
+              <div class="notification_container">
+                <ul class="noti-list" ng-repeat="notification in notifications">
+                    <p class="nodata_noti_text" ng-if="notification.notificationType === 'NO_NOTIFICATION'" translate="global.notification.no-notification">
+                    </p>
+                  <li ng-if="notification.notificationType !== 'NO_NOTIFICATION'">
+                    
+                    <span ng-if="notification.notificationType === 'MISSED_THERAPY'">
+                      <span class="dsh_icon icon-lungs"></span>
+                      <span>Your recommended therapy is missed by {{notificationData}} days</span>
+                    </span>
+                    <span ng-if="notification.notificationType === 'SETTINGS_DEVIATION'">
+                      <span class="dsh_icon icon-settings"></span>
+                      <span translate="global.notification.setting-deviation"></span>
+                    </span>
+                    <span ng-if="notification.notificationType === 'HMR_NON_COMPLIANCE'">
+                      <span class="dsh_icon icon-man-running"></span>
+                      <span translate="global.notification.hmr-non-compliant"></span>
+                    </span>
+                    <span ng-if="notification.notificationType === 'HMR_NON_COMPLIANCE AND SETTINGS_DEVIATION'">
+                      <span class="dsh_icon icon-man-running"></span>
+                      <span translate="global.notification.hmr-non-compliant-setting-deviation"></span>
+                    </span>
+                  </li>
+                </ul>
+              </div>
+
+            </div>
+          </ul>
+        </li> 
+ <li class="icon-border">
+          <a ng-class="{ active: isActive('/patient-announcements')}" href="" ng-click="navigateUser('patientannouncements');" >
+            <span  class="icons messages"> <i class="fa fa-flag" id="announcementflag" aria-hidden="true"></i>
+            </span>
+            <span class="link-text" translate="global.tabs.announcements" ></span>
+          </a>
+        </li>
+
+        <li class="header-popover dropdown">
+          <a ng-href="" data-target="#" class="dropdown-toggle" ng-class="{ active: isActive('/patient/p-reset') || isActive('/notification-settings')}" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            <span class='icon-logged-in-user'></span>
+            <span class='user-name'>{{username}}</span></a>
+          <ul class="dropdown-menu logout-dropdown">
+            <li id='account' ng-click='profile()'>
+              <span class='hillrom-icon icon-user-account'></span>
+              <p translate="global.my-dashboard">My Profile</p>
+            </li>
+            <li ng-click='logout()'>
+              <span class='hillrom-icon icon-logout'></span>
+              <p translate="global.logout"></p>
+            </li>
+          </ul>
         </li>
       </ul>
     </div>
 
   </div>
 </nav>
-
-<script type="text/javascript">
-  $('html').on('mouseup', function(e) {
-    if(!$(e.target).closest('.popover').length) {
-      $('.popover').each(function(){
-        $(this.previousSibling).popover('hide');
+<script>
+$( document ).ready(function() {
+    $(".navbar-toggle").click(function(){
+      $(".header-nav").css("display", "block");
       });
-    }
-  });
+});
 </script>

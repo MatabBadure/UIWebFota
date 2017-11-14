@@ -1,0 +1,206 @@
+
+<ng-include src="'scripts/components/navbar/navbarclinicadmin.html'"></ng-include>
+
+<div class="navbar dashboard dashbord-nav">
+  <div class="container">
+    <div class="dashbord-nav__primary pull-left">
+      <span class="dashbord-nav__primary--title" translate="doctor.tab.hcp-overview"></span>
+    </div>
+  </div>
+</div>
+
+<div class="dashboard dashboard--content padding-bottom-ls">
+  <div class="container dashboard__form">
+    <div class="margin-top-xl">
+      <div class="col-md-16 col-sm-16 reset-padding">
+        <span class="dashboard__form--type" translate="doctor.hcp-details"></span>
+      </div>
+
+      <div class="col-md-16 col-sm-16 margin-top reset-padding">
+        <div class="col-md-7 col-sm-7 reset-padding">
+          <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+            <span class="" translate="doctor.title.name"></span>
+          </div>
+          <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding">
+            <span>{{selectedHcp.title}}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-16 col-sm-16 reset-padding margin-top">
+        <div class="col-md-7 col-sm-7 reset-padding">
+          <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+            <span class="" translate="doctor.first-name"></span>
+          </div>
+          <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding">
+            <span>{{selectedHcp.firstName}}</span>
+          </div>
+        </div>
+        <div class="col-md-7 col-sm-7 col-sm-offset-2 reset-padding col-md-offset-2">
+          <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+            <span class="" translate="doctor.middle-name"></span>
+          </div>
+          <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding">
+            <span>{{selectedHcp.middleName}}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-16 col-sm-16 reset-padding margin-top">
+        <div class="col-md-7 col-sm-7 reset-padding">
+          <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+            <span class="" translate="doctor.last-name"></span>
+          </div>
+          <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding">
+            <span>{{selectedHcp.lastName}}</span>
+          </div>
+        </div>
+
+        <div class="col-md-7 col-sm-7 col-sm-offset-2 reset-padding col-md-offset-2">
+          <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+            <span class="" translate="doctor.hill-rom-id"></span>
+          </div>
+          <div class="col-md-6 col-sm-6 dashboard__form--label-val reset-padding">
+            <span>{{selectedHcp.hillromId}}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-16 col-sm-16 reset-padding margin-top">
+        <div class="col-md-7 col-sm-7 reset-padding">
+          <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+            <span class="" translate="doctor.email"></span>
+          </div>
+          <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding">
+            <span>{{selectedHcp.email}}</span>
+          </div>
+        </div>
+        <div class="col-md-7 col-sm-7 col-sm-offset-2 reset-padding col-md-offset-2">
+          <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+            <span class="" translate="doctor.role"></span>
+          </div>
+          <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding">
+            <span>{{selectedHcp.authorities[0].name}}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-16 col-sm-16 reset-padding margin-top">
+        <div class="col-md-7 col-sm-7 reset-padding">
+          <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+            <span class="" translate="doctor.speciality"></span>
+          </div>
+          <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding">
+            <span>{{selectedHcp.speciality}}</span>
+          </div>
+        </div>
+        <div class="col-md-7 col-sm-7 col-sm-offset-2 reset-padding col-md-offset-2">
+          <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+            <span class="" translate="doctor.credentials"></span>
+          </div>
+          <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding">
+            <span>{{selectedHcp.credentials}}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-16 col-sm-16 reset-padding margin-top">
+        <div class="col-md-7 col-sm-7 reset-padding">
+          <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+            <span class="" translate="doctor.primary-phone"></span>
+          </div>
+          <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding">
+            <span>{{selectedHcp.primaryPhone}}</span>
+          </div>
+        </div>
+        <div class="col-md-7 col-sm-7 reset-padding col-sm-offset-2 col-md-offset-2">
+          <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+            <span class="" translate="doctor.mobile-number"></span>
+          </div>
+          <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding">
+            <span>{{selectedHcp.mobilePhone}}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-16 col-sm-16 reset-padding margin-top">
+        <div class="col-md-7 col-sm-7 reset-padding">
+          <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+            <span class="" translate="doctor.fax-number"></span>
+          </div>
+          <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding">
+            <span>{{selectedHcp.faxNumber}}</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-md-16 col-sm-16 reset-padding margin-top">
+        <div class="col-md-7 col-sm-7 reset-padding">
+          <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+            <span class="" translate="doctor.address"></span>
+          </div>
+          <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding">
+            <span>{{selectedHcp.address}}</span>
+          </div>
+        </div>
+        <div class="col-md-7 col-sm-7 col-sm-offset-2 reset-padding col-md-offset-2">
+          <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+            <span class="" translate="doctor.city"></span>
+          </div>
+          <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding">
+            <span>{{selectedHcp.city}}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-16 col-sm-16 reset-padding margin-top">
+        <div class="col-md-7 col-sm-7 reset-padding">
+          <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+            <span class="" translate="doctor.state"></span>
+          </div>
+          <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding">
+            <span>{{selectedHcp.state}}</span>
+          </div>
+        </div>
+        <div class="col-md-7 col-sm-7 col-sm-offset-2 reset-padding col-md-offset-2">
+          <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+            <span class="" translate="doctor.zipcode"></span>
+          </div>
+          <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding">
+            <span>{{selectedHcp.zipcode}}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="clr"></div>
+    </div>
+
+    <div class="col-md-16 col-sm-16 margin-top reset-padding">
+      <div class="fropile_update_btn_group">
+        <buton class="hillrom-btn btn-primary float-right btn-margin-left" ng-click="openEditDetail(selectedHcp)" translate="doctor.edit-button-text">Edit</buton>
+        <buton class="hillrom-btn btn-primary float-right btn-margin-left" ng-click="openDiassociateModal()" translate="doctor.disassociate-button-text">Disassociate</buton>
+        <div class="clr"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div ng-if="hcpDisassociateModal" class="modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true">
+  <div class="modal__dialog">
+    <div class="modal__content">
+      <header class="modal__header">
+        <button type="button" class="modal__close" data-dismiss="modal" ng-click="closeDiassociateModal()">&times;</button>
+         <p translate="doctor.disassociate.warning"></p>
+      </header>
+      <div class="modal__body">
+         <div class="modal--message" translate="doctor.disassociate.message"></div>
+         <div class="fropile_update_btn_group row modal--custom-btn">
+          <buton class="hillrom-btn btn-submit float-right" ng-click="disassociateHcp(deletePatient)">Yes</buton>
+          <buton class="cancel hillrom-btn btn-submit float-right" data-dismiss="modal" ng-click="closeDiassociateModal()">No</buton>
+         </div>
+      </div>
+      <footer class="modal__footer">
+      </footer>
+    </div>
+  </div>
+</div>

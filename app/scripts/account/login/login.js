@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hillromvestApp')
-    .config(function ($stateProvider) {
+    .config(['$stateProvider', function ($stateProvider) {
 
         $stateProvider
             .state('login', {
@@ -24,4 +24,4 @@ angular.module('hillromvestApp')
                     }]
                 }
             });
-    });
+    }]);

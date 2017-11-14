@@ -1,0 +1,83 @@
+<div class="grid-view">
+  <div class="col-md-16 col-sm-16 reset-padding margin-top flex1">
+    <div class="col-md-1 col-sm-1 text-center">
+      <span></span>
+    </div>
+    <div class="col-md-11 col-sm-11 text-center border-right survey_grey_color">
+      <span>Questions</span>
+    </div>
+    <div class="col-md-1 col-sm-1 cyan-blue-light text-center border-right">
+      <span>Yes</span>
+    </div>
+    <div class="col-md-1 col-sm-1 cyan-blue-light text-center border-right">
+      <span>No</span>
+    </div>
+    <div class="col-md-2 col-sm-2 cyan-blue-light text-center padding10">
+      <span>Comments</span>
+    </div>
+  </div>
+
+  <div class="col-md-16 col-sm-16 reset-padding survey_grey_color flex1" ng-repeat="survey in surveyGridView track by $index">
+    <div class="col-md-1 col-sm-1 border-right text-center">
+      <span>Q-{{$index + 1}}</span>
+    </div>
+    <div class="col-md-11 col-sm-11 cyan-blue-light border-right">
+      <span>{{survey.questionText}}</span>
+    </div>
+    <div class="col-md-1 col-sm-1 text-center border-right">
+      <span ng-if="$index !== 6">{{survey.yesCount}}</span>
+      <span ng-if="$index === 6">-</span>
+    </div>
+    <div class="col-md-1 col-sm-1 text-center border-right">
+      <span ng-if="$index !== 6">{{survey.noCount}}</span>
+      <span ng-if="$index === 6">-</span>
+    </div>
+    <div class="col-md-2 col-sm-2 text-center padding10">
+      <div ng-click="showComments(survey, $index)" ng-class= "{'pointer-fill-event' : survey.noCount !== 0 || $index === 6}"><span class="view">View</span></div>
+    </div>
+  </div>
+</div>
+
+<div ng-if="showCommentModal" class="modal survey_modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true">
+  <div class="modal__dialog survey_dialog">
+    <div class="modal__content survey_content">
+      <header class="modal__header">
+        <button type="button" class="modal__close" data-dismiss="modal" ng-click="hideComments()">&times;</button>
+         <p>Q-{{selectedSurvey.quesIndex + 1}} : {{selectedSurvey.questionText}}</p>
+        </header>
+        <div class="modal__body survey__body">
+          <div class="grid-view">  
+            <div class="col-md-16 col-sm-16 text-center reset-padding">
+              <div class="col-md-3 col-sm-3 cyan-blue-light text-center  border-right">
+                <span>Patient Name</span>
+              </div>
+              <div class="col-md-3 col-sm-3 cyan-blue-light text-center  border-right">
+                <span>Serial Number</span>
+              </div>
+               <div class="col-md-3 col-sm-3 cyan-blue-light text-center  border-right">
+                <span>Date</span>
+              </div>
+               <div class="col-md-7 col-sm-7 cyan-blue-light text-center padding10">
+                <span>Comments</span>
+              </div>
+            </div>
+            <div class="col-md-16 col-sm-16 reset-padding flex survey_grey_color" ng-repeat="surveyComment in surveyComments">
+              <div class="col-md-3 col-sm-3 text-center border-right">
+                <span>{{surveyComment.patientName}}</span>
+              </div>
+              <div class="col-md-3 col-sm-3 text-center border-right">
+                <span>{{surveyComment.serialNumber}}</span>
+              </div>
+              <div class="col-md-3 col-sm-3 text-center border-right">
+                <span>{{surveyComment.date}}</span>
+              </div>
+              <div class="col-md-7 col-sm-7 text-center padding10 text-center">
+                <span>{{surveyComment.comment}}</span>
+              </div>
+          </div>
+        </div>
+      
+      </div>
+    </div>
+  </div>
+</div>

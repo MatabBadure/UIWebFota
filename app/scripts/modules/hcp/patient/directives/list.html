@@ -1,0 +1,103 @@
+<ng-include src="'scripts/components/navbar/navbarhcp.html'"></ng-include>
+<ng-include src="'scripts/components/dashboard/hcp/views/navbar.html'"></ng-include>
+  <div class="dashboard dashboard--content">
+    <div class="container dashboard__manage-view margin-top-xl">
+      <div class="dashboard__manage-view--search">
+        <div class="fuid-search-box reset-padding-right">
+          <input type="text" class="form-control" id="searchListParam" name="userName" ng-model="searchItem" autocomplete="off" placeholder="{{'patient.placeholder.search' | translate}}">
+          <span class="search-icon hillrom-icon icon-search-icon"></span>
+        </div>       
+      </div>
+
+      <div class="col-md-16 col-sm-16">
+        <ng-include src="'scripts/components/navbar/searchfilter.html'"></ng-include>
+      </div>
+
+      <div class="dashboard__manage-view--header margin-top">
+        <div class="col-md-2 col-sm-4 header--type pull-left-mob width120">
+          <span ng-class="{'sort-icon--default' : sortPatientList.lastName.isDefault, 'sort-icon-down': sortPatientList.lastName.isDown, 'sort-icon-up':sortPatientList.lastName.isUp}" ng-click="sortType('lastName')" translate="patient.patient-name">Patient Name</span>
+        </div>
+        <div class="col-md-2 col-sm-3 header--type pull-left-mob width120">
+          <span ng-class="{'sort-icon--default' : sortPatientList.mrnId.isDefault, 'sort-icon-down': sortPatientList.mrnId.isDown, 'sort-icon-up':sortPatientList.mrnId.isUp}" ng-click="sortType('mrnId')" translate="patient.mrn-id">MRN ID</span>
+        </div>
+        <div class="col-md-2 col-sm-3 header--type none hidden-sm">
+          <span ng-class="{'sort-icon--default' : sortPatientList.dob.isDefault, 'sort-icon-down': sortPatientList.dob.isDown, 'sort-icon-up':sortPatientList.dob.isUp}" ng-click="sortType('dob')" translate="patient.date-of-birth">DOB</span>
+        </div>
+        <div class="col-md-2 col-sm-3 header--type none">
+          <span ng-class="{'sort-icon--default' : sortPatientList.city.isDefault, 'sort-icon-down': sortPatientList.city.isDown, 'sort-icon-up':sortPatientList.city.isUp}" ng-click="sortType('city')" translate="patient.city-state">City/State</span>
+        </div>
+        <div class="col-md-2 hidden-sm header--type none">
+          <span ng-class="{'sort-icon--default' : sortPatientList.transmission.isDefault, 'sort-icon-down': sortPatientList.transmission.isDown, 'sort-icon-up':sortPatientList.transmission.isUp}" ng-click="sortType('transmission')" translate="patient.transmission">Transmission</span>
+        </div>
+        <div class="col-md-2 col-sm-3 header--type none">
+          <span ng-class="{'sort-icon--default' : sortPatientList.hcp.isDefault, 'sort-icon-down': sortPatientList.hcp.isDown, 'sort-icon-up':sortPatientList.hcp.isUp}" ng-click="sortType('hcp')" translate="patient.hcp-name">HCP Name</span>
+        </div>
+        <div class="col-md-2 col-sm-3 header--type pull-left-mob">
+          <span ng-class="{'sort-icon--default' : sortPatientList.status.isDefault, 'sort-icon-down': sortPatientList.status.isDown, 'sort-icon-up':sortPatientList.status.isUp}" ng-click="sortType('status')" translate="patient.status">Status</span>
+        </div>
+        <div class="col-md-2 col-sm-3 header--type none hidden-sm">
+          <span ng-class="{'sort-icon--default' : sortPatientList.adherence.isDefault, 'sort-icon-down': sortPatientList.adherence.isDown, 'sort-icon-up':sortPatientList.adherence.isUp}" ng-click="sortType('adherence')" translate="patient.adherence">Adherence</span>
+        </div>
+        <div class="clr"></div>
+      </div>
+
+      <div class="dashboard__manage-view--list" ng-repeat="patient in patients" ng-click="selectPatient(patient)" ng-readonly="true">
+          <div class="col-md-2 col-sm-4 reset-padding pull-left-mob width120">
+            <span class="main-prim-info">{{patient.lastName}}, {{patient.firstName}}</span>
+            <span class="main-secon-info">{{patient.email}}</span>
+          </div>
+          <div class="col-md-2 col-sm-3 reset-padding centered pull-left-mob width120">
+            <span class="impo-highlight">{{patient.mrnId}}</span>
+          </div>
+          <div class="col-md-2 col-sm-3 reset-padding centered none hidden-sm">
+            <span class="short-info">{{patient.dob}}</span>
+          </div>
+
+          <div class="col-md-2 col-sm-3 reset-padding centered none">
+            <span class="short-info">{{patient.city}} </span>
+            <span class="short-info" ng-if="patient.state && patient.city">,</span>
+            <span class="short-info">{{patient.state}} </span>
+          </div>
+
+          <div class="col-md-2 hidden-sm reset-padding centered none">
+            <span class="short-info">{{patient.lastTransmissionDate}}</span>
+          </div>
+
+          <div class="col-md-2 col-sm-3 reset-padding centered none">
+            <span ng-if="patient.hcpNamesCSV" class="short-info">{{patient.hcpNamesCSV}}</span>
+            <span ng-if="!patient.hcpNamesCSV" class="short-info" translate="global.not-applicable"></span>
+          </div>
+
+          <div class="col-md-2 col-sm-3 reset-padding pull-left-mob">
+            <span class="short-info active centered" ng-if="patient.expired" translate="patient.status-type.expired"></span>
+            <span class="short-info active centered" ng-if="!patient.expired && !patient.isDeleted" translate="patient.status-type.active"></span>
+            <span class="short-info inactive centered" ng-if="!patient.expired &&  patient.isDeleted" translate="patient.status-type.inactive"></span>
+          </div>
+
+          <div class="col-md-2 col-sm-3 reset-padding-left text-centered none hidden-sm">
+            <span class="short-info">{{patient.adherence}}</span>
+          </div>
+
+          <div class="clr"></div>
+       </div>
+       <div class="col-md-16 col-sm-16 empty-list-message" ng-if="patients && patients.length === 0">
+        <span translate="patient.no-patient-found"></span>
+      </div>
+
+      <div class="dashboard__manage-view--pagination">
+        <div class="col-md-16 col-sm-16 reset-padding-right">
+          <div class="navbar-right">
+            <span class="record-found" ng-if="patients.length > 0">{{total}} Patients</span>
+            <span class="record-found" ng-if="patients.length > 0">Found</span>
+            <span ng-if="patients.length > 0">
+              <span class="navigaion-link cursor-pointer" ng-class="{ 'inactive': !(currentPageIndex > 1) }" ng-click="searchPatients('PREV')">Previous</span>
+              <span class="navigaion-no">{{currentPageIndex}}</span>
+              <span class="navigaion-link cursor-pointer" ng-class="{ 'inactive': !(pageCount > currentPageIndex) }" ng-click="searchPatients('NEXT')">Next</span>
+            </span>
+          </div>
+          <div class="clr"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

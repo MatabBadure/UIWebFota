@@ -1,0 +1,100 @@
+<div class="container login activationform" ng-show="isLoaded">
+<div class="reset--position"  ng-show="isFirstLogin">
+    <div class="visi_view_container">
+      <!-- <h1 class="login_portal_name">VisiView</h1>
+      <h3 class="login_portal_name_sub">LEALTH PORTAL</h3> -->
+    </div>
+    <div class="form__container__login login__container">
+      <!-- <div class="col-md-6 img-man">
+        <img src="images/man.svg">
+        <div class="clr"></div>
+      </div> -->
+    <!-- first time login -->
+    <div class="auth-heading" translate="reset-password.set-password"> </div>
+    <div class=" col-md-16 col-lg-16 login__container__right-section">
+    <div class="password_inst" translate="login.instruction"></div>
+    <span ng-if="message">{{message}}</span>
+      <form class="login-auth-form" role="form" name="confirmForm" ng-submit="submitPassword($event)" novalidate autocomplete="off" show-validation>
+        <div class="form-group email" ng-if="!isEmailExist">
+          <input type="email" class="form-control" validate-on-blur name="email" placeholder="Enter Email" ng-model="user.email" ng-maxlength=100 required ng-pattern="/^[a-zA-Z][\.a-zA-Z0-9_\+-]+(\.[a-zA-Z0-9_\+-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.([a-zA-Z]{2,4})$/" value="">
+          <div ng-show="(confirmForm.email.$showValidationMessage && confirmForm.email.$invalid) || submitted" class="form-error">
+            <span class="login-has-error" ng-show="confirmForm.email.$error.required" translate="error.email.required"></span>
+           <span class="login-has-error" ng-show="confirmForm.email.$error.pattern" translate="error.email.invalid"></span>
+          <span class="login-has-error" ng-show="confirmForm.email.$error.maxlength" translate="error.email.maxlength">
+         </span>
+
+       </div>
+     </div>
+
+     <div class="form-group">
+      <input type="password" class="form-control" validate-on-blur name="password" id="passwordBox"
+      ng-model="user.password" ng-minlength=8 ng-maxlength=50 ng-pattern="/^(?=^.{8,}$)(?=.*\d)(?=.*[!@#$%^-\{\}|`~<>\[\]\?\\_=+&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/" placeholder="New Password" required>
+      <div ng-show="(confirmForm.password.$showValidationMessage && confirmForm.password.$invalid) || submitted">
+        <span class="login-has-error" ng-show="confirmForm.password.$error.required">
+         {{'login.password.required' | translate }}
+       </span>
+       <span class="login-has-error" ng-show="confirmForm.password.$error.maxlength">
+         {{'login.password.maxlength' | translate }}
+       </span>
+       <span class="login-has-error" ng-show="confirmForm.password.$error.pattern">
+         {{'login.password.customError' | translate }}
+       </span>
+    </div>
+  </div>
+  <div class="form-group">
+    <input type="password" class="form-control" validate-on-blur name="confirmPassword" ng-model="user.confirmPassword" ng-minlength=8 ng-maxlength=50 ng-pattern="/^(?=^.{8,}$)(?=.*\d)(?=.*[!@#$%^-\{\}|`~<>\[\]\?\\_=+&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/" required  pw-check="passwordBox" placeholder="Enter New Password">
+    <div ng-show="(confirmForm.confirmPassword.$dirty && confirmForm.confirmPassword.$invalid) || submitted">
+      <span class="login-has-error" ng-show="confirmForm.confirmPassword.$error.required && !confirmForm.confirmPassword.$error.pwmatch">
+        {{'login.password.required' | translate }}
+      </span>
+      <span class="login-has-error" ng-show="confirmForm.confirmPassword.$error.maxlength">
+         {{'login.confirm-password.maxlength' | translate }}
+      </span>
+      <span class="login-has-error" ng-show="confirmForm.confirmPassword.$error.pwmatch" >
+        {{'login.confirm-password.error' | translate }}
+      </span>
+    </div>
+  </div>
+  <div class="form-group margin-top">
+    <div class="auth-heading">security question</div>
+    <div class="auth-select">
+      <div class="custom-dropdown">
+        <select class="form-control" name="question" validate-on-blur ng-model="user.question" required ng-options="question.question for question in questions">
+          <option value="">-- select a security question --</option>
+        </select>
+      </div>
+    </div>
+    <div ng-show="(confirmForm.question.$showValidationMessage && confirmForm.question.$invalid) || submitted">
+      <span class="login-has-error" ng-show="confirmForm.question.$error.required">
+        Security question required.
+      </span>
+    </div>
+  </div>
+  <div class="form-group">
+    <input type="password" class="form-control" name="answer" ng-disabled="!user.question" validate-on-blur ng-model="user.answer" required placeholder="Enter Your Answer">
+    <div ng-show="(confirmForm.answer.$showValidationMessage && confirmForm.answer.$invalid) || submitted">
+      <span class="login-has-error" ng-show="confirmForm.answer.$error.required">
+        Answer required.
+      </span>
+    </div>
+  </div>
+  <div class="form-group">
+    <input type="checkbox" name="tnc" ng-model="user.tnc" required>
+    <span class="sec-quest">I agree to the <a class="condition_txt" href="">Terms and Conditions.</a></span>
+    <div ng-show="(confirmForm.tnc.$dirty && confirmForm.tnc.$invalid) || submitted">
+    <span class="login-has-error" ng-show="confirmForm.tnc.$error.required">
+        Please agree to Terms and Conditions.
+        </span>
+    </div>
+  </div>
+  <button type="submit" class="myButton_blue" ng-click="submitConfirmForm()" ng-show="showSubmit">Activate account</button>
+  <button type="button" class="myButton_blue" ng-show="!showSubmit">Activate account</button>
+</form>
+</div>
+<div class="clr"></div>
+<!-- first time login end -->
+</div>
+<div class="clr"></div>
+</div>
+<div class="clr"></div>
+</div>

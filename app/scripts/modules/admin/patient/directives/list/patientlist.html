@@ -5,9 +5,9 @@
         <span class="dashbord-nav__primary--title" translate="patient.home.manageLabel">Manage Patient</span>
       </div>
 
-      <div class="dashbord-nav__secondary create-user navbar-right cursor-pointer" ng-click="createPatient()">
+      <div ng-if="((userRole !== 'ASSOCIATES') && (userRole !== 'CUSTOMER_SERVICES'))" class="dashbord-nav__secondary create-user navbar-right cursor-pointer" ng-click="createPatient()">
         <span class="" translate="patient.home.createNewLabel"></span>
-        <span class="hillrom-icon icon-plus-icon"></span>
+        <span class="icon-plus-icon add-new"></span>
       </div>
     </div>
   </div>
@@ -15,90 +15,104 @@
     <div class="container dashboard__manage-view margin-top-xl">
       <div class="dashboard__manage-view--search">
         <div class="fuid-search-box reset-padding-right">
-          <input type="text" class="form-control" id="searchListParam" name="userName" ng-model="searchItem" autocomplete="off" placeholder="{{'patient.placeholder.search' | translate}}">
+          <input type="text" class="form-control" id="searchListParam" name="userName" ng-model="searchItem" ng-model-options="{ debounce: 1000 }" ng-change="searchPatientsOnQueryChange();" autocomplete="off" placeholder="{{'patient.placeholder.search' | translate}}">
           <span class="search-icon hillrom-icon icon-search-icon"></span>
         </div>
-        <div class="fixed-filter-box reset-padding-left">
-          <div class="search-dropdown">
-            <select name="search" ng-model="sortOption" ng-change="searchPatients()">
-              <option value="" selected>Newly Created</option>
-              <option value="email">Email</option>
-              <option value="firstName">First Name</option>
-              <option value="lastName">Last Name</option>
-            </select>
-          </div>
+        <div class="fixed-filter-box reset-padding-left">          
         </div>
       </div>
-      <div class="dashboard__manage-view--header">
-        <div class="col-md-2 header--type">
-          <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="patient.patient-name">Patient Name</span>
+     <!--  <div class="col-md-16">
+        <ng-include src="'scripts/components/navbar/searchfilter.html'"></ng-include>
+      </div> -->
+       <div class="row close expanded head_txt" >
+                    <div class="col-md-2 col-sm-2 col-xs-2" ng-click="toggleHeaderAccount()">
+                      <!-- <a class="close expanded" style="float:left">{{expandedSign}}</a> -->
+                      <i class="fa fa-minus-circle" aria-hidden="true" ng-hide="!expandedSign" style="float:left"><p class="head_txt advanced-filters" style="float:right;cursor:pointer"> Advanced Search</p></i>
+                      <i class="fa fa-plus-circle" aria-hidden="true" ng-hide="expandedSign" style="float:left;cursor:pointer">
+                      <p class="head_txt advanced-filters" style="float:right"> Advanced Search</p></i>     
+                    </div>
+                    
+                  </div>
+                  <div id="collapseTwo">
+<ng-include src="'scripts/components/navbar/patientAdvancedSearchFilters.html'"></ng-include>
+      </div>
+      <div class="dashboard__manage-view--header"> 
+        <div class="col-md-3 col-sm-3 header--type pull-left-mob width120">
+          <span ng-class="{'sort-icon--default' : sortPatientList.lastName.isDefault, 'sort-icon-down': sortPatientList.lastName.isDown, 'sort-icon-up':sortPatientList.lastName.isUp}" ng-click="sortType('lastName')" translate="patient.patient-name">Patient Name</span>
         </div>
-        <div class="col-md-2 header--type">
-          <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="patient.hill-rom-id">Hill-Rom ID</span>
+        <div class="col-md-2 col-sm-3 header--type pull-left-mob width120">
+          <span ng-class="{'sort-icon--default' : sortPatientList.hillromId.isDefault, 'sort-icon-down': sortPatientList.hillromId.isDown, 'sort-icon-up':sortPatientList.hillromId.isUp}" ng-click="sortType('hillromId')" translate="patient.hillromId">Hillrom ID</span>
         </div>
-        <div class="col-md-3 header--type">
-          <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="patient.email">Email</span>
+        <div class="col-md-2 header--type col-hide-iPad none">
+          <span ng-class="{'sort-icon--default' : sortPatientList.dob.isDefault, 'sort-icon-down': sortPatientList.dob.isDown, 'sort-icon-up':sortPatientList.dob.isUp}" ng-click="sortType('dob')" translate="patient.date-of-birth">DOB</span>
         </div>
-        <div class="col-md-2 header--type">
-          <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="patient.address">Address</span>
+        <div class="col-md-2 col-sm-3 header--type none">
+          <span ng-class="{'sort-icon--default' : sortPatientList.city.isDefault, 'sort-icon-down': sortPatientList.city.isDown, 'sort-icon-up':sortPatientList.city.isUp}" ng-click="sortType('city')" translate="patient.city-state">City/State</span>
         </div>
-        <div class="col-md-2 header--type">
-          <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="patient.transmission">Transmission</span>
+        <div class="col-md-2 header--type col-hide-iPad none">
+          <span ng-class="{'sort-icon--default' : sortPatientList.transmission.isDefault, 'sort-icon-down': sortPatientList.transmission.isDown, 'sort-icon-up':sortPatientList.transmission.isUp}" ng-click="sortType('transmission')" translate="patient.transmission">Transmission</span>
         </div>
-        <div class="col-md-3 header--type">
-          <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" translate="patient.clinic-name">Clinic Name</span>
+        <div class="col-md-3 col-sm-4 header--type none">
+          <span translate="patient.clinic-name" ng-class="{'sort-icon--default' : sortPatientList.clinicName.isDefault, 'sort-icon-down': sortPatientList.clinicName.isDown, 'sort-icon-up':sortPatientList.clinicName.isUp}" ng-click="sortType('clinicName')">Clinic Name</span>
         </div>
-        <div class="col-md-1 header--type">
-          <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="patient.status">Status</span>
-        </div>
-        <div class="col-md-1 header--type">
-          <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="patient.adherence">Adherence</span>
+       <!--  <div class="col-md-2 col-sm-3 header--type ">
+          <span ng-class="{'sort-icon--default' : sortPatientList.status.isDefault, 'sort-icon-down': sortPatientList.status.isDown, 'sort-icon-up':sortPatientList.status.isUp}" ng-click="sortType('status')" translate="patient.status">Status</span>
+        </div> -->
+        <div class="col-md-2 header--type col-hide-iPad none">
+          <span ng-class="{'sort-icon--default' : sortPatientList.adherence.isDefault, 'sort-icon-down': sortPatientList.adherence.isDown, 'sort-icon-up':sortPatientList.adherence.isUp}" ng-click="sortType('adherence')" translate="patient.adherence">Adherence</span>
         </div>
         <div class="clr"></div>
       </div>
 
-      <div class="dashboard__manage-view--list" ng-repeat="patient in patients" ng-click="patient.isDeleted || selectPatient(patient)" ng-readonly="true" ng-class="{ 'inactive': patient.isDeleted }">
-          <div class="col-md-2 reset-padding">
-            <span class="main-prim-info">{{patient.lastName}} {{patient.firstName}}</span>
-            <span class="main-secon-info">{{patient.dob}}</span>
+      <div class="dashboard__manage-view--list" ng-repeat="patient in patients" ng-click="selectPatient(patient)" ng-readonly="true">
+          <div class="col-md-3 col-sm-3 col-xs-3 reset-padding pull-left-mob width120">
+            <span class="main-prim-info">{{patient.lastName}}, {{patient.firstName}}</span>
+            <span class="main-secon-info none">{{patient.email}}</span>
           </div>
-          <div class="col-md-2 reset-padding centered">
+          <div class="col-md-2 col-sm-3 col-xs-3 reset-padding centered pull-left-mob width120">
             <span class="impo-highlight">{{patient.hillromId}}</span>
           </div>
-          <div class="col-md-3 reset-padding centered">
-            <span class="short-info"></span>
+          <div class="col-md-2 reset-padding centered col-hide-iPad none">
+            <span class="short-info">{{patient.dob}}</span>
           </div>
 
-          <div class="col-md-2 reset-padding centered">
-            <span class="short-info"></span>
+          <div class="col-md-2 col-sm-3 col-xs-3 reset-padding centered none">
+            <span class="short-info">{{patient.city}} </span>
+            <span class="short-info" ng-if="patient.state && patient.city">,</span>
+            <span class="short-info">{{patient.state}} </span>
           </div>
 
-          <div class="col-md-2 reset-padding centered">
-            <span class="short-info"></span>
+          <div class="col-md-2 reset-padding centered col-hide-iPad none">
+            <span class="short-info">{{patient.lastTransmissionDate}}</span>
           </div>
 
-          <div class="col-md-3 reset-padding centered">
-            <span class="short-info"></span>
+          <div class="col-md-3 col-sm-4 col-xs-4 reset-padding centered none">
+            <span class="short-info">{{patient.clinicNamesCSV}}</span>
+
           </div>
 
-          <div class="col-md-1 reset-padding">
-          <div class="icon-font">
-            <span class="icon-lungs"></span>
-          </div>
-          <div class="clr"></div>
-          </div>
+         <!--  <div class="col-md-2 col-sm-3 col-xs-3 reset-padding">
+            <span class="short-info expired centered" ng-if="patient.expired" translate="patient.status-type.expired"></span>
 
-          <div class="col-md-1 reset-padding-left centered text-right">
-            <span class="short-info"></span>
+            <span class="short-info active centered" ng-if="!patient.expired &&!patient.isDeleted" translate="patient.status-type.active"></span>
+
+            <span class="short-info inactive centered" ng-if="!patient.expired &&patient.isDeleted" translate="patient.status-type.inactive"></span>
+          </div>
+ -->
+          <div class="col-md-2 reset-padding-left text-centered col-hide-iPad none">
+            <span class="short-info">{{patient.adherence}}</span>
           </div>
 
           <div class="clr"></div>
        </div>
+       <div class="col-md-16 col-sm-16 empty-list-message" ng-if="patients && patients.length === 0">
+        <span translate="patient.no-patient-found"></span>
+      </div>
 
       <div class="dashboard__manage-view--pagination">
         <div class="col-md-16 reset-padding-right">
           <div class="navbar-right">
-            <span class="record-found" ng-if="patients.length > 0">{{patients.length}} Patients</span>
+            <span class="record-found" ng-if="patients.length > 0">{{total}} Patients</span>
             <span class="record-found" ng-if="patients.length > 0">Found</span>
             <span ng-show="pageCount > 1">
               <span class="navigaion-link cursor-pointer" ng-class="{ 'inactive': !(currentPageIndex > 1) }" ng-click="searchPatients('PREV')">Previous</span>

@@ -1,11 +1,33 @@
-<div class="container login">
-  <div class="row auth--position">
-    <div class=" form__container__auth  col-md-16 col-lg-16">
-      <div class="col-md-6 col-lg-6 ">
-        <img src="assets/images/man.svg">
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation" data-spy="affix" ng-show="!root.isAuthenticated && userRole">
+  <div class="container">
+    <div class="navbar-header navbar-primary">
+      <button data-target="#navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="" ng-click="goToHomePage();"><span class="logo icon-hill-rom-logo"></span></a>
+      <div class="navbar-brand__desc"> 
+        <span class="navbar-brand__desc--text-primary"><span translate-cloak="global.logo-text.visi-view">VisiView</span><sup translate-cloak="global.logo-text.tm-sup">TM</sup></span>
+        <span class="navbar-brand__desc--text-secondary" translate-cloak="global.logo-text.health-portal">Health Portal</span>
       </div>
-      <div class=" col-md-10 col-lg-10 login__container__right-section">
-        <div class="auth-heading">Reset password</div>
+    </div> 
+  </div>
+</nav>
+<div class="container login activationform" ng-show="isActivateUser">
+  <div class="row auth--position">
+    <div class="visi_view_container">
+      <!-- <h1 class="login_portal_name">VisiView</h1>
+      <h3 class="login_portal_name_sub">LEALTH PORTAL</h3> -->
+    </div>
+    <div class="form__container__auth col-md-16">
+      <!-- <div class="col-md-6 login__container__left-section">
+        <img src="images/man.svg">
+      </div> -->
+      <div class=" col-md-16 login__container__right-section pull-right">
+        <div class="auth-heading" translate="reset.finish.title">Reset password</div>
+        <div class="password_inst" translate="reset.instruction"></div>
         <div class="alert alert-danger login-has-error" translate="reset.finish.messages.keymissing" ng-show="keyMissing">
                 <p>The password reset key is missing.</p>
             </div>
@@ -23,86 +45,65 @@
             </div>
         <form class="login-auth-form" ng-show="!success" name="form" role="form" novalidate ng-submit="finishReset()" show-validation>
           <div class="form-group">
-            <input type="password" class="form-control" id="passwordBox" name="password" placeholder="{{'global.form.newpassword.placeholder' | translate}}" validate-on-blur ng-model="resetAccount.password" ng-minlength=8 ng-maxlength=50 ng-keyup="passwordStrength()" ng-pattern="/^(?=^.{8,}$)(?=.*\d)(?=.*[!@#$%^&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/" required>
+            <input type="password" class="form-control" id="passwordBox" name="password" placeholder="{{'global.form.newpassword.placeholder' | translate}}" validate-on-blur ng-model="resetAccount.password" ng-minlength=8 ng-maxlength=50 ng-pattern="/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/" required>
             <div ng-show="(form.password.$dirty && form.password.$showValidationMessage && form.password.$invalid) || submitted">
               <span class="login-has-error"
                 ng-show="form.password.$error.required">
-                Password required.
+               {{'reset.password.required' | translate }}
               </span>
               <span class="login-has-error"
-                ng-show="form.password.$error.minlength">
-                 Password required to be at least 8 characters.
+                ng-show="form.password.$error.pattern">
+                {{'reset.password.customError' | translate }}
               </span>
               <span class="login-has-error"
                 ng-show="form.password.$error.maxlength">
-                Password cannot be longer than 50 characters.
-              </span>
-              <span class="login-has-error"
-                 ng-show="form.password.$error.pattern" >
-                  Password complexity criteria not met.
+                {{'error.password.maxlength' | translate }}
               </span>
             </div>
-
-            <div ng-show="form.password.$dirty" class="CommonWidth" id="passwordStrengthContainer">
-            </div>
-            <div class="CommonWidth">
-              <span id="status"></span>
-            </div>
-        </div>
+          </div>
 
           <div class="form-group">
-            <input type="password" class="form-control" name="confirmPassword" placeholder="{{'global.form.confirmpassword.placeholder' | translate}}"
-                   ng-model="resetAccount.confirmPassword" ng-minlength=8 ng-maxlength=50 ng-pattern="/^(?=^.{8,}$)(?=.*\d)(?=.*[!@#$%^&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/" required>
+            <input type="password" class="form-control" name="confirmPassword" placeholder="{{'global.form.confirmpassword.placeholder' | translate}}" ng-model="resetAccount.confirmPassword" ng-minlength=8 ng-maxlength=50 ng-pattern="/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/" pw-check="passwordBox" required>
 
-            <div ng-show="(form.confirmPassword.$dirty && form.confirmPassword.$showValidationMessage && form.confirmPassword.$invalid) || submitted">
+            <div ng-show="(form.confirmPassword.$dirty && form.confirmPassword.$invalid) || submitted">
               <span class="login-has-error"
-                ng-show="form.confirmPassword.$error.required">
-                Password required.
-              </span>
-              <span class="login-has-error"
-                ng-show="form.confirmPassword.$error.minlength">
-                 Password required to be at least 8 characters.
+                ng-show="form.confirmPassword.$error.required && !form.confirmPassword.$error.pwmatch" translate="error.password.required">
               </span>
               <span class="login-has-error"
                 ng-show="form.confirmPassword.$error.maxlength">
-                Password cannot be longer than 50 characters.
+                 {{'error.confirmPassword.maxlength' | translate }}
               </span>
               <span class="login-has-error"
-                 ng-show="form.confirmPassword.$error.pattern" >
-                  Password complexity criteria not met.
+                ng-show="form.confirmPassword.$error.pwmatch">
+               {{'error.confirmPassword.match' | translate }}
               </span>
             </div>     
         </div>
 
         <div class="form-group">
-          <div class="auth-heading">security question</div>
+          <div class="auth-heading" translate="reset.finish.sec-title">Answer security question</div>
           <div class="auth-select">
             <div class="custom-dropdown">
               <select class="form-control" name="question" validate-on-blur  ng-model="resetAccount.question" required ng-options="question.question for question in questions">
-                <option value="">-- select a security question --</option>
+                <option value="">-- Select a security question --</option>
               </select>
             </div>
           </div>
 
           <div ng-show="(form.question.$dirty && form.question.$showValidationMessage && form.question.$invalid) || submitted">
-            <p class="login-has-error"
-               ng-show="form.question.$error.required">
-                Security question is required.
+            <p class="login-has-error" ng-show="form.question.$error.required" translate="error.securityQuestion.required">
             </p>
           </div>  
         </div>
 
           <div class="form-group">
-            <input type="text" class="form-control" validate-on-blur name="answer" ng-model="resetAccount.answer" required placeholder="{{'reset.placeholder.security-answer' | translate}}">
+            <input type="password" class="form-control" ng-disabled="!resetAccount.question" validate-on-blur name="answer" ng-model="resetAccount.answer" required placeholder="{{'reset.placeholder.security-answer' | translate}}">
             <div ng-show="(form.answer.$dirty && form.answer.$showValidationMessage && form.answer.$invalid) || submitted">
-              <span class="login-has-error"
-                ng-show="form.answer.$error.required">
-                Answer required.
-              </span>
+              <span class="login-has-error" ng-show="form.answer.$error.required" translate="error.answer.required"></span>
             </div>
           </div>
 
-          <button type="submit" class="myButton" ng-click="formSubmit()" translate="reset.finish.form.button">Reset Password</button>
+          <button type="submit" class="myButton_blue" ng-click="formSubmit()" translate="reset.finish.form.button">Activate Account</button>
         </form>
       </div>
     </div>

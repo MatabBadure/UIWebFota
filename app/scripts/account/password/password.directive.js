@@ -2,7 +2,7 @@
 'use strict';
 
 angular.module('hillromvestApp')
-    .directive('passwordStrengthBar', function () {
+    .directive('passwordStrengthBar', [function (){
         return {
             replace: true,
             restrict: 'E',
@@ -18,7 +18,7 @@ angular.module('hillromvestApp')
                     mesureStrength: function (p) {
 
                         var _force = 0;
-                        var _regex = /[$-/:-?{-~!"^_`\[\]]/g; // "
+                        var _regex = /[$-/:-?-~!"^_`\[\]]/g; // "
 
                         var _lowerLetters = /[a-z]+/.test(p);
                         var _upperLetters = /[A-Z]+/.test(p);
@@ -77,5 +77,5 @@ angular.module('hillromvestApp')
                     }
                 });
             }
-        };
-    });
+        }
+    }]);

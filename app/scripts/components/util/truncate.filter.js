@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hillromvestApp')
-    .filter('characters', function () {
+    .filter('characters', [function () {
         return function (input, chars, breakOnWord) {
             if (isNaN(chars)) {
                 return input;
@@ -27,8 +27,8 @@ angular.module('hillromvestApp')
             }
             return input;
         };
-    })
-    .filter('words', function () {
+    }])
+    .filter('words', [function () {
         return function (input, words) {
             if (isNaN(words)) {
                 return input;
@@ -44,4 +44,4 @@ angular.module('hillromvestApp')
             }
             return input;
         };
-    });
+    }]);

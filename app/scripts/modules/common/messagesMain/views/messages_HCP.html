@@ -1,0 +1,245 @@
+<ng-include  src="'scripts/components/navbar/navbarhcp.html'"></ng-include>
+<div class="navbar patient-user patient-user--nav">
+  <div class="container">
+    <div class="patient-user__navbar" id="navbar-collapse">
+      <ul class="nav navbar-nav patient-dashboard">
+        <li>
+          <a>
+            <span class="" translate="global.tabs.messages"></span>
+          </a>
+        </li>
+      </ul>
+      <ul  class="nav navbar-nav pull-right right dashboard_container">
+        
+        <li class="hcp_hsp_name_a" dropdown>
+          <a ng-href="" data-target="#" id="dropdownMenu1" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            <span class="">{{selectedClinicForHCP.name}} <span class="nav_drop_arrow hillrom-icon icon-arrow-down"></span></span>
+          </a>
+         <ul class="dropdown-menu hcp_dashbaord dashboard_clinic_list dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1"> 
+              <li role="menuitem" ng-repeat='clinic in clinicsHCP' ng-click="switchClinicHCP(clinic)"><a>{{::clinic.name}}</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="dashboard dashboard--content padding-bottom-ls">
+  <div class="container dashboard__form">
+<div class="row">
+      <div class="col-xs-16 reset-padding super-head">
+         <div ng-if="(flag == 'new')" class="col-xs-4" style="padding-top:10px;">
+        <span  class="" translate="global.tabs.compose-message"></span>
+      </div>
+        <div ng-if="(flag != 'new')" class="col-xs-2" style="padding-top:10px;">
+            <span ng-if="(flag == 'inbox')" class="" translate="global.messaging.inbox"></span>
+            <span ng-if="(flag == 'archive')" class="" translate="global.messaging.archive"></span>
+            <span ng-if="(flag == 'sentitems')" class="" translate="global.messaging.sent-items"></span>
+      </div>
+      <div class="col-xs-13" ng-if="(messagebodyflag) || (archivemessagebodyflag)">
+<a ng-click="goToBack(flag)" class="back"><i class="fa fa-mail-reply" aria-hidden="true"></i> Back </a>
+      </div>
+      <div class="col-xs-13" ng-if="(flag != 'new') && (flag != 'sentitems') && (!nodataflagHCP) && (!noarchivedataflagHCP)">
+       <div ng-if="(flag != 'thread')" class="col-xs-2 checkallbox" style="padding-top:10px;">
+        <span ng-if="(flag == 'inbox')" > <input type="checkbox" ng-click="toggleAll()" ng-checked="isAllSelected"></span>
+        <span ng-if="(flag == 'archive')" > <input type="checkbox" ng-click="toggleAllForArchive()" ng-checked="isAllSelected"></span>
+       </div>
+       <div class="col-xs-2 aligncenter hcp-arc-div" style="padding-top:10px; cursor:pointer;" ng-click="ArchiveMessages()">
+       <div ng-if = "((flag=='inbox') && (readflag || unreadflag))" style=" border:0.5px solid white">
+        <img src="images/archive-folder.png" style="width:20px; height:20px"/> <span translate="global.messaging.archive" class="aligntextwithimg"></span>
+       </div>
+     </div>
+       <div ng-if="readflag" class="col-xs-4 aligncenter read arc-pos-read read1" style="padding-top:10px; cursor:pointer;" ng-click="markAsRead()">
+       <div style="border:0.5px solid white;">
+         <img src="images/Mark-read.png" style="width:20px; height:20px;"/> <span translate="global.messaging.mark-as-read" class="aligntextwithimg"></span>
+       </div>
+     </div>
+       <div ng-if="unreadflag" class="col-xs-4 aligncenter" style="padding-top:10px; cursor:pointer;" ng-click="markAsUnread()">
+       <div class="arc-unread" style=" border:0.5px solid white">
+         <img src="images/mark-unread.png" style="width:20px; height:20px"/> <span translate="global.messaging.mark-as-unread" class="aligntextwithimg"></span>
+       </div>
+     </div>
+     </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-18 reset-padding after-head-container">
+       <!-- For Menu items(New Message, Inbox, Sent items, Archive) display  --> 
+        <div class="col-sm-2 optionSection">
+          
+           <a href="" ng-click="SwitchTabs('inbox')" ng-class="isactive('inbox')" > <i class="fa fa-inbox" aria-hidden="true"></i>
+           <span translate="global.messaging.inbox"></span>({{UnreadMessages}})</a>
+
+           <a href="" ng-click="SwitchTabs('archive')" ng-class="isactive('archive')" ><i class="fa fa-archive" aria-hidden="true"></i>
+           <span translate="global.messaging.archive"></span></a>
+        </div>
+        <!-- For Inbox -->
+       <div ng-if="flag == 'inbox'" >
+        <div class="col-xs-14 messageList-container"> 
+          <div class="messageList">
+            <div class="row" ng-if="(messagelistflag && !messagebodyflag)">
+          <ul class="ulheader">
+            <li>
+              <div class="col-xs-5 hcp-msg-from">
+                <span ng-class="{'sort-icon--default' : sortMessageList.from.isDefault, 'sort-icon-down': sortMessageList.from.isDown, 'sort-icon-up':sortMessageList.from.isUp}" ng-click="sortType('From',0)" translate="global.messaging.from"></span> 
+              </div>
+            <div class="col-xs-9 hcp-msg-sub">
+              <span ng-class="{'sort-icon--default' : sortMessageList.subject.isDefault, 'sort-icon-down': sortMessageList.subject.isDown, 'sort-icon-up':sortMessageList.subject.isUp}" ng-click="sortType('Subject',0)" translate="global.messaging.subject-of-message"></span>
+            </div>
+             <div class="col-xs-2 hcp-msg-date-head">
+              <span ng-class="{'sort-icon--default' : sortMessageList.date.isDefault, 'sort-icon-down': sortMessageList.date.isDown, 'sort-icon-up':sortMessageList.date.isUp}" ng-click="sortType('Date',0)" translate="global.messaging.date"></span>
+            </div>
+            </li>
+          </ul>
+        </div>
+        <div class="row">
+            <div ng-if="messagelistflag" class="col-xs-16 msgcontainer" style="float:left; min-height: 400px;max-height: 400px; overflow-y: scroll;">
+           <!--   <div ng-repeat="InboxMessage in InboxMessageList" ng-if="$index == 0" >
+            <input type="hidden"  data-ng-init="getMessageBodyOnPageload(InboxMessage)">
+            </div>   -->
+          <div ng-repeat="InboxMessage in InboxMessageList" ng-class="{'unread': (InboxMessage[2] != true) }"  style=" padding: 8px;
+               border-bottom: 0.5px solid #d0cbcb;color: #d0cbcb;cursor: pointer; " class="row">
+                  <div class="col-xs-1">  <input type="checkbox" ng-model="InboxMessage.selected" ng-change="optionToggled()"></div> 
+                  <div class="col-xs-15 main-msg"> <a href=""  ng-click = "getMessageBody(InboxMessage)" style=" color:#999; text-decoration:none;">
+                     <div class="col-xs-4 hcp-msg-subject" style="overflow: hidden; text-overflow: ellipsis;">
+                   <span style="white-space: nowrap;"> {{InboxMessage[8]}},{{InboxMessage[9]}} </span> <span><i style="color:red;" class="fa fa-flag hcp-msg-flag" ng-if="InboxMessage[2] != true" aria-hidden="true"></i><i style="color:green;" class="fa fa-check hcp-msg-tick" ng-if="InboxMessage[2] == true" aria-hidden="true"></i></span> </div> 
+                   <div class="col-xs-9 hcp-msg-desc" style="  overflow: hidden;
+    text-overflow: ellipsis;"><span style="white-space: nowrap;">{{InboxMessage[5]}}</span></div>
+     <div class="col-xs-2 hcp-msg-date">
+      <span style="white-space:nowrap;">{{InboxMessage[4]}}</span> 
+    </div>
+                   </a></div>
+           </div>
+           <div id = "NodataDiv" class="graph_nodata" ng-if = "nodataflagHCP">
+    <span class="noData_text"> No Messages Available!</span>
+  </div>
+            
+         </div>
+ <div ng-if="messagebodyflag" class="col-xs-16" style="max-height:400px; min-height:400px; overflow-y:scroll;" >
+           <div class="message-thread-container" ng-repeat="message in messageBodyObject" id="messageBodyArea"> 
+           <div class="row">
+            <div class="col-xs-15 msghead">
+              {{message[1]}}</div>
+            </div>
+            <div class="row">
+              <div class="col-xs-11 msgtitle">{{message[0].messageSubject}}</div>
+              <div class="col-xs-4 msgtimestamp">{{message[0].messageDatetime}}</div>
+            </div><div class="row">
+            <div class="col-xs-15 msgbody">
+{{message[0].messageText}}</div></div>
+            <div id = "NodataDiv" class="graph_nodata" ng-if = "nomessagebodyavailableHCP">
+    <span class="noData_text"> No Messages Available!</span>
+  </div>
+           </div> 
+          <!--  <div class="col-xs-8" style="float:right;">
+                    <button class="hillrom-btn btn-primary float-right" ng-click="setflag('inbox')" translate="global.messaging.reply"></button>
+                  </div> -->   
+          </div>
+
+          </div>      
+        </div>      
+      
+        <div class="col-sm-18" ng-if="(messagelistflag && !messagebodyflag)" ng-show="totalMessages >= 1">
+          <div class="col-sm-5 paginationcontainer " style="float:right; margin-top: 14px;">
+           <span style="color:#7ca3dc;"> {{totalMessages}} Messages Found &nbsp  </span>
+            <span ng-show="pageCount > 1">
+<span class="navigaion-link cursor-pointer active" ng-class="{ 'inactiveColor': !(PageNumber > 1) }" ng-click="Pagination('PREV')">Previous</span>
+            <span class="navigaion-no ng-binding">{{currentPageIndex}}/{{pageCount}}</span>  <span class="navigaion-link cursor-pointer active" ng-class="{ 'inactiveColor':  (PageNumber >= pageCount) }" ng-click="Pagination('NEXT')">Next</span>
+          </span>
+          </div>
+        </div>
+      </div>
+      </div>  
+      <!--For Archive -->
+      <div ng-if="flag == 'archive'" >
+        <div class="col-xs-14 messageList-container"> 
+          <div class="messageList">
+            <div class="row" ng-if="(archivemessagelistflag && !archivemessagebodyflag)">
+          <ul class="ulheader">
+            <li>
+              <div class="col-xs-5 hcp-msg-from">
+                <span ng-class="{'sort-icon--default' : sortArchiveMessageList.from.isDefault, 'sort-icon-down': sortArchiveMessageList.from.isDown, 'sort-icon-up':sortArchiveMessageList.from.isUp}" ng-click="sortTypeArchive('From',0)" translate="global.messaging.from"></span> 
+              </div>
+            <div class="col-xs-9 hcp-msg-sub">
+              <span ng-class="{'sort-icon--default' : sortArchiveMessageList.subject.isDefault, 'sort-icon-down': sortArchiveMessageList.subject.isDown, 'sort-icon-up':sortArchiveMessageList.subject.isUp}" ng-click="sortTypeArchive('Subject',0)" translate="global.messaging.subject-of-message"></span>
+            </div>
+             <div class="col-xs-2 hcp-msg-date-head">
+              <span ng-class="{'sort-icon--default' : sortArchiveMessageList.date.isDefault, 'sort-icon-down': sortArchiveMessageList.date.isDown, 'sort-icon-up':sortArchiveMessageList.date.isUp}" ng-click="sortTypeArchive('Date',0)" translate="global.messaging.date"></span>
+            </div>
+            </li>
+          </ul>
+        </div>
+        <div class="row">
+            <div  ng-if="archivemessagelistflag" class="col-xs-16 msgcontainer" style="float:left; min-height: 400px;max-height: 400px; overflow-y: scroll;">
+              <!-- <div ng-repeat="ArchiveMessage in ArchiveMessageList" ng-if="$index < 1" >
+            <input type="hidden"  data-ng-init="getMessageBodyOnPageload(ArchiveMessage)">
+            </div>  -->
+          <div ng-repeat="ArchiveMessage in ArchiveMessageList" ng-class="{'unread': (ArchiveMessage[2] != true) }" style=" padding: 8px; border-bottom: 0.5px solid #d0cbcb;color: #d0cbcb;cursor: pointer; " class="row" >
+                 <div class="col-xs-1"><input type="checkbox" ng-model="ArchiveMessage.selected" ng-change="optionToggledForArchive()"></div>
+                  <div class="col-xs-15 main-msg">
+                   <a href="" ng-click="getMessageBody(ArchiveMessage)" style=" color:#999; text-decoration:none;">
+                    <div class="col-xs-4 hcp-msg-subject1" style="overflow: hidden; text-overflow: ellipsis;">
+                   <span style="white-space: nowrap;"> {{ArchiveMessage[8]}},{{ArchiveMessage[9]}} </span> <span><i style="color:red;" class="fa fa-flag hcp-msg-flag" ng-if="ArchiveMessage[2] != true" aria-hidden="true"></i><i style="color:green;" class="fa fa-check hcp-msg-tick" ng-if="ArchiveMessage[2] == true" aria-hidden="true"></i></span> </div>
+                   <div class="col-xs-9 hcp-msg-desc" style=" overflow: hidden;
+    text-overflow: ellipsis;"><span style="white-space: nowrap;">{{ArchiveMessage[5]}}</span></div>
+    <div class="col-xs-2 hcp-msg-date"><span style="white-space:nowrap;">{{ArchiveMessage[4]}}</span>
+    </div> 
+                   </a>
+                 </div>
+           </div>
+ <div id = "NodataDiv" class="graph_nodata" ng-if = "noarchivedataflagHCP">
+    <span class="noData_text">No Messages Available!</span>
+  </div>
+         </div>
+ <div ng-if="archivemessagebodyflag" class="col-xs-16" style="max-height:400px; min-height:400px; overflow-y:scroll;" >
+  <div class="message-thread-container" ng-repeat="message in messageBodyObject" id="messageBodyArea"> 
+           <div class="row">
+            <div class="col-xs-15 msghead">
+              {{message[1]}}</div>
+            </div>
+            <div class="row">
+              <div class="col-xs-11 msgtitle">{{message[0].messageSubject}}</div>
+              <div class="col-xs-4 msgtimestamp">{{message[0].messageDatetime}}</div>
+            </div><div class="row">
+            <div class="col-xs-15 msgbody">
+{{message[0].messageText}}</div></div>
+            <div id = "NodataDiv" class="graph_nodata" ng-if = "nomessagebodyavailableHCP">
+    <span class="noData_text"> No Messages Available!</span>
+  </div>
+           </div> 
+          <!--  <div class="col-xs-8" style="float:right;">
+                    <button class="hillrom-btn btn-primary float-right" ng-click="setflag('inbox')" translate="global.messaging.reply"></button>
+                  </div> -->   
+          </div>
+
+          </div>      
+        </div>     
+      
+        <div class="col-sm-18" ng-if="(archivemessagelistflag && !archivemessagebodyflag)" ng-show="totalMessages >= 1">
+          <div class="col-sm-5 paginationcontainer " style="float:right; margin-top: 14px;">
+           <span style="color:#7ca3dc;"> {{totalMessages}} Messages Found  &nbsp  </span>
+           <span ng-show="pageCount > 1">
+<span class="navigaion-link cursor-pointer active" ng-class="{ 'inactiveColor': !(PageNumber > 1) }" ng-click="Pagination('PREV')">Previous</span>
+            <span class="navigaion-no ng-binding">{{currentPageIndex}}/{{pageCount}}</span>  <span class="navigaion-link cursor-pointer active" ng-class="{ 'inactiveColor': (PageNumber >= pageCount) }" ng-click="Pagination('NEXT')">Next</span>
+          </span>
+          </div>
+        </div>
+      </div>
+      </div>
+<!-- For Message thread display -->
+      </div>
+        
+        </div>
+      </div>
+      <div class="container dashboard__form">
+    <div class="row">
+     <div class="col-md-16 emergencyinfo">
+  <i class="fa fa-asterisk" aria-hidden="true" style="
+    font-size: 12px !important;"></i>
+  System is not regularly monitored. Call 911 if you have a medical emergency.
+  <div>
+  </div>
+</div>
+    </div>
+  </div>
+</div>

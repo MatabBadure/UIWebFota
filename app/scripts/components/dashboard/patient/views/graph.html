@@ -1,227 +1,621 @@
-<div class="container patient_wrapper">
-			<div class="col-md-16">
+<div class="container admin-user">
+	<div class="col-md-16 col-sm-16 margin-top reset-padding mob_no_margin">
+		<div class="user-gen-details">
+		<span ng-class="{'monarchIcon': (getDeviceTypeforBothIcon() =='MONARCH'), 'visivestIcon': (getDeviceTypeforBothIcon() =='VEST'), 'bothdeviceIcon': (getDeviceTypeforBothIcon() =='ALL')}">
+			<span class="user-gen-details--name">{{slectedPatient.firstName}} {{slectedPatient.lastName}}</span>
+			<span class="user-gen-details--hr-id">{{slectedPatient.hillromId}}</span>
+			</span>
+		</div>
+	</div>
+</div>
+		<div class="container patient_wrapper">
+			<div class="col-md-16 col-sm-16 padding_0">
 				<div class="row">
-					<div class="col-md-12">
+					<div class="col-md-16 col-sm-16 padding_0">
 						<div class="stats_chart_section">
-							<div class="stats_header"><h4>Statistics</h4></div>
+							<div class="stats_header"><h4 translate="graph.statistics"></h4></div>
 							<div class="stats_chart_container">
-								<div class="col-3">
+								<div class="col-3 hover_symbol ipadHeightBalance" ng-click="$parent.adherenceTable = true; getAdherenceScore('week')">
 									<div class="pie_chart" easypiechart options="adherence" percent="adherenceScore"></div>
 									<div class="stats_chart_content score">
-										<h4 class="percent">{{adherenceScore}}</h4>
-										<p class="descrip">Adherence Score</p>
+										<h4 class="percent" ng-bind="adherenceScore"></h4>
+										<p class="descrip" translate="graph.adherence-score"></p>
 									</div>
 									<div class="chart_inner_icon icon-adherence"></div>
 								</div>
-								<div class="col-3">
+								<div class="col-3 ipadHeightBalance">
 									<div class="pie_chart"  easypiechart options="hmr" percent="hmrRunRate"></div>
 									<div class="stats_chart_content hmr">
-										<h4 class="percent">{{hmrRunRate}}</h4>
-										<p class="descrip">HMR Runrate</p>
+										<h4 class="percent"  ng-bind="hmrRunRate"></h4>
+										<p class="descrip" translate="graph.averageSessionMinutes" ></p>
 									</div>
 									<div class="chart_inner_icon icon-man-running"></div>
 								</div>
-								<div class="col-3">
+								<div class="col-3 ipadHeightBalance">
 									<div class="pie_chart"  easypiechart options="missedtherapy" percent="missedtherapyDays"></div>
 									<div class="stats_chart_content missed">
-										<h4 class="percent">{{missedtherapyDays}}</h4>
-										<p class="descrip">Missed Therapy Days</p>
+										<h4 class="percent" ng-bind="missedtherapyDays"></h4>
+										<p class="descrip" translate="graph.consecutiveMissedDays"> </p>
 									</div>
 									<div class="chart_inner_icon icon-lungs"></div>
 								</div>
+								<div class="col-3 ipadHeightBalance">
+									<div class="pie_chart"  easypiechart options="settingDeviation" percent="settingsDeviatedDaysCount"></div>
+									<div class="stats_chart_content deviation">
+										<h4 class="percent" ng-bind="settingsDeviatedDaysCount"></h4>
+										<p class="descrip" translate="graph.consecutiveFrequencyDeviationDays"> </p>
+									</div>
+									<div class="chart_inner_icon icon-settings"></div>
+								</div>
 							</div>
-						</div>
-					</div>
-					<div class="col-md-4">
-						<div class="dashboard_noti_section">
-							<div class="header_noti"><h4>Notification</h4></div>
-							<div class="notification_container">
-								<ul>
-									<li><span class="dsh_icon"></span>Your recommended compliance the therapy is low <span><a href="" class="read_more">more</a></span></li>
-									<li><span class="dsh_icon icon-lungs"></span>Your recommended compliance the therapy is low <span><a href="" class="read_more">more</a></span></li>
-								</ul>
+							<div class="col-md-16 col-sm-16 adherence_details_wrapper" ng-show="adherenceTable">
+								<div class="row">
+									<div class="col-md-16 col-sm-16 header_adherence_details">
+									<div class="row">
+										<div class="col-md-6 col-sm-6">
+											<p class="head_txt" translate="graph.adherence-score-table.title" style="font-size: 17px;
+    padding-top: 5px;"></p>
+										</div>
+										<div class="col-md-9 col-sm-9 adherence_history_date">
+				<ul class="nav1 nav-pills pull-right ">
+					<li role="presentation" class=""><a href="" ng-class="{active: activeSelection === 'day'}"  ng-click="getAdherenceScore('day')" translate="graph.day"></a></li>
+					<li role="presentation" class=""><a ng-class="{active: activeSelection === 'week'}" ng-click="getAdherenceScore('week')" href="">Week</a></li>
+					<li role="presentation" class=""><a href="" ng-class="{active: activeSelection === 'month'}" ng-click="getAdherenceScore('month')" translate="graph.month"></a></li>
+					<li role="presentation" class=""><a href="" ng-class="{active: activeSelection === 'year'}" ng-click="getAdherenceScore('year')" translate="graph.year"></a></li>
+					<li role="presentation" class="" id="dp1"><a href="" date-range-picker class="date-picker" ng-model="customdates" parentEl="#dp1" options="dateOpts" ><span class="icon-calendar"></span></a></li>
+				</ul>
+			</div>
+										<div class="col-md-1">
+											<span class="pull-right" style="padding-top:5px;"><a class="close" href="javascript:void(0)" ng-click="$parent.adherenceTable = false">X</a></span>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-16 col-sm-16 headerAccount closeHtml reset-padding">
+									<div class="row close expanded head_txt" ng-click="toggleHeaderAccount()">
+										<div class="col-md-8 col-sm-8 col-xs-8">
+											<p class="head_txt">How to calculate adherence score?</p>
+										</div>
+										<div class="col-md-7 col-sm-7 col-xs-7">
+											<span ng-if="!dayFlag" class="pull-right">
+											<span class="date">{{fromDateHistory}}</span> - <span class="date">{{toDateHistory}}</span>
+										</span>
+										</span>
+			<span ng-if="dayFlag" class="date pull-right">{{toDateHistory}}<span>
+										</div>
+										<div class="col-md-1 col-sm-1">
+											<span class="pull-right">
+												<a class="close expanded">{{expandedSign}}</a></span>
+										</div>
+									</div>
+								</div>
+							<div  class="col-md-16 col-sm-16 padding10 survey_grey_color" id="collapseTwo">
+							<ul class="reset-padding">
+								<li>Everyone gets an Adherence Score of 100 to start</li>
+								<li>Every notification subtracts points from your Adherence Score</li>
+								<li>Notifications are based upon activity over the past three days
+									<ul>
+										<li>Missed Therapy Day Notification: 3 consecutive days with no therapy sessions recorded and notification continues each day until a therapy is recorded</li>
+										<li>Therapy Minutes Below Protocol: Total therapy minutes over the last 3 days is below protocol</li>
+										<li>Frequency Deviation Below Protocol: Average frequency is over 15% below protocol</li>
+									</ul>
+								</li>
+								<li>Notification type and amount off your score are as follows:
+									<ul>
+										<li>Priority 1</li>
+									</ul>
+								</li>
+								<li>Missed therapy days = 5 points off your score and lower priority notifications are ignored
+									<ul>
+										<li>Priority 2 (points deducted only if priority 1 notification is not active)</li>
+									</ul>
+								</li>
+								<li>Therapy Minutes Notification = 2 points off your score</li>
+								<li>Device Frequency Notification = 1 point off your score</li>
+								<li>Every day you follow your care plan, 1 point is added (if below 100) back to your score</li>
+							</ul>
 							</div>
+								<table class="table margin0">
+									<thead>
+										<tr>
+											<th class="col-md-3 col-sm-3 col-xs-4" translate="graph.adherence-score-table.date">Date</th>
+											<th class="col-md-7 col-sm-7 col-xs-7">
+											<table class="col-md-16 col-sm-16 col-xs-16 row">
+												<thead>
+													<tr class="col-md-16 col-sm-16 col-xs-16 row">
+														<th class="col-md-8 col-sm-8 col-xs-13 inner_th text-left text-center" translate="graph.adherence-score-table.notification"></th>
+														<th class="col-md-8 col-sm-8 col-xs-3 inner_th text-center" translate="graph.adherence-score-table.change"></th>
+													</tr>
+												</thead>
+											</table>
+											</th>
+											<!-- <th class="col-md-4 text-center" >Change</th> -->
+											<th class="col-md-3 col-sm-2 col-xs-5 text-center-mob" translate="graph.adherence-score-table.updated-score">Updated Score</th>
+											<th class="col-md-3 col-sm-3 hidden-xs text-center padding-left44" translate="graph.adherence-score-table.protocol">Protocol</th>
+										</tr>
+									</thead>
+								</table>
+								<!-- 	<tbody>
+										<tr ng-repeat="adherenceScore in adherenceScores">
+											<td class="col-md-4">{{adherenceScore.date}}</td>
+											<td class="col-md-8">
+												<table class="col-md-16 row">
+													<tbody>
+														<tr class="col-md-16 row" ng-repeat="(key, val) in adherenceScore.notificationPoints">
+															<td class="inner_td col-md-8">{{key}}</td>
+															<td class="inner_td col-md-8 text-center">{{val}}</td>
+														</tr>
+													</tbody>
+
+												</table>
+											</td>
+											<td class="col-md-4 text-center">{{adherenceScore.change}}</td>
+											<td class="col-md-4 text-center">{{adherenceScore.updatedScore}}</td>
+										</tr>
+									</tbody>
+								</table> -->
+	<div id = "NodataDiv" class="historyNoData first-row" ng-if = "noHistoryAvailable">
+		<span class="noData_text"> No Therapy Transmission Received for This Day!</span>
+	</div>
+								<div ng-if="!noHistoryAvailable && !loading" class="col-md-16 col-sm-16 col-xs-16 padding0 reset-padding vertical_align border-bottom border-lt border-rt" ng-repeat="adherenceScore in adherencetrendData">
+									<div class="col-md-14 col-sm-14 col-xs-16 padding0 reset-padding">
+										<div class="col-md-16 col-sm-16 col-xs-16 padding0 reset-padding adherencescore survey_grey_color" ng-class="{'border-bottom': adherenceScore.adherenceTrends.length !== $index+1}" ng-repeat ="adherenceTrend in adherenceScore.adherenceTrends track by $index">
+											<div class="col-md-4 col-sm-4 col-xs-4 first-row padding10">{{adherenceTrend.date}}</div>
+												<div class="col-md-8 col-sm-8 col-xs-8 padding10">
+													<div class="col-md-16 col-sm-16 col-xs-16 row" ng-repeat="(key, value) in adherenceTrend.notificationPoints">
+													<div class="col-md-8 col-sm-8 col-xs-13 first-row ">{{key}} 
+													<div style="float:right" ng-init = "popoverFlag = false" ng-mouseup="GetAdherenceScoreReason(adherenceTrend.date,key)" ng-mouseleave = "popoverFlag = false" ><a href="#" id="mypopover"  ng-click = "popoverFlag =true" popover={{myPopoverData}} popover-placement="top" popover-trigger="click" popover-is-open="popoverFlag">Details</a>
+														</div></div>
+													<div class="col-md-5 col-sm-8 col-xs-3 first-row text-center">{{value}}</div>
+													</div>
+												</div>
+												<div class="col-md-4 col-sm-2 col-xs-4 text-align_c first-row padding10  text-center-mob">{{adherenceTrend.updatedScore}}</div>
+												
+										</div>
+									</div>
+										<div ng-if="!noHistoryAvailable" class="col-md-2 col-sm-2 col-xs-2  text-center text-align-r padding10 cyan-blue-light first-row-view1 pointer-fill-event view-column" ng-click="viewProtocol(adherenceScore.protocols)">View</div>
+								</div>
+						
+						 <div class="dashboard__manage-view--pagination">
+        <div class="col-md-16 reset-padding-right">
+          <div class="navbar-right">
+            <span class="record-found" ng-if="adherencetrendlength > 0">{{adherencetrendlength}} Record(s)</span>
+            <span class="record-found" ng-if="adherencetrendlength > 0">Found</span>
+            <span ng-show="pageCount > 1">
+              <span class="navigaion-link cursor-pointer" ng-class="{ 'inactive': !(currentPageIndex > 1) }" ng-click="AdherenceHistoryPagination('PREV')">Previous</span>
+              <span class="navigaion-no">{{currentPageIndex}}/{{pageCount}}</span>
+              <span class="navigaion-link cursor-pointer" ng-class="{ 'inactive': !(pageCount > currentPageIndex) }" ng-click="AdherenceHistoryPagination('NEXT')">Next</span>
+            </span>
+          </div>
+          <div class="clr"></div>
+        </div>
+      </div>
+      	</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="col-md-16">
-				<div class="bar_graph_header">
-					<div class="col-md-5 left_header_barchart">
-						<div class="row">
-							<ul class="nav nav-pills">
-							<li><a href="" ng-click="showHmrGraph()">HMR Data</a></li>
-							<li><a href="" ng-click="showComplianceGraph()">Compliance</a></li>
-						</ul>
-						<!-- <span ng-click="HMRGraph()">HMR Data</span>
-						<span ng-click="complianceGraph()">Compliance</span> -->
-						</div>
-					</div>
-					<div class="col-md-11 right_header_barchart">
-						<ul class="nav nav-pills pull-right ">
-							<li role="presentation" class=""><a href="" ng-hide="complianceGraph" ng-click="dayChart()">Day</a></li>
-							<li role="presentation" class=""><a href="" ng-click="weeklyChart()">Week</a></li>
-							<li role="presentation" class=""><a href="" ng-click="monthlyChart()">Month</a></li>
-							<li role="presentation" class=""><a href="" ng-click="yearlyChart()">Year</a></li>
-							<li role="presentation" class="" id="dp3"><a href="" date-range-picker class="date-picker" ng-model="dates" parentEl="#dp3" options="opts" >Date</a></li>
-						</ul>
-					</div>
-					<!-- <div>
-						<span ng-click="hmrDailyChart()">Daily</span>
-						<span ng-click="hmrWeeklyChart()">Weekly</span>
-						<span ng-click="hmrMonthlyChart()">Monthly</span>
-						<span ng-click="hmrYearlyChart()">Yearly</span>
-						<span>Datepicker</span>
-					</div>-->	
+
+		<loading loaded="isGraphLoaded"></loading>
+	<!-- adding new section for graphs -->
+	<div class="col-md-16 col-sm-16 padding0" ng-class="{'pointer-no-event': !isGraphLoaded, 'pointer-fill-event': isGraphLoaded}">
+		<div class="bar_graph_header">
+			<div class="col-md-5 col-sm-7 left_header_barchart padding0">
+				<div class="row" style = "width:500px">
+					<ul class="nav nav-pills">
+					<li><a href="" ng-class="{active: isCompliance}" ng-click="isGraphLoaded  && getCompliance()" translate="graph.protocolGraph"></a></li>
+					<li><a ng-class="{active: isHMR }" href="" ng-click="isGraphLoaded && getHMR()" translate="graph.hmr-data"></a></li>
+					<li><a ng-class="{active: isAdherenceTrend}" href="" ng-click="isGraphLoaded && getAdherenceTrend()" translate="graph.adherenceTrend"></a></li>
+				</ul>
 				</div>
-				<div class="pull-right week_date_container">
-					<span ng-if="fromDate !== toDate"> 
-							<span class="date">{{fromDate}}</span> - <span class="date">{{toDate}}</span>
-					</span>
-					<span ng-if="fromDate === toDate" class="date">{{fromDate}}<span>
-				</div>	
+			</div>
+			<div class="col-md-11 col-sm-9 right_header_barchart">
+				<ul class="nav nav-pills pull-right ">
+					<li role="presentation" class=""><a href="" ng-class="{active: durationRange === 'Day'}" ng-hide="complianceGraph" ng-click="isGraphLoaded && getDayChart()" translate="graph.day"></a></li>
+					<li role="presentation" class=""><a ng-class="{active: durationRange === 'Week'}" href="" ng-click="isGraphLoaded && getWeekChart()">Week</a></li>
+					<li role="presentation" class=""><a href="" ng-class="{active: durationRange === 'Month'}" ng-click="isGraphLoaded && getMonthChart()" translate="graph.month"></a></li>
+					<li role="presentation" class=""><a href="" ng-class="{active: durationRange === 'Year'}" ng-click="isGraphLoaded && getYearChart()" translate="graph.year"></a></li>
+					<li role="presentation" class="" id="dp1"><a href="" date-range-picker class="date-picker" ng-model="dates" parentEl="#dp1" options="opts" ><span class="icon-calendar"></span></a></li>
+				</ul>
 			</div>
 		</div>
-		<style>
-		text {
-		font: 12px sans-serif;
-		}
-		svg {
-		display: block;
-		}
-		html, body, #complianceGraph, svg {
-		margin: 0px;
-		padding: 0px;
-		height: 100%;
-		width: 100%;
-		}
-}
-		</style>
-	<div ng-if="hmrGraph">
-		<div ng-if="hmrLineGraph">
-	 		<nvd3-line-chart
-	    	  data="graphData"
-	        id="HMRLineGraph"
-	        width="1250"
-	        height="350"
-	        showXAxis="true"
-	        showYAxis="true"
-	        legends="true"
-	        interactive="true"
-	        tooltips="true"
-	        isArea="true"
-	        interpolate="step-after" 
-	        yAxisLabel="Minutes"
-          margin="{left:100,top:20,bottom:20,right:10}"
-	        xAxisTickFormat="xAxisTickFormatFunction(format)"
-	        xAxisTickValues="xAxisTickValuesFunction()"
-	        noData="No Data Found!"
-	        objectEquality="true"
-	        forcey="[yAxisRangeForHMRLine.min,yAxisRangeForHMRLine.max]"
-	        tooltipcontent="toolTipContentFunction()">
-	        <svg></svg>
-	    </nvd3-line-chart>
-	  </div>
-	  <div ng-if="hmrBarGraph">
-		 	<nvd3-multi-bar-chart
-		    	data="hmrBarGraphData"
-	        id="hmrBarGraph"
-	        width="1250"
-	        height="300"
-	        showXAxis="true"
-	        showYAxis="true"
-	        interactive="true"
-	        tooltips="true"
-	        isArea="true"
-	        yAxisLabel="Minutes"
-	        margin="{left:100,top:20,bottom:20,right:10}"
-	        xAxisTickFormat="xAxisTickFormatFunction(format)"
-	        xAxisTickValues="xAxisTickValuesBarChart()"
-	        noData="No Data Found!"
-	        objectEquality="true"
-	        tooltipcontent="toolTipContentBarChart()">
-	        <svg></svg>
-		  </nvd3-multi-bar-chart>
-	  </div>
+		<div class="col-md-7 col-sm-10 left_header_barchart padding0">
+		       <div class="devicetyperadio" ng-show="isHMR && getDeviceTypeforBothIcon()=='ALL'" ng-init="$parent.deviceTypeforGraphSelected='VEST'">
+		       <span class="radio-inline no-padding devicetyperadiolabl">Show Graph For</span>
+		      <span class="radio-inline">
+		        <label class="no-padding">
+		          <input type="radio" name="deviceTypeforGraph" ng-model="$parent.deviceTypeforGraphSelected" value="VEST" ng-change="switchtoDevice()">
+		          <span class="radio-box-text">VisiVest</span>
+		        </label>
+		      </span>
+		      <span class="radio-inline">
+		        <label>
+		          <input type="radio" name="deviceTypeforGraph" ng-model="$parent.deviceTypeforGraphSelected" value="MONARCH" ng-change="switchtoDevice()">
+		          <span class="radio-box-text">Monarch</span>
+		        </label>
+		      </span>
+		    </div>
+		    <div class="devicetyperadio" ng-show="isCompliance && getDeviceTypeforBothIcon()=='ALL'" ng-init="$parent.deviceTypeforGraphSelectedProtocol='VEST'">
+		       <span class="radio-inline no-padding devicetyperadiolabl">Show Graph For</span>
+		      <span class="radio-inline">
+		        <label class="no-padding">
+		          <input type="radio" name="deviceTypeforGraphProtocol" ng-model="$parent.deviceTypeforGraphSelectedProtocol" value="VEST" ng-change="switchtoDeviceProtocol()">
+		          <span class="radio-box-text">VisiVest</span>
+		        </label>
+		      </span>
+		      <span class="radio-inline">
+		        <label>
+		          <input type="radio" name="deviceTypeforGraphProtocol" ng-model="$parent.deviceTypeforGraphSelectedProtocol" value="MONARCH" ng-change="switchtoDeviceProtocol()">
+		          <span class="radio-box-text">Monarch</span>
+		        </label>
+		      </span>
+		    </div>
+		</div>
+		<div class="col-md-9 col-sm-6 right_header_barchart">
+		<div class="pull-right week_date_container">
+			<span ng-if="fromDate !== toDate">
+					<span class="date">{{fromDate}}</span> - <span class="date">{{toDate}}</span>
+			</span>
+			<span ng-if="fromDate === toDate" class="date">{{fromDate}}</span>
+		</div>
+      </div>
 	</div>
-	  <div ng-if="complianceGraph">
-	  	<div>
-	  		 <!-- <input type="radio" name="secondaryYaxis" ng-model="compliance.secondaryYaxis" value='pressure' ng-change="reCreateComplianceGraph()">Pressure
-				 <input type="radio" name="secondaryYaxis" ng-model="compliance.secondaryYaxis" value='frequency' ng-change="reCreateComplianceGraph()">Frequency -->
-				 <input type="checkbox" name="pressure" ng-disabled="pressureIsDisabled" ng-model="compliance.pressure" ng-change="reCreateComplianceGraph()">
-	  		 <span>pressure</span>
-	  		 <input type="checkbox" name="frequency" ng-disabled="frequencyIsDisabled" ng-model="compliance.frequency" ng-change="reCreateComplianceGraph()">
-	  		 <span>Frequency</span>
-	  		 <input type="checkbox" name="duration" ng-disabled="durationIsDisabled" ng-model="compliance.duration" ng-change="reCreateComplianceGraph()">
-	  		 <span>Duration</span>
-	  	</div>
-	  	<div id="complianceGraph">
-      	<svg style="height:350px"> </svg>
-    	</div>
-	  </div>
- 		<!-- <nvd3 options="options" data="data"></nvd3> -->
-	 		<div class="col-md-16">
-	 		<div class="btn_group patient_dashdoard_btns">
-	 			<button class="hillrom-btn btn-submit float-right">Note</button>
-	 			<button class="hillrom-btn btn-submit float-right">Export Data</button>
-	 		</div>
-	 		</div>
-	 		<div class="col-md-16">
-	 			<div class="add_note_container">
-	 				<div class="note_header">
-	 					<div class="col-md-14 note_header_left">
-	 						<span class="note">Note</span>
-	 						<span class="can_do">You can add / view/edit / delete a note</span>
-	 					</div>
-	 					<div class="col-md-2 note_header_right"><a href="" class="pull-right cross_icon">X</a></div>
-	 				</div>
-	 				<div class="notes_content" ng-show="notes.note.length > 0">
- 						<div class="col-md-16 notes_row">
- 							<div class="notes_row_wrapper">
- 								<div class="col-md-2 date_col"><span>08/12/2015</span></div>
-	 							<div class="col-md-11 description" ng-show="!editNote">{{notes.note}}</div>
-	 							<form ng-show="editNote" ng-submit="updateNote();">
-	 								<input type="text" ng-model="editedNoteText">
-	 								<span class="has-error" ng-show="noteError">{{noteError}}</span>
-	 								<input type="submit" id="submit" value="Update" />	 
-	 								<input type="button"  value="Cancel" ng-click="cancelEditNote();" />	 				
-	 							</form>
-	 							<div class="col-md-3 edit_delete">
-	 								<div class="pull-right" ng-show="!editNote">
-	 									<span class="edit icon" styel="cursor:pointer;" ng-click="openEditNote();">Edit</span>
-	 									<span class="delete icon" styel="cursor:pointer;" ng-click="deleteNote(notes.id);">Delete</span>
+	<div class="clr"></div>
+	<div class="col-md-16" class="all_graph_wrapper" ng-init="getWeekChart()" style="min-height: 300px;">
+	<div id = "NodataDiv" class="graph_nodata" ng-if = "((hmrChartData.length == 0) || (noDataAvailableForHMR)) && noDataStatus && isHMR" ng-show="forhidingVestHmrGraph">
+		<span class="noData_text"> No Therapy Transmission Received for This Day!</span>
+	</div>
+	<div id = "NodataDiv" class="graph_nodata" ng-if = "((hmrChartData1.length == 0) || (noDataAvailableForHMR1)) && noDataStatus && isHMR" ng-show="forhidingMonarchHmrGraph">
+		<span class="noData_text"> No Therapy Transmission Received for This Day!</span>
+	</div>
+		<div id = "NodataDiv" class="graph_nodata" ng-if = "(compilencechartData.length ==0)  && noDataStatus && isCompliance" ng-show="forhidingVestProtocolGraph">
+		<span class="noData_text"> No Therapy Transmission Received for This Day!</span>
+	</div>
+	<div id = "NodataDiv" class="graph_nodata" ng-if = "(compilencechartData1.length ==0)  && noDataStatus && isCompliance" ng-show="forhidingMonarchProtocolGraph">
+		<span class="noData_text"> No Therapy Transmission Received for This Day!</span>
+	</div>
+		<div id = "NodataDiv" class="graph_nodata" ng-if = "isAdherenceTrend && noDataAvailableForAdherence">
+		<span class="noData_text"> No Therapy Transmission Received for This Day!</span>
+	</div>
 
-	 								</div>
-	 							</div>
- 							</div>
- 						</div> 									
-	 				</div>
-	 				<div class="col-md-16 note_edit_container" ng-show="notes.length <= 0 && addNote">
-	 					<form name="form" ng-submit="createNote();">
-						<div class="col-md-2 date_col">
-						<input class="date_input" type="text" validate-on-blur value="" ng-model="patient.formatedDOB" ng-readonly="validateADMINorASP()" data-date-format="mm/dd/yy" id="edit_date"></div>
-						<div class="col-md-12 description">
-							<div class="form-group">
-							  <textarea class="form-control custom_textarea" rows="1" id="comment" ng-model="textNote"></textarea>
+	<div class="complianceGraphPrim_wrapper" ng-show="!noDataAvailableForHMR" id="lineGraphWrapper" >
+		<div id="HMRGraph" ng-class="{ 'hide-chart': !isHMR, 'show-chart': isHMR}"  ng-show="forhidingVestHmrGraph">
+		</div>
+	</div><!-- ng-show="!noDataAvailable && !isHMR"-->
+
+	<div class="complianceGraphPrim_wrapper" ng-show="!noDataAvailableForHMR1" id="lineGraphWrapper1" >
+		<div id="HMRGraph1" ng-class="{ 'hide-chart': !isHMR, 'show-chart': isHMR}"  ng-show="forhidingMonarchHmrGraph">
+		</div>
+	</div>
+	
+	
+
+	<div class="complianceGraphPrim_wrapper" ng-show="!noDataAvailableForAdherence" id="lineGraphWrapper1" >
+		<div id="AdherenceTrendGraph" ng-class="{ 'hide-chart': !isAdherenceTrend, 'show-chart': isAdherenceTrend}" >
+		</div>
+	
+	</div>
+
+	
+    <div id="complianceGraphWrapper" >
+		<div id="complianceGraphPrim" ng-show="!noDataAvailable" class="complianceGraphPrim_wrapper" >
+			<div id="synchronizedChart" class="col-md-16" ng-class="{ 'hide-chart': !isCompliance, 'show-chart': isCompliance}" ng-show="forhidingVestProtocolGraph">
+			</div>
+		</div>
+	</div>
+   
+	<div id="complianceGraphPrim" ng-show="!noDataAvailable1" class="complianceGraphPrim_wrapper" >
+		<div id="synchronizedChart1" class="col-md-16" ng-class="{ 'hide-chart': !isCompliance, 'show-chart': isCompliance}" ng-show="forhidingMonarchProtocolGraph">
+		</div>
+	</div>
+	
+	</div>
+
+	
+
+	<!-- ending new section of graphs -->
+
+	<!-- Note section HTML -->
+	<div class="col-md-16 col-sm-16" style="margin-top: 30px;">
+		<div class="btn_group patient_dashdoard_btns" ng-class="{ 'btn_group patient_dashdoard_btns_compliance': true, 'btn_group patient_dashdoard_btns': !complianceGraph}">
+			<div dropdown class="pull-right left">
+				<button id="single-button" type="button" class="hillrom-btn btn-submit float-right" ng-class="{ 'pointer-fill-event': true , 'pointer-no-event': true }" dropdown-toggle ng-disabled="disabled" translate="graph.download" >
+					<span class="caret"></span>
+				</button>
+
+				<ul class="dropdown-menu" role="menu" aria-labelledby="single-button">
+					<li role="menuitem">
+						<a href="javascript:void(0);" ng-click="downloadAsPdf();" translate="graph.export-as-pdf"></a>
+					</li>
+					<li role="menuitem">
+						<a href="javascript:void(0);" ng-click="downloadRawDataAsCsv();" translate="graph.export-raw-data"></a>
+					</li>
+				</ul>
+
+			</div>
+			 <button class="hillrom-btn btn-submit float-right" ng-click="showAllNotes();" translate="graph.note"></button>
+
+
+		</div>
+	</div>
+
+
+	<div class="col-md-16 col-sm-16 hide_content" id="add_note_container">
+		<div class="add_note_container">
+			<div class="note_header">
+				<div class="col-md-14 col-sm-12 note_header_left pull-left-mob">
+					<span class="note" translate="graph.note"></span>
+					<span class="can_do" translate="graph.can-do" ng-show="role === 'PATIENT'"></span>
+				</div>
+				<div class="col-md-2 col-sm-4 note_header_right"><a href="" class="pull-right cross_icon" ng-click="hideNoteContainer();">X</a></div>
+			</div>
+			<div class="notes_content" ng-repeat="note in notes track by $index" ng-show="note.note.length > 0 && !note.deleted">
+				<div class="col-md-16 notes_row">
+					<div class="notes_row_wrapper">
+						<div class="col-md-2 col-sm-4 date_col view_content show_content" id="createdon_{{note.id}}"><span ng-bind="note.createdOn"></span></div>
+						<div class="col-md-11 col-sm-8 description view_content show_content" id="viewnote_{{note.id}}" ng-bind="note.note"></div>
+						<form ng-submit="updateNote(note.id, note.createdOn);">
+						<div id="editform_{{note.id}}" class="col-md-16 edit_content hide_content" ng-show="role === 'PATIENT'" >
+						<div class="col-md-16">
+   	<p class="col-md-offset-2">System not monitored 24/7. If you have an emergency, please call 911</p>
+   </div>
+							<div class="col-md-2 col-sm-3">
+								<span ng-bind="note.createdOn"></span>
 							</div>
-							<div>
-								<span class="has-error" ng-if="noteTextError">
-				                  {{noteTextError}}
-				                </span>
+							<div class="col-md-9 col-sm-6 description">
+								<div class="form-group note_edit_container">
+									<textarea id="editedNoteText_{{note.id}}" value="{{note.note}}" maxlength="300"  class="form-control custom_textarea" rows="1"></textarea>
+									<span class="has-error" ng-show="noteError" ng-bind="noteError" id="noteError_{{note.id}}"></span>
+								</div>
 							</div>
-						</div>
-						<div class="col-md-2 edit_delete">
-							<div class="pull-right">
-			 					<span class="float-right view_all_btn" ng-click="cancelAddNote();">X</span>
-								<button class="hillrom-btn btn-submit float-right save">save</button>
+
+							<div class="col-md-5 col-sm-7 edit_delete">
+								<div class="pull-right">
+									<input type="button"  value="Cancel" ng-click="cancelEditNote(note.id);" class="hillrom-btn btn-submit float-right" />
+									<input type="submit" id="submit" value="Update" class="hillrom-btn btn-submit float-right" />
+								</div>
 							</div>
 						</div>
 						</form>
-	 				</div>
-	 				<div class="btn_group patient_dashdoard_btns">
-			 			<button class="hillrom-btn btn-submit float-right" ng-click="openAddNote();" ng-show="notes.length <= 0">Add Note</button>
-			 			<span class="float-right view_all_btn">View All</span>
-	 				</div>
-	 			</div>
-	 		</div>
+						<div class="col-md-3 col-sm-4 edit_delete" ng-show="role === 'PATIENT'">
+							<div class="pull-right view_note_act view_content show_content note_delete_edit" id="viewnoteact_{{note.id}}">
+								<span class="edit icon glyphicon glyphicon-pencil" styel="cursor:pointer;" ng-click="openEditNote(note.id, note.note);"></span>
+								<span class="delete icon icon-delete-icon" styel="cursor:pointer;" ng-click="openDeleteNoteModal(note);" ></span>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="notes_content" ng-if="notes.length <= 0 && !addNoteActive">
+				<center><span translate="graph.no-data-found"></span></center>
+			</div>
+
+
+   <div class="col-md-16 note_edit_container hide_content" id="note_edit_container" ng-show="role === 'PATIENT'">
+   <div class="col-md-16">
+   	<p class="col-md-offset-2">System not monitored 24/7. If you have an emergency, please call 911</p>
+   </div>
+	<form name="form" ng-submit="createNote();">
+		<div class="col-md-2 col-sm-4 date_col">
+			<input class="date_input"  data-provide="datepickerr"  data-date-format="mm/dd/yyyy"  bootstrap-datepicker data-date-end-date="0d"   data-date-start-date="{{transmissionDate}}" id="edit_note_date" ng-model="textNote.edit_date" placeholder="Date"/></div>
+			<div class="col-md-11 col-sm-8 description">
+				<div class="form-group">
+
+					<textarea class="form-control custom_textarea" rows="1" id="comment" ng-model="textNote.text" maxlength="300"></textarea>
+				</div>
+				<div>
+					<span class="has-error" ng-if="noteTextError">
+						{{noteTextError}}
+					</span>
+				</div>
+			</div>
+			<div class="col-md-3 edit_delete">
+				<div class="pull-right">
+					<span class="float-right view_all_btn" ng-click="cancelAddNote();">X</span>
+					<button class="hillrom-btn btn-submit float-right save" translate="graph.save"></button>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div class="btn_group patient_dashdoard_btns" ng-show="role === 'PATIENT' && hasTransmissionDate">
+		<button class="hillrom-btn btn-submit float-right" ng-click="openAddNote();" translate="graph.add-note"></button>
+	</div>
+	<div class="dashboard__manage-view--pagination pagination_notes" ng-if="notes.length > 0">
+        <div class="col-md-16">
+          <div class="navbar-right">
+            <span class="record-found" >{{notes.length}}
+	            <span translate="graph.notes" ng-if="notes.length > 1"></span>
+	            <span translate="graph.note" ng-if="notes.length == 1"></span>
+            </span>
+            <span class="record-found" translate="graph.found"></span>
+            <span ng-show="perPageCount > 1">
+              <span class="navigaion-link cursor-pointer" ng-class="{ 'inactive': !(curNotePageIndex > 1) }" ng-click="showAllNotes('PREV')" translate="graph.previous"></span>
+              <span class="navigaion-no">{{curNotePageIndex}}</span>
+              <span class="navigaion-link cursor-pointer" ng-class="{ 'inactive': !(notePageCount > curNotePageIndex) }" ng-click="showAllNotes('NEXT')" translate="graph.next"></span>
+            </span>
+          </div>
+          <div class="clr"></div>
+        </div>
+      </div>
+</div>
+</div>
+</div>
 		</div>
+		<div id= "png-container" ></div>
+		<canvas id="canvas" width="1800px" height="1800px" class="graph-canvas-hide"></canvas>
+		<canvas id="HMRCCanvas" width=1300 height=350 style="display:none;"></canvas>
+
+
+<div ng-if="deleteNoteModal" class="modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true">
+  <div class="modal__dialog">
+    <div class="modal__content">
+      <header class="modal__header">
+        <button type="button" class="modal__close" data-dismiss="modal" ng-click="closeNoteDeleteModal()">&times;</button>
+         <p translate="patient.delete-note.warning"></p>
+      </header>
+      <div class="modal__body">
+         <div class="modal--message" translate="patient.delete-note.message"></div>
+         <div class="fropile_update_btn_group row modal--custom-btn">
+          <buton class="hillrom-btn btn-submit float-right" ng-click="deleteNote(noteToDelete.id)">Yes</buton>
+          <buton class="cancel hillrom-btn btn-submit float-right" data-dismiss="modal" ng-click="closeNoteDeleteModal()">No</buton>
+         </div>
+      </div>
+      <footer class="modal__footer">
+      </footer>
+    </div>
+  </div>
+</div>
+
+<!-- modal to show graph is loading -->
+<div class="modal" id="no-xls-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal__dialog">
+    <div class="modal__content">
+      <header class="modal__header">
+        <button type="button" class="modal__close graph_close_btn" data-dismiss="modal" ng-click="cloaseXLSModal()">&times;</button>
+        <p >{{header}}</p>
+      </header>
+      <div class="modal__body">
+        <div class="modal--message">No therapy done within the selected duration</div>
+      </div>
+      <footer class="modal__footer">
+      </footer>
+    </div>
+  </div>
+</div>
+<div class="modal" id="graph-loading-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal__dialog">
+    <div class="modal__content">
+      <header class="modal__header">
+        <button type="button" class="modal__close graph_close_btn" data-dismiss="modal" ng-click="cloasePDFModal()">&times;</button>
+        <p >{{header}}</p>
+      </header>
+      <div class="modal__body">
+        <div class="modal--message">PDF is loading. Please wait for sometime.</div>
+      </div>
+      <footer class="modal__footer">
+      </footer>
+    </div>
+  </div>
+</div>
+
+<!--  Disabling Patient Survey
+<div ng-if="surveyConfirmModal" id="survey_confirm_modal" class="modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true">
+  <div class="modal__dialog">
+    <div class="modal__content">
+      <header class="modal__header">
+        <button type="button" class="modal__close" data-dismiss="modal" ng-click="cancelSurvey();">&times;</button>
+        <p ng-if="surveyId === 1" translate="survey.5-days-header"> </p>
+        <p ng-if="surveyId === 2" translate="survey.30-days-header"> </p>
+        <p ng-if="surveyId === 3" translate="survey.90-days-header"> </p>
+      </header>
+      <div class="modal__body">
+        <div class="modal--message">Please complete the following survey. Press the Start button below to begin the survey.</div>
+
+        <div class="row modal--custom-btn">
+          <buton class="hillrom-btn btn-submit float-right" ng-click="$parent.surveyConfirmModal = false;takeSurveyNow(); ">Start</buton>
+          <buton class="hillrom-btn btn-submit float-right" data-dismiss="modal" ng-click="cancelSurvey();">Later</buton>
+        </div>
+      </div>
+      <footer class="modal__footer">
+      </footer>
+    </div>
+  </div>
+</div>
+-->
+
+<div ng-if="showProtocolModal" id="showProtocolModal" class="modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true">
+	<div class="modal__dialog">
+		<div class="modal__content adherence_protocol adherence_protocol_width">
+			<header class="modal__header">
+				Protocol
+				<button type="button" class="modal__close" data-dismiss="modal" ng-click="closeProtocolModal()">&times;</button>
+				<p ng-if="surveyId === 1" translate="survey.5-days-header"> </p>
+				<p ng-if="surveyId === 2" translate="survey.30-days-header"> </p>
+				<p ng-if="surveyId === 3" translate="survey.90-days-header"> </p>
+			</header>
+			<div class="modal__body">
+				<div class="dashboard dashboard--content col-md-16 col-sm-16 col-xs-16 padding0 no-padding reset-padding">
+					<div class="dashboard__manage-view col-xs-16 col-sm-16 padding0 reset-padding">
+						<div class="dashboard__manage-view--header no_border care_plan_and_device hidden-xs col-md-16 col-sm-16">
+							<div class="col-md-3 col-sm-3 header--type text-align-left">
+								<span translate="patient.protocol-caption.type"></span>
+							</div>
+							<div class="col-md-3 col-sm-3 header--type text-align-left">
+								<span translate="patient.protocol-caption.treatments-per-day"></span>
+							</div>
+							<div class="col-md-3 col-sm-3 header--type text-align-left">
+								<span translate="patient.protocol-caption.minutes-per-treatment"></span>
+							</div>
+							<div class="col-md-3 col-sm-3 header--type text-align-left">
+								<span translate="patient.protocol-caption.frequency-per-treatment"></span>
+							</div>
+							<div class="col-md-3 col-sm-3 header--type text-align-left"  ng-if="(getDeviceType() =='VEST')">
+								<span translate="patient.protocol-caption.pressure-per-treatment"></span>
+							</div>
+							<div class="col-md-3 col-sm-3 header--type text-align-left"  ng-if="(getDeviceType() =='MONARCH')">
+								<span translate="patient.protocol-caption.intensity-per-treatment"></span>
+							</div>
+							<div class="clr"></div>
+						</div>
+
+					<div class="dashboard__manage-view--header col-xs-16 hidden-md hidden-sm hidden-lg">
+						<div class="col-xs-3 header--type">
+							<span translate="">Type</span>
+						</div>
+						<div class="col-xs-4 padding0 header--type">
+							<span translate="">Trtm/day</span>
+						</div>
+						<div class="col-xs-3 header--type">
+							<span translate="">Mins</span>
+						</div>
+						<div class="col-xs-3 header--type">
+							<span translate="">Freq.</span>
+						</div>
+						<div class="col-xs-3 header--type" ng-if="(getDeviceType() =='VEST')">
+							<span translate="">Press.</span>
+						</div>
+						<div class="col-xs-3 header--type" ng-if="(getDeviceType() =='MONARCH')">
+							<span translate="">Inten.</span>
+						</div>
+						<div class="clr"></div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-16 col-sm-16 col-xs-16 border-top protocol_list_container no-padding padding0 padding10" ng-class="{'no_border' : !protocols}">
+					<div class="col-md-3 col-sm-3 no-padding hidden-xs text-center">
+						<div class="col-md-16 col-sm-16 protocol-list__treatment-day protocol-list no_border text-align-left" ng-repeat="protocol in protocols" ng-class="{'list-inactive':protocol.deleted, 'last' : $last}">
+							<span class="protocol-list--value"> {{protocol.type}} {{protocol.treatmentLabel}}</span>
+						</div>
+					</div>
+					<div class="col-xs-3 col-sm-3 hidden-sm hidden-md hidden-lg padding0">
+						<div class="col-md-16 col-sm-16 col-xs-16 protocol-list__treatment-day protocol-list no_border text-align-left" ng-repeat="protocol in protocols" ng-class="{'list-inactive':protocol.deleted, 'last' : $last}">
+							<span class="protocol-list--value uppercase">{{protocol.treatmentLabel}}</span>
+						</div>
+					</div>
+
+					<div class="col-md-2 col-xs-2 col-sm-2 col-xs-offset-4 col-sm-offset-3 treatments_per_day_count col-md-offset-3 text-center">
+						<span class="v_middle">{{protocols[0].treatmentsPerDay}}</span>
+					</div>
+					<div class="col-md-11 col-xs-11 col-sm-11 col-md-offset-2 col-sm-offset-2 col-xs-offset-2 text-center">
+						<div class="col-md-16 col-xs-16 protocol-list no_border padding0" ng-repeat="protocol in protocols" ng-class="{'list-inactive':protocol.deleted, 'last' : $last}">
+
+							<div class="col-md-5 col-xs-5 col-sm-5 text-align_c  padding0 protocol-list__strt-date">
+								<span class="protocol-list--value"> {{protocol.minMinutesPerTreatment}}</span>
+							</div>
+							<div class="col-md-5 col-xs-5 col-sm-5 text-align_c padding0 protocol-list__end-date">
+								<span class="protocol-list--value"> {{protocol.minFrequency}}<span ng-if="protocol.maxFrequency">-</span>{{protocol.maxFrequency}}</span>
+							</div>
+							<div class="col-md-4 col-xs-5 col-sm-5 text-align_c  padding0 protocol-list__end-date" ng-if="(getDeviceType() =='VEST')">
+								<span class="protocol-list--value"> {{protocol.minPressure}}<span ng-if="protocol.maxPressure">-</span>{{protocol.maxPressure}}</span>
+							</div>
+							<div class="col-md-4 col-xs-5 col-sm-5 text-align_c  padding0 protocol-list__end-date" ng-if="(getDeviceType() =='MONARCH')">
+								<span class="protocol-list--value"> {{protocol.minIntensity}}<span ng-if="protocol.maxIntensity">-</span>{{protocol.maxIntensity}}</span>
+							</div>
+						</div>
+					</div>
+					<div class="padding10 font-size18" ng-if="noProtocol">No Data Available</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

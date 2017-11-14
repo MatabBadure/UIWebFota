@@ -1,0 +1,266 @@
+
+	  <div class="container margin-top reset-padding">
+	    <div class="col-md-16 reset-padding dashboard__form--type ">
+	      <span class="graphview_text_color" ng-bind="survey.surveyName"></span>
+	    </div>
+	  </div>
+
+	  <div class="col-md-16 reset-padding margin-top">
+          <div class="col-md-12 reset-padding">
+            <span class="ng-scope dashboard__form--type survey_grey_color pull-left-mob" translate="console.survey.general-info"></span>
+          </div>
+          <div class="col-md-4 user-required reset-padding">
+            <span class="has-error">*</span> <span class="ng-scope" translate="console.survey.required-field"></span>
+          </div>
+	   </div>
+
+	   <div class="col-md-16 reset-padding margin-top">
+          <div class="col-md-8 reset-padding">
+	          	<div class="col-md-16 col-xs-16 col-sm-16 reset-padding">
+	           		 <span class="ng-scope graphview_text_color" ng-bind="survey.questions[0].questionText"></span>
+	           		 <span ng-show="survey.questions[0].mandatory" class="has-error"> *</span>
+	            </div>
+	            <div class="col-md-16 col-xs-16 col-sm-16 reset-padding">
+	           		 <input class="col-md-14 col-xs-16 col-sm-16 margin-bottom20 tab-margin-bottom20" type="text" ng-model="survey.questions[0].answerValue1" ng-disabled="true">
+	           	</div>
+          </div>
+          <div class="col-md-8 reset-padding">
+            	<div class="col-md-16 col-xs-16 col-sm-16 padding0 no-padding">
+	           		 <span class="ng-scope graphview_text_color" ng-bind="survey.questions[1].questionText"></span>
+	           		 <span ng-show="survey.questions[1].mandatory" class="has-error"> *</span> 
+	            </div>
+	            <div class="col-md-16 padding0 no-padding" ng-if="!isPhoneNumber">
+	           		 <input class="col-md-14 col-xs-16 col-sm-16 margin-bottom20 tab-margin-bottom20" style="z-index:9999" type="text" name="phoneNumber" class="form-control" validate-on-blur ng-model="survey.questions[1].answerValue1" ng-readonly="validateADMINorASP()" ui-mask="(999)-999-9999" model-view-value="true" ui-options="{clearOnBlur: false}" required>	 
+	           		           		 
+	           	</div>
+	            <div ng-show="(surveyForm.phoneNumber.$showValidationMessage && surveyForm.phoneNumber.$invalid) || submitted">
+	            	<span class="has-error" ng-show="surveyForm.phoneNumber.$error.required" translate="error.phoneNumber.required"></span>
+	              <span class="has-error" ng-show="!surveyForm.phoneNumber.$error.required && surveyForm.phoneNumber.$invalid" translate="error.phoneNumber.mask"></span>
+	            </div>
+	            <div class="col-md-16 padding0 no-padding" ng-if="isPhoneNumber">
+	           		 <input class="col-md-14 col-xs-16 col-sm-16 tab-margin-bottom20 margin-bottom20" type="text" value="{{survey.questions[1].answerValue1}}" name="phoneNumber" ng-disabled="true">
+	           	</div>	                   
+          </div>
+	   </div>
+
+	    <div class="col-md-16 reset-padding margin-top">
+    		<div class="reset-padding survey_grey_color dashboard__form--type margin-top-18">
+        		<span class="ng-scope" translate="console.survey.usage-info"></span>
+     		 </div>
+     		 <div class="col-md-12 dark_grey_text_color14 reset-padding">
+	     		 <p translate="console.survey.usage-info-message"></p>
+     		 </div>
+	    </div>
+
+	    <div class="col-md-16 reset-padding margin-top">
+          <div class="col-md-8 reset-padding">
+	          	<div class="col-md-16 reset-padding col-xs-16 col-sm-16 padding0 no-padding">
+	           		 <span class="ng-scope graphview_text_color" ng-bind="survey.questions[2].questionText"></span>
+	           		 <span ng-show="survey.questions[2].mandatory" class="has-error"> *</span> 
+	            </div>
+	            <div class="col-md-16 reset-padding">
+	           		 <input class="col-md-14 col-xs-16 col-sm-16 tab-margin-bottom20" type="text" ng-model="survey.questions[2].answerValue1" ng-disabled="true">
+	           	</div>
+          </div> 
+	   </div>
+
+	     <div class="col-md-16 reset-padding margin-top">
+          <div class="col-md-8 reset-padding">
+	          	<div class="col-md-16 reset-padding  col-xs-16 col-sm-16 margin-top-18 padding0 no-padding">
+	           		 <span class="ng-scope graphview_text_color" ng-bind="survey.questions[3].questionText"></span>
+	           		 <span ng-show="survey.questions[3].mandatory" class="has-error"> *</span> 
+	            </div>
+	            <div class="col-md-16 reset-padding">
+	           		 <input class="col-md-14 col-xs-16 col-sm-16 tab-margin-bottom20" type="text" ng-model="survey.questions[3].answerValue1" ng-disabled="true">
+	           	</div>
+          </div>
+          <div class="col-md-8 reset-padding">
+            <div class="col-md-16  col-xs-16 col-sm-16 padding0 no-padding margin-top-18">
+	           		 <span class="ng-scope graphview_text_color" ng-bind="survey.questions[4].questionText"></span>
+	           		 <span ng-show="survey.questions[4].mandatory" class="has-error"> *</span> 
+	            </div>
+	            <div class="col-md-16 col-xs-16 col-sm-16 padding0 margin-bottom20 tab-margin-bottom20 no-padding">
+	           		 <input class="col-md-14 col-xs-16 col-sm-16" type="text" ng-model="survey.questions[4].answerValue1" ng-disabled="true">
+	           	</div>
+          </div>
+	   </div>
+
+	   <div class="col-md-16 reset-padding margin-top dark_grey_text_color14">
+			<p translate="console.survey.question-info"></p>
+	   </div>
+
+
+	   <div class="col-md-16 reset-padding margin-top graphview_text_color">
+			<span ng-bind="survey.questions[5].questionText"></span>
+			<span ng-show="survey.questions[5].mandatory" class="has-error"> *</span> 
+	   </div>
+
+	   <div class="col-md-16 reset-padding mob_label">
+			<div class="col-md-3 reset-padding">
+				<label>
+				<input type="radio" class="ng-pristine ng-untouched ng-valid" name="q1" ng-model="survey.questions[5].answerValue1" value="{{survey.questions[5].answers[0]}}">
+				<span class="radio-box-text btn-margin-left" ng-bind="survey.questions[5].answers[0]"></span>
+				</label>
+			</div>
+			<div class="col-md-3 reset-padding">
+				<label>
+					<input type="radio" class="ng-pristine ng-untouched ng-valid" name="q1" ng-model="survey.questions[5].answerValue1" value="{{survey.questions[5].answers[1]}}">
+					<span class="radio-box-text btn-margin-left" ng-bind="survey.questions[5].answers[1]"></span>
+				</label>
+			</div>
+	   </div>
+	   
+
+	   <div class="col-md-16 reset-padding dark_grey_text_color14 tab-clear">
+	   		<input type="textbox" placeholder="If no, please explain" class="ng-pristine col-md-15 col-xs-16 col-sm-16 ng-untouched ng-valid" ng-model="survey.questions[5].answerValue2" ng-hide="survey.questions[5].answerValue1 === survey.questions[5].answers[0]" maxlength="250">
+		</div>
+
+
+	   <div class="col-md-16 reset-padding margin-top graphview_text_color">
+			<span ng-bind="survey.questions[6].questionText"></span>
+			<span ng-show="survey.questions[6].mandatory" class="has-error"> *</span> 
+	   </div>
+
+	   <div class="col-md-16 reset-padding mob_label">
+			<div class="col-md-3 reset-padding">
+				<label>
+				<input type="radio"  class="ng-pristine ng-untouched ng-valid" name="q2" ng-model="survey.questions[6].answerValue1" value="{{survey.questions[6].answers[0]}}">
+				<span class="radio-box-text btn-margin-left" ng-bind="survey.questions[6].answers[0]"></span>
+				</label>
+			</div>
+			<div class="col-md-3 reset-padding">
+				<label>
+					<input type="radio" class="ng-pristine ng-untouched ng-valid" name="q2" ng-model="survey.questions[6].answerValue1" value="{{survey.questions[6].answers[1]}}">
+					<span class="radio-box-text btn-margin-left" ng-bind="survey.questions[6].answers[1]"></span>
+				</label>
+			</div>
+	   </div>
+
+	   <div class="col-md-16 reset-padding dark_grey_text_color14 tab-clear">
+	   		<input type="textbox" placeholder="If no, please explain" class="ng-pristine col-md-15 col-xs-16 col-sm-16 ng-untouched ng-valid" ng-model="survey.questions[6].answerValue2" ng-hide="survey.questions[6].answerValue1 === survey.questions[6].answers[0]" maxlength="250">
+		</div>
+	
+
+	   <div class="col-md-16 reset-padding margin-top graphview_text_color">
+			<span ng-bind="survey.questions[7].questionText"></span>
+			<span ng-show="survey.questions[7].mandatory" class="has-error"> *</span> 
+	   </div>
+
+	   <div class="col-md-16 reset-padding mob_label">
+			<div class="col-md-3 reset-padding">
+				<label>
+				<input type="radio" class="ng-pristine ng-untouched ng-valid" name="q3" ng-model="survey.questions[7].answerValue1" value="{{survey.questions[7].answers[0]}}">
+				<span class="radio-box-text btn-margin-left" ng-bind="survey.questions[7].answers[0]"></span>
+				</label>
+			</div>
+			<div class="col-md-3 reset-padding">
+				<label>
+					<input type="radio" class="ng-pristine ng-untouched ng-valid" name="q3" ng-model="survey.questions[7].answerValue1" value="{{survey.questions[7].answers[1]}}">
+					<span class="radio-box-text btn-margin-left" ng-bind="survey.questions[7].answers[1]"></span>
+				</label>
+			</div>
+	   </div>
+
+	   <div class="col-md-16 reset-padding dark_grey_text_color14 tab-clear">
+	   		<input type="textbox" placeholder="If no, please explain" class="ng-pristine col-md-15 col-xs-16 col-sm-16 ng-untouched ng-valid" ng-model="survey.questions[7].answerValue2" ng-hide="survey.questions[7].answerValue1 === survey.questions[7].answers[0]" maxlength="250">
+		</div>
+	  
+
+	    <div class="col-md-16 reset-padding margin-top graphview_text_color">
+			<span ng-bind="survey.questions[8].questionText"></span>
+			<span ng-show="survey.questions[8].mandatory" class="has-error"> *</span> 
+	   </div>
+
+	   <div class="col-md-16 reset-padding mob_label">
+			<div class="col-md-3 reset-padding">
+				<label>
+				<input type="radio"  class="ng-pristine ng-untouched ng-valid" name="q4" ng-model="survey.questions[8].answerValue1" value="{{survey.questions[8].answers[0]}}">
+				<span class="radio-box-text btn-margin-left" ng-bind="survey.questions[8].answers[0]"></span>
+				</label>
+			</div>
+			<div class="col-md-3 reset-padding">
+				<label>
+					<input type="radio"  class="ng-pristine ng-untouched ng-valid" name="q4" ng-model="survey.questions[8].answerValue1" value="{{survey.questions[8].answers[1]}}">
+					<span class="radio-box-text btn-margin-left" ng-bind="survey.questions[8].answers[1]"></span>
+				</label>
+			</div>
+	   </div>
+
+	   <div class="col-md-16 reset-padding dark_grey_text_color14 tab-clear">
+	   		<input type="textbox" placeholder="If no, please explain" class="ng-pristine col-md-15 col-xs-16 col-sm-16 ng-untouched ng-valid" ng-model="survey.questions[8].answerValue2" ng-hide="survey.questions[8].answerValue1 === survey.questions[8].answers[0]" maxlength="250">
+		</div>
+
+	   <div class="col-md-16 reset-padding margin-top graphview_text_color">
+			<span ng-bind="survey.questions[9].questionText"></span>
+			<span ng-show="survey.questions[9].mandatory" class="has-error" class="has-error"> *</span> 
+	   </div>
+
+	   <div class="col-md-16 reset-padding mob_label">
+			<div class="col-md-3 reset-padding">
+				<label>
+				<input type="radio"  class="ng-pristine ng-untouched ng-valid has-error" name="q5" ng-model="survey.questions[9].answerValue1" value="{{survey.questions[9].answers[0]}}">
+				<span class="radio-box-text btn-margin-left" ng-bind="survey.questions[9].answers[0]"></span>
+				</label>
+			</div>
+			<div class="col-md-3 reset-padding">
+				<label>
+					<input type="radio"  class="ng-pristine ng-untouched ng-valid" name="q5" ng-model="survey.questions[9].answerValue1" value="{{survey.questions[9].answers[1]}}">
+					<span class="radio-box-text btn-margin-left" ng-bind="survey.questions[9].answers[1]"></span>
+				</label>
+			</div>
+	   </div>
+
+	   <div class="col-md-16 reset-padding dark_grey_text_color14 tab-clear">
+	   		<input type="textbox" placeholder="If no, please explain" class="ng-pristine col-md-15 col-xs-16 col-sm-16 ng-untouched ng-valid" ng-model="survey.questions[9].answerValue2" ng-hide="survey.questions[9].answerValue1 === survey.questions[9].answers[0]" maxlength="250">
+		</div>
+	
+
+	   <div class="col-md-16 reset-padding margin-top graphview_text_color">
+			<span ng-bind="survey.questions[10].questionText"></span>
+			<span ng-show="survey.questions[10].mandatory" class="has-error"> *</span> 
+	   </div>
+
+	   <div class="col-md-16 reset-padding mob_label">
+			<div class="col-md-3 reset-padding">
+				<label>
+				<input type="radio"  class="ng-pristine ng-untouched ng-valid" name="q6" ng-model="survey.questions[10].answerValue1" value="{{survey.questions[10].answers[0]}}">
+				<span class="radio-box-text btn-margin-left" ng-bind="survey.questions[10].answers[0]"></span>
+				</label>
+			</div>
+			<div class="col-md-3 reset-padding">
+				<label>
+					<input type="radio"  class="ng-pristine ng-untouched ng-valid" name="q6" ng-model="survey.questions[10].answerValue1" value="{{survey.questions[10].answers[1]}}">
+					<span class="radio-box-text btn-margin-left" ng-bind="survey.questions[10].answers[1]"></span>
+				</label>
+			</div>
+	   </div>
+
+	   <div class="col-md-16 reset-padding dark_grey_text_color14 tab-clear">
+	   		<input type="textbox" placeholder="If no, please explain" class="ng-pristine col-md-15 col-xs-16 col-sm-16 ng-untouched ng-valid" ng-model="survey.questions[10].answerValue2" ng-hide="survey.questions[10].answerValue1 === survey.questions[10].answers[0]" maxlength="250">
+		</div>
+
+	    <div class="col-md-16 reset-padding margin-top graphview_text_color">
+			<span ng-bind="survey.questions[11].questionText"></span>
+			<span ng-show="survey.questions[11].mandatory"></span> 
+	    </div>
+
+
+	    <div class="col-md-16 reset-padding dark_grey_text_color14">
+		 	<textarea class="col-md-15 col-sm-16 col-xs-16 margin-bottom20 tab-margin-bottom20" rows="4" cols="10" ng-model="survey.questions[11].answerValue2"></textarea>
+	    </div>
+	   <div class="col-md-16 reset-padding margin-top graphview_text_color">
+			<span translate="console.survey.clinical-follow-up"></span>
+	   </div>
+	   <div class="col-md-16 reset-padding">
+			<div class="reset-padding">
+				<label class="reset-padding padding_t2">
+					<input type="checkbox"  class="ng-pristine ng-untouched ng-valid" ng-model="survey.questions[12].answerValue1">
+				</label>
+			</div>
+			<div class="col-md-15 col-xs-14 reset-padding margin-bottom20">
+				<label>
+					<span class="radio-box-text" ng-bind="survey.questions[12].questionText"></span>
+				</label>
+			</div>
+	   </div>	    
+

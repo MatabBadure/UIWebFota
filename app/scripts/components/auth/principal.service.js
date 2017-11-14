@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hillromvestApp')
-    .factory('Principal', function Principal($q, $rootScope, Account) {
+    .factory('Principal',['$q', '$rootScope', 'Account', function Principal($q, $rootScope, Account) {
         var _identity,
             _authenticated = false;
 
@@ -68,4 +68,4 @@ angular.module('hillromvestApp')
                 return deferred.promise;
             }
         };
-    });
+    }]);

@@ -1,0 +1,149 @@
+
+
+<div class="container hcp_wrapper">
+	<div class="col-md-16 col-xs-16">
+		<div class="row">
+			<div class="col-md-16">
+				<div class="stats_chart_section  stats_chart_section_new">
+				<div class="stats_header badgefiltercontainer stats_header_new">
+						<div class="pull-left col-md-4">
+								</div>
+						<div class="pull-right left col-md-9">
+					<!--Commented meanwhile, will be uncommented when date range will be needed in upcoming sprints -->	
+				<!-- <div class="col-md-8 col-sm-8 reset-padding right_header_barchart pull-right">
+				<ul class="nav nav-pills badgefilterlist badgefilterright">
+				    <li role="presentation" class=""><a ng-class="{active: selectedDateOptionBadge === 'YESTERDAY'}" href="" ng-click="yesterdayBadge()" translate="doctor.dashboard.yesterday"></a></li>
+					<li role="presentation" class=""><a ng-class="{active: selectedDateOptionBadge === 'WEEK'}" href="" ng-click="weekBadge()" translate="doctor.dashboard.week"></a></li>
+					<li role="presentation" class=""><a href="" ng-class="{active: selectedDateOptionBadge === 'MONTH'}" ng-click="monthBadge()" translate="doctor.dashboard.month"></a></li>
+					<li role="presentation" class=""><a href="" ng-class="{active: selectedDateOptionBadge === 'YEAR'}" ng-click="yearBadge()" translate="doctor.dashboard.year"></a></li>
+					<li role="presentation" class="" id="dp1"><a href="" date-range-picker class="date-picker" ng-model="badgedates" parentEl="#dp1" options="badgeopts" ><span class="icon-calendar"></span></a></li>
+				</ul>
+			</div> -->
+						</div>
+					</div>
+					<div class="stats_header badgefiltercontainer">
+                    <div class="pull-left col-md-9">
+					<div class="col-md-16 col-sm-16 lebel-indent">
+					<label>
+			       <input type="checkbox" ng-model="$parent.VisiVest" ng-change="getclinicDashboardDataBasedonDevice(false)" > 
+			      <span translate="search-filter.visivest"></span>
+			      <span >Patients ({{ numberofVisiVestPatients }})</span>
+		        </label>
+				<label>
+			      <input type="checkbox" ng-model="$parent.Monarch" ng-change="getclinicDashboardDataBasedonDevice(false)" > 
+			      <span translate="search-filter.monarch"></span>
+			      <span >Patients ({{ numberofMonarchPatients }})</span>
+		          </label>
+                  <label>
+			      <input type="checkbox" ng-model="$parent.both" ng-change="getclinicDashboardDataBasedonDevice(false)" > 
+			      <span translate="Both"></span>
+			      <span >Patients ({{ numberofbothPatients}})</span>
+		          </label>
+
+						</div>
+						<div class="col-md-16 col-sm-16">
+							<h4 translate="doctor.dashboard.totalPatients"></h4>
+							<span class="sub_txt">{{ totalnumberofActivePatients }}</span>
+						
+							</div>
+
+						</div>
+						<!--Commented meanwhile, will be uncommented when date range will be needed in upcoming sprints -->
+						 <div class="pull-right left col-md-6 statdateipad reset-padding" id="statdateipad">
+						<div class="col-md-8 col-sm-16 reset-padding pull-right daterangecolor">
+							<h4 translate="doctor.dashboard.todayStatistics" id="filterdatetxt"></h4>
+							<span ng-if="isYesterday"><span class="sub_txt">{{statistics.date}}</span></span>
+							<!-- <span ng-if="!isYesterday">
+							<span class="sub_txt">{{fromdatedisplay}}</span> -
+							<span class="sub_txt">{{todatedisplay}}</span></span> -->
+							</div>
+						</div> 
+					</div>
+					<div class="stats_chart_container withFilterBadgeFilter">
+						<div class="col-3" ng-class="{noclick: selectedDateOptionBadge.indexOf('YESTERDAY') == -1}" ng-click="(!(selectedDateOptionBadge === 'WEEK') && !(selectedDateOptionBadge === 'YEAR') && !(selectedDateOptionBadge === 'CUSTOM') && !(selectedDateOptionBadge === 'MONTH')) && gotoPatients('missed_therapy')">
+							<div class="pie_chart"  easypiechart options="missedtherapy" percent="percentStatistics.patientsWithMissedTherapy"></div>
+							<div class="stats_chart_content missed">
+								<h4 class="percent" ng-bind="statistics.patientsWithMissedTherapy"></h4>
+								<span class="patients_txt" translate="doctor.dashboard.patients"></span>
+								<p class="descrip" translate="doctor.dashboard.consecutiveMissedDays"></p>
+							</div>
+							<div class="chart_inner_icon icon-lungs"></div>
+						</div>
+						<div class="col-3" ng-class="{noclick: selectedDateOptionBadge.indexOf('YESTERDAY') == -1}" ng-click="(!(selectedDateOptionBadge === 'WEEK') && !(selectedDateOptionBadge === 'YEAR') && !(selectedDateOptionBadge === 'CUSTOM') && !(selectedDateOptionBadge === 'MONTH')) && gotoPatients('non_hmr_compliance')">
+							<div class="pie_chart"  easypiechart options="hmr" percent="percentStatistics.patientsWithHmrNonCompliance"></div>
+							<div class="stats_chart_content hmr">
+								<h4 class="percent"  ng-bind="statistics.patientsWithHmrNonCompliance"></h4>
+								<span class="patients_txt" translate="doctor.dashboard.patients"></span>
+								<p class="descrip" translate="doctor.dashboard.hmrNonCompliance"></p>
+							</div>
+							<div class="chart_inner_icon icon-man-running"></div>
+						</div>
+						<div class="col-3" ng-class="{noclick: selectedDateOptionBadge.indexOf('YESTERDAY') == -1}" ng-click="(!(selectedDateOptionBadge === 'WEEK') && !(selectedDateOptionBadge === 'YEAR') && !(selectedDateOptionBadge === 'CUSTOM') && !(selectedDateOptionBadge === 'MONTH')) && gotoPatients('setting_deviation')">
+							<div class="pie_chart" easypiechart options="deviation" percent="percentStatistics.patientsWithSettingDeviation"></div>
+							<div class="stats_chart_content deviation">
+								<h4 class="percent" ng-bind="statistics.patientsWithSettingDeviation"></h4>
+								<span class="patients_txt" translate="doctor.dashboard.patients"></span>
+								<p class="descrip" translate="doctor.dashboard.consecutiveFrequencyDeviationDays"></p>
+							</div>
+							<div class="chart_inner_icon icon-settings"></div>
+						</div>
+						<div class="col-3" ng-class="{noclick: selectedDateOptionBadge.indexOf('YESTERDAY') == -1}" ng-click="(!(selectedDateOptionBadge === 'WEEK') && !(selectedDateOptionBadge === 'YEAR') && !(selectedDateOptionBadge === 'CUSTOM') && !(selectedDateOptionBadge === 'MONTH')) && gotoPatients('noevents')">
+							<div class="pie_chart"  easypiechart options="noevent" percent="percentStatistics.patientsWithNoEventRecorded"></div>
+							<div class="stats_chart_content noevent">
+								<h4 class="percent" ng-bind="statistics.patientsWithNoEventRecorded">{{statistics.patientsWithNoEventRecorded}}</h4>
+								<span class="patients_txt" translate="doctor.dashboard.patients"></span>
+								<p class="descrip" translate="doctor.dashboard.noEventsRecorded"></p>
+							</div>
+							<div class="chart_inner_icon icon-events"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<loading loaded="isGraphLoaded"></loading>		
+	<div class="col-md-16 padding0 mobilefix" ng-class="{'pointer-no-event': !isGraphLoaded, 'pointer-fill-event': isGraphLoaded}">
+		<div class="bar_graph_header">
+			<div class="col-md-5 col-sm-9 left_header_barchart padding0">
+				<div class="row">
+					<ul class="nav nav-pills cumulative_mob_chart">
+						<li><a ng-class="{active: selectedGraph === 'CUMULATIVE'}" href="" ng-click="showCumulativeGraph()" translate="doctor.dashboard.cumulativeStatistics"></a></li>
+						<li><a href="" ng-class="{active: selectedGraph === 'TREATMENT'}" ng-click="showTreatmentGraph()" translate="doctor.dashboard.treatmentStatistics"></a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-md-11 col-sm-7 right_header_barchart">
+				<ul class="nav nav-pills pull-right">
+					<li role="presentation" class=""><a ng-class="{active: selectedDateOption === 'WEEK'}" href="" ng-click="weeklyChart()" translate="doctor.dashboard.week"></a></li>
+					<li role="presentation" class=""><a href="" ng-class="{active: selectedDateOption === 'MONTH'}" ng-click="monthlyChart()" translate="doctor.dashboard.month"></a></li>
+					<li role="presentation" class=""><a href="" ng-class="{active: selectedDateOption === 'YEAR'}" ng-click="yearlyChart()" translate="doctor.dashboard.year"></a></li>
+					<li role="presentation" class="" id="dp3"><a href="" date-range-picker class="date-picker" ng-model="dates" parentEl="#dp3" options="opts" ><span class="icon-calendar"></span></a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="pull-right week_date_container">
+		<span ng-if="fromDate !== toDate"> 
+			<span class="date">{{fromDate}}</span> - <span class="date">{{toDate}}</span>
+		</span>
+		<span ng-if="fromDate === toDate" class="date">{{fromDate}}<span>
+	</div> 
+	<div class="col-md-16" class="all_graph_wrapper" ng-class="{treatmentGraphTL: treatmentGraph}" style="min-height: 400px;">
+		<div class="graph_nodata" ng-if="noDataAvailable" >
+			<span class="noData_text"> No Data Available!</span>
+		</div>
+		<div class="row hcp_graph_container">
+			<div class="col-md-16" ng-show="cumulativeGraph && !noDataAvailable" >
+				<div id="cumulativeGraph" class="col-md-16">					
+				</div>				
+			</div>
+			<div ng-show="treatmentGraph && !noDataAvailable"  class="col-md-16">
+				<div id="treatmentGraph" class="col-md-16">					
+				</div>				
+			</div>
+		</div>
+		
+	</div>
+	<button class="float-right hillrom-btn btn-submit margin-right13" ng-click="!noDataAvailable && downloadChartsAsPdf()" ng-class="{ 'pointer-fill-event': (!noDataAvailable && isGraphLoaded) , 'pointer-no-event': (!isGraphLoaded || noDataAvailable) }">Download As PDF</button>     	
+       <canvas id="hcpCharts" width=1300 height=350 style="display:none;"></canvas>
+</div>

@@ -1,0 +1,15 @@
+
+	<div class="row lebel-indent col-md-16 margin-bottom15">
+		<label>
+			<input type="radio" ng-model="searchFilterdevicelist.type" value="ActivePublished" ng-change="setFirmwareRadioOption()" ng-checked="true"> 
+			<span translate="search-filter.active-published"></span> 
+		</label>
+		<label>
+			<input type="radio" ng-model="searchFilterdevicelist.type" value="ActivePending" ng-change="setFirmwareRadioOption()"> 
+			<span translate="search-filter.active-pending"></span>
+		</label>		
+		<label>
+			<input type="radio" ng-model="searchFilterdevicelist.type" value="All" ng-change="setFirmwareRadioOption()"> 
+			<span translate="search-filter.all"></span>
+		</label>	
+	</div>

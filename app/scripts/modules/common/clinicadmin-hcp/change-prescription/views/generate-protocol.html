@@ -1,0 +1,287 @@
+<div class="container admin-user ng-scope">
+  <div class="col-md-16 col-sm-16 margin-top reset-padding">
+   <div class="user-gen-details">
+   <span ng-class="{'monarchIcon': (getDeviceTypeforBothIcon() =='MONARCH'), 'visivestIcon': (getDeviceTypeforBothIcon() =='VEST'), 'bothdeviceIcon': (getDeviceTypeforBothIcon() =='ALL')}">
+     <span class="user-gen-details--name ng-binding">{{patient.firstName}} {{patient.lastName}}</span>
+     <span class="user-gen-details--hr-id ng-binding">{{patient.hillromId}}</span>
+     </span>
+   </div>
+  </div>
+</div>
+
+<div class="dashboard dashboard--content padding-bottom-ls ng-scope">
+  <div class="container dashboard__form">
+    <div>
+      <div class="col-md-16 col-sm-16 reset-padding">
+        <span  class="dashboard__form--type ng-scope">Updated Prescription Form</span>
+      </div>
+
+      <div class="col-md-16 col-sm-16 reset-padding margin-top">
+        <div class="col-md-7 col-sm-7 reset-padding">
+          <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+            <span class="ng-scope">Patient Name</span>
+          </div>
+          <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding">
+            <input type="text" name="patientName" class="light_grey ng-pristine ng-untouched ng-isolate-scope ng-valid-minlength ng-valid-maxlength ng-valid ng-valid-required" ng-disabled="true" value="{{patient.firstName}} {{patient.lastName}}">
+          </div>
+        </div>
+        <div class="col-md-7 col-sm-7 col-sm-offset-2 reset-padding col-md-offset-2">
+          <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+            <span class="ng-scope">Patient DOB</span>
+          </div>
+          <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding">
+            <input type="text" name="patiendDob" class="light_grey ng-pristine ng-untouched ng-valid ng-isolate-scope ng-valid-minlength ng-valid-maxlength" ng-disabled="true" value="{{patient.dob}}">
+          </div>
+        </div>
+      </div>
+      <div class="clr"></div>
+
+      <div class="col-md-16 col-sm-16 reset-padding margin-top">
+        <div class="col-md-7 col-sm-7 reset-padding">
+          <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+            <span class="ng-scope">Prescriber Name</span>
+          </div>
+          <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding">
+            <input type="text" name="prescriberName" class="light_grey ng-pristine ng-untouched ng-isolate-scope ng-valid-minlength ng-valid-maxlength ng-valid ng-valid-required" ng-disabled="true" value="{{userFullName}}">
+          </div>
+        </div>
+        <div class="col-md-7 col-sm-7 col-sm-offset-2 reset-padding col-md-offset-2">
+          <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+            <span class="ng-scope">Date</span>
+          </div>
+          <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding">
+            <input type="text" ng-maxlength="50" ng-minlength="1" name="date" class="light_grey ng-pristine ng-untouched ng-valid ng-isolate-scope ng-valid-minlength ng-valid-maxlength" ng-model="currentDate" ng-disabled="true">
+          </div>
+        </div>
+      </div>
+      <div class="clr"></div>
+      <div class="col-md-16 col-sm-16 margin-top reset-padding">
+        <span translate="" class="dashboard__form--type ng-scope">New Protocol</span>
+      </div>
+      <div class="dashboard dashboard--content col-sm-16 col-md-16 col-xs-16 padding0px">
+        <div class="dashboard__manage-view margin-top col-xs-16 padding0">
+          <div class="dashboard__manage-view--header no_border care_plan_and_device hidden-xs">
+            <div class="col-md-1 col-sm-1 header--type text-align-left">
+            <span translate="patient.protocol-caption.device-type"></span>
+          </div>
+            <div class="col-md-3 col-sm-3 header--type text-align-l">
+              <span translate="" class="ng-scope">Type</span>
+            </div>
+            <div class="col-md-3 col-sm-3 header--type text-align-l">
+              <span translate="" class="ng-scope">Treatments Per Day</span>
+            </div>
+            <div class="col-md-3 col-sm-3 header--type text-align-l">
+              <span translate="" class="ng-scope">Minutes Per Treatment</span>
+            </div>
+            <div class="col-md-3 col-sm-3 header--type text-align-l">
+              <span translate="" class="ng-scope">Frequency Per Treatment</span>
+            </div>
+            <!-- <div class="col-md-3 col-sm-3 header--type" ng-if="getDeviceType() =='VEST'">
+              <span translate="" class="ng-scope">Pressure Per Treatment</span>
+            </div> -->
+             <div class="col-md-3 col-sm-3 header--type">
+              <span translate="" class="ng-scope">Pressure / Intensity Per Treatment</span>
+            </div>
+            <div class="clr"></div>
+          </div>
+
+         <div class="dashboard__manage-view--header no_border col-xs-16 hidden-md hidden-sm hidden-lg">
+          <div class="col-xs-3 text-left-mob header--type">
+              <span translate="">Device</span>
+            </div>
+            <div class="col-xs-3 text-left-mob header--type">
+              <span translate="">Type</span>
+            </div>
+            <div class="col-xs-3 text-left-mob header--type">
+              <span translate="">Trtm/day</span>
+            </div>
+            <div class="col-xs-3 text-left-mob header--type">
+              <span translate="">Mins</span>
+            </div>
+            <div class="col-xs-3 text-left-mob header--type">
+              <span translate="">Freq.</span>
+            </div>
+            <!-- <div class="col-xs-4 text-left-mob header--type" ng-if="getDeviceType() =='VEST'">
+              <span translate="">Press.</span>
+            </div> -->
+            <div class="col-xs-4 text-left-mob header--type">
+              <span translate="">Press./Inten.</span>
+            </div>
+            <div class="clr"></div>
+         </div>
+
+        </div>
+      </div>
+      <div class="clr"></div>
+
+      <div ng-if="getDeviceTypeforBothIcon() != 'ALL'">
+      <div class="admin-user">
+
+        <div class="col-md-16 col-sm-16 col-xs-16 border-top protocol_list_container" ng-class="{'no_border' : !protocols}">
+          <div class="col-md-1 col-sm-1 treatments_per_day_count" ng-if="protocols">
+    <div id="deviceInfoicon" style="padding-left:25% !important" class="col-md-16 col-sm-16 protocol-list__treatment-day  no_border text-align-left">
+     <span class="icon_height_width" ng-class="{'monarchIcon': (getDeviceType() =='MONARCH'), 'visivestIcon': (getDeviceType() =='VEST')}"></span>
+    </div>
+  </div>
+          <div class="col-md-3 col-sm-3 hidden-xs col-lg-offset-1 col-md-offset-1 col-sm-offset-1 col-xs-offset-1">
+            <div class="col-md-16 col-sm-16 protocol-list__treatment-day protocol-list no_border text-align-l" ng-repeat="protocol in protocols" ng-class="{'list-inactive':protocol.deleted, 'last' : $last}">
+              <span class="protocol-list--value"> {{protocol.type}} {{protocol.treatmentLabel}}</span>
+            </div>
+          </div>
+
+           <div class="col-xs-3 hidden-sm hidden-md hidden-lg">
+            <div class="col-md-16 col-sm-16 col-xs-16 protocol-list__treatment-day protocol-list no_border text-align-l" ng-repeat="protocol in protocols" ng-class="{'list-inactive':protocol.deleted, 'last' : $last}">
+              <span class="protocol-list--value uppercase">{{protocol.treatmentLabel}}</span>
+            </div>
+          </div>
+
+          <div class="col-md-3 col-sm-3 col-xs-3 col-xs-offset-3 col-sm-offset-3 treatments_per_day_count col-md-offset-3">
+            <span class="v_middle">{{protocols[0].treatmentsPerDay}}</span>
+          </div>
+          <div class="col-md-10 col-sm-10 col-xs-10 col-xs-offset-2 col-sm-offset-2 col-md-offset-2">
+            <div class="col-md-16 col-sm-16 col-xs-16 protocol-list no_border" ng-repeat="protocol in protocols" ng-class="{'list-inactive':protocol.deleted, 'last' : $last}">
+            <div class="col-md-6 col-sm-6 col-xs-6 protocol-list__strt-date">
+              <span class="protocol-list--value"> {{protocol.minMinutesPerTreatment}}</span>
+            </div>
+            <div class="col-md-4 col-sm-4 col-xs-4 protocol-list__end-date">
+              <!-- <span ng-if="protocol.type === 'Custom'" class="protocol-list--value"> {{protocol.minFrequency}}</span> -->
+              <span class="protocol-list--value"> {{protocol.minFrequency}}<span ng-if="protocol.maxFrequency">-</span>{{protocol.maxFrequency}}</span>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-6 protocol-list__end-date" ng-if="getDeviceType() =='VEST'">
+              <!-- <span ng-if="protocol.type === 'Custom'" class="protocol-list--value"> {{protocol.minPressure}}</span> -->
+              <span class="protocol-list--value"> {{protocol.minPressure}}<span ng-if="protocol.maxPressure">-</span>{{protocol.maxPressure}}</span>
+            </div>
+
+          <div class="col-md-6 col-sm-6 col-xs-6 protocol-list__end-date" ng-if="getDeviceType() =='MONARCH'">
+             <!--  <span ng-if="protocol.type === 'Custom'" class="protocol-list--value"> {{protocol.minIntensity}}</span> -->
+              <span class="protocol-list--value"> {{protocol.minIntensity}}-{{protocol.maxIntensity}}</span>
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+<!--For both devices edit -->
+    <div ng-if="getDeviceTypeforBothIcon() == 'ALL'">
+      <div class="admin-user">
+
+        <div class="col-md-16 col-sm-16 col-xs-16 border-top protocol_list_container" ng-class="{'no_border' : !protocols}">
+          <div class="col-md-1 col-sm-1 treatments_per_day_count" ng-if="protocols">
+    <div id="deviceInfoicon" style="padding-left:25% !important" class="col-md-16 col-sm-16 protocol-list__treatment-day  no_border text-align-left">
+     <span class="icon_height_width" ng-class="{'monarchIcon': (protocols[0].deviceType =='MONARCH'), 'visivestIcon': (protocols[0].deviceType =='VEST')}"></span>
+    </div>
+  </div>
+          <div class="col-md-3 col-sm-3 hidden-xs col-lg-offset-1 col-md-offset-1 col-sm-offset-1 col-xs-offset-1">
+            <div class="col-md-16 col-sm-16 protocol-list__treatment-day protocol-list no_border text-align-l" ng-repeat="protocol in protocols" ng-class="{'list-inactive':protocol.deleted, 'last' : $last}">
+              <span class="protocol-list--value"> {{protocol.type}} {{protocol.treatmentLabel}}</span>
+            </div>
+          </div>
+
+           <div class="col-xs-3 hidden-sm hidden-md hidden-lg">
+            <div class="col-md-16 col-sm-16 col-xs-16 protocol-list__treatment-day protocol-list no_border text-align-l" ng-repeat="protocol in protocols[0]" ng-class="{'list-inactive':protocol.deleted, 'last' : $last}">
+              <span class="protocol-list--value uppercase">{{protocol.treatmentLabel}}</span>
+            </div>
+          </div>
+
+          <div class="col-md-3 col-sm-3 col-xs-3 col-xs-offset-3 col-sm-offset-3 treatments_per_day_count col-md-offset-3">
+            <span class="v_middle">{{protocols[0].treatmentsPerDay}}</span>
+          </div>
+          <div class="col-md-10 col-sm-10 col-xs-10 col-xs-offset-2 col-sm-offset-2 col-md-offset-2">
+            <div class="col-md-16 col-sm-16 col-xs-16 protocol-list no_border" ng-repeat="protocol in protocols" ng-class="{'list-inactive':protocol.deleted, 'last' : $last}">
+            <div class="col-md-6 col-sm-6 col-xs-6 protocol-list__strt-date">
+              <span class="protocol-list--value"> {{protocol.minMinutesPerTreatment}}</span>
+            </div>
+            <div class="col-md-4 col-sm-4 col-xs-4 protocol-list__end-date">
+              <!-- <span ng-if="protocol.type === 'Custom'" class="protocol-list--value"> {{protocol.minFrequency}}</span> -->
+              <span class="protocol-list--value"> {{protocol.minFrequency}}<span ng-if="protocol.maxFrequency">-</span>{{protocol.maxFrequency}}</span>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-6 protocol-list__end-date" ng-if="protocols[0].deviceType =='VEST'">
+              <!-- <span ng-if="protocol.type === 'Custom'" class="protocol-list--value"> {{protocol.minPressure}}</span> -->
+              <span class="protocol-list--value"> {{protocol.minPressure}}<span ng-if="protocol.maxPressure">-</span>{{protocol.maxPressure}}</span>
+            </div>
+
+          <div class="col-md-6 col-sm-6 col-xs-6 protocol-list__end-date" ng-if="protocols[0].deviceType =='MONARCH'">
+              <!-- <span ng-if="protocol.type === 'Custom'" class="protocol-list--value"> {{protocol.minIntensity}}</span> -->
+              <span class="protocol-list--value"> {{protocol.minIntensity}}<span ng-if="protocol.maxIntensity">-</span>{{protocol.maxIntensity}}</span>
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+<!--both protocol ends -->
+<div class="clr"></div>
+    <form name="$parent.authorizeForm" ng-submit="openVerificationModal()" novalidate>
+      <div class="row lebel-indent margin-top col-md-16 margin-bottom15 ng-scope">
+
+        <div>
+          <input type="checkbox" name="termsAndCondition" class="ng-pristine ng-untouched ng-valid pull-left-mob" value="false" ng-model="terms" ng-required="!terms">
+          <span class="ng-scope link-text termsandconditon_color impo-highlight padding0 margin0 width85"><b>I agree and give my consent by clicking on "I Accept" button.</b> <a href="" ng-click="goToChangePrescriptionTermsConditions();" target="_blank">(Read Electronic Sign Disclosure and Consent)</a></span>          
+        </div>
+        <div>
+          <span class="has-error" ng-if="authorizeForm.termsAndCondition.$error.required && isAuthorizeFormSubmited">Please indicate that you have read and agree to the Terms and Conditions.</span>
+        </div>
+      </div>
+     <!--  <div class="row lebel-indent col-md-16 margin-bottom15 ng-scope dark_grey_text_color">
+        <p>1. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim </p>
+        <p>2. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim </p>
+        <p>3. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim </p>
+      </div> -->
+
+      <div class="col-md-16 col-sm-16 margin-top reset-padding">
+        <div class="">
+          <input type="submit" class="hillrom-btn btn-primary float-right btn-margin-left"  value="I Accept">
+          <input type="button" class="hillrom-btn btn-secondary float-right" ng-click="cancelProtocolUpdate()" value="Cancel">
+          <div class="clr"></div>
+        </div>
+      </div>
+    </form>
+    <div claass="clr"></div>
+    </div>
+  </div>
+</div>
+<div ng-show="isVerificationModal" class="modal">
+  <div class="modal__dialog">
+    <div class="modal__content">
+      <header class="modal__header">
+        <button type="button" class="modal__close" data-dismiss="modal" ng-click="closeVerificationModal()">×</button>
+         <p class="ng-scope">Login Verification</p>
+      </header>
+      <div class="modal__body">
+        <div class="modal--message dark_grey_text_color14 ng-scope">We need to verify that you are not a robot, but a human being!</div>
+        <form ng-submit="updateProtocol()" name="$parent.protocolVerificationForm" novalidate>
+          <div class="col-md-16 col-sm-16 col-xs-16 margin-top reset-padding">
+            <div class="col-md-5 col-sm-5 col-xs-5 dark_grey_text_color14 reset-padding">Email Address</div>
+            <div class="col-md-11 col-sm-11 col-xs-11">
+              <input type="text" name="patientName" class="light_grey dark_grey_text_colour ng-pristine ng-untouched ng-isolate-scope ng-valid-minlength ng-valid-maxlength ng-valid ng-valid-required col-md-16 col-sm-16 col-xs-16" ng-model="userEmail" ng-disabled="true">
+            </div>
+          </div>
+          <div class="col-md-16 col-sm-16 col-xs-16 margin-top reset-padding">
+            <div class="col-md-5 col-sm-5 col-xs-5 dark_grey_text_color14 reset-padding">Password</div>
+            <div class="col-md-11 col-sm-11 col-xs-11">
+              <input type="password" name="password" class="ng-pristine ng-untouched ng-isolate-scope ng-valid-minlength ng-valid-maxlength ng-valid ng-valid-required col-md-16 col-sm-16 col-xs-16" ng-model="$parent.password" required value="">
+              <div ng-if="protocolVerificationForm.$invalid">
+                <span class="has-error" ng-if="protocolVerificationForm.password.$error.required && isProtocolSubmited"> Please enter the password for your Visi-View account.</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-16 col-sm-16 col-xs-16 margin-top reset-padding">
+            <div class="col-md-5 col-sm-5 col-xs-5 dark_grey_text_color14 reset-padding">Captcha</div>
+            <div class="col-md-11 col-sm-11 col-xs-11">
+             <captcha valid="$parent.captchaValid"></captcha>
+            </div>
+          </div>
+          <div class="row modal--custom-btn">
+            <input type="submit" class="hillrom-btn btn-submit float-right" value="Confirm and Generate">
+          </div>
+        </form>
+      </div>
+      <footer class="modal__footer">
+      </footer>
+    </div>
+  </div>
+</div>

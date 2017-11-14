@@ -1,25 +1,26 @@
 'use strict';
 
 angular.module('hillromvestApp')
-    .config(function ($stateProvider) {
+    .config(['$stateProvider', function ($stateProvider) {
         $stateProvider
-            .state('home', {
-                parent: 'site',
+            .state('home', {                
+                parent: 'account',
                 url: '/',
                 data: {
-                    roles: []
+                    roles: [],
+                    pageTitle: 'login.title'
                 },
                 views: {
                     'content@': {
-                        templateUrl: 'scripts/main/main.html',
-                        controller: 'MainController'
+                        templateUrl: 'scripts/account/login/login.html',
+                        controller: 'LoginController'
                     }
                 },
                 resolve: {
-                    mainTranslatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate,$translatePartialLoader) {
-                        $translatePartialLoader.addPart('main');
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('login');
                         return $translate.refresh();
                     }]
                 }
             });
-    });
+    }]);

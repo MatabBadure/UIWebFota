@@ -1,31 +1,55 @@
-
 <div class="navbar patient-user patient-user--nav">
   <div class="container">
-    <div class="collapse navbar-collapse patient-user__navbar" id="navbar-collapse">
+    <div class="patient-user__navbar" id="navbar-collapse">
       <ul class="nav navbar-nav patient-dashboard">
         <li >
-          <a ng-class="{active: isActive('patient/patient-dashboard')}" ng-href="" ng-click="switchPatientTab('patientdashboard')">
+          <a ng-class="{active: isActive('patient/patient-dashboard')}" href="#/patient/patient-dashboard">
             <span class="" translate="patient.profile.tabs.mydashboard"></span>
           </a>
         </li>
       </ul>
 
-      <ul class="nav navbar-nav pull-right right">
-        <li >
-          <a ng-href="" ng-class="{active: isActive('patient/caregiver')}" ng-click="switchPatientTab('patientdashboardCaregiver')">
-            <span class="" translate="patient.profile.tabs.caregiver"></span>
+      <ul class="nav navbar-nav pull-right right patient_nav_link_right patient_padding partient_dashboard_mob">
+        <li>
+          <a ng-class="{active: isActive('patient/caregiver')}" href="#/patient/caregiver">
+            <span class="hide-tab" translate="patient.profile.tabs.caregiver"></span>
+            <span class="icons hillrom-icon icon-caregiver show-tab"></span>
           </a>
         </li>
         <li>
-          <a ng-href="" ng-class="{active: isActive('patient/device-protocol')}" ng-click="switchPatientTab('patientdashboardDeviceProtocol')">
-            <span class="" translate="patient.profile.tabs.device-protocol"></span>
+          <a ng-class="{active: isActive('patient/clinic-hcp')}" href="#/patient/clinic-hcp">
+            <span class="hide-tab" translate="patient.profile.tabs.clinic-hcp"></span>
+            <span class="icons hillrom-icon icon-doctor show-tab"></span>
           </a>
         </li>
         <li>
-          <a ng-href="" ng-class="{active: isActive('patient/clinic-hcp')}" ng-click="switchPatientTab('patientdashboardClinicHCP')">
-            <span class="" translate="patient.profile.tabs.clinic-hcp"></span>
+          <a ng-class="{active: isActive('patient/device-protocol')}" href="#/patient/device-protocol">
+            <span class="hide-tab" translate="patient.profile.tabs.device-protocol"></span>
+            <span class="icons hillrom-icon icon-device show-tab"></span>
           </a>
         </li>
+
+        <li>
+          <a ng-class="{active: isActive('patient/p-profile')}" href="#/patient/p-profile">
+            <span class="hide-tab" translate="patient.profile.tabs.patient-demographics"></span>
+            <span class="icons hillrom-icon icon-user show-tab"></span>
+          </a>
+        </li>
+
+        <!-- <li>
+          <a ng-class="{active: isActive('patient/p-benchmarking')}" href="#/patient/p-benchmarking">
+            <span class="hide-tab" translate="patient.profile.tabs.patient-benchmarking"></span>
+            <span class="icons hillrom-icon icon-benchmarking show-tab"></span>
+          </a>
+        </li> -->
+
+        <li>
+          <a ng-class="{active: isActive('patientDiagnostic')}" ng-click="patientDiagnostics();">
+            <span class="hide-tab" translate="patient.profile.tabs.patient-test-results"> </span>
+            <span class="icons hillrom-icon icon-test-results show-tab"></span>
+          </a>
+        </li>
+
       </ul>
     </div>
   </div>

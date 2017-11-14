@@ -1,0 +1,79 @@
+<ng-include src="'scripts/components/navbar/navbarassociate.html'"></ng-include>
+<hcp-navbar></hcp-navbar>
+
+<div class="container admin-user">
+  <div class="col-md-16 margin-top reset-padding">
+   <div class="user-gen-details">
+     <span class="user-gen-details--name">{{doctor.firstName}} {{doctor.lastName}}</span>
+     <span class="user-gen-details--hr-id">{{doctor.id}}</span>
+   </div>
+  </div>
+
+  <div class="col-md-16 admin-views">
+    <span class="admin-views--title" translate="doctor.clinic-title"></span>
+  </div>
+</div>
+<div class="dashboard dashboard--content">
+  <div class="container dashboard__manage-view margin-top">
+    <div class="dashboard__manage-view--header manage_view_list_iPad">
+      <div class="col-md-2 col-sm-3 header--type">
+        <span translate="doctor.clinic-name"></span>
+      </div>
+      <div class="col-md-2 header--type col-hide-iPad">
+        <span translate="doctor.address"></span>
+      </div>
+      <div class="col-md-2 col-sm-3 header--type">
+        <span translate="doctor.city"></span>
+      </div>
+      <div class="col-md-2 col-sm-3 header--type">
+        <span translate="doctor.state"></span>
+      </div>
+      <div class="col-md-2 header--type col-hide-iPad">
+        <span translate="doctor.phoneNumber"></span>
+      </div>
+      <div class="col-md-2 col-sm-3 header--type">
+        <span translate="doctor.type"></span>
+      </div>
+      <div class="col-md-2 col-sm-3 header--type">
+        <span translate="doctor.hillRom-id"></span>
+      </div>
+      <div class="clr"></div>
+    </div>
+    
+    <div class="dashboard__manage-view--list assoc manage_view_list_iPad" ng-repeat="clinic in clinicsOfHCP" ng-if="clinicsOfHCP.length > 0"  ng-class="{'inactive': clinic.deleted}" >
+      <span ng-click="selectClinic(clinic)">
+        <div class="col-md-2  col-sm-3 centered brakword">
+          <span class="main-prim-info">{{clinic.name}}</span>
+        </div>
+        <div class="col-md-2 centered col-hide-iPad">
+          <span class="short-info">{{clinic.address}}</span>
+        </div>
+        <div class="col-md-2  col-sm-3 centered">
+          <span class="short-info">{{clinic.city}}</span>
+        </div>
+
+        <div class="col-md-2 col-sm-3 centered">
+          <span class="short-info">{{clinic.state}}</span>
+        </div>
+
+        <div class="col-md-2 col-hide-iPad centered">
+          <span class="short-info">{{clinic.phoneNumber}}</span>
+        </div>
+
+        <div class="col-md-2 col-sm-3 centered">
+          <span class="short-info" ng-if="clinic.parent" translate="doctor.clinicType.parent"></span>
+          <span class="short-info" ng-if="!clinic.parent" translate="doctor.clinicType.satellite"></span>
+        </div>
+
+        <div class="col-md-2 col-sm-3 centered">
+          <span class="impo-highlight">{{clinic.hillromId}}</span>
+        </div>
+      </span>
+      <div class="clr"></div>
+    </div>
+
+    <div class="col-md-16 empty-list-message" ng-if="clinicsAssociatedErrMsg">
+      <span translate="doctor.no-clinic-found"></span>
+    </div>
+  </div>
+</div>

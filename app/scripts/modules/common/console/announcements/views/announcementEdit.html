@@ -1,0 +1,246 @@
+<div class="container edit-announcment margin-top reset-padding">
+  
+<div class="dashboard dashboard--content padding-bottom-ls">
+
+  <form name="form" novalidate autocomplete="off">
+    <div class="container dashboard__form">
+      <div>
+         <div class="col-md-4 reset-padding user-required pull-right" style="">
+            <span translate="" >* Required Fields</span>
+          </div>
+        <div class="col-md-16 col-sm-16 margin-top reset-padding">
+          <div class="col-md-7 col-sm-7 reset-padding">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+              <span class="" translate="global.announcement.label.name-of-announcment"></span>
+              <span class="">*</span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding">
+              <input class="" name="announcementName" type="text" ng-model="announcement.name" validate-on-blur maxlength="250" required>
+             <div ng-show="(form.announcementName.$dirty && form.announcementName.$invalid) || resetsubmitted">
+                <span class="has-error" ng-show="form.announcementName.$error.required" translate="error.announcementName.required"></span>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+          <div class="col-md-16 col-sm-16 margin-top reset-padding">
+          <div class="col-md-7 col-sm-7 reset-padding">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+              <span class="" translate="global.announcement.label.subject"></span>
+              <span class="">*</span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding">
+               <textarea rows="3" name="announcementDesc" ng-model="announcement.subject" maxlength="255" required>
+                </textarea>
+               <div ng-show="(form.announcementDesc.$dirty && form.announcementDesc.$invalid) || resetsubmitted">
+                <span class="has-error" ng-show="form.announcementDesc.$error.required" translate="error.announcementDesc.required"></span>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+            <div class="col-md-16 col-sm-16 margin-top reset-padding">
+          <div class="col-md-7 col-sm-7 reset-padding">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+              <span class="" translate="global.announcement.label.starts-on"></span>
+              <span class="">*</span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding">
+              <input type="text"   class="datepickerNew" ng-model="announcement.startDate" name = "startDate" data-provide="datepicker" data-date-autoclose="true" data-date-start-date="0d"   id="dp1" required data-date-format="mm/dd/yyyy" ng-change="endDateCheck()" ng-pattern="/^\d{2}\/\d{2}\/\d{4}$/" readonly="readonly"/>
+              <div ng-show="(form.startDate.$dirty && form.startDate.$invalid) || resetsubmitted">
+                <span class="has-error" ng-show="form.startDate.$error.required" translate="error.startDate.required"></span>
+                <span class="has-error" ng-show="form.startDate.$error.pattern && !form.startDate.$error.required" translate="error.startDate.invalid"></span>
+              </div>  
+            </div>
+          </div>
+          
+        </div>
+          <div class="col-md-16 col-sm-16 margin-top reset-padding">
+          <div class="col-md-7 col-sm-7 reset-padding">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+              <span class="" translate="global.announcement.label.ends-on"></span>
+              <span class="">*</span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding">
+             <input type="text"   class="datepickerNew" ng-model="announcement.endDate" name = "endDate" data-provide="datepicker" data-date-autoclose="true" data-date-start-date="0d"   id="dp2" required data-date-format="mm/dd/yyyy"  ng-pattern="/^\d{2}\/\d{2}\/\d{4}$/" ng-change="endDateCheck()" readonly="readonly"/>
+             <div ng-if="dateFlag == true "><span class="has-error">End Date should be greater than start date </span></div>
+             <div ng-show="(form.endDate.$dirty && form.endDate.$invalid) || resetsubmitted">
+                <span class="has-error" ng-show="form.endDate.$error.required" translate="error.endDate.required"></span>
+                <span class="has-error" ng-show="form.endDate.$error.pattern && !form.endDate.$error.required" translate="error.endDate.invalid"></span>
+              </div>  
+            </div>
+          </div>
+          
+        </div>
+
+        <div class="clr"></div>
+      </div>
+
+
+      <div class="">
+        <div class="col-md-16 col-sm-16 reset-padding margin-top">
+          <div class="col-md-7 col-sm-7 reset-padding">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+              <span class="" translate="global.announcement.label.send-to"></span>
+              <span class="">*</span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form__input reset-padding selected-box-container">
+              <div class="custom-dropdown">
+                <label class="addmargin">
+                  <input type="checkbox" ng-model="checkedtwo" ng-change="vm.myClickClinic(checkedtwo)">
+
+                  Clinic
+                </label>
+                <select name="selectclinic" class="largeselectbox" ng-disabled="!checkedtwo" ng-model="announcement.clinic">
+                  <option >All</option>
+                  <option >Specialty</option>
+                </select>
+                <div ng-show="checkedtwo == true && announcement.clinic == undefined && resetsubmitted" >
+                <span class="has-error" translate="error.selectclinic.required"></span>
+              </div> 
+                
+              </div>
+            </div>
+            <div ng-if="announcement.clinic == 'Specialty'">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding "></div>
+             <div class="col-md-10 col-sm-10 dashboard__form__input reset-padding selected-box-container hideshowoptions">
+              <div class="custom-dropdown secondselectbox">
+                <span style="display:none;">
+                <label class="addmargin">
+                  <input type="checkbox" >
+                  Clinic
+                </label>
+              </span>
+               <select name="type" ng-model="announcement.clinicType"  ng-options="item.type_code_value as item.type_code_value for item in specialities"/>
+                <div ng-show="checkedtwo == true && announcement.clinic == 'Specialty' && announcement.clinicType == undefined && resetsubmitted " >
+                <span class="has-error" translate="error.clinicSpeciality.required"></span>
+              </div> 
+                
+              </div>
+            </div>
+          </div>
+          </div>
+         <div class="col-md-7 col-sm-7 reset-padding">
+            
+            <div class="col-md-10 col-sm-10 dashboard__form__input reset-padding selected-box-container">
+              <div class="custom-dropdown">
+                <label class="addmargin">
+                  <input type="checkbox" ng-model="checkedone" ng-change="vm.myClick(checkedone)">
+                  Patient
+                </label>
+                 <select ng-disabled="!checkedone" name="type" ng-model="announcement.patientType"  ng-options="item.type_code as item.type_code_value for item in patientTypes"/>
+                <div ng-show="checkedone == true && announcement.patientType == undefined && resetsubmitted ">
+                <span class="has-error"  translate="error.patientType.required"></span>
+              </div> 
+                
+              </div>
+            </div>
+          </div>
+        </div>
+        <div ng-show="!checkedone && !checkedtwo && resetsubmitted">
+                <span class="has-error" ng-show="!checkedone && !checkedtwo" translate="error.SendTo.required"></span>
+              </div>  
+      <div class="clr"></div>
+       <div class="col-md-16 col-sm-16 margin-top reset-padding">
+          <div class="col-md-7 col-sm-7 reset-padding">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+              <span class="" translate="global.announcement.label.upload-pdf-file"></span>
+              <span class="">*</span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding">
+           <div class="col-md-6 reset-padding"> <input type="file" accept=
+"application/pdf" id="browse" name="fileupload" style="display: none" onchange="angular.element(this).scope().Handlechange(this)"/>
+          <input type="button" class="hillrom-btn btn-secondary  browsebtn noboder" value="Choose a File" id="fakeBrowse" ng-click="showModalOverwriteCall();" required/>  
+          <span  class="icons user-required"> Only PDF<i class="fa fa-file-pdf-o-new" aria-hidden="true"></i>
+            </span>
+          
+         <!--  <div ng-show="files.length == 0 && resetsubmitted">
+                <span class="has-error" ng-show="files.length == 0" translate="error.file.required"></span>
+              </div>  --> 
+        </div>
+
+          <div class="col-md-10"><input type="text" ng-model="pdfSelected" id="filename" class="nobackground" disabled="disabled" readonly="true"/>
+            <div ng-if="nonPDF == true " ><span class="has-error nonPDFclass" style="">File must be PDF only</span></div>
+         </div>
+
+          <!-- code  -->
+          <br><br> 
+          <div class="col-md-16 reset-padding">
+          <div class="col-md-7 reset-padding">Last Uploaded File</div>
+          <div class="col-md-7">{{announcementFileName}}</div>
+            </div>
+          </div>
+         
+            <div ng-show="fileinput.length">
+        <div ng-repeat="file in fileinput.slice(0)">
+            <span>{{file.webkitRelativePath || file.name}}</span>
+            (<span ng-switch="file.size > 1024*1024">
+                <span ng-switch-when="true">{{file.size / 1024 / 1024 | number:2}} MB</span>
+                <span ng-switch-default>{{file.size / 1024 | number:2}} kB</span>
+            </span>)
+        </div>
+        <input type="button" ng-click="uploadFile()" value="Upload" />
+        <div ng-show="progressVisible">
+            <div class="percent">{{progress}}%</div>
+            <div class="progress-bar">
+                <div class="uploaded" ng-style="{'width': progress+'%'}"></div>
+            </div>
+        </div>
+    </div>
+          </div>
+          
+        </div>
+    </div>
+
+
+    <div class="col-md-16 col-sm-16 margin-top reset-padding">
+      <div class="">
+        <buton type="submit" class="hillrom-btn btn-primary float-right btn-margin-left" ng-click="showannouncementUpdateModal(form)" translate="global.announcement.label.update-announcement">Update</buton>
+        <buton type="submit" class="hillrom-btn btn-secondary float-right" ng-click="redirectBack()" translate="global.announcement.label.cancel">cancel</buton>
+        <div class="clr"></div>
+      </div>
+    </div>
+    </div>
+  </form>
+</div>
+
+<div ng-if="showModalUpdate" class="modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true">
+  <div class="modal__dialog">
+    <div class="modal__content">
+      <header class="modal__header">
+        <button type="button" class="modal__close" data-dismiss="modal" ng-click="close()">&times;</button>
+        <p translate="global.announcement.modal.update-heading"></p>
+      </header>
+      <div class="modal__body">
+        <div class="modal--message" translate="global.announcement.modal.update"></div>
+        <div class="row modal--custom-btn">
+          <buton class="hillrom-btn btn-submit float-right" ng-click ="updateAnnouncement()">Yes</buton>
+          <buton class="hillrom-btn btn-submit float-right" data-dismiss="modal" ng-click="closeoverwrite()">No</buton>
+        </div>
+      </div>
+      <footer class="modal__footer">
+      </footer>
+    </div>
+  </div>
+</div>
+<div ng-if="showModalOverwrite" class="modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true">
+  <div class="modal__dialog">
+    <div class="modal__content">
+      <header class="modal__header">
+        <button type="button" class="modal__close" data-dismiss="modal" ng-click="close()">&times;</button>
+        <p translate="global.announcement.modal.overwrite-heading"></p>
+      </header>
+      <div class="modal__body">
+        <div class="modal--message" translate="global.announcement.modal.overwrite"></div>
+        <div class="row modal--custom-btn">
+          <buton class="hillrom-btn btn-submit float-right" ng-click ="HandleBrowseClick()">Yes</buton>
+          <buton class="hillrom-btn btn-submit float-right" data-dismiss="modal" ng-click="closeoverwrite()">No</buton>
+        </div>
+      </div>
+      <footer class="modal__footer">
+      </footer>
+    </div>
+  </div>
+</div>
+
+    </div>

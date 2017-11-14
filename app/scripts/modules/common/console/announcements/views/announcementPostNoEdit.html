@@ -1,0 +1,112 @@
+
+ <div class="dashboard dashboard--content">
+    <div class="container dashboard__manage-view margin-top-xl">
+      <div class="col-md-16 col-sm-16 col-xs-16 reset-padding pull-left-mob width120">
+    	<div class="announcement-list-header"> 
+      
+        <div class="col-md-4 col-sm-4 col-xs-4 sent-to">
+           <span ng-class="{'sort-icon--default' : sortAnnouncementList.nameOfannouncement.isDefault, 'sort-icon-down': sortAnnouncementList.nameOfannouncement.isDown, 'sort-icon-up':sortAnnouncementList.nameOfannouncement.isUp}" ng-click="sortType('name')" >Name</span> </div>
+           <!--  <span class="main-prim-info">Name of Announcement</span> -->
+           
+       
+          <div class="col-md-6 col-sm-6 col-xs-6 reset-padding pull-left-mob width120">
+            <span ng-class="{'sort-icon--default' : sortAnnouncementList.announcementsubject.isDefault, 'sort-icon-down': sortAnnouncementList.announcementsubject.isDown, 'sort-icon-up':sortAnnouncementList.announcementsubject.isUp}" ng-click="sortType('subject')" >Subject</span> </div>
+            <!-- <span class="impo-highlight">Subject</span> -->
+         
+          <div class="col-md-2 col-sm-3 col-xs-3 reset-padding pull-left-mob width120">
+            <span ng-class="{'sort-icon--default' : sortAnnouncementList.announcementStartdate.isDefault, 'sort-icon-down': sortAnnouncementList.announcementStartdate.isDown, 'sort-icon-up':sortAnnouncementList.announcementStartdate.isUp}" ng-click="sortType('startDate')" >Starts on</span> </div>
+           <!--  <span class="impo-highlight">Starts on</span> -->
+      
+          <div class="col-md-2 col-sm-3 col-xs-3 reset-padding pull-left-mob width120">
+            <span ng-class="{'sort-icon--default' : sortAnnouncementList.announcementEnddate.isDefault, 'sort-icon-down': sortAnnouncementList.announcementEnddate.isDown, 'sort-icon-up':sortAnnouncementList.announcementEnddate.isUp}" ng-click="sortType('endDate')" >Ends on</span> </div>
+            <!-- <span class="short-info">Ends on</span> -->
+         
+
+         <div class="col-md-1 col-sm-1 col-xs-1 reset-padding pull-left-mob width120">
+            <span class="short-info"></span>
+          </div>
+          <div class="col-md-1 col-sm-1 col-xs-1 reset-padding pull-left-mob width120">
+            <span class="short-info"></span>
+          </div>
+    </div>
+
+    <div class="announcement-list" ng-if = "!nodatadiv" ng-readonly="true" ng-repeat="announcement in announcementsList">
+          <div class="col-md-4 col-sm-4 col-xs-4  pull-left-mob width120  overflow-ellipsis">
+            <span class="main-prim-info">{{announcement.name}}</span>
+           
+          </div>
+          <div class="col-md-6 col-sm-6 col-xs-6 padding-left-sec-col pull-left-mob width120 overflow-ellipsis">
+            <span class="impo-highlight">{{announcement.subject | limitTo:120}} <span ng-if="announcement.subject.length > 120">...</span></span>
+          </div>
+          <div class="col-md-2 col-sm-3 col-xs-3 reset-padding pull-left-mob width120">
+            <span class="impo-highlight">{{announcement.startDate}}</span>
+          </div>
+          <div class="col-md-2 col-sm-3 col-xs-3 reset-padding pull-left-mob width120">
+            <span class="short-info">{{announcement.endDate}}</span>
+          </div>
+ <!--   <div class="col-md-1 col-sm-1 text-center pull-left-mob cursor-pointer">
+      <span class="icon-edit-icon" ng-click="edit(announcement.id)"></span>
+    </div>
+    <div class="col-md-1 col-sm-1 text-center pull-left-mob cursor-pointer">
+      <span class="icon-delete-icon" ng-click="showDeleteModal(announcement.id)"></span>
+    </div> -->
+<!--          <div class="col-md-2 col-sm-3 col-xs-3 reset-padding pull-left-mob width120" ng-click="edit(announcement.id)">
+            <span class="short-info cursor-pointer"><i class="fa fa-pencil" aria-hidden="true"></i>
+            </span>
+          </div>
+          <div class="col-md-2 col-sm-3 col-xs-3 reset-padding pull-left-mob width120" ng-click="showDeleteModal(announcement.id)">
+            <span class="icon-delete-icon cursor-pointer" ng-click="alert('Hii')"></span>
+          </div> -->
+          <div class="clr"></div>
+       </div>
+       <div id = "NodataDiv" class="graph_nodata" ng-if = "nodatadiv">
+    <span class="noData_text"> No Announcements Available!</span>
+  </div>
+  </div>
+  <div class="dashboard__manage-view--pagination">
+        <div class="col-md-16 reset-padding-right">
+          <div class="navbar-right">
+            <span class="record-found" ng-if="announcementsList.length > 0">{{totalElements}} Announcements</span>
+            <span class="record-found" ng-if="announcementsList.length > 0">Found</span>
+            <span ng-show="totalPages > 1">
+              <span class="navigaion-link cursor-pointer" ng-class="{ 'inactive': !(currentPageIndex > 1) }" ng-click="announcementPagination('PREV')">Previous</span>
+              <span class="navigaion-no">{{currentPageIndex}}/{{totalPages}}</span>
+              <span class="navigaion-link cursor-pointer" ng-class="{ 'inactive': !(totalPages > currentPageIndex) }" ng-click="announcementPagination('NEXT')">Next</span>
+            </span>
+          </div>
+          <div class="clr"></div>
+        </div>
+          </div>
+          <div class="col-md-16 col-sm-16 margin-top reset-padding">
+      <div class="">
+       <!--  <buton type="submit" class="hillrom-btn btn-primary float-right btn-margin-left" ng-click="setRoute('new')" translate="global.announcement.label.add-announcement">Add Announcements</buton> -->
+       
+        <div class="clr"></div>
+      </div>
+    </div>
+    </div>
+
+        
+    
+     
+  </div>
+  
+<div ng-if="DeleteModal" class="modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true">
+  <div class="modal__dialog">
+    <div class="modal__content">
+      <header class="modal__header">
+        <button type="button" class="modal__close" data-dismiss="modal" ng-click="close()">&times;</button>
+        <p translate="global.announcement.modal.delete-heading"></p>
+      </header>
+      <div class="modal__body">
+        <div class="modal--message" translate="global.announcement.modal.delete"></div>
+        <div class="row modal--custom-btn">
+          <buton class="hillrom-btn btn-submit float-right" ng-click ="deleteAnnouncement()">Yes</buton>
+          <buton class="hillrom-btn btn-submit float-right" data-dismiss="modal" ng-click="close()">No</buton>
+        </div>
+      </div>
+      <footer class="modal__footer">
+      </footer>
+    </div>
+  </div>
+</div>

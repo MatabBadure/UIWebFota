@@ -1,0 +1,7 @@
+<ng-include ng-if="userRole === 'ADMIN'" src="'scripts/components/navbar/navbar.html'"></ng-include>
+<ng-include ng-if="userRole === 'ACCT_SERVICES'" src="'scripts/components/navbar/navbarrcadmin.html'"></ng-include>
+<ng-include ng-if="userRole === 'ASSOCIATES'" src="'scripts/components/navbar/navbarassociate.html'"></ng-include>
+<ng-include ng-if="userRole === 'CUSTOMER_SERVICES'" src="'scripts/components/navbar/navbarcsr.html'"></ng-include>
+<admin-patient-navbar></admin-patient-navbar>
+<!-- <ng-include src="'scripts/modules/common/clinicadmin-hcp/patient-diagnostics/views/diagnosticsNavbar.html'" ng-if="isAddDiagnostics"></ng-include> -->
+<ng-include src="'scripts/modules/common/clinicadmin-hcp/patient-diagnostics/views/diagnostic.html'"></ng-include>

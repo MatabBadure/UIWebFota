@@ -1,0 +1,111 @@
+<div class="dashboard dashboard--content margin-top" ng-show="patientBenchmark">	
+	<!-- <div class="col-md-16 reset-padding" ng-class="{'pointer-no-event': !isGraphLoaded, 'pointer-fill-event': isGraphLoaded}"> -->
+		<div class="user-gen-details">
+			<span class="user-gen-details--name">{{::patientBenchmark.firstName}} {{::patientBenchmark.lastName}}</span>
+			<span class="user-gen-details--hr-id">{{::patientBenchmark.hillromId}}</span>
+		</div>
+		<div>
+			
+
+		</div>
+		<loading loaded="isGraphLoaded"></loading>
+		<div class="col-md-16 col-sm-16 reset-padding cyan-blue-light margin-top">
+			<div class="col-md-3 col-sm-3 benchmarking__form__input reset-padding selected-box-container">
+				<span>Benchmark</span>
+			</div>
+		
+			<div class="col-md-3 col-sm-3 benchmarking__form__input reset-padding selected-box-container margin-lt">
+				<span>Parameter</span>
+			</div>
+			<div class="col-md-1 col-sm-1 benchmarking__form__input reset-padding selected-box-container">
+				<span></span>
+			</div>
+			<div class="col-md-3 col-sm-3 benchmarking__form__input reset-padding selected-box-container" ng-show="clinics && clinics.length > 0">
+				<span>Compare with</span>
+			</div>
+		</div>
+		<div class="col-md-16 col-sm-16 padding0 reset-padding" ng-class="{'pointer-no-event': !isGraphLoaded, 'pointer-fill-event': isGraphLoaded}">
+		<div class="bar_graph_header"> 
+	
+			<!--  <div class="col-md-3 col-sm-3 benchmarking__form__input reset-padding selected-box-container">
+				<div class="col-md-16 col-sm-16 reset-padding">
+				 <input type="text" value="Average" placeholder="Average" class="light-grey col-md-15 col-sm-15 height30" ng-disabled="true"/>
+				</div>
+	  		</div> -->
+	  		<div class="col-md-3 col-sm-3 benchmarking__form__input reset-padding selected-box-container" >
+				<div class="light-grey col-md-16 reset-padding">				
+					<div class="custom-dropdown" ng-class="{'gray_dropdown': benchmarks.length == 1}">
+						<select ng-model="benchmarkings.selectedBM" ng-options="benchmark as benchmark.name for benchmark in benchmarks" ng-disabled="benchmarks.length === 1" ng-class="{'gray_dropdown': benchmarks.length == 1}"></select>					    
+					</div>   					   
+				</div> 
+			</div>
+		
+			<!-- <div class="col-md-3 col-sm-3 benchmarking__form__input reset-padding selected-box-container margin-lt">
+				<div class="col-md-16 col-sm-16 reset-padding">
+					 <input type="text" value="Adherence Score" placeholder="Adherence Score" class="light-grey col-sm-15 col-md-15 height30" ng-disabled="true"/>     
+				</div> 
+			</div> -->
+
+			<div class="col-md-3 col-sm-3 benchmarking__form__input reset-padding selected-box-container" >
+				<div class="light-grey col-md-16 reset-padding">				
+					<div class="custom-dropdown" ng-class="{'gray_dropdown': benchmarkingParam.length == 1}">
+						<select ng-model="parameters.selectedParam" ng-options="param as param.name for param in benchmarkingParam" ng-disabled="benchmarkingParam.length === 1" ng-class="{'gray_dropdown': benchmarkingParam.length == 1}"></select>					    
+					</div>   					   
+				</div> 
+			</div>
+			<div class="col-md-1 col-sm-1 vertical_align_center text-center benchmarking__form__input reset-padding selected-box-container" ng-show="clinics && clinics.length > 0">
+				<span>Vs.</span>
+			</div>
+			
+			<div class="col-md-3 col-sm-3 benchmarking__form__input reset-padding selected-box-container" ng-show="clinics && clinics.length === 1">
+				<div class="col-md-16 reset-padding">
+				 	<input type="text" value="{{clinicsDetails.selectedClinic.name}}" placeholder="{{clinicsDetails.selectedClinic.name}}" class="height30" ng-disabled="true" />								    
+
+				</div> 
+			</div>
+			<div class="col-md-3 col-sm-3 benchmarking__form__input reset-padding selected-box-container" ng-show="clinics && clinics.length > 1">
+				<div class="custom-dropdown">
+					<select ng-model="clinicsDetails.selectedClinic" ng-options="clinic as clinic.name for clinic in clinics" ng-change="reDrawChartOnClinicChange();" ng-disabled="clinics.length === 1"></select>					    
+				</div> 
+			</div>
+			<div class="col-md-4 col-sm-9 pull-right right_header_barchart cyan-blue-light">
+				<ul class="nav nav-pills pull-right ">
+					<li class="" role="presentation"><a ng-click="isGraphLoaded && dayView()" href="" ng-class="{'active': durationRange === 'Day'}" translate="patient-benchmarking.day"></a></li>
+					<li class="" role="presentation"><a ng-click="isGraphLoaded && weekView()" href="" ng-class="{'active': durationRange === 'Week'}" translate="patient-benchmarking.week"></a></li>
+					<li class="" role="presentation"><a ng-click="isGraphLoaded && monthView()" href="" ng-class="{'active': durationRange === 'Month'}" translate="patient-benchmarking.month"></a></li>
+					<li class="" role="presentation"><a ng-click="isGraphLoaded && yearView()" href="" ng-class="{'active': durationRange === 'Year'}" translate="patient-benchmarking.year"></a></li>
+					<li id="dp1" class="" role="presentation" >
+					<a  href="" id="dp2cal" date-range-picker class="date-picker margin_tp13" ng-model="dates" parentEl="#dp1" options="opts" ><span class="icon-calendar"></span></a>
+					</li>
+				</ul>
+			</div>     			
+		</div>   
+		<div class="pull-right margin-top week_date_container">
+			<span ng-if="fromDate !== toDate">
+			<span class="date">{{fromDate}}</span> - <span class="date">{{toDate}}</span>
+			</span>
+			<span ng-if="fromDate === toDate" class="date">{{fromDate}}<span>
+		</div>
+    	</div>
+    	<div class="col-md-16 col-sm-16" class="all_graph_wrapper" style="min-height: 300px;">
+		  	<div class="graph_nodata" ng-show="isNoDataAvailable">
+				<span class="noData_text"> No Data Available!</span>
+			</div>			
+
+			<div class="col-md-16 col-sm-16 margin-top" ng-show="!isNoDataAvailable">
+				<div id="patientBenchmarkingGraph" style="height: 500px;"></div>
+
+			</div>
+		</div>
+
+		<div style="clear:both"></div>
+		<div class="col-md-16 col-sm-16 dashboard__manage-view--pagination">
+			<div class="btn_group patient_dashdoard_btns">
+				<div dropdown="" class="pull-right left dropdown">
+					<button id="single-button" type="button" class="hillrom-btn btn-submit margin0 float-right ng-scope dropdown-toggle"  ng-click="exportPatientBMPDF()" ng-class="{ 'pointer-fill-event': (!isNoDataAvailable && isGraphLoaded) , 'pointer-no-event': (!isGraphLoaded || isNoDataAvailable) }">Export in PDF</button>
+				</div>
+			</div>
+		</div>
+		<div style="clear:both"></div>
+		<canvas id="patientBenchmarkCanvas" width=1300 height=350 style="display:none;"></canvas>
+</div>

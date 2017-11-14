@@ -15,7 +15,7 @@
 }
 
 .admin-user .caregiver-list__detail {
-  padding: 0;
+  padding: 0 10px;
   &--name {
     color: $cyan-blue-light;
     font-size: $font-size-base;
@@ -31,7 +31,7 @@
 }
 
 .admin-user .caregiver-list__address {
-  padding: 0;
+  padding: 0 10px;
   font-size: $font-size-small;
   font-weight: $font-weight-medium;
   color: $regent-gray;
@@ -41,14 +41,22 @@
 }
 
 .admin-user .caregiver-list__phone, .admin-user .caregiver-list__fax {
-  padding: 0;
+  padding: 0 10px;
   color: $nevada;
   font-size: $font-size-small;
   font-weight: $font-weight-medium;
 }
 
+.admin-user .caregiver-list__phone .desc-text {
+  font-size: $font-size-smaller;
+}
+
+.admin-user .caregiver-list__phone .contact-detail {
+  font-size: $font-size-small;
+}
+
 .admin-user .caregiver-list__type {
-  padding: 0;
+  padding: 0 10px;
   span {
     color: $pickled-bluewood;
     font-weight: $font-weight-semibold;
@@ -59,6 +67,16 @@
   text-align: center;
   span {
     cursor: pointer;
+    padding-right: 10px;
+  }
+  .icon-edit-icon,
+  .icon-delete-icon {
+    padding-right: 10px;
+    color: $bombay;
+    cursor: pointer;
+    &:hover{
+      color: $pickled-bluewood;
+    }
   }
 }
 

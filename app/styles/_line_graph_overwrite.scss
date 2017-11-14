@@ -1,0 +1,511 @@
+.dashboard_line_graph , .complianceGraph{
+
+	 .nv-groups {
+
+	 	.nv-point{
+	 		stroke-opacity: 1 !important;
+		    stroke-width: 3px !important;
+		    &:hover{
+		    	fill-opacity: 1 !important;
+
+		    }
+	 	}
+	}
+	.nv-lineChart{
+		g{
+			rect{
+				fill: #e3ecf7;
+				opacity: 1 !important;
+			}
+		}
+	}
+	.nv-axis{
+			path{
+				stroke: #ccc;
+			}
+			.tick{
+				text{
+				fill: $nevada;
+				font-size: 10px;
+				}
+			}
+			.nv-axisMaxMin{
+					text{
+						fill: $nevada;
+						font-size: 10px;
+						font-weight: normal;
+					}
+				}
+			.nv-axislabel{
+				fill: $nevada;
+			}
+		}
+	.nv-wrap{
+			.nv-axisMaxMin{
+				&:a-child{
+					text{
+					text-anchor: end !important;
+					}
+				}
+			}
+		}
+}
+
+.complianceGraph{
+	.axis{
+		line{
+			stroke: transparent;
+		}
+		.y1{
+			.minRecommendedLevel{
+
+			}
+		}
+	}
+	.svg_bg{
+		fill: #e3ecf7;
+	}
+	.nv-stackedarea {
+		path.nv-area{
+			stroke-opacity: 1;
+			stroke: #fff !important;
+			stroke-width: 1.5;
+		}
+	}
+	.nv-axis{
+		.tick{
+			line{
+				stroke: transparent;
+				&:hover{
+					stroke: #000;
+				}
+			}
+		}
+	}
+	.nv-linesWrap{
+		.nv-line{
+			> g{
+				> .nv-groups{
+					> .nv-group{
+						&:hover{
+							fill-opacity: 1 !important;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	.nv-line-year.nv-linesWrap{
+		.nv-line{
+			> g{
+				> .nv-groups{
+					> .nv-group{
+						&:hover{
+							fill-opacity: 1 !important;
+						}
+					}
+				}
+			}
+		}
+	}
+
+}
+.hmrBarGraph{
+	.svg_bg{
+			fill: #CCDBEA;
+			opacity: 0.5;
+		}
+	.nvd3 {
+			.nv-x {
+				line{
+						opacity: 0 !important;
+					}
+				}
+			}
+	}
+#hmrLineGraph{
+	.nv-axis{
+			 line{
+			 	opacity: 0;
+			 }
+		}
+		path.nv-line{
+			/*stroke: $label-color;*/
+		}
+}
+.missed_therapy_node {
+  fill: #cf202f;
+  stroke: #fff;
+  stroke-width: 1.5;
+  fill-opacity: 1;
+}
+
+.missed_therapy_year_node {
+  fill: #cf202f;
+  stroke: #cf202f;
+  stroke-width: 1.5;
+  fill-opacity: 0;
+}
+/* Grapg ToolTip style */
+.nvtooltip{
+		&:before {
+		    content: "";
+		    display: block;
+		    position: absolute;
+		    bottom: -11px;
+		    left: 45%;
+		    width: 0;
+			height: 0;
+			border-left: 10px solid transparent;
+			border-right: 10px solid transparent;
+
+			border-top: 10px solid $iceberg;
+
+ 		}
+ 		&:after {
+		    content: "";
+		    display: block;
+		    position: absolute;
+		    bottom: -9px;
+		    left: 45.5%;
+		    width: 0;
+			height: 0;
+			border-left: 9px solid transparent;
+			border-right: 9px solid transparent;
+
+			border-top: 9px solid #fff;
+
+ 		}
+	}
+
+#cumulativeGraph{
+	.nvtooltip{
+		&:before {
+		    content: "";
+		    display: block;
+		    position: absolute;
+		    top: 40%;
+		    left: -20px;
+		    width: 0;
+			height: 0;
+			border-top: 10px solid transparent;
+			border-bottom: 10px solid transparent;
+
+			border-right: 10px solid $iceberg;
+
+ 		}
+ 		&:after {
+		    content: "";
+		    display: block;
+		    position: absolute;
+		    top: 40%;
+		    left: -17px;
+		    width: 0;
+			height: 0;
+			border-top: 9px solid transparent;
+			border-bottom: 9px solid transparent;
+
+			border-right: 9px solid #fff;
+
+ 		}
+	}
+	}
+
+
+
+#cumulativeGraph{
+	.nvtooltip.nvtooltip_right{
+		&:before {
+		    
+		    left: 100%;
+			border-top: 10px solid transparent;
+			border-bottom: 10px solid transparent;
+
+			border-right: 0px solid $iceberg;
+			border-left: 10px solid $iceberg;
+
+ 		}
+ 		&:after {
+		    left: 100%;
+			border-top: 9px solid transparent;
+			border-bottom: 9px solid transparent;
+
+			border-right: 0px solid #fff;
+
+			border-left: 9px solid #fff;
+
+ 		}
+	}
+	}
+
+
+
+
+
+
+	.nvtooltip{
+		padding: 0px 0px 0px 0px;
+		min-width: 170px;
+		border-radius: 3px;
+		border: solid 1px $iceberg;
+
+		p{
+			padding: 0px 0px;
+			margin: 0px 0px;
+			text-align: left;
+		}
+		h6{
+			margin: 0px 0px;
+			padding: 5px 10px;
+			line-height: 20px;
+			font-weight: bold;
+			color: #fff;
+			font-size: 12px;
+			background-color: $iceberg;
+			position: relative;
+
+		}
+		h6.after{
+				&:after{
+					content: "";
+				    display: block;
+				    position: absolute;
+				    top: 6px;
+				    right: 0;
+				    width: 1px;
+					height: 15px;
+					background-color: #fff;
+				}
+			}
+		.tooltip_sub_content{
+			float: left;
+			width: 50%;
+			word-wrap: break-word;
+			position: relative;
+			.notes{
+				display: block;
+				width: 130px;
+				color: $gray-dark;
+				white-space: pre-line;
+
+			}
+		}
+		.tooltip_sub_content:first-child{
+			&:after{
+				content: "";
+				    display: block;
+				    position: absolute;
+				    top: 30px;
+				    right: 0;
+				    width: 1px;
+					height: 80%;
+					background-color: $gray-lighter;
+			}
+		}
+		.graph_ul{
+			padding: 2px 10px;
+			margin-left: 0px;
+			display: inline-block;
+			overflow: hidden;
+			clear: left;
+			width: 100%;
+			word-wrap: break-word;
+			li{
+				list-style-type: none;
+				border-bottom: solid 1px $gray-lighter;
+				padding-top: 3px;
+				overflow: hidden;
+				color: $gray-dark;
+				span{
+					color: $gray-dark;
+				}
+			}
+			.notes{
+				padding-right:10px;
+
+	
+			}
+		}
+	}
+	.patient_dashdoard_btns{
+		clear: left;
+	    display: inline-block;
+	 /*   margin: 380px 0px 20px;*/
+	    margin: 0px 0px 20px;
+	    width: 100%;
+	    .dropdown-menu{
+	    	margin-bottom: 80px;
+	    	z-index: 9999 !important;
+	    }
+	}
+	.patient_dashdoard_btns_compliance{
+		clear: left;
+	    display: inline-block;
+	    margin: 30px 0px 20px;
+	    width: 100%;
+	    .dropdown-menu{
+	    	margin-bottom: 80px;
+	    	z-index: 9999 !important;
+	    }
+	}
+	/* Grapg ToolTip style */
+/* Over write date picker style*/
+.daterangepicker{
+	&.dropdown-menu{
+	width: 490px;
+}
+
+.ranges{
+	width: 350px;
+	width: 100%;
+	.range_inputs{
+		display: inline-block;
+		width: 100%;
+		.btn{
+			margin: 7px 0px 0px;
+		    background-color: $iceberg;
+		    border: 0;
+		    border-bottom: solid 2px $blue-btn-border;
+		    color: $btn-primary-color;
+		    min-width: 120px;
+		    padding: 3px 15px;
+		    border-radius: 0;
+			&.applyBtn{
+				margin-left: 5px;
+			}
+			&:hover{
+				background-color: $blue-btn-hover;
+			}
+		}
+	}
+	.range_inputs{
+		label{
+			width: auto;
+			padding-right: 10px;
+		}
+		> div{
+			width: 50%;
+		}
+		> div:nth-child(2){
+			padding-left: 0px;
+		}
+	}
+}
+	th{
+		border-radius: 0px;
+	}
+	th.prev{
+		border-bottom-left-radius: 4px;
+		border-top-left-radius: 4px;
+	}
+	th.next{
+		border-bottom-right-radius: 4px;
+		border-top-right-radius: 4px;
+	}
+
+	}
+	.table-condensed{
+		thead{
+			tr{
+				background-color: $iceberg;
+				color: #fff;
+			&:not(:first-child){
+				background-color: transparent;
+				color: $gray-dark;
+			}
+			}
+		}
+		th{
+		&.available{
+			&:hover{
+				background: transparent !important;
+			}
+			}
+		}
+
+	}
+	.glyphicon-arrow-left{
+		&:before{
+			content: '\003c';
+		}
+	}
+	.glyphicon-arrow-right{
+		&:before{
+			content: '\003e';
+		}
+	}
+
+   .show_content{
+		display: block;
+		word-wrap: break-word;
+	}
+	.hide_content{
+		display: none;
+	}
+.hmrBarGraph{
+	.nv-y{
+		.tick{
+			line{
+				stroke: transparent;
+			}
+		}
+	}
+}
+.nv-noData{
+	text-anchor: middle;
+}
+.dashboard_line_graph, .complianceGraph{
+	svg{
+		height: 350px;
+		overflow: visible;
+	}
+}
+.graph-canvas-hide{
+	display: none;
+}
+.graph_nodata{
+	width: 180px;
+	margin: 0% auto;
+	text-align: center;
+	height: 250px;
+	.noData_text{
+		font-size : $font-size-large;
+		font-weight : bold;
+		margin-top: 50%;
+		color: $gray;
+		display: inline-block;
+	}
+}
+.datepicker thead tr:first-child th:hover, .datepicker tfoot tr th:hover, .datepicker thead tr:first-child th{
+	color: $btn-primary-color;
+	background-color: $iceberg;
+}
+.datepicker.datepicker-dropdown.datepicker-orient-bottom:after,
+.datepicker.datepicker-dropdown.datepicker-orient-left:after{
+	left: 93px;
+}
+.datepicker.datepicker-dropdown.datepicker-orient-bottom:before,
+.datepicker.datepicker-dropdown.datepicker-orient-left:before{
+	left: 92px;
+}
+
+.treatmentGraphTL{
+	.nvtooltip{
+		width: 280px;
+		margin-top: 40px;
+	}
+	.value{
+		text-align: left;
+		width: 70px;
+	}
+	}
+/*for no event*/
+.pointer-no-event{
+	pointer-events : none !important;
+	cursor: default;
+}
+.pointer-fill-event{
+	pointer-events : fill !important;
+	cursor: pointer;
+}

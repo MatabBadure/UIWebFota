@@ -1,0 +1,58 @@
+ <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="container" ng-switch="$root.isAuthenticated">
+    <div class="navbar-header navbar-primary">
+      <button data-target="#navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">
+        <span class="sr-only" translate="toggle-navigation"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="" ng-click="goToHomePage();"><span class="logo icon-hill-rom-logo"></span></a>
+      <div class="navbar-brand__desc"> 
+        <span class="navbar-brand__desc--text-primary"><span translate="visi-view"></span><sup translate="tm-sup"></sup></span>
+        <span class="navbar-brand__desc--text-secondary" translate="health-portal"></span>
+      </div>
+    </div>
+    <div class="collapse navbar-collapse header-nav navbar-secondary" id="navbar-collapse" ng-switch-when=true>
+      <ul class="nav navbar-nav navbar-right margin0 header-nav-content">
+        <li class="icon-border">
+          <a ng-class="{ active: isActive('caregiver-dashboard') }" href="" ng-click="goToCaregiverDashboard();" >
+            <span class="icons hillrom-icon icon-dashboard"></span>
+            <span class="link-text" translate="global.tabs.dashboard" ></span>
+          </a>
+        </li> 
+         <li class="icon-border">
+          <a ng-class="{ active: isActive('/caregiver-patient-announcements')}" href="" ng-click="navigateWithPatientID('caregiverannouncements');" >
+            <span  class="icons messages"> <i class="fa fa-flag" id="announcementflag" aria-hidden="true"></i>
+            </span>
+            <span class="link-text" translate="global.tabs.announcements" ></span>
+          </a>
+        </li>
+      
+        <li class="header-popover dropdown">
+          <a ng-href="" data-target="#" class="dropdown-toggle" ng-class="{ active: isActive('profile') || isActive('change-password')}" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            <span class='icon-logged-in-user'></span>
+            <span class='user-name'>{{username}}</span></a>
+          <ul class="dropdown-menu">
+            <li id='account' ng-click='caregiverProfile()'>
+              <span class='hillrom-icon icon-user-account'></span>
+              <p translate="global.my-dashboard">My Profile</p>
+            </li>
+            <li ng-click='logout()'>
+              <span class='hillrom-icon icon-logout'></span>
+              <p translate="global.logout"></p>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</nav>
+<script>
+$( document ).ready(function() {
+    $(".navbar-toggle").click(function(){
+      $(".header-nav").css("display", "block");
+      });
+});
+</script>

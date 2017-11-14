@@ -1,0 +1,166 @@
+<ng-include src="'scripts/components/navbar/navbarcsr.html'"></ng-include>
+<div class="navbar dashboard dashbord-nav">
+  <div class="container">
+    <div class="dashbord-nav__primary pull-left">
+      <span class="dashbord-nav__primary--title" translate="user.home.hillRomUser">Hill-Rom User</span>
+    </div>
+    <div class="dashbord-nav__secondary create-user navbar-right cursor-pointer" ng-click="back()">
+      <span class="">Back</span>
+    </div>
+  </div>
+</div>
+<div class="dashboard--content padding-bottom-ls">
+  <form name="form" ng-submit="createUser()" novalidate autocomplete="off">
+    <div class="container dashboard__form">
+      <div class="margin-top-xl">
+        <div class="col-md-16 reset-padding">
+           <span class="dashboard__form--type" translate="user.personal-details"></span>
+        </div>
+
+        <div class="col-md-16 reset-padding margin-top">
+          <div class="col-md-7 reset-padding">
+            <div class="col-md-6 dashboard__form--label reset-padding">
+              <span class="" translate="user.title.name"></span>
+            </div>
+            <div class="col-md-10 dashboard__form__input reset-padding selected-box-container">
+              <span>{{::user.title}}</span>
+            </div>
+          </div>
+
+          <div class="col-md-7 reset-padding col-md-offset-2" ng-show="userStatus.editMode">
+            <div class="col-md-6 dashboard__form--label reset-padding">
+              <span class="" translate="user.user-id">User ID</span>
+            </div>
+            <div class="col-md-10 dashboard__form--input reset-padding">
+              {{::user.id}}
+            </div>
+          </div>
+
+        </div>
+
+        <div class="col-md-16 reset-padding margin-top">
+          <div class="col-md-7 reset-padding">
+            <div class="col-md-6 dashboard__form--label reset-padding">
+              <span class="" translate="user.first-name"></span>
+            </div>
+            <div class="col-md-10 dashboard__form--input reset-padding">
+            {{::user.firstName}}
+            </div>
+          </div>
+          <div class="col-md-7 reset-padding col-md-offset-2">
+            <div class="col-md-6 dashboard__form--label reset-padding">
+              <span class="" translate="user.middle-name"></span>
+            </div>
+            <div class="col-md-10 dashboard__form--input reset-padding">
+            {{::user.middleName}}
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-16 reset-padding margin-top">
+          <div class="col-md-7 reset-padding">
+            <div class="col-md-6 dashboard__form--label reset-padding">
+              <span class="" translate="user.last-name"></span>
+            </div>
+            <div class="col-md-10 dashboard__form--input reset-padding">
+            {{::user.lastName}}
+            </div>
+          </div>
+          <div class="col-md-7 reset-padding col-md-offset-2">
+            <div class="col-md-6 dashboard__form--label reset-padding">
+              <span class="" translate="user.hrId"></span>
+            </div>
+            <div class="col-md-10 dashboard__form--input reset-padding">
+            	{{::user.hillromId}}
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-16 reset-padding margin-top">
+          <div class="col-md-7 reset-padding">
+            <div class="col-md-6 dashboard__form--label reset-padding">
+              <span class="" translate="user.email"></span>
+            </div>
+            <div class="col-md-10 dashboard__form--input reset-padding">
+            	{{::user.email}}
+            </div>
+          </div>
+          <div class="col-md-7 reset-padding col-md-offset-2">
+            <div class="col-md-6 dashboard__form--label reset-padding">
+              <span class="" translate="user.mobile-number"></span>
+            </div>
+            <div class="col-md-10 dashboard__form--input reset-padding">
+            {{::user.mobilePhone}}
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-16 reset-padding margin-top">
+          <div class="col-md-7 reset-padding">
+            <div class="col-md-6 dashboard__form--label reset-padding">
+              <span class="" translate="user.role-text"></span>
+            </div>
+            <div class="col-md-10 dashboard__form__input--option reset-padding">
+              <span ng-if="user.role === 'ADMIN'" value="ADMIN">Super Admin</span>
+              <span ng-if="user.role === 'ACCT_SERVICES'">RC Admin</span>
+              <span ng-if="user.role === 'CARE_GIVER'">Caregiver</span>
+              <span ng-if="user.role === 'HCP'">HCP</span>
+              <span ng-if="user.role === 'PATIENT'">Patient</span>
+              <span ng-if="user.role === 'CLINIC_ADMIN'">Clinic Admin</span>
+              <span ng-if="user.role === 'ASSOCIATES'">Associates</span>
+              <span ng-if="user.role === 'CUSTOMER_SERVICES'">Customer Services</span>
+            </div>
+          </div>
+        </div>
+        <div class="clr"></div>
+         <div class="col-md-16 reset-padding margin-top">
+        <div class="actionbuttons" ng-if="(user.role === 'PATIENT') || (user.role === 'CLINIC_ADMIN') || (user.role === 'HCP')">
+          <button type="button" class="hillrom-btn btn-primary btn-margin-left float-right" ng-class="{'disabled btn-inactive': isDisableResendButton}" ng-show=" !user.deleted && !user.activated && user.id != loggedUserId" ng-disabled="isDisableResendButton" ng-click="resendActivationLinkCSR()" translate="user.reactivate-button-text">Resend Activation Link</button>
+          <button type="button" class="hillrom-btn btn-secondary float-right" ng-click="open('deactivate')" ng-show=" !user.deleted && user.id != loggedUserId" translate="user.deactivate-button-text">Deactivate</button>
+          <button type="button" class="hillrom-btn btn-secondary float-right" ng-click="open('activate')" ng-show="user.deleted" translate="user.activate-button-text">Activate</button>
+          <div class="clr"></div>
+          <div class="clr"></div>
+        </div>
+      </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div ng-if="showActivateModal" class="modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true">
+  <div class="modal__dialog">
+    <div class="modal__content">
+      <header class="modal__header">
+        <button type="button" class="modal__close" data-dismiss="modal" ng-click="$parent.showActivateModal= false">&times;</button>
+         <p translate="user.activate.warning"></p>
+      </header>
+      <div class="modal__body">
+         <div class="modal--message" translate="user.activate.message"></div>
+         <div class="row modal--custom-btn">
+          <buton class="hillrom-btn btn-submit float-right" ng-click="activateUserCSR()">Yes</buton>
+          <buton class="hillrom-btn btn-secondary btn-submit float-right" data-dismiss="modal" ng-click="$parent.showActivateModal= false">No</buton>
+         </div>
+      </div>
+      <footer class="modal__footer">
+      </footer>
+    </div>
+  </div>
+</div>
+<div ng-if="showModal" class="modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true">
+  <div class="modal__dialog">
+    <div class="modal__content">
+      <header class="modal__header">
+        <button type="button" class="modal__close" data-dismiss="modal" ng-click="close()">&times;</button>
+         <p translate="user.delete.warning"></p>
+      </header>
+      <div class="modal__body">
+         <div class="modal--message" translate="user.delete.message"></div>
+         <div class="row modal--custom-btn">
+          <buton class="hillrom-btn btn-submit float-right" ng-click="deleteUserCSR()">Yes</buton>
+          <buton class="hillrom-btn btn-secondary btn-submit float-right" data-dismiss="modal" ng-click="close()">No</buton>
+         </div>
+      </div>
+      <footer class="modal__footer">
+      </footer>
+    </div>
+  </div>
+</div>

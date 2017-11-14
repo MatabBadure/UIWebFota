@@ -1,22 +1,24 @@
 {
     "reset": {
         "request": {
-            "title": "FORGOT YOUR PASSWORD?",
+            "pageTitle": "HillRom | Forgot Password",
+            "title": "Forgot Your Password?",
             "form": {
-                "button": "Reset password"
+                "button": "Reset Password"
             },
             "messages": {
                 "info": "Please enter the email address registered on your account ",
-                "success": "Check your e-mails for details on how to reset your password.",
+                "success": "Check your e-mail for details on how to reset your password.",
                 "notfound": "<strong>E-Mail address isn't registered!</strong> Please check and try again",
                 "placeholder":"Enter your email address"   
             }
 
         },
         "finish" : {
-            "title": "Reset password",
+            "title": "Reset Password",
+            "sec-title": "Answer Security Question",
             "form": {
-                "button": "Validate new password"
+                "button": "Reset Password"
             },
             "messages": {
                 "info": "Choose a new password",
@@ -27,7 +29,18 @@
         },
         "placeholder": {
             "security-answer": "Enter Your Answer"
-        }
+        },
+        "password": {
+            "error": "password should have at least 8 characters, contains atleast 1 number, 1 special character, 1 letter in caps",
+            "maxlength": "password can't have more than 50 characters.",
+            "required" : "Password is required.",
+            "customError": "Your password is not as per policy."
+        },
+        "confirm-password": {
+            "error": "passwords do not match",
+            "maxlength": "password can't have more than 50 characters."
+        },
+        "instruction": "Password should have atleast 8 characters, contains atleast 1 number, 1 special character, 1 letter in caps."
     }
 
 }

@@ -1,0 +1,104 @@
+<ng-include src="'scripts/components/navbar/navbarassociate.html'"></ng-include>
+<clinic-navbar></clinic-navbar>
+<div class="container admin-user">
+  <div class="col-md-16 margin-top reset-padding">
+   <div class="user-gen-details">
+   <span class="user-gen-details--name">{{::clinic.name}}</span>
+     <span class="user-gen-details--hr-id">{{::clinic.hillromId}}</span>
+   </div>
+ </div>
+</div>
+
+<div class="dashboard dashboard--content">
+  <div class="container dashboard__manage-view margin-top-xl">
+    
+    <div class="dashboard__manage-view--search">
+      <div class="fuid-search-box reset-padding-right">
+        <input type="text" class="form-control" id="searchListParam" name="userName" ng-model="searchItem" ng-model-options="{ debounce: 1000 }" ng-change="searchAssociatedHcps();" autocomplete="off" placeholder="{{'clinic.placeholder.hcp-name-email-search' | translate}}">
+        <span class="search-icon hillrom-icon icon-search-icon"></span>
+      </div>
+    </div>
+
+    <div class="col-md-16">
+      <ng-include src="'scripts/components/navbar/searchfilter.html'"></ng-include>
+    </div>
+
+    <div class="dashboard__manage-view--header">
+        <div class="col-md-2 header--type">
+          <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="clinic.hcp-name"></span>
+        </div>
+        <div class="col-md-2 header--type">
+          <span translate="clinic.credentials"></span>
+        </div>
+        <div class="col-md-2 header--type">
+          <span translate="clinic.npiNumber"></span>
+        </div>
+        <div class="col-md-2 header--type">
+          <span translate="clinic.clinic-name"></span>
+        </div>
+        <div class="col-md-2 header--type">
+          <span translate="clinic.city"></span>
+        </div>
+        <div class="col-md-2 header--type">
+          <span translate="clinic.state"></span>
+        </div>
+        <div class="col-md-2 header--type">
+          <span translate="clinic.status"></span>
+        </div>
+        <div class="clr"></div>
+      </div>
+
+      <div class="dashboard__manage-view--list assoc" ng-repeat="hcp in associatedHcps" readonly="true">
+        <span ng-click="selectDoctor(hcp)">
+          <div class="col-md-2 centered">
+            <span class="main-prim-info">{{hcp.lastName}}, {{hcp.firstName}}</span>
+          </div>
+          <div class="col-md-2 centered">
+            <span class="impo-highlight">{{hcp.credentials}}</span>
+          </div>
+          <div class="col-md-2 centered">
+            <span class="short-info">{{hcp.npiNumber}}</span>
+          </div>
+
+          <div class="col-md-2 centered">
+            <span class="short-info">{{clinic.name}}</span>
+          </div>
+
+          <div class="col-md-2 centered">
+            <span class="short-info">{{hcp.city}}</span>
+          </div>
+
+          <div class="col-md-2 centered">
+            <span class="short-info">{{hcp.state}}</span>
+          </div>
+
+          <div class="col-md-2 centered">
+            <span class="short-info active" ng-if="!hcp.deleted" translate="clinic.status-type.active"></span>
+            <span class="short-info inactive" ng-if="hcp.deleted" translate="clinic.status-type.inactive"></span>
+          </div>
+        </span>
+
+          <div class="clr"></div>
+       </div>
+
+       <div class="col-md-16 empty-list-message" ng-if="associatedHcps && associatedHcps.length === 0">
+        <span translate="clinic.noHCPs"></span>
+      </div>
+
+      <div class="dashboard__manage-view--pagination">
+        <div class="col-md-16 reset-padding-right">
+          <div class="navbar-right">
+            <span class="record-found" ng-if="associatedHcps.length > 0">{{total}}</span><span class="record-found" ng-if="associatedHcps.length > 0" translate="clinic.associated-hcps.hcps">HCPs</span>
+            <span class="record-found" ng-if="associatedHcps.length > 0" translate="clinic.associated-hcps.found">Found</span>
+            <span ng-show="associatedHcps.length > 0">
+              <span class="navigaion-link cursor-pointer" ng-class="{ 'inactive': !(currentPageIndex > 1) }" ng-click="searchAssociatedHcps('PREV')" translate="clinic.associated-hcps.previous">Previous</span>
+              <span class="navigaion-no">{{currentPageIndex}}</span>
+              <span class="navigaion-link cursor-pointer" ng-class="{ 'inactive': !(pageCount > currentPageIndex) }" ng-click="searchAssociatedHcps('NEXT')" translate="clinic.associated-hcps.next">Next</span>
+            </span>
+          </div>
+          <div class="clr"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

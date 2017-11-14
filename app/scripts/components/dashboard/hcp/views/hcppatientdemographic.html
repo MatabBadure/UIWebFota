@@ -1,0 +1,279 @@
+<div class="container admin-user">
+  <div class="col-md-16 col-sm-16 margin-top reset-padding">
+   <div class="user-gen-details">
+   <span ng-class="{'monarchIcon': (getDeviceTypeforBothIcon() =='MONARCH'), 'visivestIcon': (getDeviceTypeforBothIcon() =='VEST'), 'bothdeviceIcon': (getDeviceTypeforBothIcon() =='ALL')}">
+     <span class="user-gen-details--name">{{::patient.firstName}} {{::patient.lastName}}</span>
+     <span class="user-gen-details--hr-id">{{::patient.hillromId}}</span>
+     </span>
+   </div>
+  </div>
+</div>
+<div class="dashboard dashboard--content padding-bottom-ls">
+
+    <div class="container dashboard__form">
+      <div>
+        <div class="col-md-16 col-sm-16 reset-padding">
+          <span class="dashboard__form--type" translate="patient.demo-graph.identifier"></span>
+        </div>
+
+        <div class="col-md-16 col-sm-16 margin-top reset-padding">
+          <div class="col-md-7 col-sm-7 reset-padding col-xs-16">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding col-xs-8">
+              <span class="" translate="patient.hill-rom-id"></span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding col-xs-8">
+              <span>{{::patient.hillromId}}</span>
+            </div>
+          </div>
+          <div class="col-md-7 col-sm-7 reset-padding col-md-offset-2 col-xs-16">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding col-xs-8">
+              <span class="" translate="patient.mrn-id"></span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding col-xs-8">
+              <span>{{::patient.clinicMRNId.mrnId}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-16 col-sm-16 margin-top reset-padding">
+          <div class="col-md-7 col-sm-7 reset-padding col-xs-16">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding col-xs-8" translate="patient.clinic-level-status">
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding col-xs-8">
+              <span>{{::patient.clinicMRNId.status}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="clr"></div>
+      </div>
+
+
+      <div class="margin-top-xl">
+        <div class="col-md-16 col-sm-16 reset-padding">
+          <span class="dashboard__form--type" translate="patient.demo-graph.personal-details"></span>
+        </div>
+
+        <div class="col-md-16 col-sm-16 margin-top reset-padding">
+          <div class="col-md-7 col-sm-7 reset-padding col-xs-16">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding col-xs-8">
+              <span class="" translate="patient.title.name"></span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding col-xs-8">
+              <span>{{::patient.title}}</span>
+            </div>
+          </div>
+
+          <div class="col-md-7 col-sm-7 col-md-offset-2 reset-padding col-xs-16">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding col-xs-8">
+              <span class="" translate="patient.primary-language"></span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding col-xs-8">
+              <span>{{::fullNameLangKey}}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-16 col-sm-16 reset-padding margin-top">
+          <div class="col-md-7 col-sm-7 reset-padding col-xs-16">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding col-xs-8">
+              <span class="" translate="patient.first-name"></span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding col-xs-8">
+              <span>{{::patient.firstName}}</span>
+            </div>
+          </div>
+          <div class="col-md-7 col-sm-7 reset-padding col-md-offset-2 col-xs-16">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding col-xs-8">
+              <span class="" translate="patient.middle-name"></span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding col-xs-8">
+              <span>{{::patient.middleName}}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-16 col-sm-16 reset-padding margin-top">
+          <div class="col-md-7 col-sm-7 reset-padding col-xs-16">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding col-xs-8">
+              <span class="" translate="patient.last-name"></span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding col-xs-8">
+              <span>{{::patient.lastName}}</span>
+            </div>
+          </div>
+
+          <div class="col-md-7 col-sm-7 reset-padding col-md-offset-2 col-xs-16">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding col-xs-8">
+              <span class="" translate="patient.date-of-birth"></span>
+            </div>
+            <div class="col-md-6 col-sm-6 dashboard__form--label-val reset-padding col-xs-8">
+              <span>{{::patient.formatedDOB}}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-16 col-sm-16 reset-padding margin-top">
+          <div class="col-md-7 col-sm-7 reset-padding col-xs-16">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding col-xs-8">
+              <span class="" translate="patient.gender.name"></span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding col-xs-8">
+              <span>{{::patient.gender}}</span>
+            </div>
+          </div>
+          <div class="col-md-7 col-sm-7 reset-padding col-md-offset-2 col-xs-16">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding col-xs-8">
+              <span class="" translate="patient.address"></span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding col-xs-8">
+              <span>{{::patient.address}}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-16 col-sm-16 reset-padding margin-top">
+          <div class="col-md-7 col-sm-7 reset-padding col-xs-16">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding col-xs-8">
+              <span class="" translate="patient.city"></span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding col-xs-8">
+              <span>{{::patient.city}}</span>
+            </div>
+        </div>
+        <div class="col-md-7 col-sm-7 reset-padding col-md-offset-2 col-xs-16">
+          <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding col-xs-8">
+            <span class="" translate="patient.state"></span>
+          </div>
+          <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding col-xs-8">
+            <span>{{::patient.state}}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-16 col-sm-16 reset-padding margin-top">
+          <div class="col-md-7 col-sm-7 reset-padding col-xs-16">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding col-xs-8">
+              <span class="" translate="patient.zipcode"></span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding col-xs-8">
+              <span>{{::patient.zipcode}}</span>
+            </div>
+        </div>
+        <div class="col-md-7 col-sm-7 reset-padding col-md-offset-2 col-xs-16">
+          <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding col-xs-8">
+            <span class="" translate="patient.email"></span>
+          </div>
+          <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding col-xs-8">
+            <span>{{::patient.email}}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-16 col-sm-16 reset-padding margin-top">
+          <div class="col-md-7 col-sm-7 reset-padding col-xs-16">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding col-xs-8">
+              <span class="" translate="patient.mobile-number"></span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding col-xs-8">
+              <span>{{::patient.mobilePhone}}</span>
+            </div>
+        </div>
+        <div class="col-md-7 col-sm-7 reset-padding col-md-offset-2 col-xs-16">
+          <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding col-xs-8">
+            <span class="" translate="patient.home-phone-number"></span>
+          </div>
+          <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding col-xs-8">
+            <span>{{::patient.primaryPhone}}</span>
+          </div>
+        </div>
+      </div>
+            <div class="col-md-16 col-sm-16 reset-padding margin-top">
+          <div class="col-md-7 col-sm-7 reset-padding col-xs-16">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding col-xs-8">
+              <span class="" translate="patient.device-type-name"></span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding col-xs-8">
+              <span>{{::patient.deviceType}}</span>
+            </div>
+        </div>
+      </div>
+       <div ng-if="getDeviceTypeforBothIcon() === 'ALL' || patient.deviceType === 'VisiVest'">
+       <div class="col-md-16 col-sm-16 reset-padding margin-top">
+          <div class="col-md-7 col-sm-7 reset-padding col-xs-16">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding col-xs-8">
+              <span class="" translate="patient.garment-type"></span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding col-xs-8">
+              <span>{{::patient.vestGarmentType}}</span>
+            </div>
+        </div>
+        <div class="col-md-7 col-sm-7 reset-padding col-md-offset-2 col-xs-16">
+          <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding col-xs-8">
+            <span class="" translate="patient.garment-color"></span>
+          </div>
+          <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding col-xs-8">
+            <span>{{::patient.vestGarmentColor}}</span>
+          </div>
+        </div>
+      </div>
+ <div class="col-md-16 col-sm-16 reset-padding margin-top">
+          <div class="col-md-7 col-sm-7 reset-padding">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+              <span class="" translate="patient.garment-size"></span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding">
+              <span>{{patient.vestGarmentSize}}</span>
+            </div>
+        </div>
+      </div>
+    </div>
+       <div ng-if="getDeviceTypeforBothIcon() === 'ALL' || patient.deviceType === 'Monarch'">
+             <div class="col-md-16 col-sm-16 reset-padding margin-top">
+<!--           <div class="col-md-7 col-sm-7 reset-padding col-xs-16">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding col-xs-8">
+              <span class="" translate="patient.garment-type-monarch"></span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding col-xs-8">
+              <span>{{::patient.monarchGarmentType}}</span>
+            </div>
+        </div> -->
+        <div class="col-md-7 col-sm-7 reset-padding col-xs-16">
+          <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding col-xs-8">
+            <span class="" translate="patient.garment-color-monarch"></span>
+          </div>
+          <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding col-xs-8">
+            <span>{{::patient.monarchGarmentColor}}</span>
+          </div>
+        </div>
+      </div>
+ <div class="col-md-16 col-sm-16 reset-padding margin-top">
+<!--           <div class="col-md-7 col-sm-7 reset-padding">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+              <span class="" translate="patient.garment-size-monarch"></span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding">
+              <span>{{patient.monarchGarmentSize}}</span>
+            </div>
+        </div> -->
+      </div>
+    </div>
+      <div class="col-md-16 col-sm-16 margin-top reset-padding">    
+   <div class="col-md-7 col-sm-7 reset-padding">
+    <div class=" col-md-6 col-sm-6  dashboard__form--label reset-padding">
+          <span  translate="patient.demo-graph.patient-notes" ></span>
+        </div>
+        
+        <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding">
+          <textarea class="patientInfo_patient_Notes_Edit" wrap = "hard" readonly="readonly" >{{::patient.clinicMRNId.memoNote}}</textarea>
+          <div class="">
+        <buton type="submit"  class="hillrom-btn btn-primary float-right btn-margin-left edit-patientNotes-hcp" ng-click="openEditDetail()" translate="patient.btn.edit">Edit</buton>
+       
+        <div class="clr"></div>
+      </div>
+        </div>
+        </div>
+     
+      </div>
+      
+    </div>
+  </div>
+</div>

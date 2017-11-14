@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hillromvestApp')
-    .controller('LanguageController', function ($scope, $translate, Language, tmhDynamicLocale) {
+    .controller('LanguageController',['$scope', '$translate', 'Language', 'tmhDynamicLocale', function ($scope, $translate, Language, tmhDynamicLocale) {
         $scope.changeLanguage = function (languageKey) {
             $translate.use(languageKey);
             tmhDynamicLocale.set(languageKey);
@@ -10,4 +10,4 @@ angular.module('hillromvestApp')
         Language.getAll().then(function (languages) {
             $scope.languages = languages;
         });
-    });
+    }]);

@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('hillromvestApp')
-  .controller('LoginController', function($scope, $state, $timeout, Auth, vcRecaptchaService, globalConfig) {
+  .controller('LoginController',['$scope','$state','deviceDetector', '$timeout', 'Auth', 'vcRecaptchaService', 'globalConfig', '$rootScope', 'loginConstants', 'Principal', 'StorageService', 'patientsurveyService', 'Account',
+    function($scope, $state,deviceDetector, $timeout, Auth, vcRecaptchaService, globalConfig, $rootScope, loginConstants, Principal, StorageService, patientsurveyService, Account) {
     $scope.showLogin = true;
     $scope.isEmailExist = true;
     $scope.isFirstLogin = false;
@@ -18,6 +19,18 @@ angular.module('hillromvestApp')
     $scope.firstTimeAccessFailed = false;
     $scope.otherError = false;
     $scope.message = "";
+    $scope.showSubmit = true;
+	$scope.isBrowserCompatible= false;
+	
+	$scope.chechBrowserCompatibility = function() {
+    
+      if ((deviceDetector.browser == 'chrome' && deviceDetector.browser_version <'38' ) || (deviceDetector.browser == 'ie' && deviceDetector.browser_version < 11 ) || (deviceDetector.browser == 'firefox' && deviceDetector.browser_version < '38' )  || (deviceDetector.browser == 'safari' && deviceDetector.browser_version < '7' ) || (deviceDetector.browser == 'opera')){
+        $scope.isBrowserCompatible= true;
+          }
+    else  {
+      $scope.isBrowserCompatible = false;
+          } 
+    };
 
     $scope.setResponse = function(response) {
       $scope.response = response;
@@ -31,9 +44,81 @@ angular.module('hillromvestApp')
       $scope.submitted = true;
     };
 
+    $scope.clearLastLogin = function(){
+      Auth.logout();
+      StorageService.clearAll();
+      $scope.isAuthenticated = false;
+      $rootScope.username = null;
+      $rootScope.userFullName = null;
+      $rootScope.userLastName = null;
+      $scope.password = null;
+      $scope.isLoaded = true;
+      $scope.submitted = false;
+    };
+
+    $scope.navigateUser = function(){       
+      if(Principal.isAuthenticated()){
+        $rootScope.userRole = StorageService.get('logged').role;
+        if(!$rootScope.userRole){
+          $scope.clearLastLogin(); 
+          $state.go("home");
+        }else if($rootScope.userRole === "ADMIN"){
+          $state.go("patientUser");
+        }else if($rootScope.userRole === "PATIENT"){
+          $state.go("patientdashboard");
+        }else if($rootScope.userRole === "CLINIC_ADMIN" || $rootScope.userRole === "CLINIC ADMIN"){
+          $state.go("clinicadmindashboard");
+        }else if($rootScope.userRole === "HCP"){
+          $state.go("hcpdashboard");
+        }else if($rootScope.userRole === loginConstants.role.acctservices){
+          $state.go("rcadminPatients");
+        }else if($rootScope.userRole === loginConstants.role.associates){
+          $state.go("associatePatientUser");
+        }
+        else if($rootScope.userRole === loginConstants.role.customerservices){
+          $state.go("customerservicePatientUser");
+        }else if($rootScope.userRole === loginConstants.role.FOTAAdmin){
+          $state.go('fotaHome');
+        } else if($rootScope.userRole === loginConstants.role.FOTAApprover){
+          $state.go('fotaHome');
+        }
+      }else{        
+          $scope.clearLastLogin();
+      }
+    };
+
+    $scope.resetForActivateUser = function(){
+      $scope.isAuthenticated = false;
+      $rootScope.username = null;
+      $rootScope.userFullName = null;
+      $rootScope.userLastName = null;
+      $scope.password = null;
+      $scope.isLoaded = true;
+      $scope.message = '';
+      $scope.isFirstLogin = true;
+      $scope.isEmailExist = (StorageService.get('logged') && StorageService.get('logged').activateEmail) ? true : false;
+      $scope.showLogin = false;
+    };
+
     $scope.init = function() {
-      //Todo : needs to move into Utility Service
-      localStorage.removeItem('token');
+      var currentRoute = $state.current.name;
+	  $scope.chechBrowserCompatibility();
+      if(currentRoute === "activateUser"){
+        if(StorageService.get('logged') && StorageService.get('logged').token && StorageService.get('logged').isActivate){
+          $scope.resetForActivateUser();  
+        }else{
+          $state.go("activate");
+        }        
+      }else{
+        if(currentRoute === "postActivateLogin"){
+          $scope.isLoaded = true;
+          $scope.showLogin = true;        
+          $scope.username = '';
+          $rootScope.userRole = false;
+        }else{
+          $scope.navigateUser();  
+        }
+      }  
     };
 
     Auth.getSecurityQuestions().then(function(response) {
@@ -48,38 +133,101 @@ angular.module('hillromvestApp')
         username: $scope.username,
         password: $scope.password,
         captcha: $scope.user.captcha
-      }).then(function(data) {
-        if (data.status === 200) {
-          localStorage.removeItem('loginCount');
-          localStorage.setItem('userFirstName', data.data.user.firstName);
-          if(data.data.user.authorities[0].name === 'PATIENT'){
-            localStorage.setItem('patientID', data.data.user.id);
-            $state.go('patientdashboard');
-          } else {
-            localStorage.setItem('userId', data.data.user.id);
+      }).then(function(response) {
+        if (response.status === 200) { 
+          var logged = StorageService.get('logged') || {};
+          StorageService.remove('loginCount');
+          logged.userFirstName = response.data.user.firstName;
+          logged.userFullName = response.data.user.lastName+' '+response.data.user.firstName;
+          logged.userLastName = response.data.user.lastName;
+          logged.role = response.data.user.authorities[0].name;
+          logged.userEmail = response.data.user.email;
+          $rootScope.isFooter = false;
+          $rootScope.userRole = response.data.user.authorities[0].name;
+          $rootScope.username = response.data.user.firstName;
+          $rootScope.userFullName = response.data.user.lastName + ' ' +response.data.user.firstName;
+          $rootScope.userLastName = response.data.user.lastName;
+          $rootScope.userEmail = response.data.user.email;
+          $rootScope.userId = response.data.user.id;
+
+          
+          if(response.data.user.authorities[0].name === loginConstants.role.patient){
+          Account.get().$promise
+          .then(function (account) {
+            if(account.data.deviceType == 'ALL'){
+          localStorage.setItem('deviceType_'+response.data.user.id, 'VEST');
+          localStorage.setItem('deviceTypeforBothIcon_'+response.data.user.id, 'ALL');
+            }
+            else{
+            localStorage.setItem('deviceType_'+response.data.user.id, account.data.deviceType);
+            localStorage.setItem('deviceTypeforBothIcon_'+response.data.user.id, account.data.deviceType);
+          }
+           });
+            logged.patientID = response.data.user.id;
+            patientsurveyService.isSurvey(response.data.user.id).then(function(response) {
+              $rootScope.surveyId = response.data.id;
+              $state.go('patientdashboard');
+            });
+          } else if(response.data.user.authorities[0].name === loginConstants.role.hcp){
+            logged.userId = response.data.user.id;
+            $state.go('hcpdashboard');
+          } else if(response.data.user.authorities[0].name === 'CARE_GIVER'){
+            logged.userId = response.data.user.id;
+            //the following module added for ticket Hill-2411
+            $scope.getPatientListForCaregiver(logged.userId);
+            //Endof:the following module added for ticket Hill-2411
+            $state.go('caregiverDashboard');
+          } else if(response.data.user.authorities[0].name === 'CLINIC_ADMIN'){
+            logged.userId = response.data.user.id;
+            $state.go('clinicadmindashboard');
+          } else if(response.data.user.authorities[0].name === loginConstants.role.acctservices){
+            logged.userId = response.data.user.id;
+            $state.go('rcadminPatients');
+          } else if(response.data.user.authorities[0].name === loginConstants.role.associates){
+            logged.userId = response.data.user.id;
+            $state.go('associatePatientUser');
+          } else if(response.data.user.authorities[0].name === loginConstants.role.customerservices){
+            logged.userId = response.data.user.id;
+            $state.go('customerservicePatientUser');
+          }else if(response.data.user.authorities[0].name === loginConstants.role.FOTAAdmin){
+            logged.userId = response.data.user.id;
+            $state.go('fotaHome');
+          } else if(response.data.user.authorities[0].name === loginConstants.role.FOTAApprover){
+            logged.userId = response.data.user.id;
+            $state.go('fotaHome');
+          }else{
+            logged.userId = response.data.user.id;
             $state.go('patientUser');
           }
-
+          StorageService.save('logged', logged);
         }
-      }).catch(function(data) {
-        if (data.status === 401) {
-          if (!data.data.APP_CODE) {
-            $scope.message = data.data.Error;
+      }).catch(function(response) {
+        if (response.status === 401) {
+          $scope.response = null;
+          if (!response.data.APP_CODE) {
+            $scope.message = response.data.Error;
             $scope.authenticationError = true;
-            var loginCount = parseInt(localStorage.getItem('loginCount')) || 0;
-            localStorage.setItem('loginCount', loginCount + 1);
-            if (loginCount > 2) {
+            var loginCount = parseInt(StorageService.get('loginCount')) || 0;
+            StorageService.save('loginCount', loginCount + 1);
+            if (loginCount > 1) {
+              vcRecaptchaService.reload();
               $scope.showCaptcha = true;
             }
-          } else if (data.data.APP_CODE === 'EMAIL_PASSWORD_RESET') {
-            localStorage.setItem('token', data.data.token);
-            $scope.isFirstLogin = true;
-            $scope.isEmailExist = false;
-            $scope.showLogin = false;
-          } else if (data.data.APP_CODE === 'PASSWORD_RESET') {
-            localStorage.setItem('token', data.data.token);
-            $scope.isFirstLogin = true;
-            $scope.showLogin = false;
+          } else if (response.data.APP_CODE === 'EMAIL_PASSWORD_RESET') {
+            var logged = StorageService.get('logged') || {};
+            logged.token = response.data.token;
+            logged.activateEmail = null;
+            logged.isActivate = true;
+            StorageService.save('logged', logged);
+            $state.go("activateUser");            
+          } else if (response.data.APP_CODE === 'PASSWORD_RESET') {
+            var logged = StorageService.get('logged') || {};
+            logged.token = response.data.token;
+            logged.userEmail = null;
+            logged.isActivate = true;  
+            logged.activateEmail = true;          
+            StorageService.save('logged', logged);
+            $state.go("activateUser");     
           } else {
             $scope.otherError = true;
           }
@@ -90,8 +238,9 @@ angular.module('hillromvestApp')
       });
     };
 
-    $scope.submitPassword = function(event) {
+    $scope.submitPassword = function(event) {   
       if ($scope.confirmForm.$invalid) {
+        $scope.showSubmit = true;
         return false;
       }
       event.preventDefault();
@@ -99,6 +248,7 @@ angular.module('hillromvestApp')
       if ($scope.user.password !== $scope.user.confirmPassword) {
         $scope.doNotMatch = true;
       } else {
+        $scope.showSubmit = false;
         $scope.doNotMatch = false;
         Auth.submitPassword({
           'email': $scope.user.email,
@@ -106,15 +256,19 @@ angular.module('hillromvestApp')
           'answer': $scope.user.answer,
           'questionId': $scope.user.question.id,
           'termsAndConditionsAccepted': $scope.user.tnc
-        }).then(function(data) {
-          Auth.logout();
-          $state.go('home');
+        }).then(function(data) {          
+          $scope.user.email = null;
+          $scope.username = null;
+          $scope.clearLastLogin();
+          $scope.isFirstLogin = false;
+          $scope.showLogin = true;  
+          $state.go("postActivateLogin");
         }).catch(function(err) {
-          Auth.logout();
+          $scope.showSubmit = true;
           if(err.data && err.data.ERROR){
             $scope.message = err.data.ERROR;
           }
-          $scope.firstTimeAccessFailed = true;
+          $scope.firstTimeAccessFailed = true;          
         });
       }
     };
@@ -144,10 +298,6 @@ angular.module('hillromvestApp')
       }
     };
 
-    $scope.passwordStrength = function() {
-      $scope.display_strength('passwordBox', 'passwordStrengthContainer', 'status');
-    };
-
     $scope.div = function(x) {
       return document.getElementById(x);
     };
@@ -174,67 +324,7 @@ angular.module('hillromvestApp')
 
       x = Math.floor(x);
       return (x * $scope.factorial(x - 1));
-
     };
 
-    $scope.display_strength = function(x, y, z) {
-      if (!x || $scope.div(x) === "") {
-        $scope.div(y).style.width = 0 + "%";
-        $scope.div(z).innerHTML = "&nbsp:";
-        return false;
-      }
-      var paswd = $scope.div(x);
-      var stren = $scope.div(y);
-      var stats = $scope.div(z);
-      var years = 0;
-
-      var regex = [
-        /^[a-zA-Z]+$/g,
-        /^[a-zA-Z0-9]+$/g,
-        /^[a-zA-Z0-9\ \~\!\@\#\$\%\^\&\*\(\)]+$/g,
-      ];
-
-      var count = [42, 52, 63, 74];
-      var color = ["red", "gold", "lime", "darkgreen"];
-      var value = ["weak", "Good", "Strong", "Very Strong"];
-      var index = 0;
-
-      for (index = 0; index < regex.length; index++) {
-        if (index > regex.length) {
-          break;
-        }
-        if (regex[index].test(paswd.value)) {
-          break;
-        } else {
-          continue;
-        }
-
-      }
-
-      years = $scope.compute_strength(count[index], (paswd.value).length);
-
-      if (years >= 1000) {
-        stren.style.width = "100%";
-        stren.style.background = color[3];
-        stats.innerHTML = value[3];
-        stats.style.color = color[3];
-      } else if (years >= 100 && years < 1000) {
-        stren.style.width = "75%";
-        stren.style.background = color[2];
-        stats.innerHTML = value[2];
-        stats.style.color = color[2];
-      } else if (years >= 10 && years < 100) {
-        stren.style.width = "50%";
-        stren.style.background = color[1];
-        stats.innerHTML = value[1];
-        stats.style.color = color[1];
-      } else {
-        stren.style.width = "25%";
-        stren.style.background = color[0];
-        stats.innerHTML = value[0];
-        stats.style.color = color[0];
-      }
-      return false;
-    };
     $scope.init();
-  });
+  }]);

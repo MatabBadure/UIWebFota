@@ -17,7 +17,7 @@ body {
 .content-body {
 	background-color: inherit;
 	margin-top: 60px;
-	margin-bottom: 40px;
+	min-height:900px;
 }
 
 a:focus {
@@ -71,7 +71,9 @@ a::-moz-focus-inner {
 .margin-bottom-sm {
   margin-bottom: 10px;
 }
-
+.margin-bottom15 {
+  margin-bottom: 15px;
+}
 .margin-bottom-xl {
 	margin-bottom: 40px;
 }
@@ -101,7 +103,7 @@ a::-moz-focus-inner {
 }
 
 .margin-top {
-	margin-top: 20px;
+	margin-top: 23px;
 }
 
 .margin-top-sm {
@@ -113,8 +115,9 @@ a::-moz-focus-inner {
 }
 
 .custom-dropdown > select {
-  -moz-appearance: none;
+  /*-moz-appearance: none;*/
   border: 0;
+  cursor:pointer;
 }
 
 .custom-dropdown:before {
@@ -124,18 +127,39 @@ a::-moz-focus-inner {
   padding: 0;
   font-size: 10px;
   position: absolute;
-  top: 7px;
-  right: 8px;
+  top: 9px;
+  right: 3px;
+  font-weight: 300;
+  background-color: transparent;
+  width: 15px;
+  text-align: center;
+  padding-right: 20px;
   z-index: -1;
+}
+select>option
+{
+	border-right:1px solid #000;
+}
+@media screen\0 {
+  .custom-dropdown{
+
+    &:before{
+      content: '' !important;
+      background-color: transparent;
+    }
+  }
+  }
+.custom-dropdown.disabled_arrow:before{
+	display: none;
 }
 
 .custom-dropdown {
   background-color: transparent;
   background-repeat: no-repeat;
-  z-index: 1;
   display: inline;
   line-height: 100%;
   position: absolute;
+  z-index: 1;
 }
 
 .vertical-middle {
@@ -174,7 +198,11 @@ a::-moz-focus-inner {
 }
 
 .noty-top {
-    top: 70px;
+    top: 105px;
+}
+
+.noty-div .noty-item .close {
+	margin-right: 10px;
 }
 
 .noty-div .success {
@@ -194,19 +222,100 @@ a::-moz-focus-inner {
 }
 
 #loading-bar .bar {
-	background: $sunshade;
+	background: $blue-btn;
 	height: 4px;
 }
 
 #loading-bar-spinner .spinner-icon {
-	border-top-color:  $sunshade;
-  border-left-color: $sunshade;
+	border-top-color:  $blue-btn;
+  border-left-color: $blue-btn;
 }
 
 .text-right {
   text-align: right;
 }
 
+.text-center {
+  text-align: center;
+}
+
 .disabled-box {
   color: $alto;
+}
+
+.word-ellipsis {
+	white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.lebel-indent label {
+	padding-left: 0;
+}
+
+.lebel-indent label input {
+	display: inline-block;
+	margin-right: 5px;
+	cursor: pointer;
+}
+
+.lebel-indent label span {
+	cursor: pointer;
+}
+
+.slide.ng-enter,
+.slide.ng-leave {
+    -webkit-transition:0.5s ease-in all;
+    -moz-transition:0.5s ease-in all;
+    -o-transition:0.5s ease-in all;
+    transition:0.5s ease-in all;
+    opacity: 0;
+    margin-left: 75px;
+}
+
+.slide.ng-enter-active {
+    opacity: 1;
+    margin-left: 0;
+}
+
+/* Start Customize datepicker for dab UI */
+.custom-date .dropdown-menu {
+	min-width: 200px;
+}
+
+.datepicker table tr td span {
+	font-size: $font-size-base;
+	font-weight: $font-weight-medium;
+}
+/* End Customize datepicker for dab UI */
+
+.dropdown.open {
+	.dropdown-menu {
+		z-index: 9999;
+		li {
+			a:hover, a:focus {
+				background-color: #7ca3dc;
+				color: #FFFFFF;
+			}
+		}
+	}
+}
+
+.headerAccount{
+  background:#F5F5F5;
+  color:#7CA3DC;
+  cursor:pointer;
+  border: 1px solid rgba(124, 163, 220, 0.53);
+  border-bottom: none;
+}
+
+#collapseTwo{
+  border:1px solid #ccc;
+  border-bottom:none;
+  padding-left:25px;
+}
+
+.expanded{
+  color:#7CA3DC !important;
+  font-weight:bolder;
 }

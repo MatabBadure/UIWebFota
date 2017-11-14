@@ -1,17 +1,44 @@
 'use strict';
 
 angular.module('hillromvestApp')
-    .factory('Auth', function Auth($rootScope, $state, $q, $translate, Principal, AuthServerProvider, Account, Register, Activate, Password, PasswordResetInit, PasswordResetFinish, StorageService) {
-        return {
+    .factory('Auth',['$rootScope', '$state', '$q', '$translate', 'Principal', 'AuthServerProvider', 'Account', 'Activate', 'Password', 'PasswordResetInit', 'PasswordResetFinish', 'StorageService', 
+        function Auth($rootScope, $state, $q, $translate, Principal, AuthServerProvider, Account, Activate, Password, PasswordResetInit, PasswordResetFinish, StorageService) {
+        var auth =  {
+            goToUserDashboard: function(){
+                var logged = StorageService.get('logged');
+                if(logged.userEmail){
+                    if(Principal.isInRole('ADMIN')){
+                        $state.go('patientUser');
+                    }else if(Principal.isInRole('PATIENT')){
+                        $state.go('patientdashboard');
+                    }else if(Principal.isInRole('CLINIC ADMIN') || Principal.isInRole('CLINIC_ADMIN')){
+                        $state.go('clinicadmindashboard');
+                    }else if(Principal.isInRole('HCP')){
+                        $state.go("hcpdashboard");
+                    }else if(Principal.isInRole('CARE_GIVER')){
+                        $state.go("caregiverDashboard");
+                    }else if(Principal.isInRole('ACCT_SERVICES')){
+                        $state.go("rcadminPatients");
+                    }else if(Principal.isInRole('ASSOCIATES')){
+                        $state.go("associatePatientUser");
+                    }
+                }else{
+                    $state.go("postActivateLogin");
+                }
+            },
+
             login: function (credentials, callback) {
                 var cb = callback || angular.noop;
                 var deferred = $q.defer();
 
                 AuthServerProvider.login(credentials).then(function (data) {
-                	localStorage.setItem('token', data.data.id);
+                    var logged = StorageService.get('logged') || {};
+                    logged.token = data.data.id;
+                    StorageService.save('logged', logged);
                     Principal.identity(true).then(function(account) {
-
-                        localStorage.setItem('role', account.roles[0]);
+                        logged = StorageService.get('logged') || {};
+                        logged.role = account.roles[0];
+                        StorageService.save('logged', logged);
                         $translate.use(account.langKey);
                         $translate.refresh();
                         deferred.resolve(data);
@@ -39,7 +66,7 @@ angular.module('hillromvestApp')
             },
 
             logout: function () {
-                localStorage.clear();
+                StorageService.clearAll();
                 AuthServerProvider.logout();
                 Principal.authenticate(null);
             },
@@ -53,7 +80,8 @@ angular.module('hillromvestApp')
                             if (isAuthenticated) {
                                 // user is signed in but not authorized for desired state
                                 // $state.go('accessdenied');
-                                $state.go('pageUnderConstruction');
+                                //$state.go('pageUnderConstruction');
+                                auth.goToUserDashboard();
                             }
                             else {
                                 // user is not authenticated. stow the state they wanted before you
@@ -66,22 +94,10 @@ angular.module('hillromvestApp')
                             }
                         }
 
-                        if(isAuthenticated && $rootScope.toState.url == "/login"){
-                            $state.go('patientUser');
+                        if(isAuthenticated && ($rootScope.toState.url == "/login" || $rootScope.toState.url == "/")){ 
+                            auth.goToUserDashboard();
                         }
                     });
-            },
-            createAccount: function (account, callback) {
-                var cb = callback || angular.noop;
-
-                return Register.save(account,
-                    function () {
-                        return cb(account);
-                    },
-                    function (err) {
-                        this.logout();
-                        return cb(err);
-                    }.bind(this)).$promise;
             },
 
             updateAccount: function (account, callback) {
@@ -153,7 +169,7 @@ angular.module('hillromvestApp')
                     deferred.resolve(data);
                     return cb(data);
                 }).catch(function (err) {
-                    this.logout();
+                    //this.logout();
                     deferred.reject(err);
                     return cb(err);
                 }.bind(this));
@@ -201,6 +217,8 @@ angular.module('hillromvestApp')
                     return cb(err);
                 }.bind(this));
                 return deferred.promise;
-            }
+            }            
         };
-    });
+
+        return auth;
+    }]);

@@ -7,9 +7,9 @@
  * User Directive with create, edit and delete functions
  */
 angular.module('hillromvestApp')
-  .directive('user', function (UserService) {
+  .directive('user', function () {
     return {
-      templateUrl: 'scripts/app/modules/admin/hill-rom-user/directives/create-edit/create.html',
+      templateUrl: 'scripts/modules/admin/hill-rom-user/directives/create-edit/create.html',
       restrict: 'E',
       scope: {
         user: '=userData',
@@ -17,9 +17,19 @@ angular.module('hillromvestApp')
         onSuccess: '&',
         userStatus: '=userStatus'
       },
-      controller: function ($scope, notyService, $state) {
+      controller: ['$scope', 'notyService', '$state', 'UserService', 'StorageService', 'Auth', '$rootScope', function ($scope, notyService, $state, UserService, StorageService, Auth, $rootScope) {
+        $scope.currentUserRole = StorageService.get('logged').role;
 
-         $scope.open = function () {
+     
+        $scope.init = function(){
+          $scope.nonHillRomUsers = ['PATIENT', 'HCP', 'CLINIC_ADMIN', 'CARE_GIVER'];
+          if($state.current.name === 'hillRomUserEdit' || $state.current.name === 'rcadmin-hillRomUserEdit' || $state.current.name === 'customerserviceHillRomUserView'){
+
+            $scope.loggedUserId = StorageService.get('logged').userId;
+            }
+
+        };
+        $scope.open = function () {
           $scope.showModal = true;
         };
 
@@ -33,9 +43,11 @@ angular.module('hillromvestApp')
         };
 
         $scope.validateSuperAdmin = function () {
-          if ($scope.userStatus.editMode && $scope.userStatus.role !== roleEnum.ADMIN) {
+         $scope.isSuperadmin = ($scope.user.role === 'ADMIN' && $scope.currentUserRole === 'ACCT_SERVICES') ? true : false;
+          if ($scope.userStatus.editMode &&  !($scope.userStatus.role === roleEnum.ADMIN || $scope.userStatus.role === roleEnum.ACCT_SERVICES)) {
             return true;
           }
+          else return false;
         };
 
         /**
@@ -45,6 +57,7 @@ angular.module('hillromvestApp')
          * Function to create a user
          */
         $scope.createUser = function () {
+          $scope.showUpdateModal = false;
           if ($scope.form.$invalid) {
             return false;
           }
@@ -58,6 +71,13 @@ angular.module('hillromvestApp')
             $scope.newUser($scope.user);
           }
         };
+
+        $scope.$on('getUserDetail', function (event, args){
+          if(args.user.email === StorageService.get('logged').userEmail){
+            $scope.selectedSelf = true;
+            $scope.myHRID = args.user.hillromId;
+          }
+        });
 
         $scope.newUser = function(data) {
           UserService.createUser(data).then(function (response) {
@@ -73,8 +93,8 @@ angular.module('hillromvestApp')
               $scope.userStatus.message = response.data.ERROR;
             } else {
               $scope.userStatus.message = 'Error occured! Please try again';
-              notyService.showMessage($scope.userStatus.message, 'warning');
             }
+            notyService.showMessage($scope.userStatus.message, 'warning');
           });
         };
 
@@ -83,7 +103,13 @@ angular.module('hillromvestApp')
             $scope.userStatus.isMessage = true;
             $scope.userStatus.message = response.data.message;
             notyService.showMessage($scope.userStatus.message, 'success');
-            $scope.reset();
+            if($scope.selectedSelf && (StorageService.get('logged').userEmail !== response.data.user.email || $scope.myHRID !== response.data.user.hillromId) ){
+              $rootScope.userRole = null;
+              Auth.logout();
+              $state.go('login');
+            }else{
+              $scope.reset();
+            }
           }).catch(function (response) {
             $scope.userStatus.isMessage = true;
             if (response.data.message !== undefined) {
@@ -128,14 +154,53 @@ angular.module('hillromvestApp')
           $scope.reset();
         };
 
+        $scope.resendActivationLink = function(){
+          UserService.resendActivationLink($scope.user.id).then(function(response){
+            $scope.isDisableResendButton = true;
+            notyService.showMessage(response.data.message, 'success'); 
+          }).catch(function(response){
+            notyService.showError(response);
+          });
+        };
+
+        $scope.activateUser = function(){
+          $scope.showActivateModal = false;
+          UserService.reactivateUser($scope.user.id).then(function(response){
+           notyService.showMessage(response.data.message, 'success');
+           if($scope.currentUserRole == 'ADMIN'){
+            $state.go('hillRomUser');
+          }
+          else if($scope.currentUserRole == 'ACCT_SERVICES'){
+             $state.go('rcadmin-hillRomUser');
+          }
+          }).catch(function(response){
+           notyService.showError(response);
+          });
+        };
+
         $scope.reset = function(){
           $scope.user = {};
           $scope.userStatus.isCreate = false;
           $scope.userStatus.editMode = false;
           $scope.form.$setPristine();
           $scope.submitted = false;
-          $state.go('hillRomUser');
-        }
-      }
+          if($scope.currentUserRole == 'ADMIN'){
+            $state.go('hillRomUser');
+          }
+          else if($scope.currentUserRole == 'ACCT_SERVICES'){
+             $state.go('rcadmin-hillRomUser');
+          }
+        };
+
+        $scope.showUpdateModal = function(){
+          $scope.submitted = true;
+          if($scope.form.$invalid){
+            return false;
+          }
+          $scope.updateModal = true;
+        };
+
+        $scope.init();
+      }]
     };
   });

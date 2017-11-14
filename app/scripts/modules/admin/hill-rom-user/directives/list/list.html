@@ -2,12 +2,11 @@
 <div class="navbar dashboard dashbord-nav">
   <div class="container">
     <div class="dashbord-nav__primary pull-left">
-      <span class="dashbord-nav__primary--title">Manage Users</span>
+      <span class="dashbord-nav__primary--title" translate="user.home.manageLabel"></span>
     </div>
-
-    <div class="dashbord-nav__secondary create-user navbar-right cursor-pointer" ng-click="createUser()">
-      <span class="dashbord-nav__secondary--create-new">Create New</span>
-      <span class="hillrom-icon icon-plus-icon"></span>
+    <div ng-if="userRole !== 'ASSOCIATES' && userRole !== 'CUSTOMER_SERVICES'" class="dashbord-nav__secondary create-user navbar-right cursor-pointer" ng-click="createUser()">
+      <span class="dashbord-nav__secondary--create-new" translate="user.home.createLabel"></span>
+      <span class="icon-plus-icon add-new"></span>
     </div>
   </div>
 </div>
@@ -18,80 +17,74 @@
       <div class="fuid-search-box reset-padding-right">
         <input type="text" class="form-control" id="searchListParam" name="userName" ng-model="searchItem" autocomplete="off" placeholder="{{'user.placeholder.search' | translate}}">
         <span class="search-icon hillrom-icon icon-search-icon"></span>
-      </div>
-      <div class="fixed-filter-box reset-padding-left">
-        <div class="search-dropdown">
-          <select name="search" ng-model="sortOption" ng-change="searchUsers()">
-            <option value="" selected>Newly Created</option>
-            <option value="email">Email</option>
-            <option value="firstName">First Name</option>
-            <option value="lastName">Last Name</option>
-          </select>
-        </div>
-      </div>
+      </div>    
     </div>
 
+    <div class="col-md-16">
+      <ng-include src="'scripts/components/navbar/searchfilter.html'"></ng-include>
+    </div>
+    
     <div class="dashboard__manage-view--header">
-      <div class="col-md-3 header--type">
-        <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="user.user-name"></span>
+      <div class="col-md-3 col-sm-3 header--type pull-left-mob width120">
+        <span ng-class="{'sort-icon--default' : sortUserList.lastName.isDefault, 'sort-icon-down': sortUserList.lastName.isDown, 'sort-icon-up':sortUserList.lastName.isUp}" ng-click="sortType('lastName')" translate="user.user-name"></span>
       </div>
-      <div class="col-md-3 header--type">
-        <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="user.role-field"></span>
+      <div class="col-md-3 col-sm-3 header--type none">
+        <span ng-class="{'sort-icon--default' : sortUserList.role.isDefault, 'sort-icon-down': sortUserList.role.isDown, 'sort-icon-up':sortUserList.role.isUp}" ng-click="sortType('role')" translate="user.role-field"></span>
       </div>
-      <div class="col-md-3 header--type">
-        <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="user.hillromId"></span>
+      <div class="col-md-3 col-sm-3 header--type pull-left-mob width120">
+        <span ng-class="{'sort-icon--default' : sortUserList.hillromId.isDefault, 'sort-icon-down': sortUserList.hillromId.isDown, 'sort-icon-up':sortUserList.hillromId.isUp}" ng-click="sortType('hillromId')" translate="user.hillromId"></span>
       </div>
-      <div class="col-md-4 header--type">
-        <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="user.email"></span>
+      <div class="col-md-3 col-sm-4 header--type none">
+        <span ng-class="{'sort-icon--default' : sortUserList.email.isDefault, 'sort-icon-down': sortUserList.email.isDown, 'sort-icon-up':sortUserList.email.isUp}" ng-click="sortType('email')" translate="user.email"></span>
       </div>
-      <div class="col-md-3 header--type">
-        <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="user.mobile-number"></span>
+      <div class="col-md-3 header--type col-hide-iPad none">
+        <span ng-class="{'sort-icon--default' : sortUserList.mobileNumber.isDefault, 'sort-icon-down': sortUserList.mobileNumber.isDown, 'sort-icon-up':sortUserList.mobileNumber.isUp}" ng-click="sortType('mobileNumber')" translate="user.mobile-number"></span>
+      </div>
+      <div class="col-md-1 col-sm-3 header--type">
+        <span ng-class="{'sort-icon--default' : sortUserList.status.isDefault, 'sort-icon-down': sortUserList.status.isDown, 'sort-icon-up':sortUserList.status.isUp}" ng-click="sortType('status')" translate="user.status"></span>
       </div>
       <div class="clr"></div>
     </div>
 
-    <div class="dashboard__manage-view--list" ng-repeat="user in users" ng-class="{ 'inactive': user.deleted }" ng-click="user.deleted || selectUser(user)">
-      <div class="col-md-3 reset-padding centered">
-        <span class="main-prim-info">{{user.lastName}} {{user.firstName}}</span>
+    <div class="dashboard__manage-view--list" ng-repeat="user in users" ng-click="selectUser(user)">
+      <div class="col-md-3 col-sm-3 reset-padding centered  pull-left-mob width120">
+        <span class="main-prim-info">{{user.lastName}}, {{user.firstName}}</span>
       </div>
-      <div class="col-md-3 reset-padding centered">
-        <span class="impo-highlight">{{user.role}}</span>
+      <div class="col-md-3 col-sm-3 reset-padding centered none">
+        <span class="impo-highlight" ng-if="user.role === 'PATIENT'" translate="global.role.patient"></span>
+        <span class="impo-highlight" ng-if="user.role === 'CARE_GIVER'" translate="global.role.caregiver"></span>
+        <span class="impo-highlight" ng-if="user.role === 'HCP'" translate="global.role.hcp"></span>
+        <span class="impo-highlight" ng-if="user.role === 'CLINIC_ADMIN'" translate="global.role.clinic-admin"></span>
+        <span class="impo-highlight" ng-if="user.role === 'ADMIN'" translate="global.role.super-admin"></span>
+        <span class="impo-highlight" ng-if="user.role === 'ASSOCIATES'" translate="global.role.associates"></span>
+         <span class="impo-highlight" ng-if="user.role === 'CUSTOMER_SERVICES'" translate="global.role.customerservices"></span>
+        <span class="impo-highlight" ng-if="user.role === 'ACCT_SERVICES'" translate="global.role.account-services"> </span>
+        <span class="impo-highlight" ng-if="user.role === 'FOTA_ADMIN'" translate="global.role.FOTAAdmin"> </span>
+        <span class="impo-highlight" ng-if="user.role === 'FOTA_APPROVER'" translate="global.role.FOTAApprover"> </span>
       </div>
-      <div class="col-md-3 reset-padding centered">
-        <span class="impo-highlight">{{user.id}}</span>
+      <div class="col-md-3 col-sm-3 reset-padding centered pull-left-mob width120">
+        <span class="impo-highlight">{{user.hillromId}}</span>
       </div>
 
-      <div class="col-md-4 reset-padding centered">
+      <div class="col-md-3 col-sm-4 reset-padding centered none">
         <span class="short-info">{{user.email}}</span>
       </div>
 
-      <div class="col-md-3 reset-padding centered">
-        <span class="short-info">123-234-2741{{user.phoneNumber}}</span>
+      <div class="col-md-3 reset-padding centered col-hide-iPad none">
+        <span class="short-info">{{user.mobilePhone}}</span>
       </div>
+      <div class="col-md-1 col-sm-3 reset-padding">
+            <span class="short-info active centered" ng-if="!user.deleted && user.activated" translate="user.status-type.active"></span>
+
+            <span class="short-info inactive centered" ng-if="user.deleted" translate="user.status-type.inactive"></span>
+            <span class="short-info inactive centered" ng-if="!user.deleted && !user.activated" translate="user.status-type.pending"></span>
+          </div>
 
       <div class="clr"></div>
     </div>
-
-
-
-     <!-- <div class="dashboard__manage-view--list" ng-repeat="user in users">
-      <div ng-class="{ 'inactive': user.deleted }" ng-click="user.deleted || selectUser(user)">
-        <div class="col-md-3 reset-padding-left">
-          <span class="user-name">{{user.lastName}} {{user.firstName}}</span>
-          <span class="user-email">{{user.email}}</span>
-        </div>
-        <div class="col-md-4">
-          <span class="user-address">{{user.role}}</span>
-        </div>
-        <div class="col-md-4">
-          <span class="clinic-name">{{user.employeeId}}</span>
-        </div>
-        <div class="col-md-5 reset-padding-right">
-           <span class="clinic-name">{{user.id}}</span>
-        </div>
-        <div class="clr"></div>
-     </div>
-    </div> -->
+     <div class="col-md-16 col-sm-16 empty-list-message" ng-if="users && users.length === 0">
+      <span translate="user-not-found"></span>
+    </div>
     
     <div class="dashboard__manage-view--pagination">
       <div class="col-md-16 reset-padding-right">

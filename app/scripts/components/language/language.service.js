@@ -1,12 +1,13 @@
 'use strict';
 
 angular.module('hillromvestApp')
-    .factory('Language', function ($q, $http, $translate, LANGUAGES) {
+    .factory('Language', ['$q', '$http', '$translate', 'LANGUAGES', function ($q, $http, $translate, LANGUAGES) {
         return {
             getCurrent: function () {
                 var deferred = $q.defer();
+                // The following commented code is for multi-language support
                 var language = $translate.storage().get('NG_TRANSLATE_LANG_KEY');
-
+                  //  var language = 'en'; //This line is added to make english default language should be removed and above line should be un-commented to support more languages 
                 if (angular.isUndefined(language)) {
                     language = 'en';
                 }
@@ -20,7 +21,7 @@ angular.module('hillromvestApp')
                 return deferred.promise;
             }
         };
-    })
+    }])
 
 /*
  Languages codes are ISO_639-1 codes, see http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes

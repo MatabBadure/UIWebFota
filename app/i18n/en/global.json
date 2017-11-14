@@ -1,6 +1,145 @@
 {
     "global": {
         "title": "HillRomVest",
+         "tim-script":"Tim Script",
+         "fota-title":"Firmware Over The Air Upgrade",
+         "sample-label":"Sample Data",
+         "part-number-ex":"193164",
+         "product-name-ex":"Monarch or Optimus",
+         "software-version-ex":"0x00010002 => 0 1 0 2",
+         "release-date-ex":"MM/DD/YYYY",
+         "region1-crc-ex":"08010070,080FFFFF,0801006C",
+         "region2-crc-ex":"60000070, 60FFFFFF,6000006C",
+         "product-defalt":"Select Product Name",
+         "product-optimus":"Optimus",
+         "product-monarch":"Monarch",
+
+         "fota-browse":"Select Fota file",
+         "part-number":"Part Number",
+         "software-version":"Software Version",
+         "release-date":"Release Date",
+         "product-name":"Product Name",
+         "upload-hex-file": "Upload File",
+         "verify-input": "Verify",
+         "upload-fota": "Upload FOTA",
+         "verify-success": "All Parameters are successfully matched",
+         "verify-failure": "All Parameters are Not Matched",
+         "verify-override": "Do you want to override with Existing file ",
+         "region-one": "Region 1",
+         "region-two": "Region 2",
+         "start-addr": "Start Address",
+         "end-addr": "End Address",
+         "crc-location": "CRC Location",
+         "crc32-invalid": "CRC does not Match",
+         "crc32-valid": "CRC is matched",
+         "upload": "Upload",
+         "approve-msg":"Approved successfully",
+         "uploadMsg" : "File Uploaded successfully",
+         "delete-msg" : "Deleted successfully",
+         "delete-msgReq":"Delete Requested",
+         "delete-confirm":"Confirm Delete",
+         "delete-msgConf":"Do you want to delete?",
+         "firmware-list":"Firmware List",
+         "product-name":"Product Name",
+         "part-number":"Part Number",
+         "soft-version":"Software Version",
+         "soft-date":"Software Date",
+         "upload-by":"Upload By",
+         "upload-date":"Upload Date",
+         "published-by":"Published By",
+         "published-date":"Published Date",
+         "status":"Status",
+         "creat-new-file":"Upload New Firmware",
+         "placeholder": {
+            "search": "Search with Part Number or Product Name"
+        },
+        "firmware-info":"Firmware Info",
+        "model-id":"Model Id",
+        "board-id":"Board Id",
+        "bed-id":"Product Type",
+        "boot-comp-ver":"Boot Comp Version",
+        "fill-pattern":"Release Number",
+        "mcu-size":"MCU Size",
+        "region1-strt-add":"Region1 Start Address",
+        "region1-end-add":"Region1 End Address",
+        "region1-crc-location":"Region1 CRC Location",
+        "region2-strt-add":"Region2 Start Address",
+        "region2-end-add":"Region2 End Address",
+        "region2-crc-location":"Region2 Start Location",
+        "delete":"Delete",
+        "approve":"Approve",
+        "validate":"Validate",
+        "crc32-header":"Request Status",
+        "region1-crc":"Region1 CRC",
+        "region2-crc":"Region2 CRC",
+        "back":"Back",
+        "crc-label":"Key in the CRC value by downloading the file from Agile.",
+        "crc-label1":"Ensure that this revision is released in Agile.",
+        "unmatched-partNo":"Part Number does not match",
+        "unmatched-date":"Release Date does not match",
+        "unmatched-version":"Software Version does not match",
+         "fotaDeviceList": {
+            "seerial-no": "Serial Number",
+            "part-number": "Part Number",
+            "product-name": "Product Name",
+            "connection-type": "Connection Type",
+            "start-date-time": "Start DateTime",
+            "end-date-time": "End DateTime",
+            "download-time": "Download Time",
+            "firmware-status": "Status",
+             "placeholder": {
+            "search": "Search by Part Number"
+                }
+            },
+            "partNumber": {
+            "required": "Part Number is required.",
+            "invalid": "Part Number is invalid",
+            "pattern": "Part Number is invalid"
+                    },
+            "productName": {
+            "required": "Product Name is required."
+                    },
+            "softwareVer": {
+            "required": "Sofware Version is required.",
+            "invalid": "Sofware Version is invalid",
+            "pattern": "Sofware Version is invalid"
+                    },            
+            "softwareDate": {
+            "required": "Software Date is required.",
+            "invalid": "Software Date is invalid",
+            "pattern": "Software Date is invalid"
+                    },            
+
+              "file": {
+                "required": "File is required."
+                    },       
+
+            "startAddress": {
+            "required": "Start Address is required.",
+            "invalid": "Start Address is invalid",
+            "pattern": "Start Address is invalid"
+                    },
+            "endAddress": {
+            "required": "End Address is required.",
+            "invalid": "End Address is invalid",
+            "pattern": "End Address is invalid"
+                    },
+        "CRCLocation": {
+            "required": "CRC Location is required.",
+            "invalid": "CRC Location is invalid",
+            "pattern": "CRC Location is invalid"
+                    },
+        "region1CRC": {
+            "required": "Rgion1CRC is required.",
+            "invalid": "Rgion1CRC is invalid",
+            "pattern": "Rgion1CRC is invalid"
+                    },
+        "region2CRC": {
+            "required": "Rgion2CRC is required.",
+            "invalid": "Rgion2CRC is invalid",
+            "pattern": "Rgion2CRC is invalid"
+                    },
+
         "browsehappy": "You are using an <strong>outdated</strong> browser. Please <a href=\"http://browsehappy.com/?locale=en\">upgrade your browser</a> to improve your experience.",
         "menu": {
             "home": "Home",
@@ -40,15 +179,79 @@
             },
             "language": "Language"
         },
+          "messaging": {
+        "title":"Messages",
+        "new-message":"New Message",
+        "sent-items":"Sent Items",
+        "inbox":"Inbox",
+        "archive":"Archive",
+        "total-message":"Total Messages",
+        "total-archive":"Total Archived",
+        "from":"From",
+        "subject-of-message": "Subject of Message",
+        "date": "Date",
+        "compose-message":"Compose a New Message",
+        "subject": "Subject",
+        "message": "Message",
+        "send-message": "Send Message",
+        "cancel": "Cancel",
+        "to": "To",
+        "more-threads":"More Threads",
+        "mark-as-read": "Mark as Read",
+        "mark-as-unread": "Mark as Unread",
+        "reply" : "Reply",
+        "confirmsendmessage" : "Do you want to send the message?",
+        "sendmessageWarning" : "Compose Message",
+        "NomessageWarning" : "Do you want to send a blank message?",
+        "NoSubjectWarning" : "Do you want to send this message without a Subject?",
+        "Reply": "Reply"
+    },
+    "tims":{
+         "log-information":"Log Information",
+        "execute-job":"Execute Job",
+        "tim-script":"TIMs Script",
+        "date-tims":"Date",
+        "time-tims":"Time",
+        "warning": "TIMs Script Execution",
+        "message": "Are you sure you want to execute the Job process of the TIMs Script?",
+        "exmessage": "TIMs job is executing",
+        "logstatus-tims":"Log Status",
+        "loglink-tims":"Log Link"
+    },
+        "logo-text": {
+            "visi-view": "VisiView",
+            "tm-sup": "TM",
+            "health-portal": "Health Portal"
+        },
+        "my-dashboard": "My Profile",
+        "charger": "Charger",
+        "optimus" : "Optimus",
+        "sandbox" : "Sandbox",
+        "logout": "Logout",
+        "console": "Console",
+        "tabs": {
+            "manage-patients": "Patients",
+            "manage-hcps": "HCPs",
+            "manage-clinics": "Clinics",
+            "manage-clinic": "Clinic",
+            "manage-users": "Users",
+            "notifications": "Notifications",
+            "dashboard": "Dashboard",
+            "patients": "Patients",
+            "messages":"Messages",
+            "compose-message":"Write a New Message",
+            "announcements": "Announcements"
+        },
         "form": {
             "username": "Login",
-            "username.placeholder": "enter your Hill-Rom ID or Email ID",
+            "username.placeholder": "Enter your Hill-Rom ID or Email ID",
+            "password.placeholder": "Password",
             "newpassword": "New password",
             "newpassword.placeholder": "New password",
             "confirmpassword": "New password confirmation",
             "confirmpassword.placeholder": "Confirm the new password",
             "email": "E-mail",
-            "email.placeholder": "Your e-mail"
+            "email.placeholder": "Enter Your e-mail Id"
         },
         "messages": {
             "info": {
@@ -77,6 +280,51 @@
                     "maxlength": "Your e-mail cannot be longer than 50 characters."
                 }
             }
+        },
+        "announcement": {
+            "label": {
+                "name-of-announcment": "Name of Announcement",
+                "subject": "Subject",
+                "starts-on": "Starts on",
+                "ends-on": "Ends on",
+                "send-to": "Send To",
+                "upload-pdf-file": "Upload PDF File",
+                "cancel": "Cancel",
+                "post-announcement": "Post Announcement",
+                "update-announcement": "Update Announcement",
+                "add-announcement":"Add Announcements"
+            },
+             "modal": {
+                "delete-heading": "Delete  announcement",
+                "add-heading": "Add  announcement",
+                "update-heading": "Update  announcement",
+                "delete": "Are you sure you want to delete the announcement?",
+                "add": "Are you sure you want to add the announcement?",
+                "update": "Are you sure you want to update the announcement?",
+                "overwrite-heading": "Overwrite File",
+                "overwrite" : "Are you sure you want to overwrite the last uploaded file?"
+            }
+            
+        },
+        "role":{
+            "super-admin": "Super Admin",
+            "account-services": "RC Admin",
+            "associates":"Associates",
+            "caregiver": "Caregiver",
+            "clinic-admin": "Clinic Admin",
+            "hcp": "HCP",
+            "patient": "Patient",
+            "customerservices" : "Customer Service",
+            "FOTAAdmin" : "FOTA ADMIN",
+            "FOTAApprover" : "FOTA APPROVER"
+        },
+        "not-applicable": "NA",
+        "notification":{
+            "no-notification":"No Notifications for the day",
+            "missed-therapy": "Your recommended therapy is missed by three days.",
+            "setting-deviation": "You are not adherence to frequency defined in protocol.",
+            "hmr-non-compliant": "You are not HMR Compliant.",
+            "hmr-non-compliant-setting-deviation":"Your expected compliant therapy is low as per recommendation"
         }
     },
     "entity": {
@@ -106,5 +354,355 @@
             "datetimelocal": "This field should be a date and time."
         }
     },
-    "footer": "Copyright @ Hill-Rom 2015. All Rights Reserved"
+    "error":{ 
+            "deviceType":{
+                "required" : "Device Type is required."
+            },
+             "startDate":{
+              "required": "Announcement start date is required."
+            },
+            "endDate":{
+            "required": "Announcement end date is required."
+            },
+            "announcementName":{
+             "required": "Announcement name is required."
+            },
+            "announcementDesc":{
+             "required": "Announcement subject is required."
+            },
+            "patientType":{
+            "required": "Patient type required."
+            },
+            "clinicSpeciality":{
+            "required": "Clinic Speciality required."
+            },
+            "selectclinic":{
+            "required": "Clinic type required."
+            },
+            "SendTo":{
+            "required": "Send To required."
+            }, 
+            "file":{
+            "required": "File required."
+            },     
+        "adherenceStartDate":{
+            "required": "Adherence score start date is required.",
+            "future": "Adherence score start date cannot be future.",
+            "invalid":"Adherence score start date is required."  
+        },
+        "others":{
+            "required": "Other justification is required."  
+        },
+        "ResetTo":{
+            "required": "Reset to is required.",
+            "maxlength": "Reset to is Invalid.",
+            "invalid":"Invalid Reset number, Please enter between 1 to 100 without decimals."
+        },
+        "justification":{
+            "required": "Justification is required."
+        },
+        "firstName":{
+            "required": "First Name is required.",
+            "minlength": "First Name is required to be at least 1 character.",
+            "maxlength": "First Name cannot be longer than 50 characters."
+        },
+        "lastName":{
+            "required": "Last Name is required.",
+            "minlength": "Last Name is required to be at least 1 character.",
+            "maxlength": "Last Name cannot be longer than 50 characters."
+        },
+        "middleName":{
+            "required": "Middle Name is required.",
+            "minlength": "Middle Name is required to be at least 1 character.",
+            "maxlength": "Middle Name cannot be longer than 50 characters."
+        },
+        "email":{
+            "invalid": "E-mail is invalid.",
+            "required": "E-mail is required.",
+            "maxlength": "E-mail cannot be longer than 100 characters."
+        },
+        "dob":{
+            "required": "Date of Birth is required.",
+            "future": "Date of Birth cannot be future.",
+            "invalid":"Invalid Date of Birth"
+        },
+        "address":{
+            "maxlength": "Address cannot be longer than 100 characters."
+        },
+        "city": {
+            "maxlength": "City cannot be longer than 15 characters."
+        },
+        "zipcode": {
+            "required": "Zipcode is required.",
+            "invalid": "Zipcode is invalid",
+            "pattern": "Zipcode is invalid",
+            "zipcode-not-found": "Zipcode is not found"
+        },
+        "primaryPhone": {
+            "required":"Home phone number is required.",
+            "pattern": "Home phone number is invalid.",
+            "maxlength": "Home phone number is invalid.",
+            "mask": "Home phone number is invalid."
+        },
+        "mobilePhone":{
+            "pattern": "Mobile number is invalid.",
+            "maxlength": "Mobile number is invalid.",
+            "mask": "Mobile number is invalid.",
+            "required": "Mobile number is required"
+        },
+        "phoneNumber":{
+            "pattern": "Phone number is invalid.",
+            "maxlength": "Phone number is invalid.",
+            "mask": "Phone number is invalid.",
+            "required": "Phone number is required"
+        },
+        "faxNumber":{
+            "mask": "Fax Number is invalid."
+        },
+        "hrId": {
+            "required": "JDE/HR ID is required."
+        },
+        "relationship":{
+            "required": "Select relationship."
+        },
+        "deviceSerialNumber":{
+            "required": "Device Serial Number Required"
+        },
+        "deviceBluetoothId":{
+            "required": "Device Bluetooth ID Required"
+        },
+        "wifiId":{      
+            "required": "Device WiFi/LTE ID Required"       
+        },
+        "protocol":{
+            "treatmentPerDay": {
+                "required": "Protocol Treatment per Day Required",
+                "min": "Protocol Treatment per Day should be 1 to 9",
+                "max": "Protocol Treatment per Day should be 1 to 9",
+                "invalid": "Protocol Treatment per Day is invalid"
+            },
+            "minMinutesPerTreatment": {
+                "required":"Minimum Minutes per Treatment Required",
+                "min":"Minimum Minutes per Treatment should be 1 to 99",
+                "max":"Minimum Minutes per Treatment should be 1 to 99",
+                "invalid": "Minimum Minutes per Treatment is invalid",
+                "custom-invalid": "Minutes per Treatment is invalid",
+                "custom-required": "Minutes per Treatment is Required",
+                "custom-max-min": "Minutes per Treatment should be between 1 to 99"
+            },
+            "maxMinutesPerTreatment": {
+                "required": "Maximum Minutes per Treatment Required",
+                "min":"Maximum Minutes per Treatment should be 1 to 99",
+                "max": "Maximum Minutes per Treatment should be 1 to 99",
+                "invalid": "Maximum Minutes per Treatment is invalid"
+            },
+            "minFrequency": {
+                "required": "Minimum Frequency Required",
+                "min": "Minimum Frequency should be between 5 to 19",
+                "max": "Minimum Frequency should be between 5 to 19",
+                "invalid": "Minimum Frequency is invalid",
+                "custom-invalid": "Frequency is invalid",
+                "custom-required": "Frequency is Required",
+                "custom-max-min": "Frequency should be between 5 to 20"
+            },
+            "maxFrequency": {
+                "required": "Maximum Frequency Required",
+                "min": "Maximum Frequency should be between 6 to 20",
+                "max": "Maximum Frequency should be between 6 to 20",
+                "invalid": "Maximum Frequency is invalid"
+            },
+            "minPressure": {
+                "required": "Minimum Pressure Required",
+                "min": "Minimum Pressure should be between 1 to 9",
+                "max": "Minimum Pressure should be between 1 to 9",
+                "invalid": "Minimum Pressure is invalid",
+                "custom-invalid": "Pressure is invalid",
+                "custom-required": "Pressure is Required",
+                "custom-max-min": "Pressure should be between 1 to 9"
+            },
+            "minIntensity": {
+                "required": "Minimum Intensity Required",
+                "min": "Minimum Intensity should be between 1 to 9",
+                "max": "Minimum Intensity should be between 1 to 9",
+                "invalid": "Minimum Intensity is invalid",
+                "custom-invalid": "Intensity is invalid",
+                "custom-required": "Intensity is Required",
+                "custom-max-min": "Intensity should be between 1 to 9"
+            },
+            "maxPressure": {
+                "required": "Maximum Pressure Required",
+                "min": "Maximum Pressure should be between 2 to 10",
+                "max": "Maximum Pressure should be between 2 to 10",
+                "invalid": "Maximum Pressure is invalid"
+            },
+            "maxIntensity": {
+                "required": "Maximum Intensity Required",
+                "min": "Maximum Intensity should be between 2 to 10",
+                "max": "Maximum Intensity should be between 2 to 10",
+                "invalid": "Maximum Intensity is invalid"
+            }
+        },
+        "diagnostics":{
+            "fvcL":{
+                "required": "FVC (L) is required",
+                "min-max-range": "FVC (L) should be 0 to 9",                
+                "invalid": "FVC (L) is invalid"
+            },
+            "fvcP":{
+                "required": "FVC ( Predicted ) is required",
+                "min-max-range": "FVC ( Predicted ) should be 0 to 9",               
+                "invalid": "FVC ( Predicted ) is invalid"
+            },
+            "fev1L":{
+                "required": "FEV1 (L) is required",
+                "min-max-range": "FEV1 (L)  should be 0 to 9",               
+                "invalid": "FEV1 (L) is invalid"
+            },
+            "fev1P":{
+                "required": "FEV1 ( Predicted ) is required",
+                "min-max-range": "FEV1 ( Predicted ) should be 0 to 9",               
+                "invalid": "FEV1 ( Predicted ) is invalid"
+            },
+            "pefLMin":{
+                "required": "PEF (L/Min) is required.",
+                "min-max-range": "PEF (L/Min) should be 0 to 9",                
+                "invalid": "PEF (L/Min) is invalid"
+            },
+            "pefP":{
+                "required": "PEF ( Predicted ) is required.",
+                "min-max-range": "PEF ( Predicted ) should be 0 to 9",                
+                "invalid": "PEF ( Predicted ) is invalid"
+            },
+            "fev1TOFVCRATIO":{
+                "required": "FEV1/FVC (Predicted) is required.",
+                "min-max-range": "FEV1/FVC (Predicted) should be 0 to 9",                
+                "invalid": "FEV1/FVC (Predicted) is invalid"
+            }
+        },
+        "npiNumber":{
+            "pattern": "NPI Number is invalid.",
+            "maxlength": "NPI Number cannot be more than 15 characters."
+        },
+        "credential": {
+            "required": "Credential is required."
+        },
+        "parentClinicName": {
+            "required": "Parent Clinic is required.",
+            "match": "Parent Clinic doesn't exist."
+        },
+        "clinicName": {
+            "required": "Clinic Name is required.",
+            "maxlength": "Clinic Name cannot be longer than 50 characters."
+        },
+        "role":{
+            "required": "Role is required."
+        },
+        "answer": {
+            "required": "Answer is required.",
+            "maxlength": "Answer cannot be longer than 100 characters."
+        },
+        "password": {
+            "required": "Password is required.",
+            "minlength": "Password is required to be at least 8 character.",
+            "maxlength": "Password cannot be longer than 50 characters.",
+            "pattern": "Password is required to be at least 8 characters. Password should have atleast one special character, one upper case letter and one number."
+        },
+        "currentPassword": {
+            "required": "Current password is required.",
+            "minlength": "Current password is required to be at least 8 character.",
+            "maxlength": "Current password cannot be longer than 50 characters.",
+            "pattern": "Current password should have atleast one special character, one upper case letter and one number."
+        },
+        "newPassword": {
+            "required": "New password is required.",
+            "minlength": "New password is required to be at least 8 character.",
+            "maxlength": "New password cannot be longer than 50 characters.",
+            "pattern": "New Password should have atleast one special character, one upper case letter and one number."
+        },
+        "confirmPassword":{
+            "required": "Confirm password is required.",
+            "minlength": "Confirm password is required to be at least 8 character.",
+            "maxlength": "Confirm password cannot be longer than 50 characters.",
+            "pattern": "Confirm password should have atleast one special character, one upper case letter and one number.",
+            "match": "Password Mismatch."
+        },
+        "securityQuestion":{
+            "required": "Security question is required."
+        }
+    },
+    "footer": {
+        "copyright":"Copyright @ Hill-Rom 2016. All Rights Reserved",
+        "enhancingoutcomes":"Enhancing outcomes for patients and their caregivers",
+        "contactus":"Contact Us",
+        "privacypolicy":"Privacy Policy",
+        "termsofuse":"Terms of Use",
+        "hippanotice": "HIPAA Notice of Privacy Practices",
+        "hillromrespiratorycare": "Hill-Rom Respiratory Care Site"
+    },
+    "search-filter" : {
+        "active" : "Active",
+        "inactive" : "InActive", 
+        "no-event" : "No Transmission Recorded",
+        "setting-deviation" : "Below Frequency Setting",
+        "hmr-non-compliant" : "Below Therapy Minutes",
+         "missed-therapy" :"Missed Therapy Days",
+        "pending": "Pending",
+        "visivest":"VisiVest",
+        "monarch":"Monarch",
+        "success":"Success",
+        "fail":"Fail",
+        "active-published":"Active Published",
+        "active-pending":"Pending Approval",
+        "fota-aborted":"Aborted",
+        "fota-Fail":"Failure",
+        "all":"All"
+
+    },
+    "tims" : {
+        "success" : "Success",
+        "fail" : "Fail"
+        
+    },
+    "user-not-found" : "No user associated.",
+    "navbar": {
+        "my-dashboard": "Dashboard",
+        "create-new-hcp": "Create New HCP +",
+        "manage-hcp": "Manage HCPs",
+        "adherence-setting": "Adherence Settings",
+        "clinic-info": "Clinic Info",
+        "announcement": "Announcements"
+    },
+    "place-holder":{
+        "mobile-number": "Mobile Number",
+        "phone-number": "Phone Number"
+    },
+    "reset-password":{
+        "set-password": "Set Password"
+    },
+    "validationkey" : {
+        "invalidactivationlink" : "This activation link is no longer valid. Our records say that you have been sent a new Activation Link. Kindly check your latest email for the details.",
+        "contactmessage" : " Please contact Hill-Rom Respiratory Care Customer Support at 800-426-4224 or email HCCSWEB@Hill-Rom to resend a valid activation link."
+    },
+    "survey":{
+        "5-days-header": "Hill-Rom 5 Days Survey",
+        "30-days-header": "Hill-Rom 30 Days Survey",
+        "90-days-header": "Hill-Rom 90 Days Survey"
+    },
+    "noti_patient": {
+      "miss-therapy-days" : "Missed Therapy Days",
+      "hmr-non-adher": "HMR Non-Adherence",
+      "setting-deviation": "Setting Deviation",
+      "below-treatment":"Below Treatment Minutes",
+      "miss-therapy-days-desc": "You will get Notification email if you missed therapy for three or more days.",
+      "miss-therapy-new":"You will receive a notification if you missed a day of therapy.",
+      "hmr-non-adher-desc": "You will get Notification email if your HMR Non-Adherence is below protocol for three or more days.",
+      "hmr-non-adher-new":"You will receive a notification if you did not complete the therapy time in your protocol.",
+      "setting-deviation-desc": "You will get Notification email if your frequency is 15% below protocol for three or more days.",
+      "setting-dev-new":"You will receive a notification if your frequency setting was 15% below protocol.",
+      "messages":"Messages",
+      "message-new":"You will receive a notification if you have one or more messages in your inbox."
+    },
+        "noti-verbiage":"Turn On or Off the notification by clicking the toggle switch.",
+        "wait-for-calculation-header":"Adherence re-calculation may take upto few minutes...",
+        "wait-for-calculation-text":"Please wait while the system is re-calculating..."
 }

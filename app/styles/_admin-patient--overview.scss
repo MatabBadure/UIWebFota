@@ -15,7 +15,9 @@
   font-weight: $font-weight-bold;
   color: $pickled-bluewood;
 }
-
+#containerNonDay > .highcharts-container > .highcharts-tooltip > span{
+  left:4px !important;
+}
 .patient-details {
     padding: 10px 0;
     border-bottom: 1px solid $alto-solid;
@@ -35,7 +37,22 @@
 .patient-overview--graph {
   padding: 0;
 }
-
+.termsandconditon_color{
+  color: #34455C;
+}
+.reload-icon{
+  position:absolute;
+  right:0;
+  font-size:22px;
+  z-index:999;
+  color:#7ca3dc;
+  cursor:pointer;
+}
+.captcha{
+  color:#000;
+  font-size:20px; 
+  font-weigh:bold;
+}
 .delete-patient {
   margin: 30px 0;
   padding: 0;
@@ -66,3 +83,95 @@
     }
   }
 }
+/******For Hill-1848 ******/
+.adherence_history_date ul li a {
+  padding: 2px 0px;
+  color: white;
+  margin: 10px 0px 0px 20px;
+  border-radius: 0px;
+  font-size: 14px;
+}
+.nav1 > li > a:hover, .nav > li > a:focus {
+  text-decoration: none;
+ color: #cccccc;
+}
+.nav1 {
+  margin-bottom: 0;
+  padding-left: 0;
+  list-style: none;
+}
+.nav1 > li > a {
+  position: relative;
+  display: block;
+  padding: 10px 15px;
+}
+.adherence_history_date ul li a.active {
+text-decoration:none;
+  background-color: transparent;
+  color: #3967b5;
+}
+/******End of Hill-1848 ******/
+/******For Hill-1882 ******/
+.popover{
+  background-color : #ffffff;
+  border: 0.25px solid #7ca3dc;
+  border-radius: 0px;
+  width:250px !important;
+}
+.popover.top .arrow:after{
+  border-top-color:#ffffff;
+}
+.popover.top .arrow{
+  border-top-color:#7ca3dc;
+}
+.historyNoData{
+  margin: 0% auto;
+  text-align: center;
+  border-bottom: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  border-left: 1px solid #ccc;
+  .noData_text{
+    font-size: 18px;
+    font-weight: bold;
+    color: #555555;
+  }
+}
+/******EndOf:  Hill-1882 ******/
+
+/******For Hill-2397******/
+.toFieldmultiselectLessWidth > span  > button{ 
+  width: 312px !important;
+}
+.toFieldmultiselectLessWidth > span  > .checkboxLayer{ 
+  width: 312px !important;
+}
+.checkboxLayer  > .checkBoxContainer{ 
+  min-height: 80px !important;
+  max-height: 120px !important;
+}
+.custom-dropdown-device-type {
+  background-color: transparent;
+  background-repeat: no-repeat;
+  display: inline;
+  line-height: 100%;
+  position: absolute;
+  z-index: 4;
+}
+.custom-dropdown-device-type:before {
+  content:'\e600';
+  font-family:"hillrom";
+  color: $pickled-bluewood;
+  padding: 0;
+  font-size: 10px;
+  position: absolute;
+  top: 9px;
+  right: 3px;
+  font-weight: 300;
+  background-color: transparent;
+  width: 15px;
+  text-align: center;
+  padding-right: 20px;
+  z-index: -1;
+}
+/******EndOf: For Hill-2397******/
+

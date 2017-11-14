@@ -1,9 +1,12 @@
+<ng-include src="'scripts/components/navbar/navbar.html'"></ng-include>
 <admin-patient-navbar></admin-patient-navbar>
 <div class="container admin-user">
   <div class="col-md-16 margin-top reset-padding">
    <div class="user-gen-details">
+   <span ng-class="{'monarchIcon': (getDeviceTypeforBothIcon() =='MONARCH'), 'visivestIcon': (getDeviceTypeforBothIcon() =='VEST'), 'bothdeviceIcon': (getDeviceTypeforBothIcon() =='ALL')}">
      <span class="user-gen-details--name">{{slectedPatient.firstName}} {{slectedPatient.lastName}}&nbsp;&nbsp;</span>
      <span class="user-gen-details--hr-id">{{slectedPatient.hillromId}}</span>
+     </span>
    </div>
   </div>
 </div>
@@ -36,20 +39,10 @@
               <span class="">*</span>
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
-              <input class="" type="text" validate-on-blur name="firstName" ng-model="associateCareGiver.firstName" ng-readonly="validateADMINorASP()" ng-minlength=2 ng-maxlength=15 ng-pattern="/^[a-z A-Z]+$/" required>
+              <input class="" type="text" validate-on-blur name="firstName" ng-model="associateCareGiver.firstName" ng-readonly="validateADMINorASP()" ng-minlength=1 ng-maxlength=50 required>
               <div ng-show="(form.firstName.$dirty && form.firstName.$showValidationMessage && form.firstName.$invalid) ||submitted">
-                <span class="has-error" ng-show="form.firstName.$error.required">
-                  First Name is required.
-                </span>
-                <span class="has-error" ng-show="form.firstName.$error.pattern" >
-                  First Name cannot have number.
-                </span>
-                <span class="has-error" ng-show="form.firstName.$error.minlength" >
-                  First Name is required to be at least 2 character.
-                </span>
-                <span class="has-error" ng-show="form.firstName.$error.maxlength" >
-                  First Name cannot be longer than 15 characters.
-                </span>
+                <span class="has-error" ng-show="form.firstName.$error.required" translate="error.firstName.required"></span>
+                <span class="has-error" ng-show="form.firstName.$error.maxlength" translate="error.firstName.maxlength"></span>
               </div>
             </div>
           </div>
@@ -58,17 +51,10 @@
               <span class="" translate="patient.caregiver.middle-name"></span>
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
-              <input class="" type="text" validate-on-blur ng-readonly="validateADMINorASP()" name="middleName" ng-model="associateCareGiver.middleName" ng-pattern="/^[a-z A-Z]+$/" ng-minlength=2 ng-maxlength=15>
+              <input class="" type="text" validate-on-blur ng-readonly="validateADMINorASP()" name="middleName" ng-model="associateCareGiver.middleName" ng-minlength=1 ng-maxlength=50>
               <div ng-show="(form.middleName.$showValidationMessage && form.middleName.$invalid)">
-                <span class="has-error" ng-show="form.middleName.$error.pattern" >
-                  Middle Name cannot have number.
-                </span>
-                <span class="has-error" ng-show="form.middleName.$error.minlength" >
-                  Middle Name is required to be at least 2 character.
-                </span>
-                <span class="has-error" ng-show="form.middleName.$error.maxlength" >
-                  Middle Name cannot be longer than 15 characters.
-                </span>
+                <span class="has-error" ng-show="form.middleName.$error.minlength" translate="error.middleName.minlength"></span>
+                <span class="has-error" ng-show="form.middleName.$error.maxlength" translate="error.middleName.maxlength"></span>
               </div>
             </div>
           </div>
@@ -81,20 +67,10 @@
               <span class="">*</span>
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
-              <input class="" type="text" validate-on-blur name="lastName" ng-model="associateCareGiver.lastName" ng-readonly="validateADMINorASP()" ng-minlength=2 ng-maxlength=15 ng-pattern="/^[a-z A-Z]+$/" required>
+              <input class="" type="text" validate-on-blur name="lastName" ng-model="associateCareGiver.lastName" ng-readonly="validateADMINorASP()" ng-minlength=1 ng-maxlength=50 required>
               <div ng-show="(form.lastName.$dirty && form.lastName.$showValidationMessage && form.lastName.$invalid) || submitted">
-                <span class="has-error" ng-show="form.lastName.$error.required">
-                  Last Name is required.
-                </span>
-                <span class="has-error" ng-show="form.lastName.$error.pattern" >
-                  Last Name cannot have number.
-                </span>
-                <span class="has-error" ng-show="form.lastName.$error.minlength" >
-                  Last Name is required to be at least 2 character.
-                </span>
-                <span class="has-error" ng-show="form.lastName.$error.maxlength" >
-                  Last Name cannot be longer than 15 characters.
-                </span>
+                <span class="has-error" ng-show="form.lastName.$error.required" translate="error.lastName.required"></span>
+                <span class="has-error" ng-show="form.lastName.$error.maxlength" translate="error.lastName.maxlength"></span>
               </div>
             </div>
           </div>
@@ -106,16 +82,12 @@
             </div>
             <div class="col-md-10 dashboard__form__input--option reset-padding selected-box-container">
               <div class="custom-dropdown">
-               <!--  <select name="relationship" ng-readonly="validateADMINorASP()" ng-model="associateCareGiver.relationship" ng-options="relationship.name as relationship.name for relationship in relationships" required> -->
-              <select name="relationship" ng-readonly="validateADMINorASP()" ng-model="associateCareGiver.relationship" ng-options="relationship for relationship in relationships" ng-selected="{{relationship === associateCareGiver.relationship}}">
+                <select name="relationship" ng-readonly="validateADMINorASP()" ng-model="associateCareGiver.relationship" ng-options="relationship for relationship in relationships" ng-selected="{{relationship === associateCareGiver.relationship}}">
                 </select>
-              <!-- <option selected="selected">Select a state</option> -->
-              </select>
-              <div ng-show="(form.relationship.$dirty && form.relationship.$showValidationMessage && form.relationship.$invalid ) ||submitted">
-                <span class="has-error" ng-show="form.relationship.$error.required">
-                  Select relationship.
-                </span>
-              </div>
+              
+                <div ng-show="(form.relationship.$dirty && form.relationship.$showValidationMessage && form.relationship.$invalid ) ||submitted">
+                  <span class="has-error" ng-show="form.relationship.$error.required" translate="error.relationship.required"></span>
+                </div>
               </div>
             </div>
           </div>
@@ -129,9 +101,7 @@
             <div class="col-md-10 dashboard__form--input reset-padding">
               <input class="" type="text" validate-on-blur ng-model="associateCareGiver.address" name="address" ng-readonly="validateADMINorASP()" ng-maxlength=100>
               <div ng-show="(form.address.$showValidationMessage && form.address.$invalid)">
-                <span class="has-error" ng-show="form.address.$error.maxlength" >
-                  Address cannot be longer than 100 characters.
-                </span>
+                <span class="has-error" ng-show="form.address.$error.maxlength" translate="error.address.maxlength"></span>
               </div>
             </div>
           </div>
@@ -142,9 +112,7 @@
             <div class="col-md-10 dashboard__form--input reset-padding">
               <input class="" type="text" validate-on-blur ng-model="associateCareGiver.city" name="city" ng-readonly="validateADMINorASP()" ng-maxlength=15>
               <div ng-show="(form.city.$showValidationMessage && form.city.$invalid)">
-                <span class="has-error" ng-show="form.city.$error.maxlength" >
-                  City cannot be longer than 15 characters.
-                </span>
+                <span class="has-error" ng-show="form.city.$error.maxlength" translate="error.city.maxlength"></span>
               </div>
             </div>
           </div>
@@ -157,9 +125,6 @@
             </div>
             <div class="col-md-10 dashboard__form__input--option reset-padding selected-box-container">
             <div class="custom-dropdown">
-              <!-- <select name="state" ng-readonly="validateADMINorASP()" ng-model="associateCareGiver.state" ng-options="state.name as state.name for state in states">
-                <option  value="" selected="selected">Select a state</option>
-              </select> -->
               <select name="state" ng-readonly="validateADMINorASP()" ng-model="associateCareGiver.state" ng-options="state.name as state.name for state in states">
               <option selected="selected">Select a state</option>
               </select>
@@ -174,9 +139,7 @@
           <div class="col-md-10 dashboard__form--input reset-padding">
               <input type="text" validate-on-blur class="form-control" name="zip" ng-readonly="validateADMINorASP()" maxlength="5" ng-pattern="/^(?=.*[1-9].*)[0-9]{5}$/" ng-model="associateCareGiver.zipcode">
                <div ng-show="(form.zip.$dirty && form.zip.$showValidationMessage && form.zip.$invalid) || submitted">
-
-                <span class="has-error" ng-show="form.zip.$error.pattern">
-                  Zip Code is invalid.
+                <span class="has-error" ng-show="form.zip.$error.pattern" translate="error.zipcode.invalid">
                 </span>
               </div>
             </div>
@@ -190,17 +153,11 @@
               <span class=""> * </span>
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
-              <input type="email" class="form-control" validate-on-blur name="email"  ng-readonly="validateADMINorASP()" ng-model="associateCareGiver.email" ng-maxlength=100 required>
+              <input type="email" class="form-control" validate-on-blur name="email"  ng-readonly="validateADMINorASP()" ng-model="associateCareGiver.email" ng-maxlength=100 ng-pattern="/^[a-zA-Z][\.a-zA-Z0-9_\+-]+(\.[a-zA-Z0-9_\+-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.([a-zA-Z]{2,4})$/" required>
               <div ng-show="(form.email.$showValidationMessage && form.email.$invalid) || submitted">
-                <span class="has-error" ng-show="form.email.$error.required">
-                  E-mail is required.
-                </span>
-                <span class="has-error" ng-show="form.email.$error.email">
-                  E-mail is invalid.
-                </span>
-                <span class="has-error" ng-show="form.email.$error.maxlength">
-                  E-mail cannot be longer than 100 characters.
-                </span>
+                <span class="has-error" ng-show="form.email.$error.required" translate="error.email.required"></span>
+                <span class="has-error" ng-show="form.email.$error.pattern" translate="error.email.invalid"></span>
+                <span class="has-error" ng-show="form.email.$error.maxlength" translate="error.email.maxlength"></span>
               </div>
             </div>
         </div>
@@ -210,14 +167,10 @@
             <span class="">*</span>
           </div>
           <div class="col-md-10 dashboard__form--input reset-padding">
-            <input type="text" validate-on-blur class="form-control" name="primaryPhone" ng-readonly="validateADMINorASP()" mask="(999)-999-9999" ng-model="associateCareGiver.primaryPhone" required>
+            <input type="text" validate-on-blur class="form-control" name="primaryPhone" ng-readonly="validateADMINorASP()" ui-mask="(999)-999-9999" model-view-value="true" ng-model="associateCareGiver.primaryPhone" required ui-options="{clearOnBlur: false}">
              <div ng-show="(form.primaryPhone.$showValidationMessage && form.primaryPhone.$invalid) || submitted">
-              <span class="has-error" ng-show="form.primaryPhone.$error.required">
-                Home phone number is required.
-              </span>
-              <span class="has-error" ng-show="!form.primaryPhone.$error.required && form.primaryPhone.$invalid">
-                Home phone number is invalid.
-              </span>
+              <span class="has-error" ng-show="form.primaryPhone.$error.required" translate="error.primaryPhone.required"></span>
+              <span class="has-error" ng-show="form.primaryPhone.$error.mask" translate="error.primaryPhone.mask"></span>
             </div>
           </div>
         </div>
@@ -230,11 +183,9 @@
               <span class=""></span>
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
-              <input type="text" class="form-control" validate-on-blur  name="mobilePhone"  ng-readonly="validateADMINorASP()" ng-model="associateCareGiver.mobilePhone" mask="(999)-999-9999">
+              <input type="text" class="form-control" validate-on-blur  name="mobilePhone"  ng-readonly="validateADMINorASP()" ng-model="associateCareGiver.mobilePhone" ui-mask="(999)-999-9999" model-view-value="true" ui-options="{clearOnBlur: false}">
               <div ng-show="(form.mobilePhone.$showValidationMessage && form.mobilePhone.$invalid) || submitted">
-                <span class="has-error" ng-show="form.mobilePhone.$invalid">
-                  Mobile number is invalid.
-                </span>
+                <span class="has-error" ng-show="form.mobilePhone.$error.mask" translate="error.mobilePhone.mask"></span>
               </div>
             </div>
         </div>
@@ -245,7 +196,7 @@
 
     <div class="col-md-16 margin-top reset-padding">
       <div class="">
-        <buton type="submit" class="hillrom-btn btn-primary float-right btn-margin-left" ng-click="formSubmitCaregiver()" ng-show="!patientStatus.isCreate" translate="patient.btn.update" ng-if="careGiverStatus === 'edit'">Update</buton>
+        <buton type="submit" class="hillrom-btn btn-primary float-right btn-margin-left" ng-click="showCaregiverUpdateModal()" ng-show="!patientStatus.isCreate" translate="patient.btn.update" ng-if="careGiverStatus === 'edit'">Update</buton>
         <buton type="submit" class="hillrom-btn btn-primary float-right btn-margin-left" ng-click="formSubmitCaregiver()" ng-show="!patientStatus.isCreate" translate="patient.btn.save" ng-if="careGiverStatus != 'edit'">Save</buton>
         <buton type="submit" class="hillrom-btn btn-secondary float-right" ng-click="switchPatientTab('patientCraegiver')" ng-show="!patientStatus.isCreate" translate="patient.btn.cancel">cancel</buton>
         <div class="clr"></div>
@@ -253,4 +204,24 @@
     </div>
     </div>
   </form>
+</div>
+
+<div ng-if="caregiverUpdateModal" class="modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true">
+  <div class="modal__dialog">
+    <div class="modal__content">
+      <header class="modal__header">
+        <button type="button" class="modal__close" data-dismiss="modal" ng-click="$parent.caregiverUpdateModal=false">&times;</button>
+        <p translate="patient.caregiver.update.warning"></p>
+      </header>
+      <div class="modal__body">
+        <div class="modal--message" translate="patient.caregiver.update.message"></div>
+        <div class="row modal--custom-btn">
+          <buton class="hillrom-btn btn-submit float-right" ng-click="formSubmitCaregiver()">Yes</buton>
+          <buton class="hillrom-btn btn-submit float-right" data-dismiss="modal" ng-click="$parent.caregiverUpdateModal=false">No</buton>
+        </div>
+      </div>
+      <footer class="modal__footer">
+      </footer>
+    </div>
+  </div>
 </div>

@@ -1,0 +1,35 @@
+<div ng-show="userRole === 'PATIENT'">
+<ng-include  src="'scripts/components/navbar/navbarpatientuser.html'"></ng-include>
+<ng-include src="'scripts/modules/clinicadmin/announcements/views/navbar.html'"></ng-include>
+</div>
+<div ng-show="userRole === 'CARE_GIVER'">
+<ng-include  src="'scripts/components/navbar/navbarCaregiverUser.html'"></ng-include>
+<ng-include src="'scripts/components/dashboard/caregiver/views/caregiver-announcements-navbar.html'"></ng-include>
+</div>
+
+
+
+<div class="container">
+	<div class="col-xs-16 announce-list" ng-repeat="announce in announcement track by $index">
+		<h2>{{announce.name}}</h2>
+		<p ng-bind="announce.subject"></p>
+		<button class="float-right hillrom-btn btn-submit margin-right13" ng-click="downloadChartsAsPdf(announce.pdfFilePath)">View PDF</button>
+	</div>
+	<div class="dashboard__manage-view--pagination">
+	  <div class="col-md-16 reset-padding-right">
+	    <div class="navbar-right" ng-if="!nodatadiv">
+	      <span class="record-found"><span class="count" ng-bind="total"></span>
+	      <span class="record-found">Announcements Found</span>
+	      <span  ng-show="totalPages > 1">
+	        <span class="navigaion-link cursor-pointer" ng-class="{ 'inactive': !(currentPageIndex > 1) }" ng-click="searchAnnouncements('PREV')">Previous</span>
+	        <span class="navigaion-no">{{currentPageIndex}}/{{totalPages}}</span>
+	        <span class="navigaion-link cursor-pointer" ng-class="{ 'inactive': !(totalPages > currentPageIndex) }" ng-click="searchAnnouncements('NEXT')">Next</span>
+	      </span>
+	    </div>
+	    <div class="clr"></div>
+	     <div id = "NodataDiv" class="graph_nodata" ng-if = "nodatadiv">
+    <span class="noData_text"> No Announcements Available!</span>
+  </div> 
+	  </div>
+	</div>
+</div>

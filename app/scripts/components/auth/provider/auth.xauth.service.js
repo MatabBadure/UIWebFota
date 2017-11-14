@@ -1,14 +1,15 @@
 'use strict';
 
 angular.module('hillromvestApp')
-    .factory('AuthServerProvider', function loginService($http, localStorageService, Base64) {
+    .factory('AuthServerProvider', ['$http', 'StorageService', 'headerService', 'URL',
+        function($http, StorageService, headerService, URL) {
         return {
             login: function(credentials) {
                 var data = {
                   'username' : credentials.username,
                   'password' : credentials.password
                 };
-                return $http.post('api/authenticate', data, {
+                return $http.post(URL.authenticate, data, {
                     headers: {
                         "Content-Type": "application/json",
                         "Accept": "application/json"
@@ -18,9 +19,9 @@ angular.module('hillromvestApp')
                 });
             },
             signOut: function() {
-                return $http.post('/api/logout',{}, {
+                return $http.post(URL.logout, {}, {
                     headers: {
-                        'x-auth-token': localStorage.getItem('token')
+                        'x-auth-token': StorageService.get('logged').token
                     }
                 }).success(function (data, status, headers, config) {
                     return {'response': data, 'status': status, 'headers' : headers, 'config' : config};
@@ -28,10 +29,10 @@ angular.module('hillromvestApp')
             },
             logout: function() {
                 //Stateless API : No server logout
-                localStorageService.clearAll();
+                StorageService.clearAll();
             },
             getToken: function () {
-                return localStorageService.get('token');
+                return StorageService.get('logged').token;
             },
             hasValidToken: function () {
                 var token = this.getToken();
@@ -39,12 +40,8 @@ angular.module('hillromvestApp')
             },
 
             submitPassword: function (data) {
-                return $http.put('api/account/update_emailpassword', data, {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json',
-                        'x-auth-token': localStorage.getItem('token')
-                    }
+                return $http.put(URL.updateEmailPassword, data, {
+                    headers: headerService.getHeader()
                 }).success(function (data, status, headers, config) {
                     return {'response' : data, 'status' : status, 'headers' : headers, 'config' : config};
                 }).error(function (data, status, headers, config) {
@@ -54,7 +51,7 @@ angular.module('hillromvestApp')
 
 
             configurePassword: function (data) {
-                return $http.put('api/account/update_passwordsecurityquestion', data, {
+                return $http.put(URL.updatePasswordSecurityQuestion, data, {
                     headers: {
                         'Content-Type': 'application/json',
                         'Accept': 'application/json'
@@ -67,12 +64,9 @@ angular.module('hillromvestApp')
             },
 
             changeSecurityQuestion: function(data, id){
-                return $http.put('/api/user/'+id+'/changeSecurityQuestion', data, {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json',
-                        'x-auth-token': localStorage.getItem('token')
-                    }
+                var url = URL.changeSecurityQuestion.replace('USERID', id);
+                return $http.put(url, data, {
+                    headers: headerService.getHeader()
                 }).success(function (data, status, headers, config) {
                     return {'response' : data, 'status' : status, 'headers' : headers, 'config' : config};
                 }).error(function (data, status, headers, config) {
@@ -81,7 +75,7 @@ angular.module('hillromvestApp')
             },
 
             getSecurityQuestions: function () {
-                return $http.get('api/securityQuestions')
+                return $http.get(URL.securityQuestions)
                 .success(function (data, status, headers, config) {
                     return {'response' : data, 'status' : status, 'headers' : headers, 'config' : config};
                 }).error(function (data, status, headers, config) {
@@ -94,10 +88,30 @@ angular.module('hillromvestApp')
                 var data = {
                     'response': captchaData
                 };
-                return $http.post('/api/recaptcha', data).
+                return $http.post(URL.recaptcha, data).
                    success(function(response) {
                    return response;
                });
+            },
+
+            isValidActivationKey: function (keyData){
+                var url = URL.validateActivationKey.replace('KEYDATA', keyData)
+                return $http.get(url)
+                .success(function (data, status, headers, config) {
+                    return {'response' : data, 'status' : status, 'headers' : headers, 'config' : config};
+                }).error(function (data, status, headers, config) {
+                    return {'response' : data, 'status' : status, 'headers' : headers, 'config' : config};
+                });
+            },
+            
+            isValidResetKey: function (keyData){
+                var url = URL.validateResetKey.replace('KEYDATA', keyData);
+                return $http.get(url)
+                .success(function (data, status, headers, config) {
+                    return {'response' : data, 'status' : status, 'headers' : headers, 'config' : config};
+                }).error(function (data, status, headers, config) {
+                    return {'response' : data, 'status' : status, 'headers' : headers, 'config' : config};
+                });
             }
         };
-    });
+    }]);

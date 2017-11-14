@@ -1,0 +1,840 @@
+@media only screen and (min-width : 768px) and (max-width : 1024px) and (orientation : landscape) { 
+.col-3.ipadHeightBalance {
+    min-height: 210px;
+}
+/******For Hill-2397******/
+.createpatient_minheight{
+	min-height:800px !important;
+}
+/******EndOf: For Hill-2397******/
+//******To remove static border bottom******/
+.minheight{
+	min-height:600px !important;
+}
+/******End of remove static border bottom******/
+.compose-message-container > .row
+{
+	border: 0.5px solid #7ca3dc;
+}
+/******Activation page footer alignment ******/
+FooterAlignmentForDevices{
+	margin-top:13% !important;
+	float:none !important;
+}
+LoginContentHeightForDevices{
+	max-height:none !important;
+}
+/****** End of Activation page footer alignment ******/
+/******Adherence Setting Tab ******/
+.ipadMargin-right{
+	margin-right:240px !important;
+}
+/******End ofAdherence Setting Tab ******/
+.inb-date span,.arc-date span,.sent-date span,.hcp-msg-date span,.inb-date1 span
+{
+	white-space: pre-line !important;
+}
+.toFieldmultiselectLessWidth > span > button
+{
+	width:256px !important;
+}
+.toFieldmultiselectLessWidth > span > .checkboxLayer
+{
+	width:256px !important;
+}
+.checkboxLayer  > .checkBoxContainer{ 
+  height: 80px !important;
+}
+.inb-flag,.inb-tick
+{
+	position: absolute;
+    top: 25%;
+    right: 0%;
+}
+.message-thread-container > .row
+{
+	margin-right:10px;
+}
+.messageList-container .msgcontainer .row {
+    height: auto;
+}
+.unselectclass, .selectclass
+{
+	padding-left:4px;
+	font-size:0.75em;
+}
+.paginationcontainer
+{
+	width:50%;
+}
+	/*HCP dashboard Style device-*/
+ 	.stats_chart_container{ 
+		.pie_chart{
+			float: none;
+		}
+		.stats_chart_content{
+			margin: 0;
+			text-align: center;
+			width: 100%;
+			.percent{
+				float: none;
+			}
+		}
+	}
+
+	/*Login page Style*/
+	.footer_container {
+		.footer_right{
+			display: none;
+		}
+	}
+	.auth--position, .reset--position{
+		width: 70%;
+		margin: 10% auto 15%;
+	}
+	.login{
+		background: url("../images/bg_ipad_landscape.jpg") no-repeat;
+		-webkit-background-size: cover;
+		-moz-background-size: cover;
+		-o-background-size: cover;
+		background-size: cover;
+		display: table;
+		/*height: calc(100% - 123px);*/
+		height: 100%;
+		position: absolute;
+		width: 100%;
+		background-size: 100% 100%;
+		.login--position{
+			width: 70%;
+			margin: 10% auto 15%;
+		}
+	}
+	.visi_view_container{
+		margin: 0% auto 4%;
+	}
+	.login__container__right-section{
+		width: 100%;
+	}
+	/*Login page Style END*/
+
+	/*HCP Patient Dashboar Style*/
+	.stats_chart_container{
+		.pie_chart{
+			text-align: center;
+			margin: 10px 0px 0px;
+		}
+		.col-3{
+			.chart_inner_icon{
+				left: 40%;
+   				top: 22%;
+			}
+		}
+	}
+	.hcp_wrapper{
+		.stats_chart_container{
+			.chart_inner_icon{
+				left: 37%;
+    			top: 19%;
+			}
+		}
+	}
+	/*HCP Patient Dashboar Style END*/	
+
+	/*Bug fixes*/
+	ul li, ul li:visited, ul li:focus, a:visited, a:focus{
+		outline: none;
+		box-shadow: none;
+		-webkit-box-shadow: none;
+	}
+	input.form-control{
+		-webkit-box-shadow: none;
+		-moz-box-shadow: none;
+		box-shadow: none;
+		border-radius: 0px;
+		-webkit-border-radius: 0px;
+	}
+	/*input[type="text"], input[type="email"], input[type="search"], input[type="password"] {
+	-webkit-appearance: caret;
+	-moz-appearance: caret; 
+	border-radius: 0px;
+	}*/
+
+	.patient-user__navbar .patient-dashboard > li {
+		padding-right: 0;
+	}
+
+	.patient_nav_link_right li {
+		margin-right: 10px;
+		font-size: 12px;
+	}
+	.patient-user__navbar ul > li{
+		padding-right: 20px;
+	}
+	.patient-user__navbar ul > li > a .icons{
+		top: 13px;
+		display:none;
+		left: 8px !important;
+	}
+	.patient_padding li a {
+    padding-top: 30px !important;
+}
+
+	.patient-user__navbar{
+		width: 100%;
+		display: inline-block;
+	}
+
+	.height300{
+		height:auto!important;
+	}
+	.height500{
+		height:auto!important;
+	}
+	/*Admin Responsive column style*/
+	.col-hide-iPad{
+		display: none;
+	}
+	.col-hide-web{
+    	display: block;
+  	}
+  	.adherence_protocol_width{
+  		max-width: 759px!important;
+    	width: 759px!important;
+  	}
+	.dashboard__manage-view--header{
+		.header--type{
+			/*width: 20%;*/
+		}
+	}
+	.dashboard__manage-view--list > div{
+/*		width: 20%;
+*/	}
+	.manage_view_list_iPad{
+		.centered{
+			width: 16.666%;
+		}
+		.col-sm-3{
+			width: 16.666%;
+		}
+	}
+	.no-padding{
+		padding:0px;
+	}
+	.word_wrap{
+		word-wrap: break-word;
+	}
+	.tab-margin-bottom20{
+		margin-bottom:20px;
+	}
+	.tab-clear{
+		clear:both;
+	}
+	.margin-left-10-reset{
+		margin-left:0px;
+	}
+	.margin-tp19{
+		margin-top:19px;
+	}
+	.modal__header{
+		padding: 10px!important;
+	}
+	.hide-tab{
+		display:none !important;
+	}
+	.show-tab{
+		display:block !important;
+	}
+	.margin-left15{
+		margin-left:15px;
+	}
+	.margin-l{
+		margin-left:6px;
+	}
+	.height400{
+		height:auto;
+	}
+	.hideOverflow{
+			overflow:hidden!important;
+		}
+	.benchmarking__form__input select{
+		width:130px!important;
+	}
+	.multiSelect > button{
+		width:180px;
+	}
+	.dark_grey_text_colour{
+	color: $storm-dust !important;
+}
+	.navbar-secondary .navbar-right > li{
+		padding:0 14px !important;
+	}
+
+	.flex1 {
+	  height: auto;
+	  display: -webkit-flex;
+	  flex-flow: -webkit-row column;
+	}
+	.after-head-container
+{
+	    border: 0.5px solid #d0cbcb;
+}
+	
+	@media screen and (-webkit-min-device-pixel-ratio:0) {
+		.hideOverflow{
+			overflow:hidden!important;
+		}
+
+	}
+
+}
+
+@media only screen and (min-width : 768px) and (max-width : 1024px) and (orientation : portrait) {
+.col-3.ipadHeightBalance {
+    min-height: 199px;
+}
+/******For Hill-2397******/
+.createpatient_minheight{
+	margin-bottom: 180px;
+}/******EndOf: For Hill-2397******/
+/******Archive option responsiveness ******/
+.arc-read {
+    width: 20%;
+} 
+/******Archive option responsiveness ******/
+/******Adherence Setting Tab ******/
+.ipadMargin-right{
+	margin-right:240px !important;
+}
+/******End ofAdherence Setting Tab ******/
+.compose-message-container > .row
+{
+	border: 0.5px solid #7ca3dc;
+}
+.inb-date span,.arc-date span,.sent-date span,.hcp-msg-date span,.inb-date1 span
+{
+	    white-space: pre-line !important;
+}
+.message-thread-container > .row
+{
+	margin-right:10px;
+}
+.messageList-container .msgcontainer .row {
+    height: auto;
+}
+.unselectclass, .selectclass
+{
+	padding-left:4px;
+	font-size:0.75em;
+}
+.inb-flag,.inb-tick
+{
+	position: absolute;
+    top: 25%;
+    right: 0%;
+}
+.after-head-container
+{
+	    border: 0.5px solid #d0cbcb;
+}
+.paginationcontainer
+{
+	width:50%;
+}
+/******To remove static border bottom******/
+.minheight{
+	min-height:900px !important;
+}
+/******End of remove static border bottom******/
+
+/******Wrap text for bigger text on smaller devices******/
+.wrapTextForSmallScreens{
+	word-wrap: break-word;
+} 
+/******End of Wrap text for bigger text on smaller devices******/
+/****** For spacing between list and search box in devices like ipad  ******/
+.marginBottomforDevices
+{
+	margin-bottom:10px;
+}
+/****** End of spacing between list and search box in devices like ipad  ******/
+/******Activation page footer alignment ******/
+LoginContentHeightForDevices{
+	max-height:none;
+}
+/****** End of Activation page footer alignment ******/
+/****** ResetAdherence score alignment for ipad ******/
+.marginLeftForDevices{
+	margin-left:4% !important;
+}
+/******End of ResetAdherence score alignment for ipad ******/
+	/*HCP dashboard Style*/
+	.stats_chart_container{ 
+		.pie_chart{
+			float: none;
+			text-align: center;
+		}
+		.col-3{
+			.chart_inner_icon{
+				left: 38%;
+   				top: 18%;
+			}
+		}
+		.stats_chart_content{
+			margin: 0;
+			text-align: center;
+			width: 100%;
+			.percent{
+				float: none;
+			}
+		}
+	}
+	.hcp_wrapper{
+		.stats_chart_container{
+			.chart_inner_icon{
+				left: 39%;
+    			top: 16%;
+			}
+		}
+	}
+
+	.form__container__login .login__container__right-section {
+		margin: 0 auto;
+	}
+
+	.patient-user__navbar ul > li {
+		padding-right: 20px;
+	}
+
+	/*Login page Style*/
+	.footer_container {
+		.footer_right{
+			display: none;
+		}
+	}
+	.auth--position, .reset--position{
+		width: 70%;
+		margin: 10% auto 15%;
+	}
+	.login{
+		background: url("../images/bg_ipad_portrait.jpg") no-repeat;
+		-webkit-background-size: cover;
+		-moz-background-size: cover;
+		-o-background-size: cover;
+		background-size: cover;
+		display: table;
+		/*height: calc(100% - 123px);*/
+		height: 100%;
+		position: absolute;
+		width: 100%;
+		background-size: 100% 100%;
+		.login--position{
+			width: 70%;
+			margin: 10% auto 15%;
+		}
+	}
+	.visi_view_container{
+		margin: 0% auto 4%;
+	}
+	.login__container__right-section{
+		width: 100%;
+	}	
+		.adherence_protocol_width{
+  		max-width: 759px!important;
+    	width: 759px!important;
+  	}
+	/*Login page Style END*/
+
+	/* User Particular info tab padding */
+	.user-detail-info {
+		padding: 0 10px;
+	}
+	/* User Particular info tab padding  END*/
+	/*Bug fixes*/
+	ul li, ul li:visited, ul li:focus, a:visited, a:focus {
+		outline: none;
+		box-shadow: none;
+		-webkit-box-shadow: none;
+	}
+	input.form-control{
+		-webkit-box-shadow: none;
+		-moz-box-shadow: none;
+		box-shadow: none;
+		border-radius: 0px;
+		-webkit-border-radius: 0px;
+	}
+	/*input[type="text"], input[type="email"], input[type="search"], input[type="password"] {
+	-webkit-appearance: caret;
+	-moz-appearance: caret; 
+	border-radius: 0px;
+	}*/
+	.patient-user__navbar{
+		width: 100%;
+		display: inline-block;
+	}
+
+	.patient-user__navbar .patient-dashboard > li {
+		padding-right: 0;
+	}
+
+	.patient_nav_link_right li {
+		margin-right: 5px;
+	}
+	/*Admin Responsive column style*/
+	.col-hide-iPad{
+		display: none;
+	}
+	.col-hide-web{
+    	display: block;
+  	}
+  	.no-padding{
+		padding:0px;
+	}
+	.tab-margin-bottom20{
+		margin-bottom:20px;
+	}
+	.word_wrap{
+		word-wrap: break-word;
+	}
+	.tab-clear{
+		clear:both;
+	}
+	.dark_grey_text_colour{
+	color: $storm-dust !important;
+}
+	.margin-left-10-reset{
+		margin-left:0px;
+	}
+	.margin-tp19{
+		margin-top:19px;
+	}
+	.margin-l{
+		margin-left:6px;
+	}
+	.hide-tab{
+		display:none !important;
+	}
+	.show-tab{
+		display:block !important;
+	}
+	.text-align-r{
+		text-align: right;
+	}
+	.text-align_c{
+		text-align:center!important;
+	}
+	
+	.patient-user__navbar ul > li > a .icons{
+		left:8px !important
+	}
+	.flex1 {
+	  height: auto;
+	  display: -webkit-flex;
+	  flex-flow: -webkit-row column;
+	}
+	
+	.patient_padding li a{
+		padding-top:30px!important
+	}
+	.height400{
+		height:auto;
+	}
+	.hideOverflow{
+			overflow:hidden!important;
+		}
+
+	.benchmarking__form__input select{
+		width:130px!important;
+	}
+	.multiSelect > button{
+		width:180px;
+	}
+	.navbar-secondary .navbar-right > li{
+		padding:0 14px !important;
+	}
+	@media screen and (-webkit-min-device-pixel-ratio:0) {
+		.hideOverflow{
+			overflow:hidden!important;
+		}
+	
+	}
+}
+@media screen and (min-width : 1024px){
+	.login{
+		background: url("../images/login_bg.jpg") no-repeat;
+		-webkit-background-size: cover;
+		-moz-background-size: cover;
+		-o-background-size: cover;
+		background-size: cover;
+		background-size: 100% 100%;
+	}
+	.no-padding{
+		padding:0px;
+	}
+	.tab-margin-bottom20{
+		margin-bottom:20px;
+	}
+	.tab-clear{
+		clear:both;
+	}
+	.margin-left-10-reset{
+		margin-left:0px;
+	}
+	.word_wrap{
+		word-wrap: break-word;
+	}
+	.margin-l{
+		margin-left:6px;
+	}
+	.height400{
+		height:auto;
+	}
+
+	.hideOverflow{
+			overflow:hidden!important;
+		}
+
+/*	.benchmarking__form__input select{
+		width:130px!important;
+	}
+	.multiSelect > button{
+		width:180px;
+	}*/
+	@media screen and (-webkit-min-device-pixel-ratio:0) {
+		.hideOverflow{
+			overflow:hidden!important;
+		}
+	
+	}
+	
+	.incompatible_browser_message{
+ 	 background-color:rgba(255, 255, 255, 0.7);
+	padding:5px 5px;
+	box-shadow:0px 0px 6px #777777;
+	margin-top:20px; text-align:center;
+}
+.incompatible_browser_message img{
+	height:40px;
+	width:40px;
+}
+.incompatible_browser_message figcaption{
+ 	 font-size:10px;
+}
+.incompatible_browser_message a{
+	 margin-right:15px;
+ 	 float:left;
+}
+.incompatible_browser_message_Header{
+	color:black; 
+	font-weight:900;
+ 	font-size:12px; 
+	}
+	.incompatible_browser_message_Body{
+	color:black; 
+	font-weight:300; 
+	font-size:10px;
+	}
+} 
+@media only screen and (min-width : 700px) and (max-width : 1024px) and (orientation : portrait) { 
+.incompatible_browser_message{
+  background-color:rgba(255, 255, 255, 0.7);
+padding:5px 5px;
+box-shadow:0px 0px 6px #777777;
+margin-top:20px; text-align:center;
+}
+.incompatible_browser_message img{
+height:40px;
+width:40px;
+}
+.incompatible_browser_message figcaption{
+  font-size:10px;
+}
+.incompatible_browser_message a{
+  margin-right:15px;
+  float:left;
+}
+.incompatible_browser_message_Header{
+color:black; 
+font-weight:900;
+ font-size:18px; 
+	}
+	.incompatible_browser_message_Body{
+color:black; 
+font-weight:300; 
+font-size:12px;
+	}
+	#Message_Text{
+	width:50% !important;
+	}
+	.message-thread-container > .row
+{
+	margin-right:10px;
+}
+.badgefiltercontainer .col-md-4 {
+  width: 100%;
+}
+.badgefiltercontainer .col-md-9 {
+  width: 100%;
+}
+
+}
+@media only screen and (min-width : 700px) and (max-width : 1024px) and (orientation : landscape) {
+.statdateipad {
+    width: auto !important;
+	}
+	.statdateipad .col-md-7 {
+	  width: 100%;
+	} 
+.incompatible_browser_message{
+  background-color:rgba(255, 255, 255, 0.7);
+padding:5px 5px;
+box-shadow:0px 0px 6px #777777;
+margin-top:20px; text-align:center;
+}
+.incompatible_browser_message img{
+height:40px;
+width:40px;
+}
+.incompatible_browser_message figcaption{
+  font-size:10px;
+}
+.incompatible_browser_message a{
+  margin-right:15px;
+  float:left;
+}
+.incompatible_browser_message_Header{
+color:black; 
+font-weight:900;
+ font-size:18px; 
+	}
+	.incompatible_browser_message_Body{
+color:black; 
+font-weight:300; 
+font-size:12px;
+	}
+	#Message_Text{
+	width:50% !important;
+	}
+	.message-thread-container > .row
+{
+	margin-right:10px;
+}
+.badgefiltercontainer .col-md-4 {
+  width: 30%;
+}
+.badgefiltercontainer .col-md-9 {
+  width: 70%;
+}
+}
+@media only screen and (min-width : 1290px) and (max-width :1366px ) and (orientation : landscape) { 
+
+.statdateipad {
+    width: auto !important;
+	}
+	.statdateipad .col-md-7 {
+	  width: 100%;
+	}
+/******To remove static border bottom******/
+.minheight{
+	min-height:600px !important;
+}
+/******End of remove static border bottom******/
+}
+
+@media screen and (min-width: 320px) and (max-width: 768px)
+ { 
+   .statdateipad {
+    width: auto !important;
+	}
+	.statdateipad .col-md-7 {
+	  width: 100%;
+	}
+ .super-head {
+  border-radius: 0;
+  max-height: 100%;
+}
+.after-head-container:first-child .optionSection {
+  max-height: 100%;
+}
+.custom-dropdown .multiSelect > button {
+  /* max-width: 100% !important; */
+  width: 105% !important;
+  padding-right: 30%;
+}
+.inb-date span,.arc-date span,.sent-date span,.hcp-msg-date span,.inb-date1 span
+{
+	    white-space: pre-line !important;
+}
+.after-head-container {
+  min-height: 100%;
+}
+.compose-message-container {
+  max-height: 100%;
+  min-height: 100%;
+}
+.mobilefix
+{
+    clear: both;
+}
+.badgefiltercontainer .col-md-16 {
+  padding: 0;
+}
+.badgefiltercontainer .col-md-4 {
+  width: 100%;
+}
+.badgefiltercontainer .col-md-9 {
+  width: 100%;
+}
+
+}
+@media screen and (min-width: 320px) and (max-width: 667px)
+{
+.super-head .col-sm-3, .super-head .col-xs-4 {
+  margin-bottom: 10px;
+  width: 100%;
+}
+.message-thread-container > .row
+{
+	margin-right:10px;
+}
+
+
+} 
+
+@media only screen and (min-width : 767px) and (max-width : 769px) and (orientation : portrait) { 
+	 .activefixmobile > li > a 
+  {
+    padding: 20px 27px 20px 3px !important;
+  }
+  .custom-dropdown .multiSelect > button {
+    width: 400px !important;
+}
+}
+@media only screen and (max-width: 1024px) and (min-width: 768px) and (orientation: landscape) { 
+	 .activefixmobile > li > a 
+  {
+    padding: 20px 27px 20px 3px !important;
+  }
+}
+@media screen and (min-width: 540px) and (max-width: 767px)
+{
+	#statdateipad {
+	  float: right !important;
+	}	
+
+}
+  @media screen and (max-width: 1190px) and (min-width: 520px) {
+    .timsDateContainer
+    {
+      border: none !important;
+      width: 23% !important;;
+    }
+    .timsDatesRange
+    {
+      margin-top: 6% !important;
+    }
+    
+    .timsCalender li {
+    margin-top: -26% !important;
+    margin-left: 9%;
+	}
+}

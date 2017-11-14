@@ -4,10 +4,9 @@
       <div class="dashbord-nav__primary pull-left">
         <span class="dashbord-nav__primary--title" translate="doctor.home.manageLabel">Manage HCP</span>
       </div>
-
-      <div class="dashbord-nav__secondary create-user navbar-right cursor-pointer" ng-click="createDoctor()">
+      <div ng-if="((userRole !== 'ASSOCIATES') && (role !== 'CUSTOMER_SERVICES'))" class="dashbord-nav__secondary create-user navbar-right cursor-pointer" ng-click="createDoctor()">
         <span class="" translate="doctor.home.createNewLabel">Create New</span>
-        <span class="hillrom-icon icon-plus-icon"></span>
+        <span class="icon-plus-icon add-new"></span>
       </div>
     </div>
   </div>
@@ -15,107 +14,104 @@
     <div class="container dashboard__manage-view margin-top-xl">
       <div class="dashboard__manage-view--search">
         <div class="fuid-search-box reset-padding-right">
-          <input type="text" class="form-control" id="searchListParam" name="userName" ng-model="searchItem" autocomplete="off" placeholder="{{'doctor.placeholder.search' | translate}}">
+          <input type="text" class="form-control" id="searchListParam" name="userName" ng-model="searchItem" ng-model-options="{ debounce: 1000 }" ng-change="searchDoctorsOnQueryChange();" autocomplete="off" placeholder="{{'doctor.placeholder.search' | translate}}">
           <span class="search-icon hillrom-icon icon-search-icon"></span>
         </div>
-        <div class="fixed-filter-box reset-padding-left">
+        <!-- <div class="fixed-filter-box reset-padding-left">
           <div class="search-dropdown">
             <select name="search" ng-model="sortOption" ng-change="searchDoctors()">
-              <option value="" selected>Newly Created</option>
-              <option value="email">Email</option>
-              <option value="firstName">First Name</option>
-              <option value="lastName">Last Name</option>
+              <option value="" selected translate="doctor.filter.all"></option>
+              <option value="email" translate="doctor.filter.active"></option>
+              <option value="firstName" translate="doctor.filter.inactive"></option>
             </select>
           </div>
-        </div>
+        </div> -->
       </div>
-
+      
+      <div class="col-md-16">
+        <ng-include src="'scripts/components/navbar/searchfilter.html'"></ng-include>
+      </div>
       <div class="dashboard__manage-view--header">
-        <div class="col-md-3 header--type">
-          <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="doctor.hcp-name">HCP Name</span>
+        <div class="col-md-2 col-sm-3 header--type pull-left-mob width120">
+          <span ng-class="{'sort-icon--default' : sortHcpList.lastName.isDefault, 'sort-icon-down': sortHcpList.lastName.isDown, 'sort-icon-up':sortHcpList.lastName.isUp}" ng-click="sortType('lastName')" translate="doctor.hcp-name">HCP Name</span>
         </div>
-        <div class="col-md-2 header--type">
-          <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="doctor.credentials">Credentials</span>
+      <!--   <div class="col-md-2 header--type col-hide-iPad none">
+          <span ng-class="{'sort-icon--default' : sortHcpList.credentials.isDefault, 'sort-icon-down': sortHcpList.credentials.isDown, 'sort-icon-up':sortHcpList.credentials.isUp}" ng-click="sortType('credentials')" translate="doctor.credentials">Credentials</span>
+        </div> -->
+        <div class="col-md-2 col-sm-3 header--type pull-left-mob width120">
+          <span ng-class="{'sort-icon--default' : sortHcpList.npiNumber.isDefault, 'sort-icon-down': sortHcpList.npiNumber.isDown, 'sort-icon-up':sortHcpList.npiNumber.isUp}" ng-click="sortType('npiNumber')" translate="doctor.npiNumber">NPI Number</span>
         </div>
-        <div class="col-md-2 header--type">
-          <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="doctor.npiNumber">NPI Number</span>
+        <div class="col-md-3 col-sm-3 header--type none">
+          <span ng-class="{'sort-icon--default' : sortHcpList.clinicName.isDefault, 'sort-icon-down': sortHcpList.clinicName.isDown, 'sort-icon-up':sortHcpList.clinicName.isUp}" ng-click="sortType('clinicName')" translate="doctor.clinic-name">Clinic Name</span>
         </div>
-        <div class="col-md-4 header--type">
-          <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="doctor.clinic-name">Clinic Name</span>
+
+        <div class="col-md-2 col-sm-4 header--type col-hide-web">
+          <span ng-class="{'sort-icon--default' : sortHcpList.city.isDefault, 'sort-icon-down': sortHcpList.city.isDown, 'sort-icon-up':sortHcpList.city.isUp}" ng-click="sortType('city')" translate="doctor.city-state">City</span>
+          <!-- <span ng-class="{'sort-icon--default' : sortHcpList.state.isDefault, 'sort-icon-down': sortHcpList.state.isDown, 'sort-icon-up':sortHcpList.state.isUp}" ng-click="sortType('state')" translate="doctor.state">state</span> -->
         </div>
-        <div class="col-md-2 header--type">
-          <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="doctor.city">City</span>
+
+        <div class="col-md-2 header--type col-hide-iPad none">
+          <span ng-class="{'sort-icon--default' : sortHcpList.city.isDefault, 'sort-icon-down': sortHcpList.city.isDown, 'sort-icon-up':sortHcpList.city.isUp}" ng-click="sortType('city')" translate="doctor.city">City</span>
         </div>
-        <div class="col-md-2 header--type">
-          <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" translate="doctor.state">state</span>
-        </div>
-        <div class="col-md-1 header--type">
-          <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="doctor.status">Status</span>
+        <div class="col-md-2 header--type col-hide-iPad none">
+          <span ng-class="{'sort-icon--default' : sortHcpList.state.isDefault, 'sort-icon-down': sortHcpList.state.isDown, 'sort-icon-up':sortHcpList.state.isUp}" ng-click="sortType('state')" translate="doctor.state">state</span>
+        </div> 
+
+        <div class="col-md-1 col-sm-3 header--type pull-left-mob">
+          <span ng-class="{'sort-icon--default' : sortHcpList.status.isDefault, 'sort-icon-down': sortHcpList.status.isDown, 'sort-icon-up':sortHcpList.status.isUp}" ng-click="sortType('status')" translate="doctor.status">Status</span>
         </div>
         <div class="clr"></div>
       </div>
 
-      <div class="dashboard__manage-view--list" ng-repeat="doctor in doctors" ng-click="doctor.deleted || selectDoctor(doctor)" ng-class="{ 'inactive': doctor.deleted }">
-          <div class="col-md-3 reset-padding centered">
-            <span class="main-prim-info">{{doctor.lastName}} {{doctor.firstName}}</span>
+      <div class="dashboard__manage-view--list" ng-repeat="doctor in doctors" ng-click="selectDoctor(doctor)">
+          <div class="col-md-2 col-sm-3 reset-padding centered pull-left-mob width120">
+            <span class="main-prim-info">{{doctor.lastName}}, {{doctor.firstName}}</span>
           </div>
-          <div class="col-md-2 reset-padding centered">
-            <span class="impo-highlight">ASRT</span>
-          </div>
-          <div class="col-md-2 reset-padding centered">
-            <span class="short-info">1030121212</span>
-          </div>
-
-          <div class="col-md-4 reset-padding centered">
-            <span class="short-info" ng-repeat ="clinic in doctor.clinics">{{clinic.name}}</span>
+       <!--    <div class="col-md-2 reset-padding centered col-hide-iPad none">
+            <span class="impo-highlight">{{doctor.credentials}}</span>
+          </div> -->
+          <div class="col-md-2 col-sm-3 reset-padding centered pull-left-mob width120">
+            <span class="short-info">{{doctor.npiNumber}}</span>
           </div>
 
-          <div class="col-md-2 reset-padding centered">
-            <span class="short-info">{{doctor.city}}</span>
+          <div class="col-md-3 col-sm-3 reset-padding centered none">
+            <span class="short-info" ng-repeat ="clinic in doctor.clinics"> {{clinic.name}} <b>{{$last ? '' : ', '}}</b></span>
           </div>
 
-          <div class="col-md-2 reset-padding centered">
+          <div class="col-md-2 col-sm-4 reset-padding centered col-hide-web none">
+            <span class="short-info">{{doctor.city}}</span> /
             <span class="short-info">{{doctor.state}}</span>
           </div>
 
-          <div class="col-md-1 reset-padding">
-          <div class="icon-font">
-            <span class="icon-lungs"></span>
+          <div class="col-md-2 reset-padding centered col-hide-iPad none">
+            <span class="short-info">{{doctor.city}}</span>
           </div>
-          <div class="clr"></div>
+
+          <div class="col-md-2 reset-padding centered col-hide-iPad none">
+            <span class="short-info">{{doctor.state}}</span>
+          </div>
+
+          <div class="col-md-1 col-sm-3 reset-padding centered pull-left-mob">
+            <span class="short-info active" ng-if="!doctor.deleted && doctor.activated" translate="doctor.status-type.active"></span>
+            <span class="short-info inactive" ng-if="doctor.deleted" translate="doctor.status-type.inactive"></span>
+            <span class="short-info inactive" ng-if="!doctor.deleted && !doctor.activated" translate="doctor.status-type.pending"></span>
           </div>
 
           <div class="clr"></div>
        </div>
-
-      <!--  <div class="dashboard__manage-view--list" ng-repeat="doctor in doctors" ng-click="doctor.deleted || selectDoctor(doctor)" ng-class="{ 'inactive': doctor.deleted }">
-          <div class="col-md-3 reset-padding-left">
-            <span class="user-name">{{doctor.lastName}} {{doctor.firstName}}</span>
-            <span class="user-email">{{doctor.email}} {{doctor.id}}</span>
-          </div>
-          <div class="col-md-4">
-            <span class="user-home-no">{{doctor.city}} {{doctor.state}}</span>
-            <span class="user-address">{{doctor.address}} {{doctor.zipcode}}</span>
-          </div>
-          <div class="col-md-4">
-            <span class="clinic-name" ng-repeat ="clinic in doctor.clinics">{{clinic.name}}</span>
-          </div>
-          <div class="col-md-5 reset-padding-right">
-            <span >{{doctor.primaryPhone}}</span>
-            <span >{{doctor.speciality}} {{doctor.credentials}}</span>
-          </div>
-          <div class="clr"></div>
-       </div> -->
+       <div class="col-md-16 col-sm-16 empty-list-message" ng-if="doctors && doctors.length === 0">
+        <span translate="doctor.no-hcp-found"></span>
+      </div>
 
       <div class="dashboard__manage-view--pagination">
         <div class="col-md-16 reset-padding-right">
           <div class="navbar-right">
-            <span class="record-found" ng-if="doctors.length > 0">{{doctors.length}} Doctors</span>
-            <span class="record-found" ng-if="doctors.length > 0">Found</span>
+            <span class="record-found" ng-if="doctors.length > 0">{{total}}</span><span class="record-found" ng-if="doctors.length > 0" translate="doctor.hcp-text">HCPs</span>
+            <span class="record-found" ng-if="doctors.length > 0" translate="doctor.found-text">Found</span>
             <span ng-show="pageCount > 1">
-              <span class="navigaion-link cursor-pointer" ng-class="{ 'inactive': !(currentPageIndex > 1) }" ng-click="searchDoctors('PREV')">Previous</span>
+              <span class="navigaion-link cursor-pointer" ng-class="{ 'inactive': !(currentPageIndex > 1) }" ng-click="searchDoctors('PREV')" translate="doctor.previous-text">Previous</span>
               <span class="navigaion-no">{{currentPageIndex}}</span>
-              <span class="navigaion-link cursor-pointer" ng-class="{ 'inactive': !(pageCount > currentPageIndex) }" ng-click="searchDoctors('NEXT')">Next</span>
+              <span class="navigaion-link cursor-pointer" ng-class="{ 'inactive': !(pageCount > currentPageIndex) }" ng-click="searchDoctors('NEXT')" translate="doctor.next-text">Next</span>
             </span>
           </div>
           <div class="clr"></div>

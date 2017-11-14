@@ -1,0 +1,11 @@
+<ng-include src="'scripts/components/navbar/navbar.html'"></ng-include>
+<ng-include src="'scripts/modules/admin/clinic/directives/clinic-info/navbar/navbar.html'"></ng-include>
+<div class="container admin-user">
+  <div class="col-md-16 margin-top reset-padding">
+   <div class="user-gen-details">
+   <span class="user-gen-details--name">{{::selectedClinic.name}}</span>
+     <span class="user-gen-details--hr-id">{{::selectedClinic.hillromId}}</span>
+   </div>
+ </div>
+</div>
+<ng-include src="'scripts/components/dashboard/hcp/views/graph.html'"></ng-include>

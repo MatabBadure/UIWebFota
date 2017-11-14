@@ -1,95 +1,205 @@
 <div class="container admin-user">
   <div class="col-md-16 margin-top reset-padding">
    <div class="user-gen-details">
-     <span class="user-gen-details--name">Williams James</span>
-     <span class="user-gen-details--hr-id">HR45321</span>
+   <span ng-class="{'monarchIcon': (getDeviceTypeforBothIcon() =='MONARCH'), 'visivestIcon': (getDeviceTypeforBothIcon() =='VEST'), 'bothdeviceIcon': (getDeviceTypeforBothIcon() =='ALL')}">
+     <span class="user-gen-details--name">{{patientView.firstName}}  {{patientView.lastName}}</span>
+     <span class="user-gen-details--hr-id">{{patientView.hillromId}}</span>
+     </span>
    </div>
   </div>
 </div>
+
 <div class="dashboard dashboard--content padding-bottom-ls">
-
-    <div class="container dashboard__form">
-      <div>
-        <div class="col-md-16 margin-top reset-padding">
-          <div class="col-md-7 reset-padding">
-            <div class="col-md-6 dashboard__form--label reset-padding">
-              <span class="" translate="profile.title-name"></span>
-            </div>
-            <div class="col-md-10 dashboard__form--label-val reset-padding">
-              <span>Mr</span>
-            </div>
+  <div class="container dashboard__form">
+    <div class="row">
+      <div class="col-md-16 col-sm-16 margin-top reset-padding">
+        <div class="col-md-7 col-sm-9 reset-padding">
+          <div class="col-md-6 col-sm-5 dashboard__form--label reset-padding col-xs-8">
+            <span class="" translate="profile.title-name"></span>
+          </div>
+          <div class="col-md-10 col-sm-11 dashboard__form--label-val reset-padding col-xs-8">
+            <span ng-bind="patientView.title"></span>
           </div>
         </div>
-        <div class="clr"></div>
-      </div>
-
-      <div>
-        <div class="col-md-16 margin-top reset-padding">
-          <div class="col-md-7 reset-padding">
-            <div class="col-md-6 dashboard__form--label reset-padding">
-              <span class="" translate="profile.first-name"></span>
-            </div>
-            <div class="col-md-10 dashboard__form--label-val reset-padding">
-              <span>Avnesh</span>
-            </div>
-          </div>
-
-          <div class="col-md-7 col-md-offset-2 reset-padding">
-            <div class="col-md-6 dashboard__form--label reset-padding">
-              <span class="" translate="profile.middle-name"></span>
-            </div>
-            <div class="col-md-10 dashboard__form--label-val reset-padding">
-              <span>K.</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-16 reset-padding margin-top">
-          <div class="col-md-7 reset-padding">
-            <div class="col-md-6 dashboard__form--label reset-padding">
-              <span class="" translate="profile.last-name"></span>
-            </div>
-            <div class="col-md-10 dashboard__form--label-val reset-padding">
-              <span>Shakya</span>
-            </div>
-          </div>
-          <div class="col-md-7 reset-padding col-md-offset-2">
-            <div class="col-md-6 dashboard__form--label reset-padding">
-              <span class="" translate="profile.mobile-no"></span>
-            </div>
-            <div class="col-md-10 dashboard__form--label-val reset-padding">
-              <span>1234567890</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-16 reset-padding margin-top">
-          <div class="col-md-7 reset-padding">
-            <div class="col-md-6 dashboard__form--label reset-padding">
-              <span class="" translate="profile.email"></span>
-            </div>
-            <div class="col-md-10 dashboard__form--label-val reset-padding">
-              <span>avnesh@neevtech.com</span>
-            </div>
-          </div>
-
-          <div class="col-md-7 reset-padding col-md-offset-2">
-            <div class="col-md-6 dashboard__form--label reset-padding">
-              <span class="" translate="profile.view-role-text"></span>
-            </div>
-            <div class="col-md-6 dashboard__form--label-val reset-padding">
-              <span>Super Admin</span>
-            </div>
-          </div>
-        </div>
-      <div class="clr"></div>
-    </div>
-
-    <div class="col-md-16 margin-top reset-padding">
-      <div class="">
-        <buton class="hillrom-btn btn-primary float-right btn-margin-left" ng-click="openEditDetail()" translate="profile.edit-button-text">Edit</buton>
-        <div class="clr"></div>
       </div>
     </div>
+
+    <div class="row">
+      <div class="col-md-16 col-sm-16 reset-padding">
+        <div class="col-md-7 col-sm-9 reset-padding">
+          <div class="col-md-6 col-sm-5 dashboard__form--label reset-padding col-xs-8">
+            <span class="" translate="profile.first-name"></span>
+          </div>
+          <div class="col-md-10 col-sm-11 dashboard__form--label-val reset-padding col-xs-8">
+            <span ng-bind="patientView.firstName"></span>
+          </div>
+        </div>
+
+        <div class="col-md-7 col-sm-7 col-md-offset-2 reset-padding" ng-show="patientView.middleName">
+          <div class="col-md-6 col-sm-5 dashboard__form--label reset-padding col-xs-8">
+            <span class="" translate="profile.middle-name"></span>
+          </div>
+          <div class="col-md-10 col-sm-11 dashboard__form--label-val reset-padding col-xs-8">
+            <span ng-bind="patientView.middleName"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-16 col-sm-16 reset-padding margin-top">
+        <div class="col-md-7 col-sm-9 reset-padding">
+          <div class="col-md-6 col-sm-5 dashboard__form--label reset-padding col-xs-8">
+            <span class="" translate="profile.last-name"></span>
+          </div>
+          <div class="col-md-10 col-sm-11 dashboard__form--label-val reset-padding col-xs-8">
+            <span ng-bind="patientView.lastName"></span>
+          </div>
+        </div>
+        <div class="col-md-7 col-sm-7 col-xs-16 reset-padding col-md-offset-2">
+          <div class="col-md-6 col-sm-5 col-xs-5 dashboard__form--label reset-padding col-xs-8">
+            <span class="" translate="profile.mobile-no"></span>
+          </div>
+          <div class="col-md-10 col-sm-11 dashboard__form--label-val reset-padding col-xs-8">
+            <span ng-bind="patientView.mobilePhone"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-16 col-sm-16 reset-padding margin-top">
+        <div class="col-md-7 col-sm-9 reset-padding">
+          <div class="col-md-6 col-sm-5 dashboard__form--label reset-padding col-xs-8">
+            <span class="" translate="profile.email"></span>
+          </div>
+          <div class="col-md-10 col-sm-11 dashboard__form--label-val reset-padding col-xs-8">
+            <span ng-bind="patientView.email"></span>
+          </div>
+        </div>
+
+        <div class="col-md-7 col-sm-7 reset-padding col-md-offset-2">
+          <div class="col-md-6 col-sm-5 dashboard__form--label reset-padding col-xs-8">
+            <span class="" translate="profile.view-role-text"></span>
+          </div>
+          <div class="col-md-6 col-sm-6 dashboard__form--label-val reset-padding col-xs-8" ng-if="role !=='CARE_GIVER'">
+            <span ng-bind="userRole"></span>
+          </div>
+          <div class="col-md-6 col-sm-6 dashboard__form--label-val reset-padding col-xs-8" ng-if="role ==='CARE_GIVER'">
+            <span >PATIENT</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-16 col-sm-16 reset-padding margin-top">
+        <div class="col-md-7 col-sm-9 reset-padding col-xs-16">
+          <div class="col-md-6 col-sm-5 dashboard__form--label reset-padding col-xs-8">
+            <span class="" translate="profile.address"></span>
+          </div>
+          <div class="col-md-10 col-sm-11 dashboard__form--label-val reset-padding col-xs-8">
+            <span ng-bind="patientView.address"></span>
+          </div>
+        </div>
+
+        <div class="col-md-7 col-sm-7 reset-padding col-md-offset-2 col-xs-16">
+          <div class="col-md-6 col-sm-5 dashboard__form--label reset-padding col-xs-8">
+            <span class="" translate="profile.city"></span>
+          </div>
+          <div class="col-md-10 col-sm-11 dashboard__form--label-val reset-padding col-xs-8">
+            <span ng-bind="patientView.city"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-16 col-sm-16 reset-padding margin-top">
+        <div class="col-md-7 col-sm-9 reset-padding col-xs-16">
+          <div class="col-md-6 col-sm-5 dashboard__form--label reset-padding col-xs-8">
+            <span class="" translate="profile.state"></span>
+          </div>
+          <div class="col-md-10 col-sm-11 dashboard__form--label-val reset-padding col-xs-8">
+            <span ng-bind="patientView.state"></span>
+          </div>
+        </div>
+
+        <div class="col-md-7 col-sm-7 reset-padding col-md-offset-2 col-xs-16">
+          <div class="col-md-6 col-sm-5 dashboard__form--label reset-padding col-xs-8">
+            <span class="" translate="profile.zipcode"></span>
+          </div>
+          <div class="col-md-10 col-sm-11 dashboard__form--label-val reset-padding col-xs-8">
+            <span ng-bind="patientView.zipcode"></span>
+          </div>
+        </div>
+      </div>
+            <div class="col-md-16 col-sm-16 reset-padding margin-top">
+        <div class="col-md-7 col-sm-9 reset-padding col-xs-16">
+          <div class="col-md-6 col-sm-5 dashboard__form--label reset-padding col-xs-8">
+            <span class="" translate="profile.device-type-name"></span>
+          </div>
+          <div class="col-md-10 col-sm-11 dashboard__form--label-val reset-padding col-xs-8">
+            <span ng-bind="patientView.deviceType"></span>
+          </div>
+        </div>
+      </div>
+      <!-- Garment fields for Visivest --> 
+      <div ng-if="getDeviceTypeforBothIcon() === 'ALL' || patientView.deviceType === 'VisiVest'">
+       <div class="col-md-16 col-sm-16 reset-padding margin-top">
+        <div class="col-md-7 col-sm-9 reset-padding col-xs-16">
+          <div class="col-md-6 col-sm-5 dashboard__form--label reset-padding col-xs-8">
+            <span class="" translate="profile.garment-type"></span>
+          </div>
+          <div class="col-md-10 col-sm-11 dashboard__form--label-val reset-padding col-xs-8">
+            <span ng-bind="patientView.vestGarmentType"></span>
+          </div>
+        </div>
+
+        <div class="col-md-7 col-sm-7 reset-padding col-md-offset-2 col-xs-16">
+          <div class="col-md-6 col-sm-5 dashboard__form--label reset-padding col-xs-8">
+            <span class="" translate="profile.garment-color"></span>
+          </div>
+          <div class="col-md-10 col-sm-11 dashboard__form--label-val reset-padding col-xs-8">
+            <span ng-bind="patientView.vestGarmentColor"></span>
+          </div>
+        </div>
+      </div>
+       <div class="col-md-16 col-sm-16 reset-padding margin-top">
+        <div class="col-md-7 col-sm-9 reset-padding col-xs-16">
+          <div class="col-md-6 col-sm-5 dashboard__form--label reset-padding col-xs-8">
+            <span class="" translate="profile.garment-size"></span>
+          </div>
+          <div class="col-md-10 col-sm-11 dashboard__form--label-val reset-padding col-xs-8">
+            <span ng-bind="patientView.vestGarmentSize"></span>
+          </div>
+        </div>
+      </div>
     </div>
+<!-- Garment fields for Monarch -->
+ <div ng-if="getDeviceTypeforBothIcon() === 'ALL' || patientView.deviceType === 'Monarch'">
+        <div class="col-md-16 col-sm-16 reset-padding margin-top">
+<!--         <div class="col-md-7 col-sm-9 reset-padding col-xs-16">
+          <div class="col-md-6 col-sm-5 dashboard__form--label reset-padding col-xs-8">
+            <span class="" translate="profile.garment-type-monarch"></span>
+          </div>
+          <div class="col-md-10 col-sm-11 dashboard__form--label-val reset-padding col-xs-8">
+            <span ng-bind="patientView.monarchGarmentType"></span>
+          </div>
+        </div> -->
+
+        <div class="col-md-7 col-sm-7 reset-padding col-xs-16">
+          <div class="col-md-6 col-sm-5 dashboard__form--label reset-padding col-xs-8">
+            <span class="" translate="profile.garment-color-monarch"></span>
+          </div>
+          <div class="col-md-10 col-sm-11 dashboard__form--label-val reset-padding col-xs-8">
+            <span ng-bind="patientView.monarchGarmentColor"></span>
+          </div>
+        </div>
+      </div>
+<!--        <div class="col-md-16 col-sm-16 reset-padding margin-top">
+        <div class="col-md-7 col-sm-9 reset-padding col-xs-16">
+          <div class="col-md-6 col-sm-5 dashboard__form--label reset-padding col-xs-8">
+            <span class="" translate="profile.garment-size-monarch"></span>
+          </div>
+          <div class="col-md-10 col-sm-11 dashboard__form--label-val reset-padding col-xs-8">
+            <span ng-bind="patientView.monarchGarmentSize"></span>
+          </div>
+        </div>
+      </div> -->
+    </div>
+  </div>
+  </div>
 </div>

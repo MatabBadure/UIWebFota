@@ -1,0 +1,5 @@
+<ng-include src="'scripts/components/navbar/navbarclinicadmin.html'"></ng-include>
+<!-- Secondary navbar will come here -->
+<div ng-show="doctorStatus.editMode || doctorStatus.isCreate">
+		<doctor doctor-data="doctor" doctor-status="doctorStatus"></doctor>
+</div>

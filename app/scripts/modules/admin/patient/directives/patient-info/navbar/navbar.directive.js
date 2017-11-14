@@ -3,9 +3,9 @@
 angular.module('hillromvestApp')
 .directive('adminPatientNavbar', function() {
   return {
-      templateUrl: 'scripts/app/modules/admin/patient/directives/patient-info/navbar/navbar.html',
+      templateUrl: 'scripts/modules/admin/patient/directives/patient-info/navbar/navbar.html',
       restrict: 'E',
-      controller: function ($scope, $location) {
+      controller: ['$scope', '$location', function ($scope, $location) {
         $scope.isActive = function(tab) {
           var path = $location.path();
           if (path.indexOf(tab) !== -1) {
@@ -14,6 +14,6 @@ angular.module('hillromvestApp')
             return false;
           }
         };
-      }
+      }]
     }
 });

@@ -106,7 +106,8 @@
   
   a {
     font-weight: 100;
-    color: #ffffff;
+    color: $tuna;
+    font-weight: bold;
   }
 
   .link {
@@ -115,16 +116,37 @@
 
   #forgotpwd a {
     color: #585858;
+    font-weight: normal;
   }
 }
 
 .auth--position {
-	margin: 5% auto;
-  width: 50%;
+	margin: 10% auto;
+  	width: 30%;
+  	.visi_view_container{
+  		margin: 0% auto 4%;
+  	}
 }
 
 .form__container__auth {
 	background-color: rgba(255, 255, 255, 0.7);
+	position: relative;
+	padding: 20px 50px;
+  	-moz-box-shadow: 0px 0px 6px $gray-light;
+  	-webkit-box-shadow: 0px 0px 6px $gray-light;
+  	box-shadow: 0px 0px 6px $gray-light;
+  	overflow: hidden;
+}
+
+.password_inst{
+	color: $trout;
+}
+
+.login__container__left-section {
+	height: 225px;
+    position: absolute;
+    top: 50%;
+    margin-top: -112.5px;
 }
 
 .login-auth-form {
@@ -135,6 +157,7 @@
 	.form-control {
 		height: 35px;
 		border-radius: 0;
+		border: solid 1px $silver-approx; 
 	}
 	.sec-quest {
 		color: $nevada;
@@ -145,9 +168,8 @@
 	color: $pickled-bluewood;
   font-size: $font-size-base;
   font-weight: $font-weight-bold;
-  margin: 10px 0;
+  margin: 20px 0;
   text-align: center;
-  text-transform: uppercase;
 }
 
 .auth-select {

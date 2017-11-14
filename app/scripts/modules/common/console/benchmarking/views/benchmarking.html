@@ -1,0 +1,22 @@
+<div class="col-md-16 padding0">
+  <div class="container patient_wrapper reset-padding">
+    <div class="col-md-16 reset-padding pointer-fill-event" ng-class="">
+      <div class="bar_graph_header">
+        <div class="col-md-5 col-sm-7 left_header_barchart padding0">
+          <div class="">
+            <ul class="nav nav-pills">
+              <li><a href="" ng-click="switchBenchmarking('parameter')" translate="" ng-class="{ active : !isActive('benchmarking/clinicanddisease') } ">Parameter</a></li>
+              <li><a href="" ng-click="switchBenchmarking('clinicDisease')" translate="" ng-class="{ active : isActive('benchmarking/clinicanddisease')}">Clinic and Disease</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div ng-if = "!isActive('benchmarking/clinicanddisease')">
+      <ng-include src="'scripts/modules/common/console/benchmarking/views/parameter.html'"></ng-include>  
+    </div>
+    <div ng-if = "isActive('benchmarking/clinicanddisease')">
+      <ng-include src="'scripts/modules/common/console/benchmarking/views/clinicanddisease.html'"></ng-include>  
+    </div>
+  </div>
+</div>

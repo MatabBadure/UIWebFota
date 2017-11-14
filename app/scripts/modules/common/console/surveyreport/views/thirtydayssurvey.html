@@ -1,0 +1,56 @@
+<div class="grid-view">
+  <div class="col-md-16 col-sm-16 reset-padding margin-top flex1">
+    <div class="col-md-1 col-sm-1 text-center padding10 ">
+      <span></span>
+    </div>
+    <div class="col-md-9 col-sm-3 text-center border-right padding20  survey_grey_color">
+      <span>Questions</span>
+    </div>
+    <div class="col-md-1 col-sm-2 cyan-blue-light text-center border-right padding_tl10 ">
+      <span>Strongly disagree</span>
+    </div>
+    <div class="col-md-1 col-sm-2 cyan-blue-light text-center border-right padding_tl10 ">
+      <span>Somewhat disagree</span>
+    </div>
+    <div class="col-md-1 col-sm-2 cyan-blue-light padding20 text-center border-right ">
+      <span>Neutral</span>
+    </div>
+    <div class="col-md-1 col-sm-2 cyan-blue-light text-center border-right padding_tl10 ">
+      <span>Somewhat agree</span>
+    </div>
+    <div class="col-md-1 col-sm-2 cyan-blue-light text-center border-right ">
+      <span>Strongly agree</span>
+    </div>
+    <div class="col-md-1 col-sm-2 cyan-blue-light text-center padding_tl10">
+      <span>Unable to assess</span>
+    </div>
+  </div>
+
+  <div class="col-md-16 col-sm-16 reset-padding survey_grey_color flex1" ng-repeat="survey in surveyGridView track by $index">
+    <div class="col-md-1 col-sm-1 border-right text-center">
+      <span>Q-{{$index + 1}}</span>
+    </div>
+    <div class="col-md-9 col-sm-3 padding10 cyan-blue-light border-right">
+      <span>{{survey.questionText}}</span>
+    </div>
+    <div class="col-md-1 col-sm-2 text-center border-right">
+      <span>{{survey.stronglyDisagreeCount}}</span>
+    </div>
+    <div class="col-md-1 col-sm-2 text-center border-right">
+      <span>{{survey.somewhatDisagreeCount}}</span>
+    </div>
+    <div class="col-md-1 col-sm-2 text-center border-right">
+      <span>{{survey.neutralCount}}</span>
+    </div>
+    <div class="col-md-1 col-sm-2 text-center border-right">
+      <span>{{survey.somewhatAgreeCount}}</span>
+    </div>
+    <div class="col-md-1 col-sm-2 text-center border-right">
+      <span>{{survey.stronglyAgreeCount}}</span>
+    </div>
+    <div class="col-md-1 col-sm-2 text-center ellipes padding10">
+      <span>{{survey.unableToAccessCount}}</span>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,58 @@
+
+<div class="navbar patient-user patient-user--nav" ng-controller="graphController">
+  <div class="container">
+    <div class="collapse navbar-collapse patient-user__navbar" id="navbar-collapse">
+      <ul class="nav navbar-nav pull-right right">
+        
+        <li class="hcp_hsp_name_a" dropdown>
+          <a ng-href="" data-target="#"  id="dropdownMenu11" data-toggle="dropdown">
+            <div class="overflow-ellipsis-dropdown">
+            <span class="">{{selectedPatient.user.lastName}} {{selectedPatient.user.firstName}}</span> </div>
+            <span class="hillrom-icon icon-arrow-down"></span>
+          </a>
+          <ul class="dropdown-menu bgcolor pull-right" role="menu" aria-labelledby="dropdownMenu11" id="min-width-for-small-devices">
+              <li role="menuitem" ng-repeat='patient in patients' ng-click="switchPatient(patient)"><a>{{patient.user.lastName}} {{patient.user.firstName}}</a></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav activefixmobile pull-right right patient_nav_link_right left-mob padding_tblr_secondary_nav extra-tabs-responsive">
+        <li>
+          <a ng-class="{active: isActive('caregiver/caregiver-list')}" href="" ng-click="switchCaregiverTab('caregiverdashboardCaregiver')">
+            <span class="hide-tab hidden-xs" translate="patient.profile.tabs.caregiver"></span>
+            <span class="icons hillrom-icon icon-caregiver show-tab"></span>
+          </a>
+        </li>
+        <li>
+          <a ng-class="{active: isActive('caregiver/clinic-hcp')}" href="" ng-click="switchCaregiverTab('caregiverDashboardClinicHCP')">
+            <span class="hide-tab hidden-xs" translate="patient.profile.tabs.clinic-hcp"></span>
+            <span class="icons hillrom-icon icon-doctor show-tab"></span>
+          </a>
+        </li>
+        <li>
+          <a ng-href="" ng-class="{active: isActive('caregiver/device-protocol')}" ng-click="switchCaregiverTab('caregiverDashboardDeviceProtocol')">
+            <span class="hide-tab hidden-xs">Care Plan and Device</span>
+            <span class="icons hillrom-icon icon-device show-tab"></span>
+          </a>
+        </li>
+        <li>
+          <a ng-href="" ng-class="{active: isActive('caregiver/patient-info')}" ng-click="switchCaregiverTab('patientDashboardPatientInfo')">
+            <span class="hide-tab hidden-xs">Patient Info</span>
+            <span class="icons hillrom-icon icon-profile-settings show-tab"></span>
+          </a>
+        </li>
+        <li>
+          <a ng-href="" ng-class="{active: isActive('caregiver/notification-settings')}" ng-click="switchCaregiverTab('patientDashboardNotification')">
+            <span class="hide-tab hidden-xs">Notification Settings</span>
+            <span class="icons hillrom-icon icon-settings show-tab"></span>
+          </a>
+        </li>
+         <li>
+          <a ng-class="{active: isActive('patientDiagnostic')}" ng-click="switchCaregiverTab('caregiverpatientDiagnostic');">
+            <span class="hide-tab hidden-xs" translate="patient.profile.tabs.patient-test-results"> </span>
+            <span class="icons hillrom-icon icon-test-results show-tab"></span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

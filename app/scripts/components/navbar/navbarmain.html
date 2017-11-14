@@ -1,0 +1,24 @@
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation" data-spy="affix" ng-show="!$root.isAuthenticated || !userRole">
+  <div class="container">
+    <div class="navbar-header navbar-primary">
+      <button data-target="#navbar-collapse" data-toggle="collapse" class="navbar-toggle none" type="button">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="" ng-click="goToHomePage();"><span class="logo icon-hill-rom-logo"></span></a>
+      <div class="navbar-brand__desc"> 
+        <span class="navbar-brand__desc--text-primary"><span translate-cloak="global.logo-text.visi-view">VisiView</span><sup translate-cloak="global.logo-text.tm-sup">TM</sup></span>
+        <span class="navbar-brand__desc--text-secondary" translate-cloak="global.logo-text.health-portal">Health Portal</span>
+      </div>
+    </div> 
+  </div>
+</nav>
+<script>
+$( document ).ready(function() {
+    $(".navbar-toggle").click(function(){
+      $(".header-nav").css("display", "block");
+      });
+});
+</script>

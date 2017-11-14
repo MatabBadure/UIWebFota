@@ -1,0 +1,382 @@
+<ng-include src="'scripts/components/navbar/navbarclinicadmin.html'"></ng-include>
+<clinicadmin-patient-navbar></clinicadmin-patient-navbar>
+<div class="container admin-user">
+  <div class="col-md-16 col-sm-16 col-xs-16 margin-top reset-padding">
+   <div class="user-gen-details">
+   <span ng-class="{'monarchIcon': (getDeviceTypeforBothIcon() =='MONARCH'), 'visivestIcon': (getDeviceTypeforBothIcon() =='VEST'), 'bothdeviceIcon': (getDeviceTypeforBothIcon() =='ALL')}">
+     <span class="user-gen-details--name">{{slectedPatient.firstName}} {{slectedPatient.lastName}}</span>
+     <span class="user-gen-details--hr-id">{{slectedPatient.hillromId}}</span>
+     </span>
+   </div>
+  </div>
+</div>
+<div class="dashboard dashboard--content padding-bottom-ls">
+  <form name="form" novalidate autocomplete="off">
+    <div class="container dashboard__form">
+      <div>
+        <div class="col-md-16 col-sm-16 col-xs-16 reset-padding">
+          <div class="col-md-12 col-sm-12 col-sm-12 reset-padding">
+            <span class="dashboard__form--type" translate="patient.demo-graph.identifier"></span>
+          </div>
+          <div class="col-md-4 col-sm-4 col-sm-6 user-required reset-padding">
+            <span translate="patient.required-field"></span>
+          </div>
+        </div>
+
+        <div class="col-md-16 col-sm-16 margin-top reset-padding">
+          <div class="col-md-7 col-sm-7 reset-padding">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+              <span class="" translate="patient.hill-rom-id"></span>
+              <span class="">*</span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding">
+              <input class="" type="text" validate-on-blur ng-model="patient.hillromId" ng-disabled = "true" name="HRID" ng-readonly="patientStatus.editMode"/>
+            </div>
+          </div>
+          <div class="col-md-7 col-sm-7 col-sm-offset-2 col-md-offset-2 reset-padding">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+              <span class="" translate="patient.mrn-id"></span>
+              <span class=""></span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding">
+              <input class="" type="text" ng-model="patient.clinicMRNId.mrnId" name="MRNID"/>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-16 col-sm-16 margin-top reset-padding">
+          <div class="col-md-7 col-sm-7 reset-padding">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+              <span class="" translate="patient.clinic-level-status"></span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form__input--option reset-padding selected-box-container">
+              <spam ng-if="patient.expired" translate="patient.status-type.expired"></spam>
+              <div class="custom-dropdown" ng-if="!patient.expired">
+                <select name="language" ng-readonly="validateADMINorASP()" ng-model="patient.clinicMRNId.status" >
+                  <option value="active" translate="patient.status-type.active"></option>
+                  <option value="inactive" translate="patient.status-type.inactive"></option>
+                  <option value="expired" translate="patient.status-type.expired"></option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="clr"></div>
+      </div>
+
+
+      <div class="margin-top-xl">
+        <div class="col-md-16 col-sm-16 reset-padding">
+          <span class="dashboard__form--type" translate="patient.demo-graph.personal-details"></span>
+        </div>
+
+        <div class="col-md-16 col-sm-16 margin-top reset-padding">
+          <div class="col-md-7 col-sm-7 reset-padding">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+              <span class="" translate="patient.title.name"></span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form__input reset-padding selected-box-container">
+              <div class="custom-dropdown">
+                <select name="title" ng-readonly="validateADMINorASP()" ng-disabled = "true" ng-model="patient.title" ng-options="option for option in ['Mr.', 'Mrs.', 'Ms.']" ng-selected="{{option === patient.title}}">
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-7 col-sm-7 col-md-offset-2 col-sm-offset-2 reset-padding">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+              <span class="" translate="patient.primary-language"></span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form__input--option reset-padding selected-box-container">
+              <div class="custom-dropdown">
+                <select name="language" ng-readonly="validateADMINorASP()" ng-disabled = "true" ng-model="patient.langKey">
+                  <option value="" selected="selected">Select a language</option>
+                  <option value="zh">Chinese</option>
+                 <option value="en">English</option>
+                 <option value="fr">French</option>
+                 <option value="de">German</option>
+                 <option value="hi">Hindi </option>
+                 <option value="it">Italian</option>
+                 <option value="ja">Japanese</option>
+                 <option value="es">Spanish</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-16 col-sm-16 reset-padding margin-top">
+          <div class="col-md-7 col-sm-7 reset-padding">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+              <span class="" translate="patient.first-name"></span>
+              <span class="">*</span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding">
+              <input class="" type="text" validate-on-blur name="firstName" ng-model="patient.firstName" ng-readonly="validateADMINorASP()" ng-disabled = "true" ng-minlength=1 ng-maxlength=50/>
+            </div>
+          </div>
+          <div class="col-md-7 col-sm-7 reset-padding col-md-offset-2 col-sm-offset-2">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+              <span class="" translate="patient.middle-name"></span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding">
+              <input class="" type="text" validate-on-blur ng-readonly="validateADMINorASP()" name="middleName" ng-disabled = "true" ng-model="patient.middleName" ng-minlength=1 ng-maxlength=50/>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-16 col-sm-16 reset-padding margin-top">
+          <div class="col-md-7 col-sm-7 reset-padding">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+              <span class="" translate="patient.last-name"></span>
+              <span class="">*</span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding">
+              <input class="" type="text" validate-on-blur name="lastName" ng-model="patient.lastName" ng-readonly="validateADMINorASP()" ng-disabled = "true" ng-minlength=1 ng-maxlength=50/>
+            </div>
+          </div>
+
+
+          <div class="col-md-7 col-sm-7 reset-padding col-sm-offset-2 col-md-offset-2">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+              <span class="" translate="patient.date-of-birth"></span>
+              <span class="">*</span>
+            </div>
+            <div class="col-md-5 col-sm-10 dashboard__form--input reset-padding">
+              <input type="text" name="dob" validate-on-blur class="custom-dob span2" value="" ng-disabled = "true" ng-model="patient.formatedDOB" data-date-format="mm/dd/yyyy" id="dp2" readonly="readonly"/>
+              <span readonly class="dashboard__form--label-age">{{patient.age}}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-16 col-sm-16 reset-padding margin-top">
+          <div class="col-md-7 col-sm-7 reset-padding">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+              <span class="" translate="patient.gender.name"></span>
+              <span class=""></span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form__input reset-padding selected-box-container">
+              <div class="custom-dropdown">
+                <select name="gender" ng-disabled = "true" ng-readonly="validateADMINorASP()" ng-model="patient.gender">
+                  <option selected translate="patient.gender.male">Male</option>
+                  <option translate="patient.gender.female">Female</option>
+                  <option translate="patient.gender.others">Others</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-7 col-sm-7 reset-padding col-md-offset-2 col-sm-offset-2">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+              <span class="" translate="patient.address"></span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding">
+              <input class="" type="text" validate-on-blur ng-model="patient.address" ng-disabled = "true" name="address" ng-readonly="validateADMINorASP()" ng-maxlength=100/>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-16 col-sm-16 reset-padding margin-top">
+          <div class="col-md-7 col-sm-7 reset-padding">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+              <span class="" translate="patient.zipcode"></span>
+              <span class="">*</span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding">
+              <input type="text" validate-on-blur class="form-control" name="zip" ng-readonly="validateADMINorASP()" maxlength="5" ng-disabled = "true" ng-pattern="/^(?=.*[1-9].*)[0-9]{5}$/" ng-model="patient.zipcode" ng-blur="getCityState(patient.zipcode)"/>
+            </div>
+          </div>
+          <div class="col-md-7 col-sm-7 reset-padding col-md-offset-2 col-sm-offset-2">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+              <span class="" translate="patient.state"></span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding">
+              <input class="" type="text" validate-on-blur ng-model="patient.state" name="state" ng-readonly="validateADMINorASP()" ng-disabled="true"/>
+            </div>
+          </div>
+        </div>
+
+      <div class="col-md-16 col-sm-16 reset-padding margin-top">
+        <div class="col-md-7 col-sm-7 reset-padding">
+          <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+            <span class="" translate="patient.city"></span>
+          </div>
+          <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding">
+            <input type="text" validate-on-blur ng-model="patient.city" ng-disabled = "true" name="city" ng-readonly="validateADMINorASP()" ng-disabled="true"/>
+          </div>
+        </div>
+
+        <div class="col-md-7 col-sm-7 reset-padding col-md-offset-2 col-sm-offset-2">
+          <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+            <span class="" translate="patient.email"></span>
+            <span class=""></span>
+          </div>
+          <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding">
+            <input type="email" class="form-control" validate-on-blur name="email"  ng-readonly="validateADMINorASP()" ng-disabled = "true" ng-model="patient.email" ng-pattern="/^[a-zA-Z][\.a-zA-Z0-9_\+-]+(\.[a-zA-Z0-9_\+-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.([a-zA-Z]{2,4})$/" ng-maxlength=100/>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-16 col-sm-16 reset-padding margin-top">
+          <div class="col-md-7 col-sm-7 reset-padding">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+              <span class="" translate="patient.mobile-number"></span>
+              <span class=""></span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding">
+              <input type="text" validate-on-blur class="form-control" name="mobilePhone" ng-readonly="validateADMINorASP()" ng-disabled = "true" ng-model="patient.mobilePhone" ui-mask="(999)-999-9999" model-view-value="true" ui-options="{clearOnBlur: false}">
+            </div>
+        </div>
+        <div class="col-md-7 col-sm-7 reset-padding col-md-offset-2 col-sm-offset-2">
+          <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+            <span class="" translate="patient.home-phone-number"></span>
+            <span class=""></span>
+          </div>
+          <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding">
+            <input type="text" class="form-control" validate-on-blur  name="primaryPhone"  ng-readonly="validateADMINorASP()" ng-disabled = "true" ng-model="patient.primaryPhone" ui-mask="(999)-999-9999" model-view-value="true" ui-options="{clearOnBlur: false}">
+          </div>
+        </div>
+      </div>
+             <div class="col-md-16 col-sm-16 reset-padding margin-top">
+          <div class="col-md-7 col-sm-7 reset-padding">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+              <span class="" translate="patient.device-type-name"></span>
+              <span class=""></span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding">
+              <input type="text" validate-on-blur ng-model="patient.deviceType" ng-disabled = "true" name="deviceType" ng-readonly="validateADMINorASP()" ng-disabled="true"/>
+            </div>
+        </div>
+      </div>
+      <div ng-if="getDeviceTypeforBothIcon() === 'ALL' || patient.deviceType === 'VisiVest'">
+       <div class="col-md-16 col-sm-16 reset-padding margin-top">
+          <div class="col-md-7 col-sm-7 reset-padding">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+              <span class="" translate="patient.garment-type"></span>
+              <span class=""></span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form__input--option reset-padding selected-box-container">
+              <div class="custom-dropdown">
+                 <select name="type" ng-model="patient.vestGarmentType" ng-disabled = "true" ng-options="item.type_code_value as item.type_code_value for item in garmentType_Vest">
+                </select>
+              </div>
+            </div>
+        </div>
+        <div class="col-md-7 col-sm-7 reset-padding col-md-offset-2">
+          <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+            <span class="" translate="patient.garment-color"></span>
+            <span class=""></span>
+          </div>
+          <div class="col-md-10 col-sm-10 dashboard__form__input--option reset-padding selected-box-container">
+              <div class="custom-dropdown">
+                 <select name="type" ng-model="patient.vestGarmentColor" ng-disabled = "true" ng-options="item.type_code_value as item.type_code_value for item in garmentColor_Vest">
+                </select>
+              </div>
+            </div>
+        </div>
+      </div>
+      <div class="col-md-16 col-sm-16 reset-padding margin-top">
+  <div class="col-md-7 col-sm-7 reset-padding ">
+
+          <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+            <span class="" translate="patient.garment-size"></span>
+            <span class=""></span>
+          </div>
+       <div class="col-md-10 col-sm-10 dashboard__form__input--option reset-padding selected-box-container">
+              <div class="custom-dropdown">
+                 <select name="type" ng-model="patient.vestGarmentSize" ng-disabled = "true" ng-options="item.type_code_value as item.type_code_value for item in garmentSize_Vest">
+                </select>
+              </div>
+            </div>
+        </div>
+    </div>
+  </div>
+    <div ng-if="getDeviceTypeforBothIcon() === 'ALL' || patient.deviceType === 'Monarch'">
+           <div class="col-md-16 col-sm-16 reset-padding margin-top">
+<!--           <div class="col-md-7 col-sm-7 reset-padding">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+              <span class="" translate="patient.garment-type-monarch"></span>
+              <span class=""></span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form__input--option reset-padding selected-box-container">
+              <div class="custom-dropdown">
+                 <select name="type" ng-model="patient.monarchGarmentType" ng-disabled = "true" ng-options="item.type_code_value as item.type_code_value for item in garmentType_Monarch">
+                </select>
+              </div>
+            </div>
+        </div> -->
+        <div class="col-md-7 col-sm-7 reset-padding">
+          <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+            <span class="" translate="patient.garment-color-monarch"></span>
+            <span class=""></span>
+          </div>
+          <div class="col-md-10 col-sm-10 dashboard__form__input--option reset-padding selected-box-container">
+              <div class="custom-dropdown">
+                 <select name="type" ng-model="patient.monarchGarmentColor" ng-disabled = "true" ng-options="item.type_code_value as item.type_code_value for item in garmentColor_Monarch">
+                </select>
+              </div>
+            </div>
+        </div>
+      </div>
+<!--       <div class="col-md-16 col-sm-16 reset-padding margin-top">
+  <div class="col-md-7 col-sm-7 reset-padding ">
+
+          <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+            <span class="" translate="patient.garment-size-monarch"></span>
+            <span class=""></span>
+          </div>
+       <div class="col-md-10 col-sm-10 dashboard__form__input--option reset-padding selected-box-container">
+              <div class="custom-dropdown">
+                 <select name="type" ng-model="patient.monarchGarmentSize" ng-disabled = "true" ng-options="item.type_code_value as item.type_code for item in garmentSize_Monarch">
+                </select>
+              </div>
+            </div>
+        </div>
+    </div> -->
+  </div>
+<div class="col-md-16 col-sm-16 reset-padding margin-top">
+          <div class="col-md-7 col-sm-7 reset-padding">
+
+          <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+            <span class="" translate="patient.demo-graph.patient-notes"></span>
+            <span class=""></span>
+          </div>
+        <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding">
+            <textarea ng-model="patient.clinicMRNId.memoNote" name="notes" class="patientInfo_patient_Notes_Edit" wrap = "hard"></textarea>
+            
+          </div>
+        </div>
+      </div>
+      <div class="clr"></div>
+    </div>
+    <div class="col-md-16 col-sm-16 margin-top reset-padding">
+      <div class="">
+        <buton type="submit" ng-click="showUpdatePatientModal()" class="hillrom-btn btn-primary float-right btn-margin-left" translate="patient.btn.update">Update</buton>
+        <buton type="submit" class="hillrom-btn btn-secondary float-right" ng-click="cancelEditDemographics()" translate="patient.btn.cancel">cancel</buton>
+        <div class="clr"></div>
+      </div>
+    </div>
+	 <div class="patientInfo_update_note">
+  To update the fields in gray, please contact Hill-Rom Customer Support (800) 426-4224 or request <a href="https://respiratorycare.hill-rom.com/en/about-us/customer-service/" target="_blank">online </a>
+</div>
+    </div>
+  </form>
+</div>
+
+<div ng-if="updateModal" class="modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true">
+  <div class="modal__dialog">
+    <div class="modal__content">
+      <header class="modal__header">
+        <button type="button" class="modal__close" data-dismiss="modal" ng-click="$parent.updateModal= false">&times;</button>
+         <p translate="patient.update.warning"></p>
+      </header>
+      <div class="modal__body">
+         <div class="modal--message" translate="patient.update.message"></div>
+         <div class="row modal--custom-btn">
+          <buton class="hillrom-btn btn-submit float-right" ng-click="editPatient()">Yes</buton>
+          <buton class="hillrom-btn btn-secondary btn-submit float-right" data-dismiss="modal" ng-click="$parent.updateModal= false">No</buton>
+         </div>
+      </div>
+      <footer class="modal__footer">
+      </footer>
+    </div>
+  </div>
+</div>

@@ -1,187 +1,231 @@
 <!doctype html>
-<html class="no-js">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>HillRomVest</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width">
-        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-        <!-- build:css assets/styles/vendor.css -->
-        <!-- bower:css -->
-        <link rel="stylesheet" href="bower_components/ng-tags-input/ng-tags-input.min.css" />
-        <link rel="stylesheet" href="bower_components/angular-notys/angular-notys.css" />
-        <link rel="stylesheet" href="bower_components/nvd3/src/nv.d3.css" />
-        <link rel="stylesheet" href="bower_components/bootstrap-daterangepicker/daterangepicker-bs3.css" />
-        <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.css" />
-        <!-- endbower -->
-        <!-- endbuild -->
-        <!-- build:css assets/styles/main.css -->
-        <link rel="stylesheet" href="styles/main.css">
-        <!-- endbuild -->
-    </head>
-    <body ng-app="hillromvestApp">
-    <div noty-container></div>
-        <!--[if lt IE 9]>
-            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
-        <!-- <div ng-show="{{ENV === 'dev'}}" class="development" ng-cloak=""></div> -->
-        <div id="wrap">
-            <navigation-bar></navigation-bar>
-            <div class="content-body" ui-view="content"></div>
-            <div class="footer navbar-fixed-bottom">
-                <div class="container text-center">
-                    <span translate="footer">This is your footer</span>
-                </div>
-            </div>
-        </div>
-        <!-- <div id="footer">
-          <div class="container">
-            <p translate="footer"></p>
-          </div>
-        </div> -->
+<html class="no-js" >
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <title>Hill-Rom Vest</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="expires" content="0">
+    <!-- build:css -->
+    <link rel="stylesheet" href="bower_components/ng-tags-input/ng-tags-input.min.css" />
+    <link rel="stylesheet" href="bower_components/bootstrap-daterangepicker/daterangepicker-bs3.css" />
+    <link rel="stylesheet" href="bower_components/nvd3/src/nv.d3.css" />
+    <link rel="stylesheet" href="bower_components/angular-toastr/dist/angular-toastr.min.css"/>
+    <link rel="stylesheet" href="bower_components/isteven-angular-multiselect/isteven-multi-select.css"/>
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css"/>
 
-        <!-- Google Analytics: uncomment and change UA-XXXXX-X to be your site's ID.
-        <script>
-            (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
-            function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
-            e=o.createElement(i);r=o.getElementsByTagName(i)[0];
-            e.src='//www.google-analytics.com/analytics.js';
-            r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
-            ga('create','UA-XXXXX-X');ga('send','pageview');
-        </script>-->
-
-        <!-- build:js scripts/vendor.js -->
-        <!-- bower:js -->
-        <script src="bower_components/modernizr/modernizr.js"></script>
-        <script src="bower_components/jquery/dist/jquery.js"></script>
-        <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/affix.js"></script>
-        <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/alert.js"></script>
-        <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/button.js"></script>
-        <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/carousel.js"></script>
-        <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/collapse.js"></script>
-        <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/dropdown.js"></script>
-        <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/tab.js"></script>
-        <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/transition.js"></script>
-        <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/scrollspy.js"></script>
-        <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/modal.js"></script>
-        <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/tooltip.js"></script>
-        <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/popover.js"></script>
-        <script src="bower_components/json3/lib/json3.js"></script>
-        <script src="bower_components/angular/angular.js"></script>
-        <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-        <script src="bower_components/angular-resource/angular-resource.js"></script>
-        <script src="bower_components/angular-cookies/angular-cookies.js"></script>
-        <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
-        <script src="bower_components/angular-translate/angular-translate.js"></script>
-        <script src="bower_components/angular-translate-storage-cookie/angular-translate-storage-cookie.js"></script>
-        <script src="bower_components/angular-translate-loader-partial/angular-translate-loader-partial.js"></script>
-        <script src="bower_components/angular-dynamic-locale/src/tmhDynamicLocale.js"></script>
-        <script src="bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
-        <script src="bower_components/angular-animate/angular-animate.js"></script>
-        <script src="bower_components/angular-cache-buster/angular-cache-buster.js"></script>
-        <script src="bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js"></script>
-        <script src="bower_components/angular-recaptcha/release/angular-recaptcha.js"></script>
-        <script src="bower_components/bootstrap-sass-datepicker/js/bootstrap-sass-datepicker.js"></script>
-        <script src="bower_components/ng-tags-input/ng-tags-input.min.js"></script>
-        <script src="bower_components/angular-notys/angular-notys.js"></script>
-        <script src="bower_components/d3/d3.js"></script>
-        <script src="bower_components/nvd3/nv.d3.js"></script>
-        <script src="bower_components/angularjs-nvd3-directives/dist/angularjs-nvd3-directives.js"></script>
-        <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
-        <script src="bower_components/moment/moment.js"></script>
-        <script src="bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
-        <script src="bower_components/angular-daterangepicker/js/angular-daterangepicker.js"></script>
-        <script src="bower_components/angular-mask/dist/ngMask.js"></script>
-        <script src="bower_components/angular-loading-bar/build/loading-bar.js"></script>
-        <script src="bower_components/angular-validation-match/dist/angular-validation-match.min.js"></script>
-        <!-- endbower -->
-        <!-- endbuild -->
-
-        <!-- build:js({.tmp,src/main/webapp}) scripts/app.js -->
-        <script src="scripts/app.js"></script>
-        <script src="scripts/app.constants.js"></script>
-        <script src="scripts/routes.js"></script>
-        <script src="scripts/components/auth/auth.service.js"></script>
-        <script src="scripts/components/auth/principal.service.js"></script>
-        <script src="scripts/components/auth/authority.directive.js"></script>
-        <script src="scripts/components/auth/services/account.service.js"></script>
-        <script src="scripts/components/auth/services/activate.service.js"></script>
-        <script src="scripts/components/auth/services/password.service.js"></script>
-        <script src="scripts/components/auth/services/register.service.js"></script>
-        <script src="scripts/components/form/form.directive.js"></script>
-        <script src="scripts/components/navbar/navbar.directive.js"></script>
-        <script src="scripts/components/navbar/navbar.controller.js"></script>
-        <script src="scripts/components/util/truncate.filter.js"></script>
-        <script src="scripts/components/util/base64.service.js"></script>
-        <script src="scripts/components/util/parse-links.service.js"></script>
-        <script src="scripts/components/util/dateutil.service.js"></script>
-        <script src="scripts/account/account.js"></script>
-        <script src="scripts/account/activate/activate.js"></script>
-        <script src="scripts/account/activate/activate.controller.js"></script>
-        <script src="scripts/account/authenticate/authenticate.js"></script>
-        <script src="scripts/account/authenticate/authenticate.controller.js"></script>
-        <script src="scripts/account/login/login.js"></script>
-        <script src="scripts/account/login/login.controller.js"></script>
-        <script src="scripts/account/logout/logout.js"></script>
-        <script src="scripts/account/logout/logout.controller.js"></script>
-        <script src="scripts/account/password/password.js"></script>
-        <script src="scripts/account/password/password.controller.js"></script>
-        <script src="scripts/account/password/password.directive.js"></script>
-        <script src="scripts/account/reset/finish/reset.finish.controller.js"></script>
-        <script src="scripts/account/reset/finish/reset.finish.js"></script>
-        <script src="scripts/account/reset/request/reset.request.controller.js"></script>
-        <script src="scripts/account/reset/request/reset.request.js"></script>
-        <script src="scripts/error/error.js"></script>
-        <script src="scripts/main/main.js"></script>
-        <script src="scripts/main/main.controller.js"></script>
-        <script src="scripts/components/language/language.service.js"></script>
-        <script src="scripts/components/language/language.controller.js"></script>
-        <script src="scripts/components/auth/provider/auth.xauth.service.js"></script>
-        <script src="https://www.google.com/recaptcha/api.js?onload=vcRecaptchaApiLoaded&render=explicit" async defer></script>
-
-        <script src="scripts/modules/admin/hill-rom-user/services/users.service.js"></script>
-        <script src="scripts/components/util/commons.directive.js"></script>
-        <script src="scripts/components/util/commons.filter.js"></script>
-
-
-
-        <script src="scripts/api-mock.js"></script>
-        <script src="scripts/globalconfig.js"></script>
-        <script src="scripts/controller.constants.js"></script>
-        <script src="scripts/service.constants.js"></script>
-        <script src="scripts/components/util/headers.service.js"></script>
-
-
-        <script src="scripts/modules/admin/patient/controllers/patients.controller.js"></script>
-        <script src="scripts/modules/admin/patient/services/patient.service.js"></script>
-        <script src="scripts/modules/admin/hill-rom-user/directives/list/userslistdirective.js"></script>
-         <script src="scripts/modules/admin/hill-rom-user/directives/create-edit/userdirective.js"></script>
-         <script src="scripts/modules/admin/hill-rom-user/controllers/users.controller.js"></script>
-         <script src="scripts/modules/admin/hcp/controllers/doctors.controller.js"></script>
-         <script src="scripts/modules/admin/hcp/directives/create-edit/doctordirective.js"></script>
-         <script src="scripts/modules/admin/hcp/directives/list/doctorslistdirective.js"></script>
-         <script src="scripts/modules/admin/hcp/services/doctors.service.js"></script>
-
-
-        <script src="scripts/modules/admin/clinic/controllers/clinics.controller.js"></script>
-        <script src="scripts/modules/admin/clinic/directives/create-edit/clinicdirective.js"></script>
-        <script src="scripts/modules/admin/clinic/directives/list/cliniclistdirective.js"></script>
-        <script src="scripts/modules/admin/clinic/services/clinics.service.js"></script>
-        <script src="scripts/modules/admin/patient/directives/create-edit/patientdirective.js"></script>
-        <script src="scripts/modules/admin/patient/directives/list/patientlistdirective.js"></script>
-        <script src="scripts/modules/admin/patient/directives/patient-info/navbar/navbar.directive.js"></script>
-        <script src="scripts/components/util/noty.service.js"></script>
-        <script src="scripts/components/util/date.service.js"></script>
-        <script src="scripts/modules/admin/hcp/directives/hcp-info/navbar/navbar.directive.js"></script>
-        <script src="scripts/modules/patient/graph/controller/graphs.controller.js"></script>
-        <script src="scripts/components/dashboard/patient/directives/directives.js"></script>
-        <script src="scripts/modules/patient/graph/services/patient.dashboard.service.js"></script>
-        <script src="scripts/components/util/graphUtil.service.js"></script>
-        <script src="scripts/components/dashboard/patient/directives/ngenter.js"></script>
-        <script src="scripts/modules/admin/clinic/directives/clinic-info/navbar/navbar.directive.js"></script>
-        <script src="scripts/modules/admin/profile/navbar/navbar.directive.js"></script>
-        <script src="scripts/modules/admin/profile/controller/admin-profile.controller.js"></script>
+    <link rel="stylesheet" href="styles/styles.css">
     <!-- endbuild -->
-    </body>
+
+</head>
+ 
+<body ng-app="hillromvestApp"  >
+<!--  <span us-spinner> </span> -->
+  <span us-spinner="{radius:15, width:6, length:10, color: '#7ca3dc', position: 'fixed'}"></span>
+    <div noty-container></div>
+    <div id="wrap" ng-controller="MainController">
+        <ng-include src="'scripts/components/navbar/navbarmain.html'"></ng-include>
+        <div id="top-shadow"></div>
+
+        <div class="content-body remove-static-padding minheight" ui-view="content"   ></div>
+
+        <footer ng-class="FooterLoginZindex()" class="footer navbar-fixed-bottom">
+
+<div class="col-md-16 footer_container" style="border-top: 1px solid #C1C1C1 !important;">
+    <div class="container">
+        <div class="col-md-10 footer_left">
+            <ul class="footer_left_ul">
+                <li><a href="http://respiratorycare.hill-rom.com/en/about-us/customer-service/"  target="_blank" translate="footer.contactus"></a></li>
+                <li><a href="#/privacyPolicy" target="_blank" translate="footer.privacypolicy"></a></li>
+                <li><a href="#/termsOfUse" target="_blank" translate="footer.termsofuse"></a></li>
+                <li><a href="#/privacyPractices" target="_blank" translate="footer.hippanotice"></a></li>
+                <li><a href="https://RespiratoryCare.Hill-Rom.com" target="_blank" translate="footer.hillromrespiratorycare"></a></li>
+            </ul>
+            <p class="copyright_txt" translate="footer.copyright"></p>
+        </div>
+        <div class="col-md-6 footer_right">
+            <span class="footer_right_txt pull-right" translate="footer.enhancingoutcomes"></span>
+        </div>
+    </div>
+</div>
+</footer>
+</div> 
+
+<!-- build:js -->
+<script src="bower_components/canvg-gabelerner/rgbcolor.js"></script>
+<script src="bower_components/canvg-gabelerner/StackBlur.js"></script>
+<script src="bower_components/canvg-gabelerner/canvg.js"></script>
+<script src="bower_components/canvg/dist/canvg.bundle.min.js"></script>
+<script src="bower_components/jspdf/dist/jspdf.min.js"></script>
+<script src="bower_components/jspdf/dist/jspdf.debug.min.js"></script>
+<script src="bower_components/modernizr/modernizr.min.js"></script>
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<script src="bower_components/json3/lib/json3.min.js"></script>
+<script src="bower_components/angular/angular.min.js"></script>
+<script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+<script src="bower_components/angular-resource/angular-resource.min.js"></script>
+<script src="bower_components/angular-cookies/angular-cookies.min.js"></script>
+<script src="bower_components/angular-translate/angular-translate.min.js"></script>
+<script src="bower_components/angular-translate-storage-cookie/angular-translate-storage-cookie.min.js"></script>
+<script src="bower_components/angular-translate-loader-partial/angular-translate-loader-partial.min.js"></script>
+<script src="bower_components/angular-dynamic-locale/src/tmhDynamicLocale.min.js"></script>
+<script src="bower_components/angular-local-storage/dist/angular-local-storage.min.js"></script>
+<script src="bower_components/angular-animate/angular-animate.min.js"></script>
+<script src="bower_components/moment/moment.min.js"></script>
+<script src="bower_components/bootstrap-daterangepicker/daterangepicker.min.js"></script>
+<script src="bower_components/angular-cache-buster/angular-cache-buster.min.js"></script>
+<script src="bower_components/angular-recaptcha/release/angular-recaptcha.min.js"></script>
+<script src="bower_components/bootstrap-sass-datepicker/js/bootstrap-sass-datepicker.min.js"></script>
+<script src="bower_components/ng-tags-input/ng-tags-input.min.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script> 
+<script src="bower_components/angular-spinner/angular-spinner.min.js"></script>
+<script src="bower_components/angular-loading-spinner/angular-loading-spinner.js"></script>   
+<script src="bower_components/spin.js/spin.js"></script>          
+<script src="bower_components/angular-validation-match/dist/angular-validation-match.min.js"></script>
+<script src="bower_components/angular-toastr/dist/angular-toastr.min.js"></script>
+<script src="bower_components/angular-toastr/dist/angular-toastr.tpls.min.js"></script>
+<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls-2.5.0.js"></script>
+<script src="bower_components/isteven-angular-multiselect/isteven-multi-select.js"></script>
+<script src="bower_components/requirejs/require.min.js"></script>
+<script src="bower_components/d3/d3.min.js"></script>
+<script src="scripts/third_party_library/nv.d3.js"></script>
+<script src="bower_components/oclazyload/dist/ocLazyLoad.min.js"></script>
+<script src="bower_components/angular-ui-mask/dist/mask.min.js"></script>
+<script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+<script src="bower_components/re-tree/re-tree.min.js"></script>
+<script src="bower_components/ng-device-detector/ng-device-detector.min.js"></script>
+<script src="scripts/app.min.js"></script>
+<script src="scripts/recaptcha.min.js"></script>
+<script src="scripts/app.constants.min.js"></script>
+<script src="scripts/routes.min.js"></script>
+<script src="scripts/components/auth/auth.service.min.js"></script>
+<script src="scripts/components/auth/principal.service.min.js"></script>
+<script src="scripts/components/auth/authority.directive.min.js"></script>
+<script src="scripts/components/auth/services/account.service.min.js"></script>
+<script src="scripts/components/auth/services/activate.service.min.js"></script>
+<script src="scripts/components/auth/services/password.service.min.js"></script>
+<script src="scripts/components/form/form.directive.min.js"></script>
+<script src="scripts/components/util/truncate.filter.min.js"></script>
+<script src="scripts/components/util/base64.service.min.js"></script>
+<script src="scripts/components/util/parse-links.service.min.js"></script>
+<script src="scripts/components/util/dateutil.service.min.js"></script>
+<script src="scripts/account/account.min.js"></script>
+<script src="scripts/account/activate/activate.min.js"></script>
+<script src="scripts/account/activate/activate.controller.min.js"></script>
+<script src="scripts/account/authenticate/authenticate.min.js"></script>
+<script src="scripts/account/authenticate/authenticate.controller.min.js"></script>
+<script src="scripts/account/login/login.min.js"></script>
+<script src="scripts/account/login/login.controller.min.js"></script>
+<script src="scripts/account/logout/logout.min.js"></script>
+<script src="scripts/account/logout/logout.controller.min.js"></script>
+<script src="scripts/account/password/password.min.js"></script>
+<script src="scripts/account/password/password.controller.min.js"></script>
+<script src="scripts/account/password/password.directive.min.js"></script>
+<script src="scripts/account/reset/finish/reset.finish.controller.min.js"></script>
+<script src="scripts/account/reset/finish/reset.finish.min.js"></script>
+<script src="scripts/account/reset/request/reset.request.controller.min.js"></script>
+<script src="scripts/account/reset/request/reset.request.min.js"></script>
+<script src="scripts/error/error.min.js"></script>
+<script src="scripts/main/main.min.js"></script>
+<script src="scripts/main/main.controller.min.js"></script>
+<script src="scripts/components/language/language.service.min.js"></script>
+<script src="scripts/components/language/language.controller.min.js"></script>
+<script src="scripts/components/auth/provider/auth.xauth.service.min.js"></script>
+<script src="scripts/modules/admin/hill-rom-user/services/users.service.min.js"></script>
+<script src="scripts/components/util/commons.directive.min.js"></script>
+<script src="scripts/components/util/commons.filter.min.js"></script>
+<script src="scripts/components/util/mobileNumber.directive.min.js"></script>
+<script src="scripts/api-mock.min.js"></script>
+<script src="scripts/globalconfig.min.js"></script>
+<script src="scripts/controller.constants.min.js"></script>
+<script src="scripts/service.constants.min.js"></script>
+<script src="scripts/components/util/headers.service.min.js"></script>
+<script src="scripts/modules/admin/patient/controllers/patients.controller.min.js"></script>
+<script src="scripts/modules/admin/patient/services/patient.service.min.js"></script>
+<script src="scripts/modules/admin/hill-rom-user/directives/list/userslistdirective.min.js"></script>
+<script src="scripts/modules/admin/hill-rom-user/directives/create-edit/userdirective.min.js"></script>
+<script src="scripts/modules/admin/hill-rom-user/controllers/users.controller.min.js"></script>
+<script src="scripts/modules/admin/hcp/controllers/doctors.controller.min.js"></script>
+<script src="scripts/modules/admin/hcp/directives/create-edit/doctordirective.min.js"></script>
+<script src="scripts/modules/admin/hcp/directives/list/doctorslistdirective.min.js"></script>
+<script src="scripts/modules/admin/hcp/services/doctors.service.min.js"></script>
+<script src="scripts/modules/admin/clinic/controllers/clinics.controller.min.js"></script>
+<script src="scripts/modules/admin/clinic/services/clinics.service.min.js"></script>
+<script src="scripts/modules/admin/patient/directives/create-edit/patientdirective.min.js"></script>
+<script src="scripts/modules/admin/patient/directives/list/patientlistdirective.min.js"></script>
+<script src="scripts/modules/admin/patient/directives/patient-info/navbar/navbar.directive.min.js"></script>
+<script src="scripts/components/util/noty.service.min.js"></script>
+<script src="scripts/components/util/date.service.min.js"></script>
+<script src="scripts/modules/admin/hcp/directives/hcp-info/navbar/navbar.directive.min.js"></script>
+<script src="scripts/components/dashboard/patient/directives/directives.min.js"></script>
+<script src="scripts/modules/patient/graph/services/patient.dashboard.service.min.js"></script>
+<script src="scripts/components/util/graphUtil.service.min.js"></script>
+<script src="scripts/components/dashboard/patient/directives/ngenter.min.js"></script>
+<script src="scripts/modules/admin/clinic/directives/clinic-info/navbar/navbar.directive.min.js"></script>
+<script src="scripts/modules/admin/profile/navbar/navbar.directive.min.js"></script>
+<script src="scripts/modules/patient/profile/navbar/navbar.directive.min.js"></script>
+<script src="scripts/modules/hcp/graph/services/hcp.dashboard.service.min.js"></script>
+<script src="scripts/modules/hcp/patient/controllers/hcppatient.controller.min.js"></script>
+<script src="scripts/modules/hcp/patient/directives/navbar/hcppatientnavbar.directive.min.js"></script>
+<script src="scripts/modules/hcp/profile/controllers/hcp-profile.controller.min.js"></script>
+<script src="scripts/modules/hcp/patient/services/hcppatinet.service.min.js"></script>
+<script src="scripts/modules/clinicadmin/patient/directives/navbar/clinicadminpatientnavbar.directive.min.js"></script>
+<script src="scripts/modules/caregiver/graph/services/caregiver.dashboard.services.min.js"></script>
+<script src="scripts/modules/caregiver/profile/controllers/caregiver-profile-controller.min.js"></script>
+<script src="scripts/modules/caregiver/graph/controllers/caregiver-navbar-controller.min.js"></script>
+<script src="scripts/components/util/graph.service.min.js"></script>
+<script src="scripts/components/util/searchfilter.service.min.js"></script>
+<script src="scripts/components/util/scrollNavbar.min.js"></script>
+<script src="scripts/modules/clinicadmin/hcp/controllers/clinicadminhcp.controller.min.js"></script>
+<script src="scripts/modules/clinicadmin/clinic/controllers/clinicadminclinic.controller.min.js"></script>
+<script src="scripts/modules/clinicadmin/hcp/services/clinicadminhcp.service.min.js"></script>
+<script src="scripts/components/util/sortoptions.service.min.js"></script>
+<script src="scripts/modules/clinicadmin/patient/services/clinicadminpatient.service.min.js"></script>
+<script src="scripts/components/util/commonsUsers.service.min.js"></script>
+<script src="scripts/modules/patient/profile/controllers/patientprofile.controller.min.js"></script>
+<script src="scripts/modules/hcp/graph/controller/graphs.controller.min.js"></script>
+<script src="scripts/modules/patient/graph/controller/graphs.controller.js"></script>
+<script src="scripts/components/modal/modal.min.js"></script>
+<script src="scripts/modules/clinicadmin/graph/services/clinicadmin.service.min.js"></script>
+<script src="scripts/components/util/addressUtil.service.js"></script>
+<script src="scripts/components/modal/alertmodal.js"></script>
+<script src="scripts/modules/common/console/loginanalytics/controllers/loginanalytics.controller.js"></script>
+<script src="scripts/modules/common/console/surveyreport/controllers/surveyreport.controller.js"></script>
+<script src="scripts/modules/patient/survey/controllers/patientsurvey.controller.js"></script>
+<script src="scripts/components/util/exportutil.service.js"></script>
+<script src="scripts/components/captcha/captcha.min.js"></script>
+<script src="scripts/modules/common/console/loginanalytics/services/loginanalytics.service.js"></script>
+<script src="scripts/modules/patient/survey/services/patientSurvey.service.js"></script>
+<script src="scripts/modules/common/console/benchmarking/controllers/benchmarking.controller.js"></script>
+<script src="scripts/modules/common/console/benchmarking/services/benchmarking.service.js"></script>
+<script src="scripts/modules/patient/profile/controllers/patientbenchmarking.controller.js"></script>
+<script src="scripts/modules/common/clinicadmin-hcp/change-prescription/controllers/changeprescription.controller.js"></script>
+<script src="scripts/modules/common/clinicadmin-hcp/benchmarking/controllers/benchmarking.controller.js"></script>
+<script src="scripts/modules/common/clinicadmin-hcp/patient-diagnostics/controllers/patientDiagnosticController.js"></script>
+<script src="scripts/modules/common/clinicadmin-hcp/patient-diagnostics/services/patientdiagnostic.service.js"></script>
+<script src="scripts/modules/common/console/devicelist/controllers/devicelist.controller.js"></script>
+<script src="scripts/modules/admin/profile/controller/chargercontroller.js"></script>
+<script src="scripts/modules/admin/profile/service/charger.service.js"></script>
+<script src="scripts/modules/admin/profile/chargerTab/chargerTab.directive.js"></script>
+<script src="scripts/modules/admin/profile/chargerTab/chargerTab.directive.min.js"></script>
+<script src="scripts/modules/common/messagesMain/controller/messagecontroller.js"></script>
+<script src="scripts/modules/common/messagesMain/services/message.service.js"></script>
+<script src="scripts/modules/common/console/announcements/controllers/announcements.controller.js"></script>
+<script src="scripts/modules/common/console/announcements/services/announcement.service.js"></script>
+<script src="scripts/modules/clinicadmin/announcements/controllers/announcementsCA.controller.js"></script>
+<script src="scripts/modules/common/console/announcements/directives/announcement.directive.js"></script>
+<script src="scripts/modules/patient/announcements/controllers/announcements.controller.js"></script>
+<script src="scripts/modules/tims/controller/tims.controller.js"></script>
+<script src="scripts/modules/tims/services/tims.service.js"></script>
+<script src="scripts/modules/FOTA/FotaHome/controllers/fota.controller.js"></script>
+<script src="scripts/modules/FOTA/FotaHome/services/fota.service.js"></script>
+<script src="bower_components/angular-spinner/angular-spinner.js"></script>
+
+<!-- endbuild -->
+
+</body>
 </html>

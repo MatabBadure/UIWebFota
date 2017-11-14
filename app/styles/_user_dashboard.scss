@@ -1,0 +1,689 @@
+.read_more{
+	color: $sunshade;
+}
+/* ----Left Navbar CSS ----*/
+.brand_name{
+	color: $label-color;
+	padding: $base_padding;
+	display: inline-block;
+	padding-left: 0px;
+}
+/* ----Right Navbar CSS ----*/
+.patient_dash_right_nav{
+	li{
+		&:last-child{
+				padding-right: 0px;
+			}
+		a{
+			color: $label-color;
+			border-radius: 0;
+			font-weight: normal;
+			&:hover{
+				background-color: $table-bg;
+				color: $pre-bg;
+			}
+			&:focus{
+				background-color: $table-bg;
+			}
+
+		}
+
+	}
+}
+/*----- Stats Chart CSS -----*/
+.patient_wrapper{
+	margin-top: 25px;
+}
+.stats_chart_section{
+	.stats_header{
+		border-bottom: $border_default;
+		display: inline-block;
+		width: 100%;
+
+		h4{
+			color: $iceberg;
+			margin: 0px 5px 0px 0px;
+			line-height: 25px;
+			float: left;
+			font-size: 17px;
+		}
+		.sub_txt{
+			line-height: 27px;
+			color: $sunshade;
+		}
+	}
+}
+.stats_chart_container{
+	clear: left;
+    display: inline-block;
+    margin: 25px 0;
+    width: 100%;
+	.col-3{
+		width: 24.25%;
+		display: inline-block;
+		float: left;
+		position: relative;
+		margin-right: 1%;
+		background-image: url("../images/Color-HCP-Dashboard.png");
+		background-size: 100% 100%;
+		&:last-child{
+			margin-right: 0px;
+		}
+		/*background:-webkit-gradient(linear, 0% 77%, 0% 2%, from(#7ca3dc), to(#fdfcfc));*/
+		.chart_inner_icon{
+			color: #ccc;
+		    display: inline-block;
+		    font-size: 45px;
+		    height: 60px;
+		    left: 37px;
+		    position: absolute;
+		    top: 32px;
+		    width: 45px;
+		}
+
+	}
+	.pie_chart{
+		float: left;
+		margin-left: 5px;
+	}
+
+}
+.stats_chart_content{
+	display: inline-block;
+    margin: 30px 0 0 15px;
+    width: 46%;
+    &.score{
+    	color: #41ae76;
+    }
+    &.hmr{
+    	color: #8c6bb1;
+    }
+    &.missed{
+    	color: #ef6548;
+    }
+    &.deviation{
+    	color: #4eb3d3;
+    }
+
+    .percent{
+    	font-size: 30px;
+	    font-weight: bold;
+	    line-height: 30px;
+	    margin: 0;
+	    float: left;
+    }
+    .descrip{
+    	clear: left;
+    }
+    .patients_txt{
+    	margin: 7px 0px 0px 10px;
+    	display: inline-block;
+    }
+}
+/* Notification Section CSS */
+.dashboard_noti_section{
+	margin-bottom: 20px;
+}
+.dashboard_noti_section{
+	.header_noti{
+		h4{
+			margin: 0px 0px;
+			color: $iceberg;
+			margin: 0px 0px;
+			line-height: 25px;
+			font-size: 17px;
+		}
+	}
+}
+.notification_container{
+	ul{
+		padding: 0px;
+		margin: 0;
+		li{
+			list-style-type: none;
+			padding: 12px 0px;
+			padding-left: 60px;
+			border-bottom: $border_default;
+			color: $gray;
+			position: relative;
+			&:hover{
+				background-color: #F2EFEF;
+			}
+			.dsh_icon{
+				border: $border_default;
+			    border-radius: 50%;
+			    color: #7DDBFA;
+			    font-size: 23px;
+			    height: 43px;
+			    left: 3px;
+			    line-height: 38px;
+			    position: absolute;
+			    top: 14px;
+			    padding-left: 9px;
+			    width: 43px;
+			}
+		}
+		.read_more{
+			text-decoration: underline;
+			&:hover{
+				color: $sunshade;
+			}
+		}
+	}
+}
+
+/* -----BarChart Style ------*/
+.bar_graph_header{
+	border-bottom: $border_default;
+	display: inline-block;
+	width: 100%;
+}
+.left_header_barchart{
+	ul{
+		li{
+			a{
+				padding: 2px 0px;
+				color: $gray-light;
+				margin: 10px 20px 0px 0px;
+				border-radius: 0px;
+				border-bottom: solid 2px #fff;
+				font-size: 16px;
+				&:hover{
+					background-color: transparent;
+				}
+				&:focus{
+					background-color: transparent;
+				}
+				&.active{
+					background-color: transparent;
+					color: $iceberg;
+					border-bottom: solid 2px $sunshade;
+				}
+			}
+		}
+	}
+}
+.right_header_barchart{
+	ul{
+		li{
+			a{
+				padding: 2px 0px;
+				color: $silver-approx;
+				margin: 10px 0px 0px 20px;
+				border-radius: 0px;
+				border-bottom: solid 2px #fff;
+				font-size: 14px;
+				&:hover{
+					background-color: transparent;
+				}
+				&:focus{
+					background-color: transparent;
+				}
+				&.active{
+					background-color: transparent;
+					color: $iceberg;
+				}
+			}
+		}
+	}
+}
+.week_date_container{
+	color: $gray-dark;
+	.date{
+		padding: 10px 10px;
+	}
+}
+
+/* Dash Doard Note section css */
+.patient_dashdoard_btns{
+	.hillrom-btn{
+		background-color: $iceberg;
+		border: 0;
+		border-bottom: solid 2px $blue-btn-border;
+		color: $btn-primary-color;
+		&:hover{
+			background-color: $blue-btn-hover;
+		}
+	}
+}
+.add_note_container{
+	display: block;
+	border: $border_default;
+	clear: left;
+	float: left;
+	width: 100%;
+	min-height: 100px;
+	margin: 30px 0px;
+		.note_header{
+			border-bottom: $border_default;
+			display: inline-block;
+			width: 100%;
+			padding: 5px 0px;
+		}
+}
+.note_header_left{
+	.note{
+		color: $iceberg;
+		font-size: 14px;
+	}
+	.can_do{
+		color: $gray-light;
+		font-size: 12px;
+	}
+}
+.note_header_right{
+	.cross_icon{
+		font-size: 14px;
+		font-weight: lighter;
+		color: $gray-light;
+		text-decoration: none;
+		padding: 0px 10px;
+	}
+}
+.notes_content{
+	.notes_row{
+		border-bottom: $border_default;
+		padding: 10px 0px;
+		overflow: hidden;
+	}
+}
+.edit_delete{
+	.icon{
+		display: inline-block;
+		cursor: pointer;
+		&.edit{
+			margin-right: 10px;
+		}
+	}
+}
+.add_note_container{
+	.patient_dashdoard_btns{
+		display: inline-block;
+		width: 100%;
+		margin: 20px 0px 0px;
+		padding: 0px 10px;
+	}
+	.view_all_btn{
+		padding: 5px 5px;
+		cursor: pointer;
+		&:hover{
+			color: $gray-dark;
+		}
+	}
+}
+.note_edit_container{
+	padding: 15px 0px;
+	.date_input{
+		width: 100%;
+	}
+	.custom_textarea{
+		height: 80px;
+	}
+	.edit_delete{
+		.save{
+			background-color: $iceberg;
+			border:0px;
+			border-bottom: solid 2px $sunshade;
+			margin-right: 15px;
+			color: $btn-primary-color;
+			&:hover{
+				background-color: $sunshade;
+			}
+		}
+	}
+}
+
+/* Custom check Style */
+.wrapper_custom_check{
+	margin: 20px 0 0;
+	.custom_check_container{
+		float: left;
+		display: inline-block;
+		margin-right: 40px;
+		&:last-child{
+			margin-right: 0px;
+		}
+		.check{
+			opacity: 0;
+			position: absolute;
+			&:checked + .check_label{
+				color: $gray-dark;
+				&.missedTHRP_legend{
+					&:after{
+						background-color: #4e95c4;
+						border: $btn-default-bg;
+					}
+				}
+				&.pressure_legend{
+					&:after{
+						background-color: #ff9829;
+						border: $btn-default-bg;
+					}
+				}
+				&.frequency_legend{
+					&:after{
+						background-color: #34978f;
+						border: $btn-default-bg;
+					}
+				}
+				&.duration_legend{
+					&:after{
+						background-color: #4e95c4;
+						border: $btn-default-bg;
+					}
+				}
+				&:last-child{
+					padding-right: 0px;
+				}
+			}
+		}
+		.check_label{
+			position: relative;
+			font-weight: normal;
+			padding: 0px 0px;
+
+			&:after{
+				border: 1px solid $gray-light;
+				background-color: transparent;
+			    border-radius: 50%;
+			    content: "";
+			    cursor: pointer !important;
+			    display: inline-block;
+			    height: 12px;
+			    left: -17px;
+			    position: absolute;
+			    top: 3px;
+			    width: 12px;
+			    border: solid 1px $forest-green;
+			}
+		}
+	}
+	.graph_check_error{
+		display: block;
+		clear: left;
+		float: right;
+	}
+}
+
+.wrapper_custom_check.custom-check-hcp-clinicadmin{
+
+.check{
+
+   &:checked + .check_label{
+    color: $gray-dark;
+    &.missedTHRP_legend{
+     &:after{
+      background-color: #4e95c4;
+      border: $btn-default-bg;
+     }
+    }
+    &.pressure_legend{
+     &:after{
+      background-color: #ef6548;
+      border: $btn-default-bg;
+     }
+    }
+    &.frequency_legend{
+     &:after{
+      background-color: #4eb3d3;
+      border: $btn-default-bg;
+     }
+    }
+    &.duration_legend{
+     &:after{
+      background-color: #41ae76;
+      border: $btn-default-bg;
+     }
+    }
+    &.non_ndherence_legend{
+     &:after{
+      background-color: #8c6bb1;
+      border: $btn-default-bg;
+     }
+    }
+    &:last-child{
+     padding-right: 0px;
+    }
+   }
+  }
+}
+
+
+/* &.sky_blue{
+				&:after{
+					background-color: $iceberg;
+					border: $btn-default-bg;
+				}
+			}
+			&.sunshade{
+				&:after{
+					background-color: $sunshade;
+					border: $btn-default-bg;
+				}
+			}
+ */
+
+/* Custom check Style END*/
+ /* User Profile Setting */
+.specific-user .user-header {
+  margin-top: 30px;
+  padding: 0;
+	&--title {
+    font-size: $font-size-base;
+    font-weight: $font-weight-bold;
+    color: $pickled-bluewood;
+  }
+}
+
+.specific-user .user-header--desc {
+	padding: 0;
+	border-bottom: 1px solid $celeste;
+	span {
+		font-size: $font-size-small;
+  	color: $celeste;
+	}
+}
+
+.user-notification {
+	padding: 20px 0;
+	&--key {
+		padding: 0;
+		span {
+			color: $nevada;
+		}
+	}
+	&--head {
+		color: $cyan-blue-light;
+	}
+
+	&--icon {
+		padding: 0;
+		span {
+			font-size: 30px;
+			line-height: 21px;
+			cursor: pointer;
+		}
+		span.inactive {
+			color: $silver-approx;
+		}
+		span.active {
+			color: $fruit-salad;
+		}
+	}
+}
+.note_delete_edit{
+	margin-right: 5px;
+}
+.patient_line, .rounded_patient, .rect_patient {
+	background-color: #ff9829;
+}
+.hcp_line, .rounded_hcp, .rect_hcp{
+	background-color: #35978f;
+}
+.rounded_clinic, .clinic_line, .rect_clinic{
+	background-color: #4d95c4;
+}
+.caregiver_line, .rect_caregiver{
+	background-color: #8b6baf;
+}
+.patient_line, .hcp_line, .clinic_line, .caregiver_line{
+	width: 18px;
+    height: 3px;
+    margin: 3px;
+    display: block;
+    position: relative;
+}
+.legend_text, .rect_legend_text{
+	position: relative;
+	top: -8px;
+	left: 27px;
+	cursor: pointer;
+	color: #333333;
+    font-size: 12px;
+    font-weight: bold;
+}
+.grey_color, .grey_color > .rounded_patient, .grey_color > .rounded_hcp, .grey_color > .rounded_clinic, .grey_color > .clinic_line{
+	background: #cccccc !important;
+}
+
+.grey_color > .rounded_caregiver{
+	border-color: transparent transparent #ccc transparent !important;
+}
+.clinic_text{ 
+	position: relative;
+    top: -14px !important;
+    left: 29px !important; 
+    cursor: pointer;
+    color: #333333;
+    font-size: 12px;
+    font-weight: bold;
+    }
+.rounded_clinic{
+	top: -1px !important;
+	left: 17px !important;
+}
+.rect_patient, .rect_hcp, .rect_clinic, .rect_caregiver{
+	left:0!important;
+}
+.rect_legend_text{
+	left:20px !important;
+	font-family: arial;
+}
+.rounded_clinic, .rounded_hcp, .rounded_caregiver, .rect_patient, .rect_caregiver, .rect_clinic, .rect_hcp{
+	border-radius:0 !important;
+}
+.rounded_hcp{
+    transform: rotate(45deg);
+}
+.height34{
+	height:34px;
+}
+.rounded_patient, .rounded_hcp, .rounded_clinic, .rounded_caregiver, .rect_patient, .rect_caregiver, .rect_clinic, .rect_hcp {
+    display: block;
+    width: 16px;
+    height: 12px;
+    padding: 0 0 0 0px;
+    border-radius: 50%;
+    transition: all .5s ease;
+    cursor: pointer;
+    position: absolute;
+    top: 0px;
+    left: 4px;
+}
+.rounded_caregiver{
+	padding: 0;
+	width: 0;
+	height: 0;
+	border-style: solid;
+	border-width: 0 5px 10px 5px;
+	border-color: transparent transparent #8b6baf transparent;
+}
+.error-message{
+	position:relative;
+	top:55px;
+	right:100%;
+}
+.graph_color{
+	background: #e6f1f4;
+}
+.margin-right13{
+	margin-right: 13px;
+}
+.margin-left25{
+	margin-left:25px;
+}
+.margin-left15{
+	margin-left:15px;
+}
+.margin-left30{
+	margin-left: -60px!important;
+}
+.graphview_text_color{
+	color: $blue-btn;
+}
+
+#containerDay > .highcharts-container > .highcharts-tooltip > span{
+	left: -4px !important;
+}
+.survey_dialog{
+	width:800px!important;
+	overflow-y: initial !important
+}
+.survey_content{
+	width:100%!important;
+	max-width:800px!important;
+}
+.dark_grey{
+	color:#646568;
+}
+.margin-left5{
+	margin-left:5px;
+}
+.padding_tl10{
+	padding:10px 0px;
+}
+
+.margin0{
+	margin:0 !important;
+}
+.border-lt{
+	border-left:1px solid #ccc;
+}
+.border-rt{
+	border-right:1px solid #ccc;
+}
+.border-bottom{
+	border-bottom:1px solid #ccc;
+}
+.vertical_align{
+	display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+}
+.adherence_protocol{
+	max-width:1000px;
+	width:1000px;
+}
+.survey__body{
+	max-height:400px;
+	height:auto;
+	overflow-y: auto!important;
+}
+.light_gray{
+	color: $bombay !important;
+}
+.dashboard__manage-view--pagination{
+	&.pagination_notes{
+		margin: 0px 5px 15px !important;
+		display: inline-block;
+		float: right;
+
+	}
+
+}
+.grey_text.rect_legend_text{
+	color: #cccccc;
+}
+
+
+

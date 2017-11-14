@@ -1,0 +1,17 @@
+<table class="col-md-16 col-sm-16 col-xs-16">
+  <tr>
+    <td class="col-md-16 col-sm-16 col-xs-16 reset-padding">
+      <input type="text" class="col-md-16 col-sm-16 col-xs-16" ng-model="captchaInput"/>
+      <span class="dark_grey_text_color">Please enter the captcha from picture below</span>
+      <span class="has-error" ng-if="!valid && submited">Please enter valid captcha</span>
+    </td>
+  </tr>
+
+  <tr height="40">
+    <td>
+      <span class="captcha col-md-14 col-sm-14 col-xs-14 margin-top">{{captchaValue}}</span></td>
+      <td>
+      <span class="reload-icon" ng-click="init()">&#10226;</span>
+    </td>
+  </tr>
+</table>

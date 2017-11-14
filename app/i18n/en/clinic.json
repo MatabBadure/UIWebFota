@@ -1,10 +1,19 @@
 {
     "clinic" : {
+
+        "page-title": {
+          "clinics": "HillRom | Clinics",
+          "clinic-profile": "HillRom | Clinic Profile",
+          "associated-HCPs": "HillRom | Associated HCPs",
+          "associated-patients" : "HillRom | Associated Patients",
+          "clinic-admin": "Hillrom | Clinic Admin",
+          "adherence-settings": "Hillrom | Adherence Settings"
+        },
         "home": {
-            "title": "Clinics",
-            "createLabel": "Create Clinic",
+            "createLabel": "Create New Clinic",
             "createOrEditLabel": "Create or edit a Clinic",
-            "updateLabel":"Update Clinic"
+            "updateLabel":"Update Clinic",
+            "manageLabel": "Manage Clinics"
         },
         "delete": {
             "question": "Are you sure you want to delete Clinic {{ id }}?"
@@ -13,14 +22,21 @@
             "title": "Clinic"
         },
         "clinic-type": "Clinic Type",
+        "clinic-speciality": "Speciality",
+        "adherence-setting": "Adherence Window",
+        "transmission": "Transmission",
         "clinic-option": {
             "parent-clinic": "Parent Clinic",
             "satellite-clinic": "Satellite Clinic"
         },
         "placeholder": {
-            "search": "Search with Name, Hill-Rom ID or Email",
+            "search": "Search with Clinic Name or Hill-Rom ID",
             "hcp-search": "Search HCP here",
-            "patient-search": "Search Patients here"
+            "patient-search": "Search Patients here",
+            "existed-admin": "Search Clinic Admin",
+            "parent-clinic-search": "Search Parent clinic here",
+            "patient-search" : "Search with Name, Email or Hill-Rom ID",
+            "hcp-name-email-search": "Search HCP with Name or Email"
         },
         "select-parent": "Parent Clinic",
         "general-details": "General Details",
@@ -28,6 +44,9 @@
         "hr-id": "HR-ID",
         "personal-details": "Clinic Details",
         "address": "Address",
+        "address1": "Address 1",
+        "address2": "Address 2",
+        "city-state": "City/State",
         "zipcode": "Zip",
         "city": "City",
         "state": "State",
@@ -36,23 +55,75 @@
         "clinic-phone": "Clinic Phone Number",
         "hillromId": "HillromId",
         "parentClinicId": "ParentClinicId",
-        "npiNumber": "NpiNumber",
+        "npiNumber": "NPI Number",
         "user": "user",
         "patients": "patients",
         "parent": "parent",
         "required-field": "* Required Fields",
         "back-button-text": "Back",
-        "submit-button-text": "submit",
+        "submit-button-text": "Submit",
         "cancel-button-text": "cancel",
         "deactivate-button-text": "Deactivate",
+        "activate-button-text": "Activate",
         "update-button-text": "Update",
+        "create-button-text": "Create",
+        "add-clinic-admin": "Add Clinic Admin",
+        "active": "Active",
+        "inactive": "Inactive",
+        "hcp-name": "HCP Name",
+        "credentials": "Credentials",
+        "clinic-admin-name": "Clinic Admin Name",
+        "email": "Email",
+        "patient-name": "Patient Name",
+        "adherence": "Adherence",
+        "yes" : "Yes",
+        "noClinics": "No Clinic Associated",
+        "noHCPs": "No HCP Associated",
+        "noPatients": "No Patient Associated",
+        "noClinicAdmins": "No Clinic Admin Associated",
+        "mrn-id": "MRN ID",
+        "date-of-birth": "Date of Birth",
         "delete": {
-            "warning": "Are you sure you want to Deactivate the Clinic?",
-            "message": "If you deactivate the clinic, you will no longer be able to view the information."
+            "warning": "Deactivate Clinic",
+            "message": "Are you sure to deactivate Clinic from the Hill-Rom system?"
+        },
+        "update": {
+            "warning": "Clinic - Details",
+            "message": "You have made changes/updates for Clinic details. Are you sure to make updates?"
+        },
+         "activate": {
+            "warning": "Activate Clinic",
+            "message": "Are you sure you want to activate the Clinic?"
+        },
+
+        "adherence": {
+            "warning": "Adherence Settings",
+            "message": "You have made changes/updates for Adherence Settings. Are you sure to make updates?"
+        },
+        "deletePatient":{
+            "warning": "Clinic Dashboard - Disassociate Patient",
+            "message": "Do you want to Disassociate the Patient from the Clinic?"
+        },
+        "deleteHcp":{
+            "warning": " Clinic Dashboard - Disassociate HCP",
+            "message": "Do you want to Disassociate HCP from the Clinic?"
+        },
+        "associateHcp":{
+            "warning": "Clinic Dashboard - Associate HCP",
+            "message": "Do you want to associate HCP to the Clinic?"
+        },
+        "associatePatient":{
+            "warning": "Clinic Dashboard - Associate Patient",
+            "message": "Do you want to associate the Patient to the Clinic?"
+        },
+        "associateClinicAdmin":{
+            "warning": "Clinic Dashboard - Associate Clinic Admin",
+            "message": "Do you want to associate the Clinic Admin to the Clinic?"
         },
         "hillRom-id": "Hill-Rom ID",
         "type": "Type",
         "status": "Status",
+         "adherence": "Adherence",
         "view-assoc-patients": "View Associate Patients",
         "view-assoc-hcps": "View Associate HCPs",
         "phoneNumber": "Phone number",
@@ -62,12 +133,62 @@
         "clinic-view-assoc-patients": "View Associated Patients",
         "clinic-view-assoc-hcps": "View Associated HCPs",
         "clinic-edit": "Edit Clinic",
+        "clinic-deactivate": "Deactivate",
         "assoc-clinic": "Associated Clinics",
         "add-satellite-clinic": "Add Satellite Clinic",
         "link-hcp": "Link HCP",
         "link-patient": "Link Patient",
         "tab": {
-            "clinic-overview": "Clinic Profile"
+            "clinic-overview": "Clinic Profile",
+            "assoc-hcp": "Associated HCPs",
+            "assoc-patients": "Associated Patients",
+            "clinic-admin": "Clinic Admin"
+        },
+        "option": {
+            "add-exist-admin": "Select Existing Admin",
+            "add-new-admin": "Create New Admin"
+        },
+        "filter": {
+            "all": "All",
+            "active": "Active",
+            "inactive": "Inactive",
+            "expired": "Expired"
+        },
+        "status-type": {
+            "active": "Active",
+            "inactive": "Inactive",
+            "pending": "Pending",
+            "expired":"Expired"
+        },
+        "admin": {
+            "first-name": "First Name",
+            "middle-name": "Middle Name",
+            "last-name": "Last Name",
+            "phone": "Mobile Number",
+            "email": "Email"
+        },
+        "deleteClinicAdmin":{
+            "warning": "Clinic Dashboard - Disassociate Clinic Admin",
+            "message": "Do you want to Disassociate Clinic Admin from the Clinic?"
+        },
+        "updateClinicAdmin":{
+            "warning": "Clinic Admin - Details",
+            "message": "You have made changes/updates for Clinic Admin. Are you sure to make updates?"
+        },
+        "clinicType":{
+            "parent": "Parent",
+            "child": "Child",
+            "satellite": "Satellite"
+        },
+        "associated-hcps": {
+            "previous": "Previous",
+            "next": "Next",
+            "hcps": "HCPs",
+            "found": "Found"
+        },
+         "adherence": {
+            "warning": "Adherence Settings",
+            "message": "You have made changes/updates for Adherence Settings. Are you sure to make updates?"
         }
     }
 }

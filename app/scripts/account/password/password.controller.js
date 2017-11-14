@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hillromvestApp')
-    .controller('PasswordController', function ($scope, Auth, Principal) {
+    .controller('PasswordController',['$scope', 'Auth', 'Principal', function ($scope, Auth, Principal) {
         Principal.identity().then(function(account) {
             $scope.account = account;
         });
@@ -29,5 +29,5 @@ angular.module('hillromvestApp')
                     $scope.error = 'ERROR';
                 });
             }
-        };
-    });
+        }
+    }]);

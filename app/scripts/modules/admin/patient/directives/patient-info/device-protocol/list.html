@@ -1,106 +1,579 @@
+<ng-include src="'scripts/components/navbar/navbar.html'"></ng-include>
 <admin-patient-navbar></admin-patient-navbar>
 <div class="container admin-user">
-  <div class="col-md-16 margin-top">
+  <div class="col-md-16 col-sm-16 margin-top">
    <div class="user-gen-details">
-     <span class="user-gen-details--name">{{slectedPatient.firstName}} {{slectedPatient.lastName}}</span>
-     <span class="user-gen-details--hr-id">{{slectedPatient.hillromId}}</span>
+   <span ng-class="{'monarchIcon': (getDeviceTypeforBothIcon() =='MONARCH'), 'visivestIcon': (getDeviceTypeforBothIcon() =='VEST'), 'bothdeviceIcon': (getDeviceTypeforBothIcon() =='ALL')}">
+     <span class="user-gen-details--name">{{::slectedPatient.firstName}} {{::slectedPatient.lastName}}</span>
+     <span class="user-gen-details--hr-id">{{::slectedPatient.hillromId}}</span></span>
    </div>
   </div>
 
-  <div class="col-md-16 patient-protocol">
+  <div class="col-md-16 col-sm-16 patient-protocol">
     <span class="patient-protocol--title" translate="patient.protocol-title"></span>
   </div>
 
-  <!-- <div class="col-md-16 protocol-list" ng-if="protocol">
-    <div class="col-md-3 protocol-list__treatment-day">
-      <span class="protocol-list__treatment-day--text" translate="patient.protocol.tm-per-day"></span>
-      <span class="protocol-list--value"> {{protocol.treatmentsPerDay}}</span>
+  <div class="dashboard dashboard--content col-md-14 col-sm-14">
+    <div class="dashboard__manage-view margin-top">
+      <div class="dashboard__manage-view--header no_border care_plan_and_device">
+        <div class="col-md-1 col-sm-1 header--type text-align-left">
+            <span translate="patient.protocol-caption.device-type"></span>
+          </div>
+          <div class="col-md-2 col-sm-2 header--type text-align-left">
+            <span translate="patient.protocol-caption.type"></span>
+          </div>
+          <div class="col-md-3 col-sm-3 header--type text-align-center">
+            <span translate="patient.protocol-caption.treatments-per-day"></span>
+          </div>
+          <div class="col-md-3 col-sm-3 header--type text-align-center">
+            <span translate="patient.protocol-caption.minutes-per-treatment"></span>
+          </div>
+          <div class="col-md-3 col-sm-3 header--type text-align-center">
+            <span translate="patient.protocol-caption.frequency-per-treatment"></span>
+          </div>
+          <div class="col-md-3 col-sm-3 header--type text-align-center">
+            <span translate="patient.protocol-caption.intensity-pressure"></span>
+          </div>
+          <div class="clr"></div>
+        </div>
     </div>
-    <div class="col-md-4 protocol-list__treatment-minute">
-      <span class="protocol-list__treatment-minute--text" translate="patient.protocol.min-per-tm"></span>
-      <span class="protocol-list--value"> {{protocol.minutesPerTreatment}}</span>
-    </div>
-    <div class="col-md-3 protocol-list__freq">
-      <span class="protocol-list__freq--text" translate="patient.protocol.frequency"></span>
-      <span class="protocol-list--value"> {{protocol.frequencies}}</span>
-    </div>
-    <div class="col-md-4 protocol-list__use-day">
-      <span class="protocol-list__use-day--text" translate="patient.protocol.min-minute-per-day"></span>
-      <span class="protocol-list--value"> {{protocol.minimumMinutesOfUsePerDay}}</span>
-    </div>
-    <div class="col-md-1 protocol-list__edit icons text-center">
-      <span class="glyphicon glyphicon glyphicon-pencil" ng-click="openEditProtocol()"></span>
-    </div>
-    <div class="col-md-1 protocol-list__delete text-center">
-      <span class="glyphicon glyphicon-trash" ng-click="deleteProtocol()"></span>
-    </div>
-  </div> -->
+  </div>
+  <!-- Single protocol list starts from here -->
+  <div ng-if="getDeviceTypeforBothIcon() !='ALL'">
+<div class="col-md-16 col-sm-16 border-top protocol_list_container" ng-class="{'no_border' : !protocols}">
 
-  <div class="col-md-16 protocol-list" ng-repeat="protocol in protocols" ng-class="{'list-inactive':protocol.deleted}">
-    <div class="col-md-3 protocol-list__type">
-      <span> {{protocol.type}}</span>
+
+  <div class="col-md-1 col-sm-1 treatments_per_day_count" ng-if="(protocols)">
+    <div id="deviceicon" class="col-md-16 col-sm-16 protocol-list__treatment-day no_border text-align-left">
+
+
+     <span class="icon_height_width" ng-class="{'monarchIcon': (getDeviceType() =='MONARCH'), 'visivestIcon': (getDeviceType() =='VEST')}"></span>
     </div>
-    <div class="col-md-3 protocol-list__treatment-day">
-      <span class="protocol-list--value"> {{protocol.treatmentsPerDay}}</span>
+  </div>
+  <div class="col-md-2 col-sm-2 col-lg-offset-1 col-md-offset-1 col-sm-offset-1 col-xs-offset-1">
+    <div class="col-md-16 col-sm-16 protocol-list__treatment-day protocol-list no_border text-align-left" ng-repeat="protocol in protocols" ng-class="{'list-inactive':protocol.deleted, 'last' : $last}">
+      <span class="protocol-list--value"> {{protocol.type}} {{protocol.treatmentLabel}}</span>
     </div>
-    <div class="col-md-4 protocol-list__strt-date">
-      <span class="protocol-list--value"> 12 January, 2015{{protocol.startDate}}</span>
-    </div>
-    <div class="col-md-4 protocol-list__end-date">
-      <span class="protocol-list--value"> 22 January, 2015{{protocol.endDate}}</span>
-    </div>
-    <div class="col-md-1 protocol-list__edit icons text-center">
-      <span ng-if="!protocol.deleted" class="glyphicon glyphicon glyphicon-pencil" ng-click="openEditProtocol(protocol)"></span>
-    </div>
-    <div class="col-md-1 protocol-list__delete text-center">
-      <span ng-if="!protocol.deleted" class="glyphicon glyphicon-trash" ng-click="deleteProtocolModel(protocol.id)"></span>
+  </div>
+  <div class="col-md-2 col-sm-2 treatments_per_day_count col-sm-offset-3 col-md-offset-3">
+      <span class="v_middle">{{protocols[0].treatmentsPerDay}}</span>
+  </div>
+  <div class="col-md-9 col-sm-9 col-sm-offset-2 col-md-offset-2">
+    <div class="col-md-16 col-sm-16 protocol-list no_border" ng-repeat="protocol in protocols" ng-class="{'list-inactive':protocol.deleted, 'last' : $last}">
+      <!-- <div class="col-md-3 protocol-list__treatment-day">
+        <span class="protocol-list--value"> {{protocol.treatmentsPerDay}}</span>
+      </div> -->
+      <div class="col-md-5 col-sm-5 protocol-list__strt-date">
+        <span class="protocol-list--value"> {{protocol.minMinutesPerTreatment}}</span>      
+      </div>
+      <div class="col-md-5 col-sm-5 protocol-list__end-date">
+        <!-- <span ng-if="protocol.type === 'Custom'" class="protocol-list--value"> {{protocol.minFrequency}}</span> -->
+        <span class="protocol-list--value"> {{protocol.minFrequency}} <span ng-if="protocol.maxFrequency">-</span>{{protocol.maxFrequency}}</span>
+      </div>
+      <div class="col-md-4 col-sm-4 protocol-list__end-date" ng-if="getDeviceType() =='VEST'">
+       <!--  <span ng-if="protocol.type === 'Custom'" class="protocol-list--value"> {{protocol.minPressure}}</span> -->
+        <span class="protocol-list--value"> {{protocol.minPressure}}<span ng-if="protocol.maxPressure">-</span>{{protocol.maxPressure}}</span>
+      </div>
+
+<div class="col-md-4 col-sm-4 protocol-list__end-date" ng-if="getDeviceType() =='MONARCH'">
+        <!-- <span ng-if="protocol.type === 'Custom'" class="protocol-list--value"> {{protocol.minIntensity}}</span> -->
+        <span class="protocol-list--value"> {{protocol.minIntensity}}<span ng-if="protocol.maxIntensity">-</span>{{protocol.maxIntensity}}</span>
+      </div>
+
     </div>
   </div>
 
-  <div class="col-md-16 reset-padding">
-    <div class="col-md-8 clinic-link">
+  <div class="col-md-2 col-sm-2 comon_action_div" ng-if="protocols">
+    <div class="col-md-8 col-sm-8 protocol-list__edit icons text-center">
+      <span ng-if="!protocol.deleted" class="icon-edit-icon" ng-click="openEditProtocol(protocols[0])"></span>
     </div>
-    <div class="col-md-8 clinic-link">
-      <buton ng-show="addProtocol" class="hillrom-btn btn-primary float-right" ng-click="linkProtocol()" translate="patient.link-protocol"></buton>
-      <buton ng-show="!addProtocol" class="hillrom-btn btn-inactive float-right" translate="patient.link-protocol"></buton>
+    <div class="col-md-8 col-sm-8 protocol-list__edit icons text-center">
+      <span ng-if="!protocol.deleted" class="icon-delete-icon" ng-click="deleteProtocolModel(protocols[0].id)"></span>
     </div>
   </div>
 
-  <div class="col-md-16 patient-device">
+</div>
+</div>
+  <!-- Single protocol list ends here -->
+
+  <!-- Both protocol starts from here  -->
+ 
+  <div ng-if="getDeviceTypeforBothIcon() =='ALL'">
+    <div ng-if="normalProtocol[0].length">
+<div class="col-md-16 col-sm-16 border-top protocol_list_container" ng-class="{'no_border' : !normalProtocol[0] || customProtocol[0]}">
+  <div class="col-md-1 col-sm-1 treatments_per_day_count" ng-if="(normalProtocol[0])">
+    <div id="deviceicon" class="col-md-16 col-sm-16 protocol-list__treatment-day no_border text-align-left">
+
+
+     <span class="icon_height_width" ng-class="{'monarchIcon': (normalProtocol[0][0].deviceType =='MONARCH'), 'visivestIcon': (normalProtocol[0][0].deviceType =='VEST')}"></span>
+    </div>
+  </div>
+  <div class="col-md-2 col-sm-2 col-lg-offset-1 col-md-offset-1 col-sm-offset-1 col-xs-offset-1">
+    <div class="col-md-16 col-sm-16 protocol-list__treatment-day protocol-list no_border text-align-left" ng-repeat="protocol in normalProtocol[0]" ng-class="{'list-inactive':protocol.deleted, 'last' : $last}">
+      <span class="protocol-list--value"> {{protocol.type}} {{protocol.treatmentLabel}}</span>
+    </div>
+  </div>
+  <div class="col-md-2 col-sm-2 treatments_per_day_count col-sm-offset-3 col-md-offset-3">
+      <span class="v_middle">{{normalProtocol[0][0].treatmentsPerDay}}</span>
+  </div>
+  <div class="col-md-9 col-sm-9 col-sm-offset-2 col-md-offset-2">
+    <div class="col-md-16 col-sm-16 protocol-list no_border" ng-repeat="protocol in normalProtocol[0]" ng-class="{'list-inactive':protocol.deleted, 'last' : $last}">
+      <!-- <div class="col-md-3 protocol-list__treatment-day">
+        <span class="protocol-list--value"> {{protocol.treatmentsPerDay}}</span>
+      </div> -->
+      <div class="col-md-5 col-sm-5 protocol-list__strt-date">
+        <span class="protocol-list--value"> {{protocol.minMinutesPerTreatment}}</span>      
+      </div>
+      <div class="col-md-5 col-sm-5 protocol-list__end-date">
+        
+        <span  class="protocol-list--value"> {{protocol.minFrequency}}<span ng-if="protocol.maxFrequency">-</span>{{protocol.maxFrequency}}</span>
+      </div>
+      <div class="col-md-4 col-sm-4 protocol-list__end-date" ng-if="protocol.deviceType =='VEST'">
+       
+        <span class="protocol-list--value"> {{protocol.minPressure}}<span ng-if="protocol.maxPressure">-</span>{{protocol.maxPressure}}</span>
+      </div>
+
+<div class="col-md-4 col-sm-4 protocol-list__end-date" ng-if="protocol.deviceType =='MONARCH'">
+        
+        <span class="protocol-list--value"> {{protocol.minIntensity}}<span ng-if="protocol.maxIntensity">-</span>{{protocol.maxIntensity}}</span>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="col-md-2 col-sm-2 comon_action_div" ng-if="normalProtocol[0]">
+    <div class="col-md-8 col-sm-8 protocol-list__edit icons text-center">
+      <span ng-if="!protocol.deleted" class="icon-edit-icon" ng-click="openEditProtocol(normalProtocol[0][0])"></span>
+    </div>
+    <div class="col-md-8 col-sm-8 protocol-list__edit icons text-center">
+      <span ng-if="!protocol.deleted" class="icon-delete-icon" ng-click="deleteProtocolModelforBoth(normalProtocol[0][0].id,normalProtocol[0][0].deviceType)"></span>
+    </div>
+  </div>
+
+</div>
+</div>
+  <div ng-if="normalProtocol[1].length">
+<div class="col-md-16 col-sm-16 border-top protocol_list_container" ng-class="{'no_border' : !normalProtocol[1]}">
+  <div class="col-md-1 col-sm-1 treatments_per_day_count" ng-if="(normalProtocol[1])">
+    <div id="deviceicon" class="col-md-16 col-sm-16 protocol-list__treatment-day no_border text-align-left">
+
+
+     <span class="icon_height_width" ng-class="{'monarchIcon': (normalProtocol[1][0].deviceType =='MONARCH'), 'visivestIcon': (normalProtocol[1][0].deviceType =='VEST')}"></span>
+    </div>
+  </div>
+  <div class="col-md-2 col-sm-2 col-lg-offset-1 col-md-offset-1 col-sm-offset-1 col-xs-offset-1">
+    <div class="col-md-16 col-sm-16 protocol-list__treatment-day protocol-list no_border text-align-left" ng-repeat="protocol in normalProtocol[1]" ng-class="{'list-inactive':protocol.deleted, 'last' : $last}">
+      <span class="protocol-list--value"> {{protocol.type}} {{protocol.treatmentLabel}}</span>
+    </div>
+  </div>
+  <div class="col-md-2 col-sm-2 treatments_per_day_count col-sm-offset-3 col-md-offset-3">
+      <span class="v_middle">{{normalProtocol[1][0].treatmentsPerDay}}</span>
+  </div>
+  <div class="col-md-9 col-sm-9 col-sm-offset-2 col-md-offset-2">
+    <div class="col-md-16 col-sm-16 protocol-list no_border" ng-repeat="protocol in normalProtocol[1]" ng-class="{'list-inactive':protocol.deleted, 'last' : $last}">
+      <!-- <div class="col-md-3 protocol-list__treatment-day">
+        <span class="protocol-list--value"> {{protocol.treatmentsPerDay}}</span>
+      </div> -->
+      <div class="col-md-5 col-sm-5 protocol-list__strt-date">
+        <span class="protocol-list--value"> {{protocol.minMinutesPerTreatment}}</span>      
+      </div>
+      <div class="col-md-5 col-sm-5 protocol-list__end-date">
+        
+        <span  class="protocol-list--value"> {{protocol.minFrequency}}<span ng-if="protocol.maxFrequency">-</span>{{protocol.maxFrequency}}</span>
+      </div>
+      <div class="col-md-4 col-sm-4 protocol-list__end-date" ng-if="protocol.deviceType =='VEST'">
+       
+        <span class="protocol-list--value"> {{protocol.minPressure}}<span ng-if="protocol.maxPressure">-</span>{{protocol.maxPressure}}</span>
+      </div>
+
+<div class="col-md-4 col-sm-4 protocol-list__end-date" ng-if="protocol.deviceType =='MONARCH'">
+        
+        <span class="protocol-list--value"> {{protocol.minIntensity}}<span ng-if="protocol.maxIntensity">-</span>{{protocol.maxIntensity}}</span>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="col-md-2 col-sm-2 comon_action_div" ng-if="normalProtocol[1]">
+    <div class="col-md-8 col-sm-8 protocol-list__edit icons text-center">
+      <span ng-if="!protocol.deleted" class="icon-edit-icon" ng-click="openEditProtocol(normalProtocol[1][0])"></span>
+    </div>
+    <div class="col-md-8 col-sm-8 protocol-list__edit icons text-center">
+      <span ng-if="!protocol.deleted" class="icon-delete-icon" ng-click="deleteProtocolModelforBoth(normalProtocol[1][0].id,normalProtocol[1][0].deviceType)"></span>
+    </div>
+  </div>
+
+</div>
+</div>
+   <div ng-if="customProtocol[0].length">
+<div class="col-md-16 col-sm-16 border-top protocol_list_container" ng-class="{'no_border' : !customProtocol[0] || customProtocol[1]}">
+
+
+  <div class="col-md-1 col-sm-1 treatments_per_day_count" ng-if="(customProtocol[0])">
+    <div id="deviceicon" class="col-md-16 col-sm-16 protocol-list__treatment-day no_border text-align-left">
+
+
+     <span class="icon_height_width" ng-class="{'monarchIcon': (customProtocol[0][0].deviceType =='MONARCH'), 'visivestIcon': (customProtocol[0][0].deviceType =='VEST')}"></span>
+    </div>
+  </div>
+  <div class="col-md-2 col-sm-2 col-lg-offset-1 col-md-offset-1 col-sm-offset-1 col-xs-offset-1">
+    <div class="col-md-16 col-sm-16 protocol-list__treatment-day protocol-list no_border text-align-left" ng-repeat="protocol in customProtocol[0]" ng-class="{'list-inactive':protocol.deleted, 'last' : $last}">
+      <span class="protocol-list--value"> {{protocol.type}} {{protocol.treatmentLabel}}</span>
+    </div>
+  </div>
+  <div class="col-md-2 col-sm-2 treatments_per_day_count col-sm-offset-3 col-md-offset-3">
+      <span class="v_middle">{{customProtocol[0][0].treatmentsPerDay}}</span>
+  </div>
+  <div class="col-md-9 col-sm-9 col-sm-offset-2 col-md-offset-2">
+    <div class="col-md-16 col-sm-16 protocol-list no_border" ng-repeat="protocol in customProtocol[0]" ng-class="{'list-inactive':protocol.deleted, 'last' : $last}">
+      <!-- <div class="col-md-3 protocol-list__treatment-day">
+        <span class="protocol-list--value"> {{protocol.treatmentsPerDay}}</span>
+      </div> -->
+      <div class="col-md-5 col-sm-5 protocol-list__strt-date">
+        <span class="protocol-list--value"> {{protocol.minMinutesPerTreatment}}</span>      
+      </div>
+      <div class="col-md-5 col-sm-5 protocol-list__end-date">
+        <span  class="protocol-list--value"> {{protocol.minFrequency}}<span ng-if="protocol.maxFrequency">-</span>{{protocol.maxFrequency}}</span>
+      </div>
+      <div class="col-md-4 col-sm-4 protocol-list__end-date" ng-if="protocol.deviceType =='VEST'">
+        <span  class="protocol-list--value"> {{protocol.minPressure}}<span ng-if="protocol.maxPressure">-</span>{{protocol.maxPressure}}</span>
+       
+      </div>
+
+<div class="col-md-4 col-sm-4 protocol-list__end-date" ng-if="protocol.deviceType =='MONARCH'">
+        <span class="protocol-list--value"> {{protocol.minIntensity}}<span ng-if="protocol.maxIntensity">-</span>{{protocol.maxIntensity}}</span>
+       
+      </div>
+
+    </div> 
+  </div>
+
+  <div class="col-md-2 col-sm-2 comon_action_div" ng-if="customProtocol[0]">
+    <div class="col-md-8 col-sm-8 protocol-list__edit icons text-center">
+      <span ng-if="!protocol.deleted" class="icon-edit-icon" ng-click="openEditProtocol(customProtocol[0][0])"></span>
+    </div>
+    <div class="col-md-8 col-sm-8 protocol-list__edit icons text-center">
+      <span ng-if="!protocol.deleted" class="icon-delete-icon" ng-click="deleteProtocolModelforBoth(customProtocol[0][0].id,customProtocol[0][0].deviceType)"></span>
+    </div>
+  </div>
+
+</div>
+</div>
+   <div ng-if="customProtocol[1].length">
+<div class="col-md-16 col-sm-16 border-top protocol_list_container" ng-class="{'no_border' : !customProtocol[1]}">
+
+
+  <div class="col-md-1 col-sm-1 treatments_per_day_count" ng-if="(customProtocol[1])">
+    <div id="deviceicon" class="col-md-16 col-sm-16 protocol-list__treatment-day no_border text-align-left">
+
+
+     <span class="icon_height_width" ng-class="{'monarchIcon': (customProtocol[1][0].deviceType =='MONARCH'), 'visivestIcon': (customProtocol[1][0].deviceType =='VEST')}"></span>
+    </div>
+  </div>
+  <div class="col-md-2 col-sm-2 col-lg-offset-1 col-md-offset-1 col-sm-offset-1 col-xs-offset-1">
+    <div class="col-md-16 col-sm-16 protocol-list__treatment-day protocol-list no_border text-align-left" ng-repeat="protocol in customProtocol[1]" ng-class="{'list-inactive':protocol.deleted, 'last' : $last}">
+      <span class="protocol-list--value"> {{protocol.type}} {{protocol.treatmentLabel}}</span>
+    </div>
+  </div>
+  <div class="col-md-2 col-sm-2 treatments_per_day_count col-sm-offset-3 col-md-offset-3">
+      <span class="v_middle">{{customProtocol[1][0].treatmentsPerDay}}</span>
+  </div>
+  <div class="col-md-9 col-sm-9 col-sm-offset-2 col-md-offset-2">
+    <div class="col-md-16 col-sm-16 protocol-list no_border" ng-repeat="protocol in customProtocol[1]" ng-class="{'list-inactive':protocol.deleted, 'last' : $last}">
+      <!-- <div class="col-md-3 protocol-list__treatment-day">
+        <span class="protocol-list--value"> {{protocol.treatmentsPerDay}}</span>
+      </div> -->
+      <div class="col-md-5 col-sm-5 protocol-list__strt-date">
+        <span class="protocol-list--value"> {{protocol.minMinutesPerTreatment}}</span>      
+      </div>
+      <div class="col-md-5 col-sm-5 protocol-list__end-date">
+        <span  class="protocol-list--value"> {{protocol.minFrequency}}<span ng-if="protocol.maxFrequency">-</span>{{protocol.maxFrequency}}</span>
+      </div>
+      <div class="col-md-4 col-sm-4 protocol-list__end-date" ng-if="protocol.deviceType =='VEST'">
+        <span  class="protocol-list--value">{{protocol.minPressure}}<span ng-if="protocol.maxPressure">-</span>{{protocol.maxPressure}}</span>
+       
+      </div>
+
+<div class="col-md-4 col-sm-4 protocol-list__end-date" ng-if="protocol.deviceType =='MONARCH'">
+        <span class="protocol-list--value"> {{protocol.minIntensity}}<span ng-if="protocol.maxIntensity">-</span>{{protocol.maxIntensity}}</span>
+       
+      </div>
+
+    </div>
+  </div>
+
+  <div class="col-md-2 col-sm-2 comon_action_div" ng-if="customProtocol[1]">
+    <div class="col-md-8 col-sm-8 protocol-list__edit icons text-center">
+      <span ng-if="!protocol.deleted" class="icon-edit-icon" ng-click="openEditProtocol(customProtocol[1][0])"></span>
+    </div>
+    <div class="col-md-8 col-sm-8 protocol-list__edit icons text-center">
+      <span ng-if="!protocol.deleted" class="icon-delete-icon" ng-click="deleteProtocolModelforBoth(customProtocol[1][0].id,customProtocol[1][0].deviceType)"></span>
+    </div>
+  </div>
+
+</div>
+</div>
+</div>
+
+  <!-- Both protocol ends here  -->
+  <div class="col-md-16 col-sm-16 empty-list-message " ng-if="isProtocolLoaded && !protocols" ng-class="{'border-top': (getDeviceTypeforBothIcon() =='ALL')}"><span translate="patient.empty-protocol-list-message"></span></div>
+
+  <div class="col-md-16 col-sm-16 reset-padding" ng-if="isProtocolLoaded && !slectedPatient.isDeleted">
+    <div class="col-md-8 col-sm-8 clinic-link">
+    </div>
+    <div class="col-md-8 col-sm-8 clinic-link">
+      <buton ng-show="isAddProtocol || getDeviceTypeforBothIcon()=='ALL'" class="hillrom-btn btn-primary float-right" ng-click="DisableAddProtocol || linkProtocol()" translate="patient.link-protocol" ng-disabled="DisableAddProtocol" ng-class="{'btn-inactive': (DisableAddProtocol)} "></buton>
+      <buton ng-show="!isAddProtocol && getDeviceTypeforBothIcon()!='ALL'" class="hillrom-btn btn-inactive float-right" translate="patient.link-protocol"></buton>
+    </div>
+  </div>
+
+  <div class="col-md-16 col-sm-16 patient-device">
     <span class="patient-device--title" translate="patient.device-title"></span>
   </div>
 
-  <div class="col-md-16 device-list" ng-repeat="device in devices" ng-class="{'list-inactive': !device.active}">
-    <div class="col-md-3 device-list__serial">
+<div class="dashboard dashboard--content">
+  <div class="dashboard__manage-view margin-top">
+    <div class="dashboard__manage-view--header">
+       <div class="col-md-2 col-sm-2 header--type text-align-left">
+            <span translate="patient.device-caption.device-type"></span>
+          </div>
+        <div class="col-md-3 col-sm-3 header--type">
+          <span translate="patient.device-caption.serial-no"></span>
+        </div>
+        <div class="col-md-3 col-sm-3 header--type">
+          <span translate="patient.device-caption.blutooth-id"></span>
+        </div>
+        <div class="col-md-2 col-sm-2 header--type">
+          <span translate="patient.device-caption.status"></span>
+        </div>
+        <div class="col-md-2 col-sm-2 header--type">
+          <span translate="">Total HMR (mins)</span>
+        </div>
+        <div class="col-md-2 col-sm-2 header--type">
+          <span translate="patient.device-caption.active-or-inactive-date"></span>
+        </div>
+        <div class="clr"></div>
+      </div>
+  </div>
+</div>
+
+  <div class="col-md-16 col-sm-16 device-list" ng-repeat="device in devices  | orderBy:'active':true" ng-class="{'list-inactive': !device.active}">
+     <div id="deviceInfoicon" class="col-md-2 col-sm-2 device-list__serial">
+     <!--   <span ng-if ="getDeviceTypeforBothIcon() !='ALL'">
+      <span class="icon_height_width" ng-class="{'monarchIcon': (getDeviceType() =='MONARCH'), 'visivestIcon': (getDeviceType() =='VEST')}"></span>
+      </span> -->
+
+      <!-- <span ng-if ="getDeviceTypeforBothIcon() =='ALL'"> -->
+       <span>    
+  <span ng-if="device.deviceType == 'MONARCH'">
+      <span class="icon_height_width monarchIcon"></span>
+      </span>
+      <span ng-if="device.deviceType == 'VEST'">
+      <span class="icon_height_width visivestIcon"></span>
+      </span>
+    </span>
+
+    </div>
+    <div class="col-md-3 col-sm-3 device-list__serial">
       <span>{{device.serialNumber}}</span>
     </div>
-    <div class="col-md-2 device-list__bt-id">
-      <span>{{device.bluetoothId}}</span>
+    <div class="col-md-3 col-sm-3 device-list__bt-id">
+      <span >{{device.bluetoothId}}{{device.wifiId}}</span>
     </div>
-    <div class="col-md-1 device-list__device">
-      <span class="icon-lungs active"></span>
+
+    <div class="col-md-2 col-sm-2 device-list__status">
+      <span ng-if="device.active" class="device--list__status--text" translate="patient.device.active-status">Active</span>
+      <span ng-if="!device.active" class="device--list__status--text" translate="patient.device.inactive-status"></span>
     </div>
-    <div class="col-md-2 device-list__status">
-      <span ng-if="device.active" class="device--list__status--text">Active</span>
-      <span ng-if="!device.active" class="device--list__status--text">Inactive</span>
+    <div class="col-md-2 col-sm-2">
+      <span>{{device.hmr}}</span>
     </div>
-    <div class="col-md-6 device-list__date">
-      <span>{{device.createdDate}}</span><span ng-if="device.active"> - Active date</span>
-      <span ng-if="!device.active"> - Inactive date</span>
+    <div class="col-md-2 col-sm-2 device-list__date" ng-if="!device.active">
+      <span>{{device.lastModifiedDate}}</span>
     </div>
-    <div class="col-md-1 device-list__edit text-center">
-      <span ng-if="device.active" class="glyphicon glyphicon-pencil cursor-pointer" ng-click="openEditDevice(device)"></span>
+    <div class="col-md-2 col-sm-2 device-list__date" ng-if="device.active">
+       <span>{{device.createdDate}}</span>
     </div>
-    <div class="col-md-1 device-list__delete text-center">
-      <span ng-if="device.active" class="glyphicon glyphicon-trash cursor-pointer" ng-click="deleteDeviceModel(device)"></span>
+   
+    <div class="col-md-2 col-sm-2 device-list__edit text-center">
+      <span ng-if="device.active" class="icon-edit-icon cursor-pointer" ng-click="openEditDevice(device)"></span>
+      <span ng-if="device.active" class="icon-delete-icon cursor-pointer" ng-click="deleteDeviceModel(device)"></span>
     </div>
   </div>
 
-  <div class="col-md-16 reset-padding">
-    <div class="col-md-8 clinic-link">
+  <div class="col-md-16 col-sm-16 margin-top">
+    <div class="patient-device--title">Global HMR Reading</div> <span class="total_hmr_text">{{HHMM}}</span>
+  </div>
+
+  <div class="col-md-16 col-sm-16 empty-list-message" ng-if="isDevicesLoaded && !devices"><span translate="patient.empty-device-list-message"></span></div>
+
+
+
+  <div class="col-md-16 col-sm-16 reset-padding" ng-if="isDevicesLoaded && !slectedPatient.isDeleted">
+    <div class="col-md-8 col-sm-8 clinic-link">
     </div>
-    <div class="col-md-8 clinic-link">
+    <div class="col-md-8 col-sm-8 clinic-link">
       <buton class="hillrom-btn btn-primary float-right" ng-click="linkDevice()" translate="patient.link-device"></buton>
+    </div>
+  </div>
+
+  <div class="col-md-16 col-sm-16 patient-protocol">
+    <span class="patient-protocol--title">Reset Adherence Score</span>
+  </div>
+  <form name ="form">
+    <div class="col-md-16 col-sm-16 margin-top reset-padding">
+          <div class="col-md-7 col-sm-7 reset-padding">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+              <span class="" translate="patient.reset-adherence.reset-date-set">Adherence score Start date</span>
+              <span class="">*</span>
+            </div>
+            <div class="col-md-10 col-sm-8 dashboard__form--input reset-padding">
+             <input type="text" ng-model = "resetStartDate" name="adherenceStartDate" validate-on-blur class="datepickerNew"  id= "dp3" required data-date-format="mm/dd/yyyy"  ng-pattern="/^\d{2}\/\d{2}\/\d{4}$/" readonly="readonly"/>
+                <div ng-show="(form.adherenceStartDate.$dirty && form.adherenceStartDate.$invalid) || resetsubmitted">
+                <span class="has-error" ng-show="form.adherenceStartDate.$error.required" translate="error.adherenceStartDate.required"></span>
+                <!-- <span class="has-error" ng-if="!form.adherenceStartDate.$error.required && !form.adherenceStartDate.$error.pattern" translate="error.adherenceStartDate.future"></span> -->
+                <span class="has-error" ng-show="form.adherenceStartDate.$error.pattern && !form.adherenceStartDate.$error.required" translate="error.adherenceStartDate.invalid"></span>
+              </div>  
+            </div>
+          </div>
+          <div class="col-md-7 col-sm-7 col-sm-offset-0 col-md-offset-2 reset-padding marginLeftForDevices">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+              <span class="" translate="patient.reset-adherence.reset-date">Reset Date</span>
+              <span class="">*</span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding">
+              <input class="" type="text" readonly ng-disabled = "true" ng-model="todayDate" name="MRNID">
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-16 col-sm-16 margin-top reset-padding">
+          <div class="col-md-7 col-sm-7 reset-padding">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+              <span class="" translate="patient.reset-adherence.reset">Reset To</span>
+              <span class="">*</span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding">
+              <input class="" name="ResetTo" ng-pattern="/^[0-9]{1,7}$/" ng-model = "scoreToReset" type="text" ng-change="handleChange()" ng-disabled = "true" required>
+              <div ng-show="(form.ResetTo.$dirty && form.ResetTo.$invalid) || resetsubmitted || maxNumberReached">
+                <span class="has-error" ng-show="form.ResetTo.$error.required" translate="error.ResetTo.required"></span>
+                <span class="has-error" ng-show="maxNumberReached" translate="error.ResetTo.invalid"></span>
+                <span class="has-error" ng-show="form.ResetTo.$error.pattern && !form.ResetTo.$error.required" translate="error.ResetTo.invalid"></span>
+              </div>  
+            </div>
+          </div>
+        
+        </div>
+
+        <div class="col-md-16 col-sm-16 margin-top reset-padding">
+          <div class="col-md-7 col-sm-7 reset-padding">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+              <span class="" translate="patient.reset-adherence.justification">Justification</span>
+              <span class="">*</span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form__input reset-padding selected-box-container">
+              <div class="custom-dropdown">
+                <select name="justification" ng-model="justification" required ng-options="item.type_code_value as item.type_code_value for item in justificationlist" ng-change="SelectOthers(justification)">
+                </select>
+                <div ng-show="(form.justification.$dirty && form.justification.$invalid) || resetsubmitted">
+                <span class="has-error" ng-show="form.justification.$error.required" translate="error.justification.required"></span>
+              </div>  
+              </div>
+            </div>
+          </div>
+        </div>
+         <div ng-if = "ShowOther" class="col-md-16 col-sm-16 margin-top reset-padding">
+          <div   class="col-md-7 col-sm-7  reset-padding ">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+              <span class="" translate="patient.reset-adherence.others">Others</span>
+              <span class="">*</span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding" >
+              <textarea name="oth" class="" style="box-shadow:none !important;"  ng-model = "$parent.othersContent" required  maxlength="150"></textarea>
+              <div ng-show="(form.oth.$dirty && form.oth.$invalid) || resetsubmitted">
+                <span class="has-error" ng-show="form.oth.$error.required" translate="error.others.required"></span>
+              </div>   
+            </div>
+          </div>
+          </div>
+
+        <div class="col-md-16 col-sm-16 reset-padding" >
+        <div class="col-md-8 col-sm-8 clinic-link">
+        </div>
+        <div class="col-md-8 col-sm-8 clinic-link">
+          <buton  type="submit" class="hillrom-btn btn-primary float-right" ng-click = "showUpdateReset()" translate = "patient.reset-adherence.reset-button">Reset</buton>
+        </div>
+      </div>
+      </form>
+       <!-- Adding reset history starts from here -->
+      <div class="col-md-16 col-sm-16 patient-protocol">
+    <span class="patient-protocol--title">Adherence Score Reset History</span>
+  </div>
+  <div class="col-md-16 col-sm-16 reset-padding resethistory">
+   <div class="table-responsive">          
+  <table class="table table-hover resethistorylist">
+    <thead>
+      <tr class="header--type">
+        <th style="width:20%">Start Date</th>
+        <th style="width:20%">Reset Date</th>
+        <th style="width:20%">Reset  Time</th>
+        <th style="width:20%">Justification</th>
+        <th style="width:20%">Comments</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="resetHistory in resetHistoryData">
+     <td style="width:20%">{{ resetHistory.resetStartDate }}</td>
+     <td style="width:20%">{{ resetHistory.resetDate }}</td>
+     <td style="width:20%">{{ resetHistory.resetTime }}</td>
+     <td style="width:20%">{{ resetHistory.justification }}</td>
+     <td style="width:20%" class="othercommenttxt">{{ resetHistory.comments }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div  class="graph_nodata" ng-if = "nodataflag">
+    <span class="noData_text"> No Reset History Available!</span>
+  </div>
+  <div class="col-md-16 reset-padding adherenceresethistorypaginationcontner" >
+    <div class="col-sm-5 paginationcontainer ">
+           <span style="color:#7ca3dc;"> {{totalElements}} Reset History Records Found &nbsp </span>
+           <span ng-show="totalPages > 1">
+            <span class="navigaion-link cursor-pointer activeColor" ng-class="{ 'inactiveColor': !(currentPageIndex > 1) }" ng-click="getAdherenceScoreResetHistoryPagination('PREV')">Previous</span>
+            <span class="navigaion-no ng-binding">{{currentPageIndex}}/{{totalPages}}</span>  <span class="navigaion-link cursor-pointer activeColor"  ng-class="{ 'inactiveColor': !(totalPages > currentPageIndex) }" ng-click="getAdherenceScoreResetHistoryPagination('NEXT')">Next</span>
+          </span>
+          </div>
+        </div>
+  </div>
+
+  </div>
+
+  <!-- Adding reset history ends from here -->
+</div>
+
+
+<div ng-if="showUpdateModalReset" class="modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true">
+  <div class="modal__dialog">
+    <div class="modal__content">
+      <header class="modal__header">
+        <button type="button" class="modal__close" data-dismiss="modal" ng-click="$parent.showUpdateModalReset = false">&times;</button>
+         <p translate="patient.reset-score.warning"></p>
+      </header>
+      <div class="modal__body">
+         <div class="modal--message">
+         <span translate="patient.reset-score.message"></span>
+         <span>{{::slectedPatient.firstName}} {{::slectedPatient.lastName}}</span>
+         <span translate="patient.reset-score.to"></span>
+         <span>{{scoreToReset}}</span>
+         <span translate="patient.reset-score.from"></span>
+         <span>{{resetStartDate}}</span>
+         </div>
+         <div class="row modal--custom-btn">
+          <buton class="hillrom-btn btn-submit float-right" ng-click="resetScore()">Yes</buton>
+          <buton class="hillrom-btn btn-submit float-right" data-dismiss="modal" ng-click="$parent.showUpdateModalReset = false">No</buton>          
+         </div>
+      </div>
+      <footer class="modal__footer">
+      </footer>
     </div>
   </div>
 </div>
@@ -115,8 +588,9 @@
       <div class="modal__body">
          <div class="modal--message" translate="patient.delete-protocol.message"></div>
          <div class="row modal--custom-btn">
-          <buton class="hillrom-btn btn-submit float-right" ng-click="deleteProtocol()">Yes</buton>
-          <buton class="hillrom-btn btn-submit float-right" data-dismiss="modal" ng-click="cancelProtocolModel()">No</buton>
+          <buton ng-if="getDeviceTypeforBothIcon() !='ALL'" class="hillrom-btn btn-submit float-right" ng-click="deleteProtocol()">Yes</buton>
+          <buton ng-if="getDeviceTypeforBothIcon() =='ALL'" class="hillrom-btn btn-submit float-right" ng-click="deleteProtocolforBoth()">Yes</buton>
+          <buton class="hillrom-btn btn-submit float-right" data-dismiss="modal" ng-click="cancelProtocolModel()">No</buton>          
          </div>
       </div>
       <footer class="modal__footer">
@@ -135,8 +609,10 @@
       <div class="modal__body">
          <div class="modal--message" translate="patient.delete-device.message"></div>
          <div class="row modal--custom-btn">
-          <buton class="hillrom-btn btn-submit float-right" ng-click="deleteDevice()">Yes</buton>
-          <buton class="hillrom-btn btn-submit float-right" data-dismiss="modal" ng-click="cancelDeviceModel()">No</buton>
+          <!-- <buton ng-if ="getDeviceTypeforBothIcon() !='ALL'" class="hillrom-btn btn-submit float-right" ng-click="deleteDevice()">Yes</buton> -->
+         <!--  <buton ng-if ="getDeviceTypeforBothIcon() =='ALL'" class="hillrom-btn btn-submit float-right" ng-click="deleteDeviceboth()">Yes</buton> -->
+          <buton  class="hillrom-btn btn-submit float-right" ng-click="deleteDeviceboth()">Yes</buton>
+          <buton class="hillrom-btn btn-submit float-right" data-dismiss="modal" ng-click="cancelDeviceModel()">No</buton>         
          </div>
       </div>
       <footer class="modal__footer">

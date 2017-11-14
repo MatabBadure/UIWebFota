@@ -20,7 +20,7 @@ module.exports = function (grunt) {
     app: require('./bower.json').appPath || 'app',
     dist: 'dist'
   };
-
+  var proxySnippet = require('grunt-connect-proxy/lib/utils').proxyRequest;
   // Define the configuration for all the tasks
   grunt.initConfig({
 
@@ -71,6 +71,33 @@ module.exports = function (grunt) {
         hostname: 'localhost',
         livereload: 35729
       },
+      server: {
+        options: {
+          hostname: 'localhost',
+          keepalive: true,
+          open: true,
+          middleware: function (connect, options) {
+            return [
+              connect.static('.tmp'),
+              connect().use(
+                  '/bower_components',
+                  connect.static('./bower_components')
+              ),
+              connect.static(appConfig.app),
+              proxySnippet
+            ];
+          }
+        },
+        proxies: [{
+          context: '/api',
+          host: 'dev.hillromvest.com',
+          port: 8080,
+          rewrite: {
+            '^/api': '/hillromvest/api'
+          }
+        }]
+      },
+
       livereload: {
         options: {
           open: true,
@@ -81,10 +108,20 @@ module.exports = function (grunt) {
                 '/bower_components',
                 connect.static('./bower_components')
               ),
-              connect.static(appConfig.app)
+              connect.static(appConfig.app),
+              proxySnippet
             ];
           }
-        }
+        },
+        proxies: [{
+          context: '/api',
+          host: 'dev.hillromvest.com',
+          port: 8080,
+          rewrite: {
+            '^/api': '/hillromvest/api'
+            }
+        }]
+
       },
       test: {
         options: {
@@ -176,22 +213,42 @@ module.exports = function (grunt) {
     compass: {
       options: {
         sassDir: '<%= yeoman.app %>/styles',
-        cssDir: '.tmp/styles',
-        generatedImagesDir: '.tmp/images/generated',
+        cssDir: '<%= yeoman.app %>/styles',
+        generatedImagesDir: '<%= yeoman.app %>/images/generated',
         imagesDir: '<%= yeoman.app %>/images',
         javascriptsDir: '<%= yeoman.app %>/scripts',
-        fontsDir: '<%= yeoman.app %>/styles/fonts',
-        importPath: './bower_components',
+        fontsDir: '<%= yeoman.app %>/fonts',
+        importPath: '<%= yeoman.app %>/bower_components',
         httpImagesPath: '/images',
         httpGeneratedImagesPath: '/images/generated',
-        httpFontsPath: '/styles/fonts',
+        httpFontsPath: '/fonts',
         relativeAssets: false,
         assetCacheBuster: false,
         raw: 'Sass::Script::Number.precision = 10\n'
       },
       dist: {
         options: {
-          generatedImagesDir: '<%= yeoman.dist %>/images/generated'
+            includePaths: [
+                'bower_components'
+            ]
+        },
+        dist: {
+            files: [{
+                expand: true,
+                cwd: '<%= hillrom.app %>/styles',
+                src: ['*.scss'],
+                dest: '.tmp/styles',
+                ext: '.css'
+            }]
+        },
+        server: {
+            files: [{
+                expand: true,
+                cwd: '<%= hillrom.app %>/styles',
+                src: ['*.scss'],
+                dest: '<%= hillrom.app %>/styles',
+                ext: '.css'
+            }]
         }
       },
       server: {
@@ -387,7 +444,7 @@ module.exports = function (grunt) {
     }
   });
 
-
+  grunt.loadNpmTasks('grunt-connect-proxy');
   grunt.registerTask('serve', 'Compile then start a connect web server', function (target) {
     if (target === 'dist') {
       return grunt.task.run(['build', 'connect:dist:keepalive']);
@@ -395,9 +452,9 @@ module.exports = function (grunt) {
 
     grunt.task.run([
       'clean:server',
-      'wiredep',
-      'concurrent:server',
+      //'concurrent:server',
       'autoprefixer',
+      'configureProxies:server',
       'connect:livereload',
       'watch'
     ]);

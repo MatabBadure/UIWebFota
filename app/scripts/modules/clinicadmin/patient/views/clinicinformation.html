@@ -1,0 +1,114 @@
+<ng-include src="'scripts/components/navbar/navbarclinicadmin.html'"></ng-include>
+<clinicadmin-patient-navbar></clinicadmin-patient-navbar>
+<div class="container admin-user">
+  <div class="col-md-16 col-sm-16 margin-top">
+   <div class="user-gen-details">
+   <span ng-class="{'monarchIcon': (getDeviceTypeforBothIcon() =='MONARCH'), 'visivestIcon': (getDeviceTypeforBothIcon() =='VEST'), 'bothdeviceIcon': (getDeviceTypeforBothIcon() =='ALL')}">
+     <span class="user-gen-details--name">{{::patient.firstName}} {{::patient.lastName}}</span>
+     <span class="user-gen-details--hr-id">{{::patient.hillromId}}</span>
+     </span>
+   </div>
+  </div>
+
+  <div class="col-md-16 col-sm-16 admin-views">
+    <span class="admin-views--title">{{::clinic.name}}</span>
+  </div>
+
+  <div class="col-md-16 col-sm-16 user-detail-info">
+    <div class="col-md-4 col-sm-4 user-detail-info__data word-ellipsis">
+      <span class="user-detail-info__data--key" translate="clinic.hillromId"></span>
+      <span class="user-detail-info__data--key">:</span>
+      <span class="user-detail-info__data--value">{{::clinic.hillromId}}</span>
+    </div>
+    <div class="col-md-4 col-sm-4 user-detail-info__data">
+      <span class="user-detail-info__data--key" translate="clinic.type"></span>
+      <span class="user-detail-info__data--key">:</span>
+      <span class="user-detail-info__data--value" ng-if="clinic.parent" translate="clinic.parent"></span>
+      <span class="user-detail-info__data--value" ng-if="!clinic.parent" translate="clinic.satellite"></span>
+    </div>
+    <div class="col-md-4 col-sm-4 user-detail-info__data">
+      <span class="user-detail-info__data--key" translate="clinic.status"></span>
+      <span class="user-detail-info__data--key">:</span>
+      <span class="user-detail-info__data--value" ng-if="clinic.deleted" translate="clinic.inactive"></span>
+      <span class="user-detail-info__data--value" ng-if="!clinic.deleted" translate="clinic.active"></span>
+    </div>
+
+    <div class="col-md-4 col-sm-4 user-detail-info__data">
+      <span class="user-detail-info__data--key" translate="clinic.phoneNumber"></span>
+      <span class="user-detail-info__data--key">:</span>
+      <span class="user-detail-info__data--value">{{::clinic.phoneNumber}}</span>
+    </div>
+
+    <div class="col-md-4 col-sm-4 user-detail-info__data word-ellipsis">
+      <span class="user-detail-info__data--key" translate="clinic.address"></span>
+      <span class="user-detail-info__data--key">:</span>
+      <span class="user-detail-info__data--value">{{::clinic.address}}</span>
+    </div>
+
+    <div class="col-md-4 col-sm-4 user-detail-info__data">
+      <span class="user-detail-info__data--key" translate="clinic.city"></span>
+      <span class="user-detail-info__data--key">:</span>
+      <span class="user-detail-info__data--value">{{::clinic.city}}</span>
+    </div>
+  </div>
+  
+  <div class="col-md-16 col-sm-16 admin-views">
+    <span class="admin-views--title" translate="patient.hcp-title"></span>
+  </div>
+
+  <div class="dashboard dashboard--content">
+    <div class="dashboard__manage-view margin-top">
+      <div class="dashboard__manage-view--header">
+          <div class="col-md-3 col-sm-3 header--type">
+            <span translate="patient.hcp-caption.hcp-name"></span>
+          </div>
+          <div class="col-md-3 col-sm-3 header--type">
+            <span translate="patient.hcp-caption.credentials"></span>
+          </div>
+          <div class="col-md-3 col-sm-3 header--type">
+            <span translate="patient.hcp-caption.phone-number"></span>
+          </div>
+          <div class="col-md-3 col-sm-3 header--type">
+            <span translate="patient.hcp-caption.fax-number"></span>
+          </div>
+          <div class="col-md-3 col-sm-3 header--type">
+            <span translate="patient.hcp-caption.npi-id"></span>
+          </div>
+          <div class="clr"></div>
+        </div>
+    </div>
+  </div>
+  <div class="col-md-16 col-sm-16 clinic-list marginBottomforDevices" ng-repeat="hcp in associatedHCPs track by $index" ng-if="associatedHCPs.length > 0">
+    <div class="col-md-3 col-sm-3 clinic-list__detail">
+      <span class="clinic-list__detail--name">{{hcp.lastName}}, {{hcp.firstName}}</span>
+    </div>
+    <div class="col-md-3 col-sm-3 clinic-list__address">
+      <span class="clinic-list__credentials">{{hcp.credentials}}</span>
+    </div>
+    <div class="col-md-3 col-sm-3 clinic-list__phone">
+      <span class="clinic-list__phone--number" ng-bind="hcp.primaryPhone"></span>
+    </div>
+    <div class="col-md-3 col-sm-3 clinic-list__fax">
+      <span class="clinic-list__fax--number" ng-bind="hcp.faxNumber"></span>
+    </div>
+    <div class="col-md-3 col-sm-3 clinic-list__hr-id">
+      <span class="clinic-list__fax--number" ng-bind="hcp.npiNumber"></span>
+    </div>
+  </div>
+  <div class="col-md-16 col-sm-16 empty-list-message" ng-if="!associatedHCPs || associatedHCPs.length === 0">
+    <span translate="no-hcp-found"> </span>
+  </div>
+
+  <div class="col-md-16 reset-padding">
+    <div class="col-md-8 clinic-link">
+      <input type="text" ng-show="searchHCPText" ng-model="searchHcp" typeahead="hcp as hcp.lastName +', &nbsp' + hcp.firstName  + ' &nbsp ' + hcp.clinics[0].name for hcp in getHCPstoLink($viewValue)" typeahead-on-select="showAssociateHCPModal($item)" class="form-control" placeholder="{{'patient.placeholder.hcp-link' | translate}}">
+    </div>
+
+    <div class="col-md-8 clinic-link">
+      <buton class="hillrom-btn btn-primary float-right" ng-show="!searchHCPText" ng-click="linkHCP()" translate="patient.link-hcp"></buton>
+    </div>
+  </div>
+</div>
+
+<modal ng-if="associateHCPModal" modall="showModal" onyes="selectHcpForPatient()" onno="$parent.associateHCPModal = false; $parent.searchHcp= ''" header="{{'patient.associate-hcp-info.warning' | translate}}" message="{{'patient.associate-hcp-info.message' | translate}}">
+</modal>

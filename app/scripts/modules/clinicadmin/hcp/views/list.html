@@ -1,0 +1,128 @@
+<ng-include src="'scripts/components/navbar/navbarclinicadmin.html'"></ng-include>
+<!-- <ng-include src="'scripts/components/dashboard/clinicadmin/views/navbar.html'"></ng-include> -->
+
+<div class="navbar patient-user patient-user--nav">
+  <div class="container">
+    <div class="collapse navbar-collapse patient-user__navbar" id="navbar-collapse">
+      <ul class="nav navbar-nav patient-dashboard">
+        <li >
+          <a ng-href="" class="nav_bar_title">
+            <span class="" translate="navbar.manage-hcp"></span>
+          </a>
+        </li>
+      </ul>
+
+      <ul class="nav navbar-nav pull-right right">
+        <li class="create-tab">
+            <a href="javascript:void(0)" ng-click="createHCP()" translate="navbar.create-new-hcp">Create New HCP +</a>
+        </li>
+        <li class="hcp_hsp_name_a" dropdown>
+          <a ng-href="" data-target="#" id="dropdownMenu1" data-toggle="dropdown">
+            <span class="">{{selectedClinic.name}} <span class="nav_drop_arrow hillrom-icon icon-arrow-down"></span></span>
+          </a>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+          <li role="menuitem" ng-repeat='clinic in clinics' ng-click="switchClinic(clinic)"><a>{{::clinic.name}}</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+<!-- <div class="navbar dashboard dashbord-nav">
+  <div class="container">
+    <div class="dashbord-nav__primary pull-left">
+      <span class="dashbord-nav__primary--title" translate="doctor.home.manageLabel"></span>
+    </div>
+
+    <div class="dashbord-nav__secondary create-user navbar-right cursor-pointer" ng-click="createHCP()">
+      <span class="dashbord-nav__secondary--create-new" translate="doctor.home.createLabel"></span>
+      <span class="icon-plus-icon add-new"></span>
+    </div>
+  </div>
+</div> -->
+
+<div class="dashboard dashboard--content">
+  <div class="container dashboard__manage-view margin-top-xl">
+    <div class="dashboard__manage-view--search">
+      <div class="fuid-search-box reset-padding-right">
+        <input type="text" class="form-control" id="searchListParam" name="userName" ng-model="searchItem" autocomplete="off" placeholder="{{'doctor.placeholder.search' | translate}}" >
+        <span class="search-icon hillrom-icon icon-search-icon"></span>
+      </div>
+    </div>
+
+    <div class="col-md-16 col-sm-16">
+      <ng-include src="'scripts/components/navbar/searchfilter.html'"></ng-include>
+    </div>
+
+    <div class="dashboard__manage-view--header">
+      <div class="col-md-3 col-sm-3 header--type">
+        <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="doctor.hcp-name">HCP Name</span>
+      </div>
+      <div class="col-md-3 col-sm-3 header--type">
+        <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="doctor.credentials">Credentials</span>
+      </div>
+      <div class="col-md-3 col-sm-2 header--type">
+        <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="doctor.npi-number">NPI Number</span>
+      </div>
+      <div class="col-md-3 col-sm-3 header--type">
+        <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="doctor.city">City</span>
+      </div>
+      <div class="col-md-3 col-sm-3 header--type">
+        <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="doctor.state">State</span>
+      </div>
+      <div class="col-md-1 col-sm-2 header--type">
+        <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" translate="doctor.status">Status</span>
+      </div>
+      <div class="clr"></div>
+    </div>
+
+    <div class="dashboard__manage-view--list" ng-repeat="hcp in hcps" ng-click="hcp.isDeleted || selectHcp(hcp)" ng-readonly="true" ng-class="{'inactive': hcp.isDeleted}">    
+      <div class="col-md-3 col-sm-3 reset-padding">
+        <span class="main-prim-info">{{hcp.lastName}}, {{hcp.firstName}}</span>
+      </div>
+      <div class="col-md-3 col-sm-3 reset-padding centered">
+        <span class="impo-highlight">{{::hcp.credentials}}</span>
+      </div>
+      <div class="col-md-3 col-sm-2 reset-padding centered">
+        <span class="short-info">{{hcp.npiNumber}}</span>
+      </div>
+
+      <div class="col-md-3 col-sm-3 reset-padding centered">
+        <span class="short-info">{{hcp.city}} </span>
+      </div>
+
+      <div class="col-md-3 col-sm-3 reset-padding centered">
+        <span class="short-info">{{hcp.state}}</span>
+      </div>
+
+      <div class="col-md-1 col-sm-2 reset-padding centered">
+        <span class="short-info active centered" ng-if="!hcp.isDeleted" translate="doctor.status-type.active"></span>
+        <span class="short-info inactive centered" ng-if="hcp.isDeleted" translate="doctor.status-type.inactive"></span>
+      </div>
+      <div class="clr"></div>
+    </div>
+    <div class="col-md-16 col-sm-16 empty-list-message" ng-if="!hcps || hcps.length === 0">
+      <span translate="doctor.no-hcp-found"></span>
+    </div>
+    <div class="dashboard__manage-view--pagination">
+      <div class="col-md-16 col-sm-16 reset-padding-right">
+        <div class="navbar-right">
+          <span class="record-found" ng-if="hcps.length > 0">{{total}} HCPs</span>
+          <span class="record-found" ng-if="hcps.length > 0">Found</span>
+          <span ng-show="hcps.length > 0">
+            <span class="navigaion-link cursor-pointer" ng-class="{ 'inactive': !(currentPageIndex > 1) }" ng-click="searchHcps('PREV')">Previous</span>
+            <span class="navigaion-no">{{currentPageIndex}}</span>
+            <span class="navigaion-link cursor-pointer" ng-class="{ 'inactive': !(pageCount > currentPageIndex) }" ng-click="searchHcps('NEXT')">Next</span>
+          </span>
+        </div>
+        <div class="clr"></div>
+      </div>
+    </div>
+  </div>
+</div>

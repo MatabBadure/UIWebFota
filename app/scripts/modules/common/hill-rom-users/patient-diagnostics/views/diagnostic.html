@@ -1,0 +1,176 @@
+<div class="container admin-user" ng-if="!isAddDiagnostic">
+  <div class="dashboard dashboard--content margin-top">
+    <div class="user-gen-details">
+    <span ng-class="{'monarchIcon': (getDeviceTypeforBothIcon() =='MONARCH'), 'visivestIcon': (getDeviceTypeforBothIcon() =='VEST'), 'bothdeviceIcon': (getDeviceTypeforBothIcon() =='ALL')}">
+      <span class="user-gen-details--name">{{::patient.firstName}} {{::patient.lastName}}</span>
+      <span class="user-gen-details--hr-id">{{::patient.hillromId}}</span>
+      </span>
+    </div>
+
+    <div class="col-md-16 col-xs-16 padding0">
+      <div class="patient_wrapper reset-padding">
+        <div ng-class="" class="col-md-16 col-xs-16 reset-padding pointer-fill-event">
+          <div class="bar_graph_header">
+            <div class="col-md-5 col-sm-7 col-xs-5 left_header_barchart padding0">
+              <div class="">
+                <ul class="nav nav-pills">
+                  <li><a href="" ng-click="switchView('grid')" translate="" ng-class="{'active': viewType === 'grid'}">Grid View</a></li>
+                  <!-- Below is When Graph Comes-->
+                  <!-- <li><a href="" ng-click="switchView('graph')" translate="" ng-class="{'active': viewType === 'graph'}">Graph View</a></li> -->
+                </ul>
+              </div>
+            </div>
+            <div class="col-md-11 col-sm-9 col-xs-11 right_header_barchart cyan-blue-light">
+              <ul class="nav nav-pills pull-right">
+                <li>
+                  <span ng-if="fromDate !== toDate" class="pull-left margin_tp15 ng-scope">
+                    <span class="date ng-binding">{{fromDate}}</span> - <span class="date ng-binding">{{toDate}}</span>
+                  </span>
+                  <span ng-if="fromDate === toDate" class="pull-left margin_tp15 ng-scope">
+                    <span class="date ng-binding">{{fromDate}}</span>
+                  </span>
+                </li>
+              
+                <li id="dp1" class="" role="">
+                  <a options="opts" parentel="#dp1" ng-model="dates" class="date-picker margin_tp13 ng-pristine ng-untouched ng-valid ng-isolate-scope" date-range-picker="" id="dp1cal" href=""><span class="icon-calendar"></span></a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-16 col-xs-16 ng-scope" ng-if="testResults && testResults.length === 0">
+          <div class="graph_nodata">
+            <span class="noData_text"> No Data Available!</span>
+          </div>
+          <!-- <div  class="">
+            <span class="noData_text" style="font-size:18px;position:relative;top:12px">No Data Available!</span>
+          </div> -->
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-view ng-scope">
+      <div class="col-md-16 col-sm-16 col-xs-16 text-center reset-padding flex1 margin-top" ng-if="testResults && testResults.length !== 0">
+        <div class="col-md-3 col-sm-2 col-xs-4 cyan-blue-light text-center  border-right">
+          <span>Date</span>
+        </div>
+        <div class="col-md-6 col-sm-7 col-xs-5 cyan-blue-light text-center border-right">
+          <span>Test Results</span>
+        </div>
+        <div class="col-md-4 col-sm-4 col-xs-4 cyan-blue-light text-center  border-right">
+          <span>Notes </span>
+        </div>
+        <div class="col-md-3 col-sm-3 col-xs-3 cyan-blue-light text-center  border-right">
+          <span>Last updated by</span>
+        </div>
+      </div>
+
+      <div  class="col-md-16 col-sm-16 col-xs-16 reset-padding survey_grey_color flex1 ng-scope" ng-repeat="testResult in testResults">
+        <div class="col-md-3 col-sm-2 col-xs-4 border-right text-center">
+          <div class="col-md-16 reset-padding center">
+            <span>{{testResult.testResultDate}}</span>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-7 col-xs-5 padding0 cyan-blue-light border-right">
+          <div class="col-md-16 col-sm-16 col-xs-16 padding0">
+            <div class="col-md-6 col-sm-5 col-xs-16">
+              <div class="col-md-10 col-sm-12 col-xs-10 dashboard__form--label reset-padding">
+                <span >FVC (L)</span>
+              </div>
+              <div class="col-md-6 col-sm-4 col-xs-6 dashboard__form--label reset-padding">
+                <span>{{testResult.fvc_L}}</span>
+              </div>
+            </div>
+            <div class="col-md-10 col-sm-11 col-xs-16">
+              <div class="col-md-4 col-sm-4 col-xs-10 dashboard__form--label reset-padding pull-right">
+                <span> {{testResult.fvc_P}} %</span>
+              </div>
+              <div class="col-md-12 col-sm-12 col-xs-6 dashboard__form--label reset-padding pull-right">
+                <span class="ng-scope">FVC ( Predicted )</span>
+              </div>
+              <div>
+              </div>
+            </div>
+          </div> 
+          <div class="col-md-16 col-sm-16 col-xs-16 padding0">
+            <div class="col-md-6 col-sm-5 col-xs-16">
+              <div class="col-md-10 col-sm-12 col-xs-10 dashboard__form--label reset-padding">
+                <span >FEV1 (L)</span>
+              </div>
+              <div class="col-md-6 col-sm-4 col-xs-6 dashboard__form--label reset-padding">
+                <span>{{testResult.fev1_L}}</span>
+              </div>
+            </div>
+            <div class="col-md-10 col-sm-11 col-xs-16">
+              <div class="col-md-4 col-sm-4 col-xs-10 dashboard__form--label reset-padding pull-right">
+                <span>{{testResult.fev1_P}} %</span>
+              </div>
+              <div class="col-md-12 col-sm-12 col-xs-6 dashboard__form--label reset-padding pull-right">
+                <span class="ng-scope">FEV1 ( Predicted )</span>
+              </div>
+              <div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-16 col-sm-16 col-xs-16 padding0">
+            <div class="col-md-6 col-sm-5 col-xs-16">
+              <div class="col-md-10 col-sm-12 col-xs-10 dashboard__form--label reset-padding">
+                <span >PEF (L/Min)</span>
+              </div>
+              <div class="col-md-6 col-sm-4 col-xs-6 dashboard__form--label reset-padding">
+                <span>{{testResult.pef_L_Min}}</span>
+              </div>
+            </div>
+            <div class="col-md-10 col-sm-11 col-xs-16">
+              <div class="col-md-4 col-sm-4 col-xs-10 dashboard__form--label reset-padding pull-right">
+                <span>{{testResult.pef_P}} %</span>
+              </div>
+              <div class="col-md-12 col-sm-12 col-xs-6 dashboard__form--label reset-padding pull-right">
+                <span class="ng-scope">PEF ( Predicted )</span>
+              </div>
+              <div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-16 col-sm-16 col-xs-16 padding0">
+            <div class="col-md-10 col-sm-16 col-xs-16 col-sm-offset-0 col-md-offset-6">
+              <div class="col-md-4 col-sm-3 col-xs-5 dashboard__form--label reset-padding pull-right">
+                <span class="margin-l">{{testResult.fev1_TO_FVC_RATIO}} %</span>
+              </div>
+              <div class="col-md-12 col-sm-13 col-xs-11 dashboard__form--label reset-padding pull-right">
+                <span class="ng-scope">FEV1/FVC ( Predicted )</span>
+              </div>
+              <div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-4 col-xs-4 text-center padding10 word_wrap border-right">
+          <div class="col-md-16 col-sm-16 col-xs-16 dashboard__form--label reset-padding pull-right">
+            <span>{{testResult.comments}}</span>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-3 col-xs-3 word_wrap text-center padding10" ng-hide="userRole === 'ADMIN' || userRole === 'ACCT_SERVICES' || userRole === 'ASSOCIATES' || userRole === 'CUSTOMER_SERVICES'"> 
+          <div class="col-md-16 col-sm-16 col-xs-16 dashboard__form--label reset-padding pull-right">
+            <span ng-bind="testResult.lastUpdatedBy"></span>
+            <div  ng-if="!isPatinetLogin">
+              <a href="" ng-click="openEditDiagnostics(testResult.id)">Edit</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-16 col-sm-16 col-xs-16 margin-top tab-margin-bottom20 ng-scope" ng-hide="userRole === 'ADMIN' || userRole === 'ACCT_SERVICES' || userRole === 'ASSOCIATES' || userRole === 'CUSTOMER_SERVICES'">
+      <a class="dashboard__form--type survey_grey_color pull-right" style="color: #7ca3dc;font-size: 15px;text-decoration: initial;padding-bottom: 10px;">Would you like to add test results ?</a>
+      <div class="btn_group patient_dashdoard_btns">
+        <div class="pull-right">
+          <button class="hillrom-btn btn-submit margin0 float-right ng-scope dropdown-toggle" type="button" id="add-test-result-button" ng-click="addUpdateDiagnostics()">Add Test Result</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div ng-if="isAddDiagnostic">
+<ng-include src="'scripts/modules/common/clinicadmin-hcp/patient-diagnostics/views/diagnosticadd.html'"></ng-include>
+</div>

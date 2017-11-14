@@ -1,0 +1,144 @@
+
+<ng-include src="'scripts/components/navbar/navbarclinicadmin.html'"></ng-include>
+<ng-include src="'scripts/modules/clinicadmin/profile/navbar/navbar.html'"></ng-include><div class="dashboard dashboard--content padding-bottom-ls">
+
+    <div class="container dashboard__form">      
+      <div>
+        <div class="col-md-16 col-sm-16 margin-top reset-padding">
+          <div class="col-md-7 col-sm-7 reset-padding">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+              <span class="" translate="profile.first-name"></span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding">
+              <span>{{user.firstName}}</span>
+            </div>
+          </div>
+
+          <div class="col-md-7 col-sm-7 col-md-offset-2 reset-padding">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+              <span class="" translate="profile.middle-name"></span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding">
+              <span>{{user.middleName}}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-16 col-sm-16 reset-padding margin-top">
+          <div class="col-md-7 col-sm-7 reset-padding">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+              <span class="" translate="profile.last-name"></span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding">
+              <span>{{user.lastName}}</span>
+            </div>
+          </div>
+          <div class="col-md-7 col-sm-7 reset-padding col-md-offset-2">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+              <span class="" translate="profile.view-role-text"></span>
+            </div>
+            <div class="col-md-6 col-sm-6 dashboard__form--label-val reset-padding">
+              <span nf-if="user.role === 'CLINIC_ADMIN'">Clinic Admin</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-16 col-sm-16 reset-padding margin-top">
+          <div class="col-md-7 col-sm-7 reset-padding">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+              <span class="" translate="profile.email"></span>
+            </div>
+            <div class="col-md-10 col-sm-10 dashboard__form--label-val reset-padding wrapTextForSmallScreens">
+              <span>{{user.email}}</span>
+            </div>
+          </div>
+
+           <div class="col-md-7 col-sm-7 reset-padding col-md-offset-2">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+              <span class="" translate="profile.phone"></span>
+            </div>
+            <div class="col-md-6 col-sm-6 dashboard__form--label-val reset-padding" >
+              <span class="">{{user.mobilePhone}}</span>
+            </div>
+          </div>
+        </div>
+      <div class="clr"></div> 
+    </div>
+
+    <div class="col-md-16 col-sm-16 margin-top reset-padding">
+      <div class="">
+        <buton class="hillrom-btn btn-primary float-right btn-margin-left" ng-click="editMode()" translate="profile.edit-button-text">Edit</buton>
+        <div class="clr"></div>
+      </div>
+    </div>
+    </div>
+</div>
+
+
+<div class="dashboard dashboard--content">
+  <div class="container dashboard__manage-view margin-top-xl">
+    <div class="dashboard__manage-view--header">
+      <div class="col-md-2 col-sm-2 header--type">
+        <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="profile.clinic.clinic-name"></span>
+      </div>
+      <div class="col-md-2 col-sm-2 header--type">
+        <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="profile.clinic.address"></span>
+      </div>
+      <div class="col-md-2 col-sm-2 header--type">
+        <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="profile.clinic.city"></span>
+      </div>
+      <div class="col-md-2 col-sm-2 header--type">
+        <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="profile.clinic.state"></span>
+      </div>
+      <div class="col-md-2 col-sm-2 header--type">
+        <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="profile.clinic.phoneNumber"></span>
+      </div>
+      <div class="col-md-2 col-sm-2 header--type">
+        <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="profile.clinic.type"></span>
+      </div>
+      <div class="col-md-2 col-sm-2 header--type">
+        <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" translate="profile.clinic.hillRom-id"></span>
+      </div>
+      <div class="col-md-2 col-sm-2 header--type">
+        <span ng-class="{'sort-icon--default' : sortIconDefault, 'sort-icon-down' : sortIconDown, 'sort-icon-up': sortIconUp}" ng-click="sortType()" translate="profile.clinic.status"></span>
+      </div>
+      <div class="clr"></div>
+    </div>
+
+    <div class="dashboard__manage-view--list" ng-repeat="clinic in clinics | filter: {name: searchItem}" ng-click="clinic.deleted || selectClinic(clinic)" ng-class="{'inactive': clinic.deleted}">
+      <div class="col-md-2 col-sm-2 reset-padding centered">
+        <span class="main-prim-info">{{clinic.name}}</span>
+      </div>
+      <div class="col-md-2 col-sm-2 reset-padding centered">
+        <span class="short-info">{{clinic.address}}</span>
+      </div>
+      <div class="col-md-2 col-sm-2 reset-padding centered">
+        <span class="short-info">{{clinic.city}}</span>
+      </div>
+
+      <div class="col-md-2 col-sm-2 reset-padding centered">
+        <span class="short-info">{{clinic.state}}</span>
+      </div>
+
+      <div class="col-md-2 col-sm-2 reset-padding centered">
+        <span class="short-info">{{clinic.phoneNumber}}</span>
+      </div>
+
+      <div class="col-md-2 col-sm-2 reset-padding centered">
+        <span class="short-info" ng-if="clinic.parent" translate="profile.clinic.clinicType.parent"></span>
+        <span class="short-info" ng-if="!clinic.parent" translate="profile.clinic.clinicType.satellite"></span>
+      </div>
+
+      <div class="col-md-2 col-sm-2 reset-padding centered">
+        <span class="impo-highlight">{{clinic.hillromId}}</span>
+      </div>
+
+      <div class="col-md-2 col-sm-2 reset-padding centered">
+        <span class="short-info active" ng-if="!clinic.deleted" translate="profile.clinic.status-type.active"></span>
+        <span class="short-info inactive" ng-if="clinic.deleted" translate="profile.clinic.status-type.inactive"></span>
+      </div>
+
+      <div class="clr"></div>
+    </div>
+  </div>
+</div>

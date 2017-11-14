@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hillromvestApp')
-    .config(function ($stateProvider) {
+    .config(['$stateProvider', function ($stateProvider) {
         $stateProvider
             .state('activate', {
                 parent: 'account',
@@ -12,7 +12,7 @@ angular.module('hillromvestApp')
                 },
                 views: {
                     'content@': {
-                        templateUrl: 'scripts/app/account/activate/activate.html',
+                        templateUrl: 'scripts/account/activate/activate.html',
                         controller: 'ActivationController'
                     }
                 },
@@ -23,5 +23,5 @@ angular.module('hillromvestApp')
                     }]
                 }
             });
-    });
+    }]);
 

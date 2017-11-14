@@ -1,0 +1,182 @@
+<ng-include src="'scripts/components/navbar/navbar.html'"></ng-include>
+<admin-patient-navbar></admin-patient-navbar>
+
+<div class="container admin-user ng-scope">
+  <div class="col-md-16 col-sm-16 margin-top reset-padding">
+   <div class="user-gen-details">
+     <span class="user-gen-details--name ng-binding">{{slectedPatient.firstName}} {{slectedPatient.lastName}}</span>
+     <span class="user-gen-details--hr-id ng-binding">{{slectedPatient.hillromId}}</span>
+   </div>
+  </div>
+</div>
+
+<div class="dashboard dashboard--content padding-bottom-ls ng-scope">
+  <div class="container dashboard__form">
+    <div>
+      <div class="col-md-16 col-sm-16 reset-padding">
+        <span  class="dashboard__form--type ng-scope">Updated Prescription Form</span>
+      </div>
+
+      <div class="col-md-16 col-sm-16 reset-padding margin-top">
+        <div class="col-md-7 col-sm-7 reset-padding">
+          <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+            <span class="ng-scope">Patient Name</span>
+          </div>
+          <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding">
+            <input type="text" name="patientName" class="light_grey ng-pristine ng-untouched ng-isolate-scope ng-valid-minlength ng-valid-maxlength ng-valid ng-valid-required" ng-disabled="true" value="{{slectedPatient.firstName}} {{slectedPatient.lastName}}">
+          </div>
+        </div>
+        <div class="col-md-7 col-sm-7 col-sm-offset-2 reset-padding col-md-offset-2">
+          <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+            <span class="ng-scope">Patient DOB</span>
+          </div>
+          <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding">
+            <input type="text" name="patiendDob" class="light_grey ng-pristine ng-untouched ng-valid ng-isolate-scope ng-valid-minlength ng-valid-maxlength" ng-disabled="true" value="{{slectedPatient.dob}}">
+          </div>
+        </div>
+      </div>       
+      <div class="clr"></div>
+
+      <div class="col-md-16 col-sm-16 reset-padding margin-top">
+        <div class="col-md-7 col-sm-7 reset-padding">
+          <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+            <span class="ng-scope">Prescriber Name</span>
+          </div>
+          <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding">
+            <input type="text" name="prescriberName" class="light_grey ng-pristine ng-untouched ng-isolate-scope ng-valid-minlength ng-valid-maxlength ng-valid ng-valid-required" ng-disabled="true" value="{{userFullName}}">
+          </div>
+        </div>
+        <div class="col-md-7 col-sm-7 col-sm-offset-2 reset-padding col-md-offset-2">
+          <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+            <span class="ng-scope">Date</span>
+          </div>
+          <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding">
+            <input type="text" ng-maxlength="50" ng-minlength="1" name="date" class="light_grey ng-pristine ng-untouched ng-valid ng-isolate-scope ng-valid-minlength ng-valid-maxlength" ng-model="currentDate" ng-disabled="true">
+          </div>
+        </div>
+      </div> 
+      <div class="clr"></div>
+			<div class="col-md-16 col-sm-16 margin-top reset-padding">
+				<span translate="" class="dashboard__form--type ng-scope">New Protocol</span>
+			</div>
+      <div class="dashboard dashboard--content col-md-16 col-sm-16">
+   			<div class="dashboard__manage-view margin-top">
+      		<div class="dashboard__manage-view--header no_border care_plan_and_device">
+		        <div class="col-md-3 col-sm-3 header--type text-align-l">
+		          <span translate="" class="ng-scope">Type</span>
+		        </div>
+		        <div class="col-md-3 col-sm-3 header--type text-align-l">
+		          <span translate="" class="ng-scope">Treatments Per Day</span>
+		        </div>
+		        <div class="col-md-3 col-sm-3 header--type text-align-l">
+	            <span translate="" class="ng-scope">Minutes Per Treatment</span>
+	          </div>
+	          <div class="col-md-3 col-sm-3 header--type text-align-l">
+	            <span translate="" class="ng-scope">Frequency Per Treatment</span>
+		        </div>
+		        <div class="col-md-3 col-sm-3 header--type">
+		          <span translate="" class="ng-scope">Pressure Per Treatment</span>
+		        </div>
+        		<div class="clr"></div>
+      		</div>
+    		</div>
+  		</div>
+		  <div class="clr"></div>
+      <div class="admin-user">
+		    <div class="col-md-16 col-sm-16 border-top protocol_list_container" ng-class="{'no_border' : !protocols}">
+          <div class="col-md-3 col-sm-3">
+            <div class="col-md-16 col-sm-16 protocol-list__treatment-day protocol-list no_border text-align-l" ng-repeat="protocol in protocols" ng-class="{'list-inactive':protocol.deleted, 'last' : $last}">
+              <span class="protocol-list--value"> {{protocol.type}} {{protocol.treatmentLabel}}</span>
+            </div>
+          </div>
+          <div class="col-md-2 col-sm-2 treatments_per_day_count col-sm-offset-3 col-md-offset-3">
+            <span class="v_middle">{{protocols[0].treatmentsPerDay}}</span>
+          </div>
+          <div class="col-md-11 col-sm-11 col-md-offset-2 col-md-offset-2">
+            <div class="col-md-16 protocol-list no_border" ng-repeat="protocol in protocols" ng-class="{'list-inactive':protocol.deleted, 'last' : $last}">
+            <div class="col-md-5 col-sm-5 protocol-list__strt-date">
+              <span class="protocol-list--value"> {{protocol.minMinutesPerTreatment}}</span>      
+            </div>
+            <div class="col-md-5 col-sm-5 protocol-list__end-date">
+              <span ng-if="protocol.type === 'Custom'" class="protocol-list--value"> {{protocol.minFrequency}}</span>
+              <span ng-if="protocol.type === 'Normal'" class="protocol-list--value"> {{protocol.minFrequency}}-{{protocol.maxFrequency}}</span>
+            </div>
+            <div class="col-md-5 col-sm-5 protocol-list__end-date">
+              <span ng-if="protocol.type === 'Custom'" class="protocol-list--value"> {{protocol.minPressure}}</span>
+              <span ng-if="protocol.type === 'Normal'" class="protocol-list--value"> {{protocol.minPressure}}-{{protocol.maxPressure}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <form name="authorizeForm" ng-submit="openVerificationModal()" novalidate>
+      <div class="row lebel-indent margin-top col-md-16 col-sm-16 margin-bottom15 ng-scope">
+        <div>
+  		    <input type="checkbox" name="termsAndCondition" class="ng-pristine ng-untouched ng-valid" value="false" ng-model="terms" ng-required="!terms">
+  		    <span class="ng-scope link-text termsandconditon_color">Accept Terms and Conditions</span>
+        </div>
+        <div>
+          <span class="has-error" ng-if="authorizeForm.termsAndCondition.$error.required && isAuthorizeFormSubmited">Please indicate that you have read and agree to the Terms and Conditions.</span>
+        </div>
+      </div>
+      <div class="row lebel-indent col-md-16 margin-bottom15 ng-scope dark_grey_text_color">
+  		  <p>1. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim </p>
+  		  <p>2. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim </p>
+  		  <p>3. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim </p>
+      </div>
+
+      <div class="col-md-16 col-sm-16 margin-top reset-padding">
+        <div class="">
+          <input type="submit" class="hillrom-btn btn-primary float-right btn-margin-left"  value="Electronically Sign">
+          <input type="button" class="hillrom-btn btn-secondary float-right" ng-click="cancelProtocolUpdate()" value="Cancel">
+          <div class="clr"></div>
+        </div>
+      </div>
+    </form>
+    <div claass="clr"></div>
+    </div>
+  </div>
+</div>
+
+<div ng-show="isVerificationModal" class="modal">
+  <div class="modal__dialog">
+    <div class="modal__content">
+      <header class="modal__header">
+        <button type="button" class="modal__close" data-dismiss="modal" ng-click="isVerificationModal= false">×</button>
+         <p class="ng-scope">Login Verification</p>
+      </header>
+      <div class="modal__body">
+        <div class="modal--message dark_grey_text_color14 ng-scope">We need to verify that you are not a robot, but a human being!</div>
+        <form ng-submit="updateProtocol()" name="protocolVerificationForm" novalidate>
+          <div class="col-md-16 col-xs-16 margin-top reset-padding">
+            <div class="col-md-5 col-xs-5 dark_grey_text_color14 reset-padding">Email Address</div>
+            <div class="col-md-11 col-xs-11">
+              <input type="text" name="patientName" class="light_grey ng-pristine ng-untouched ng-isolate-scope ng-valid-minlength ng-valid-maxlength ng-valid ng-valid-required col-md-16 col-xs-16" ng-model="userEmail" ng-disabled="true">
+            </div>
+          </div>
+          <div class="col-md-16 col-xs-16 margin-top reset-padding">
+            <div class="col-md-5 col-xs-5 dark_grey_text_color14 reset-padding">Password</div>
+            <div class="col-md-11 col-xs-11">
+              <input type="password" name="password" class="ng-pristine ng-untouched ng-isolate-scope ng-valid-minlength ng-valid-maxlength ng-valid ng-valid-required col-md-16 col-xs-16" ng-model="password" required value="">
+              <div ng-if="protocolVerificationForm.$invalid">
+                <span class="has-error" ng-if="protocolVerificationForm.password.$error.required && isProtocolSubmited"> Please enter the password for your Visi-View account.</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-16 col-sm-16 col-xs-16 margin-top reset-padding">
+            <div class="col-md-5 col-sm-5 col-xs-5 dark_grey_text_color14 reset-padding">Captcha</div>
+            <div class="col-md-11 col-sm-11 col-xs-11">
+             <captcha valid="captchaValid"></captcha>
+            </div>
+          </div>
+          <div class="row modal--custom-btn">
+            <input type="submit"class="hillrom-btn btn-submit float-right" value="Confirm and Generate">
+          </div>
+        </form>
+      </div>
+      <footer class="modal__footer">
+      </footer>
+    </div>
+  </div>
+</div>

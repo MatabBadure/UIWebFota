@@ -3,8 +3,14 @@
     <div class="collapse navbar-collapse patient-user__navbar" id="navbar-collapse">
       <ul class="nav navbar-nav">
         <li >
-          <a ng-class="{active: isActive('patientOverview')}" ng-href="" ng-click="switchPatientTab('patientOverview')">
+          <a ng-class="{active: isActive('hcpProfile')}" ng-href="" ng-click="switchHCPTab('hcpProfile')">
             <span class="" translate="doctor.tab.hcp-overview">HCP Profile</span>
+          </a>
+        </li>
+
+        <li >
+          <a ng-class="{active: isActive('associatedClinic')}" ng-href="" ng-click="switchHCPTab('associatedClinic')">
+            <span class="" translate="doctor.tab.associated-clinic">HCP Profile</span>
           </a>
         </li>
       </ul>

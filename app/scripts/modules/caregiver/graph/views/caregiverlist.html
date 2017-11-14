@@ -1,0 +1,79 @@
+<ng-include src="'scripts/components/navbar/navbar.html'"></ng-include>
+<div class="col-md-16 col-sm-16 patient-caregiver">
+  <span class="patient-caregiver--title" translate="patient.caregiver-title"></span>
+  <div class="dashboard dashboard--content">
+    <div class="dashboard__manage-view margin-top">
+      <div class="dashboard__manage-view--header">
+        <div class="col-md-4 col-sm-4 header--type pull-left-mob width120">
+          <span translate="patient.caregiver-caption.caregiver-name"></span>
+        </div>
+        <div class="col-md-4 col-sm-4 header--type none">
+          <span translate="patient.caregiver-caption.address"></span>
+        </div>
+        <div class="col-md-4 col-sm-4 header--type none">
+          <span translate="patient.caregiver-caption.contact-details"></span>
+        </div>
+        <div class="col-md-3 col-sm-2 header--type pull-left-mob width120">
+          <span translate="patient.caregiver-caption.relationship"></span>
+        </div>
+        <div class="clr"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="clearfix col-md-16 col-sm-16 caregiver-list" ng-repeat="caregiver in caregivers track by $index" ng-if="!caregiver.user.deleted"> 
+    <div class="col-md-4 col-sm-4 caregiver-list__detail width120 pull-left-mob">
+      <span class="caregiver-list__detail--name">{{::caregiver.user.lastName}}, {{::caregiver.user.firstName}}</span>
+      <span class="caregiver-list__detail--email">{{::caregiver.user.email}}</span>
+    </div>
+    <div class="col-md-4 col-sm-4 caregiver-list__address none">
+      <span class="caregiver-list__address--primary" ng-if="caregiver.user.address">{{::caregiver.user.address}}</span>
+      <span class="caregiver-list__address--secondary" ng-if="caregiver.user.city">{{::caregiver.user.city}}
+        <span ng-if="caregiver.user.city && caregiver.user.state">,</span>
+        <span ng-if="caregiver.user.state">{{::caregiver.user.state}} </span></span>
+      </div>
+      <div class="col-md-4 col-sm-4 caregiver-list__phone none">
+        <div class="desc-text" translate="patient.caregiver-caption.phone-number"></div>
+        <div class="contact-detail">{{::caregiver.user.primaryPhone}}</div>
+        <div class="desc-text" translate="patient.caregiver-caption.mobile-number"></div>
+        <div class="contact-detail">{{::caregiver.user.mobilePhone}}</div>
+      </div>
+      <div class="col-md-3 col-sm-2 caregiver-list__type pull-left-mob">
+        <span>{{::caregiver.relationshipLabel}}</span>
+      </div>
+
+   <div class="col-md-1 col-sm-2 caregiver-list__delete text-right-mob">
+        <span class="icon-edit-icon" ng-if="!(caregiverID)" ng-click="goToCaregiverEdit(caregiver.user.id)"></span>
+        <span class="icon-delete-icon" ng-if="!(caregiverID)" ng-click="openModalCaregiver(caregiver.user.id, $index)"></span>
+      </div>
+    </div>
+    
+  </div>
+  
+  <div class="col-md-16 col-sm-16 empty-list-message" ng-if="!caregivers.length">
+      <span translate="patient.empty-caregiver-list-message"></span>
+    </div>
+    <div class="col-md-16 col-sm-16 reset-padding caregiver-link" ng-if="!(caregiverID)">
+          <buton class="hillrom-btn btn-primary float-right" ng-click="linkCaregiver()" translate="patient.link-caregiver"></buton>
+    </div>
+  </div>
+</div>
+<div ng-if="showModalCaregiver" class="modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true">
+  <div class="modal__dialog">
+    <div class="modal__content">
+      <header class="modal__header">
+        <button type="button" class="modal__close" data-dismiss="modal" ng-click="closeModalCaregiver()">&times;</button>
+         <p translate="patient.delete-caregiver.warning"></p>
+      </header>
+      <div class="modal__body">
+         <div class="modal--message" translate="patient.delete-caregiver.message"></div>
+         <div class="row modal--custom-btn">
+          <buton class="hillrom-btn btn-submit float-right" ng-click="disassociateCaregiver(deleteCaregiver.id, deleteCaregiver.index)">Yes</buton>
+          <buton class="hillrom-btn btn-submit float-right" data-dismiss="modal" ng-click="closeModalCaregiver()">No</buton>
+         </div>
+      </div>
+      <footer class="modal__footer">
+      </footer>
+    </div>
+  </div>
+</div>

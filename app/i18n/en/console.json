@@ -1,0 +1,54 @@
+{
+	"console":{
+		"page-title":{
+			"survey": "Hillrom | Survey",
+			"login-analytics": "Hillrom | Analytics",
+			"bottom-banner": "Hillrom | Banner",
+			"benchmarking": "Hillrom | Benchmarking",
+			"announcements": "Hillrom | Announcements"
+			},
+		"console-tabs":{
+			"survey": "Survey",
+			"banner": "Bottom Banner",
+			"login-analytics": "Login Analytics" ,
+			"publish-banner": "Publish Banner",
+			"already-published": "Already Published",
+			"expired-banner": "Expired Banner",
+			"banner-setting": "Banner Setting",
+			"patient-survey": "Survey"
+			},
+		"analytics":{
+			"legends":{
+				"all": "All",
+				"patient": "Patient",
+				"hcp": "HCP",
+				"clinicadmin": "Clinic Admin",
+				"caregiver": "Caregiver"
+			},
+			"views":{
+				"day": "Day",
+				"week": "Week",
+				"month": "Month",
+				"year": "Year"
+			}
+		},
+		"survey":{
+			"general-info": "General Info",
+			"required-field": "Required Field",
+			"usage-info": "Usage Info",
+			"not-available": "Not Available",
+			"yes": "Yes",
+			"no": "No",
+			"strongly-disagree": "Strongly Disagree",
+			"somewhat-disagree": "Somewhat Disagree",
+			"neutral": "Neutral",
+			"somewhat-agree": "Somewhat Agree",
+			"strongly-agree": "Strongly Agree",
+			"unable-to-assess": "Unable to Assess",
+			"question-answer": "Please answer the following questions by choosing any one option.",
+			"clinical-follow-up": "Clinical follow-up",
+			"question-info": "The following questions ask about the Vest Airway Clearance System training session. Please answer the following questions by choosing Yes or No. If your response is No, Please feel free to explain or comment on the experience.",
+			"usage-info-message": "Please type the reading from the total use display in field below. The display reads to the tength of the hour. Confirm your device is turned on, at the Normal/Custom screen press the OFF button to obtain the hour meter reading."
+		}	
+	}
+}
