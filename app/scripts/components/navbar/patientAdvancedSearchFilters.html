@@ -52,7 +52,6 @@
           on-reset="onReset()"
           on-clear="onClear()"
           on-search-change="onSearchChange()"
-          is-disabled = true
           class="advanced-dropdown-country"
         >
         </div>
@@ -183,11 +182,8 @@
                   </div>
                        <div class="col-md-4 col-sm-4">
               <span class="advanced-filters" translate="">Diagnosis</span>
-            <div class="form__select__input--option reset-padding selected-box-container">
-              <div class="custom-dropdown" >
-                <select name="type" ng-model="patientAdvancedFilters.diagnosis"  ng-options="item.type_code_value as item.type_code for item in adherenceDays">
-                </select>
-              </div>
+            <div class="form__select__input--option reset-padding selected-box-container dynamic-seach-list">
+               <input class="form-control" type="text" ng-model="searchDiagnosis" typeahead="diagnosis as diagnosis.code + ' &nbsp :' + diagnosis.description for diagnosis in getMatchingDiagnosisList($viewValue)" typeahead-on-select="showAssociateHCPModal($item)" placeholder="{{'clinic.placeholder.hcp-search' | translate}}">
             </div>
             
           </div>
@@ -290,15 +286,20 @@
                           <span class="advanced-filters">HMR Range</span>
                           <div class="col-md-4">
                             <span class="advanced-filters">Min</span>
-                            <input class="" type="text" validate-on-blur ng-model="patientAdvancedFilters.minHMRRange" name="minHMRRange" min="1" ng-change="maxRangeCheck()" ng-readonly="patientStatus.editMode">
+                            <input class="" type="number" validate-on-blur ng-model="patientAdvancedFilters.minHMRRange" name="minHMRRange" ng-keyup="maxRangeCheck()" ng-change="maxRangeCheck()" ng-readonly="patientStatus.editMode">
                           </div>
                           <div class="col-md-4">
                             <span class="advanced-filters">Max</span>
-                            <input class="" type="text" validate-on-blur ng-model="patientAdvancedFilters.maxHMRRange" name="maxHMRRange" ng-change="maxRangeCheck()" min="{{patientAdvancedFilters.minHMRRange+1}}"  ng-readonly="patientStatus.editMode">
-                            <span class="has-error" ng-show="hmrRangeFlag" >Max HMR Range should be greater than Min HMR Range
-                </span>
+                            <input class="" type="number" validate-on-blur ng-model="patientAdvancedFilters.maxHMRRange" name="maxHMRRange" ng-keyup="maxRangeCheck()" ng-change="maxRangeCheck()" ng-readonly="patientStatus.editMode">
+
                           </div>
-              
+                          <span class="has-error" ng-show="hmrRangeFlag" >Max HMR should be greater than Min HMR 
+                            </span>
+                            <span class="has-error" ng-show="minHmrInvalid" >Min HMR is invalid 
+                            </span>
+                            <span class="has-error" ng-show="maxHmrInvalid" >Max HMR is invalid
+                            </span>
+                                    
             </div>
              
         </div>
@@ -365,7 +366,7 @@
  <div  class="col-md-16 col-sm-16 padding10 survey_grey_color" style="padding-bottom:20px">
         <div class="col-md-16 margin-top reset-padding">
         <div class="">
-          <button type="submit" ng-click="advancedSearchPatients()" class="hillrom-btn btn-primary btn-margin-left float-right">Search Clinics</button>
+          <button type="submit" ng-disabled="hmrRangeFlag || dateFlag" ng-click="advancedSearchPatients()" class="hillrom-btn btn-primary btn-margin-left float-right">Search Clinics</button>
           <button type="submit" ng-click="initClinicAdvancedFilters()" class="hillrom-btn btn-primary btn-margin-left float-right">Reset Filters</button>
         </div>
       </div>
