@@ -21,7 +21,7 @@
                       <span>
 
                       <label class="radio advanced-filters-radio" ng-repeat="gender in genders">
-            <input type="radio" ng-model="patientAdvancedFilters.gender" name="protocolType" value="{{gender.name}}"><span class="cyan-blue-light advanced-filters">{{gender.name}}</span>
+            <input type="radio" ng-model="patientAdvancedFilters.gender" name="gender" value="{{gender.name}}"><span class="cyan-blue-light advanced-filters">{{gender.name}}</span>
         </label>
                       </span>
                     </div>
@@ -290,12 +290,12 @@
                           <span class="advanced-filters">HMR Range</span>
                           <div class="col-md-4">
                             <span class="advanced-filters">Min</span>
-                            <input class="" type="text" validate-on-blur ng-model="patientAdvancedFilters.minHMRRange" name="minHMRRange" min="1" ng-readonly="patientStatus.editMode">
+                            <input class="" type="text" validate-on-blur ng-model="patientAdvancedFilters.minHMRRange" name="minHMRRange" min="1" ng-change="maxRangeCheck()" ng-readonly="patientStatus.editMode">
                           </div>
                           <div class="col-md-4">
                             <span class="advanced-filters">Max</span>
-                            <input class="" type="text" validate-on-blur ng-model="patientAdvancedFilters.maxHMRRange" name="maxHMRRange" min="{{patientAdvancedFilters.minHMRRange+1}}" ng-readonly="patientStatus.editMode">
-                            <span class="has-error" ng-show="patientAdvancedFilters.maxHMRRange  < patientAdvancedFilters.minHMRRange" >Max HMR Range should be greater than Min HMR Range
+                            <input class="" type="text" validate-on-blur ng-model="patientAdvancedFilters.maxHMRRange" name="maxHMRRange" ng-change="maxRangeCheck()" min="{{patientAdvancedFilters.minHMRRange+1}}"  ng-readonly="patientStatus.editMode">
+                            <span class="has-error" ng-show="hmrRangeFlag" >Max HMR Range should be greater than Min HMR Range
                 </span>
                           </div>
               
@@ -320,8 +320,8 @@
                          <div class="form-group advanced-filters-radio-div">
                       <span>
 
-                      <label class="radio advanced-filters-radio-many" ng-repeat="value in noTransmissionResorded">
-            <input type="radio" ng-model="patientAdvancedFilters.noTransmissionRecorded" name="noTransmissionResorded" value="{{value.name}}"><span class="cyan-blue-light advanced-filters">{{value.name}}</span>
+                      <label class="radio advanced-filters-radio-many" ng-repeat="value in noTransmissionRecorded">
+            <input type="radio" ng-model="patientAdvancedFilters.noTransmissionRecorded" name="noTransmissionRecorded" value="{{value.name}}"><span class="cyan-blue-light advanced-filters">{{value.name}}</span>
         </label>
                       </span>
                     </div>
@@ -343,7 +343,7 @@
                       <span>
 
                       <label class="radio advanced-filters-radio-many" ng-repeat="value in belowTherapyMinutes">
-            <input type="radio" ng-model="patientAdvancedFilters.belowTherapyMin" name="belowTherapyMinutes" value="{{value.name}}"><span class="cyan-blue-light advanced-filters">{{value.name}}</span>
+            <input type="radio" ng-model="patientAdvancedFilters.belowTherapyMin" name="belowTherapyMin" value="{{value.name}}"><span class="cyan-blue-light advanced-filters">{{value.name}}</span>
         </label>
                       </span>
                     </div>
@@ -353,8 +353,8 @@
                          <div class="form-group advanced-filters-radio-div">
                       <span>
 
-                      <label class="radio advanced-filters-radio-many" ng-repeat="value in missedTherpyDays">
-            <input type="radio" ng-model="patientAdvancedFilters.missedTherapyDays" name="missedTherpyDays" value="{{value.name}}"><span class="cyan-blue-light advanced-filters">{{value.name}}</span>
+                      <label class="radio advanced-filters-radio-many" ng-repeat="value in missedTherapyDays">
+            <input type="radio" ng-model="patientAdvancedFilters.missedTherapyDays" name="missedTherapyDays" value="{{value.name}}"><span class="cyan-blue-light advanced-filters">{{value.name}}</span>
         </label>
                       </span>
                     </div>
@@ -366,7 +366,7 @@
         <div class="col-md-16 margin-top reset-padding">
         <div class="">
           <button type="submit" ng-click="advancedSearchPatients()" class="hillrom-btn btn-primary btn-margin-left float-right">Search Clinics</button>
-          <button type="submit" ng-click="resetAdvancedFilters()" class="hillrom-btn btn-primary btn-margin-left float-right">Reset Filters</button>
+          <button type="submit" ng-click="initClinicAdvancedFilters()" class="hillrom-btn btn-primary btn-margin-left float-right">Reset Filters</button>
         </div>
       </div>
 </div>
