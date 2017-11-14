@@ -827,11 +827,22 @@ $scope.setFirmwareRadioOption = function(){
       $scope.Fotadeviceslist = response.data;
       $scope.devicelistPageCount = $scope.Fotadeviceslist.totalPages;
       if($scope.Fotadeviceslist.content){
-       for (var i = 0 ; i < $scope.Fotadeviceslist.content.length; i++) { 
+       for (var i = 0 ; i < $scope.Fotadeviceslist.content.length; i++) {
+
+            if($scope.Fotadeviceslist.content[i].downloadStartDateTime === null){
+              $scope.Fotadeviceslist.content[i].currentDownloadStartDateTime = "00:00:00";
+              }else{
                 $scope.Fotadeviceslist.content[i].currentDownloadStartDateTime = dateService.getDateTimeFromTimeStamp($scope.Fotadeviceslist.content[i].downloadStartDateTime,patientDashboard.dateFormat,'-')
                 console.log("dateServiceStrt.",dateService.getDateTimeFromTimeStamp($scope.Fotadeviceslist.content[i].downloadStartDateTime,patientDashboard.dateFormat,'-'));
+              }
+                console.log("DnStrtTime",$scope.Fotadeviceslist.content[i].downloadStartDateTime);
+              
+            if($scope.Fotadeviceslist.content[i].downloadEndDateTime === null){
+              $scope.Fotadeviceslist.content[i].currentDownloadEndDateTime = "00:00:00";
+              }else{
                 $scope.Fotadeviceslist.content[i].currentDownloadEndDateTime = dateService.getDateTimeFromTimeStamp($scope.Fotadeviceslist.content[i].downloadEndDateTime,patientDashboard.dateFormat,'-')
                 console.log("dateServiceEnd.",dateService.getDateTimeFromTimeStamp($scope.Fotadeviceslist.content[i].downloadEndDateTime,patientDashboard.dateFormat,'-'));          
+                } 
               }
             }
     });
