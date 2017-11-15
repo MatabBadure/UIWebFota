@@ -59,7 +59,7 @@ angular.module('hillromvestApp')
         selectAll       : "Tick all",
         selectNone      : "Tick none",
         search          : "Type here to search...",
-        nothingSelected : "Nothing is selected",
+        nothingSelected : "",
         allSelected : "All Selected",
         Cancel : "Cancel",
           OK:"OK"

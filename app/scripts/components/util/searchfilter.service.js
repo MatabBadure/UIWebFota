@@ -266,6 +266,50 @@ angular.module('hillromvestApp')
                   cities.push(obj);
             return cities;
               };
+              this.processAgeRange = function(){
+              var range = [
+        { 'name': '0-5', 'ticked': false },
+        { 'name': '6-10', 'ticked': false},
+        { 'name': '11-15',  'ticked': false},
+        { 'name': '16-20',  'ticked': false},
+        { 'name': '21-25', 'ticked': false},
+        { 'name': '26-30', 'ticked': false},
+        { 'name': '31-35', 'ticked': false},
+        { 'name': '36-40', 'ticked': false},
+        { 'name': '41-45', 'ticked': false},
+        { 'name': '46-50', 'ticked': false},
+        { 'name': '51-55', 'ticked': false},
+        { 'name': '56-60', 'ticked': false},
+        { 'name': '61-65', 'ticked': false},
+        { 'name': '66-70', 'ticked': false},
+        { 'name': '71-75', 'ticked': false},
+        { 'name': '76-80', 'ticked': false},
+        { 'name': '81-above', 'ticked': false}
+      ];
+            return range;
+              };
+           this.processAdherenceScoreRange = function(){
+              var range = [
+        { 'name': '0-5', 'ticked': false },
+        { 'name': '6-10', 'ticked': false},
+        { 'name': '11-15',  'ticked': false},
+        { 'name': '16-20',  'ticked': false},
+        { 'name': '21-25', 'ticked': false},
+        { 'name': '26-30', 'ticked': false},
+        { 'name': '31-35', 'ticked': false},
+        { 'name': '36-40', 'ticked': false},
+        { 'name': '41-45', 'ticked': false},
+        { 'name': '46-50', 'ticked': false},
+        { 'name': '51-55', 'ticked': false},
+        { 'name': '56-60', 'ticked': false},
+        { 'name': '61-65', 'ticked': false},
+        { 'name': '66-70', 'ticked': false},
+        { 'name': '71-75', 'ticked': false},
+        { 'name': '76-80', 'ticked': false},
+        { 'name': '81-above', 'ticked': false}
+      ];
+            return range;
+              };
 
 
     }]);

@@ -120,51 +120,15 @@ angular.module('hillromvestApp')
         selectAll       : "Tick all",
         selectNone      : "Tick none",
         search          : "Type here to search...",
-        nothingSelected : "Nothing is selected",
+        nothingSelected : "",
         allSelected : "All Selected",
         Cancel : "Cancel",
           OK:"OK"
       }
-                  $scope.ageGroups = [
-        { 'name': '0-5', 'ticked': true },
-        { 'name': '6-10', 'ticked': true},
-        { 'name': '11-15',  'ticked': true},
-        { 'name': '16-20',  'ticked': true},
-        { 'name': '21-25', 'ticked': true},
-        { 'name': '26-30', 'ticked': true},
-        { 'name': '31-35', 'ticked': true},
-        { 'name': '36-40', 'ticked': true},
-        { 'name': '41-45', 'ticked': true},
-        { 'name': '46-50', 'ticked': true},
-        { 'name': '51-55', 'ticked': true},
-        { 'name': '56-60', 'ticked': true},
-        { 'name': '61-65', 'ticked': true},
-        { 'name': '66-70', 'ticked': true},
-        { 'name': '71-75', 'ticked': true},
-        { 'name': '76-80', 'ticked': true},
-        { 'name': '81-above', 'ticked': true}
-      ];
-
-      $scope.adherenceScoreRangeGroups= [
-        { 'name': '0-5', 'ticked': true },
-        { 'name': '6-10', 'ticked': true},
-        { 'name': '11-15',  'ticked': true},
-        { 'name': '16-20',  'ticked': true},
-        { 'name': '21-25', 'ticked': true},
-        { 'name': '26-30', 'ticked': true},
-        { 'name': '31-35', 'ticked': true},
-        { 'name': '36-40', 'ticked': true},
-        { 'name': '41-45', 'ticked': true},
-        { 'name': '46-50', 'ticked': true},
-        { 'name': '51-55', 'ticked': true},
-        { 'name': '56-60', 'ticked': true},
-        { 'name': '61-65', 'ticked': true},
-        { 'name': '66-70', 'ticked': true},
-        { 'name': '71-75', 'ticked': true},
-        { 'name': '76-80', 'ticked': true},
-        { 'name': '81-above', 'ticked': true}
-      ];
+       $scope.ageGroups = searchFilterService.processAgeRange();
+       $scope.adherenceScoreRangeGroups= searchFilterService.processAdherenceScoreRange();
        $scope.diagnosis = {};
+
         $scope.init = function() {
           $scope.userRole = StorageService.get('logged').role;
           $scope.searchFilter = searchFilterService.initSearchFiltersForPatient();
@@ -406,11 +370,45 @@ angular.module('hillromvestApp')
       $scope.patientAdvancedFilters.city = [];
       $scope.patientAdvancedFilters.zipcode = "";
       $scope.patientAdvancedFilters.clinicLevelStatus = "All";
-      $scope.diagnosis = [
-                        {'code':"A86", 'description':"Unspecified viral encephalitis"},
-                        {'code':"A87.0", 'description':"Enteroviral meningitis"},
-                        {'code':"A87.1", 'description':"Adenoviral meningitis"}
-                        ];
+      $scope.diagnosis =[
+        {
+            "id": 222,
+            "type": "patient_diagnostic_code",
+            "type_code": "A00.0",
+            "type_code_value": "Cholera due to Vibrio cholerae 01, biovar cholerae"
+        },
+        {
+            "id": 223,
+            "type": "patient_diagnostic_code",
+            "type_code": "A00.1",
+            "type_code_value": "Observation and evaluation of newborn for suspected skin and subcutaneous tissue condition ruled out"
+        },
+        {
+            "id": 224,
+            "type": "patient_diagnostic_code",
+            "type_code": "A00.1",
+            "type_code_value": "Adenoviral meningitis"
+        },
+        {
+            "id": 225,
+            "type": "patient_diagnostic_code",
+            "type_code": "A00.1",
+            "type_code_value": "Cholera due to Vibrio cholerae 01, biovar eltor"
+        },
+        {
+            "id": 226,
+            "type": "patient_diagnostic_code",
+            "type_code": "A00.1",
+            "type_code_value": "Observation and evaluation of newborn for suspected skin and subcutaneous tissue condition ruled out"
+        },
+        {
+            "id": 227,
+            "type": "patient_diagnostic_code",
+            "type_code": "A00.1",
+            "type_code_value": "Adenoviral2345 meningitis"
+        }
+    ];
+                      
       $scope.searchDiagnosis = "";
       $scope.patientAdvancedFilters.diagnosis = "";
       $scope.patientAdvancedFilters.adherenceScoreRange = "";
@@ -458,9 +456,15 @@ angular.module('hillromvestApp')
   $scope.maxRangeCheck = function(){
   /*$scope.minRange = $scope.patientAdvancedFilters.minHMRRange;
   $scope.maxRange = $scope.patientAdvancedFilters.maxHMRRange;*/
-  if($scope.patientAdvancedFilters.minHMRRange.toString().length && $scope.patientAdvancedFilters.maxHMRRange.toString().length){
-  $scope.minHmrInvalid = false;
-  $scope.maxHmrInvalid = false;
+/*  if($scope.patientAdvancedFilters.minHMRRange == null){
+    $scope.patientAdvancedFilters.minHMRRange = "";
+  }
+  if($scope.patientAdvancedFilters.maxHMRRange == null){
+    $scope.patientAdvancedFilters.maxHMRRange = "";
+  }*/
+  console.log("($scope.patientAdvancedFilters.minHMRRange",$scope.patientAdvancedFilters.minHMRRange);
+    console.log("($scope.patientAdvancedFilters.maxHMRRange",$scope.patientAdvancedFilters.maxHMRRange);
+  if(Number.isInteger($scope.patientAdvancedFilters.minHMRRange) && Number.isInteger($scope.patientAdvancedFilters.maxHMRRange)){
   if(parseInt($scope.patientAdvancedFilters.minHMRRange) >= parseInt($scope.patientAdvancedFilters.maxHMRRange))
   {
      $scope.hmrRangeFlag = true;
@@ -472,11 +476,23 @@ angular.module('hillromvestApp')
   }
   else{
      $scope.hmrRangeFlag = false;
-      $scope.minHmrInvalid = false;
-  $scope.maxHmrInvalid = false;
-  }
 
-  if(isNaN($scope.patientAdvancedFilters.minHMRRange) || isNaN($scope.patientAdvancedFilters.maxHMRRange)){
+  }
+if($scope.patientAdvancedFilters.minHMRRange === undefined){
+  //do nothing
+  $scope.minHmrInvalid = true;
+}
+else{
+  $scope.minHmrInvalid = false;
+}
+if($scope.patientAdvancedFilters.maxHMRRange === undefined){
+  //do nothing
+  $scope.maxHmrInvalid = true;
+}
+else{
+  $scope.maxHmrInvalid = false;
+}
+ /* if(isNaN($scope.patientAdvancedFilters.minHMRRange) || isNaN($scope.patientAdvancedFilters.maxHMRRange)){
     $scope.hmrRangeFlag = false;
     if(isNaN($scope.patientAdvancedFilters.minHMRRange) && isNaN($scope.patientAdvancedFilters.maxHMRRange)){
       $scope.minHmrInvalid = true;
@@ -490,7 +506,7 @@ angular.module('hillromvestApp')
       $scope.minHmrInvalid = true;
       $scope.maxHmrInvalid = false;
     }
-  }
+  }*/
   }
   $scope.getCityStateforAdvancedFilters = function(zipcode){ 
           $scope.isZipcode = true; 
@@ -506,7 +522,7 @@ angular.module('hillromvestApp')
             });  
           }else{
             $scope.form = {};
-            $scope.form.zip = {};
+            $scope.form.zipcode = {};
             $scope.isZipcode = false; 
             $scope.selectedStates = [];
             $scope.selectedCities = [];
@@ -518,7 +534,7 @@ angular.module('hillromvestApp')
             $("#state-dropdown").css("pointer-events","all");
             $("#city-dropdown").css("background-color", 'rgb(235, 235, 228)');
             $("#city-dropdown").css("pointer-events","none");
-            if($scope.form.zip.$dirty && $scope.form.zip.$showValidationMessage && $scope.form.zip.$invalid){
+            if($scope.form.zipcode.$dirty && $scope.form.zipcode.$showValidationMessage && $scope.form.zipcode.$invalid){
             }else{
               $scope.serviceError = '';  
               $scope.isServiceError = true;
@@ -648,31 +664,80 @@ angular.module('hillromvestApp')
 
         });
       return ([
-                        {'code':"A86", 'description':"Observation and evaluation of newborn for suspected skin and subcutaneous tissue condition ruled out"},
-                        {'code':"A87.0", 'description':"Enteroviral meningitis"},
-                        {'code':"A87.1", 'description':"Adenoviral meningitis"},
-                        {'code':"A87.6", 'description':"Adenoviral vbnm meningitis"},
-                        {'code':"A88.1", 'description':"Adenoviral2345 meningitis"},
-                        {'code':"A80.1", 'description':"Adenoviraladrg meningitis"},
-                        {'code':"A86", 'description':"Observation and evaluation of newborn for suspected skin and subcutaneous tissue condition ruled out"},
-                        {'code':"A87.0", 'description':"Enteroviral meningitis"},
-                        {'code':"A87.1", 'description':"Adenoviral meningitis"},
-                        {'code':"A87.6", 'description':"Adenoviral vbnm meningitis"},
-                        {'code':"A88.1", 'description':"Adenoviral2345 meningitis"},
-                        {'code':"A80.1", 'description':"Adenoviraladrg meningitis"},
-                        {'code':"A86", 'description':"Observation and evaluation of newborn for suspected skin and subcutaneous tissue condition ruled out"},
-                        {'code':"A87.0", 'description':"Enteroviral meningitis"},
-                        {'code':"A87.1", 'description':"Adenoviral meningitis"},
-                        {'code':"A87.6", 'description':"Adenoviral vbnm meningitis"},
-                        {'code':"A88.1", 'description':"Adenoviral2345 meningitis"},
-                        {'code':"A80.1", 'description':"Adenoviraladrg meningitis"},
-                        {'code':"A86", 'description':"Observation and evaluation of newborn for suspected skin and subcutaneous tissue condition ruled out"},
-                        {'code':"A87.0", 'description':"Enteroviral meningitis"},
-                        {'code':"A87.1", 'description':"Adenoviral meningitis"},
-                        {'code':"A87.6", 'description':"Adenoviral vbnm meningitis"},
-                        {'code':"A88.1", 'description':"Adenoviral2345 meningitis"},
-                        {'code':"A80.1", 'description':"Adenoviraladrg meningitis"}
-                        ]);
+        {
+            "id": 222,
+            "type": "patient_diagnostic_code",
+            "type_code": "A00.0",
+            "type_code_value": "Cholera due to Vibrio cholerae 01, biovar cholerae"
+        },
+        {
+            "id": 223,
+            "type": "patient_diagnostic_code",
+            "type_code": "A00.1",
+            "type_code_value": "Observation and evaluation of newborn for suspected skin and subcutaneous tissue condition ruled out"
+        },
+        {
+            "id": 224,
+            "type": "patient_diagnostic_code",
+            "type_code": "A00.1",
+            "type_code_value": "Adenoviral meningitis"
+        },
+        {
+            "id": 225,
+            "type": "patient_diagnostic_code",
+            "type_code": "A00.1",
+            "type_code_value": "Cholera due to Vibrio cholerae 01, biovar eltor"
+        },
+        {
+            "id": 226,
+            "type": "patient_diagnostic_code",
+            "type_code": "A00.1",
+            "type_code_value": "Observation and evaluation of newborn for suspected skin and subcutaneous tissue condition ruled out"
+        },
+        {
+            "id": 227,
+            "type": "patient_diagnostic_code",
+            "type_code": "A00.1",
+            "type_code_value": "Adenoviral2345 meningitis"
+        },
+        {
+            "id": 228,
+            "type": "patient_diagnostic_code",
+            "type_code": "A00.0",
+            "type_code_value": "Surgical operation with implant of artificial internal device as the cause of abnormal reaction of the patient, or of later complication, without mention of misadventure at the time of the procedure"
+        },
+        {
+            "id": 229,
+            "type": "patient_diagnostic_code",
+            "type_code": "A00.1",
+            "type_code_value": "Drug or chemical induced diabetes mellitus with proliferative diabetic retinopathy with combined traction retinal detachment and rhegmatogenous retinal detachment"
+        },
+        {
+            "id": 230,
+            "type": "patient_diagnostic_code",
+            "type_code": "A00.1",
+            "type_code_value": "Traumatic subarachnoid hemorrhage with loss of consciousness greater than 24 hours without return to pre-existing conscious level with patient surviving"
+        },
+        {
+            "id": 231,
+            "type": "patient_diagnostic_code",
+            "type_code": "A00.1",
+            "type_code_value": "Injury of left internal carotid artery, intracranial portion, not elsewhere classified with loss of consciousness greater than 24 hours without return to pre-existing conscious level with patient surviving"
+        },
+        {
+            "id": 232,
+            "type": "patient_diagnostic_code",
+            "type_code": "A00.1",
+            "type_code_value": "Diabetes mellitus due to underlying condition with hyperosmolarity without nonketotic hyperglycemic-hyperosmolar coma (NKHHC)"
+        },
+        {
+            "id": 233,
+            "type": "patient_diagnostic_code",
+            "type_code": "A00.1",
+            "type_code_value": "Adenoviral2345 meningitis"
+        }
+    ]
+                      );
     }
     };
     $scope.showAssociateHCPModal = function(){

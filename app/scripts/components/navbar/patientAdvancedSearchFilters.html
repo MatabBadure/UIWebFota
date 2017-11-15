@@ -1,17 +1,22 @@
                   <div  class="col-md-16 col-sm-16 padding10 survey_grey_color" >
                          <div class="col-md-4 dashboard__form--input advanced-filters-margin">
                           <span class="advanced-filters">Patient Name</span>
-              <input class="" type="text" validate-on-blur ng-model="patientAdvancedFilters.name" name="HRID" ng-readonly="patientStatus.editMode">
+              <input class="" type="text" validate-on-blur ng-model="patientAdvancedFilters.name" name="name">
             </div>
               
                    <div class="col-md-4 dashboard__form--input advanced-filters-margin">
                           <span class="advanced-filters">Hill-Rom ID</span>
-              <input class="" type="text" validate-on-blur ng-model="patientAdvancedFilters.hillromId" name="HRID" ng-readonly="patientStatus.editMode">
+              <input class="" type="text" validate-on-blur ng-model="patientAdvancedFilters.hillromId" name="HRID">
             </div>
+            <form name="form1" autocomplete="off">
              <div class="col-md-4 dashboard__form--input advanced-filters-margin">
                           <span class="advanced-filters">Email</span>
-              <input class="" type="text" validate-on-blur ng-model="patientAdvancedFilters.email" name="HRID" ng-readonly="patientStatus.editMode">
+              <input class="" type="text" validate-on-blur ng-model="patientAdvancedFilters.email" name="email" ng-pattern="/^[a-zA-Z][\.a-zA-Z0-9_\+-]+(\.[a-zA-Z0-9_\+-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.([a-zA-Z]{2,4})$/" >
+              <div ng-show="(form1.email.$dirty && form1.email.$showValidationMessage && form1.email.$invalid)">
+                <span class="has-error" ng-show="form1.email.$error.pattern" translate="error.email.invalid"></span>
+              </div>
             </div>
+          </form>
         </div>
 
         <div  class="col-md-16 col-sm-16 padding10 survey_grey_color" >
@@ -30,7 +35,7 @@
               <span class="advanced-filters">Age Range</span>
 
       <div class="benchmarking__form__input selected-box-container " >
-      <div class="custom-dropdown" id="">
+      <div class="custom-dropdown advanced-filters-multiselect-z-index">
         <div 
           isteven-multi-select
           input-model="ageGroups"
@@ -60,7 +65,7 @@
     </div>
         </div>
 
-        <form name="form" autocomplete="off">
+        
         <div  class="col-md-16 col-sm-16 filters-padding20 survey_grey_color" >
 
     <div class="col-md-4 col-sm-4  benchmarking__form__input selected-box-container advanced-filters-margin">
@@ -121,7 +126,7 @@
           on-reset="onReset()"
           on-clear="onClear()"
           on-search-change="onSearchChange()"
-          class="advanced-dropdown"
+          class="advanced-dropdown-country"
           is-disabled ="isZipcode"
         >
         </div>
@@ -131,7 +136,7 @@
      <div class="col-md-4 col-sm-4  benchmarking__form__input selected-box-container advanced-filters-margin" >
       <span class="advanced-filters">City</span>
       <div class="benchmarking__form__input selected-box-container" >
-      <div class="custom-dropdown disable-isteven-multiselect" id="city-dropdown">
+      <div class="custom-dropdown disable-isteven-multiselect advanced-filters-multiselect-z-index advanced-filters-multiselect-height" id="city-dropdown">
       <!--   <select class="" ng-if="selectedStates.length > 1 || selectedStates.length === 0" ng-disabled="true">
           <option value="all" label="All" selected="selected">All</option>
         </select> -->
@@ -149,7 +154,7 @@
           search-property="name"
           max-height="250px"
           on-close="onCitiesClose()"
-          class="advanced-dropdown"
+          class="advanced-dropdown-country"
           is-disabled ="isZipcode"
         >
         </div>          
@@ -157,17 +162,19 @@
     </div>
     </div>
     <div class="col-md-1 col-sm-1  benchmarking__form__input selected-box-container advanced-filters-margin" >
+      <form name="form" autocomplete="off">
       <span class="advanced-filters">Zip Code</span>
                   <div class="dashboard__form--input reset-padding">
-              <input type="text" validate-on-blur class="form-control" name="zip" ng-readonly="validateADMINorASP()" maxlength="5" ng-pattern="/^(?=.*[1-9].*)[0-9]{5}$/" ng-model="patientAdvancedFilters.zipcode" ng-blur="getCityStateforAdvancedFilters(patientAdvancedFilters.zipcode)" ng-enter="" ng-keyup="clearMessages()">
-              <div ng-show="(form.zip.$dirty && form.zip.$showValidationMessage && form.zip.$invalid) || submitted">
-                <span class="has-error" ng-show="form.zip.$error.pattern && !form.zip.$error.required" translate="error.zipcode.pattern"></span>
+              <input type="text" validate-on-blur class="form-control" name="zipcode" ng-readonly="validateADMINorASP()" maxlength="5" ng-pattern="/^(?=.*[1-9].*)[0-9]{5}$/" ng-model="patientAdvancedFilters.zipcode" ng-blur="getCityStateforAdvancedFilters(patientAdvancedFilters.zipcode)" ng-enter="" ng-keyup="clearMessages()">
+              <div ng-show="(form.zipcode.$dirty && form.zipcode.$showValidationMessage && form.zipcode.$invalid) || submitted">
+                <span class="has-error" ng-show="form.zipcode.$error.pattern && !form.zipcode.$error.required" translate="error.zipcode.pattern"></span>
               </div>
-              <span class="has-error" ng-show="serviceError && !form.zip.$error.pattern && !form.zip.$error.required">{{serviceError}}</span>
+              <span class="has-error" ng-show="serviceError && !form.zipcode.$error.pattern && !form.zipcode.$error.required">{{serviceError}}</span>
             </div>
+          </form>
     </div>
         </div>
-</form>
+
 <div  class="col-md-16 col-sm-16 padding10 survey_grey_color" >
    <div class="col-md-4 advanced-filters-margin">
           <span class="advanced-filters">Clinic Level Status</span>
@@ -183,7 +190,7 @@
                        <div class="col-md-4 col-sm-4 advanced-filters-margin">
               <span class="advanced-filters" translate="">Diagnosis</span>
             <div class="form__select__input--option reset-padding selected-box-container dynamic-seach-list">
-               <input class="form-control" type="text" ng-model="searchDiagnosis" typeahead="diagnosis as diagnosis.code + ' &nbsp :' + diagnosis.description for diagnosis in getMatchingDiagnosisList($viewValue)">
+               <input class="form-control" type="text" ng-model="searchDiagnosis" typeahead="diagnosis as diagnosis.type_code + ' &nbsp :' + diagnosis.type_code_value for diagnosis in getMatchingDiagnosisList($viewValue)">
             </div>
             
           </div>
@@ -212,7 +219,7 @@
           on-reset="onReset()"
           on-clear="onClear()"
           on-search-change="onSearchChange()"
-          class="advanced-dropdown"
+          class="advanced-dropdown-country"
           is-disabled ="isZipcode"
         >
         </div>
@@ -297,21 +304,23 @@
               
                    <div class="col-md-4 dashboard__form--input advanced-filters-margin">
                           
-                            <div class="col-md-8 advanced-filters-padding" >
+                            <div class="col-md-7 advanced-filters-padding" >
                             <span class="advanced-filters">Min</span>
-                            <input class="" type="number" validate-on-blur ng-model="patientAdvancedFilters.minHMRRange" name="minHMRRange" ng-keyup="maxRangeCheck()" ng-change="maxRangeCheck()" ng-readonly="patientStatus.editMode">
+                            <input class="" type="number" validate-on-blur ng-model="patientAdvancedFilters.minHMRRange" name="minHMRRange" ng-keyup="maxRangeCheck()" ng-change="maxRangeCheck()" min="0" ng-readonly="patientStatus.editMode">
+                         <span class="has-error" ng-show="minHmrInvalid" >Min HMR is invalid 
+                            </span>
                           </div>
-                          <div class="col-md-8 advanced-filters-padding">
+                          <div class="col-md-7 advanced-filters-padding">
                             <span class="advanced-filters">Max</span>
-                            <input class="" type="number" validate-on-blur ng-model="patientAdvancedFilters.maxHMRRange" name="maxHMRRange" ng-keyup="maxRangeCheck()" ng-change="maxRangeCheck()" ng-readonly="patientStatus.editMode">
-
+                            <input class="" type="number" validate-on-blur ng-model="patientAdvancedFilters.maxHMRRange" name="maxHMRRange" ng-keyup="maxRangeCheck()" ng-change="maxRangeCheck()" min="0" ng-readonly="patientStatus.editMode">
+                             <span class="has-error" ng-show="maxHmrInvalid" >Max HMR is invalid
+                            </span>
+                            <span class="has-error" ng-show="hmrRangeFlag" >Max HMR should be greater than Min HMR 
+                            </span>
                           </div>
-                          <span class="has-error" ng-show="hmrRangeFlag" >Max HMR should be greater than Min HMR 
-                            </span>
-                            <span class="has-error" ng-show="minHmrInvalid" >Min HMR is invalid 
-                            </span>
-                            <span class="has-error" ng-show="maxHmrInvalid" >Max HMR is invalid
-                            </span>
+                          
+                            
+                           
                                     
             </div>
              
@@ -379,7 +388,7 @@
  <div  class="col-md-16 col-sm-16 padding10 survey_grey_color" style="padding-bottom:20px">
         <div class="col-md-16 margin-top reset-padding">
         <div class="">
-          <button type="submit" ng-disabled="hmrRangeFlag || dateFlag" ng-click="advancedSearchPatients()" class="hillrom-btn btn-primary btn-margin-left float-right">Search Clinics</button>
+          <button type="submit" ng-disabled="hmrRangeFlag || dateFlag || maxHmrInvalid || minHmrInvalid" ng-click="advancedSearchPatients()" class="hillrom-btn btn-primary btn-margin-left float-right">Search Clinics</button>
           <button type="submit" ng-click="initAdvancedFilters()" class="hillrom-btn btn-primary btn-margin-left float-right">Reset Filters</button>
         </div>
       </div>
