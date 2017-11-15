@@ -655,6 +655,7 @@
         "active-pending":"Pending Approval",
         "fota-aborted":"Aborted",
         "fota-Fail":"Failure",
+        "fota-inprogress":"In progress",
         "all":"All"
 
     },
