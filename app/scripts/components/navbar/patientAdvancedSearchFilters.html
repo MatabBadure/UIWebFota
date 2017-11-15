@@ -1,35 +1,35 @@
                   <div  class="col-md-16 col-sm-16 padding10 survey_grey_color" >
-                         <div class="col-md-6 dashboard__form--input">
+                         <div class="col-md-4 dashboard__form--input advanced-filters-margin">
                           <span class="advanced-filters">Patient Name</span>
               <input class="" type="text" validate-on-blur ng-model="patientAdvancedFilters.name" name="HRID" ng-readonly="patientStatus.editMode">
             </div>
               
-                   <div class="col-md-4 dashboard__form--input">
+                   <div class="col-md-4 dashboard__form--input advanced-filters-margin">
                           <span class="advanced-filters">Hill-Rom ID</span>
               <input class="" type="text" validate-on-blur ng-model="patientAdvancedFilters.hillromId" name="HRID" ng-readonly="patientStatus.editMode">
             </div>
-             <div class="col-md-4 dashboard__form--input">
+             <div class="col-md-4 dashboard__form--input advanced-filters-margin">
                           <span class="advanced-filters">Email</span>
               <input class="" type="text" validate-on-blur ng-model="patientAdvancedFilters.email" name="HRID" ng-readonly="patientStatus.editMode">
             </div>
         </div>
 
         <div  class="col-md-16 col-sm-16 padding10 survey_grey_color" >
-          <div class="col-md-6">
+          <div class="col-md-4 advanced-filters-margin">
           <span class="advanced-filters">Gender</span>
                          <div class="form-group advanced-filters-radio-div">
                       <span>
 
-                      <label class="radio advanced-filters-radio" ng-repeat="gender in genders">
+                      <label class="radio advanced-filters-radio-gender" ng-repeat="gender in genders">
             <input type="radio" ng-model="patientAdvancedFilters.gender" name="gender" value="{{gender.name}}"><span class="cyan-blue-light advanced-filters">{{gender.name}}</span>
         </label>
                       </span>
                     </div>
                   </div>
-                     <div class="col-md-4 col-sm-4  benchmarking__form__input selected-box-container">
+                     <div class="col-md-4 col-sm-4  benchmarking__form__input selected-box-container advanced-filters-margin">
               <span class="advanced-filters">Age Range</span>
 
-      <div class="benchmarking__form__input selected-box-container" >
+      <div class="benchmarking__form__input selected-box-container " >
       <div class="custom-dropdown" id="">
         <div 
           isteven-multi-select
@@ -63,7 +63,7 @@
         <form name="form" autocomplete="off">
         <div  class="col-md-16 col-sm-16 filters-padding20 survey_grey_color" >
 
-    <div class="col-md-6 col-sm-6  benchmarking__form__input selected-box-container">
+    <div class="col-md-4 col-sm-4  benchmarking__form__input selected-box-container advanced-filters-margin">
               <span class="advanced-filters">Country</span>
 
       <div class="benchmarking__form__input selected-box-container" >
@@ -96,7 +96,7 @@
       </div> 
     </div>
     </div>
-    <div class="col-md-4 col-sm-4  benchmarking__form__input selected-box-container" >
+    <div class="col-md-4 col-sm-4  benchmarking__form__input selected-box-container advanced-filters-margin" >
     <span class="advanced-filters">State</span>
     <div class="benchmarking__form__input selected-box-container" >
       <div class="custom-dropdown" id="state-dropdown">
@@ -128,7 +128,7 @@
       </div> 
     </div>
   </div>
-     <div class="col-md-4 col-sm-4  benchmarking__form__input selected-box-container padding0px" >
+     <div class="col-md-4 col-sm-4  benchmarking__form__input selected-box-container advanced-filters-margin" >
       <span class="advanced-filters">City</span>
       <div class="benchmarking__form__input selected-box-container" >
       <div class="custom-dropdown disable-isteven-multiselect" id="city-dropdown">
@@ -156,7 +156,7 @@
       </div> 
     </div>
     </div>
-    <div class="col-md-2 col-sm-2  benchmarking__form__input selected-box-container padding0px" >
+    <div class="col-md-1 col-sm-1  benchmarking__form__input selected-box-container advanced-filters-margin" >
       <span class="advanced-filters">Zip Code</span>
                   <div class="dashboard__form--input reset-padding">
               <input type="text" validate-on-blur class="form-control" name="zip" ng-readonly="validateADMINorASP()" maxlength="5" ng-pattern="/^(?=.*[1-9].*)[0-9]{5}$/" ng-model="patientAdvancedFilters.zipcode" ng-blur="getCityStateforAdvancedFilters(patientAdvancedFilters.zipcode)" ng-enter="" ng-keyup="clearMessages()">
@@ -169,7 +169,7 @@
         </div>
 </form>
 <div  class="col-md-16 col-sm-16 padding10 survey_grey_color" >
-   <div class="col-md-6">
+   <div class="col-md-4 advanced-filters-margin">
           <span class="advanced-filters">Clinic Level Status</span>
                          <div class="form-group advanced-filters-radio-div">
                       <span>
@@ -180,14 +180,14 @@
                       </span>
                     </div>
                   </div>
-                       <div class="col-md-4 col-sm-4">
+                       <div class="col-md-4 col-sm-4 advanced-filters-margin">
               <span class="advanced-filters" translate="">Diagnosis</span>
             <div class="form__select__input--option reset-padding selected-box-container dynamic-seach-list">
                <input class="form-control" type="text" ng-model="searchDiagnosis" typeahead="diagnosis as diagnosis.code + ' &nbsp :' + diagnosis.description for diagnosis in getMatchingDiagnosisList($viewValue)">
             </div>
             
           </div>
-           <div class="col-md-4 col-sm-4  benchmarking__form__input selected-box-container" >
+           <div class="col-md-4 col-sm-4  benchmarking__form__input selected-box-container advanced-filters-margin" >
     <span class="advanced-filters">Adherence Score Range</span>
     <div class="benchmarking__form__input selected-box-container" >
       <div class="custom-dropdown" id="state-dropdown">
@@ -221,10 +221,22 @@
   </div>
                    
         </div>
-        <div  class="col-md-16 col-sm-16 padding10 survey_grey_color" >
-   <div class="col-md-6">
+        <div  class="col-md-16 col-sm-16 padding10 survey_grey_color advanced-filter-padding-tag1" >
+          <div class="col-md-4 advanced-filters-margin">
+          </div>
+          <div class="col-md-4 advanced-filters-margin">
+          </div>
+          <div class="col-md-4">
+                  <span class="advanced-filters">Device Activate Date Range</span>
+                </div>
+                </div>
+
+        <div  class="col-md-16 col-sm-16 padding10 survey_grey_color advanced-filter-padding-tag" >
+   <div class="col-md-4 advanced-filters-margin">
+    <div class="col-md-10 col-sm-4 dashboard__form--label reset-padding advanced-filters-padding">
           <span class="advanced-filters">Device Type</span>
-                         <div class="form-group advanced-filters-radio-div">
+        </div>
+                         <div class="col-md-16 col-sm-4 form-group advanced-filters-radio-div">
                       <span>
 
                       <label class="radio advanced-filters-radio" ng-class="lastRadio(value,'Inactive')" ng-repeat="value in deviceType">
@@ -233,9 +245,11 @@
                       </span>
                     </div>
                   </div>
-                  <div class="col-md-4">
+                  <div class="col-md-4 advanced-filters-margin">
+                    <div class="col-md-10 col-sm-4 dashboard__form--label reset-padding advanced-filters-padding">
           <span class="advanced-filters">Device Status</span>
-                         <div class="form-group advanced-filters-radio-div">
+          </div>
+                         <div class="col-md-16 col-sm-4 form-group advanced-filters-radio-div">
                       <span>
 
                       <label class="radio advanced-filters-radio-many" ng-class="lastRadio(value,'Inactive')" ng-repeat="value in deviceStatus">
@@ -245,21 +259,20 @@
                     </div>
                   </div>
                   <form name="form" autocomplete="off">
-                   <div class="col-md-6">
-          <span class="advanced-filters">Device Activate Date Range</span>
-                       <div class="col-md-7 col-sm-7 reset-padding">
-            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+                   <div class="col-md-4">
+                       <div class="col-md-8 col-sm-8 reset-padding">
+            <div class="col-md-10 col-sm-4 dashboard__form--label reset-padding advanced-filters-padding">
               <span class="advanced-filters" translate="">From</span>
             </div>
-            <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding">
+            <div class="col-md-16 col-sm-16 dashboard__form--input advanced-filters-padding">
               <input type="text"   class="datepickerNew" ng-model="patientAdvancedFilters.deviceActiveDateFrom" name = "startDate" data-provide="datepicker" data-date-autoclose="true" data-date-start-date="-730d"   id="dp1" required data-date-format="mm/dd/yyyy" ng-change="endDateCheck()"  ng-pattern="/^\d{2}\/\d{2}\/\d{4}$/" readonly="readonly"/>
             </div>
           </div>
-          <div class="col-md-7 col-sm-7 reset-padding">
-            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
-              <span class="advanced-filters" translate="">To</span>
+          <div class="col-md-8 col-sm-8 reset-padding">
+            <div class="col-md-10 col-sm-4 dashboard__form--label reset-padding advanced-filters-padding">
+              <span class="advanced-filters" translate=""> To</span>
             </div>
-            <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding">
+            <div class="col-md-16 col-sm-16 dashboard__form--input reset-padding">
              <input type="text"   class="datepickerNew" ng-model="patientAdvancedFilters.deviceActiveDateTo" name = "endDate" data-provide="datepicker" data-date-autoclose="true" data-date-start-date="-730d" id="dp2" required data-date-format="mm/dd/yyyy"  ng-pattern="/^\d{2}\/\d{2}\/\d{4}$/" ng-change="endDateCheck()" readonly="readonly"/>
              <div ng-if="dateFlag == true "><span class="has-error">To Date should be greater than From date </span></div>
             </div>
@@ -267,20 +280,28 @@
                   </div>
                 </form>
                 </div>
+                </div>
+        <div  class="col-md-16 col-sm-16 survey_grey_color advanced-filter-padding-tag1" >
+          <div class="col-md-4 advanced-filters-margin">
+          </div>
+          <div class="col-md-4">
+                 <span class="advanced-filters">HMR Range</span>
+                </div>
+                </div>
 
-                 <div  class="col-md-16 col-sm-16 padding10 survey_grey_color" >
-                         <div class="col-md-6 dashboard__form--input">
+                 <div  class="col-md-16 col-sm-16 padding10 survey_grey_color advanced-filter-padding-tag" >
+                         <div class="col-md-4 dashboard__form--input advanced-filters-margin">
                           <span class="advanced-filters">Serial Number</span>
               <input class="" type="text" validate-on-blur ng-model="patientAdvancedFilters.serialNo" name="HRID" ng-readonly="patientStatus.editMode">
             </div>
               
-                   <div class="col-md-6 dashboard__form--input">
-                          <span class="advanced-filters">HMR Range</span>
-                          <div class="col-md-4">
+                   <div class="col-md-4 dashboard__form--input advanced-filters-margin">
+                          
+                            <div class="col-md-8 advanced-filters-padding" >
                             <span class="advanced-filters">Min</span>
                             <input class="" type="number" validate-on-blur ng-model="patientAdvancedFilters.minHMRRange" name="minHMRRange" ng-keyup="maxRangeCheck()" ng-change="maxRangeCheck()" ng-readonly="patientStatus.editMode">
                           </div>
-                          <div class="col-md-4">
+                          <div class="col-md-8 advanced-filters-padding">
                             <span class="advanced-filters">Max</span>
                             <input class="" type="number" validate-on-blur ng-model="patientAdvancedFilters.maxHMRRange" name="maxHMRRange" ng-keyup="maxRangeCheck()" ng-change="maxRangeCheck()" ng-readonly="patientStatus.editMode">
 
