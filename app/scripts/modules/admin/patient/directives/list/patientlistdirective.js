@@ -22,112 +22,22 @@ angular.module('hillromvestApp')
       function($scope, $timeout, patientService, $state, $stateParams, notyService, searchFilterService, sortOptionsService, StorageService,loginConstants,$rootScope,addressService) {
         var searchOnLoad = true;
         $scope.sortPatientList = sortOptionsService.getSortOptionsForPatientList();
-                $scope.expandedSign = false;
-          $scope.genders = [{
-                name: "All",
-                value:"all"
-            }, {
-                name: "Male",
-                value:"male"
-            }, {
-                name: "Female",
-                value:"female"
-            }, {
-                name: "Other",
-                value:"other"
-            }];
-          $scope.adherenceReset = [{
-                name: "All",
-                value:"all"
-            }, {
-                name: "Yes",
-                value:"yes"
-            }, {
-                name: "No",
-                value:"no"
-            }];
-                      $scope.noTransmissionRecorded = [{
-                name: "All",
-                value:"all"
-            }, {
-                name: "Yes",
-                value:"yes"
-            }, {
-                name: "No",
-                value:"no"
-            }];
-                      $scope.belowFrequencySetting = [{
-                name: "All",
-                value:"all"
-            }, {
-                name: "Yes",
-                value:"yes"
-            }, {
-                name: "No",
-                value:"no"
-            }];
-                      $scope.belowTherapyMinutes = [{
-                name: "All",
-                value:"all"
-            }, {
-                name: "Yes",
-                value:"yes"
-            }, {
-                name: "No",
-                value:"no"
-            }];
-              $scope.missedTherapyDays = [{
-                name: "All",
-                value:"all"
-            }, {
-                name: "Yes",
-                value:"yes"
-            }, {
-                name: "No",
-                value:"no"
-            }];
-            $scope.activeInactive = [{
-                name: "All",
-                value:"all"
-            }, {
-                name: "Active",
-                value:"active"
-            }, {
-                name: "Inactive",
-                value:"inactive"
-            }];
-            $scope.deviceType = [{
-                name: "All",
-                value:"ALL"
-            }, {
-                name: "VisiVest",
-                value:"VEST"
-            }, {
-                name: "Monarch",
-                value:"MONARCH"
-            }];
-            $scope.deviceStatus = [{
-                name: "All",
-                value:"all"
-            }, {
-                name: "Active",
-                value:"active"
-            }, {
-                name: "Inactive",
-                value:"inactive"
-            }];
-             $scope.localLang = {
-        selectAll       : "Tick all",
-        selectNone      : "Tick none",
-        search          : "Type here to search...",
-        nothingSelected : "",
-        allSelected : "All Selected",
-        Cancel : "Cancel",
-          OK:"OK"
-      }
-       $scope.ageGroups = searchFilterService.processAgeRange();
-       $scope.adherenceScoreRangeGroups= searchFilterService.processAdherenceScoreRange();
-       $scope.diagnosis = {};
+        $scope.expandedSign = false;
+        $scope.genders = searchFilterService.processGenderOptions();
+        $scope.adherenceReset = searchFilterService.processYesNoOptions();
+        $scope.noTransmissionRecorded = searchFilterService.processYesNoOptions();
+        $scope.belowFrequencySetting = searchFilterService.processYesNoOptions();
+        $scope.belowTherapyMinutes = searchFilterService.processYesNoOptions();
+        $scope.missedTherapyDays = searchFilterService.processYesNoOptions();
+        $scope.activeInactive = searchFilterService.processActiveInactiveOptions();
+        $scope.deviceType = searchFilterService.processDeviceTypeOptions();
+        $scope.deviceStatus = searchFilterService.processYesNoOptions();
+        $scope.localLang = searchFilterService.multiselectPropertiesForAdvancedFilters()
+        $scope.ageGroups = searchFilterService.processAgeRange();
+        $scope.adherenceScoreRangeGroups= searchFilterService.processAdherenceScoreRange();
+        $scope.diagnosis = {};
+        $scope.isZipcode = false;
+        $scope.form = {};
 
         $scope.init = function() {
           $scope.userRole = StorageService.get('logged').role;
@@ -353,6 +263,10 @@ angular.module('hillromvestApp')
       }     
     }
     $scope.initAdvancedFilters = function(){
+             $("#city-dropdown").css("background-color", 'rgb(235, 235, 228)');
+       $("#city-dropdown").css("pointer-events","none");
+      $("#state-dropdown").css("background-color", 'inherit');
+       $("#state-dropdown").css("pointer-events","all");
       $scope.dateFlag = false;
       $scope.hmrRangeFlag = false;
       $scope.patientAdvancedFilters = {};
@@ -370,6 +284,9 @@ angular.module('hillromvestApp')
       $scope.patientAdvancedFilters.city = [];
       $scope.patientAdvancedFilters.zipcode = "";
       $scope.patientAdvancedFilters.clinicLevelStatus = "All";
+      $scope.ageGroups = searchFilterService.processAgeRange();
+      $scope.adherenceScoreRangeGroups= searchFilterService.processAdherenceScoreRange();
+      $scope.searchDiagnosis = "";
       $scope.diagnosis =[
         {
             "id": 222,
@@ -512,6 +429,7 @@ else{
           $scope.isZipcode = true; 
           delete $scope.serviceError;
           $scope.isServiceError = false;
+          console.log("form:",$scope.form);
           if(zipcode){
             addressService.getCityStateByZip(zipcode).then(function(response){
               $scope.mapZipcode(response.data);
@@ -521,8 +439,8 @@ else{
                $scope.isZipcode = false; 
             });  
           }else{
-            $scope.form = {};
-            $scope.form.zipcode = {};
+            $scope.form2 = {};
+            $scope.form2.zip = {};
             $scope.isZipcode = false; 
             $scope.selectedStates = [];
             $scope.selectedCities = [];
@@ -534,7 +452,7 @@ else{
             $("#state-dropdown").css("pointer-events","all");
             $("#city-dropdown").css("background-color", 'rgb(235, 235, 228)');
             $("#city-dropdown").css("pointer-events","none");
-            if($scope.form.zipcode.$dirty && $scope.form.zipcode.$showValidationMessage && $scope.form.zipcode.$invalid){
+            if($scope.form2.zip.$dirty && $scope.form2.zip.$showValidationMessage && $scope.form2.zip.$invalid){
             }else{
               $scope.serviceError = '';  
               $scope.isServiceError = true;

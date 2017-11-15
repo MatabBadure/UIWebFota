@@ -65,7 +65,7 @@
     </div>
         </div>
 
-        
+    <form name="form2" autocomplete="off">    
         <div  class="col-md-16 col-sm-16 filters-padding20 survey_grey_color" >
 
     <div class="col-md-4 col-sm-4  benchmarking__form__input selected-box-container advanced-filters-margin">
@@ -162,19 +162,19 @@
     </div>
     </div>
     <div class="col-md-1 col-sm-1  benchmarking__form__input selected-box-container advanced-filters-margin" >
-      <form name="form" autocomplete="off">
+      
       <span class="advanced-filters">Zip Code</span>
-                  <div class="dashboard__form--input reset-padding">
-              <input type="text" validate-on-blur class="form-control" name="zipcode" ng-readonly="validateADMINorASP()" maxlength="5" ng-pattern="/^(?=.*[1-9].*)[0-9]{5}$/" ng-model="patientAdvancedFilters.zipcode" ng-blur="getCityStateforAdvancedFilters(patientAdvancedFilters.zipcode)" ng-enter="" ng-keyup="clearMessages()">
-              <div ng-show="(form.zipcode.$dirty && form.zipcode.$showValidationMessage && form.zipcode.$invalid) || submitted">
-                <span class="has-error" ng-show="form.zipcode.$error.pattern && !form.zipcode.$error.required" translate="error.zipcode.pattern"></span>
+                  <div class="dashboard__form--input reset-padding" style="width:200px">
+                          <input type="text" validate-on-blur class="form-control" name="zip" maxlength="5" ng-pattern="/^(?=.*[1-9].*)[0-9]{5}$/" ng-model="patientAdvancedFilters.zipcode" ng-blur="getCityStateforAdvancedFilters(patientAdvancedFilters.zipcode)" ng-enter="" ng-keyup="clearMessages()">
+              <div ng-show="(form2.zip.$dirty && form2.zip.$showValidationMessage && form2.zip.$invalid) || submitted" style="width:200px">
+                <span class="has-error" ng-show="form2.zip.$error.pattern && !form2.zip.$error.required" translate="error.zipcode.pattern"></span>
               </div>
-              <span class="has-error" ng-show="serviceError && !form.zipcode.$error.pattern && !form.zipcode.$error.required">{{serviceError}}</span>
+              <span class="has-error" ng-show="serviceError && !form2.zip.$error.pattern && !form2.zip.$error.required">{{serviceError}}</span>
             </div>
-          </form>
+         
     </div>
         </div>
-
+</form>
 <div  class="col-md-16 col-sm-16 padding10 survey_grey_color" >
    <div class="col-md-4 advanced-filters-margin">
           <span class="advanced-filters">Clinic Level Status</span>
@@ -190,7 +190,7 @@
                        <div class="col-md-4 col-sm-4 advanced-filters-margin">
               <span class="advanced-filters" translate="">Diagnosis</span>
             <div class="form__select__input--option reset-padding selected-box-container dynamic-seach-list">
-               <input class="form-control" type="text" ng-model="searchDiagnosis" typeahead="diagnosis as diagnosis.type_code + ' &nbsp :' + diagnosis.type_code_value for diagnosis in getMatchingDiagnosisList($viewValue)">
+               <input class="form-control" style="text-overflow: ellipsis" type="text" ng-model="searchDiagnosis" typeahead="diagnosis as diagnosis.type_code + ' &nbsp : ' + diagnosis.type_code_value for diagnosis in getMatchingDiagnosisList($viewValue)">
             </div>
             
           </div>

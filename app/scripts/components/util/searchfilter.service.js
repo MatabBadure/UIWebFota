@@ -310,6 +310,73 @@ angular.module('hillromvestApp')
       ];
             return range;
               };
+               this.processGenderOptions = function(){
+              var options = [{
+                name: "All",
+                value:"all"
+            }, {
+                name: "Male",
+                value:"male"
+            }, {
+                name: "Female",
+                value:"female"
+            }, {
+                name: "Other",
+                value:"other"
+            }];
+            return options;
+              };
+              this.processYesNoOptions = function(){
+              var options = [{
+                name: "All",
+                value:"all"
+            }, {
+                name: "Yes",
+                value:"yes"
+            }, {
+                name: "No",
+                value:"no"
+            }];
+            return options;
+              };
+              this.processActiveInactiveOptions = function(){
+              var options = [{
+                name: "All",
+                value:"all"
+            }, {
+                name: "Active",
+                value:"active"
+            }, {
+                name: "Inactive",
+                value:"inactive"
+            }];
+            return options;
+              };
+              this.processDeviceTypeOptions = function(){
+              var options = [{
+                name: "All",
+                value:"ALL"
+            }, {
+                name: "VisiVest",
+                value:"VEST"
+            }, {
+                name: "Monarch",
+                value:"MONARCH"
+            }];
+            return options;
+              };
 
+              this.multiselectPropertiesForAdvancedFilters = function(){
+                var properties = {
+        selectAll       : "Tick all",
+        selectNone      : "Tick none",
+        search          : "Type here to search...",
+        nothingSelected : "",
+        allSelected : "All Selected",
+        Cancel : "Cancel",
+          OK:"OK"
+      };
+      return properties;
+              }
 
     }]);

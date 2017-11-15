@@ -2740,6 +2740,9 @@ angular.module('hillromvestApp')
                     }
                 },
                 resolve: {
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('PatientDiagnosticModule');
+                    }],
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('patient');
                         return $translate.refresh();
@@ -3504,6 +3507,9 @@ angular.module('hillromvestApp')
                     }
                 },
                 resolve: {
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('PatientDiagnosticModule');
+                    }],
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('patient');
                         return $translate.refresh();
@@ -5217,6 +5223,9 @@ angular.module('hillromvestApp')
                     }
                 },
                 resolve: {
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('PatientDiagnosticModule');
+                    }],
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('patient');
                         return $translate.refresh();
