@@ -52,7 +52,6 @@
           on-reset="onReset()"
           on-clear="onClear()"
           on-search-change="onSearchChange()"
-          is-disabled = true
           class="advanced-dropdown-country"
         >
         </div>
@@ -183,11 +182,8 @@
                   </div>
                        <div class="col-md-4 col-sm-4 advanced-filters-margin">
               <span class="advanced-filters" translate="">Diagnosis</span>
-            <div class="form__select__input--option reset-padding selected-box-container">
-              <div class="custom-dropdown" >
-                <select name="type" ng-model="patientAdvancedFilters.diagnosis"  ng-options="item.type_code_value as item.type_code for item in adherenceDays">
-                </select>
-              </div>
+            <div class="form__select__input--option reset-padding selected-box-container dynamic-seach-list">
+               <input class="form-control" type="text" ng-model="searchDiagnosis" typeahead="diagnosis as diagnosis.code + ' &nbsp :' + diagnosis.description for diagnosis in getMatchingDiagnosisList($viewValue)">
             </div>
             
           </div>
@@ -270,10 +266,6 @@
             </div>
             <div class="col-md-16 col-sm-16 dashboard__form--input advanced-filters-padding">
               <input type="text"   class="datepickerNew" ng-model="patientAdvancedFilters.deviceActiveDateFrom" name = "startDate" data-provide="datepicker" data-date-autoclose="true" data-date-start-date="-730d"   id="dp1" required data-date-format="mm/dd/yyyy" ng-change="endDateCheck()"  ng-pattern="/^\d{2}\/\d{2}\/\d{4}$/" readonly="readonly"/>
-              <div ng-show="(form.startDate.$dirty && form.startDate.$invalid) || resetsubmitted">
-                <span class="has-error" ng-show="form.startDate.$error.required" translate="error.startDate.required"></span>
-                <span class="has-error" ng-show="form.startDate.$error.pattern && !form.startDate.$error.required" translate="error.startDate.invalid"></span>
-              </div>  
             </div>
           </div>
           <div class="col-md-8 col-sm-8 reset-padding">
@@ -283,10 +275,6 @@
             <div class="col-md-16 col-sm-16 dashboard__form--input reset-padding">
              <input type="text"   class="datepickerNew" ng-model="patientAdvancedFilters.deviceActiveDateTo" name = "endDate" data-provide="datepicker" data-date-autoclose="true" data-date-start-date="-730d" id="dp2" required data-date-format="mm/dd/yyyy"  ng-pattern="/^\d{2}\/\d{2}\/\d{4}$/" ng-change="endDateCheck()" readonly="readonly"/>
              <div ng-if="dateFlag == true "><span class="has-error">To Date should be greater than From date </span></div>
-             <div ng-show="(form.endDate.$dirty && form.endDate.$invalid) || resetsubmitted">
-                <span class="has-error" ng-show="form.endDate.$error.required" translate="error.endDate.required"></span>
-                <span class="has-error" ng-show="form.endDate.$error.pattern && !form.endDate.$error.required" translate="error.endDate.invalid"></span>
-              </div>  
             </div>
           </div>
                   </div>
@@ -311,15 +299,20 @@
                           
                             <div class="col-md-8 advanced-filters-padding" >
                             <span class="advanced-filters">Min</span>
-                            <input class="" type="text" validate-on-blur ng-model="patientAdvancedFilters.minHMRRange" name="minHMRRange" min="1" ng-change="maxRangeCheck()" ng-readonly="patientStatus.editMode">
+                            <input class="" type="number" validate-on-blur ng-model="patientAdvancedFilters.minHMRRange" name="minHMRRange" ng-keyup="maxRangeCheck()" ng-change="maxRangeCheck()" ng-readonly="patientStatus.editMode">
                           </div>
                           <div class="col-md-8 advanced-filters-padding">
                             <span class="advanced-filters">Max</span>
-                            <input class="" type="text" validate-on-blur ng-model="patientAdvancedFilters.maxHMRRange" name="maxHMRRange" ng-change="maxRangeCheck()" min="{{patientAdvancedFilters.minHMRRange+1}}"  ng-readonly="patientStatus.editMode">
-                            <span class="has-error" ng-show="hmrRangeFlag" >Max HMR Range should be greater than Min HMR Range
-                </span>
+                            <input class="" type="number" validate-on-blur ng-model="patientAdvancedFilters.maxHMRRange" name="maxHMRRange" ng-keyup="maxRangeCheck()" ng-change="maxRangeCheck()" ng-readonly="patientStatus.editMode">
+
                           </div>
-              
+                          <span class="has-error" ng-show="hmrRangeFlag" >Max HMR should be greater than Min HMR 
+                            </span>
+                            <span class="has-error" ng-show="minHmrInvalid" >Min HMR is invalid 
+                            </span>
+                            <span class="has-error" ng-show="maxHmrInvalid" >Max HMR is invalid
+                            </span>
+                                    
             </div>
              
         </div>
@@ -386,8 +379,8 @@
  <div  class="col-md-16 col-sm-16 padding10 survey_grey_color" style="padding-bottom:20px">
         <div class="col-md-16 margin-top reset-padding">
         <div class="">
-          <button type="submit" ng-click="advancedSearchPatients()" class="hillrom-btn btn-primary btn-margin-left float-right">Search Clinics</button>
-          <button type="submit" ng-click="initClinicAdvancedFilters()" class="hillrom-btn btn-primary btn-margin-left float-right">Reset Filters</button>
+          <button type="submit" ng-disabled="hmrRangeFlag || dateFlag" ng-click="advancedSearchPatients()" class="hillrom-btn btn-primary btn-margin-left float-right">Search Clinics</button>
+          <button type="submit" ng-click="initAdvancedFilters()" class="hillrom-btn btn-primary btn-margin-left float-right">Reset Filters</button>
         </div>
       </div>
 </div>

@@ -164,6 +164,7 @@ angular.module('hillromvestApp')
         { 'name': '76-80', 'ticked': true},
         { 'name': '81-above', 'ticked': true}
       ];
+       $scope.diagnosis = {};
         $scope.init = function() {
           $scope.userRole = StorageService.get('logged').role;
           $scope.searchFilter = searchFilterService.initSearchFiltersForPatient();
@@ -245,6 +246,7 @@ angular.module('hillromvestApp')
           patientService.getPatients($scope.searchItem, $scope.sortOption, $scope.currentPageIndex, $scope.perPageCount,filter)
             .then(function(response) {
               $scope.patients = response.data;
+               $scope.isAdvancedFilters = false;
               var patientCount = $scope.patients.length;
               for (var i = 0 ; i < patientCount ; i++) {                
                 $scope.patients[i].dob = $scope.getDateFromTimestamp($scope.patients[i].dob);
@@ -393,7 +395,7 @@ angular.module('hillromvestApp')
       $scope.patientAdvancedFilters.name = "";
       $scope.patientAdvancedFilters.hillromId = "";
       $scope.patientAdvancedFilters.email = "";
-      $scope.patientAdvancedFilters.gender = "";
+      $scope.patientAdvancedFilters.gender = "All";
       $scope.patientAdvancedFilters.age = "";
       $scope.selectedCountry = ["US"];
       $scope.selectedCountryObj = ["US"];
@@ -404,6 +406,12 @@ angular.module('hillromvestApp')
       $scope.patientAdvancedFilters.city = [];
       $scope.patientAdvancedFilters.zipcode = "";
       $scope.patientAdvancedFilters.clinicLevelStatus = "All";
+      $scope.diagnosis = [
+                        {'code':"A86", 'description':"Unspecified viral encephalitis"},
+                        {'code':"A87.0", 'description':"Enteroviral meningitis"},
+                        {'code':"A87.1", 'description':"Adenoviral meningitis"}
+                        ];
+      $scope.searchDiagnosis = "";
       $scope.patientAdvancedFilters.diagnosis = "";
       $scope.patientAdvancedFilters.adherenceScoreRange = "";
       $scope.patientAdvancedFilters.deviceType = "All";
@@ -411,8 +419,8 @@ angular.module('hillromvestApp')
       $scope.patientAdvancedFilters.deviceActiveDateFrom = "";
       $scope.patientAdvancedFilters.deviceActiveDateTo = "";
       $scope.patientAdvancedFilters.serialNo = "";
-      $scope.patientAdvancedFilters.minHMRRange = 0;
-      $scope.patientAdvancedFilters.maxHMRRange = 0;
+      $scope.patientAdvancedFilters.minHMRRange = "";
+      $scope.patientAdvancedFilters.maxHMRRange = "";
       $scope.patientAdvancedFilters.adherenceReset = "All";
       $scope.patientAdvancedFilters.noTransmissionRecorded = "All";
       $scope.patientAdvancedFilters.belowFrequencySetting = "All";
@@ -432,6 +440,7 @@ angular.module('hillromvestApp')
 {
   $scope.startdatecheck = $scope.patientAdvancedFilters.deviceActiveDateFrom;
   $scope.enddatecheck = $scope.patientAdvancedFilters.deviceActiveDateTo;
+  if($scope.patientAdvancedFilters.deviceActiveDateFrom && $scope.patientAdvancedFilters.deviceActiveDateTo){
   if(new Date ($scope.enddatecheck) < new Date($scope.startdatecheck))
   {
      $scope.dateFlag = true;
@@ -440,12 +449,19 @@ angular.module('hillromvestApp')
   {
     $scope.dateFlag = false;
   }
+  }
+  else{
+     $scope.dateFlag = false;
+  }
+
   };
   $scope.maxRangeCheck = function(){
   /*$scope.minRange = $scope.patientAdvancedFilters.minHMRRange;
   $scope.maxRange = $scope.patientAdvancedFilters.maxHMRRange;*/
-  if($scope.patientAdvancedFilters.minHMRRange){
-  if($scope.patientAdvancedFilters.minHMRRange > $scope.patientAdvancedFilters.maxHMRRange)
+  if($scope.patientAdvancedFilters.minHMRRange.toString().length && $scope.patientAdvancedFilters.maxHMRRange.toString().length){
+  $scope.minHmrInvalid = false;
+  $scope.maxHmrInvalid = false;
+  if(parseInt($scope.patientAdvancedFilters.minHMRRange) >= parseInt($scope.patientAdvancedFilters.maxHMRRange))
   {
      $scope.hmrRangeFlag = true;
   }
@@ -453,23 +469,28 @@ angular.module('hillromvestApp')
   {
     $scope.hmrRangeFlag = false;
   }
-}
-else{
-   $scope.hmrRangeFlag = false;
-}
-if($scope.patientAdvancedFilters.maxHMRRange){
-   if($scope.patientAdvancedFilters.minHMRRange > $scope.patientAdvancedFilters.maxHMRRange)
-  {
-     $scope.hmrRangeFlag = true;
   }
-  else
-  {
+  else{
+     $scope.hmrRangeFlag = false;
+      $scope.minHmrInvalid = false;
+  $scope.maxHmrInvalid = false;
+  }
+
+  if(isNaN($scope.patientAdvancedFilters.minHMRRange) || isNaN($scope.patientAdvancedFilters.maxHMRRange)){
     $scope.hmrRangeFlag = false;
+    if(isNaN($scope.patientAdvancedFilters.minHMRRange) && isNaN($scope.patientAdvancedFilters.maxHMRRange)){
+      $scope.minHmrInvalid = true;
+      $scope.maxHmrInvalid = true;
+    }
+     else if(isNaN($scope.patientAdvancedFilters.maxHMRRange) && !isNaN($scope.patientAdvancedFilters.minHMRRange)){
+      $scope.minHmrInvalid = false;
+      $scope.maxHmrInvalid = true;
+    }
+    else if(!isNaN($scope.patientAdvancedFilters.maxHMRRange) && isNaN($scope.patientAdvancedFilters.minHMRRange)){
+      $scope.minHmrInvalid = true;
+      $scope.maxHmrInvalid = false;
+    }
   }
-}
-else{
-   $scope.hmrRangeFlag = false;
-}
   }
   $scope.getCityStateforAdvancedFilters = function(zipcode){ 
           $scope.isZipcode = true; 
@@ -589,8 +610,20 @@ else{
       angular.forEach($scope.selectedCities, function(city){
             $scope.patientAdvancedFilters.city.push(city.name);
           });
+      patientService.getPatientsAdvancedSearch($scope.sortOption, $scope.currentPageIndex, $scope.perPageCount, $scope.patientAdvancedFilters).then(function(){
+              $scope.patients = response.data;
+              var patientCount = $scope.patients.length;
+              for (var i = 0 ; i < patientCount ; i++) {                
+                $scope.patients[i].dob = $scope.getDateFromTimestamp($scope.patients[i].dob);
+                $scope.patients[i].lastTransmissionDate = $scope.getDateFromTimestampforTransmissiondate($scope.patients[i].lastTransmissionDate);
+              }
+              $scope.total = response.headers()['x-total-count'];
+              $scope.pageCount = Math.ceil($scope.total / 10);
+      }).catch(function(){
+        $scope.noMatchFound = true;
+      });
       console.log("$scope.patientAdvancedFilters",$scope.patientAdvancedFilters);
-    }
+    };
     $scope.onCloseAgeRange = function(){
       if($scope.selectedAgeRange){
         $scope.patientAdvancedFilters.age = [];
@@ -598,7 +631,7 @@ else{
           $scope.patientAdvancedFilters.age.push(ageRange.name);
         });
       }
-    }
+    };
     $scope.onCloseAdherenceScoreRange = function(){
       if($scope.selectedAdherenceScoreRange){
         $scope.patientAdvancedFilters.adherenceScoreRange = [];
@@ -606,7 +639,45 @@ else{
           $scope.patientAdvancedFilters.adherenceScoreRange.push(adherenceScoreRange.name);
         });
       } 
+    };
+    $scope.getMatchingDiagnosisList = function($viewValue){
+      if($viewValue.length >=2){
+        patientService.getDiagnosticList($viewValue).then(function(){
+
+        }).catch(function(){
+
+        });
+      return ([
+                        {'code':"A86", 'description':"Observation and evaluation of newborn for suspected skin and subcutaneous tissue condition ruled out"},
+                        {'code':"A87.0", 'description':"Enteroviral meningitis"},
+                        {'code':"A87.1", 'description':"Adenoviral meningitis"},
+                        {'code':"A87.6", 'description':"Adenoviral vbnm meningitis"},
+                        {'code':"A88.1", 'description':"Adenoviral2345 meningitis"},
+                        {'code':"A80.1", 'description':"Adenoviraladrg meningitis"},
+                        {'code':"A86", 'description':"Observation and evaluation of newborn for suspected skin and subcutaneous tissue condition ruled out"},
+                        {'code':"A87.0", 'description':"Enteroviral meningitis"},
+                        {'code':"A87.1", 'description':"Adenoviral meningitis"},
+                        {'code':"A87.6", 'description':"Adenoviral vbnm meningitis"},
+                        {'code':"A88.1", 'description':"Adenoviral2345 meningitis"},
+                        {'code':"A80.1", 'description':"Adenoviraladrg meningitis"},
+                        {'code':"A86", 'description':"Observation and evaluation of newborn for suspected skin and subcutaneous tissue condition ruled out"},
+                        {'code':"A87.0", 'description':"Enteroviral meningitis"},
+                        {'code':"A87.1", 'description':"Adenoviral meningitis"},
+                        {'code':"A87.6", 'description':"Adenoviral vbnm meningitis"},
+                        {'code':"A88.1", 'description':"Adenoviral2345 meningitis"},
+                        {'code':"A80.1", 'description':"Adenoviraladrg meningitis"},
+                        {'code':"A86", 'description':"Observation and evaluation of newborn for suspected skin and subcutaneous tissue condition ruled out"},
+                        {'code':"A87.0", 'description':"Enteroviral meningitis"},
+                        {'code':"A87.1", 'description':"Adenoviral meningitis"},
+                        {'code':"A87.6", 'description':"Adenoviral vbnm meningitis"},
+                        {'code':"A88.1", 'description':"Adenoviral2345 meningitis"},
+                        {'code':"A80.1", 'description':"Adenoviraladrg meningitis"}
+                        ]);
     }
+    };
+    $scope.showAssociateHCPModal = function(){
+      alert("yayy");
+    };
      //End of Implementation of GIMP- 20    
         $scope.init();
       }]
