@@ -113,7 +113,7 @@ angular.module('hillromvestApp')
             $scope.currentPageIndex = 1;
           } 
           if($scope.isAdvancedFilters){
-            $scope.advancedSearchPatients();
+            $scope.advancedSearchPatients(false);
           }
           else{
           var filter = searchFilterService.getFilterStringForPatient($scope.searchFilter);
@@ -533,7 +533,13 @@ else{
     $scope.resetAdvancedFilters = function(){
       $scope.initAdvancedFilters();
     }
-    $scope.advancedSearchPatients = function(){
+    $scope.advancedSearchPatients = function(isFresh){
+      if(isFresh){
+        $scope.currentPageIndex = 1;
+          $scope.perPageCount = 10;
+          $scope.pageCount = 0;
+          $scope.total = 0;
+      }
       $scope.isAdvancedFilters = true;
       if($scope.patientAdvancedFilters.zipcode){
         //do nothing
@@ -576,12 +582,14 @@ else{
     };
     $scope.getMatchingDiagnosisList = function($viewValue){
       if($viewValue.length >=2){
-        patientService.getDiagnosticList($viewValue).then(function(){
-
+        patientService.getDiagnosticList($viewValue).then(function(response){
+          $scope.diagnosis = {};
+          $scope.diagnosis = response.data;
         }).catch(function(){
 
         });
-      return ([
+        return $scope.diagnosis.typeCode;
+     /* return ([
         {
             "id": 222,
             "type": "patient_diagnostic_code",
@@ -655,7 +663,7 @@ else{
             "type_code_value": "Adenoviral2345 meningitis"
         }
     ]
-                      );
+                      );*/
     }
     };
     $scope.showAssociateHCPModal = function(){
