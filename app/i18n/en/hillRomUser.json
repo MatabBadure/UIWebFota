@@ -92,6 +92,7 @@
         "parent": "parent",
         "submit-button-text": "submit",
         "reactivate-button-text":"Resend Activation Link",
+        "resetpassword-button-text":"Reset Password",
         "cancel-button-text": "cancel",
         "deactivate-button-text": "Deactivate",
         "activate-button-text":"Activate",
@@ -108,6 +109,11 @@
         "update":{
             "warning": "Hill-Rom User - Details",
             "message": "You have made changes/updates for Hill-Rom User. Are you sure to make updates?"
+        },
+        "resetpassword": {
+            "warning": "Reset Password",
+            "message": "You are requesting for User password reset from the system and Email will be sent to user for rest of the New password . Are you sure to continue?"
         }
+
     }
 }
