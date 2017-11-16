@@ -59,7 +59,7 @@ angular.module('hillromvestApp')
         selectAll       : "Tick all",
         selectNone      : "Tick none",
         search          : "Type here to search...",
-        nothingSelected : "Nothing is selected",
+        nothingSelected : "",
         allSelected : "All Selected",
         Cancel : "Cancel",
           OK:"OK"
@@ -358,7 +358,7 @@ angular.module('hillromvestApp')
         }
 
         if($scope.isAdvancedFilters){
-          $scope.advancedSearchClinics();
+          $scope.advancedSearchClinics(false);
         }
         else{
          
@@ -1148,10 +1148,10 @@ $scope.activateClinicModal = function(clininc){
        $("#city-dropdown").css("pointer-events","none");
       $("#state-dropdown").css("background-color", 'inherit');
        $("#state-dropdown").css("pointer-events","all");
-        $scope.currentPageIndex = 1;
+       /* $scope.currentPageIndex = 1;
       $scope.perPageCount = 10;
       $scope.pageCount = 0;
-      $scope.total = 0;
+      $scope.total = 0;*/
       $scope.isZipcode = false;
       $scope.clinicAdvancedFilter = {};
       $scope.clinicAdvancedFilter.clinicName = "";
@@ -1332,7 +1332,13 @@ $scope.activateClinicModal = function(clininc){
           });
     };
 
-    $scope.advancedSearchClinics = function(){
+    $scope.advancedSearchClinics = function(isFresh){
+      if(isFresh){
+        $scope.currentPageIndex = 1;
+      $scope.perPageCount = 10;
+      $scope.pageCount = 0;
+      $scope.total = 0;
+      }
       $scope.isAdvancedFilters = true;
       if($scope.clinicAdvancedFilter.zipcode){
         //do nothing
