@@ -112,7 +112,7 @@
         },
         "resetpassword": {
             "warning": "Reset Password",
-            "message": "You are requesting for User password reset from the system and Email will be sent to user for rest of the New password . Are you sure to continue?"
+            "message": "A reset password link will be sent to the user email. Are you sure you want to continue?"
         }
 
     }
