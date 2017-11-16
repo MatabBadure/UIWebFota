@@ -215,6 +215,15 @@ angular.module('hillromvestApp')
           return response;
         });
       },
+       //changes for pasword reset
+       resetPasswordUser : function(userId){
+        var url = URL.resetPasswordUser.replace('USERID', userId);
+        return $http.put(url, null, {
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });
+      },
 
       validateCredentials : function(data){
         var url = URL.validateCredentials;
