@@ -87,7 +87,8 @@
           </div>
           <div class="col-md-7 reset-padding col-md-offset-2">
             <div class="col-md-6 dashboard__form--label reset-padding">
-              <span class="" translate="user.mobile-number"></span>
+              <span ng-if="user.role != 'PATIENT'" class="" translate="user.mobile-number"></span> 
+              <span ng-if="user.role === 'PATIENT'" class="" translate="user.secondary-phone"></span>
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
             {{::user.mobilePhone}}
