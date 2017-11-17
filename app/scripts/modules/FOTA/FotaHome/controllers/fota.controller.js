@@ -641,7 +641,7 @@ $scope.validateMatched = function(){
     $scope.getFirmwareById = function(id){
       fotaService.getFirmwareInfo(id).then(function(response){
       $scope.selectedFirmware = response.data.fotaInfo;
-      $scope.releaseConvertedDate = dateService.getDateTimeFromTimeStamp($scope.selectedFirmware.releaseDate,patientDashboard.dateFormat,'-')
+      $scope.releaseConvertedDate = dateService.getDateFromTimeStamp($scope.selectedFirmware.releaseDate,patientDashboard.dateFormat,'-')
       $scope.uploadConvertedDate = dateService.getDateTimeFromTimeStamp($scope.selectedFirmware.uploadDatetime,patientDashboard.dateFormat,'-')
      if($scope.selectedFirmware.publishedDateTime !== null){
            $scope.publishedConvertedDate = dateService.getDateTimeFromTimeStamp($scope.selectedFirmware.publishedDateTime,patientDashboard.dateFormat,'-')
