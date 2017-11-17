@@ -275,7 +275,7 @@ angular.module('hillromvestApp')
       $scope.patientAdvancedFilters.hillromId = "";
       $scope.patientAdvancedFilters.email = "";
       $scope.patientAdvancedFilters.gender = "All";
-      $scope.patientAdvancedFilters.age = "";
+      $scope.patientAdvancedFilters.age = [];
       $scope.selectedCountry = ["US"];
       $scope.selectedCountryObj = ["US"];
       $scope.selectedStates = [];
@@ -290,7 +290,7 @@ angular.module('hillromvestApp')
       $scope.diagnosis ="";                   
       $scope.searchDiagnosis = {};
       $scope.patientAdvancedFilters.diagnosis = "";
-      $scope.patientAdvancedFilters.adherenceScoreRange = "";
+      $scope.patientAdvancedFilters.adherenceScoreRange = [];
       $scope.patientAdvancedFilters.deviceType = "All";
       $scope.patientAdvancedFilters.deviceStatus = "All";
       $scope.patientAdvancedFilters.deviceActiveDateFrom = "";

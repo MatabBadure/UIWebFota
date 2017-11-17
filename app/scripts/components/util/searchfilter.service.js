@@ -288,7 +288,7 @@ angular.module('hillromvestApp')
       ];
             return range;
               };
-           this.processAdherenceScoreRange = function(){
+             this.processAdherenceScoreRange = function(){
               var range = [
         { 'name': '0-5', 'ticked': false },
         { 'name': '6-10', 'ticked': false},
@@ -306,7 +306,10 @@ angular.module('hillromvestApp')
         { 'name': '66-70', 'ticked': false},
         { 'name': '71-75', 'ticked': false},
         { 'name': '76-80', 'ticked': false},
-        { 'name': '81-above', 'ticked': false}
+        { 'name': '81-85', 'ticked': false},
+        { 'name': '86-90', 'ticked': false},
+        { 'name': '91-95', 'ticked': false},
+        { 'name': '96-100', 'ticked': false}
       ];
             return range;
               };
