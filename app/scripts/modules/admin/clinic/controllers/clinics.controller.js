@@ -1148,10 +1148,6 @@ $scope.activateClinicModal = function(clininc){
        $("#city-dropdown").css("pointer-events","none");
       $("#state-dropdown").css("background-color", 'inherit');
        $("#state-dropdown").css("pointer-events","all");
-       /* $scope.currentPageIndex = 1;
-      $scope.perPageCount = 10;
-      $scope.pageCount = 0;
-      $scope.total = 0;*/
       $scope.isZipcode = false;
       $scope.clinicAdvancedFilter = {};
       $scope.clinicAdvancedFilter.clinicName = "";
