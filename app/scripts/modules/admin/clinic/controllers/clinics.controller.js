@@ -358,7 +358,7 @@ angular.module('hillromvestApp')
         }
 
         if($scope.isAdvancedFilters){
-          $scope.advancedSearchClinics();
+          $scope.advancedSearchClinics(false);
         }
         else{
          
@@ -1328,7 +1328,13 @@ $scope.activateClinicModal = function(clininc){
           });
     };
 
-    $scope.advancedSearchClinics = function(){
+    $scope.advancedSearchClinics = function(isFresh){
+      if(isFresh){
+        $scope.currentPageIndex = 1;
+      $scope.perPageCount = 10;
+      $scope.pageCount = 0;
+      $scope.total = 0;
+      }
       $scope.isAdvancedFilters = true;
       if($scope.clinicAdvancedFilter.zipcode){
         //do nothing

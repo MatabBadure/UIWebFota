@@ -53,7 +53,9 @@
             "clinic-admin": "Clinic Admin",
             "caregiver": "Caregiver",
             "associates": "Associates",
-            "customerservices" : "Customer Service"
+            "customerservices" : "Customer Service",
+            "FOTAAdmin" : "FOTA Admin",
+            "FOTAApprover" : "FOTA Approver"
         },
         "placeholder": {
             "search": "Search with Name, Hill-Rom ID or Email"
@@ -82,6 +84,7 @@
         "state": "State",
         "primary-phone": "Primary Phone",
         "mobile-number": "Mobile Number",
+        "secondary-phone": "Secondary Phone",
         "fax-number": "Fax Number",
         "hillromId": "Hill-Rom ID",
         "parentClinicId": "ParentClinicId",
@@ -89,6 +92,7 @@
         "parent": "parent",
         "submit-button-text": "submit",
         "reactivate-button-text":"Resend Activation Link",
+        "resetpassword-button-text":"Reset Password",
         "cancel-button-text": "cancel",
         "deactivate-button-text": "Deactivate",
         "activate-button-text":"Activate",
@@ -105,6 +109,11 @@
         "update":{
             "warning": "Hill-Rom User - Details",
             "message": "You have made changes/updates for Hill-Rom User. Are you sure to make updates?"
+        },
+        "resetpassword": {
+            "warning": "Reset Password",
+            "message": "A reset password link will be sent to the user email. Are you sure you want to continue?"
         }
+
     }
 }
