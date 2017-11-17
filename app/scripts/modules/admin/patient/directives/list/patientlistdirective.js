@@ -131,6 +131,7 @@ angular.module('hillromvestApp')
               searchOnLoad = false;
             }).catch(function(response) {
               $scope.noMatchFound = true;
+               $scope.isAdvancedFilters = false;
             });
           }
         };
@@ -286,47 +287,8 @@ angular.module('hillromvestApp')
       $scope.patientAdvancedFilters.clinicLevelStatus = "All";
       $scope.ageGroups = searchFilterService.processAgeRange();
       $scope.adherenceScoreRangeGroups= searchFilterService.processAdherenceScoreRange();
-      $scope.searchDiagnosis = "";
-      $scope.diagnosis =[
-        {
-            "id": 222,
-            "type": "patient_diagnostic_code",
-            "type_code": "A00.0",
-            "type_code_value": "Cholera due to Vibrio cholerae 01, biovar cholerae"
-        },
-        {
-            "id": 223,
-            "type": "patient_diagnostic_code",
-            "type_code": "A00.1",
-            "type_code_value": "Observation and evaluation of newborn for suspected skin and subcutaneous tissue condition ruled out"
-        },
-        {
-            "id": 224,
-            "type": "patient_diagnostic_code",
-            "type_code": "A00.1",
-            "type_code_value": "Adenoviral meningitis"
-        },
-        {
-            "id": 225,
-            "type": "patient_diagnostic_code",
-            "type_code": "A00.1",
-            "type_code_value": "Cholera due to Vibrio cholerae 01, biovar eltor"
-        },
-        {
-            "id": 226,
-            "type": "patient_diagnostic_code",
-            "type_code": "A00.1",
-            "type_code_value": "Observation and evaluation of newborn for suspected skin and subcutaneous tissue condition ruled out"
-        },
-        {
-            "id": 227,
-            "type": "patient_diagnostic_code",
-            "type_code": "A00.1",
-            "type_code_value": "Adenoviral2345 meningitis"
-        }
-    ];
-                      
-      $scope.searchDiagnosis = "";
+      $scope.diagnosis ="";                   
+      $scope.searchDiagnosis = {};
       $scope.patientAdvancedFilters.diagnosis = "";
       $scope.patientAdvancedFilters.adherenceScoreRange = "";
       $scope.patientAdvancedFilters.deviceType = "All";
@@ -371,16 +333,6 @@ angular.module('hillromvestApp')
 
   };
   $scope.maxRangeCheck = function(){
-  /*$scope.minRange = $scope.patientAdvancedFilters.minHMRRange;
-  $scope.maxRange = $scope.patientAdvancedFilters.maxHMRRange;*/
-/*  if($scope.patientAdvancedFilters.minHMRRange == null){
-    $scope.patientAdvancedFilters.minHMRRange = "";
-  }
-  if($scope.patientAdvancedFilters.maxHMRRange == null){
-    $scope.patientAdvancedFilters.maxHMRRange = "";
-  }*/
-  console.log("($scope.patientAdvancedFilters.minHMRRange",$scope.patientAdvancedFilters.minHMRRange);
-    console.log("($scope.patientAdvancedFilters.maxHMRRange",$scope.patientAdvancedFilters.maxHMRRange);
   if(Number.isInteger($scope.patientAdvancedFilters.minHMRRange) && Number.isInteger($scope.patientAdvancedFilters.maxHMRRange)){
   if(parseInt($scope.patientAdvancedFilters.minHMRRange) >= parseInt($scope.patientAdvancedFilters.maxHMRRange))
   {
@@ -409,21 +361,6 @@ if($scope.patientAdvancedFilters.maxHMRRange === undefined){
 else{
   $scope.maxHmrInvalid = false;
 }
- /* if(isNaN($scope.patientAdvancedFilters.minHMRRange) || isNaN($scope.patientAdvancedFilters.maxHMRRange)){
-    $scope.hmrRangeFlag = false;
-    if(isNaN($scope.patientAdvancedFilters.minHMRRange) && isNaN($scope.patientAdvancedFilters.maxHMRRange)){
-      $scope.minHmrInvalid = true;
-      $scope.maxHmrInvalid = true;
-    }
-     else if(isNaN($scope.patientAdvancedFilters.maxHMRRange) && !isNaN($scope.patientAdvancedFilters.minHMRRange)){
-      $scope.minHmrInvalid = false;
-      $scope.maxHmrInvalid = true;
-    }
-    else if(!isNaN($scope.patientAdvancedFilters.maxHMRRange) && isNaN($scope.patientAdvancedFilters.minHMRRange)){
-      $scope.minHmrInvalid = true;
-      $scope.maxHmrInvalid = false;
-    }
-  }*/
   }
   $scope.getCityStateforAdvancedFilters = function(zipcode){ 
           $scope.isZipcode = true; 
@@ -540,27 +477,39 @@ else{
           $scope.pageCount = 0;
           $scope.total = 0;
       }
-      $scope.isAdvancedFilters = true;
+     
       if($scope.patientAdvancedFilters.zipcode){
         //do nothing
       }
       else{
         $scope.patientAdvancedFilters.zipcode = "";
       }
+      if($scope.patientAdvancedFilters.minHMRRange){
+        $scope.patientAdvancedFilters.minHMRRange = $scope.patientAdvancedFilters.minHMRRange.toString();
+      }
+      if($scope.patientAdvancedFilters.maxHMRRange){
+        $scope.patientAdvancedFilters.maxHMRRange = $scope.patientAdvancedFilters.maxHMRRange.toString();
+      }
       angular.forEach($scope.selectedCities, function(city){
             $scope.patientAdvancedFilters.city.push(city.name);
           });
       patientService.getPatientsAdvancedSearch($scope.sortOption, $scope.currentPageIndex, $scope.perPageCount, $scope.patientAdvancedFilters).then(function(){
               $scope.patients = response.data;
+               $scope.isAdvancedFilters = true;
               var patientCount = $scope.patients.length;
               for (var i = 0 ; i < patientCount ; i++) {                
                 $scope.patients[i].dob = $scope.getDateFromTimestamp($scope.patients[i].dob);
                 $scope.patients[i].lastTransmissionDate = $scope.getDateFromTimestampforTransmissiondate($scope.patients[i].lastTransmissionDate);
               }
+              $scope.patientAdvancedFilters.minHMRRange = Number($scope.patientAdvancedFilters.minHMRRange);
+               $scope.patientAdvancedFilters.maxHMRRange = Number($scope.patientAdvancedFilters.maxHMRRange);
               $scope.total = response.headers()['x-total-count'];
               $scope.pageCount = Math.ceil($scope.total / 10);
       }).catch(function(){
+        $scope.patientAdvancedFilters.minHMRRange = Number($scope.patientAdvancedFilters.minHMRRange);
+        $scope.patientAdvancedFilters.maxHMRRange = Number($scope.patientAdvancedFilters.maxHMRRange);
         $scope.noMatchFound = true;
+         $scope.isAdvancedFilters = false;
       });
       console.log("$scope.patientAdvancedFilters",$scope.patientAdvancedFilters);
     };
@@ -581,93 +530,36 @@ else{
       } 
     };
     $scope.getMatchingDiagnosisList = function($viewValue){
-      if($viewValue.length >=2){
-        patientService.getDiagnosticList($viewValue).then(function(response){
-          $scope.diagnosis = {};
-          $scope.diagnosis = response.data;
-        }).catch(function(){
-
-        });
-        return $scope.diagnosis.typeCode;
-     /* return ([
-        {
-            "id": 222,
-            "type": "patient_diagnostic_code",
-            "type_code": "A00.0",
-            "type_code_value": "Cholera due to Vibrio cholerae 01, biovar cholerae"
-        },
-        {
-            "id": 223,
-            "type": "patient_diagnostic_code",
-            "type_code": "A00.1",
-            "type_code_value": "Observation and evaluation of newborn for suspected skin and subcutaneous tissue condition ruled out"
-        },
-        {
-            "id": 224,
-            "type": "patient_diagnostic_code",
-            "type_code": "A00.1",
-            "type_code_value": "Adenoviral meningitis"
-        },
-        {
-            "id": 225,
-            "type": "patient_diagnostic_code",
-            "type_code": "A00.1",
-            "type_code_value": "Cholera due to Vibrio cholerae 01, biovar eltor"
-        },
-        {
-            "id": 226,
-            "type": "patient_diagnostic_code",
-            "type_code": "A00.1",
-            "type_code_value": "Observation and evaluation of newborn for suspected skin and subcutaneous tissue condition ruled out"
-        },
-        {
-            "id": 227,
-            "type": "patient_diagnostic_code",
-            "type_code": "A00.1",
-            "type_code_value": "Adenoviral2345 meningitis"
-        },
-        {
-            "id": 228,
-            "type": "patient_diagnostic_code",
-            "type_code": "A00.0",
-            "type_code_value": "Surgical operation with implant of artificial internal device as the cause of abnormal reaction of the patient, or of later complication, without mention of misadventure at the time of the procedure"
-        },
-        {
-            "id": 229,
-            "type": "patient_diagnostic_code",
-            "type_code": "A00.1",
-            "type_code_value": "Drug or chemical induced diabetes mellitus with proliferative diabetic retinopathy with combined traction retinal detachment and rhegmatogenous retinal detachment"
-        },
-        {
-            "id": 230,
-            "type": "patient_diagnostic_code",
-            "type_code": "A00.1",
-            "type_code_value": "Traumatic subarachnoid hemorrhage with loss of consciousness greater than 24 hours without return to pre-existing conscious level with patient surviving"
-        },
-        {
-            "id": 231,
-            "type": "patient_diagnostic_code",
-            "type_code": "A00.1",
-            "type_code_value": "Injury of left internal carotid artery, intracranial portion, not elsewhere classified with loss of consciousness greater than 24 hours without return to pre-existing conscious level with patient surviving"
-        },
-        {
-            "id": 232,
-            "type": "patient_diagnostic_code",
-            "type_code": "A00.1",
-            "type_code_value": "Diabetes mellitus due to underlying condition with hyperosmolarity without nonketotic hyperglycemic-hyperosmolar coma (NKHHC)"
-        },
-        {
-            "id": 233,
-            "type": "patient_diagnostic_code",
-            "type_code": "A00.1",
-            "type_code_value": "Adenoviral2345 meningitis"
+      console.log("$viewValue",$viewValue);
+      if($viewValue.length == 2 || $viewValue.length > 2){
+        console.log("$viewValue.length",$viewValue.length);
+            patientService.getDiagnosticList($viewValue).then(function(response){
+           $scope.searchDiagnosis = {};
+          if(response.data.typeCode){
+          $scope.searchDiagnosis = response.data;
         }
-    ]
-                      );*/
+        else{
+           $scope.searchDiagnosis = {'typeCode':[]};
+        }
+          
+        }).catch(function(){
+           $scope.searchDiagnosis = {'typeCode':[]};
+        });  
+        return $scope.searchDiagnosis.typeCode;
     }
     };
-    $scope.showAssociateHCPModal = function(){
-      alert("yayy");
+    $scope.selectDiagnosis = function(diagnosis){
+      if(diagnosis){
+        if(diagnosis.type_code){
+        $scope.patientAdvancedFilters.diagnosis = diagnosis.type_code;
+      }
+      else{
+         $scope.patientAdvancedFilters.diagnosis = "";
+      }
+      }
+      else{
+        $scope.patientAdvancedFilters.diagnosis = "";
+      }
     };
      //End of Implementation of GIMP- 20    
         $scope.init();

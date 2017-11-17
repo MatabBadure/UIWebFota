@@ -190,7 +190,7 @@
                        <div class="col-md-4 col-sm-4 advanced-filters-margin">
               <span class="advanced-filters" translate="">Diagnosis</span>
             <div class="form__select__input--option reset-padding selected-box-container dynamic-seach-list">
-               <input class="form-control" style="text-overflow: ellipsis" type="text" ng-model="searchDiagnosis" typeahead="diagnosis as diagnosis.type_code + ' &nbsp : ' + diagnosis.type_code_value for diagnosis in getMatchingDiagnosisList($viewValue)">
+               <input class="form-control" style="text-overflow: ellipsis" type="text" ng-model="diagnosis" typeahead="searchDiagnosis as searchDiagnosis.type_code + ' &nbsp : ' + searchDiagnosis.type_code_value for searchDiagnosis in getMatchingDiagnosisList($viewValue)" typeahead-on-select="selectDiagnosis($item)">
             </div>
             
           </div>
