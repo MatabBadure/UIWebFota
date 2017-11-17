@@ -535,6 +535,26 @@ angular.module('hillromvestApp')
         {
          return('Chinese');
         }
+      },
+
+      getPatientsAdvancedSearch: function(sortOption, pageNo, perPage, data) {
+        if (sortOption === "" || sortOption === undefined || sortOption === null) {
+          sortOption = sortConstant.plastName + searchFilters.amp + searchFilters.asc + searchFilters.equal + true;
+        }
+        var url = URL.patientAdvancedSearch.replace("PER_PAGE",perPage).replace("PAGE",pageNo).replace("SORT_OPTION",sortOption);
+        return $http.post(url, data, {
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });
+      },
+      getDiagnosticList: function(value){
+        var url = URL.matchingDiagnosticList.replace("SEARCH_STRING",value)
+         return $http.get(url, {
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });
       }
 
       
