@@ -48,6 +48,7 @@ angular.module('hillromvestApp')
             "termsAndConditionsAccepted": $scope.resetAccount.tnc,
             "key": $stateParams.key
           }
+            Auth.activateAccount({key: $stateParams.key}).then(function () {
           Auth.configurePassword(data).then(function () {
             $scope.success = 'OK';
             $state.go('login');
@@ -59,6 +60,9 @@ angular.module('hillromvestApp')
               $scope.message = reset.finish.otherError;
             }
           });
+        }).catch(function (response) {
+              $scope.showServerError(response);
+            });
         }
       };
 
