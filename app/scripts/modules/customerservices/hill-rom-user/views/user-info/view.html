@@ -116,7 +116,7 @@
         <div class="clr"></div>
          <div class="col-md-16 reset-padding margin-top">
         <div class="actionbuttons" ng-if="(user.role === 'PATIENT') || (user.role === 'CLINIC_ADMIN') || (user.role === 'HCP') || (user.role === 'CARE_GIVER')">
-          <button type="button" class="hillrom-btn btn-primary btn-margin-left float-right" ng-show="user.activated"  ng-click="showResetModel()"  translate="user.resetpassword-button-text">Reset Password</button>
+          <button type="button" class="hillrom-btn btn-primary btn-margin-left float-right" ng-show="user.activated && !user.deleted"  ng-click="showResetModel()"  translate="user.resetpassword-button-text">Reset Password</button>
           <button type="button" class="hillrom-btn btn-primary btn-margin-left float-right" ng-class="{'disabled btn-inactive': isDisableResendButton}" ng-show=" !user.deleted && !user.activated && user.id != loggedUserId" ng-disabled="isDisableResendButton" ng-click="resendActivationLinkCSR()" translate="user.reactivate-button-text">Resend Activation Link</button>
           <button type="button" class="hillrom-btn btn-secondary float-right" ng-click="open('deactivate')" ng-show=" !user.deleted && user.id != loggedUserId" translate="user.deactivate-button-text">Deactivate</button>
           <button type="button" class="hillrom-btn btn-secondary float-right" ng-click="open('activate')" ng-show="user.deleted" translate="user.activate-button-text">Activate</button>

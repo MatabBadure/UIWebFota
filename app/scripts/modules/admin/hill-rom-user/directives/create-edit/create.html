@@ -184,7 +184,7 @@
        <div class="padding-bottom-20"></div>
       <div class="col-md-16 reset-padding margin-top">
         <div class="">
-          <button type="button" class="hillrom-btn btn-primary btn-margin-left float-right" ng-show="user.activated && isUser"  ng-click="showResetModel()"  translate="user.resetpassword-button-text">Reset Password</button>
+          <button type="button" class="hillrom-btn btn-primary btn-margin-left float-right" ng-show="user.activated && isUser && !user.deleted"  ng-click="showResetModel()"  translate="user.resetpassword-button-text">Reset Password</button>
           <button type="button" class="hillrom-btn btn-primary btn-margin-left float-right" ng-class="{'disabled btn-inactive': isDisableResendButton}" ng-show="!userStatus.isCreate && !user.deleted && !user.activated && !isSuperadmin" ng-disabled="isDisableResendButton" ng-click="resendActivationLink()" translate="user.reactivate-button-text">Resend Activation Link</button>
           <button type="submit" class="hillrom-btn btn-primary btn-margin-left float-right" ng-show="userStatus.isCreate && !isSuperadmin" ng-click="formSubmit()" translate="user.submit-button-text">Submit</button>
           <button type="reset" ng-click="cancel()" ng-show="userStatus.isCreate && !isSuperadmin && !isSuperadmin" class="hillrom-btn btn-secondary float-right" translate="user.cancel-button-text">Cancel</button>
