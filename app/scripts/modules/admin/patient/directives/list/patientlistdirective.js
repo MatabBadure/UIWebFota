@@ -349,9 +349,11 @@ angular.module('hillromvestApp')
   };
   $scope.maxRangeCheck = function(){
   if(Number.isInteger($scope.patientAdvancedFilters.minHMRRange) && Number.isInteger($scope.patientAdvancedFilters.maxHMRRange)){
+     $scope.hmrRangeInvalid = false;
   if(parseInt($scope.patientAdvancedFilters.minHMRRange) >= parseInt($scope.patientAdvancedFilters.maxHMRRange))
   {
      $scope.hmrRangeFlag = true;
+
   }
   else
   {
@@ -359,8 +361,14 @@ angular.module('hillromvestApp')
   }
   }
   else{
+    if($scope.patientAdvancedFilters.minHMRRange % 1 != 0 || $scope.patientAdvancedFilters.maxHMRRange % 1 != 0){
+      $scope.hmrRangeInvalid = true;
+    }
+    else{
+      $scope.hmrRangeInvalid = false;
+    }
      $scope.hmrRangeFlag = false;
-
+     
   }
 if($scope.patientAdvancedFilters.minHMRRange === undefined){
   //do nothing

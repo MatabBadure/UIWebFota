@@ -317,7 +317,10 @@
                             </span>
                             <span class="has-error" ng-show="hmrRangeFlag" >Max HMR should be greater than Min HMR 
                             </span>
+
                           </div>
+                          <span class="has-error" ng-show="hmrRangeInvalid && !(maxHmrInvalid || minHmrInvalid)" >Ranges cannot be decimals 
+                            </span>
                           
                             
                            
