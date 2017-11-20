@@ -130,5 +130,12 @@ $scope.activateUserCSR = function(){
             notyService.showError(response);
           });
         };
+         $scope.showResetModel = function(){
+          if($scope.form.$invalid){
+            return true;
+          }else{
+            $scope.resetModal = true;
+          }
+        };
     $scope.init();
   }]);

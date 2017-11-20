@@ -358,7 +358,7 @@ angular.module('hillromvestApp')
               this.processDeviceTypeOptions = function(){
               var options = [{
                 name: "All",
-                value:"ALL"
+                value:"All"
             }, {
                 name: "VisiVest",
                 value:"VEST"
@@ -370,16 +370,25 @@ angular.module('hillromvestApp')
               };
 
               this.multiselectPropertiesForAdvancedFilters = function(){
-                var properties = {
-        selectAll       : "Tick all",
-        selectNone      : "Tick none",
-        search          : "Type here to search...",
-        nothingSelected : "",
-        allSelected : "All Selected",
-        Cancel : "Cancel",
-          OK:"OK"
-      };
-      return properties;
-              }
+                      var properties = {
+              selectAll       : "Tick all",
+              selectNone      : "Tick none",
+              search          : "Type here to search...",
+              nothingSelected : "",
+              allSelected : "All Selected",
+              Cancel : "Cancel",
+                OK:"OK"
+                };
+                return properties;
+              };
+               this.getMatchingDiagnosisList = function($viewValue, list){
+                var diagnosis = [];
+                for (var i=0; i< list.length; i++) {
+                  if (list[i].type_code.toLowerCase().indexOf($viewValue.toLowerCase()) != -1 || list[i].type_code_value.toLowerCase().indexOf($viewValue.toLowerCase()) != -1) {
+                    diagnosis.push(list[i]);
+                  }
+                }
+                return diagnosis;
+              };
 
     }]);

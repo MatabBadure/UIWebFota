@@ -56,12 +56,13 @@ angular.module('hillromvestApp')
           $scope.sortIconDown = false;
           $scope.searchItem = "";
           $scope.isAdvancedFilters = false;
+          $scope.noDataFlag = false;
           $scope.initAdvancedFilters();
           $scope.searchPatients();
           if($stateParams.clinicIds){
             $scope.getAssociatedPatientsToClinic($stateParams.clinicIds);
           }
-/*          patientService.getDiagnosticList('0').then(function(response){
+/*          patientService.getDiagnosticList('').then(function(response){
            $scope.searchDiagnosis = {};
           if(response.data.typeCode){
           $scope.searchDiagnosis = response.data;
@@ -72,11 +73,12 @@ angular.module('hillromvestApp')
           
         }).catch(function(){
            $scope.searchDiagnosis = {'typeCode':[]};
-        });*/ 
+        }); */
         };
 
         $scope.searchPatientsOnQueryChange = function(){
           if(($state.current.name === "patientUser" || $state.current.name === "rcadminPatients" || $state.current.name === "associatePatientUser" || $state.current.name === "customerservicePatientUser") && !$stateParams.clinicIds && !searchOnLoad){
+            $scope.isAdvancedFilters = false;
             $scope.searchPatients();
           }
         };
@@ -141,6 +143,7 @@ angular.module('hillromvestApp')
               $scope.total = response.headers()['x-total-count'];
               $scope.pageCount = Math.ceil($scope.total / 10);
               searchOnLoad = false;
+              $scope.noDataFlag = false;
             }).catch(function(response) {
               $scope.noMatchFound = true;
                $scope.isAdvancedFilters = false;
@@ -263,7 +266,7 @@ angular.module('hillromvestApp')
       //$scope.expandedSign = ($scope.expandedSign === "+") ? "-" : "+"; 
       $scope.expandedSign = ($scope.expandedSign === true) ? false : true;  
       if($scope.expandedSign === true){
-        $scope.searchItem = ""; 
+        //$scope.searchItem = ""; 
         /*$scope.isAdvancedFilters = true;*/
        $("#searchListParam").attr("disabled", true);
        $("#searchListParam").css("background-color", 'rgb(235, 235, 228)'); 
@@ -346,9 +349,11 @@ angular.module('hillromvestApp')
   };
   $scope.maxRangeCheck = function(){
   if(Number.isInteger($scope.patientAdvancedFilters.minHMRRange) && Number.isInteger($scope.patientAdvancedFilters.maxHMRRange)){
+     $scope.hmrRangeInvalid = false;
   if(parseInt($scope.patientAdvancedFilters.minHMRRange) >= parseInt($scope.patientAdvancedFilters.maxHMRRange))
   {
      $scope.hmrRangeFlag = true;
+
   }
   else
   {
@@ -356,8 +361,14 @@ angular.module('hillromvestApp')
   }
   }
   else{
+    if($scope.patientAdvancedFilters.minHMRRange % 1 != 0 || $scope.patientAdvancedFilters.maxHMRRange % 1 != 0){
+      $scope.hmrRangeInvalid = true;
+    }
+    else{
+      $scope.hmrRangeInvalid = false;
+    }
      $scope.hmrRangeFlag = false;
-
+     
   }
 if($scope.patientAdvancedFilters.minHMRRange === undefined){
   //do nothing
@@ -484,6 +495,7 @@ else{
     }
     $scope.advancedSearchPatients = function(isFresh){
       if(isFresh){
+        $scope.searchItem = "";
         $scope.currentPageIndex = 1;
           $scope.perPageCount = 10;
           $scope.pageCount = 0;
@@ -521,6 +533,7 @@ else{
               }
               $scope.total = response.headers()['x-total-count'];
               $scope.pageCount = Math.ceil($scope.total / 10);
+               $scope.noDataFlag = true;
       }).catch(function(){
        if($scope.patientAdvancedFilters.minHMRRange){
               $scope.patientAdvancedFilters.minHMRRange = Number($scope.patientAdvancedFilters.minHMRRange);
@@ -529,6 +542,7 @@ else{
                $scope.patientAdvancedFilters.maxHMRRange = Number($scope.patientAdvancedFilters.maxHMRRange);
               }
         $scope.noMatchFound = true;
+        $scope.noDataFlag = true;
          $scope.isAdvancedFilters = false;
       });
       console.log("$scope.patientAdvancedFilters",$scope.patientAdvancedFilters);
