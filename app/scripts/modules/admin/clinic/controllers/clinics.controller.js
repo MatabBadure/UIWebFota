@@ -1130,7 +1130,7 @@ $scope.activateClinicModal = function(clininc){
       //$scope.expandedSign = ($scope.expandedSign === "+") ? "-" : "+"; 
       $scope.expandedSign = ($scope.expandedSign === true) ? false : true;  
       if($scope.expandedSign === true){
-        $scope.searchItem = ""; 
+       // $scope.searchItem = ""; 
         /*$scope.isAdvancedFilters = true;*/
        $("#searchListParam").attr("disabled", true);
        $("#searchListParam").css("background-color", 'rgb(235, 235, 228)'); 
@@ -1330,6 +1330,7 @@ $scope.activateClinicModal = function(clininc){
 
     $scope.advancedSearchClinics = function(isFresh){
       if(isFresh){
+         $scope.searchItem = ""; 
         $scope.currentPageIndex = 1;
       $scope.perPageCount = 10;
       $scope.pageCount = 0;
