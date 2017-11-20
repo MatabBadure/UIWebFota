@@ -565,7 +565,7 @@ else{
         }).catch(function(){
            $scope.searchDiagnosis = {'typeCode':[]};
         });  
-        return searchFilterService.getMatchingDiagnosisList($viewValue, $scope.searchDiagnosis.typeCode);
+        return $scope.searchDiagnosis.typeCode;
     }
     };
     $scope.selectDiagnosis = function(diagnosis){
