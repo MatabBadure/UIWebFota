@@ -61,6 +61,18 @@ angular.module('hillromvestApp')
           if($stateParams.clinicIds){
             $scope.getAssociatedPatientsToClinic($stateParams.clinicIds);
           }
+/*          patientService.getDiagnosticList('0').then(function(response){
+           $scope.searchDiagnosis = {};
+          if(response.data.typeCode){
+          $scope.searchDiagnosis = response.data;
+        }
+        else{
+           $scope.searchDiagnosis = {'typeCode':[]};
+        }
+          
+        }).catch(function(){
+           $scope.searchDiagnosis = {'typeCode':[]};
+        });*/ 
         };
 
         $scope.searchPatientsOnQueryChange = function(){
@@ -493,7 +505,7 @@ else{
       angular.forEach($scope.selectedCities, function(city){
             $scope.patientAdvancedFilters.city.push(city.name);
           });
-      patientService.getPatientsAdvancedSearch($scope.sortOption, $scope.currentPageIndex, $scope.perPageCount, $scope.patientAdvancedFilters).then(function(){
+      patientService.getPatientsAdvancedSearch($scope.sortOption, $scope.currentPageIndex, $scope.perPageCount, $scope.patientAdvancedFilters).then(function(response){
               $scope.patients = response.data;
                $scope.isAdvancedFilters = true;
               var patientCount = $scope.patients.length;
@@ -501,13 +513,21 @@ else{
                 $scope.patients[i].dob = $scope.getDateFromTimestamp($scope.patients[i].dob);
                 $scope.patients[i].lastTransmissionDate = $scope.getDateFromTimestampforTransmissiondate($scope.patients[i].lastTransmissionDate);
               }
+              if($scope.patientAdvancedFilters.minHMRRange){
               $scope.patientAdvancedFilters.minHMRRange = Number($scope.patientAdvancedFilters.minHMRRange);
+               }
+               if($scope.patientAdvancedFilters.maxHMRRange){
                $scope.patientAdvancedFilters.maxHMRRange = Number($scope.patientAdvancedFilters.maxHMRRange);
+              }
               $scope.total = response.headers()['x-total-count'];
               $scope.pageCount = Math.ceil($scope.total / 10);
       }).catch(function(){
-        $scope.patientAdvancedFilters.minHMRRange = Number($scope.patientAdvancedFilters.minHMRRange);
-        $scope.patientAdvancedFilters.maxHMRRange = Number($scope.patientAdvancedFilters.maxHMRRange);
+       if($scope.patientAdvancedFilters.minHMRRange){
+              $scope.patientAdvancedFilters.minHMRRange = Number($scope.patientAdvancedFilters.minHMRRange);
+               }
+               if($scope.patientAdvancedFilters.maxHMRRange){
+               $scope.patientAdvancedFilters.maxHMRRange = Number($scope.patientAdvancedFilters.maxHMRRange);
+              }
         $scope.noMatchFound = true;
          $scope.isAdvancedFilters = false;
       });
