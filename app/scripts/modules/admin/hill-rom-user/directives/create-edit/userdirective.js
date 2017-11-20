@@ -216,15 +216,12 @@ angular.module('hillromvestApp')
           }
           $scope.updateModal = true;
         };
-        $scope.showResetModel = function () {
-         
-        
-          if ($scope.form.$invalid) {
+        $scope.showResetModel = function(){
+          if($scope.form.$invalid){
             return true;
-          } else {
+          } else{
             $scope.resetModal = true;
           }
-
         }
 
 
