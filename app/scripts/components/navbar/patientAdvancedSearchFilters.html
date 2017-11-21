@@ -272,7 +272,7 @@
               <span class="advanced-filters" translate="">From</span>
             </div>
             <div class="col-md-16 col-sm-16 dashboard__form--input advanced-filters-padding">
-              <input type="text"   class="datepickerNew" ng-model="patientAdvancedFilters.deviceActiveDateFrom" name = "startDate" data-provide="datepicker" data-date-autoclose="true" data-date-start-date="-730d"   id="dp1" required data-date-format="mm/dd/yyyy" ng-change="endDateCheck()"  ng-pattern="/^\d{2}\/\d{2}\/\d{4}$/" readonly="readonly"/>
+              <input type="text"   class="datepickerNew" ng-model="patientAdvancedFilters.deviceActiveDateFrom" name = "startDate" data-provide="datepicker" data-date-autoclose="true" data-date-start-date="-730d" data-date-end-date="0d" id="dp1" required data-date-format="mm/dd/yyyy" ng-change="endDateCheck()"  ng-pattern="/^\d{2}\/\d{2}\/\d{4}$/" readonly="readonly"/>
             </div>
           </div>
           <div class="col-md-8 col-sm-8 reset-padding">
@@ -280,7 +280,7 @@
               <span class="advanced-filters" translate=""> To</span>
             </div>
             <div class="col-md-16 col-sm-16 dashboard__form--input reset-padding">
-             <input type="text"   class="datepickerNew" ng-model="patientAdvancedFilters.deviceActiveDateTo" name = "endDate" data-provide="datepicker" data-date-autoclose="true" data-date-start-date="-730d" id="dp2" required data-date-format="mm/dd/yyyy"  ng-pattern="/^\d{2}\/\d{2}\/\d{4}$/" ng-change="endDateCheck()" readonly="readonly"/>
+             <input type="text"   class="datepickerNew" ng-model="patientAdvancedFilters.deviceActiveDateTo" name = "endDate" data-provide="datepicker" data-date-autoclose="true" data-date-start-date="-730d" data-date-end-date="0d" id="dp2" required data-date-format="mm/dd/yyyy"  ng-pattern="/^\d{2}\/\d{2}\/\d{4}$/" ng-change="endDateCheck()" readonly="readonly"/>
              <div ng-if="dateFlag == true "><span class="has-error">To Date should be greater than From date </span></div>
             </div>
           </div>
