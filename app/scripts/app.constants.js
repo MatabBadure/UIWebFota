@@ -170,9 +170,12 @@ angular.module('hillromvestApp')
 	'optimusdevicedatalist' : 'api/optimusdevicedatalist?page=PAGE&per_page=PER_PAGE',
 	'optimusDeviceData' : 'api/optimusDeviceData/ID',
 	'optimusdevicedata' : 'api/optimusdevicedata',
+	'resetPasswordUser' : 'api/user/USERID/resetPassword',
 	'clinicAdvancedfilter' : 'api/clinics/advanced/search?&page=PAGE&per_page=PER_PAGE&sort_by=SORT_OPTION&asc=true',
 	'availableStatesAdv':'/api/availableStatesAdv',
 	'cityByCountryAndState':'/api/cityByCountryAndState',
-	'stateByCountryCode':'/api/stateByCountryCode?country=COUNTRY'
+	'stateByCountryCode':'/api/stateByCountryCode?country=COUNTRY',
+	'patientAdvancedSearch' : 'api/advancedSearch/patient?&page=PAGE&per_page=PER_PAGE&sort_by=SORT_OPTION&asc=true',
+	'matchingDiagnosticList' : 'api/patient/diagnosis?searchString=SEARCH_STRING'
 
 });

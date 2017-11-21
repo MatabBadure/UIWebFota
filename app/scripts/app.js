@@ -95,7 +95,9 @@ angular.module('hillromvestApp',
   .config(['$stateProvider', '$urlRouterProvider', '$httpProvider', '$locationProvider', '$translateProvider', 'tmhDynamicLocaleProvider', 'httpRequestInterceptorCacheBusterProvider','$ocLazyLoadProvider', function($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider, $translateProvider, tmhDynamicLocaleProvider, httpRequestInterceptorCacheBusterProvider, $ocLazyLoadProvider) {
 
     //Cache everything except rest api requests
-    httpRequestInterceptorCacheBusterProvider.setMatchlist([/.*api.*/, /.*protected.*/, /.*.json.*/, /.*tims.*/, /.*index.html.*/, /.*navbar.html.*/, /.*patient-details.html.*/, /.*clinicadminpatientnavbar.html.*/], true);
+
+    httpRequestInterceptorCacheBusterProvider.setMatchlist([/.*api.*/, /.*protected.*/, /.*.json.*/, /.*tims.*/, /.*index.html.*/, /.*navbar.html.*/, /.*patient-details.html.*/, /.*clinicadminpatientnavbar.html.*/, /.*patientAdvancedSearchFilters.html.*/, /.*patientlist.html.*/, /.*view.html.*/], true);
+
 
     $urlRouterProvider.otherwise('/');
     $stateProvider.state('site', {

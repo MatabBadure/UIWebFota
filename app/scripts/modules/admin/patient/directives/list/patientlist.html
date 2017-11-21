@@ -21,8 +21,20 @@
         <div class="fixed-filter-box reset-padding-left">          
         </div>
       </div>
-      <div class="col-md-16">
+     <!--  <div class="col-md-16">
         <ng-include src="'scripts/components/navbar/searchfilter.html'"></ng-include>
+      </div> -->
+       <div class="row close expanded head_txt" >
+                    <div class="col-md-2 col-sm-2 col-xs-2" ng-click="toggleHeaderAccount()">
+                      <!-- <a class="close expanded" style="float:left">{{expandedSign}}</a> -->
+                      <i class="fa fa-minus-circle" aria-hidden="true" ng-hide="!expandedSign" style="float:left"><p class="head_txt advanced-filters-head" style="float:right;cursor:pointer"> Advanced Search</p></i>
+                      <i class="fa fa-plus-circle" aria-hidden="true" ng-hide="expandedSign" style="float:left;cursor:pointer">
+                      <p class="head_txt advanced-filters-head" style="float:right"> Advanced Search</p></i>     
+                    </div>
+                    
+                  </div>
+                  <div id="collapseTwo" style="border:none;">
+<ng-include src="'scripts/components/navbar/patientAdvancedSearchFilters.html'"></ng-include>
       </div>
       <div class="dashboard__manage-view--header"> 
         <div class="col-md-3 col-sm-3 header--type pull-left-mob width120">
@@ -93,7 +105,7 @@
 
           <div class="clr"></div>
        </div>
-       <div class="col-md-16 col-sm-16 empty-list-message" ng-if="patients && patients.length === 0">
+       <div class="col-md-16 col-sm-16 empty-list-message" ng-if="patients && patients.length === 0 && (searchItem || noDataFlag)">
         <span translate="patient.no-patient-found"></span>
       </div>
 

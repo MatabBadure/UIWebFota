@@ -59,7 +59,7 @@ angular.module('hillromvestApp')
         selectAll       : "Tick all",
         selectNone      : "Tick none",
         search          : "Type here to search...",
-        nothingSelected : "Nothing is selected",
+        nothingSelected : "",
         allSelected : "All Selected",
         Cancel : "Cancel",
           OK:"OK"
@@ -337,6 +337,7 @@ angular.module('hillromvestApp')
 
       $scope.searchClinicsOnQueryChange = function(){
         if(($state.current.name === 'clinicUser' || $state.current.name === 'clinicUserRcadmin' || $state.current.name === 'associateClinicUser' || $state.current.name === 'customerserviceClinicUser') && !searchOnLoad){
+         $scope.isAdvancedFilters = false;
           $scope.searchClinics();
         }
       };
@@ -354,9 +355,10 @@ angular.module('hillromvestApp')
           }
         }else {
             $scope.currentPageIndex = 1;
-        } 
+        }
+
         if($scope.isAdvancedFilters){
-          $scope.advancedSearchClinics();
+          $scope.advancedSearchClinics(false);
         }
         else{
          
@@ -1128,14 +1130,14 @@ $scope.activateClinicModal = function(clininc){
       //$scope.expandedSign = ($scope.expandedSign === "+") ? "-" : "+"; 
       $scope.expandedSign = ($scope.expandedSign === true) ? false : true;  
       if($scope.expandedSign === true){
-        $scope.searchItem = ""; 
-        $scope.isAdvancedFilters = true;
+       // $scope.searchItem = ""; 
+        /*$scope.isAdvancedFilters = true;*/
        $("#searchListParam").attr("disabled", true);
        $("#searchListParam").css("background-color", 'rgb(235, 235, 228)'); 
-      $scope.initPaginationVars();
+     // $scope.initPaginationVars();
       }
       else{
-         $scope.isAdvancedFilters = false;
+         
        $("#searchListParam").attr("disabled", false);
        $("#searchListParam").css("background-color", 'inherit'); 
       }     
@@ -1326,7 +1328,15 @@ $scope.activateClinicModal = function(clininc){
           });
     };
 
-    $scope.advancedSearchClinics = function(){
+    $scope.advancedSearchClinics = function(isFresh){
+      if(isFresh){
+         $scope.searchItem = ""; 
+        $scope.currentPageIndex = 1;
+      $scope.perPageCount = 10;
+      $scope.pageCount = 0;
+      $scope.total = 0;
+      }
+      $scope.isAdvancedFilters = true;
       if($scope.clinicAdvancedFilter.zipcode){
         //do nothing
       }
@@ -1343,6 +1353,8 @@ $scope.activateClinicModal = function(clininc){
       clinicService.getclinicsByAdvancedFilter($scope.clinicAdvancedFilter,$scope.clinicSortOption, $scope.currentPageIndex, $scope.perPageCount).then(function(response){
        $scope.clinics = {};
         $scope.clinics = response.data;
+         $scope.total = response.headers()['x-total-count'];
+        $scope.pageCount = Math.ceil($scope.total / 10);
         $scope.noDataFlag = true;
         }).catch(function(response){
           

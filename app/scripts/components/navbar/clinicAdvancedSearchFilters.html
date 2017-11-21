@@ -97,7 +97,8 @@
      <div class="col-md-4 col-sm-4  benchmarking__form__input selected-box-container padding0px" >
       <span class="advanced-filters">City</span>
       <div class="benchmarking__form__input selected-box-container" >
-      <div class="custom-dropdown disable-isteven-multiselect" id="city-dropdown">
+
+      <div class="custom-dropdown disable-isteven-multiselect advanced-filters-multiselect-height" id="city-dropdown">
       <!--   <select class="" ng-if="selectedStates.length > 1 || selectedStates.length === 0" ng-disabled="true">
           <option value="all" label="All" selected="selected">All</option>
         </select> -->
@@ -139,7 +140,7 @@
               <span class="advanced-filters" translate="clinic.adherence-setting"></span>
             <div class="form__select__input--option reset-padding selected-box-container">
               <div class="custom-dropdown" >
-                <select name="type" ng-model="clinicAdvancedFilter.adherenceWindowSelected"  ng-options="item.type_code_value as item.type_code for item in adherenceDays">
+                <select name="type" ng-model="clinicAdvancedFilter.adherenceWindowSelected"  ng-options="item.type_code_value as item.type_code for item in adherenceDays" style="width:254px">
                 </select>
               </div>
             </div>
@@ -161,7 +162,7 @@
  <div  class="col-md-16 col-sm-16 padding10 survey_grey_color" style="padding-bottom:20px">
         <div class="col-md-16 margin-top reset-padding">
         <div class="">
-          <button type="submit" ng-click="advancedSearchClinics()" class="hillrom-btn btn-primary btn-margin-left float-right">Search Clinics</button>
+          <button type="submit" ng-click="advancedSearchClinics(true)" class="hillrom-btn btn-primary btn-margin-left float-right">Search Clinics</button>
           <button type="submit" ng-click="initClinicAdvancedFilters()" class="hillrom-btn btn-primary btn-margin-left float-right">Reset Filters</button>
         </div>
       </div>

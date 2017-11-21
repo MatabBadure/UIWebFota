@@ -382,15 +382,18 @@ angular.module('hillromvestApp')
 				}
 			}
 		}
-			else{
+			else if($stateParams.clinicId){
 		    	$scope.selectedClinic.name  = localStorage.getItem('clinicname_'+$stateParams.clinicId);
          		$scope.selectedClinic.hillromId =  localStorage.getItem('clinicHillRomID_'+$stateParams.clinicId);
 				$scope.selectedClinic.id = $stateParams.clinicId;
 				}
+				else{
+					$scope.selectedClinic = {};
+				}
 			$scope.initCount($scope.selectedClinic.id);
 		if(userId){
 		$scope.weeklyChart();
-		if($scope.selectedClinic){
+		if($scope.selectedClinic.id){
 			$scope.getStatistics($scope.selectedClinic.id, userId);
 		}else{					
 			$scope.badgetoDate = $scope.badgestatistics.date = $scope.getYesterday();
@@ -536,7 +539,7 @@ angular.module('hillromvestApp')
 
 	$scope.getCumulativeGraphData = function() {
 		$scope.noDataAvailable = false;						
-		if($scope.selectedClinic){					
+		if($scope.selectedClinic.id){					
 			hcpDashBoardService.getCumulativeGraphPoints($scope.hcpId, $scope.selectedClinic.id, dateService.getDateFromTimeStamp($scope.fromTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), $scope.groupBy, $scope.ClinicDashboardDeviceType).then(function(response){
 				$scope.cumulativeChartData = response.data;	
 				if($scope.cumulativeChartData && typeof($scope.cumulativeChartData) === "object"){ 
@@ -586,7 +589,7 @@ angular.module('hillromvestApp')
 
 	
 	$scope.getTreatmentGraphData = function() {
-		if($scope.selectedClinic){
+		if($scope.selectedClinic.id){
 			hcpDashBoardService.getTreatmentGraphPoints($scope.hcpId, $scope.selectedClinic.id, dateService.getDateFromTimeStamp($scope.fromTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), $scope.groupBy, $scope.ClinicDashboardDeviceType).then(function(response){			
 				$scope.treatmentChartData = response.data;
 				if($scope.treatmentChartData && typeof($scope.treatmentChartData) === "object"){ 
@@ -639,11 +642,16 @@ angular.module('hillromvestApp')
 	};
 
 	$scope.chooseGraph = function() {
+		if($scope.selectedClinic.id){
 		if($scope.cumulativeGraph) {
 			$scope.getCumulativeGraphData();
 		} else if ($scope.treatmentGraph) {
 			$scope.getTreatmentGraphData();
 		}
+	}
+	else{
+		$scope.plotNoDataAvailable();
+	}
 	};
 
 	$scope.drawChart = function(datePicker,dateOption,groupByOption,durationInDays) {	

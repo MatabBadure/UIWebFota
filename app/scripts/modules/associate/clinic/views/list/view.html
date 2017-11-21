@@ -28,7 +28,7 @@
                     </div>
                     
                   </div>
-                  <div id="collapseTwo">
+                  <div id="collapseTwo" style="border:none">
 <ng-include src="'scripts/components/navbar/clinicAdvancedSearchFilters.html'"></ng-include>
       </div>
     <div class="dashboard__manage-view--header">
@@ -109,7 +109,7 @@
 
       <div class="clr"></div>
     </div>
-    <div class="col-md-16 col-sm-16 empty-list-message" ng-if="clinics && clinics.length === 0">
+    <div class="col-md-16 col-sm-16 empty-list-message" ng-if="clinics && clinics.length === 0  && (searchItem || noDataFlag)">
       <span translate="clinic.noClinics"></span>
     </div>
 

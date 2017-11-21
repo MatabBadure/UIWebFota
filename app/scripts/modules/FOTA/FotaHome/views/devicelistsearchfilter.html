@@ -5,12 +5,16 @@
 			<span translate="search-filter.success"></span> 
 		</label>
 		<label>
-			<input type="radio" ng-model="searchFilterdevicelist.type" value="Failure" ng-change="setDeviceRadioOption()"> 
-			<span translate="search-filter.fota-Fail"></span>
+			<input type="radio" ng-model="searchFilterdevicelist.type" value="In progress" ng-change="setDeviceRadioOption()"> 
+			<span translate="search-filter.fota-inprogress"></span>
 		</label>	
 		<label>
 			<input type="radio" ng-model="searchFilterdevicelist.type" value="Aborted" ng-change="setDeviceRadioOption()"> 
 			<span translate="search-filter.fota-aborted"></span>
+		</label>
+		<label>
+			<input type="radio" ng-model="searchFilterdevicelist.type" value="Failure" ng-change="setDeviceRadioOption()"> 
+			<span translate="search-filter.fota-Fail"></span>
 		</label>	
 		<label>
 			<input type="radio" ng-model="searchFilterdevicelist.type" value="All" ng-change="setDeviceRadioOption()"> 
