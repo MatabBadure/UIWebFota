@@ -295,7 +295,7 @@ angular.module('hillromvestApp')
       $scope.selectedCountryObj = ["US"];
       $scope.selectedStates = [];
       $scope.selectedCities = [];
-      $scope.patientAdvancedFilters.country = "US";
+      $scope.patientAdvancedFilters.country = "All";
       $scope.patientAdvancedFilters.state = [];
       $scope.patientAdvancedFilters.city = [];
       $scope.patientAdvancedFilters.zipcode = "";
