@@ -31,7 +31,7 @@ angular.module('hillromvestApp')
         $scope.missedTherapyDays = searchFilterService.processYesNoOptions();
         $scope.activeInactive = searchFilterService.processActiveInactiveOptions();
         $scope.deviceType = searchFilterService.processDeviceTypeOptions();
-        $scope.deviceStatus = searchFilterService.processYesNoOptions();
+        $scope.deviceStatus = searchFilterService.processActiveInactiveOptions();
         $scope.localLang = searchFilterService.multiselectPropertiesForAdvancedFilters()
         $scope.ageGroups = searchFilterService.processAgeRange();
         $scope.adherenceScoreRangeGroups= searchFilterService.processAdherenceScoreRange();
