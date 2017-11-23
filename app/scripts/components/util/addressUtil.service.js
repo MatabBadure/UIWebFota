@@ -45,6 +45,35 @@ angular.module('hillromvestApp')
         }).success(function (response) {
             return response;
         });
+      },
+
+      getAvailableStatesAdv: function() {
+        var url = URL.availableStatesAdv;
+        return $http.get(url,{
+          headers: headerService.getHeader()
+        }).success(function (response) {
+            return response;
+        });
+      },
+
+       getAllStatesAdv: function(countries) {
+        //var data = {"country": countries};
+        var url = URL.stateByCountryCode.replace("COUNTRY",countries);
+        return $http.get(url,{
+          headers: headerService.getHeader()
+        }).success(function (response) {
+            return response;
+        });
+      },
+
+        getCitybyStateAdv: function(countries, states) {
+          var data = {"country": countries, "state": states};
+        var url = URL.cityByCountryAndState;
+        return $http.post(url, data,{
+          headers: headerService.getHeader()
+        }).success(function (response) {
+            return response;
+        });
       }
       
     };

@@ -202,8 +202,193 @@ angular.module('hillromvestApp')
                  /*else if(!timsFilter.isSuccess && !timsFilter.isFail){
                     filterString = searchFilters.isSuccess + searchFilters.colon + 0 + searchFilters.semicolon + searchFilters.isFail + searchFilters.colon + 0 + searchFilters.semicolon;
                  }*/
-            console.log("filterString in service :",filterString);
            return filterString;
           }
+
+              this.processStatesOld = function(states){
+                var statesList = [];
+                angular.forEach(states, function(state, key){
+                  var obj = {
+                    'name': key,
+                    'ticked': false
+                  };
+                  statesList.push(obj);
+                });
+                return statesList;
+              };
+              this.processCountriesOld = function(){
+                var countries = [];
+                 var obj = {
+              'name':'USA',
+              'ticked':true 
+            };
+            countries.push(obj)
+            return countries;
+              };
+            this.processCitiesOld = function(states){
+              var cities = []
+            angular.forEach(states, function(state, key){
+             for(var i=0;i<state.length;i++){
+                  var obj = {
+                    'name': state[i],
+                    'ticked': false
+                  };
+                  cities.push(obj);
+                   
+                }
+                });
+            return cities;
+              };
+
+              this.processStates = function(states){
+                var statesList = [];
+                angular.forEach(states, function(key){
+                  var obj = {
+                    'name': key,
+                    'ticked': false
+                  };
+                  statesList.push(obj);
+                });
+                return statesList;
+              };
+              this.processCountries = function(){
+                var countries = [];
+                 var obj = {
+              'name':'USA',
+              'ticked':true 
+            };
+            countries.push(obj)
+            return countries;
+              };
+            this.processCities = function(){
+              var cities = []
+                  var obj = {};
+                  cities.push(obj);
+            return cities;
+              };
+              this.processAgeRange = function(){
+              var range = [
+        { 'name': '0-5', 'ticked': false },
+        { 'name': '6-10', 'ticked': false},
+        { 'name': '11-15',  'ticked': false},
+        { 'name': '16-20',  'ticked': false},
+        { 'name': '21-25', 'ticked': false},
+        { 'name': '26-30', 'ticked': false},
+        { 'name': '31-35', 'ticked': false},
+        { 'name': '36-40', 'ticked': false},
+        { 'name': '41-45', 'ticked': false},
+        { 'name': '46-50', 'ticked': false},
+        { 'name': '51-55', 'ticked': false},
+        { 'name': '56-60', 'ticked': false},
+        { 'name': '61-65', 'ticked': false},
+        { 'name': '66-70', 'ticked': false},
+        { 'name': '71-75', 'ticked': false},
+        { 'name': '76-80', 'ticked': false},
+        { 'name': '81-above', 'ticked': false}
+      ];
+            return range;
+              };
+             this.processAdherenceScoreRange = function(){
+              var range = [
+        { 'name': '0-5', 'ticked': false },
+        { 'name': '6-10', 'ticked': false},
+        { 'name': '11-15',  'ticked': false},
+        { 'name': '16-20',  'ticked': false},
+        { 'name': '21-25', 'ticked': false},
+        { 'name': '26-30', 'ticked': false},
+        { 'name': '31-35', 'ticked': false},
+        { 'name': '36-40', 'ticked': false},
+        { 'name': '41-45', 'ticked': false},
+        { 'name': '46-50', 'ticked': false},
+        { 'name': '51-55', 'ticked': false},
+        { 'name': '56-60', 'ticked': false},
+        { 'name': '61-65', 'ticked': false},
+        { 'name': '66-70', 'ticked': false},
+        { 'name': '71-75', 'ticked': false},
+        { 'name': '76-80', 'ticked': false},
+        { 'name': '81-85', 'ticked': false},
+        { 'name': '86-90', 'ticked': false},
+        { 'name': '91-95', 'ticked': false},
+        { 'name': '96-100', 'ticked': false}
+      ];
+            return range;
+              };
+               this.processGenderOptions = function(){
+              var options = [{
+                name: "All",
+                value:"all"
+            }, {
+                name: "Male",
+                value:"male"
+            }, {
+                name: "Female",
+                value:"female"
+            }, {
+                name: "Other",
+                value:"other"
+            }];
+            return options;
+              };
+              this.processYesNoOptions = function(){
+              var options = [{
+                name: "All",
+                value:"all"
+            }, {
+                name: "Yes",
+                value:"yes"
+            }, {
+                name: "No",
+                value:"no"
+            }];
+            return options;
+              };
+              this.processActiveInactiveOptions = function(){
+              var options = [{
+                name: "All",
+                value:"all"
+            }, {
+                name: "Active",
+                value:"active"
+            }, {
+                name: "Inactive",
+                value:"inactive"
+            }];
+            return options;
+              };
+              this.processDeviceTypeOptions = function(){
+              var options = [{
+                name: "All",
+                value:"All"
+            }, {
+                name: "VisiVest",
+                value:"VEST"
+            }, {
+                name: "Monarch",
+                value:"MONARCH"
+            }];
+            return options;
+              };
+
+              this.multiselectPropertiesForAdvancedFilters = function(){
+                      var properties = {
+              selectAll       : "Tick all",
+              selectNone      : "Tick none",
+              search          : "Type here to search...",
+              nothingSelected : "",
+              allSelected : "All Selected",
+              Cancel : "Cancel",
+                OK:"OK"
+                };
+                return properties;
+              };
+               this.getMatchingDiagnosisList = function($viewValue, list){
+                var diagnosis = [];
+                for (var i=0; i< list.length; i++) {
+                  if (list[i].type_code.toLowerCase().indexOf($viewValue.toLowerCase()) != -1 || list[i].type_code_value.toLowerCase().indexOf($viewValue.toLowerCase()) != -1) {
+                    diagnosis.push(list[i]);
+                  }
+                }
+                return diagnosis;
+              };
 
     }]);
