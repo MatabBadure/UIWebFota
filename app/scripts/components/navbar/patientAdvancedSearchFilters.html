@@ -11,10 +11,11 @@
             <form name="form1" autocomplete="off">
              <div class="col-md-4 dashboard__form--input advanced-filters-margin">
                           <span class="advanced-filters">Email</span>
-              <input class="" type="text" validate-on-blur ng-model="patientAdvancedFilters.email" name="email" ng-pattern="/^[a-zA-Z][\.a-zA-Z0-9_\+-]+(\.[a-zA-Z0-9_\+-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.([a-zA-Z]{2,4})$/" >
-              <div ng-show="(form1.email.$dirty && form1.email.$showValidationMessage && form1.email.$invalid)">
+                           <input class="" type="text" validate-on-blur ng-model="patientAdvancedFilters.email" name="email">
+             <!--  <input class="" type="text" validate-on-blur ng-model="patientAdvancedFilters.email" name="email" ng-pattern="/^[a-zA-Z][\.a-zA-Z0-9_\+-]+(\.[a-zA-Z0-9_\+-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.([a-zA-Z]{2,4})$/" > -->
+             <!--  <div ng-show="(form1.email.$dirty && form1.email.$showValidationMessage && form1.email.$invalid)">
                 <span class="has-error" ng-show="form1.email.$error.pattern" translate="error.email.invalid"></span>
-              </div>
+              </div> -->
             </div>
           </form>
         </div>

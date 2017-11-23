@@ -31,7 +31,7 @@ angular.module('hillromvestApp')
         $scope.missedTherapyDays = searchFilterService.processYesNoOptions();
         $scope.activeInactive = searchFilterService.processActiveInactiveOptions();
         $scope.deviceType = searchFilterService.processDeviceTypeOptions();
-        $scope.deviceStatus = searchFilterService.processYesNoOptions();
+        $scope.deviceStatus = searchFilterService.processActiveInactiveOptions();
         $scope.localLang = searchFilterService.multiselectPropertiesForAdvancedFilters()
         $scope.ageGroups = searchFilterService.processAgeRange();
         $scope.adherenceScoreRangeGroups= searchFilterService.processAdherenceScoreRange();
@@ -295,7 +295,7 @@ angular.module('hillromvestApp')
       $scope.selectedCountryObj = ["US"];
       $scope.selectedStates = [];
       $scope.selectedCities = [];
-      $scope.patientAdvancedFilters.country = "US";
+      $scope.patientAdvancedFilters.country = "All";
       $scope.patientAdvancedFilters.state = [];
       $scope.patientAdvancedFilters.city = [];
       $scope.patientAdvancedFilters.zipcode = "";
