@@ -175,6 +175,7 @@ $scope.activateUserCSR = function(){
             notyService.showError(response);
           });
         };
+
         $scope.onSelectChange = function(){
           console.log("kjhfg");
         
@@ -196,6 +197,7 @@ $scope.activateUserCSR = function(){
             $scope.resetModal = true;
           }
         };
+
         //Gimp-4
        $scope.onSelectChange = function(){
         $scope.noReason = false;
@@ -213,5 +215,21 @@ $scope.activateUserCSR = function(){
          }
         };
         //End of Gimp-4
+
+         $scope.resetUser = function () {
+          $scope.resetModal = false;
+          UserService.resetPasswordUser($scope.user.id).then(function (response) {
+            notyService.showMessage(response.data.message, 'success');
+            if ($scope.currentUserRole == 'ADMIN') {
+              $state.go('hillRomUser');
+            }
+            else if ($scope.currentUserRole == 'ACCT_SERVICES') {
+              $state.go('rcadmin-hillRomUser');
+            }
+          }).catch(function (response) {
+            notyService.showError(response);
+          });
+        };
+
     $scope.init();
   }]);
