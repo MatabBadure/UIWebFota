@@ -10,10 +10,21 @@ angular.module('hillromvestApp')
       'isCreate': false,
       'isMessage': false
     };
-
-    $scope.init = function() {
+    $scope.isDisabled = false;
+         $scope.noReason = false;
+         $scope.reason = {};
+         $scope.reason.deactivationReason = "";
+         $scope.reason.reasonDetail = "";
+         $scope.noOtherDescription = false;
+         
+    $scope.init = function() {   
+     UserService.getdeactivationTypeCodeValues_Reason().then(function(response){
+          $scope.reasonList = response.data.typeCode;
+         //$scope.reasonList = $scope.typecodeResponse.typeCode;
+        }).catch(function(response){
+        notyService.showError(response);
+      });  
       var currentRoute = $state.current.name;
-
       if ($state.current.name === 'hillRomUserEdit' || $state.current.name === 'associateHillRomUserView' || $state.current.name === 'rcadmin-hillRomUserEdit' || $state.current.name === 'customerserviceHillRomUserView') {
         $scope.getUserDetails($stateParams.userId, $scope.setEditMode);
       } else if ($state.current.name === 'hillRomUserNew' || $state.current.name === 'rcadmin-hillRomUserNew') {
@@ -98,29 +109,63 @@ $scope.activateUserCSR = function(){
         $scope.close = function () {
        $scope.showModal = false;
         };
-         $scope.deleteUserCSR = function () {
-          UserService.deleteUser($scope.user.id).then(function (response) {
+         $scope.deleteUserCSR = function(){
+          // console.log("$scope.deactivationReason",$scope.deactivationReason)
+          // if(!$scope.deactivationReason){
+          //   $scope.noReason = true;
+          //   return;
+          // }
+          // else{
+          //   $scope.noReason = false;
+          // } 
+            if ($scope.reason.deactivationReason!="" && $scope.reason.deactivationReason!=undefined){
+          console.log("in required",$scope.reason.deactivationReason);
+          //Gimp-4
+          if($scope.reason.deactivationReason === "other"){ 
+            if($scope.reason.reasonDetail){
+            var reason = $scope.reason.reasonDetail;
+          }
+          else{
+            $scope.noOtherDescription = true;
+            return;
+          }
+          }
+          else{
+            var reason = $scope.reason.deactivationReason;
+          }
+            UserService.deleteUserWithReason($scope.user.id,reason.toString()).then(function (response) {
+            //End of Gimp-4
+            $scope.reason.reasonDetail = "";
+            $scope.reason.deactivationReason = "";
             $scope.showModal = false;
             $scope.userStatus.isMessage = true;
             $scope.userStatus.message = response.data.message;
             notyService.showMessage($scope.userStatus.message, 'success');
-            //$scope.reset();
-            if(StorageService.get('logged').role === 'CUSTOMER_SERVICES'){
+           if(StorageService.get('logged').role === 'CUSTOMER_SERVICES'){
             $state.go('customerserviceHillRomUser');
            }
-            
           }).catch(function (response) {
+            //$scope.reset();
             $scope.showModal = false;
             $scope.userStatus.isMessage = true;
-            if(response.data.message !== undefined) {
+            if (response.data.message !== undefined) {
               $scope.userStatus.message = response.data.message;
-            } else if(response.data.ERROR !== undefined){
+            } else if (response.data.ERROR !== undefined) {
               $scope.userStatus.message = response.data.ERROR;
             } else {
               $scope.userStatus.message = 'Error occured! Please try again';
             }
             notyService.showMessage($scope.userStatus.message, 'warning');
           });
+        }
+          else{
+         // $scope.msg = 'Please Select the reason';
+         $scope.noReason = true;
+         console.log("masigf");
+        }
+
+          console.log("in deleteUser 11111",$scope.reason.deactivationReason);
+          console.log("in deleteUser 22222",$scope.reason.reasonDetail);
         };
         $scope.resendActivationLinkCSR = function(){
           UserService.resendActivationLink($scope.user.id).then(function(response){
@@ -130,13 +175,47 @@ $scope.activateUserCSR = function(){
             notyService.showError(response);
           });
         };
-         $scope.showResetModel = function(){
+
+        $scope.onSelectChange = function(){
+          console.log("kjhfg");
+        
+
+        if($scope.deactivationReason === 'other'){ 
+          console.log("jshd");
+         $scope.isDisabled = false;  //enabling the text box because user selected 'Other' option.
+         }
+        }
+        // $scope.changetextbox = function(){
+        //   if($scope.deactivationReason){
+        //     console.log("print the reason:",$scope.deactivationReason);
+        //     } 
+        // }
+        $scope.showResetModel = function(){
           if($scope.form.$invalid){
             return true;
           }else{
             $scope.resetModal = true;
           }
         };
+
+        //Gimp-4
+       $scope.onSelectChange = function(){
+        $scope.noReason = false;
+        $scope.noOtherDescription = false;
+          console.log("kjhfg",$scope.reason.deactivationReason);
+        if($scope.reason.deactivationReason === "other"){ 
+          console.log("in ifsfgssggs",$scope.reason.deactivationReason);
+        // $scope.reason.reasonDetail = "";
+         $scope.isDisabled = true;  //enabling the text box because user selected 'Other' option.
+         }
+         else{
+          //$scope.reasonDetail = $scope.reason.deactivationReason;
+          console.log("in else",$scope.reason.deactivationReason);
+          $scope.isDisabled = false; 
+         }
+        };
+        //End of Gimp-4
+
          $scope.resetUser = function () {
           $scope.resetModal = false;
           UserService.resetPasswordUser($scope.user.id).then(function (response) {
@@ -151,5 +230,6 @@ $scope.activateUserCSR = function(){
             notyService.showError(response);
           });
         };
+
     $scope.init();
   }]);
