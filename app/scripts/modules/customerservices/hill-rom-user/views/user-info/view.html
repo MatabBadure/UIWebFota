@@ -111,18 +111,16 @@
               <span ng-if="user.role === 'CUSTOMER_SERVICES'">Customer Services</span>
             </div>
           </div>
-        </div>
-         <div class="col-md-16 reset-padding margin-top" ng-show="user.activated && user.deleted">
-          <div class="col-md-7 reset-padding">
+          <div class="col-md-7 reset-padding col-md-offset-2" ng-show="user.deleted">
             <div class="col-md-6 dashboard__form--label reset-padding">
               <span class="ng-scope">Deactivation Reason</span>
             </div>
-          <div class="col-md-10 dashboard__form--input reset-padding">
+            <div class="col-md-10 dashboard__form__input--option reset-padding">
               <textarea type="text" class="col-md-8 dashboard__form__input--option reset-padding" ng-model="user.deactivationReason" style="width:310px;height:50px;" wrap = "hard" maxlength="255" required ng-readonly="true" ng-disabled="disabled"></textarea>
             </div>
           </div>
         </div>
-        <div class="clr"></div>
+         <div class="clr"></div>
          <div class="col-md-16 reset-padding margin-top">
         <div class="actionbuttons" ng-if="(user.role === 'PATIENT') || (user.role === 'CLINIC_ADMIN') || (user.role === 'HCP') || (user.role === 'CARE_GIVER')">
           <button type="button" class="hillrom-btn btn-primary btn-margin-left float-right" ng-show="user.activated && !user.deleted"  ng-click="showResetModel()"  translate="user.resetpassword-button-text">Reset Password</button>
