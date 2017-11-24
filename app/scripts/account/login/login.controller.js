@@ -149,6 +149,7 @@ angular.module('hillromvestApp')
           $rootScope.userLastName = response.data.user.lastName;
           $rootScope.userEmail = response.data.user.email;
           $rootScope.userId = response.data.user.id;
+          $rootScope.timestampPreference =  localStorage.setItem('timestampPreference', "GMT-10:00");;
 
           
           if(response.data.user.authorities[0].name === loginConstants.role.patient){

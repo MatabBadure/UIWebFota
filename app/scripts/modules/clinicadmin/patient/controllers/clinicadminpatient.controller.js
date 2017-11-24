@@ -610,7 +610,7 @@ angular.module('hillromvestApp')
       $scope.patients = response.data;      
       angular.forEach($scope.patients, function(patient){
         patient.dob = (patient.dob) ? dateService.getDateFromTimeStamp(patient.dob, patientDashboard.dateFormat, '/') : patient.dob;
-        patient.lastTransmissionDate = (patient.lastTransmissionDate) ? dateService.getDateFromYYYYMMDD(patient.lastTransmissionDate, '/') : patient.lastTransmissionDate;
+        patient.lastTransmissionDate = $scope.getDateFromTimestampforTransmissiondate(patient.lastTransmissionDate);
       });
       $scope.total = (response.headers()['x-total-count']) ? response.headers()['x-total-count'] :$scope.patients.length; 
       $scope.pageCount = Math.ceil($scope.total / 10);
@@ -619,6 +619,71 @@ angular.module('hillromvestApp')
       notyService.showError(response);
     });    
   };
+
+           $scope.getDateFromTimestampforTransmissiondate = function(timestamp){
+            var offset = "";
+          if(!timestamp){
+            return searchFilters.emptyString;
+          }
+          var timestampPreference = localStorage.getItem('timestampPreference');
+          if(timestampPreference){
+          var timeFromString = timestampPreference.split("T");
+   
+          if(timeFromString[1]){
+          var splitTime = timeFromString[1].split(":");
+         // Number(splitTime[0]);
+         // Number(splitTime[1]);
+          if(splitTime[0]){
+            console.log("spskdfj",splitTime[0].indexOf("-"));
+            console.log("splitTime[0]",splitTime[0]);
+            if(splitTime[0].indexOf('-') > -1){
+            var getExactHours = splitTime[0].split("-");
+            offset = offset + "-";
+          }
+          else if(splitTime[0].indexOf('+') > -1){
+            var getExactHours = splitTime[0].split("+");
+             offset = offset + "+";
+          }
+          if(splitTime[1] === "30"){
+            var temp = parseInt(getExactHours[1])+0.5;
+             offset = offset + (temp).toString();
+          }
+          else if(splitTime[1] === "45"){
+            var temp = parseInt(getExactHours[1])+0.75;
+             //offset = offset + (parseInt(getExactHours[1])+0.75).toString();
+             offset = offset + (temp).toString();
+          }
+          else{
+             var temp = parseInt(getExactHours[1]);
+             //offset = offset + (parseInt(getExactHours[1])).toString();
+             offset = offset + (temp).toString();
+          }
+        }
+      }
+      else{
+         offset = 1;
+      }
+    }
+    else{
+      offset = 1;
+    }
+         // var offset = res[1];
+          console.log("offset",parseInt(offset));
+          var clientDate = new Date(timestamp);
+          var  utc = clientDate.getTime() + (clientDate.getTimezoneOffset() * 60000);
+          var _date = new Date(utc + (3600000*parseInt(offset)));
+
+         /* var timeZoneOffset = new Date(timestamp).getTimezoneOffset()*60*1000;
+          var qualcommOffset = 6*60*60*1000;
+          var timestamp = timestamp + timeZoneOffset - qualcommOffset;*/
+         /* var _date = new Date(timestamp);*/
+          var _month = (_date.getMonth()+1).toString();
+          _month = _month.length > 1 ? _month : '0' + _month;
+          var _day = (_date.getDate()).toString();
+          _day = _day.length > 1 ? _day : '0' + _day;
+          var _year = (_date.getFullYear()).toString();
+          return _month+"/"+_day+"/"+_year;
+        };
 
   $scope.searchOnFilters = function(){    
     $scope.searchPatients();

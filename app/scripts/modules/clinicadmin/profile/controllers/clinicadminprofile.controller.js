@@ -24,6 +24,7 @@ angular.module('hillromvestApp')
       UserService.getUser(adminId).then(function(response){
         $scope.user = response.data.user;
         $scope.user.role = StorageService.get('logged').role;
+        //$scope.user.timezonePreference = "";
       }).catch(function(response){
         notyService.showError(response);
       });
@@ -172,6 +173,24 @@ angular.module('hillromvestApp')
         return false;
       }else{
         $scope.passordUpdateModal = true;
+      }
+    };
+
+    $scope.getMatchingTimestampList = function($viewValue){
+      return (UserService.getTimezoneList($viewValue));
+    };
+    
+     $scope.selectDiagnosis = function(timestamp){
+      if(timestamp){
+        if(timestamp.type_code){
+        $scope.user.timestampPreference = timestamp.type_code;
+      }
+      else{
+         $scope.user.timestampPreference = "";
+      }
+      }
+      else{
+        $scope.user.timestampPreference = "";
       }
     };
 

@@ -253,7 +253,30 @@ angular.module('hillromvestApp')
         return $http.get(url, {
           headers: headerService.getHeader()
         });
-      }
+      },
+
+      getTimezoneList : function($viewValue){
+       return ([
+        {
+            "id": 222,
+            "type": "patient_diagnostic_code",
+            "type_code": "(GMT-12:00) International Date Line West",
+            "type_code_value": "GMT-12:00"
+        },
+        {
+            "id": 223,
+            "type": "patient_diagnostic_code",
+            "type_code": "(GMT-11:00) Midway Island, Samoa",
+            "type_code_value": "GMT-11:00"
+        },
+        {
+            "id": 224,
+            "type": "patient_diagnostic_code",
+            "type_code": "(GMT-10:00) Hawaii",
+            "type_code_value": "GMT-10:00"
+        }
+            ])
+    }
 
     };
   }]);
