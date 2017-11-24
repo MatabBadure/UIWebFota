@@ -38,6 +38,7 @@ angular.module('hillromvestApp')
         $scope.diagnosis = {};
         $scope.isZipcode = false;
         $scope.form = {};
+        $scope.loadList = false;
 
         $scope.init = function() {
           $scope.userRole = StorageService.get('logged').role;
@@ -57,6 +58,7 @@ angular.module('hillromvestApp')
           $scope.searchItem = "";
           $scope.isAdvancedFilters = false;
           $scope.noDataFlag = false;
+          $scope.isLoading = false;
           $scope.initAdvancedFilters();
           $scope.searchPatients();
           if($stateParams.clinicIds){
@@ -563,26 +565,45 @@ else{
         });
       } 
     };
-    $scope.getMatchingDiagnosisList = function($viewValue){
+/*    $scope.updateDiagnosisList = function($viewValue){
       console.log("$viewValue",$viewValue);
+      $scope.isLoading = true;
       if($viewValue.length == 2 || $viewValue.length > 2){
         console.log("$viewValue.length",$viewValue.length);
             patientService.getDiagnosticList($viewValue).then(function(response){
+              $scope.loadList = true;
            $scope.searchDiagnosis = {};
           if(response.data.typeCode){
           $scope.searchDiagnosis = response.data;
+           $scope.isLoading = false;
+          // return $scope.searchDiagnosis.typeCode;
         }
         else{
            $scope.searchDiagnosis = {'typeCode':[]};
+            $scope.isLoading = false;
+           // return $scope.searchDiagnosis.typeCode;
         }
           
         }).catch(function(){
+           $scope.isLoading = false;
            $scope.searchDiagnosis = {'typeCode':[]};
+           // return $scope.searchDiagnosis.typeCode;
         });  
-        return $scope.searchDiagnosis.typeCode;
+       
     }
+    };*/
+     $scope.getMatchingDiagnosisList = function($viewValue){
+      console.log("$viewValue",$viewValue);
+      $scope.isLoading = true;
+        return patientService.getDiagnosticList($viewValue);    
     };
+    /*$scope.getMatchingDiagnosisList = function($viewValue){
+      console.log("$viewValue",$viewValue);
+  return $scope.searchDiagnosis.typeCode;   
+    };*/
     $scope.selectDiagnosis = function(diagnosis){
+       $scope.loadList = false;
+       $scope.isLoading = false;
       if(diagnosis){
         if(diagnosis.type_code){
         $scope.patientAdvancedFilters.diagnosis = diagnosis.type_code;
