@@ -256,26 +256,12 @@ angular.module('hillromvestApp')
       },
 
       getTimezoneList : function(){
-       return (
-        {
-           'Asia/ansd': "+10:30",
-           'US/NY' : "+12:00",
-            'Asia/ansd': "+10:30",
-           'US/NY' : "+12:00",
-            'Asia/ansd': "+10:30",
-           'US/NY' : "+12:00",
-            'Asia/ansd': "+10:30",
-           'US/NY' : "+12:00",
-            'Asia/ansd': "+10:30",
-           'US/NY' : "+12:00",
-            'Asia/ansd': "+10:30",
-           'US/NY' : "+12:00",
-            'Asia/ansd': "+10:30",
-           'US/NY' : "+12:00",
-            'Asia/ansd': "+10:30",
-           'US/NY' : "+12:00"
-        }
-            )
+        var url = URL.timezoneList;
+        return $http.get(url, {
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });
     }
 
     };

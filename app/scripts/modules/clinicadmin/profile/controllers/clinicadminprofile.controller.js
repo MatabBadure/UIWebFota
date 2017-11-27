@@ -38,7 +38,12 @@ angular.module('hillromvestApp')
       }).catch(function(response){
         notyService.showError(response);
       });
-      $scope.timezoneList = UserService.getTimezoneList();
+      //$scope.timezoneList =
+       UserService.getTimezoneList().then(function(response){
+        $scope.timezoneList = response.data.timezones;
+       }).catch(function(response){
+        notyService.showError(response);
+      });
     };
 
     $scope.initSettings = function(){

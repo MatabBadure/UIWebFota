@@ -177,6 +177,6 @@ angular.module('hillromvestApp')
 	'stateByCountryCode':'/api/stateByCountryCode?country=COUNTRY',
 	'patientAdvancedSearch' : 'api/advancedSearch/patient?&page=PAGE&per_page=PER_PAGE&sort_by=SORT_OPTION&asc=true',
 	'matchingDiagnosticList' : 'api/patient/diagnosis?searchString=SEARCH_STRING',
-	'timezoneList' : 'http://api.timezonedb.com/v2/list-time-zone?key=SL07JN5ZFAHI&format=json'
+	'timezoneList' : 'api/user/timezone'
 
 });
