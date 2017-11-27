@@ -376,10 +376,14 @@ angular.module('hillromvestApp')
     if (minutes < 10) {minutes = "0"+minutes;}
     //if (seconds < 10) {seconds = "0"+seconds;}
     return hours+' hours '+minutes +' minutes';
-    };
-
-    getOffset: function(timestampPreference){
-      var timeFromString = timestampPreference.split("T");
+    },
+ //End of Gimp-18  
+    getDateinPreferredTimezone: function(timestamp){
+      var offset = "";
+      var timestampPreference = localStorage.getItem('timestampPreference');
+          if(timestampPreference){
+           // offset = dateService.getOffset(timestampPreference);
+                var timeFromString = timestampPreference.split("T");
    
           if(timeFromString[1]){
           var splitTime = timeFromString[1].split(":");
@@ -411,7 +415,91 @@ angular.module('hillromvestApp')
              offset = offset + (temp).toString();
           }
         }
-      };
-  //End of Gimp-18  
-    };
+      }
+      else{
+         offset = 1;
+      }
+    }
+     else{
+            offset = 1;
+          }
+          console.log("offset",parseInt(offset));
+          var clientDate = new Date(timestamp);
+          var  utc = clientDate.getTime() + (clientDate.getTimezoneOffset() * 60000);
+          var _date = new Date(utc + (3600000*parseInt(offset)));
+
+          var _month = (_date.getMonth()+1).toString();
+          _month = _month.length > 1 ? _month : '0' + _month;
+          var _day = (_date.getDate()).toString();
+          _day = _day.length > 1 ? _day : '0' + _day;
+          var _year = (_date.getFullYear()).toString();
+          return _month+"/"+_day+"/"+_year;  
+            },
+  getDateTimeinPreferredTimezone: function(timestamp){
+      var offset = "";
+      var timestampPreference = localStorage.getItem('timestampPreference');
+          if(timestampPreference){
+           // offset = dateService.getOffset(timestampPreference);
+                var timeFromString = timestampPreference.split("T");
+   
+          if(timeFromString[1]){
+          var splitTime = timeFromString[1].split(":");
+         // Number(splitTime[0]);
+         // Number(splitTime[1]);
+          if(splitTime[0]){
+            console.log("spskdfj",splitTime[0].indexOf("-"));
+            console.log("splitTime[0]",splitTime[0]);
+            if(splitTime[0].indexOf('-') > -1){
+            var getExactHours = splitTime[0].split("-");
+            offset = offset + "-";
+          }
+          else if(splitTime[0].indexOf('+') > -1){
+            var getExactHours = splitTime[0].split("+");
+             offset = offset + "+";
+          }
+          if(splitTime[1] === "30"){
+            var temp = parseInt(getExactHours[1])+0.5;
+             offset = offset + (temp).toString();
+          }
+          else if(splitTime[1] === "45"){
+            var temp = parseInt(getExactHours[1])+0.75;
+             //offset = offset + (parseInt(getExactHours[1])+0.75).toString();
+             offset = offset + (temp).toString();
+          }
+          else{
+             var temp = parseInt(getExactHours[1]);
+             //offset = offset + (parseInt(getExactHours[1])).toString();
+             offset = offset + (temp).toString();
+          }
+        }
+      }
+      else{
+         offset = 1;
+      }
+    }
+     else{
+            offset = 1;
+          }
+          console.log("offset",parseInt(offset));
+          var clientDate = new Date(timestamp);
+          var  utc = clientDate.getTime() + (clientDate.getTimezoneOffset() * 60000);
+          var _date = new Date(utc + (3600000*parseInt(offset)));
+          var hours = (_date.getHours() >= 10) ? _date.getHours() : "0"+_date.getHours();
+      // Minutes part from the timestamp
+      var minutes = "0" + _date.getMinutes();
+      // Seconds part from the timestamp
+      var seconds = "0" + _date.getSeconds();
+
+      // Will display time in 10:30:23 format
+      var formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+          //var _time = _date.getTime().toString();
+          var _month = (_date.getMonth()+1).toString();
+          _month = _month.length > 1 ? _month : '0' + _month;
+          var _day = (_date.getDate()).toString();
+          _day = _day.length > 1 ? _day : '0' + _day;
+          var _year = (_date.getFullYear()).toString();
+          //var experiment = new Date().toLocaleString("en-US", {timeZone: "America/New_York"})
+          return _month+"/"+_day+"/"+_year+" "+formattedTime;  
+            }
+     };
   }]);

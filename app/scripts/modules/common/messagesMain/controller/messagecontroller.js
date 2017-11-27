@@ -485,7 +485,7 @@ $scope.totalMessages = $scope.ArchiveListRawData.totalElements;
 
 $scope.ArchiveMessageList = angular.extend({},$scope.ArchiveMessageList, $scope.ArchiveListRawData.content);
     for(var i=0;i<$scope.ArchiveListRawData.content.length;i++){
-    tempDate.push(dateService.getDateTimeFromTimeStamp($scope.ArchiveListRawData.content[i][4],patientDashboard.dateFormat ,'/'));
+    tempDate.push(dateService.getDateTimeinPreferredTimezone($scope.ArchiveListRawData.content[i][4]));
  }
  if($scope.ArchiveListRawData.content.length){
   for(var i=0;i<$scope.ArchiveListRawData.content.length;i++){
@@ -513,7 +513,7 @@ $scope.totalMessages = $scope.ArchiveListRawData.totalElements;
 
 $scope.ArchiveMessageList = angular.extend({},$scope.ArchiveMessageList, $scope.ArchiveListRawData.content);
     for(var i=0;i<$scope.ArchiveListRawData.content.length;i++){
-   tempDate.push(dateService.getDateTimeFromTimeStamp($scope.ArchiveListRawData.content[i][4],patientDashboard.dateFormat ,'/')); 
+   tempDate.push(dateService.getDateTimeinPreferredTimezone($scope.ArchiveListRawData.content[i][4])); 
  }
   if($scope.ArchiveListRawData.content.length){
   for(var i=0;i<$scope.ArchiveListRawData.content.length;i++){
@@ -539,7 +539,7 @@ $scope.pageCount = $scope.ArchiveListRawData.totalPages;
 $scope.totalMessages = $scope.ArchiveListRawData.totalElements;
 $scope.ArchiveMessageList = angular.extend({},$scope.ArchiveMessageList, $scope.ArchiveListRawData.content);
     for(var i=0;i<$scope.ArchiveListRawData.content.length;i++){
-   tempDate.push(dateService.getDateTimeFromTimeStamp($scope.ArchiveListRawData.content[i][4],patientDashboard.dateFormat ,'/')); 
+   tempDate.push(dateService.getDateTimeinPreferredTimezone($scope.ArchiveListRawData.content[i][4])); 
  }
   if($scope.ArchiveListRawData.content.length){
   for(var i=0;i<$scope.ArchiveListRawData.content.length;i++){
@@ -578,7 +578,7 @@ $scope.pageCount = $scope.InboxListRawData.totalPages;
 $scope.totalMessages = $scope.InboxListRawData.totalElements;
 $scope.InboxMessageList = angular.extend({},$scope.InboxMessageList, $scope.InboxListRawData.content);
     for(var i=0;i<$scope.InboxListRawData.content.length;i++){
-    tempDate.push(dateService.getDateTimeFromTimeStamp($scope.InboxListRawData.content[i][4],patientDashboard.dateFormat ,'/')); 
+    tempDate.push(dateService.getDateTimeinPreferredTimezone($scope.InboxListRawData.content[i][4])); 
  }
 if($scope.InboxListRawData.content.length){
   for(var i=0;i<$scope.InboxListRawData.content.length;i++){
@@ -607,7 +607,7 @@ $scope.pageCount = $scope.InboxListRawData.totalPages;
 $scope.totalMessages = $scope.InboxListRawData.totalElements;
 $scope.InboxMessageList = angular.extend({},$scope.InboxMessageList, $scope.InboxListRawData.content);
     for(var i=0;i<$scope.InboxListRawData.content.length;i++){
-     tempDate.push(dateService.getDateTimeFromTimeStamp($scope.InboxListRawData.content[i][4],patientDashboard.dateFormat ,'/')); 
+     tempDate.push(dateService.getDateTimeinPreferredTimezone($scope.InboxListRawData.content[i][4])); 
  }
  if($scope.InboxListRawData.content.length){
   for(var i=0;i<$scope.InboxListRawData.content.length;i++){
@@ -635,7 +635,7 @@ isClinic = 1;
     $scope.totalMessages = $scope.InboxListRawData.totalElements;
     $scope.InboxMessageList = angular.extend({},$scope.InboxMessageList, $scope.InboxListRawData.content);
     for(var i=0;i<$scope.InboxListRawData.content.length;i++){
-     tempDate.push(dateService.getDateTimeFromTimeStamp($scope.InboxListRawData.content[i][4],patientDashboard.dateFormat ,'/')); 
+     tempDate.push(dateService.getDateTimeinPreferredTimezone($scope.InboxListRawData.content[i][4])); 
  }
   if($scope.InboxListRawData.content.length){
   for(var i=0;i<$scope.InboxListRawData.content.length;i++){
@@ -909,7 +909,7 @@ messageService.fetchSentItems(toPassID,isclinic,$scope.PageNumber,$scope.perPage
  $scope.MessageDetails = angular.copy($scope.sentmessageListRawData.content[0]);
         $scope.sentmessageList = angular.extend({},$scope.sentmessageList, $scope.sentmessageListRawData.content);
     for(var i=0;i<$scope.sentmessageListRawData.content.length;i++){
-     tempDate.push(dateService.getDateTimeFromTimeStamp($scope.sentmessageList[i][1],patientDashboard.dateFormat ,'/')); 
+     tempDate.push(dateService.getDateTimeinPreferredTimezone($scope.sentmessageList[i][1])); 
 
  }
  if($scope.sentmessageListRawData.content.length){
@@ -935,7 +935,8 @@ else if((StorageService.get('logged').role === 'CLINIC_ADMIN')){
  $scope.MessageDetails = angular.copy($scope.sentmessageListRawData.content[0]);
         $scope.sentmessageList = angular.extend({},$scope.sentmessageList, $scope.sentmessageListRawData.content);
     for(var i=0;i<$scope.sentmessageListRawData.content.length;i++){
-     tempDate.push(dateService.getDateTimeFromTimeStamp($scope.sentmessageList[i][1],patientDashboard.dateFormat ,'/')); 
+     tempDate.push(dateService.getDateTimeinPreferredTimezone($scope.sentmessageList[i][1])); 
+    //tempDate.push(dateService.getDateTimeFromTimeStamp($scope.sentmessageList[i][1],patientDashboard.dateFormat ,'/'));
  }
  if($scope.sentmessageListRawData.content.length){
   for(var i=0;i<$scope.sentmessageListRawData.content.length;i++){
@@ -1444,6 +1445,12 @@ $scope.toggleAllForArchive = function() {
       {
         formatedDateTime = convertedDate+" "+finalTimestamp;
       }
+      var experiment = new Date().toLocaleString("en-US", {timeZone: "Canada/Pacific"});
+      var expkajsdh = TimeZone.getTimeZone("Canada/Pacific");
+      var expDate = dateService.convertToTimestamp(experiment.replace(', ',' '));
+      var offset = expDate.getTimezoneOffset();
+      var finalconvertedDate = dateService.getDateinPreferredTimezone(expDate);
+      
       return formatedDateTime;
     };
 
@@ -1495,7 +1502,7 @@ clinicid = arrayobject[9];
 messageService.getthreaddata(id,rootid,userid,clinicid).then(function(response){
   $scope.messageBodyObject = response.data;
   for(var i=0;i<response.data.length;i++){
-    tempDate.push(dateService.getDateTimeFromTimeStamp(response.data[i][0].messageDatetime,patientDashboard.dateFormat ,'/')); 
+    tempDate.push(dateService.getDateTimeinPreferredTimezone(response.data[i][0].messageDatetime)); 
  }
 if(response.data.length){
   for(var i=0;i<response.data.length;i++){

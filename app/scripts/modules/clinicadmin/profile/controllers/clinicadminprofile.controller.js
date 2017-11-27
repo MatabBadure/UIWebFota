@@ -38,6 +38,7 @@ angular.module('hillromvestApp')
       }).catch(function(response){
         notyService.showError(response);
       });
+      $scope.timezoneList = UserService.getTimezoneList();
     };
 
     $scope.initSettings = function(){
@@ -179,7 +180,7 @@ angular.module('hillromvestApp')
     $scope.getMatchingTimestampList = function($viewValue){
       return (UserService.getTimezoneList($viewValue));
     };
-    
+
      $scope.selectDiagnosis = function(timestamp){
       if(timestamp){
         if(timestamp.type_code){
