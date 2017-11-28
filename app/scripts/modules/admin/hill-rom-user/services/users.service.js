@@ -253,7 +253,16 @@ angular.module('hillromvestApp')
         return $http.get(url, {
           headers: headerService.getHeader()
         });
-      }
+      },
+
+     getTimezoneList : function(){
+        var url = URL.timezoneList;
+        return $http.get(url, {
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });
+    }
 
     };
   }]);
