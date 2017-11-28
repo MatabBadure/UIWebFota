@@ -39,6 +39,8 @@ angular.module('hillromvestApp')
         });
       },
 
+      
+
       /**
        * @ngdoc method
        * @name editUser
@@ -255,6 +257,7 @@ angular.module('hillromvestApp')
         });
       },
 
+
      getTimezoneList : function(){
         var url = URL.timezoneList;
         return $http.get(url, {
@@ -262,7 +265,38 @@ angular.module('hillromvestApp')
         }).success(function(response) {
           return response;
         });
+     },
+      //Gimp-4
+
+      deleteUserWithReason: function(id,data) {
+        console.log("data",data);
+        var obj = {
+          'reasonCode': data
+        };
+        //var url = URL.userBaseUrl + '/' + id + '?' + 'reason=' + data;
+        //data.replace(/\%20/g,"+");
+        //$http.delete('/roles/' + roleid, {params: {userId: userID}}).then
+        var url = URL.deleteUserWithReason.replace('ID',id);
+         return $http.delete(url, {
+          headers: headerService.getHeader(),
+          data: obj
+          }).success(function(response) {
+          return response;
+        });
+      },
+
+        getdeactivationTypeCodeValues_Reason: function(){
+        //data.replace(/\%20/g,"+");
+        var url = URL.getdeactivationTypeCodeValues_Reason;
+        return $http.get(url, {
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });
     }
+
+      //End of Gimp-4
+
 
     };
   }]);

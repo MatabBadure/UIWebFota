@@ -31,7 +31,7 @@ angular.module('hillromvestApp')
         $scope.missedTherapyDays = searchFilterService.processYesNoOptions();
         $scope.activeInactive = searchFilterService.processActiveInactiveOptions();
         $scope.deviceType = searchFilterService.processDeviceTypeOptions();
-        $scope.deviceStatus = searchFilterService.processYesNoOptions();
+        $scope.deviceStatus = searchFilterService.processActiveInactiveOptions();
         $scope.localLang = searchFilterService.multiselectPropertiesForAdvancedFilters()
         $scope.ageGroups = searchFilterService.processAgeRange();
         $scope.adherenceScoreRangeGroups= searchFilterService.processAdherenceScoreRange();
@@ -56,15 +56,29 @@ angular.module('hillromvestApp')
           $scope.sortIconDown = false;
           $scope.searchItem = "";
           $scope.isAdvancedFilters = false;
+          $scope.noDataFlag = false;
           $scope.initAdvancedFilters();
           $scope.searchPatients();
           if($stateParams.clinicIds){
             $scope.getAssociatedPatientsToClinic($stateParams.clinicIds);
           }
+/*          patientService.getDiagnosticList('').then(function(response){
+           $scope.searchDiagnosis = {};
+          if(response.data.typeCode){
+          $scope.searchDiagnosis = response.data;
+        }
+        else{
+           $scope.searchDiagnosis = {'typeCode':[]};
+        }
+          
+        }).catch(function(){
+           $scope.searchDiagnosis = {'typeCode':[]};
+        }); */
         };
 
         $scope.searchPatientsOnQueryChange = function(){
           if(($state.current.name === "patientUser" || $state.current.name === "rcadminPatients" || $state.current.name === "associatePatientUser" || $state.current.name === "customerservicePatientUser") && !$stateParams.clinicIds && !searchOnLoad){
+            $scope.isAdvancedFilters = false;
             $scope.searchPatients();
           }
         };
@@ -129,6 +143,7 @@ angular.module('hillromvestApp')
               $scope.total = response.headers()['x-total-count'];
               $scope.pageCount = Math.ceil($scope.total / 10);
               searchOnLoad = false;
+              $scope.noDataFlag = false;
             }).catch(function(response) {
               $scope.noMatchFound = true;
                $scope.isAdvancedFilters = false;
@@ -251,7 +266,7 @@ angular.module('hillromvestApp')
       //$scope.expandedSign = ($scope.expandedSign === "+") ? "-" : "+"; 
       $scope.expandedSign = ($scope.expandedSign === true) ? false : true;  
       if($scope.expandedSign === true){
-        $scope.searchItem = ""; 
+        //$scope.searchItem = ""; 
         /*$scope.isAdvancedFilters = true;*/
        $("#searchListParam").attr("disabled", true);
        $("#searchListParam").css("background-color", 'rgb(235, 235, 228)'); 
@@ -280,7 +295,7 @@ angular.module('hillromvestApp')
       $scope.selectedCountryObj = ["US"];
       $scope.selectedStates = [];
       $scope.selectedCities = [];
-      $scope.patientAdvancedFilters.country = "US";
+      $scope.patientAdvancedFilters.country = "All";
       $scope.patientAdvancedFilters.state = [];
       $scope.patientAdvancedFilters.city = [];
       $scope.patientAdvancedFilters.zipcode = "";
@@ -334,9 +349,11 @@ angular.module('hillromvestApp')
   };
   $scope.maxRangeCheck = function(){
   if(Number.isInteger($scope.patientAdvancedFilters.minHMRRange) && Number.isInteger($scope.patientAdvancedFilters.maxHMRRange)){
+     $scope.hmrRangeInvalid = false;
   if(parseInt($scope.patientAdvancedFilters.minHMRRange) >= parseInt($scope.patientAdvancedFilters.maxHMRRange))
   {
      $scope.hmrRangeFlag = true;
+
   }
   else
   {
@@ -344,8 +361,14 @@ angular.module('hillromvestApp')
   }
   }
   else{
+    if($scope.patientAdvancedFilters.minHMRRange % 1 != 0 || $scope.patientAdvancedFilters.maxHMRRange % 1 != 0){
+      $scope.hmrRangeInvalid = true;
+    }
+    else{
+      $scope.hmrRangeInvalid = false;
+    }
      $scope.hmrRangeFlag = false;
-
+     
   }
 if($scope.patientAdvancedFilters.minHMRRange === undefined){
   //do nothing
@@ -472,6 +495,7 @@ else{
     }
     $scope.advancedSearchPatients = function(isFresh){
       if(isFresh){
+        $scope.searchItem = "";
         $scope.currentPageIndex = 1;
           $scope.perPageCount = 10;
           $scope.pageCount = 0;
@@ -493,7 +517,7 @@ else{
       angular.forEach($scope.selectedCities, function(city){
             $scope.patientAdvancedFilters.city.push(city.name);
           });
-      patientService.getPatientsAdvancedSearch($scope.sortOption, $scope.currentPageIndex, $scope.perPageCount, $scope.patientAdvancedFilters).then(function(){
+      patientService.getPatientsAdvancedSearch($scope.sortOption, $scope.currentPageIndex, $scope.perPageCount, $scope.patientAdvancedFilters).then(function(response){
               $scope.patients = response.data;
                $scope.isAdvancedFilters = true;
               var patientCount = $scope.patients.length;
@@ -501,14 +525,24 @@ else{
                 $scope.patients[i].dob = $scope.getDateFromTimestamp($scope.patients[i].dob);
                 $scope.patients[i].lastTransmissionDate = $scope.getDateFromTimestampforTransmissiondate($scope.patients[i].lastTransmissionDate);
               }
+              if($scope.patientAdvancedFilters.minHMRRange){
               $scope.patientAdvancedFilters.minHMRRange = Number($scope.patientAdvancedFilters.minHMRRange);
+               }
+               if($scope.patientAdvancedFilters.maxHMRRange){
                $scope.patientAdvancedFilters.maxHMRRange = Number($scope.patientAdvancedFilters.maxHMRRange);
+              }
               $scope.total = response.headers()['x-total-count'];
               $scope.pageCount = Math.ceil($scope.total / 10);
+               $scope.noDataFlag = true;
       }).catch(function(){
-        $scope.patientAdvancedFilters.minHMRRange = Number($scope.patientAdvancedFilters.minHMRRange);
-        $scope.patientAdvancedFilters.maxHMRRange = Number($scope.patientAdvancedFilters.maxHMRRange);
+       if($scope.patientAdvancedFilters.minHMRRange){
+              $scope.patientAdvancedFilters.minHMRRange = Number($scope.patientAdvancedFilters.minHMRRange);
+               }
+               if($scope.patientAdvancedFilters.maxHMRRange){
+               $scope.patientAdvancedFilters.maxHMRRange = Number($scope.patientAdvancedFilters.maxHMRRange);
+              }
         $scope.noMatchFound = true;
+        $scope.noDataFlag = true;
          $scope.isAdvancedFilters = false;
       });
       console.log("$scope.patientAdvancedFilters",$scope.patientAdvancedFilters);

@@ -175,10 +175,20 @@
                 <div ng-show="(form.role.$dirty && form.role.$showValidationMessage && form.role.$invalid) || submitted">
                   <span class="has-error" ng-show="form.role.$error.required" translate="error.role.required"></span>
                 </div>
-              </div>              
+              </div> 
+
+            </div>
+          </div>
+          <div class="col-md-7 reset-padding col-md-offset-2" ng-show="user.deleted">
+            <div class="col-md-6 dashboard__form--label reset-padding">
+              <span class="ng-scope">Deactivation Reason</span>
+            </div>
+            <div class="col-md-10 dashboard__form__input--option reset-padding">
+              <textarea type="text" class="col-md-8 dashboard__form__input--option reset-padding" ng-model="user.deactivationReason" style="width:310px;height:50px;" wrap = "hard" maxlength="255" ng-readonly="true" ng-disabled="disabled"></textarea>
             </div>
           </div>
         </div>
+
         <div class="clr"></div>
       </div>
        <div class="padding-bottom-20"></div>
@@ -208,7 +218,28 @@
         <button type="button" class="modal__close" data-dismiss="modal" ng-click="close()">&times;</button>
          <p translate="user.delete.warning"></p>
       </header>
+
       <div class="modal__body">
+             <label class="col-md-4 dashboard__form__input--option reset-padding" class= "ng-scope">Select Reason*</label>
+             <select name="type" class="col-md-8 dashboard__form__input--option reset-padding" style="text-transform:none" ng-model="reason.deactivationReason"  ng-options="item.type_code_value as item.type_code for item in reasonList" ng-change="onSelectChange()" required>
+             </select>
+           <div class="col-md-10 dashboard__form__input--option reset-padding"></div>
+             <div ng-show="noReason">
+                <span class="has-error" translate="error.DeactivationReason.required"></span>
+              </div>
+            </br>
+           <div ng-if="isDisabled">
+             <label class="col-md-4 dashboard__form__input--option reset-padding">Others*</label>
+             <textarea type="text" id="yourTextBox" class="col-md-8 dashboard__form__input--option reset-padding" ng-model="reason.reasonDetail" placeholder="Enter the reason" style="width:300px;height:50px;" wrap = "hard" maxlength="255" required></textarea>
+             <hr>
+             <div class="col-md-4 dashboard__form__input--option reset-padding"></div>
+             <div ng-show="noOtherDescription">
+                <span class="has-error" translate="error.DeactivationReason.required"></span>
+              </div>
+            </br>
+            </div>
+            <hr>
+         <div class="col-md-32 dashboard__form__input--option reset-padding"></div>
          <div class="modal--message" translate="user.delete.message"></div>
          <div class="row modal--custom-btn">
           <buton class="hillrom-btn btn-submit float-right" ng-click="deleteUser()">Yes</buton>
@@ -261,7 +292,7 @@
   </div>
 </div>
 
-<div ng-if="resetModal" class="modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true">
+<div ng-if="resetModal" class="modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" >
   <div class="modal__dialog">
     <div class="modal__content">
       <header class="modal__header">

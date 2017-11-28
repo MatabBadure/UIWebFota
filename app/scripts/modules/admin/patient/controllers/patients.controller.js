@@ -153,7 +153,10 @@ angular.module('hillromvestApp')
       }).catch(function(response){
         notyService.showError(response);
       });
-        };
+      
+      
+
+    };
 
         
     $scope.openEditDetail = function(){

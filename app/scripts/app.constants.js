@@ -149,6 +149,8 @@ angular.module('hillromvestApp')
 	'adherenceResetProgress': '/api/adherenceResetProgress/CLINICID',
 	'getAdherenceScoreResetHistory' : 'api/user/ID/AdherenceResetHistoryForPatient?&page=PAGE&per_page=PER_PAGE&deviceType=DEVICETYPE',
 	'getgarmentTypeCodeValues_Vest' : 'api/codeValues/garment_type_vest',
+	//api for deactivation reason type code values for drop down
+	'getdeactivationTypeCodeValues_Reason' : 'api/codeValues/user_deactivation_reason_codes',
 	'getgarmentSizeCodeValues_Vest' : 'api/codeValues/garment_size_vest',
 	'getgarmentColorCodeValues_Vest' : 'api/codeValues/garment_color_vest',
 	'getgarmentTypeCodeValues_Monarch' : 'api/codeValues/garment_type_monarch',
@@ -177,6 +179,7 @@ angular.module('hillromvestApp')
 	'stateByCountryCode':'/api/stateByCountryCode?country=COUNTRY',
 	'patientAdvancedSearch' : 'api/advancedSearch/patient?&page=PAGE&per_page=PER_PAGE&sort_by=SORT_OPTION&asc=true',
 	'matchingDiagnosticList' : 'api/patient/diagnosis?searchString=SEARCH_STRING',
-	'timezoneList' : 'api/user/timezone'
+	'timezoneList' : 'api/user/timezone',
+	'deleteUserWithReason' : '/api/user//ID'
 
 });
