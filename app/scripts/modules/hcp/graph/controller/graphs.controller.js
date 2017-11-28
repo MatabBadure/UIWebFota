@@ -537,15 +537,58 @@ angular.module('hillromvestApp')
 		$scope.getCumulativeGraphData();
 	};
 
+	 $scope.discardprevData = function(){
+	 	var object = $scope.cumulativeChartDataRaw;
+	 	var fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
+	 	var toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');
+         var timestampPreference = localStorage.getItem('timestampPreference');
+/*         for(var i = 0; i < object.xAxis.categories.length; i++) {
+                var obj = object.xAxis.categories[i];
+                  
+                  if((moment(obj).tz(timestampPreference).format(patientDashboard.timestampMMDDYY) > fromDate)){
+                  object.xAxis.categories.splice(i, 1);
+                  i--;
+					}
+					 else if((moment(obj).tz(timestampPreference).format(patientDashboard.timestampMMDDYY) < toDate)){
+                  object.xAxis.categories.splice(i, 1);
+                  i--;
+					}
+                }
+
+*/   
+		var obj = object.xAxis.categories[0];
+		          
+		 if((moment(obj).tz(timestampPreference).format(patientDashboard.timestampMMDDYY) > fromDate)){
+		                  object.xAxis.categories.splice(0, 1);
+							}
+							var obj1 = object.xAxis.categories[(object.xAxis.categories.length-1)]; 
+		 if((moment(obj1).tz(timestampPreference).format(patientDashboard.timestampMMDDYY) < toDate)){
+		                  object.xAxis.categories.splice((object.xAxis.categories.length-1), 1);
+							}
+		return object;
+      };
+
 	$scope.getCumulativeGraphData = function() {
+		var timestampPreference = localStorage.getItem('timestampPreference');
 		$scope.noDataAvailable = false;						
 		if($scope.selectedClinic.id){					
 			hcpDashBoardService.getCumulativeGraphPoints($scope.hcpId, $scope.selectedClinic.id, dateService.getDateFromTimeStamp($scope.fromTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), $scope.groupBy, $scope.ClinicDashboardDeviceType).then(function(response){
-				$scope.cumulativeChartData = response.data;	
+				$scope.cumulativeChartData = response.data;
+				var myTime = moment(new Date().getTime()).tz(timestampPreference);
+				var serverTime = moment(myTime).tz("America/Chicago").format(patientDashboard.timestampMMDDYYHHMMSS);
+				var preferredTimeTime = moment(myTime).tz(timestampPreference).format(patientDashboard.timestampMMDDYYHHMMSS);
+				$scope.serverOffset = moment(serverTime).diff(preferredTimeTime);
+				//console.log("serveroffset",serveroffset);
+				//console.log(moment().add('milliseconds', serverOffset));
 				if($scope.cumulativeChartData && typeof($scope.cumulativeChartData) === "object"){ 
 					angular.forEach($scope.cumulativeChartData.xAxis.categories, function(x, key){
-		              $scope.cumulativeChartData.xAxis.categories[key] = dateService.convertToTimestamp(x);
+						//var intermediateTime = moment(x).tz('America/Chicago');
+						var tempDate = moment(x).utcOffset($scope.serverOffset).format(patientDashboard.timestampMMDDYY);
+		              $scope.cumulativeChartData.xAxis.categories[key] = new Date(tempDate).getTime();
 		            });
+		            /*if($scope.cumulativeChartDataRaw){
+		            	$scope.cumulativeChartData = $scope.discardprevData();
+		            }*/
 		            angular.forEach($scope.cumulativeChartData.series, function(s, key1){
 		            	if($scope.cumulativeChartData.series[key1].name.toLowerCase() === "missed therapy days"){
 		            		$scope.cumulativeChartData.series[key1].color = "#ef6548";
@@ -570,7 +613,8 @@ angular.module('hillromvestApp')
 			              if($scope.cumulativeChartData.series[key1].data[key2].toolText.missedTherapy){
 			                $scope.cumulativeChartData.series[key1].data[key2].color = "red";
 			              }
-			            });            
+			            });    
+			             
 						setTimeout(function(){	
 							$scope.removeAllCharts();						
 							$scope.cumulativeChart("cumulativeGraph", $scope.cumulativeChartData);          
@@ -589,13 +633,15 @@ angular.module('hillromvestApp')
 
 	
 	$scope.getTreatmentGraphData = function() {
+		var timestampPreference = localStorage.getItem('timestampPreference');
 		if($scope.selectedClinic.id){
 			hcpDashBoardService.getTreatmentGraphPoints($scope.hcpId, $scope.selectedClinic.id, dateService.getDateFromTimeStamp($scope.fromTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), $scope.groupBy, $scope.ClinicDashboardDeviceType).then(function(response){			
 				$scope.treatmentChartData = response.data;
 				if($scope.treatmentChartData && typeof($scope.treatmentChartData) === "object"){ 
 					$scope.noDataAvailable = false;
 					angular.forEach($scope.treatmentChartData.xAxis.categories, function(x, key){
-		              $scope.treatmentChartData.xAxis.categories[key] = dateService.convertToTimestamp(x);
+		             var tempDate = moment(x).tz(timestampPreference).format(patientDashboard.timestampMMDDYY);
+		              $scope.treatmentChartData.xAxis.categories[key] = new Date(tempDate).getTime();
 		            });
 		            angular.forEach($scope.treatmentChartData.series, function(s, key1){
 		            	if($scope.treatmentChartData.series[key1].name.toLowerCase() === "average length of treatment"){

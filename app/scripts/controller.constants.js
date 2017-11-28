@@ -36,6 +36,8 @@ var patientDashboard = {
 	"hmrNonDayGraph" : "HMRLINE_GRAPH",
 	"complianceGraph" : "COMPLIANCE_GRAPH",
 	"defaultDaysForBadges" : 1,
+	"timestampMMDDYY" : "MM/DD/YYYY",
+	"timestampMMDDYYHHMMSS" : "MM/DD/YYYY HH:MM:SS"
 }
 
 var profile = {
