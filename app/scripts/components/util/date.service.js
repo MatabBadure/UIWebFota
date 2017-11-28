@@ -376,6 +376,15 @@ angular.module('hillromvestApp')
     if (minutes < 10) {minutes = "0"+minutes;}
     //if (seconds < 10) {seconds = "0"+seconds;}
     return hours+' hours '+minutes +' minutes';
+    },
+  //End of Gimp-18  
+  //Gimp-18
+    getTimezoneOffsetForConversion: function () {
+      var timestampPreference = localStorage.getItem('timestampPreference');
+      var myTime = moment(new Date().getTime()).tz(timestampPreference);
+      var serverTime = moment(myTime).tz("America/Chicago").format(patientDashboard.timestampMMDDYYHHMMSS);
+      var preferredTimeTime = moment(myTime).tz(timestampPreference).format(patientDashboard.timestampMMDDYYHHMMSS);
+      return moment(serverTime).diff(preferredTimeTime);
     }
   //End of Gimp-18  
     };

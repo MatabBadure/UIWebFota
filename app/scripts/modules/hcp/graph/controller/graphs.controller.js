@@ -574,16 +574,16 @@ angular.module('hillromvestApp')
 		if($scope.selectedClinic.id){					
 			hcpDashBoardService.getCumulativeGraphPoints($scope.hcpId, $scope.selectedClinic.id, dateService.getDateFromTimeStamp($scope.fromTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), $scope.groupBy, $scope.ClinicDashboardDeviceType).then(function(response){
 				$scope.cumulativeChartData = response.data;
-				var myTime = moment(new Date().getTime()).tz(timestampPreference);
+				/*var myTime = moment(new Date().getTime()).tz(timestampPreference);
 				var serverTime = moment(myTime).tz("America/Chicago").format(patientDashboard.timestampMMDDYYHHMMSS);
 				var preferredTimeTime = moment(myTime).tz(timestampPreference).format(patientDashboard.timestampMMDDYYHHMMSS);
-				$scope.serverOffset = moment(serverTime).diff(preferredTimeTime);
+				$scope.serverOffset = moment(serverTime).diff(preferredTimeTime);*/
 				//console.log("serveroffset",serveroffset);
 				//console.log(moment().add('milliseconds', serverOffset));
 				if($scope.cumulativeChartData && typeof($scope.cumulativeChartData) === "object"){ 
 					angular.forEach($scope.cumulativeChartData.xAxis.categories, function(x, key){
 						//var intermediateTime = moment(x).tz('America/Chicago');
-						var tempDate = moment(x).utcOffset($scope.serverOffset).format(patientDashboard.timestampMMDDYY);
+						var tempDate = moment(x).utcOffset(dateService.getTimezoneOffsetForConversion()).format(patientDashboard.timestampMMDDYY);
 		              $scope.cumulativeChartData.xAxis.categories[key] = new Date(tempDate).getTime();
 		            });
 		            /*if($scope.cumulativeChartDataRaw){
