@@ -450,6 +450,9 @@
             "mask": "Mobile number is invalid.",
             "required": "Mobile number is required"
         },
+         "DeactivationReason":{
+            "required": "Deactivation Reason is required"
+        },
         "phoneNumber":{
             "pattern": "Phone number is invalid.",
             "maxlength": "Phone number is invalid.",
