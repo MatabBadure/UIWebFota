@@ -7,6 +7,7 @@ angular.module('hillromvestApp')
   $scope.perPageCount = 5;
   $scope.PageNumber=1;
   $scope.nodataflag = false;
+  $scope.serverOffset = dateService.getTimezoneOffsetForConversion();
       $scope.DisableAddProtocol = false; 
     $scope.displayFlag = true;
           $scope.customPointsChecker = 0;
@@ -55,6 +56,7 @@ angular.module('hillromvestApp')
         };
   $scope.init = function(){
     $scope.viewMode = false;
+    $scope.serverOffset = dateService.getTimezoneOffsetForConversion();
     if($state.current.name === 'clinicadminpatientDemographic'  || $state.current.name === 'clinicadmminpatientDemographicEdit'){
       $scope.viewMode = true;
       $scope.getPatientInfo($stateParams.patientId, $scope.setEditMode);
@@ -171,6 +173,10 @@ angular.module('hillromvestApp')
       patientService.getAdherenceScoreResetHistory(patientId,$scope.PageNumber,$scope.perPageCount,$scope.getDeviceTypeforBothIcon()).then(function(response){
      
         $scope.resetHistoryData = response.data.Adherence_Reset_History.content;  
+         angular.forEach($scope.resetHistoryData, function(x, key){  
+         var tempDate = moment(x.resetDate).utcOffset($scope.serverOffset).format(patientDashboard.timestampMMDDYY);
+         $scope.resetHistoryData[key].resetDate = tempDate;  
+         });
       $scope.totalPages = response.data.Adherence_Reset_History.totalPages;
       $scope.totalElements = response.data.Adherence_Reset_History.totalElements;
 
@@ -451,11 +457,22 @@ angular.module('hillromvestApp')
   };
 
   $scope.getDevices = function(patientId){
+    $scope.serverOffset = dateService.getTimezoneOffsetForConversion();
     patientService.getDevices(patientId).then(function(response){
       angular.forEach(response.data.deviceList, function(device){
-        device.createdDate = dateService.getDateByTimestamp(device.createdDate);
+        //var tempDate = moment(x).utcOffset($scope.serverOffset).format(patientDashboard.timestampMMDDYY);
+       var createdDateInitial = dateService.getDateFromTimeStamp(device.createdDate,patientDashboard.serverDateFormat,'-');
+       var modifiedDateInitial = dateService.getDateFromTimeStamp(device.lastModifiedDate,patientDashboard.serverDateFormat,'-');
+       var createdDateFormat = moment(createdDateInitial).utcOffset($scope.serverOffset).format(patientDashboard.timestampMMDDYY);
+       var modifiedDateFormat = moment(modifiedDateInitial).utcOffset($scope.serverOffset).format(patientDashboard.timestampMMDDYY);
+        var createdDate = dateService.getDateByTimestamp(new Date(createdDateFormat).getTime());
+        var modifiedDate = dateService.getDateByTimestamp(new Date(modifiedDateFormat).getTime());
+        device.createdDate = createdDate;
+        device.lastModifiedDate = modifiedDate;
+         //device.createdDate = moment(device.createdDate).utcOffset($scope.serverOffset).format(patientDashboard.timestampMMDDYY);
+        /*device.createdDate = dateService.getDateByTimestamp(device.createdDate);
         device.lastModifiedDate = dateService.getDateByTimestamp(device.lastModifiedDate);
-         device.createdDate = dateService.getDateByTimestamp(device.createdDate);
+         device.createdDate = dateService.getDateByTimestamp(device.createdDate);*/
       });
       $scope.devices = response.data.deviceList;
     }).catch(function(response){

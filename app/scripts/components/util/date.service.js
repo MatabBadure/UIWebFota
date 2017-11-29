@@ -56,6 +56,7 @@ angular.module('hillromvestApp')
         return new Date(d).getMonthWeek;
       },
       getDateByTimestamp: function(data){
+        console.log("data",data);
         var date = new Date(data);
         return this.getMonthName(date) + ' ' + this.getDay(date.getDate()) + ', ' + this.getYear(date.getFullYear(date))
       },
@@ -381,10 +382,21 @@ angular.module('hillromvestApp')
   //Gimp-18
     getTimezoneOffsetForConversion: function () {
       var timestampPreference = localStorage.getItem('timestampPreference');
+      if(timestampPreference){
+      var myTime = moment(new Date());
+      var serverTime = moment(new Date()).tz("America/Chicago");
+      var preferredTimeTime = moment(new Date()).tz("Asia/Choibalsan");
+      console.log("ïn if dateservice",moment(moment(serverTime).diff(preferredTimeTime)).format("HH:mm"));
+      return moment(moment(serverTime).diff(preferredTimeTime)).format("HH:mm");
+    }
+    else{
+      timestampPreference = "America/Chicago";
       var myTime = moment(new Date().getTime()).tz(timestampPreference);
-      var serverTime = moment(myTime).tz("America/Chicago").format(patientDashboard.timestampMMDDYYHHMMSS);
-      var preferredTimeTime = moment(myTime).tz(timestampPreference).format(patientDashboard.timestampMMDDYYHHMMSS);
-      return moment(serverTime).diff(preferredTimeTime);
+      var serverTime = moment(new Date()).tz("America/Chicago").format(patientDashboard.timestampMMDDYYHHMMSS);
+      var preferredTimeTime = moment(new Date()).tz(timestampPreference).format(patientDashboard.timestampMMDDYYHHMMSS);
+      console.log("ïn else dateservice",moment(serverTime).diff(preferredTimeTime));
+      return moment(serverTime).diff(preferredTimeTime,'hours');
+    }
     }
   //End of Gimp-18  
     };
