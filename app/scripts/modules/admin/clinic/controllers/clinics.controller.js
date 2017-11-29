@@ -68,6 +68,8 @@ angular.module('hillromvestApp')
       $scope.isAdvancedFilters = false; 
       $scope.isZipcode = false;
       $scope.expandedSign = false;
+      $scope.clinic.parentClinic = {};
+      $scope.noParentName = false;
     /*check the state from the route*/
     $scope.init = function() {
       var currentRoute = $state.current.name;
@@ -437,13 +439,42 @@ angular.module('hillromvestApp')
     };
 
     $scope.submitted = false;
-    $scope.formSubmit = function() {
+   $scope.formSubmit = function() {
+      if($scope.clinic.type == 'child' && $scope.clinic.parentClinic.name == ""){
+        return false;
+      }
+      else{
       $scope.submitted = true;
+    }
+    };
+
+   /* $scope.formSubmit = function() {
+            $scope.submitted = true;
+    };*/
+    $scope.formUpdate = function(){
+    if($scope.form.$invalid){
+      if($scope.clinic.type == 'child' && $scope.clinic.parentClinic.name == null){
+        $scope.noParentName = true;
+      }
+        return false;
+      }
+      else{
+        $scope.showUpdateModal = true;
+      }
+
+    };
+
+    $scope.validateParentName = function(){
+      $scope.clinic.parentClinic = {};
+      $scope.clinic.parentClinic.name = null;
     };
 
     $scope.formSubmitClinic = function() {
       if ($scope.form.$invalid) {
         return false;
+      }
+      else{
+        $scope.showUpdateModal = true;
       }
       if ($scope.clinic.type === 'parent') {
         $scope.clinic.parent = true;
@@ -1327,6 +1358,9 @@ $scope.activateClinicModal = function(clininc){
           
           });
     };
+   /* $scope.validateParentName = function() {
+      $scope.clinic.parentClinic.name = "";
+    };*/
 
     $scope.advancedSearchClinics = function(isFresh){
       if(isFresh){

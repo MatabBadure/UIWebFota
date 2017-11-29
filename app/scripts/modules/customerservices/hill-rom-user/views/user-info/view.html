@@ -165,9 +165,11 @@
         <label class="col-md-4 dashboard__form__input--option reset-padding" class= "ng-scope">Select Reason*</label>
              <select name="type" class="col-md-8 dashboard__form__input--option reset-padding" style="text-transform:none" ng-model="reason.deactivationReason"  ng-options="item.type_code as item.type_code for item in reasonList" ng-change="onSelectChange()" required>
              </select>
-           <div class="col-md-10 dashboard__form__input--option reset-padding"></div>
+
+           <div class="col-md-10 dashboard__form__input--option reset-padding">
              <div ng-show="noReason">
                 <span class="has-error" translate="error.DeactivationReason.required"></span>
+              </div>
               </div>
             </br>
            <div ng-if="isDisabled">
