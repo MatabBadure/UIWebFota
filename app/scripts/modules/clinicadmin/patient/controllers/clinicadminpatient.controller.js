@@ -630,7 +630,7 @@ angular.module('hillromvestApp')
         //patient.lastTransmissionDate = (patient.lastTransmissionDate) ? dateService.getDateFromYYYYMMDD(patient.lastTransmissionDate, '/') : patient.lastTransmissionDate;
         
       /*patient.lastTransmissionDate = moment.tz(patient.lastTransmissionDate, patientDashboard.timestampMMDDYY, localStorage.getItem('timestampPreference'));*/
-     patient.lastTransmissionDate = moment(patient.lastTransmissionDate).tz(localStorage.getItem('timestampPreference')).format(patientDashboard.timestampMMDDYY);
+     patient.lastTransmissionDate = moment(patient.lastTransmissionDate).utcOffset($scope.serverOffset).format(patientDashboard.timestampMMDDYY);
       });
       $scope.total = (response.headers()['x-total-count']) ? response.headers()['x-total-count'] :$scope.patients.length; 
       $scope.pageCount = Math.ceil($scope.total / 10);

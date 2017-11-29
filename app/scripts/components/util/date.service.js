@@ -383,11 +383,19 @@ angular.module('hillromvestApp')
     getTimezoneOffsetForConversion: function () {
       var timestampPreference = localStorage.getItem('timestampPreference');
       if(timestampPreference){
-      var myTime = moment(new Date());
-      var serverTime = moment(new Date()).tz("America/Chicago");
-      var preferredTimeTime = moment(new Date()).tz("Asia/Choibalsan");
-      console.log("ïn if dateservice",moment(moment(serverTime).diff(preferredTimeTime)).format("HH:mm"));
-      return moment(moment(serverTime).diff(preferredTimeTime)).format("HH:mm");
+      var myTime = moment(new Date()).utcOffset(0);
+      var serverTime = moment().tz("America/Chicago");
+      var preferredTimeTime = moment().tz("Pacific/Chatham");
+     // var blah = moment(serverTime.diff(preferredTimeTime)).utcOffset(0).format("HH:mm");
+      //var blah = moment.duration(serverTime.diff(preferredTimeTime));
+      var blah = serverTime.diff(preferredTimeTime);
+      console.log("blah:",blah);
+      var tp = serverTime._offset - preferredTimeTime._offset;
+      console.log("tppp",tp);
+      var blahblah = moment.duration(blah).hours();
+      console.log("blah bah",blahblah);
+     // console.log("ïn if dateservice",moment(blah).format("HH:mm"));
+      return blah;
     }
     else{
       timestampPreference = "America/Chicago";
