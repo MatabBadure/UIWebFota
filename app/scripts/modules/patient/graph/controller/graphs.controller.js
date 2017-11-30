@@ -994,12 +994,7 @@ angular.module('hillromvestApp')
             // this is for year view or custom view having datapoints more than 7
             // x-axis will be plotted accordingly, chart type will be datetime
              var dateInitial = moment.tz(x,patientDashboard.serverDateTimeZone);
-             if( $scope.durationRange = "Day"){
                var dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYYHHMMSS);   
-               }
-               else{
-                var dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYY);
-               }
                var tempDate = new Date(dateFinal).getTime();
             var curDay = responseData.xAxis.categories[key].split(" ");
             $scope.isSameDay = ($scope.isSameDay && (curDay[0] === startDay[0]) )? true : false;  
@@ -1368,12 +1363,12 @@ angular.module('hillromvestApp')
               // x-axis will be plotted accordingly, chart type will be datetime
                var dateInitial = moment.tz(x,patientDashboard.serverDateTimeZone);
               if($scope.durationRange !== "Day" && !$scope.isSameDayHMRGraph){
-               var dateFinal = dateInitial.tz($scope.preferredTimezone).format(patientDashboard.timestampMMDDYY);   
+               var dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYYHHMMSS);   
                var tempDate = new Date(dateFinal).getTime();
                 $scope.hmrChartData.xAxis.xLabels.push(tempDate);
                 $scope.hmrChartData.xAxis.categories[key] = tempDate;               
               }else{
-               var dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYYHHMMSS);   
+               dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYYHHMMSS);   
                var tempDate = new Date(dateFinal).getTime();
                 $scope.hmrChartData.xAxis.xLabels.push(tempDate);
                 $scope.hmrChartData.xAxis.categories[key] = Highcharts.dateFormat("%I:%M %p",tempDate) ;
@@ -3064,7 +3059,7 @@ $scope.getComplianceGraph = function(){
             // this is for year view or custom view having datapoints more than 7
             // x-axis will be plotted accordingly, chart type will be datetime
              var dateInitial = moment.tz(x,patientDashboard.serverDateTimeZone);
-               var dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYY);   
+               var dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYYHHMMSS);   
                var tempDate = new Date(dateFinal).getTime();
             var curDay = responseData.xAxis.categories[key].split(" ");
             $scope.isSameDay = ($scope.isSameDay && (curDay[0] === startDay[0]) )? true : false;  
@@ -3407,7 +3402,7 @@ $scope.getComplianceGraph = function(){
                
               if($scope.durationRange !== "Day" && !$scope.isSameDayHMRGraph){
                 var dateInitial = moment.tz(x,patientDashboard.serverDateTimeZone);
-               var dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYY);   
+               var dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYYHHMMSS);   
                var tempDate = new Date(dateFinal).getTime();
                 $scope.hmrChartData.xAxis.xLabels.push(tempDate);
                 $scope.hmrChartData.xAxis.categories[key] = tempDate;               
@@ -3484,7 +3479,7 @@ $scope.getComplianceGraph = function(){
               // this is for year view or custom view having datapoints more than 7
               // x-axis will be plotted accordingly, chart type will be datetime
                var dateInitial = moment.tz(x,patientDashboard.serverDateTimeZone);
-               var dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYY);   
+               var dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYYHHMMSS);   
                var tempDate = new Date(dateFinal).getTime();
               if($scope.durationRange !== "Day" && !$scope.isSameDayAdherenceTrend){
                 $scope.adherenceTrendData.xAxis.xLabels.push(tempDate);
@@ -4427,7 +4422,7 @@ $scope.getComplianceGraph1 = function(){
             // this is for year view or custom view having datapoints more than 7
             // x-axis will be plotted accordingly, chart type will be datetime
              var dateInitial = moment.tz(x,patientDashboard.serverDateTimeZone);
-               var dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYY);   
+               var dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYYHHMMSS);   
                var tempDate = new Date(dateFinal).getTime();
             var curDay = responseData.xAxis.categories[key].split(" ");
             $scope.isSameDay = ($scope.isSameDay && (curDay[0] === startDay[0]) )? true : false;  
@@ -4518,7 +4513,7 @@ $scope.getComplianceGraph1 = function(){
               // this is for year view or custom view having datapoints more than 7
               // x-axis will be plotted accordingly, chart type will be datetime
               var dateInitial = moment.tz(x,patientDashboard.serverDateTimeZone);
-               var dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYY);   
+               var dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYYHHMMSS);   
                var tempDate = new Date(dateFinal).getTime();
               if($scope.durationRange !== "Day" && !$scope.isSameDayHMRGraph){
                 $scope.hmrChartData1.xAxis.xLabels.push(tempDate);
