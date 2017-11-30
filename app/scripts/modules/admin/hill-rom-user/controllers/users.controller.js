@@ -108,8 +108,8 @@ $scope.activateUserCSR = function(){
           $scope.showActivateModal = true;
         }
         };
-        $scope.close=function () {
-          $scope.isDisabled = false;
+        $scope.close=function(){
+         $scope.isDisabled = false;
          $scope.showModal = false;
         };
          $scope.deleteUserCSR = function(){
@@ -184,7 +184,6 @@ $scope.activateUserCSR = function(){
         
 
         if($scope.deactivationReason === 'Other'){ 
-          //console.log("jshd");
          $scope.isDisabled = false;  //enabling the text box because user selected 'Other' option.
          }
         }
@@ -208,7 +207,6 @@ $scope.activateUserCSR = function(){
           console.log("kjhfg",$scope.reason.deactivationReason);
         if($scope.reason.deactivationReason === "Other"){   
           console.log("in ifsfgssggs",$scope.reason.deactivationReason);
-        // $scope.reason.reasonDetail = "";
          $scope.isDisabled = true;  //enabling the text box because user selected 'Other' option.
          }
          else{

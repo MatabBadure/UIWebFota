@@ -46,7 +46,7 @@ angular.module('hillromvestApp')
         $scope.open = function () {
           $scope.showModal = true;
         };
-
+//Bug fix ---- Gimp-36 Gimp-4
         $scope.close = function () {
          $scope.isDisabled = false;
          //$scope.noReason = false;
