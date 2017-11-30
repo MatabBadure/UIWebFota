@@ -4,6 +4,7 @@ angular.module('hillromvestApp')
 	function($scope, $state, clinicService,hcpDashBoardService, dateService, graphUtil, $stateParams, hcpDashboardConstants, DoctorService, clinicadminService, notyService, StorageService,$filter,commonsUserService, exportutilService, $rootScope,loginConstants) {
 	var chart;
 	$scope.noDataAvailable = false;
+	 $scope.preferredTimezone = localStorage.getItem('timestampPreference');
 	function getDaysIntervalInChart(noOfDataPoints){
       var pInterval = 8;
       var sInterval = 9;
@@ -577,8 +578,9 @@ angular.module('hillromvestApp')
 				$scope.cumulativeChartData = response.data;
 				if($scope.cumulativeChartData && typeof($scope.cumulativeChartData) === "object"){ 
 					angular.forEach($scope.cumulativeChartData.xAxis.categories, function(x, key){
-						var tempDate = moment(x).utcOffset($scope.serverOffset).format(patientDashboard.timestampMMDDYY);
-		              $scope.cumulativeChartData.xAxis.categories[key] = new Date(tempDate).getTime();
+						var dateInitial = moment.tz(x,patientDashboard.serverDateTimeZone);
+		        	 var dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYY);
+		              $scope.cumulativeChartData.xAxis.categories[key] = new Date(dateFinal).getTime();
 		            });
 		            angular.forEach($scope.cumulativeChartData.series, function(s, key1){
 		            	if($scope.cumulativeChartData.series[key1].name.toLowerCase() === "missed therapy days"){
@@ -631,8 +633,9 @@ angular.module('hillromvestApp')
 				if($scope.treatmentChartData && typeof($scope.treatmentChartData) === "object"){ 
 					$scope.noDataAvailable = false;
 					angular.forEach($scope.treatmentChartData.xAxis.categories, function(x, key){
-		             var tempDate = moment(x).utcOffset($scope.serverOffset).format(patientDashboard.timestampMMDDYY);
-		              $scope.treatmentChartData.xAxis.categories[key] = new Date(tempDate).getTime();
+					var dateInitial = moment.tz(x,patientDashboard.serverDateTimeZone);
+		        	 var dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYY);		           
+	        	    $scope.treatmentChartData.xAxis.categories[key] = new Date(dateFinal).getTime();
 		            });
 		            angular.forEach($scope.treatmentChartData.series, function(s, key1){
 		            	if($scope.treatmentChartData.series[key1].name.toLowerCase() === "average length of treatment"){
