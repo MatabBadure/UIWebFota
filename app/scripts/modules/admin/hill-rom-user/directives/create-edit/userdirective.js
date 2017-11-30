@@ -48,6 +48,13 @@ angular.module('hillromvestApp')
         };
 
         $scope.close = function () {
+         $scope.isDisabled = false;
+         //$scope.noReason = false;
+         //$scope.reason = {};
+         $scope.reason.deactivationReason = "";
+         $scope.reason.reasonDetail = "";
+         //$scope.noOtherDescription = false;
+         //$scope.reasonList = {}
           $scope.showModal = false;
         };
 
@@ -197,6 +204,7 @@ angular.module('hillromvestApp')
         };
 
         $scope.cancel = function () {
+
           $scope.reset();
         };
 
