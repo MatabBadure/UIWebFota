@@ -206,7 +206,7 @@ $scope.activateUserCSR = function(){
         $scope.noReason = false;
         $scope.noOtherDescription = false;
           console.log("kjhfg",$scope.reason.deactivationReason);
-        if($scope.reason.deactivationReason === "Other"){ 
+        if($scope.reason.deactivationReason === "Other"){   
           console.log("in ifsfgssggs",$scope.reason.deactivationReason);
         // $scope.reason.reasonDetail = "";
          $scope.isDisabled = true;  //enabling the text box because user selected 'Other' option.

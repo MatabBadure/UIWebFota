@@ -56,7 +56,7 @@ angular.module('hillromvestApp')
          //$scope.noOtherDescription = false;
          //$scope.reasonList = {}
           $scope.showModal = false;
-        };
+        };    
 
         $scope.submitted = false;
         $scope.formSubmit = function () {
