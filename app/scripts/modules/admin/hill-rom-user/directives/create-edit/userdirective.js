@@ -158,7 +158,7 @@ angular.module('hillromvestApp')
           if ($scope.reason.deactivationReason!="" && $scope.reason.deactivationReason!=undefined){
           console.log("in required",$scope.reason.deactivationReason);
           //Gimp-4
-          if($scope.reason.deactivationReason === "other"){ 
+          if($scope.reason.deactivationReason === "Other"){ 
             if($scope.reason.reasonDetail){
             var reason = $scope.reason.reasonDetail;
           }
@@ -280,7 +280,7 @@ angular.module('hillromvestApp')
         $scope.noReason = false;
         $scope.noOtherDescription = false;
           console.log("kjhfg",$scope.reason.deactivationReason);
-        if($scope.reason.deactivationReason === "other"){ 
+        if($scope.reason.deactivationReason === "Other"){ 
           console.log("in ifsfgssggs",$scope.reason.deactivationReason);
         // $scope.reason.reasonDetail = "";
          $scope.isDisabled = true;  //enabling the text box because user selected 'Other' option.
