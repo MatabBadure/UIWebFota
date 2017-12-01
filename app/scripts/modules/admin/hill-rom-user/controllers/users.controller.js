@@ -100,14 +100,17 @@ $scope.activateUserCSR = function(){
         };
         $scope.open = function (option) {
           if(option == 'deactivate'){
+            $scope.reason.deactivationReason = "";
+            $scope.reason.reasonDetail = "";
           $scope.showModal = true;
         }
         else if(option == 'activate'){
           $scope.showActivateModal = true;
         }
         };
-        $scope.close = function () {
-       $scope.showModal = false;
+        $scope.close=function(){
+         $scope.isDisabled = false;
+         $scope.showModal = false;
         };
          $scope.deleteUserCSR = function(){
           // console.log("$scope.deactivationReason",$scope.deactivationReason)
@@ -121,7 +124,7 @@ $scope.activateUserCSR = function(){
             if ($scope.reason.deactivationReason!="" && $scope.reason.deactivationReason!=undefined){
           console.log("in required",$scope.reason.deactivationReason);
           //Gimp-4
-          if($scope.reason.deactivationReason === "other"){ 
+          if($scope.reason.deactivationReason === "Other"){ 
             if($scope.reason.reasonDetail){
             var reason = $scope.reason.reasonDetail;
           }
@@ -177,11 +180,10 @@ $scope.activateUserCSR = function(){
         };
 
         $scope.onSelectChange = function(){
-          console.log("kjhfg");
+          //console.log("kjhfg");
         
 
-        if($scope.deactivationReason === 'other'){ 
-          console.log("jshd");
+        if($scope.deactivationReason === 'Other'){ 
          $scope.isDisabled = false;  //enabling the text box because user selected 'Other' option.
          }
         }
@@ -203,9 +205,8 @@ $scope.activateUserCSR = function(){
         $scope.noReason = false;
         $scope.noOtherDescription = false;
           console.log("kjhfg",$scope.reason.deactivationReason);
-        if($scope.reason.deactivationReason === "other"){ 
+        if($scope.reason.deactivationReason === "Other"){   
           console.log("in ifsfgssggs",$scope.reason.deactivationReason);
-        // $scope.reason.reasonDetail = "";
          $scope.isDisabled = true;  //enabling the text box because user selected 'Other' option.
          }
          else{

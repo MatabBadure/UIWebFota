@@ -46,10 +46,17 @@ angular.module('hillromvestApp')
         $scope.open = function () {
           $scope.showModal = true;
         };
-
+//Bug fix ---- Gimp-36 Gimp-4
         $scope.close = function () {
+         $scope.isDisabled = false;
+         //$scope.noReason = false;
+         //$scope.reason = {};
+         $scope.reason.deactivationReason = "";
+         $scope.reason.reasonDetail = "";
+         //$scope.noOtherDescription = false;
+         //$scope.reasonList = {}
           $scope.showModal = false;
-        };
+        };    
 
         $scope.submitted = false;
         $scope.formSubmit = function () {
@@ -197,6 +204,7 @@ angular.module('hillromvestApp')
         };
 
         $scope.cancel = function () {
+
           $scope.reset();
         };
 
