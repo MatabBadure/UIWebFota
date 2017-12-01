@@ -467,6 +467,7 @@ angular.module('hillromvestApp')
 
   $scope.getDevices = function(patientId){
     patientService.getDevices(patientId).then(function(response){
+      //Gimp-31
       angular.forEach(response.data.deviceList, function(device){
     var dateInitial1 = moment.tz(device.createdDate,patientDashboard.serverDateTimeZone);
         var dateFinal1 = moment.tz(dateInitial1,$scope.preferredTimezone).format('LL');

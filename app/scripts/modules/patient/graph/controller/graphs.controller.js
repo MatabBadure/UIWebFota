@@ -48,7 +48,6 @@ angular.module('hillromvestApp')
       $scope.forhidingMonarchHmrGraph = false;
       $scope.oneDayData = true;
       $scope.oneDayData1 = true;
-      $scope.serverOffset = dateService.getTimezoneOffsetForConversion();
 
       $scope.initCount("");
             var currentRoute = $state.current.name;
@@ -1364,12 +1363,24 @@ angular.module('hillromvestApp')
                var dateInitial = moment.tz(x,patientDashboard.serverDateTimeZone);
               if($scope.durationRange !== "Day" && !$scope.isSameDayHMRGraph){
                var dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYYHHMMSS);   
-               var tempDate = new Date(dateFinal).getTime();
+                
+                var tempDate = moment(dateFinal).format("X");
+                tempDate = parseInt("" + tempDate.toString() + '000');
+                console.log("timestamp test",tempDate);
+                //var tempDate = new Date(dateFinal).getTime();
+                //console.log("timestamp test javascript",tempDate);
                 $scope.hmrChartData.xAxis.xLabels.push(tempDate);
                 $scope.hmrChartData.xAxis.categories[key] = tempDate;               
               }else{
-               dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYYHHMMSS);   
-               var tempDate = new Date(dateFinal).getTime();
+                var temppp  = moment(dateInitial).format("X");
+                temppp = parseInt("" + temppp.toString() + '000');
+               dateFinal = moment.tz(temppp,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYYHHMMSS);   
+               console.log("jhasbdufygadsfyu",dateFinal);
+                //var tempDate = moment(dateFinal).format("X");
+                console.log("timestamp test",moment(dateFinal).format("X"));
+                var tempDate = moment(dateFinal).format("X");
+                tempDate = parseInt("" + tempDate.toString() + '000');
+                console.log("timestamp test",tempDate);
                 $scope.hmrChartData.xAxis.xLabels.push(tempDate);
                 $scope.hmrChartData.xAxis.categories[key] = Highcharts.dateFormat("%I:%M %p",tempDate) ;
               }
@@ -2565,62 +2576,74 @@ angular.module('hillromvestApp')
       var toDate = dateService.convertDateToYyyyMmDdFormat($scope.toDateHistory);
       patientDashBoardService.getAdeherenceData(patientId, fromDate, toDate, $scope.getDeviceType()).then(function(response){
 
-        $scope.adherenceScores = response.data;
-        $scope.adherenceHistoryAllData = response.data;
-        $scope.adherencetrendlength=0;
-        for(var i=0; i <$scope.adherenceScores.length;i++){
-                   $scope.adherencetrendlength= $scope.adherencetrendlength+$scope.adherenceScores[i].adherenceTrends.length;
-        }
-         $scope.pageCount = Math.ceil($scope.adherencetrendlength / 7);
-        
-        $scope.lengthTrack=0;
-        $scope.adherencetrendData = new Array();
-         if($scope.dayFlag == true){
-        for(var j = 0 ; j<$scope.adherenceScores.length;j++){
-$scope.adherencetrendData.push(new Object({"adherenceTrends": [] , "protocols": []}));
-          for(var i=0; i <$scope.adherenceScores[j].adherenceTrends.length;i++){
-                 if($scope.adherenceScores[j].adherenceTrends[i].date == $scope.toDate){
-                 $scope.adherencetrendData[j].adherenceTrends[i]= angular.extend({},$scope.adherencetrendData[j].adherenceTrends[i],$scope.adherenceScores[j].adherenceTrends[i]);
-                 $scope.adherencetrendData[j].protocols=angular.extend({},$scope.adherencetrendData[j].protocols,$scope.adherenceScores[j].protcols);
-                $scope.noHistoryAvailable = false;
+          $scope.adherenceScores = response.data;
+          $scope.adherenceHistoryAllData = response.data;
+          $scope.adherencetrendlength = 0;
+          for (var i = 0; i < $scope.adherenceScores.length; i++) {
+            $scope.adherencetrendlength = $scope.adherencetrendlength + $scope.adherenceScores[i].adherenceTrends.length;
+          }
+          $scope.pageCount = Math.ceil($scope.adherencetrendlength / 7);
+
+          $scope.lengthTrack = 0;
+          $scope.adherencetrendData = new Array();
+          if ($scope.dayFlag == true) {
+            for (var j = 0; j < $scope.adherenceScores.length; j++) {
+              $scope.adherencetrendData.push(new Object({ "adherenceTrends": [], "protocols": [] }));
+              for (var i = 0; i < $scope.adherenceScores[j].adherenceTrends.length; i++) {
+
+                if ($scope.adherenceScores[j].adherenceTrends[i].date == $scope.toDate) {
+                 //vinay Changes
+                  var datetimestamp = $scope.adherenceScores[j].adherenceTrends[i].date;
+                  var dateInitial = moment.tz(datetimestamp,patientDashboard.serverDateTimeZone);
+                var dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYY);
+                  $scope.adherenceScores[j].adherenceTrends[i].date = dateFinal;
+                  //vinay changes end
+                  $scope.adherencetrendData[j].adherenceTrends[i] = angular.extend({}, $scope.adherencetrendData[j].adherenceTrends[i], $scope.adherenceScores[j].adherenceTrends[i]);
+                  $scope.adherencetrendData[j].protocols = angular.extend({}, $scope.adherencetrendData[j].protocols, $scope.adherenceScores[j].protcols);
+                  $scope.noHistoryAvailable = false;
                 }
                 else{
                   $scope.adherencetrendlength=0;
                    $scope.noHistoryAvailable = true;
                 }
-        }
-      }
-    }
-    else{
-   loop1:    for(var j = 0 ; j<$scope.adherenceScores.length;j++){
-        $scope.adherencetrendData.push(new Object({"adherenceTrends": [] , "protocols": []}));
-          $scope.adherencetrendData[j].protocols=angular.extend({},$scope.adherencetrendData[j].protocols,$scope.adherenceScores[j].protcols);
-          for(var i=0; i <$scope.adherenceScores[j].adherenceTrends.length;i++){
-                   $scope.adherencetrendData[j].adherenceTrends[i]= angular.extend({},$scope.adherencetrendData[j].adherenceTrends[i],$scope.adherenceScores[j].adherenceTrends[i]);
-                      $scope.lengthTrack++;//no. of records to be displayed in a page
-                      if(i == ($scope.adherenceScores[j].adherenceTrends.length-1))
-                       { //If records available are less than no. of records to be displayed in a page
-                        $scope.nextDate=$scope.adherenceScores[j].adherenceTrends[i].date;
-                        $scope.lessThanSeven = i;
-                       }
-                      if($scope.lengthTrack == 7){
-                        $scope.nextDate=$scope.adherenceScores[j].adherenceTrends[i].date; //Store the date of the last row from the displayed records
-                        $scope.lessThanSeven = 6;
-                       break loop1; //break if the no. of records to be displayed in a page is reached
-                      }
-        }
-      }
-    }
-       angular.element(document).ready(function () {  
-     $scope.loading = false;
-    });
-   
-      }).catch(function(response){
-        $scope.noHistoryAvailable = true;
-       // notyService.showError(response);
-      });
-      $scope.getFirstTransmissionDateforHistory();
-    };
+              }
+            }
+          }
+          else {
+            loop1: for (var j = 0; j < $scope.adherenceScores.length; j++) {
+              $scope.adherencetrendData.push(new Object({ "adherenceTrends": [], "protocols": [] }));
+              $scope.adherencetrendData[j].protocols = angular.extend({}, $scope.adherencetrendData[j].protocols, $scope.adherenceScores[j].protcols);
+              for (var i = 0; i < $scope.adherenceScores[j].adherenceTrends.length; i++) {
+               //vinay Changes
+                var datetimestamp = $scope.adherenceScores[j].adherenceTrends[i].date;
+                var dateInitial = moment.tz(datetimestamp,patientDashboard.serverDateTimeZone);
+                var dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYY);
+                  $scope.adherenceScores[j].adherenceTrends[i].date = dateFinal;
+                //vinay changes end
+                $scope.adherencetrendData[j].adherenceTrends[i] = angular.extend({}, $scope.adherencetrendData[j].adherenceTrends[i], $scope.adherenceScores[j].adherenceTrends[i]);
+                $scope.lengthTrack++;//no. of records to be displayed in a page
+                if (i == ($scope.adherenceScores[j].adherenceTrends.length - 1)) { //If records available are less than no. of records to be displayed in a page
+                  $scope.nextDate = $scope.adherenceScores[j].adherenceTrends[i].date;
+                  $scope.lessThanSeven = i;
+                }
+                if ($scope.lengthTrack == 7) {
+                  $scope.nextDate = $scope.adherenceScores[j].adherenceTrends[i].date; //Store the date of the last row from the displayed records
+                  $scope.lessThanSeven = 6;
+                  break loop1; //break if the no. of records to be displayed in a page is reached
+                }
+              }
+            }
+          }
+          angular.element(document).ready(function () {
+            $scope.loading = false;
+          });
+
+        }).catch(function (response) {
+          $scope.noHistoryAvailable = true;
+          // notyService.showError(response);
+        });
+        $scope.getFirstTransmissionDateforHistory();
+      };
 
   /******End of Adherence History Grid view Date selection-Hill-1848 ******/  
   $scope.getFirstTransmissionDateforHistory = function(){
@@ -2732,75 +2755,77 @@ $scope.adherencetrendData.push(new Object({"adherenceTrends": [] , "protocols": 
     };
 
 
-    $scope.toggleHeaderAccount = function(){
-      $( "#collapseTwo" ).slideToggle( "slow" );
-      $scope.expandedSign = ($scope.expandedSign === "+") ? "-" : "+";      
-    }
-    /******For Hill-1882******/
-        $scope.GetAdherenceScoreReason = function(hoverdate,key){
-      var MTDdates = ""; //Variable to store dates of Missed therapies
-      var HNAdates = ""; //Variable to store dates of HMR Non Adherence
-      var ASRdates = ""; //Variable to store dates of HMR Non Adherence
-      var FDdates = ""; //Variable to store dates of Frequency Deviation
-      var HNACounter = 0;
-      var res ="";
-      $scope.myPopoverData=""; 
-    for(var j=0; j < ($scope.adherenceHistoryAllData.length) ; j++){
-     var adherenceTrends = $scope.adherenceHistoryAllData[j].adherenceTrends;
-      for(var i=0; i < (adherenceTrends.length) ; i++)
-      {
-        var date = adherenceTrends[i].date;
-         var notificationPoints = Object.keys(adherenceTrends[i].notificationPoints); 
-/******Collecting the dates to be displayed in details******/  
-         if(notificationPoints.indexOf('Missed Therapy Days') >-1){
-          if(HNACounter >= 2)
-          {
-             res = HNAdates.split(",");
-            if(MTDdates == ""){
-             MTDdates =res[res.length-2]+ ", "+res[res.length-1] + "," + date;
+      $scope.toggleHeaderAccount = function () {
+        $("#collapseTwo").slideToggle("slow");
+        $scope.expandedSign = ($scope.expandedSign === "+") ? "-" : "+";
+      }
+      /******For Hill-1882******/
+      $scope.GetAdherenceScoreReason = function (hoverdate, key) {
+        var MTDdates = ""; //Variable to store dates of Missed therapies
+        var HNAdates = ""; //Variable to store dates of HMR Non Adherence
+        var ASRdates = ""; //Variable to store dates of HMR Non Adherence
+        var FDdates = ""; //Variable to store dates of Frequency Deviation
+        var HNACounter = 0;
+        var res = "";
+        $scope.myPopoverData = "";
+        for (var j = 0; j < ($scope.adherenceHistoryAllData.length); j++) {
+          var adherenceTrends = $scope.adherenceHistoryAllData[j].adherenceTrends;
+          for (var i = 0; i < (adherenceTrends.length); i++) {
+               
+            
+           //vinay changes
+           var dateInitial = moment.tz(adherenceTrends[i].date,patientDashboard.serverDateTimeZone);
+           var dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYY);
+            var date  =  dateInitial;
+            var notificationPoints = Object.keys(adherenceTrends[i].notificationPoints);
+            /******Collecting the dates to be displayed in details******/
+            if (notificationPoints.indexOf('Missed Therapy Days') > -1) {
+              if (HNACounter >= 2) {
+                res = HNAdates.split(",");
+                if (MTDdates == "") {
+                  MTDdates = res[res.length - 2] + ", " + res[res.length - 1] + "," + date;
+                }
+                else {
+                  MTDdates = MTDdates + ", " + res[res.length - 2] + ", " + res[res.length - 1] + "," + date;
+                }
+                HNACounter = 0;
+                HNAdates = "";
+                FDdates = "";
+                ASRdates = "";
+              }
+              else {
+                HNACounter = 0;
+                HNAdates = "";
+                FDdates = "";
+                ASRdates = "";
+                if (MTDdates == "") {//To remove unnecessary comma
+                  MTDdates = date;
+                }
+                else {//add comma only for more than 1 date
+                  MTDdates = MTDdates + ", " + date;
+                }
+              }
             }
-            else{
-            MTDdates =MTDdates + ", "+ res[res.length-2]+ ", "+res[res.length-1] + "," + date;
+            else if (notificationPoints.indexOf('Below Treatment Minutes') > -1 && notificationPoints.indexOf('Setting Deviation') > -1) {
+              //for HMR Non-Adherence and Frequency Deviation
+              HNACounter++;
+              MTDdates = "";
+              ASRdates = "";
+              if (HNAdates == "") {
+                HNAdates = date;
+              }
+              else {
+                HNAdates = HNAdates + ", " + date;
+              }
+              if (FDdates == "") {
+                FDdates = date;
+              }
+              else {
+                FDdates = FDdates + ", " + date;
+              }
             }
-            HNACounter = 0;
-            HNAdates = "";
-            FDdates = "";
-            ASRdates = "";
-          }
-          else
-          {
-             HNACounter = 0;
-             HNAdates = "";
-             FDdates = "";
-             ASRdates = "";
-          if(MTDdates == ""){//To remove unnecessary comma
-             MTDdates = date;
-               }
-           else{//add comma only for more than 1 date
-             MTDdates = MTDdates + ", "+date;
-           }
-          }
-         }
-          else if(notificationPoints.indexOf('Below Treatment Minutes') > -1 && notificationPoints.indexOf('Setting Deviation') > -1){
-             //for HMR Non-Adherence and Frequency Deviation
-             HNACounter++;
-             MTDdates= "";
-             ASRdates = "";
-             if(HNAdates == ""){
-             HNAdates = date;
-           }
-            else{
-             HNAdates = HNAdates +", "+ date;
-           }
-             if(FDdates == ""){
-             FDdates = date;
-           }
-           else{
-             FDdates = FDdates +", "+ date;
-           }
-         }
-         else if(notificationPoints.indexOf('Below Treatment Minutes')>-1 && notificationPoints.indexOf('Setting Deviation') < 0){
-             //for HMR Non-Adherence
+            else if (notificationPoints.indexOf('Below Treatment Minutes') > -1 && notificationPoints.indexOf('Setting Deviation') < 0) {
+              //for HMR Non-Adherence
               HNACounter++;
              MTDdates= "";
              FDdates = "";
@@ -4514,7 +4539,7 @@ $scope.getComplianceGraph1 = function(){
               // x-axis will be plotted accordingly, chart type will be datetime
               var dateInitial = moment.tz(x,patientDashboard.serverDateTimeZone);
                var dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYYHHMMSS);   
-               var tempDate = new Date(dateFinal).getTime();
+               var tempDate = moment(dateFinal).format("X");
               if($scope.durationRange !== "Day" && !$scope.isSameDayHMRGraph){
                 $scope.hmrChartData1.xAxis.xLabels.push(tempDate);
                 $scope.hmrChartData1.xAxis.categories[key] = tempDate;               
