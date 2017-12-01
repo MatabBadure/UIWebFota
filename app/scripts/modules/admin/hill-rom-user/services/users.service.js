@@ -257,6 +257,15 @@ angular.module('hillromvestApp')
         });
       },
 
+
+     getTimezoneList : function(){
+        var url = URL.timezoneList;
+        return $http.get(url, {
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });
+     },
       //Gimp-4
 
       deleteUserWithReason: function(id,data) {
@@ -284,8 +293,10 @@ angular.module('hillromvestApp')
         }).success(function(response) {
           return response;
         });
-      }
+    }
+
       //End of Gimp-4
+
 
     };
   }]);
