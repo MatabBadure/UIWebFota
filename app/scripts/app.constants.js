@@ -179,6 +179,7 @@ angular.module('hillromvestApp')
 	'stateByCountryCode':'/api/stateByCountryCode?country=COUNTRY',
 	'patientAdvancedSearch' : 'api/advancedSearch/patient?&page=PAGE&per_page=PER_PAGE&sort_by=SORT_OPTION&asc=true',
 	'matchingDiagnosticList' : 'api/patient/diagnosis?searchString=SEARCH_STRING',
+	'timezoneList' : 'api/user/timezone',
 	'deleteUserWithReason' : '/api/user//ID'
 
 });
