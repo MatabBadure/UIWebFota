@@ -2,6 +2,7 @@
   "name": "qogir",
   "version": "0.0.0",
   "dependencies": {
+    "angular-moment-timezone": "^1.7.0",
     "gulp-install": "^0.6.0"
   },
   "devDependencies": {
