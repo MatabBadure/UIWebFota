@@ -4,7 +4,7 @@ angular.module('hillromvestApp')
 	function($scope, $state, clinicService,hcpDashBoardService, dateService, graphUtil, $stateParams, hcpDashboardConstants, DoctorService, clinicadminService, notyService, StorageService,$filter,commonsUserService, exportutilService, $rootScope,loginConstants) {
 	var chart;
 	$scope.noDataAvailable = false;
-	 $scope.preferredTimezone = localStorage.getItem('timestampPreference');
+	 $scope.preferredTimezone = $scope.getTimezonePreference();
 	function getDaysIntervalInChart(noOfDataPoints){
       var pInterval = 8;
       var sInterval = 9;
@@ -59,7 +59,6 @@ angular.module('hillromvestApp')
 		$scope.prescribeDevice = false;
 		$scope.isYesterday = true;
 		$scope.selectedClinic = {};
-		$scope.serverOffset = dateService.getTimezoneOffsetForConversion();
 		$scope.statistics = {
 			"date":$scope.toDate,
 			"patientsWithSettingDeviation":0,

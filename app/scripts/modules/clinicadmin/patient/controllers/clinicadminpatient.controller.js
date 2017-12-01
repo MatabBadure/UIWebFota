@@ -7,7 +7,7 @@ angular.module('hillromvestApp')
   $scope.perPageCount = 5;
   $scope.PageNumber=1;
   $scope.nodataflag = false;
-  $scope.preferredTimezone = localStorage.getItem('timestampPreference');
+  $scope.preferredTimezone = $scope.getTimezonePreference();
       $scope.DisableAddProtocol = false; 
     $scope.displayFlag = true;
           $scope.customPointsChecker = 0;

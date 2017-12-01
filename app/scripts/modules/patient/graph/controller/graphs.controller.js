@@ -11,7 +11,7 @@ angular.module('hillromvestApp')
     $scope.displayFlag = true;
     $scope.customPointsChecker = 0;
     $scope.lastdeviceType = "";   
-     $scope.preferredTimezone = localStorage.getItem('timestampPreference');   
+     $scope.preferredTimezone = $scope.getTimezonePreference();   
     $scope.isIE = function(){        
       if(window.navigator.userAgent.indexOf("MSIE") !== -1){
         return true

@@ -5,7 +5,7 @@ angular.module('hillromvestApp')
 function ($scope, $state, $rootScope, StorageService, UserService, patientDiagnosticService, notyService, dateService, $stateParams, commonsUserService, $parse,caregiverDashBoardService) {
   $scope.isAddDiagnostic = false; 
   $scope.defaultTestResultDate = dateService.getDateFromTimeStamp(new Date().getTime(), patientDashboard.dateFormat, "/"); 
-  $scope.preferredTimezone = localStorage.getItem('timestampPreference');
+  $scope.preferredTimezone = $scope.getTimezonePreference();
   $scope.calculateDateFromPicker = function(picker) {
     $scope.fromTimeStamp = new Date(picker.startDate._d).getTime();	      
 	  $scope.toTimeStamp = (new Date().getTime() < new Date(picker.endDate._d).getTime())? new Date().getTime() : new Date(picker.endDate._d).getTime();

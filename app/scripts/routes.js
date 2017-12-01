@@ -2359,7 +2359,7 @@ angular.module('hillromvestApp')
 
             .state('caregiverProfile', {
                 parent: 'caregiver-dashboard-profile',
-                url: '/profile/:patientId',
+                url: '/profile/{patientId}',
                 data: {
                     roles: ['CARE_GIVER'],
                     pageTitle: 'patient.title'

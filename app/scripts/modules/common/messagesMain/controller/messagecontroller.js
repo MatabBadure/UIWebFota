@@ -37,7 +37,7 @@ $scope.messageBodyObject = {};
   $scope.archivemessageBodyObject = {};
   $scope.toID = [];
   $rootScope.UnreadMessages = "";
-   $scope.preferredTimezone = localStorage.getItem('timestampPreference');
+   $scope.preferredTimezone = $scope.getTimezonePreference();
   /* console.log("clinic ID");
    console.log(StorageService.get('logged').userId);*/
  

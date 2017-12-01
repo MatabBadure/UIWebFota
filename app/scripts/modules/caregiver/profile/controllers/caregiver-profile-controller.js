@@ -29,6 +29,11 @@ angular.module('hillromvestApp')
 
     $scope.init = function(){
       //$scope.$emit('getSelectedPatient', $stateParams.patientId);
+       UserService.getTimezoneList().then(function(response){
+        $scope.timezoneList = response.data.timezones;
+       }).catch(function(response){
+        notyService.showError(response);
+      });
       if($state.current.name === 'caregiverProfile' || $state.current.name === 'caregiverProfileEdit' ){
         $scope.initProfile(StorageService.get('logged').userId);
       } else if($state.current.name === 'caregiverChangePassword'){
@@ -47,6 +52,7 @@ angular.module('hillromvestApp')
       careGiver.role = 'CARE_GIVER';
       UserService.editUser(careGiver).then(function(response){
         notyService.showMessage(response.data.message, 'success');
+        localStorage.setItem('timestampPreference',$scope.user.timeZone);
         $state.go('caregiverProfile', {'patientId':$stateParams.patientId});
       }).catch(function(response){
         notyService.showMessage(response.data.message, 'warning');

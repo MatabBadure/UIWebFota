@@ -149,7 +149,7 @@ angular.module('hillromvestApp')
           $rootScope.userLastName = response.data.user.lastName;
           $rootScope.userEmail = response.data.user.email;
           $rootScope.userId = response.data.user.id;
-          localStorage.setItem('timestampPreference',"Etc/GMT+12");
+          localStorage.setItem('timestampPreference',response.data.user.timeZone);
           
           if(response.data.user.authorities[0].name === loginConstants.role.patient){
           Account.get().$promise

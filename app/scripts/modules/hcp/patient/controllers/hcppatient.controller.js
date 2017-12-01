@@ -5,7 +5,8 @@ angular.module('hillromvestApp')
    $scope.DisableAddProtocol = false; 
     $scope.displayFlag = true;
           $scope.customPointsChecker = 0;
-          $scope.lastdeviceType = "";   
+          $scope.lastdeviceType = "";  
+          $scope.preferredTimezone = $scope.getTimezonePreference();  
 	$scope.init = function(){     
     if($state.current.name === 'hcppatientDemographic'){
       $scope.getPatientInfo($stateParams.patientId, $scope.setEditMode);
