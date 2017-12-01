@@ -175,7 +175,7 @@ angular.module('hillromvestApp')
          angular.forEach($scope.resetHistoryData, function(x, key){  
           
           var onlyTime = x.resetTime.slice(0, -2);
-          var xDate = x.resetDate+ " " + onlyTime;
+          var xDate = dateService.getinMomentFormat(x.resetDate,"mm/dd/yyyy")+ " " + onlyTime + ":00";
          var dateInitial = moment.tz(x.resetStartDate,patientDashboard.serverDateTimeZone);
          var dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYY);
          $scope.resetHistoryData[key].resetStartDate = dateFinal;

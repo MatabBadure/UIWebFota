@@ -379,210 +379,24 @@ angular.module('hillromvestApp')
     return hours+' hours '+minutes +' minutes';
     },
   //End of Gimp-18  
-  //Gimp-18
-    convertDatetoTimestampMoment: function(timestamp,dateFormat){
-      //var dateIs = moment(timestamp).tz("America/Chicago").format();
-      console.log("converiduf",moment(timestamp).tz("America/Chicago").format(dateFormat));
-      return moment(timestamp).tz("America/Chicago");
-      },
-    getTimezoneOffsetForConversion: function () {
-      var timestampPreference = localStorage.getItem('timestampPreference');
-      if(timestampPreference){
-      var myTime = moment(new Date()).utcOffset(0);
-      var serverTime = moment().tz("America/Chicago").utcOffset();
-      //var serverTime = moment().tz("GB-Eire").utcOffset();
-      var preferredTimeTime = moment().tz("Pacific/Chatham").utcOffset();
-     console.log("preferredTimeTime + serverTime",preferredTimeTime - serverTime);
-     var a = preferredTimeTime - serverTime;
-     var hours = Math.trunc(a/60);
-      var minutes = a % 60;
-      console.log(hours +":"+ minutes);
-     var tp = hours +":"+ minutes;
-     return (tp);
+  //Gimp-31
+     getinMomentFormat: function(x,fromFormat){
+      if(x && fromFormat){
+      switch(fromFormat){
+        case "mm/dd/yyyy hh:mm:ss":
+        var res = x.split(" ");
+        var digits = res[0].split('/');
+        return (digits[2] + '-' + digits[0] + '-' + digits[1] + ' ' + res[1]);
+        break;
+        case "mm/dd/yyyy":
+        var digits = x.split('/');
+        return (digits[2] + '-' + digits[0] + '-' + digits[1]);
+        break;       
+        default:
+        return x;
+      };
     }
-    else{
-      timestampPreference = "America/Chicago";
-      var myTime = moment(new Date().getTime()).tz(timestampPreference);
-      var serverTime = moment(new Date()).tz("America/Chicago").format(patientDashboard.timestampMMDDYYHHMMSS);
-      var preferredTimeTime = moment(new Date()).tz(timestampPreference).format(patientDashboard.timestampMMDDYYHHMMSS);
-      console.log("ïn else dateservice",moment(serverTime).diff(preferredTimeTime));
-      return moment(serverTime).diff(preferredTimeTime,'hours');
     }
-    },
-        getDateinPreferredTimezoneLatest: function(timestamp,offset){
-      var timestampPreference = localStorage.getItem('timestampPreference');
-      if(offset){
-        var offsetTemp = offset;
-        offset = "";
-          var splitTime = offsetTemp.split(":");
-          if(splitTime[0]){
-            console.log("spskdfj",splitTime[0].indexOf("-"));
-            console.log("splitTime[0]",splitTime[0]);
-            var getExactHours = splitTime[0];
-            if(splitTime[0].indexOf('-') > -1){
-           // var getExactHours = splitTime[0].split("-");
-            offset = offset + "-";
-          }
-          else if(splitTime[0].indexOf('+') > -1){
-           // var getExactHours = splitTime[0].split("+");
-             offset = offset + "+";
-          }
-         offset = getExactHours;
-          if(splitTime[1] === "30"){
-            var temp = parseInt(getExactHours[1])+0.5;
-             offset = parseInt(offset) + 0.5;
-          }
-          else if(splitTime[1] === "45"){
-            var temp = parseInt(getExactHours[1])+0.75;
-             //offset = offset + (parseInt(getExactHours[1])+0.75).toString();
-             offset =  parseInt(offset) + 0.75;
-          }
-          /*else{
-             var temp = parseInt(getExactHours[1]);
-             //offset = offset + (parseInt(getExactHours[1])).toString();
-             offset = offset + 0;
-          }*/
-        }
-      }
-      else{
-         offset = 1;
-      }
-           console.log("offset",parseInt(offset));
-          var clientDate = new Date(timestamp);
-         // var _date = clientDate.addHours(offset);
-          var _date =  clientDate.setHours(clientDate.getHours()+offset);
-          /*var  utc = clientDate.getTime() + (clientDate.getTimezoneOffset() * 60000);
-          var _date = new Date(utc + (3600000*parseInt(offset)));
-*/
-          var _month = (_date.getMonth()+1).toString();
-          _month = _month.length > 1 ? _month : '0' + _month;
-          var _day = (_date.getDate()).toString();
-          _day = _day.length > 1 ? _day : '0' + _day;
-          var _year = (_date.getFullYear()).toString();
-          return _month+"/"+_day+"/"+_year;  
-            },
-    getDateinPreferredTimezone: function(timestamp){
-      var offset = "";
-      var timestampPreference = localStorage.getItem('timestampPreference');
-          if(timestampPreference){
-           // offset = dateService.getOffset(timestampPreference);
-                var timeFromString = timestampPreference.split("T");
-   
-          if(timeFromString[1]){
-          var splitTime = timeFromString[1].split(":");
-          if(splitTime[0]){
-            console.log("spskdfj",splitTime[0].indexOf("-"));
-            console.log("splitTime[0]",splitTime[0]);
-            if(splitTime[0].indexOf('-') > -1){
-            var getExactHours = splitTime[0].split("-");
-            offset = offset + "-";
-          }
-          else if(splitTime[0].indexOf('+') > -1){
-            var getExactHours = splitTime[0].split("+");
-             offset = offset + "+";
-          }
-          if(splitTime[1] === "30"){
-            var temp = parseInt(getExactHours[1])+0.5;
-             offset = offset + (temp).toString();
-          }
-          else if(splitTime[1] === "45"){
-            var temp = parseInt(getExactHours[1])+0.75;
-             //offset = offset + (parseInt(getExactHours[1])+0.75).toString();
-             offset = offset + (temp).toString();
-          }
-          else{
-             var temp = parseInt(getExactHours[1]);
-             //offset = offset + (parseInt(getExactHours[1])).toString();
-             offset = offset + (temp).toString();
-          }
-        }
-      }
-      else{
-         offset = 1;
-      }
-    }
-     else{
-            offset = 1;
-          }
-          console.log("offset",parseInt(offset));
-          var clientDate = new Date(timestamp);
-          var  utc = clientDate.getTime() + (clientDate.getTimezoneOffset() * 60000);
-          var _date = new Date(utc + (3600000*parseInt(offset)));
-
-          var _month = (_date.getMonth()+1).toString();
-          _month = _month.length > 1 ? _month : '0' + _month;
-          var _day = (_date.getDate()).toString();
-          _day = _day.length > 1 ? _day : '0' + _day;
-          var _year = (_date.getFullYear()).toString();
-          return _month+"/"+_day+"/"+_year;  
-            },
-  getDateTimeinPreferredTimezone: function(timestamp){
-      var offset = "";
-      var timestampPreference = localStorage.getItem('timestampPreference');
-          if(timestampPreference){
-           // offset = dateService.getOffset(timestampPreference);
-                var timeFromString = timestampPreference.split("T");
-   
-          if(timeFromString[1]){
-          var splitTime = timeFromString[1].split(":");
-         // Number(splitTime[0]);
-         // Number(splitTime[1]);
-          if(splitTime[0]){
-            console.log("spskdfj",splitTime[0].indexOf("-"));
-            console.log("splitTime[0]",splitTime[0]);
-            if(splitTime[0].indexOf('-') > -1){
-            var getExactHours = splitTime[0].split("-");
-            offset = offset + "-";
-          }
-          else if(splitTime[0].indexOf('+') > -1){
-            var getExactHours = splitTime[0].split("+");
-             offset = offset + "+";
-          }
-          if(splitTime[1] === "30"){
-            var temp = parseInt(getExactHours[1])+0.5;
-             offset = offset + (temp).toString();
-          }
-          else if(splitTime[1] === "45"){
-            var temp = parseInt(getExactHours[1])+0.75;
-             //offset = offset + (parseInt(getExactHours[1])+0.75).toString();
-             offset = offset + (temp).toString();
-          }
-          else{
-             var temp = parseInt(getExactHours[1]);
-             //offset = offset + (parseInt(getExactHours[1])).toString();
-             offset = offset + (temp).toString();
-          }
-        }
-      }
-      else{
-         offset = 1;
-      }
-    }
-     else{
-            offset = 1;
-          }
-          console.log("offset",parseInt(offset));
-          var clientDate = new Date(timestamp);
-          var  utc = clientDate.getTime() + (clientDate.getTimezoneOffset() * 60000);
-          var _date = new Date(utc + (3600000*parseInt(offset)));
-          var hours = (_date.getHours() >= 10) ? _date.getHours() : "0"+_date.getHours();
-      // Minutes part from the timestamp
-      var minutes = "0" + _date.getMinutes();
-      // Seconds part from the timestamp
-      var seconds = "0" + _date.getSeconds();
-
-      // Will display time in 10:30:23 format
-      var formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
-          //var _time = _date.getTime().toString();
-          var _month = (_date.getMonth()+1).toString();
-          _month = _month.length > 1 ? _month : '0' + _month;
-          var _day = (_date.getDate()).toString();
-          _day = _day.length > 1 ? _day : '0' + _day;
-          var _year = (_date.getFullYear()).toString();
-          //var experiment = new Date().toLocaleString("en-US", {timeZone: "America/New_York"})
-          return _month+"/"+_day+"/"+_year+" "+formattedTime;  
-            }
- 
-  //End of Gimp-18  
+  //End of Gimp-31  
     };
   }]);
