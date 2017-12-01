@@ -108,7 +108,7 @@ $scope.activateUserCSR = function(){
           $scope.showActivateModal = true;
         }
         };
-        $scope.close=function(){
+        $scope.close=function () {
          $scope.isDisabled = false;
          $scope.showModal = false;
         };

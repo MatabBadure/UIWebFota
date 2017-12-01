@@ -166,7 +166,7 @@
           
           <label class="col-md-4 dashboard__form__input--option reset-padding" class= "ng-scope">Select Reason*</label>
           <div class="col-md-8"> 
-             <select name="type" class="dashboard__form__input--option reset-padding compatability_deactivatereason" style="width:100%;" ng-model="reason.deactivationReason"  ng-options="item.type_code as item.type_code for item in reasonList" ng-change="onSelectChange()" required>
+             <select name="type" class="dashboard__form__input--option reset-padding compatability_deactivatereason" style="text-transform:none;width:100%;" ng-model="reason.deactivationReason"  ng-options="item.type_code as item.type_code for item in reasonList" ng-change="onSelectChange()" required>
              </select>
            </div>        
           <div class="col-md-offset-4 col-md-8">
