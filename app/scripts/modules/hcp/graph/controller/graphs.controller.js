@@ -577,8 +577,13 @@ angular.module('hillromvestApp')
 				$scope.cumulativeChartData = response.data;
 				if($scope.cumulativeChartData && typeof($scope.cumulativeChartData) === "object"){ 
 					angular.forEach($scope.cumulativeChartData.xAxis.categories, function(x, key){
+						if(StorageService.get('logged').role === 'ADMIN' || StorageService.get('logged').role === loginConstants.role.acctservices || StorageService.get('logged').role === loginConstants.role.associates || StorageService.get('logged').role === loginConstants.role.customerservices){
+			                var dateFinal = dateService.convertToTimestamp(x);
+			              }
+			              else{
 						var dateInitial = moment.tz(x,patientDashboard.serverDateTimeZone);
 		        	 var dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYY);
+		             }
 		              $scope.cumulativeChartData.xAxis.categories[key] = new Date(dateFinal).getTime();
 		            });
 		            angular.forEach($scope.cumulativeChartData.series, function(s, key1){
@@ -632,8 +637,13 @@ angular.module('hillromvestApp')
 				if($scope.treatmentChartData && typeof($scope.treatmentChartData) === "object"){ 
 					$scope.noDataAvailable = false;
 					angular.forEach($scope.treatmentChartData.xAxis.categories, function(x, key){
+						if(StorageService.get('logged').role === 'ADMIN' || StorageService.get('logged').role === loginConstants.role.acctservices || StorageService.get('logged').role === loginConstants.role.associates || StorageService.get('logged').role === loginConstants.role.customerservices){
+			                var dateFinal = dateService.convertToTimestamp(x);
+			              }
+			              else{
 					var dateInitial = moment.tz(x,patientDashboard.serverDateTimeZone);
 		        	 var dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYY);		           
+	        	   }
 	        	    $scope.treatmentChartData.xAxis.categories[key] = new Date(dateFinal).getTime();
 		            });
 		            angular.forEach($scope.treatmentChartData.series, function(s, key1){

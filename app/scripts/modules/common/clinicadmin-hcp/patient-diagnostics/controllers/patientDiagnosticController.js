@@ -140,10 +140,12 @@ function ($scope, $state, $rootScope, StorageService, UserService, patientDiagno
   $scope.getTestResultsByPatientId = function(){
     patientDiagnosticService.getTestResultsByPatientId($scope.diagnosticPatientId, $scope.serverFromDate, $scope.serverToDate).then(function(response){    
       //Vinay
+      if(response.data.length>0){
       var dateInitial = moment.tz(response.data[0].testResultDate,patientDashboard.serverDateTimeZone);
     var dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYY);
      response.data[0].testResultDate = dateFinal;   
-      $scope.testResults = response.data;      
+      $scope.testResults = response.data; 
+      }     
     }).catch(function(response){
       
     });

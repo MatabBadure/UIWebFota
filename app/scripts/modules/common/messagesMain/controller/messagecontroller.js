@@ -1519,7 +1519,7 @@ messageService.getthreaddata(id,rootid,userid,clinicid).then(function(response){
   $scope.messageBodyObject = response.data;
   for(var i=0;i<response.data.length;i++){
     //tempDate.push(dateService.getDateTimeFromTimeStamp(response.data[i][0].messageDatetime,patientDashboard.dateFormat ,'/')); 
-  var dateInitial = moment.tz(response.data[i][0],patientDashboard.serverDateTimeZone);
+  var dateInitial = moment.tz(response.data[i][0].messageDatetime,patientDashboard.serverDateTimeZone);
  var dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYYHHMMSS);
  tempDate.push(dateFinal);
   }
@@ -1551,8 +1551,11 @@ var id = arrayobject[2];
 var tempDate = [];
 messageService.getMessageBodyService(id).then(function(response){
     $scope.sentmessageBody = response.data;
-   $scope.sentmessageBody.date = arrayobject[1];
-
+   if(response.data){
+  var dateInitial = moment.tz(response.data.messageDatetime,patientDashboard.serverDateTimeZone);
+ var dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYYHHMMSS);
+   $scope.sentmessageBody.date = $scope.GetDateifToday(dateFinal);
+}
 if(StorageService.get('logged').role === 'CLINIC_ADMIN'){       
   $scope.sentmessageBody.name = arrayobject[6];
 }
@@ -1576,7 +1579,11 @@ var tempDate = [];
     $scope.markAsRead();
 messageService.getMessageBodyService(id).then(function(response){
     $scope.archivemessageBodyObject  = response.data;
-    $scope.archivemessageBodyObject.date = arrayobject[4];
+    if(response.data){
+      var dateInitial = moment.tz(response.data.messageDatetime,patientDashboard.serverDateTimeZone);
+ var dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYYHHMMSS);
+    $scope.archivemessageBodyObject.date = $scope.GetDateifToday(dateFinal);
+  }
        if(StorageService.get('logged').role === 'CLINIC_ADMIN' || StorageService.get('logged').role === 'HCP'){
         if(!arrayobject[8] && arrayobject[9]){
  $scope.archivemessageBodyObject.name = arrayobject[9];
