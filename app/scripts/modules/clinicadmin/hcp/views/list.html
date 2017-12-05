@@ -16,7 +16,7 @@
         <li class="create-tab">
             <a href="javascript:void(0)" ng-click="createHCP()" translate="navbar.create-new-hcp">Create New HCP +</a>
         </li>
-        <li class="hcp_hsp_name_a" dropdown>
+        <li class="hcp_hsp_name_a" dropdown ng-show="clinics.length > 0">
           <a ng-href="" data-target="#" id="dropdownMenu1" data-toggle="dropdown">
             <span class="">{{selectedClinic.name}} <span class="nav_drop_arrow hillrom-icon icon-arrow-down"></span></span>
           </a>

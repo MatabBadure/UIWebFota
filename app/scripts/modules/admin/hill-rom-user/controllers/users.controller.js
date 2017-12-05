@@ -130,5 +130,26 @@ $scope.activateUserCSR = function(){
             notyService.showError(response);
           });
         };
+         $scope.showResetModel = function(){
+          if($scope.form.$invalid){
+            return true;
+          }else{
+            $scope.resetModal = true;
+          }
+        };
+         $scope.resetUser = function () {
+          $scope.resetModal = false;
+          UserService.resetPasswordUser($scope.user.id).then(function (response) {
+            notyService.showMessage(response.data.message, 'success');
+            if ($scope.currentUserRole == 'ADMIN') {
+              $state.go('hillRomUser');
+            }
+            else if ($scope.currentUserRole == 'ACCT_SERVICES') {
+              $state.go('rcadmin-hillRomUser');
+            }
+          }).catch(function (response) {
+            notyService.showError(response);
+          });
+        };
     $scope.init();
   }]);

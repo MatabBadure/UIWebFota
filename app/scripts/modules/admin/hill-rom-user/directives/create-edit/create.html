@@ -124,7 +124,8 @@
           </div>
           <div class="col-md-7 reset-padding col-md-offset-2">
             <div class="col-md-6 dashboard__form--label reset-padding">
-              <span class="" translate="user.mobile-number"></span>
+              <span ng-if="user.role != 'PATIENT'" class="" translate="user.mobile-number"></span>    
+             <span ng-if="user.role === 'PATIENT'" class="" translate="user.secondary-phone"></span>
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
               <input class="" type="text" name="mobilePhone" validate-on-blur ng-model="user.mobilePhone" ng-maxlength=100 ng-readonly="validateSuperAdmin()" ng-disabled="isSuperadmin" ui-mask="(999)-999-9999" model-view-value="true" ui-options="{clearOnBlur: false}">
@@ -183,17 +184,20 @@
        <div class="padding-bottom-20"></div>
       <div class="col-md-16 reset-padding margin-top">
         <div class="">
+          <button type="button" class="hillrom-btn btn-primary btn-margin-left float-right" ng-show="user.activated && isUser && !user.deleted"  ng-click="showResetModel()"  translate="user.resetpassword-button-text">Reset Password</button>
           <button type="button" class="hillrom-btn btn-primary btn-margin-left float-right" ng-class="{'disabled btn-inactive': isDisableResendButton}" ng-show="!userStatus.isCreate && !user.deleted && !user.activated && !isSuperadmin" ng-disabled="isDisableResendButton" ng-click="resendActivationLink()" translate="user.reactivate-button-text">Resend Activation Link</button>
           <button type="submit" class="hillrom-btn btn-primary btn-margin-left float-right" ng-show="userStatus.isCreate && !isSuperadmin" ng-click="formSubmit()" translate="user.submit-button-text">Submit</button>
           <button type="reset" ng-click="cancel()" ng-show="userStatus.isCreate && !isSuperadmin && !isSuperadmin" class="hillrom-btn btn-secondary float-right" translate="user.cancel-button-text">Cancel</button>
           <button type="button" class="hillrom-btn btn-primary btn-margin-left float-right" ng-click="showUpdateModal()" ng-disabled="isSuperadmin" ng-show="!userStatus.isCreate && !isSuperadmin" translate="user.update-button-text">Update</button>
+
           <button type="button" class="hillrom-btn btn-secondary float-right" ng-click="open()" ng-show="!userStatus.isCreate && !user.deleted && user.id != loggedUserId && !isSuperadmin" translate="user.deactivate-button-text">Deactivate</button>
+
           <button type="button" class="hillrom-btn btn-secondary float-right" ng-click="$parent.showActivateModal= true" ng-show="!userStatus.isCreate && user.deleted && !isSuperadmin" translate="user.activate-button-text">Activate</button>
           <div class="clr"></div>
           <div class="clr"></div>
         </div>
       </div>
-    </div>
+    </div
   </form>
 </div>
 
@@ -249,6 +253,26 @@
          <div class="row modal--custom-btn">
           <buton class="hillrom-btn btn-submit float-right" ng-click="createUser()">Yes</buton>
           <buton class="hillrom-btn btn-secondary btn-submit float-right" data-dismiss="modal" ng-click="$parent.updateModal= false">No</buton>
+         </div>
+      </div>
+      <footer class="modal__footer">
+      </footer>
+    </div>
+  </div>
+</div>
+
+<div ng-if="resetModal" class="modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true">
+  <div class="modal__dialog">
+    <div class="modal__content">
+      <header class="modal__header">
+        <button type="button" class="modal__close" data-dismiss="modal" ng-click="$parent.resetModal= false">&times;</button>
+         <p translate="user.resetpassword.warning"></p>
+      </header>
+      <div class="modal__body">
+         <div class="modal--message" translate="user.resetpassword.message"></div>
+         <div class="row modal--custom-btn">
+          <buton class="hillrom-btn btn-submit float-right"  ng-click="resetUser()">Yes</buton>
+          <buton class="hillrom-btn btn-secondary btn-submit float-right" data-dismiss="modal" ng-click="$parent.resetModal= false">No</buton>
          </div>
       </div>
       <footer class="modal__footer">

@@ -378,7 +378,10 @@
       <span>{{device.serialNumber}}</span>
     </div>
     <div class="col-md-3 col-sm-3 device-list__bt-id">
-      <span >{{device.bluetoothId}}{{device.wifiId}}</span>
+      <span ng-if="device.lteId">{{device.lteId}}</span>
+       <span ng-if="!device.bluetoothId && device.wifiId && !device.lteId">{{device.wifiId}}</span>
+       <span ng-if="device.bluetoothId && !device.wifiId && !device.lteId">{{device.bluetoothId}}</span>
+       <span ng-if="device.bluetoothId && device.wifiId && !device.lteId">{{device.wifiId}}</span>
     </div>
 
     <div class="col-md-2 col-sm-2 device-list__status">
@@ -402,7 +405,7 @@
   </div>
 
   <div class="col-md-16 col-sm-16 margin-top">
-    <div class="patient-device--title">Global HMR Reading</div> <span class="total_hmr_text">{{totalHmr}} mins</span>
+    <div class="patient-device--title">Global HMR Reading</div> <span class="total_hmr_text">{{HHMM}}</span>
   </div>
 
   <div class="col-md-16 col-sm-16 empty-list-message" ng-if="isDevicesLoaded && !devices"><span translate="patient.empty-device-list-message"></span></div>

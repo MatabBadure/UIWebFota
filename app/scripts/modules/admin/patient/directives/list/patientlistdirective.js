@@ -18,10 +18,27 @@ angular.module('hillromvestApp')
         })
       }
       },
-      controller: ['$scope', '$timeout', 'patientService', '$state', '$stateParams', 'notyService','searchFilterService', 'sortOptionsService', 'StorageService', 'loginConstants', '$rootScope',
-      function($scope, $timeout, patientService, $state, $stateParams, notyService, searchFilterService, sortOptionsService, StorageService,loginConstants,$rootScope) {
+      controller: ['$scope', '$timeout', 'patientService', '$state', '$stateParams', 'notyService','searchFilterService', 'sortOptionsService', 'StorageService', 'loginConstants', '$rootScope', 'addressService',
+      function($scope, $timeout, patientService, $state, $stateParams, notyService, searchFilterService, sortOptionsService, StorageService,loginConstants,$rootScope,addressService) {
         var searchOnLoad = true;
         $scope.sortPatientList = sortOptionsService.getSortOptionsForPatientList();
+        $scope.expandedSign = false;
+        $scope.genders = searchFilterService.processGenderOptions();
+        $scope.adherenceReset = searchFilterService.processYesNoOptions();
+        $scope.noTransmissionRecorded = searchFilterService.processYesNoOptions();
+        $scope.belowFrequencySetting = searchFilterService.processYesNoOptions();
+        $scope.belowTherapyMinutes = searchFilterService.processYesNoOptions();
+        $scope.missedTherapyDays = searchFilterService.processYesNoOptions();
+        $scope.activeInactive = searchFilterService.processActiveInactiveOptions();
+        $scope.deviceType = searchFilterService.processDeviceTypeOptions();
+        $scope.deviceStatus = searchFilterService.processActiveInactiveOptions();
+        $scope.localLang = searchFilterService.multiselectPropertiesForAdvancedFilters()
+        $scope.ageGroups = searchFilterService.processAgeRange();
+        $scope.adherenceScoreRangeGroups= searchFilterService.processAdherenceScoreRange();
+        $scope.diagnosis = {};
+        $scope.isZipcode = false;
+        $scope.form = {};
+
         $scope.init = function() {
           $scope.userRole = StorageService.get('logged').role;
           $scope.searchFilter = searchFilterService.initSearchFiltersForPatient();
@@ -38,14 +55,30 @@ angular.module('hillromvestApp')
           $scope.sortIconUp = false;
           $scope.sortIconDown = false;
           $scope.searchItem = "";
+          $scope.isAdvancedFilters = false;
+          $scope.noDataFlag = false;
+          $scope.initAdvancedFilters();
           $scope.searchPatients();
           if($stateParams.clinicIds){
             $scope.getAssociatedPatientsToClinic($stateParams.clinicIds);
           }
+/*          patientService.getDiagnosticList('').then(function(response){
+           $scope.searchDiagnosis = {};
+          if(response.data.typeCode){
+          $scope.searchDiagnosis = response.data;
+        }
+        else{
+           $scope.searchDiagnosis = {'typeCode':[]};
+        }
+          
+        }).catch(function(){
+           $scope.searchDiagnosis = {'typeCode':[]};
+        }); */
         };
 
         $scope.searchPatientsOnQueryChange = function(){
           if(($state.current.name === "patientUser" || $state.current.name === "rcadminPatients" || $state.current.name === "associatePatientUser" || $state.current.name === "customerservicePatientUser") && !$stateParams.clinicIds && !searchOnLoad){
+            $scope.isAdvancedFilters = false;
             $scope.searchPatients();
           }
         };
@@ -93,10 +126,15 @@ angular.module('hillromvestApp')
           } else {
             $scope.currentPageIndex = 1;
           } 
+          if($scope.isAdvancedFilters){
+            $scope.advancedSearchPatients(false);
+          }
+          else{
           var filter = searchFilterService.getFilterStringForPatient($scope.searchFilter);
           patientService.getPatients($scope.searchItem, $scope.sortOption, $scope.currentPageIndex, $scope.perPageCount,filter)
             .then(function(response) {
               $scope.patients = response.data;
+               $scope.isAdvancedFilters = false;
               var patientCount = $scope.patients.length;
               for (var i = 0 ; i < patientCount ; i++) {                
                 $scope.patients[i].dob = $scope.getDateFromTimestamp($scope.patients[i].dob);
@@ -105,9 +143,12 @@ angular.module('hillromvestApp')
               $scope.total = response.headers()['x-total-count'];
               $scope.pageCount = Math.ceil($scope.total / 10);
               searchOnLoad = false;
+              $scope.noDataFlag = false;
             }).catch(function(response) {
               $scope.noMatchFound = true;
+               $scope.isAdvancedFilters = false;
             });
+          }
         };
          $scope.getDateFromTimestampforTransmissiondate = function(timestamp){
           if(!timestamp){
@@ -217,8 +258,344 @@ angular.module('hillromvestApp')
         };
         $scope.searchOnFilters = function(){           
           $scope.searchPatients();
-        };        
+        }; 
 
+        //Implementation of GIMP- 20       
+        $scope.toggleHeaderAccount = function(){
+      $( "#collapseTwo" ).slideToggle( "slow" );
+      //$scope.expandedSign = ($scope.expandedSign === "+") ? "-" : "+"; 
+      $scope.expandedSign = ($scope.expandedSign === true) ? false : true;  
+      if($scope.expandedSign === true){
+        //$scope.searchItem = ""; 
+        /*$scope.isAdvancedFilters = true;*/
+       $("#searchListParam").attr("disabled", true);
+       $("#searchListParam").css("background-color", 'rgb(235, 235, 228)'); 
+     // $scope.initPaginationVars();
+      }
+      else{
+         
+       $("#searchListParam").attr("disabled", false);
+       $("#searchListParam").css("background-color", 'inherit'); 
+      }     
+    }
+    $scope.initAdvancedFilters = function(){
+             $("#city-dropdown").css("background-color", 'rgb(235, 235, 228)');
+       $("#city-dropdown").css("pointer-events","none");
+      $("#state-dropdown").css("background-color", 'inherit');
+       $("#state-dropdown").css("pointer-events","all");
+      $scope.dateFlag = false;
+      $scope.hmrRangeFlag = false;
+      $scope.patientAdvancedFilters = {};
+      $scope.patientAdvancedFilters.name = "";
+      $scope.patientAdvancedFilters.hillromId = "";
+      $scope.patientAdvancedFilters.email = "";
+      $scope.patientAdvancedFilters.gender = "All";
+      $scope.patientAdvancedFilters.age = [];
+      $scope.selectedCountry = ["US"];
+      $scope.selectedCountryObj = ["US"];
+      $scope.selectedStates = [];
+      $scope.selectedCities = [];
+      $scope.patientAdvancedFilters.country = "All";
+      $scope.patientAdvancedFilters.state = [];
+      $scope.patientAdvancedFilters.city = [];
+      $scope.patientAdvancedFilters.zipcode = "";
+      $scope.patientAdvancedFilters.clinicLevelStatus = "All";
+      $scope.ageGroups = searchFilterService.processAgeRange();
+      $scope.adherenceScoreRangeGroups= searchFilterService.processAdherenceScoreRange();
+      $scope.diagnosis ="";                   
+      $scope.searchDiagnosis = {};
+      $scope.patientAdvancedFilters.diagnosis = "";
+      $scope.patientAdvancedFilters.adherenceScoreRange = [];
+      $scope.patientAdvancedFilters.deviceType = "All";
+      $scope.patientAdvancedFilters.deviceStatus = "All";
+      $scope.patientAdvancedFilters.deviceActiveDateFrom = "";
+      $scope.patientAdvancedFilters.deviceActiveDateTo = "";
+      $scope.patientAdvancedFilters.serialNo = "";
+      $scope.patientAdvancedFilters.minHMRRange = "";
+      $scope.patientAdvancedFilters.maxHMRRange = "";
+      $scope.patientAdvancedFilters.adherenceReset = "All";
+      $scope.patientAdvancedFilters.noTransmissionRecorded = "All";
+      $scope.patientAdvancedFilters.belowFrequencySetting = "All";
+      $scope.patientAdvancedFilters.belowTherapyMin = "All";
+      $scope.patientAdvancedFilters.missedTherapyDays = "All";
+
+      $scope.countries = searchFilterService.processCountries();
+      addressService.getAllStatesAdv($scope.selectedCountryObj).then(function(response){
+        $scope.rawStates = response.data;
+        $scope.states = searchFilterService.processStates($scope.rawStates);
+        $scope.cities = searchFilterService.processCities();
+      }).catch(function(response){
+        notyService.showError(response);
+      });
+    }
+ $scope.endDateCheck = function()
+{
+  $scope.startdatecheck = $scope.patientAdvancedFilters.deviceActiveDateFrom;
+  $scope.enddatecheck = $scope.patientAdvancedFilters.deviceActiveDateTo;
+  if($scope.patientAdvancedFilters.deviceActiveDateFrom && $scope.patientAdvancedFilters.deviceActiveDateTo){
+  if(new Date ($scope.enddatecheck) < new Date($scope.startdatecheck))
+  {
+     $scope.dateFlag = true;
+  }
+  else
+  {
+    $scope.dateFlag = false;
+  }
+  }
+  else{
+     $scope.dateFlag = false;
+  }
+
+  };
+  $scope.maxRangeCheck = function(){
+  if(Number.isInteger($scope.patientAdvancedFilters.minHMRRange) && Number.isInteger($scope.patientAdvancedFilters.maxHMRRange)){
+     $scope.hmrRangeInvalid = false;
+  if(parseInt($scope.patientAdvancedFilters.minHMRRange) >= parseInt($scope.patientAdvancedFilters.maxHMRRange))
+  {
+     $scope.hmrRangeFlag = true;
+
+  }
+  else
+  {
+    $scope.hmrRangeFlag = false;
+  }
+  }
+  else{
+    if($scope.patientAdvancedFilters.minHMRRange % 1 != 0 || $scope.patientAdvancedFilters.maxHMRRange % 1 != 0){
+      $scope.hmrRangeInvalid = true;
+    }
+    else{
+      $scope.hmrRangeInvalid = false;
+    }
+     $scope.hmrRangeFlag = false;
+     
+  }
+if($scope.patientAdvancedFilters.minHMRRange === undefined){
+  //do nothing
+  $scope.minHmrInvalid = true;
+}
+else{
+  $scope.minHmrInvalid = false;
+}
+if($scope.patientAdvancedFilters.maxHMRRange === undefined){
+  //do nothing
+  $scope.maxHmrInvalid = true;
+}
+else{
+  $scope.maxHmrInvalid = false;
+}
+  }
+  $scope.getCityStateforAdvancedFilters = function(zipcode){ 
+          $scope.isZipcode = true; 
+          delete $scope.serviceError;
+          $scope.isServiceError = false;
+          console.log("form:",$scope.form);
+          if(zipcode){
+            addressService.getCityStateByZip(zipcode).then(function(response){
+              $scope.mapZipcode(response.data);
+            }).catch(function(response){
+              $scope.serviceError = response.data.ERROR;
+              $scope.isServiceError = true;
+               $scope.isZipcode = false; 
+            });  
+          }else{
+            $scope.form2 = {};
+            $scope.form2.zip = {};
+            $scope.isZipcode = false; 
+            $scope.selectedStates = [];
+            $scope.selectedCities = [];
+            $scope.states = searchFilterService.processStates($scope.rawStates);
+            $scope.cities = searchFilterService.processCities();
+            $scope.patientAdvancedFilters.city = [];
+             $scope.patientAdvancedFilters.state = [];
+            $("#state-dropdown").css("background-color", 'inherit');
+            $("#state-dropdown").css("pointer-events","all");
+            $("#city-dropdown").css("background-color", 'rgb(235, 235, 228)');
+            $("#city-dropdown").css("pointer-events","none");
+            if($scope.form2.zip.$dirty && $scope.form2.zip.$showValidationMessage && $scope.form2.zip.$invalid){
+            }else{
+              $scope.serviceError = '';  
+              $scope.isServiceError = true;
+            }
+          }
+        };
+             $scope.onCloseState = function(){
+         if($scope.selectedStates.length > 0){
+          var selectedStates = [];
+          $scope.cities = [];
+          $scope.patientAdvancedFilters.city = [];
+          $scope.patientAdvancedFilters.state = [];
+          angular.forEach($scope.selectedStates, function(state){
+            $scope.patientAdvancedFilters.state.push(state.name);
+          });
+
+         addressService.getCitybyStateAdv($scope.selectedCountryObj,$scope.patientAdvancedFilters.state).then(function(response){
+          if(!$scope.isZipcode){
+          $("#city-dropdown").css("background-color", 'inherit');
+          $("#city-dropdown").css("pointer-events","all");
+        }
+           $scope.cities = response.data;
+          }).catch(function(){
+
+          });
+
+        }else{
+          delete $scope.city;
+          $scope.state = Object.keys($scope.rawStates).join();
+          $scope.cities = searchFilterService.processCities();
+          $("#city-dropdown").css("background-color", 'rgb(235, 235, 228)');
+          $("#city-dropdown").css("pointer-events","none");
+          $scope.patientAdvancedFilters.city = [];
+          $scope.patientAdvancedFilters.state = [];
+      }
+    };
+
+   $scope.onCitiesClose = function(){
+      if($scope.selectedCities.length > 0 ){
+        $scope.patientAdvancedFilters.city = [];
+        var cities = [];
+        angular.forEach($scope.selectedCities, function(city){
+          cities.push(city.name);
+          $scope.patientAdvancedFilters.city.push(city.name);
+        });
+      }else{
+        $scope.patientAdvancedFilters.city = [];
+      }
+    };
+      $scope.clearMessages = function(){
+          if($scope.patientAdvancedFilters.zipcode){
+            delete $scope.serviceError;
+          }
+        };
+    $scope.mapZipcode = function(responseData){
+      if(responseData.length>0){
+      $scope.selectedStates = [];
+       $scope.isZipcode = true; 
+            }
+          angular.forEach(responseData, function(cityState){
+            angular.forEach($scope.states, function(state){
+            if(cityState.state === state.name){
+              state.ticked = true;
+              $scope.selectedStates.push(state);
+            }
+            else{
+              state.ticked = false;
+            }
+          });
+          });
+          $("#state-dropdown").css("background-color", 'rgb(235, 235, 228)');
+          $("#state-dropdown").css("pointer-events","none");
+          $("#city-dropdown").css("background-color", 'rgb(235, 235, 228)');
+          $("#city-dropdown").css("pointer-events","none");
+          $scope.onCloseState();
+    };
+
+    $scope.resetAdvancedFilters = function(){
+      $scope.initAdvancedFilters();
+    }
+    $scope.advancedSearchPatients = function(isFresh){
+      if(isFresh){
+        $scope.searchItem = "";
+        $scope.currentPageIndex = 1;
+          $scope.perPageCount = 10;
+          $scope.pageCount = 0;
+          $scope.total = 0;
+      }
+     
+      if($scope.patientAdvancedFilters.zipcode){
+        //do nothing
+      }
+      else{
+        $scope.patientAdvancedFilters.zipcode = "";
+      }
+      if($scope.patientAdvancedFilters.minHMRRange){
+        $scope.patientAdvancedFilters.minHMRRange = $scope.patientAdvancedFilters.minHMRRange.toString();
+      }
+      if($scope.patientAdvancedFilters.maxHMRRange){
+        $scope.patientAdvancedFilters.maxHMRRange = $scope.patientAdvancedFilters.maxHMRRange.toString();
+      }
+      angular.forEach($scope.selectedCities, function(city){
+            $scope.patientAdvancedFilters.city.push(city.name);
+          });
+      patientService.getPatientsAdvancedSearch($scope.sortOption, $scope.currentPageIndex, $scope.perPageCount, $scope.patientAdvancedFilters).then(function(response){
+              $scope.patients = response.data;
+               $scope.isAdvancedFilters = true;
+              var patientCount = $scope.patients.length;
+              for (var i = 0 ; i < patientCount ; i++) {                
+                $scope.patients[i].dob = $scope.getDateFromTimestamp($scope.patients[i].dob);
+                $scope.patients[i].lastTransmissionDate = $scope.getDateFromTimestampforTransmissiondate($scope.patients[i].lastTransmissionDate);
+              }
+              if($scope.patientAdvancedFilters.minHMRRange){
+              $scope.patientAdvancedFilters.minHMRRange = Number($scope.patientAdvancedFilters.minHMRRange);
+               }
+               if($scope.patientAdvancedFilters.maxHMRRange){
+               $scope.patientAdvancedFilters.maxHMRRange = Number($scope.patientAdvancedFilters.maxHMRRange);
+              }
+              $scope.total = response.headers()['x-total-count'];
+              $scope.pageCount = Math.ceil($scope.total / 10);
+               $scope.noDataFlag = true;
+      }).catch(function(){
+       if($scope.patientAdvancedFilters.minHMRRange){
+              $scope.patientAdvancedFilters.minHMRRange = Number($scope.patientAdvancedFilters.minHMRRange);
+               }
+               if($scope.patientAdvancedFilters.maxHMRRange){
+               $scope.patientAdvancedFilters.maxHMRRange = Number($scope.patientAdvancedFilters.maxHMRRange);
+              }
+        $scope.noMatchFound = true;
+        $scope.noDataFlag = true;
+         $scope.isAdvancedFilters = false;
+      });
+      console.log("$scope.patientAdvancedFilters",$scope.patientAdvancedFilters);
+    };
+    $scope.onCloseAgeRange = function(){
+      if($scope.selectedAgeRange){
+        $scope.patientAdvancedFilters.age = [];
+        angular.forEach($scope.selectedAgeRange, function(ageRange){
+          $scope.patientAdvancedFilters.age.push(ageRange.name);
+        });
+      }
+    };
+    $scope.onCloseAdherenceScoreRange = function(){
+      if($scope.selectedAdherenceScoreRange){
+        $scope.patientAdvancedFilters.adherenceScoreRange = [];
+        angular.forEach($scope.selectedAdherenceScoreRange, function(adherenceScoreRange){
+          $scope.patientAdvancedFilters.adherenceScoreRange.push(adherenceScoreRange.name);
+        });
+      } 
+    };
+    $scope.getMatchingDiagnosisList = function($viewValue){
+      console.log("$viewValue",$viewValue);
+      if($viewValue.length == 2 || $viewValue.length > 2){
+        console.log("$viewValue.length",$viewValue.length);
+            patientService.getDiagnosticList($viewValue).then(function(response){
+           $scope.searchDiagnosis = {};
+          if(response.data.typeCode){
+          $scope.searchDiagnosis = response.data;
+        }
+        else{
+           $scope.searchDiagnosis = {'typeCode':[]};
+        }
+          
+        }).catch(function(){
+           $scope.searchDiagnosis = {'typeCode':[]};
+        });  
+        return $scope.searchDiagnosis.typeCode;
+    }
+    };
+    $scope.selectDiagnosis = function(diagnosis){
+      if(diagnosis){
+        if(diagnosis.type_code){
+        $scope.patientAdvancedFilters.diagnosis = diagnosis.type_code;
+      }
+      else{
+         $scope.patientAdvancedFilters.diagnosis = "";
+      }
+      }
+      else{
+        $scope.patientAdvancedFilters.diagnosis = "";
+      }
+    };
+     //End of Implementation of GIMP- 20    
         $scope.init();
       }]
     };

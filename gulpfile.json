@@ -185,7 +185,9 @@
             "app/scripts/modules/tims/controller/tims.controller.js",
             "app/scripts/modules/tims/services/tims.service.js",
             "app/scripts/modules/FOTA/FotaHome/controllers/fota.controller.js",
-            "app/scripts/modules/FOTA/FotaHome/services/fota.service.js"
+            "app/scripts/modules/FOTA/FotaHome/services/fota.service.js",
+            "app/scripts/account/reset/password/reset.password.controller.js",
+            "app/scripts/account/reset/password/reset.password.js"
         ],
         "scripts_min_path":[
             "app/bower_components/canvg-gabelerner/rgbcolor.min.js",
@@ -355,7 +357,9 @@
             "app/scripts/modules/tims/controller/tims.controller.min.js",
             "app/scripts/modules/tims/services/tims.service.min.js",
             "app/scripts/modules/FOTA/FotaHome/controllers/fota.controller.min.js",
-            "app/scripts/modules/FOTA/FotaHome/services/fota.service.min.js"
+            "app/scripts/modules/FOTA/FotaHome/services/fota.service.min.js",
+            "app/scripts/account/reset/password/reset.password.controller.min.js",
+            "app/scripts/account/reset/password/reset.password.min.js"
         ],
         "clean": [
             "app/build/",

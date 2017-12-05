@@ -31,12 +31,13 @@
              <span class="icons hillrom-icon icon-caregiver hidden-md hidden-lg hidden-sm"></span>
           </a>
         </li>
-        <li class="pull-right-mob margin_lr" ng-if= "userRole === 'CLINIC_ADMIN' || userRole === 'HCP'" >
+        <li class="pull-right-mob margin_lr">
           <a ng-class="{ active: isActive('patientDiagnostic')}" ng-href="" ng-click="patientDiagnostics();">
             <span class="none" translate="patient.profile.tabs.patient-test-results"></span>
              <span class="icons hillrom-icon icon-test-results hidden-md hidden-lg hidden-sm"></span>
           </a>
         </li>
+
       </ul>
     </div>
   </div>

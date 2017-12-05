@@ -149,6 +149,9 @@ angular.module('hillromvestApp')
                     }
                 },
                 resolve: {
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('PatientDiagnosticModule');
+                    }],
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('patient');
                         return $translate.refresh();
@@ -174,6 +177,9 @@ angular.module('hillromvestApp')
                     }
                 },
                 resolve: {
+                     loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('PatientDiagnosticModule');
+                    }],
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('patient');
                         return $translate.refresh();
@@ -855,6 +861,9 @@ angular.module('hillromvestApp')
                   }
               },
               resolve: {
+                 loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('PatientDiagnosticModule');
+                    }],
                   translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                       $translatePartialLoader.addPart('clinic');
                       return $translate.refresh();
@@ -2731,6 +2740,9 @@ angular.module('hillromvestApp')
                     }
                 },
                 resolve: {
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('PatientDiagnosticModule');
+                    }],
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('patient');
                         return $translate.refresh();
@@ -3161,6 +3173,9 @@ angular.module('hillromvestApp')
                   }
               },
               resolve: {
+                loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('PatientDiagnosticModule');
+                    }],
                   translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                       $translatePartialLoader.addPart('clinic');
                       return $translate.refresh();
@@ -3495,6 +3510,9 @@ angular.module('hillromvestApp')
                     }
                 },
                 resolve: {
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('PatientDiagnosticModule');
+                    }],
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('patient');
                         return $translate.refresh();
@@ -3546,6 +3564,9 @@ angular.module('hillromvestApp')
                   }
               },
               resolve: {
+                 loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('PatientDiagnosticModule');
+                    }],
                   translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                       $translatePartialLoader.addPart('clinic');
                       return $translate.refresh();
@@ -5205,6 +5226,9 @@ angular.module('hillromvestApp')
                     }
                 },
                 resolve: {
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('PatientDiagnosticModule');
+                    }],
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('patient');
                         return $translate.refresh();
@@ -5362,6 +5386,9 @@ angular.module('hillromvestApp')
                   }
               },
               resolve: {
+                 loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('PatientDiagnosticModule');
+                    }],
                   translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                       $translatePartialLoader.addPart('clinic');
                       return $translate.refresh();
@@ -6404,7 +6431,131 @@ angular.module('hillromvestApp')
                         }
                     ]
                 }
-            });
+            })
+
+//Implementation of GIMP-19
+.state('adminPatientDiagnostic', {
+                parent: 'patientUser',
+                url: '/{patientId}/patientDiagnostic',
+                data: {
+                    roles: ['ADMIN'],
+                    pageTitle: 'profile.page-title.benchmarking'
+                },
+                views: {
+                     'content@': {
+                        templateUrl: 'scripts/modules/common/hill-rom-users/patient-diagnostics/views/patientDiagnostic.html',
+                        controller: 'patientDiagnosticController'
+                    }
+                },
+                resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('PatientDiagnosticModule');
+                    }],
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+.state('customerservicePatientDiagnostic', {
+                parent: 'customerservicePatientUser',
+                url: '/{patientId}/patientDiagnostic',
+                data: {
+                    roles: ['CUSTOMER_SERVICES'],
+                    pageTitle: 'profile.page-title.benchmarking'
+                },
+                views: {
+                     'content@': {
+                        templateUrl: 'scripts/modules/common/hill-rom-users/patient-diagnostics/views/patientDiagnostic.html',
+                        controller: 'patientDiagnosticController'
+                    }
+                },
+                resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('PatientDiagnosticModule');
+                    }],
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+
+.state('associatePatientDiagnostic', {
+                parent: 'associatePatientUser',
+                url: '/{patientId}/patientDiagnostic',
+                data: {
+                    roles: ['ASSOCIATES'],
+                    pageTitle: 'profile.page-title.benchmarking'
+                },
+                views: {
+                     'content@': {
+                        templateUrl: 'scripts/modules/common/hill-rom-users/patient-diagnostics/views/patientDiagnostic.html',
+                        controller: 'patientDiagnosticController'
+                    }
+                },
+                resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('PatientDiagnosticModule');
+                    }],
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+.state('rcadminPatientDiagnostic', {
+                parent: 'patientUser',
+                url: '/{patientId}/patientDiagnostic',
+                data: {
+                    roles: ['ACCT_SERVICES'],
+                    pageTitle: 'profile.page-title.benchmarking'
+                },
+                views: {
+                     'content@': {
+                        templateUrl: 'scripts/modules/common/hill-rom-users/patient-diagnostics/views/patientDiagnostic.html',
+                        controller: 'patientDiagnosticController'
+                    }
+                },
+                resolve: {
+                    //Lazy loading of controllers and external dependencies so boost intial load
+                    //time
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('PatientDiagnosticModule');
+                    }],
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('patient-user');
+                        return $translate.refresh();
+                    }],
+                    authorize: ['Auth',
+                        function(Auth) {
+                            return Auth.authorize(false);
+                        }
+                    ]
+                }
+            })
+//End of Implementation of GIMP-19
 
 }]);
 
