@@ -604,6 +604,7 @@ angular.module('hillromvestApp')
       $scope.currentPageIndex = 1;
     }
     var filter = searchFilterService.getFilterStringForPatient($scope.searchFilter);
+   if(filter){
     var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : $stateParams.clinicId;
     DoctorService.searchPatientsForHCPOrCliniadmin($scope.searchItem, 'clinicadmin', StorageService.get('logged').userId, clinicId, $scope.currentPageIndex, $scope.perPageCount, filter, $scope.sortOption).then(function (response) {
       $scope.patients = response.data;      
@@ -617,6 +618,13 @@ angular.module('hillromvestApp')
     }).catch(function (response) {
       notyService.showError(response);
     });    
+  }
+  else{
+      $scope.patients = {};
+      $scope.currentPageIndex = 1;
+      $scope.perPageCount = 10;
+      $scope.pageCount = 0;
+    }     
   };
 
   $scope.searchOnFilters = function(){    
