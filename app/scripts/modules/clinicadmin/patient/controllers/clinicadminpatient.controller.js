@@ -139,12 +139,12 @@ angular.module('hillromvestApp')
         $scope.form.$setPristine();
         $scope.showUpdateModalReset = false;
         $scope.getAdherenceScoreResetHistory($stateParams.patientId);
-   /*     $scope.resetStartDate = null;
+        $scope.resetStartDate = null;
         $scope.justification = "";
-        $scope.scoreToReset = 100;
         $scope.othersContent = null;
-        $scope.ShowOther = false;*/
+        $scope.ShowOther = false;
         $scope.resetsubmitted = false ; 
+        $scope.nodataflag = false;
         if($scope.patientStatus.role === loginConstants.role.acctservices){
         $state.go('patientProtocolRcadmin', {'patientId': $stateParams.patientId});
       }else{
@@ -154,11 +154,10 @@ angular.module('hillromvestApp')
         notyService.showError(response);
         $scope.form.$setPristine();
         $scope.showUpdateModalReset = false;
-       /* $scope.resetStartDate = null;
+        $scope.resetStartDate = null;
         $scope.justification = "";
-        $scope.scoreToReset = 100;
         $scope.othersContent = null;
-          $scope.ShowOther = false;*/
+          $scope.ShowOther = false;
         $scope.resetsubmitted = false ; 
       });
 
