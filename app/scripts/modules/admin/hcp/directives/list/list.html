@@ -4,7 +4,7 @@
       <div class="dashbord-nav__primary pull-left">
         <span class="dashbord-nav__primary--title" translate="doctor.home.manageLabel">Manage HCP</span>
       </div>
-      <div ng-if="((userRole !== 'ASSOCIATES') && (role !== 'CUSTOMER_SERVICES'))" class="dashbord-nav__secondary create-user navbar-right cursor-pointer" ng-click="createDoctor()">
+      <div ng-if="((role !== 'ASSOCIATES') && (role !== 'CUSTOMER_SERVICES'))" class="dashbord-nav__secondary create-user navbar-right cursor-pointer" ng-click="createDoctor()">
         <span class="" translate="doctor.home.createNewLabel">Create New</span>
         <span class="icon-plus-icon add-new"></span>
       </div>
