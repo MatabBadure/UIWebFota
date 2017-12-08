@@ -34,15 +34,15 @@ angular.module('hillromvestApp')
               }
             }
             }else{
-              searchFilter.isActive = true;
+              searchFilter.isActive = false;
               searchFilter.isInActive = false;
               searchFilter.isNoEvent = false;
               searchFilter.isSettingsDeviated = false;
               searchFilter.isHMRNonCompliant = false;
               searchFilter.isMissedTherapy = false;
               searchFilter.isPending = false;
-              searchFilter.VisiVest = true;
-              searchFilter.Monarch = true;
+              searchFilter.VisiVest = false;
+              searchFilter.Monarch = false;
             }
             searchFilter.userList = searchFilters.patientList;
             return searchFilter;
@@ -58,7 +58,7 @@ angular.module('hillromvestApp')
 
         this.initSearchFiltersForHCP = function() {
             var searchFilter = {};
-            searchFilter.isActive = true;
+            searchFilter.isActive = false;
             searchFilter.isInActive = false;
             searchFilter.userList = searchFilters.hcpList;
             return searchFilter;
@@ -67,39 +67,66 @@ angular.module('hillromvestApp')
 
         this.getFilterStringForPatient = function(filter) {
            var filterString = searchFilters.emptyString;
+           var flag = false;
+          /* if(flag=true){
+            //the following commented code is for later use when on selection of both devices All should be passed- incomplete from Back-end as of now
+              filterString += searchFilters.deviceType + searchFilters.all + searchFilters.colon + 1 + searchFilters.semicolon;
+              filterString += searchFilters.amp + searchFilters.devicetype + searchFilters.allCaps ;
+           }
+           else{
+            //do nothing..
+           }*/
            if(filter.isActive && !filter.isInActive){
               filterString = searchFilters.isDeleted + searchFilters.colon + 0 + searchFilters.semicolon;
+              flag=true;
            }else if(!filter.isActive && filter.isInActive){
               filterString = searchFilters.isDeleted + searchFilters.colon + 1 + searchFilters.semicolon;
+              flag=true;
+           }
+            else if(filter.isActive && filter.isInActive){
+              filterString = searchFilters.isActive + searchFilters.colon + 1 + searchFilters.amp;
+              filterString =filterString + searchFilters.isDeleted + searchFilters.colon + 1 + searchFilters.semicolon;
+              flag=true;
+           }
+           else
+           {
+            filterString = searchFilters.emptyString;
            }
            if(filter.isSettingsDeviated){
              filterString += searchFilters.isSettingsDeviated + searchFilters.colon + 1 + searchFilters.semicolon;
+             flag=true;
            }
            if(filter.isHMRNonCompliant){
              filterString += searchFilters.isHMRNonCompliant + searchFilters.colon + 1 + searchFilters.semicolon;
+             flag=true;
            }
            if(filter.isMissedTherapy){
-             filterString += searchFilters.isMissedTherapy + searchFilters.colon + 1 + searchFilters.semicolon; 
+             filterString += searchFilters.isMissedTherapy + searchFilters.colon + 1 + searchFilters.semicolon;
+             flag=true; 
            }
            if(filter.isNoEvent){
             filterString += searchFilters.isNoEvent + searchFilters.colon + 1 + searchFilters.semicolon; 
+            flag=true;
            }
             if(filter.VisiVest && filter.Monarch){
             // the following commented code is for later use when on selection of both devices All should be passed- incomplete from Back-end as of now
            // filterString += searchFilters.deviceType + searchFilters.all + searchFilters.colon + 1 + searchFilters.semicolon;
             filterString += searchFilters.amp + searchFilters.devicetype + searchFilters.allCaps ;
            }
-             else if(filter.VisiVest && !filter.Monarch){
+            else if(filter.VisiVest && !filter.Monarch){
             filterString += searchFilters.amp + searchFilters.devicetype + searchFilters.VisiVest ; 
            }
            else if(filter.Monarch && !filter.VisiVest){
             filterString += searchFilters.amp + searchFilters.devicetype + searchFilters.Monarch ; 
            }
             else if(!filter.VisiVest && !filter.Monarch){
+              if(flag  == true){
             // the following commented code is for later use when on selection of both devices All should be passed- incomplete from Back-end as of now
-           // filterString += searchFilters.deviceType + searchFilters.all + searchFilters.colon + 1 + searchFilters.semicolon;
-            filterString += searchFilters.amp + searchFilters.devicetype + searchFilters.allCaps ;
-           }
+           //filterString += searchFilters.deviceType + searchFilters.all + searchFilters.colon + 1 + searchFilters.semicolon;
+          filterString += searchFilters.amp + searchFilters.devicetype + searchFilters.allCaps ;
+        }
+      }
+           //}
            return filterString;
         }
 
