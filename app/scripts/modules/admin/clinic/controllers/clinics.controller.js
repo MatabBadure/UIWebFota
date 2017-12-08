@@ -1148,16 +1148,18 @@ $scope.activateClinicModal = function(clininc){
        $("#city-dropdown").css("pointer-events","none");
       $("#state-dropdown").css("background-color", 'inherit');
        $("#state-dropdown").css("pointer-events","all");
+       $("#country-dropdown").css("background-color", 'inherit');
+       $("#country-dropdown").css("pointer-events","all");
       $scope.isZipcode = false;
       $scope.clinicAdvancedFilter = {};
       $scope.clinicAdvancedFilter.clinicName = "";
       $scope.clinicAdvancedFilter.clinicType = "";
       $scope.clinicAdvancedFilter.clinicSpecialty = "";
-      $scope.selectedCountry = ["US"];
-      $scope.selectedCountryObj = ["US"];
+      $scope.selectedCountry = [];
+      $scope.selectedCountryObj = 'US';
       $scope.selectedStates = [];
       $scope.selectedCities = [];
-      $scope.clinicAdvancedFilter.country = "US";
+      $scope.clinicAdvancedFilter.country = ['US'];
       $scope.clinicAdvancedFilter.state = [];
       $scope.clinicAdvancedFilter.city = [];
       $scope.clinicAdvancedFilter.zipcode = "";
@@ -1170,7 +1172,8 @@ $scope.activateClinicModal = function(clininc){
       clinicService.getClinicSpeciality().then(function(response){
          $scope.specialities =  response.data.typeCode;
       }).catch(function(response){});
-      addressService.getAllStatesAdv($scope.selectedCountryObj).then(function(response){
+      $scope.countries = searchFilterService.processCountries();
+      addressService.getAllStatesAdv($scope.clinicAdvancedFilter.country).then(function(response){
         $scope.rawStates = response.data;
         $scope.states = searchFilterService.processStates($scope.rawStates);
         $scope.cities = searchFilterService.processCities();
@@ -1200,7 +1203,11 @@ $scope.activateClinicModal = function(clininc){
             $scope.states = searchFilterService.processStates($scope.rawStates);
             $scope.cities = searchFilterService.processCities();
             $scope.clinicAdvancedFilter.city = [];
-             $scope.clinicAdvancedFilter.state = [];
+            $scope.clinicAdvancedFilter.state = [];
+            $scope.clinicAdvancedFilter.country = [];
+            $scope.countries = searchFilterService.processCountries();
+            $("#country-dropdown").css("background-color", 'inherit');
+            $("#country-dropdown").css("pointer-events","all");
             $("#state-dropdown").css("background-color", 'inherit');
             $("#state-dropdown").css("pointer-events","all");
             $("#city-dropdown").css("background-color", 'rgb(235, 235, 228)');
@@ -1212,40 +1219,60 @@ $scope.activateClinicModal = function(clininc){
             }
           }
         };
-       /* $scope.onCloseState = function(){
-         if($scope.selectedStates.length > 0){
-        var selectedStates = [];
+      $scope.onCloseCountry = function(){
+          if($scope.selectedCountry.length > 0){
+          var selectedCountry = [];
+          $scope.states = [];
           $scope.cities = [];
+          $scope.clinicAdvancedFilter.country = [];
           $scope.clinicAdvancedFilter.city = [];
           $scope.clinicAdvancedFilter.state = [];
-           angular.forEach($scope.selectedStates, function(selectedState){
-          angular.forEach($scope.rawStates, function(state,key){
-           if(selectedState.name === key){
-            for(var i=0;i<state.length;i++){
-               var obj = {
-              'name':state[i],
-              'ticked':true 
-            };
-            $scope.clinicAdvancedFilter.city.push(state[i]);
-            $scope.cities.push(obj);
-            }
-            $scope.clinicAdvancedFilter.state.push(selectedState.name);
-            }
+          //push selected country in $scope.patientadvancedFilters.country angular.foreach etc
+          
+          //pass the country to the service and call API like in line no.323
 
+          angular.forEach($scope.selectedCountry, function(country){
+            $scope.clinicAdvancedFilter.country.push(country.name);
           });
-        });
-        angular.forEach($scope.selectedStates, function(selectedState){
-          selectedStates.push(selectedState.name);
-        });
-        $scope.state = selectedStates.join();
-      }else{
-        delete $scope.city;
-        $scope.state = Object.keys($scope.rawStates).join();
-        $scope.cities = searchFilterService.processCities($scope.rawStates);
-        $scope.clinicAdvancedFilter.city = [];
-        $scope.clinicAdvancedFilter.state = [];
-      }
-    };*/
+
+          addressService.getAllStatesAdv($scope.clinicAdvancedFilter.country).then(function(response){
+          if(!$scope.isZipcode){
+          $("#state-dropdown").css("background-color", 'inherit');
+          $("#state-dropdown").css("pointer-events","all");
+          }
+           $scope.states = response.data;
+          }).catch(function(){
+
+          }); 
+          //states pushing
+          //call cities api  
+          angular.forEach($scope.selectedStates, function(state){
+            $scope.clinicAdvancedFilter.state.push(state.name);
+          });     
+         /* addressService.getCitybyStateAdv($scope.patientAdvancedFilters.country,$scope.patientAdvancedFilters.state).then(function(response){
+          if(!$scope.isZipcode){
+          $("#city-dropdown").css("background-color", 'inherit');
+          $("#city-dropdown").css("pointer-events","all");
+          }
+           $scope.cities = response.data;
+          }).catch(function(){
+          });*/
+          }
+          else{
+          delete $scope.state;
+          $scope.states = searchFilterService.processStates();
+          delete $scope.city;
+         // $scope.state = Object.keys($scope.rawStates).join();
+          $scope.cities = searchFilterService.processCities();
+          $("#city-dropdown").css("background-color", 'rgb(235, 235, 228)');
+          $("#city-dropdown").css("pointer-events","none");
+          $("#state-dropdown").css("background-color", 'rgb(235, 235, 228)');
+          $("#state-dropdown").css("pointer-events","none");
+          $scope.clinicAdvancedFilter.city = [];
+          $scope.clinicAdvancedFilter.state = [];
+
+          }
+          };
      $scope.onCloseState = function(){
          if($scope.selectedStates.length > 0){
           var selectedStates = [];
@@ -1256,7 +1283,7 @@ $scope.activateClinicModal = function(clininc){
             $scope.clinicAdvancedFilter.state.push(state.name);
           });
 
-         addressService.getCitybyStateAdv($scope.selectedCountryObj,$scope.clinicAdvancedFilter.state).then(function(response){
+         addressService.getCitybyStateAdv($scope.clinicAdvancedFilter.country,$scope.clinicAdvancedFilter.state).then(function(response){
           if(!$scope.isZipcode){
           $("#city-dropdown").css("background-color", 'inherit');
           $("#city-dropdown").css("pointer-events","all");
@@ -1299,8 +1326,17 @@ $scope.activateClinicModal = function(clininc){
       $scope.selectedStates = [];
        $scope.isZipcode = true; 
             }
-          angular.forEach(responseData, function(cityState){
-            angular.forEach($scope.states, function(state){
+            angular.forEach(responseData, function(cityState){
+            angular.forEach($scope.countries, function(country){
+            if(cityState.country === country.name){
+              country.ticked = true;
+              $scope.selectedCountry.push(country);
+            }
+            else{
+              country.ticked = false;
+            }
+          });
+          angular.forEach($scope.states, function(state){
             if(cityState.state === state.name){
               state.ticked = true;
               $scope.selectedStates.push(state);
@@ -1310,12 +1346,14 @@ $scope.activateClinicModal = function(clininc){
             }
           });
           });
+          $("#country-dropdown").css("background-color", 'rgb(235, 235, 228)');
+          $("#country-dropdown").css("pointer-events","none");
           $("#state-dropdown").css("background-color", 'rgb(235, 235, 228)');
           $("#state-dropdown").css("pointer-events","none");
           $("#city-dropdown").css("background-color", 'rgb(235, 235, 228)');
           $("#city-dropdown").css("pointer-events","none");
           $scope.onCloseState();
-    };
+        };
 
     $scope.resetAdvancedFilters = function(){
       $scope.initClinicAdvancedFilters();

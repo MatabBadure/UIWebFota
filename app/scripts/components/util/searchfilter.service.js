@@ -249,11 +249,11 @@ angular.module('hillromvestApp')
               'name':'USA',
               'ticked':true 
             };
-            countries.push(obj)
+            countries.push(obj);
             return countries;
               };
             this.processCitiesOld = function(states){
-              var cities = []
+              var cities = [];
             angular.forEach(states, function(state, key){
              for(var i=0;i<state.length;i++){
                   var obj = {
@@ -279,16 +279,18 @@ angular.module('hillromvestApp')
                 return statesList;
               };
               this.processCountries = function(){
-                var countries = [];
-                 var obj = {
-              'name':'USA',
-              'ticked':true 
-            };
-            countries.push(obj)
+                var countries = [{
+              'name':'US',
+              'ticked':true
+            },
+            {
+              'name':'CANADA',
+              'ticked':false 
+            }];
             return countries;
               };
             this.processCities = function(){
-              var cities = []
+              var cities = [];
                   var obj = {};
                   cities.push(obj);
             return cities;
