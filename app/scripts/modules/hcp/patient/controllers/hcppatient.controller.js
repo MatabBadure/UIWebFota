@@ -27,7 +27,7 @@ angular.module('hillromvestApp')
         var filter = ($stateParams.filter).split("+");
       }
       else var filter = "";
-      $scope.searchFilter = searchFilterService.initSearchFiltersForPatient(filter, true);
+      $scope.searchFilter = searchFilterService.initSearchFiltersForPatientCA(filter, true);
       $scope.currentPageIndex = 1;
       $scope.perPageCount = 10;
       $scope.pageCount = 0;
@@ -294,7 +294,7 @@ angular.module('hillromvestApp')
     }else {
       $scope.currentPageIndex = 1;
     }
-    $scope.searchFilter = ($scope.searchFilter && $scope.searchFilter != undefined) ? $scope.searchFilter :searchFilterService.initSearchFiltersForPatient();
+    $scope.searchFilter = ($scope.searchFilter && $scope.searchFilter != undefined) ? $scope.searchFilter :searchFilterService.initSearchFiltersForPatientCA();
     var filter = searchFilterService.getFilterStringForPatient($scope.searchFilter);
     if(filter){
     var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : $stateParams.clinicId;

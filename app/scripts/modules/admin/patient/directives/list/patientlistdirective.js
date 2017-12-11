@@ -453,10 +453,10 @@ else{
           }
           $scope.rawStates = response.data;
            $scope.states = searchFilterService.processStates($scope.rawStates);
-           angular.forEach($scope.states, function(state){
+/*           angular.forEach($scope.states, function(state){
 
             $scope.patientAdvancedFilters.state.push(state.name);
-          });  
+          });*/  
           }).catch(function(){
 
           }); 
