@@ -34,6 +34,51 @@ angular.module('hillromvestApp')
               }
             }
             }else{
+              searchFilter.isActive = true;
+              searchFilter.isInActive = false;
+              searchFilter.isNoEvent = false;
+              searchFilter.isSettingsDeviated = false;
+              searchFilter.isHMRNonCompliant = false;
+              searchFilter.isMissedTherapy = false;
+              searchFilter.isPending = false;
+              searchFilter.VisiVest = true;
+              searchFilter.Monarch = true;
+            }
+            searchFilter.userList = searchFilters.patientList;
+            return searchFilter;
+        }
+            this.initSearchFiltersForPatientCA = function(filter, isActive) {
+            var searchFilter = {};
+            if(isActive){
+              searchFilter.isActive = true;
+            }
+            if(filter){
+              for(var i=0;i<filter.length;i++){
+                switch(filter[i]){
+                case 'isActive':searchFilter.isActive = true;
+                break;
+                case 'isInActive':searchFilter.isInActive = true;
+                break;
+                case 'noevents':searchFilter.isNoEvent = true;
+                break;
+                case 'setting_deviation':searchFilter.isSettingsDeviated = true;
+                break;
+                case 'non_hmr_compliance':searchFilter.isHMRNonCompliant = true;
+                break;
+                case 'missed_therapy':searchFilter.isMissedTherapy = true;
+                break;
+                case 'isPending':searchFilter.isPending = true;
+                break;
+                case 'VisiVest':searchFilter.VisiVest = true;
+                break;
+                case 'Monarch':searchFilter.Monarch = true;
+                break;
+                case 'All': searchFilter.VisiVest = true;
+                            searchFilter.Monarch = true;
+                break;
+              }
+            }
+            }else{
               searchFilter.isActive = false;
               searchFilter.isInActive = false;
               searchFilter.isNoEvent = false;

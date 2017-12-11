@@ -88,7 +88,7 @@ angular.module('hillromvestApp')
     else{
       var filter = "";
     }
-      $scope.searchFilter = searchFilterService.initSearchFiltersForPatient(filter, true);
+      $scope.searchFilter = searchFilterService.initSearchFiltersForPatientCA(filter, true);
       $scope.sortPatientList = sortOptionsService.getSortOptionsForPatientList();
       $scope.currentPageIndex = 1;
       $scope.perPageCount = 10;
