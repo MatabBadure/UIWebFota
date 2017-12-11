@@ -548,43 +548,66 @@ else{
       if(responseData.length>0){
       $scope.selectedStates = [];
        $scope.isZipcode = true; 
+       $scope.states = [];
+       $scope.cities = [];
+       $scope.selectedCities = [];
+       $scope.selectedStates = [];
+       $scope.selectedCountry = [];
+
+       $scope.patientAdvancedFilters.country = [];
+       $scope.patientAdvancedFilters.state = [];
+       $scope.patientAdvancedFilters.city = [];
             }
-            var cntry = ["US","CANADA"];
+            /*var cntry = ["US","CANADA"];
             addressService.getAllStatesAdv(cntry).then(function(response){
         $scope.rawStates = response.data;
         $scope.states = searchFilterService.processStates($scope.rawStates);
         $scope.cities = searchFilterService.processCities();
       }).catch(function(response){
         notyService.showError(response);
-      });
+      });*/
 
+ $scope.states.push({
+              'name':responseData[0].state,
+              'ticked':true
+            });
+            $scope.cities.push({
+              'name':responseData[0].city,
+              'ticked':true
+            }); 
+            $scope.selectedStates.push({
+              'name':responseData[0].state,
+              'ticked':true
+            });
+            $scope.selectedCities.push({
+              'name':responseData[0].city,
+              'ticked':true
+            });
+           
+           $scope.patientAdvancedFilters.state.push(responseData[0].state);
+           $scope.patientAdvancedFilters.city.push(responseData[0].city); 
           angular.forEach(responseData, function(cityState){
             angular.forEach($scope.countries, function(country){
             if(cityState.country === country.name){
               country.ticked = true;
               $scope.selectedCountry.push(country);
+              $scope.patientAdvancedFilters.country.push(country.name);
             }
             else{
               country.ticked = false;
             }
           });
-            angular.forEach($scope.states, function(state){
-            if(cityState.state === state.name){
-              state.ticked = true;
-              $scope.selectedStates.push(state);
-            }
-            else{
-              state.ticked = false;
-            }
+
           });
-          });
+
+
           $("#country-dropdown").css("background-color", 'rgb(235, 235, 228)');
           $("#country-dropdown").css("pointer-events","none");
           $("#state-dropdown").css("background-color", 'rgb(235, 235, 228)');
           $("#state-dropdown").css("pointer-events","none");
           $("#city-dropdown").css("background-color", 'rgb(235, 235, 228)');
           $("#city-dropdown").css("pointer-events","none");
-          $scope.onCloseState();
+          //$scope.onCloseState();
     };
 
     $scope.resetAdvancedFilters = function(){
@@ -600,6 +623,7 @@ else{
       }
      
       if($scope.patientAdvancedFilters.zipcode){
+        $scope.patientAdvancedFilters.zipcode.replace(' ','');
         //do nothing
       }
       else{
@@ -611,6 +635,7 @@ else{
       if($scope.patientAdvancedFilters.maxHMRRange){
         $scope.patientAdvancedFilters.maxHMRRange = $scope.patientAdvancedFilters.maxHMRRange.toString();
       }
+      $scope.patientAdvancedFilters.city = [];
       angular.forEach($scope.selectedCities, function(city){
             $scope.patientAdvancedFilters.city.push(city.name);
           });
