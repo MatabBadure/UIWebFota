@@ -88,7 +88,7 @@ angular.module('hillromvestApp')
     else{
       var filter = "";
     }
-      $scope.searchFilter = searchFilterService.initSearchFiltersForPatient(filter, true);
+      $scope.searchFilter = searchFilterService.initSearchFiltersForPatientCA(filter, true);
       $scope.sortPatientList = sortOptionsService.getSortOptionsForPatientList();
       $scope.currentPageIndex = 1;
       $scope.perPageCount = 10;
@@ -138,12 +138,12 @@ angular.module('hillromvestApp')
         $scope.form.$setPristine();
         $scope.showUpdateModalReset = false;
         $scope.getAdherenceScoreResetHistory($stateParams.patientId);
-   /*     $scope.resetStartDate = null;
+        $scope.resetStartDate = null;
         $scope.justification = "";
-        $scope.scoreToReset = 100;
         $scope.othersContent = null;
-        $scope.ShowOther = false;*/
+        $scope.ShowOther = false;
         $scope.resetsubmitted = false ; 
+        $scope.nodataflag = false;
         if($scope.patientStatus.role === loginConstants.role.acctservices){
         $state.go('patientProtocolRcadmin', {'patientId': $stateParams.patientId});
       }else{
@@ -153,11 +153,10 @@ angular.module('hillromvestApp')
         notyService.showError(response);
         $scope.form.$setPristine();
         $scope.showUpdateModalReset = false;
-       /* $scope.resetStartDate = null;
+        $scope.resetStartDate = null;
         $scope.justification = "";
-        $scope.scoreToReset = 100;
         $scope.othersContent = null;
-          $scope.ShowOther = false;*/
+          $scope.ShowOther = false;
         $scope.resetsubmitted = false ; 
       });
 
@@ -605,6 +604,7 @@ angular.module('hillromvestApp')
       $scope.currentPageIndex = 1;
     }
     var filter = searchFilterService.getFilterStringForPatient($scope.searchFilter);
+   if(filter){
     var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : $stateParams.clinicId;
     DoctorService.searchPatientsForHCPOrCliniadmin($scope.searchItem, 'clinicadmin', StorageService.get('logged').userId, clinicId, $scope.currentPageIndex, $scope.perPageCount, filter, $scope.sortOption).then(function (response) {
       $scope.patients = response.data;      
@@ -618,6 +618,13 @@ angular.module('hillromvestApp')
     }).catch(function (response) {
       notyService.showError(response);
     });    
+  }
+  else{
+      $scope.patients = {};
+      $scope.currentPageIndex = 1;
+      $scope.perPageCount = 10;
+      $scope.pageCount = 0;
+    }     
   };
 
   $scope.searchOnFilters = function(){    
