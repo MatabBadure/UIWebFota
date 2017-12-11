@@ -1287,7 +1287,9 @@ $scope.getdevice = function(){
         }else if(response.data.message){
           $scope.associatedClinicsErrMsg = response.data.message;
         }
-        clinicService.getClinics($scope.searchItem, $scope.sortOption, $scope.currentPageIndex, $scope.perPageCount).then(function (response) {
+        var searchItem = window.encodeURIComponent("%%");
+        var filter = "isDeleted:0;";
+        clinicService.getClinics(searchItem, $scope.sortOption, $scope.currentPageIndex, $scope.perPageCount, filter).then(function (response) {
           $scope.initializeClinics(response.data);
         });
       });
