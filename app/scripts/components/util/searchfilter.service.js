@@ -47,6 +47,51 @@ angular.module('hillromvestApp')
             searchFilter.userList = searchFilters.patientList;
             return searchFilter;
         }
+            this.initSearchFiltersForPatientCA = function(filter, isActive) {
+            var searchFilter = {};
+            if(isActive){
+              searchFilter.isActive = true;
+            }
+            if(filter){
+              for(var i=0;i<filter.length;i++){
+                switch(filter[i]){
+                case 'isActive':searchFilter.isActive = true;
+                break;
+                case 'isInActive':searchFilter.isInActive = true;
+                break;
+                case 'noevents':searchFilter.isNoEvent = true;
+                break;
+                case 'setting_deviation':searchFilter.isSettingsDeviated = true;
+                break;
+                case 'non_hmr_compliance':searchFilter.isHMRNonCompliant = true;
+                break;
+                case 'missed_therapy':searchFilter.isMissedTherapy = true;
+                break;
+                case 'isPending':searchFilter.isPending = true;
+                break;
+                case 'VisiVest':searchFilter.VisiVest = true;
+                break;
+                case 'Monarch':searchFilter.Monarch = true;
+                break;
+                case 'All': searchFilter.VisiVest = true;
+                            searchFilter.Monarch = true;
+                break;
+              }
+            }
+            }else{
+              searchFilter.isActive = false;
+              searchFilter.isInActive = false;
+              searchFilter.isNoEvent = false;
+              searchFilter.isSettingsDeviated = false;
+              searchFilter.isHMRNonCompliant = false;
+              searchFilter.isMissedTherapy = false;
+              searchFilter.isPending = false;
+              searchFilter.VisiVest = false;
+              searchFilter.Monarch = false;
+            }
+            searchFilter.userList = searchFilters.patientList;
+            return searchFilter;
+        }
 
         this.initSearchFiltersForClinic = function() {
             var searchFilter = {};
@@ -58,7 +103,7 @@ angular.module('hillromvestApp')
 
         this.initSearchFiltersForHCP = function() {
             var searchFilter = {};
-            searchFilter.isActive = true;
+            searchFilter.isActive = false;
             searchFilter.isInActive = false;
             searchFilter.userList = searchFilters.hcpList;
             return searchFilter;
@@ -67,39 +112,66 @@ angular.module('hillromvestApp')
 
         this.getFilterStringForPatient = function(filter) {
            var filterString = searchFilters.emptyString;
+           var flag = false;
+          /* if(flag=true){
+            //the following commented code is for later use when on selection of both devices All should be passed- incomplete from Back-end as of now
+              filterString += searchFilters.deviceType + searchFilters.all + searchFilters.colon + 1 + searchFilters.semicolon;
+              filterString += searchFilters.amp + searchFilters.devicetype + searchFilters.allCaps ;
+           }
+           else{
+            //do nothing..
+           }*/
            if(filter.isActive && !filter.isInActive){
               filterString = searchFilters.isDeleted + searchFilters.colon + 0 + searchFilters.semicolon;
+              flag=true;
            }else if(!filter.isActive && filter.isInActive){
               filterString = searchFilters.isDeleted + searchFilters.colon + 1 + searchFilters.semicolon;
+              flag=true;
+           }
+            else if(filter.isActive && filter.isInActive){
+              filterString = searchFilters.isActive + searchFilters.colon + 1 + searchFilters.amp;
+              filterString =filterString + searchFilters.isDeleted + searchFilters.colon + 1 + searchFilters.semicolon;
+              flag=true;
+           }
+           else
+           {
+            filterString = searchFilters.emptyString;
            }
            if(filter.isSettingsDeviated){
              filterString += searchFilters.isSettingsDeviated + searchFilters.colon + 1 + searchFilters.semicolon;
+             flag=true;
            }
            if(filter.isHMRNonCompliant){
              filterString += searchFilters.isHMRNonCompliant + searchFilters.colon + 1 + searchFilters.semicolon;
+             flag=true;
            }
            if(filter.isMissedTherapy){
-             filterString += searchFilters.isMissedTherapy + searchFilters.colon + 1 + searchFilters.semicolon; 
+             filterString += searchFilters.isMissedTherapy + searchFilters.colon + 1 + searchFilters.semicolon;
+             flag=true; 
            }
            if(filter.isNoEvent){
             filterString += searchFilters.isNoEvent + searchFilters.colon + 1 + searchFilters.semicolon; 
+            flag=true;
            }
             if(filter.VisiVest && filter.Monarch){
             // the following commented code is for later use when on selection of both devices All should be passed- incomplete from Back-end as of now
            // filterString += searchFilters.deviceType + searchFilters.all + searchFilters.colon + 1 + searchFilters.semicolon;
             filterString += searchFilters.amp + searchFilters.devicetype + searchFilters.allCaps ;
            }
-             else if(filter.VisiVest && !filter.Monarch){
+            else if(filter.VisiVest && !filter.Monarch){
             filterString += searchFilters.amp + searchFilters.devicetype + searchFilters.VisiVest ; 
            }
            else if(filter.Monarch && !filter.VisiVest){
             filterString += searchFilters.amp + searchFilters.devicetype + searchFilters.Monarch ; 
            }
             else if(!filter.VisiVest && !filter.Monarch){
+              if(flag  == true){
             // the following commented code is for later use when on selection of both devices All should be passed- incomplete from Back-end as of now
-           // filterString += searchFilters.deviceType + searchFilters.all + searchFilters.colon + 1 + searchFilters.semicolon;
-            filterString += searchFilters.amp + searchFilters.devicetype + searchFilters.allCaps ;
-           }
+           //filterString += searchFilters.deviceType + searchFilters.all + searchFilters.colon + 1 + searchFilters.semicolon;
+          filterString += searchFilters.amp + searchFilters.devicetype + searchFilters.allCaps ;
+        }
+      }
+           //}
            return filterString;
         }
 
@@ -222,11 +294,11 @@ angular.module('hillromvestApp')
               'name':'USA',
               'ticked':true 
             };
-            countries.push(obj)
+            countries.push(obj);
             return countries;
               };
             this.processCitiesOld = function(states){
-              var cities = []
+              var cities = [];
             angular.forEach(states, function(state, key){
              for(var i=0;i<state.length;i++){
                   var obj = {
@@ -252,16 +324,18 @@ angular.module('hillromvestApp')
                 return statesList;
               };
               this.processCountries = function(){
-                var countries = [];
-                 var obj = {
-              'name':'USA',
-              'ticked':true 
-            };
-            countries.push(obj)
+                var countries = [{
+              'name':'US',
+              'ticked':true
+            },
+            {
+              'name':'CANADA',
+              'ticked':false 
+            }];
             return countries;
               };
             this.processCities = function(){
-              var cities = []
+              var cities = [];
                   var obj = {};
                   cities.push(obj);
             return cities;

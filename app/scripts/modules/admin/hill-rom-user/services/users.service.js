@@ -48,6 +48,9 @@ angular.module('hillromvestApp')
        *
        */
       editUser: function(data) {
+        if(data.zipcode){
+        data.zipcode = data.zipcode.replace(' ','');
+      }
         return $http.put(URL.userBaseUrl + data.id, data, {
           headers: headerService.getHeader()
         }).success(function(response) {

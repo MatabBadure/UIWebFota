@@ -117,7 +117,7 @@
 		           	<input class="col-md-14  col-xs-16 col-sm-16 margin-bottom20 tab-margin-bottom20" type="text" ng-model="survey.questions[7].answerValue1" ng-disabled="true">
 		        </div>
 	           	<div class="col-md-16 padding0 no-padding" ng-if="!isZipcode">
-	           		<input type="text" validate-on-blur class="form-control col-xs-16 col-sm-16 margin-bottom20 tab-margin-bottom20" name="zipcode" ng-readonly="validateADMINorASP()" maxlength="5" ng-pattern="/^(?=.*[1-9].*)[0-9]{5}$/" ng-model="survey.questions[7].answerValue1" ng-blur="getCityState(survey.questions[7].answerValue1)" ng-enter="" ng-keyup="clearMessages()" required>	
+	           		<input type="text" validate-on-blur class="form-control col-xs-16 col-sm-16 margin-bottom20 tab-margin-bottom20" name="zipcode" ng-readonly="validateADMINorASP()" maxlength="7" ng-pattern='/^(\d{5}(-\d{4})?|[A-Z]\d[A-Z] *\d[A-Z]\d)$/' ng-model="survey.questions[7].answerValue1" ng-blur="getCityState(survey.questions[7].answerValue1)" ng-enter="" ng-keyup="clearMessages()" required>	
 				</div>
 				<div ng-show="(surveyForm.zipcode.$dirty && surveyForm.zipcode.$showValidationMessage && surveyForm.zipcode.$invalid) || submitted">
 					<span class="has-error" ng-show="surveyForm.zipcode.$error.pattern && !surveyForm.zipcode.$error.required" translate="error.zipcode.pattern"></span>
