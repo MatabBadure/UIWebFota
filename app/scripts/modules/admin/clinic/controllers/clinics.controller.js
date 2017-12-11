@@ -1240,15 +1240,16 @@ $scope.activateClinicModal = function(clininc){
           $("#state-dropdown").css("background-color", 'inherit');
           $("#state-dropdown").css("pointer-events","all");
           }
-           $scope.states = response.data;
+           $scope.rawStates = response.data;
+           $scope.states = searchFilterService.processStates($scope.rawStates);
           }).catch(function(){
 
           }); 
           //states pushing
           //call cities api  
-          angular.forEach($scope.selectedStates, function(state){
+          /*angular.forEach($scope.selectedStates, function(state){
             $scope.clinicAdvancedFilter.state.push(state.name);
-          });     
+          });  */   
          /* addressService.getCitybyStateAdv($scope.patientAdvancedFilters.country,$scope.patientAdvancedFilters.state).then(function(response){
           if(!$scope.isZipcode){
           $("#city-dropdown").css("background-color", 'inherit');
