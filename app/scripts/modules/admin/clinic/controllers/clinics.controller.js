@@ -1423,7 +1423,7 @@ $scope.activateClinicModal = function(clininc){
       }
       $scope.isAdvancedFilters = true;
       if($scope.clinicAdvancedFilter.zipcode){
-        $scope.clinicAdvancedFilter.zipcode.replace(' ','');
+         $scope.clinicAdvancedFilter.zipcode = $scope.clinicAdvancedFilter.zipcode.replace(' ','');
         //do nothing
       }
       else{

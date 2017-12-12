@@ -108,6 +108,13 @@ angular.module('hillromvestApp')
             searchFilter.userList = searchFilters.hcpList;
             return searchFilter;
         }
+        this.initSearchFiltersForUsers = function() {
+            var searchFilter = {};
+            searchFilter.isActive = true;
+            searchFilter.isInActive = false;
+            searchFilter.userList = searchFilters.hcpList;
+            return searchFilter;
+        }
 
 
         this.getFilterStringForPatient = function(filter) {
