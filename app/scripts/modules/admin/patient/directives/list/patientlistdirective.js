@@ -623,8 +623,7 @@ else{
       }
      
       if($scope.patientAdvancedFilters.zipcode){
-        $scope.patientAdvancedFilters.zipcode.replace(' ','');
-        //do nothing
+        $scope.patientAdvancedFilters.zipcode = $scope.patientAdvancedFilters.zipcode.replace(' ','');
       }
       else{
         $scope.patientAdvancedFilters.zipcode = "";

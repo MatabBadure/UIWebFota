@@ -40,7 +40,7 @@ angular.module('hillromvestApp')
           $scope.sortIconUp = false;
           $scope.sortIconDown = false;
           $scope.searchItem = "";
-          $scope.searchFilter = searchFilterService.initSearchFiltersForHCP();
+          $scope.searchFilter = searchFilterService.initSearchFiltersForUsers();
           $scope.searchUsers();
         };
 
