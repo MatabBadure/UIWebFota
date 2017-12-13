@@ -292,6 +292,9 @@ angular.module('hillromvestApp')
           $("#city-dropdown").css("pointer-events","all");
         }
            $scope.cities = response.data;
+           angular.forEach($scope.cities, function(cityObj){
+          cityObj.name  = unescape(escape(cityObj.name));
+        });
           }).catch(function(){
 
           });
