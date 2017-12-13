@@ -443,6 +443,17 @@ angular.module('hillromvestApp')
             return options;
               };
 
+              this.processClinicTypeOptions = function(){
+              var options = [{
+                type_code_value: "Parent",
+                type_code_value:"Parent"
+            }, {
+                type_code_value: "Satellite",
+                type_code_value:"Satellite"
+            }];
+            return options;
+              };
+
               this.multiselectPropertiesForAdvancedFilters = function(){
                       var properties = {
               selectAll       : "Tick all",
