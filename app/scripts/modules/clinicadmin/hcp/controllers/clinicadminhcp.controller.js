@@ -46,6 +46,10 @@ angular.module('hillromvestApp')
       $scope.doctorStatus.editMode = true;
     };
 
+    $scope.searchHCPsOnQueryChange = function(){
+      $scope.searchHcps();
+    }
+
     $scope.searchHcps = function(track){ 
       if (track !== undefined) {
         if (track === "PREV" && $scope.currentPageIndex > 1) {
@@ -61,7 +65,7 @@ angular.module('hillromvestApp')
         $scope.currentPageIndex = 1;
       }
       var filter = searchFilterService.getFilterStringForPatient($scope.searchFilter);
-      if(filter){
+      if(filter || $scope.searchItem){
       var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : $stateParams.clinicId;
       clinicadminHcpService.searchAssociatedHcpsToClinic($scope.searchItem, filter, sortConstant.lastName, $scope.currentPageIndex, $scope.perPageCount, StorageService.get('logged').userId, clinicId).then(function(response){
         $scope.hcps = response.data;
