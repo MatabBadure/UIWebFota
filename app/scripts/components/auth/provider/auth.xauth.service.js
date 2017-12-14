@@ -112,6 +112,18 @@ angular.module('hillromvestApp')
                 }).error(function (data, status, headers, config) {
                     return {'response' : data, 'status' : status, 'headers' : headers, 'config' : config};
                 });
+            },
+            //Gimp-32  
+            reActivateAccountAgeLimit: function(data){
+                var url = URL.changeSecurityQuestion;
+                return $http.put(url, data, {
+                    headers: headerService.getHeader()
+                }).success(function (data, status, headers, config) {
+                    return {'response' : data, 'status' : status, 'headers' : headers, 'config' : config};
+                }).error(function (data, status, headers, config) {
+
+                });
             }
+            //End of Gimp-32  
         };
     }]);

@@ -7,14 +7,17 @@ angular.module('hillromvestApp')
       $scope.doNotMatch = null;
       $scope.showCaptcha = false;
       $scope.resetAccount = {};
+      $scope.resetAccountAgeLimit = {};
       $scope.questions = [];
       $scope.questionsNotLoaded = false;
       $scope.questionVerificationFailed = false;
       $scope.submitted = false;
       $scope.otherError = false;
       $scope.message = "";
+      $scope.stateIs = $state.current.name;
       var data = {};
       $timeout(function () { angular.element('[ng-model="resetAccount.password"]').focus(); });
+       $timeout(function () { angular.element('[ng-model="resetAccountAgeLimit.password"]').focus(); });
       $scope.formSubmit = function () {
         $scope.submitted = true;
       }
@@ -65,5 +68,56 @@ angular.module('hillromvestApp')
             });
         }
       };
+
+      //Gimp-32  
+       $scope.resetAccountUser = function () {
+        if ($scope.form.$invalid) {
+          return false;
+        }
+        $scope.error = null;
+        if ($scope.resetAccountAgeLimit.password !== $scope.resetAccountAgeLimit.confirmPassword) {
+          $scope.doNotMatch = 'ERROR';
+          $scope.message = reset.finish.passwordNotMatched;
+        } else {
+          $scope.doNotMatch = null;
+           data = {
+            "email": $scope.resetAccountAgeLimit.email,
+            "questionId": ($scope.resetAccountAgeLimit.question && $scope.resetAccountAgeLimit.question.id) ? $scope.resetAccountAgeLimit.question.id : null,
+            "answer": $scope.resetAccountAgeLimit.answer,
+            "password": $scope.resetAccountAgeLimit.password,
+            "termsAndConditionsAccepted": $scope.resetAccountAgeLimit.tnc,
+            "key": $stateParams.key
+          };
+          console.log("data",data);
+         /*   Auth.activateAccount({key: $stateParams.key}).then(function () {
+          Auth.configurePassword(data).then(function () {
+            $scope.success = 'OK';
+            $state.go('login');
+          }).catch(function (response) {
+            $scope.success = null;
+            if(response.status === 400 && response.data.ERROR !== undefined){
+              $scope.message = response.data.ERROR;
+            }else{
+              $scope.message = reset.finish.otherError;
+            }
+          });
+        }).catch(function (response) {
+              $scope.showServerError(response);
+            });*/
+          Auth.reActivateAccountAgeLimit(data).then(function(){
+            $scope.success = 'OK';
+            $state.go('login');
+          }).catch(function (response) {
+            $scope.success = null;
+            if(response.status === 400 && response.data.ERROR !== undefined){
+              $scope.message = response.data.ERROR;
+            }else{
+              $scope.message = reset.finish.otherError;
+            }
+            });
+        }
+      };
+      //End of Gimp-32  
+
 
     }]);
