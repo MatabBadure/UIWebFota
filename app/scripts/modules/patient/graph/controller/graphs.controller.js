@@ -2,8 +2,8 @@
 
 angular.module('hillromvestApp')
 .controller('graphController',
-  ['$scope', '$state', 'patientDashBoardService', 'StorageService', 'dateService', 'graphUtil', 'patientService', 'UserService', '$stateParams', 'notyService', '$timeout', 'graphService', 'caregiverDashBoardService', 'loginConstants', '$location','$filter', 'commonsUserService', 'clinicadminPatientService', '$rootScope', 'patientGraphsConstants', 'exportutilService',
-  function($scope, $state, patientDashBoardService, StorageService, dateService, graphUtil, patientService, UserService, $stateParams, notyService, $timeout, graphService, caregiverDashBoardService, loginConstants, $location, $filter, commonsUserService, clinicadminPatientService, $rootScope, patientGraphsConstants, exportutilService) { 
+  ['$scope', '$state', 'patientDashBoardService', 'StorageService', 'dateService', 'graphUtil', 'patientService', 'UserService', '$stateParams', 'notyService', '$timeout', 'graphService', 'caregiverDashBoardService', 'loginConstants', '$location','$filter', 'commonsUserService', 'clinicadminPatientService', '$rootScope', 'patientGraphsConstants', 'exportutilService', 'searchFilterService',
+  function($scope, $state, patientDashBoardService, StorageService, dateService, graphUtil, patientService, UserService, $stateParams, notyService, $timeout, graphService, caregiverDashBoardService, loginConstants, $location, $filter, commonsUserService, clinicadminPatientService, $rootScope, patientGraphsConstants, exportutilService, searchFilterService) { 
       $scope.loading = false;
     $scope.isGraphLoaded = false;    
     $scope.expandedSign = "+";
@@ -47,6 +47,7 @@ angular.module('hillromvestApp')
       $scope.forhidingMonarchHmrGraph = false;
       $scope.oneDayData = true;
       $scope.oneDayData1 = true;
+      $scope.noDataAvailableTestReults = true;
 
       $scope.initCount("");
             var currentRoute = $state.current.name;
@@ -1046,6 +1047,91 @@ angular.module('hillromvestApp')
       });
     };
 
+    $scope.getTestResultsGraph = function(){
+     // response.data = searchFilterService.gettestResultsData();
+     if(!($scope.duration === 'Custom')){
+     $scope.calculateTimeDuration(365,'NotAdherenceScoreHistory');
+   }
+      patientDashBoardService.getTestReultsGraphData($scope.patientId, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.durationRange).then(function(response){
+      $scope.testReultsChartData = response.data;
+        var responseData = response.data;              
+        var xData = [];
+        $scope.chartDataTestResults = {};
+        $scope.chartDataTestResults.datasets = [];
+        $scope.noDataAvailableTestResults = false;
+        if(responseData){ 
+          $scope.noDataAvailableTestResults = false;        
+          xData = responseData.xAxis.categories; 
+          responseData.xAxis.xLabels = []; 
+          var startDay = (responseData.xAxis && responseData.xAxis.categories.length > 0) ? responseData.xAxis.categories[0].split(" "): null;  
+          $scope.complianceXAxisLabelCount = 0;
+          angular.forEach(responseData.xAxis.categories, function(x, key){              
+            // this is for year view or custom view having datapoints more than 7
+            // x-axis will be plotted accordingly, chart type will be datetime
+            var curDay = responseData.xAxis.categories[key].split(" ");
+            $scope.isSameDay = ($scope.isSameDay && (curDay[0] === startDay[0]) )? true : false;  
+            if(curDay[0] !== startDay[0]){
+              startDay[0] = curDay[0];
+              $scope.complianceXAxisLabelCount++;
+            }
+            var dateTextLabel = Highcharts.dateFormat("%m/%d/%Y",dateService.convertToTimestamp(x));
+            dateTextLabel += (Highcharts.dateFormat("%I:%M %p",dateService.convertToTimestamp(x)))? ' ( ' + Highcharts.dateFormat("%I:%M %p",dateService.convertToTimestamp(x)) + ' )' : '';
+            
+            responseData.xAxis.xLabels.push(dateTextLabel);            
+              xData[key] = dateService.convertToTimestamp(x);                          
+            });       
+
+          angular.forEach(responseData.series, function(s, key1){
+            var marker = {};
+            marker.radius = (s.data && s.data.length < 50)? 2 : 0.5;
+            $scope.markerRadius = marker.radius; 
+            responseData.series[key1].unit = ""; 
+            responseData.series[key1].color = patientGraphsConstants.colors.pressure; 
+            angular.forEach(s.data, function(d, key2){
+              var tooltipDateText = responseData.series[key1].data[key2].x ;
+              responseData.series[key1].data[key2].x = xData[key2];
+              responseData.series[key1].data[key2].marker = marker;
+             // responseData.series[key1].data[key2].toolText.dateText = responseData.xAxis.xLabels[key2] ;
+              
+              /*if(responseData.series[key1].data[key2].toolText.missedTherapy){
+                responseData.series[key1].data[key2].color = "red";
+              }*/
+            });
+           /* if(responseData.series[key1].name === "Avg Pressure/Intensity"){
+              responseData.series[key1].unit = ""; 
+              responseData.series[key1].color = patientGraphsConstants.colors.pressure;
+            }else if(responseData.series[key1].name === "Avg Pressure/Intensity"){
+              responseData.series[key1].unit = ""; 
+              responseData.series[key1].color = patientGraphsConstants.colors.pressure;
+            }
+            else if(responseData.series[key1].name === "Avg Frequency"){
+              responseData.series[key1].unit = patientGraphsConstants.units.frequency; 
+              responseData.series[key1].color = patientGraphsConstants.colors.frequency;
+            }else if(responseData.series[key1].name === "Avg Duration"){
+              responseData.series[key1].unit = patientGraphsConstants.units.duration; 
+              responseData.series[key1].color = patientGraphsConstants.colors.duration;
+            }*/
+            $scope.chartDataTestResults.datasets.push(responseData.series[key1]);
+          });
+          $scope.chartDataTestResults.xData = xData;
+          setTimeout(function(){            
+              $scope.synchronizedTestResultsChart('synchronizedChartTestResults');           
+          }, 100);    
+        }
+         else{
+          $scope.noDataAvailableTestResults = true;
+         // $scope.removeAllCharts();
+        }  
+      }).catch(function(){
+         $scope.noDataAvailableTestResults = true;
+      });
+      //$scope.noDataAvailableTestReults = false;
+      //$scope.synchronizedChart('synchronizedChartTestReults');
+
+           
+    };
+
+
     $scope.setSynchronizedChart = function(divId){
        Highcharts.setOptions({
             global: {
@@ -1108,6 +1194,191 @@ angular.module('hillromvestApp')
           } 
         });
                
+    };
+    $scope.synchronizedTestResultsChart = function(divId){
+       
+        // Get the data. The contents of the data file can be viewed at
+        divId = (divId) ? divId : "synchronizedChartTestResults";
+        $("#"+divId).empty();
+        $scope.setSynchronizedChart(divId);
+        function syncExtremes(e) {
+              var thisChart = this.chart;
+
+        if (e.trigger !== 'syncExtremes') { // Prevent feedback loop
+            Highcharts.each(Highcharts.charts, function(chart) {
+              if(chart && chart.renderTo.offsetParent && chart.renderTo.offsetParent.id === "synchronizedChartTestResults"){ 
+                if (chart !== thisChart) {
+                  if (chart.xAxis[0].setExtremes) { // It is null while updating
+                    chart.xAxis[0].setExtremes(e.min, e.max, undefined, false, {
+                      trigger: 'syncExtremes'
+                    });
+                  }
+                }
+              }
+            });
+          }
+        }
+        
+        $.each($scope.chartDataTestResults.datasets, function(i, dataset) { 
+        dataset.plotLines = {};
+       // dataset.plotLines.max = 10;
+        //dataset.plotLines.min = 14;        
+         // var  minRange = (dataset.plotLines.max) ? dataset.plotLines.max : dataset.plotLines.min;
+         // var yMaxPlotLine = dataset.plotLines.max;
+         // var yMinPlotLine = dataset.plotLines.min;
+          var noOfDataPoints = ($scope.chartDataTestResults.xData)? $scope.chartDataTestResults.xData.length: 0;
+          var daysInterval = getDaysIntervalInChart($scope.complianceXAxisLabelCount);         
+          
+          $('<div class="chart">')
+            .appendTo('#'+divId)
+            .highcharts({
+              credits: {
+                enabled: false
+              },
+              chart: {
+                marginLeft: 40, 
+                //spacingTop: 30,
+                spacingBottom: 30,                
+                backgroundColor:  "#e6f1f4",
+                height:375
+              },
+              title: {
+                text: dataset.name + " " +dataset.unit,
+                align: 'left',
+                margin: 25,
+                x: 30,
+                style:{
+                  color: dataset.color,
+                  fontWeight: 'bold',
+                  fontSize: '14px'
+                }                
+              },             
+              legend: {
+                enabled: false
+              },
+              xAxis: {
+                type: 'datetime',
+                crosshair: true,
+                minPadding: 0,
+                maxPadding: 0,
+                startOnTick: false,
+                endOnTick: false,                
+                events: {
+                  setExtremes: syncExtremes
+                },
+                labels: {
+                  style: {
+                    color: '#525151',
+                    fontWeight: 'bold'
+                  },
+                  formatter: function() {
+                    return Highcharts.dateFormat("%m/%d/%Y", this.value);
+                  }
+                },
+                lineWidth: 2,
+                units: [
+                  ['day', [daysInterval]]
+                ] 
+              },
+              yAxis: {
+                gridLineColor: '#FF0000',
+                gridLineWidth: 0,
+                lineWidth:2,
+               // minRange: minRange,
+                min: 0,
+                allowDecimals:false,
+                title: {
+                  text: null
+                },
+                plotLines: [{
+                    //value: yMinPlotLine,
+                    color: '#99cf99',
+                    dashStyle: 'Dash',
+                    width: 1,                    
+                    label: {
+                        align: "right",
+                        text: 'Min Threshold',
+                        y: -5,
+                        x: -10,
+                        style: {
+                            color: '#c1c1c1',
+                            font: '10px Helvetica',
+                            fontWeight: 'normal'
+                        }/*,
+                        textAlign: "left"*/
+                    }
+                }, {
+                    //value: yMaxPlotLine,
+                    color: '#f19999',
+                    dashStyle: 'Dash',
+                    width: 1,                    
+                    label: {
+                      align: "right",
+                      text: 'Max Threshold',
+                      y: -5,
+                      x: -10,
+                      style: {
+                          color: '#c1c1c1',
+                          font: '10px Helvetica',
+                          fontWeight: 'normal'
+                      }/*,
+                        textAlign: "left"*/
+                    }
+                }],
+              },
+              plotOptions: {  
+                line: {
+                    lineWidth: 3,
+                    softThreshold: false,
+                    marker: {
+                          enabled: true,
+                           radius: $scope.markerRadius
+                    },
+                    states: {
+                        hover: {
+                            enabled: false
+                        }                    
+                    } //putting down x-axis, when we have zero for all y-axis values
+                }
+              },
+              tooltip: { 
+                enabled: true, 
+                positioner: function () {
+                    return {
+                        x: this.chart.chartWidth - this.label.width, // right aligned
+                        y: -1 // align to title
+                    };
+                },            
+                // formatter: function() {
+                //   var s = '<div style="font-size:12x;font-weight: bold; padding-bottom: 3px;">'+  this.point.toolText.dateText +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div>';                         
+                //   s += '<div style="font-size:10px; font-weight: bold; width:100%"><div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left"> ' + this.point.series.name + '</div> ' 
+                //   + '<div style="padding:5px;width:10%"><b>' + this.point.y + '</b></div></div>';
+                //   s += '</div>';
+                //   return s;
+                // },
+                borderWidth: 0, 
+                backgroundColor: 'none',
+                pointFormat: '<span style="color:{point.series.color}"> {series.name}: {point.y}</span>',//'{point.series.name}' + ' : ' +'{point.y}',
+                headerFormat: '',
+                shadow: false,
+                style: {
+                    fontSize: '14px'
+                },
+                hideDelay: 0//,
+                //useHTML: true                
+              },
+              series: [{
+                data: dataset.data,
+                name: dataset.name,
+                type: dataset.type,
+                color: dataset.color,                
+                fillOpacity: 0.3,
+                 tooltip: {
+                    valueSuffix: ' ' + dataset.unit
+                }
+              }]
+            });
+        });
     };
 
     $scope.synchronizedChart = function(divId){
@@ -2095,6 +2366,7 @@ angular.module('hillromvestApp')
         $scope.getHMRGraph();
         $scope.getAdhereneTrendGraph();
         $scope.getComplianceGraph();
+        $scope.getTestResultsGraph();
     };
 
     $scope.getYearChart = function(){
@@ -2651,6 +2923,7 @@ $scope.adherencetrendData.push(new Object({"adherenceTrends": [] , "protocols": 
     $scope.getAdherenceTrend = function(){
       $scope.isHMR = false;
       $scope.isCompliance = false;
+      $scope.isTestResults = false;
       $scope.isAdherenceTrend = true;
       if(($scope.adherenceTrendData.length == 0) || ($scope.adherenceTrendData==null))
       {
@@ -2662,20 +2935,29 @@ $scope.adherencetrendData.push(new Object({"adherenceTrends": [] , "protocols": 
       }
       $scope.selectChart($scope.fromDate);
     };
+     $scope.getTestResults = function(){
+      $scope.isHMR = false;
+      $scope.isCompliance = false;
+      $scope.isAdherenceTrend = false;
+      $scope.isTestResults = true;
+      $scope.getTransmissionDateForPatient($scope.patientId);
+      $scope.selectChart($scope.fromDate);
+    };
 
     $scope.getHMR = function(){
       $scope.isHMR = true;
       $scope.isCompliance = false;
+      $scope.isTestResults = false;
       $scope.isAdherenceTrend = false;
       $scope.noDataStatus = true;
       $scope.getTransmissionDateForPatient($scope.patientId);
       $scope.selectChart($scope.fromDate);
-
     };
 
     $scope.getCompliance = function(){
       $scope.isHMR = false;
       $scope.isCompliance = true;
+      $scope.isTestResults = false;
       $scope.isAdherenceTrend = false;
       $scope.noDataStatus = true;
         $scope.getTransmissionDateForPatient($scope.patientId);
@@ -2691,12 +2973,14 @@ $scope.adherencetrendData.push(new Object({"adherenceTrends": [] , "protocols": 
     $scope.removeAllCharts = function(){
      $("#HMRGraph").empty();
       $("#synchronizedChart").empty(); 
-      $("#AdherenceTrendGraph").empty();    
+      $("#AdherenceTrendGraph").empty();
+      $("#synchronizedChartTestResults").empty();    
     };
     $scope.removeAllCharts1 = function(){
      $("#HMRGraph1").empty();
       $("#synchronizedChart1").empty(); 
-      $("#AdherenceTrendGraph").empty();    
+      $("#AdherenceTrendGraph").empty();
+      $("#synchronizedChartTestResults").empty();    
     };
 
     $scope.viewProtocol = function(protcols){
@@ -4926,6 +5210,7 @@ $scope.getComplianceGraph1 = function(){
         $scope.removeAllCharts1();    
         $scope.getHMRGraph1();
         $scope.getComplianceGraph1();
+        $scope.getTestResultsGraph();
     };
 
 }

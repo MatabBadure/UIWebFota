@@ -199,20 +199,21 @@
 	<!-- adding new section for graphs -->
 	<div class="col-md-16 col-sm-16 padding0" ng-class="{'pointer-no-event': !isGraphLoaded, 'pointer-fill-event': isGraphLoaded}">
 		<div class="bar_graph_header">
-			<div class="col-md-5 col-sm-7 left_header_barchart padding0">
-				<div class="row" style = "width:500px">
+			<div class="col-md-8 col-sm-7 left_header_barchart padding0">
+				<div class="row" style = "width:600px">
 					<ul class="nav nav-pills">
 					<li><a href="" ng-class="{active: isCompliance}" ng-click="isGraphLoaded  && getCompliance()" translate="graph.protocolGraph"></a></li>
 					<li><a ng-class="{active: isHMR }" href="" ng-click="isGraphLoaded && getHMR()" translate="graph.hmr-data"></a></li>
 					<li><a ng-class="{active: isAdherenceTrend}" href="" ng-click="isGraphLoaded && getAdherenceTrend()" translate="graph.adherenceTrend"></a></li>
+					<li><a ng-class="{active: isTestResults}" href="" ng-click="isGraphLoaded && getTestResults()" translate="graph.testResults"></a></li>
 				</ul>
 				</div>
 			</div>
-			<div class="col-md-11 col-sm-9 right_header_barchart">
+			<div class="col-md-8 col-sm-9 right_header_barchart">
 				<ul class="nav nav-pills pull-right ">
-					<li role="presentation" class=""><a href="" ng-class="{active: durationRange === 'Day'}" ng-hide="complianceGraph" ng-click="isGraphLoaded && getDayChart()" translate="graph.day"></a></li>
-					<li role="presentation" class=""><a ng-class="{active: durationRange === 'Week'}" href="" ng-click="isGraphLoaded && getWeekChart()">Week</a></li>
-					<li role="presentation" class=""><a href="" ng-class="{active: durationRange === 'Month'}" ng-click="isGraphLoaded && getMonthChart()" translate="graph.month"></a></li>
+					<li role="presentation" class="" ng-if="!isTestResults"><a href="" ng-class="{active: durationRange === 'Day'}" ng-hide="complianceGraph" ng-click="isGraphLoaded && getDayChart()" translate="graph.day"></a></li>
+					<li role="presentation" class="" ng-if="!isTestResults"><a ng-class="{active: durationRange === 'Week'}" href="" ng-click="isGraphLoaded && getWeekChart()">Week</a></li>
+					<li role="presentation" class="" ng-if="!isTestResults"><a href="" ng-class="{active: durationRange === 'Month'}" ng-click="isGraphLoaded && getMonthChart()" translate="graph.month"></a></li>
 					<li role="presentation" class=""><a href="" ng-class="{active: durationRange === 'Year'}" ng-click="isGraphLoaded && getYearChart()" translate="graph.year"></a></li>
 					<li role="presentation" class="" id="dp1"><a href="" date-range-picker class="date-picker" ng-model="dates" parentEl="#dp1" options="opts" ><span class="icon-calendar"></span></a></li>
 				</ul>
@@ -276,20 +277,23 @@
 		<div id = "NodataDiv" class="graph_nodata" ng-if = "isAdherenceTrend && noDataAvailableForAdherence">
 		<span class="noData_text"> No Therapy Transmission Received for This Day!</span>
 	</div>
+	<div id = "NodataDiv" class="graph_nodata" ng-if = "isTestResults && noDataAvailableTestResults">
+		<span class="noData_text"> No Data for This Day!</span>
+	</div>
 
-	<div class="complianceGraphPrim_wrapper" ng-show="!noDataAvailableForHMR" id="lineGraphWrapper" >
+	<div class="complianceGraphPrim_wrapper" ng-show="!noDataAvailableForHMR && isHMR" id="lineGraphWrapper" >
 		<div id="HMRGraph" ng-class="{ 'hide-chart': !isHMR, 'show-chart': isHMR}"  ng-show="forhidingVestHmrGraph">
 		</div>
 	</div><!-- ng-show="!noDataAvailable && !isHMR"-->
 
-	<div class="complianceGraphPrim_wrapper" ng-show="!noDataAvailableForHMR1" id="lineGraphWrapper1" >
+	<div class="complianceGraphPrim_wrapper" ng-show="!noDataAvailableForHMR1 && isHMR" id="lineGraphWrapper1" >
 		<div id="HMRGraph1" ng-class="{ 'hide-chart': !isHMR, 'show-chart': isHMR}"  ng-show="forhidingMonarchHmrGraph">
 		</div>
 	</div>
 	
 	
 
-	<div class="complianceGraphPrim_wrapper" ng-show="!noDataAvailableForAdherence" id="lineGraphWrapper1" >
+	<div class="complianceGraphPrim_wrapper" ng-show="!noDataAvailableForAdherence && isAdherenceTrend" id="lineGraphWrapper1" >
 		<div id="AdherenceTrendGraph" ng-class="{ 'hide-chart': !isAdherenceTrend, 'show-chart': isAdherenceTrend}" >
 		</div>
 	
@@ -297,14 +301,19 @@
 
 	
     <div id="complianceGraphWrapper" >
-		<div id="complianceGraphPrim" ng-show="!noDataAvailable" class="complianceGraphPrim_wrapper" >
+		<div id="complianceGraphPrim" ng-show="!noDataAvailable && isCompliance" class="complianceGraphPrim_wrapper" >
 			<div id="synchronizedChart" class="col-md-16" ng-class="{ 'hide-chart': !isCompliance, 'show-chart': isCompliance}" ng-show="forhidingVestProtocolGraph">
 			</div>
 		</div>
 	</div>
    
-	<div id="complianceGraphPrim" ng-show="!noDataAvailable1" class="complianceGraphPrim_wrapper" >
+	<div id="complianceGraphPrim" ng-show="!noDataAvailable1 && isCompliance" class="complianceGraphPrim_wrapper" >
 		<div id="synchronizedChart1" class="col-md-16" ng-class="{ 'hide-chart': !isCompliance, 'show-chart': isCompliance}" ng-show="forhidingMonarchProtocolGraph">
+		</div>
+	</div>
+
+	<div id="testResultsGraphPrim" ng-show="!noDataAvailableTestResults && isTestResults" class="complianceGraphPrim_wrapper" >
+		<div id="synchronizedChartTestResults" class="col-md-16" ng-class="{ 'hide-chart': !isTestResults, 'show-chart': isTestResults}">
 		</div>
 	</div>
 	
@@ -444,6 +453,7 @@
 		<div id= "png-container" ></div>
 		<canvas id="canvas" width="1800px" height="1800px" class="graph-canvas-hide"></canvas>
 		<canvas id="HMRCCanvas" width=1300 height=350 style="display:none;"></canvas>
+		<canvas id="TestResultsCanvas" width="1800px" height="1800px" style="display:none;"></canvas>
 
 
 <div ng-if="deleteNoteModal" class="modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true">
