@@ -219,7 +219,7 @@ angular.module('hillromvestApp')
                 return deferred.promise;
             },
             //Gimp-32
-             reActivateAccountAgeLimit: function(data){
+             reActivateAccountAgeLimit: function(data, callback){
                   var deferred = $q.defer();
                 var cb = callback || angular.noop;
                 AuthServerProvider.reActivateAccountAgeLimit(data).then(function (data) {

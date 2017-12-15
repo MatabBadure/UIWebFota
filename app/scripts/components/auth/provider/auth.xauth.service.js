@@ -115,7 +115,7 @@ angular.module('hillromvestApp')
             },
             //Gimp-32  
             reActivateAccountAgeLimit: function(data){
-                var url = URL.changeSecurityQuestion;
+                var url = URL.resetAccountAgeLimit;
                 return $http.put(url, data, {
                     headers: headerService.getHeader()
                 }).success(function (data, status, headers, config) {
