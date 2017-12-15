@@ -6537,7 +6537,7 @@ angular.module('hillromvestApp')
                     ]
                 }
             })
-.state('rcadminPatientDiagnostic', {
+            .state('rcadminPatientDiagnostic', {
                 parent: 'patientUser',
                 url: '/{patientId}/patientDiagnostic',
                 data: {

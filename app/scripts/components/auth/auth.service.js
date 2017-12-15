@@ -217,7 +217,22 @@ angular.module('hillromvestApp')
                     return cb(err);
                 }.bind(this));
                 return deferred.promise;
-            }            
+            },
+            //Gimp-32
+             reActivateAccountAgeLimit: function(data, callback){
+                  var deferred = $q.defer();
+                var cb = callback || angular.noop;
+                AuthServerProvider.reActivateAccountAgeLimit(data).then(function (data) {
+                    deferred.resolve(data);
+                    return cb(data);
+                }).catch(function (err) {
+                    //this.logout();
+                    deferred.reject(err);
+                    return cb(err);
+                }.bind(this));
+                return deferred.promise;
+             }  
+             //End of Gimp-32       
         };
 
         return auth;
