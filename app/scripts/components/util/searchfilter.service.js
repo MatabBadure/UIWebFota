@@ -108,6 +108,13 @@ angular.module('hillromvestApp')
             searchFilter.userList = searchFilters.hcpList;
             return searchFilter;
         }
+        this.initSearchFiltersForUsers = function() {
+            var searchFilter = {};
+            searchFilter.isActive = true;
+            searchFilter.isInActive = false;
+            searchFilter.userList = searchFilters.hcpList;
+            return searchFilter;
+        }
 
 
         this.getFilterStringForPatient = function(filter) {
@@ -439,6 +446,17 @@ angular.module('hillromvestApp')
             }, {
                 name: "Monarch",
                 value:"MONARCH"
+            }];
+            return options;
+              };
+
+              this.processClinicTypeOptions = function(){
+              var options = [{
+                type_code_value: "Parent",
+                type_code_value:"Parent"
+            }, {
+                type_code_value: "Satellite",
+                type_code_value:"Satellite"
             }];
             return options;
               };
