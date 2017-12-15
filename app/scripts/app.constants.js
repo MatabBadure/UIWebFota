@@ -181,5 +181,6 @@ angular.module('hillromvestApp')
 	'hcpAdvancedSearch' : 'api/advancedSearch/hcp?&page=PAGE&per_page=PER_PAGE&sort_by=SORT_OPTION&asc=true',
 	'matchingDiagnosticList' : 'api/patient/diagnosis?searchString=SEARCH_STRING',
 	'timezoneList' : 'api/user/timezone',
-	'deleteUserWithReason' : '/api/user//ID'
+	'deleteUserWithReason' : '/api/user//ID',
+	'resetAccountAgeLimit' : 'api/account/re_register'
 });
