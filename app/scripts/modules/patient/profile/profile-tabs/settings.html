@@ -8,6 +8,25 @@
     <span translate="noti-verbiage"></span>
   </div>
 
+<div class="col-md-16 col-sm-16 dashboard__manage-view--header"> 
+   <div class="row margin-bottom20">
+        <div class="col-md-3 col-sm-3 header--type pull-left-mob width120">
+          <span>Notification Type</span>
+        </div>
+        <div class="col-md-1 col-sm-3 header--type pull-left-mob width120" style="padding-left:0px">
+          <span>On/Off</span>
+        </div>
+        <div class="col-md-3 header--type pull-left-mob width120" style="padding-left:0px">
+          <span>Frequency</span>
+        </div>
+        <div class="col-md-2 col-sm-3 header--type none" style="padding-left:0px">
+          <span>Description</span>
+        </div>
+      </div>
+        <div class="clr"></div>
+      </div>
+
+
   <div class="col-md-16 col-sm-16 user-notification">
     <div class="row margin-bottom20">
       <div class="col-md-3 col-sm-4 pull-left-mob padding0">
@@ -16,7 +35,16 @@
       <div class="col-md-1 col-sm-1 user-notification--icon text-right-mob" ng-click="toggleNotification('missedTherapyNotification');">
         <span ng-class="patientUser.missedTherapyNotification ? 'icon-toggle-on active': 'icon-toggle-off'"></span>
       </div>
-      <div class="col-md-12 col-sm-11 user-notification--icon" translate="noti_patient.miss-therapy-new">
+      <div class="col-md-3 col-sm-1 user-notification--icon text-right-mob" ng-click="toggleNotification('missedTherapyNotification');">
+        <div class="col-md-6 dashboard__form__input reset-padding selected-box-container" style="height:40px">
+              <div class="custom-dropdown">
+                <select name="title" ng-readonly="validateADMINorASP()"  ng-disabled="isDisable" ng-model="data.MissedTherapyNotificationFreq" ng-options="option for option in dayOptions" ng-change="notificationFrequency('missedTherapyNotification')" ng-selected="{{option === patient.title}}">
+                </select>
+              </div>
+            </div>
+      </div>
+
+      <div class="col-md-8 col-sm-5 user-notification--icon" translate="noti_patient.miss-therapy-new">
         You will receive a notification if you missed a day of therapy.
       </div>
     </div>
@@ -28,7 +56,15 @@
       <div class="col-md-1 col-sm-1 user-notification--icon text-right-mob" ng-click="toggleNotification('nonHMRNotification');">
         <span ng-class="patientUser.nonHMRNotification ? 'icon-toggle-on active': 'icon-toggle-off'"></span>
       </div>
-       <div class="col-md-12 col-sm-11 user-notification--icon" translate="noti_patient.hmr-non-adher-new">
+      <div class="col-md-3 col-sm-1 user-notification--icon text-right-mob" ng-click="toggleNotification('nonHMRNotification');">
+        <div class="col-md-6 dashboard__form__input reset-padding selected-box-container" style="height:40px">
+              <div class="custom-dropdown">
+                <select name="title" ng-readonly="validateADMINorASP()"  ng-disabled="isDisable1" ng-model="data.NonHMRNotificationFreq" ng-options="option for option in dayOptions" ng-change="notificationFrequency('nonHMRNotification')" ng-selected="{{option === patient.title}}">
+                </select>
+              </div>
+            </div>
+      </div>
+       <div class="col-md-8 col-sm-5 user-notification--icon" translate="noti_patient.hmr-non-adher-new">
        You will receive a notification if you did not complete the therapy time in your protocol 
       </div>
     </div>
@@ -40,7 +76,15 @@
       <div class="col-md-1 col-sm-1 user-notification--icon text-right-mob" ng-click="toggleNotification('settingDeviationNotification');">
         <span ng-class="patientUser.settingDeviationNotification ? 'icon-toggle-on active': 'icon-toggle-off'"></span>
       </div>
-       <div class="col-md-12 col-sm-11 user-notification--icon" translate="noti_patient.setting-dev-new">
+      <div class="col-md-3 col-sm-1 user-notification--icon text-right-mob" ng-click="toggleNotification('settingDeviationNotification');">
+        <div class="col-md-6 dashboard__form__input reset-padding selected-box-container" style="height:40px">
+              <div class="custom-dropdown">
+                <select name="title" ng-readonly="validateADMINorASP()" ng-disabled="isDisable2" ng-model="data.SettingDeviationNotificationFreq" ng-options="option for option in dayOptions" ng-change="notificationFrequency('settingDeviationNotification')" ng-selected="{{option === patient.title}}">
+                </select>
+              </div>
+            </div>
+      </div>
+       <div class="col-md-8 col-sm-5 user-notification--icon" translate="noti_patient.setting-dev-new">
         You will receive a notification if your frequency setting was 15% below protocol 
       </div>
     </div>
@@ -52,9 +96,27 @@
       <div class="col-md-1 col-sm-1 user-notification--icon text-right-mob" ng-click="toggleNotification('messageNotification');">
         <span ng-class="patientUser.messageNotification ? 'icon-toggle-on active': 'icon-toggle-off'"></span>
       </div>
-       <div class="col-md-12 col-sm-11 user-notification--icon" translate="noti_patient.message-new">
+      <div class="col-md-3 col-sm-1 user-notification--icon text-right-mob" ng-click="toggleNotification('messageNotification');">
+        <div class="col-md-6 dashboard__form__input reset-padding selected-box-container" style="height:40px">
+              <div class="custom-dropdown">
+                <select name="title" ng-readonly="validateADMINorASP()" ng-disabled="isDisable3" ng-model="data.MessageNotificationFreq" ng-options="option for option in dayOptions" ng-change="notificationFrequency('messageNotification')" ng-selected="{{option === patient.title}}">
+                </select>
+              </div>
+            </div>
+      </div>
+       <div class="col-md-8 col-sm-5 user-notification--icon" translate="noti_patient.message-new">
         You will receive a notification if you have one or more messages in your inbox
       </div>
     </div>
   </div>
 </div>
+
+
+
+
+<!-- <div class="col-md-10 dashboard__form__input reset-padding selected-box-container">
+              <div class="custom-dropdown">
+                <select name="title" ng-readonly="validateADMINorASP()" ng-model="patient.title" ng-options="option for option in ['Mr.', 'Mrs.', 'Ms.']" ng-selected="{{option === patient.title}}">
+                </select>
+              </div>
+            </div> -->
