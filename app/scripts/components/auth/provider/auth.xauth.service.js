@@ -117,7 +117,10 @@ angular.module('hillromvestApp')
             reActivateAccountAgeLimit: function(data){
                 var url = URL.resetAccountAgeLimit;
                 return $http.put(url, data, {
-                    headers: headerService.getHeader()
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    }
                 }).success(function (data, status, headers, config) {
                     return {'response' : data, 'status' : status, 'headers' : headers, 'config' : config};
                 }).error(function (data, status, headers, config) {
