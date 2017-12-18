@@ -23,6 +23,7 @@ angular.module('hillromvestApp')
       $scope.isAdvancedFilters = false; 
       $scope.isZipcode = false;
       $scope.expandedSign = false;
+      $scope.linkHCPFlag = false;
     /*check the state from the route*/
     $scope.init = function() {
       var currentRoute = $state.current.name;
@@ -52,6 +53,7 @@ angular.module('hillromvestApp')
         $scope.initPaginationVars();
         $scope.initClinicAssoctPatients($stateParams.clinicId);
       } else if(currentRoute === 'clinicAssociatedHCP' || currentRoute === 'clinicAssociatedHCPRcadmin' || currentRoute === 'clinicAssociatedHCPAssociate' || currentRoute === 'clinicAssociatedHCPCustomerService'){
+        $scope.linkHCPFlag = true;
         $scope.initClinicAssoctHCPs($stateParams.clinicId);
       }
       else if(currentRoute === 'clinicAdmin' || currentRoute === 'clinicAdminRcadmin' || currentRoute === 'clinicAdminAssociate' || currentRoute === 'clinicAdminCustomerService'){
@@ -103,7 +105,14 @@ angular.module('hillromvestApp')
       var filter = searchFilterService.getFilterStringForHCP($scope.searchFilter);
       $scope.perPageCount = 10;
       if(!$scope.searchItem){
-        $scope.searchItem = '';
+        if($scope.linkHCPFlag){
+          //var searchItem = window.encodeURIComponent("%%");
+        $scope.searchItem =  window.encodeURIComponent("%%");
+        }
+        else{
+          $scope.searchItem = '';
+        }
+        
       }
       clinicService.getAssociatedHCPstoClinic($stateParams.clinicId, $scope.searchItem, filter, sortConstant.lastName, $scope.currentPageIndex, $scope.perPageCount).then(function(response) {
         $scope.associatedHcps = response.data;
@@ -124,12 +133,12 @@ angular.module('hillromvestApp')
       $scope.isAssociateHCP = false;
       $scope.searchFilter = searchFilterService.initSearchFiltersForClinic();
       var filter = searchFilterService.getFilterStringForHCP($scope.searchFilter);
-      var searchString = '';
+      var searchString = window.encodeURIComponent("%%");
       $scope.currentPageIndex = 1;
       $q.all([
         clinicService.getAssociatedHCPstoClinic(clinicId, searchString, filter, sortConstant.lastName, $scope.currentPageIndex, 10),
         clinicService.getClinicAssoctHCPs(clinicId),
-        clinicService.getHCPsWithClinicName()
+        clinicService.getHCPsWithClinicName(searchString)
       ]).then(function(response) {
         if(response){
           if(response[0]){
