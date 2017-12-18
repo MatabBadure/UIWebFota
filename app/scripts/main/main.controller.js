@@ -392,7 +392,7 @@ else {
 			});
 		};
 		$window.onfocus = function(){				
-			if($state.current.name && $state.current.name !== 'activationLinkErrorPage'  && $state.current.name !== 'postActivateLogin' && $state.current.name !== 'activateUser' && $state.current.name !== 'home' &&  $state.current.name !== 'login' && $state.current.name !== 'requestReset' && $state.current.name !== 'finishReset' && $state.current.name !== 'authenticate'){
+			if($state.current.name && $state.current.name !== 'activationLinkErrorPage'  && $state.current.name !== 'postActivateLogin' && $state.current.name !== 'activateUser' && $state.current.name !== 'home' &&  $state.current.name !== 'login' && $state.current.name !== 'requestReset' && $state.current.name !== 'finishReset' && $state.current.name !== 'authenticate' && $state.current.name !== 'resetAccount' && $state.current.name !== 'passwordReset'){
 				$scope.isUserChanged();
 			}
 		};
