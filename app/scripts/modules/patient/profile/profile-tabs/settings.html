@@ -33,12 +33,12 @@
         <span class="user-notification--head" translate="noti_patient.miss-therapy-days"></span>
       </div>
       <div class="col-md-1 col-sm-1 user-notification--icon text-right-mob" ng-click="toggleNotification('missedTherapyNotification');">
-        <span ng-class="patientUser.missedTherapyNotification ? 'icon-toggle-on active': 'icon-toggle-off'"></span>
+        <span ng-class="data.missedTherapyNotification ? 'icon-toggle-on active': 'icon-toggle-off'"></span>
       </div>
-      <div class="col-md-3 col-sm-1 user-notification--icon text-right-mob" ng-click="toggleNotification('missedTherapyNotification');">
+      <div class="col-md-3 col-sm-1 user-notification--icon text-right-mob">
         <div class="col-md-6 dashboard__form__input reset-padding selected-box-container" style="height:40px">
               <div class="custom-dropdown">
-                <select name="title" ng-readonly="validateADMINorASP()"  ng-disabled="isDisable" ng-model="data.MissedTherapyNotificationFreq" ng-options="option for option in dayOptions" ng-change="notificationFrequency('missedTherapyNotification')" ng-selected="{{option === patient.title}}">
+                <select name="title" ng-readonly="validateADMINorASP()"  ng-disabled="!data.missedTherapyNotification" ng-model="data.MissedTherapyNotificationFreq" ng-options="option for option in dayOptions" ng-change="notificationFrequency()" ng-selected="{{option === patient.title}}">
                 </select>
               </div>
             </div>
@@ -56,10 +56,10 @@
       <div class="col-md-1 col-sm-1 user-notification--icon text-right-mob" ng-click="toggleNotification('nonHMRNotification');">
         <span ng-class="patientUser.nonHMRNotification ? 'icon-toggle-on active': 'icon-toggle-off'"></span>
       </div>
-      <div class="col-md-3 col-sm-1 user-notification--icon text-right-mob" ng-click="toggleNotification('nonHMRNotification');">
+      <div class="col-md-3 col-sm-1 user-notification--icon text-right-mob">
         <div class="col-md-6 dashboard__form__input reset-padding selected-box-container" style="height:40px">
               <div class="custom-dropdown">
-                <select name="title" ng-readonly="validateADMINorASP()"  ng-disabled="isDisable1" ng-model="data.NonHMRNotificationFreq" ng-options="option for option in dayOptions" ng-change="notificationFrequency('nonHMRNotification')" ng-selected="{{option === patient.title}}">
+                <select name="title" ng-readonly="validateADMINorASP()"  ng-disabled="!data.nonHMRNotification" ng-model="data.NonHMRNotificationFreq" ng-options="option for option in dayOptions" ng-change="notificationFrequency()" ng-selected="{{option === patient.title}}">
                 </select>
               </div>
             </div>
@@ -76,10 +76,10 @@
       <div class="col-md-1 col-sm-1 user-notification--icon text-right-mob" ng-click="toggleNotification('settingDeviationNotification');">
         <span ng-class="patientUser.settingDeviationNotification ? 'icon-toggle-on active': 'icon-toggle-off'"></span>
       </div>
-      <div class="col-md-3 col-sm-1 user-notification--icon text-right-mob" ng-click="toggleNotification('settingDeviationNotification');">
+      <div class="col-md-3 col-sm-1 user-notification--icon text-right-mob">
         <div class="col-md-6 dashboard__form__input reset-padding selected-box-container" style="height:40px">
               <div class="custom-dropdown">
-                <select name="title" ng-readonly="validateADMINorASP()" ng-disabled="isDisable2" ng-model="data.SettingDeviationNotificationFreq" ng-options="option for option in dayOptions" ng-change="notificationFrequency('settingDeviationNotification')" ng-selected="{{option === patient.title}}">
+                <select name="title" ng-readonly="validateADMINorASP()" ng-disabled="!data.settingDeviationNotification" ng-model="data.SettingDeviationNotificationFreq" ng-options="option for option in dayOptions" ng-change="notificationFrequency()" ng-selected="{{option === patient.title}}">
                 </select>
               </div>
             </div>
@@ -98,9 +98,8 @@
       </div>
       <div class="col-md-3 col-sm-1 user-notification--icon text-right-mob" ng-click="toggleNotification('messageNotification');">
         <div class="col-md-6 dashboard__form__input reset-padding selected-box-container" style="height:40px">
-              <div class="custom-dropdown">
-                <select name="title" ng-readonly="validateADMINorASP()" ng-disabled="isDisable3" ng-model="data.MessageNotificationFreq" ng-options="option for option in dayOptions" ng-change="notificationFrequency('messageNotification')" ng-selected="{{option === patient.title}}">
-                </select>
+              <div class="custom-text">
+                <input type="text" name="title" ng-disabled="true" placeholder="Daily" style="height:32px; width:136px; text-align:center;">
               </div>
             </div>
       </div>
@@ -110,13 +109,3 @@
     </div>
   </div>
 </div>
-
-
-
-
-<!-- <div class="col-md-10 dashboard__form__input reset-padding selected-box-container">
-              <div class="custom-dropdown">
-                <select name="title" ng-readonly="validateADMINorASP()" ng-model="patient.title" ng-options="option for option in ['Mr.', 'Mrs.', 'Ms.']" ng-selected="{{option === patient.title}}">
-                </select>
-              </div>
-            </div> -->
