@@ -852,6 +852,31 @@ angular.module('hillromvestApp')
       pdf.save('VisiView™.pdf'); 
     },1000); 
   }
+  this.exportHMRCGraphAsPDFForAdherenceTrendHavingNoTestResults = function(divId, canvasId, fromDate, toDate, patientInfo, clinicDetails){
+   var pdf = this.getPdf();
+    var pageHeight = pdf.internal.pageSize.height;
+    var pageWidth = pdf.internal.pageSize.width;
+    if(clinicDetails && clinicDetails !== null){
+      this.setHeaderAsClinic(pdf, fromDate, toDate, clinicDetails);
+    }else{
+      pdf = this.setHeader(pdf, fromDate, toDate, pdfServiceConstants.text.pdfpageHeader);
+    }
+    pdf = this.addPatientInfoToHMRCReport(pdf, patientInfo, fromDate, toDate); 
+    pdf = this.addAllSvgsToPDF(pdf, canvasId, divId, 30, 350, 540, 100, pdfServiceConstants.text.protocolGraph);
+    pdf = this.setFooter(pdf, pdf.internal.pageSize.height-80);
+    pdf = this.setPageNumber(pdf, "1", "2");  
+    pdf.addPage(); 
+    pdf = this.setTopHeader(pdf, fromDate, toDate);
+    pdf = this.addSvgToPDF(pdf, canvasId, "HMRGraph", 30, 150, 540, 200, pdfServiceConstants.text.hmrStatistics); 
+    pdf = this.addSvgToPDF(pdf, canvasId, "AdherenceTrendGraph", 30, 420, 540, 200, pdfServiceConstants.text.adherenceTrend);
+    pdf = this.setFooter(pdf, pdf.internal.pageSize.height-80);
+    pdf.addPage(); 
+    pdf = this.setFooter(pdf, pdf.internal.pageSize.height-80, true);
+    pdf = this.setPageNumber(pdf, "2", "2");
+    setTimeout(function(){     
+      pdf.save('VisiView™.pdf'); 
+    },1000); 
+  }
 
   this.setTextForNoGraph = function(pdf)
   {

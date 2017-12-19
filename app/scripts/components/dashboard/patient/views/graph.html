@@ -252,11 +252,17 @@
 		    </div>
 		</div>
 		<div class="col-md-9 col-sm-6 right_header_barchart">
-		<div class="pull-right week_date_container">
+		<div class="pull-right week_date_container" ng-if="!isTestResults">
 			<span ng-if="fromDate !== toDate">
 					<span class="date">{{fromDate}}</span> - <span class="date">{{toDate}}</span>
 			</span>
 			<span ng-if="fromDate === toDate" class="date">{{fromDate}}</span>
+		</div>
+		<div class="pull-right week_date_container" ng-if="isTestResults">
+			<span ng-if="fromDate !== toDate">
+					<span class="date">{{fromDateTestResults}}</span> - <span class="date">{{toDateTestResults}}</span>
+			</span>
+			<span ng-if="fromDateTestResults === toDateTestResults" class="date">{{fromDateTestResults}}</span>
 		</div>
       </div>
 	</div>

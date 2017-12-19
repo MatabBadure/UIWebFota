@@ -47,7 +47,7 @@ angular.module('hillromvestApp')
       $scope.forhidingMonarchHmrGraph = false;
       $scope.oneDayData = true;
       $scope.oneDayData1 = true;
-      $scope.noDataAvailableTestReults = true;
+      $scope.noDataAvailableTestResults = true;
 
       $scope.initCount("");
             var currentRoute = $state.current.name;
@@ -299,11 +299,18 @@ angular.module('hillromvestApp')
       }
     else{
       $scope.fromTimeStamp = new Date(picker.startDate._d).getTime();
+      $scope.fromTimeStampTestResults = new Date(picker.startDate._d).getTime();
       $scope.toTimeStamp = new Date(picker.endDate._d).getTime();
+      $scope.toTimeStampTestResults = new Date(picker.endDate._d).getTime();
       $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
+      $scope.fromDateTestResults = dateService.getDateFromTimeStamp($scope.fromTimeStampTestResults,patientDashboard.dateFormat,'/');
       $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');
+      $scope.toDateTestResults = dateService.getDateFromTimeStamp($scope.toTimeStampTestResults,patientDashboard.dateFormat,'/');
       if ($scope.fromDate === $scope.toDate ) {
         $scope.fromTimeStamp = $scope.toTimeStamp;
+      }
+      if ($scope.fromDateTestResults === $scope.toDateTestResults ) {
+        $scope.fromTimeStampTestResults = $scope.toTimeStampTestResults;
       }
     }
     };
@@ -442,6 +449,12 @@ angular.module('hillromvestApp')
       $scope.fromTimeStamp = dateService.getnDaysBackTimeStamp(durationInDays);;
       $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
          }
+    };
+    $scope.calculateTimeDurationTestResults = function(durationInDays) {
+      $scope.toTimeStampTestResults = new Date().getTime();
+      $scope.toDateTestResults = dateService.getDateFromTimeStamp($scope.toTimeStampTestResults,patientDashboard.dateFormat,'/');
+      $scope.fromTimeStampTestResults = dateService.getnDaysBackTimeStamp(durationInDays);
+      $scope.fromDateTestResults = dateService.getDateFromTimeStamp($scope.fromTimeStampTestResults,patientDashboard.dateFormat,'/');
     };
     /*this should initiate the list of caregivers associated to the patient*/
     $scope.initPatientCaregiver = function(){
@@ -1047,13 +1060,14 @@ angular.module('hillromvestApp')
       });
     };
 
+//Gimp-14 
     $scope.getTestResultsGraph = function(){
      // response.data = searchFilterService.gettestResultsData();
-     if(!($scope.duration === 'Custom')){
-     $scope.calculateTimeDuration(365,'NotAdherenceScoreHistory');
+     if($scope.durationRange !== 'Custom'){
+     $scope.calculateTimeDurationTestResults(365);
    }
-      patientDashBoardService.getTestReultsGraphData($scope.patientId, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.durationRange).then(function(response){
-      $scope.testReultsChartData = response.data;
+      patientDashBoardService.getTestResultsGraphData($scope.patientId, dateService.getDateFromTimeStamp($scope.fromTimeStampTestResults,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStampTestResults,patientDashboard.serverDateFormat,'-'), $scope.durationRange).then(function(response){
+      $scope.TestResultsChartData = response.data;
         var responseData = response.data;              
         var xData = [];
         $scope.chartDataTestResults = {};
@@ -1125,8 +1139,8 @@ angular.module('hillromvestApp')
       }).catch(function(){
          $scope.noDataAvailableTestResults = true;
       });
-      //$scope.noDataAvailableTestReults = false;
-      //$scope.synchronizedChart('synchronizedChartTestReults');
+      //$scope.noDataAvailableTestResults = false;
+      //$scope.synchronizedChart('synchronizedChartTestResults');
 
            
     };
@@ -2372,6 +2386,7 @@ angular.module('hillromvestApp')
     $scope.getYearChart = function(){
       $scope.durationRange = "Year";
       $scope.calculateTimeDuration(365,'NotAdherenceScoreHistory');
+      $scope.calculateTimeDurationTestResults(365);
      // $scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
       $scope.getFirstTransmissionDate();
       $scope.drawHMRCChart();
@@ -2381,6 +2396,7 @@ angular.module('hillromvestApp')
     $scope.getMonthChart = function(){
       $scope.durationRange = "Month";
       $scope.calculateTimeDuration(30,'NotAdherenceScoreHistory');
+      $scope.calculateTimeDurationTestResults(30);
       //$scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
       $scope.getFirstTransmissionDate();
       $scope.drawHMRCChart();
@@ -2390,6 +2406,7 @@ angular.module('hillromvestApp')
     $scope.getWeekChart = function(){
       $scope.durationRange = "Week";
       $scope.calculateTimeDuration(6,'NotAdherenceScoreHistory');
+      $scope.calculateTimeDurationTestResults(6);
       //$scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
       $scope.getFirstTransmissionDate();
       $scope.drawHMRCChart();
@@ -2715,8 +2732,11 @@ angular.module('hillromvestApp')
       
        if(($scope.getDeviceTypeforBothIcon() == 'MONARCH')|| ($scope.getDeviceTypeforBothIcon() == 'VEST')){
 
-        if($scope.hmrChartData.length===0) {
+        if($scope.hmrChartData.length===0 && $scope.adherenceTrendData.length===0 && $scope.$scope.compilencechartData.length===0) {
           exportutilService.exportHMRCGraphAsPDFForAdherenceTrendHavingNoHMR("synchronizedChart", "HMRCCanvas", $scope.fromDate, $scope.toDate, $scope.patientInfo, clinicDetail);
+        }
+         if($scope.TestResultsChartData.length === 0 && ($scope.hmrChartData.length !== 0 && $scope.adherenceTrendData.length !== 0)) {
+          exportutilService.exportHMRCGraphAsPDFForAdherenceTrendHavingNoTestResults("synchronizedChart", "HMRCCanvas", $scope.fromDate, $scope.toDate, $scope.patientInfo, clinicDetail);
         }
         else {
           exportutilService.exportHMRCGraphAsPDFForAdherenceTrend("synchronizedChart", "HMRCCanvas", $scope.fromDate, $scope.toDate, $scope.patientInfo, clinicDetail);
