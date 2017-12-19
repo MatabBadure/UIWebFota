@@ -28,7 +28,7 @@ angular.module('hillromvestApp')
         var filter = ($stateParams.filter).split("+");
       }
       else var filter = "";
-      $scope.searchFilter = searchFilterService.initSearchFiltersForPatientCA(filter, true);
+      $scope.searchFilter = searchFilterService.initSearchFiltersForPatient(filter, true);
       $scope.currentPageIndex = 1;
       $scope.perPageCount = 10;
       $scope.pageCount = 0;
@@ -297,7 +297,7 @@ $scope.searchPatientsOnQueryChange = function(){
     }else {
       $scope.currentPageIndex = 1;
     }
-    $scope.searchFilter = ($scope.searchFilter && $scope.searchFilter != undefined) ? $scope.searchFilter :searchFilterService.initSearchFiltersForPatientCA();
+    $scope.searchFilter = ($scope.searchFilter && $scope.searchFilter != undefined) ? $scope.searchFilter :searchFilterService.initSearchFiltersForPatient();
     var filter = searchFilterService.getFilterStringForPatient($scope.searchFilter);
     if(filter || $scope.searchItem){
       if(!filter.length && $scope.searchItem){
