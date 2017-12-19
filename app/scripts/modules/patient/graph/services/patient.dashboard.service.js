@@ -199,7 +199,7 @@ angular.module('hillromvestApp')
         });
       },
 
-      getTestReultsGraphData: function(id, fromTimeStamp, toTimeStamp, duration, date){
+      getTestResultsGraphData: function(id, fromTimeStamp, toTimeStamp, duration, date){
         var url = URL.getTestResultsGraphData.replace('ID',id).replace('FROMDATE',fromTimeStamp).replace('TODATE',toTimeStamp).replace('DURATION',duration);
        // url = url +'&deviceType='+localStorage.getItem('deviceType');    
         return $http.get(url, {

@@ -1078,7 +1078,7 @@ angular.module('hillromvestApp')
           xData = responseData.xAxis.categories; 
           responseData.xAxis.xLabels = []; 
           var startDay = (responseData.xAxis && responseData.xAxis.categories.length > 0) ? responseData.xAxis.categories[0].split(" "): null;  
-          $scope.complianceXAxisLabelCount = 0;
+          $scope.testResultsXAxisLabelCount = 0;
           angular.forEach(responseData.xAxis.categories, function(x, key){              
             // this is for year view or custom view having datapoints more than 7
             // x-axis will be plotted accordingly, chart type will be datetime
@@ -1086,14 +1086,15 @@ angular.module('hillromvestApp')
             $scope.isSameDay = ($scope.isSameDay && (curDay[0] === startDay[0]) )? true : false;  
             if(curDay[0] !== startDay[0]){
               startDay[0] = curDay[0];
-              $scope.complianceXAxisLabelCount++;
+              $scope.testResultsXAxisLabelCount++;
             }
             var dateTextLabel = Highcharts.dateFormat("%m/%d/%Y",dateService.convertToTimestamp(x));
             dateTextLabel += (Highcharts.dateFormat("%I:%M %p",dateService.convertToTimestamp(x)))? ' ( ' + Highcharts.dateFormat("%I:%M %p",dateService.convertToTimestamp(x)) + ' )' : '';
             
             responseData.xAxis.xLabels.push(dateTextLabel);            
               xData[key] = dateService.convertToTimestamp(x);                          
-            });       
+            });
+            console.log("xdata",xData)       
 
           angular.forEach(responseData.series, function(s, key1){
             var marker = {};
@@ -1241,8 +1242,8 @@ angular.module('hillromvestApp')
          // var yMaxPlotLine = dataset.plotLines.max;
          // var yMinPlotLine = dataset.plotLines.min;
           var noOfDataPoints = ($scope.chartDataTestResults.xData)? $scope.chartDataTestResults.xData.length: 0;
-          var daysInterval = getDaysIntervalInChart($scope.complianceXAxisLabelCount);         
-          
+          var daysInterval = getDaysIntervalInChart($scope.testResultsXAxisLabelCount);         
+          console.log("thiss",this);
           $('<div class="chart">')
             .appendTo('#'+divId)
             .highcharts({
@@ -1637,7 +1638,6 @@ angular.module('hillromvestApp')
              else{
               $scope.oneDayData = true;
             }    
-            console.log("$scope.oneDayData",$scope.oneDayData) 
             angular.forEach($scope.hmrChartData.xAxis.categories, function(x, key){              
               // this is for year view or custom view having datapoints more than 7
               // x-axis will be plotted accordingly, chart type will be datetime
@@ -2732,7 +2732,7 @@ angular.module('hillromvestApp')
       
        if(($scope.getDeviceTypeforBothIcon() == 'MONARCH')|| ($scope.getDeviceTypeforBothIcon() == 'VEST')){
 
-        if($scope.hmrChartData.length===0 && $scope.adherenceTrendData.length===0 && $scope.$scope.compilencechartData.length===0) {
+        if($scope.hmrChartData.length===0 && $scope.adherenceTrendData.length===0 && $scope.compilencechartData.length===0) {
           exportutilService.exportHMRCGraphAsPDFForAdherenceTrendHavingNoHMR("synchronizedChart", "HMRCCanvas", $scope.fromDate, $scope.toDate, $scope.patientInfo, clinicDetail);
         }
          if($scope.TestResultsChartData.length === 0 && ($scope.hmrChartData.length !== 0 && $scope.adherenceTrendData.length !== 0)) {
