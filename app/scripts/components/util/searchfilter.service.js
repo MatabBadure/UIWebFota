@@ -103,7 +103,7 @@ angular.module('hillromvestApp')
 
         this.initSearchFiltersForHCP = function() {
             var searchFilter = {};
-            searchFilter.isActive = false;
+            searchFilter.isActive = true;
             searchFilter.isInActive = false;
             searchFilter.userList = searchFilters.hcpList;
             return searchFilter;
