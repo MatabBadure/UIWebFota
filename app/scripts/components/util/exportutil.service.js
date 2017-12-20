@@ -749,7 +749,7 @@ angular.module('hillromvestApp')
   /*
   For Adherence Trend
   */
-  this.exportHMRCGraphAsPDFForAdherenceTrend = function(divId, canvasId, fromDate, toDate, patientInfo, clinicDetails){
+  this.exportHMRCGraphAsPDFForAdherenceTrend = function(divId, canvasId, fromDate, toDate, patientInfo, clinicDetails, hmrGraphData, adherenceGraphData, protocolGraphData, testResultsGraphData){
     var pdf = this.getPdf();
     var pageHeight = pdf.internal.pageSize.height;
     var pageWidth = pdf.internal.pageSize.width;
@@ -759,19 +759,73 @@ angular.module('hillromvestApp')
       pdf = this.setHeader(pdf, fromDate, toDate, pdfServiceConstants.text.pdfpageHeader);
     }
     pdf = this.addPatientInfoToHMRCReport(pdf, patientInfo, fromDate, toDate); 
+    var page = 1;
+    var totalPages = 2;
+    console.log("protocolGraphData",protocolGraphData)
+    if(protocolGraphData){
+    if(protocolGraphData.series.length){
+      page++;
+      totalPages++;
     pdf = this.addAllSvgsToPDF(pdf, canvasId, divId, 30, 350, 540, 100, pdfServiceConstants.text.protocolGraph);
-    pdf = this.setFooter(pdf, pdf.internal.pageSize.height-80);
-    pdf = this.setPageNumber(pdf, "1", "3");  
+     pdf = this.setFooter(pdf, pdf.internal.pageSize.height-80);
+    pdf = this.setPageNumber(pdf, page.toString(), totalPages.toString());  
+     pdf.addPage(); 
+    pdf = this.setTopHeader(pdf, fromDate, toDate);
+  }
+}
+    if(hmrGraphData){
+    if(hmrGraphData.series.length){
+       if(page == 1){
+         pdf.addPage();
+    pdf = this.setTopHeader(pdf, fromDate, toDate);
+      }
+      page++;
+      if(!(totalPages>3)){
+        totalPages++;
+      }
+      
+    pdf = this.addSvgToPDF(pdf, canvasId, "HMRGraph", 30, 150, 540, 200, pdfServiceConstants.text.hmrStatistics); 
     pdf.addPage(); 
     pdf = this.setTopHeader(pdf, fromDate, toDate);
-    pdf = this.addSvgToPDF(pdf, canvasId, "HMRGraph", 30, 150, 540, 200, pdfServiceConstants.text.hmrStatistics); 
+
+  }
+}
+if(adherenceGraphData){
+  if(adherenceGraphData.series.length){
+    page++;
+     if(page == 1){
+         pdf.addPage();
+    pdf = this.setTopHeader(pdf, fromDate, toDate);
+      }
+    if(!(totalPages>3)){
+        totalPages++;
+      }
     pdf = this.addSvgToPDF(pdf, canvasId, "AdherenceTrendGraph", 30, 420, 540, 200, pdfServiceConstants.text.adherenceTrend);
-    pdf = this.setFooter(pdf, pdf.internal.pageSize.height-80);
-    pdf = this.setPageNumber(pdf, "2", "3"); 
-    pdf.addPage(); 
+  pdf = this.setFooter(pdf, pdf.internal.pageSize.height-80);
+    pdf = this.setPageNumber(pdf, page.toString(), totalPages.toString()); 
+    pdf.addPage();
+    pdf = this.setTopHeader(pdf, fromDate, toDate);
+  }
+}
+    
+    if(testResultsGraphData){
+    if(testResultsGraphData.series.length){
+      if(page == 1){
+         pdf.addPage();
+    pdf = this.setTopHeader(pdf, fromDate, toDate);
+      }
+    page++; 
+    if(!(totalPages>3)){
+        totalPages++;
+      }
     pdf = this.addAllSvgsToPDF(pdf, "TestResultsCanvas", "synchronizedChartTestResults", 30, 120, 540, 200, pdfServiceConstants.text.testResults); 
-    pdf = this.setFooter(pdf, pdf.internal.pageSize.height-80, true);
-    pdf = this.setPageNumber(pdf, "3", "3");
+     pdf = this.setFooter(pdf, pdf.internal.pageSize.height-80, true);
+    pdf = this.setPageNumber(pdf, page.toString(), totalPages.toString());
+    pdf.addPage();
+    pdf = this.setTopHeader(pdf, fromDate, toDate);
+    }
+  }
+   
     setTimeout(function(){     
       pdf.save('VisiView™.pdf'); 
     },1000); 

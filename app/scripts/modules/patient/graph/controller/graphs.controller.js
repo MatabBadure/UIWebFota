@@ -20,6 +20,7 @@ angular.module('hillromvestApp')
     };
     var isIEBrowser = $scope.isIE();
     $scope.init = function() {
+      $scope.noDataforPDF = false;
       $scope.currentPageIndex = 1;
       $scope.pageCount = 0;
       $scope.nextDate= new Date();
@@ -1053,10 +1054,12 @@ angular.module('hillromvestApp')
           }, 100);          
         } else{
           $scope.noDataAvailable = true;
+          $scope.compilencechartData = "";
          // $scope.removeAllCharts();
         }       
       }).catch(function(){
         $scope.noDataAvailable = true;
+        $scope.compilencechartData = "";
       });
     };
 
@@ -1135,10 +1138,12 @@ angular.module('hillromvestApp')
         }
          else{
           $scope.noDataAvailableTestResults = true;
+          $scope.TestResultsChartData = {}
          // $scope.removeAllCharts();
         }  
       }).catch(function(){
          $scope.noDataAvailableTestResults = true;
+         $scope.TestResultsChartData = {};
       });
       //$scope.noDataAvailableTestResults = false;
       //$scope.synchronizedChart('synchronizedChartTestResults');
@@ -1210,12 +1215,75 @@ angular.module('hillromvestApp')
         });
                
     };
+    $scope.setSynchronizedChartTestResults = function(divId){
+       Highcharts.setOptions({
+            global: {
+                useUTC: false
+            }
+        });        
+         /**
+         * In order to synchronize tooltips and crosshairs, override the
+         * built-in events with handlers defined on the parent element.
+         */
+         
+        $("#"+divId).bind('mousemove touchmove touchstart mouseover', function(e) {
+          var chart,
+          point,
+          i,
+          event;
+          var charts = Highcharts.charts;               
+          for (i = 0; i < Highcharts.charts.length; i = i + 1) {
+            chart = Highcharts.charts[i];            
+            if(chart && chart.renderTo.offsetParent && chart.renderTo.offsetParent.id === "synchronizedChartTestResults"){              
+              event = chart.pointer.normalize(e.originalEvent); // Find coordinates within the chart
+              point = chart.series[0].searchPoint(event, true); // Get the hovered point
+
+              if (point) {
+                chart.xAxis[0].crosshair = true;
+                point.onMouseOver(); // Show the hover marker
+                chart.tooltip.refresh(point); // Show the tooltip
+                chart.xAxis[0].drawCrosshair(event, point); // Show the crosshair
+              }
+            }
+          }
+          if( $('.highcharts-button').length > 0 ){
+            $('.highcharts-button').show();
+          }
+        });
+
+        //$("#"+divId).bind('mouseleave', function(e) { 
+        //  $(".button").unbind('click').click(
+        $("#"+divId).unbind('mouseleave').mouseleave(function(e) {                    
+          e.stopPropagation();         
+          var chart,
+          point,
+          i,
+          event;
+
+          var charts = Highcharts.charts;   
+          for (i = 0; i < Highcharts.charts.length; i = i + 1) {
+            chart = Highcharts.charts[i];
+            if(chart &&  chart.renderTo.offsetParent && chart.renderTo.offsetParent.id === "synchronizedChartTestResults"){               
+              event = chart.pointer.normalize(e.originalEvent);
+              point = chart.series[0].searchPoint(event, true);
+
+              point.onMouseOut(); 
+              chart.tooltip.hide(point);
+              chart.xAxis[0].hideCrosshair(); 
+              if( $('.highcharts-button').length > 0 ){
+                $('.highcharts-button').hide();
+              }
+            }
+          } 
+        });
+               
+    };
     $scope.synchronizedTestResultsChart = function(divId){
        
         // Get the data. The contents of the data file can be viewed at
         divId = (divId) ? divId : "synchronizedChartTestResults";
         $("#"+divId).empty();
-        $scope.setSynchronizedChart(divId);
+        $scope.setSynchronizedChartTestResults(divId);
         function syncExtremes(e) {
               var thisChart = this.chart;
 
@@ -1292,7 +1360,7 @@ angular.module('hillromvestApp')
                 },
                 lineWidth: 2,
                 units: [
-                  ['day', [daysInterval]]
+                  ['day']
                 ] 
               },
               yAxis: {
@@ -1683,10 +1751,12 @@ angular.module('hillromvestApp')
         } else{
           console.log(" $scope.noDataAvailableForHMR");
           $scope.noDataAvailableForHMR = true;
+          $scope.hmrChartData = "";
           //$scope.removeAllCharts();
         }
       }).catch(function(){
         $scope.noDataAvailableForHMR = true;
+        $scope.hmrChartData = "";
       });
     };
 
@@ -1753,10 +1823,12 @@ angular.module('hillromvestApp')
           }, 100);          
         } else{
           $scope.noDataAvailableForAdherence = true;
+          $scope.adherenceTrendData = "";
           //$scope.removeAllCharts();
         }
       }).catch(function(){
         $scope.noDataAvailableForAdherence = true;
+        $scope.adherenceTrendData = "";
          // $scope.removeAllCharts();
       });
     };
@@ -2732,7 +2804,11 @@ angular.module('hillromvestApp')
       
        if(($scope.getDeviceTypeforBothIcon() == 'MONARCH')|| ($scope.getDeviceTypeforBothIcon() == 'VEST')){
 
-        if($scope.hmrChartData.length===0 && $scope.adherenceTrendData.length===0 && $scope.compilencechartData.length===0) {
+        if($scope.hmrChartData.length===0 && $scope.adherenceTrendData.length===0 && $scope.compilencechartData.length===0 && $scope.TestResultsChartData.length === 0) {
+          $scope.noDataforPDF = true;
+        }
+         /*
+          if($scope.hmrChartData.length===0 && $scope.adherenceTrendData.length===0 && $scope.compilencechartData.length===0 && $scope.TestResultsChartData.length === 0) {
           exportutilService.exportHMRCGraphAsPDFForAdherenceTrendHavingNoHMR("synchronizedChart", "HMRCCanvas", $scope.fromDate, $scope.toDate, $scope.patientInfo, clinicDetail);
         }
          if($scope.TestResultsChartData.length === 0 && ($scope.hmrChartData.length !== 0 && $scope.adherenceTrendData.length !== 0)) {
@@ -2740,8 +2816,11 @@ angular.module('hillromvestApp')
         }
         else {
           exportutilService.exportHMRCGraphAsPDFForAdherenceTrend("synchronizedChart", "HMRCCanvas", $scope.fromDate, $scope.toDate, $scope.patientInfo, clinicDetail);
-        }
-
+        }*/
+        else{
+          $scope.noDataforPDF = false;
+     exportutilService.exportHMRCGraphAsPDFForAdherenceTrend("synchronizedChart", "HMRCCanvas", $scope.fromDate, $scope.toDate, $scope.patientInfo, clinicDetail, $scope.hmrChartData, $scope.adherenceTrendData, $scope.compilencechartData, $scope.TestResultsChartData);
+}
       }else if(($scope.getDeviceTypeforBothIcon() == 'ALL')){
          exportutilService.exportHMRCGraphAsPDFForAdherenceTrendForAll("synchronizedChart","synchronizedChart1", "HMRCCanvas", $scope.fromDate, $scope.toDate, $scope.patientInfo, clinicDetail,$scope.hmrChartData1);
       }    
@@ -3394,10 +3473,12 @@ $scope.getComplianceGraph = function(){
           }, 100);          
         } else{
           $scope.noDataAvailable = true;
+          $scope.compilencechartData = {};
          // $scope.removeAllCharts();
         }       
       }).catch(function(){
         $scope.noDataAvailable = true;
+        $scope.compilencechartData = {};
       });
     };
 
@@ -3725,10 +3806,12 @@ $scope.getComplianceGraph = function(){
         } else{
           console.log(" $scope.noDataAvailableForHMR");
           $scope.noDataAvailableForHMR = true;
+          $scope.hmrChartData = "";
           //$scope.removeAllCharts();
         }
       }).catch(function(){
         $scope.noDataAvailableForHMR = true;
+        $scope.hmrChartData = "";
       });
     };
 
@@ -3796,10 +3879,12 @@ $scope.getComplianceGraph = function(){
           }, 100);          
         } else{
           $scope.noDataAvailableForAdherence = true;
+          $scope.adherenceTrendData = "";
          // $scope.removeAllCharts();
         }
       }).catch(function(){
         $scope.noDataAvailableForAdherence = true;
+        $scope.adherenceTrendData = "";
          // $scope.removeAllCharts();
       });
     };
@@ -4744,10 +4829,12 @@ $scope.getComplianceGraph1 = function(){
           }, 100);          
         } else{
           $scope.noDataAvailable1 = true;
+          $scope.compilencechartData1 = "";
          // $scope.removeAllCharts();
         }       
       }).catch(function(){
         $scope.noDataAvailable1 = true;
+        $scope.compilencechartData1 = "";
       });
     };
 
@@ -4825,10 +4912,12 @@ $scope.getComplianceGraph1 = function(){
         } else{
           console.log(" $scope.noDataAvailableForHMR1");
           $scope.noDataAvailableForHMR1 = true;
+          $scope.hmrChartData1 = "";
          // $scope.removeAllCharts();
         }
       }).catch(function(){
       $scope.noDataAvailableForHMR1 = true;
+      $scope.hmrChartData1 = "";
       });
     };
 
