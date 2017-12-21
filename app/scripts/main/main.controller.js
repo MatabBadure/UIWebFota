@@ -14,6 +14,15 @@ angular.module('hillromvestApp')
 				$scope.getunreadcount(clinicid);
 			}	
 	}
+	$rootScope.getTimezonePreference = function(){
+	var timeZone = localStorage.getItem('timestampPreference');
+	if(timeZone){
+		return timeZone;
+	}
+	else{
+		return 'America/Chicago';
+	}
+	}
 	$rootScope.getDeviceType = function(){
 		var patientId = "";
 		$rootScope.userRole = StorageService.get('logged').role;

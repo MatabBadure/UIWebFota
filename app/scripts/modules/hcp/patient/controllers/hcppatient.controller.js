@@ -4,10 +4,11 @@ angular.module('hillromvestApp')
   var searchOnLoad = true; 
    $scope.DisableAddProtocol = false; 
     $scope.displayFlag = true;
-          $scope.customPointsChecker = 0;
-          $scope.lastdeviceType = "";   
+          $scope.customPointsChecker = 0;  
+          $scope.lastdeviceType = "";  
+          $scope.preferredTimezone = $scope.getTimezonePreference();  
 	$scope.init = function(){  
-  $scope.searchItem = "";   
+     $scope.searchItem = "";
     if($state.current.name === 'hcppatientDemographic'){
       $scope.getPatientInfo($stateParams.patientId, $scope.setEditMode);
     }else if($state.current.name === 'hcppatientdemographicEdit'){
@@ -236,9 +237,13 @@ angular.module('hillromvestApp')
   $scope.getDevices = function(patientId){
     patientService.getDevices(patientId).then(function(response){
       angular.forEach(response.data.deviceList, function(device){
-        device.createdDate = dateService.getDateByTimestamp(device.createdDate);
-        device.lastModifiedDate = dateService.getDateByTimestamp(device.lastModifiedDate);
-         device.createdDate = dateService.getDateByTimestamp(device.createdDate);
+        //Gimp-31
+         var dateInitial1 = moment.tz(device.createdDate,patientDashboard.serverDateTimeZone);
+        var dateFinal1 = moment.tz(dateInitial1,$scope.preferredTimezone).format('LL');
+        device.createdDate = dateFinal1;
+         var dateInitial = moment.tz(device.lastModifiedDate,patientDashboard.serverDateTimeZone);
+        var dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format('LL');
+        device.lastModifiedDate = dateFinal;
       });
       $scope.devices = response.data.deviceList;
     }).catch(function(response){
@@ -308,7 +313,9 @@ $scope.searchPatientsOnQueryChange = function(){
       $scope.patients = response.data;      
       angular.forEach($scope.patients, function(patient){
         patient.dob = (patient.dob) ? dateService.getDateFromTimeStamp(patient.dob, patientDashboard.dateFormat, '/') : patient.dob;
-        patient.lastTransmissionDate = (patient.lastTransmissionDate) ? dateService.getDateFromYYYYMMDD(patient.lastTransmissionDate, '/') : patient.lastTransmissionDate;
+        var dateInitial = moment.tz(patient.lastTransmissionDate,patientDashboard.serverDateTimeZone);
+      var dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYY);
+        patient.lastTransmissionDate = dateFinal;
       });
       $scope.total = (response.headers()['x-total-count']) ? response.headers()['x-total-count'] :$scope.patients.length; 
       $scope.pageCount = Math.ceil($scope.total / 10);

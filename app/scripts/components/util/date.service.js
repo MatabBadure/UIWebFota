@@ -56,6 +56,7 @@ angular.module('hillromvestApp')
         return new Date(d).getMonthWeek;
       },
       getDateByTimestamp: function(data){
+        console.log("data",data);
         var date = new Date(data);
         return this.getMonthName(date) + ' ' + this.getDay(date.getDate()) + ', ' + this.getYear(date.getFullYear(date))
       },
@@ -376,7 +377,26 @@ angular.module('hillromvestApp')
     if (minutes < 10) {minutes = "0"+minutes;}
     //if (seconds < 10) {seconds = "0"+seconds;}
     return hours+' hours '+minutes +' minutes';
-    }
+    },
   //End of Gimp-18  
+  //Gimp-31
+     getinMomentFormat: function(x,fromFormat){
+      if(x && fromFormat){
+      switch(fromFormat){
+        case "mm/dd/yyyy hh:mm:ss":
+        var res = x.split(" ");
+        var digits = res[0].split('/');
+        return (digits[2] + '-' + digits[0] + '-' + digits[1] + ' ' + res[1]);
+        break;
+        case "mm/dd/yyyy":
+        var digits = x.split('/');
+        return (digits[2] + '-' + digits[0] + '-' + digits[1]);
+        break;       
+        default:
+        return x;
+      };
+    }
+    }
+  //End of Gimp-31  
     };
   }]);
