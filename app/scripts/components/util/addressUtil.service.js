@@ -57,9 +57,9 @@ angular.module('hillromvestApp')
       },
 
        getAllStatesAdv: function(countries) {
-        //var data = {"country": countries};
-        var url = URL.stateByCountryCode.replace("COUNTRY",countries);
-        return $http.get(url,{
+        var data = {"country": countries};
+        var url = URL.stateByCountryCode;
+         return $http.post(url, data,{
           headers: headerService.getHeader()
         }).success(function (response) {
             return response;
@@ -75,6 +75,7 @@ angular.module('hillromvestApp')
             return response;
         });
       }
+      
       
     };
   }]);

@@ -118,7 +118,7 @@
             <span class=""></span>
           </div>
           <div class="col-md-10 dashboard__form--input reset-padding">
-              <input type="text" validate-on-blur class="form-control" name="zip" maxlength="5" ng-pattern="/^(?=.*[1-9].*)[0-9]{5}$/" ng-model="associateCareGiver.zipcode">
+              <input type="text" validate-on-blur class="form-control" name="zip" maxlength="7" ng-pattern='/^(\d{5}(-\d{4})?|[A-Z]\d[A-Z] *\d[A-Z]\d)$/' ng-model="associateCareGiver.zipcode">
                <div ng-show="(form.zip.$dirty && form.zip.$showValidationMessage && form.zip.$invalid) || submitted">
                 <span class="has-error" ng-show="form.zip.$error.pattern" translate="error.zipcode.invalid">
                 </span>
@@ -154,6 +154,22 @@
               <span class="has-error" ng-show="form.primaryPhone.$error.mask" translate="error.primaryPhone.mask"></span>
             </div>
           </div>
+        </div>
+      </div>
+
+       <div class="col-md-16 reset-padding margin-top">
+          <div class="col-md-7 reset-padding">
+            <div class="col-md-6 dashboard__form--label reset-padding">
+              <span class="" translate="patient.timestamp-preference"></span>
+            </div>
+            <div class="col-md-10 dashboard__form--input reset-padding">
+              <div class="col-md-10 dashboard__form__input--sec-option reset-padding">
+              <div class="custom-dropdown">
+                <select class="security-select" ng-model="associateCareGiver.timeZone" ng-options="key as key + '  &nbsp : &nbsp ' + value for (key , value) in timezoneList"></select>
+            </div>
+            </div>
+              </div>
+            </div>
         </div>
       </div>
       <div class="clr"></div>

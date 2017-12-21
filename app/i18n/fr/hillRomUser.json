@@ -100,7 +100,7 @@
         "update-button-text": "Update",
         "required-field": "* Required Fields",
         "delete": {
-            "warning": "Deactivate Clinic",
+            "warning": "Deactivate User",
             "message": "You are deactivating User from the system and User will no longer be able to access Hill-Rom application. Are you sure to continue?"
         },
         "activate":{

@@ -73,7 +73,7 @@
               <span class="advanced-filters">Country</span>
 
       <div class="benchmarking__form__input selected-box-container" >
-      <div class="custom-dropdown disable-isteven-multiselect" id="country-dropdown">
+      <div class="custom-dropdown" id="country-dropdown">
         <div 
           isteven-multi-select
           input-model="countries"
@@ -88,14 +88,13 @@
           search-property="name"
           max-height="250px"
           on-open="onOpen()"
-          on-close="onClose()"
+          on-close="onCloseCountry()"
           on-item-click= "onItemclick()"
           on-select-all="onSelectAll()"
           on-select-none="onSelectNone()"
           on-reset="onReset()"
           on-clear="onClear()"
           on-search-change="onSearchChange()"
-          is-disabled = true
           class="advanced-dropdown-country"
         >
         </div>
@@ -166,7 +165,7 @@
       
       <span class="advanced-filters">Zip Code</span>
                   <div class="dashboard__form--input reset-padding" style="width:200px">
-                          <input type="text" validate-on-blur class="form-control" name="zip" maxlength="5" ng-pattern="/^(?=.*[1-9].*)[0-9]{5}$/" ng-model="patientAdvancedFilters.zipcode" ng-blur="getCityStateforAdvancedFilters(patientAdvancedFilters.zipcode)" ng-enter="" ng-keyup="clearMessages()">
+                          <input type="text" validate-on-blur class="form-control" name="zip" maxlength="7" ng-pattern='/^(\d{5}(-\d{4})?|[A-Z]\d[A-Z] *\d[A-Z]\d)$/' ng-model="patientAdvancedFilters.zipcode" ng-blur="getCityStateforAdvancedFilters(patientAdvancedFilters.zipcode)" ng-enter="" ng-keyup="clearMessages()">
               <div ng-show="(form2.zip.$dirty && form2.zip.$showValidationMessage && form2.zip.$invalid) || submitted" style="width:200px">
                 <span class="has-error" ng-show="form2.zip.$error.pattern && !form2.zip.$error.required" translate="error.zipcode.pattern"></span>
               </div>
@@ -392,7 +391,7 @@
  <div  class="col-md-16 col-sm-16 padding10 survey_grey_color" style="padding-bottom:20px">
         <div class="col-md-16 margin-top reset-padding">
         <div class="">
-          <button type="submit" ng-disabled="hmrRangeFlag || dateFlag || maxHmrInvalid || minHmrInvalid" ng-click="advancedSearchPatients(true)" class="hillrom-btn btn-primary btn-margin-left float-right">Search Patients</button>
+          <button type="submit" ng-disabled="hmrRangeFlag || dateFlag || maxHmrInvalid || minHmrInvalid || serviceError || (form2.zip.$error.pattern && !form2.zip.$error.required)" ng-click="advancedSearchPatients(true)" class="hillrom-btn btn-primary btn-margin-left float-right">Search Patients</button>
           <button type="submit" ng-click="initAdvancedFilters()" class="hillrom-btn btn-primary btn-margin-left float-right">Reset Filters</button>
         </div>
       </div>

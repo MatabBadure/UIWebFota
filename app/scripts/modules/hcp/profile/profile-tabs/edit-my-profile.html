@@ -202,7 +202,7 @@
             <div class="col-md-6 dashboard__form--label reset-padding" translate="profile.zipcode">
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
-              <input class="" type="text" name="zipcode" validate-on-blur ng-model="user.zipcode" maxlength="5" ng-pattern="/^(?=.*[1-9].*)[0-9]{5}$/" ng-readonly="validateSuperAdmin()" required>
+              <input class="" type="text" name="zipcode" validate-on-blur ng-model="user.zipcode" maxlength="7" ng-pattern='/^(\d{5}(-\d{4})?|[A-Z]\d[A-Z] *\d[A-Z]\d)$/' ng-readonly="validateSuperAdmin()" required>
               <div ng-show="(form.zipcode.$dirty && form.zipcode.$showValidationMessage && form.zipcode.$invalid) || submitted">
                 <span class="has-error" ng-show="form.zipcode.$error.required" translate="error.zipcode.required"></span>
                 <span class="has-error" ng-show="form.zipcode.$error.pattern" translate="error.zipcode.pattern"></span>
@@ -225,6 +225,16 @@
                 <select class="security-select" name="question" validate-on-blur  ng-model="resetAccount.question" ng-options="question.question for question in questions">
                   <option value="">-- select a security question --</option>
                 </select>
+            </div>
+            </div>
+          </div>
+          <div class="col-md-7 reset-padding col-md-offset-2">
+            <div class="col-md-6 dashboard__form--label reset-padding">
+              <span class="" translate="profile.timestamp-preference"></span>
+            </div>
+            <div class="col-md-10 dashboard__form__input--sec-option reset-padding">
+              <div class="custom-dropdown">
+                <select class="security-select" ng-model="user.timeZone" ng-options="key as key + '  &nbsp : &nbsp ' + value for (key , value) in timezoneList"></select>
             </div>
             </div>
           </div>

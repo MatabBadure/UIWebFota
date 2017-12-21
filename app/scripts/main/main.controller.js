@@ -14,6 +14,15 @@ angular.module('hillromvestApp')
 				$scope.getunreadcount(clinicid);
 			}	
 	}
+	$rootScope.getTimezonePreference = function(){
+	var timeZone = localStorage.getItem('timestampPreference');
+	if(timeZone){
+		return timeZone;
+	}
+	else{
+		return 'America/Chicago';
+	}
+	}
 	$rootScope.getDeviceType = function(){
 		var patientId = "";
 		$rootScope.userRole = StorageService.get('logged').role;
@@ -392,7 +401,7 @@ else {
 			});
 		};
 		$window.onfocus = function(){				
-			if($state.current.name && $state.current.name !== 'activationLinkErrorPage'  && $state.current.name !== 'postActivateLogin' && $state.current.name !== 'activateUser' && $state.current.name !== 'home' &&  $state.current.name !== 'login' && $state.current.name !== 'requestReset' && $state.current.name !== 'finishReset' && $state.current.name !== 'authenticate'){
+			if($state.current.name && $state.current.name !== 'activationLinkErrorPage'  && $state.current.name !== 'postActivateLogin' && $state.current.name !== 'activateUser' && $state.current.name !== 'home' &&  $state.current.name !== 'login' && $state.current.name !== 'requestReset' && $state.current.name !== 'finishReset' && $state.current.name !== 'authenticate' && $state.current.name !== 'resetAccount' && $state.current.name !== 'passwordReset'){
 				$scope.isUserChanged();
 			}
 		};

@@ -4,7 +4,7 @@
       <div class="dashbord-nav__primary pull-left">
         <span class="dashbord-nav__primary--title" translate="doctor.home.manageLabel">Manage HCP</span>
       </div>
-      <div ng-if="((userRole !== 'ASSOCIATES') && (role !== 'CUSTOMER_SERVICES'))" class="dashbord-nav__secondary create-user navbar-right cursor-pointer" ng-click="createDoctor()">
+      <div ng-if="((role !== 'ASSOCIATES') && (role !== 'CUSTOMER_SERVICES'))" class="dashbord-nav__secondary create-user navbar-right cursor-pointer" ng-click="createDoctor()">
         <span class="" translate="doctor.home.createNewLabel">Create New</span>
         <span class="icon-plus-icon add-new"></span>
       </div>
@@ -27,9 +27,18 @@
           </div>
         </div> -->
       </div>
+      <div class="row close expanded head_txt" >
+                    <div class="col-md-2 col-sm-2 col-xs-2" ng-click="toggleHeaderAccount()">
+                      <!-- <a class="close expanded" style="float:left">{{expandedSign}}</a> -->
+                      <i class="fa fa-minus-circle" aria-hidden="true" ng-hide="!expandedSign" style="float:left"><p class="head_txt advanced-filters-head" style="float:right;cursor:pointer"> Advanced Search</p></i>
+                      <i class="fa fa-plus-circle" aria-hidden="true" ng-hide="expandedSign" style="float:left;cursor:pointer">
+                      <p class="head_txt advanced-filters-head" style="float:right"> Advanced Search</p></i>     
+                    </div>
+                    
+                  </div>
       
-      <div class="col-md-16">
-        <ng-include src="'scripts/components/navbar/searchfilter.html'"></ng-include>
+      <div id="collapseTwo" style="border:none">
+        <ng-include src="'scripts/components/navbar/hcpAdvancedSearchFilters.html'"></ng-include>
       </div>
       <div class="dashboard__manage-view--header">
         <div class="col-md-2 col-sm-3 header--type pull-left-mob width120">
@@ -99,7 +108,7 @@
 
           <div class="clr"></div>
        </div>
-       <div class="col-md-16 col-sm-16 empty-list-message" ng-if="doctors && doctors.length === 0">
+       <div class="col-md-16 col-sm-16 empty-list-message" ng-if="doctors && doctors.length === 0 && (searchItem || noDataFlag)">
         <span translate="doctor.no-hcp-found"></span>
       </div>
 

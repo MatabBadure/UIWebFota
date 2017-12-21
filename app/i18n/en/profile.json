@@ -36,7 +36,7 @@
     "phone": "Mobile Number",
     "hr-id": "HR ID",
     "email": "Email",
-    "timestamp-preference": "Preferred Timestamp",
+    "timestamp-preference": "Preferred Timezone",
     "role-text":"Select Role",
     "view-role-text":"Role",
     "role": {
