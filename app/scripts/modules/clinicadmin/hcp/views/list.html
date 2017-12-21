@@ -51,7 +51,7 @@
   <div class="container dashboard__manage-view margin-top-xl">
     <div class="dashboard__manage-view--search">
       <div class="fuid-search-box reset-padding-right">
-        <input type="text" class="form-control" id="searchListParam" name="userName" ng-model="searchItem" autocomplete="off" placeholder="{{'doctor.placeholder.search' | translate}}" >
+        <input type="text" class="form-control" id="searchListParam" name="userName" ng-model="searchItem" autocomplete="off" placeholder="{{'doctor.placeholder.search' | translate}}" ng-change="searchHCPsOnQueryChange()">
         <span class="search-icon hillrom-icon icon-search-icon"></span>
       </div>
     </div>
@@ -102,8 +102,8 @@
       </div>
 
       <div class="col-md-1 col-sm-2 reset-padding centered">
-        <span class="short-info active centered" ng-if="!hcp.isDeleted" translate="doctor.status-type.active"></span>
-        <span class="short-info inactive centered" ng-if="hcp.isDeleted" translate="doctor.status-type.inactive"></span>
+        <span class="short-info active centered" ng-if="!hcp.deleted" translate="doctor.status-type.active"></span>
+        <span class="short-info inactive centered" ng-if="hcp.deleted" translate="doctor.status-type.inactive"></span>
       </div>
       <div class="clr"></div>
     </div>

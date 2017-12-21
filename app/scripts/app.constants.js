@@ -35,7 +35,7 @@ angular.module('hillromvestApp')
 	'getTransmissionDate':'/api/patient/PATIENTID/firsttrasmissiondate?&deviceType=DEVICETYPE',
 	'getHCPsToLinkToPatient':'/api/patient/PATIENTID/hcpbypatientclinics/search?searchString=SEARCHSTRING&page=PAGENO&per_page=OFFSET',
 	'searchAssociatedHcpsToClinic':'/api/user/clinicadmin/CLINICADMINID/hcp/search?searchString=SEARCHSTRING&clinicId=CLINICID&page=PAGE&per_page=PERPAGECOUNT&filter=FILTER&sort_by=SORTBY',
-	'getHCPsWithClinicName': 'api/user/hcp/search?searchString=&page=1&per_page=&sort_by=lastName&asc=true&filter=isDeleted:0',
+	'getHCPsWithClinicName': 'api/user/hcp/search?searchString=SEARCHSTRING&page=1&per_page=&sort_by=lastName&asc=true&filter=isDeleted:0',
 	'getUserSecurityQuestion': 'api/user/USERID/securityQuestion',
 	'searchPatientsForHCP': '/api/user/ROLE/USERID/patient/search?searchString=SEARCHSTRING&page=PAGENO&per_page=OFFSET&clinicId=CLINICID&filter=FILTER&sort_by=SORTBY',
 	'searchPatientsForHCPOrClinicadminFromSuperAdmin': '/api/user/admin/ROLE/USERID/patient/search?searchString=SEARCHSTRING&page=PAGENO&per_page=OFFSET&clinicId=CLINICID&filter=FILTER&sort_by=SORTBY',
@@ -176,10 +176,11 @@ angular.module('hillromvestApp')
 	'clinicAdvancedfilter' : 'api/clinics/advanced/search?&page=PAGE&per_page=PER_PAGE&sort_by=SORT_OPTION&asc=true',
 	'availableStatesAdv':'/api/availableStatesAdv',
 	'cityByCountryAndState':'/api/cityByCountryAndState',
-	'stateByCountryCode':'/api/stateByCountryCode?country=COUNTRY',
+	'stateByCountryCode':'/api/stateByCountryCode',
 	'patientAdvancedSearch' : 'api/advancedSearch/patient?&page=PAGE&per_page=PER_PAGE&sort_by=SORT_OPTION&asc=true',
+	'hcpAdvancedSearch' : 'api/advancedSearch/hcp?&page=PAGE&per_page=PER_PAGE&sort_by=SORT_OPTION&asc=true',
 	'matchingDiagnosticList' : 'api/patient/diagnosis?searchString=SEARCH_STRING',
 	'timezoneList' : 'api/user/timezone',
-	'deleteUserWithReason' : '/api/user//ID'
-
+	'deleteUserWithReason' : '/api/user//ID',
+	'resetAccountAgeLimit' : 'api/account/re_register'
 });
