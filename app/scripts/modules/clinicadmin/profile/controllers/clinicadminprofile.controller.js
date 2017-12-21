@@ -107,7 +107,7 @@ angular.module('hillromvestApp')
       }
       $scope.user.role = $scope.user.authorities[0].name;
       UserService.editUser($scope.user).then(function(response){  
-       localStorage.setItem('timestampPreference',"US/Hawaii");      
+       localStorage.setItem('timestampPreference',$scope.user.timeZone);      
         if(StorageService.get('logged').userEmail === $scope.user.email){
           notyService.showMessage(response.data.message, 'success');
           $state.go('clinicadminUserProfile');
