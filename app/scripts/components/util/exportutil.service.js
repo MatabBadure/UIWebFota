@@ -765,7 +765,7 @@ angular.module('hillromvestApp')
     if(protocolGraphData){
     if(protocolGraphData.series.length){
       page++;
-      totalPages++;
+      //totalPages++;
     pdf = this.addAllSvgsToPDF(pdf, canvasId, divId, 30, 350, 540, 100, pdfServiceConstants.text.protocolGraph);
      pdf = this.setFooter(pdf, pdf.internal.pageSize.height-80);
     pdf = this.setPageNumber(pdf, page.toString(), totalPages.toString());  
@@ -780,13 +780,12 @@ angular.module('hillromvestApp')
     pdf = this.setTopHeader(pdf, fromDate, toDate);
       }
       page++;
-      if(!(totalPages>3)){
-        totalPages++;
-      }
+      totalPages++;
+
       
     pdf = this.addSvgToPDF(pdf, canvasId, "HMRGraph", 30, 150, 540, 200, pdfServiceConstants.text.hmrStatistics); 
-    pdf.addPage(); 
-    pdf = this.setTopHeader(pdf, fromDate, toDate);
+    /*pdf.addPage(); 
+    pdf = this.setTopHeader(pdf, fromDate, toDate);*/
 
   }
 }
@@ -797,7 +796,7 @@ if(adherenceGraphData){
          pdf.addPage();
     pdf = this.setTopHeader(pdf, fromDate, toDate);
       }
-    if(!(totalPages>3)){
+    if(!(totalPages>3) || !(totalPages == 3)){
         totalPages++;
       }
     pdf = this.addSvgToPDF(pdf, canvasId, "AdherenceTrendGraph", 30, 420, 540, 200, pdfServiceConstants.text.adherenceTrend);
@@ -810,19 +809,19 @@ if(adherenceGraphData){
     
     if(testResultsGraphData){
     if(testResultsGraphData.series.length){
-      if(page == 1){
+      if(page == 1 || page == 2){
          pdf.addPage();
     pdf = this.setTopHeader(pdf, fromDate, toDate);
       }
     page++; 
-    if(!(totalPages>3)){
+     if(!(totalPages>3) || !(totalPages == 3)){
         totalPages++;
       }
     pdf = this.addAllSvgsToPDF(pdf, "TestResultsCanvas", "synchronizedChartTestResults", 30, 120, 540, 200, pdfServiceConstants.text.testResults); 
      pdf = this.setFooter(pdf, pdf.internal.pageSize.height-80, true);
     pdf = this.setPageNumber(pdf, page.toString(), totalPages.toString());
-    pdf.addPage();
-    pdf = this.setTopHeader(pdf, fromDate, toDate);
+    /*pdf.addPage();
+    pdf = this.setTopHeader(pdf, fromDate, toDate);*/
     }
   }
    
