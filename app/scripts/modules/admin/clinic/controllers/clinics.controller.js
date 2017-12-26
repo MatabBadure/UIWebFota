@@ -186,11 +186,15 @@ angular.module('hillromvestApp')
       $scope.sortIconDown = false;
       $scope.searchClinics();
     };
-
+$scope.toggleNotificationMessages = function(){
+  var temp = !$scope.clinic.isMessageOpted;
+  $scope.clinic.isMessageOpted = temp;
+}
     $scope.initCreateClinic = function(){
       $scope.states = [];
       $scope.clinic = {};
       $scope.clinic.type = 'parent';
+      $scope.clinic.isMessageOpted = true;
       $scope.clinicStatus.editMode = false;
       $scope.clinicStatus.isCreate = true;
       clinicService.getClinicSpeciality().then(function(response){
