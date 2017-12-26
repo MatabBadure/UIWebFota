@@ -553,10 +553,7 @@ angular.module('hillromvestApp')
          return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {
-          console.log("response",response.typeCode);
-          var res  = response.typeCode;
-          console.log("res",response.typeCode);
-          return "abc";
+          return response;
         });
       }
 
