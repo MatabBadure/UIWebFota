@@ -8,6 +8,43 @@
 
 
 @media only screen and (min-width : 320px) and (max-width : 765px) {
+/***** Gimp-25 *****/
+    .phone-noti-type{
+    max-width: 70px;
+    }
+    .phone-noti-headers{
+    padding-left:3px !important;
+    }
+    .phone-noti-desc{
+    text-align: left;
+    }
+    .phone-noti-heading{
+     padding-left: 7px;
+    }
+    .phone-noti-descdetail{
+     padding-left: 10px;
+    }
+    .phone-noti-align
+    {
+    padding-left: 35px;
+    }
+    .phone-noti-dropdown-align
+    {
+    margin-right: 10px;
+    margin-left: -38px;
+    }
+    .phone-noti-msg-align
+    {
+     margin-left: 32px;
+    }
+    .phone6-noti-msg-align
+    {
+     margin-right: -65px;
+    }
+    .phone-error-message-align{
+   margin-top: 25px;
+    }
+/***** End of Gimp-25 *****/
 .multiselectbtncontainer {
   max-height: 100% !important;
 }
@@ -928,7 +965,7 @@ min-height: 135px;
 /*End of Messaging Implementation-Hill-1839*/
 @media only screen and (min-width : 410px) and (max-width : 737px) and (orientation : landscape) 
 {
-	.arc-read
+    .arc-read
 	{
 		width: 21%;
 	}
@@ -940,6 +977,17 @@ min-height: 135px;
 
 @media only screen and (min-width : 320px) and (max-width : 766px)
 {
+  .noti-toggle
+  {
+     padding-left: 110px;
+  }
+  .noti-dropdown-align {
+    margin-right: 10px;
+    margin-left: -22px;
+}
+.noti-msg-align {
+    margin-left: 110px;
+}
   .icon_height_width {
   background-size: 100% auto;
   height: 15px;
@@ -1004,6 +1052,7 @@ min-height: 135px;
 }
 @media only screen and (min-width : 331px) and (max-width : 767px)
 {
+
 	 .activefixmobile > li > a 
   {
     padding: 19px 12px 20px !important;
