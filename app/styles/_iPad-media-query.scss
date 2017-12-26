@@ -1,4 +1,9 @@
 @media only screen and (min-width : 768px) and (max-width : 1024px) and (orientation : landscape) { 
+/***** Gimp-25****/
+.disable_color_ipad{
+	background-color: #ebebe4;
+}
+/***** End of Gimp-25 *****/
 .col-3.ipadHeightBalance {
     min-height: 210px;
 }
@@ -289,6 +294,17 @@ LoginContentHeightForDevices{
 }
 
 @media only screen and (min-width : 768px) and (max-width : 1024px) and (orientation : portrait) {
+/*****Gimp-25****/
+.noti_desc{
+	margin-left: 186px;
+}
+.noti_dropdown{
+	margin-left: 47px;	
+}
+.disable_color_ipad{
+	background-color: #ebebe4;
+}
+/*****End of Gimp-25****/
 .col-3.ipadHeightBalance {
     min-height: 199px;
 }

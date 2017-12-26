@@ -4,11 +4,18 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
   function ($scope, $state, notyService, patientService, UserService, AuthServerProvider,Password, Auth, StorageService, caregiverDashBoardService, $stateParams, loginConstants, $q, dateService, $rootScope, commonsUserService) {
     $scope.isPhoneUpdated = false;
    $scope.isEmailUpdated = false;
+   $scope.dayOptions = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday', 'Daily'];
+   $scope.MessageNotificationFreq = "";
   $scope.init = function(){
 		var currentRoute = $state.current.name;
      $scope.initCount("");
+     $scope.isDisable = false;
+      $scope.isDisable1 = false;
+       $scope.isDisable2 = false;
+        $scope.isDisable3 = false;
 		$scope.profileTab = currentRoute;	
 		$scope.userRole = StorageService.get('logged').role;
+    $scope.data  = {};
     $scope.role = StorageService.get('logged').role;
     $scope.caregiverID = parseInt(StorageService.get('logged').userId);
     UserService.getTimezoneList().then(function(response){
@@ -295,10 +302,44 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
     	notyService.showMessage(profile.PASSWORD_REST_ERROR, 'warning');
     });
   };
+  $scope.processNotificationData = function(){
+    $scope.data.isMissedTherapyNotification = $scope.patientUser.missedTherapyNotification;
+    $scope.data.isNonHMRNotification = $scope.patientUser.nonHMRNotification;
+    $scope.data.isSettingDeviationNotification = $scope.patientUser.settingDeviationNotification;
+    $scope.data.isMessageNotification = $scope.patientUser.messageNotification;
+    $scope.data.MissedTherapyNotificationFreq = $scope.patientUser.missedTherapyNotificationFreq;
+    $scope.data.NonHMRNotificationFreq = $scope.patientUser.nonHMRNotificationFreq;
+    $scope.data.SettingDeviationNotificationFreq = $scope.patientUser.settingDeviationNotificationFreq;
+    if($scope.data.isMessageNotification){
+      $scope.MessageNotificationFreq = 'Daily';
+    }
+    else{
+      $scope.MessageNotificationFreq = "";
+    }
+    /*if($scope.data.isMissedTherapyNotification){
+    $scope.data.MissedTherapyNotificationFreq = "Daily";
+  }
+  else{
+$scope.data.MissedTherapyNotificationFreq = "";
+  }
+   if($scope.data.isNonHMRNotification){
+    $scope.data.NonHMRNotificationFreq = "Daily";
+  }
+   else{
+    $scope.data.NonHMRNotificationFreq = "";
+  }
+   if($scope.data.isSettingDeviationNotification){
+    $scope.data.SettingDeviationNotificationFreq = "Daily";
+  }
+   else{
+     $scope.data.SettingDeviationNotificationFreq = "";
+  }*/
+  };
 
   $scope.initPatientSettings = function(){ 	
 		UserService.getPatientUserNotification(StorageService.get('logged').patientID).then(function(response){
 			$scope.patientUser = response.data.user;
+      $scope.processNotificationData();
 		}).catch(function(){
 		   notyService.showError(response);
 		});
@@ -312,26 +353,85 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
   };
 
   $scope.toggleNotification = function(notification){
-    var data = {"isMissedTherapyNotification" : $scope.patientUser.missedTherapyNotification, "isNonHMRNotification": $scope.patientUser.nonHMRNotification, "isSettingDeviationNotification": $scope.patientUser.settingDeviationNotification,"isMessageNotification": $scope.patientUser.messageNotification};
-   var id = ($scope.selectedPatient)? ($scope.selectedPatient.userId): (StorageService.get('logged').patientID);
+   // $scope.data = {"isMissedTherapyNotification" : $scope.patientUser.missedTherapyNotification, "isNonHMRNotification": $scope.patientUser.nonHMRNotification, "isSettingDeviationNotification": $scope.patientUser.settingDeviationNotification,"isMessageNotification": $scope.patientUser.messageNotification};
+   
     if(notification === 'missedTherapyNotification'){
-    	data.isMissedTherapyNotification = !$scope.patientUser.missedTherapyNotification;
-    }
-    if(notification === 'nonHMRNotification'){
-    	data.isNonHMRNotification = !$scope.patientUser.nonHMRNotification;
-    }
-    if(notification === 'settingDeviationNotification'){
-    	data.isSettingDeviationNotification = !$scope.patientUser.settingDeviationNotification;
-    }
-     if(notification === 'messageNotification')
+    	$scope.data.isMissedTherapyNotification = !$scope.patientUser.missedTherapyNotification;
+      $scope.patientUser.missedTherapyNotification = $scope.data.isMissedTherapyNotification;
+      if($scope.data.isMissedTherapyNotification == false)
       {
-        data.isMessageNotification = !$scope.patientUser.messageNotification;
+        $scope.data.MissedTherapyNotificationFreq = "";
+        $scope.notificationFrequency();
       }
-    UserService.updatePatientUserNotification(id, data).then(function(response){
-			$scope.patientUser = response.data.user;    
-		}).catch(function(response){
+    }
+    else if(notification === 'nonHMRNotification'){
+    	$scope.data.isNonHMRNotification = !$scope.patientUser.nonHMRNotification;
+      $scope.patientUser.nonHMRNotification = $scope.data.isNonHMRNotification;
+      if($scope.data.isNonHMRNotification == false){
+        $scope.data.NonHMRNotificationFreq = "";
+        $scope.notificationFrequency();
+      }
+    }
+    else if(notification === 'settingDeviationNotification'){
+    	$scope.data.isSettingDeviationNotification = !$scope.patientUser.settingDeviationNotification;
+      $scope.patientUser.settingDeviationNotification = $scope.data.isSettingDeviationNotification;
+      if( $scope.data.isSettingDeviationNotification == false)
+      {
+        $scope.data.SettingDeviationNotificationFreq = "";
+        $scope.notificationFrequency();
+      }
+    }
+     else if(notification === 'messageNotification'){
+        $scope.data.isMessageNotification = !$scope.patientUser.messageNotification;
+        $scope.patientUser.messageNotification = $scope.data.isMessageNotification;
+        if($scope.data.isMessageNotification){
+          $scope.MessageNotificationFreq = 'Daily'
+        }
+        else{
+        $scope.MessageNotificationFreq = '';
+      }
+        $scope.notificationFrequency();
+      }
+  };
+ $scope.discardIncompleteData = function(){
+     var dataTemp = Object.assign({}, $scope.data);
+      //var data = $scope.data;
+      if($scope.data.isMissedTherapyNotification){
+        if($scope.data.MissedTherapyNotificationFreq){
+          //do nothing
+        }
+        else{
+          dataTemp.isMissedTherapyNotification = false;
+        }
+      }
+            if($scope.data.isNonHMRNotification){
+        if($scope.data.NonHMRNotificationFreq){
+          //do nothing
+        }
+        else{
+          dataTemp.isNonHMRNotification = false;
+        }
+      }
+            if($scope.data.isSettingDeviationNotification){
+        if($scope.data.SettingDeviationNotificationFreq){
+          //do nothing
+        }
+        else{
+          dataTemp.isSettingDeviationNotification = false;
+        }
+      }
+      return dataTemp;
+    };
+    
+  $scope.notificationFrequency = function(){
+    var data = $scope.discardIncompleteData();
+  var id = ($scope.selectedPatient)? ($scope.selectedPatient.userId): (StorageService.get('logged').patientID);
+  UserService.updatePatientUserNotification(id,data).then(function(response){
+      $scope.patientUser = response.data.user;   
+    //  $scope.processNotificationData(); 
+    }).catch(function(response){
       notyService.showError(response);
-		});
+    });
   };
 
   $scope.cancel = function(){

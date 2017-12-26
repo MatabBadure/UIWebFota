@@ -8,40 +8,93 @@
   <div class="col-md-16 col-sm-16 user-header--desc">
     <span translate="profile.noti-verbiage"></span>
   </div>
+  <div class="col-md-16 col-sm-16 dashboard__manage-view--header"> 
+   <div class="row margin-bottom20">
+        <div class="col-md-3 col-sm-4 header--type pull-left-mob width120">
+          <span>Notification Type</span>
+        </div>
+        <div class="col-md-1 col-sm-2 header--type pull-left-mob width120" style="padding-left:0px">
+          <span>On/Off</span>
+        </div>
+        <div class="col-md-3 col-sm-4 header--type pull-left-mob width120" style="padding-left:0px">
+          <span>Frequency</span>
+        </div>
+        <div class="col-md-3 col-sm-4 header--type pull-left-mob width120" style="padding-left:0px">
+          <span>Description</span>
+        </div>
+      </div>
+        <div class="clr"></div>
+      </div>
 
   <div class="col-md-16 col-sm-16 user-notification">
-    <div class="row margin-bottom20"> 
-      <div class="col-md-3 col-sm-4 pull-left-mob">
+      <div class="row margin-bottom20" style = "margin-bottom: 10px;">
+      <div class="col-md-3 col-sm-4 pull-left-mob padding0">
         <span class="user-notification--head" translate="profile.noti.miss-therapy-days"></span>
       </div>
       <div class="col-md-1 col-sm-1 user-notification--icon text-right-mob" ng-click="toggleNotification('missedTherapyNotification');">
-        <span ng-class="user.missedTherapyNotification ? 'icon-toggle-on active': 'icon-toggle-off'"></span>
+        <span ng-class="data.isMissedTherapyNotification ? 'icon-toggle-on active': 'icon-toggle-off'"></span>
       </div>
-      <div class="col-md-12 col-sm-11 user-notification--icon padding-left-10" translate="profile.noti_hcp.miss-therapy-days-desc">
+      <div class="col-md-3 col-sm-1 user-notification--icon text-right-mob">
+        <div class="col-md-6 dashboard__form__input reset-padding selected-box-container" style="height:40px">
+              <div class="custom-dropdown noti_dropdown">
+                <select name="title" ng-readonly="validateADMINorASP()" ng-disabled="!data.isMissedTherapyNotification" ng-model="data.MissedTherapyNotificationFreq" ng-options="option for option in dayOptions" ng-change="notificationFrequency()">
+                </select>
+                  <div class="col-md-16 col-sm-16 col-xs-4">
+            <span class="has-error" style="font-size: 12px;" ng-show="!data.MissedTherapyNotificationFreq && data.isMissedTherapyNotification">Select Frequency
+            </span>
+          </div>
+              </div>
+            </div>
+      </div>
+      <div class="col-md-8 col-sm-5 user-notification--icon noti_desc" translate="profile.noti_hcp.miss-therapy-days-desc">
         You will receive a notification if one or more of your patients missed a day of therapy within your clinic's adherence window.
       </div>
     </div>
 
-    <div class="row margin-bottom20">
+    <div class="row margin-bottom20" style = "margin-bottom: 10px;">
       <div class="col-md-3 col-sm-4 pull-left-mob">
         <span class="user-notification--head" translate="profile.noti.below-treatment"></span>
       </div>
       <div class="col-md-1 col-sm-1 user-notification--icon text-right-mob" ng-click="toggleNotification('nonHMRNotification');">
-        <span ng-class="user.nonHMRNotification ? 'icon-toggle-on active': 'icon-toggle-off'"></span>
+        <span ng-class="data.isNonHMRNotification ? 'icon-toggle-on active': 'icon-toggle-off'"></span>
       </div>
-       <div class="col-md-12 col-sm-11 user-notification--icon padding-left-10" translate="profile.noti_hcp.hmr-non-adher-desc">
+      <div class="col-md-3 col-sm-1 user-notification--icon text-right-mob">
+        <div class="col-md-6 dashboard__form__input reset-padding selected-box-container" style="height:40px">
+              <div class="custom-dropdown noti_dropdown">
+                <select name="title" ng-readonly="validateADMINorASP()"  ng-disabled="!data.isNonHMRNotification" ng-model="data.NonHMRNotificationFreq" ng-options="option for option in dayOptions" ng-change="notificationFrequency()">
+                </select>
+                <div class="col-md-16 col-sm-16 col-xs-4">
+            <span class="has-error" style="font-size: 12px;" ng-show="!data.NonHMRNotificationFreq && data.isNonHMRNotification">Select Frequency
+            </span>
+          </div>
+              </div>
+            </div>
+      </div>
+       <div class="col-md-8 col-sm-5 user-notification--icon padding-left-10 noti_desc" translate="profile.noti_hcp.hmr-non-adher-desc">
        You will receive a notification if one or more of your patients did not complete the therapy time in their protocol within your clinic's adherence window.
       </div>
     </div>
 
-    <div class="row margin-bottom20">
+    <div class="row margin-bottom20" style = "margin-bottom: 10px;">
       <div class="col-md-3 col-sm-4 pull-left-mob">
         <span class="user-notification--head" translate="profile.noti.setting-deviation"></span>
       </div>
       <div class="col-md-1 col-sm-1 user-notification--icon text-right-mob" ng-click="toggleNotification('settingDeviationNotification');">
-        <span ng-class="user.settingDeviationNotification ? 'icon-toggle-on active': 'icon-toggle-off'"></span>
+        <span ng-class="data.isSettingDeviationNotification ? 'icon-toggle-on active': 'icon-toggle-off'"></span>
       </div>
-       <div class="col-md-12 col-sm-11 user-notification--icon padding-left-10 " translate="profile.noti_hcp.setting-deviation-desc">
+       <div class="col-md-3 col-sm-1 user-notification--icon text-right-mob">
+        <div class="col-md-6 dashboard__form__input reset-padding selected-box-container" style="height:40px">
+              <div class="custom-dropdown noti_dropdown">
+                <select name="title" ng-readonly="validateADMINorASP()" ng-disabled="!data.isSettingDeviationNotification" ng-model="data.SettingDeviationNotificationFreq" ng-options="option for option in dayOptions" ng-change="notificationFrequency()" ng-selected="{{option === patient.title}}">
+                </select>
+                <div class="col-md-16 col-sm-16 col-xs-4">
+            <span class="has-error" style="font-size: 12px;" ng-show="!data.SettingDeviationNotificationFreq && data.isSettingDeviationNotification">Select Frequency
+            </span>
+          </div>
+              </div>
+            </div>
+      </div>
+       <div class="col-md-8 col-sm-5 user-notification--icon padding-left-10 noti_desc" translate="profile.noti_hcp.setting-deviation-desc phone-error-message-align">
          You will receive a notification if one or more of your patients frequency setting was 15% below protocol within your clinic's adherence window.
       </div>
     </div>
@@ -51,9 +104,21 @@
         <span class="user-notification--head" translate="profile.noti_hcp.messages"></span>
       </div>
       <div class="col-md-1 col-sm-1 user-notification--icon text-right-mob" ng-click="toggleNotification('messageNotification');">
-        <span ng-class="user.messageNotification ? 'icon-toggle-on active': 'icon-toggle-off'"></span>
+        <span ng-class="data.isMessageNotification ? 'icon-toggle-on active': 'icon-toggle-off'"></span>
       </div>
-       <div class="col-md-12 col-sm-11 user-notification--icon padding-left-10" translate="profile.noti.message-new">
+       <div class="col-md-3 col-sm-1 user-notification--icon phone-noti-align custom-noti-align text-right-mob">
+        <div class="col-md-6 col-xs-4 dashboard__form__input reset-padding selected-box-container" style="height:40px">
+              <div class="custom-dropdown noti_dropdown">
+                <select  class="phone-noti-dropdown-align" name="messageFreq" ng-model="MessageNotificationFreq" ng-disabled="true">
+                  <option selected>{{MessageNotificationFreq}}</option>
+                </select>
+                <div>
+           
+          </div>
+              </div>
+            </div>
+      </div>
+       <div class="col-md-8 col-sm-5 user-notification--icon padding-left-10 noti_desc" translate="profile.noti.message-new">
        You will receive a notification if you have one or more messages in your clinic's inbox.
       </div>
     </div>
