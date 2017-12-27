@@ -37,7 +37,7 @@
             "app/bower_components/angular-local-storage/dist/angular-local-storage.js",
             "app/bower_components/angular-animate/angular-animate.js",
             "app/bower_components/moment/moment.js",
-             "app/bower_components/moment-timezone/builds/moment-timezone.js", 
+             "app/bower_components/moment-timezone/moment-timezone.js", 
             "app/bower_components/moment-timezone/moment-timezone-utils.js",
             "app/bower_components/moment-timezone/builds/moment-timezone-with-data.js", 
             "app/bower_components/bootstrap-daterangepicker/daterangepicker.js",
