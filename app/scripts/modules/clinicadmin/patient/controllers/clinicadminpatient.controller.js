@@ -95,6 +95,7 @@ angular.module('hillromvestApp')
       $scope.pageCount = 0;
       $scope.getClinicsAssociatedToHCP();
       var clinicId = $stateParams.clinicId;
+      $scope.getisMessagesOpted();
       $scope.initCount($stateParams.clinicId);
       $scope.searchPatients(); 
     }
@@ -503,6 +504,7 @@ angular.module('hillromvestApp')
       $scope.searchPatients();      
     }
     $state.go('clinicadminpatientdashboard',{'clinicId': $scope.selectedClinic.id});
+    $scope.getisMessagesOpted();
     $scope.initCount($scope.selectedClinic.id);
   };
 

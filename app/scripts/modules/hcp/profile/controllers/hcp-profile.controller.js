@@ -90,6 +90,7 @@ $scope.data.MissedTherapyNotificationFreq = "";
     });
   };
     $scope.init = function(){
+      $scope.getisMessagesOpted();
        $scope.initCount($stateParams.clinicId);
       if($state.current.name === 'hcpUserProfile' || $state.current.name === 'editHCPProfile' ){
         $scope.initProfile(StorageService.get('logged').userId);

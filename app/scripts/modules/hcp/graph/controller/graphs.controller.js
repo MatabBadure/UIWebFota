@@ -390,6 +390,7 @@ angular.module('hillromvestApp')
 				else{
 					$scope.selectedClinic = {};
 				}
+				$scope.getisMessagesOpted();
 			$scope.initCount($scope.selectedClinic.id);
 		if(userId){
 		$scope.weeklyChart();
@@ -493,6 +494,7 @@ angular.module('hillromvestApp')
 	  $scope.drawGraph();
 	}
 	$state.go('clinicadmindashboard',{'clinicId': $scope.selectedClinic.id});
+	$scope.getisMessagesOpted();
 	$scope.initCount($scope.selectedClinic.id);
   };
 

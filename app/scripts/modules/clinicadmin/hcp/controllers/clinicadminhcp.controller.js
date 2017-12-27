@@ -13,6 +13,7 @@ angular.module('hillromvestApp')
         $scope.perPageCount = 10;
         $scope.getClinicsAssociatedToClinicadmin();
         $scope.initClinicadminHcpDashboard();
+        $scope.getisMessagesOpted();
         $scope.initCount($stateParams.clinicId);
       }else if(currentState === 'clinicadminnewhcp'){
         $scope.doctorStatus = {};

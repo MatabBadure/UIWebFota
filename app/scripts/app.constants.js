@@ -182,5 +182,6 @@ angular.module('hillromvestApp')
 	'matchingDiagnosticList' : 'api/patient/diagnosis?searchString=SEARCH_STRING',
 	'timezoneList' : 'api/user/timezone',
 	'deleteUserWithReason' : '/api/user//ID',
-	'resetAccountAgeLimit' : 'api/account/re_register'
+	'resetAccountAgeLimit' : 'api/account/re_register',
+	'isMessagesOpted': 'api//isMessagesOpted/USERID'
 });

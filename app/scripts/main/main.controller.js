@@ -14,6 +14,10 @@ angular.module('hillromvestApp')
 				$scope.getunreadcount(clinicid);
 			}	
 	}
+	$rootScope.getisMessagesOpted = function(){
+		//$rootScope.isMessagesOptedFlag = false;
+		$scope.getisMessagesOpted();
+	}
 	$rootScope.getDeviceType = function(){
 		var patientId = "";
 		$rootScope.userRole = StorageService.get('logged').role;
@@ -39,7 +43,6 @@ angular.module('hillromvestApp')
 		$rootScope.userRole = StorageService.get('logged').role;
 		if($rootScope.userRole === 'PATIENT'){
 			patientId = $rootScope.userId;
-			console.log("patientId in main",patientId)
 		}
 		else if($rootScope.userRole === 'CARE_GIVER'){
 			if($stateParams.patientId){
@@ -96,6 +99,24 @@ angular.module('hillromvestApp')
 			
 		
     };
+    /***** Get isMessagesOpted Gimp-22,Gimp-23,Gimp-28,Gimp-29*****/
+    $scope.getisMessagesOpted = function(){
+    	var userid = "";
+    	if(StorageService.get('logged').role === 'PATIENT'){
+    		userid = StorageService.get('logged').patientID;
+    	}
+    	else{
+    		userid = StorageService.get('logged').userId;
+    	}
+    	UserService.getisMessagesOpted(userid).then(function(response){
+    		$rootScope.isMessagesOptedFlag = response.data;
+    		//return $rootScope.isMessagesOptedFlag;
+    	}).catch(function(response){
+    		$rootScope.isMessagesOptedFlag = false;
+    		//return $rootScope.isMessagesOptedFlag;
+    	});
+    };
+      /*****End of Get isMessagesOpted Gimp-22,Gimp-23,Gimp-28,Gimp-29*****/
 	 /*****Get unread messages *****/
    $scope.getunreadcount = function(clinicid){
   if(StorageService.get('logged').role === 'PATIENT'){

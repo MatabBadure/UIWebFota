@@ -22,8 +22,10 @@ if($scope.userRole === 'HCP'){
       $scope.getClinicsForClinicAdmin(); 
      
     }
+    $scope.getisMessagesOpted();
     var clinicid = ($stateParams.clinicId)?($stateParams.clinicId):$scope.selectedClinic.id;
     $scope.initCount(clinicid);
+
 };
     $scope.searchUsers = function(track) {          
       if (track !== undefined) {

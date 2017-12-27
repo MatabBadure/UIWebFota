@@ -47,7 +47,7 @@ angular.module('hillromvestApp')
       $scope.forhidingMonarchHmrGraph = false;
       $scope.oneDayData = true;
       $scope.oneDayData1 = true;
-
+      $scope.getisMessagesOpted();
       $scope.initCount("");
             var currentRoute = $state.current.name;
              $scope.caregiverID = parseInt(StorageService.get('logged').userId);

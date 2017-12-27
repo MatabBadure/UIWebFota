@@ -15,6 +15,7 @@ angular.module('hillromvestApp')
       var currentRoute = $state.current.name;
       if (currentRoute === 'clinicadminclinicdashboard' || currentRoute === 'adherenceSettingPage') {   
       $scope.clinicDashboardInit(); 
+      $scope.getisMessagesOpted();
       $scope.initCount($stateParams.clinicId);
     }
     if(currentRoute === 'adherenceSettingPage'){
