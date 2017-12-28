@@ -26,9 +26,11 @@ angular.module('hillromvestApp')
       $scope.clinic.parentClinic = {};
       $scope.noParentName = false;
       $scope.linkHCPFlag = false;
+      $scope.enableDisableOptions = searchFilterService.enableDisable();
     /*check the state from the route*/
     $scope.init = function() {
       var currentRoute = $state.current.name;
+
       if (currentRoute === 'clinicEdit' || currentRoute === 'clinicEditRcadmin') {
         $scope.initClinicEdit($stateParams.clinicId, $scope.setEditMode);
         //$scope.getClinicDetails($stateParams.clinicId, $scope.setEditMode);
@@ -186,15 +188,16 @@ angular.module('hillromvestApp')
       $scope.sortIconDown = false;
       $scope.searchClinics();
     };
-$scope.toggleNotificationMessages = function(){
-  var temp = !$scope.clinic.isMessageOpted;
-  $scope.clinic.isMessageOpted = temp;
+$scope.toggleNotificationMessages = function(value){
+  //var temp = !$scope.clinic.isMessageOpted;
+  $scope.clinic.isMessageOpted = value;
 }
     $scope.initCreateClinic = function(){
       $scope.states = [];
       $scope.clinic = {};
       $scope.clinic.type = 'parent';
       $scope.clinic.isMessageOpted = true;
+      $scope.clinic.isMessageOpted = $scope.clinic.isMessageOpted.toString();
       $scope.clinicStatus.editMode = false;
       $scope.clinicStatus.isCreate = true;
       clinicService.getClinicSpeciality().then(function(response){
@@ -228,7 +231,9 @@ $scope.toggleNotificationMessages = function(){
       clinicService.getClinic(clinicId).then(function(response) {
         $scope.clinic = response.data.clinic;
         $scope.clinic.zipcode = commonsUserService.formatZipcode($scope.clinic.zipcode);
-        $scope.slectedClinic = response.data.clinic;
+        $scope.slectedClinic = response.data.clinic;   
+        $scope.clinic.isMessageOpted = $scope.clinic.isMessageOpted.toString();
+
         if($scope.clinic.parent){
           $scope.clinic.type = "parent";
         }else{
@@ -446,7 +451,7 @@ $scope.toggleNotificationMessages = function(){
     }
 
     $scope.formSubmitClinic = function() {
-      
+      $scope.clinic.isMessageOpted = ($scope.clinic.isMessageOpted === "true") ? true : false;
       if ($scope.clinic.type === 'parent') {
         $scope.clinic.parent = true;
         $scope.clinic.makeParent = true;
