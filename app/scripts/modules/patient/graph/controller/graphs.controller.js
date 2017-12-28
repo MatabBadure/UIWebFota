@@ -2471,6 +2471,7 @@ angular.module('hillromvestApp')
 
     $scope.getMonthChart = function(){
       $scope.durationRange = "Month";
+      $scope.durationDay = false;
       $scope.calculateTimeDuration(30,'NotAdherenceScoreHistory');
       $scope.calculateTimeDurationTestResults(30);
       //$scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
@@ -2481,6 +2482,7 @@ angular.module('hillromvestApp')
 
     $scope.getWeekChart = function(){
       $scope.durationRange = "Week";
+      $scope.durationDay = false;
       $scope.calculateTimeDuration(6,'NotAdherenceScoreHistory');
       $scope.calculateTimeDurationTestResults(6);
       //$scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
@@ -2490,7 +2492,8 @@ angular.module('hillromvestApp')
     };
 
     $scope.getCustomDateRangeChart = function(){  
-      $scope.durationRange = "Custom";    
+      $scope.durationRange = "Custom"; 
+      $scope.durationDay = true;   
      // $scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
       $scope.getFirstTransmissionDate();
       $scope.drawHMRCChart();
