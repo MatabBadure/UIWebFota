@@ -482,5 +482,15 @@ angular.module('hillromvestApp')
                 }
                 return diagnosis;
               };
+              this.enableDisable = function(){
+              var options = [{
+                name: "Enable",
+                value: true
+            }, {
+                name: "Disable",
+                value: false
+            }];
+            return options;
+              };
 
     }]);
