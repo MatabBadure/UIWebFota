@@ -576,13 +576,19 @@ angular.module('hillromvestApp')
 			hcpDashBoardService.getCumulativeGraphPoints($scope.hcpId, $scope.selectedClinic.id, dateService.getDateFromTimeStamp($scope.fromTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,hcpDashboardConstants.serverDateFormat,'-'), $scope.groupBy, $scope.ClinicDashboardDeviceType).then(function(response){
 				$scope.cumulativeChartData = response.data;
 				if($scope.cumulativeChartData && typeof($scope.cumulativeChartData) === "object"){ 
+					var dateFinal = "";
 					angular.forEach($scope.cumulativeChartData.xAxis.categories, function(x, key){
 						if(StorageService.get('logged').role === 'ADMIN' || StorageService.get('logged').role === loginConstants.role.acctservices || StorageService.get('logged').role === loginConstants.role.associates || StorageService.get('logged').role === loginConstants.role.customerservices){
-			                var dateFinal = dateService.convertToTimestamp(x);
+			               dateFinal = dateService.convertToTimestamp(x);
 			              }
 			              else{
+			              	if($scope.preferredTimezone){
 						var dateInitial = moment.tz(x,patientDashboard.serverDateTimeZone);
-		        	 var dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYY);
+		        	 dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYY);
+		        	}
+		        	else{
+		        		dateFinal = dateService.convertToTimestamp(x);
+		        	}
 		             }
 		              $scope.cumulativeChartData.xAxis.categories[key] = new Date(dateFinal).getTime();
 		            });
@@ -636,13 +642,19 @@ angular.module('hillromvestApp')
 				$scope.treatmentChartData = response.data;
 				if($scope.treatmentChartData && typeof($scope.treatmentChartData) === "object"){ 
 					$scope.noDataAvailable = false;
+					var dateFinal = "";
 					angular.forEach($scope.treatmentChartData.xAxis.categories, function(x, key){
 						if(StorageService.get('logged').role === 'ADMIN' || StorageService.get('logged').role === loginConstants.role.acctservices || StorageService.get('logged').role === loginConstants.role.associates || StorageService.get('logged').role === loginConstants.role.customerservices){
-			                var dateFinal = dateService.convertToTimestamp(x);
+			                dateFinal = dateService.convertToTimestamp(x);
 			              }
 			              else{
+			              	if($scope.preferredTimezone){
 					var dateInitial = moment.tz(x,patientDashboard.serverDateTimeZone);
-		        	 var dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYY);		           
+		        	dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYY);	
+		        	 }
+		        	 else{
+		        	 	dateFinal = dateService.convertToTimestamp(x);
+		        	 }	           
 	        	   }
 	        	    $scope.treatmentChartData.xAxis.categories[key] = new Date(dateFinal).getTime();
 		            });

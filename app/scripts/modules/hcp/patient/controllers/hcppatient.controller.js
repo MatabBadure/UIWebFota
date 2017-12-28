@@ -236,6 +236,7 @@ angular.module('hillromvestApp')
 
   $scope.getDevices = function(patientId){
     patientService.getDevices(patientId).then(function(response){
+      if($scope.preferredTimezone){
       angular.forEach(response.data.deviceList, function(device){
         //Gimp-31
          var dateInitial1 = moment.tz(device.createdDate,patientDashboard.serverDateTimeZone);
@@ -245,6 +246,7 @@ angular.module('hillromvestApp')
         var dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format('LL');
         device.lastModifiedDate = dateFinal;
       });
+    }
       $scope.devices = response.data.deviceList;
     }).catch(function(response){
       notyService.showError(response);
@@ -310,13 +312,21 @@ $scope.searchPatientsOnQueryChange = function(){
     }
     var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : $stateParams.clinicId;
     DoctorService.searchPatientsForHCP($scope.searchItem, 'hcp',StorageService.get('logged').userId, clinicId, $scope.currentPageIndex, $scope.perPageCount, filter, $scope.sortOption).then(function (response) {
-      $scope.patients = response.data;      
+      $scope.patients = response.data;  
+  
       angular.forEach($scope.patients, function(patient){
         patient.dob = (patient.dob) ? dateService.getDateFromTimeStamp(patient.dob, patientDashboard.dateFormat, '/') : patient.dob;
+         if($scope.preferredTimezone){  
         var dateInitial = moment.tz(patient.lastTransmissionDate,patientDashboard.serverDateTimeZone);
       var dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYY);
         patient.lastTransmissionDate = dateFinal;
+      }
+      else{
+        patient.lastTransmissionDate = (patient.lastTransmissionDate) ? dateService.getDateFromYYYYMMDD(patient.lastTransmissionDate, '/') : patient.lastTransmissionDate;
+      }
       });
+
+
       $scope.total = (response.headers()['x-total-count']) ? response.headers()['x-total-count'] :$scope.patients.length; 
       $scope.pageCount = Math.ceil($scope.total / 10);
       searchOnLoad = false;

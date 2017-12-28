@@ -16,11 +16,11 @@ angular.module('hillromvestApp')
 	}
 	$rootScope.getTimezonePreference = function(){
 	var timeZone = localStorage.getItem('timestampPreference');
-	if(timeZone){
+	if(timeZone !== "null"){
 		return timeZone;
 	}
 	else{
-		return 'America/Chicago';
+		return false;
 	}
 	}
 	$rootScope.getDeviceType = function(){
@@ -48,7 +48,6 @@ angular.module('hillromvestApp')
 		$rootScope.userRole = StorageService.get('logged').role;
 		if($rootScope.userRole === 'PATIENT'){
 			patientId = $rootScope.userId;
-			console.log("patientId in main",patientId)
 		}
 		else if($rootScope.userRole === 'CARE_GIVER'){
 			if($stateParams.patientId){
