@@ -38,7 +38,7 @@ var patientDashboard = {
 	"defaultDaysForBadges" : 1,
 	"timestampMMDDYY" : "MM/DD/YYYY",
 	"timestampMMDDYYHHMMSS" : "MM/DD/YYYY HH:MM:SS",
-	"serverDateTimeZone" : "Etc/GMT+6"
+	"serverDateTimeZone" : "Etc/GMT+5"
 }
 
 var profile = {
