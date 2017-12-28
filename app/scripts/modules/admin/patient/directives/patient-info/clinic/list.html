@@ -149,7 +149,7 @@
   </div>
   <div class="col-md-16 col-sm-16 reset-padding">
     <div class="col-md-8 col-sm-8 clinic-link">
-      <input type="text" ng-show="searchHCPText" ng-model="searchHcp" typeahead="hcp as hcp.lastName +', &nbsp' + hcp.firstName  + ' &nbsp ' + hcp.clinics[0].name for hcp in getHCPsToLinkToPatient($viewValue)" typeahead-on-select="showAssociateHcpModal($item)" class="form-control" placeholder="{{'patient.placeholder.hcp-link' | translate}}">
+      <input type="text" ng-show="searchHCPText" ng-model="searchHcp" typeahead="hcp as hcp.lastName +', &nbsp' + hcp.firstName  + ' &nbsp ' + hcp.clinics[0].name for hcp in getHCPsToLinkToPatient($viewValue)" typeahead-on-select="showAssociateHcpModal($item)" class="form-control" placeholder="{{'patient.placeholder.hcp-admin-link' | translate}}">
     </div>
 
     <div class="col-md-8 col-sm-8 clinic-link">

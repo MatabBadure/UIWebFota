@@ -8,51 +8,121 @@
     <span translate="noti-verbiage"></span>
   </div>
 
+<div class="col-md-16 col-sm-16 dashboard__manage-view--header"> 
+   <div class="row margin-bottom20">
+        <div class="col-md-3 col-sm-4 col-xs-5 header--type pull-left-mob">
+          <span>Notification Type</span>
+        </div>
+        <div class="col-md-1 col-sm-2 col-xs-5 header--type pull-left-mob paddingLeft0 phone-noti-headers">
+          <span>On/Off</span>
+        </div>
+        <div class="col-md-3 col-sm-4 col-xs-5 header--type pull-left-mob paddingLeft0 phone-noti-headers">
+          <span>Frequency</span>
+        </div>
+        <div class="col-md-3 col-sm-4 col-xs-16 header--type pull-left-mob paddingLeft0 phone-noti-headers phone-noti-desc">
+          <span class="phone-noti-heading">Description</span>
+        </div>
+      </div>
+        <div class="clr"></div>
+      </div>
+
+
   <div class="col-md-16 col-sm-16 user-notification">
-    <div class="row margin-bottom20">
-      <div class="col-md-3 col-sm-4 pull-left-mob padding0">
+    <div class="row margin-bottom20" style = "margin-bottom: 10px;">
+      <div class="col-md-3 col-sm-4 col-xs-4 pull-left-mob padding0">
         <span class="user-notification--head" translate="noti_patient.miss-therapy-days"></span>
       </div>
-      <div class="col-md-1 col-sm-1 user-notification--icon text-right-mob" ng-click="toggleNotification('missedTherapyNotification');">
-        <span ng-class="patientUser.missedTherapyNotification ? 'icon-toggle-on active': 'icon-toggle-off'"></span>
+      <div class="col-md-1 col-sm-1 col-xs-5 user-notification--icon text-right-mob" ng-click="toggleNotification('missedTherapyNotification');">
+        <span ng-class="data.isMissedTherapyNotification ? 'icon-toggle-on active': 'icon-toggle-off'"></span>
       </div>
-      <div class="col-md-12 col-sm-11 user-notification--icon" translate="noti_patient.miss-therapy-new">
+      <div class="col-md-3 col-sm-1 user-notification--icon text-right-mob">
+        <div class="col-md-6 dashboard__form__input reset-padding selected-box-container" style="height:40px">
+              <div class="custom-dropdown noti_dropdown">
+                <select name="title" ng-readonly="validateADMINorASP()"  ng-disabled="!data.isMissedTherapyNotification" ng-model="data.MissedTherapyNotificationFreq" ng-options="option for option in dayOptions" ng-change="notificationFrequency()">
+                </select>
+                  <div class="col-md-16 col-sm-16 col-xs-4">
+            <span class="has-error col-xs-4" style="font-size: 12px;" ng-show="!data.MissedTherapyNotificationFreq && data.isMissedTherapyNotification">Select Frequency
+            </span>
+          </div>
+              </div>
+
+            </div>
+          
+      </div>
+
+      <div class="col-md-8 col-sm-5 user-notification--icon noti_desc" translate="noti_patient.miss-therapy-new">
         You will receive a notification if you missed a day of therapy.
       </div>
     </div>
 
-    <div class="row margin-bottom20">
-      <div class="col-md-3 col-sm-4 pull-left-mob padding0">
+    <div class="row margin-bottom20" style = "margin-bottom: 10px;">
+      <div class="col-md-3 col-sm-4 col-xs-4 pull-left-mob padding0">
         <span class="user-notification--head" translate="noti_patient.below-treatment"></span>
       </div>
-      <div class="col-md-1 col-sm-1 user-notification--icon text-right-mob" ng-click="toggleNotification('nonHMRNotification');">
-        <span ng-class="patientUser.nonHMRNotification ? 'icon-toggle-on active': 'icon-toggle-off'"></span>
+      <div class="col-md-1 col-sm-1 col-xs-5 user-notification--icon text-right-mob" ng-click="toggleNotification('nonHMRNotification');">
+        <span ng-class="data.isNonHMRNotification ? 'icon-toggle-on active': 'icon-toggle-off'"></span>
       </div>
-       <div class="col-md-12 col-sm-11 user-notification--icon" translate="noti_patient.hmr-non-adher-new">
+      <div class="col-md-3 col-sm-1 user-notification--icon text-right-mob">
+        <div class="col-md-6 dashboard__form__input reset-padding selected-box-container" style="height:40px">
+              <div class="custom-dropdown noti_dropdown">
+                <select name="title" ng-readonly="validateADMINorASP()"  ng-disabled="!data.isNonHMRNotification" ng-model="data.NonHMRNotificationFreq" ng-options="option for option in dayOptions" ng-change="notificationFrequency()">
+                </select>
+                <div class="col-md-16 col-sm-16 col-xs-4">
+            <span class="has-error" style="font-size: 12px;" ng-show="!data.NonHMRNotificationFreq && data.isNonHMRNotification">Select Frequency
+            </span>
+          </div>
+              </div>
+            </div>
+      </div>
+       <div class="col-md-8 col-sm-5 user-notification--icon noti_desc" translate="noti_patient.hmr-non-adher-new">
        You will receive a notification if you did not complete the therapy time in your protocol 
       </div>
     </div>
 
-    <div class="row">
-      <div class="col-md-3 col-sm-4 pull-left-mob padding0">
+    <div class="row margin-bottom20" style = "margin-bottom: 10px;">
+      <div class="col-md-3 col-sm-4 col-xs-4 pull-left-mob padding0">
         <span class="user-notification--head" translate="noti_patient.setting-deviation"></span>
       </div>
-      <div class="col-md-1 col-sm-1 user-notification--icon text-right-mob" ng-click="toggleNotification('settingDeviationNotification');">
-        <span ng-class="patientUser.settingDeviationNotification ? 'icon-toggle-on active': 'icon-toggle-off'"></span>
+      <div class="col-md-1 col-sm-1 col-xs-5 user-notification--icon text-right-mob" ng-click="toggleNotification('settingDeviationNotification');">
+        <span ng-class="data.isSettingDeviationNotification ? 'icon-toggle-on active': 'icon-toggle-off'"></span>
       </div>
-       <div class="col-md-12 col-sm-11 user-notification--icon" translate="noti_patient.setting-dev-new">
+      <div class="col-md-3 col-sm-1 user-notification--icon text-right-mob">
+        <div class="col-md-6 dashboard__form__input reset-padding selected-box-container" style="height:40px">
+              <div class="custom-dropdown noti_dropdown">
+                <select name="title" ng-readonly="validateADMINorASP()" ng-disabled="!data.isSettingDeviationNotification" ng-model="data.SettingDeviationNotificationFreq" ng-options="option for option in dayOptions" ng-change="notificationFrequency()" ng-selected="{{option === patient.title}}">
+                </select>
+                <div class="col-md-16 col-sm-16 col-xs-4">
+            <span class="has-error" style="font-size: 12px;" ng-show="!data.SettingDeviationNotificationFreq && data.isSettingDeviationNotification">Select Frequency
+            </span>
+          </div>
+              </div>
+            </div>
+      </div>
+       <div class="col-md-8 col-sm-5 user-notification--icon noti_desc" translate="noti_patient.setting-dev-new">
         You will receive a notification if your frequency setting was 15% below protocol 
       </div>
     </div>
 
-     <div class="row">
-      <div class="col-md-3 col-sm-4 pull-left-mob padding0">
+     <div class="row" >
+      <div class="col-md-3 col-sm-4 col-xs-4  pull-left-mob padding0">
         <span class="user-notification--head" translate="noti_patient.messages"></span>
       </div>
-      <div class="col-md-1 col-sm-1 user-notification--icon text-right-mob" ng-click="toggleNotification('messageNotification');">
-        <span ng-class="patientUser.messageNotification ? 'icon-toggle-on active': 'icon-toggle-off'"></span>
+      <div class="col-md-1 col-sm-1 col-xs-5 user-notification--icon phone-noti-align custom-noti-align" ng-click="toggleNotification('messageNotification');">
+        <span ng-class="data.isMessageNotification ? 'icon-toggle-on active': 'icon-toggle-off'"></span>
       </div>
-       <div class="col-md-12 col-sm-11 user-notification--icon" translate="noti_patient.message-new">
+      <div class="col-md-3 col-sm-1 user-notification--icon phone-noti-align custom-noti-align text-right-mob">
+        <div class="col-md-6 col-xs-4 dashboard__form__input reset-padding selected-box-container" style="height:40px">
+              <div class="custom-dropdown noti_dropdown">
+                <select  class="phone-noti-dropdown-align" name="messageFreq" ng-model="MessageNotificationFreq" ng-disabled="true">
+                  <option selected>{{MessageNotificationFreq}}</option>
+                </select>
+                <div>
+           
+          </div>
+              </div>
+            </div>
+      </div>
+       <div class="col-md-8 col-sm-5 user-notification--icon noti_desc" translate="noti_patient.message-new">
         You will receive a notification if you have one or more messages in your inbox
       </div>
     </div>
