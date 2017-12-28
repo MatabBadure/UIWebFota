@@ -345,6 +345,7 @@
     "hmr-data": "Total Therapy Hours",
     "adherenceTrend":"Adherence Trend",
     "protocolGraph":"Protocol Graph",
+    "testResults":"Test Result Trend",
     "compliance": "Compliance",
     "day": "Day",
     "year": "Year",
