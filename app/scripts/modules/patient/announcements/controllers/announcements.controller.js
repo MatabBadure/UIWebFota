@@ -11,6 +11,7 @@ angular.module('hillromvestApp')
     $scope.userId = "";
     $scope.nodatadiv = false;
     $scope.toTimeStamp = new Date().getTime(); 
+    $scope.getisMessagesOpted();
     $scope.initCount("");
 
  $scope.searchAnnouncements = function(track) {      

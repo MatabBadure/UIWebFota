@@ -93,6 +93,7 @@ $scope.data.MissedTherapyNotificationFreq = "";
     };
 
     $scope.init = function(){
+      $scope.getisMessagesOpted();
       $scope.initCount($stateParams.clinicId);
       if($state.current.name === 'clinicadminUserProfile' || $state.current.name === 'editClinicadminProfile' || $state.current.name === 'clinicadminUpdatePassword'){
         $scope.initProfile(StorageService.get('logged').userId);

@@ -8,6 +8,7 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
    $scope.MessageNotificationFreq = "";
   $scope.init = function(){
 		var currentRoute = $state.current.name;
+    $scope.getisMessagesOpted();
      $scope.initCount("");
      $scope.isDisable = false;
       $scope.isDisable1 = false;

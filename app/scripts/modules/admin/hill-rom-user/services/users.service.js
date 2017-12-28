@@ -296,9 +296,21 @@ angular.module('hillromvestApp')
         }).success(function(response) {
           return response;
         });
-    }
+    },
 
       //End of Gimp-4
+
+/***** Get isMessagesOpted Gimp-22,Gimp-23,Gimp-28,Gimp-29*****/
+       getisMessagesOpted: function(userid){
+        //data.replace(/\%20/g,"+");
+        var url = URL.isMessagesOpted.replace('USERID',userid);
+        return $http.get(url, {
+          headers: headerService.getHeader()
+        }).success(function(response) {
+          return response;
+        });
+    }
+    /***** End of Get isMessagesOpted Gimp-22,Gimp-23,Gimp-28,Gimp-29*****/
 
 
     };
