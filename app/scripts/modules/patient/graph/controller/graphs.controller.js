@@ -20,6 +20,7 @@ angular.module('hillromvestApp')
     };
     var isIEBrowser = $scope.isIE();
     $scope.init = function() {
+      $scope.durationDay = false;
       $scope.noDataforPDF = false;
       $scope.currentPageIndex = 1;
       $scope.pageCount = 0;
@@ -341,10 +342,12 @@ angular.module('hillromvestApp')
       dateLimit: {"months":24},
       eventHandlers: {'apply.daterangepicker': function(ev, picker) {
           $scope.durationRange = "Custom";     
+          $scope.durationDay = true;
           $scope.calculateDateFromPicker(picker,'NotAdherenceScoreHistory');  
           var dayDiff = dateService.getDateDiffIndays($scope.fromTimeStamp,$scope.toTimeStamp);          
           if( dayDiff === 0){
             $scope.durationRange = "Day";
+            
           }
           $scope.selectChart($scope.fromDate);        
         }
@@ -1066,7 +1069,7 @@ angular.module('hillromvestApp')
 //Gimp-14 
     $scope.getTestResultsGraph = function(){
      // response.data = searchFilterService.gettestResultsData();
-     if($scope.durationRange !== 'Custom'){
+     if($scope.durationRange !== 'Custom' && !$scope.durationDay){
      $scope.calculateTimeDurationTestResults(365);
    }
       patientDashBoardService.getTestResultsGraphData($scope.patientId, dateService.getDateFromTimeStamp($scope.fromTimeStampTestResults,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStampTestResults,patientDashboard.serverDateFormat,'-'), $scope.durationRange).then(function(response){
@@ -1115,14 +1118,14 @@ angular.module('hillromvestApp')
                 responseData.series[key1].data[key2].color = "red";
               }*/
             });
-           /* if(responseData.series[key1].name === "Avg Pressure/Intensity"){
+            if(responseData.series[key1].name === "Avg FVC% Predicted"){
               responseData.series[key1].unit = ""; 
               responseData.series[key1].color = patientGraphsConstants.colors.pressure;
-            }else if(responseData.series[key1].name === "Avg Pressure/Intensity"){
+            }else if(responseData.series[key1].name === "Avg FEV1% Predicted"){
               responseData.series[key1].unit = ""; 
-              responseData.series[key1].color = patientGraphsConstants.colors.pressure;
+              responseData.series[key1].color = patientGraphsConstants.colors.frequency;
             }
-            else if(responseData.series[key1].name === "Avg Frequency"){
+           /* else if(responseData.series[key1].name === "Avg Frequency"){
               responseData.series[key1].unit = patientGraphsConstants.units.frequency; 
               responseData.series[key1].color = patientGraphsConstants.colors.frequency;
             }else if(responseData.series[key1].name === "Avg Duration"){
@@ -2457,6 +2460,7 @@ angular.module('hillromvestApp')
 
     $scope.getYearChart = function(){
       $scope.durationRange = "Year";
+      $scope.durationDay = false;
       $scope.calculateTimeDuration(365,'NotAdherenceScoreHistory');
       $scope.calculateTimeDurationTestResults(365);
      // $scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
@@ -2467,6 +2471,7 @@ angular.module('hillromvestApp')
 
     $scope.getMonthChart = function(){
       $scope.durationRange = "Month";
+      $scope.durationDay = false;
       $scope.calculateTimeDuration(30,'NotAdherenceScoreHistory');
       $scope.calculateTimeDurationTestResults(30);
       //$scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
@@ -2477,6 +2482,7 @@ angular.module('hillromvestApp')
 
     $scope.getWeekChart = function(){
       $scope.durationRange = "Week";
+      $scope.durationDay = false;
       $scope.calculateTimeDuration(6,'NotAdherenceScoreHistory');
       $scope.calculateTimeDurationTestResults(6);
       //$scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
@@ -2486,7 +2492,8 @@ angular.module('hillromvestApp')
     };
 
     $scope.getCustomDateRangeChart = function(){  
-      $scope.durationRange = "Custom";    
+      $scope.durationRange = "Custom"; 
+      $scope.durationDay = true;   
      // $scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
       $scope.getFirstTransmissionDate();
       $scope.drawHMRCChart();
@@ -2503,6 +2510,8 @@ angular.module('hillromvestApp')
       
       $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
       $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');
+      $scope.fromDateTestResults = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
+      $scope.toDateTestResults = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');
       $scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
       $scope.drawHMRCChart();
       $scope.drawHMRCChart1();
