@@ -1,6 +1,6 @@
 angular.module('hillromvestApp')
-.controller('clinicadminclinicController',['$scope', '$location','$state', 'clinicadminService', 'notyService', '$stateParams', 'clinicService', 'UserService', 'StorageService', '$timeout' ,'commonsUserService',
-  function($scope, $location,$state, clinicadminService, notyService, $stateParams, clinicService, UserService, StorageService, $timeout , commonsUserService) {
+.controller('clinicadminclinicController',['$scope', '$location','$state', 'clinicadminService', 'notyService', '$stateParams', 'clinicService', 'UserService', 'StorageService', '$timeout' ,'commonsUserService', '$rootScope',
+  function($scope, $location,$state, clinicadminService, notyService, $stateParams, clinicService, UserService, StorageService, $timeout , commonsUserService, $rootScope) {
 
     $scope.init = function(){
       $scope.totalPatientsforAdherenceCal = 0;
@@ -199,6 +199,12 @@ $scope.getAdherenceScoreSettingDays = function(){
     };
 
     $scope.switchClinic = function(clinic){
+      if(!clinic.isMessageOpted){
+      $rootScope.selectedClinicMessagesFalse = false;
+    }
+    else{
+      $rootScope.selectedClinicMessagesFalse = true;
+    }
       if($state.current.name === 'adherenceSettingPage'){
 $state.go('adherenceSettingPage',{"clinicId": clinic.id});
       }

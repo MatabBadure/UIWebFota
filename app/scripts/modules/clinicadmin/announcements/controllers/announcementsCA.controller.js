@@ -1,6 +1,6 @@
 angular.module('hillromvestApp')
-.controller('clinicadminannouncementsController',['$scope', '$location','$state', 'announcementservice', 'notyService', '$stateParams', 'clinicService', 'UserService', 'StorageService', 'commonsUserService', 'clinicadminService', 'DoctorService', '$filter',
-  function($scope, $location,$state, announcementservice, notyService, $stateParams, clinicService, UserService, StorageService, commonsUserService,clinicadminService,DoctorService,$filter) {
+.controller('clinicadminannouncementsController',['$scope', '$location','$state', 'announcementservice', 'notyService', '$stateParams', 'clinicService', 'UserService', 'StorageService', 'commonsUserService', 'clinicadminService', 'DoctorService', '$filter', '$rootScope',
+  function($scope, $location,$state, announcementservice, notyService, $stateParams, clinicService, UserService, StorageService, commonsUserService,clinicadminService,DoctorService,$filter,$rootScope) {
     
 
  //to get unread messages count
@@ -98,6 +98,12 @@ for(var i=0;i<$scope.clinics.length;i++){
   };
   $scope.switchClinic = function(clinic){
     $scope.selectedClinic = clinic;
+    if(!clinic.isMessageOpted){
+      $rootScope.selectedClinicMessagesFalse = false;
+    }
+    else{
+      $rootScope.selectedClinicMessagesFalse = true;
+    }
 
 if($scope.userRole === 'HCP'){
      $state.go('hcpannouncements',{'clinicId':$scope.selectedClinic.id});

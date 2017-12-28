@@ -386,6 +386,9 @@ angular.module('hillromvestApp')
 		    	$scope.selectedClinic.name  = localStorage.getItem('clinicname_'+$stateParams.clinicId);
          		$scope.selectedClinic.hillromId =  localStorage.getItem('clinicHillRomID_'+$stateParams.clinicId);
 				$scope.selectedClinic.id = $stateParams.clinicId;
+/*				if(!clinic.isMessageOpted){
+			  	$rootScope.isMessagesOptedFlag = false;
+			  }*/
 				}
 				else{
 					$scope.selectedClinic = {};
@@ -492,8 +495,19 @@ angular.module('hillromvestApp')
 	  $scope.selectedClinic = clinic;
 	  $scope.getStatistics($scope.selectedClinic.id, StorageService.get('logged').userId);
 	  $scope.drawGraph();
+	  if(!clinic.isMessageOpted){
+	  	$rootScope.selectedClinicMessagesFalse = false;
+	  }
+	  else{
+	  	$rootScope.selectedClinicMessagesFalse = true;
+	  }
 	}
+	if(StorageService.get('logged').role === 'HCP'){
+		$state.go('hcpdashboard',{'clinicId': $scope.selectedClinic.id});
+	}
+	else{
 	$state.go('clinicadmindashboard',{'clinicId': $scope.selectedClinic.id});
+}
 	$scope.getisMessagesOpted();
 	$scope.initCount($scope.selectedClinic.id);
   };

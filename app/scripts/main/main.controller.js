@@ -16,7 +16,7 @@ angular.module('hillromvestApp')
 	}
 	$rootScope.getisMessagesOpted = function(){
 		//$rootScope.isMessagesOptedFlag = false;
-		$scope.getisMessagesOpted();
+		$scope.getisMessagesOptedfromService();
 	}
 	$rootScope.getDeviceType = function(){
 		var patientId = "";
@@ -100,7 +100,7 @@ angular.module('hillromvestApp')
 		
     };
     /***** Get isMessagesOpted Gimp-22,Gimp-23,Gimp-28,Gimp-29*****/
-    $scope.getisMessagesOpted = function(){
+    $scope.getisMessagesOptedfromService = function(){
     	var userid = "";
     	if(StorageService.get('logged').role === 'PATIENT'){
     		userid = StorageService.get('logged').patientID;

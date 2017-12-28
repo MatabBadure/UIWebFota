@@ -1269,7 +1269,12 @@ $scope.ArchiveBox();
 
   $scope.switchClinic = function(clinic){
 /*$scope.selectedClinicForCA = null;*/
-
+if(!clinic.isMessageOpted){
+      $rootScope.selectedClinicMessagesFalse = false;
+    }
+    else{
+      $rootScope.selectedClinicMessagesFalse = true;
+    }
 $state.go('Messages_CA', {'clinicId':clinic.id});
 $scope.selectedClinicForCA = angular.copy(clinic);
 //$scope.SwitchTabs('inbox',1);
@@ -1277,6 +1282,12 @@ $scope.selectedClinicForCA = angular.copy(clinic);
   };
 
    $scope.switchClinicHCP = function(clinic){
+    if(!clinic.isMessageOpted){
+      $rootScope.selectedClinicMessagesFalse = false;
+    }
+    else{
+      $rootScope.selectedClinicMessagesFalse = true;
+    }    
 $state.go('Messages_HCP', {'clinicId':clinic.id});
 $scope.selectedClinicForHCP = angular.copy(clinic);
 $scope.SwitchTabs('inbox');

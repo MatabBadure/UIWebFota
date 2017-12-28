@@ -183,5 +183,5 @@ angular.module('hillromvestApp')
 	'timezoneList' : 'api/user/timezone',
 	'deleteUserWithReason' : '/api/user//ID',
 	'resetAccountAgeLimit' : 'api/account/re_register',
-	'isMessagesOpted': 'api//isMessagesOpted/USERID'
+	'isMessagesOpted': 'api/isMessagesOpted/USERID'
 });
