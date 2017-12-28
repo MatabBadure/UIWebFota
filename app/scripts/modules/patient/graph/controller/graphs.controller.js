@@ -2,8 +2,8 @@
 
 angular.module('hillromvestApp')
 .controller('graphController',
-  ['$scope', '$state', 'patientDashBoardService', 'StorageService', 'dateService', 'graphUtil', 'patientService', 'UserService', '$stateParams', 'notyService', '$timeout', 'graphService', 'caregiverDashBoardService', 'loginConstants', '$location','$filter', 'commonsUserService', 'clinicadminPatientService', '$rootScope', 'patientGraphsConstants', 'exportutilService',
-  function($scope, $state, patientDashBoardService, StorageService, dateService, graphUtil, patientService, UserService, $stateParams, notyService, $timeout, graphService, caregiverDashBoardService, loginConstants, $location, $filter, commonsUserService, clinicadminPatientService, $rootScope, patientGraphsConstants, exportutilService) { 
+  ['$scope', '$state', 'patientDashBoardService', 'StorageService', 'dateService', 'graphUtil', 'patientService', 'UserService', '$stateParams', 'notyService', '$timeout', 'graphService', 'caregiverDashBoardService', 'loginConstants', '$location','$filter', 'commonsUserService', 'clinicadminPatientService', '$rootScope', 'patientGraphsConstants', 'exportutilService', 'searchFilterService',
+  function($scope, $state, patientDashBoardService, StorageService, dateService, graphUtil, patientService, UserService, $stateParams, notyService, $timeout, graphService, caregiverDashBoardService, loginConstants, $location, $filter, commonsUserService, clinicadminPatientService, $rootScope, patientGraphsConstants, exportutilService, searchFilterService) { 
       $scope.loading = false;
     $scope.isGraphLoaded = false;    
     $scope.expandedSign = "+";
@@ -20,6 +20,7 @@ angular.module('hillromvestApp')
     };
     var isIEBrowser = $scope.isIE();
     $scope.init = function() {
+      $scope.noDataforPDF = false;
       $scope.currentPageIndex = 1;
       $scope.pageCount = 0;
       $scope.nextDate= new Date();
@@ -47,6 +48,7 @@ angular.module('hillromvestApp')
       $scope.forhidingMonarchHmrGraph = false;
       $scope.oneDayData = true;
       $scope.oneDayData1 = true;
+      $scope.noDataAvailableTestResults = true;
 
       $scope.initCount("");
             var currentRoute = $state.current.name;
@@ -298,11 +300,18 @@ angular.module('hillromvestApp')
       }
     else{
       $scope.fromTimeStamp = new Date(picker.startDate._d).getTime();
+      $scope.fromTimeStampTestResults = new Date(picker.startDate._d).getTime();
       $scope.toTimeStamp = new Date(picker.endDate._d).getTime();
+      $scope.toTimeStampTestResults = new Date(picker.endDate._d).getTime();
       $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
+      $scope.fromDateTestResults = dateService.getDateFromTimeStamp($scope.fromTimeStampTestResults,patientDashboard.dateFormat,'/');
       $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');
+      $scope.toDateTestResults = dateService.getDateFromTimeStamp($scope.toTimeStampTestResults,patientDashboard.dateFormat,'/');
       if ($scope.fromDate === $scope.toDate ) {
         $scope.fromTimeStamp = $scope.toTimeStamp;
+      }
+      if ($scope.fromDateTestResults === $scope.toDateTestResults ) {
+        $scope.fromTimeStampTestResults = $scope.toTimeStampTestResults;
       }
     }
     };
@@ -441,6 +450,12 @@ angular.module('hillromvestApp')
       $scope.fromTimeStamp = dateService.getnDaysBackTimeStamp(durationInDays);;
       $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
          }
+    };
+    $scope.calculateTimeDurationTestResults = function(durationInDays) {
+      $scope.toTimeStampTestResults = new Date().getTime();
+      $scope.toDateTestResults = dateService.getDateFromTimeStamp($scope.toTimeStampTestResults,patientDashboard.dateFormat,'/');
+      $scope.fromTimeStampTestResults = dateService.getnDaysBackTimeStamp(durationInDays);
+      $scope.fromDateTestResults = dateService.getDateFromTimeStamp($scope.fromTimeStampTestResults,patientDashboard.dateFormat,'/');
     };
     /*this should initiate the list of caregivers associated to the patient*/
     $scope.initPatientCaregiver = function(){
@@ -1039,12 +1054,103 @@ angular.module('hillromvestApp')
           }, 100);          
         } else{
           $scope.noDataAvailable = true;
+          $scope.compilencechartData = "";
          // $scope.removeAllCharts();
         }       
       }).catch(function(){
         $scope.noDataAvailable = true;
+        $scope.compilencechartData = "";
       });
     };
+
+//Gimp-14 
+    $scope.getTestResultsGraph = function(){
+     // response.data = searchFilterService.gettestResultsData();
+     if($scope.durationRange !== 'Custom'){
+     $scope.calculateTimeDurationTestResults(365);
+   }
+      patientDashBoardService.getTestResultsGraphData($scope.patientId, dateService.getDateFromTimeStamp($scope.fromTimeStampTestResults,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStampTestResults,patientDashboard.serverDateFormat,'-'), $scope.durationRange).then(function(response){
+      $scope.TestResultsChartData = response.data;
+        var responseData = response.data;              
+        var xData = [];
+        $scope.chartDataTestResults = {};
+        $scope.chartDataTestResults.datasets = [];
+        $scope.noDataAvailableTestResults = false;
+        if(responseData){ 
+          $scope.noDataAvailableTestResults = false;        
+          xData = responseData.xAxis.categories; 
+          responseData.xAxis.xLabels = []; 
+          var startDay = (responseData.xAxis && responseData.xAxis.categories.length > 0) ? responseData.xAxis.categories[0].split(" "): null;  
+          $scope.testResultsXAxisLabelCount = 0;
+          angular.forEach(responseData.xAxis.categories, function(x, key){              
+            // this is for year view or custom view having datapoints more than 7
+            // x-axis will be plotted accordingly, chart type will be datetime
+            var curDay = responseData.xAxis.categories[key].split(" ");
+            $scope.isSameDay = ($scope.isSameDay && (curDay[0] === startDay[0]) )? true : false;  
+            if(curDay[0] !== startDay[0]){
+              startDay[0] = curDay[0];
+              $scope.testResultsXAxisLabelCount++;
+            }
+            var dateTextLabel = Highcharts.dateFormat("%m/%d/%Y",dateService.convertToTimestamp(x));
+            dateTextLabel += (Highcharts.dateFormat("%I:%M %p",dateService.convertToTimestamp(x)))? ' ( ' + Highcharts.dateFormat("%I:%M %p",dateService.convertToTimestamp(x)) + ' )' : '';
+            
+            responseData.xAxis.xLabels.push(dateTextLabel);            
+              xData[key] = dateService.convertToTimestamp(x);                          
+            });
+            console.log("xdata",xData)       
+
+          angular.forEach(responseData.series, function(s, key1){
+            var marker = {};
+            marker.radius = (s.data && s.data.length < 50)? 2 : 0.5;
+            $scope.markerRadius = marker.radius; 
+            responseData.series[key1].unit = ""; 
+            responseData.series[key1].color = patientGraphsConstants.colors.pressure; 
+            angular.forEach(s.data, function(d, key2){
+              var tooltipDateText = responseData.series[key1].data[key2].x ;
+              responseData.series[key1].data[key2].x = xData[key2];
+              responseData.series[key1].data[key2].marker = marker;
+             // responseData.series[key1].data[key2].toolText.dateText = responseData.xAxis.xLabels[key2] ;
+              
+              /*if(responseData.series[key1].data[key2].toolText.missedTherapy){
+                responseData.series[key1].data[key2].color = "red";
+              }*/
+            });
+           /* if(responseData.series[key1].name === "Avg Pressure/Intensity"){
+              responseData.series[key1].unit = ""; 
+              responseData.series[key1].color = patientGraphsConstants.colors.pressure;
+            }else if(responseData.series[key1].name === "Avg Pressure/Intensity"){
+              responseData.series[key1].unit = ""; 
+              responseData.series[key1].color = patientGraphsConstants.colors.pressure;
+            }
+            else if(responseData.series[key1].name === "Avg Frequency"){
+              responseData.series[key1].unit = patientGraphsConstants.units.frequency; 
+              responseData.series[key1].color = patientGraphsConstants.colors.frequency;
+            }else if(responseData.series[key1].name === "Avg Duration"){
+              responseData.series[key1].unit = patientGraphsConstants.units.duration; 
+              responseData.series[key1].color = patientGraphsConstants.colors.duration;
+            }*/
+            $scope.chartDataTestResults.datasets.push(responseData.series[key1]);
+          });
+          $scope.chartDataTestResults.xData = xData;
+          setTimeout(function(){            
+              $scope.synchronizedTestResultsChart('synchronizedChartTestResults');           
+          }, 100);    
+        }
+         else{
+          $scope.noDataAvailableTestResults = true;
+          $scope.TestResultsChartData = {}
+         // $scope.removeAllCharts();
+        }  
+      }).catch(function(){
+         $scope.noDataAvailableTestResults = true;
+         $scope.TestResultsChartData = {};
+      });
+      //$scope.noDataAvailableTestResults = false;
+      //$scope.synchronizedChart('synchronizedChartTestResults');
+
+           
+    };
+
 
     $scope.setSynchronizedChart = function(divId){
        Highcharts.setOptions({
@@ -1108,6 +1214,254 @@ angular.module('hillromvestApp')
           } 
         });
                
+    };
+    $scope.setSynchronizedChartTestResults = function(divId){
+       Highcharts.setOptions({
+            global: {
+                useUTC: false
+            }
+        });        
+         /**
+         * In order to synchronize tooltips and crosshairs, override the
+         * built-in events with handlers defined on the parent element.
+         */
+         
+        $("#"+divId).bind('mousemove touchmove touchstart mouseover', function(e) {
+          var chart,
+          point,
+          i,
+          event;
+          var charts = Highcharts.charts;               
+          for (i = 0; i < Highcharts.charts.length; i = i + 1) {
+            chart = Highcharts.charts[i];            
+            if(chart && chart.renderTo.offsetParent && chart.renderTo.offsetParent.id === "synchronizedChartTestResults"){              
+              event = chart.pointer.normalize(e.originalEvent); // Find coordinates within the chart
+              point = chart.series[0].searchPoint(event, true); // Get the hovered point
+
+              if (point) {
+                chart.xAxis[0].crosshair = true;
+                point.onMouseOver(); // Show the hover marker
+                chart.tooltip.refresh(point); // Show the tooltip
+                chart.xAxis[0].drawCrosshair(event, point); // Show the crosshair
+              }
+            }
+          }
+          if( $('.highcharts-button').length > 0 ){
+            $('.highcharts-button').show();
+          }
+        });
+
+        //$("#"+divId).bind('mouseleave', function(e) { 
+        //  $(".button").unbind('click').click(
+        $("#"+divId).unbind('mouseleave').mouseleave(function(e) {                    
+          e.stopPropagation();         
+          var chart,
+          point,
+          i,
+          event;
+
+          var charts = Highcharts.charts;   
+          for (i = 0; i < Highcharts.charts.length; i = i + 1) {
+            chart = Highcharts.charts[i];
+            if(chart &&  chart.renderTo.offsetParent && chart.renderTo.offsetParent.id === "synchronizedChartTestResults"){               
+              event = chart.pointer.normalize(e.originalEvent);
+              point = chart.series[0].searchPoint(event, true);
+
+              point.onMouseOut(); 
+              chart.tooltip.hide(point);
+              chart.xAxis[0].hideCrosshair(); 
+              if( $('.highcharts-button').length > 0 ){
+                $('.highcharts-button').hide();
+              }
+            }
+          } 
+        });
+               
+    };
+    $scope.synchronizedTestResultsChart = function(divId){
+       
+        // Get the data. The contents of the data file can be viewed at
+        divId = (divId) ? divId : "synchronizedChartTestResults";
+        $("#"+divId).empty();
+        $scope.setSynchronizedChartTestResults(divId);
+        function syncExtremes(e) {
+              var thisChart = this.chart;
+
+        if (e.trigger !== 'syncExtremes') { // Prevent feedback loop
+            Highcharts.each(Highcharts.charts, function(chart) {
+              if(chart && chart.renderTo.offsetParent && chart.renderTo.offsetParent.id === "synchronizedChartTestResults"){ 
+                if (chart !== thisChart) {
+                  if (chart.xAxis[0].setExtremes) { // It is null while updating
+                    chart.xAxis[0].setExtremes(e.min, e.max, undefined, false, {
+                      trigger: 'syncExtremes'
+                    });
+                  }
+                }
+              }
+            });
+          }
+        }
+        
+        $.each($scope.chartDataTestResults.datasets, function(i, dataset) { 
+        dataset.plotLines = {};
+       // dataset.plotLines.max = 10;
+        //dataset.plotLines.min = 14;        
+         // var  minRange = (dataset.plotLines.max) ? dataset.plotLines.max : dataset.plotLines.min;
+         // var yMaxPlotLine = dataset.plotLines.max;
+         // var yMinPlotLine = dataset.plotLines.min;
+          var noOfDataPoints = ($scope.chartDataTestResults.xData)? $scope.chartDataTestResults.xData.length: 0;
+          var daysInterval = getDaysIntervalInChart($scope.testResultsXAxisLabelCount);         
+          console.log("thiss",this);
+          $('<div class="chart">')
+            .appendTo('#'+divId)
+            .highcharts({
+              credits: {
+                enabled: false
+              },
+              chart: {
+                marginLeft: 40, 
+                //spacingTop: 30,
+                spacingBottom: 30,                
+                backgroundColor:  "#e6f1f4",
+                height:375
+              },
+              title: {
+                text: dataset.name + " " +dataset.unit,
+                align: 'left',
+                margin: 25,
+                x: 30,
+                style:{
+                  color: dataset.color,
+                  fontWeight: 'bold',
+                  fontSize: '14px'
+                }                
+              },             
+              legend: {
+                enabled: false
+              },
+              xAxis: {
+                type: 'datetime',
+                crosshair: true,
+                minPadding: 0,
+                maxPadding: 0,
+                startOnTick: false,
+                endOnTick: false,                
+                events: {
+                  setExtremes: syncExtremes
+                },
+                labels: {
+                  style: {
+                    color: '#525151',
+                    fontWeight: 'bold'
+                  },
+                  formatter: function() {
+                    return Highcharts.dateFormat("%m/%d/%Y", this.value);
+                  }
+                },
+                lineWidth: 2,
+                units: [
+                  ['day']
+                ] 
+              },
+              yAxis: {
+                gridLineColor: '#FF0000',
+                gridLineWidth: 0,
+                lineWidth:2,
+               // minRange: minRange,
+                min: 0,
+                allowDecimals:false,
+                title: {
+                  text: null
+                },
+                plotLines: [{
+                    //value: yMinPlotLine,
+                    color: '#99cf99',
+                    dashStyle: 'Dash',
+                    width: 1,                    
+                    label: {
+                        align: "right",
+                        text: 'Min Threshold',
+                        y: -5,
+                        x: -10,
+                        style: {
+                            color: '#c1c1c1',
+                            font: '10px Helvetica',
+                            fontWeight: 'normal'
+                        }/*,
+                        textAlign: "left"*/
+                    }
+                }, {
+                    //value: yMaxPlotLine,
+                    color: '#f19999',
+                    dashStyle: 'Dash',
+                    width: 1,                    
+                    label: {
+                      align: "right",
+                      text: 'Max Threshold',
+                      y: -5,
+                      x: -10,
+                      style: {
+                          color: '#c1c1c1',
+                          font: '10px Helvetica',
+                          fontWeight: 'normal'
+                      }/*,
+                        textAlign: "left"*/
+                    }
+                }],
+              },
+              plotOptions: {  
+                line: {
+                    lineWidth: 3,
+                    softThreshold: false,
+                    marker: {
+                          enabled: true,
+                           radius: $scope.markerRadius
+                    },
+                    states: {
+                        hover: {
+                            enabled: false
+                        }                    
+                    } //putting down x-axis, when we have zero for all y-axis values
+                }
+              },
+              tooltip: { 
+                enabled: true, 
+                positioner: function () {
+                    return {
+                        x: this.chart.chartWidth - this.label.width, // right aligned
+                        y: -1 // align to title
+                    };
+                },            
+                // formatter: function() {
+                //   var s = '<div style="font-size:12x;font-weight: bold; padding-bottom: 3px;">'+  this.point.toolText.dateText +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div>';                         
+                //   s += '<div style="font-size:10px; font-weight: bold; width:100%"><div style="color:'+ this.point.color +';padding:5px 0;width:80%;float:left"> ' + this.point.series.name + '</div> ' 
+                //   + '<div style="padding:5px;width:10%"><b>' + this.point.y + '</b></div></div>';
+                //   s += '</div>';
+                //   return s;
+                // },
+                borderWidth: 0, 
+                backgroundColor: 'none',
+                pointFormat: '<span style="color:{point.series.color}"> {series.name}: {point.y}</span>',//'{point.series.name}' + ' : ' +'{point.y}',
+                headerFormat: '',
+                shadow: false,
+                style: {
+                    fontSize: '14px'
+                },
+                hideDelay: 0//,
+                //useHTML: true                
+              },
+              series: [{
+                data: dataset.data,
+                name: dataset.name,
+                type: dataset.type,
+                color: dataset.color,                
+                fillOpacity: 0.3,
+                 tooltip: {
+                    valueSuffix: ' ' + dataset.unit
+                }
+              }]
+            });
+        });
     };
 
     $scope.synchronizedChart = function(divId){
@@ -1352,7 +1706,6 @@ angular.module('hillromvestApp')
              else{
               $scope.oneDayData = true;
             }    
-            console.log("$scope.oneDayData",$scope.oneDayData) 
             angular.forEach($scope.hmrChartData.xAxis.categories, function(x, key){              
               // this is for year view or custom view having datapoints more than 7
               // x-axis will be plotted accordingly, chart type will be datetime
@@ -1398,10 +1751,12 @@ angular.module('hillromvestApp')
         } else{
           console.log(" $scope.noDataAvailableForHMR");
           $scope.noDataAvailableForHMR = true;
+          $scope.hmrChartData = "";
           //$scope.removeAllCharts();
         }
       }).catch(function(){
         $scope.noDataAvailableForHMR = true;
+        $scope.hmrChartData = "";
       });
     };
 
@@ -1468,10 +1823,12 @@ angular.module('hillromvestApp')
           }, 100);          
         } else{
           $scope.noDataAvailableForAdherence = true;
+          $scope.adherenceTrendData = "";
           //$scope.removeAllCharts();
         }
       }).catch(function(){
         $scope.noDataAvailableForAdherence = true;
+        $scope.adherenceTrendData = "";
          // $scope.removeAllCharts();
       });
     };
@@ -2095,11 +2452,13 @@ angular.module('hillromvestApp')
         $scope.getHMRGraph();
         $scope.getAdhereneTrendGraph();
         $scope.getComplianceGraph();
+        $scope.getTestResultsGraph();
     };
 
     $scope.getYearChart = function(){
       $scope.durationRange = "Year";
       $scope.calculateTimeDuration(365,'NotAdherenceScoreHistory');
+      $scope.calculateTimeDurationTestResults(365);
      // $scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
       $scope.getFirstTransmissionDate();
       $scope.drawHMRCChart();
@@ -2109,6 +2468,7 @@ angular.module('hillromvestApp')
     $scope.getMonthChart = function(){
       $scope.durationRange = "Month";
       $scope.calculateTimeDuration(30,'NotAdherenceScoreHistory');
+      $scope.calculateTimeDurationTestResults(30);
       //$scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
       $scope.getFirstTransmissionDate();
       $scope.drawHMRCChart();
@@ -2118,6 +2478,7 @@ angular.module('hillromvestApp')
     $scope.getWeekChart = function(){
       $scope.durationRange = "Week";
       $scope.calculateTimeDuration(6,'NotAdherenceScoreHistory');
+      $scope.calculateTimeDurationTestResults(6);
       //$scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
       $scope.getFirstTransmissionDate();
       $scope.drawHMRCChart();
@@ -2443,13 +2804,23 @@ angular.module('hillromvestApp')
       
        if(($scope.getDeviceTypeforBothIcon() == 'MONARCH')|| ($scope.getDeviceTypeforBothIcon() == 'VEST')){
 
-        if($scope.hmrChartData.length===0) {
+        if($scope.hmrChartData.length===0 && $scope.adherenceTrendData.length===0 && $scope.compilencechartData.length===0 && $scope.TestResultsChartData.length === 0) {
+          $scope.noDataforPDF = true;
+        }
+         /*
+          if($scope.hmrChartData.length===0 && $scope.adherenceTrendData.length===0 && $scope.compilencechartData.length===0 && $scope.TestResultsChartData.length === 0) {
           exportutilService.exportHMRCGraphAsPDFForAdherenceTrendHavingNoHMR("synchronizedChart", "HMRCCanvas", $scope.fromDate, $scope.toDate, $scope.patientInfo, clinicDetail);
+        }
+         if($scope.TestResultsChartData.length === 0 && ($scope.hmrChartData.length !== 0 && $scope.adherenceTrendData.length !== 0)) {
+          exportutilService.exportHMRCGraphAsPDFForAdherenceTrendHavingNoTestResults("synchronizedChart", "HMRCCanvas", $scope.fromDate, $scope.toDate, $scope.patientInfo, clinicDetail);
         }
         else {
           exportutilService.exportHMRCGraphAsPDFForAdherenceTrend("synchronizedChart", "HMRCCanvas", $scope.fromDate, $scope.toDate, $scope.patientInfo, clinicDetail);
-        }
-
+        }*/
+        else{
+          $scope.noDataforPDF = false;
+     exportutilService.exportHMRCGraphAsPDFForAdherenceTrend("synchronizedChart", "HMRCCanvas", $scope.fromDate, $scope.toDate, $scope.patientInfo, clinicDetail, $scope.hmrChartData, $scope.adherenceTrendData, $scope.compilencechartData, $scope.TestResultsChartData);
+}
       }else if(($scope.getDeviceTypeforBothIcon() == 'ALL')){
          exportutilService.exportHMRCGraphAsPDFForAdherenceTrendForAll("synchronizedChart","synchronizedChart1", "HMRCCanvas", $scope.fromDate, $scope.toDate, $scope.patientInfo, clinicDetail,$scope.hmrChartData1);
       }    
@@ -2651,6 +3022,7 @@ $scope.adherencetrendData.push(new Object({"adherenceTrends": [] , "protocols": 
     $scope.getAdherenceTrend = function(){
       $scope.isHMR = false;
       $scope.isCompliance = false;
+      $scope.isTestResults = false;
       $scope.isAdherenceTrend = true;
       if(($scope.adherenceTrendData.length == 0) || ($scope.adherenceTrendData==null))
       {
@@ -2662,20 +3034,29 @@ $scope.adherencetrendData.push(new Object({"adherenceTrends": [] , "protocols": 
       }
       $scope.selectChart($scope.fromDate);
     };
+     $scope.getTestResults = function(){
+      $scope.isHMR = false;
+      $scope.isCompliance = false;
+      $scope.isAdherenceTrend = false;
+      $scope.isTestResults = true;
+      $scope.getTransmissionDateForPatient($scope.patientId);
+      $scope.selectChart($scope.fromDate);
+    };
 
     $scope.getHMR = function(){
       $scope.isHMR = true;
       $scope.isCompliance = false;
+      $scope.isTestResults = false;
       $scope.isAdherenceTrend = false;
       $scope.noDataStatus = true;
       $scope.getTransmissionDateForPatient($scope.patientId);
       $scope.selectChart($scope.fromDate);
-
     };
 
     $scope.getCompliance = function(){
       $scope.isHMR = false;
       $scope.isCompliance = true;
+      $scope.isTestResults = false;
       $scope.isAdherenceTrend = false;
       $scope.noDataStatus = true;
         $scope.getTransmissionDateForPatient($scope.patientId);
@@ -2691,14 +3072,17 @@ $scope.adherencetrendData.push(new Object({"adherenceTrends": [] , "protocols": 
     $scope.removeAllCharts = function(){
      $("#HMRGraph").empty();
       $("#synchronizedChart").empty(); 
-      $("#AdherenceTrendGraph").empty();    
+      $("#AdherenceTrendGraph").empty();
+      $("#synchronizedChartTestResults").empty();    
     };
     $scope.removeAllCharts1 = function(){
 
      $("#HMRGraph1").empty();
       $("#synchronizedChart1").empty(); 
 
-      $("#AdherenceTrendGraph").empty();    
+      $("#AdherenceTrendGraph").empty();
+      $("#synchronizedChartTestResults").empty();    
+
     };
 
     $scope.viewProtocol = function(protcols){
@@ -3092,10 +3476,12 @@ $scope.getComplianceGraph = function(){
           }, 100);          
         } else{
           $scope.noDataAvailable = true;
+          $scope.compilencechartData = {};
          // $scope.removeAllCharts();
         }       
       }).catch(function(){
         $scope.noDataAvailable = true;
+        $scope.compilencechartData = {};
       });
     };
 
@@ -3423,10 +3809,12 @@ $scope.getComplianceGraph = function(){
         } else{
           console.log(" $scope.noDataAvailableForHMR");
           $scope.noDataAvailableForHMR = true;
+          $scope.hmrChartData = "";
           //$scope.removeAllCharts();
         }
       }).catch(function(){
         $scope.noDataAvailableForHMR = true;
+        $scope.hmrChartData = "";
       });
     };
 
@@ -3494,10 +3882,12 @@ $scope.getComplianceGraph = function(){
           }, 100);          
         } else{
           $scope.noDataAvailableForAdherence = true;
+          $scope.adherenceTrendData = "";
          // $scope.removeAllCharts();
         }
       }).catch(function(){
         $scope.noDataAvailableForAdherence = true;
+        $scope.adherenceTrendData = "";
          // $scope.removeAllCharts();
       });
     };
@@ -4442,10 +4832,12 @@ $scope.getComplianceGraph1 = function(){
           }, 100);          
         } else{
           $scope.noDataAvailable1 = true;
+          $scope.compilencechartData1 = "";
          // $scope.removeAllCharts();
         }       
       }).catch(function(){
         $scope.noDataAvailable1 = true;
+        $scope.compilencechartData1 = "";
       });
     };
 
@@ -4523,10 +4915,12 @@ $scope.getComplianceGraph1 = function(){
         } else{
           console.log(" $scope.noDataAvailableForHMR1");
           $scope.noDataAvailableForHMR1 = true;
+          $scope.hmrChartData1 = "";
          // $scope.removeAllCharts();
         }
       }).catch(function(){
       $scope.noDataAvailableForHMR1 = true;
+      $scope.hmrChartData1 = "";
       });
     };
 
@@ -4928,6 +5322,7 @@ $scope.getComplianceGraph1 = function(){
         $scope.removeAllCharts1();    
         $scope.getHMRGraph1();
         $scope.getComplianceGraph1();
+        $scope.getTestResultsGraph();
     };
 
 }
