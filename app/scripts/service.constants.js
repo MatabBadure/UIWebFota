@@ -221,7 +221,7 @@ angular.module('hillromvestApp').constant('pdfServiceConstants', {
         noHMRGraphContentForPDF : "Protocol and Total Therapy Hours Graph is Not Available because of No Data",
         signatureContent : "Electronically signed by ",
         monarch:"Monarch",
-        testResults:"Test Results Graph"
+        testResults:"Test Result Trend"
     },
     style:{
         font:{
