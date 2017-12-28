@@ -1,6 +1,6 @@
 angular.module('hillromvestApp')
-.controller('clinicadminHcpController',['$scope', '$state', '$stateParams', 'clinicService', 'DoctorService', 'UserService', 'searchFilterService', '$timeout', 'clinicadminService', 'clinicadminHcpService', 'notyService', 'StorageService', 'commonsUserService',
-  function($scope, $state, $stateParams, clinicService, DoctorService, UserService, searchFilterService, $timeout, clinicadminService, clinicadminHcpService, notyService, StorageService, commonsUserService) {
+.controller('clinicadminHcpController',['$scope', '$state', '$stateParams', 'clinicService', 'DoctorService', 'UserService', 'searchFilterService', '$timeout', 'clinicadminService', 'clinicadminHcpService', 'notyService', 'StorageService', 'commonsUserService', '$rootScope',
+  function($scope, $state, $stateParams, clinicService, DoctorService, UserService, searchFilterService, $timeout, clinicadminService, clinicadminHcpService, notyService, StorageService, commonsUserService, $rootScope) {
 
     var searchOnLoad = true;
   	$scope.init = function(){
@@ -13,6 +13,7 @@ angular.module('hillromvestApp')
         $scope.perPageCount = 10;
         $scope.getClinicsAssociatedToClinicadmin();
         $scope.initClinicadminHcpDashboard();
+        $scope.getisMessagesOpted();
         $scope.initCount($stateParams.clinicId);
       }else if(currentState === 'clinicadminnewhcp'){
         $scope.doctorStatus = {};
@@ -151,6 +152,12 @@ angular.module('hillromvestApp')
     };
 
     $scope.switchClinic = function(clinic){
+      if(!clinic.isMessageOpted){
+      $rootScope.selectedClinicMessagesFalse = false;
+    }
+    else{
+      $rootScope.selectedClinicMessagesFalse = true;
+    }
       $state.go('clinicadminhcpdashboard', {'clinicId':clinic.id});
     };
 

@@ -90,6 +90,7 @@ $scope.data.MissedTherapyNotificationFreq = "";
     });
   };
     $scope.init = function(){
+      $scope.getisMessagesOpted();
        $scope.initCount($stateParams.clinicId);
       if($state.current.name === 'hcpUserProfile' || $state.current.name === 'editHCPProfile' ){
         $scope.initProfile(StorageService.get('logged').userId);
@@ -112,12 +113,12 @@ $scope.data.MissedTherapyNotificationFreq = "";
         };
         
     $scope.editMode = function(){
-       var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : (($scope.clinics && $scope.clinics.length > 0) ? $scope.clinics[0].id : $stateParams.clinicId);      
+       var clinicId = ($stateParams.clinicId) ? $stateParams.clinicId : (($scope.clinics && $scope.clinics.length > 0) ? $scope.clinics[0].id : $stateParams.clinicId);      
       $state.go('editHCPProfile', {'clinicId': clinicId});
     };
 
     $scope.switchProfileTab = function(status){
-       var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : (($scope.clinics && $scope.clinics.length > 0) ? $scope.clinics[0].id : $stateParams.clinicId);      
+       var clinicId = ($stateParams.clinicId) ? $stateParams.clinicId : (($scope.clinics && $scope.clinics.length > 0) ? $scope.clinics[0].id : $stateParams.clinicId);      
       $state.go(status, {'clinicId': clinicId});
     };
 
@@ -280,7 +281,7 @@ UserService.updatePatientUserNotification(StorageService.get('logged').userId, $
     };
 
     $scope.goToPatientDashboard = function(value){
-      var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : (($scope.clinics && $scope.clinics.length > 0) ? $scope.clinics[0].id : $stateParams.clinicId);
+      var clinicId = ($stateParams.clinicId) ? $stateParams.clinicId : (($scope.clinics && $scope.clinics.length > 0) ? $scope.clinics[0].id : $stateParams.clinicId);
       $state.go(value, {'clinicId': clinicId});
     };
 

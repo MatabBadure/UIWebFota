@@ -45,9 +45,25 @@ $scope.messageBodyObject = {};
     DoctorService.getClinicsAssociatedToHCP(userId).then(function(response){
       //$scope.getDashboardForHCPOrPatient(response, userId);
       if(response.data && response.data.clinics){
-      $scope.clinicsHCP = $filter('orderBy')(response.data.clinics, "name");
+      $scope.clinicsHCP = $filter('orderBy')(response.data.clinics, "name", "isMessageOpted");
        if($stateParams.clinicId && $stateParams.clinicId != 'others'){
-         $scope.selectedClinicForHCP = commonsUserService.getSelectedClinicFromList($scope.clinicsHCP, $stateParams.clinicId);
+          var clinicSelected = "";
+          angular.forEach($scope.clinicsHCP,function(clinic,key){
+            if($stateParams.clinicId == clinic.id){
+              if(!clinic.isMessageOpted){
+                clinicSelected = $scope.clinicsHCP[key+1].id;
+              }
+              else{
+                clinicSelected = $stateParams.clinicId;
+              }
+            }
+          })
+          if(clinicSelected){
+         $scope.selectedClinicForHCP = commonsUserService.getSelectedClinicFromList($scope.clinicsHCP, clinicSelected);
+       }
+       else{
+        $scope.selectedClinicForHCP = commonsUserService.getSelectedClinicFromList($scope.clinicsHCP, $stateParams.clinicId);
+       }
        $scope.switchClinicHCP($scope.selectedClinicForHCP);
      
       }
@@ -66,7 +82,9 @@ $scope.messageBodyObject = {};
          $scope.clinicsListdata = response.data;
          $scope.clinicsList=[];
          for(var i=0;i<$scope.clinicsListdata.clinics.length;i++){
+          if($scope.clinicsListdata.clinics[i].isMessageOpted){
          $scope.clinicsList.push($scope.clinicsListdata.clinics[i].name);
+       }
          }
          $scope.SelectedClinic = angular.copy($scope.clinicsListdata.clinics[0]);
         $scope.processClinics($scope.clinicsList);
@@ -78,7 +96,23 @@ $scope.messageBodyObject = {};
       if(response.data && response.data.clinics){
         $scope.clinics = $filter('orderBy')(response.data.clinics, "name");
         if($stateParams.clinicId){
+          var clinicSelected = "";
+          angular.forEach($scope.clinics,function(clinic,key){
+            if($stateParams.clinicId == clinic.id){
+              if(!clinic.isMessageOpted){
+                clinicSelected = $scope.clinics[key+1].id;
+              }
+              else{
+                clinicSelected = $stateParams.clinicId;
+              }
+            }
+          });
+          if(clinicSelected){
+          $scope.selectedClinicForCA = commonsUserService.getSelectedClinicFromList($scope.clinics, clinicSelected);
+        }
+        else{
           $scope.selectedClinicForCA = commonsUserService.getSelectedClinicFromList($scope.clinics, $stateParams.clinicId);
+        }
         $scope.switchClinic($scope.selectedClinicForCA);
         }else if($scope.clinics && $scope.clinics.length > 0){
         //  $scope.selectedClinicForCA=angular.copy($scope.clinics[0]);
@@ -1011,7 +1045,7 @@ if (track !== undefined) {
           'name': clinic,
           'ticked': true
         };
-        $scope.clinicnames.push(obj);  
+        $scope.clinicnames.push(obj);
       });
     };
 $scope.processpatients = function(patients){
@@ -1235,7 +1269,12 @@ $scope.ArchiveBox();
 
   $scope.switchClinic = function(clinic){
 /*$scope.selectedClinicForCA = null;*/
-
+if(!clinic.isMessageOpted){
+      $rootScope.selectedClinicMessagesFalse = false;
+    }
+    else{
+      $rootScope.selectedClinicMessagesFalse = true;
+    }
 $state.go('Messages_CA', {'clinicId':clinic.id});
 $scope.selectedClinicForCA = angular.copy(clinic);
 //$scope.SwitchTabs('inbox',1);
@@ -1243,6 +1282,12 @@ $scope.selectedClinicForCA = angular.copy(clinic);
   };
 
    $scope.switchClinicHCP = function(clinic){
+    if(!clinic.isMessageOpted){
+      $rootScope.selectedClinicMessagesFalse = false;
+    }
+    else{
+      $rootScope.selectedClinicMessagesFalse = true;
+    }    
 $state.go('Messages_HCP', {'clinicId':clinic.id});
 $scope.selectedClinicForHCP = angular.copy(clinic);
 $scope.SwitchTabs('inbox');
