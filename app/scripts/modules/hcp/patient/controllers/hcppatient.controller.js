@@ -6,7 +6,8 @@ angular.module('hillromvestApp')
     $scope.displayFlag = true;
           $scope.customPointsChecker = 0;
           $scope.lastdeviceType = "";   
-	$scope.init = function(){     
+	$scope.init = function(){  
+  $scope.searchItem = "";   
     if($state.current.name === 'hcppatientDemographic'){
       $scope.getPatientInfo($stateParams.patientId, $scope.setEditMode);
     }else if($state.current.name === 'hcppatientdemographicEdit'){
@@ -278,7 +279,9 @@ angular.module('hillromvestApp')
       $state.go(value, {'clinicId': clinicId});
 	};
 
-
+$scope.searchPatientsOnQueryChange = function(){
+            $scope.searchPatients();
+        };
 
 	$scope.searchPatients = function(track){
     if (track !== undefined) {
@@ -296,6 +299,10 @@ angular.module('hillromvestApp')
     }
     $scope.searchFilter = ($scope.searchFilter && $scope.searchFilter != undefined) ? $scope.searchFilter :searchFilterService.initSearchFiltersForPatient();
     var filter = searchFilterService.getFilterStringForPatient($scope.searchFilter);
+    if(filter || $scope.searchItem){
+      if(!filter.length && $scope.searchItem){
+      var filter = "&deviceType=ALL";
+    }
     var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : $stateParams.clinicId;
     DoctorService.searchPatientsForHCP($scope.searchItem, 'hcp',StorageService.get('logged').userId, clinicId, $scope.currentPageIndex, $scope.perPageCount, filter, $scope.sortOption).then(function (response) {
       $scope.patients = response.data;      
@@ -308,7 +315,14 @@ angular.module('hillromvestApp')
       searchOnLoad = false;
     }).catch(function (response) {
       notyService.showError(response);
-    });           
+    });    
+    }
+    else{
+      $scope.patients = {};
+      $scope.currentPageIndex = 1;
+      $scope.perPageCount = 10;
+      $scope.pageCount = 0;
+    }       
 	};
 
   $scope.switchClinic = function(clinic){

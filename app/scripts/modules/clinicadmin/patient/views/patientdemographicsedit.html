@@ -181,7 +181,7 @@
               <span class="">*</span>
             </div>
             <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding">
-              <input type="text" validate-on-blur class="form-control" name="zip" ng-readonly="validateADMINorASP()" maxlength="5" ng-disabled = "true" ng-pattern="/^(?=.*[1-9].*)[0-9]{5}$/" ng-model="patient.zipcode" ng-blur="getCityState(patient.zipcode)"/>
+              <input type="text" validate-on-blur class="form-control" name="zip" ng-readonly="validateADMINorASP()" maxlength="7" ng-pattern='/^(\d{5}(-\d{4})?|[A-Z]\d[A-Z] *\d[A-Z]\d)$/' ng-disabled = "true"  ng-model="patient.zipcode" ng-blur="getCityState(patient.zipcode)"/>
             </div>
           </div>
           <div class="col-md-7 col-sm-7 reset-padding col-md-offset-2 col-sm-offset-2">

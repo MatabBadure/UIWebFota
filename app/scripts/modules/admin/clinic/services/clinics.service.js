@@ -162,8 +162,8 @@ angular.module('hillromvestApp')
         });
       },
 
-      getHCPsWithClinicName: function(){
-        var url = URL.getHCPsWithClinicName;
+      getHCPsWithClinicName: function(searchString){
+        var url = URL.getHCPsWithClinicName.replace('SEARCHSTRING',searchString);
         return $http.get(url, {
           headers: headerService.getHeader()
         }).success(function(response) {

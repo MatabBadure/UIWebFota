@@ -1,11 +1,11 @@
                 <!--Implementation of GIMP-39 -->
                   <div  class="col-md-16 col-sm-16 padding10 survey_grey_color" >
                          <div class="col-md-4 dashboard__form--input">
-                          <span class="advanced-filters">Clinic Name</span>
-              <input class="" type="text" validate-on-blur ng-model="clinicAdvancedFilter.clinicName" name="clinicname">
+                          <span class="advanced-filters">HCP Name</span>
+              <input class="" type="text" validate-on-blur ng-model="hcpAdvancedFilter.name" name="name">
             </div>
               
-      <div class="col-md-4 col-sm-4 dashboard__form--input">
+      <!-- <div class="col-md-4 col-sm-4 dashboard__form--input">
               <span class="advanced-filters" translate="clinic.clinic-type"></span>
             <div class="form__select__input--option reset-padding selected-box-container">
                  <div class="custom-dropdown" >
@@ -14,19 +14,43 @@
               </div>
             </div>
 
-          </div>
-          <div class="col-md-4 col-sm-4 reset-padding">
-              <span class="advanced-filters" translate="clinic.clinic-speciality"></span>
+          </div> -->
+          <div class="col-md-4 col-sm-4 dashboard__form--input">
+              <span class="advanced-filters" translate="doctor.speciality"></span>
             <div class="form__select__input--option reset-padding selected-box-container">
               <div class="custom-dropdown" >
-                <select name="type" ng-model="clinicAdvancedFilter.clinicSpecialty"  ng-options="item.type_code_value as item.type_code_value for item in specialities">
+                <select name="type" ng-model="hcpAdvancedFilter.specialty"  ng-options="item.type_code_value as item.type_code_value for item in specialities">
                 </select>
               </div>
             </div>
             
           </div>
+          <!-- <div class="col-md-4 col-sm-4 reset-padding">
+              <span class="advanced-filters" translate="clinic.clinic-speciality"></span>
+            <div class="form__select__input--option reset-padding selected-box-container">
+              <div class="custom-dropdown" >
+                <select name="type" ng-model="hcpAdvancedFilter.clinicSpecialty"  ng-options="item.type_code_value as item.type_code_value for item in specialities">hcpAdvancedFilter
+                </select>
+              </div>
+            </div>
+            
+          </div> -->
+          <div class="col-md-4 col-sm-4 reset-padding">
+            <span class="advanced-filters">Select a credential</span>
+            <div class="form__select__input--option reset-padding selected-box-container">
+              <div class="custom-dropdown" >
+              <select ng-model="hcpAdvancedFilter.credentials" validate-on-blur name="credential" ng-options="option for option in credentialsList" ng-selected="{{option === hcpAdvancedFilter.credentials}}" ng-change="checkCredential()">
+                <option value="" selected >Select a credential</option>
+              </select>
+              <div ng-show="(form.credentials.$dirty && form.credentials.$showValidationMessage && form.credentials.$invalid)">
+              </div>
+            </div>
+          </div>
+            </div>
+
         </div>
-<form name="form" autocomplete="off">
+
+        <form name="form" autocomplete="off">
         <div  class="col-md-16 col-sm-16 filters-padding20 survey_grey_color" >
 
     <div class="col-md-4 col-sm-4  benchmarking__form__input selected-box-container">
@@ -126,7 +150,7 @@
     <div class="col-md-4 col-sm-4  benchmarking__form__input selected-box-container padding0px" >
       <span class="advanced-filters">Zip Code</span>
                   <div class="dashboard__form--input reset-padding">
-              <input type="text" validate-on-blur class="form-control" name="zip" ng-readonly="validateADMINorASP()" maxlength="7" ng-pattern='/^(\d{5}(-\d{4})?|[A-Z]\d[A-Z] *\d[A-Z]\d)$/' ng-model="clinicAdvancedFilter.zipcode" ng-blur="getCityStateforAdvancedFilters(clinicAdvancedFilter.zipcode)" ng-enter="" ng-keyup="clearMessages()">
+              <input type="text" validate-on-blur class="form-control" name="zip" ng-readonly="validateADMINorASP()" maxlength="7" ng-pattern='/^(\d{5}(-\d{4})?|[A-Z]\d[A-Z] *\d[A-Z]\d)$/' ng-model="hcpAdvancedFilter.zipcode" ng-blur="getCityStateforAdvancedFilters(hcpAdvancedFilter.zipcode)" ng-enter="" ng-keyup="clearMessages()">
               <div ng-show="(form.zip.$dirty && form.zip.$showValidationMessage && form.zip.$invalid) || submitted">
                 <span class="has-error" ng-show="form.zip.$error.pattern && !form.zip.$error.required" translate="error.zipcode.pattern"></span>
               </div>
@@ -137,36 +161,24 @@
 </form>
         <div  class="col-md-16 col-sm-16 padding10 survey_grey_color" >
                        <div class="col-md-4 col-sm-4">
-              <span class="advanced-filters" translate="clinic.adherence-setting"></span>
-            <div class="form__select__input--option reset-padding selected-box-container">
-              <div class="custom-dropdown" >
-                <select name="type" ng-model="clinicAdvancedFilter.adherenceWindowSelected"  ng-options="item.type_code_value as item.type_code for item in adherenceDays" style="width:254px">
-                </select>
-              </div>
-            </div>
-            
-          </div>
-                    <div class="col-md-4">
-          <span class="advanced-filters">Status</span>
-                         <div class="form-group advanced-filters-radio-div">
-                      <span>
+              <span class="advanced-filters">Status</span>
+              <div class="form-group advanced-filters-radio-div">
+              <span>
 
-                      <label class="radio advanced-filters-radio" ng-class="lastRadio(value,'Inactive')" ng-repeat="value in activeInactive">
-            <input type="radio" ng-model="clinicAdvancedFilter.clinicStatus" name="protocolType" value="{{value.name}}"><span class="cyan-blue-light advanced-filters">{{value.name}}</span>
-        </label>
-                      </span>
-                    </div>
-                  </div>
+              <label class="radio advanced-filters-radio" ng-class="lastRadio(value,'Inactive')" ng-repeat="value in activeInactive">
+              <input type="radio" ng-model="hcpAdvancedFilter.status" name="protocolType" value="{{value.name}}">
+              <span class="cyan-blue-light advanced-filters">{{value.name}}</span>
+              </label>
+              </span>
+              </div>  
+          </div>
         </div>
 
  <div  class="col-md-16 col-sm-16 padding10 survey_grey_color" style="padding-bottom:20px">
         <div class="col-md-16 margin-top reset-padding">
         <div class="">
-          <button type="submit" ng-disabled="serviceError || (form.zip.$error.pattern && !form.zip.$error.required)" ng-click="advancedSearchClinics(true)" class="hillrom-btn btn-primary btn-margin-left float-right">Search Clinics</button>
-          <button type="submit" ng-click="initClinicAdvancedFilters()" class="hillrom-btn btn-primary btn-margin-left float-right">Reset Filters</button>
+          <button type="submit" ng-disabled="serviceError || (form.zip.$error.pattern && !form.zip.$error.required)" ng-click="advancedSearchHcps(true)" class="hillrom-btn btn-primary btn-margin-left float-right">Search HCPs</button>
+          <button type="submit" ng-click="initHcpAdvancedFilters()" class="hillrom-btn btn-primary btn-margin-left float-right">Reset Filters</button>
         </div>
       </div>
 </div>
-
-
-   
