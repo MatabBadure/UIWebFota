@@ -211,13 +211,23 @@
         <div class="col-md-16 col-sm-16 reset-padding margin-top">
           <div class="col-md-7 col-sm-7 reset-padding">
             <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
-              <span class="">Messages On/Off</span>
+              <span class="">Messages</span>
             </div>
-            <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding">
+            <div class="col-md-10 col-sm-10 reset-padding">
+                         <div class="form-group advanced-filters-radio-div">
+                      <span>
+
+                      <label class="radio advanced-filters-radio-gender" ng-repeat="isMessageOpted in enableDisableOptions">
+            <input type="radio" ng-model="clinic.isMessageOpted" name="isMessageOpted" value="{{isMessageOpted.value}}"><span class="cyan-blue-light advanced-filters">{{isMessageOpted.name}}</span>
+        </label>
+                      </span>
+                    </div>
+                  </div>
+           <!--  <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding">
               <div class="col-md-1 col-sm-1 col-xs-5 user-notification--icon phone-noti-align" ng-click="toggleNotificationMessages();">
               <span ng-class="clinic.isMessageOpted ? 'icon-toggle-on active': 'icon-toggle-off'"></span>
             </div>
-            </div>
+            </div> -->
           </div>
         </div>
         <div class="clr"></div>
