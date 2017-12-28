@@ -3076,10 +3076,13 @@ $scope.adherencetrendData.push(new Object({"adherenceTrends": [] , "protocols": 
       $("#synchronizedChartTestResults").empty();    
     };
     $scope.removeAllCharts1 = function(){
+
      $("#HMRGraph1").empty();
       $("#synchronizedChart1").empty(); 
+
       $("#AdherenceTrendGraph").empty();
       $("#synchronizedChartTestResults").empty();    
+
     };
 
     $scope.viewProtocol = function(protcols){
