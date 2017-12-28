@@ -763,6 +763,7 @@ angular.module('hillromvestApp')
     var totalPages = 2;
     console.log("protocolGraphData",protocolGraphData)
     if(protocolGraphData){
+      if(protocolGraphData.series){
     if(protocolGraphData.series.length){
       page++;
       //totalPages++;
@@ -773,7 +774,9 @@ angular.module('hillromvestApp')
     pdf = this.setTopHeader(pdf, fromDate, toDate);
   }
 }
+}
     if(hmrGraphData){
+      if(hmrGraphData.series){
     if(hmrGraphData.series.length){
        if(page == 1){
          pdf.addPage();
@@ -789,7 +792,9 @@ angular.module('hillromvestApp')
 
   }
 }
+}
 if(adherenceGraphData){
+   if(adherenceGraphData.series){
   if(adherenceGraphData.series.length){
     page++;
      if(page == 1){
@@ -802,12 +807,14 @@ if(adherenceGraphData){
     pdf = this.addSvgToPDF(pdf, canvasId, "AdherenceTrendGraph", 30, 420, 540, 200, pdfServiceConstants.text.adherenceTrend);
   pdf = this.setFooter(pdf, pdf.internal.pageSize.height-80);
     pdf = this.setPageNumber(pdf, page.toString(), totalPages.toString()); 
-    pdf.addPage();
-    pdf = this.setTopHeader(pdf, fromDate, toDate);
+   /* pdf.addPage();
+    pdf = this.setTopHeader(pdf, fromDate, toDate);*/
   }
+}
 }
     
     if(testResultsGraphData){
+      if(testResultsGraphData.series){
     if(testResultsGraphData.series.length){
       if(page == 1 || page == 2){
          pdf.addPage();
@@ -823,6 +830,7 @@ if(adherenceGraphData){
     /*pdf.addPage();
     pdf = this.setTopHeader(pdf, fromDate, toDate);*/
     }
+  }
   }
    
     setTimeout(function(){     
