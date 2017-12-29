@@ -2815,6 +2815,7 @@ angular.module('hillromvestApp')
 
         if($scope.hmrChartData.length===0 && $scope.adherenceTrendData.length===0 && $scope.compilencechartData.length===0 && $scope.TestResultsChartData.length === 0) {
           $scope.noDataforPDF = true;
+          exportutilService.noGraphforAll($scope.fromDate, $scope.toDate, $scope.patientInfo, clinicDetail);
         }
          /*
           if($scope.hmrChartData.length===0 && $scope.adherenceTrendData.length===0 && $scope.compilencechartData.length===0 && $scope.TestResultsChartData.length === 0) {
@@ -2828,10 +2829,16 @@ angular.module('hillromvestApp')
         }*/
         else{
           $scope.noDataforPDF = false;
-     exportutilService.exportHMRCGraphAsPDFForAdherenceTrend("synchronizedChart", "HMRCCanvas", $scope.fromDate, $scope.toDate, $scope.patientInfo, clinicDetail, $scope.hmrChartData, $scope.adherenceTrendData, $scope.compilencechartData, $scope.TestResultsChartData);
+     exportutilService.exportHMRCGraphAsPDFForAdherenceTrend("synchronizedChart", "HMRCCanvas", $scope.fromDate, $scope.toDate, $scope.patientInfo, clinicDetail, $scope.hmrChartData, $scope.adherenceTrendData, $scope.compilencechartData, $scope.TestResultsChartData, $scope.fromDateTestResults, $scope.toDateTestResults);
 }
       }else if(($scope.getDeviceTypeforBothIcon() == 'ALL')){
-         exportutilService.exportHMRCGraphAsPDFForAdherenceTrendForAll("synchronizedChart","synchronizedChart1", "HMRCCanvas", $scope.fromDate, $scope.toDate, $scope.patientInfo, clinicDetail,$scope.hmrChartData1);
+        if($scope.hmrChartData1.length===0 && $scope.adherenceTrendData.length===0 && $scope.compilencechartData1.length===0 && $scope.TestResultsChartData.length === 0 && $scope.hmrChartData.length===0 && $scope.adherenceTrendData.length===0 && $scope.compilencechartData.length===0) {
+          $scope.noDataforPDF = true;
+          exportutilService.noGraphforAll($scope.fromDate, $scope.toDate, $scope.patientInfo, clinicDetail);
+        }
+        else{
+         exportutilService.exportHMRCGraphAsPDFForAdherenceTrendForAll("synchronizedChart","synchronizedChart1", "HMRCCanvas", $scope.fromDate, $scope.toDate, $scope.patientInfo, clinicDetail,$scope.hmrChartData1, $scope.adherenceTrendData, $scope.compilencechartData1, $scope.TestResultsChartData, $scope.hmrChartData, $scope.compilencechartData, $scope.fromDateTestResults, $scope.toDateTestResults);
+     }
       }    
     };
 
