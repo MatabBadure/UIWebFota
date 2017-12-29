@@ -761,7 +761,7 @@ angular.module('hillromvestApp')
     pdf = this.addPatientInfoToHMRCReport(pdf, patientInfo, fromDate, toDate); 
     var page = 1;
     var totalPages = 3;
-    if(protocolGraphDataVest){
+    if(protocolGraphData){
       if(protocolGraphData.series){
     if(protocolGraphData.series.length){
     //  page++;
@@ -774,7 +774,7 @@ angular.module('hillromvestApp')
   }
 }
 }
-    if(hmrGraphDataVest){
+    if(hmrGraphData){
       if(hmrGraphData.series){
     if(hmrGraphData.series.length){
          pdf.addPage();
@@ -859,8 +859,8 @@ if(adherenceGraphData){
     var page = 1;
     var totalPages = 6;
     if(protocolGraphDataVest){
-      if(protocolGraphData.series){
-    if(protocolGraphData.series.length){
+      if(protocolGraphDataVest.series){
+    if(protocolGraphDataVest.series.length){
     //  page++;
       //totalPages++;
     pdf = this.addAllSvgsToPDF(pdf, canvasId, divId, 30, 350, 540, 100, pdfServiceConstants.text.protocolGraph);
@@ -872,8 +872,8 @@ if(adherenceGraphData){
 }
 }
     if(hmrGraphDataVest){
-      if(hmrGraphData.series){
-    if(hmrGraphData.series.length){
+      if(hmrGraphDataVest.series){
+    if(hmrGraphDataVest.series.length){
          pdf.addPage();
     pdf = this.setTopHeader(pdf, fromDate, toDate);
       page++;   
