@@ -1431,6 +1431,13 @@ $scope.getdevice = function(){
     };
 
     $scope.selectDoctor = function(doctor) {
+      console.log("doctorrrr:",doctor);
+/*DoctorService.getClinicsAssociatedToHCP(doctor.id).then(function(response){
+console.log("response::",response)
+}).catch(function(){
+
+});*/
+if(doctor.authorities[0].name === 'HCP'){
       if($scope.patientStatus.role === loginConstants.role.acctservices){
         $state.go('hcpProfileRcadmin',{
           'doctorId': doctor.id
@@ -1444,6 +1451,29 @@ $scope.getdevice = function(){
           'doctorId': doctor.id
         });
       }
+    }
+    else if(doctor.authorities[0].name === 'CLINIC_ADMIN'){
+      var state = 'clinicAdmin';
+      var clinicID = doctor.clinics[0].id;
+if($scope.patientStatus.role === loginConstants.role.acctservices){
+        $state.go(state+loginConstants.role.Rcadmin, {
+          'clinicId': clinicID
+        });
+      }else if($scope.patientStatus.role === loginConstants.role.associates){
+        $state.go(state+'Associate', {
+          'clinicId': clinicID
+        });
+      }else if($scope.patientStatus.role === loginConstants.role.customerservices){
+        $state.go(state+'CustomerService', {
+          'clinicId': clinicID
+        });
+      }
+      else{
+        $state.go(state, {
+          'clinicId': clinicID
+        });
+      }
+    }
     };
 
     $scope.selectClinic = function(clinic) {
