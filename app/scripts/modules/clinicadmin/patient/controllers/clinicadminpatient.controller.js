@@ -96,6 +96,7 @@ angular.module('hillromvestApp')
       $scope.pageCount = 0;
       $scope.getClinicsAssociatedToHCP();
       var clinicId = $stateParams.clinicId;
+       $scope.getisMessagesOpted();
       $scope.initCount($stateParams.clinicId);
       $scope.searchPatients(); 
     }
@@ -525,7 +526,14 @@ angular.module('hillromvestApp')
       $scope.selectedClinic = clinic;
       $scope.searchPatients();      
     }
+    if(!clinic.isMessageOpted){   
+      $rootScope.selectedClinicMessagesFalse = false;    
+     }
+    else{    
+      $rootScope.selectedClinicMessagesFalse = true;   
+    }    
     $state.go('clinicadminpatientdashboard',{'clinicId': $scope.selectedClinic.id});
+    $scope.getisMessagesOpted();
     $scope.initCount($scope.selectedClinic.id);
   };
 
@@ -643,6 +651,9 @@ angular.module('hillromvestApp')
       var dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYY);
      patient.lastTransmissionDate = dateFinal;
       });
+    }
+    else{
+      patient.lastTransmissionDate = (patient.lastTransmissionDate) ? dateService.getDateFromYYYYMMDD(patient.lastTransmissionDate, '/') : patient.lastTransmissionDate;
     }
       $scope.total = (response.headers()['x-total-count']) ? response.headers()['x-total-count'] :$scope.patients.length; 
       $scope.pageCount = Math.ceil($scope.total / 10);

@@ -1073,9 +1073,11 @@ angular.module('hillromvestApp')
           }, 100);          
         } else{
           $scope.noDataAvailable = true;
+           $scope.compilencechartData = "";
          // $scope.removeAllCharts();
         }       
       }).catch(function(){
+         $scope.compilencechartData = "";
         $scope.noDataAvailable = true;
       });
     };
@@ -1797,9 +1799,11 @@ angular.module('hillromvestApp')
         } else{
           console.log(" $scope.noDataAvailableForHMR");
           $scope.noDataAvailableForHMR = true;
+          $scope.hmrChartData = "";
           //$scope.removeAllCharts();
         }
       }).catch(function(){
+        $scope.hmrChartData = "";
         $scope.noDataAvailableForHMR = true;
       });
     };
@@ -1877,10 +1881,12 @@ angular.module('hillromvestApp')
               $scope.AdherenceTrendCategoryChart();
             }else{
            $scope.AdherenceTrendAreaChart();
+           $scope.adherenceTrendData = "";
             }            
           }, 100);          
         } else{
           $scope.noDataAvailableForAdherence = true;
+          $scope.adherenceTrendData = "";
           //$scope.removeAllCharts();
         }
       }).catch(function(){
@@ -2067,7 +2073,7 @@ angular.module('hillromvestApp')
       var chartType = "column";
       Highcharts.setOptions({
           global: {
-              useUTC: true
+              useUTC: false
           }
       });  
       var fillcolor = '#7cb5ee';
@@ -3626,9 +3632,11 @@ $scope.getComplianceGraph = function(){
           }, 100);          
         } else{
           $scope.noDataAvailable = true;
+          $scope.compilencechartData = {};
          // $scope.removeAllCharts();
         }       
       }).catch(function(){
+        $scope.compilencechartData = {};
         $scope.noDataAvailable = true;
       });
     };
@@ -3983,9 +3991,11 @@ $scope.getComplianceGraph = function(){
         } else{
           console.log(" $scope.noDataAvailableForHMR");
           $scope.noDataAvailableForHMR = true;
+          $scope.hmrChartData = "";
           //$scope.removeAllCharts();
         }
       }).catch(function(){
+        $scope.hmrChartData = "";
         $scope.noDataAvailableForHMR = true;
       });
     };
@@ -4070,10 +4080,12 @@ $scope.getComplianceGraph = function(){
           }, 100);          
         } else{
           $scope.noDataAvailableForAdherence = true;
+          $scope.adherenceTrendData = "";
          // $scope.removeAllCharts();
         }
       }).catch(function(){
         $scope.noDataAvailableForAdherence = true;
+        $scope.adherenceTrendData = "";
          // $scope.removeAllCharts();
       });
     };
@@ -5116,10 +5128,12 @@ $scope.getComplianceGraph1 = function(){
         } else{
           console.log(" $scope.noDataAvailableForHMR1");
           $scope.noDataAvailableForHMR1 = true;
+          $scope.hmrChartData1 = "";
          // $scope.removeAllCharts();
         }
       }).catch(function(){
       $scope.noDataAvailableForHMR1 = true;
+      $scope.hmrChartData1 = "";
       });
     };
 

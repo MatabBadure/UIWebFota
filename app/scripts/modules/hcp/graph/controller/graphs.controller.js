@@ -492,8 +492,15 @@ angular.module('hillromvestApp')
 	  $scope.selectedClinic = clinic;
 	  $scope.getStatistics($scope.selectedClinic.id, StorageService.get('logged').userId);
 	  $scope.drawGraph();
+	  if(!clinic.isMessageOpted){   
+      $rootScope.selectedClinicMessagesFalse = false;    
+   }    
+   else{   
+        $rootScope.selectedClinicMessagesFalse = true;   
+    }
 	}
 	$state.go('clinicadmindashboard',{'clinicId': $scope.selectedClinic.id});
+	$scope.getisMessagesOpted();
 	$scope.initCount($scope.selectedClinic.id);
   };
 

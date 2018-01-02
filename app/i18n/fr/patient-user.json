@@ -114,7 +114,8 @@
       "clinic-link": "Search Clinic here",
       "device-link": "Search Device here",
       "protocol-link": "Search Protocol here",
-      "hcp-link": "Search HCP here"
+      "hcp-link": "Search HCP here",
+      "hcp-admin-link": "Search Clinic Admins, HCPs here"
     },
     "device": {
       "gen-details": "Add Device",
@@ -345,6 +346,7 @@
     "hmr-data": "Total Therapy Hours",
     "adherenceTrend":"Adherence Trend",
     "protocolGraph":"Protocol Graph",
+    "testResults":"Test Result Trend",
     "compliance": "Compliance",
     "day": "Day",
     "year": "Year",

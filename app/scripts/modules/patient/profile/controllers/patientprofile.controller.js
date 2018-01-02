@@ -7,14 +7,15 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
    $scope.dayOptions = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday', 'Daily'];
    $scope.MessageNotificationFreq = "";
   $scope.init = function(){
-    var currentRoute = $state.current.name;
+		var currentRoute = $state.current.name;
+    $scope.getisMessagesOpted();
      $scope.initCount("");
      $scope.isDisable = false;
       $scope.isDisable1 = false;
        $scope.isDisable2 = false;
         $scope.isDisable3 = false;
-    $scope.profileTab = currentRoute; 
-    $scope.userRole = StorageService.get('logged').role;
+		$scope.profileTab = currentRoute;	
+		$scope.userRole = StorageService.get('logged').role;
     $scope.data  = {};
     $scope.role = StorageService.get('logged').role;
     $scope.caregiverID = parseInt(StorageService.get('logged').userId);
@@ -25,19 +26,19 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
       });
     if( $scope.role === loginConstants.role.caregiver){
         $scope.getPatientListForCaregiver($scope.caregiverID);
-      } 
-    if (currentRoute === 'patientProfile') {
-      $scope.initProfileView();        
-    }else if(currentRoute === 'patientProfileEdit'){
-      $scope.initProfileEdit();
-    }else if(currentRoute === 'patientResetPassword'){
-      $scope.initResetPassword();
-    }else if(currentRoute === 'patientSettings'){
-      $scope.initPatientSettings();
-    } 
-  };
+      }	
+		if (currentRoute === 'patientProfile') {
+			$scope.initProfileView();        
+		}else if(currentRoute === 'patientProfileEdit'){
+			$scope.initProfileEdit();
+		}else if(currentRoute === 'patientResetPassword'){
+			$scope.initResetPassword();
+		}else if(currentRoute === 'patientSettings'){
+			$scope.initPatientSettings();
+		}	
+	};
 
-  $scope.isProfileTabActive = function(tab) {
+	$scope.isProfileTabActive = function(tab) {
     if ($scope.profileTab.indexOf(tab) !== -1) {
       return true;
     } else {
@@ -93,12 +94,12 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
     $state.go(status, {'caregiverId': $stateParams.caregiverId});
   };
 
-  $scope.switchProfileTabs = function(tab){
-    $scope.profileTab = tab;
-    $state.go(tab); 
-  };
+	$scope.switchProfileTabs = function(tab){
+		$scope.profileTab = tab;
+		$state.go(tab);	
+	};
 
-  $scope.getPatientById = function(patientId){
+	$scope.getPatientById = function(patientId){
     patientService.getPatientInfo(patientId).then(function(response){
       $scope.patientView = response.data;
     }).catch(function(response){
@@ -120,10 +121,10 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
       }
     };
 
-  $scope.initProfileView = function(){
-    UserService.getUser(StorageService.get('logged').patientID).then(function(response){
-      $scope.patientView = response.data.user;
-          if($scope.patientView){
+	$scope.initProfileView = function(){
+		UserService.getUser(StorageService.get('logged').patientID).then(function(response){
+			$scope.patientView = response.data.user;
+		      if($scope.patientView){
         $scope.patientView.zipcode = commonsUserService.formatZipcode($scope.patientView.zipcode);
       if($scope.patientView.deviceType){
         $scope.patientView.deviceType = patientService.getDeviceTypeName($scope.patientView.deviceType);
@@ -136,12 +137,12 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
         }
       }
     }).catch(function(response){});
-    AuthServerProvider.getSecurityQuestions().then(function(response){
-      $scope.questions = response.data
-    }).catch(function(response){
+		AuthServerProvider.getSecurityQuestions().then(function(response){
+			$scope.questions = response.data
+		}).catch(function(response){
       notyService.showError(response);
     });
-  };
+	};
     $scope.initProfileViewCaregiver = function(){
     UserService.getUser($scope.selectedPatient.userId).then(function(response){
       $scope.patientView = response.data.user;
@@ -165,20 +166,20 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
     });
   };
 
-  $scope.initProfileEdit = function(){
-    UserService.getUser(StorageService.get('logged').patientID).then(function(response){
-      $scope.editPatientProfile = response.data.user;
-    }).catch(function(response){});
-    AuthServerProvider.getSecurityQuestions().then(function(response){
-      $scope.questions = response.data
-    }).catch(function(response){
+	$scope.initProfileEdit = function(){
+		UserService.getUser(StorageService.get('logged').patientID).then(function(response){
+			$scope.editPatientProfile = response.data.user;
+		}).catch(function(response){});
+		AuthServerProvider.getSecurityQuestions().then(function(response){
+			$scope.questions = response.data
+		}).catch(function(response){
       notyService.showError(response);
-    });   
-  };
+    });		
+	};
 
   $scope.initResetPassword = function(){
     $scope.showUpdatePasswordModal = false;
-    $scope.profile = {};
+  	$scope.profile = {};
     $q.all([
       AuthServerProvider.getSecurityQuestions(),
       patientService.getUserSecurityQuestion(StorageService.get('logged').patientID),
@@ -299,7 +300,7 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
       notyService.showMessage(response.data.message, 'success');
       $state.go('login');
     }).catch(function(response){
-      notyService.showMessage(profile.PASSWORD_REST_ERROR, 'warning');
+    	notyService.showMessage(profile.PASSWORD_REST_ERROR, 'warning');
     });
   };
   $scope.processNotificationData = function(){
@@ -336,13 +337,13 @@ $scope.data.MissedTherapyNotificationFreq = "";
   }*/
   };
 
-  $scope.initPatientSettings = function(){  
-    UserService.getPatientUserNotification(StorageService.get('logged').patientID).then(function(response){
-      $scope.patientUser = response.data.user;
+  $scope.initPatientSettings = function(){ 	
+		UserService.getPatientUserNotification(StorageService.get('logged').patientID).then(function(response){
+			$scope.patientUser = response.data.user;
       $scope.processNotificationData();
-    }).catch(function(){
-       notyService.showError(response);
-    });
+		}).catch(function(){
+		   notyService.showError(response);
+		});
   };
     $scope.initPatientSettingsCaregiver = function(){  
     UserService.getPatientUserNotification($scope.selectedPatient.userId).then(function(response){
@@ -356,7 +357,7 @@ $scope.data.MissedTherapyNotificationFreq = "";
    // $scope.data = {"isMissedTherapyNotification" : $scope.patientUser.missedTherapyNotification, "isNonHMRNotification": $scope.patientUser.nonHMRNotification, "isSettingDeviationNotification": $scope.patientUser.settingDeviationNotification,"isMessageNotification": $scope.patientUser.messageNotification};
    
     if(notification === 'missedTherapyNotification'){
-      $scope.data.isMissedTherapyNotification = !$scope.patientUser.missedTherapyNotification;
+    	$scope.data.isMissedTherapyNotification = !$scope.patientUser.missedTherapyNotification;
       $scope.patientUser.missedTherapyNotification = $scope.data.isMissedTherapyNotification;
       if($scope.data.isMissedTherapyNotification == false)
       {
@@ -365,7 +366,7 @@ $scope.data.MissedTherapyNotificationFreq = "";
       }
     }
     else if(notification === 'nonHMRNotification'){
-      $scope.data.isNonHMRNotification = !$scope.patientUser.nonHMRNotification;
+    	$scope.data.isNonHMRNotification = !$scope.patientUser.nonHMRNotification;
       $scope.patientUser.nonHMRNotification = $scope.data.isNonHMRNotification;
       if($scope.data.isNonHMRNotification == false){
         $scope.data.NonHMRNotificationFreq = "";
@@ -373,7 +374,7 @@ $scope.data.MissedTherapyNotificationFreq = "";
       }
     }
     else if(notification === 'settingDeviationNotification'){
-      $scope.data.isSettingDeviationNotification = !$scope.patientUser.settingDeviationNotification;
+    	$scope.data.isSettingDeviationNotification = !$scope.patientUser.settingDeviationNotification;
       $scope.patientUser.settingDeviationNotification = $scope.data.isSettingDeviationNotification;
       if( $scope.data.isSettingDeviationNotification == false)
       {
@@ -480,5 +481,5 @@ $scope.data.MissedTherapyNotificationFreq = "";
       return !invalid;
   };
 
-  $scope.init();    
+	$scope.init();    
 }]);
