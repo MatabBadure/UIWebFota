@@ -114,8 +114,7 @@
       "clinic-link": "Search Clinic here",
       "device-link": "Search Device here",
       "protocol-link": "Search Protocol here",
-      "hcp-link": "Search HCP here",
-      "hcp-admin-link": "Search Clinic Admins, HCPs here"
+      "hcp-link": "Search HCP here"
     },
     "device": {
       "gen-details": "Add Device",
@@ -184,6 +183,7 @@
       "email": "Email",
       "phone-no": "Phone No.",
       "mobile-no": "Mobile No.",
+      "timestamp-preference": "Preferred Timezone",
       "update":{
         "warning": "Caregiver Info - Details",
         "message": "You have made changes/updates for Caregiver details. Are you sure to make updates?"
@@ -345,7 +345,6 @@
     "hmr-data": "Total Therapy Hours",
     "adherenceTrend":"Adherence Trend",
     "protocolGraph":"Protocol Graph",
-    "testResults":"Test Result Trend",
     "compliance": "Compliance",
     "day": "Day",
     "year": "Year",
