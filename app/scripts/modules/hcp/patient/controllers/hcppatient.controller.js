@@ -1,13 +1,14 @@
 angular.module('hillromvestApp')
-.controller('hcpPatientController',['$scope', '$state', '$stateParams', 'hcpPatientService', 'patientService', 'notyService', 'DoctorService', 'clinicadminPatientService', 'dateService', 'clinicService', '$timeout', 'searchFilterService', 'StorageService', 'sortOptionsService','$filter', 'commonsUserService', '$rootScope',
-  function($scope, $state, $stateParams, hcpPatientService, patientService, notyService, DoctorService, clinicadminPatientService, dateService, clinicService, $timeout, searchFilterService, StorageService, sortOptionsService, $filter,commonsUserService, $rootScope) {   
+.controller('hcpPatientController',['$scope', '$state', '$stateParams', 'hcpPatientService', 'patientService', 'notyService', 'DoctorService', 'clinicadminPatientService', 'dateService', 'clinicService', '$timeout', 'searchFilterService', 'StorageService', 'sortOptionsService','$filter', 'commonsUserService',
+  function($scope, $state, $stateParams, hcpPatientService, patientService, notyService, DoctorService, clinicadminPatientService, dateService, clinicService, $timeout, searchFilterService, StorageService, sortOptionsService, $filter,commonsUserService) {   
   var searchOnLoad = true; 
    $scope.DisableAddProtocol = false; 
     $scope.displayFlag = true;
-          $scope.customPointsChecker = 0;
-          $scope.lastdeviceType = "";   
-	$scope.init = function(){  
-  $scope.searchItem = "";   
+          $scope.customPointsChecker = 0;  
+          $scope.lastdeviceType = "";  
+          $scope.preferredTimezone = $scope.getTimezonePreference();  
+  $scope.init = function(){  
+     $scope.searchItem = "";
     if($state.current.name === 'hcppatientDemographic'){
       $scope.getPatientInfo($stateParams.patientId, $scope.setEditMode);
     }else if($state.current.name === 'hcppatientdemographicEdit'){
@@ -33,10 +34,9 @@ angular.module('hillromvestApp')
       $scope.perPageCount = 10;
       $scope.pageCount = 0;
       $scope.getClinicsAssociatedToHCP();  
-      $scope.getisMessagesOpted();
       $scope.initCount($stateParams.clinicId);               
     }
-	};
+  };
 
 
   $scope.getClinicsAssociatedToHCP = function(){
@@ -120,16 +120,16 @@ angular.module('hillromvestApp')
     });
   };
 
-	$scope.getPatientsWithNoEvents = function(filter, clinicId, pageNo, offset){
+  $scope.getPatientsWithNoEvents = function(filter, clinicId, pageNo, offset){
     var userId = StorageService.get('logged').userId;
-		hcpPatientService.getAssociatedPatientsWithNoEvents(filter, clinicId, userId, pageNo, offset).then(function(response){
+    hcpPatientService.getAssociatedPatientsWithNoEvents(filter, clinicId, userId, pageNo, offset).then(function(response){
       $scope.patients = response.data.patientUsers;
       $scope.total = (response.headers()['x-total-count']) ? response.headers()['x-total-count'] : $scope.patients.length;
       $scope.pageCount = Math.ceil($scope.total / 10);
     }).catch(function(response){
       notyService.showError(response);
     });
-	};
+  };
 
   $scope.getPatientById = function(patientId){
     patientService.getPatientInfo(patientId).then(function(response){
@@ -236,11 +236,17 @@ angular.module('hillromvestApp')
 
   $scope.getDevices = function(patientId){
     patientService.getDevices(patientId).then(function(response){
+      if($scope.preferredTimezone){
       angular.forEach(response.data.deviceList, function(device){
-        device.createdDate = dateService.getDateByTimestamp(device.createdDate);
-        device.lastModifiedDate = dateService.getDateByTimestamp(device.lastModifiedDate);
-         device.createdDate = dateService.getDateByTimestamp(device.createdDate);
+        //Gimp-31
+         var dateInitial1 = moment.tz(device.createdDate,patientDashboard.serverDateTimeZone);
+        var dateFinal1 = moment.tz(dateInitial1,$scope.preferredTimezone).format('LL');
+        device.createdDate = dateFinal1;
+         var dateInitial = moment.tz(device.lastModifiedDate,patientDashboard.serverDateTimeZone);
+        var dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format('LL');
+        device.lastModifiedDate = dateFinal;
       });
+    }
       $scope.devices = response.data.deviceList;
     }).catch(function(response){
       notyService.showError(response);
@@ -255,7 +261,7 @@ angular.module('hillromvestApp')
     });
   };
 
-	$scope.selectPatient = function(patient){
+  $scope.selectPatient = function(patient){
         //localStorage.setItem('deviceType', patient.deviceType);
         if(patient.deviceType == 'ALL'){
           localStorage.setItem('deviceType_'+patient.id, 'VEST');
@@ -268,23 +274,23 @@ angular.module('hillromvestApp')
             localStorage.setItem('deviceTypeforBothIcon_'+patient.id, patient.deviceType);
           }
     $state.go('hcppatientOverview',{'patientId': patient.id, 'clinicId': $scope.selectedClinic.id});
-	};
+  };
 
-	$scope.switchPatientTab = function(value){     
-		value = 'hcp' + value;
-		$state.go(value, {'patientId':$stateParams.patientId, 'clinicId': $stateParams.clinicId});
-	};
+  $scope.switchPatientTab = function(value){     
+    value = 'hcp' + value;
+    $state.go(value, {'patientId':$stateParams.patientId, 'clinicId': $stateParams.clinicId});
+  };
 
-	$scope.goToPatientDashboard = function(value){
+  $scope.goToPatientDashboard = function(value){
       var clinicId =  ($scope.selectedClinic && $scope.selectedClinic.id) ? $scope.selectedClinic.id : ($stateParams.clinicId ? $stateParams.clinicId : null);
       $state.go(value, {'clinicId': clinicId});
-	};
+  };
 
 $scope.searchPatientsOnQueryChange = function(){
             $scope.searchPatients();
         };
 
-	$scope.searchPatients = function(track){
+  $scope.searchPatients = function(track){
     if (track !== undefined) {
       if (track === "PREV" && $scope.currentPageIndex > 1) {
         $scope.currentPageIndex--;
@@ -306,11 +312,21 @@ $scope.searchPatientsOnQueryChange = function(){
     }
     var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : $stateParams.clinicId;
     DoctorService.searchPatientsForHCP($scope.searchItem, 'hcp',StorageService.get('logged').userId, clinicId, $scope.currentPageIndex, $scope.perPageCount, filter, $scope.sortOption).then(function (response) {
-      $scope.patients = response.data;      
+      $scope.patients = response.data;  
+  
       angular.forEach($scope.patients, function(patient){
         patient.dob = (patient.dob) ? dateService.getDateFromTimeStamp(patient.dob, patientDashboard.dateFormat, '/') : patient.dob;
+         if($scope.preferredTimezone){  
+        var dateInitial = moment.tz(patient.lastTransmissionDate,patientDashboard.serverDateTimeZone);
+      var dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYY);
+        patient.lastTransmissionDate = dateFinal;
+      }
+      else{
         patient.lastTransmissionDate = (patient.lastTransmissionDate) ? dateService.getDateFromYYYYMMDD(patient.lastTransmissionDate, '/') : patient.lastTransmissionDate;
+      }
       });
+
+
       $scope.total = (response.headers()['x-total-count']) ? response.headers()['x-total-count'] :$scope.patients.length; 
       $scope.pageCount = Math.ceil($scope.total / 10);
       searchOnLoad = false;
@@ -324,21 +340,13 @@ $scope.searchPatientsOnQueryChange = function(){
       $scope.perPageCount = 10;
       $scope.pageCount = 0;
     }       
-	};
+  };
 
   $scope.switchClinic = function(clinic){
     if($scope.selectedClinic.id !== clinic.id){
       $scope.selectedClinic = clinic;
-      $scope.searchPatients(); 
-
+      $scope.searchPatients();      
     }
-    if(!clinic.isMessageOpted){
-      $rootScope.selectedClinicMessagesFalse = false;
-    }
-    else{
-      $rootScope.selectedClinicMessagesFalse = true;
-    }   
-    $scope.getisMessagesOpted();
     $scope.initCount($scope.selectedClinic.id);
   };
 
@@ -385,7 +393,7 @@ $scope.searchPatientsOnQueryChange = function(){
   $scope.searchOnFilters = function(){    
     $scope.searchPatients();
   }; 
-	
+  
   $scope.sortType = function(sortParam){ 
     var toggledSortOptions = {};
     $scope.sortOption = "";

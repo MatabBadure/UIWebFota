@@ -39,6 +39,11 @@ angular.module('hillromvestApp')
       }).catch(function(response){
         notyService.showError(response);
       });
+      UserService.getTimezoneList().then(function(response){
+        $scope.timezoneList = response.data.timezones;
+       }).catch(function(response){
+        notyService.showError(response);
+      });
     };
  $scope.processNotificationData = function(){
     $scope.data.isMissedTherapyNotification = $scope.user.missedTherapyNotification;
@@ -90,7 +95,6 @@ $scope.data.MissedTherapyNotificationFreq = "";
     });
   };
     $scope.init = function(){
-      $scope.getisMessagesOpted();
        $scope.initCount($stateParams.clinicId);
       if($state.current.name === 'hcpUserProfile' || $state.current.name === 'editHCPProfile' ){
         $scope.initProfile(StorageService.get('logged').userId);
@@ -113,12 +117,12 @@ $scope.data.MissedTherapyNotificationFreq = "";
         };
         
     $scope.editMode = function(){
-       var clinicId = ($stateParams.clinicId) ? $stateParams.clinicId : (($scope.clinics && $scope.clinics.length > 0) ? $scope.clinics[0].id : $stateParams.clinicId);      
+       var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : (($scope.clinics && $scope.clinics.length > 0) ? $scope.clinics[0].id : $stateParams.clinicId);      
       $state.go('editHCPProfile', {'clinicId': clinicId});
     };
 
     $scope.switchProfileTab = function(status){
-       var clinicId = ($stateParams.clinicId) ? $stateParams.clinicId : (($scope.clinics && $scope.clinics.length > 0) ? $scope.clinics[0].id : $stateParams.clinicId);      
+       var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : (($scope.clinics && $scope.clinics.length > 0) ? $scope.clinics[0].id : $stateParams.clinicId);      
       $state.go(status, {'clinicId': clinicId});
     };
 
@@ -139,7 +143,8 @@ $scope.data.MissedTherapyNotificationFreq = "";
       }
       $scope.user.role = $scope.user.authorities[0].name;
        var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : (($scope.clinics && $scope.clinics.length > 0) ? $scope.clinics[0].id : $stateParams.clinicId);
-      UserService.editUser($scope.user).then(function(response){        
+      UserService.editUser($scope.user).then(function(response){      
+      localStorage.setItem('timestampPreference',$scope.user.timeZone);  
         if(StorageService.get('logged').userEmail === $scope.user.email){
           notyService.showMessage(response.data.message, 'success');
           $state.go('hcpUserProfile', {'clinicId': clinicId});
@@ -281,7 +286,7 @@ UserService.updatePatientUserNotification(StorageService.get('logged').userId, $
     };
 
     $scope.goToPatientDashboard = function(value){
-      var clinicId = ($stateParams.clinicId) ? $stateParams.clinicId : (($scope.clinics && $scope.clinics.length > 0) ? $scope.clinics[0].id : $stateParams.clinicId);
+      var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : (($scope.clinics && $scope.clinics.length > 0) ? $scope.clinics[0].id : $stateParams.clinicId);
       $state.go(value, {'clinicId': clinicId});
     };
 

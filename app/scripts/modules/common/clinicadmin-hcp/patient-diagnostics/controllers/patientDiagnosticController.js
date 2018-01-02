@@ -5,9 +5,10 @@ angular.module('hillromvestApp')
 function ($scope, $state, $rootScope, StorageService, UserService, patientDiagnosticService, notyService, dateService, $stateParams, commonsUserService, $parse,caregiverDashBoardService) {
   $scope.isAddDiagnostic = false; 
   $scope.defaultTestResultDate = dateService.getDateFromTimeStamp(new Date().getTime(), patientDashboard.dateFormat, "/"); 
+  $scope.preferredTimezone = $scope.getTimezonePreference();
   $scope.calculateDateFromPicker = function(picker) {
-    $scope.fromTimeStamp = new Date(picker.startDate._d).getTime();	      
-	  $scope.toTimeStamp = (new Date().getTime() < new Date(picker.endDate._d).getTime())? new Date().getTime() : new Date(picker.endDate._d).getTime();
+    $scope.fromTimeStamp = new Date(picker.startDate._d).getTime();       
+    $scope.toTimeStamp = (new Date().getTime() < new Date(picker.endDate._d).getTime())? new Date().getTime() : new Date(picker.endDate._d).getTime();
     $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
     $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');
 
@@ -15,7 +16,7 @@ function ($scope, $state, $rootScope, StorageService, UserService, patientDiagno
     $scope.serverToDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-');
     if ($scope.fromDate === $scope.toDate ) {
       $scope.fromTimeStamp = $scope.toTimeStamp;
-    }	      
+    }       
   };
 
   $scope.calculateTimeDuration = function(durationInDays) {
@@ -27,21 +28,21 @@ function ($scope, $state, $rootScope, StorageService, UserService, patientDiagno
     $scope.serverToDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-');
   };
 
-	$scope.opts = {
-		maxDate: new Date(),
-		format: patientDashboard.dateFormat,
+  $scope.opts = {
+    maxDate: new Date(),
+    format: patientDashboard.dateFormat,
     dateLimit: {"months":12},
-		eventHandlers: {'apply.daterangepicker': function(ev, picker) {  
-				$scope.calculateDateFromPicker(picker);				
-				$scope.getTestResultsByPatientId();
-			},
-			'click.daterangepicker': function(ev, picker) {
-				$("#dp1cal").data('daterangepicker').setStartDate($scope.fromDate);
-				$("#dp1cal").data('daterangepicker').setEndDate($scope.toDate);
-			}
-		},
-		opens: 'left'
-	}
+    eventHandlers: {'apply.daterangepicker': function(ev, picker) {  
+        $scope.calculateDateFromPicker(picker);       
+        $scope.getTestResultsByPatientId();
+      },
+      'click.daterangepicker': function(ev, picker) {
+        $("#dp1cal").data('daterangepicker').setStartDate($scope.fromDate);
+        $("#dp1cal").data('daterangepicker').setEndDate($scope.toDate);
+      }
+    },
+    opens: 'left'
+  }
 
 
   $scope.addUpdateDiagnostics = function(){
@@ -69,7 +70,16 @@ function ($scope, $state, $rootScope, StorageService, UserService, patientDiagno
     $scope.isAddDiagnostic = true;
     $scope.isEditDiagnostics = false;
     $scope.testResult = {}; 
+    //$scope.testResult.testResultDate = $scope.defaultTestResultDate;
+    // vinay changes 
+     if($scope.preferredTimezone){
+    var dateInitial = moment.tz($scope.defaultTestResultDate,patientDashboard.serverDateTimeZone);
+    var dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYY);
+    $scope.testResult.testResultDate = dateFinal; 
+  }
+  else{
     $scope.testResult.testResultDate = $scope.defaultTestResultDate;
+  }
     if($stateParams.resultId){      
       patientDiagnosticService.getTestResultById($stateParams.resultId).then(function(response){
         $scope.testResult = response.data;
@@ -82,25 +92,25 @@ function ($scope, $state, $rootScope, StorageService, UserService, patientDiagno
   };
 
   $scope.init = function(){
-  	$scope.calculateTimeDuration(365);
+    $scope.calculateTimeDuration(365);
     $scope.testResult = {};
     $scope.isPatinetLogin = false;
-		if($state.current.name === "patientDiagnostic"){
-			$scope.hidePatientNavbar = true;
+    if($state.current.name === "patientDiagnostic"){
+      $scope.hidePatientNavbar = true;
       $scope.isPatinetLogin = true;
       $scope.viewType = 'grid';
-      $scope.diagnosticPatientId = StorageService.get('logged').patientID;		  
-		}else if($state.current.name === "caregiverpatientDiagnostic"){
+      $scope.diagnosticPatientId = StorageService.get('logged').patientID;      
+    }else if($state.current.name === "caregiverpatientDiagnostic"){
       var loginID = StorageService.get('logged').userId;
       $scope.isPatinetLogin = false;
       $scope.viewType = 'grid';
       $scope.getPatientListForCaregiver(loginID);
       $scope.diagnosticPatientId = ($stateParams.patientId)?$stateParams.patientId:$scope.selectedPatient.user.id;
-    }else if($state.current.name === "CADiagnostic"){		
+    }else if($state.current.name === "CADiagnostic"){   
       $scope.diagnosticPatientId =  $stateParams.patientId;
-		}else if($state.current.name === "HCPDiagnostic"){			
+    }else if($state.current.name === "HCPDiagnostic"){      
       $scope.diagnosticPatientId =  $stateParams.patientId;
-		}
+    }
     //Implementation of GIMP-19
     else if($state.current.name === "adminPatientDiagnostic" || $state.current.name === "rcadminPatientDiagnostic" || $state.current.name === "associatePatientDiagnostic" || $state.current.name === "customerservicePatientDiagnostic"){
       $scope.diagnosticPatientId =  $stateParams.patientId;
@@ -126,15 +136,23 @@ function ($scope, $state, $rootScope, StorageService, UserService, patientDiagno
     UserService.getUser($scope.diagnosticPatientId).then(function(response){
       $scope.patient = response.data.user;
     });
-	};
+  };
 
   $scope.switchView = function(view){
     $scope.viewType = view;
   };
 
   $scope.getTestResultsByPatientId = function(){
-    patientDiagnosticService.getTestResultsByPatientId($scope.diagnosticPatientId, $scope.serverFromDate, $scope.serverToDate).then(function(response){
-      $scope.testResults = response.data;      
+    patientDiagnosticService.getTestResultsByPatientId($scope.diagnosticPatientId, $scope.serverFromDate, $scope.serverToDate).then(function(response){    
+      //Vinay
+      if(response.data.length>0){
+         if($scope.preferredTimezone){
+      var dateInitial = moment.tz(response.data[0].testResultDate,patientDashboard.serverDateTimeZone);
+    var dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYY);
+     response.data[0].testResultDate = dateFinal;   
+   }
+      $scope.testResults = response.data; 
+      }     
     }).catch(function(response){
       
     });
@@ -262,7 +280,7 @@ function ($scope, $state, $rootScope, StorageService, UserService, patientDiagno
       });
     };
 
-	$scope.init();
+  $scope.init();
 
   
   angular.element('#dp2').datepicker({
@@ -277,7 +295,15 @@ function ($scope, $state, $rootScope, StorageService, UserService, patientDiagno
        $("#dp2").datepicker('setDate', $scope.defaultTestResultDate);
        $(this).val($scope.defaultTestResultDate).datepicker('update');
        if($scope.testResult){
-          $scope.testResult.testResultDate = $scope.defaultTestResultDate;
+         //vinay changes
+          if($scope.preferredTimezone){
+         var dateInitial = moment.tz($scope.defaultTestResultDate,patientDashboard.serverDateTimeZone);
+         var dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYY);
+         $scope.testResult.testResultDate = dateFinal; 
+       }
+       else{
+         $scope.testResult.testResultDate = $scope.defaultTestResultDate;
+       }
        }
     }
   });

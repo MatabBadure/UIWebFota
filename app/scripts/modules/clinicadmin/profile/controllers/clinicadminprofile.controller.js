@@ -93,7 +93,6 @@ $scope.data.MissedTherapyNotificationFreq = "";
     };
 
     $scope.init = function(){
-      $scope.getisMessagesOpted();
       $scope.initCount($stateParams.clinicId);
       if($state.current.name === 'clinicadminUserProfile' || $state.current.name === 'editClinicadminProfile' || $state.current.name === 'clinicadminUpdatePassword'){
         $scope.initProfile(StorageService.get('logged').userId);
@@ -141,7 +140,8 @@ $scope.data.MissedTherapyNotificationFreq = "";
         });
       }
       $scope.user.role = $scope.user.authorities[0].name;
-      UserService.editUser($scope.user).then(function(response){        
+      UserService.editUser($scope.user).then(function(response){  
+       localStorage.setItem('timestampPreference',$scope.user.timeZone);      
         if(StorageService.get('logged').userEmail === $scope.user.email){
           notyService.showMessage(response.data.message, 'success');
           $state.go('clinicadminUserProfile');
