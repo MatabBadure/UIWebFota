@@ -583,7 +583,7 @@ angular.module('hillromvestApp')
 			              }
 			              else{
 			              	if($scope.preferredTimezone){
-						var dateInitial = moment.tz(x,patientDashboard.serverDateTimeZone);
+						var dateInitial = moment.tz(x,patientDashboard.serverDateTimeZone).format();
 		        	 dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYY);
 		        	}
 		        	else{
@@ -649,7 +649,7 @@ angular.module('hillromvestApp')
 			              }
 			              else{
 			              	if($scope.preferredTimezone){
-					var dateInitial = moment.tz(x,patientDashboard.serverDateTimeZone);
+					var dateInitial = moment.tz(x,patientDashboard.serverDateTimeZone).format();
 		        	dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYY);	
 		        	 }
 		        	 else{

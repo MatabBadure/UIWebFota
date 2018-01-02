@@ -239,10 +239,10 @@ angular.module('hillromvestApp')
       if($scope.preferredTimezone){
       angular.forEach(response.data.deviceList, function(device){
         //Gimp-31
-         var dateInitial1 = moment.tz(device.createdDate,patientDashboard.serverDateTimeZone);
+         var dateInitial1 = moment.tz(device.createdDate,patientDashboard.serverDateTimeZone).format();
         var dateFinal1 = moment.tz(dateInitial1,$scope.preferredTimezone).format('LL');
         device.createdDate = dateFinal1;
-         var dateInitial = moment.tz(device.lastModifiedDate,patientDashboard.serverDateTimeZone);
+         var dateInitial = moment.tz(device.lastModifiedDate,patientDashboard.serverDateTimeZone).format();
         var dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format('LL');
         device.lastModifiedDate = dateFinal;
       });
@@ -317,7 +317,7 @@ $scope.searchPatientsOnQueryChange = function(){
       angular.forEach($scope.patients, function(patient){
         patient.dob = (patient.dob) ? dateService.getDateFromTimeStamp(patient.dob, patientDashboard.dateFormat, '/') : patient.dob;
          if($scope.preferredTimezone){  
-        var dateInitial = moment.tz(patient.lastTransmissionDate,patientDashboard.serverDateTimeZone);
+        var dateInitial = moment.tz(patient.lastTransmissionDate,patientDashboard.serverDateTimeZone).format();
       var dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYY);
         patient.lastTransmissionDate = dateFinal;
       }

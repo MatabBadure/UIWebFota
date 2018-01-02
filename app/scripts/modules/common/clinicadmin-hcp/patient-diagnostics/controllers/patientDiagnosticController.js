@@ -73,7 +73,7 @@ function ($scope, $state, $rootScope, StorageService, UserService, patientDiagno
     //$scope.testResult.testResultDate = $scope.defaultTestResultDate;
     // vinay changes 
      if($scope.preferredTimezone){
-    var dateInitial = moment.tz($scope.defaultTestResultDate,patientDashboard.serverDateTimeZone);
+    var dateInitial = moment.tz($scope.defaultTestResultDate,patientDashboard.serverDateTimeZone).format();
     var dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYY);
     $scope.testResult.testResultDate = dateFinal; 
   }
@@ -147,7 +147,7 @@ function ($scope, $state, $rootScope, StorageService, UserService, patientDiagno
       //Vinay
       if(response.data.length>0){
          if($scope.preferredTimezone){
-      var dateInitial = moment.tz(response.data[0].testResultDate,patientDashboard.serverDateTimeZone);
+      var dateInitial = moment.tz(response.data[0].testResultDate,patientDashboard.serverDateTimeZone).format();
     var dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYY);
      response.data[0].testResultDate = dateFinal;   
    }
@@ -297,7 +297,7 @@ function ($scope, $state, $rootScope, StorageService, UserService, patientDiagno
        if($scope.testResult){
          //vinay changes
           if($scope.preferredTimezone){
-         var dateInitial = moment.tz($scope.defaultTestResultDate,patientDashboard.serverDateTimeZone);
+         var dateInitial = moment.tz($scope.defaultTestResultDate,patientDashboard.serverDateTimeZone).format();
          var dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYY);
          $scope.testResult.testResultDate = dateFinal; 
        }
