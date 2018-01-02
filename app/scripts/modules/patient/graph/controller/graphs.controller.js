@@ -1841,16 +1841,31 @@ angular.module('hillromvestApp')
                 startDay[0] = curDay[0];
                 $scope.adherenceTrendXAxisLabelCount++;
               }
-            });       
+            });
+            var tempDate = "";       
             angular.forEach($scope.adherenceTrendData.xAxis.categories, function(x, key){              
               // this is for year view or custom view having datapoints more than 7
               // x-axis will be plotted accordingly, chart type will be datetime
+              if(StorageService.get('logged').role === 'ADMIN' || StorageService.get('logged').role === loginConstants.role.acctservices || StorageService.get('logged').role === loginConstants.role.associates || StorageService.get('logged').role === loginConstants.role.customerservices){
+                tempDate = dateService.convertToTimestamp(x);
+              }
+              else{
+                if($scope.preferredTimezone){
+              var modifiedx = dateService.getinMomentFormat(x,"mm/dd/yyyy");
+               var dateInitial = moment.tz(modifiedx,patientDashboard.serverDateTimeZone);
+               var dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYYHHMMSS);   
+               tempDate = new Date(dateFinal).getTime();
+             }
+             else{
+            tempDate = dateService.convertToTimestamp(x);
+             }
+             }
               if($scope.durationRange !== "Day" && !$scope.isSameDayAdherenceTrend){
-                $scope.adherenceTrendData.xAxis.xLabels.push(dateService.convertToTimestamp(x));
-                $scope.adherenceTrendData.xAxis.categories[key] = dateService.convertToTimestamp(x);               
+                $scope.adherenceTrendData.xAxis.xLabels.push(tempDate);
+                $scope.adherenceTrendData.xAxis.categories[key] = tempDate;               
               }else{
                 $scope.adherenceTrendData.xAxis.xLabels.push(x);
-                $scope.adherenceTrendData.xAxis.categories[key] = Highcharts.dateFormat("%I:%M %p",dateService.convertToTimestamp(x)) ;
+                $scope.adherenceTrendData.xAxis.categories[key] = Highcharts.dateFormat("%I:%M %p",tempDate) ;
               }
             });
           angular.forEach($scope.adherenceTrendData.series, function(s, key1){
@@ -4031,7 +4046,7 @@ $scope.getComplianceGraph = function(){
               }
               else{
                 if($scope.preferredTimezone){
-              var modifiedx = dateService.getinMomentFormat(x,"mm/dd/yyyy hh:mm:ss");
+              var modifiedx = dateService.getinMomentFormat(x,"mm/dd/yyyy");
                var dateInitial = moment.tz(modifiedx,patientDashboard.serverDateTimeZone).format();
                var dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYYHHMMSS);   
                tempDate = new Date(dateFinal).getTime();
