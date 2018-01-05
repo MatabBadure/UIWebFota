@@ -184,6 +184,7 @@
       "email": "Email",
       "phone-no": "Phone No.",
       "mobile-no": "Mobile No.",
+      "timestamp-preference": "Preferred Timezone",
       "update":{
         "warning": "Caregiver Info - Details",
         "message": "You have made changes/updates for Caregiver details. Are you sure to make updates?"

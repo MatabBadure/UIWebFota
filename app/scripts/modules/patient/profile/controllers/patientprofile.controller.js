@@ -19,6 +19,11 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
     $scope.data  = {};
     $scope.role = StorageService.get('logged').role;
     $scope.caregiverID = parseInt(StorageService.get('logged').userId);
+    UserService.getTimezoneList().then(function(response){
+        $scope.timezoneList = response.data.timezones;
+       }).catch(function(response){
+        notyService.showError(response);
+      });
     if( $scope.role === loginConstants.role.caregiver){
         $scope.getPatientListForCaregiver($scope.caregiverID);
       }	
@@ -225,6 +230,7 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
       var data = $scope.patient;
       data.role = 'PATIENT';
       UserService.editUser(data).then(function(response){
+        localStorage.setItem('timestampPreference',$scope.user.timeZone);
         notyService.showMessage(response.data.message, 'success');
         $scope.isPhoneUpdated = false;
       }).catch(function(response){
@@ -241,6 +247,7 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
       var data = $scope.patient;
       data.role = 'PATIENT';
       UserService.editUser(data).then(function(response){
+         localStorage.setItem('timestampPreference',$scope.user.timeZone);
         Auth.logout();
         StorageService.clearAll();
         $rootScope.userRole = null;
@@ -261,6 +268,7 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
       var data = $scope.patient;
       data.role = 'PATIENT';
       UserService.editUser(data).then(function(response){
+         localStorage.setItem('timestampPreference',$scope.user.timeZone);
         Auth.logout();
         StorageService.clearAll();
         $rootScope.userRole = null;
