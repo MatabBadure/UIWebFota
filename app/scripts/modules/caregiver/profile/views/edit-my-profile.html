@@ -156,6 +156,22 @@
           </div>
         </div>
       </div>
+
+       <div class="col-md-16 reset-padding margin-top">
+          <div class="col-md-7 reset-padding">
+            <div class="col-md-6 dashboard__form--label reset-padding">
+              <span class="" translate="patient.timestamp-preference"></span>
+            </div>
+            <div class="col-md-10 dashboard__form--input reset-padding">
+              <div class="col-md-10 dashboard__form__input--sec-option reset-padding">
+              <div class="custom-dropdown">
+                <select class="security-select" ng-model="associateCareGiver.timeZone" ng-options="key as key + '  &nbsp : &nbsp ' + value for (key , value) in timezoneList"></select>
+            </div>
+            </div>
+              </div>
+            </div>
+        </div>
+      </div>
       <div class="clr"></div>
     </div>
 
