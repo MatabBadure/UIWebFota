@@ -39,6 +39,11 @@ angular.module('hillromvestApp')
       }).catch(function(response){
         notyService.showError(response);
       });
+      UserService.getTimezoneList().then(function(response){
+        $scope.timezoneList = response.data.timezones;
+       }).catch(function(response){
+        notyService.showError(response);
+      });
     };
  $scope.processNotificationData = function(){
     $scope.data.isMissedTherapyNotification = $scope.user.missedTherapyNotification;
@@ -139,7 +144,8 @@ $scope.data.MissedTherapyNotificationFreq = "";
       }
       $scope.user.role = $scope.user.authorities[0].name;
        var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : (($scope.clinics && $scope.clinics.length > 0) ? $scope.clinics[0].id : $stateParams.clinicId);
-      UserService.editUser($scope.user).then(function(response){        
+      UserService.editUser($scope.user).then(function(response){      
+      localStorage.setItem('timestampPreference',$scope.user.timeZone);  
         if(StorageService.get('logged').userEmail === $scope.user.email){
           notyService.showMessage(response.data.message, 'success');
           $state.go('hcpUserProfile', {'clinicId': clinicId});

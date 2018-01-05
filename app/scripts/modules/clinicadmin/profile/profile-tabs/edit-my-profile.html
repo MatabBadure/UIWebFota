@@ -137,14 +137,9 @@
             <div class="col-md-6 dashboard__form--label reset-padding">
               <span class="" translate="profile.timestamp-preference"></span>
             </div>
-            <!--  <div class="form__select__input--option reset-padding selected-box-container dynamic-seach-list wrapTextForSmallScreens">
-               <input class="form-control" style="text-overflow: ellipsis" id="" type="text" ng-model="timestamp" typeahead="searchTimestamp as searchTimestamp.type_code + ' &nbsp : ' + searchTimestamp.type_code_value for searchTimestamp in getMatchingTimestampList($viewValue)" typeahead-on-select="selectTimestamp($item)">
-            </div> -->
              <div class="col-md-10 reset-padding selected-box-container dashboard__form__input--sec-option">
                  <div class="custom-dropdown" >
-                <!-- <select name="type" ng-model="resetAccount.timestampPreference"  ng-options="item as item.keys() + ':' + item.value for item in timezoneList">
-                </select> -->
-                <select class="security-select" ng-model="user.timestampPreference" ng-options="key as key + '  &nbsp : &nbsp ' + value for (key , value) in timezoneList"></select>
+                <select class="security-select" ng-model="user.timeZone" ng-options="key as key + '  &nbsp : &nbsp ' + value for (key , value) in timezoneList"></select>
               </div>
             </div>
           </div>
