@@ -147,6 +147,10 @@
     "securityQuestion":{
       "warning" : "Update Security Q & A",
       "message" : "Are you sure to update your Security Question and Answer?"
+    },
+     "preferredTimezone":{
+      "warning" : "Update Preferred Timezone",
+      "message" : "Are you sure to update your preferred timezone?"
     }
   },
   "benchmarking":{
