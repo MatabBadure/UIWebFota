@@ -16,7 +16,7 @@
             <span class="">{{selectedClinicForHCP.name}} <span class="nav_drop_arrow hillrom-icon icon-arrow-down"></span></span>
           </a>
          <ul class="dropdown-menu hcp_dashbaord dashboard_clinic_list dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1"> 
-              <li role="menuitem" ng-repeat='clinic in clinicsHCP' ng-click="switchClinicHCP(clinic)"><a>{{::clinic.name}}</a></li>
+              <li role="menuitem" ng-repeat='clinic in clinicsHCP | filter:{isMessageOpted:true}' ng-click="switchClinicHCP(clinic)"><a>{{::clinic.name}}</a></li>
           </ul>
         </li>
       </ul>

@@ -14,6 +14,19 @@ angular.module('hillromvestApp')
 				$scope.getunreadcount(clinicid);
 			}	
 	}
+  $rootScope.getTimezonePreference = function(){
+  var timeZone = localStorage.getItem('timestampPreference');
+  if(timeZone !== "null"){
+    return timeZone;
+  }
+  else{
+    return false;
+  }
+  }
+	$rootScope.getisMessagesOpted = function(){
+		//$rootScope.isMessagesOptedFlag = false;
+		$scope.getisMessagesOptedfromService();
+	}
 	$rootScope.getDeviceType = function(){
 		var patientId = "";
 		$rootScope.userRole = StorageService.get('logged').role;
@@ -39,7 +52,6 @@ angular.module('hillromvestApp')
 		$rootScope.userRole = StorageService.get('logged').role;
 		if($rootScope.userRole === 'PATIENT'){
 			patientId = $rootScope.userId;
-			console.log("patientId in main",patientId)
 		}
 		else if($rootScope.userRole === 'CARE_GIVER'){
 			if($stateParams.patientId){
@@ -96,6 +108,24 @@ angular.module('hillromvestApp')
 			
 		
     };
+    /***** Get isMessagesOpted Gimp-22,Gimp-23,Gimp-28,Gimp-29*****/
+    $scope.getisMessagesOptedfromService = function(){
+    	var userid = "";
+    	if(StorageService.get('logged').role === 'PATIENT'){
+    		userid = StorageService.get('logged').patientID;
+    	}
+    	else{
+    		userid = StorageService.get('logged').userId;
+    	}
+    	UserService.getisMessagesOpted(userid).then(function(response){
+    		$rootScope.isMessagesOptedFlag = response.data;
+    		//return $rootScope.isMessagesOptedFlag;
+    	}).catch(function(response){
+    		$rootScope.isMessagesOptedFlag = false;
+    		//return $rootScope.isMessagesOptedFlag;
+    	});
+    };
+      /*****End of Get isMessagesOpted Gimp-22,Gimp-23,Gimp-28,Gimp-29*****/
 	 /*****Get unread messages *****/
    $scope.getunreadcount = function(clinicid){
   if(StorageService.get('logged').role === 'PATIENT'){
@@ -392,7 +422,7 @@ else {
 			});
 		};
 		$window.onfocus = function(){				
-			if($state.current.name && $state.current.name !== 'activationLinkErrorPage'  && $state.current.name !== 'postActivateLogin' && $state.current.name !== 'activateUser' && $state.current.name !== 'home' &&  $state.current.name !== 'login' && $state.current.name !== 'requestReset' && $state.current.name !== 'finishReset' && $state.current.name !== 'authenticate'){
+			if($state.current.name && $state.current.name !== 'activationLinkErrorPage'  && $state.current.name !== 'postActivateLogin' && $state.current.name !== 'activateUser' && $state.current.name !== 'home' &&  $state.current.name !== 'login' && $state.current.name !== 'requestReset' && $state.current.name !== 'finishReset' && $state.current.name !== 'authenticate' && $state.current.name !== 'resetAccount' && $state.current.name !== 'passwordReset'){
 				$scope.isUserChanged();
 			}
 		};

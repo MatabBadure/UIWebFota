@@ -23,9 +23,14 @@ angular.module('hillromvestApp')
       $scope.isAdvancedFilters = false; 
       $scope.isZipcode = false;
       $scope.expandedSign = false;
+      $scope.clinic.parentClinic = {};
+      $scope.noParentName = false;
+      $scope.linkHCPFlag = false;
+      $scope.enableDisableOptions = searchFilterService.enableDisable();
     /*check the state from the route*/
     $scope.init = function() {
       var currentRoute = $state.current.name;
+
       if (currentRoute === 'clinicEdit' || currentRoute === 'clinicEditRcadmin') {
         $scope.initClinicEdit($stateParams.clinicId, $scope.setEditMode);
         //$scope.getClinicDetails($stateParams.clinicId, $scope.setEditMode);
@@ -52,6 +57,7 @@ angular.module('hillromvestApp')
         $scope.initPaginationVars();
         $scope.initClinicAssoctPatients($stateParams.clinicId);
       } else if(currentRoute === 'clinicAssociatedHCP' || currentRoute === 'clinicAssociatedHCPRcadmin' || currentRoute === 'clinicAssociatedHCPAssociate' || currentRoute === 'clinicAssociatedHCPCustomerService'){
+        $scope.linkHCPFlag = true;
         $scope.initClinicAssoctHCPs($stateParams.clinicId);
       }
       else if(currentRoute === 'clinicAdmin' || currentRoute === 'clinicAdminRcadmin' || currentRoute === 'clinicAdminAssociate' || currentRoute === 'clinicAdminCustomerService'){
@@ -103,7 +109,14 @@ angular.module('hillromvestApp')
       var filter = searchFilterService.getFilterStringForHCP($scope.searchFilter);
       $scope.perPageCount = 10;
       if(!$scope.searchItem){
-        $scope.searchItem = '';
+        if($scope.linkHCPFlag){
+          //var searchItem = window.encodeURIComponent("%%");
+        $scope.searchItem =  window.encodeURIComponent("%%");
+        }
+        else{
+          $scope.searchItem = '';
+        }
+        
       }
       clinicService.getAssociatedHCPstoClinic($stateParams.clinicId, $scope.searchItem, filter, sortConstant.lastName, $scope.currentPageIndex, $scope.perPageCount).then(function(response) {
         $scope.associatedHcps = response.data;
@@ -124,12 +137,12 @@ angular.module('hillromvestApp')
       $scope.isAssociateHCP = false;
       $scope.searchFilter = searchFilterService.initSearchFiltersForClinic();
       var filter = searchFilterService.getFilterStringForHCP($scope.searchFilter);
-      var searchString = '';
+      var searchString = window.encodeURIComponent("%%");
       $scope.currentPageIndex = 1;
       $q.all([
         clinicService.getAssociatedHCPstoClinic(clinicId, searchString, filter, sortConstant.lastName, $scope.currentPageIndex, 10),
         clinicService.getClinicAssoctHCPs(clinicId),
-        clinicService.getHCPsWithClinicName()
+        clinicService.getHCPsWithClinicName(searchString)
       ]).then(function(response) {
         if(response){
           if(response[0]){
@@ -175,11 +188,16 @@ angular.module('hillromvestApp')
       $scope.sortIconDown = false;
       $scope.searchClinics();
     };
-
+$scope.toggleNotificationMessages = function(value){
+  //var temp = !$scope.clinic.isMessageOpted;
+  $scope.clinic.isMessageOpted = value;
+}
     $scope.initCreateClinic = function(){
       $scope.states = [];
       $scope.clinic = {};
       $scope.clinic.type = 'parent';
+      $scope.clinic.isMessageOpted = true;
+      $scope.clinic.isMessageOpted = $scope.clinic.isMessageOpted.toString();
       $scope.clinicStatus.editMode = false;
       $scope.clinicStatus.isCreate = true;
       clinicService.getClinicSpeciality().then(function(response){
@@ -213,7 +231,9 @@ angular.module('hillromvestApp')
       clinicService.getClinic(clinicId).then(function(response) {
         $scope.clinic = response.data.clinic;
         $scope.clinic.zipcode = commonsUserService.formatZipcode($scope.clinic.zipcode);
-        $scope.slectedClinic = response.data.clinic;
+        $scope.slectedClinic = response.data.clinic;   
+        $scope.clinic.isMessageOpted = $scope.clinic.isMessageOpted.toString();
+
         if($scope.clinic.parent){
           $scope.clinic.type = "parent";
         }else{
@@ -392,18 +412,56 @@ angular.module('hillromvestApp')
     };
 
     $scope.submitted = false;
-    $scope.formSubmit = function() {
+   $scope.formSubmit = function() {
+      if($scope.clinic.type == 'child' && $scope.clinic.parentClinic.name == ""){
+        return false;
+      }
+      else{
       $scope.submitted = true;
+    }
     };
 
-    $scope.formSubmitClinic = function() {
+   /* $scope.formSubmit = function() {
+            $scope.submitted = true;
+    };*/
+    $scope.formUpdate = function(){
+    if($scope.form.$invalid){
+      if($scope.clinic.type == 'child' && $scope.clinic.parentClinic.name == null){
+        $scope.noParentName = true;
+      }
+        return false;
+      }
+      else{
+        $scope.showUpdateModal = true;
+      }
+
+    };
+
+    $scope.validateParentName = function(){
+      $scope.clinic.parentClinic = {};
+      $scope.clinic.parentClinic.name = null;
+    };
+    $scope.showModalCreateEdit = function(){
       if ($scope.form.$invalid) {
         return false;
       }
+      else{
+        $scope.showUpdateModal = true;
+      }
+    }
+
+    $scope.formSubmitClinic = function() {
+      $scope.clinic.isMessageOpted = ($scope.clinic.isMessageOpted === "true") ? true : false;
       if ($scope.clinic.type === 'parent') {
         $scope.clinic.parent = true;
+        $scope.clinic.makeParent = true;
+           $scope.clinic.makeChild = false;
+           delete $scope.clinic.parentClinic;
+       
       } else {
         $scope.clinic.parent = false;
+        $scope.clinic.makeParent = false;
+           $scope.clinic.makeChild = true;
       }
       if ($scope.clinicStatus.editMode) {
         var data = $scope.clinic;
@@ -1345,6 +1403,9 @@ $scope.activateClinicModal = function(clininc){
           
           });
     };
+   /* $scope.validateParentName = function() {
+      $scope.clinic.parentClinic.name = "";
+    };*/
 
     $scope.advancedSearchClinics = function(isFresh){
       if(isFresh){

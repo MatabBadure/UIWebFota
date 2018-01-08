@@ -23,7 +23,7 @@
 </div>
 
 <div class="dashboard dashboard--content padding-bottom-ls">
-  <form name="form" ng-submit="formSubmitClinic()" novalidate autocomplete="off">
+  <form name="form" ng-submit="showModalCreateEdit()" novalidate autocomplete="off">
     <div class="container dashboard__form">
       <div class="margin-top-xl">
         <div class="col-md-16 col-sm-16 reset-padding">
@@ -42,8 +42,8 @@
               <span class="">*</span>
             </div>
             <div class="col-md-10 col-sm-10 dashboard__form__input--option reset-padding selected-box-container">
-              <div class="custom-dropdown" ng-class="{'disabled_arrow': clinicStatus.editMode || clinicStatus.createSatellite}">
-                <select name="type" ng-model="clinic.type" ng-disabled="clinicStatus.editMode || clinicStatus.createSatellite">
+              <div class="custom-dropdown">
+                <select name="type" ng-model="clinic.type" ng-change="validateParentName()">
                   <option selected translate="clinic.clinic-option.parent-clinic" value="parent"></option>
                   <option translate="clinic.clinic-option.satellite-clinic" value="child"></option>
                 </select>
@@ -72,14 +72,15 @@
               <span class="">*</span>
             </div>
             <div class="col-md-10 col-sm-10 dashboard__form--input parent-list reset-padding clinic-link dropdownListView">
-
+              <div class="custom-dropdown">
               <input class="form-control" name="parentClinicName" ng-disabled="clinicStatus.createSatellite" type="text" ng-model="clinic.parentClinic.name" typeahead="clinic as clinic.name + ' '+clinic.city +' '+ clinic.state for clinic in parentClinics | filter:$viewValue" typeahead-on-select="selectClinicEdit($item)" placeholder="{{'clinic.placeholder.parent-clinic-search' | translate}}" validate-on-blur   match="clinic.parentClinic.name" required>
 
-              <div ng-show="(form.parentClinicName.$dirty && form.parentClinicName.$showValidationMessage && form.parentClinicName.$invalid) || submitted">
+              <div ng-show="(form.parentClinicName.$dirty && form.parentClinicName.$showValidationMessage && form.parentClinicName.$invalid) || submitted || noParentName">
+                
                 <span class="has-error" ng-show="form.parentClinicName.$error.required" translate="error.parentClinicName.required"></span>
                 <span class="has-error" ng-show="form.parentClinicName.$error.match && !form.parentClinicName.$error.required" translate="error.parentClinicName.match"></span>
               </div>
-
+              </div>
             </div>
           </div>
         <div class="col-md-16 col-sm-16 reset-padding margin-top">
@@ -207,11 +208,33 @@
             </div>
           </div>
         </div>
+        <div class="col-md-16 col-sm-16 reset-padding margin-top">
+          <div class="col-md-7 col-sm-7 reset-padding">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding">
+              <span class="">Messages</span>
+            </div>
+            <div class="col-md-10 col-sm-10 reset-padding">
+                         <div class="form-group advanced-filters-radio-div">
+                      <span>
+
+                      <label class="radio advanced-filters-radio-gender" ng-repeat="isMessageOpted in enableDisableOptions">
+            <input type="radio" ng-model="clinic.isMessageOpted" name="isMessageOpted" value="{{isMessageOpted.value}}"><span class="cyan-blue-light advanced-filters">{{isMessageOpted.name}}</span>
+        </label>
+                      </span>
+                    </div>
+                  </div>
+           <!--  <div class="col-md-10 col-sm-10 dashboard__form--input reset-padding">
+              <div class="col-md-1 col-sm-1 col-xs-5 user-notification--icon phone-noti-align" ng-click="toggleNotificationMessages();">
+              <span ng-class="clinic.isMessageOpted ? 'icon-toggle-on active': 'icon-toggle-off'"></span>
+            </div>
+            </div> -->
+          </div>
+        </div>
         <div class="clr"></div>
       </div>
       <div class="col-md-16 col-sm-16 reset-padding margin-top">
         <div class="">
-          <button type="button" ng-click="$parent.showUpdateModal=true" ng-show="!clinicStatus.isCreate" class="hillrom-btn btn-primary btn-margin-left float-right" translate="clinic.update-button-text"></button>
+          <button type="button" ng-click="formUpdate()" ng-show="!clinicStatus.isCreate" class="hillrom-btn btn-primary btn-margin-left float-right" translate="clinic.update-button-text"></button>
           <button type="submit" ng-click="formSubmit()" ng-show="clinicStatus.isCreate" class="hillrom-btn btn-primary btn-margin-left float-right" translate="clinic.submit-button-text"></button>
           <button type="reset" ng-click="cancel()" class="hillrom-btn btn-secondary float-right" translate="clinic.cancel-button-text">Cancel</button>
           <div class="clr"></div>

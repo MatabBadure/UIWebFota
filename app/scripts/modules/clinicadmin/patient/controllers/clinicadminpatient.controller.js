@@ -7,6 +7,7 @@ angular.module('hillromvestApp')
   $scope.perPageCount = 5;
   $scope.PageNumber=1;
   $scope.nodataflag = false;
+  $scope.preferredTimezone = $scope.getTimezonePreference();
       $scope.DisableAddProtocol = false; 
     $scope.displayFlag = true;
           $scope.customPointsChecker = 0;
@@ -88,13 +89,14 @@ angular.module('hillromvestApp')
     else{
       var filter = "";
     }
-      $scope.searchFilter = searchFilterService.initSearchFiltersForPatientCA(filter, true);
+      $scope.searchFilter = searchFilterService.initSearchFiltersForPatient(filter, true);
       $scope.sortPatientList = sortOptionsService.getSortOptionsForPatientList();
       $scope.currentPageIndex = 1;
       $scope.perPageCount = 10;
       $scope.pageCount = 0;
       $scope.getClinicsAssociatedToHCP();
       var clinicId = $stateParams.clinicId;
+       $scope.getisMessagesOpted();
       $scope.initCount($stateParams.clinicId);
       $scope.searchPatients(); 
     }
@@ -170,6 +172,21 @@ angular.module('hillromvestApp')
       patientService.getAdherenceScoreResetHistory(patientId,$scope.PageNumber,$scope.perPageCount,$scope.getDeviceTypeforBothIcon()).then(function(response){
      
         $scope.resetHistoryData = response.data.Adherence_Reset_History.content;  
+        if($scope.preferredTimezone){
+         angular.forEach($scope.resetHistoryData, function(x, key){      
+          var onlyTime = x.resetTime.slice(0, -2);
+          var xDate = dateService.getinMomentFormat(x.resetDate,"mm/dd/yyyy")+ " " + onlyTime + ":00";
+         var dateInitial = moment.tz(x.resetStartDate,patientDashboard.serverDateTimeZone).format();
+         var dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYY);
+         $scope.resetHistoryData[key].resetStartDate = dateFinal;
+
+         var dateInitial1 = moment.tz(xDate,patientDashboard.serverDateTimeZone);
+         var dateFinal1 = moment.tz(dateInitial1,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYYHHMMSS);
+         var res = dateFinal1.split(" ");
+         $scope.resetHistoryData[key].resetDate = res[0];
+         $scope.resetHistoryData[key].resetTime = res[1].slice(0, -3) + x.resetTime.slice(-2);   
+         });
+       }
       $scope.totalPages = response.data.Adherence_Reset_History.totalPages;
       $scope.totalElements = response.data.Adherence_Reset_History.totalElements;
 
@@ -451,11 +468,18 @@ angular.module('hillromvestApp')
 
   $scope.getDevices = function(patientId){
     patientService.getDevices(patientId).then(function(response){
+      //Gimp-31
+       if($scope.preferredTimezone){
       angular.forEach(response.data.deviceList, function(device){
-        device.createdDate = dateService.getDateByTimestamp(device.createdDate);
-        device.lastModifiedDate = dateService.getDateByTimestamp(device.lastModifiedDate);
-         device.createdDate = dateService.getDateByTimestamp(device.createdDate);
+    var dateInitial1 = moment.tz(device.createdDate,patientDashboard.serverDateTimeZone);
+        var dateFinal1 = moment.tz(dateInitial1,$scope.preferredTimezone).format('LL');
+        device.createdDate = dateFinal1;
+         var dateInitial = moment.tz(device.lastModifiedDate,patientDashboard.serverDateTimeZone).format();
+        var dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format('LL');
+        device.lastModifiedDate = dateFinal;
+       
       });
+    }
       $scope.devices = response.data.deviceList;
     }).catch(function(response){
       notyService.showError(response);
@@ -502,7 +526,14 @@ angular.module('hillromvestApp')
       $scope.selectedClinic = clinic;
       $scope.searchPatients();      
     }
+    if(!clinic.isMessageOpted){   
+      $rootScope.selectedClinicMessagesFalse = false;    
+     }
+    else{    
+      $rootScope.selectedClinicMessagesFalse = true;   
+    }    
     $state.go('clinicadminpatientdashboard',{'clinicId': $scope.selectedClinic.id});
+    $scope.getisMessagesOpted();
     $scope.initCount($scope.selectedClinic.id);
   };
 
@@ -612,11 +643,18 @@ angular.module('hillromvestApp')
     }
     var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : $stateParams.clinicId;
     DoctorService.searchPatientsForHCPOrCliniadmin($scope.searchItem, 'clinicadmin', StorageService.get('logged').userId, clinicId, $scope.currentPageIndex, $scope.perPageCount, filter, $scope.sortOption).then(function (response) {
-      $scope.patients = response.data;      
+      $scope.patients = response.data; 
+       if($scope.preferredTimezone){     
       angular.forEach($scope.patients, function(patient){
         patient.dob = (patient.dob) ? dateService.getDateFromTimeStamp(patient.dob, patientDashboard.dateFormat, '/') : patient.dob;
-        patient.lastTransmissionDate = (patient.lastTransmissionDate) ? dateService.getDateFromYYYYMMDD(patient.lastTransmissionDate, '/') : patient.lastTransmissionDate;
+      var dateInitial = moment.tz(patient.lastTransmissionDate,patientDashboard.serverDateTimeZone).format();
+      var dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYY);
+     patient.lastTransmissionDate = dateFinal;
       });
+    }
+    else{
+      patient.lastTransmissionDate = (patient.lastTransmissionDate) ? dateService.getDateFromYYYYMMDD(patient.lastTransmissionDate, '/') : patient.lastTransmissionDate;
+    }
       $scope.total = (response.headers()['x-total-count']) ? response.headers()['x-total-count'] :$scope.patients.length; 
       $scope.pageCount = Math.ceil($scope.total / 10);
       searchOnLoad = false;
