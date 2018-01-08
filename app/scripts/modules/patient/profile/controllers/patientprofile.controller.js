@@ -6,6 +6,14 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
    $scope.isEmailUpdated = false;
    $scope.dayOptions = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday', 'Daily'];
    $scope.MessageNotificationFreq = "";
+   $scope.showtimezoneModal = false;
+   UserService.getTimezoneList().then(function(response){
+   $scope.timezoneList = response.data.timezones;
+   }).catch(function(response){
+   notyService.showError(response);
+   });
+   $scope.timezoneChanged = false;
+  $scope.showtimezoneModal = false;
   $scope.init = function(){
 		var currentRoute = $state.current.name;
     $scope.getisMessagesOpted();
@@ -19,11 +27,7 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
     $scope.data  = {};
     $scope.role = StorageService.get('logged').role;
     $scope.caregiverID = parseInt(StorageService.get('logged').userId);
-    UserService.getTimezoneList().then(function(response){
-        $scope.timezoneList = response.data.timezones;
-       }).catch(function(response){
-        notyService.showError(response);
-      });
+
     if( $scope.role === loginConstants.role.caregiver){
         $scope.getPatientListForCaregiver($scope.caregiverID);
       }	
@@ -177,6 +181,32 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
     });		
 	};
 
+  $scope.updateshowtimezoneModal = function(){
+    if($scope.patient.timeZone){
+    $scope.showtimezoneModal = true;
+  }
+  }
+  $scope.changePreferredTimezone = function(){
+    $scope.timezoneChanged = true;
+  }
+
+  $scope.updatePreferredTimezone = function(){
+     var data = $scope.patient;
+      data.role = 'PATIENT';
+      UserService.editUser(data).then(function(response){
+        $scope.patient = response.data.user;
+        $scope.timezoneChanged = false;
+        localStorage.setItem('timestampPreference',$scope.patient.timeZone);
+        notyService.showMessage(response.data.message, 'success');
+        //$scope.isPhoneUpdated = false;
+      }).catch(function(response){
+        $scope.timezoneChanged = false;
+        notyService.showError(response);
+        //$scope.isPhoneUpdated = false;
+      }); 
+      $scope.showtimezoneModal = false; 
+  };
+
   $scope.initResetPassword = function(){
     $scope.showUpdatePasswordModal = false;
   	$scope.profile = {};
@@ -268,7 +298,7 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
       var data = $scope.patient;
       data.role = 'PATIENT';
       UserService.editUser(data).then(function(response){
-         localStorage.setItem('timestampPreference',$scope.user.timeZone);
+         localStorage.setItem('timestampPreference',$scope.patient.timeZone);
         Auth.logout();
         StorageService.clearAll();
         $rootScope.userRole = null;
