@@ -51,8 +51,9 @@ angular.module('hillromvestApp')
     $scope.updateCaregiver = function(careGiver){
       careGiver.role = 'CARE_GIVER';
       UserService.editUser(careGiver).then(function(response){
+        $scope.associateCareGiver = response.data.user;
         notyService.showMessage(response.data.message, 'success');
-        localStorage.setItem('timestampPreference',$scope.user.timeZone);
+        localStorage.setItem('timestampPreference',$scope.associateCareGiver.timeZone);
         $state.go('caregiverProfile', {'patientId':$stateParams.patientId});
       }).catch(function(response){
         notyService.showMessage(response.data.message, 'warning');
