@@ -111,8 +111,9 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
     });
   };
 
-  $scope.setOverviewMode = function(patient){
+  $scope.setOverviewMode = function(patient, patientProfile){
       $scope.patient = patient;
+      $scope.patient.timeZone = patientProfile.timeZone;
       if (patient.dob !== null) {
         $scope.patient.age = dateService.getAge(new Date($scope.patient.dob));
         var _date = dateService.getDate($scope.patient.dob);
@@ -213,7 +214,8 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
     $q.all([
       AuthServerProvider.getSecurityQuestions(),
       patientService.getUserSecurityQuestion(StorageService.get('logged').patientID),
-      patientService.getPatientInfo(StorageService.get('logged').patientID)
+      patientService.getPatientInfo(StorageService.get('logged').patientID),
+      UserService.getUser(StorageService.get('logged').patientID)
     ]).then(function(data) {        
       if(data){
         if(data[0]){
@@ -228,7 +230,7 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
           $scope.resetAccount = ($scope.resetAccount) ? $scope.resetAccount : $scope.questions[0];
         }
         if(data[2]){
-          $scope.setOverviewMode(data[2].data);
+          $scope.setOverviewMode(data[2].data,data[3].data.user);
         }
       }
     });
@@ -260,7 +262,8 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
       var data = $scope.patient;
       data.role = 'PATIENT';
       UserService.editUser(data).then(function(response){
-        localStorage.setItem('timestampPreference',$scope.user.timeZone);
+        /*$scope.patient  = response.data.user;
+        localStorage.setItem('timestampPreference',$scope.patient.timeZone);*/
         notyService.showMessage(response.data.message, 'success');
         $scope.isPhoneUpdated = false;
       }).catch(function(response){
@@ -277,7 +280,8 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
       var data = $scope.patient;
       data.role = 'PATIENT';
       UserService.editUser(data).then(function(response){
-         localStorage.setItem('timestampPreference',$scope.user.timeZone);
+       /* $scope.patient  = response.data.user;
+         localStorage.setItem('timestampPreference',$scope.patient.timeZone);*/
         Auth.logout();
         StorageService.clearAll();
         $rootScope.userRole = null;
@@ -298,7 +302,8 @@ angular.module('hillromvestApp').controller('patientprofileController', ['$scope
       var data = $scope.patient;
       data.role = 'PATIENT';
       UserService.editUser(data).then(function(response){
-         localStorage.setItem('timestampPreference',$scope.patient.timeZone);
+      /*  $scope.patient  = response.data.user;
+         localStorage.setItem('timestampPreference',$scope.patient.timeZone);*/
         Auth.logout();
         StorageService.clearAll();
         $rootScope.userRole = null;

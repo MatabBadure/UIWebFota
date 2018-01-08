@@ -211,7 +211,9 @@ angular.module('hillromvestApp')
         }
               var vestFlag = false;
         var monarchFlag = false;
+        if($scope.protocols && $scope.protocols.length){
         $scope.lastdeviceType = $scope.protocols[0].deviceType;
+      }
         angular.forEach($scope.protocols, function(protocol){
           if(protocol.deviceType === searchFilters.VisiVest){
             vestFlag = true;
