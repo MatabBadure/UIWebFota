@@ -318,9 +318,11 @@ $scope.searchPatientsOnQueryChange = function(){
       angular.forEach($scope.patients, function(patient){
         patient.dob = (patient.dob) ? dateService.getDateFromTimeStamp(patient.dob, patientDashboard.dateFormat, '/') : patient.dob;
          if($scope.preferredTimezone){  
+          if(patient.lastTransmissionDate){
         var dateInitial = moment.tz(patient.lastTransmissionDate,patientDashboard.serverDateTimeZone).format();
       var dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYY);
         patient.lastTransmissionDate = dateFinal;
+      }
       }
       else{
         patient.lastTransmissionDate = (patient.lastTransmissionDate) ? dateService.getDateFromYYYYMMDD(patient.lastTransmissionDate, '/') : patient.lastTransmissionDate;
