@@ -383,6 +383,7 @@ $scope.data.MissedTherapyNotificationFreq = "";
     $scope.initPatientSettingsCaregiver = function(){  
     UserService.getPatientUserNotification($scope.selectedPatient.userId).then(function(response){
       $scope.patientUser = response.data.user;
+      $scope.processNotificationData();
     }).catch(function(){
        notyService.showError(response);
     });
