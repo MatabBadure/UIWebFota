@@ -633,8 +633,24 @@ angular.module('hillromvestApp')
       $scope.devices = []; $scope.devices.length = 0;
       patientService.getDevices((StorageService.get('logged').patientID || $scope.patientId), $scope.getDeviceTypeforBothIcon()).then(function(response){
         angular.forEach(response.data.deviceList, function(device){
-          device.createdDate = dateService.getDateByTimestamp(device.createdDate);
+                   if(StorageService.get('logged').role === 'ADMIN' || StorageService.get('logged').role === loginConstants.role.acctservices || StorageService.get('logged').role === loginConstants.role.associates || StorageService.get('logged').role === loginConstants.role.customerservices){
+           device.createdDate = dateService.getDateByTimestamp(device.createdDate);
           device.lastModifiedDate = dateService.getDateByTimestamp(device.lastModifiedDate);
+          }
+          else{
+            if($scope.preferredTimezone){
+              var dateInitial1 = moment.tz(device.createdDate,patientDashboard.serverDateTimeZone);
+              var dateFinal1 = moment.tz(dateInitial1,$scope.preferredTimezone).format('LL');
+              device.createdDate = dateFinal1;
+              var dateInitial1 = moment.tz(device.lastModifiedDate,patientDashboard.serverDateTimeZone);
+              var dateFinal1 = moment.tz(dateInitial1,$scope.preferredTimezone).format('LL');
+              device.lastModifiedDate = dateFinal1;
+            }
+            else{
+               device.createdDate = dateService.getDateByTimestamp(device.createdDate);
+          device.lastModifiedDate = dateService.getDateByTimestamp(device.lastModifiedDate);
+            }
+          }
         });
         if(response.data.deviceList){
           $scope.devices = response.data.deviceList;
@@ -651,8 +667,26 @@ angular.module('hillromvestApp')
       $scope.devices = []; $scope.devices.length = 0;
       patientService.getDevices($scope.selectedPatient.userId,$scope.getDeviceTypeforBothIcon()).then(function(response){
         angular.forEach(response.data.deviceList, function(device){
-          device.createdDate = dateService.getDateByTimestamp(device.createdDate);
+         if(StorageService.get('logged').role === 'ADMIN' || StorageService.get('logged').role === loginConstants.role.acctservices || StorageService.get('logged').role === loginConstants.role.associates || StorageService.get('logged').role === loginConstants.role.customerservices){
+           device.createdDate = dateService.getDateByTimestamp(device.createdDate);
           device.lastModifiedDate = dateService.getDateByTimestamp(device.lastModifiedDate);
+          }
+          else{
+            if($scope.preferredTimezone){
+              var dateInitial1 = moment.tz(device.createdDate,patientDashboard.serverDateTimeZone);
+              var dateFinal1 = moment.tz(dateInitial1,$scope.preferredTimezone).format('LL');
+              device.createdDate = dateFinal1;
+              var dateInitial1 = moment.tz(device.lastModifiedDate,patientDashboard.serverDateTimeZone);
+              var dateFinal1 = moment.tz(dateInitial1,$scope.preferredTimezone).format('LL');
+              device.lastModifiedDate = dateFinal1;
+            }
+            else{
+               device.createdDate = dateService.getDateByTimestamp(device.createdDate);
+          device.lastModifiedDate = dateService.getDateByTimestamp(device.lastModifiedDate);
+            }
+          }
+          
+         
         });
         if(response.data.deviceList){
           $scope.devices = response.data.deviceList;
@@ -728,8 +762,24 @@ angular.module('hillromvestApp')
            var vestFlag = false;
         var monarchFlag = false;
         angular.forEach($scope.protocols, function(protocol){
+         if(StorageService.get('logged').role === 'ADMIN' || StorageService.get('logged').role === loginConstants.role.acctservices || StorageService.get('logged').role === loginConstants.role.associates || StorageService.get('logged').role === loginConstants.role.customerservices){
           protocol.createdDate = dateService.getDateByTimestamp(protocol.createdDate);
           protocol.lastModifiedDate = dateService.getDateByTimestamp(protocol.lastModifiedDate);
+          }
+          else{
+            if($scope.preferredTimezone){
+              var dateInitial1 = moment.tz(protocol.createdDate,patientDashboard.serverDateTimeZone);
+              var dateFinal1 = moment.tz(dateInitial1,$scope.preferredTimezone).format('LL');
+              protocol.createdDate = dateFinal1;
+              var dateInitial1 = moment.tz(protocol.lastModifiedDate,patientDashboard.serverDateTimeZone);
+              var dateFinal1 = moment.tz(dateInitial1,$scope.preferredTimezone).format('LL');
+              protocol.lastModifiedDate = dateFinal1;
+            }
+            else{
+               protocol.createdDate = dateService.getDateByTimestamp(protocol.createdDate);
+               protocol.lastModifiedDate = dateService.getDateByTimestamp(protocol.lastModifiedDate);
+            }
+          }
           if(!protocol.deleted){
             $scope.addProtocol = false;
           }
