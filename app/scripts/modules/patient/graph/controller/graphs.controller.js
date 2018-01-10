@@ -685,7 +685,7 @@ angular.module('hillromvestApp')
           device.lastModifiedDate = dateService.getDateByTimestamp(device.lastModifiedDate);
             }
           }
-          
+
          
         });
         if(response.data.deviceList){
@@ -2628,13 +2628,33 @@ angular.module('hillromvestApp')
     $scope.getDayChart = function(isOtherDayTimestamp){
       $scope.durationRange = "Day";
       if(isOtherDayTimestamp){
+         $scope.fromTimeStamp = $scope.toTimeStamp = isOtherDayTimestamp;
+        if(StorageService.get('logged').role === 'ADMIN' || StorageService.get('logged').role === loginConstants.role.acctservices || StorageService.get('logged').role === loginConstants.role.associates || StorageService.get('logged').role === loginConstants.role.customerservices){
+       
+         $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
+      $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');
+        }
+        else{   
+        if($scope.preferredTimezone){
+          //$scope.preferredTimezone).format(patientDashboard.timestampMMDDYYHHMMSS)
+        var dateInitial = moment.tz(isOtherDayTimestamp,patientDashboard.serverDateTimeZone).format(patientDashboard.dateFormat);
+           $scope.fromDate = $scope.toDate =  moment.tz(isOtherDayTimestamp,$scope.preferredTimezone).format(patientDashboard.dateFormat);
+           $scope.fromTimeStamp = $scope.toTimeStamp = new Date(dateInitial).getTime();
+
+        }
+        else{
         $scope.fromTimeStamp = $scope.toTimeStamp = isOtherDayTimestamp;
+         $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
+      $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');
+        }
+       }
       }else{
-        $scope.fromTimeStamp = $scope.toTimeStamp = new Date().getTime();        
+        $scope.fromTimeStamp = $scope.toTimeStamp = new Date().getTime(); 
+         $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
+      $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');       
       }
       
-      $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
-      $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');
+     
       $scope.fromDateTestResults = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
       $scope.toDateTestResults = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');
       $scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
