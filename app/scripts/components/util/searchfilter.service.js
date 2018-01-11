@@ -452,10 +452,10 @@ angular.module('hillromvestApp')
 
               this.processClinicTypeOptions = function(){
               var options = [{
-                type_code_value: "Parent",
+                type_code: "Parent",
                 type_code_value:"Parent"
             }, {
-                type_code_value: "Satellite",
+                type_code: "Satellite",
                 type_code_value:"Satellite"
             }];
             return options;

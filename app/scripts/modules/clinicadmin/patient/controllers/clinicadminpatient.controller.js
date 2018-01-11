@@ -1,12 +1,20 @@
 angular.module('hillromvestApp')
-.controller('clinicadminPatientController',['$scope', '$state', '$stateParams', 'clinicadminPatientService', 'patientService', 'notyService', 'DoctorService', 'clinicadminService', 'clinicService', 'dateService', 'UserService', 'searchFilterService', '$timeout', 'StorageService', 'sortOptionsService','$filter', 'commonsUserService', '$q', 'addressService', '$rootScope', 'exportutilService',
-  function($scope, $state, $stateParams, clinicadminPatientService, patientService, notyService, DoctorService, clinicadminService, clinicService, dateService, UserService, searchFilterService, $timeout, StorageService, sortOptionsService,$filter, commonsUserService, $q, addressService, $rootScope, exportutilService) { 
+.controller('clinicadminPatientController',['$scope', '$state', '$stateParams', 'clinicadminPatientService', 'patientService', 'notyService', 'DoctorService', 'clinicadminService', 'clinicService', 'dateService', 'UserService', 'searchFilterService', '$timeout', 'StorageService', 'sortOptionsService','$filter', 'commonsUserService', '$q', 'addressService', '$rootScope', 'exportutilService','loginConstants',
+  function($scope, $state, $stateParams, clinicadminPatientService, patientService, notyService, DoctorService, clinicadminService, clinicService, dateService, UserService, searchFilterService, $timeout, StorageService, sortOptionsService,$filter, commonsUserService, $q, addressService, $rootScope, exportutilService,loginConstants) { 
   var searchOnLoad = true;
   $scope.currentPageIndex = 1;
   $scope.pageCount = 0;
   $scope.perPageCount = 5;
   $scope.PageNumber=1;
   $scope.nodataflag = false;
+  $scope.patientStatus = {
+      'role': StorageService.get('logged').role,
+      'editMode': false,
+      'isCreate': false,
+      'isMessage': false,
+      'message': ''
+    };
+
   $scope.preferredTimezone = $scope.getTimezonePreference();
       $scope.DisableAddProtocol = false; 
     $scope.displayFlag = true;
@@ -148,7 +156,10 @@ angular.module('hillromvestApp')
         $scope.nodataflag = false;
         if($scope.patientStatus.role === loginConstants.role.acctservices){
         $state.go('patientProtocolRcadmin', {'patientId': $stateParams.patientId});
-      }else{
+      }else if($scope.patientStatus.role === loginConstants.role.clinicadmin){
+        $state.go('clinicadminpatientProtocol');
+      }
+      else{
         $state.go('patientProtocol');
       }
       }).catch(function(response){
@@ -471,27 +482,17 @@ angular.module('hillromvestApp')
   $scope.getDevices = function(patientId){
     patientService.getDevices(patientId).then(function(response){
       //Gimp-31
-      
+       if($scope.preferredTimezone){
       angular.forEach(response.data.deviceList, function(device){
-         if($scope.preferredTimezone){
-        if(device.createdDate){
     var dateInitial1 = moment.tz(device.createdDate,patientDashboard.serverDateTimeZone);
         var dateFinal1 = moment.tz(dateInitial1,$scope.preferredTimezone).format('LL');
         device.createdDate = dateFinal1;
-      }
-      if(device.lastModifiedDate){
          var dateInitial = moment.tz(device.lastModifiedDate,patientDashboard.serverDateTimeZone).format();
         var dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format('LL');
         device.lastModifiedDate = dateFinal;
-      }
-      } 
-       else{
-      device.createdDate = dateService.getDateByTimestamp(device.createdDate);
-      device.lastModifiedDate = dateService.getDateByTimestamp(device.lastModifiedDate);
-    }  
+       
       });
-  
-   
+    }
       $scope.devices = response.data.deviceList;
     }).catch(function(response){
       notyService.showError(response);
