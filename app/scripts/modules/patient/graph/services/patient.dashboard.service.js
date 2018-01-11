@@ -16,6 +16,11 @@ angular.module('hillromvestApp')
       *
       */
       getHMRGraphPoints: function(id, deviceTypeforGraph, fromTimeStamp, toTimeStamp, duration, date) {
+        if(deviceTypeforGraph){
+        if(!deviceTypeforGraph.length){
+          deviceTypeforGraph = localStorage.getItem('deviceType_'+id);
+        }
+      }
         var url = patient.graph.baseURL;
         url  = url + '/' + id + '/therapyData';
         if ( fromTimeStamp !== undefined && toTimeStamp !== undefined && duration !== undefined) {
@@ -34,6 +39,11 @@ angular.module('hillromvestApp')
       },
 
       getAdherenceTrendGraphPoints: function(id, deviceTypeforGraph, fromTimeStamp, toTimeStamp, duration, date) {
+         if(deviceTypeforGraph){
+        if(!deviceTypeforGraph.length){
+          deviceTypeforGraph = localStorage.getItem('deviceType_'+id);
+        }
+      }
         var url = patient.graph.baseURL;
         url  = url + '/' + id + '/adherenceTrendGraphData';
         if ( fromTimeStamp !== undefined && toTimeStamp !== undefined && duration !== undefined) {
@@ -122,6 +132,11 @@ angular.module('hillromvestApp')
       *
       */
       getcomplianceGraphPoints: function(id, fromTimeStamp, toTimeStamp, groupBy) {
+         if(deviceTypeforGraph){
+        if(!deviceTypeforGraph.length){
+          deviceTypeforGraph = localStorage.getItem('deviceType_'+id);
+        }
+      }
         var url = admin.hillRomUser.baseURL;
         url  = url + '/' + id + '/complianceLevel';
         if ( fromTimeStamp !== undefined && toTimeStamp !== undefined && groupBy !== undefined) {

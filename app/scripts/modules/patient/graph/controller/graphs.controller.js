@@ -195,14 +195,14 @@ angular.module('hillromvestApp')
                   for(var i=0;i<response.data.patients.length;i++){
                     if($stateParams.patientId == response.data.patients[i].userId){
                   $scope.selectedPatient = response.data.patients[i];
-   /*              if(!$scope.getDeviceTypeforBothIcon()){             
+/*                 if(!$scope.getDeviceTypeforBothIcon()){             
                            if(response.data.patients[i].deviceType == 'ALL'){
-                    localStorage.setItem('deviceType_'+response.data.patients[i].id, 'VEST');
-                    localStorage.setItem('deviceTypeforBothIcon_'+response.data.patients[i].id, 'ALL');
+                    localStorage.setItem('deviceType_'+response.data.patients[i].patientId, 'VEST');
+                    localStorage.setItem('deviceTypeforBothIcon_'+response.data.patients[i].patientId, 'ALL');
                  }
                       else{
-                      localStorage.setItem('deviceType_'+response.data.patients[i].id, response.data.patients[i].deviceType);
-                      localStorage.setItem('deviceTypeforBothIcon_'+response.data.patients[i].id, response.data.patients[i].deviceType);
+                      localStorage.setItem('deviceType_'+response.data.patients[i].patientId, response.data.patients[i].deviceType);
+                      localStorage.setItem('deviceTypeforBothIcon_'+response.data.patients[i].patientId, response.data.patients[i].deviceType);
                     }
                   }*/
                     $scope.patientId = $stateParams.patientId;
@@ -218,20 +218,21 @@ angular.module('hillromvestApp')
 
                 } else{
                  $scope.selectedPatient = response.data.patients[0];
-        /* if(response.data.patients[0].deviceType == 'ALL'){
-          localStorage.setItem('deviceType_'+response.data.patients[0].id, 'VEST');
-         // localStorage.setItem('deviceTypeforGraph_'+response.data.patients[0].id, 'ALL');
+/*         if(response.data.patients[0].deviceType == 'ALL'){
+          localStorage.setItem('deviceType_'+response.data.patients[0].patientId, 'VEST');
+          localStorage.setItem('deviceTypeforBothIcon_'+response.data.patients[0].patientId, 'ALL');
             }
             else{
-            localStorage.setItem('deviceType_'+response.data.patients[0].id, response.data.patients[0].deviceType);
-           // localStorage.setItem('deviceTypeforGraph', response.data.patients[0].deviceType);
-          }          
-              */    $scope.patientId = $scope.selectedPatient.userId;
+            localStorage.setItem('deviceType_'+response.data.patients[0].patientId, response.data.patients[0].deviceType);
+            localStorage.setItem('deviceTypeforBothIcon_'+response.data.patients[0].patientId, response.data.patients[0].deviceType);
+          } */         
+                  $scope.patientId = $scope.selectedPatient.userId;
                      $scope.$emit('getSelectedPatient', $scope.selectedPatient);
                      var logged = StorageService.get('logged');                    
             logged.patientID = $scope.patientId               
             StorageService.save('logged', logged);
                 }  
+
            $scope.$emit('getPatients', $scope.patients);
                   if(currentname === 'caregiverDashboardClinicHCP'){
           $scope.initPatientClinicHCPsforCaregiver();
@@ -1752,7 +1753,9 @@ angular.module('hillromvestApp')
         if($scope.hmrChartDataRaw){
          $scope.hmrChartDataRaw = $scope.discardLessHMRData($scope.hmrChartDataRaw);
           }
-          $scope.hmrChartData = $scope.hmrChartDataRaw;
+          //$scope.hmrChartData = $scope.hmrChartDataRaw;
+          $scope.hmrChartData = angular.copy($scope.hmrChartDataRaw);
+         // angular.copy($scope.hmrChartDataRaw, $scope.hmrChartData);
           console.log("hmrdata line 1330:",$scope.hmrChartDataRaw);
         $scope.noDataAvailableForHMR  = false;       
         if($scope.hmrChartData && typeof($scope.hmrChartData) === "object" && ($scope.hmrChartDataRaw.xAxis.categories.length > 0 && $scope.hmrChartDataRaw.series[0].data.length > 0)){ 
@@ -2120,7 +2123,8 @@ angular.module('hillromvestApp')
                     events: {
                         click: function () {
                             if(this.toolText && !this.toolText.missedTherapy && $scope.oneDayData){
-                              $scope.getDayChart(this.x);
+                              console.log("this.toolText",this);
+                              $scope.getDayChart(this.x,this.index);
                             }                            
                         }
                     }
@@ -2591,7 +2595,9 @@ angular.module('hillromvestApp')
      // $scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
       $scope.getFirstTransmissionDate();
       $scope.drawHMRCChart();
+      if($scope.getDeviceTypeforBothIcon() == 'ALL'){
       $scope.drawHMRCChart1();
+    }
     };
 
     $scope.getMonthChart = function(){
@@ -2602,7 +2608,9 @@ angular.module('hillromvestApp')
       //$scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
       $scope.getFirstTransmissionDate();
       $scope.drawHMRCChart();
+     if($scope.getDeviceTypeforBothIcon() == 'ALL'){
       $scope.drawHMRCChart1();
+    }
     };
 
     $scope.getWeekChart = function(){
@@ -2613,7 +2621,9 @@ angular.module('hillromvestApp')
       //$scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
       $scope.getFirstTransmissionDate();
       $scope.drawHMRCChart();
+      if($scope.getDeviceTypeforBothIcon() == 'ALL'){
       $scope.drawHMRCChart1();
+    }
     };
 
     $scope.getCustomDateRangeChart = function(){  
@@ -2622,11 +2632,14 @@ angular.module('hillromvestApp')
      // $scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
       $scope.getFirstTransmissionDate();
       $scope.drawHMRCChart();
+      if($scope.getDeviceTypeforBothIcon() == 'ALL'){
       $scope.drawHMRCChart1();
+    }
     };
 
-    $scope.getDayChart = function(isOtherDayTimestamp){
+    $scope.getDayChart = function(isOtherDayTimestamp,index){
       $scope.durationRange = "Day";
+      var dateInitial = '';
       if(isOtherDayTimestamp){
          $scope.fromTimeStamp = $scope.toTimeStamp = isOtherDayTimestamp;
         if(StorageService.get('logged').role === 'ADMIN' || StorageService.get('logged').role === loginConstants.role.acctservices || StorageService.get('logged').role === loginConstants.role.associates || StorageService.get('logged').role === loginConstants.role.customerservices){
@@ -2637,9 +2650,24 @@ angular.module('hillromvestApp')
         else{   
         if($scope.preferredTimezone){
           //$scope.preferredTimezone).format(patientDashboard.timestampMMDDYYHHMMSS)
-        var dateInitial = moment.tz(isOtherDayTimestamp,patientDashboard.serverDateTimeZone).format(patientDashboard.dateFormat);
-           $scope.fromDate = $scope.toDate =  moment.tz(isOtherDayTimestamp,$scope.preferredTimezone).format(patientDashboard.dateFormat);
-           $scope.fromTimeStamp = $scope.toTimeStamp = new Date(dateInitial).getTime();
+       // var dateInitial = moment.tz(isOtherDayTimestamp,$scope.preferredTimezone).format();
+        // var dateInitial = dateService.getDateFromTimeStamp(isOtherDayTimestamp,patientDashboard.timestampMMDDYYHHMMSS,'/');
+/*        if($scope.deviceTypeforGraph == 'VEST'){
+        dateInitial = $scope.hmrChartDataRaw.xAxis.categories[index];
+        }
+        else if($scope.deviceTypeforGraph == 'MONARCH'){
+          dateInitial = $scope.hmrChartDataRaw.xAxis.categories[index];
+        }*/
+        if($scope.getDeviceTypeforBothIcon() == 'ALL'){
+      dateInitial = $scope.hmrChartData1Raw.xAxis.categories[index];
+    }
+    else{
+       dateInitial = $scope.hmrChartDataRaw.xAxis.categories[index];
+    }
+        //dateInitial = new Date(isOtherDayTimestamp);
+        var dateFinal = moment.tz(dateInitial,patientDashboard.serverDateTimeZone).format(patientDashboard.timestampMMDDYYHHMMSS);
+           $scope.fromDate = $scope.toDate =  dateService.getDateFromTimeStamp(isOtherDayTimestamp,patientDashboard.dateFormat,'/');
+           $scope.fromTimeStamp = $scope.toTimeStamp = new Date(dateFinal).getTime();
 
         }
         else{
@@ -2659,7 +2687,9 @@ angular.module('hillromvestApp')
       $scope.toDateTestResults = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');
       $scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
       $scope.drawHMRCChart();
+      if($scope.getDeviceTypeforBothIcon() == 'ALL'){
       $scope.drawHMRCChart1();
+    }
     };
 
     $scope.initGraph = function(){
@@ -3982,7 +4012,9 @@ $scope.getComplianceGraph = function(){
        if($scope.hmrChartDataRaw){
          $scope.hmrChartDataRaw = $scope.discardLessHMRData($scope.hmrChartDataRaw);
           }
-          $scope.hmrChartData = $scope.hmrChartDataRaw;
+          //$scope.hmrChartData = $scope.hmrChartDataRaw;
+          // angular.copy($scope.hmrChartDataRaw, $scope.hmrChartData);
+          $scope.hmrChartData = angular.copy($scope.hmrChartDataRaw);
            console.log("hmrdata line 3348:",$scope.hmrChartDataRaw);
         $scope.noDataAvailableForHMR  = false;       
         if($scope.hmrChartData && typeof($scope.hmrChartData) === "object" && ($scope.hmrChartDataRaw.xAxis.categories.length > 0 && $scope.hmrChartDataRaw.series[0].data.length > 0)){ 
@@ -4334,7 +4366,8 @@ $scope.getComplianceGraph = function(){
                     events: {
                         click: function () {
                             if(this.toolText && !this.toolText.missedTherapy && $scope.oneDayData){
-                              $scope.getDayChart(this.x);
+                              console.log("this.toolText",this);
+                              $scope.getDayChart(this.x,this.index);
                             }                            
                         }
                     }
@@ -5130,7 +5163,9 @@ $scope.getComplianceGraph1 = function(){
        if($scope.hmrChartData1Raw){
          $scope.hmrChartData1Raw = $scope.discardLessHMRData($scope.hmrChartData1Raw);    
           }
-          $scope.hmrChartData1 = $scope.hmrChartData1Raw;
+          //$scope.hmrChartData1 = $scope.hmrChartData1Raw;
+          $scope.hmrChartData1 = angular.copy($scope.hmrChartData1Raw);
+          // angular.copy($scope.hmrChartData1Raw, $scope.hmrChartData1);
            console.log("hmrdata line 4441:",$scope.hmrChartData1Raw);
         $scope.noDataAvailableForHMR1  = false;       
         if($scope.hmrChartData1 && typeof($scope.hmrChartData1) === "object" && ($scope.hmrChartData1Raw.xAxis.categories.length > 0 && $scope.hmrChartData1Raw.series[0].data.length > 0)){ 
@@ -5386,7 +5421,8 @@ $scope.getComplianceGraph1 = function(){
                     events: {
                         click: function () {
                             if(this.toolText && !this.toolText.missedTherapy & $scope.oneDayData1){
-                              $scope.getDayChart(this.x);
+                              console.log("this.toolText",this);
+                              $scope.getDayChart(this.x,this.index);
                             }                            
                         }
                     }
