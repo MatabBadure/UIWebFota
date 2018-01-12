@@ -27,7 +27,7 @@ angular.module('hillromvestApp')
           fd.append('uploadfile',fil);
            });
            return $http.post(url, fd, {
-          headers: headerService.getHeaderforUpload()
+          headers: headerService.getHeaderforUploadFota()
         }).success(function(response) {
           return response;
         });
@@ -89,7 +89,7 @@ angular.module('hillromvestApp')
      getDownloadFirmware:function(id){
           var url = URL.firmwareDownload.replace('ID',id);
            return $http.get(url, {
-          headers: headerService.getHeaderforUpload(),responseType: "arraybuffer"
+          headers: headerService.getHeaderforUploadFota(),responseType: "arraybuffer"
         });   
       },
 
