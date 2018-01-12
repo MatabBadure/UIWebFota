@@ -31,10 +31,18 @@ angular.module('hillromvestApp')
       getHeaderforUpload: function(){
         var token = StorageService.get('logged').token,
           header = {
+            'x-auth-token': token,
+            'Content-Type': undefined,
+            'name':'uploadfile'
+          };
+        return header;
+      },
+      getHeaderforUploadFota: function(){
+        var token = StorageService.get('logged').token,
+          header = {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
             'x-auth-token': token,
-            'Content-Type': undefined,
             'name':'uploadfile'
           };
         return header;
