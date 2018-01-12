@@ -73,7 +73,7 @@
             </div>
             <div class="col-md-10 col-sm-10 dashboard__form--input parent-list reset-padding clinic-link dropdownListView">
               <div class="custom-dropdown">
-              <input class="form-control" name="parentClinicName" ng-disabled="clinicStatus.createSatellite" type="text" ng-model="clinic.parentClinic.name" typeahead="clinic as clinic.name + ' '+clinic.city +' '+ clinic.state for clinic in parentClinics | filter:$viewValue" typeahead-on-select="selectClinicEdit($item)" placeholder="{{'clinic.placeholder.parent-clinic-search' | translate}}" validate-on-blur   match="clinic.parentClinic.name" required>
+              <input class="form-control" name="parentClinicName" ng-disabled="clinicStatus.createSatellite" type="text" ng-model="clinic.parentClinic.name" typeahead="clinicInQuery as clinicInQuery.name + ' '+ clinicInQuery.city +' '+ clinicInQuery.state for clinicInQuery in parentClinics | filter: ($viewValue && !(clinic.id == clinicInQuery.id))" typeahead-on-select="selectClinicEdit($item)" placeholder="{{'clinic.placeholder.parent-clinic-search' | translate}}" validate-on-blur   match="clinic.parentClinic.name" required>
 
               <div ng-show="(form.parentClinicName.$dirty && form.parentClinicName.$showValidationMessage && form.parentClinicName.$invalid) || submitted || noParentName">
                 
