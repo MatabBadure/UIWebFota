@@ -482,17 +482,24 @@ angular.module('hillromvestApp')
   $scope.getDevices = function(patientId){
     patientService.getDevices(patientId).then(function(response){
       //Gimp-31
-       if($scope.preferredTimezone){
       angular.forEach(response.data.deviceList, function(device){
+         if($scope.preferredTimezone){
+        if(device.createdDate){
     var dateInitial1 = moment.tz(device.createdDate,patientDashboard.serverDateTimeZone);
         var dateFinal1 = moment.tz(dateInitial1,$scope.preferredTimezone).format('LL');
         device.createdDate = dateFinal1;
+      }
+      if(device.lastModifiedDate){
          var dateInitial = moment.tz(device.lastModifiedDate,patientDashboard.serverDateTimeZone).format();
         var dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format('LL');
         device.lastModifiedDate = dateFinal;
-       
+      }
+      } 
+       else{
+      device.createdDate = dateService.getDateByTimestamp(device.createdDate);
+      device.lastModifiedDate = dateService.getDateByTimestamp(device.lastModifiedDate);
+    }  
       });
-    }
       $scope.devices = response.data.deviceList;
     }).catch(function(response){
       notyService.showError(response);
