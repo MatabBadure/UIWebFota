@@ -470,8 +470,7 @@ angular.module('hillromvestApp')
 
   $scope.getDevices = function(patientId){
     patientService.getDevices(patientId).then(function(response){
-      //Gimp-31
-      
+      //Gimp-31  
       angular.forEach(response.data.deviceList, function(device){
          if($scope.preferredTimezone){
         if(device.createdDate){
@@ -489,9 +488,7 @@ angular.module('hillromvestApp')
       device.createdDate = dateService.getDateByTimestamp(device.createdDate);
       device.lastModifiedDate = dateService.getDateByTimestamp(device.lastModifiedDate);
     }  
-      });
-  
-   
+      });  
       $scope.devices = response.data.deviceList;
     }).catch(function(response){
       notyService.showError(response);
