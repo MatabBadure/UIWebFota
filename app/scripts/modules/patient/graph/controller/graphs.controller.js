@@ -447,6 +447,23 @@ angular.module('hillromvestApp')
       $scope.toDate = toDateTemp[0];
        var fromDateTemp = $scope.hmrChartDataRaw.xAxis.categories[0].split(" ");
       $scope.fromDate = fromDateTemp[0];*/
+      if($scope.durationRange === 'Day'){
+        if($scope.hmrChartDataRaw){
+          $scope.toDate = dateService.getDateFromTimeStamp($scope.hmrChartDataRaw.xAxis.xLabels[($scope.hmrChartDataRaw.xAxis.xLabels.length)-1],patientDashboard.dateFormat,'/');
+              //$scope.toDate = $scope.hmrChartDataRaw.xAxis.xLabels[($scope.hmrChartDataRaw.xAxis.xLabels.length)-1];
+      $scope.fromDate = dateService.getDateFromTimeStamp($scope.hmrChartDataRaw.xAxis.xLabels[0],patientDashboard.dateFormat,'/');
+      }
+     else if($scope.hmrChartData1Raw){
+              $scope.toDate = dateService.getDateFromTimeStamp($scope.hmrChartData1Raw.xAxis.xLabels[($scope.hmrChartData1Raw.xAxis.xLabels.length)-1],patientDashboard.dateFormat,'/');
+      $scope.fromDate = dateService.getDateFromTimeStamp($scope.hmrChartData1Raw.xAxis.xLabels[0],patientDashboard.dateFormat,'/');
+      }
+      
+      else{
+        $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');
+         $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
+      }
+      }
+      else{
        if($scope.hmrChartDataRaw){
               $scope.toDate = dateService.getDateFromTimeStamp($scope.hmrChartDataRaw.xAxis.categories[$scope.hmrChartDataRaw.xAxis.categories.length-1],patientDashboard.dateFormat,'/');
       $scope.fromDate = dateService.getDateFromTimeStamp($scope.hmrChartDataRaw.xAxis.categories[0],patientDashboard.dateFormat,'/');
@@ -461,7 +478,7 @@ angular.module('hillromvestApp')
         $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');
          $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
       }
-      
+      }
     };  
       $scope.getRangeOfDates1 = function(){
       $scope.toDate = dateService.getDateFromTimeStamp($scope.hmrChartData1Raw.xAxis.categories[$scope.hmrChartData1Raw.xAxis.categories.length-1],patientDashboard.dateFormat,'/');
@@ -4046,7 +4063,7 @@ $scope.getComplianceGraph = function(){
               tempDate = dateService.convertToTimestamp(x);
              }
              }
-                $scope.hmrChartData.xAxis.xLabels.push(x);
+                $scope.hmrChartData.xAxis.xLabels.push(tempDate);
                 $scope.hmrChartData.xAxis.categories[key] = Highcharts.dateFormat("%I:%M %p",tempDate) ;
               }
             });         
@@ -4422,7 +4439,8 @@ $scope.getComplianceGraph = function(){
               backgroundColor: "rgba(255,255,255,1)",            
               formatter: function() {
   
-                  var dateX = dateService.convertToTimestamp(this.point.toolText.dateText);
+                 // var dateX = dateService.convertToTimestamp(this.point.toolText.dateText);
+                  var dateX = this.point.toolText.dateText;
                   var dateTextLabel = Highcharts.dateFormat("%m/%d/%Y",dateX);                  
                   if(this.point.toolText.sessionNo && this.point.toolText.sessionNo.indexOf("/" > 0)){
                     var splitSession = this.point.toolText.sessionNo.split("/");                    
@@ -5185,7 +5203,7 @@ $scope.getComplianceGraph1 = function(){
                 $scope.hmrChartData1.xAxis.xLabels.push(tempDate);
                 $scope.hmrChartData1.xAxis.categories[key] = tempDate;               
               }else{
-                $scope.hmrChartData1.xAxis.xLabels.push(x);
+                $scope.hmrChartData1.xAxis.xLabels.push(tempDate);
                 $scope.hmrChartData1.xAxis.categories[key] = Highcharts.dateFormat("%I:%M %p",tempDate) ;
               }
             });         
@@ -5474,7 +5492,8 @@ $scope.getComplianceGraph1 = function(){
           tooltip: { 
               backgroundColor: "rgba(255,255,255,1)",            
               formatter: function() {
-                  var dateX = dateService.convertToTimestamp(this.point.toolText.dateText);
+                 // var dateX = dateService.convertToTimestamp(this.point.toolText.dateText);
+                 var dateX = this.point.toolText.dateText;
                   var dateTextLabel = Highcharts.dateFormat("%m/%d/%Y",dateX);                  
                   if(this.point.toolText.sessionNo && this.point.toolText.sessionNo.indexOf("/" > 0)){
                     var splitSession = this.point.toolText.sessionNo.split("/");                    
