@@ -624,7 +624,6 @@ $scope.activateClinicModal = function(clininc){
     $scope.removeParent = function() {
       $scope.clinic.parentClinic = null;
     };
-
     $scope.getParentClinic = function() {
       clinicService.getAllClinics().then(function (response) {
         $scope.parentClinics = response.data;
@@ -637,6 +636,24 @@ $scope.activateClinicModal = function(clininc){
           }
         });
       }).catch(function (response) {});
+    };
+    $scope.filterClinicForEdit = function(clinic){
+      if($scope.clinicStatus.editMode){
+        var i = 0;
+        if($scope.parentClinics){
+         i = $scope.parentClinics.length;
+      }
+        var tempArray = angular.copy($scope.parentClinics);
+        while(i--){
+          if(clinic.id === $scope.parentClinics[i].id){
+            tempArray.splice(i,1);
+          }
+        }
+        return tempArray;
+      }
+      else{
+        return $scope.parentClinics;
+      }
     };
 
     $scope.createSatellite = function(parentId){
