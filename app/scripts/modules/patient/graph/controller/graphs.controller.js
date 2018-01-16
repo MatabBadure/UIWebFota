@@ -440,7 +440,33 @@ angular.module('hillromvestApp')
         $state.go(status, {'patientId': $stateParams.patientId});
       }
     };
-    
+  $scope.getRangeOfDates = function(){
+/*      console.log("$scope.hmrChartDataRaw",$scope.hmrChartData)
+      var index = $scope.hmrChartDataRaw.xAxis.categories.length-1;
+      var toDateTemp = ($scope.hmrChartDataRaw.xAxis.categories[index]).split(" ");
+      $scope.toDate = toDateTemp[0];
+       var fromDateTemp = $scope.hmrChartDataRaw.xAxis.categories[0].split(" ");
+      $scope.fromDate = fromDateTemp[0];*/
+       if($scope.hmrChartDataRaw){
+              $scope.toDate = dateService.getDateFromTimeStamp($scope.hmrChartDataRaw.xAxis.categories[$scope.hmrChartDataRaw.xAxis.categories.length-1],patientDashboard.dateFormat,'/');
+      $scope.fromDate = dateService.getDateFromTimeStamp($scope.hmrChartDataRaw.xAxis.categories[0],patientDashboard.dateFormat,'/');
+      }
+     else if($scope.hmrChartData1Raw){
+              $scope.toDate = dateService.getDateFromTimeStamp($scope.hmrChartData1Raw.xAxis.categories[$scope.hmrChartData1Raw.xAxis.categories.length-1],patientDashboard.dateFormat,'/');
+      $scope.fromDate = dateService.getDateFromTimeStamp($scope.hmrChartData1Raw.xAxis.categories[0],patientDashboard.dateFormat,'/');
+
+      }
+      
+      else{
+        $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');
+         $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
+      }
+      
+    };  
+      $scope.getRangeOfDates1 = function(){
+      $scope.toDate = dateService.getDateFromTimeStamp($scope.hmrChartData1Raw.xAxis.categories[$scope.hmrChartData1Raw.xAxis.categories.length-1],patientDashboard.dateFormat,'/');
+      $scope.fromDate = dateService.getDateFromTimeStamp($scope.hmrChartData1Raw.xAxis.categories[0],patientDashboard.dateFormat,'/');
+    };
    $scope.calculateTimeDuration = function(durationInDays,flag) {
       if(flag == 'AdherenceScoreHistory'){
       $scope.toTimeStampHistory = new Date().getTime();
@@ -450,9 +476,9 @@ angular.module('hillromvestApp')
       }
       else{
       $scope.toTimeStamp = new Date().getTime();
-      $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');
+     // $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');
       $scope.fromTimeStamp = dateService.getnDaysBackTimeStamp(durationInDays);;
-      $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
+     // $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
          }
     };
     $scope.calculateTimeDurationTestResults = function(durationInDays) {
@@ -1845,7 +1871,8 @@ angular.module('hillromvestApp')
             }else{
               $scope.HMRAreaChart();
             }            
-          }, 100);          
+          }, 100);  
+           $scope.getRangeOfDates();        
         } else{
           console.log(" $scope.noDataAvailableForHMR");
           $scope.noDataAvailableForHMR = true;
@@ -2628,33 +2655,13 @@ angular.module('hillromvestApp')
     $scope.getDayChart = function(isOtherDayTimestamp){
       $scope.durationRange = "Day";
       if(isOtherDayTimestamp){
-         $scope.fromTimeStamp = $scope.toTimeStamp = isOtherDayTimestamp;
-        if(StorageService.get('logged').role === 'ADMIN' || StorageService.get('logged').role === loginConstants.role.acctservices || StorageService.get('logged').role === loginConstants.role.associates || StorageService.get('logged').role === loginConstants.role.customerservices){
-       
-         $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
-      $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');
-        }
-        else{   
-        if($scope.preferredTimezone){
-          //$scope.preferredTimezone).format(patientDashboard.timestampMMDDYYHHMMSS)
-        var dateInitial = moment.tz(isOtherDayTimestamp,patientDashboard.serverDateTimeZone).format(patientDashboard.dateFormat);
-           $scope.fromDate = $scope.toDate =  moment.tz(isOtherDayTimestamp,$scope.preferredTimezone).format(patientDashboard.dateFormat);
-           $scope.fromTimeStamp = $scope.toTimeStamp = new Date(dateInitial).getTime();
-
-        }
-        else{
         $scope.fromTimeStamp = $scope.toTimeStamp = isOtherDayTimestamp;
-         $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
-      $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');
-        }
-       }
       }else{
-        $scope.fromTimeStamp = $scope.toTimeStamp = new Date().getTime(); 
-         $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
-      $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');       
+        $scope.fromTimeStamp = $scope.toTimeStamp = new Date().getTime();        
       }
       
-     
+      $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
+      $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');
       $scope.fromDateTestResults = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
       $scope.toDateTestResults = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');
       $scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
@@ -4072,7 +4079,8 @@ $scope.getComplianceGraph = function(){
             }else{
               $scope.HMRAreaChart();
             }            
-          }, 100);          
+          }, 100);
+          $scope.getRangeOfDates();          
         } else{
           console.log(" $scope.noDataAvailableForHMR");
           $scope.noDataAvailableForHMR = true;
@@ -4413,6 +4421,7 @@ $scope.getComplianceGraph = function(){
           tooltip: { 
               backgroundColor: "rgba(255,255,255,1)",            
               formatter: function() {
+  
                   var dateX = dateService.convertToTimestamp(this.point.toolText.dateText);
                   var dateTextLabel = Highcharts.dateFormat("%m/%d/%Y",dateX);                  
                   if(this.point.toolText.sessionNo && this.point.toolText.sessionNo.indexOf("/" > 0)){
@@ -5209,7 +5218,8 @@ $scope.getComplianceGraph1 = function(){
             }else{
               $scope.HMRAreaChart1();
             }            
-          }, 100);          
+          }, 100);    
+           $scope.getRangeOfDates();      
         } else{
           console.log(" $scope.noDataAvailableForHMR1");
           $scope.noDataAvailableForHMR1 = true;
