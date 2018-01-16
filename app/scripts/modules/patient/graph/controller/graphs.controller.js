@@ -480,10 +480,7 @@ angular.module('hillromvestApp')
       }
       }
     };  
-      $scope.getRangeOfDates1 = function(){
-      $scope.toDate = dateService.getDateFromTimeStamp($scope.hmrChartData1Raw.xAxis.categories[$scope.hmrChartData1Raw.xAxis.categories.length-1],patientDashboard.dateFormat,'/');
-      $scope.fromDate = dateService.getDateFromTimeStamp($scope.hmrChartData1Raw.xAxis.categories[0],patientDashboard.dateFormat,'/');
-    };
+      
    $scope.calculateTimeDuration = function(durationInDays,flag) {
       if(flag == 'AdherenceScoreHistory'){
       $scope.toTimeStampHistory = new Date().getTime();
