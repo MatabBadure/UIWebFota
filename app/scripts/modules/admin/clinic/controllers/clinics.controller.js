@@ -425,7 +425,7 @@ $scope.toggleNotificationMessages = function(value){
             $scope.submitted = true;
     };*/
     $scope.formUpdate = function(){
-    if($scope.form.$invalid){
+    if($scope.form.$invalid || $scope.isServiceError){
       if($scope.clinic.type == 'child' && $scope.clinic.parentClinic.name == null){
         $scope.noParentName = true;
       }
@@ -442,7 +442,7 @@ $scope.toggleNotificationMessages = function(value){
       $scope.clinic.parentClinic.name = null;
     };
     $scope.showModalCreateEdit = function(){
-      if ($scope.form.$invalid) {
+      if ($scope.form.$invalid || $scope.isServiceError) {
         return false;
       }
       else{
