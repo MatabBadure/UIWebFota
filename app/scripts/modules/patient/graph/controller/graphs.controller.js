@@ -5245,9 +5245,9 @@ $scope.getComplianceGraph1 = function(){
               if($scope.hmrChartData1.series[key1].data[key2].toolText.missedTherapy){
                 $scope.hmrChartData1.series[key1].data[key2].color = "red";
               }
-              if(!$scope.hmrChartData1.series[key1].data[key2].toolText.missedTherapy && $scope.getDeviceType() == 'MONARCH'){
+/*              if(!$scope.hmrChartData1.series[key1].data[key2].toolText.missedTherapy && $scope.getDeviceType() == 'MONARCH'){
                 $scope.hmrChartData1.series[key1].data[key2].color = "#7cb5ee";
-              }
+              }*/
 
             });             
             
