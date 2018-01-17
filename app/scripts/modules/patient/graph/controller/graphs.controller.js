@@ -27,7 +27,7 @@ angular.module('hillromvestApp')
       $scope.pageCount = 0;
       $scope.nextDate= new Date();
       $scope.disableDatesInDatePicker();  
-       $scope.role = StorageService.get('logged').role; 
+      $scope.role = StorageService.get('logged').role; 
       $scope.hmrRunRate = 0;
       $scope.adherenceScore = 0;
       $scope.missedtherapyDays = 0;
@@ -84,7 +84,7 @@ angular.module('hillromvestApp')
 /*      if( $scope.role === loginConstants.role.caregiver){
         $scope.getPatientListForCaregiver($scope.caregiverID);
       }*/
-      if(StorageService.get('logged').role === loginConstants.role.admin || StorageService.get('logged').role === loginConstants.role.acctservices || StorageService.get('logged').role === loginConstants.role.associates || StorageService.get('logged').role === loginConstants.role.customerservices){
+      if($scope.role === loginConstants.role.admin || $scope.role === loginConstants.role.acctservices || $scope.role === loginConstants.role.associates || $scope.role === loginConstants.role.customerservices){
      $scope.isHillRomUser = true;   
       }
       else{
@@ -440,7 +440,47 @@ angular.module('hillromvestApp')
         $state.go(status, {'patientId': $stateParams.patientId});
       }
     };
-    
+  $scope.getRangeOfDates = function(){
+/*      console.log("$scope.hmrChartDataRaw",$scope.hmrChartData)
+      var index = $scope.hmrChartDataRaw.xAxis.categories.length-1;
+      var toDateTemp = ($scope.hmrChartDataRaw.xAxis.categories[index]).split(" ");
+      $scope.toDate = toDateTemp[0];
+       var fromDateTemp = $scope.hmrChartDataRaw.xAxis.categories[0].split(" ");
+      $scope.fromDate = fromDateTemp[0];*/
+      if($scope.durationRange === 'Day'){
+        if($scope.hmrChartDataRaw){
+          $scope.toDate = dateService.getDateFromTimeStamp($scope.hmrChartDataRaw.xAxis.xLabels[($scope.hmrChartDataRaw.xAxis.xLabels.length)-1],patientDashboard.dateFormat,'/');
+              //$scope.toDate = $scope.hmrChartDataRaw.xAxis.xLabels[($scope.hmrChartDataRaw.xAxis.xLabels.length)-1];
+      $scope.fromDate = dateService.getDateFromTimeStamp($scope.hmrChartDataRaw.xAxis.xLabels[0],patientDashboard.dateFormat,'/');
+      }
+     else if($scope.hmrChartData1Raw){
+              $scope.toDate = dateService.getDateFromTimeStamp($scope.hmrChartData1Raw.xAxis.xLabels[($scope.hmrChartData1Raw.xAxis.xLabels.length)-1],patientDashboard.dateFormat,'/');
+      $scope.fromDate = dateService.getDateFromTimeStamp($scope.hmrChartData1Raw.xAxis.xLabels[0],patientDashboard.dateFormat,'/');
+      }
+      
+      else{
+        $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');
+         $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
+      }
+      }
+      else{
+       if($scope.hmrChartDataRaw){
+              $scope.toDate = dateService.getDateFromTimeStamp($scope.hmrChartDataRaw.xAxis.categories[$scope.hmrChartDataRaw.xAxis.categories.length-1],patientDashboard.dateFormat,'/');
+      $scope.fromDate = dateService.getDateFromTimeStamp($scope.hmrChartDataRaw.xAxis.categories[0],patientDashboard.dateFormat,'/');
+      }
+     else if($scope.hmrChartData1Raw){
+              $scope.toDate = dateService.getDateFromTimeStamp($scope.hmrChartData1Raw.xAxis.categories[$scope.hmrChartData1Raw.xAxis.categories.length-1],patientDashboard.dateFormat,'/');
+      $scope.fromDate = dateService.getDateFromTimeStamp($scope.hmrChartData1Raw.xAxis.categories[0],patientDashboard.dateFormat,'/');
+
+      }
+      
+      else{
+        $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');
+         $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
+      }
+      }
+    };  
+      
    $scope.calculateTimeDuration = function(durationInDays,flag) {
       if(flag == 'AdherenceScoreHistory'){
       $scope.toTimeStampHistory = new Date().getTime();
@@ -463,7 +503,7 @@ angular.module('hillromvestApp')
     };
     /*this should initiate the list of caregivers associated to the patient*/
     $scope.initPatientCaregiver = function(){
-      if(StorageService.get('logged').role === 'PATIENT'){
+      if($scope.role === 'PATIENT'){
       $scope.getCaregiversForPatient(StorageService.get('logged').patientID);
     }
     else{
@@ -495,7 +535,7 @@ angular.module('hillromvestApp')
     };
 
     $scope.redirectToPatientDashboard = function(){
-      var role = StorageService.get('logged').role;
+      var role = $scope.role;
       switch(role){
         case 'ADMIN':$state.go('patientUser');
         break;
@@ -633,7 +673,7 @@ angular.module('hillromvestApp')
       $scope.devices = []; $scope.devices.length = 0;
       patientService.getDevices((StorageService.get('logged').patientID || $scope.patientId), $scope.getDeviceTypeforBothIcon()).then(function(response){
         angular.forEach(response.data.deviceList, function(device){
-                   if(StorageService.get('logged').role === 'ADMIN' || StorageService.get('logged').role === loginConstants.role.acctservices || StorageService.get('logged').role === loginConstants.role.associates || StorageService.get('logged').role === loginConstants.role.customerservices){
+                   if($scope.role === 'ADMIN' || $scope.role === loginConstants.role.acctservices || $scope.role === loginConstants.role.associates || $scope.role === loginConstants.role.customerservices){
            device.createdDate = dateService.getDateByTimestamp(device.createdDate);
           device.lastModifiedDate = dateService.getDateByTimestamp(device.lastModifiedDate);
           }
@@ -667,7 +707,7 @@ angular.module('hillromvestApp')
       $scope.devices = []; $scope.devices.length = 0;
       patientService.getDevices($scope.selectedPatient.userId,$scope.getDeviceTypeforBothIcon()).then(function(response){
         angular.forEach(response.data.deviceList, function(device){
-         if(StorageService.get('logged').role === 'ADMIN' || StorageService.get('logged').role === loginConstants.role.acctservices || StorageService.get('logged').role === loginConstants.role.associates || StorageService.get('logged').role === loginConstants.role.customerservices){
+         if($scope.role === 'ADMIN' || $scope.role === loginConstants.role.acctservices || $scope.role === loginConstants.role.associates || $scope.role === loginConstants.role.customerservices){
            device.createdDate = dateService.getDateByTimestamp(device.createdDate);
           device.lastModifiedDate = dateService.getDateByTimestamp(device.lastModifiedDate);
           }
@@ -762,7 +802,7 @@ angular.module('hillromvestApp')
            var vestFlag = false;
         var monarchFlag = false;
         angular.forEach($scope.protocols, function(protocol){
-         if(StorageService.get('logged').role === 'ADMIN' || StorageService.get('logged').role === loginConstants.role.acctservices || StorageService.get('logged').role === loginConstants.role.associates || StorageService.get('logged').role === loginConstants.role.customerservices){
+         if($scope.role === 'ADMIN' || $scope.role === loginConstants.role.acctservices || $scope.role === loginConstants.role.associates || $scope.role === loginConstants.role.customerservices){
           protocol.createdDate = dateService.getDateByTimestamp(protocol.createdDate);
           protocol.lastModifiedDate = dateService.getDateByTimestamp(protocol.lastModifiedDate);
           }
@@ -1061,7 +1101,7 @@ angular.module('hillromvestApp')
           angular.forEach(responseData.xAxis.categories, function(x, key){              
             // this is for year view or custom view having datapoints more than 7
             // x-axis will be plotted accordingly, chart type will be datetime
-            if(StorageService.get('logged').role === 'ADMIN' || StorageService.get('logged').role === loginConstants.role.acctservices || StorageService.get('logged').role === loginConstants.role.associates || StorageService.get('logged').role === loginConstants.role.customerservices){
+            if($scope.role === 'ADMIN' || $scope.role === loginConstants.role.acctservices || $scope.role === loginConstants.role.associates || $scope.role === loginConstants.role.customerservices){
                 tempDate = dateService.convertToTimestamp(x);
               }
               else{
@@ -1784,7 +1824,7 @@ angular.module('hillromvestApp')
                var dateInitial = moment.tz(modifiedx,patientDashboard.serverDateTimeZone).format();
                var tempDate = "";
               if($scope.durationRange !== "Day" && !$scope.isSameDayHMRGraph){
-               if(StorageService.get('logged').role === 'ADMIN' || StorageService.get('logged').role === loginConstants.role.acctservices || StorageService.get('logged').role === loginConstants.role.associates || StorageService.get('logged').role === loginConstants.role.customerservices){
+               if($scope.role === 'ADMIN' || $scope.role === loginConstants.role.acctservices || $scope.role === loginConstants.role.associates || $scope.role === loginConstants.role.customerservices){
                 tempDate = dateService.convertToTimestamp(x);
               }
               else{
@@ -1799,7 +1839,7 @@ angular.module('hillromvestApp')
                 $scope.hmrChartData.xAxis.xLabels.push(tempDate);
                 $scope.hmrChartData.xAxis.categories[key] = tempDate;               
               }else{
-                if(StorageService.get('logged').role === 'ADMIN' || StorageService.get('logged').role === loginConstants.role.acctservices || StorageService.get('logged').role === loginConstants.role.associates || StorageService.get('logged').role === loginConstants.role.customerservices){
+                if($scope.role === 'ADMIN' || $scope.role === loginConstants.role.acctservices || $scope.role === loginConstants.role.associates || $scope.role === loginConstants.role.customerservices){
                 tempDate = dateService.convertToTimestamp(x);
               }
               else{
@@ -1845,7 +1885,10 @@ angular.module('hillromvestApp')
             }else{
               $scope.HMRAreaChart();
             }            
-          }, 100);          
+          }, 100);  
+          if($scope.role === loginConstants.role.hcp || $scope.role === loginConstants.role.clinicadmin || $scope.role === loginConstants.role.patient || $scope.role === loginConstants.role.caregiver){
+           $scope.getRangeOfDates();   
+           }
         } else{
           console.log(" $scope.noDataAvailableForHMR");
           $scope.noDataAvailableForHMR = true;
@@ -1896,7 +1939,7 @@ angular.module('hillromvestApp')
             angular.forEach($scope.adherenceTrendData.xAxis.categories, function(x, key){              
               // this is for year view or custom view having datapoints more than 7
               // x-axis will be plotted accordingly, chart type will be datetime
-              if(StorageService.get('logged').role === 'ADMIN' || StorageService.get('logged').role === loginConstants.role.acctservices || StorageService.get('logged').role === loginConstants.role.associates || StorageService.get('logged').role === loginConstants.role.customerservices){
+              if($scope.role === 'ADMIN' || $scope.role === loginConstants.role.acctservices || $scope.role === loginConstants.role.associates || $scope.role === loginConstants.role.customerservices){
                 tempDate = dateService.convertToTimestamp(x);
               }
               else{
@@ -2628,33 +2671,13 @@ angular.module('hillromvestApp')
     $scope.getDayChart = function(isOtherDayTimestamp){
       $scope.durationRange = "Day";
       if(isOtherDayTimestamp){
-         $scope.fromTimeStamp = $scope.toTimeStamp = isOtherDayTimestamp;
-        if(StorageService.get('logged').role === 'ADMIN' || StorageService.get('logged').role === loginConstants.role.acctservices || StorageService.get('logged').role === loginConstants.role.associates || StorageService.get('logged').role === loginConstants.role.customerservices){
-       
-         $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
-      $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');
-        }
-        else{   
-        if($scope.preferredTimezone){
-          //$scope.preferredTimezone).format(patientDashboard.timestampMMDDYYHHMMSS)
-        var dateInitial = moment.tz(isOtherDayTimestamp,patientDashboard.serverDateTimeZone).format(patientDashboard.dateFormat);
-           $scope.fromDate = $scope.toDate =  moment.tz(isOtherDayTimestamp,$scope.preferredTimezone).format(patientDashboard.dateFormat);
-           $scope.fromTimeStamp = $scope.toTimeStamp = new Date(dateInitial).getTime();
-
-        }
-        else{
         $scope.fromTimeStamp = $scope.toTimeStamp = isOtherDayTimestamp;
-         $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
-      $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');
-        }
-       }
       }else{
-        $scope.fromTimeStamp = $scope.toTimeStamp = new Date().getTime(); 
-         $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
-      $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');       
+        $scope.fromTimeStamp = $scope.toTimeStamp = new Date().getTime();        
       }
       
-     
+      $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
+      $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');
       $scope.fromDateTestResults = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
       $scope.toDateTestResults = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');
       $scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
@@ -2819,7 +2842,7 @@ angular.module('hillromvestApp')
 
      $scope.getNotesBetweenDateRange = function(fromTimeStamp, toTimeStamp, scrollUp){
       var patientId = null;
-      if(StorageService.get('logged').role === 'PATIENT'){
+      if($scope.role === 'PATIENT'){
         patientId = StorageService.get('logged').patientID;
       }else{
         patientId = $stateParams.patientId;
@@ -2832,7 +2855,7 @@ angular.module('hillromvestApp')
         $scope.notes = response.data;
        angular.forEach($scope.notes, function(x, key){  
         //gimp-31
-        if(StorageService.get('logged').role === 'ADMIN' || StorageService.get('logged').role === loginConstants.role.acctservices || StorageService.get('logged').role === loginConstants.role.associates || StorageService.get('logged').role === loginConstants.role.customerservices){
+        if($scope.role === 'ADMIN' || $scope.role === loginConstants.role.acctservices || $scope.role === loginConstants.role.associates || $scope.role === loginConstants.role.customerservices){
                dateFinal = $scope.notes[key].createdOn;
               }
               else{
@@ -3116,7 +3139,7 @@ angular.module('hillromvestApp')
 
                 if ($scope.adherenceScores[j].adherenceTrends[i].date == $scope.toDate) {
                  //vinay Changes
-                 if(StorageService.get('logged').role === 'ADMIN' || StorageService.get('logged').role === loginConstants.role.acctservices || StorageService.get('logged').role === loginConstants.role.associates || StorageService.get('logged').role === loginConstants.role.customerservices){
+                 if($scope.role === 'ADMIN' || $scope.role === loginConstants.role.acctservices || $scope.role === loginConstants.role.associates || $scope.role === loginConstants.role.customerservices){
                 dateFinal = $scope.adherenceScores[j].adherenceTrends[i].date;
               }
               else{
@@ -3149,7 +3172,7 @@ angular.module('hillromvestApp')
               $scope.adherencetrendData[j].protocols = angular.extend({}, $scope.adherencetrendData[j].protocols, $scope.adherenceScores[j].protcols);
               for (var i = 0; i < $scope.adherenceScores[j].adherenceTrends.length; i++) {
                //vinay Changes
-               if(StorageService.get('logged').role === 'ADMIN' || StorageService.get('logged').role === loginConstants.role.acctservices || StorageService.get('logged').role === loginConstants.role.associates || StorageService.get('logged').role === loginConstants.role.customerservices){
+               if($scope.role === 'ADMIN' || $scope.role === loginConstants.role.acctservices || $scope.role === loginConstants.role.associates || $scope.role === loginConstants.role.customerservices){
                 dateFinal = $scope.adherenceScores[j].adherenceTrends[i].date;
               }
               else{
@@ -3333,7 +3356,7 @@ angular.module('hillromvestApp')
                
             var date = "";
            //vinay changes
-           if(StorageService.get('logged').role === 'ADMIN' || StorageService.get('logged').role === loginConstants.role.acctservices || StorageService.get('logged').role === loginConstants.role.associates || StorageService.get('logged').role === loginConstants.role.customerservices){
+           if($scope.role === 'ADMIN' || $scope.role === loginConstants.role.acctservices || $scope.role === loginConstants.role.associates || $scope.role === loginConstants.role.customerservices){
                 date = adherenceTrends[i].date;
               }
               else{
@@ -3655,7 +3678,7 @@ $scope.getComplianceGraph = function(){
           angular.forEach(responseData.xAxis.categories, function(x, key){              
             // this is for year view or custom view having datapoints more than 7
             // x-axis will be plotted accordingly, chart type will be datetime
-            if(StorageService.get('logged').role === 'ADMIN' || StorageService.get('logged').role === loginConstants.role.acctservices || StorageService.get('logged').role === loginConstants.role.associates || StorageService.get('logged').role === loginConstants.role.customerservices){
+            if($scope.role === 'ADMIN' || $scope.role === loginConstants.role.acctservices || $scope.role === loginConstants.role.associates || $scope.role === loginConstants.role.customerservices){
                 tempDate = dateService.convertToTimestamp(x);
               }
               else{
@@ -4012,7 +4035,7 @@ $scope.getComplianceGraph = function(){
                 var modifiedx = dateService.getinMomentFormat(x,"mm/dd/yyyy hh:mm:ss");
                 var dateInitial = moment.tz(modifiedx,patientDashboard.serverDateTimeZone).format();
               if($scope.durationRange !== "Day" && !$scope.isSameDayHMRGraph){
-                if(StorageService.get('logged').role === 'ADMIN' || StorageService.get('logged').role === loginConstants.role.acctservices || StorageService.get('logged').role === loginConstants.role.associates || StorageService.get('logged').role === loginConstants.role.customerservices){
+                if($scope.role === 'ADMIN' || $scope.role === loginConstants.role.acctservices || $scope.role === loginConstants.role.associates || $scope.role === loginConstants.role.customerservices){
                 tempDate = dateService.convertToTimestamp(x);
               }
               else{
@@ -4027,7 +4050,7 @@ $scope.getComplianceGraph = function(){
                 $scope.hmrChartData.xAxis.xLabels.push(tempDate);
                 $scope.hmrChartData.xAxis.categories[key] = tempDate;               
               }else{
-                if(StorageService.get('logged').role === 'ADMIN' || StorageService.get('logged').role === loginConstants.role.acctservices || StorageService.get('logged').role === loginConstants.role.associates || StorageService.get('logged').role === loginConstants.role.customerservices){
+                if($scope.role === 'ADMIN' || $scope.role === loginConstants.role.acctservices || $scope.role === loginConstants.role.associates || $scope.role === loginConstants.role.customerservices){
                 tempDate = dateService.convertToTimestamp(x);
               }
               else{
@@ -4039,7 +4062,7 @@ $scope.getComplianceGraph = function(){
               tempDate = dateService.convertToTimestamp(x);
              }
              }
-                $scope.hmrChartData.xAxis.xLabels.push(x);
+                $scope.hmrChartData.xAxis.xLabels.push(tempDate);
                 $scope.hmrChartData.xAxis.categories[key] = Highcharts.dateFormat("%I:%M %p",tempDate) ;
               }
             });         
@@ -4072,7 +4095,10 @@ $scope.getComplianceGraph = function(){
             }else{
               $scope.HMRAreaChart();
             }            
-          }, 100);          
+          }, 100);
+          if($scope.role === loginConstants.role.hcp || $scope.role === loginConstants.role.clinicadmin || $scope.role === loginConstants.role.patient || $scope.role === loginConstants.role.caregiver){
+           $scope.getRangeOfDates();   
+           }          
         } else{
           console.log(" $scope.noDataAvailableForHMR");
           $scope.noDataAvailableForHMR = true;
@@ -4111,7 +4137,7 @@ $scope.getComplianceGraph = function(){
             angular.forEach($scope.adherenceTrendData.xAxis.categories, function(x, key){              
               // this is for year view or custom view having datapoints more than 7
               // x-axis will be plotted accordingly, chart type will be datetime
-              if(StorageService.get('logged').role === 'ADMIN' || StorageService.get('logged').role === loginConstants.role.acctservices || StorageService.get('logged').role === loginConstants.role.associates || StorageService.get('logged').role === loginConstants.role.customerservices){
+              if($scope.role === 'ADMIN' || $scope.role === loginConstants.role.acctservices || $scope.role === loginConstants.role.associates || $scope.role === loginConstants.role.customerservices){
                 tempDate = dateService.convertToTimestamp(x);
               }
               else{
@@ -4413,7 +4439,9 @@ $scope.getComplianceGraph = function(){
           tooltip: { 
               backgroundColor: "rgba(255,255,255,1)",            
               formatter: function() {
-                  var dateX = dateService.convertToTimestamp(this.point.toolText.dateText);
+  
+                 // var dateX = dateService.convertToTimestamp(this.point.toolText.dateText);
+                  var dateX = this.point.toolText.dateText;
                   var dateTextLabel = Highcharts.dateFormat("%m/%d/%Y",dateX);                  
                   if(this.point.toolText.sessionNo && this.point.toolText.sessionNo.indexOf("/" > 0)){
                     var splitSession = this.point.toolText.sessionNo.split("/");                    
@@ -5157,7 +5185,7 @@ $scope.getComplianceGraph1 = function(){
             angular.forEach($scope.hmrChartData1.xAxis.categories, function(x, key){              
               // this is for year view or custom view having datapoints more than 7
               // x-axis will be plotted accordingly, chart type will be datetime
-              if(StorageService.get('logged').role === 'ADMIN' || StorageService.get('logged').role === loginConstants.role.acctservices || StorageService.get('logged').role === loginConstants.role.associates || StorageService.get('logged').role === loginConstants.role.customerservices){
+              if($scope.role === 'ADMIN' || $scope.role === loginConstants.role.acctservices || $scope.role === loginConstants.role.associates || $scope.role === loginConstants.role.customerservices){
               tempDate = dateService.convertToTimestamp(x);
               }
               else{
@@ -5176,7 +5204,7 @@ $scope.getComplianceGraph1 = function(){
                 $scope.hmrChartData1.xAxis.xLabels.push(tempDate);
                 $scope.hmrChartData1.xAxis.categories[key] = tempDate;               
               }else{
-                $scope.hmrChartData1.xAxis.xLabels.push(x);
+                $scope.hmrChartData1.xAxis.xLabels.push(tempDate);
                 $scope.hmrChartData1.xAxis.categories[key] = Highcharts.dateFormat("%I:%M %p",tempDate) ;
               }
             });         
@@ -5209,7 +5237,10 @@ $scope.getComplianceGraph1 = function(){
             }else{
               $scope.HMRAreaChart1();
             }            
-          }, 100);          
+          }, 100);    
+           if($scope.role === loginConstants.role.hcp || $scope.role === loginConstants.role.clinicadmin || $scope.role === loginConstants.role.patient || $scope.role === loginConstants.role.caregiver){
+           $scope.getRangeOfDates();   
+           }      
         } else{
           console.log(" $scope.noDataAvailableForHMR1");
           $scope.noDataAvailableForHMR1 = true;
@@ -5464,7 +5495,8 @@ $scope.getComplianceGraph1 = function(){
           tooltip: { 
               backgroundColor: "rgba(255,255,255,1)",            
               formatter: function() {
-                  var dateX = dateService.convertToTimestamp(this.point.toolText.dateText);
+                 // var dateX = dateService.convertToTimestamp(this.point.toolText.dateText);
+                 var dateX = this.point.toolText.dateText;
                   var dateTextLabel = Highcharts.dateFormat("%m/%d/%Y",dateX);                  
                   if(this.point.toolText.sessionNo && this.point.toolText.sessionNo.indexOf("/" > 0)){
                     var splitSession = this.point.toolText.sessionNo.split("/");                    
