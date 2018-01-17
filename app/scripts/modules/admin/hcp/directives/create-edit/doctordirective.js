@@ -104,7 +104,14 @@ angular.module('hillromvestApp')
         };
 
         $scope.formSubmit = function() {
+          if ($scope.form.$invalid || $scope.isServiceError) {
+            return false;
+          }
+          else{
           $scope.submitted = true;
+          $scope.showModal = true;
+        }
+
         };
 
         $scope.init();
@@ -120,13 +127,10 @@ angular.module('hillromvestApp')
 
 
         $scope.createDoctor = function() {
-          if ($scope.form.$invalid) {
-            return false;
-          }
           if( $scope.isOtherCredential ) {
             $scope.doctor.credentials = $scope.doctor.otherCredential;
           }
-
+          $scope.showModal = false;
           $scope.doctor.clinicList = [];
           angular.forEach($scope.doctor.clinics, function(clinic){
             $scope.doctor.clinicList.push({'id': clinic.id});

@@ -18,7 +18,7 @@
 </div>
 
 <div class="dashboard dashboard--content padding-bottom-ls">
-  <form name="form" class="dashboard-page__form--new" ng-submit="createDoctor()" novalidate autocomplete="off">
+  <form name="form" class="dashboard-page__form--new" ng-submit="formSubmit()" novalidate autocomplete="off">
     <div class="container dashboard__form">
       <div class="margin-top-xl">
         <div class="col-md-16 col-sm-16 reset-padding">
@@ -278,7 +278,7 @@
         <div class="">
           <button type="submit" ng-click="formSubmit()" ng-show="doctorStatus.isCreate" class="hillrom-btn btn-primary btn-margin-left float-right" translate="doctor.submit-button-text">Submit</button>
           <button type="reset" ng-click="cancel()" ng-show="doctorStatus.isCreate" class="hillrom-btn btn-secondary float-right" translate="doctor.cancel-button-text">Cancel</button>
-          <button type="button" ng-click="$parent.showModal=true" ng-show="!doctorStatus.isCreate" class="hillrom-btn btn-primary btn-margin-left float-right" translate="doctor.update-button-text"></button>
+          <button type="button" ng-click="formSubmit()" ng-show="!doctorStatus.isCreate" class="hillrom-btn btn-primary btn-margin-left float-right" translate="doctor.update-button-text"></button>
           <button type="button" ng-click="cancelUpdate()" ng-show="!doctorStatus.isCreate" class="hillrom-btn btn-secondary float-right" translate="doctor.cancel-button-text">Cancel</button>
           <div class="clr"></div>
         </div>
@@ -286,7 +286,7 @@
     </div>
   </form>
 </div>
-<!-- 
+
 <div ng-if="showModal" class="modal" id="sg-modal" tabIndex="-1" role="dialog" aria-labelledby="sgModalLabel" aria-hidden="true">
   <div class="modal__dialog">
     <div class="modal__content">
@@ -305,7 +305,7 @@
       </footer>
     </div>
   </div>
-</div> -->
+</div>
 
-<modal ng-if="showModal" modall="showModal" onyes="createDoctor()" onno="$parent.showModal = false" header="{{'doctor.update.warning' | translate}}" message="{{'doctor.update.message' | translate}}">
-</modal>
+<!-- <modal ng-if="showModal" modall="showModal" onyes="createDoctor()" onno="$parent.showModal = false" header="{{'doctor.update.warning' | translate}}" message="{{'doctor.update.message' | translate}}">
+</modal> -->
