@@ -591,8 +591,9 @@ angular.module('hillromvestApp')
 			              }
 			              else{
 			              	if($scope.preferredTimezone){
-						var dateInitial = moment.tz(x,patientDashboard.serverDateTimeZone).format();
-		        	 dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYY);
+			              		var modifiedx = dateService.getinMomentFormat(x,"mm/dd/yyyy hh:mm:ss");
+						var dateInitial = moment.tz(modifiedx,patientDashboard.serverDateTimeZone).format();
+		        	 dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYYHHMMSS);
 		        	}
 		        	else{
 		        		dateFinal = dateService.convertToTimestamp(x);
@@ -631,9 +632,9 @@ angular.module('hillromvestApp')
 							$scope.cumulativeChart("cumulativeGraph", $scope.cumulativeChartData);          
 						}, 10); 
 			          });
-if(loggedRole === loginConstants.hcp || loggedRole === loginConstants.clinicadmin){
- $scope.getRangeOfDates('Cumulative');
-}
+					if(loggedRole === loginConstants.hcp || loggedRole === loginConstants.clinicadmin){
+					 $scope.getRangeOfDates('Cumulative');
+					}
 				}else{
 					$scope.plotNoDataAvailable();
 				}
@@ -661,8 +662,9 @@ if(loggedRole === loginConstants.hcp || loggedRole === loginConstants.clinicadmi
 			              }
 			              else{
 			              	if($scope.preferredTimezone){
-					var dateInitial = moment.tz(x,patientDashboard.serverDateTimeZone).format();
-		        	dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYY);	
+			              		var modifiedx = dateService.getinMomentFormat(x,"mm/dd/yyyy hh:mm:ss");
+					var dateInitial = moment.tz(modifiedx,patientDashboard.serverDateTimeZone).format();
+		        	dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYYHHMMSS);	
 		        	 }
 		        	 else{
 		        	 	dateFinal = dateService.convertToTimestamp(x);
@@ -1214,7 +1216,10 @@ if(loggedRole === loginConstants.hcp || loggedRole === loginConstants.clinicadmi
 	      $scope.getRangeOfDates = function(flag){
         if(flag === 'Cumulative'){
               $scope.toDate = dateService.getDateFromTimeStamp($scope.cumulativeChartData.xAxis.categories[$scope.cumulativeChartData.xAxis.categories.length-1],patientDashboard.dateFormat,'/');
-      $scope.fromDate = dateService.getDateFromTimeStamp($scope.cumulativeChartData.xAxis.categories[0],patientDashboard.dateFormat,'/');
+       var dateInitial = moment.tz($scope.fromTimeStamp,patientDashboard.serverDateTimeZone).format();
+       var dateFinal =  moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.dateFormat);
+       $scope.fromDate = dateFinal;
+      //$scope.fromDate = dateService.getDateFromTimeStamp($scope.cumulativeChartData.xAxis.categories[0],patientDashboard.dateFormat,'/');
       }
      else if(flag === 'Treatment'){
               $scope.toDate = dateService.getDateFromTimeStamp($scope.treatmentChartData.xAxis.categories[$scope.treatmentChartData.xAxis.categories.length-1],patientDashboard.dateFormat,'/');

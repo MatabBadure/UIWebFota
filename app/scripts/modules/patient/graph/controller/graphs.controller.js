@@ -2167,7 +2167,7 @@ angular.module('hillromvestApp')
                     events: {
                         click: function () {
                             if(this.toolText && !this.toolText.missedTherapy && $scope.oneDayData){
-                              $scope.getDayChart(this.x);
+                              $scope.getDayChart(this.x,true);
                             }                            
                         }
                     }
@@ -2385,7 +2385,7 @@ angular.module('hillromvestApp')
                     events: {
                         click: function () {
                             if($scope.durationRange !== "Day" && this.toolText && !this.toolText.missedTherapy && $scope.oneDayData){                              
-                              $scope.getDayChart(this.category);
+                              $scope.getDayChart(this.category,true);
                             } 
                         }
                     }
@@ -2680,13 +2680,16 @@ angular.module('hillromvestApp')
     }
     };
 
-    $scope.getDayChart = function(isOtherDayTimestamp){
+    $scope.getDayChart = function(isOtherDayTimestamp, isOnClickOfGraphPoint){
       $scope.durationRange = "Day";
-      if(isOtherDayTimestamp){
-        var dateInitial = moment.tz(isOtherDayTimestamp,$scope.preferredTimezone).format();
+      if(isOtherDayTimestamp && isOnClickOfGraphPoint){
+       var dateInitial = new Date(isOtherDayTimestamp).getTime();
        var dateFinal =  moment.tz(dateInitial,patientDashboard.serverDateTimeZone).format(patientDashboard.timestampMMDDYYHHMMSS);
-      $scope.fromTimeStamp = $scope.toTimeStamp = new Date(dateFinal).getTime();
-      }else{
+       $scope.fromTimeStamp = $scope.toTimeStamp = new Date(dateFinal).getTime();
+      }else if(isOtherDayTimestamp && !isOnClickOfGraphPoint){
+        $scope.fromTimeStamp = $scope.toTimeStamp = isOtherDayTimestamp;
+      }
+      else{
         $scope.fromTimeStamp = $scope.toTimeStamp = new Date().getTime();        
       }
       
@@ -2698,7 +2701,7 @@ angular.module('hillromvestApp')
       $scope.drawHMRCChart();
        if($scope.getDeviceTypeforBothIcon() == 'ALL'){
       $scope.drawHMRCChart1();
-    }
+      }
     };
 
     $scope.initGraph = function(){
@@ -3247,7 +3250,7 @@ angular.module('hillromvestApp')
     $scope.selectChart = function(fromDate){
       switch($scope.durationRange) {
           case "Day":
-              $scope.getDayChart(fromDate);
+              $scope.getDayChart(fromDate,false);
               break;
           case "Week":
               $scope.getWeekChart();
@@ -4376,7 +4379,7 @@ $scope.getComplianceGraph = function(){
                     events: {
                         click: function () {
                             if(this.toolText && !this.toolText.missedTherapy && $scope.oneDayData){
-                              $scope.getDayChart(this.x);
+                              $scope.getDayChart(this.x,true);
                             }                            
                         }
                     }
@@ -4595,7 +4598,7 @@ $scope.getComplianceGraph = function(){
                     events: {
                         click: function () {
                             if($scope.durationRange !== "Day" && this.toolText && !this.toolText.missedTherapy && $scope.oneDayData){                              
-                              $scope.getDayChart(this.category);
+                              $scope.getDayChart(this.category,true);
                             } 
                         }
                     }
@@ -5445,7 +5448,7 @@ $scope.getComplianceGraph1 = function(){
                     events: {
                         click: function () {
                             if(this.toolText && !this.toolText.missedTherapy & $scope.oneDayData1){
-                              $scope.getDayChart(this.x);
+                              $scope.getDayChart(this.x,true);
                             }                            
                         }
                     }
@@ -5661,7 +5664,7 @@ $scope.getComplianceGraph1 = function(){
                     events: {
                         click: function () {
                             if($scope.durationRange !== "Day" && this.toolText && !this.toolText.missedTherapy && $scope.oneDayData1){                              
-                              $scope.getDayChart(this.category);
+                              $scope.getDayChart(this.category,true);
                             } 
                         }
                     }
