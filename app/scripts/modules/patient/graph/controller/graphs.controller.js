@@ -1962,7 +1962,7 @@ angular.module('hillromvestApp')
                 $scope.adherenceTrendData.xAxis.xLabels.push(tempDate);
                 $scope.adherenceTrendData.xAxis.categories[key] = tempDate;               
               }else{
-                $scope.adherenceTrendData.xAxis.xLabels.push(x);
+                $scope.adherenceTrendData.xAxis.xLabels.push(tempDate);
                 $scope.adherenceTrendData.xAxis.categories[key] = Highcharts.dateFormat("%I:%M %p",tempDate) ;
               }
             });
@@ -1994,7 +1994,6 @@ angular.module('hillromvestApp')
               $scope.AdherenceTrendCategoryChart();
             }else{
            $scope.AdherenceTrendAreaChart();
-           $scope.adherenceTrendData = "";
             }            
           }, 100);          
         } else{
@@ -4172,7 +4171,7 @@ $scope.getComplianceGraph = function(){
                 $scope.adherenceTrendData.xAxis.xLabels.push(tempDate);
                 $scope.adherenceTrendData.xAxis.categories[key] = tempDate;               
               }else{
-                $scope.adherenceTrendData.xAxis.xLabels.push(x);
+                $scope.adherenceTrendData.xAxis.xLabels.push(tempDate);
                 $scope.adherenceTrendData.xAxis.categories[key] = Highcharts.dateFormat("%I:%M %p",tempDate) ;
               }
             });
