@@ -1787,7 +1787,7 @@ angular.module('hillromvestApp')
       };
     
       $scope.getHMRGraph = function(){
-      patientDashBoardService.getHMRGraphPoints($scope.patientId, $scope.deviceTypeforGraph, moment.tz($scope.fromTimeStamp).format(patientDashboard.serverDateFormat), moment.tz($scope.toTimeStamp).format(patientDashboard.serverDateFormat), $scope.durationRange).then(function(response){
+      patientDashBoardService.getHMRGraphPoints($scope.patientId, $scope.deviceTypeforGraph, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.durationRange).then(function(response){
         $scope.hmrChartDataRaw = response.data;
         if($scope.hmrChartDataRaw){
          $scope.hmrChartDataRaw = $scope.discardLessHMRData($scope.hmrChartDataRaw);
@@ -2680,7 +2680,8 @@ angular.module('hillromvestApp')
       $scope.durationRange = "Day";
       if(isOtherDayTimestamp){
         var dateInitial = moment.tz(isOtherDayTimestamp,$scope.preferredTimezone).format();
-        $scope.fromTimeStamp = $scope.toTimeStamp = moment.tz(dateInitial,patientDashboard.serverDateTimeZone).format('X');
+       var dateFinal =  moment.tz(dateInitial,patientDashboard.serverDateTimeZone).format(patientDashboard.timestampMMDDYYHHMMSS);
+      $scope.fromTimeStamp = $scope.toTimeStamp = new Date(dateFinal).getTime();
       }else{
         $scope.fromTimeStamp = $scope.toTimeStamp = new Date().getTime();        
       }
@@ -4011,7 +4012,7 @@ $scope.getComplianceGraph = function(){
     
     $scope.getHMRGraph = function(){
       $scope.deviceTypeforGraph="VEST";
-      patientDashBoardService.getHMRGraphPoints($scope.patientId, $scope.deviceTypeforGraph, moment.tz($scope.fromTimeStamp).format(patientDashboard.serverDateFormat), moment.tz($scope.toTimeStamp).format(patientDashboard.serverDateFormat), $scope.durationRange).then(function(response){
+      patientDashBoardService.getHMRGraphPoints($scope.patientId, $scope.deviceTypeforGraph,dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'),  $scope.durationRange).then(function(response){
         $scope.hmrChartDataRaw = response.data;
        if($scope.hmrChartDataRaw){
          $scope.hmrChartDataRaw = $scope.discardLessHMRData($scope.hmrChartDataRaw);
@@ -5164,7 +5165,7 @@ $scope.getComplianceGraph1 = function(){
 
     $scope.getHMRGraph1 = function(){
     $scope.deviceTypeforGraph="MONARCH";
-      patientDashBoardService.getHMRGraphPoints($scope.patientId, $scope.deviceTypeforGraph, moment.tz($scope.fromTimeStamp).format(patientDashboard.serverDateFormat), moment.tz($scope.toTimeStamp).format(patientDashboard.serverDateFormat), $scope.durationRange).then(function(response){
+      patientDashBoardService.getHMRGraphPoints($scope.patientId, $scope.deviceTypeforGraph, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.durationRange).then(function(response){
         $scope.hmrChartData1Raw = response.data;
        if($scope.hmrChartData1Raw){
          $scope.hmrChartData1Raw = $scope.discardLessHMRData($scope.hmrChartData1Raw);    
