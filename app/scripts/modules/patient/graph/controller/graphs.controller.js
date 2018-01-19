@@ -1001,10 +1001,26 @@ angular.module('hillromvestApp')
     $scope.openAddNote = function(){
       $scope.noteTextError =  null;
       $scope.textNote = {};
-      var formattedDate = dateService.getDateTimeFromTimeStamp(new Date().getTime(),patientDashboard.dateFormat,'/');
-      if(formattedDate && formattedDate.indexOf(" ") !== -1){
+      //var formattedDate = dateService.getDateTimeFromTimeStamp(new Date().getTime(),patientDashboard.dateFormat,'/');
+     var formattedDate = '';
+      if($scope.preferredTimezone){
+        console.log("new Date()",new Date())
+      var dateInitial1 = moment.tz(new Date(),patientDashboard.serverDateTimeZone).format(patientDashboard.timestampMMDDYY);
+      var dateFinal1 = moment.tz(dateInitial1,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYY);
+      formattedDate = dateFinal1;
+      }
+      else{
+      formattedDate = dateService.getDateTimeFromTimeStamp(new Date().getTime(),patientDashboard.dateFormat,'/');
+      }
+
+      if(formattedDate){
+        if(formattedDate.indexOf(" ") !== -1){
         formattedDate =  formattedDate.split(" ");
         $scope.textNote.edit_date = formattedDate[0];//dateService.convertDateToYyyyMmDdFormat(new Date());
+      }
+      else{
+       $scope.textNote.edit_date = formattedDate; 
+      }
       }      
        $scope.textNote.text = "";
       $scope.addNoteActive = true;
@@ -2863,12 +2879,13 @@ angular.module('hillromvestApp')
         var dateFinal = "";
         $scope.showNotes = true;
         $scope.notes = response.data;
-       angular.forEach($scope.notes, function(x, key){  
-        //gimp-31
-        if($scope.role === 'ADMIN' || $scope.role === loginConstants.role.acctservices || $scope.role === loginConstants.role.associates || $scope.role === loginConstants.role.customerservices){
-               dateFinal = $scope.notes[key].createdOn;
-              }
-              else{
+        /*Commented till testing for notes is completed */
+     /* angular.forEach($scope.notes, function(x, key){  
+        gimp-31
+       if($scope.role === 'ADMIN' || $scope.role === loginConstants.role.acctservices || $scope.role === loginConstants.role.associates || $scope.role === loginConstants.role.customerservices){
+              dateFinal = $scope.notes[key].createdOn;
+             }
+             else{
                 if($scope.preferredTimezone){
          var dateInitial = moment.tz(x.createdOn,patientDashboard.serverDateTimeZone).format();
          dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYY);
@@ -2878,7 +2895,7 @@ angular.module('hillromvestApp')
        }
          }
          $scope.notes[key].createdOn = dateFinal;  
-         });
+         });*/
         $scope.totalNotes = response.headers()['x-total-count'];
         $scope.notePageCount = Math.ceil($scope.totalNotes / 4);
         $scope.showNotesCSS();
