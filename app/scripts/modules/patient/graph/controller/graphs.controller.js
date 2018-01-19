@@ -465,7 +465,7 @@ angular.module('hillromvestApp')
        if($scope.hmrChartDataRaw){
               $scope.toDate = dateService.getDateFromTimeStamp($scope.hmrChartDataRaw.xAxis.categories[$scope.hmrChartDataRaw.xAxis.categories.length-1],patientDashboard.dateFormat,'/');
        var dateInitial = moment.tz($scope.fromTimeStamp,patientDashboard.serverDateTimeZone).format();
-       var dateFinal =  moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.dateFormat);
+       var dateFinal =  moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYY);
        $scope.fromDate = dateFinal;
        //Below code commented till testing of timezone ticket is complete
       //$scope.fromDate = dateService.getDateFromTimeStamp($scope.hmrChartDataRaw.xAxis.categories[0],patientDashboard.dateFormat,'/');
@@ -474,7 +474,7 @@ angular.module('hillromvestApp')
      else if($scope.hmrChartData1Raw){
               $scope.toDate = dateService.getDateFromTimeStamp($scope.hmrChartData1Raw.xAxis.categories[$scope.hmrChartData1Raw.xAxis.categories.length-1],patientDashboard.dateFormat,'/');
        var dateInitial = moment.tz($scope.fromTimeStamp,patientDashboard.serverDateTimeZone).format();
-       var dateFinal =  moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.dateFormat);
+       var dateFinal =  moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYY);
         $scope.fromDate = dateFinal;
       //Below code commented till testing of timezone ticket is complete
       // $scope.fromDate = dateService.getDateFromTimeStamp($scope.hmrChartData1Raw.xAxis.categories[0],patientDashboard.dateFormat,'/');
