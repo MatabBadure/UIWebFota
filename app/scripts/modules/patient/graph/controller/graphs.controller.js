@@ -441,18 +441,14 @@ angular.module('hillromvestApp')
       }
     };
   $scope.getRangeOfDates = function(){
-/*      console.log("$scope.hmrChartDataRaw",$scope.hmrChartData)
-      var index = $scope.hmrChartDataRaw.xAxis.categories.length-1;
-      var toDateTemp = ($scope.hmrChartDataRaw.xAxis.categories[index]).split(" ");
-      $scope.toDate = toDateTemp[0];
-       var fromDateTemp = $scope.hmrChartDataRaw.xAxis.categories[0].split(" ");
-      $scope.fromDate = fromDateTemp[0];*/
+    //following if block is To get the from and to dates for day view of graph
       if($scope.durationRange === 'Day'){
+        //following if block is To get the from and to dates for day view of VisiVest graph
         if($scope.hmrChartDataRaw){
           $scope.toDate = dateService.getDateFromTimeStamp($scope.hmrChartDataRaw.xAxis.xLabels[($scope.hmrChartDataRaw.xAxis.xLabels.length)-1],patientDashboard.dateFormat,'/');
-              //$scope.toDate = $scope.hmrChartDataRaw.xAxis.xLabels[($scope.hmrChartDataRaw.xAxis.xLabels.length)-1];
-      $scope.fromDate = dateService.getDateFromTimeStamp($scope.hmrChartDataRaw.xAxis.xLabels[0],patientDashboard.dateFormat,'/');
+          $scope.fromDate = dateService.getDateFromTimeStamp($scope.hmrChartDataRaw.xAxis.xLabels[0],patientDashboard.dateFormat,'/');
       }
+      //following if block is To get the from and to dates for day view of Monarch graph
      else if($scope.hmrChartData1Raw){
               $scope.toDate = dateService.getDateFromTimeStamp($scope.hmrChartData1Raw.xAxis.xLabels[($scope.hmrChartData1Raw.xAxis.xLabels.length)-1],patientDashboard.dateFormat,'/');
       $scope.fromDate = dateService.getDateFromTimeStamp($scope.hmrChartData1Raw.xAxis.xLabels[0],patientDashboard.dateFormat,'/');
@@ -463,17 +459,26 @@ angular.module('hillromvestApp')
          $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
       }
       }
+       //following if block is To get the from and to dates for month,day,year view of graph
       else{
+        //following if block is To get the from and to dates for month,day,year view of VisiVest graph
        if($scope.hmrChartDataRaw){
               $scope.toDate = dateService.getDateFromTimeStamp($scope.hmrChartDataRaw.xAxis.categories[$scope.hmrChartDataRaw.xAxis.categories.length-1],patientDashboard.dateFormat,'/');
-      $scope.fromDate = dateService.getDateFromTimeStamp($scope.hmrChartDataRaw.xAxis.categories[0],patientDashboard.dateFormat,'/');
+       var dateInitial = moment.tz($scope.fromTimeStamp,patientDashboard.serverDateTimeZone).format();
+       var dateFinal =  moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.dateFormat);
+       $scope.fromDate = dateFinal;
+       //Below code commented till testing of timezone ticket is complete
+      //$scope.fromDate = dateService.getDateFromTimeStamp($scope.hmrChartDataRaw.xAxis.categories[0],patientDashboard.dateFormat,'/');
       }
+      //following if block is To get the from and to dates for month,day,year view of Monarch graph
      else if($scope.hmrChartData1Raw){
               $scope.toDate = dateService.getDateFromTimeStamp($scope.hmrChartData1Raw.xAxis.categories[$scope.hmrChartData1Raw.xAxis.categories.length-1],patientDashboard.dateFormat,'/');
-      $scope.fromDate = dateService.getDateFromTimeStamp($scope.hmrChartData1Raw.xAxis.categories[0],patientDashboard.dateFormat,'/');
-
+       var dateInitial = moment.tz($scope.fromTimeStamp,patientDashboard.serverDateTimeZone).format();
+       var dateFinal =  moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.dateFormat);
+        $scope.fromDate = dateFinal;
+      //Below code commented till testing of timezone ticket is complete
+      // $scope.fromDate = dateService.getDateFromTimeStamp($scope.hmrChartData1Raw.xAxis.categories[0],patientDashboard.dateFormat,'/');
       }
-      
       else{
         $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');
          $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
@@ -1973,7 +1978,7 @@ angular.module('hillromvestApp')
                 $scope.adherenceTrendData.xAxis.xLabels.push(tempDate);
                 $scope.adherenceTrendData.xAxis.categories[key] = tempDate;               
               }else{
-                $scope.adherenceTrendData.xAxis.xLabels.push(x);
+                $scope.adherenceTrendData.xAxis.xLabels.push(tempDate);
                 $scope.adherenceTrendData.xAxis.categories[key] = Highcharts.dateFormat("%I:%M %p",tempDate) ;
               }
             });
@@ -2005,7 +2010,6 @@ angular.module('hillromvestApp')
               $scope.AdherenceTrendCategoryChart();
             }else{
            $scope.AdherenceTrendAreaChart();
-           $scope.adherenceTrendData = "";
             }            
           }, 100);          
         } else{
@@ -2695,7 +2699,9 @@ angular.module('hillromvestApp')
     $scope.getDayChart = function(isOtherDayTimestamp){
       $scope.durationRange = "Day";
       if(isOtherDayTimestamp){
-        $scope.fromTimeStamp = $scope.toTimeStamp = isOtherDayTimestamp;
+        var dateInitial = moment.tz(isOtherDayTimestamp,$scope.preferredTimezone).format();
+       var dateFinal =  moment.tz(dateInitial,patientDashboard.serverDateTimeZone).format(patientDashboard.timestampMMDDYYHHMMSS);
+      $scope.fromTimeStamp = $scope.toTimeStamp = new Date(dateFinal).getTime();
       }else{
         $scope.fromTimeStamp = $scope.toTimeStamp = new Date().getTime();        
       }
@@ -2706,7 +2712,7 @@ angular.module('hillromvestApp')
       $scope.toDateTestResults = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');
       $scope.dates = {startDate: $scope.fromDate, endDate: $scope.toDate};
       $scope.drawHMRCChart();
-      if($scope.getDeviceTypeforBothIcon() == 'ALL'){
+       if($scope.getDeviceTypeforBothIcon() == 'ALL'){
       $scope.drawHMRCChart1();
     }
     };
@@ -4027,7 +4033,7 @@ $scope.getComplianceGraph = function(){
     
     $scope.getHMRGraph = function(){
       $scope.deviceTypeforGraph="VEST";
-      patientDashBoardService.getHMRGraphPoints($scope.patientId, $scope.deviceTypeforGraph, dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'), $scope.durationRange).then(function(response){
+      patientDashBoardService.getHMRGraphPoints($scope.patientId, $scope.deviceTypeforGraph,dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.serverDateFormat,'-'), dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.serverDateFormat,'-'),  $scope.durationRange).then(function(response){
         $scope.hmrChartDataRaw = response.data;
        if($scope.hmrChartDataRaw){
          $scope.hmrChartDataRaw = $scope.discardLessHMRData($scope.hmrChartDataRaw);
@@ -4182,7 +4188,7 @@ $scope.getComplianceGraph = function(){
                 $scope.adherenceTrendData.xAxis.xLabels.push(tempDate);
                 $scope.adherenceTrendData.xAxis.categories[key] = tempDate;               
               }else{
-                $scope.adherenceTrendData.xAxis.xLabels.push(x);
+                $scope.adherenceTrendData.xAxis.xLabels.push(tempDate);
                 $scope.adherenceTrendData.xAxis.categories[key] = Highcharts.dateFormat("%I:%M %p",tempDate) ;
               }
             });
