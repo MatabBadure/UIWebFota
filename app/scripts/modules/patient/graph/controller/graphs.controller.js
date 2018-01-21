@@ -1828,13 +1828,15 @@ angular.module('hillromvestApp')
               var modifiedx = dateService.getinMomentFormat(x,"mm/dd/yyyy hh:mm:ss");
                var dateInitial = moment.tz(modifiedx,patientDashboard.serverDateTimeZone).format();
                var tempDate = "";
+               var dateFinal = "";
               if($scope.durationRange !== "Day" && !$scope.isSameDayHMRGraph){
                if($scope.role === 'ADMIN' || $scope.role === loginConstants.role.acctservices || $scope.role === loginConstants.role.associates || $scope.role === loginConstants.role.customerservices){
                 tempDate = dateService.convertToTimestamp(x);
               }
               else{
                 if($scope.preferredTimezone){
-               var dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYYHHMMSS);   
+               dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format();
+               dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYYHHMMSS);   
                tempDate = new Date(dateFinal).getTime();
               }
               else{
@@ -1849,6 +1851,7 @@ angular.module('hillromvestApp')
               }
               else{
                 if($scope.preferredTimezone){
+               dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format();
                dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYYHHMMSS);   
                tempDate = new Date(dateFinal).getTime();
              }
@@ -2682,9 +2685,11 @@ angular.module('hillromvestApp')
 
     $scope.getDayChart = function(isOtherDayTimestamp, isOnClickOfGraphPoint){
       $scope.durationRange = "Day";
+      if($scope.role === loginConstants.role.hcp || $scope.role === loginConstants.role.clinicadmin || $scope.role === loginConstants.role.patient || $scope.role === loginConstants.role.caregiver){
       if(isOtherDayTimestamp && isOnClickOfGraphPoint){
        var dateInitial = new Date(isOtherDayTimestamp).getTime();
-       var dateFinal =  moment.tz(dateInitial,patientDashboard.serverDateTimeZone).format(patientDashboard.timestampMMDDYYHHMMSS);
+       var dateFinal =  moment.tz(dateInitial,patientDashboard.serverDateTimeZone).format();
+       dateFinal =  moment.tz(dateInitial,patientDashboard.serverDateTimeZone).format(patientDashboard.timestampMMDDYYHHMMSS);
        $scope.fromTimeStamp = $scope.toTimeStamp = new Date(dateFinal).getTime();
       }else if(isOtherDayTimestamp && !isOnClickOfGraphPoint){
         $scope.fromTimeStamp = $scope.toTimeStamp = isOtherDayTimestamp;
@@ -2692,6 +2697,16 @@ angular.module('hillromvestApp')
       else{
         $scope.fromTimeStamp = $scope.toTimeStamp = new Date().getTime();        
       }
+    }
+    else{
+      if(isOtherDayTimestamp){
+        $scope.fromTimeStamp = $scope.toTimeStamp = isOtherDayTimestamp;
+      }
+      else{
+        $scope.fromTimeStamp = $scope.toTimeStamp = new Date().getTime();        
+      }
+      }
+
       
       $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
       $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');
@@ -4048,6 +4063,7 @@ $scope.getComplianceGraph = function(){
               $scope.oneDayData = true;
             } 
                 var tempDate = "";   
+                var dateFinal = ""
             angular.forEach($scope.hmrChartData.xAxis.categories, function(x, key){              
               // this is for year view or custom view having datapoints more than 7
               // x-axis will be plotted accordingly, chart type will be datetime
@@ -4059,7 +4075,8 @@ $scope.getComplianceGraph = function(){
               }
               else{
                 if($scope.preferredTimezone){
-               var dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYYHHMMSS);   
+               dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format();
+               dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYYHHMMSS);   
                tempDate = new Date(dateFinal).getTime();
              }
              else{
@@ -4074,7 +4091,8 @@ $scope.getComplianceGraph = function(){
               }
               else{
                 if($scope.preferredTimezone){
-               var dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYYHHMMSS);   
+               dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format();
+               dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYYHHMMSS);   
                tempDate = new Date(dateFinal).getTime();
              }
              else{
@@ -5201,6 +5219,7 @@ $scope.getComplianceGraph1 = function(){
               $scope.oneDayData1 = true;
             }   
             var tempDate = "";
+            var dateFinal = ""
              angular.forEach($scope.hmrChartData1.xAxis.categories, function(x, key){              
               // this is for year view or custom view having datapoints more than 7
               // x-axis will be plotted accordingly, chart type will be datetime
@@ -5212,7 +5231,8 @@ $scope.getComplianceGraph1 = function(){
               }
               else{
                 if($scope.preferredTimezone){
-               var dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYYHHMMSS);   
+               dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format();
+               dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYYHHMMSS);   
                tempDate = new Date(dateFinal).getTime();
              }
              else{
@@ -5227,7 +5247,8 @@ $scope.getComplianceGraph1 = function(){
               }
               else{
                 if($scope.preferredTimezone){
-               var dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYYHHMMSS);   
+               dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format();
+               dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYYHHMMSS);   
                tempDate = new Date(dateFinal).getTime();
              }
              else{
