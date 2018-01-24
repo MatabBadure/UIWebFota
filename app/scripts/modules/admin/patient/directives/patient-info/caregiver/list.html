@@ -38,11 +38,11 @@
 
   <div class="col-md-16 col-sm-16 caregiver-list" ng-repeat="caregiver in caregivers | filter:{user:{deleted: false}} track by $index">
     <div class="col-md-3 col-sm-3 caregiver-list__detail">
-      <span class="caregiver-list__detail--name">{{caregiver.user.lastName}}, {{caregiver.user.firstName}}</span>
-      <span class="caregiver-list__detail--email">{{caregiver.user.email}}</span>
+      <span class="caregiver-list__detail--name caregiverwraptext">{{caregiver.user.lastName}}, {{caregiver.user.firstName}}</span>
+      <span class="caregiver-list__detail--email caregiverwraptext">{{caregiver.user.email}}</span>
     </div>
     <div class="col-md-3 col-sm-3 caregiver-list__address">
-      <span class="caregiver-list__address--primary" ng-if="caregiver.user.address">{{caregiver.user.address}}</span>
+      <span class="caregiver-list__address--primary caregiverwraptext" ng-if="caregiver.user.address">{{caregiver.user.address}}</span>
       <span class="caregiver-list__address--secondary" ng-if="caregiver.user.city">{{caregiver.user.city}}
       <span ng-if="caregiver.user.city && caregiver.user.state">,</span>
       <span ng-if="caregiver.user.state">{{caregiver.user.state}} </span></span>
@@ -53,7 +53,7 @@
     <div class="col-md-3 col-sm-3 caregiver-list__fax">
       <span class="caregiver-list__fax--number">{{caregiver.user.mobilePhone | phoneFormat}}</span>
     </div>
-    <div class="col-md-3 col-sm-2 caregiver-list__type">
+    <div class="col-md-3 col-sm-3 caregiver-list__type">
       <span>{{caregiver.relationshipLabel}}</span>
     </div>
     <div class="col-md-1 col-sm-2 caregiver-list__delete" >
