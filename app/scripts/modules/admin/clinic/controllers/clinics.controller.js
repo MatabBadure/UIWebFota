@@ -108,17 +108,21 @@ angular.module('hillromvestApp')
       }
       var filter = searchFilterService.getFilterStringForHCP($scope.searchFilter);
       $scope.perPageCount = 10;
+      var toSearch = "";
       if(!$scope.searchItem){
         if($scope.linkHCPFlag){
           //var searchItem = window.encodeURIComponent("%%");
-        $scope.searchItem =  window.encodeURIComponent("%%");
+        toSearch =  window.encodeURIComponent("%%");
         }
         else{
-          $scope.searchItem = '';
+          toSearch = '';
         }
         
       }
-      clinicService.getAssociatedHCPstoClinic($stateParams.clinicId, $scope.searchItem, filter, sortConstant.lastName, $scope.currentPageIndex, $scope.perPageCount).then(function(response) {
+      else{
+        toSearch = $scope.searchItem;
+      }
+      clinicService.getAssociatedHCPstoClinic($stateParams.clinicId, toSearch, filter, sortConstant.lastName, $scope.currentPageIndex, $scope.perPageCount).then(function(response) {
         $scope.associatedHcps = response.data;
         $scope.total = response.headers()['x-total-count'];
         $scope.pageCount = Math.ceil($scope.total / 10);
