@@ -1018,10 +1018,26 @@ angular.module('hillromvestApp')
     $scope.openAddNote = function(){
       $scope.noteTextError =  null;
       $scope.textNote = {};
-      var formattedDate = dateService.getDateTimeFromTimeStamp(new Date().getTime(),patientDashboard.dateFormat,'/');
-      if(formattedDate && formattedDate.indexOf(" ") !== -1){
+      //var formattedDate = dateService.getDateTimeFromTimeStamp(new Date().getTime(),patientDashboard.dateFormat,'/');
+     var formattedDate = '';
+      if($scope.preferredTimezone){
+        console.log("new Date()",new Date())
+      var dateInitial1 = moment.tz(new Date(),patientDashboard.serverDateTimeZone).format(patientDashboard.timestampMMDDYY);
+      var dateFinal1 = moment.tz(dateInitial1,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYY);
+      formattedDate = dateFinal1;
+      }
+      else{
+      formattedDate = dateService.getDateTimeFromTimeStamp(new Date().getTime(),patientDashboard.dateFormat,'/');
+      }
+
+      if(formattedDate){
+        if(formattedDate.indexOf(" ") !== -1){
         formattedDate =  formattedDate.split(" ");
         $scope.textNote.edit_date = formattedDate[0];//dateService.convertDateToYyyyMmDdFormat(new Date());
+      }
+      else{
+       $scope.textNote.edit_date = formattedDate; 
+      }
       }      
        $scope.textNote.text = "";
       $scope.addNoteActive = true;
@@ -2906,7 +2922,7 @@ angular.module('hillromvestApp')
        }
          }
          $scope.notes[key].createdOn = dateFinal;  
-         });
+         });*/
         $scope.totalNotes = response.headers()['x-total-count'];
         $scope.notePageCount = Math.ceil($scope.totalNotes / 4);
         $scope.showNotesCSS();
