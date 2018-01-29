@@ -243,7 +243,8 @@ angular.module('hillromvestApp',
         name: 'PatientDiagnosticModule',
         files:[          
           'bower_components/angular-daterangepicker/js/angular-daterangepicker.js',
-          'bower_components/isteven-angular-multiselect/isteven-multi-select.js'
+          'bower_components/isteven-angular-multiselect/isteven-multi-select.js',
+          'scripts/modules/admin/patient/directives/list/typeahead.visiview.directive.js'
         ]
       },
       {
