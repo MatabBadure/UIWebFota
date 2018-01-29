@@ -320,6 +320,7 @@ angular.module('hillromvestApp')
       $scope.patientAdvancedFilters.belowFrequencySetting = "All";
       $scope.patientAdvancedFilters.belowTherapyMin = "All";
       $scope.patientAdvancedFilters.missedTherapyDays = "All";
+      $scope.searchPatientsOnQueryChange();
 
       $scope.countries = searchFilterService.processCountries();
       angular.forEach($scope.countries, function(country){

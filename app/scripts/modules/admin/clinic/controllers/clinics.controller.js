@@ -1201,6 +1201,7 @@ $scope.activateClinicModal = function(clininc){
       $scope.clinicAdvancedFilter.clinicStatus = "All";
       $scope.countries = searchFilterService.processCountries();
       $scope.getAdherenceScoreSettingDays();
+      $scope.searchClinicsOnQueryChange();
      /* $("#country-dropdown").css("background-color",'#eeeeee');
       $("#country-dropdown").css("pointer-events","none");*/
       clinicService.getClinicSpeciality().then(function(response){
