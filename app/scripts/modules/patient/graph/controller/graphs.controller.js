@@ -2909,7 +2909,7 @@ angular.module('hillromvestApp')
         $scope.notes = response.data;
        angular.forEach($scope.notes, function(x, key){  
         //gimp-31
-        if($scope.isHillRomUser){
+       if($scope.isHillRomUser){
                dateFinal = $scope.notes[key].createdOn;
               }
               else{
@@ -2922,7 +2922,7 @@ angular.module('hillromvestApp')
        }
          }
          $scope.notes[key].createdOn = dateFinal;  
-         });*/
+         });
         $scope.totalNotes = response.headers()['x-total-count'];
         $scope.notePageCount = Math.ceil($scope.totalNotes / 4);
         $scope.showNotesCSS();
