@@ -91,3 +91,9 @@
     color: $pickled-bluewood;
   }
 }
+
+.admin-user .caregiverwraptext {
+  white-space: nowrap; 
+  overflow: hidden; 
+  text-overflow: ellipsis;
+}
