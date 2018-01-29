@@ -220,7 +220,8 @@ angular.module('hillromvestApp').constant('pdfServiceConstants', {
         pdfpageHeader: "Hill-Rom Respiratory Care",
         noHMRGraphContentForPDF : "Protocol and Total Therapy Hours Graph is Not Available because of No Data",
         signatureContent : "Electronically signed by ",
-        monarch:"Monarch"
+        monarch:"Monarch",
+        testResults:"Test Result Trend"
     },
     style:{
         font:{

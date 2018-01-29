@@ -35,7 +35,7 @@ angular.module('hillromvestApp')
 	'getTransmissionDate':'/api/patient/PATIENTID/firsttrasmissiondate?&deviceType=DEVICETYPE',
 	'getHCPsToLinkToPatient':'/api/patient/PATIENTID/hcpbypatientclinics/search?searchString=SEARCHSTRING&page=PAGENO&per_page=OFFSET',
 	'searchAssociatedHcpsToClinic':'/api/user/clinicadmin/CLINICADMINID/hcp/search?searchString=SEARCHSTRING&clinicId=CLINICID&page=PAGE&per_page=PERPAGECOUNT&filter=FILTER&sort_by=SORTBY',
-	'getHCPsWithClinicName': 'api/user/hcp/search?searchString=&page=1&per_page=&sort_by=lastName&asc=true&filter=isDeleted:0',
+	'getHCPsWithClinicName': 'api/user/hcp/search?searchString=SEARCHSTRING&page=1&per_page=&sort_by=lastName&asc=true&filter=isDeleted:0',
 	'getUserSecurityQuestion': 'api/user/USERID/securityQuestion',
 	'searchPatientsForHCP': '/api/user/ROLE/USERID/patient/search?searchString=SEARCHSTRING&page=PAGENO&per_page=OFFSET&clinicId=CLINICID&filter=FILTER&sort_by=SORTBY',
 	'searchPatientsForHCPOrClinicadminFromSuperAdmin': '/api/user/admin/ROLE/USERID/patient/search?searchString=SEARCHSTRING&page=PAGENO&per_page=OFFSET&clinicId=CLINICID&filter=FILTER&sort_by=SORTBY',
@@ -149,6 +149,8 @@ angular.module('hillromvestApp')
 	'adherenceResetProgress': '/api/adherenceResetProgress/CLINICID',
 	'getAdherenceScoreResetHistory' : 'api/user/ID/AdherenceResetHistoryForPatient?&page=PAGE&per_page=PER_PAGE&deviceType=DEVICETYPE',
 	'getgarmentTypeCodeValues_Vest' : 'api/codeValues/garment_type_vest',
+	//api for deactivation reason type code values for drop down
+	'getdeactivationTypeCodeValues_Reason' : 'api/codeValues/user_deactivation_reason_codes',
 	'getgarmentSizeCodeValues_Vest' : 'api/codeValues/garment_size_vest',
 	'getgarmentColorCodeValues_Vest' : 'api/codeValues/garment_color_vest',
 	'getgarmentTypeCodeValues_Monarch' : 'api/codeValues/garment_type_monarch',
@@ -174,8 +176,14 @@ angular.module('hillromvestApp')
 	'clinicAdvancedfilter' : 'api/clinics/advanced/search?&page=PAGE&per_page=PER_PAGE&sort_by=SORT_OPTION&asc=true',
 	'availableStatesAdv':'/api/availableStatesAdv',
 	'cityByCountryAndState':'/api/cityByCountryAndState',
-	'stateByCountryCode':'/api/stateByCountryCode?country=COUNTRY',
+	'stateByCountryCode':'/api/stateByCountryCode',
 	'patientAdvancedSearch' : 'api/advancedSearch/patient?&page=PAGE&per_page=PER_PAGE&sort_by=SORT_OPTION&asc=true',
-	'matchingDiagnosticList' : 'api/patient/diagnosis?searchString=SEARCH_STRING'
+	'hcpAdvancedSearch' : 'api/advancedSearch/hcp?&page=PAGE&per_page=PER_PAGE&sort_by=SORT_OPTION&asc=true',
+	'matchingDiagnosticList' : 'api/patient/diagnosis?searchString=SEARCH_STRING',
+	'timezoneList' : 'api/user/timezone',
+	'isMessagesOpted': 'api/isMessagesOpted/USERID',
+	'deleteUserWithReason' : 'api/user//ID',
+	'getTestResultsGraphData' : 'api/users/ID/testResultsGraph?from=FROMDATE&to=TODATE&duration=DURATION',
+	'resetAccountAgeLimit' : 'api/account/re_register'
 
 });

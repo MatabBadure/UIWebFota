@@ -1,6 +1,6 @@
 angular.module('hillromvestApp')
-.controller('clinicadminHcpController',['$scope', '$state', '$stateParams', 'clinicService', 'DoctorService', 'UserService', 'searchFilterService', '$timeout', 'clinicadminService', 'clinicadminHcpService', 'notyService', 'StorageService', 'commonsUserService',
-  function($scope, $state, $stateParams, clinicService, DoctorService, UserService, searchFilterService, $timeout, clinicadminService, clinicadminHcpService, notyService, StorageService, commonsUserService) {
+.controller('clinicadminHcpController',['$scope', '$state', '$stateParams', 'clinicService', 'DoctorService', 'UserService', 'searchFilterService', '$timeout', 'clinicadminService', 'clinicadminHcpService', 'notyService', 'StorageService', 'commonsUserService', '$rootScope',
+  function($scope, $state, $stateParams, clinicService, DoctorService, UserService, searchFilterService, $timeout, clinicadminService, clinicadminHcpService, notyService, StorageService, commonsUserService, $rootScope) {
 
     var searchOnLoad = true;
   	$scope.init = function(){
@@ -13,6 +13,7 @@ angular.module('hillromvestApp')
         $scope.perPageCount = 10;
         $scope.getClinicsAssociatedToClinicadmin();
         $scope.initClinicadminHcpDashboard();
+        $scope.getisMessagesOpted();
         $scope.initCount($stateParams.clinicId);
       }else if(currentState === 'clinicadminnewhcp'){
         $scope.doctorStatus = {};
@@ -46,6 +47,10 @@ angular.module('hillromvestApp')
       $scope.doctorStatus.editMode = true;
     };
 
+    $scope.searchHCPsOnQueryChange = function(){
+      $scope.searchHcps();
+    }
+
     $scope.searchHcps = function(track){ 
       if (track !== undefined) {
         if (track === "PREV" && $scope.currentPageIndex > 1) {
@@ -61,6 +66,7 @@ angular.module('hillromvestApp')
         $scope.currentPageIndex = 1;
       }
       var filter = searchFilterService.getFilterStringForPatient($scope.searchFilter);
+      if(filter || $scope.searchItem){
       var clinicId = ($scope.selectedClinic) ? $scope.selectedClinic.id : $stateParams.clinicId;
       clinicadminHcpService.searchAssociatedHcpsToClinic($scope.searchItem, filter, sortConstant.lastName, $scope.currentPageIndex, $scope.perPageCount, StorageService.get('logged').userId, clinicId).then(function(response){
         $scope.hcps = response.data;
@@ -70,6 +76,13 @@ angular.module('hillromvestApp')
       }).catch(function(response){
         notyService.showError(response);
       });  
+    }
+    else{
+      $scope.hcps = {};
+      $scope.pageCount = 0;
+      $scope.total = 0;
+      $scope.perPageCount = 10;
+    }
     };
 
     $scope.selectHcp = function(hcp){
@@ -139,6 +152,12 @@ angular.module('hillromvestApp')
     };
 
     $scope.switchClinic = function(clinic){
+      if(!clinic.isMessageOpted){
+      $rootScope.selectedClinicMessagesFalse = false;
+    }
+    else{
+      $rootScope.selectedClinicMessagesFalse = true;
+    }
       $state.go('clinicadminhcpdashboard', {'clinicId':clinic.id});
     };
 

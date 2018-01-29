@@ -69,7 +69,7 @@
         <span class="protocol-list--value"> {{protocol.minFrequency}}<span ng-if="protocol.maxFrequency">-</span>{{protocol.maxFrequency}}</span>
       </div>
       <div class="col-md-4 col-sm-4 col-md-offset-1 protocol-list__end-date" ng-if="getDeviceType() =='VEST'">
-        <<!-- span ng-if="protocol.type === 'Custom'" class="protocol-list--value margin-left15"> {{protocol.minPressure}}</span> -->
+        <!-- span ng-if="protocol.type === 'Custom'" class="protocol-list--value margin-left15"> {{protocol.minPressure}}</span> -->
         <spanclass="protocol-list--value margin-left15"> {{protocol.minPressure}}<span ng-if="protocol.maxPressure">-</span>{{protocol.maxPressure}}</span>
       </div>
       <div class="col-md-4 col-sm-4 col-md-offset-1 protocol-list__end-date" ng-if="getDeviceType() =='MONARCH'">
@@ -318,7 +318,10 @@
       <span>{{::device.serialNumber}}</span>
     </div>
     <div class="col-md-3 col-sm-3 device-list__bt-id">
-      <span >{{device.bluetoothId}}{{device.wifiId}}</span>
+      <span ng-if="device.lteId">{{device.lteId}}</span>
+       <span ng-if="!device.bluetoothId && device.wifiId && !device.lteId">{{device.wifiId}}</span>
+       <span ng-if="device.bluetoothId && !device.wifiId && !device.lteId">{{device.bluetoothId}}</span>
+       <span ng-if="device.bluetoothId && device.wifiId && !device.lteId">{{device.wifiId}}</span>
     </div>
     <div class="col-md-1 col-sm-1 device-list__status">
       <span ng-if="device.active" class="device--list__status--text" translate="patient.device.active-status">Active</span>
@@ -422,7 +425,7 @@
         <div class="col-md-8 col-sm-8 clinic-link">
         </div>
         <div class="col-md-8 col-sm-8 clinic-link">
-          <buton  type="submit" class="hillrom-btn btn-primary float-right" ng-click = "showUpdateReset()" translate = "patient.reset-adherence.reset-button">Reset</buton>
+          <buton  type="reset" class="hillrom-btn btn-primary float-right" ng-click = "showUpdateReset()" translate = "patient.reset-adherence.reset-button">Reset</buton>
         </div>
       </div>
       </form>
@@ -488,7 +491,7 @@
          </div>
          <div class="row modal--custom-btn">
           <buton class="hillrom-btn btn-submit float-right" ng-click="resetScore()">Yes</buton>
-          <buton class="hillrom-btn btn-submit float-right" data-dismiss="modal" ng-click="$parent.showUpdateModalReset = false"">No</buton>          
+          <buton class="hillrom-btn btn-submit float-right" data-dismiss="modal" ng-click="$parent.showUpdateModalReset = false">No</buton>          
          </div>
       </div>
       <footer class="modal__footer">

@@ -3,7 +3,7 @@ angular.module('hillromvestApp')
 .controller('messagecontroller', [ '$scope','$state','$filter','$compile','$rootScope','$stateParams','messageService', 'dateService','patientService','DoctorService','StorageService','notyService','toastr','clinicService','clinicadminService','sortOptionsService', 'commonsUserService',
   function ($scope,$state,$filter,$compile,$rootScope,$stateParams,messageService,dateService,patientService,DoctorService,StorageService,notyService,toastr,clinicService,clinicadminService,sortOptionsService,commonsUserService) {
    $scope.dummyvalue = 12 ;
-   $scope.messageAttributes = {};	
+   $scope.messageAttributes = {}; 
    $scope.ReplymessageAttributes = {};
    $scope.selectedClinics = [];
    $scope.selectedPatients = [];
@@ -37,6 +37,7 @@ $scope.messageBodyObject = {};
   $scope.archivemessageBodyObject = {};
   $scope.toID = [];
   $rootScope.UnreadMessages = "";
+   $scope.preferredTimezone = $scope.getTimezonePreference();
   /* console.log("clinic ID");
    console.log(StorageService.get('logged').userId);*/
  
@@ -45,9 +46,25 @@ $scope.messageBodyObject = {};
     DoctorService.getClinicsAssociatedToHCP(userId).then(function(response){
       //$scope.getDashboardForHCPOrPatient(response, userId);
       if(response.data && response.data.clinics){
-      $scope.clinicsHCP = $filter('orderBy')(response.data.clinics, "name");
+      $scope.clinicsHCP = $filter('orderBy')(response.data.clinics, "name", "isMessageOpted");
        if($stateParams.clinicId && $stateParams.clinicId != 'others'){
-         $scope.selectedClinicForHCP = commonsUserService.getSelectedClinicFromList($scope.clinicsHCP, $stateParams.clinicId);
+var clinicSelected = "";
+          angular.forEach($scope.clinicsHCP,function(clinic,key){
+            if($stateParams.clinicId == clinic.id){
+              if(!clinic.isMessageOpted){
+                clinicSelected = $scope.clinicsHCP[key+1].id;
+              }
+              else{
+                clinicSelected = $stateParams.clinicId;
+              }
+            }
+          })
+          if(clinicSelected){
+         $scope.selectedClinicForHCP = commonsUserService.getSelectedClinicFromList($scope.clinicsHCP, clinicSelected);
+       }
+       else{
+        $scope.selectedClinicForHCP = commonsUserService.getSelectedClinicFromList($scope.clinicsHCP, $stateParams.clinicId);
+       }
        $scope.switchClinicHCP($scope.selectedClinicForHCP);
      
       }
@@ -66,7 +83,9 @@ $scope.messageBodyObject = {};
          $scope.clinicsListdata = response.data;
          $scope.clinicsList=[];
          for(var i=0;i<$scope.clinicsListdata.clinics.length;i++){
+          if($scope.clinicsListdata.clinics[i].isMessageOpted){
          $scope.clinicsList.push($scope.clinicsListdata.clinics[i].name);
+       }
          }
          $scope.SelectedClinic = angular.copy($scope.clinicsListdata.clinics[0]);
         $scope.processClinics($scope.clinicsList);
@@ -78,7 +97,23 @@ $scope.messageBodyObject = {};
       if(response.data && response.data.clinics){
         $scope.clinics = $filter('orderBy')(response.data.clinics, "name");
         if($stateParams.clinicId){
+          var clinicSelected = "";
+          angular.forEach($scope.clinics,function(clinic,key){
+            if($stateParams.clinicId == clinic.id){
+              if(!clinic.isMessageOpted){
+                clinicSelected = $scope.clinics[key+1].id;
+              }
+              else{
+                clinicSelected = $stateParams.clinicId;
+              }
+            }
+          });
+          if(clinicSelected){
+          $scope.selectedClinicForCA = commonsUserService.getSelectedClinicFromList($scope.clinics, clinicSelected);
+        }
+        else{
           $scope.selectedClinicForCA = commonsUserService.getSelectedClinicFromList($scope.clinics, $stateParams.clinicId);
+        }
         $scope.switchClinic($scope.selectedClinicForCA);
         }else if($scope.clinics && $scope.clinics.length > 0){
         //  $scope.selectedClinicForCA=angular.copy($scope.clinics[0]);
@@ -89,8 +124,7 @@ $scope.messageBodyObject = {};
     }).catch(function(response){
     
     });
-  };
-   $scope.getAllPatientsByClinicId = function(){
+  };   $scope.getAllPatientsByClinicId = function(){
     clinicService.getClinicAssoctPatients($scope.selectedClinicForCA.id,1,100).then(function(response){
       $scope.patients = [];
       angular.forEach(response.data.patientUsers, function(patientList){
@@ -485,7 +519,16 @@ $scope.totalMessages = $scope.ArchiveListRawData.totalElements;
 
 $scope.ArchiveMessageList = angular.extend({},$scope.ArchiveMessageList, $scope.ArchiveListRawData.content);
     for(var i=0;i<$scope.ArchiveListRawData.content.length;i++){
-    tempDate.push(dateService.getDateTimeFromTimeStamp($scope.ArchiveListRawData.content[i][4],patientDashboard.dateFormat ,'/'));
+    //tempDate.push(dateService.getDateTimeFromTimeStamp($scope.ArchiveListRawData.content[i][4],patientDashboard.dateFormat ,'/'));
+if($scope.preferredTimezone){
+var dateInitial = moment.tz($scope.ArchiveListRawData.content[i][4],patientDashboard.serverDateTimeZone).format();
+ var dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format();
+ dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYYHHMMSS);
+ tempDate.push(dateFinal);
+}
+else{
+  tempDate.push(dateService.getDateTimeFromTimeStamp($scope.ArchiveListRawData.content[i][4],patientDashboard.dateFormat ,'/'));
+}
  }
  if($scope.ArchiveListRawData.content.length){
   for(var i=0;i<$scope.ArchiveListRawData.content.length;i++){
@@ -513,8 +556,17 @@ $scope.totalMessages = $scope.ArchiveListRawData.totalElements;
 
 $scope.ArchiveMessageList = angular.extend({},$scope.ArchiveMessageList, $scope.ArchiveListRawData.content);
     for(var i=0;i<$scope.ArchiveListRawData.content.length;i++){
-   tempDate.push(dateService.getDateTimeFromTimeStamp($scope.ArchiveListRawData.content[i][4],patientDashboard.dateFormat ,'/')); 
- }
+   //tempDate.push(dateService.getDateTimeFromTimeStamp($scope.ArchiveListRawData.content[i][4],patientDashboard.dateFormat ,'/')); 
+ if($scope.preferredTimezone){
+  var dateInitial = moment.tz($scope.ArchiveListRawData.content[i][4],patientDashboard.serverDateTimeZone).format();
+ var dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format();
+ dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYYHHMMSS);
+ tempDate.push(dateFinal);
+}
+else{
+  tempDate.push(dateService.getDateTimeFromTimeStamp($scope.ArchiveListRawData.content[i][4],patientDashboard.dateFormat ,'/'));
+}
+  }
   if($scope.ArchiveListRawData.content.length){
   for(var i=0;i<$scope.ArchiveListRawData.content.length;i++){
     $scope.ArchiveMessageList[i][4] = $scope.GetDateifToday(tempDate[i]);
@@ -539,7 +591,16 @@ $scope.pageCount = $scope.ArchiveListRawData.totalPages;
 $scope.totalMessages = $scope.ArchiveListRawData.totalElements;
 $scope.ArchiveMessageList = angular.extend({},$scope.ArchiveMessageList, $scope.ArchiveListRawData.content);
     for(var i=0;i<$scope.ArchiveListRawData.content.length;i++){
-   tempDate.push(dateService.getDateTimeFromTimeStamp($scope.ArchiveListRawData.content[i][4],patientDashboard.dateFormat ,'/')); 
+  // tempDate.push(dateService.getDateTimeFromTimeStamp($scope.ArchiveListRawData.content[i][4],patientDashboard.dateFormat ,'/')); 
+ if($scope.preferredTimezone){
+ var dateInitial = moment.tz($scope.ArchiveListRawData.content[i][4],patientDashboard.serverDateTimeZone).format();
+ var dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format();
+ dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYYHHMMSS);
+ tempDate.push(dateFinal);
+}
+else{
+  tempDate.push(dateService.getDateTimeFromTimeStamp($scope.ArchiveListRawData.content[i][4],patientDashboard.dateFormat ,'/')); 
+}
  }
   if($scope.ArchiveListRawData.content.length){
   for(var i=0;i<$scope.ArchiveListRawData.content.length;i++){
@@ -578,7 +639,16 @@ $scope.pageCount = $scope.InboxListRawData.totalPages;
 $scope.totalMessages = $scope.InboxListRawData.totalElements;
 $scope.InboxMessageList = angular.extend({},$scope.InboxMessageList, $scope.InboxListRawData.content);
     for(var i=0;i<$scope.InboxListRawData.content.length;i++){
-    tempDate.push(dateService.getDateTimeFromTimeStamp($scope.InboxListRawData.content[i][4],patientDashboard.dateFormat ,'/')); 
+   //tempDate.push(dateService.getDateTimeFromTimeStamp($scope.InboxListRawData.content[i][4],patientDashboard.dateFormat ,'/')); 
+   if($scope.preferredTimezone){
+ var dateInitial = moment.tz($scope.InboxListRawData.content[i][4],patientDashboard.serverDateTimeZone).format();
+ var dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format();
+ dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYYHHMMSS);
+ tempDate.push(dateFinal);
+}
+else{
+  tempDate.push(dateService.getDateTimeFromTimeStamp($scope.InboxListRawData.content[i][4],patientDashboard.dateFormat ,'/'));
+}
  }
 if($scope.InboxListRawData.content.length){
   for(var i=0;i<$scope.InboxListRawData.content.length;i++){
@@ -607,7 +677,16 @@ $scope.pageCount = $scope.InboxListRawData.totalPages;
 $scope.totalMessages = $scope.InboxListRawData.totalElements;
 $scope.InboxMessageList = angular.extend({},$scope.InboxMessageList, $scope.InboxListRawData.content);
     for(var i=0;i<$scope.InboxListRawData.content.length;i++){
-     tempDate.push(dateService.getDateTimeFromTimeStamp($scope.InboxListRawData.content[i][4],patientDashboard.dateFormat ,'/')); 
+     //tempDate.push(dateService.getDateTimeFromTimeStamp($scope.InboxListRawData.content[i][4],patientDashboard.dateFormat ,'/')); 
+      if($scope.preferredTimezone){ 
+ var dateInitial = moment.tz($scope.InboxListRawData.content[i][4],patientDashboard.serverDateTimeZone).format();
+ var dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format();
+ dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYYHHMMSS);
+ tempDate.push(dateFinal);
+}
+else{
+  tempDate.push(dateService.getDateTimeFromTimeStamp($scope.InboxListRawData.content[i][4],patientDashboard.dateFormat ,'/'));
+}
  }
  if($scope.InboxListRawData.content.length){
   for(var i=0;i<$scope.InboxListRawData.content.length;i++){
@@ -635,7 +714,16 @@ isClinic = 1;
     $scope.totalMessages = $scope.InboxListRawData.totalElements;
     $scope.InboxMessageList = angular.extend({},$scope.InboxMessageList, $scope.InboxListRawData.content);
     for(var i=0;i<$scope.InboxListRawData.content.length;i++){
-     tempDate.push(dateService.getDateTimeFromTimeStamp($scope.InboxListRawData.content[i][4],patientDashboard.dateFormat ,'/')); 
+     //tempDate.push(dateService.getDateTimeFromTimeStamp($scope.InboxListRawData.content[i][4],patientDashboard.dateFormat ,'/')); 
+     if($scope.preferredTimezone){ 
+ var dateInitial = moment.tz($scope.InboxListRawData.content[i][4],patientDashboard.serverDateTimeZone).format();
+ var dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format();
+ dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYYHHMMSS);
+ tempDate.push(dateFinal);
+}
+else{
+  tempDate.push(dateService.getDateTimeFromTimeStamp($scope.InboxListRawData.content[i][4],patientDashboard.dateFormat ,'/'));
+}
  }
   if($scope.InboxListRawData.content.length){
   for(var i=0;i<$scope.InboxListRawData.content.length;i++){
@@ -909,8 +997,16 @@ messageService.fetchSentItems(toPassID,isclinic,$scope.PageNumber,$scope.perPage
  $scope.MessageDetails = angular.copy($scope.sentmessageListRawData.content[0]);
         $scope.sentmessageList = angular.extend({},$scope.sentmessageList, $scope.sentmessageListRawData.content);
     for(var i=0;i<$scope.sentmessageListRawData.content.length;i++){
-     tempDate.push(dateService.getDateTimeFromTimeStamp($scope.sentmessageList[i][1],patientDashboard.dateFormat ,'/')); 
-
+    // tempDate.push(dateService.getDateTimeFromTimeStamp($scope.sentmessageList[i][1],patientDashboard.dateFormat ,'/'));
+    if($scope.preferredTimezone){ 
+var dateInitial = moment.tz($scope.sentmessageList[i][1],patientDashboard.serverDateTimeZone).format();
+ var dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format();
+ dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYYHHMMSS);
+ tempDate.push(dateFinal);
+}
+else{
+  tempDate.push(dateService.getDateTimeFromTimeStamp($scope.sentmessageList[i][1],patientDashboard.dateFormat ,'/'));
+}
  }
  if($scope.sentmessageListRawData.content.length){
   for(var i=0;i<$scope.sentmessageListRawData.content.length;i++){
@@ -935,7 +1031,15 @@ else if((StorageService.get('logged').role === 'CLINIC_ADMIN')){
  $scope.MessageDetails = angular.copy($scope.sentmessageListRawData.content[0]);
         $scope.sentmessageList = angular.extend({},$scope.sentmessageList, $scope.sentmessageListRawData.content);
     for(var i=0;i<$scope.sentmessageListRawData.content.length;i++){
-     tempDate.push(dateService.getDateTimeFromTimeStamp($scope.sentmessageList[i][1],patientDashboard.dateFormat ,'/')); 
+      if($scope.preferredTimezone){
+   var dateInitial = moment.tz($scope.sentmessageList[i][1],patientDashboard.serverDateTimeZone).format();
+   var dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format();
+   dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYYHHMMSS);
+ tempDate.push(dateFinal); 
+}
+else{
+  tempDate.push(dateService.getDateTimeFromTimeStamp($scope.sentmessageList[i][1],patientDashboard.dateFormat ,'/'));
+}
  }
  if($scope.sentmessageListRawData.content.length){
   for(var i=0;i<$scope.sentmessageListRawData.content.length;i++){
@@ -1235,7 +1339,12 @@ $scope.ArchiveBox();
 
   $scope.switchClinic = function(clinic){
 /*$scope.selectedClinicForCA = null;*/
-
+if(!clinic.isMessageOpted){   
+      $rootScope.selectedClinicMessagesFalse = false;    
+   }    
+   else{   
+        $rootScope.selectedClinicMessagesFalse = true;   
+    }
 $state.go('Messages_CA', {'clinicId':clinic.id});
 $scope.selectedClinicForCA = angular.copy(clinic);
 //$scope.SwitchTabs('inbox',1);
@@ -1243,6 +1352,12 @@ $scope.selectedClinicForCA = angular.copy(clinic);
   };
 
    $scope.switchClinicHCP = function(clinic){
+    if(!clinic.isMessageOpted){   
+      $rootScope.selectedClinicMessagesFalse = false;    
+   }    
+   else{   
+        $rootScope.selectedClinicMessagesFalse = true;   
+    }
 $state.go('Messages_HCP', {'clinicId':clinic.id});
 $scope.selectedClinicForHCP = angular.copy(clinic);
 $scope.SwitchTabs('inbox');
@@ -1495,8 +1610,17 @@ clinicid = arrayobject[9];
 messageService.getthreaddata(id,rootid,userid,clinicid).then(function(response){
   $scope.messageBodyObject = response.data;
   for(var i=0;i<response.data.length;i++){
-    tempDate.push(dateService.getDateTimeFromTimeStamp(response.data[i][0].messageDatetime,patientDashboard.dateFormat ,'/')); 
- }
+    //tempDate.push(dateService.getDateTimeFromTimeStamp(response.data[i][0].messageDatetime,patientDashboard.dateFormat ,'/')); 
+    if($scope.preferredTimezone){
+  var dateInitial = moment.tz(response.data[i][0].messageDatetime,patientDashboard.serverDateTimeZone).format();
+ var dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format();
+ dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYYHHMMSS);
+ tempDate.push(dateFinal);
+}
+else{
+  tempDate.push(dateService.getDateTimeFromTimeStamp(response.data[i][0].messageDatetime,patientDashboard.dateFormat ,'/'));
+}
+  }
 if(response.data.length){
   for(var i=0;i<response.data.length;i++){
     $scope.messageBodyObject[i][0].messageDatetime = $scope.GetDateifToday(tempDate[i]);
@@ -1525,8 +1649,17 @@ var id = arrayobject[2];
 var tempDate = [];
 messageService.getMessageBodyService(id).then(function(response){
     $scope.sentmessageBody = response.data;
-   $scope.sentmessageBody.date = arrayobject[1];
-
+   if(response.data){
+    if($scope.preferredTimezone){
+  var dateInitial = moment.tz(response.data.messageDatetime,patientDashboard.serverDateTimeZone).format();
+ var dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format();
+ dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYYHHMMSS);
+   $scope.sentmessageBody.date = $scope.GetDateifToday(dateFinal);
+ }
+ else{
+  $scope.sentmessageBody.date = arrayobject[1];
+ }
+}
 if(StorageService.get('logged').role === 'CLINIC_ADMIN'){       
   $scope.sentmessageBody.name = arrayobject[6];
 }
@@ -1550,7 +1683,18 @@ var tempDate = [];
     $scope.markAsRead();
 messageService.getMessageBodyService(id).then(function(response){
     $scope.archivemessageBodyObject  = response.data;
-    $scope.archivemessageBodyObject.date = arrayobject[4];
+    if(response.data){
+      if($scope.preferredTimezone){
+      var dateInitial = moment.tz(response.data.messageDatetime,patientDashboard.serverDateTimeZone).format();
+       var dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format();
+       dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYYHHMMSS);
+        $scope.archivemessageBodyObject.date = $scope.GetDateifToday(dateFinal);
+      }
+      else{
+        $scope.archivemessageBodyObject.date = arrayobject[4];
+      }
+   
+  }
        if(StorageService.get('logged').role === 'CLINIC_ADMIN' || StorageService.get('logged').role === 'HCP'){
         if(!arrayobject[8] && arrayobject[9]){
  $scope.archivemessageBodyObject.name = arrayobject[9];

@@ -116,7 +116,7 @@
             </div>
             </div>
           </div>
-        </div>
+        
         <div class="col-md-16 reset-padding margin-top" ng-if="resetAccount.question">
           <div class="col-md-7 reset-padding">
             <div class="col-md-6 dashboard__form--label reset-padding">
@@ -128,6 +128,22 @@
               <div ng-show="(form.answer.$dirty && form.answer.$showValidationMessage && form.answer.$invalid) || submitted">
                 <span class="has-error" ng-show="form.answer.$error.required" translate="error.answer.required"></span>
                 <span class="has-error" ng-show="form.answer.$error.maxlength" translate="error.answer.maxlength"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+
+
+        <div class="col-md-16 reset-padding margin-top-xl">
+          <div class="col-md-7 reset-padding">
+            <div class="col-md-6 dashboard__form--label reset-padding">
+              <span class="" translate="profile.timestamp-preference"></span>
+            </div>
+
+             <div class="col-md-10 reset-padding selected-box-container dashboard__form__input--sec-option">
+                 <div class="custom-dropdown" style="width: 306px;">
+                <select class="security-select" ng-model="user.timeZone" ng-options="key as value for (key , value) in timezoneList"></select>
               </div>
             </div>
           </div>
@@ -164,3 +180,10 @@
     </div>
   </div>
 </div>
+
+
+<!--  <div class="form__select__input--option reset-padding selected-box-container dynamic-seach-list wrapTextForSmallScreens">
+               <input class="form-control" style="text-overflow: ellipsis" id="" type="text" ng-model="timestamp" typeahead="searchTimestamp as searchTimestamp.type_code + ' &nbsp : ' + searchTimestamp.type_code_value for searchTimestamp in getMatchingTimestampList($viewValue)" typeahead-on-select="selectTimestamp($item)">
+            </div> -->
+ <!-- <select name="type" ng-model="resetAccount.timestampPreference"  ng-options="item as item.keys() + ':' + item.value for item in timezoneList">
+                </select> -->

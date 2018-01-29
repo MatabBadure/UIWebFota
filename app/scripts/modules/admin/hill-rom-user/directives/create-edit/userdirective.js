@@ -19,7 +19,21 @@ angular.module('hillromvestApp')
       },
       controller: ['$scope', 'notyService', '$state', 'UserService', 'StorageService', 'Auth', '$rootScope', function ($scope, notyService, $state, UserService, StorageService, Auth, $rootScope) {
         $scope.currentUserRole = StorageService.get('logged').role;
+        $scope.isDisabled = false;
+         $scope.noReason = false;
+         $scope.reason = {};
+         $scope.reason.deactivationReason = "";
+         $scope.reason.reasonDetail = "";
+         $scope.noOtherDescription = false;
+         $scope.reasonList = {}
         $scope.init = function () {
+          UserService.getdeactivationTypeCodeValues_Reason().then(function(response){
+          $scope.reasonList = response.data.typeCode;
+          console.log("$scope.reasonList",$scope.reasonList);
+         //$scope.reasonList = $scope.typecodeResponse.typeCode;
+        }).catch(function(response){
+        notyService.showError(response);
+      });
     
           $scope.nonHillRomUsers = ['PATIENT', 'HCP', 'CLINIC_ADMIN', 'CARE_GIVER'];
 
@@ -32,10 +46,17 @@ angular.module('hillromvestApp')
         $scope.open = function () {
           $scope.showModal = true;
         };
-
+//Bug fix ---- Gimp-36 Gimp-4
         $scope.close = function () {
+         $scope.isDisabled = false;
+         //$scope.noReason = false;
+         //$scope.reason = {};
+         $scope.reason.deactivationReason = "";
+         $scope.reason.reasonDetail = "";
+         //$scope.noOtherDescription = false;
+         //$scope.reasonList = {}
           $scope.showModal = false;
-        };
+        };    
 
         $scope.submitted = false;
         $scope.formSubmit = function () {
@@ -132,13 +153,34 @@ angular.module('hillromvestApp')
          * Function to delete a User
          */
         $scope.deleteUser = function () {
-          UserService.deleteUser($scope.user.id).then(function (response) {
+
+            //Type code values  
+          if ($scope.reason.deactivationReason!="" && $scope.reason.deactivationReason!=undefined){
+          console.log("in required",$scope.reason.deactivationReason);
+          //Gimp-4
+          if($scope.reason.deactivationReason === "Other"){ 
+            if($scope.reason.reasonDetail){
+            var reason = $scope.reason.reasonDetail;
+          }
+          else{
+            $scope.noOtherDescription = true;
+            return;
+          }
+          }
+          else{
+            var reason = $scope.reason.deactivationReason;
+          }
+            UserService.deleteUserWithReason($scope.user.id,reason).then(function (response) {
+            //End of Gimp-4
+            $scope.reason.reasonDetail = "";
+            $scope.reason.deactivationReason = "";
             $scope.showModal = false;
             $scope.userStatus.isMessage = true;
             $scope.userStatus.message = response.data.message;
             notyService.showMessage($scope.userStatus.message, 'success');
             $scope.reset();
           }).catch(function (response) {
+            $scope.reset();
             $scope.showModal = false;
             $scope.userStatus.isMessage = true;
             if (response.data.message !== undefined) {
@@ -150,9 +192,19 @@ angular.module('hillromvestApp')
             }
             notyService.showMessage($scope.userStatus.message, 'warning');
           });
+        }
+          else{
+         // $scope.msg = 'Please Select the reason';
+         $scope.noReason = true;
+         console.log("masigf");
+        }
+
+          console.log("in deleteUser 11111",$scope.reason.deactivationReason);
+          console.log("in deleteUser 22222",$scope.reason.reasonDetail);
         };
 
         $scope.cancel = function () {
+
           $scope.reset();
         };
 
@@ -216,18 +268,30 @@ angular.module('hillromvestApp')
           }
           $scope.updateModal = true;
         };
-        $scope.showResetModel = function () {
-         
-        
-          if ($scope.form.$invalid) {
+        $scope.showResetModel = function(){
+          if($scope.form.$invalid){
             return true;
-          } else {
+          } else{
             $scope.resetModal = true;
           }
-
-        }
-
-
+        };
+//Gimp-4
+       $scope.onSelectChange = function(){
+        $scope.noReason = false;
+        $scope.noOtherDescription = false;
+          console.log("kjhfg",$scope.reason.deactivationReason);
+        if($scope.reason.deactivationReason === "Other"){ 
+          console.log("in ifsfgssggs",$scope.reason.deactivationReason);
+        // $scope.reason.reasonDetail = "";
+         $scope.isDisabled = true;  //enabling the text box because user selected 'Other' option.
+         }
+         else{
+          //$scope.reasonDetail = $scope.reason.deactivationReason;
+          console.log("in else",$scope.reason.deactivationReason);
+          $scope.isDisabled = false; 
+         }
+        };
+        //End of Gimp-4
         $scope.init();
       }]
     };

@@ -9,14 +9,14 @@
           </a>
         </li>
       </ul>
-      <ul  class="nav navbar-nav pull-right right dashboard_container">
+      <ul  class="nav navbar-nav pull-right right dashboard_container" ng-show="clinicsHCP.length > 0">
         
         <li class="hcp_hsp_name_a" dropdown>
           <a ng-href="" data-target="#" id="dropdownMenu1" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
             <span class="">{{selectedClinicForHCP.name}} <span class="nav_drop_arrow hillrom-icon icon-arrow-down"></span></span>
           </a>
          <ul class="dropdown-menu hcp_dashbaord dashboard_clinic_list dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1"> 
-              <li role="menuitem" ng-repeat='clinic in clinicsHCP' ng-click="switchClinicHCP(clinic)"><a>{{::clinic.name}}</a></li>
+              <li role="menuitem" ng-repeat='clinic in clinicsHCP | filter:{isMessageOpted:true}' ng-click="switchClinicHCP(clinic)"><a>{{::clinic.name}}</a></li>
           </ul>
         </li>
       </ul>

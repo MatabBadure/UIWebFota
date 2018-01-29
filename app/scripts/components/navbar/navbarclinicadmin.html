@@ -21,7 +21,7 @@
             <span class="link-text" translate="global.tabs.dashboard" ></span>
           </a>
         </li>
-         <li class="icon-border">
+         <li class="icon-border" ng-show="$root.isMessagesOptedFlag && $root.selectedClinicMessagesFalse">
           <a ng-class="{ active: isActive('clinicadmin/messages_CA')}" href="" ng-click="goToPatientDashboard('Messages_CA');" >
             <span class="icons messages"> <i class="fa fa-envelope" aria-hidden="true"></i>
             </span>

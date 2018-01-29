@@ -167,6 +167,17 @@
               <span>{{user.zipcode}}</span>
             </div>
           </div>
+           <div class="col-md-7 col-sm-7 reset-padding col-md-offset-2 col-xs-16">
+            <div class="col-md-6 col-sm-6 dashboard__form--label reset-padding col-xs-8">
+              <span class="" translate="profile.timestamp-preference"></span>
+            </div>
+            <div class="col-md-6 col-sm-6 dashboard__form--label-val reset-padding col-xs-8">
+              <!-- <span>{{user.timeZone}}</span> -->
+              <div class="col-md-10 dashboard__form__input--sec-option reset-padding">
+                <select class="security-select dashboard__form--label-val" style="background-color:white; border:none;-webkit-appearance: unset;" ng-model="user.timeZone" ng-options="key as value for (key , value) in timezoneList" ng-disabled="true"></select>
+            </div>
+            </div>
+          </div>
         </div>
 
 

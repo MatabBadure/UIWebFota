@@ -153,7 +153,10 @@ angular.module('hillromvestApp')
       }).catch(function(response){
         notyService.showError(response);
       });
-        };
+      
+      
+
+    };
 
         
     $scope.openEditDetail = function(){
@@ -395,6 +398,7 @@ $scope.getdevice = function(){
           $scope.customPointsChecker = 0;
           $scope.lastdeviceType = "";
        $scope.selectedDevice();
+        $scope.getClinics();
       var currentRoute = $state.current.name;
       //in case the route is changed from other thatn switching tabs
      // $scope.devicetype = localStorage.getItem('deviceType');
@@ -603,6 +607,7 @@ $scope.getdevice = function(){
       patientService.associateClinicToPatient($stateParams.patientId, data).then(function(response) {
         $scope.searchClinicText = false;
         $scope.associatedClinics = response.data.clinics;
+        $scope.clinics = response.data.clinics;
         $scope.getAvailableAndAssociatedClinics($stateParams.patientId);
         $scope.getAvailableAndAssociatedHCPs($stateParams.patientId);
       }).catch(function(response) {
@@ -671,11 +676,12 @@ $scope.getdevice = function(){
         $scope.form.$setPristine();
         $scope.showUpdateModalReset = false;
         $scope.getAdherenceScoreResetHistory($stateParams.patientId);
-        /*$scope.resetStartDate = null;
+        $scope.resetStartDate = null;
         $scope.justification = "";
-        $scope.scoreToReset = 100;
-        $scope.othersContent = "";
-        $scope.ShowOther = false;*/
+        $scope.othersContent = null;
+        $scope.ShowOther = false;
+        $scope.resetsubmitted = false ; 
+        $scope.nodataflag = false;
         $scope.resetsubmitted = false ; 
         if($scope.patientStatus.role === loginConstants.role.acctservices){
         $state.go('patientProtocolRcadmin', {'patientId': $stateParams.patientId});
@@ -686,11 +692,12 @@ $scope.getdevice = function(){
         notyService.showError(response);
         $scope.form.$setPristine();
         $scope.showUpdateModalReset = false;
-       /* $scope.resetStartDate = null;
+       $scope.resetStartDate = null;
         $scope.justification = "";
-        $scope.scoreToReset = 100;
-        $scope.othersContent = "";
-        $scope.ShowOther = false;*/
+        $scope.othersContent = null;
+        $scope.ShowOther = false;
+        $scope.resetsubmitted = false ; 
+        $scope.nodataflag = false;
         $scope.resetsubmitted = false ; 
       });
 
@@ -828,19 +835,24 @@ $scope.getdevice = function(){
 
     $scope.showUpdateReset = function()
     {
-      if($scope.form.$invalid){
+        if($scope.form.$invalid){
         $scope.resetsubmitted = true;
-       
         return false;
       }else if($scope.maxNumberReached)
       {
-         $scope.maxNumberReached= true;
-         return false;
+        $scope.maxNumberReached= true;
+        return false;
+      $scope.resetStartDate = null;
+      $scope.justification = "";
+      $scope.scoreToReset = 100;
+      $scope.othersContent = "";
+      $scope.ShowOther = false;
+         
       }
       else{
          $scope.showUpdateModalReset = true;
       }
-     
+
     };
 
     $scope.SelectOthers = function(option){
@@ -1284,8 +1296,15 @@ $scope.getdevice = function(){
         }else if(response.data.message){
           $scope.associatedClinicsErrMsg = response.data.message;
         }
-        clinicService.getClinics($scope.searchItem, $scope.sortOption, $scope.currentPageIndex, $scope.perPageCount).then(function (response) {
-          $scope.initializeClinics(response.data);
+
+         var searchItem = window.encodeURIComponent("%%");
+        var filter = "isDeleted:0;";
+        clinicService.getClinics(searchItem, $scope.sortOption, $scope.currentPageIndex, $scope.perPageCount, filter).then(function (response) {
+          var tempResponse = response.data;
+          if(response.data){
+          $scope.initializeClinics(tempResponse);
+        }
+
         });
       });
     };
@@ -1414,6 +1433,13 @@ $scope.getdevice = function(){
     };
 
     $scope.selectDoctor = function(doctor) {
+      console.log("doctorrrr:",doctor);
+/*DoctorService.getClinicsAssociatedToHCP(doctor.id).then(function(response){
+console.log("response::",response)
+}).catch(function(){
+
+});*/
+if(doctor.authorities[0].name === 'HCP'){
       if($scope.patientStatus.role === loginConstants.role.acctservices){
         $state.go('hcpProfileRcadmin',{
           'doctorId': doctor.id
@@ -1427,6 +1453,29 @@ $scope.getdevice = function(){
           'doctorId': doctor.id
         });
       }
+    }
+    else if(doctor.authorities[0].name === 'CLINIC_ADMIN'){
+      var state = 'clinicAdmin';
+      var clinicID = doctor.clinics[0].id;
+if($scope.patientStatus.role === loginConstants.role.acctservices){
+        $state.go(state+loginConstants.role.Rcadmin, {
+          'clinicId': clinicID
+        });
+      }else if($scope.patientStatus.role === loginConstants.role.associates){
+        $state.go(state+'Associate', {
+          'clinicId': clinicID
+        });
+      }else if($scope.patientStatus.role === loginConstants.role.customerservices){
+        $state.go(state+'CustomerService', {
+          'clinicId': clinicID
+        });
+      }
+      else{
+        $state.go(state, {
+          'clinicId': clinicID
+        });
+      }
+    }
     };
 
     $scope.selectClinic = function(clinic) {

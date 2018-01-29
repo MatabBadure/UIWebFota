@@ -15,7 +15,7 @@
         </li>
       </ul>
 
-      <ul class="nav navbar-nav pull-right right">
+      <ul class="nav navbar-nav pull-right right" ng-show="clinics.length > 0">
         <li class="hcp_hsp_name_a" dropdown>
           <a ng-href="" data-target="#" id="dropdownMenu1" dropdown-toggle>
             <span class="">{{selectedClinic.name}} <span class="nav_drop_arrow hillrom-icon icon-arrow-down"></span></span>
@@ -132,7 +132,7 @@
               <span class="" translate="clinic.zipcode"></span>
             </div>
             <div class="col-md-10 dashboard__form--input reset-padding">
-              <input class="" type="text" validate-on-blur ng-model="clinic.zipcode" name="zipcode" ng-readonly="validateADMINorASP()" maxlength="5" ng-pattern="/^(?=.*[1-9].*)[0-9]{5}$/">
+              <input class="" type="text" validate-on-blur ng-model="clinic.zipcode" name="zipcode" ng-readonly="validateADMINorASP()" maxlength="7" ng-pattern='/^(\d{5}(-\d{4})?|[A-Z]\d[A-Z] *\d[A-Z]\d)$/'>
               <div ng-show="(form.zipcode.$showValidationMessage && form.zipcode.$invalid) || submitted">
                 <span class="has-error" ng-show="form.zipcode.$error.pattern" translate="error.zipcode.pattern"></span>
               </div>

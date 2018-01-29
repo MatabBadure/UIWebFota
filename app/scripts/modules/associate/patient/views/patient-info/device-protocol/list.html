@@ -323,7 +323,10 @@
       <span>{{device.serialNumber}}</span>
     </div>
     <div class="col-md-3 device-list__bt-id">
-     <span >{{device.bluetoothId}}{{device.wifiId}}</span>
+     <span ng-if="device.lteId">{{device.lteId}}</span>
+       <span ng-if="!device.bluetoothId && device.wifiId && !device.lteId">{{device.wifiId}}</span>
+       <span ng-if="device.bluetoothId && !device.wifiId && !device.lteId">{{device.bluetoothId}}</span>
+       <span ng-if="device.bluetoothId && device.wifiId && !device.lteId">{{device.wifiId}}</span>
     </div>
     <div class="col-md-3 device-list__status">
       <span ng-if="device.active" class="device--list__status--text" translate="patient.device.active-status">Active</span>

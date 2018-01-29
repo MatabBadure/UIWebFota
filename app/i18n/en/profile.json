@@ -36,6 +36,7 @@
     "phone": "Mobile Number",
     "hr-id": "HR ID",
     "email": "Email",
+    "timestamp-preference": "Preferred Timezone",
     "role-text":"Select Role",
     "view-role-text":"Role",
     "role": {
@@ -146,6 +147,10 @@
     "securityQuestion":{
       "warning" : "Update Security Q & A",
       "message" : "Are you sure to update your Security Question and Answer?"
+    },
+     "preferredTimezone":{
+      "warning" : "Update Preferred Timezone",
+      "message" : "Are you sure to update your preferred timezone?"
     }
   },
   "benchmarking":{

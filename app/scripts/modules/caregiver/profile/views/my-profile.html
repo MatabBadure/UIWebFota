@@ -125,6 +125,17 @@
               <span>{{associateCareGiver.primaryPhone}}</span>
             </div>
           </div>
+           <div class="col-md-7 col-sm-7 col-xs-16 reset-padding col-md-offset-2">
+            <div class="col-md-6 col-sm-6 col-xs-6 dashboard__form--label reset-padding">
+              <span class="">Preferred Timezone</span>
+            </div>
+            <div class="col-md-10 col-sm-10 col-xs-10 dashboard__form--label-val reset-padding">
+              <!-- <span>{{associateCareGiver.timeZone}}</span> -->
+              <div class="col-md-10 dashboard__form__input--sec-option reset-padding">
+                <select class="security-select dashboard__form--label-val" style="background-color:white; border:none;-webkit-appearance: unset;" ng-model="associateCareGiver.timeZone" ng-options="key as value for (key , value) in timezoneList" ng-disabled="true"></select>
+            </div>
+            </div>
+          </div>
         </div>
       <div class="clr"></div>
     </div>
