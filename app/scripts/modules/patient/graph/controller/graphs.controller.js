@@ -147,6 +147,9 @@ angular.module('hillromvestApp')
        {
           $scope.deviceTypeforGraphProtocol = "VEST";
        }
+
+
+       
     };
 
     angular.element('#edit_date').datepicker({
