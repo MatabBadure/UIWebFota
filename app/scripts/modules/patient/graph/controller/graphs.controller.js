@@ -338,7 +338,7 @@ angular.module('hillromvestApp')
     };
     
     $scope.opts = {
-      maxDate: moment.tz(new Date(),$scope.preferredTimezone).format(patientDashboard.timestampMMDDYY),
+      maxDate: ($scope.preferredTimezone)?moment.tz(new Date(),$scope.preferredTimezone).format(patientDashboard.timestampMMDDYY):new Date(),
       format: patientDashboard.dateFormat,
       dateLimit: {"months":24},
       eventHandlers: {'apply.daterangepicker': function(ev, picker) {
@@ -3118,7 +3118,7 @@ angular.module('hillromvestApp')
       angular.element(document.querySelector('.datepicker')).hide();
     });
     $scope.dateOpts = {
-      maxDate: moment.tz(new Date(),$scope.preferredTimezone),
+      maxDate: ($scope.preferredTimezone)?moment.tz(new Date(),$scope.preferredTimezone).format(patientDashboard.timestampMMDDYY):new Date(),
       format: patientDashboard.dateFormat,
       dateLimit: {"months":24},
       eventHandlers: {'apply.daterangepicker': function(ev, picker) {
