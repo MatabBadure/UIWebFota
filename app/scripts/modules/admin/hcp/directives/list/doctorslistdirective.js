@@ -160,6 +160,7 @@ angular.module('hillromvestApp')
       //$scope.hcpAdvancedFilter.adherenceWindowSelected = "";
       $scope.hcpAdvancedFilter.status = "All";
       $scope.countries = searchFilterService.processCountries();
+      $scope.searchDoctorsOnQueryChange();
       //$scope.getAdherenceScoreSettingDays();
      /* $("#country-dropdown").css("background-color",'#eeeeee');
       $("#country-dropdown").css("pointer-events","none");*/
