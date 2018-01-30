@@ -1131,9 +1131,11 @@ angular.module('hillromvestApp')
           var startDay = (responseData.xAxis && responseData.xAxis.categories.length > 0) ? responseData.xAxis.categories[0].split(" "): null;  
           $scope.complianceXAxisLabelCount = 0;
           var tempDate = "";
-          angular.forEach(responseData.xAxis.categories, function(x, key){              
+          //angular.forEach(responseData.xAxis.categories, function(x, key){              
             // this is for year view or custom view having datapoints more than 7
             // x-axis will be plotted accordingly, chart type will be datetime
+            for(var key = 0;key < responseData.xAxis.categories.length;key++){
+              var x = responseData.xAxis.categories[key];
             if($scope.isHillRomUser){
                 tempDate = dateService.convertToTimestamp(x);
               }
@@ -1156,10 +1158,18 @@ angular.module('hillromvestApp')
             }
             var dateTextLabel = Highcharts.dateFormat("%m/%d/%Y",tempDate);
             dateTextLabel += (Highcharts.dateFormat("%I:%M %p",tempDate))? ' ( ' + Highcharts.dateFormat("%I:%M %p",tempDate) + ' )' : '';
-            
-            responseData.xAxis.xLabels.push(dateTextLabel);            
-              xData[key] = tempDate;                          
-            });       
+            var tempDateFormatted = dateService.getDateFromTimeStamp(tempDate,patientDashboard.dateFormat,'/');
+            if(tempDateFormatted >= $scope.fromDate){
+               responseData.xAxis.xLabels.push(dateTextLabel);            
+              xData[key] = tempDate;    
+              }
+              else{
+                 responseData.xAxis.categories.splice(key,1);
+                responseData.series[0].data.splice(key,1);
+               key--;
+              }
+                                   
+            }       
 
           angular.forEach(responseData.series, function(s, key1){
             var marker = {};
@@ -1852,7 +1862,7 @@ angular.module('hillromvestApp')
            // angular.forEach($scope.hmrChartData.xAxis.categories, function(x, key){              
               // this is for year view or custom view having datapoints more than 7
               // x-axis will be plotted accordingly, chart type will be datetime
-         for(var key = 0;key<$scope.hmrChartData.xAxis.categories.length;key++){
+         for(var key = 0;key < $scope.hmrChartData.xAxis.categories.length;key++){
               var x = $scope.hmrChartData.xAxis.categories[key];
               var modifiedx = dateService.getinMomentFormat(x,"mm/dd/yyyy hh:mm:ss");
                var dateInitial = moment.tz(modifiedx,patientDashboard.serverDateTimeZone).format();
@@ -1988,9 +1998,11 @@ angular.module('hillromvestApp')
               }
             });
             var tempDate = "";       
-            angular.forEach($scope.adherenceTrendData.xAxis.categories, function(x, key){              
+            //angular.forEach($scope.adherenceTrendData.xAxis.categories, function(x, key){
+            for(var key = 0;key < $scope.adherenceTrendData.xAxis.categories.length;key++){              
               // this is for year view or custom view having datapoints more than 7
               // x-axis will be plotted accordingly, chart type will be datetime
+              var x = $scope.adherenceTrendData.xAxis.categories[key];
               if($scope.isHillRomUser){
                 tempDate = dateService.convertToTimestamp(x);
               }
@@ -2005,14 +2017,32 @@ angular.module('hillromvestApp')
             tempDate = dateService.convertToTimestamp(x);
              }
              }
+             var tempDateFormatted = dateService.getDateFromTimeStamp(tempDate,patientDashboard.dateFormat,'/');
               if($scope.durationRange !== "Day" && !$scope.isSameDayAdherenceTrend){
-                $scope.adherenceTrendData.xAxis.xLabels.push(tempDate);
-                $scope.adherenceTrendData.xAxis.categories[key] = tempDate;               
+                if(tempDateFormatted >= $scope.fromDate){
+                   $scope.adherenceTrendData.xAxis.xLabels.push(tempDate);
+                $scope.adherenceTrendData.xAxis.categories[key] = tempDate;
+               
+              }
+              else{
+               $scope.adherenceTrendData.xAxis.categories.splice(key,1);
+               $scope.adherenceTrendData.series[0].data.splice(key,1);
+               key--;
+              }
+                               
               }else{
-                $scope.adherenceTrendData.xAxis.xLabels.push(tempDate);
+                if(tempDateFormatted == $scope.fromDate){
+                  $scope.adherenceTrendData.xAxis.xLabels.push(tempDate);
                 $scope.adherenceTrendData.xAxis.categories[key] = Highcharts.dateFormat("%I:%M %p",tempDate) ;
               }
-            });
+              else{
+               $scope.adherenceTrendData.xAxis.categories.splice(key,1);
+               $scope.adherenceTrendData.series[0].data.splice(key,1);
+               key--;
+              }
+                
+              }
+            }
           angular.forEach($scope.adherenceTrendData.series, function(s, key1){
             var marker = {};
             marker.radius = (s.data && s.data.length < 50)? 2 : 0.5;
@@ -3747,9 +3777,11 @@ $scope.getComplianceGraph = function(){
           var startDay = (responseData.xAxis && responseData.xAxis.categories.length > 0) ? responseData.xAxis.categories[0].split(" "): null;  
           $scope.complianceXAxisLabelCount = 0;
           var tempDate = "";
-          angular.forEach(responseData.xAxis.categories, function(x, key){              
+          //angular.forEach(responseData.xAxis.categories, function(x, key){ 
+          for(var key = 0;key < responseData.xAxis.categories.length;key++){             
             // this is for year view or custom view having datapoints more than 7
             // x-axis will be plotted accordingly, chart type will be datetime
+            var x = responseData.xAxis.categories[key];
             if($scope.isHillRomUser){
                 tempDate = dateService.convertToTimestamp(x);
               }
@@ -3771,11 +3803,18 @@ $scope.getComplianceGraph = function(){
               $scope.complianceXAxisLabelCount++;
             }
             var dateTextLabel = Highcharts.dateFormat("%m/%d/%Y",tempDate);
-            dateTextLabel += (Highcharts.dateFormat("%I:%M %p",tempDate))? ' ( ' + Highcharts.dateFormat("%I:%M %p",tempDate) + ' )' : '';
-            
-            responseData.xAxis.xLabels.push(dateTextLabel);            
-              xData[key] = tempDate;                          
-            });       
+            dateTextLabel += (Highcharts.dateFormat("%I:%M %p",tempDate))? ' ( ' + Highcharts.dateFormat("%I:%M %p",tempDate) + ' )' : '';             
+              var tempDateFormatted = dateService.getDateFromTimeStamp(tempDate,patientDashboard.dateFormat,'/');
+            if(tempDateFormatted >= $scope.fromDate){
+               responseData.xAxis.xLabels.push(dateTextLabel);            
+              xData[key] = tempDate;   
+              }
+              else{
+                 responseData.xAxis.categories.splice(key,1);
+                responseData.series[0].data.splice(key,1);
+               key--;
+              }                         
+            }       
 
           angular.forEach(responseData.series, function(s, key1){
             var marker = {};
@@ -4105,7 +4144,7 @@ $scope.getComplianceGraph = function(){
             //angular.forEach($scope.hmrChartData.xAxis.categories, function(x, key){              
               // this is for year view or custom view having datapoints more than 7
               // x-axis will be plotted accordingly, chart type will be datetime
-              for(var key = 0;key<$scope.hmrChartData.xAxis.categories.length;key++){
+              for(var key = 0;key < $scope.hmrChartData.xAxis.categories.length;key++){
                 var x = $scope.hmrChartData.xAxis.categories[key];
                 var modifiedx = dateService.getinMomentFormat(x,"mm/dd/yyyy hh:mm:ss");
                 var dateInitial = moment.tz(modifiedx,patientDashboard.serverDateTimeZone).format();
@@ -4130,7 +4169,7 @@ $scope.getComplianceGraph = function(){
               }
               else{
                $scope.hmrChartData.xAxis.categories.splice(key,1);
-               $scope.hmrChartData.xAxis.series[0].data.splice(key,1);
+               $scope.hmrChartData.series[0].data.splice(key,1);
                key--;
               }
                                
@@ -4155,7 +4194,7 @@ $scope.getComplianceGraph = function(){
               }
               else{
                $scope.hmrChartData.xAxis.categories.splice(key,1);
-               $scope.hmrChartData.xAxis.series[0].data.splice(key,1);
+               $scope.hmrChartData.series[0].data.splice(key,1);
                key--;
               }
                 
@@ -4229,9 +4268,11 @@ $scope.getComplianceGraph = function(){
               }
             });  
              var tempDate = "";     
-            angular.forEach($scope.adherenceTrendData.xAxis.categories, function(x, key){              
+           // angular.forEach($scope.adherenceTrendData.xAxis.categories, function(x, key){    
+           for(var key = 0;key < $scope.adherenceTrendData.xAxis.categories.length;key++){          
               // this is for year view or custom view having datapoints more than 7
               // x-axis will be plotted accordingly, chart type will be datetime
+              var x = $scope.adherenceTrendData.xAxis.categories[key];
               if($scope.isHillRomUser){
                 tempDate = dateService.convertToTimestamp(x);
               }
@@ -4245,15 +4286,32 @@ $scope.getComplianceGraph = function(){
              else{
             tempDate = dateService.convertToTimestamp(x);
              }
-             }
+             } var tempDateFormatted = dateService.getDateFromTimeStamp(tempDate,patientDashboard.dateFormat,'/');
+
               if($scope.durationRange !== "Day" && !$scope.isSameDayAdherenceTrend){
-                $scope.adherenceTrendData.xAxis.xLabels.push(tempDate);
-                $scope.adherenceTrendData.xAxis.categories[key] = tempDate;               
-              }else{
-                $scope.adherenceTrendData.xAxis.xLabels.push(tempDate);
-                $scope.adherenceTrendData.xAxis.categories[key] = Highcharts.dateFormat("%I:%M %p",tempDate) ;
+                if(tempDateFormatted >= $scope.fromDate){
+                   $scope.adherenceTrendData.xAxis.xLabels.push(tempDate);
+                $scope.adherenceTrendData.xAxis.categories[key] = tempDate; 
               }
-            });
+              else{
+               $scope.adherenceTrendData.xAxis.categories.splice(key,1);
+               $scope.adherenceTrendData.series[0].data.splice(key,1);
+               key--;
+              }
+                              
+              }else{
+                if(tempDateFormatted == $scope.fromDate){
+                   $scope.adherenceTrendData.xAxis.xLabels.push(tempDate);
+                $scope.adherenceTrendData.xAxis.categories[key] = Highcharts.dateFormat("%I:%M %p",tempDate) ; 
+              }
+              else{
+               $scope.adherenceTrendData.xAxis.categories.splice(key,1);
+               $scope.adherenceTrendData.series[0].data.splice(key,1);
+               key--;
+              }
+                
+              }
+            }
           angular.forEach($scope.adherenceTrendData.series, function(s, key1){
             var marker = {};
             marker.radius = (s.data && s.data.length < 50)? 2 : 0.5;
@@ -5186,9 +5244,26 @@ $scope.getComplianceGraph1 = function(){
           responseData.xAxis.xLabels = []; 
           var startDay = (responseData.xAxis && responseData.xAxis.categories.length > 0) ? responseData.xAxis.categories[0].split(" "): null;  
           $scope.complianceXAxisLabelCount = 0;
-          angular.forEach(responseData.xAxis.categories, function(x, key){              
+          //angular.forEach(responseData.xAxis.categories, function(x, key){     
+          for(var key = 0;key < responseData.xAxis.categories.length;key++){         
             // this is for year view or custom view having datapoints more than 7
             // x-axis will be plotted accordingly, chart type will be datetime
+            var x = responseData.xAxis.categories[key];
+            var tempDate = "";
+                        if($scope.isHillRomUser){
+                tempDate = dateService.convertToTimestamp(x);
+              }
+              else{
+                if($scope.preferredTimezone){
+            var modifiedx = dateService.getinMomentFormat(x,"mm/dd/yyyy hh:mm:ss");
+             var dateInitial = moment.tz(modifiedx,patientDashboard.serverDateTimeZone).format();
+               var dateFinal = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYYHHMMSS);   
+               tempDate = new Date(dateFinal).getTime();
+             }
+             else{
+              tempDate = dateService.convertToTimestamp(x);
+             }
+             }
             var curDay = responseData.xAxis.categories[key].split(" ");
             $scope.isSameDay = ($scope.isSameDay && (curDay[0] === startDay[0]) )? true : false;  
             if(curDay[0] !== startDay[0]){
@@ -5198,9 +5273,17 @@ $scope.getComplianceGraph1 = function(){
             var dateTextLabel = Highcharts.dateFormat("%m/%d/%Y",dateService.convertToTimestamp(x));
             dateTextLabel += (Highcharts.dateFormat("%I:%M %p",dateService.convertToTimestamp(x)))? ' ( ' + Highcharts.dateFormat("%I:%M %p",dateService.convertToTimestamp(x)) + ' )' : '';
             
-            responseData.xAxis.xLabels.push(dateTextLabel);            
-              xData[key] = dateService.convertToTimestamp(x);                          
-            });       
+            var tempDateFormatted = dateService.getDateFromTimeStamp(tempDate,patientDashboard.dateFormat,'/');
+            if(tempDateFormatted >= $scope.fromDate){
+              responseData.xAxis.xLabels.push(dateTextLabel);            
+              xData[key] = dateService.convertToTimestamp(x);      
+              }
+              else{
+                 responseData.xAxis.categories.splice(key,1);
+                responseData.series[0].data.splice(key,1);
+               key--;
+              }                         
+            }       
 
           angular.forEach(responseData.series, function(s, key1){
             var marker = {};
@@ -5280,7 +5363,7 @@ $scope.getComplianceGraph1 = function(){
              //angular.forEach($scope.hmrChartData1.xAxis.categories, function(x, key){              
               // this is for year view or custom view having datapoints more than 7
               // x-axis will be plotted accordingly, chart type will be datetime
-              for(var key = 0;key<$scope.hmrChartData1.xAxis.categories.length;key++){
+              for(var key = 0;key < $scope.hmrChartData1.xAxis.categories.length;key++){
                 var x = $scope.hmrChartData1.xAxis.categories[key];
                 var modifiedx = dateService.getinMomentFormat(x,"mm/dd/yyyy hh:mm:ss");
                 var dateInitial = moment.tz(modifiedx,patientDashboard.serverDateTimeZone).format();
@@ -5303,7 +5386,7 @@ $scope.getComplianceGraph1 = function(){
               }
               else{
                 $scope.hmrChartData1.xAxis.categories.splice(key,1);
-               $scope.hmrChartData1.xAxis.series[0].data.splice(key,1);
+               $scope.hmrChartData1.series[0].data.splice(key,1);
                key--;
               }              
               }else{
@@ -5325,7 +5408,7 @@ $scope.getComplianceGraph1 = function(){
               }
               else{
                 $scope.hmrChartData1.xAxis.categories.splice(key,1);
-               $scope.hmrChartData1.xAxis.series[0].data.splice(key,1);
+               $scope.hmrChartData1.series[0].data.splice(key,1);
                key--;
               }
                 
