@@ -67,7 +67,7 @@ angular.module('hillromvestApp')
 	return (localStorage.getItem('deviceTypeforBothIcon_'+patientId));	
 	}
 	//the following module added for ticket Hill-2411
-	$rootScope.getPatientListForCaregiver = function(caregiverID){
+	$rootScope.getPatientListForCaregiver = function(caregiverID,isRouting,routeParam){
       var currentname = $state.current.name;  
       caregiverDashBoardService.getPatients(caregiverID).then(function(response){
                 $scope.patients = response.data.patients;
@@ -77,7 +77,14 @@ angular.module('hillromvestApp')
                  if(response.data.patients[0].deviceType == 'ALL'){
           localStorage.setItem('deviceType_'+response.data.patients[0].user.id, 'VEST');
           localStorage.setItem('deviceTypeforBothIcon_'+response.data.patients[0].user.id, 'ALL');
-
+          if(isRouting){
+            if(routeParam){
+                $state.go(routeParam);
+              }
+              else{
+                $state.go('caregiverDashboard');
+              }
+              }
             }
             else{
             localStorage.setItem('deviceType_'+response.data.patients[0].user.id, response.data.patients[0].deviceType);
