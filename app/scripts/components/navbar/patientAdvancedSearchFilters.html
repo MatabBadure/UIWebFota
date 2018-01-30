@@ -190,7 +190,7 @@
                        <div class="col-md-4 col-sm-4 advanced-filters-margin">
               <span class="advanced-filters" translate="">Diagnosis</span>
             <div class="form__select__input--option reset-padding selected-box-container dynamic-seach-list">
-               <input class="form-control" style="text-overflow: ellipsis" id="diagnosis-list" type="text" ng-model="diagnosis" typeahead="searchDiagnosis as searchDiagnosis.type_code + ' &nbsp : ' + searchDiagnosis.type_code_value for searchDiagnosis in getMatchingDiagnosisList($viewValue)" typeahead-on-select="selectDiagnosis($item)">
+               <input class="form-control" style="text-overflow: ellipsis" id="diagnosis-list" type="text" ng-model="diagnosis" typeahead-visiview="searchDiagnosis as searchDiagnosis.type_code + ' &nbsp : ' + searchDiagnosis.type_code_value for searchDiagnosis in getMatchingDiagnosisList($viewValue)" typeahead-on-select="selectDiagnosis($item)" typeahead-min-length="2" typeahead-loading="isLoading">
             </div>
             
           </div>
@@ -272,6 +272,7 @@
               <span class="advanced-filters" translate="">From</span>
             </div>
             <div class="col-md-16 col-sm-16 dashboard__form--input advanced-filters-padding">
+
               <input type="text"   class="datepickerNew" ng-model="patientAdvancedFilters.deviceActiveDateFrom" name = "startDate" data-provide="datepicker" data-date-autoclose="true" data-date-start-date="-730d" data-date-end-date="0d" id="dp1" required data-date-format="mm/dd/yyyy" ng-change="endDateCheck()"  ng-pattern="/^\d{2}\/\d{2}\/\d{4}$/" readonly="readonly"/>
             </div>
           </div>
@@ -280,7 +281,9 @@
               <span class="advanced-filters" translate=""> To</span>
             </div>
             <div class="col-md-16 col-sm-16 dashboard__form--input reset-padding">
+
              <input type="text"   class="datepickerNew" ng-model="patientAdvancedFilters.deviceActiveDateTo" name = "endDate" data-provide="datepicker" data-date-autoclose="true" data-date-start-date="-730d" data-date-end-date="0d" id="dp2" required data-date-format="mm/dd/yyyy"  ng-pattern="/^\d{2}\/\d{2}\/\d{4}$/" ng-change="endDateCheck()" readonly="readonly"/>
+
              <div ng-if="dateFlag == true "><span class="has-error">To Date should be greater than From date </span></div>
             </div>
           </div>

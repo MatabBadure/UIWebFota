@@ -190,7 +190,8 @@
             "app/scripts/modules/FOTA/FotaHome/controllers/fota.controller.js",
             "app/scripts/modules/FOTA/FotaHome/services/fota.service.js",
             "app/scripts/account/reset/password/reset.password.controller.js",
-            "app/scripts/account/reset/password/reset.password.js"
+            "app/scripts/account/reset/password/reset.password.js",
+            "app/scripts/modules/admin/patient/directives/list/typeahead.visiview.directive.js"
         ],
         "scripts_min_path":[
             "app/bower_components/canvg-gabelerner/rgbcolor.min.js",
@@ -364,7 +365,8 @@
             "app/scripts/modules/FOTA/FotaHome/controllers/fota.controller.min.js",
             "app/scripts/modules/FOTA/FotaHome/services/fota.service.min.js",
             "app/scripts/account/reset/password/reset.password.controller.min.js",
-            "app/scripts/account/reset/password/reset.password.min.js"
+            "app/scripts/account/reset/password/reset.password.min.js",
+            "app/scripts/modules/admin/patient/directives/list/typeahead.visiview.directive.min.js"
         ],
         "clean": [
             "app/build/",
