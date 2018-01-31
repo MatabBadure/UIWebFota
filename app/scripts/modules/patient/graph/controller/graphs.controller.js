@@ -351,6 +351,10 @@ angular.module('hillromvestApp')
             
           }
           $scope.selectChart($scope.fromDate);        
+        },
+         'click.daterangepicker': function(ev, picker) {
+          $("#dp1").data('daterangepicker').setStartDate($scope.fromDate);
+          $("#dp1").data('daterangepicker').setEndDate($scope.toDate);
         }
       },
       opens: 'left'
