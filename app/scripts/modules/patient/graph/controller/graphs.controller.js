@@ -1158,8 +1158,10 @@ angular.module('hillromvestApp')
             }
             var dateTextLabel = Highcharts.dateFormat("%m/%d/%Y",tempDate);
             dateTextLabel += (Highcharts.dateFormat("%I:%M %p",tempDate))? ' ( ' + Highcharts.dateFormat("%I:%M %p",tempDate) + ' )' : '';
-            var tempDateFormatted = dateService.getDateFromTimeStamp(tempDate,patientDashboard.dateFormat,'/');
-            if(tempDateFormatted >= $scope.fromDate && tempDateFormatted <= $scope.toDate){
+            var tempDateFormatted = new Date(dateService.getDateFromTimeStamp(tempDate,patientDashboard.dateFormat,'/')).getTime();
+             var fromDateCompare = new Date($scope.fromDate).getTime();
+             var toDateCompare = new Date($scope.toDate).getTime();
+            if(tempDateFormatted >= fromDateCompare && tempDateFormatted <= toDateCompare){
                responseData.xAxis.xLabels.push(dateTextLabel);            
               xData[key] = tempDate;    
               }
@@ -1881,8 +1883,10 @@ angular.module('hillromvestApp')
               }
               }
                
-              var tempDateFormatted = dateService.getDateFromTimeStamp(tempDate,patientDashboard.dateFormat,'/');
-                if(tempDateFormatted >= $scope.fromDate && tempDateFormatted <= $scope.toDate){
+              var tempDateFormatted = new Date(dateService.getDateFromTimeStamp(tempDate,patientDashboard.dateFormat,'/')).getTime();
+             var fromDateCompare = new Date($scope.fromDate).getTime();
+             var toDateCompare = new Date($scope.toDate).getTime();
+                if(tempDateFormatted >= fromDateCompare && tempDateFormatted <= toDateCompare){
                $scope.hmrChartData.xAxis.xLabels.push(tempDate);
                 $scope.hmrChartData.xAxis.categories[key] = tempDate;   
               }
@@ -2017,9 +2021,11 @@ angular.module('hillromvestApp')
             tempDate = dateService.convertToTimestamp(x);
              }
              }
-             var tempDateFormatted = dateService.getDateFromTimeStamp(tempDate,patientDashboard.dateFormat,'/');
+             var tempDateFormatted = new Date(dateService.getDateFromTimeStamp(tempDate,patientDashboard.dateFormat,'/')).getTime();
+             var fromDateCompare = new Date($scope.fromDate).getTime();
+             var toDateCompare = new Date($scope.toDate).getTime();
               if($scope.durationRange !== "Day" && !$scope.isSameDayAdherenceTrend){
-                if(tempDateFormatted >= $scope.fromDate && tempDateFormatted <= $scope.toDate){
+                if(tempDateFormatted >= fromDateCompare && tempDateFormatted <= toDateCompare){
                    $scope.adherenceTrendData.xAxis.xLabels.push(tempDate);
                 $scope.adherenceTrendData.xAxis.categories[key] = tempDate;
                
@@ -2031,7 +2037,7 @@ angular.module('hillromvestApp')
               }
                                
               }else{
-                if(tempDateFormatted == $scope.fromDate){
+                if(tempDateFormatted == fromDateCompare){
                   $scope.adherenceTrendData.xAxis.xLabels.push(tempDate);
                 $scope.adherenceTrendData.xAxis.categories[key] = Highcharts.dateFormat("%I:%M %p",tempDate) ;
               }
@@ -3804,8 +3810,10 @@ $scope.getComplianceGraph = function(){
             }
             var dateTextLabel = Highcharts.dateFormat("%m/%d/%Y",tempDate);
             dateTextLabel += (Highcharts.dateFormat("%I:%M %p",tempDate))? ' ( ' + Highcharts.dateFormat("%I:%M %p",tempDate) + ' )' : '';             
-              var tempDateFormatted = dateService.getDateFromTimeStamp(tempDate,patientDashboard.dateFormat,'/');
-            if(tempDateFormatted >= $scope.fromDate && tempDateFormatted <= $scope.toDate){
+              var tempDateFormatted = new Date(dateService.getDateFromTimeStamp(tempDate,patientDashboard.dateFormat,'/')).getTime();
+             var fromDateCompare = new Date($scope.fromDate).getTime();
+             var toDateCompare = new Date($scope.toDate).getTime();
+            if(tempDateFormatted >= fromDateCompare && tempDateFormatted <= toDateCompare){
                responseData.xAxis.xLabels.push(dateTextLabel);            
               xData[key] = tempDate;   
               }
@@ -4161,8 +4169,10 @@ $scope.getComplianceGraph = function(){
                tempDate = dateService.convertToTimestamp(x);
              }
              }
-             var tempDateFormatted = dateService.getDateFromTimeStamp(tempDate,patientDashboard.dateFormat,'/');
-                if(tempDateFormatted >= $scope.fromDate && tempDateFormatted <= $scope.toDate){
+             var tempDateFormatted = new Date(dateService.getDateFromTimeStamp(tempDate,patientDashboard.dateFormat,'/')).getTime();
+             var fromDateCompare = new Date($scope.fromDate).getTime();
+             var toDateCompare = new Date($scope.toDate).getTime();
+                if(tempDateFormatted >= fromDateCompare && tempDateFormatted <= toDateCompare){
                    $scope.hmrChartData.xAxis.xLabels.push(tempDate);
                 $scope.hmrChartData.xAxis.categories[key] = tempDate;
                
@@ -4186,8 +4196,9 @@ $scope.getComplianceGraph = function(){
               tempDate = dateService.convertToTimestamp(x);
              }
              }
-             var tempDateFormatted = dateService.getDateFromTimeStamp(tempDate,patientDashboard.dateFormat,'/');
-                if(tempDateFormatted == $scope.fromDate){
+             var tempDateFormatted = new Date(dateService.getDateFromTimeStamp(tempDate,patientDashboard.dateFormat,'/')).getTime();
+             var fromDateCompare = new Date($scope.fromDate).getTime();
+                if(tempDateFormatted == fromDateCompare){
                    $scope.hmrChartData.xAxis.xLabels.push(tempDate);
                 $scope.hmrChartData.xAxis.categories[key] = Highcharts.dateFormat("%I:%M %p",tempDate) ;
                
@@ -4286,10 +4297,13 @@ $scope.getComplianceGraph = function(){
              else{
             tempDate = dateService.convertToTimestamp(x);
              }
-             } var tempDateFormatted = dateService.getDateFromTimeStamp(tempDate,patientDashboard.dateFormat,'/');
+             }
+             var tempDateFormatted = new Date(dateService.getDateFromTimeStamp(tempDate,patientDashboard.dateFormat,'/')).getTime();
+             var fromDateCompare = new Date($scope.fromDate).getTime();
+             var toDateCompare = new Date($scope.toDate).getTime();
 
               if($scope.durationRange !== "Day" && !$scope.isSameDayAdherenceTrend){
-                if(tempDateFormatted >= $scope.fromDate && tempDateFormatted <= $scope.toDate){
+                if(tempDateFormatted >= fromDateCompare && tempDateFormatted <= toDateCompare){
                    $scope.adherenceTrendData.xAxis.xLabels.push(tempDate);
                 $scope.adherenceTrendData.xAxis.categories[key] = tempDate; 
               }
@@ -4300,7 +4314,7 @@ $scope.getComplianceGraph = function(){
               }
                               
               }else{
-                if(tempDateFormatted == $scope.fromDate){
+                if(tempDateFormatted == fromDateCompare){
                    $scope.adherenceTrendData.xAxis.xLabels.push(tempDate);
                 $scope.adherenceTrendData.xAxis.categories[key] = Highcharts.dateFormat("%I:%M %p",tempDate) ; 
               }
@@ -5273,8 +5287,10 @@ $scope.getComplianceGraph1 = function(){
             var dateTextLabel = Highcharts.dateFormat("%m/%d/%Y",dateService.convertToTimestamp(x));
             dateTextLabel += (Highcharts.dateFormat("%I:%M %p",dateService.convertToTimestamp(x)))? ' ( ' + Highcharts.dateFormat("%I:%M %p",dateService.convertToTimestamp(x)) + ' )' : '';
             
-            var tempDateFormatted = dateService.getDateFromTimeStamp(tempDate,patientDashboard.dateFormat,'/');
-            if(tempDateFormatted >= $scope.fromDate && tempDateFormatted <= $scope.toDate){
+            var tempDateFormatted = new Date(dateService.getDateFromTimeStamp(tempDate,patientDashboard.dateFormat,'/')).getTime();
+             var fromDateCompare = new Date($scope.fromDate).getTime();
+             var toDateCompare = new Date($scope.toDate).getTime();
+            if(tempDateFormatted >= fromDateCompare && tempDateFormatted <= toDateCompare){
               responseData.xAxis.xLabels.push(dateTextLabel);            
               xData[key] = dateService.convertToTimestamp(x);      
               }
@@ -5337,7 +5353,6 @@ $scope.getComplianceGraph1 = function(){
          $scope.hmrChartData1Raw = $scope.discardLessHMRData($scope.hmrChartData1Raw);    
           }
           $scope.hmrChartData1 = $scope.hmrChartData1Raw;
-           console.log("hmrdata line 4441:",$scope.hmrChartData1Raw);
         $scope.noDataAvailableForHMR1  = false;       
         if($scope.hmrChartData1 && typeof($scope.hmrChartData1) === "object" && ($scope.hmrChartData1Raw.xAxis.categories.length > 0 && $scope.hmrChartData1Raw.series[0].data.length > 0)){ 
           $scope.noDataAvailableForHMR1 = false;      
@@ -5379,8 +5394,11 @@ $scope.getComplianceGraph1 = function(){
              else{
                tempDate = dateService.convertToTimestamp(x);
              }
-             }  var tempDateFormatted = dateService.getDateFromTimeStamp(tempDate,patientDashboard.dateFormat,'/');
-                 if(tempDateFormatted >= $scope.fromDate && tempDateFormatted <= $scope.toDate){
+             } 
+             var tempDateFormatted = new Date(dateService.getDateFromTimeStamp(tempDate,patientDashboard.dateFormat,'/')).getTime();
+             var fromDateCompare = new Date($scope.fromDate).getTime();
+             var toDateCompare = new Date($scope.toDate).getTime();
+                 if(tempDateFormatted >= fromDateCompare && tempDateFormatted <= toDateCompare){
                 $scope.hmrChartData1.xAxis.xLabels.push(tempDate);
                 $scope.hmrChartData1.xAxis.categories[key] = tempDate; 
               }
@@ -5402,7 +5420,9 @@ $scope.getComplianceGraph1 = function(){
               tempDate = dateService.convertToTimestamp(x);
              }
              }
-              if(dateService.getDateFromTimeStamp(tempDate,patientDashboard.dateFormat,'/') == $scope.fromDate){
+            var tempDateFormatted = new Date(dateService.getDateFromTimeStamp(tempDate,patientDashboard.dateFormat,'/')).getTime();
+             var fromDateCompare = new Date($scope.fromDate).getTime();
+              if(tempDateFormatted == fromDateCompare){
                 $scope.hmrChartData1.xAxis.xLabels.push(tempDate);
                 $scope.hmrChartData1.xAxis.categories[key] = Highcharts.dateFormat("%I:%M %p",tempDate) ;
               }
