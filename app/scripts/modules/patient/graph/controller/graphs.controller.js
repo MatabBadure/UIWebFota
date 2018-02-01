@@ -498,6 +498,7 @@ angular.module('hillromvestApp')
       $scope.fromDateHistory = dateService.getDateFromTimeStamp($scope.fromTimeStampHistory,patientDashboard.dateFormat,'/');
       }
       else{
+        if($scope.preferredTimezone){
       $scope.toTimeStamp = $scope.dateRangeForGraphs(new Date().getTime(),moment.tz.guess(),$scope.preferredTimezone,'',patientDashboard.alternateTimestampFormat);//new Date().getTime();
      // $scope.toDate = $scope.dateRangeForGraphs($scope.toTimeStamp,$scope.preferredTimezone,,'','X');
       $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');
@@ -507,6 +508,13 @@ angular.module('hillromvestApp')
       $scope.fromTimeStamp = $scope.dateRangeForGraphs(fromDateTime,moment.tz.guess(),$scope.preferredTimezone,'',patientDashboard.alternateTimestampFormat);
       $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
       $scope.fromTimeStamp = $scope.dateRangeForGraphs($scope.fromTimeStamp,$scope.preferredTimezone,patientDashboard.serverDateTimeZone,'',patientDashboard.alternateTimestampFormat);
+         }
+         else{
+          $scope.toTimeStamp = new Date().getTime();
+          $scope.fromTimeStamp = dateService.getnDaysBackTimeStamp(durationInDays);
+          $scope.toDate =  dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');
+          $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
+         }
          }
     };
     $scope.dateRangeForGraphs = function(date,fromTimezone,toTimezone,fromFormat,toFormat){
@@ -3187,6 +3195,10 @@ angular.module('hillromvestApp')
             $scope.duration = "day";
           }
           $scope.getAdherenceScore($scope.duration);
+        },
+         'click.daterangepicker': function(ev, picker) {
+          $("#dp1History").data('daterangepicker').setStartDate($scope.fromDateHistory);
+          $("#dp1History").data('daterangepicker').setEndDate($scope.toDateHistory);
         }
       },
       opens: 'left'
