@@ -215,7 +215,7 @@
 					<li role="presentation" class="" ng-if="!isTestResults"><a ng-class="{active: durationRange === 'Week'}" href="" ng-click="isGraphLoaded && getWeekChart()">Week</a></li>
 					<li role="presentation" class="" ng-if="!isTestResults"><a href="" ng-class="{active: durationRange === 'Month'}" ng-click="isGraphLoaded && getMonthChart()" translate="graph.month"></a></li>
 					<li role="presentation" class=""><a href="" ng-class="{active: durationRange === 'Year' || (isTestResults && durationRange != 'Custom')}" ng-click="isGraphLoaded && getYearChart()" translate="graph.year"></a></li>
-					<li role="presentation" class="" id="dp1"><a href="" date-range-picker class="date-picker" ng-model="dates" parentEl="#dp1" options="opts" ><span class="icon-calendar"></span></a></li>
+					<li role="presentation" class="" id="dp1"><a href="" date-range-picker class="date-picker" ng-model="dates" id="dp1patientGraph" parentEl="#dp1" options="opts" ><span class="icon-calendar"></span></a></li>
 				</ul>
 			</div>
 		</div>

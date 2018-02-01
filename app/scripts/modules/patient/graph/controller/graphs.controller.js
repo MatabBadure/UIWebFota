@@ -338,7 +338,7 @@ angular.module('hillromvestApp')
     };
     
     $scope.opts = {
-      maxDate: ($scope.preferredTimezone)?moment.tz(new Date(),$scope.preferredTimezone).format(patientDashboard.timestampMMDDYY):new Date(),
+      maxDate: new Date(),
       format: patientDashboard.dateFormat,
       dateLimit: {"months":24},
       eventHandlers: {'apply.daterangepicker': function(ev, picker) {
@@ -353,8 +353,8 @@ angular.module('hillromvestApp')
           $scope.selectChart($scope.fromDate);        
         },
          'click.daterangepicker': function(ev, picker) {
-          $("#dp1").data('daterangepicker').setStartDate($scope.fromDate);
-          $("#dp1").data('daterangepicker').setEndDate($scope.toDate);
+          $("#dp1patientGraph").data('daterangepicker').setStartDate($scope.fromDate);
+          $("#dp1patientGraph").data('daterangepicker').setEndDate($scope.toDate);
         }
       },
       opens: 'left'
