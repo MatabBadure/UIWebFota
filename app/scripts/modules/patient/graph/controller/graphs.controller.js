@@ -3184,7 +3184,7 @@ angular.module('hillromvestApp')
       angular.element(document.querySelector('.datepicker')).hide();
     });
     $scope.dateOpts = {
-      maxDate: ($scope.preferredTimezone)?moment.tz(new Date(),$scope.preferredTimezone).format(patientDashboard.timestampMMDDYY):new Date(),
+      maxDate: new Date(),
       format: patientDashboard.dateFormat,
       dateLimit: {"months":24},
       eventHandlers: {'apply.daterangepicker': function(ev, picker) {
