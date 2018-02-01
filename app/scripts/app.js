@@ -96,7 +96,7 @@ angular.module('hillromvestApp',
 
     //Cache everything except rest api requests
 
-    httpRequestInterceptorCacheBusterProvider.setMatchlist([/.*api.*/, /.*protected.*/, /.*.json.*/, /.*scripts.*/, /.*main.min.js.*/,/.*main.min.css.*/], true, 'Sprint_7_2018_1');
+    httpRequestInterceptorCacheBusterProvider.setMatchlist([/.*api.*/, /.*protected.*/, /.*.json.*/], true);
 
 
 
