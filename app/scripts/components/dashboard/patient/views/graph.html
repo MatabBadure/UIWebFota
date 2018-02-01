@@ -274,10 +274,10 @@
 	<div id = "NodataDiv" class="graph_nodata" ng-if = "((hmrChartData1.length == 0) || (noDataAvailableForHMR1)) && noDataStatus && isHMR" ng-show="forhidingMonarchHmrGraph">
 		<span class="noData_text"> No Therapy Transmission Received for This Day!</span>
 	</div>
-		<div id = "NodataDiv" class="graph_nodata" ng-if = "(compilencechartData.length ==0)  && noDataStatus && isCompliance" ng-show="forhidingVestProtocolGraph">
+		<div id = "NodataDiv" class="graph_nodata" ng-if = "((compilencechartData.length == 0) || (noDataAvailable))  && noDataStatus && isCompliance" ng-show="forhidingVestProtocolGraph">
 		<span class="noData_text"> No Therapy Transmission Received for This Day!</span>
 	</div>
-	<div id = "NodataDiv" class="graph_nodata" ng-if = "(compilencechartData1.length ==0)  && noDataStatus && isCompliance" ng-show="forhidingMonarchProtocolGraph">
+	<div id = "NodataDiv" class="graph_nodata" ng-if = "((compilencechartData1.length == 0) || (noDataAvailable1))  && noDataStatus && isCompliance" ng-show="forhidingMonarchProtocolGraph">
 		<span class="noData_text"> No Therapy Transmission Received for This Day!</span>
 	</div>
 		<div id = "NodataDiv" class="graph_nodata" ng-if = "isAdherenceTrend && noDataAvailableForAdherence">
