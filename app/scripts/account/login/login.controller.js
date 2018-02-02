@@ -165,12 +165,16 @@ angular.module('hillromvestApp')
           }
            });
             logged.patientID = response.data.user.id;
+            StorageService.save('logged', logged);
+            $scope.getisMessagesOpted();
             patientsurveyService.isSurvey(response.data.user.id).then(function(response) {
               $rootScope.surveyId = response.data.id;
               $state.go('patientdashboard');
             });
           } else if(response.data.user.authorities[0].name === loginConstants.role.hcp){
             logged.userId = response.data.user.id;
+            StorageService.save('logged', logged);
+            $scope.getisMessagesOpted();
             $state.go('hcpdashboard');
           } else if(response.data.user.authorities[0].name === 'CARE_GIVER'){
             logged.userId = response.data.user.id;
@@ -181,6 +185,8 @@ angular.module('hillromvestApp')
             
           } else if(response.data.user.authorities[0].name === 'CLINIC_ADMIN'){
             logged.userId = response.data.user.id;
+            StorageService.save('logged', logged);
+            $scope.getisMessagesOpted();
             $state.go('clinicadmindashboard');
           } else if(response.data.user.authorities[0].name === loginConstants.role.acctservices){
             logged.userId = response.data.user.id;
@@ -199,6 +205,7 @@ angular.module('hillromvestApp')
             $state.go('fotaHome');
           }else{
             logged.userId = response.data.user.id;
+            StorageService.save('logged', logged);
             $state.go('patientUser');
           }
           StorageService.save('logged', logged);
