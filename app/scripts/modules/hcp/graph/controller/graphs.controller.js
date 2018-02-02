@@ -319,8 +319,14 @@ angular.module('hillromvestApp')
 		if($state.current.name === 'hcpdashboard'){
 			hcpDashBoardService.getStatistics(clinicId, userId, $scope.ClinicDashboardDeviceType).then(function(response){
 				  $scope.statistics = response.data.statitics;
-				  $scope.statistics.date = $scope.getYesterday();				  
-				  $scope.toDate = dateService.getDateFromTimeStamp(new Date($scope.statistics.date),hcpDashboardConstants.USdateFormat,'/');
+				  $scope.statistics.date = $scope.getYesterday();
+				  if($scope.preferredTimezone){
+				  var dateInitial = moment.tz($scope.statistics.date,$scope.preferredTimezone).format();
+				 $scope.statistics.date = $scope.toDate = moment.tz(dateInitial,$scope.preferredTimezone).format(hcpDashboardConstants.USdateFormat);
+				  }
+				  else{
+				 $scope.toDate = dateService.getDateFromTimeStamp(new Date($scope.statistics.date),hcpDashboardConstants.USdateFormat,'/');
+				  }
 				  $scope.getPercentageStatistics($scope.statistics);
 				}).catch(function(response){
 				  notyService.showError(response);
@@ -330,10 +336,23 @@ angular.module('hillromvestApp')
 		  clinicadminService.getStatistics(clinicId, userId, $scope.ClinicDashboardDeviceType).then(function(response){
 		  $scope.statistics = response.data.statitics;
 		  $scope.statistics.date = $scope.getYesterday();
-		  $scope.toDate = dateService.getDateFromTimeStamp(new Date($scope.statistics.date),hcpDashboardConstants.USdateFormat,'/');
+		  if($scope.preferredTimezone){
+		  var dateInitial = moment.tz($scope.statistics.date,$scope.preferredTimezone).format();
+		  $scope.statistics.date = $scope.toDate = moment.tz(dateInitial,$scope.preferredTimezone).format(hcpDashboardConstants.USdateFormat);
+		}
+		else{
+			$scope.toDate = dateService.getDateFromTimeStamp(new Date($scope.statistics.date),hcpDashboardConstants.USdateFormat,'/');
+		}
 		  $scope.getPercentageStatistics($scope.statistics);
 		}).catch(function(response){
-		 $scope.toDate = $scope.statistics.date = $scope.getYesterday();
+		  $scope.statistics.date = $scope.getYesterday();
+		   if($scope.preferredTimezone){
+		   var dateInitial = moment.tz($scope.statistics.date,$scope.preferredTimezone).format();
+		 $scope.statistics.date = $scope.toDate = moment.tz(dateInitial,$scope.preferredTimezone).format(hcpDashboardConstants.USdateFormat);
+		  }
+		  else{
+		  	$scope.toDate = $scope.statistics.date;
+		  }
 		  notyService.showError(response);
 		});
 
@@ -342,10 +361,23 @@ angular.module('hillromvestApp')
 		  clinicadminService.getStatistics(clinicId, userId, $scope.ClinicDashboardDeviceType).then(function(response){
 		  $scope.statistics = response.data.statitics;
 		  $scope.statistics.date = $scope.getYesterday();
-		  $scope.toDate = dateService.getDateFromTimeStamp(new Date($scope.statistics.date),hcpDashboardConstants.USdateFormat,'/');
+		   if($scope.preferredTimezone){
+		  var dateInitial = moment.tz($scope.statistics.date,$scope.preferredTimezone).format();
+		  $scope.statistics.date = $scope.toDate = moment.tz(dateInitial,$scope.preferredTimezone).format(hcpDashboardConstants.USdateFormat);
+		  }
+		  else{
+		  	$scope.toDate = dateService.getDateFromTimeStamp(new Date($scope.statistics.date),hcpDashboardConstants.USdateFormat,'/');
+		  }
 		  $scope.getPercentageStatistics($scope.statistics);
 		}).catch(function(response){
-		 $scope.toDate = $scope.statistics.date = $scope.getYesterday();
+		  $scope.statistics.date = $scope.getYesterday();
+		  if($scope.preferredTimezone){
+		 var dateInitial = moment.tz($scope.statistics.date,$scope.preferredTimezone).format();
+		 $scope.statistics.date = $scope.toDate = moment.tz(dateInitial,$scope.preferredTimezone).format(hcpDashboardConstants.USdateFormat);
+		  }
+		  else{
+		  	$scope.toDate = $scope.statistics.date;
+		  }
 		  notyService.showError(response);
 		});
 
@@ -472,7 +504,7 @@ angular.module('hillromvestApp')
 
 	/*Dtate picker js*/
 	$scope.opts = {
-		maxDate: ($scope.preferredTimezone)?moment.tz(new Date(),$scope.preferredTimezone).format(patientDashboard.timestampMMDDYY):new Date(),
+		maxDate: new Date(),
 		format: patientDashboard.dateFormat,
 		dateLimit: {"months":patientDashboard.maxDurationInMonths},
 		eventHandlers: {
@@ -480,7 +512,11 @@ angular.module('hillromvestApp')
 			  $scope.calculateDateFromPicker(picker);
 			  $scope.drawGraph();
 			  $scope.selectedDateOption = '';
-			}
+			},
+         'click.daterangepicker': function(ev, picker) {
+          $("#dp3clinic").data('daterangepicker').setStartDate($scope.fromDate);
+          $("#dp3clinic").data('daterangepicker').setEndDate($scope.toDate);
+        }
 		},
 		opens: 'left'
 	};
@@ -585,7 +621,9 @@ angular.module('hillromvestApp')
 				$scope.cumulativeChartData = response.data;
 				if($scope.cumulativeChartData && typeof($scope.cumulativeChartData) === "object"){ 
 					var dateFinal = "";
-					angular.forEach($scope.cumulativeChartData.xAxis.categories, function(x, key){
+					//angular.forEach($scope.cumulativeChartData.xAxis.categories, function(x, key){
+						for(var key = 0;key < $scope.cumulativeChartData.xAxis.categories.length;key++){
+							var x = $scope.cumulativeChartData.xAxis.categories[key];
 						if(loggedRole === 'ADMIN' || loggedRole === loginConstants.role.acctservices || loggedRole === loginConstants.role.associates || loggedRole === loginConstants.role.customerservices){
 			               dateFinal = dateService.convertToTimestamp(x);
 			              }
@@ -599,8 +637,22 @@ angular.module('hillromvestApp')
 		        		dateFinal = dateService.convertToTimestamp(x);
 		        	}
 		             }
-		              $scope.cumulativeChartData.xAxis.categories[key] = new Date(dateFinal).getTime();
-		            });
+		             var tempDateFormatted = new Date(dateFinal).getTime();
+		             var fromDateCompare = new Date($scope.fromDate).getTime();
+		             var toDateCompare = new Date($scope.toDate).getTime();
+		             if(tempDateFormatted >= fromDateCompare && tempDateFormatted <= toDateCompare){
+		             	$scope.cumulativeChartData.xAxis.categories[key] = tempDateFormatted;
+		             }
+		             else{
+		             	$scope.cumulativeChartData.xAxis.categories.splice(key,1);
+		             	$scope.cumulativeChartData.series[0].data.splice(key,1);
+		             	$scope.cumulativeChartData.series[1].data.splice(key,1);
+		             	$scope.cumulativeChartData.series[2].data.splice(key,1);
+		             	$scope.cumulativeChartData.series[3].data.splice(key,1);
+		             	key--;
+		             }
+		              }
+		            //});
 		            angular.forEach($scope.cumulativeChartData.series, function(s, key1){
 		            	if($scope.cumulativeChartData.series[key1].name.toLowerCase() === "missed therapy days"){
 		            		$scope.cumulativeChartData.series[key1].color = "#ef6548";
@@ -632,9 +684,9 @@ angular.module('hillromvestApp')
 							$scope.cumulativeChart("cumulativeGraph", $scope.cumulativeChartData);          
 						}, 10); 
 			          });
-					if(loggedRole === loginConstants.hcp || loggedRole === loginConstants.clinicadmin){
+					/*if(loggedRole === loginConstants.hcp || loggedRole === loginConstants.clinicadmin){
 					 $scope.getRangeOfDates('Cumulative');
-					}
+					}*/
 				}else{
 					$scope.plotNoDataAvailable();
 				}
@@ -656,7 +708,9 @@ angular.module('hillromvestApp')
 				if($scope.treatmentChartData && typeof($scope.treatmentChartData) === "object"){ 
 					$scope.noDataAvailable = false;
 					var dateFinal = "";
-					angular.forEach($scope.treatmentChartData.xAxis.categories, function(x, key){
+					//angular.forEach($scope.treatmentChartData.xAxis.categories, function(x, key){
+						for(var key = 0;key < $scope.treatmentChartData.xAxis.categories.length; key++){
+							var x = $scope.treatmentChartData.xAxis.categories[key];
 						if(loggedRole === 'ADMIN' || loggedRole === loginConstants.role.acctservices || loggedRole === loginConstants.role.associates || loggedRole === loginConstants.role.customerservices){
 			                dateFinal = dateService.convertToTimestamp(x);
 			              }
@@ -670,8 +724,19 @@ angular.module('hillromvestApp')
 		        	 	dateFinal = dateService.convertToTimestamp(x);
 		        	 }	           
 	        	   }
-	        	    $scope.treatmentChartData.xAxis.categories[key] = new Date(dateFinal).getTime();
-		            });
+	        	   var tempDateFormatted = new Date(dateFinal).getTime();
+		             var fromDateCompare = new Date($scope.fromDate).getTime();
+		             var toDateCompare = new Date($scope.toDate).getTime();
+		             if(tempDateFormatted >= fromDateCompare && tempDateFormatted <= toDateCompare){
+		             	$scope.treatmentChartData.xAxis.categories[key] = tempDateFormatted;
+		             }
+		             else{
+		             	$scope.treatmentChartData.xAxis.categories.splice(key,1);
+		             	$scope.treatmentChartData.series[0].data.splice(key,1);
+		             	key--;
+		             }
+	        	    }
+		            //});
 		            angular.forEach($scope.treatmentChartData.series, function(s, key1){
 		            	if($scope.treatmentChartData.series[key1].name.toLowerCase() === "average length of treatment"){
 							$scope.treatmentChartData.series[key1].yAxis = 1;
@@ -711,11 +776,29 @@ angular.module('hillromvestApp')
 	};
 
 	$scope.calculateTimeDuration = function(durationInDays) {
+		if($scope.preferredTimezone){
+	  $scope.toTimeStamp = $scope.dateRangeForGraphs(new Date().getTime(),moment.tz.guess(),$scope.preferredTimezone,'',patientDashboard.alternateTimestampFormat);//new Date().getTime();
+     // $scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,patientDashboard.dateFormat,'/');
+      $scope.toTimeStamp = $scope.dateRangeForGraphs($scope.toTimeStamp,$scope.preferredTimezone,patientDashboard.serverDateTimeZone,'',patientDashboard.alternateTimestampFormat);
+      var fromDateTime = dateService.getnDaysBackTimeStamp(durationInDays);
+      $scope.fromTimeStamp = $scope.dateRangeForGraphs(fromDateTime,moment.tz.guess(),$scope.preferredTimezone,'',patientDashboard.alternateTimestampFormat);
+      $scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,patientDashboard.dateFormat,'/');
+      $scope.fromTimeStamp = $scope.dateRangeForGraphs($scope.fromTimeStamp,$scope.preferredTimezone,patientDashboard.serverDateTimeZone,'',patientDashboard.alternateTimestampFormat);
+		}
+		else{
 		$scope.toTimeStamp = new Date().getTime();
-		$scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,hcpDashboardConstants.USdateFormat,'/');
-		$scope.fromTimeStamp = dateService.getnDaysBackTimeStamp(durationInDays);;
+		//$scope.toDate = dateService.getDateFromTimeStamp($scope.toTimeStamp,hcpDashboardConstants.USdateFormat,'/');
+		$scope.fromTimeStamp = dateService.getnDaysBackTimeStamp(durationInDays);
 		$scope.fromDate = dateService.getDateFromTimeStamp($scope.fromTimeStamp,hcpDashboardConstants.USdateFormat,'/');
+	}
 	};
+	$scope.dateRangeForGraphs = function(date,fromTimezone,toTimezone,fromFormat,toFormat){
+      var dateInitial = moment.tz(date,fromTimezone).format();
+      dateInitial = moment.tz(dateInitial,fromTimezone).format(fromFormat);
+      var dateFinal = moment.tz(dateInitial,toTimezone).format();
+      dateFinal = moment.tz(dateInitial,toTimezone).format(toFormat);
+      return dateFinal;
+    };
 
 	$scope.chooseGraph = function() {
 		if($scope.selectedClinic.id){
