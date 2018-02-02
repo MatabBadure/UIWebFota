@@ -321,8 +321,8 @@ angular.module('hillromvestApp')
 				  $scope.statistics = response.data.statitics;
 				  $scope.statistics.date = $scope.getYesterday();
 				  if($scope.preferredTimezone){
-				  var dateInitial = moment.tz($scope.statistics.date,$scope.preferredTimezone).format();
-				 $scope.statistics.date = $scope.toDate = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.dateFormat);
+				  var dateInitial = moment.tz($scope.statistics.date,patientDashboard.serverDateTimeZone).format();
+				 $scope.statistics.date = $scope.toDate = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYY);
 				  }
 				  else{
 				 $scope.toDate = dateService.getDateFromTimeStamp(new Date($scope.statistics.date),hcpDashboardConstants.USdateFormat,'/');
@@ -337,8 +337,8 @@ angular.module('hillromvestApp')
 		  $scope.statistics = response.data.statitics;
 		  $scope.statistics.date = $scope.getYesterday();
 		  if($scope.preferredTimezone){
-		  var dateInitial = moment.tz($scope.statistics.date,$scope.preferredTimezone).format();
-		  $scope.statistics.date = $scope.toDate = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.dateFormat);
+		  var dateInitial = moment.tz($scope.statistics.date,patientDashboard.serverDateTimeZone).format();
+		  $scope.statistics.date = $scope.toDate = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYY);
 		}
 		else{
 			$scope.toDate = dateService.getDateFromTimeStamp(new Date($scope.statistics.date),hcpDashboardConstants.USdateFormat,'/');
@@ -347,8 +347,8 @@ angular.module('hillromvestApp')
 		}).catch(function(response){
 		  $scope.statistics.date = $scope.getYesterday();
 		   if($scope.preferredTimezone){
-		   var dateInitial = moment.tz($scope.statistics.date,$scope.preferredTimezone).format();
-		 $scope.statistics.date = $scope.toDate = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.dateFormat);
+		   var dateInitial = moment.tz($scope.statistics.date,patientDashboard.serverDateTimeZone).format();
+		 $scope.statistics.date = $scope.toDate = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYY);
 		  }
 		  else{
 		  	$scope.toDate = $scope.statistics.date;
@@ -362,8 +362,8 @@ angular.module('hillromvestApp')
 		  $scope.statistics = response.data.statitics;
 		  $scope.statistics.date = $scope.getYesterday();
 		   if($scope.preferredTimezone){
-		  var dateInitial = moment.tz($scope.statistics.date,$scope.preferredTimezone).format();
-		  $scope.statistics.date = $scope.toDate = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.dateFormat);
+		  var dateInitial = moment.tz($scope.statistics.date,patientDashboard.serverDateTimeZone).format();
+		  $scope.statistics.date = $scope.toDate = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYY);
 		  }
 		  else{
 		  	$scope.toDate = dateService.getDateFromTimeStamp(new Date($scope.statistics.date),hcpDashboardConstants.USdateFormat,'/');
@@ -372,8 +372,8 @@ angular.module('hillromvestApp')
 		}).catch(function(response){
 		  $scope.statistics.date = $scope.getYesterday();
 		  if($scope.preferredTimezone){
-		 var dateInitial = moment.tz($scope.statistics.date,$scope.preferredTimezone).format();
-		 $scope.statistics.date = $scope.toDate = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.dateFormat);
+		 var dateInitial = moment.tz($scope.statistics.date,patientDashboard.serverDateTimeZone).format();
+		 $scope.statistics.date = $scope.toDate = moment.tz(dateInitial,$scope.preferredTimezone).format(patientDashboard.timestampMMDDYY);
 		  }
 		  else{
 		  	$scope.toDate = $scope.statistics.date;
