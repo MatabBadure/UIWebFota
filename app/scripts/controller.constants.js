@@ -37,7 +37,7 @@ var patientDashboard = {
 	"complianceGraph" : "COMPLIANCE_GRAPH",
 	"defaultDaysForBadges" : 1,
 	"timestampMMDDYY" : "MM/DD/YYYY",
-	"timestampMMDDYYHHMMSS" : "MM/DD/YYYY HH:MM:SS",
+	"timestampMMDDYYHHMMSS" : "MM/DD/YYYY HH:mm:ss",
 	"serverDateTimeZone" : "Etc/GMT+5"
 }
 
