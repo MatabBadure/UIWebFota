@@ -59,6 +59,8 @@ angular.module('hillromvestApp')
 		$scope.prescribeDevice = false;
 		$scope.isYesterday = true;
 		$scope.selectedClinic = {};
+		$scope.isMessagesOptedFlag = StorageService.get('messagesFlag').isMessageOpted;
+		$scope.selectedClinicMessagesFalse = StorageService.get('messagesFlag').selectedClinicMessagesFalse;
 		$scope.statistics = {
 			"date":$scope.toDate,
 			"patientsWithSettingDeviation":0,
@@ -526,14 +528,18 @@ angular.module('hillromvestApp')
   $scope.switchClinic = function(clinic){
 	if($scope.selectedClinic.id !== clinic.id){
 	  $scope.selectedClinic = clinic;
+	  var messagesFlag = StorageService.get('messagesFlag');
 	  $scope.getStatistics($scope.selectedClinic.id, StorageService.get('logged').userId);
 	  $scope.drawGraph();
 	  if(!clinic.isMessageOpted){   
-      $rootScope.selectedClinicMessagesFalse = false;    
+      //$rootScope.selectedClinicMessagesFalse = false;  
+      messagesFlag.selectedClinicMessagesFalse = false;
    }    
    else{   
-        $rootScope.selectedClinicMessagesFalse = true;   
+        //$rootScope.selectedClinicMessagesFalse = true;  
+        messagesFlag.selectedClinicMessagesFalse = true; 
     }
+    StorageService.save('messagesFlag',messagesFlag);
 	}
 	$state.go('clinicadmindashboard',{'clinicId': $scope.selectedClinic.id});
 	$scope.getisMessagesOpted();

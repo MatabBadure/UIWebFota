@@ -25,6 +25,7 @@ angular.module('hillromvestApp')
   }
 	$rootScope.getisMessagesOpted = function(){
 		//$rootScope.isMessagesOptedFlag = false;
+    $scope.selectedClinicMessagesFalse = StorageService.get('messagesFlag').selectedClinicMessagesFalse;
 		$scope.getisMessagesOptedfromService();
 	}
 	$rootScope.getDeviceType = function(){
@@ -124,11 +125,16 @@ angular.module('hillromvestApp')
     	else{
     		userid = StorageService.get('logged').userId;
     	}
+      var messagesFlag = StorageService.get('messagesFlag');
     	UserService.getisMessagesOpted(userid).then(function(response){
-    		$rootScope.isMessagesOptedFlag = response.data;
+    		//$rootScope.isMessagesOptedFlag = response.data;
+        $scope.isMessagesOptedFlag = messagesFlag.isMessagesOptedFlag = response.data;
+        StorageService.save('messagesFlag',messagesFlag);
     		//return $rootScope.isMessagesOptedFlag;
     	}).catch(function(response){
-    		$rootScope.isMessagesOptedFlag = false;
+    		//$rootScope.isMessagesOptedFlag = false;
+        $scope.isMessagesOptedFlag = messagesFlag.isMessagesOptedFlag = false;
+         StorageService.save('messagesFlag',messagesFlag);
     		//return $rootScope.isMessagesOptedFlag;
     	});
     };

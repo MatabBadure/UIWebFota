@@ -149,7 +149,10 @@ angular.module('hillromvestApp')
           $rootScope.userLastName = response.data.user.lastName;
           $rootScope.userEmail = response.data.user.email;
           $rootScope.userId = response.data.user.id;
-          $rootScope.selectedClinicMessagesFalse = true;
+          //$rootScope.selectedClinicMessagesFalse = true;
+          var messagesFlag = {};
+          messagesFlag.selectedClinicMessagesFalse = true;
+          StorageService.save('messagesFlag',messagesFlag);
           localStorage.setItem('timestampPreference',response.data.user.timeZone);
           
           if(response.data.user.authorities[0].name === loginConstants.role.patient){
