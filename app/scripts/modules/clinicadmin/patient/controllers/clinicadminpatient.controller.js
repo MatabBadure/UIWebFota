@@ -121,6 +121,7 @@ angular.module('hillromvestApp')
       var resetDate = $scope.resetStartDate;
       var res = resetDate.split("/");
       var resetDateFinal = res[2]+"-"+res[0]+"-"+res[1];
+
       var resetTo = $scope.scoreToReset;
       var tempJustification = $scope.justification;
       if(tempJustification=="Other")
@@ -183,7 +184,7 @@ angular.module('hillromvestApp')
       patientService.getAdherenceScoreResetHistory(patientId,$scope.PageNumber,$scope.perPageCount,$scope.getDeviceTypeforBothIcon()).then(function(response){
      
         $scope.resetHistoryData = response.data.Adherence_Reset_History.content;  
-        if($scope.preferredTimezone){
+       /*if($scope.preferredTimezone){
          angular.forEach($scope.resetHistoryData, function(x, key){      
           var onlyTime = x.resetTime.slice(0, -2);
           var xDate = dateService.getinMomentFormat(x.resetDate,"mm/dd/yyyy")+ " " + onlyTime + ":00";
@@ -197,7 +198,7 @@ angular.module('hillromvestApp')
          $scope.resetHistoryData[key].resetDate = res[0];
          $scope.resetHistoryData[key].resetTime = res[1].slice(0, -3) + x.resetTime.slice(-2);   
          });
-       }
+       }*/
       $scope.totalPages = response.data.Adherence_Reset_History.totalPages;
       $scope.totalElements = response.data.Adherence_Reset_History.totalElements;
 
@@ -283,7 +284,7 @@ angular.module('hillromvestApp')
             mm='0'+mm
         } 
         var today = mm+'/'+dd+'/'+yyyy;
-        $scope.todayDate = today;
+          $scope.todayDate = today;      
     };
 
 

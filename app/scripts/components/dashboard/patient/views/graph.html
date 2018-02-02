@@ -62,7 +62,7 @@
 					<li role="presentation" class=""><a ng-class="{active: activeSelection === 'week'}" ng-click="getAdherenceScore('week')" href="">Week</a></li>
 					<li role="presentation" class=""><a href="" ng-class="{active: activeSelection === 'month'}" ng-click="getAdherenceScore('month')" translate="graph.month"></a></li>
 					<li role="presentation" class=""><a href="" ng-class="{active: activeSelection === 'year'}" ng-click="getAdherenceScore('year')" translate="graph.year"></a></li>
-					<li role="presentation" class="" id="dp1"><a href="" date-range-picker class="date-picker" ng-model="customdates" parentEl="#dp1" options="dateOpts" ><span class="icon-calendar"></span></a></li>
+					<li role="presentation" class="" id="dp1"><a href="" date-range-picker class="date-picker" ng-model="customdates" id="dp1History" parentEl="#dp1" options="dateOpts" ><span class="icon-calendar"></span></a></li>
 				</ul>
 			</div>
 										<div class="col-md-1">
@@ -215,7 +215,7 @@
 					<li role="presentation" class="" ng-if="!isTestResults"><a ng-class="{active: durationRange === 'Week'}" href="" ng-click="isGraphLoaded && getWeekChart()">Week</a></li>
 					<li role="presentation" class="" ng-if="!isTestResults"><a href="" ng-class="{active: durationRange === 'Month'}" ng-click="isGraphLoaded && getMonthChart()" translate="graph.month"></a></li>
 					<li role="presentation" class=""><a href="" ng-class="{active: durationRange === 'Year' || (isTestResults && durationRange != 'Custom')}" ng-click="isGraphLoaded && getYearChart()" translate="graph.year"></a></li>
-					<li role="presentation" class="" id="dp1"><a href="" date-range-picker class="date-picker" ng-model="dates" parentEl="#dp1" options="opts" ><span class="icon-calendar"></span></a></li>
+					<li role="presentation" class="" id="dp1"><a href="" date-range-picker class="date-picker" ng-model="dates" id="dp1patientGraph" parentEl="#dp1" options="opts" ><span class="icon-calendar"></span></a></li>
 				</ul>
 			</div>
 		</div>
@@ -274,10 +274,10 @@
 	<div id = "NodataDiv" class="graph_nodata" ng-if = "((hmrChartData1.length == 0) || (noDataAvailableForHMR1)) && noDataStatus && isHMR" ng-show="forhidingMonarchHmrGraph">
 		<span class="noData_text"> No Therapy Transmission Received for This Day!</span>
 	</div>
-		<div id = "NodataDiv" class="graph_nodata" ng-if = "(compilencechartData.length ==0)  && noDataStatus && isCompliance" ng-show="forhidingVestProtocolGraph">
+		<div id = "NodataDiv" class="graph_nodata" ng-if = "((compilencechartData.length == 0) || (noDataAvailable))  && noDataStatus && isCompliance" ng-show="forhidingVestProtocolGraph">
 		<span class="noData_text"> No Therapy Transmission Received for This Day!</span>
 	</div>
-	<div id = "NodataDiv" class="graph_nodata" ng-if = "(compilencechartData1.length ==0)  && noDataStatus && isCompliance" ng-show="forhidingMonarchProtocolGraph">
+	<div id = "NodataDiv" class="graph_nodata" ng-if = "((compilencechartData1.length == 0) || (noDataAvailable1))  && noDataStatus && isCompliance" ng-show="forhidingMonarchProtocolGraph">
 		<span class="noData_text"> No Therapy Transmission Received for This Day!</span>
 	</div>
 		<div id = "NodataDiv" class="graph_nodata" ng-if = "isAdherenceTrend && noDataAvailableForAdherence">
